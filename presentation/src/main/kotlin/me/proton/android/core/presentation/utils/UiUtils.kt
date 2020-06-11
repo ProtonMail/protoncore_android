@@ -20,34 +20,11 @@ package me.proton.android.core.presentation.utils
 
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import me.proton.android.core.presentation.ui.HumanVerificationDialog
 
 /**
  * Created by dinokadrikj on 5/15/20.
  */
 
-private const val TAG_HUMAN_VERIFICATION_DIALOG = "human_verification_dialog"
-
-/**
- * Shows the human verification dialog.
- */
-fun FragmentManager.showHumanVerification(largeLayout: Boolean, containerId: Int = android.R.id.content) {
-    val newFragment = HumanVerificationDialog()
-    if (largeLayout) {
-        // For large screens (tablets), we show the fragment as a dialog
-        newFragment.show(this, TAG_HUMAN_VERIFICATION_DIALOG)
-    } else {
-        // The smaller screens (phones), we show the fragment fullscreen
-        inTransaction {
-            add(containerId, newFragment)
-            addToBackStack(null)
-        }
-    }
-}
-
-/**
- *
- */
 inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> FragmentTransaction) {
     val transaction = beginTransaction()
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

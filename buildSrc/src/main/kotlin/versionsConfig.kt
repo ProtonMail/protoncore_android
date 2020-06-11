@@ -21,8 +21,8 @@ fun initVersions() {
     `fragment version` =                        "1.2.0-alpha03" // Released: Apr 05, 2020
     `fragment version`
     `ktx version` =                             "1.2.0-beta01"  // Released: Oct 11, 2019
-    `lifecycle version` =                       "2.2.0-beta01"  // Released: Oct 11, 2019
-    `material version` =                        "1.1.0-beta01"  // Released: Oct 05, 2019
+    `lifecycle version` =                       "2.2.0"  // Released: Oct 11, 2019
+    `material version` =                        "1.2.0-alpha02" // Updated: May 24, 2020
     `android-paging version` =                  "2.1.0"         // Released: Jan 26, 2019
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
 
@@ -36,6 +36,7 @@ fun initVersions() {
     `retrofit-kotlin-serialization version` =   "0.4.0"         // Released: Apr 12, 2019
     `timber version` =                          "4.7.1"         // Released:
     `viewStateStore version` =                  "1.3-beta-3"    // Released: Oct 03, 2019
+    `hilt-android version` =                    "2.28-alpha" // Released: Jun 10, 2020
     // endregion
 }
 
@@ -53,7 +54,7 @@ const val `okHttp version` =                "4.8.0"         // Released: Jul 11,
 // endregion
 
 // region Gradle
-const val `easyGradle version` =            "1.5-beta-4"    // Released: Jun 14, 2020
+const val `easyGradle version` =            "1.5-beta-8"    // Released: Jun 14, 2020
 // endregion
 
 // region Plugins

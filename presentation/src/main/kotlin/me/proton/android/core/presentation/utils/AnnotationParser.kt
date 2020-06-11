@@ -23,7 +23,7 @@ import me.proton.android.core.presentation.ui.ContentLayout
 /**
  * Created by dinokadrikj on 5/16/20.
  */
-inline fun <reified T: Any> T.getAnnotatedLayout(): Int {
+inline fun <reified T : Any> T.getAnnotatedLayout(): Int {
     val annotation = javaClass.annotations.find {
         it.annotationClass == ContentLayout::class
     } as? ContentLayout

@@ -18,16 +18,18 @@
 
 package me.proton.android.core.coreexample
 
-import ch.protonmail.libs.coreexample.R
-import ch.protonmail.libs.coreexample.databinding.ActivityMainBinding
+import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.viewmodel.MainViewModel
 import me.proton.android.core.presentation.ui.ContentLayout
 import me.proton.android.core.presentation.ui.ProtonActivity
+import me.proton.core.humanverification.presentation.utils.showHumanVerification
 
 @ContentLayout(R.layout.activity_main)
 class MainActivity : ProtonActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun initViewModel() {
-
+        binding.humanVerification.setOnClickListener {
+            supportFragmentManager.showHumanVerification(largeLayout = false, containerId =  binding.fragmentContainer.id)
+        }
     }
 }

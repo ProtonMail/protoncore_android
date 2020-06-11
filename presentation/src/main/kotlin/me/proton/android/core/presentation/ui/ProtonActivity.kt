@@ -32,7 +32,7 @@ import me.proton.android.core.presentation.utils.getAnnotatedLayout
  */
 abstract class ProtonActivity<DB : ViewDataBinding, VM : ViewModel> : AppCompatActivity() {
 
-    private lateinit var binding: DB
+    protected lateinit var binding: DB
     protected lateinit var viewModel: VM
 
     protected abstract fun initViewModel()

@@ -16,6 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
+import util.libVersion
+
 plugins {
     `android-library`
     `kotlin-android`
@@ -23,20 +27,16 @@ plugins {
     `kotlin-serialization`
 }
 
-val version = Version(0, 1, 0)
-archivesBaseName = archiveNameFor(ProtonCore.presentation, version)
+libVersion = Version(0, 1, 0)
 
-android(version)
+android(libVersion!!)
 
 dependencies {
     // Core
-    implementation(project(Module.core))
-
-    // Domain
-    implementation(project(Module.domain))
+    // implementation(project(Module.))
 
     // Kotlin
-    implementation(
+    api(
         `kotlin-jdk7`,
         `kotlin-reflect`,
         `coroutines-android`,
@@ -45,8 +45,10 @@ dependencies {
     )
 
     // Android
-    compileOnly(`android-annotation`)
-    implementation(
+    compileOnly(
+        `paging-runtime`,
+        `android-annotation`)
+    api(
         appcompat,
         material
     )
@@ -57,9 +59,6 @@ dependencies {
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))
 
-    // Lint
-    lintChecks(project(Module.lint))
+    // Lint - off temporary
+    // lintChecks(project(Module.lint))
 }
-
-dokka()
-// publish(Module.auth, version)

@@ -45,6 +45,7 @@ abstract class ProtonFragment<VM : ViewModel, DB : ViewDataBinding> : Fragment()
     open fun onViewCreated() {}
 
     abstract fun initViewModel()
+    abstract fun layoutId(): Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +57,7 @@ abstract class ProtonFragment<VM : ViewModel, DB : ViewDataBinding> : Fragment()
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        internalBinding = DataBindingUtil.inflate(inflater, getAnnotatedLayout(), container, false)
+        internalBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         binding.setLifecycleOwner { lifecycle }
         super.onCreateView(inflater, container, savedInstanceState)
         onViewCreated()

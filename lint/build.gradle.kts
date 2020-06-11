@@ -7,7 +7,6 @@ plugins {
 }
 
 val version = Version(0, 1, 0)
-archivesBaseName = archiveNameFor(ProtonCore.lint, version)
 
 dependencies {
     // Lint

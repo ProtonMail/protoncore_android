@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<!-- TODO update to Android 6 min supported version to support new styles -->
+<resources>
+
+    <style name="ProtonTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="ProtonEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textSize">@dimen/h5</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+
+    <style name="ProtonEditText.Border.Grey" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:colorAccent">@color/purple</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/dark_gray</item>
+        <item name="android:textSize">@dimen/h4</item>
+        <item name="android:background">@drawable/default_edit_text</item>
+    </style>
+
+    <style name="ProtonButton" parent="Widget.MaterialComponents.Button" />
+
+    <style name="ProtonButton.Default" parent="Widget.AppCompat.Button" />
+
+    <style name="ProtonButton.Borderless.Layout" parent="ProtonButton.Default">
+        <item name="boxStrokeColor">@null</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="background">@color/white</item>
+    </style>
+
+    <style name="ProtonButton.Borderless" parent="ProtonButton.Default">
+        <item name="android:textColor">@drawable/selector_borderless_button_foreground</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="ProtonButton.Action" parent="ProtonButton.Default">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/selector_action_button_background</item>
+    </style>
+
+    <style name="ProtonButton.Toggle" parent="ProtonButton">
+        <item name="android:textColor">@drawable/selector_toggle_button_foreground</item>
+        <item name="android:colorBackground">@drawable/selector_toggle_button_background</item>
+        <item name="android:backgroundTint">@drawable/selector_toggle_button_background</item>
+    </style>
+</resources>

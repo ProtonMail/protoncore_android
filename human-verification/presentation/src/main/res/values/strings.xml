@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- base common strings -->
+    <string name="close">Close</string>
+    <string name="help">Help</string>
+
+    <string name="human_verification_title">Human Verification</string>
+    <string name="human_verification_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
+    <string name="human_verification_enter_code_subtitle">Enter the verification code that was sent to %s</string>
+    <string name="human_verification_option_captcha">Captcha</string>
+    <string name="human_verification_option_email">Email</string>
+    <string name="human_verification_option_sms">Sms</string>
+    <string name="human_verification_get_verification_code">Get verification code</string>
+    <string name="human_verification_already_have_code">I already have a code</string>
+    <string name="human_verification_request_replacement_code">Request replacement code</string>
+    <string name="human_verification_verify">Verify</string> <!-- To verify the entered code - action -->
+    <string name="human_verification_help_title">Do you need any help with human verification?</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Email</string>
+    <string name="sms_hint">Phone number</string>
+
+    <!-- TODO: update correct strings below -->
+    <string name="human_verification_help_manual_title">Manual Verification</string>
+    <string name="human_verification_help_manual">If the three options for human verification are not working for you, you can contact us for a manual verification</string>
+    <string name="human_verification_help_website_title">Help page on our web site</string>
+    <string name="human_verification_help_website">If you need more information why this is needed.</string>
+</resources>

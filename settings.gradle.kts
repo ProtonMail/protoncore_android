@@ -3,6 +3,7 @@ rootProject.name = "Proton Core"
 // Common
 include(
     // Utils
+    // ":lint",
     ":util:kotlin",
     ":util:android:shared-preferences",
     ":util:android:work-manager",
@@ -15,9 +16,9 @@ include(
 
 // Shared
 include(
-    ":domain"
-    // ":presentation",
-    // ":data"
+    ":domain",
+    // ":data",
+    ":presentation"
 )
 
 // Support
@@ -41,11 +42,20 @@ include(
     // ":settings:presentation",
     // ":settings:data",
     // Human Verification
-//     ":human-verification",
-//     ":human-verification:domain",
-//     ":human-verification:presentation",
-//     ":human-verification:data"
+    ":human-verification",
+    ":human-verification:domain",
+    ":human-verification:presentation",
+    ":human-verification:data"
 )
+
+// Demo app
+include(
+    ":coreexample"
+)
+
+// * * * * * * *
+// NAMING BELOW
+// * * * * * *
 
 // Common
 project(":util:kotlin").name = "util-kotlin"
@@ -75,7 +85,7 @@ project(":network:data").name = "network-data"
 // ":settings:data",
 
 // Human Verification
-//project(":human-verification").name = "human-verification"
-//project(":human-verification:domain").name = "human-verification-domain"
-//project(":human-verification:presentation").name = "human-verification-presentation"
-//project(":human-verification:data").name = "human-verification-data"
+project(":human-verification").name = "human-verification"
+project(":human-verification:domain").name = "human-verification-domain"
+project(":human-verification:presentation").name = "human-verification-presentation"
+project(":human-verification:data").name = "human-verification-data"

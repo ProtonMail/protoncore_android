@@ -58,6 +58,3 @@ dependencies {
     // Lint
     lintChecks(project(Module.lint))
 }
-
-dokka()
-// publish(Module.auth, version)

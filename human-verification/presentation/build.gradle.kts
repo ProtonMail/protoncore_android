@@ -4,9 +4,11 @@ import util.libVersion
 
 plugins {
     `android-library`
+    `kotlin-android`
+    `kotlin-android-extensions`
 }
 
-//libVersion = Version(0, 1, 0)
+// libVersion = Version(0, 1, 0)
 
 android()
 
@@ -15,13 +17,24 @@ dependencies {
     implementation(
 
         project(Module.kotlinUtil),
-        // project(Module.presentation)
+        project(Module.presentation),
+        project(Module.humanVerificationDomain),
 
         // Kotlin
         `kotlin-jdk7`,
 
         // Android
-        `android-ktx`
+        `android-ktx`,
+        `fragment`,
+        `lifecycle-viewModel`,
+        `viewStateStore`,
+        `coroutines-core`,
+        `hilt-android`,
+        `hilt-lifecycle-viewmodel`
+    )
+
+    api(
+        `lifecycle-viewModel`
     )
 
     testImplementation(project(Module.androidTest))

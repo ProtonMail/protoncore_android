@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/parent_padding">
+
+        <TextView
+            android:id="@+id/callingCodeText"
+            style="@style/ProtonEditText.Border.Grey"
+            android:layout_width="65dp"
+            android:layout_height="55dp"
+            android:enabled="false"
+            android:singleLine="true"
+            android:textAllCaps="true"
+            android:textCursorDrawable="@null"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/actionButtons"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/smsEditTextLayout"
+            app:layout_constrainedHeight="true"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/smsEditTextLayout"
+            style="@style/ProtonButton.Borderless.Layout"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:autofillHints="@string/input_sms_for_human_verification"
+            android:hint="XXX XXX XXX"
+            android:padding="0dp"
+            app:endIconDrawable="@drawable/vector_clear"
+            app:endIconMode="custom"
+            app:endIconTint="@color/dark_gray"
+            app:hintAnimationEnabled="false"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toTopOf="@+id/actionButtons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/callingCodeText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/smsEditText"
+                style="@style/ProtonEditText.Border.Grey"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:inputType="text|phone" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/actionButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/smsEditTextLayout">
+
+            <android.widget.Button
+                android:id="@+id/getVerificationCodeButton"
+                style="@style/ProtonButton.Action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_top_margin"
+                android:text="@string/human_verification_get_verification_code" />
+
+            <android.widget.Button
+                android:id="@+id/proceedButton"
+                style="@style/ProtonButton.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_top_margin"
+                android:text="@string/human_verification_already_have_code" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

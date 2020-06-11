@@ -18,5 +18,15 @@
   -->
 
 <resources>
+    <!-- region layout margins -->
+    <dimen name="normal_margin">5dp</dimen>
     <dimen name="default_top_margin">10dp</dimen>
+    <dimen name="double_top_margin">20dp</dimen>
+    <dimen name="default_view_vertical_space">10dp</dimen>
+    <dimen name="parent_padding">10dp</dimen>
+    <!-- endregion -->
+
+    <!-- region view margins -->
+    <dimen name="input_padding">10dp</dimen>
+    <!-- endregion -->
 </resources>

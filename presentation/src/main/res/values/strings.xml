@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -18,9 +17,7 @@
   -->
 
 <resources>
-    <string name="human_verification_title">Human Verification</string>
-    <string name="human_verification_subtitle">To prevent abuse, please verify you are human using one of the following options</string>
-    <string name="human_verification_option_captcha" >Captcha</string>
-    <string name="human_verification_option_email">Email</string>
-    <string name="human_verification_option_sms">Sms</string>
+
+    <!-- base common presentation strings -->
+
 </resources>
