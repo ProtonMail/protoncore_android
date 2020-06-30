@@ -40,6 +40,7 @@ import java.net.SocketTimeoutException
 import java.security.cert.CertificateException
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLHandshakeException
 import kotlin.reflect.KClass
 
 /**
@@ -160,6 +161,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     } catch (e: SerializationException) {
         ApiResult.Error.Parse
     } catch (e: CertificateException) {
+        ApiResult.Error.Certificate
+    } catch (e: SSLHandshakeException) {
         ApiResult.Error.Certificate
     } catch (e: ProtonErrorException) {
         ApiResult.Error.Proton(e.httpCode, e.protonCode, e.error)
