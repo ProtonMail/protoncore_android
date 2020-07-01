@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>DispatcherProvider - util-kotlin</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">util-kotlin</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.util.kotlin</a>&nbsp;/&nbsp;<a href="./index.html">DispatcherProvider</a><br/>
+<br/>
+<h1>DispatcherProvider</h1>
+<code><span class="keyword">interface </span><span class="identifier">DispatcherProvider</span></code>
+<p>Provides <a href="#">CoroutineDispatcher</a>s in order to inject them in the constructor of a component allowing it to be tested</p>
+<p><strong>Author</strong><br/>
+Davide Farella</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-comp.html">Comp</a></h4>
+</td>
+<td>
+<p><a href="#">CoroutineDispatcher</a> meant to run computational operations</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">Comp</span><span class="symbol">: </span><span class="identifier">CoroutineDispatcher</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-io.html">Io</a></h4>
+</td>
+<td>
+<p><a href="#">CoroutineDispatcher</a> meant to run IO operations</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">Io</span><span class="symbol">: </span><span class="identifier">CoroutineDispatcher</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-main.html">Main</a></h4>
+</td>
+<td>
+<p><a href="#">CoroutineDispatcher</a> meant to run on main thread</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">Main</span><span class="symbol">: </span><span class="identifier">CoroutineDispatcher</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

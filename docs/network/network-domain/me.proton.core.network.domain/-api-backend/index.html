@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ApiBackend - network-domain</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">network-domain</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.network.domain</a>&nbsp;/&nbsp;<a href="./index.html">ApiBackend</a><br/>
+<br/>
+<h1>ApiBackend</h1>
+<code><span class="keyword">interface </span><span class="identifier">ApiBackend</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code>
+<p>Class responsible for making an actual API call using underlying HTTP library.</p>
+<h3>Parameters</h3>
+<p><a name="Api"></a>
+<code>Api</code> - API interface.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-tokens/index.html">Tokens</a></h4>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Tokens</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="base-url.html">baseUrl</a></h4>
+</td>
+<td>
+<p>BaseUrl for the API.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">baseUrl</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="invoke.html">invoke</a></h4>
+</td>
+<td>
+<p>Makes API call defined with <a href="#">block</a> lambda.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">suspend</span> <span class="keyword">operator</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">invoke</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.network.domain.ApiBackend$invoke(me.proton.core.network.domain.ApiManager.Call((me.proton.core.network.domain.ApiBackend.Api, me.proton.core.network.domain.ApiBackend.invoke.T)))/call">call</span><span class="symbol">:</span>&nbsp;<span class="identifier">Call</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">,</span>&nbsp;<span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-api-result/index.html"><span class="identifier">ApiResult</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="refresh-tokens.html">refreshTokens</a></h4>
+</td>
+<td>
+<p>Update the tokens (access and refresh).</p>
+<code><span class="keyword">abstract</span> <span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">refreshTokens</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-api-result/index.html"><span class="identifier">ApiResult</span></a><span class="symbol">&lt;</span><span class="identifier">Tokens</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

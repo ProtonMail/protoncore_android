@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>UserData - network-domain</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">network-domain</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.network.domain</a>&nbsp;/&nbsp;<a href="./index.html">UserData</a><br/>
+<br/>
+<h1>UserData</h1>
+<code><span class="keyword">interface </span><span class="identifier">UserData</span></code>
+<p>Getters and setters for user info bound to a given <a href="../-api-manager/index.html">ApiManager</a> instance.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="access-token.html">accessToken</a></h4>
+</td>
+<td>
+<p>Setter and getter for access token to be used for 'Authorization' header.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">accessToken</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="refresh-token.html">refreshToken</a></h4>
+</td>
+<td>
+<p>Refresh token to be used for access token refreshing.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">refreshToken</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="session-uid.html">sessionUid</a></h4>
+</td>
+<td>
+<p>Session UID to be used for 'x-pm-uid' header and various request bodies.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">sessionUid</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="force-logout.html">forceLogout</a></h4>
+</td>
+<td>
+<p>Tells client to force logout (because e.g. token refresh unrecoverably failed).</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">forceLogout</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

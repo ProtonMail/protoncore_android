@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>me.proton.core.util.kotlin.kotlin.collections.Iterable - util-kotlin</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">util-kotlin</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.util.kotlin</a>&nbsp;/&nbsp;<a href="./index.html">kotlin.collections.Iterable</a><br/>
+<br/>
+<h3>Extensions for kotlin.collections.Iterable</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="for-each-async.html">forEachAsync</a></h4>
+</td>
+<td>
+<p>Execute concurrently a lambda <a href="for-each-async.html#me.proton.core.util.kotlin$forEachAsync(kotlin.collections.Iterable((me.proton.core.util.kotlin.forEachAsync.T)), kotlin.coroutines.SuspendFunction1((me.proton.core.util.kotlin.forEachAsync.T, kotlin.Unit)))/block">block</a> for each <a href="for-each-async.html#T">T</a> element in the <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html">Iterable</a></p>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html"><span class="identifier">Iterable</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">forEachAsync</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.kotlin$forEachAsync(kotlin.collections.Iterable((me.proton.core.util.kotlin.forEachAsync.T)), kotlin.coroutines.SuspendFunction1((me.proton.core.util.kotlin.forEachAsync.T, kotlin.Unit)))/block">block</span><span class="symbol">:</span>&nbsp;<span class="keyword">suspend </span><span class="symbol">(</span><span class="identifier">T</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="map-async.html">mapAsync</a></h4>
+</td>
+<td>
+<p>Map concurrently each <a href="map-async.html#T">T</a> element in the <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html">Iterable</a></p>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">V</span><span class="symbol">&gt;</span> <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html"><span class="identifier">Iterable</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">mapAsync</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.kotlin$mapAsync(kotlin.collections.Iterable((me.proton.core.util.kotlin.mapAsync.T)), kotlin.coroutines.SuspendFunction1((me.proton.core.util.kotlin.mapAsync.T, me.proton.core.util.kotlin.mapAsync.V)))/mapper">mapper</span><span class="symbol">:</span>&nbsp;<span class="keyword">suspend </span><span class="symbol">(</span><span class="identifier">T</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<span class="identifier">V</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">V</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="map-not-null-async.html">mapNotNullAsync</a></h4>
+</td>
+<td>
+<p>Map concurrently each <a href="map-not-null-async.html#T">T</a> element in the <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html">Iterable</a>, skipping null values</p>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html"><span class="identifier">Iterable</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">.</span><span class="identifier">mapNotNullAsync</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.kotlin$mapNotNullAsync(kotlin.collections.Iterable((me.proton.core.util.kotlin.mapNotNullAsync.T)), kotlin.coroutines.SuspendFunction1((me.proton.core.util.kotlin.mapNotNullAsync.T, me.proton.core.util.kotlin.mapNotNullAsync.V)))/mapper">mapper</span><span class="symbol">:</span>&nbsp;<span class="keyword">suspend </span><span class="symbol">(</span><span class="identifier">T</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<span class="identifier">V</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">V</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

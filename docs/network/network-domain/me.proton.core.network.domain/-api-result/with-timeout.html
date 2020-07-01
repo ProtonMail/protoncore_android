@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ApiResult.withTimeout - network-domain</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">network-domain</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.network.domain</a>&nbsp;/&nbsp;<a href="index.html">ApiResult</a>&nbsp;/&nbsp;<a href="./with-timeout.html">withTimeout</a><br/>
+<br/>
+<h1>withTimeout</h1>
+<a name="me.proton.core.network.domain.ApiResult.Companion$withTimeout(kotlin.Long, kotlin.coroutines.SuspendFunction1((kotlinx.coroutines.CoroutineScope, me.proton.core.network.domain.ApiResult((me.proton.core.network.domain.ApiResult.Companion.withTimeout.T)))))"></a>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">withTimeout</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.network.domain.ApiResult.Companion$withTimeout(kotlin.Long, kotlin.coroutines.SuspendFunction1((kotlinx.coroutines.CoroutineScope, me.proton.core.network.domain.ApiResult((me.proton.core.network.domain.ApiResult.Companion.withTimeout.T)))))/timeoutMs">timeoutMs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.network.domain.ApiResult.Companion$withTimeout(kotlin.Long, kotlin.coroutines.SuspendFunction1((kotlinx.coroutines.CoroutineScope, me.proton.core.network.domain.ApiResult((me.proton.core.network.domain.ApiResult.Companion.withTimeout.T)))))/block">block</span><span class="symbol">:</span>&nbsp;<span class="keyword">suspend </span><span class="identifier">CoroutineScope</span><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="index.html"><span class="identifier">ApiResult</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="index.html"><span class="identifier">ApiResult</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Introduce timeout for given block returning <a href="index.html">ApiResult</a>.</p>
+<h3>Parameters</h3>
+<p><a name="T"></a>
+<code>T</code> - Value type for successful call.</p>
+<p><a name="timeoutMs"></a>
+<code>timeoutMs</code> - Timeout in milliseconds.</p>
+<p><a name="block"></a>
+<code>block</code> - potentially long-running lambda producing <a href="index.html">ApiResult</a>.</p>
+<p><strong>Return</strong><br/>
+block <a href="index.html">ApiResult</a> or <a href="-error/-timeout/index.html">ApiResult.Error.Timeout</a> on timeout.</p>
+</BODY>
+</HTML>

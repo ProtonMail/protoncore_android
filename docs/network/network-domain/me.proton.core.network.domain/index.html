@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>me.proton.core.network.domain - network-domain</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">network-domain</a>&nbsp;/&nbsp;<a href="./index.html">me.proton.core.network.domain</a><br/>
+<br/>
+<h2>Package me.proton.core.network.domain</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-api-backend/index.html">ApiBackend</a></h4>
+</td>
+<td>
+<p>Class responsible for making an actual API call using underlying HTTP library.</p>
+<code><span class="keyword">interface </span><span class="identifier">ApiBackend</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-api-client/index.html">ApiClient</a></h4>
+</td>
+<td>
+<p>Represents the client of the library. Enables 2-way communication between the lib and the client.</p>
+<code><span class="keyword">interface </span><span class="identifier">ApiClient</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-api-error-handler/index.html">ApiErrorHandler</a></h4>
+</td>
+<td>
+<p>Handler for API call errors. To be used as a part of a chain of handlers.</p>
+<code><span class="keyword">interface </span><span class="identifier">ApiErrorHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-api-manager/index.html">ApiManager</a></h4>
+</td>
+<td>
+<p>Enables making <a href="-api-manager/index.html#Api">Api</a> calls by the client, along with error handling.</p>
+<code><span class="keyword">interface </span><span class="identifier">ApiManager</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-api-manager-impl/index.html">ApiManagerImpl</a></h4>
+</td>
+<td>
+<p>Implementation of <a href="-api-manager/index.html">ApiManager</a>.</p>
+<code><span class="keyword">class </span><span class="identifier">ApiManagerImpl</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-api-manager/index.html"><span class="identifier">ApiManager</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-api-result/index.html">ApiResult</a></h4>
+</td>
+<td>
+<p>Result of the safe API call.</p>
+<code><span class="keyword">sealed</span> <span class="keyword">class </span><span class="identifier">ApiResult</span><span class="symbol">&lt;</span><span class="keyword">out</span>&nbsp;<span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-doh-provider/index.html">DohProvider</a></h4>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">DohProvider</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-network-manager/index.html">NetworkManager</a></h4>
+</td>
+<td>
+<p>Allows checking connectivity state (disconnected/metered/unmetered).</p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">NetworkManager</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-network-status/index.html">NetworkStatus</a></h4>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">NetworkStatus</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-proton-force-update-handler/index.html">ProtonForceUpdateHandler</a></h4>
+</td>
+<td>
+<p>Handles force update response.</p>
+<code><span class="keyword">class </span><span class="identifier">ProtonForceUpdateHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-api-error-handler/index.html"><span class="identifier">ApiErrorHandler</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-refresh-token-handler/index.html">RefreshTokenHandler</a></h4>
+</td>
+<td>
+<p>Handler for Authorization error, will attempt refreshing access token and repeat original call.</p>
+<code><span class="keyword">class </span><span class="identifier">RefreshTokenHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-api-error-handler/index.html"><span class="identifier">ApiErrorHandler</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-timeout-override/index.html">TimeoutOverride</a></h4>
+</td>
+<td>
+<p>Custom timeout to be applied on a per-call basis.</p>
+<code><span class="keyword">class </span><span class="identifier">TimeoutOverride</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-user-data/index.html">UserData</a></h4>
+</td>
+<td>
+<p>Getters and setters for user info bound to a given <a href="-api-manager/index.html">ApiManager</a> instance.</p>
+<code><span class="keyword">interface </span><span class="identifier">UserData</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

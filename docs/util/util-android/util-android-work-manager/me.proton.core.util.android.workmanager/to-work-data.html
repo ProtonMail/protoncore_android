@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>toWorkData - util-android-work-manager</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">util-android-work-manager</a>&nbsp;/&nbsp;<a href="index.html">me.proton.core.util.android.workmanager</a>&nbsp;/&nbsp;<a href="./to-work-data.html">toWorkData</a><br/>
+<br/>
+<h1>toWorkData</h1>
+<a name="me.proton.core.util.android.workmanager$toWorkData(me.proton.core.util.android.workmanager.toWorkData.T, kotlinx.serialization.SerializationStrategy((me.proton.core.util.android.workmanager.toWorkData.T)))"></a>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="keyword">reified</span>&nbsp;<span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <span class="identifier">T</span><span class="symbol">.</span><span class="identifier">toWorkData</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.workmanager$toWorkData(me.proton.core.util.android.workmanager.toWorkData.T, kotlinx.serialization.SerializationStrategy((me.proton.core.util.android.workmanager.toWorkData.T)))/serializer">serializer</span><span class="symbol">:</span>&nbsp;<span class="identifier">SerializationStrategy</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Data</span></code>
+<h3>Parameters</h3>
+<p><a name="T"></a>
+<code>T</code> - must be a class annotate with <a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html">Serializable</a></p>
+<p><a name="serializer"></a>
+<code>serializer</code> - optional <a href="#">SerializationStrategy</a> of <a href="to-work-data.html#T">T</a>, if no value is passed, the
+<a href="#">ImplicitReflectionSerializer</a> will be used</p>
+<p><strong>Return</strong><br/>
+<a href="#">Data</a> created by serializing receiver <a href="to-work-data.html#T">T</a></p>
+</BODY>
+</HTML>

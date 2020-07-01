@@ -1,0 +1,7 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:me.proton.core.util.gradle$hierarchy(org.gradle.api.Project)me.proton.core.util.gradle/org.gradle.api.-project/hierarchy.html
+$dokka.location:me.proton.core.util.gradle$setupDetekt(org.gradle.api.Project, kotlin.Function1((org.gradle.api.Project, kotlin.Boolean)))me.proton.core.util.gradle/org.gradle.api.-project/setup-detekt.html
+$dokka.location:me.proton.core.util.gradle$setupDokka(org.gradle.api.Project, kotlin.Function1((org.gradle.api.Project, kotlin.Boolean)))me.proton.core.util.gradle/org.gradle.api.-project/setup-dokka.html
+$dokka.location:me.proton.core.util.gradle$setupKotlin(org.gradle.api.Project, kotlin.Array((kotlin.String)))me.proton.core.util.gradle/org.gradle.api.-project/setup-kotlin.html
+me.proton.core.util.gradle

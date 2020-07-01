@@ -1,0 +1,87 @@
+image: gitlab.protontech.ch:4567/protonvpn/android/android-app:protonish5
+
+variables:
+  ANDROID_COMPILE_SDK: "28"
+  ANDROID_BUILD_TOOLS: "28.0.2"
+  ANDROID_SDK_TOOLS:   "4333796"
+
+before_script:
+  - if [[ -n "$http_proxy" ]]; then export JAVA_TOOL_OPTIONS="-Dhttp.proxyHost=$( echo ${http_proxy##http://} | cut -d':' -f1 ) -Dhttp.proxyPort=$( echo ${http_proxy##http://} | cut -d':' -f2 ) -Dhttps.proxyHost=$( echo ${https_proxy##http://} | cut -d':' -f1 ) -Dhttps.proxyPort=$( echo ${https_proxy##http://} | cut -d':' -f2 ) -Dhttp.nonProxyHosts=\"$( echo $no_proxy | tr ',' '|' )\""; fi
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+  - chmod +x ./gradlew
+
+stages:
+  - analyze
+  - build
+  - test
+  - publish
+  - commit
+
+#####################
+detekt analysis:
+  stage: analyze
+  tags:
+    - android
+  script:
+    - ./gradlew multiModuleDetekt
+  artifacts:
+    expire_in: 1 month
+    reports:
+      codequality: config/detekt/reports/mergedReport.json
+
+assemble:
+  stage: build
+  tags:
+    - android
+  script:
+    - ./gradlew assemble
+  # artifacts:
+  #   paths:
+  #   - app/build/outputs/
+
+debugTests:
+  stage: test
+  tags:
+    - android
+  script:
+    - ./gradlew -Pci --console=plain testDebugUnitTest
+
+include:
+  - project: 'agarroux/publish-github'
+    file: '/jobs/release.gitlab-ci.yml'
+
+release-publish-github:
+  stage: publish
+  only:
+    - master
+  variables:
+    RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonMail/protoncore_android.git
+    RELEASE_SYNC_TO_BRANCH: 'master'
+    RELEASE_SYNC_FROM_BRANCH: 'master'
+  extends: .release-sync-commit-shared
+
+publishBintray:
+  stage: publish
+  tags:
+    - android
+  script:
+    - ./gradlew assemble && ./gradlew publishAll
+  only:
+    - master
+  artifacts:
+      expire_in: 10 days
+      paths:
+          - new_releases.tmp
+          - releases
+          - docs
+          - README.md
+
+commitRelease:
+  stage: commit
+  needs:
+      - job: publishBintray
+        artifacts: true
+  script:
+    - ./util/commitRelease
+  only:
+    - master

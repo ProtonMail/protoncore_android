@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ApiManagerImpl - network-domain</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">network-domain</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.network.domain</a>&nbsp;/&nbsp;<a href="./index.html">ApiManagerImpl</a><br/>
+<br/>
+<h1>ApiManagerImpl</h1>
+<code><span class="keyword">class </span><span class="identifier">ApiManagerImpl</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-api-manager/index.html"><span class="identifier">ApiManager</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code>
+<p>Implementation of <a href="../-api-manager/index.html">ApiManager</a>.</p>
+<h3>Parameters</h3>
+<p><a name="Api"></a>
+<code>Api</code> - API interface</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Implementation of <a href="../-api-manager/index.html">ApiManager</a>.</p>
+<code><span class="identifier">ApiManagerImpl</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.network.domain.ApiManagerImpl$<init>(me.proton.core.network.domain.ApiClient, me.proton.core.network.domain.ApiBackend((me.proton.core.network.domain.ApiManagerImpl.Api)), me.proton.core.network.domain.DohProvider, me.proton.core.network.domain.NetworkManager, kotlin.collections.List((me.proton.core.network.domain.ApiErrorHandler((me.proton.core.network.domain.ApiManagerImpl.Api)))), kotlin.Function0((kotlin.Long)))/client">client</span><span class="symbol">:</span>&nbsp;<a href="../-api-client/index.html"><span class="identifier">ApiClient</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.network.domain.ApiManagerImpl$<init>(me.proton.core.network.domain.ApiClient, me.proton.core.network.domain.ApiBackend((me.proton.core.network.domain.ApiManagerImpl.Api)), me.proton.core.network.domain.DohProvider, me.proton.core.network.domain.NetworkManager, kotlin.collections.List((me.proton.core.network.domain.ApiErrorHandler((me.proton.core.network.domain.ApiManagerImpl.Api)))), kotlin.Function0((kotlin.Long)))/primaryBackend">primaryBackend</span><span class="symbol">:</span>&nbsp;<a href="../-api-backend/index.html"><span class="identifier">ApiBackend</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.network.domain.ApiManagerImpl$<init>(me.proton.core.network.domain.ApiClient, me.proton.core.network.domain.ApiBackend((me.proton.core.network.domain.ApiManagerImpl.Api)), me.proton.core.network.domain.DohProvider, me.proton.core.network.domain.NetworkManager, kotlin.collections.List((me.proton.core.network.domain.ApiErrorHandler((me.proton.core.network.domain.ApiManagerImpl.Api)))), kotlin.Function0((kotlin.Long)))/dohProvider">dohProvider</span><span class="symbol">:</span>&nbsp;<a href="../-doh-provider/index.html"><span class="identifier">DohProvider</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.network.domain.ApiManagerImpl$<init>(me.proton.core.network.domain.ApiClient, me.proton.core.network.domain.ApiBackend((me.proton.core.network.domain.ApiManagerImpl.Api)), me.proton.core.network.domain.DohProvider, me.proton.core.network.domain.NetworkManager, kotlin.collections.List((me.proton.core.network.domain.ApiErrorHandler((me.proton.core.network.domain.ApiManagerImpl.Api)))), kotlin.Function0((kotlin.Long)))/networkManager">networkManager</span><span class="symbol">:</span>&nbsp;<a href="../-network-manager/index.html"><span class="identifier">NetworkManager</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.network.domain.ApiManagerImpl$<init>(me.proton.core.network.domain.ApiClient, me.proton.core.network.domain.ApiBackend((me.proton.core.network.domain.ApiManagerImpl.Api)), me.proton.core.network.domain.DohProvider, me.proton.core.network.domain.NetworkManager, kotlin.collections.List((me.proton.core.network.domain.ApiErrorHandler((me.proton.core.network.domain.ApiManagerImpl.Api)))), kotlin.Function0((kotlin.Long)))/errorHandlers">errorHandlers</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-api-error-handler/index.html"><span class="identifier">ApiErrorHandler</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.network.domain.ApiManagerImpl$<init>(me.proton.core.network.domain.ApiClient, me.proton.core.network.domain.ApiBackend((me.proton.core.network.domain.ApiManagerImpl.Api)), me.proton.core.network.domain.DohProvider, me.proton.core.network.domain.NetworkManager, kotlin.collections.List((me.proton.core.network.domain.ApiErrorHandler((me.proton.core.network.domain.ApiManagerImpl.Api)))), kotlin.Function0((kotlin.Long)))/monoClockMs">monoClockMs</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="invoke.html">invoke</a></h4>
+</td>
+<td>
+<p>Performs API call.</p>
+<code><span class="keyword">suspend</span> <span class="keyword">operator</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">invoke</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.network.domain.ApiManagerImpl$invoke(kotlin.Boolean, kotlin.coroutines.SuspendFunction1((me.proton.core.network.domain.ApiManagerImpl.Api, me.proton.core.network.domain.ApiManagerImpl.invoke.T)))/forceNoRetryOnConnectionErrors">forceNoRetryOnConnectionErrors</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.network.domain.ApiManagerImpl$invoke(kotlin.Boolean, kotlin.coroutines.SuspendFunction1((me.proton.core.network.domain.ApiManagerImpl.Api, me.proton.core.network.domain.ApiManagerImpl.invoke.T)))/block">block</span><span class="symbol">:</span>&nbsp;<span class="keyword">suspend </span><span class="symbol">(</span><span class="identifier">Api</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<span class="identifier">T</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-api-result/index.html"><span class="identifier">ApiResult</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="fail-request-before-time-ms.html">failRequestBeforeTimeMs</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">failRequestBeforeTimeMs</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
