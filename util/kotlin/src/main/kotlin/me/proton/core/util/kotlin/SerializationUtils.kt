@@ -13,6 +13,7 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.PrimitiveDescriptor
 import kotlinx.serialization.PrimitiveKind
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.Serializer
 import kotlinx.serialization.parse
@@ -49,6 +50,21 @@ annotation class NeedSerializable
 inline fun <reified T : Any> String.deserialize(
     deserializer: DeserializationStrategy<T>? = null
 ): T = deserializer?.let { Serializer.parse(deserializer, this) } ?: Serializer.parse(this)
+
+/**
+ * @return [T] object from the receiver [String] or null if receiver can't be deserialized to [T].
+ *
+ * Note: this function uses reflection as long as explicit [deserializer] [DeserializationStrategy]
+ * is passed explicitly
+ */
+@NeedSerializable
+inline fun <reified T : Any> String.deserializeOrNull(
+    deserializer: DeserializationStrategy<T>? = null
+): T? = try {
+    deserialize(deserializer)
+} catch (e: SerializationException) {
+    null
+}
 
 /**
  * @return [List] of [T] object from the receiver [String]

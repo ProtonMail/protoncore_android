@@ -79,7 +79,6 @@ class ApiFactory(private val apiClient: ApiClient) {
             apiClient,
             userData,
             baseOkHttpClient,
-            ProtonCoreConfig.defaultJsonStringFormat,
             listOf(jsonConverter),
             interfaceClass,
             networkManager,

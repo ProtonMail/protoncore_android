@@ -218,7 +218,8 @@ internal class ApiManagerTests {
     @Test
     fun `test force update`() = runBlockingTest {
         coEvery { backend.invoke<TestResult>(any()) } returns
-                ApiResult.Error.Proton(400, ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE, "")
+                ApiResult.Error.Http(400, "",
+                    ApiResult.Error.ProtonData(ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE, ""))
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Error)
         assertEquals(true, apiClient.forceUpdated)

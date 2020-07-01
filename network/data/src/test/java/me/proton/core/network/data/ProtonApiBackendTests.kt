@@ -30,7 +30,6 @@ import me.proton.core.network.data.util.prepareResponse
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
-import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -56,8 +55,7 @@ internal class ProtonApiBackendTests {
     fun before() {
         MockKAnnotations.init(this)
         val client = MockApiClient()
-        val apiFactory = ApiFactory(client)
-        
+        apiFactory = ApiFactory(client)
         val user = MockUserData()
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
@@ -69,7 +67,6 @@ internal class ProtonApiBackendTests {
             client,
             user,
             apiFactory.baseOkHttpClient,
-            ProtonCoreConfig.defaultJsonStringFormat,
             listOf(
                 ScalarsConverterFactory.create(),
                 apiFactory.jsonConverter
@@ -128,11 +125,11 @@ internal class ProtonApiBackendTests {
             """{ "Code": 10, "Error": "darn!" }""")
 
         val result = backend(ApiManager.Call(0) { test() })
-        assertTrue(result is ApiResult.Error.Proton)
+        assertTrue(result is ApiResult.Error.Http)
 
-        assertEquals(10, result.protonCode)
+        assertEquals(10, result.proton?.code)
         assertEquals(401, result.httpCode)
-        assertEquals("darn!", result.error)
+        assertEquals("darn!", result.proton?.error)
     }
 
     @Test

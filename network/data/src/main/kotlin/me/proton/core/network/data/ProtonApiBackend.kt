@@ -17,9 +17,8 @@
  */
 package me.proton.core.network.data
 
-import kotlinx.serialization.SerializationException
-import kotlinx.serialization.json.Json
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.data.protonApi.ProtonErrorData
 import me.proton.core.network.data.protonApi.RefreshTokenRequest
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
@@ -28,19 +27,15 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.UserData
+import me.proton.core.util.kotlin.deserializeOrNull
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import retrofit2.Converter
-import retrofit2.HttpException
 import retrofit2.Retrofit
-import java.io.IOException
-import java.net.SocketTimeoutException
-import java.security.cert.CertificateException
 import java.util.Locale
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLHandshakeException
 import kotlin.reflect.KClass
 
 /**
@@ -51,7 +46,6 @@ import kotlin.reflect.KClass
  * @property client [ApiClient] to be used with the backend.
  * @property userData [UserData] bound to this backend.
  * @property networkManager [NetworkManager] instance.
- * @param json kotlin Json parser.
  * @param converters Retrofit converters to be used in the backend.
  * @param interfaceClass Kotlin class for [Api].
  * @param securityStrategy Strategy function introducing to okhttp builder pinning and other
@@ -62,14 +56,11 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private val client: ApiClient,
     private val userData: UserData,
     baseOkHttpClient: OkHttpClient,
-    private val json: Json,
     converters: List<Converter.Factory>,
     interfaceClass: KClass<Api>,
     private val networkManager: NetworkManager,
     securityStrategy: (OkHttpClient.Builder) -> Unit
 ) : ApiBackend<Api> {
-
-    private class ProtonErrorException(val httpCode: Int, val protonCode: Int, val error: String) : IOException()
 
     private val api: Api
 
@@ -126,21 +117,15 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         return request
     }
 
-    @Throws(IOException::class)
     private fun interceptErrors(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val response = chain.proceed(request)
 
-        // TODO: use serialization functions from kotlin-utils
-        val body = response.peekBody(Long.MAX_VALUE).string()
-        try {
-            val bodyJson = json.parseJson(body)
-            val code = bodyJson.jsonObject["Code"]?.primitive?.int
-            val error = bodyJson.jsonObject["Error"]?.primitive?.content
-            if (code != null && error != null)
-                throw ProtonErrorException(response.code, code, error)
-        } catch (e: SerializationException) {
-            // ignore: not a json response
+        if (!response.isSuccessful) {
+            val errorBody = response.peekBody(MAX_ERROR_BYTES).string()
+            val protonError = errorBody.deserializeOrNull(ProtonErrorData.serializer())?.apiResultData
+            if (protonError != null)
+                throw ProtonErrorException(response, protonError)
         }
 
         return response
@@ -149,28 +134,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     override suspend fun <T> invoke(call: ApiManager.Call<Api, T>): ApiResult<T> =
         invokeInternal(call.block)
 
-    private suspend fun <T> invokeInternal(block: suspend Api.() -> T): ApiResult<T> = try {
-        ApiResult.Success(block(api))
-    } catch (e: HttpException) {
-        val retryAfter = e.response()?.headers()?.get("Retry-After")?.toIntOrNull()
-        if (e.code() == ApiResult.HTTP_TOO_MANY_REQUESTS && retryAfter != null) {
-            ApiResult.Error.TooManyRequest(retryAfter)
-        } else {
-            ApiResult.Error.Http(e.code(), e.message())
-        }
-    } catch (e: SerializationException) {
-        ApiResult.Error.Parse
-    } catch (e: CertificateException) {
-        ApiResult.Error.Certificate
-    } catch (e: SSLHandshakeException) {
-        ApiResult.Error.Certificate
-    } catch (e: ProtonErrorException) {
-        ApiResult.Error.Proton(e.httpCode, e.protonCode, e.error)
-    } catch (e: SocketTimeoutException) {
-        ApiResult.Error.Timeout(networkManager.isConnectedToNetwork())
-    } catch (e: IOException) {
-        ApiResult.Error.Connection(networkManager.isConnectedToNetwork())
-    }
+    private suspend fun <T> invokeInternal(block: suspend Api.() -> T): ApiResult<T> =
+        safeApiCall(networkManager, api, block)
 
     override suspend fun refreshTokens(): ApiResult<ApiBackend.Tokens> {
         val result = invokeInternal {
@@ -183,5 +148,9 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 refresh = result.value.refreshToken))
             is ApiResult.Error -> result
         }
+    }
+
+    companion object {
+        private const val MAX_ERROR_BYTES = 1_000_000L
     }
 }

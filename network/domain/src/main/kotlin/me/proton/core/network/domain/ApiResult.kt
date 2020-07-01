@@ -47,17 +47,10 @@ sealed class ApiResult<out T> {
          *
          * @property httpCode HTTP code.
          * @property message HTTP message.
+         * @property proton Proton-specific HTTP error data.
          */
-        open class Http(val httpCode: Int, val message: String) : Error()
-
-        /**
-         * Response with Proton error.
-         *
-         * @property httpCode Response HTTP code.
-         * @property protonCode Response Proton code.
-         * @property error Error string.
-         */
-        class Proton(httpCode: Int, val protonCode: Int, val error: String) : Http(httpCode, error)
+        open class Http(val httpCode: Int, val message: String, val proton: ProtonData? = null) : Error()
+        class ProtonData(val code: Int, val error: String)
 
         /**
          * Parsing error. Should not normally happen.
@@ -96,7 +89,8 @@ sealed class ApiResult<out T> {
          * @property retryAfterSeconds Number of seconds to hold all requests (network layer will
          *  automatically fail requests that don't comply)
          */
-        class TooManyRequest(val retryAfterSeconds: Int) : Http(HTTP_TOO_MANY_REQUESTS, "Too Many Requests")
+        class TooManyRequest(val retryAfterSeconds: Int, proton: ProtonData? = null) :
+            Http(HTTP_TOO_MANY_REQUESTS, "Too Many Requests", proton)
     }
 
     /**
