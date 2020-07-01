@@ -8,7 +8,8 @@ Modules provides support for using Proton API and offers common networking tools
 To start using API client first creates `ApiFactory` singleton with `ApiClient` interface implementation. E.g. with Dagger:
 ```kotlin
 @Singleton @Provides
-fun provideApiFactory(apiClient: ApiClient): ApiFactory = ApiFactory(apiClient)
+fun provideApiFactory(apiClient: ApiClient, networkManager: NetworkManager): ApiFactory =
+    ApiFactory(context, baseUrl, apiClient, networkManager)
 ```
 Now `ApiFactory` can be used to create per-user instances of `ApiManager<Api>` that implements client-defined retrofit interface `Api`. `Api` is needs to be based on suspending functions, inherit from `BaseRetrofitApi` and can be composed from multiple interfaces.
 ```kotlin
@@ -25,7 +26,7 @@ class MyResponse(@SerialName("FieldA") val fieldA: Int, ...)
 Now instances of `ApiManager` supporting `MyRetrofitApi` and tied to given `UserData` can be created with `ApiFactory`
 ```kotlin
 val apiManager1 = apiFactory.ApiManager(
-    "https://api.protonvpn.ch/", user1Data, MyRetrofitApi::class, networkManager, customErrorHandlers, ...)
+    user1Data, MyRetrofitApi::class, customErrorHandlers, ...)
 ```
 API calls wit `ApiManager` are suspending, return `ApiResult<T>` (no exceptions should be thrown) and perform error handling logic (like retries, DoH, token refresh, force logout, force upgrade as well as custom handling logic through `ApiErrorHandler` plugins):
 ```kotlin

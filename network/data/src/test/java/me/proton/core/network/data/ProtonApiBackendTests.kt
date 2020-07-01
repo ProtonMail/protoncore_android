@@ -17,11 +17,14 @@
  */
 package me.proton.core.network.data
 
+import android.content.Context
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockUserData
@@ -55,7 +58,8 @@ internal class ProtonApiBackendTests {
     fun before() {
         MockKAnnotations.init(this)
         val client = MockApiClient()
-        apiFactory = ApiFactory(client)
+        val scope = CoroutineScope(TestCoroutineDispatcher())
+        apiFactory = ApiFactory("https://example.com/", client, networkManager, scope)
         val user = MockUserData()
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
