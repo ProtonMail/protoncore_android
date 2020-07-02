@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.data
 
+import android.content.Context
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -63,14 +64,17 @@ internal class ApiManagerTests {
     fun before() {
         MockKAnnotations.init(this)
         time = 0L
+
         apiClient = MockApiClient()
-        apiFactory = ApiFactory(apiClient)
-        user = MockUserData()
         networkManager = MockNetworkManager()
         networkManager.networkStatus = NetworkStatus.Unmetered
+
+        val scope = CoroutineScope(TestCoroutineDispatcher())
+        apiFactory = ApiFactory("https://example.com/", apiClient, networkManager, scope)
+
+        user = MockUserData()
         val dohProvider = DohProvider()
         ApiManagerImpl.failRequestBeforeTimeMs = Long.MIN_VALUE
-        val scope = CoroutineScope(TestCoroutineDispatcher())
         apiManager = ApiManagerImpl(apiClient, backend, dohProvider, networkManager,
             apiFactory.createBaseErrorHandlers(user, ::time, scope), ::time)
 
@@ -218,7 +222,8 @@ internal class ApiManagerTests {
     @Test
     fun `test force update`() = runBlockingTest {
         coEvery { backend.invoke<TestResult>(any()) } returns
-                ApiResult.Error.Proton(400, ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE, "")
+                ApiResult.Error.Http(400, "",
+                    ApiResult.Error.ProtonData(ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE, ""))
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Error)
         assertEquals(true, apiClient.forceUpdated)

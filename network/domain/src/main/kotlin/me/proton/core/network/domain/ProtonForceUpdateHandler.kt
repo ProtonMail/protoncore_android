@@ -30,7 +30,7 @@ class ProtonForceUpdateHandler<Api>(private val apiClient: ApiClient) : ApiError
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
-        if (error is ApiResult.Error.Proton && error.protonCode == ERROR_CODE_FORCE_UPDATE)
+        if (error is ApiResult.Error.Http && error.proton?.code == ERROR_CODE_FORCE_UPDATE)
             apiClient.forceUpdate()
         return error
     }

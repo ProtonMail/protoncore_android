@@ -23,6 +23,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.plus
 import me.proton.core.network.data.NetworkManagerImpl
 import me.proton.core.network.data.ProtonApiBackend
 import me.proton.core.network.data.initPinning
@@ -44,57 +45,57 @@ import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
 
 /**
- * Factory for creating [ApiManager] instances. Intended to be an application-wide singleton.
+ * Factory for creating [ApiManager] instances. There should be a single instance per [baseUrl].
+ *
+ * @param baseUrl Base url for the api e.g. "https://api.protonvpn.ch/"
  */
-class ApiFactory(private val apiClient: ApiClient) {
+class ApiFactory(
+    private val baseUrl: String,
+    private val apiClient: ApiClient,
+    private val networkManager: NetworkManager,
+    scope: CoroutineScope
+) {
 
     @OptIn(ObsoleteCoroutinesApi::class)
-    private val networkMainDispatcher = newSingleThreadContext("core.network.main")
+    private val mainScope = scope + newSingleThreadContext("core.network.main")
 
     /**
      * Instantiates ApiManager for given [Api] interface and user.
      *
      * @param Api Retrofit interface defined by the client, must inherit from [BaseRetrofitApi].
-     * @param baseUrl Base url for the api e.g. "https://api.protonvpn.ch/"
      * @param userData [UserData] to be used in the [ApiManager].
      * @param interfaceClass Kotlin class for [Api] interface.
-     * @param networkManager [NetworkManager] to be used for connectivity checks.
      * @param clientErrorHandlers Extra error handlers provided by the client.
      * @param certificatePins Overrides [Constants.DEFAULT_PINS]
      * @return [ApiManager] instance.
      */
     fun <Api : BaseRetrofitApi> ApiManager(
-        baseUrl: Uri,
         userData: UserData,
         interfaceClass: KClass<Api>,
-        networkManager: NetworkManager,
         clientErrorHandlers: List<ApiErrorHandler<Api>> = emptyList(),
         certificatePins: Array<String> = Constants.DEFAULT_PINS
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
-            initPinning(builder, baseUrl.host!!, certificatePins)
+            initPinning(builder, Uri.parse(baseUrl).host!!, certificatePins)
         }
         val primaryBackend = ProtonApiBackend(
             baseUrl.toString(),
             apiClient,
             userData,
             baseOkHttpClient,
-            ProtonCoreConfig.defaultJsonStringFormat,
             listOf(jsonConverter),
             interfaceClass,
             networkManager,
             pinningStrategy
         )
         val dohProvider = DohProvider()
-        val mainScope = CoroutineScope(networkMainDispatcher)
         val errorHandlers =
             createBaseErrorHandlers<Api>(userData, ::javaMonoClockMs, mainScope) + clientErrorHandlers
         return ApiManagerImpl(apiClient, primaryBackend, dohProvider, networkManager, errorHandlers, ::javaMonoClockMs)
     }
 
-    internal val jsonConverter by lazy {
+    internal val jsonConverter =
         ProtonCoreConfig.defaultJsonStringFormat.asConverterFactory("application/json".toMediaType())
-    }
 
     internal val baseOkHttpClient by lazy {
         val builder = OkHttpClient.Builder()

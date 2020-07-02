@@ -17,6 +17,9 @@
  */
 package me.proton.core.network.data.protonApi
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.network.domain.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -28,4 +31,12 @@ interface BaseRetrofitApi {
 
     @GET("test/ping")
     suspend fun ping()
+}
+
+@Serializable
+data class ProtonErrorData(
+    @SerialName("Code") val code: Int,
+    @SerialName("Error") val error: String
+) {
+    val apiResultData get() = ApiResult.Error.ProtonData(code, error)
 }
