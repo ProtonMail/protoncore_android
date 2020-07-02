@@ -4,6 +4,7 @@ $dokka.location:me.proton.core.util.kotlin$containsNoCase(kotlin.CharSequence, k
 $dokka.location:me.proton.core.util.kotlin$deserialize(kotlin.String, kotlinx.serialization.DeserializationStrategy((me.proton.core.util.kotlin.deserialize.T)))me.proton.core.util.kotlin/kotlin.-string/deserialize.html
 $dokka.location:me.proton.core.util.kotlin$deserializeList(kotlin.String)me.proton.core.util.kotlin/kotlin.-string/deserialize-list.html
 $dokka.location:me.proton.core.util.kotlin$deserializeMap(kotlin.String)me.proton.core.util.kotlin/kotlin.-string/deserialize-map.html
+$dokka.location:me.proton.core.util.kotlin$deserializeOrNull(kotlin.String, kotlinx.serialization.DeserializationStrategy((me.proton.core.util.kotlin.deserializeOrNull.T)))me.proton.core.util.kotlin/kotlin.-string/deserialize-or-null.html
 $dokka.location:me.proton.core.util.kotlin$endsWith(kotlin.String, kotlin.String)me.proton.core.util.kotlin/kotlin.-string/ends-with.html
 $dokka.location:me.proton.core.util.kotlin$equalsNoCase(kotlin.String, kotlin.String)me.proton.core.util.kotlin/kotlin.-string/equals-no-case.html
 $dokka.location:me.proton.core.util.kotlin$filterNotIndexed(kotlin.sequences.Sequence((me.proton.core.util.kotlin.filterNotIndexed.T)), kotlin.Function2((kotlin.Int, me.proton.core.util.kotlin.filterNotIndexed.T, kotlin.Boolean)))me.proton.core.util.kotlin/kotlin.sequences.-sequence/filter-not-indexed.html
