@@ -120,7 +120,7 @@ Data: **0** - _released on: ND_
 
 Network: **0.1.1** - _released on: Jul 03, 2020_
 
-Network Domain: **0.1** - _released on: Jul 03, 2020_
+Network Domain: **0.1.1** - _released on: Jul 03, 2020_
 
 Network Data: **0.1.1** - _released on: Jul 03, 2020_
 
