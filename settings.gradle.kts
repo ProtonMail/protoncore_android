@@ -15,7 +15,7 @@ include(
 
 // Shared
 include(
-    // ":domain",
+    ":domain"
     // ":presentation",
     // ":data"
 )
@@ -56,10 +56,6 @@ project(":util:gradle").name = "util-gradle"
 project(":test:kotlin").name = "test-kotlin"
 project(":test:android").name = "test-android"
 project(":test:android:instrumented").name = "test-android-instrumented"
-
-// ":domain"
-// ":presentation"
-// ":data
 
 // Network
 project(":network").name = "network"

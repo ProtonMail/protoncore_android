@@ -15,21 +15,24 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
+import studio.forface.easygradle.dsl.*
+import util.libVersion
 
 plugins {
-    id("java-library")
-    id("kotlin")
+    `kotlin-library`
 }
 
-val version = Version(0, 0, 1)
-archivesBaseName = archiveNameFor(ProtonCore.domain, version)
+libVersion = Version(0, 1, 0)
 
 dependencies {
 
-    // Kotlin
     implementation(
-        `kotlin-jdk7`
+        project(Module.kotlinUtil),
+
+        // Kotlin
+        `kotlin-jdk7`,
+        `coroutines-core`
     )
 
-    /*testImplementation(project(Module.testKotlin))*/
+    testImplementation(project(Module.kotlinTest))
 }
