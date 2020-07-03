@@ -108,7 +108,7 @@ Test Android Instrumented: **0.1.1** - _released on: Jun 17, 2020_
 
 ## Shared
 
-Domain: **0** - _released on: ND_
+Domain: **0.1** - _released on: Jul 03, 2020_
 
 Presentation: **0** - _released on: ND_
 
@@ -120,7 +120,7 @@ Data: **0** - _released on: ND_
 
 Network: **0.1.1** - _released on: Jul 03, 2020_
 
-Network Domain: **0.1.1** - _released on: Jul 03, 2020_
+Network Domain: **0.1** - _released on: Jul 03, 2020_
 
 Network Data: **0.1.1** - _released on: Jul 03, 2020_
 
@@ -128,7 +128,7 @@ Network Data: **0.1.1** - _released on: Jul 03, 2020_
 
 Crypto: **0** - _released on: ND_
 
-Crypto Domain: **0** - _released on: ND_
+Crypto Domain: **0.1** - _released on: Jul 03, 2020_
 
 Crypto Data: **0** - _released on: ND_
 
@@ -138,7 +138,7 @@ Crypto Data: **0** - _released on: ND_
 
 Contacts: **0** - _released on: ND_
 
-Contacts Domain: **0** - _released on: ND_
+Contacts Domain: **0.1** - _released on: Jul 03, 2020_
 
 Contacts Presentation: **0** - _released on: ND_
 
@@ -148,7 +148,7 @@ Contacts Data: **0** - _released on: ND_
 
 Settings: **0** - _released on: ND_
 
-Settings Domain: **0** - _released on: ND_
+Settings Domain: **0.1** - _released on: Jul 03, 2020_
 
 Settings Presentation: **0** - _released on: ND_
 
@@ -158,7 +158,7 @@ Settings Data: **0** - _released on: ND_
 
 Human Verification: **0** - _released on: ND_
 
-Human Verification Domain: **0** - _released on: ND_
+Human Verification Domain: **0.1** - _released on: Jul 03, 2020_
 
 Human Verification Presentation: **0** - _released on: ND_
 
