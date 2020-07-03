@@ -16,12 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 import studio.forface.easygradle.dsl.*
+import util.libVersion
 
 plugins {
     `kotlin-library`
 }
 
-//libVersion = Version(0, 0, 1)
+libVersion = Version(0, 1, 0)
 
 dependencies {
 
