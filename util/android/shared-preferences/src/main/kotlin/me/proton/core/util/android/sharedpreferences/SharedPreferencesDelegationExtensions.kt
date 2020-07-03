@@ -54,6 +54,20 @@ fun SharedPreferencesDelegationExtensions.int(key: String? = null) = optional(
     setter = { k, v -> edit { putInt(k, v) } }
 )
 
+/** @return ( by Delegation ) Mutable Property of type [Long] */
+fun SharedPreferencesDelegationExtensions.long(default: Long, key: String? = null) = required(
+    explicitKey = key,
+    getter = { k -> getLong(k, default) },
+    setter = { k, v -> edit { putLong(k, v) } }
+)
+
+/** @return ( by Delegation ) Mutable Property of type Nullable [Long] */
+fun SharedPreferencesDelegationExtensions.long(key: String? = null) = optional(
+    explicitKey = key,
+    getter = { k -> getLong(k) },
+    setter = { k, v -> edit { putLong(k, v) } }
+)
+
 /** @return ( by Delegation ) Mutable Property of type [String] */
 fun SharedPreferencesDelegationExtensions.string(default: String, key: String? = null) = required(
     explicitKey = key,
@@ -149,6 +163,8 @@ fun SharedPreferences.boolean(default: Boolean, key: String? = null) = ext.boole
 fun SharedPreferences.boolean(key: String? = null) = ext.boolean(key)
 fun SharedPreferences.int(default: Int, key: String? = null) = ext.int(default, key)
 fun SharedPreferences.int(key: String? = null) = ext.int(key)
+fun SharedPreferences.long(default: Long, key: String? = null) = ext.long(default, key)
+fun SharedPreferences.long(key: String? = null) = ext.long(key)
 fun SharedPreferences.string(default: String, key: String? = null) = ext.string(default, key)
 fun SharedPreferences.string(key: String? = null) = ext.string(key)
 @NeedSerializable

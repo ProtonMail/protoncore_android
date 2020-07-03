@@ -17,8 +17,14 @@
  */
 package me.proton.core.network.data
 
+import com.datatheorem.android.trustkit.config.PublicKeyPin
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLContext
+import javax.net.ssl.X509TrustManager
 
 /**
  * Inits given okhttp builder with pinning.
@@ -32,4 +38,40 @@ internal fun initPinning(okBuilder: OkHttpClient.Builder, host: String, pins: Ar
         .add("**.$host", *pins)
         .build()
     okBuilder.certificatePinner(pinner)
+}
+
+/**
+ * Inits given okhttp builder with leaf SPKI pinning. Accepts certificate chain iff leaf certificate
+ * SPKI matches one of the [spkiPins].
+ *
+ * @param okBuilder builder to introduce pinning to.
+ * @param spkiPins list of sha-256 SPKI hashes.
+ */
+internal fun initSPKIleafPinning(builder: OkHttpClient.Builder, spkiPins: List<String>) {
+    val trustManager = LeafSPKIPinningTrustManager(spkiPins)
+    val sslContext = SSLContext.getInstance("TLS")
+    sslContext.init(null, arrayOf(trustManager), null)
+    builder.sslSocketFactory(sslContext.socketFactory, trustManager)
+    builder.hostnameVerifier(HostnameVerifier { _, _ ->
+        // Verification is based solely on SPKI pinning of leaf certificate
+        true
+    })
+}
+
+internal class LeafSPKIPinningTrustManager(pinnedSPKIHashes: List<String>) : X509TrustManager {
+
+    private val pins: List<PublicKeyPin> = pinnedSPKIHashes.map { PublicKeyPin(it) }
+
+    @Throws(CertificateException::class)
+    override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
+        if (PublicKeyPin(chain.first()) !in pins)
+            throw CertificateException("Pin verification failed")
+    }
+
+    @Throws(CertificateException::class)
+    override fun checkClientTrusted(chain: Array<X509Certificate?>?, authType: String?) {
+        throw CertificateException("Client certificates not supported!")
+    }
+
+    override fun getAcceptedIssuers(): Array<X509Certificate?>? = arrayOfNulls(0)
 }

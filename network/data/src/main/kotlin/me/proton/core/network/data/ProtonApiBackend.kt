@@ -150,6 +150,9 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         }
     }
 
+    override suspend fun isPotentiallyBlocked(): Boolean =
+        invokeInternal { ping() }.isPotentialBlocking
+
     companion object {
         private const val MAX_ERROR_BYTES = 1_000_000L
     }

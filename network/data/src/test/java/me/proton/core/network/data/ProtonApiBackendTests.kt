@@ -17,7 +17,6 @@
  */
 package me.proton.core.network.data
 
-import android.content.Context
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -27,12 +26,14 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
+import me.proton.core.network.data.util.MockNetworkPrefs
 import me.proton.core.network.data.util.MockUserData
 import me.proton.core.network.data.util.TestRetrofitApi
 import me.proton.core.network.data.util.prepareResponse
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.NetworkPrefs
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -54,12 +55,15 @@ internal class ProtonApiBackendTests {
     @MockK
     lateinit var networkManager: NetworkManager
 
+    private lateinit var prefs: NetworkPrefs
+
     @BeforeTest
     fun before() {
         MockKAnnotations.init(this)
         val client = MockApiClient()
         val scope = CoroutineScope(TestCoroutineDispatcher())
-        apiFactory = ApiFactory("https://example.com/", client, networkManager, scope)
+        prefs = MockNetworkPrefs()
+        apiFactory = ApiFactory("https://example.com/", client, networkManager, prefs, scope)
         val user = MockUserData()
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable

@@ -7,7 +7,7 @@ plugins {
     `kotlin-serialization`
 }
 
-libVersion = Version(0, 1, 0)
+libVersion = Version(0, 1, 1)
 
 android()
 
@@ -18,15 +18,19 @@ dependencies {
 
     implementation(
         project(Module.kotlinUtil),
+        project(Module.sharedPreferencesUtil),
         project(Module.networkDomain),
 
         `kotlin-jdk7`,
         `coroutines-core`,
         `serialization`,
+        `retrofit-kotlin-serialization`,
 
         squareup("retrofit2", "retrofit") version retrofitVersion,
         squareup("okhttp3", "logging-interceptor") version okHttpVersion,
-        dependency("com.jakewharton.retrofit", module = "retrofit2-kotlinx-serialization-converter") version "0.5.0"
+        dependency("org.minidns", module = "minidns-hla") version "0.3.4",
+        dependency("commons-codec", module = "commons-codec") version "1.14",
+        dependency("com.datatheorem.android.trustkit", module = "trustkit") version "1.1.2"
     )
 
     testImplementation(
