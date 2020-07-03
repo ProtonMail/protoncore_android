@@ -61,10 +61,31 @@
 </tr>
 <tr>
 <td>
+<h4><a href="-doh-api-handler/index.html">DohApiHandler</a></h4>
+</td>
+<td>
+<p>Responsible for making an API call according to DoH feature logic: when our API seems blocked
+will refresh the list of alternative proxies with DoH queries and try to repeat a call on those
+proxies.</p>
+<code><span class="keyword">class </span><span class="identifier">DohApiHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="-doh-provider/index.html">DohProvider</a></h4>
 </td>
 <td>
+<p>Refreshes alternative urls for <a href="#">baseUrl</a> using given list of DoH services (<a href="#">dohServices</a>). Makes
+sure that only one refresh operation takes place at one time for given baseUrl. Single instance
+should exist per baseUrl.</p>
 <code><span class="keyword">class </span><span class="identifier">DohProvider</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-doh-service/index.html">DohService</a></h4>
+</td>
+<td>
+<p>Gets the list of alternative baseUrls for Proton API.</p>
+<code><span class="keyword">interface </span><span class="identifier">DohService</span></code></td>
 </tr>
 <tr>
 <td>
@@ -73,6 +94,14 @@
 <td>
 <p>Allows checking connectivity state (disconnected/metered/unmetered).</p>
 <code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">NetworkManager</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-network-prefs/index.html">NetworkPrefs</a></h4>
+</td>
+<td>
+<p>Persistently stored preferences for network module.</p>
+<code><span class="keyword">interface </span><span class="identifier">NetworkPrefs</span></code></td>
 </tr>
 <tr>
 <td>

@@ -33,11 +33,28 @@
 <p>Result of the safe API call.</p>
 </tr>
 <tr>
+<h5><a href="../me.proton.core.network.domain/-doh-api-handler/index.html">me.proton.core.network.domain.DohApiHandler</a></h5>
+<p>Responsible for making an API call according to DoH feature logic: when our API seems blocked
+will refresh the list of alternative proxies with DoH queries and try to repeat a call on those
+proxies.</p>
+</tr>
+<tr>
 <h5><a href="../me.proton.core.network.domain/-doh-provider/index.html">me.proton.core.network.domain.DohProvider</a></h5>
+<p>Refreshes alternative urls for <a href="#">baseUrl</a> using given list of DoH services (<a href="#">dohServices</a>). Makes
+sure that only one refresh operation takes place at one time for given baseUrl. Single instance
+should exist per baseUrl.</p>
+</tr>
+<tr>
+<h5><a href="../me.proton.core.network.domain/-doh-service/index.html">me.proton.core.network.domain.DohService</a></h5>
+<p>Gets the list of alternative baseUrls for Proton API.</p>
 </tr>
 <tr>
 <h5><a href="../me.proton.core.network.domain/-network-manager/index.html">me.proton.core.network.domain.NetworkManager</a></h5>
 <p>Allows checking connectivity state (disconnected/metered/unmetered).</p>
+</tr>
+<tr>
+<h5><a href="../me.proton.core.network.domain/-network-prefs/index.html">me.proton.core.network.domain.NetworkPrefs</a></h5>
+<p>Persistently stored preferences for network module.</p>
 </tr>
 <tr>
 <h5><a href="../me.proton.core.network.domain/-network-status/index.html">me.proton.core.network.domain.NetworkStatus</a></h5>

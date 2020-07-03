@@ -16,7 +16,7 @@
 <h4><a href="-api-factory/index.html">ApiFactory</a></h4>
 </td>
 <td>
-<p>Factory for creating <a href="-api-factory/-api-manager.html">ApiManager</a> instances. Intended to be an application-wide singleton.</p>
+<p>Factory for creating <a href="-api-factory/-api-manager.html">ApiManager</a> instances. There should be a single instance per <a href="#">baseUrl</a>.</p>
 <code><span class="keyword">class </span><span class="identifier">ApiFactory</span></code></td>
 </tr>
 <tr>
@@ -38,6 +38,14 @@
 <td>
 <p>Factory method for <a href="#">NetworkManager</a> allowing tracking of connectivity changes.</p>
 <code><span class="keyword">fun </span><span class="identifier">NetworkManager</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.network.data.di$NetworkManager(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">NetworkManager</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-network-prefs.html">NetworkPrefs</a></h4>
+</td>
+<td>
+<p>Factory method to create persistent storage of preferences for network module.</p>
+<code><span class="keyword">fun </span><span class="identifier">NetworkPrefs</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.network.data.di$NetworkPrefs(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">NetworkPrefs</span></code></td>
 </tr>
 </tbody>
 </table>

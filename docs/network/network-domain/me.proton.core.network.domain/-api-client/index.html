@@ -40,6 +40,22 @@ will happen randomly after 500-1000ms, next one after 1000-2000ms ...</p>
 </tr>
 <tr>
 <td>
+<h4><a href="doh-proxy-refresh-timeout-ms.html">dohProxyRefreshTimeoutMs</a></h4>
+</td>
+<td>
+<p>Timeout for refreshing proxy list (can span multiple DoH queries).</p>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">dohProxyRefreshTimeoutMs</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="doh-service-timeout-ms.html">dohServiceTimeoutMs</a></h4>
+</td>
+<td>
+<p>Timeout for DoH queries.</p>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">dohServiceTimeoutMs</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="doh-timeout-ms.html">dohTimeoutMs</a></h4>
 </td>
 <td>
@@ -53,6 +69,14 @@ will happen randomly after 500-1000ms, next one after 1000-2000ms ...</p>
 <td>
 <p>Enables debug logging in the underlying HTTP library.</p>
 <code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">enableDebugLogging</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="proxy-validity-period-ms.html">proxyValidityPeriodMs</a></h4>
+</td>
+<td>
+<p>How long alternative API proxy will be used before primary API is attempted again.</p>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">proxyValidityPeriodMs</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 <tr>
 <td>
