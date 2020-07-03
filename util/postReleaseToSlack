@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+# Check if the release file exists
+if ! [ -s 'new_releases.tmp' ]; then
+  echo "=> No file new_releases.tmp to use for the commit"
+  exit 0
+fi
+​​
+printMessage() {
+cat <<EOT
+  Hello <!channel> :wave:
+​
+$(cat new_releases.tmp | sed 's/^/:gift: */g; s/$/*/g')
+EOT
+}
+​
+body="$(printMessage | sed ':a;N;$!ba;s/\n/\\n/g; s/"/\x22/g; s/`/\x60/g')";
+​
+​
+curl \
+  -X POST \
+  --fail \
+  -H 'Content-type: application/json' \
+  --data "{\"mrkdwn\": true, \"text\": \"$body\"}" \
+  $V4_CHANNEL_WEBHOOK
+
