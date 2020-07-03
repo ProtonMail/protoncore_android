@@ -18,22 +18,26 @@
 package me.proton.core.network.data.di
 
 import android.content.Context
-import android.net.Uri
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.plus
 import me.proton.core.network.data.NetworkManagerImpl
+import me.proton.core.network.data.NetworkPrefsImpl
 import me.proton.core.network.data.ProtonApiBackend
+import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
 import me.proton.core.network.data.initPinning
+import me.proton.core.network.data.initSPKIleafPinning
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiManagerImpl
+import me.proton.core.network.domain.DohApiHandler
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.ProtonForceUpdateHandler
 import me.proton.core.network.domain.RefreshTokenHandler
 import me.proton.core.network.domain.UserData
@@ -41,6 +45,7 @@ import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import java.net.URI
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
 
@@ -53,11 +58,16 @@ class ApiFactory(
     private val baseUrl: String,
     private val apiClient: ApiClient,
     private val networkManager: NetworkManager,
+    private val prefs: NetworkPrefs,
     scope: CoroutineScope
 ) {
 
     @OptIn(ObsoleteCoroutinesApi::class)
     private val mainScope = scope + newSingleThreadContext("core.network.main")
+
+    init {
+        requireNotNull(URI(baseUrl).host)
+    }
 
     /**
      * Instantiates ApiManager for given [Api] interface and user.
@@ -76,10 +86,10 @@ class ApiFactory(
         certificatePins: Array<String> = Constants.DEFAULT_PINS
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
-            initPinning(builder, Uri.parse(baseUrl).host!!, certificatePins)
+            initPinning(builder, URI(baseUrl).host, certificatePins)
         }
         val primaryBackend = ProtonApiBackend(
-            baseUrl.toString(),
+            baseUrl,
             apiClient,
             userData,
             baseOkHttpClient,
@@ -88,10 +98,28 @@ class ApiFactory(
             networkManager,
             pinningStrategy
         )
-        val dohProvider = DohProvider()
+
         val errorHandlers =
             createBaseErrorHandlers<Api>(userData, ::javaMonoClockMs, mainScope) + clientErrorHandlers
-        return ApiManagerImpl(apiClient, primaryBackend, dohProvider, networkManager, errorHandlers, ::javaMonoClockMs)
+
+        val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
+            initSPKIleafPinning(builder, Constants.ALTERNATIVE_API_SPKI_PINS)
+        }
+        val dohApiHandler = DohApiHandler(apiClient, primaryBackend, dohProvider, prefs, ::javaWallClockMs) { baseUrl ->
+            ProtonApiBackend(
+                baseUrl,
+                apiClient,
+                userData,
+                baseOkHttpClient,
+                listOf(jsonConverter),
+                interfaceClass,
+                networkManager,
+                alternativePinningStrategy
+            )
+        }
+
+        return ApiManagerImpl(
+            apiClient, primaryBackend, dohApiHandler, networkManager, errorHandlers, ::javaMonoClockMs)
     }
 
     internal val jsonConverter =
@@ -119,8 +147,18 @@ class ApiFactory(
         ProtonForceUpdateHandler(apiClient)
     )
 
+    private val dohProvider by lazy {
+        val dohServices = Constants.DOH_PROVIDERS_URLS.map {
+            DnsOverHttpsProviderRFC8484(baseOkHttpClient, baseUrl, networkManager)
+        }
+        DohProvider(baseUrl, apiClient, dohServices, mainScope, prefs, ::javaMonoClockMs)
+    }
+
     private fun javaMonoClockMs(): Long =
         TimeUnit.NANOSECONDS.toMillis(System.nanoTime())
+
+    private fun javaWallClockMs(): Long =
+        System.currentTimeMillis()
 }
 
 /**
@@ -128,3 +166,9 @@ class ApiFactory(
  */
 fun NetworkManager(context: Context): NetworkManager =
     NetworkManagerImpl(context.applicationContext)
+
+/**
+ * Factory method to create persistent storage of preferences for network module.
+ */
+fun NetworkPrefs(context: Context): NetworkPrefs =
+    NetworkPrefsImpl(context.applicationContext)

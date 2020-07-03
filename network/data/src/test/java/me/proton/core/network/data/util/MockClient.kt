@@ -18,6 +18,7 @@
 package me.proton.core.network.data.util
 
 import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.UserData
 
 class MockUserData : UserData {
@@ -47,4 +48,10 @@ class MockApiClient : ApiClient {
     override fun forceUpdate() {
         forceUpdated = true
     }
+}
+
+class MockNetworkPrefs : NetworkPrefs {
+    override var activeAltBaseUrl: String? = null
+    override var lastPrimaryApiFail: Long = Long.MIN_VALUE
+    override var alternativeBaseUrls: List<String>? = null
 }

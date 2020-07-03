@@ -27,9 +27,8 @@ import kotlin.random.Random
  *
  * @param Api API interface
  * @property client [ApiClient] for client-library integration.
- * @property primaryBackend [ApiBackend] for regular API calls, when it fails [dohProvider] will
- *   be used to deliver [ApiBackend] for proxies.
- * @property dohProvider [DohProvider] instance to deliver alternative [ApiBackend]s.
+ * @property primaryBackend [ApiBackend] for regular API calls.
+ * @property dohApiHandler [DohApiHandler] instance to handle DoH logic for API calls.
  * @property networkManager [NetworkManager] for connectivity checks.
  * @property errorHandlers list of [ApiErrorHandler] for call error recovery.
  * @property monoClockMs Monotonic clock with millisecond resolution.
@@ -37,7 +36,7 @@ import kotlin.random.Random
 class ApiManagerImpl<Api>(
     private val client: ApiClient,
     private val primaryBackend: ApiBackend<Api>,
-    private val dohProvider: DohProvider,
+    private val dohApiHandler: DohApiHandler<Api>,
     private val networkManager: NetworkManager,
     private val errorHandlers: List<ApiErrorHandler<Api>>,
     private val monoClockMs: () -> Long
@@ -61,16 +60,12 @@ class ApiManagerImpl<Api>(
             forceNoRetryOnConnectionErrors ->
                 handledCall(primaryBackend, call)
             client.shouldUseDoh ->
-                ApiResult.withTimeout(client.dohTimeoutMs) {
-                    callWithDoH(call)
+                ApiResult.withTimeout(client.dohProxyRefreshTimeoutMs) {
+                    dohApiHandler(::handledCall, call)
                 }
             else ->
                 callWithBackoff(call)
         }
-    }
-
-    private suspend fun <T> callWithDoH(call: ApiManager.Call<Api, T>): ApiResult<T> {
-        return handledCall(primaryBackend, call) // TODO: DoH logic
     }
 
     private suspend fun <T> callWithBackoff(call: ApiManager.Call<Api, T>): ApiResult<T> {

@@ -37,6 +37,12 @@ interface ApiBackend<Api> {
     data class Tokens(val refresh: String, val access: String)
 
     /**
+     * Lightweight call checking if API might be blocked.
+     * @return [true] if API is not reachable and error might indicate blocking.
+     */
+    suspend fun isPotentiallyBlocked(): Boolean
+
+    /**
      * Makes API call defined with [block] lambda.
      *
      * @param T Result type for API call.

@@ -17,6 +17,8 @@
  */
 package me.proton.core.network.domain
 
+import java.util.concurrent.TimeUnit
+
 /**
  * Represents the client of the library. Enables 2-way communication between the lib and the client.
  */
@@ -48,6 +50,21 @@ interface ApiClient {
      * Global timeout for DoH logic.
      */
     val dohTimeoutMs: Long get() = 60_000L
+
+    /**
+     * How long alternative API proxy will be used before primary API is attempted again.
+     */
+    val proxyValidityPeriodMs: Long get() = TimeUnit.DAYS.toMillis(1)
+
+    /**
+     * Timeout for DoH queries.
+     */
+    val dohServiceTimeoutMs: Long get() = TimeUnit.SECONDS.toMillis(10)
+
+    /**
+     * Timeout for refreshing proxy list (can span multiple DoH queries).
+     */
+    val dohProxyRefreshTimeoutMs: Long get() = TimeUnit.SECONDS.toMillis(30)
 
     /**
      * Retry count for exponential backoff.
