@@ -91,7 +91,8 @@ class ReleaseManager internal constructor(
     forceRefresh: Boolean = false
 ) : Project by project {
 
-    private val prevVersion = README_VERSION_REGEX.find(README_FILE.readText())!!.groupValues[1]
+    private val prevVersion = README_VERSION_REGEX.find(README_FILE.readText())?.groupValues?.get(1)
+        ?: throw IllegalArgumentException("Cannot find version for $name: $README_VERSION_REGEX")
     private val versionName = libVersion!!.versionName
 
     val isNewVersion = forceRefresh || prevVersion != versionName
@@ -166,7 +167,8 @@ class ReleaseManager internal constructor(
         val Project.JAR_DIRECTORY get() = File(buildDir, "libs")
         val Project.AAR_DIRECTORY get() = File(buildDir, "outputs" + File.separator + "aar")
         val Project.README_FILE get() = File(rootDir, "README.md")
-        val Project.README_VERSION_REGEX get() = readmeVersion(humanReadableName, "(.+)", "(.+)").toRegex()
+        val Project.README_VERSION_REGEX get() =
+            readmeVersion("^$humanReadableName", "(.+)", "(.+)").toRegex(RegexOption.MULTILINE)
         val Project.NEW_RELEASES_FILE get() = File(rootDir, "new_releases.tmp")
             .also {
                 // 10 min lifetime
