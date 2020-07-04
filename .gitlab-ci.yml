@@ -16,6 +16,7 @@ stages:
   - test
   - publish
   - commit
+  - slackRelease
 
 #####################
 detekt analysis:
@@ -83,5 +84,15 @@ commitRelease:
         artifacts: true
   script:
     - ./util/commitRelease
+  only:
+    - master
+
+postReleaseToSlack:
+  stage: slackRelease
+  needs:
+      - job: publishBintray
+        artifacts: true
+  script:
+    - ./util/postReleaseToSlack
   only:
     - master
