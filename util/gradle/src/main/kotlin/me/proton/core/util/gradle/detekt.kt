@@ -61,6 +61,7 @@ fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 
             failFast = false
             config = files(configFile)
+            input = files(sub.projectDir.path + "/src/")
 
             reports {
                 xml.enabled = false
@@ -106,7 +107,7 @@ internal open class MergeDetektReports : DefaultTask() {
                 ?.filterNotNull()
                 // Skip modules without issues
                 ?.filter {
-                    it.bufferedReader().use {  reader ->
+                    it.bufferedReader().use { reader ->
                         return@filter reader.readLine() != "[]"
                     }
                 }
