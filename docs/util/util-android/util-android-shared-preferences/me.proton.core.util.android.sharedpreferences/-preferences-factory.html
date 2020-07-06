@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>PreferencesFactory - util-android-shared-preferences</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">util-android-shared-preferences</a>&nbsp;/&nbsp;<a href="index.html">me.proton.core.util.android.sharedpreferences</a>&nbsp;/&nbsp;<a href="./-preferences-factory.html">PreferencesFactory</a><br/>
+<br/>
+<h1>PreferencesFactory</h1>
+<code><span class="keyword">typealias </span><span class="identifier">PreferencesFactory</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://developer.android.com/reference/android/content/SharedPreferences.html"><span class="identifier">SharedPreferences</span></a></code>
+<p>Lambda that returns <a href="https://developer.android.com/reference/android/content/SharedPreferences.html">SharedPreferences</a></p>
+<p>A lambda has been chosen over an interface for avoid to implement it for simple use cases
+E.G. <code>fun someFunction(factory: PreferencesFactory) { ... }</code>
+could be used in the following way <code>someFunction { mySharedPreferences }</code>
+While a more complex use case could be</p>
+<pre><code>class MultiUserPreferencesFactory(username: String) : PreferencesFactory {
+override fun invoke(): SharedPreferences {
+getPreferencesForUsername(username)
+}
+}
+someFunction(myMultiUserPreferencesFactory)
+</code></pre>
+<p><strong>Author</strong><br/>
+Davide Farella</p>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-parametrized-preferences-factory/index.html">ParametrizedPreferencesFactory</a></h4>
+</td>
+<td>
+<p><a href="./-preferences-factory.html">PreferencesFactory</a> for create <a href="https://developer.android.com/reference/android/content/SharedPreferences.html">SharedPreferences</a> with params</p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">ParametrizedPreferencesFactory</span><span class="symbol">&lt;</span><span class="identifier">P</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Params</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./-preferences-factory.html"><span class="identifier">PreferencesFactory</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

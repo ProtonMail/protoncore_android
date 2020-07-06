@@ -1,0 +1,165 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>me.proton.core.util.android.sharedpreferences - util-android-shared-preferences</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">util-android-shared-preferences</a>&nbsp;/&nbsp;<a href="./index.html">me.proton.core.util.android.sharedpreferences</a><br/>
+<br/>
+<h2>Package me.proton.core.util.android.sharedpreferences</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-parametrized-preferences-factory/index.html">ParametrizedPreferencesFactory</a></h4>
+</td>
+<td>
+<p><a href="-preferences-factory.html">PreferencesFactory</a> for create <a href="https://developer.android.com/reference/android/content/SharedPreferences.html">SharedPreferences</a> with params</p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">ParametrizedPreferencesFactory</span><span class="symbol">&lt;</span><span class="identifier">P</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Params</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-preferences-factory.html"><span class="identifier">PreferencesFactory</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-preferences-factory.html">PreferencesFactory</a></h4>
+</td>
+<td>
+<p>Lambda that returns <a href="https://developer.android.com/reference/android/content/SharedPreferences.html">SharedPreferences</a></p>
+<code><span class="keyword">typealias </span><span class="identifier">PreferencesFactory</span>&nbsp;<span class="symbol">=</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://developer.android.com/reference/android/content/SharedPreferences.html"><span class="identifier">SharedPreferences</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-preferences-provider.html">PreferencesProvider</a></h4>
+</td>
+<td>
+<p>Entity that can provide <a href="https://developer.android.com/reference/android/content/SharedPreferences.html">SharedPreferences</a>
+Use this interface to be able to call Preferences's delegates
+I.E. &gt;
+class MyClass : PreferencesProvider {
+override val preferences = ...</p>
+<code><span class="keyword">interface </span><span class="identifier">PreferencesProvider</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-pref-type/index.html">PrefType</a></h4>
+</td>
+<td>
+<p>Supported type by <a href="https://developer.android.com/reference/android/content/SharedPreferences.html">SharedPreferences</a></p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">PrefType</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-shared-preferences-delegation-extensions/index.html">SharedPreferencesDelegationExtensions</a></h4>
+</td>
+<td>
+<p>Interface providing extensions for Delegation for <a href="https://developer.android.com/reference/android/content/SharedPreferences.html">SharedPreferences</a></p>
+<code><span class="keyword">interface </span><span class="identifier">SharedPreferencesDelegationExtensions</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-username-param/index.html">UsernameParam</a></h4>
+</td>
+<td>
+<p><a href="-parametrized-preferences-factory/-params.html">ParametrizedPreferencesFactory.Params</a> for <a href="-username-preferences-factory/index.html">UsernamePreferencesFactory</a></p>
+<code><span class="keyword">class </span><span class="identifier">UsernameParam</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Params</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-username-preferences-factory/index.html">UsernamePreferencesFactory</a></h4>
+</td>
+<td>
+<p>A SharedPreference Factory that generate <a href="https://developer.android.com/reference/android/content/SharedPreferences.html">SharedPreferences</a> regarding a given Username</p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">UsernamePreferencesFactory</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-parametrized-preferences-factory/index.html"><span class="identifier">ParametrizedPreferencesFactory</span></a><span class="symbol">&lt;</span><a href="-username-param/index.html"><span class="identifier">UsernameParam</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Extensions for External Classes</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="android.content.-shared-preferences/index.html">android.content.SharedPreferences</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="android.content.-shared-preferences.-editor/index.html">android.content.SharedPreferences.Editor</a></h4>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="any.html">any</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">any</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$any(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, me.proton.core.util.android.sharedpreferences.any.T, kotlin.String)/default">default</span><span class="symbol">:</span>&nbsp;<span class="identifier">T</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$any(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, me.proton.core.util.android.sharedpreferences.any.T, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<span class="identifier">T</span><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">any</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$any(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<span class="identifier">T</span><span class="symbol">?</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="boolean.html">boolean</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">boolean</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$boolean(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.Boolean, kotlin.String)/default">default</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$boolean(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.Boolean, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">boolean</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$boolean(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="int.html">int</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">int</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$int(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.Int, kotlin.String)/default">default</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$int(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.Int, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">int</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$int(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="invoke.html">invoke</a></h4>
+</td>
+<td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">invoke</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$invoke(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, me.proton.core.util.android.sharedpreferences.invoke.T, kotlin.String)/default">default</span><span class="symbol">:</span>&nbsp;<span class="identifier">T</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$invoke(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, me.proton.core.util.android.sharedpreferences.invoke.T, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<span class="identifier">T</span><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">invoke</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$invoke(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<span class="identifier">T</span><span class="symbol">?</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="list.html">list</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">list</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$list(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.collections.List((me.proton.core.util.android.sharedpreferences.list.T)), kotlin.String)/default">default</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$list(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.collections.List((me.proton.core.util.android.sharedpreferences.list.T)), kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">list</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$list(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="long.html">long</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">long</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$long(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.Long, kotlin.String)/default">default</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$long(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.Long, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">long</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$long(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="map.html">map</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">K</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">, </span><span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">map</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$map(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.collections.Map((me.proton.core.util.android.sharedpreferences.map.K, me.proton.core.util.android.sharedpreferences.map.V)), kotlin.String)/default">default</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><span class="identifier">K</span><span class="symbol">,</span>&nbsp;<span class="identifier">V</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$map(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.collections.Map((me.proton.core.util.android.sharedpreferences.map.K, me.proton.core.util.android.sharedpreferences.map.V)), kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><span class="identifier">K</span><span class="symbol">,</span>&nbsp;<span class="identifier">V</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">K</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">, </span><span class="identifier">V</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">map</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$map(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><span class="identifier">K</span><span class="symbol">,</span>&nbsp;<span class="identifier">V</span><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="string.html">string</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">string</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$string(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String, kotlin.String)/default">default</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$string(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><a href="-shared-preferences-delegation-extensions/index.html"><span class="identifier">SharedPreferencesDelegationExtensions</span></a><span class="symbol">.</span><span class="identifier">string</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.sharedpreferences$string(me.proton.core.util.android.sharedpreferences.SharedPreferencesDelegationExtensions, kotlin.String)/key">key</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-read-write-property/index.html"><span class="identifier">ReadWriteProperty</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
