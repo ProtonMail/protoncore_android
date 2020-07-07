@@ -20,6 +20,7 @@ package me.proton.core.network.data.util
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.data.protonApi.IntToBoolSerializer
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Tag
@@ -28,6 +29,8 @@ import retrofit2.http.Tag
 class TestResult(
     @SerialName("Number") val number: Int,
     @SerialName("String") val string: String,
+
+    @Serializable(with = IntToBoolSerializer::class)
     @SerialName("Bool") val bool: Boolean = true
 )
 

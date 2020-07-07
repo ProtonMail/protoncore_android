@@ -30,6 +30,7 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
+import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkManager
 import me.proton.core.network.data.util.MockNetworkPrefs
 import me.proton.core.network.data.util.MockUserData
@@ -86,7 +87,7 @@ internal class ApiManagerTests {
         networkManager.networkStatus = NetworkStatus.Unmetered
 
         val scope = CoroutineScope(TestCoroutineDispatcher())
-        apiFactory = ApiFactory(baseUrl, apiClient, networkManager, prefs, scope)
+        apiFactory = ApiFactory(baseUrl, apiClient, MockLogger(), networkManager, prefs, scope)
 
         user = MockUserData()
 

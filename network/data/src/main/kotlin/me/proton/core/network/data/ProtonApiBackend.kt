@@ -27,6 +27,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.UserData
+import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.deserializeOrNull
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -54,6 +55,7 @@ import kotlin.reflect.KClass
 internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     override val baseUrl: String,
     private val client: ApiClient,
+    private val logger: Logger,
     private val userData: UserData,
     baseOkHttpClient: OkHttpClient,
     converters: List<Converter.Factory>,
@@ -101,7 +103,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private fun prepareHeaders(original: Request): Request.Builder {
         val request = original.newBuilder()
             .header("x-pm-appversion", client.appVersionHeader)
-            .header("x-pm-apiversion", "3")
             .header("x-pm-locale", Locale.getDefault().language)
             .header("User-Agent", client.userAgent)
             .method(original.method, original.body)
@@ -135,7 +136,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         invokeInternal(call.block)
 
     private suspend fun <T> invokeInternal(block: suspend Api.() -> T): ApiResult<T> =
-        safeApiCall(networkManager, api, block)
+        safeApiCall(networkManager, logger, api, block)
 
     override suspend fun refreshTokens(): ApiResult<ApiBackend.Tokens> {
         val result = invokeInternal {

@@ -21,6 +21,7 @@ import me.proton.core.network.data.safeApiCall
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.util.kotlin.Logger
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import org.apache.commons.codec.binary.Base32
@@ -39,7 +40,8 @@ import java.util.concurrent.TimeUnit
 class DnsOverHttpsProviderRFC8484(
     baseOkHttpClient: OkHttpClient,
     private val baseUrl: String,
-    private val networkManager: NetworkManager
+    private val networkManager: NetworkManager,
+    private val logger: Logger
 ) : DohService {
 
     private val api: DnsOverHttpsRetrofitApi
@@ -84,7 +86,7 @@ class DnsOverHttpsProviderRFC8484(
         val queryMessageBase64 = Base64(true).encodeToString(
             queryMessage.toArray())
 
-        val response = safeApiCall(networkManager, api) {
+        val response = safeApiCall(networkManager, logger, api) {
             api.getServers(baseUrl.removeSuffix("/"), queryMessageBase64)
         }
         if (response is ApiResult.Success) {

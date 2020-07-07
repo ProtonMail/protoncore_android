@@ -31,8 +31,8 @@ fun Project.setupPublishing(filter: (Project) -> Boolean = { true }) {
 private fun Project.setupModule() {
     afterEvaluate {
 
-        val bintrayApiKey = System.getenv()["BINTRAY_PUBLISH_KEY"]
-        if (libVersion != null && bintrayApiKey != null) {
+        val bintrayApiKey = System.getenv()["BINTRAY_PUBLISH_KEY"] ?: "none"
+        if (libVersion != null) {
 
             archivesBaseName = archiveName
 
@@ -54,7 +54,8 @@ private fun Project.setupModule() {
                     with(releaseManager) {
                         moveArchives("releases")
                         generateKdocIfNeeded()
-                        updateReadme()
+                        if (bintrayApiKey != "none")
+                            updateReadme()
                         printToNewReleasesFile()
                     }
                 }

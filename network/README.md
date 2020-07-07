@@ -45,3 +45,16 @@ val networkManager = NetworkManager(context)
 networkManager.networkStatus
 myScope.launch { networkManager.observe().collect { newState -> ... } }
 ```
+
+### Serialization utils
+Proton API sends Boolean values as 0/1 integers in response json. In order to support serialization
+from int to bool `IntToBoolSerializer` needs to be used explicitly on a given field.
+```kotlin
+@Serializable
+class MyResponse {
+    //...
+    @Serializable(with = IntToBoolSerializer::class)
+    @SerialName("MyBoolField")
+    val myBoolField: Boolean
+}
+```

@@ -41,6 +41,7 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.ProtonForceUpdateHandler
 import me.proton.core.network.domain.RefreshTokenHandler
 import me.proton.core.network.domain.UserData
+import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -57,6 +58,7 @@ import kotlin.reflect.KClass
 class ApiFactory(
     private val baseUrl: String,
     private val apiClient: ApiClient,
+    private val logger: Logger,
     private val networkManager: NetworkManager,
     private val prefs: NetworkPrefs,
     scope: CoroutineScope
@@ -91,6 +93,7 @@ class ApiFactory(
         val primaryBackend = ProtonApiBackend(
             baseUrl,
             apiClient,
+            logger,
             userData,
             baseOkHttpClient,
             listOf(jsonConverter),
@@ -109,6 +112,7 @@ class ApiFactory(
             ProtonApiBackend(
                 baseUrl,
                 apiClient,
+                logger,
                 userData,
                 baseOkHttpClient,
                 listOf(jsonConverter),
@@ -149,7 +153,7 @@ class ApiFactory(
 
     private val dohProvider by lazy {
         val dohServices = Constants.DOH_PROVIDERS_URLS.map {
-            DnsOverHttpsProviderRFC8484(baseOkHttpClient, baseUrl, networkManager)
+            DnsOverHttpsProviderRFC8484(baseOkHttpClient, baseUrl, networkManager, logger)
         }
         DohProvider(baseUrl, apiClient, dohServices, mainScope, prefs, ::javaMonoClockMs)
     }

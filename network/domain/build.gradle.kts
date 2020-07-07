@@ -7,7 +7,7 @@ plugins {
     `kotlin-serialization`
 }
 
-libVersion = Version(0, 1, 1)
+libVersion = Version(0, 1, 2)
 
 dependencies {
 

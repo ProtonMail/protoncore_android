@@ -26,6 +26,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
+import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkPrefs
 import me.proton.core.network.data.util.MockUserData
 import me.proton.core.network.data.util.TestRetrofitApi
@@ -60,10 +61,11 @@ internal class ProtonApiBackendTests {
     @BeforeTest
     fun before() {
         MockKAnnotations.init(this)
+        val logger = MockLogger()
         val client = MockApiClient()
         val scope = CoroutineScope(TestCoroutineDispatcher())
         prefs = MockNetworkPrefs()
-        apiFactory = ApiFactory("https://example.com/", client, networkManager, prefs, scope)
+        apiFactory = ApiFactory("https://example.com/", client, logger, networkManager, prefs, scope)
         val user = MockUserData()
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
@@ -73,6 +75,7 @@ internal class ProtonApiBackendTests {
         backend = ProtonApiBackend(
             webServer.url("/").toString(),
             client,
+            logger,
             user,
             apiFactory.baseOkHttpClient,
             listOf(
@@ -183,5 +186,15 @@ internal class ProtonApiBackendTests {
 
         val result = backend(ApiManager.Call(0) { test() })
         assertEquals(true, result.valueOrNull?.bool)
+    }
+
+    @Test
+    fun `test deserialize bool from int`() = runBlocking {
+        webServer.prepareResponse(
+            HttpURLConnection.HTTP_OK,
+            """{ "Number": 5, "String": "foo", Bool: 0 }""")
+
+        val result = backend(ApiManager.Call(0) { test() })
+        assertEquals(false, result.valueOrNull?.bool)
     }
 }
