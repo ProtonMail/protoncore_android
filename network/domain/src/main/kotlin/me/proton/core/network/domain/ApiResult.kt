@@ -19,6 +19,7 @@ package me.proton.core.network.domain
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withTimeoutOrNull
+import java.lang.Exception
 
 /**
  * Result of the safe API call.
@@ -39,8 +40,9 @@ sealed class ApiResult<out T> {
 
     /**
      * Base class for error result.
+     * @param cause [Exception] exception that caused this error for debugging purposes.
      */
-    sealed class Error : ApiResult<Nothing>() {
+    sealed class Error(val cause: Exception?) : ApiResult<Nothing>() {
 
         /**
          * HTTP error.
@@ -49,20 +51,20 @@ sealed class ApiResult<out T> {
          * @property message HTTP message.
          * @property proton Proton-specific HTTP error data.
          */
-        open class Http(val httpCode: Int, val message: String, val proton: ProtonData? = null) : Error()
+        open class Http(val httpCode: Int, val message: String, val proton: ProtonData? = null) : Error(null)
         class ProtonData(val code: Int, val error: String)
 
         /**
          * Parsing error. Should not normally happen.
          */
-        object Parse : Error()
+        class Parse(cause: Exception?) : Error(cause)
 
         /**
          * Base class for connection errors (no response available)
          *
          * @property potentialBlock [true] if our API might have been blocked.
          */
-        open class Connection(val potentialBlock: Boolean) : Error() {
+        open class Connection(val potentialBlock: Boolean, cause: Exception? = null) : Error(cause) {
             override val isPotentialBlocking get() = potentialBlock
         }
 
@@ -71,17 +73,17 @@ sealed class ApiResult<out T> {
          *
          * @param potentialBlock [true] if our API might have been blocked.
          */
-        class Timeout(potentialBlock: Boolean) : Connection(potentialBlock)
+        class Timeout(potentialBlock: Boolean, cause: Exception? = null) : Connection(potentialBlock, cause)
 
         /**
          * Certificate verification failed.
          */
-        object Certificate : Connection(true)
+        class Certificate(cause: Exception) : Connection(true, cause)
 
         /**
          * No connectivity.
          */
-        object NoInternet : Connection(false)
+        object NoInternet : Connection(false, null)
 
         /**
          * 429 "Too Many Requests"
@@ -114,7 +116,7 @@ sealed class ApiResult<out T> {
          * @return block [ApiResult] or [ApiResult.Error.Timeout] on timeout.
          */
         suspend fun <T> withTimeout(timeoutMs: Long, block: suspend CoroutineScope.() -> ApiResult<T>) =
-            withTimeoutOrNull(timeoutMs, block) ?: Error.Timeout(true)
+            withTimeoutOrNull(timeoutMs, block) ?: Error.Timeout(true, null)
 
         const val HTTP_TOO_MANY_REQUESTS = 429
     }

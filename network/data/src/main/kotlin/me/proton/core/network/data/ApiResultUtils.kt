@@ -20,6 +20,7 @@ package me.proton.core.network.data
 import kotlinx.serialization.SerializationException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.util.kotlin.Logger
 import okhttp3.Response
 import retrofit2.HttpException
 import java.io.IOException
@@ -29,26 +30,31 @@ import javax.net.ssl.SSLHandshakeException
 
 internal suspend fun <Api, T> safeApiCall(
     networkManager: NetworkManager,
+    logger: Logger,
     api: Api,
     block: suspend (Api) -> T
-): ApiResult<T> =
-    try {
+): ApiResult<T> {
+    val result = try {
         ApiResult.Success(block(api))
     } catch (e: ProtonErrorException) {
         parseHttpError(e.response, e.protonData)
     } catch (e: HttpException) {
         parseHttpError(e.response()!!.raw(), null)
     } catch (e: SerializationException) {
-        ApiResult.Error.Parse
+        ApiResult.Error.Parse(e)
     } catch (e: CertificateException) {
-        ApiResult.Error.Certificate
+        ApiResult.Error.Certificate(e)
     } catch (e: SSLHandshakeException) {
-        ApiResult.Error.Certificate
+        ApiResult.Error.Certificate(e)
     } catch (e: SocketTimeoutException) {
-        ApiResult.Error.Timeout(networkManager.isConnectedToNetwork())
+        ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), e)
     } catch (e: IOException) {
-        ApiResult.Error.Connection(networkManager.isConnectedToNetwork())
+        ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
     }
+    if (result is ApiResult.Error)
+        result.cause?.let(logger::e)
+    return result
+}
 
 private fun <T> parseHttpError(response: Response, protonData: ApiResult.Error.ProtonData?): ApiResult<T> {
     val retryAfter = response.headers["Retry-After"]?.toIntOrNull()

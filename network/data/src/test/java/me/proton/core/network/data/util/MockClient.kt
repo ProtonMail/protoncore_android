@@ -20,6 +20,7 @@ package me.proton.core.network.data.util
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.UserData
+import me.proton.core.util.kotlin.Logger
 
 class MockUserData : UserData {
 
@@ -54,4 +55,11 @@ class MockNetworkPrefs : NetworkPrefs {
     override var activeAltBaseUrl: String? = null
     override var lastPrimaryApiFail: Long = Long.MIN_VALUE
     override var alternativeBaseUrls: List<String>? = null
+}
+
+class MockLogger : Logger {
+
+    override fun e(e: Throwable) {
+        e.printStackTrace()
+    }
 }
