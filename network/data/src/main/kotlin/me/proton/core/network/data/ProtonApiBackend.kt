@@ -103,7 +103,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private fun prepareHeaders(original: Request): Request.Builder {
         val request = original.newBuilder()
             .header("x-pm-appversion", client.appVersionHeader)
-            .header("x-pm-apiversion", "3")
             .header("x-pm-locale", Locale.getDefault().language)
             .header("User-Agent", client.userAgent)
             .method(original.method, original.body)
