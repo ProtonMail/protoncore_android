@@ -31,7 +31,7 @@ fun Project.setupPublishing(filter: (Project) -> Boolean = { true }) {
 private fun Project.setupModule() {
     afterEvaluate {
 
-        val bintrayApiKey = System.getenv()["BINTRAY_PUBLISH_KEY"] ?: "none"
+        val bintrayApiKey = System.getenv()["BINTRAY_PUBLISH_KEY"] ?: " "
         if (libVersion != null) {
 
             archivesBaseName = archiveName
@@ -47,25 +47,34 @@ private fun Project.setupModule() {
                 override = true
             }
 
-            // Setup pre publish
-            val releaseManager = ReleaseManager(this)
-            val prePublish = tasks.create("prePublish") {
-                doFirst {
-                    with(releaseManager) {
-                        moveArchives("releases")
-                        generateKdocIfNeeded()
-                        if (bintrayApiKey != "none")
-                            updateReadme()
-                        printToNewReleasesFile()
-                    }
-                }
-            }
+            with(ReleaseManager(this)) {
+                if (bintrayApiKey.isNotBlank()) {
 
-            // setup publish
-            tasks.register("publishAll") {
-                dependsOn(prePublish)
-                if (releaseManager.isNewVersion) {
-                    dependsOn(tasks.getByName("uploadArchives"))
+                    // Setup pre publish
+                    val prePublish = tasks.create("prePublish") {
+                        doFirst {
+                            moveArchives("releases")
+                            generateKdocIfNeeded()
+                            updateReadme()
+                            printToNewReleasesFile()
+                        }
+                    }
+
+                    // Setup publish
+                    tasks.register("publishAll") {
+                        dependsOn(prePublish)
+                        if (isNewVersion)
+                            dependsOn(tasks.getByName("uploadArchives"))
+                    }
+                } else {
+                    // Force Dokka update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
+                    tasks.create("forceDokka") {
+                        doLast { generateKdocIfNeeded() }
+                    }
+                    // Force Readme update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
+                    tasks.create("forceUpdateReadme") {
+                        doLast { updateReadme() }
+                    }
                 }
             }
         }
