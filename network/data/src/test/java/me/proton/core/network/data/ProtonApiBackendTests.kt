@@ -187,4 +187,14 @@ internal class ProtonApiBackendTests {
         val result = backend(ApiManager.Call(0) { test() })
         assertEquals(true, result.valueOrNull?.bool)
     }
+
+    @Test
+    fun `test deserialize bool from int`() = runBlocking {
+        webServer.prepareResponse(
+            HttpURLConnection.HTTP_OK,
+            """{ "Number": 5, "String": "foo", Bool: 0 }""")
+
+        val result = backend(ApiManager.Call(0) { test() })
+        assertEquals(false, result.valueOrNull?.bool)
+    }
 }
