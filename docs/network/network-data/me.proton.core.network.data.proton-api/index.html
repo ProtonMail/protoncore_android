@@ -20,6 +20,16 @@
 </tr>
 <tr>
 <td>
+<h4><a href="-int-to-bool-serializer/index.html">IntToBoolSerializer</a></h4>
+</td>
+<td>
+<p>Kotlin Boolean serializer that can deserialize Boolean from both bool and int json values
+(where 0 = false). Needs to be explicitly used for the given field with
+<code>@Serializable(with=IntToBoolSerializer::class)</code></p>
+<code><span class="keyword">class </span><span class="identifier">IntToBoolSerializer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">KSerializer</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="-proton-error-data/index.html">ProtonErrorData</a></h4>
 </td>
 <td>

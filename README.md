@@ -94,7 +94,7 @@ Util Android Shared Preferences: **0.1.1** - _released on: Jul 06, 2020_
 
 Util Android Work Manager: **0.1** - _released on: Jun 22, 2020_
 
-Util Kotlin: **0.1.3** - _released on: Jul 02, 2020_
+Util Kotlin: **0.1.4** - _released on: Jul 07, 2020_
 
 Util Gradle: **0.1.8** - _released on: Jul 06, 2020_
 
@@ -118,11 +118,11 @@ Data: **0** - _released on: ND_
 
 ### Network
 
-Network: **0.1.1** - _released on: Jul 03, 2020_
+Network: **0.1.2** - _released on: Jul 07, 2020_
 
-Network Domain: **0.1.1** - _released on: Jul 03, 2020_
+Network Domain: **0.1.2** - _released on: Jul 07, 2020_
 
-Network Data: **0.1.1** - _released on: Jul 03, 2020_
+Network Data: **0.1.2** - _released on: Jul 07, 2020_
 
 ### Crypto
 

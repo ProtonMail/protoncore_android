@@ -1,0 +1,62 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>IntToBoolSerializer - network-data</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">network-data</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.network.data.protonApi</a>&nbsp;/&nbsp;<a href="./index.html">IntToBoolSerializer</a><br/>
+<br/>
+<h1>IntToBoolSerializer</h1>
+<code><span class="keyword">class </span><span class="identifier">IntToBoolSerializer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">KSerializer</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code>
+<p>Kotlin Boolean serializer that can deserialize Boolean from both bool and int json values
+(where 0 = false). Needs to be explicitly used for the given field with
+<code>@Serializable(with=IntToBoolSerializer::class)</code></p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Kotlin Boolean serializer that can deserialize Boolean from both bool and int json values
+(where 0 = false). Needs to be explicitly used for the given field with
+<code>@Serializable(with=IntToBoolSerializer::class)</code></p>
+<code><span class="identifier">IntToBoolSerializer</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="descriptor.html">descriptor</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">descriptor</span><span class="symbol">: </span><span class="identifier">SerialDescriptor</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="deserialize.html">deserialize</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">deserialize</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.network.data.protonApi.IntToBoolSerializer$deserialize(kotlinx.serialization.Decoder)/decoder">decoder</span><span class="symbol">:</span>&nbsp;<span class="identifier">Decoder</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="serialize.html">serialize</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">serialize</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.network.data.protonApi.IntToBoolSerializer$serialize(kotlinx.serialization.Encoder, kotlin.Boolean)/encoder">encoder</span><span class="symbol">:</span>&nbsp;<span class="identifier">Encoder</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.network.data.protonApi.IntToBoolSerializer$serialize(kotlinx.serialization.Encoder, kotlin.Boolean)/value">value</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
