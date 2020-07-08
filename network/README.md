@@ -8,8 +8,8 @@ Modules provides support for using Proton API and offers common networking tools
 To start using API client first creates `ApiFactory` singleton with `ApiClient` interface implementation. E.g. with Dagger:
 ```kotlin
 @Singleton @Provides
-fun provideApiFactory(apiClient: ApiClient, networkManager: NetworkManager): ApiFactory =
-    ApiFactory(context, baseUrl, apiClient, networkManager)
+fun provideApiFactory(apiClient: ApiClient, networkManager: NetworkManager, logger: Logger): ApiFactory =
+    ApiFactory(context, baseUrl, apiClient, logger, networkManager)
 ```
 Now `ApiFactory` can be used to create per-user instances of `ApiManager<Api>` that implements client-defined retrofit interface `Api`. `Api` is needs to be based on suspending functions, inherit from `BaseRetrofitApi` and can be composed from multiple interfaces.
 ```kotlin
