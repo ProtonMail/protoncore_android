@@ -152,8 +152,8 @@ class ApiFactory(
     )
 
     private val dohProvider by lazy {
-        val dohServices = Constants.DOH_PROVIDERS_URLS.map {
-            DnsOverHttpsProviderRFC8484(baseOkHttpClient, baseUrl, networkManager, logger)
+        val dohServices = Constants.DOH_PROVIDERS_URLS.map { serviceUrl ->
+            DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, networkManager, logger)
         }
         DohProvider(baseUrl, apiClient, dohServices, mainScope, prefs, ::javaMonoClockMs)
     }

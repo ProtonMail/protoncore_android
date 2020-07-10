@@ -7,7 +7,7 @@ plugins {
     `kotlin-serialization`
 }
 
-libVersion = Version(0, 1, 2)
+libVersion = Version(0, 1, 3)
 
 android()
 
@@ -16,8 +16,11 @@ dependencies {
     val okHttpVersion = "4.7.2"
     val retrofitVersion = "2.9.0"
 
+    api(
+        project(Module.kotlinUtil)
+    )
+
     implementation(
-        project(Module.kotlinUtil),
         project(Module.sharedPreferencesUtil),
         project(Module.networkDomain),
 
