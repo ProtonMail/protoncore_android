@@ -23,16 +23,17 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
-import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.domain.NetworkManager
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okio.Buffer
+import org.junit.runner.RunWith
 import org.minidns.dnsmessage.DnsMessage
 import org.minidns.record.Record
 import org.minidns.record.TXT
+import org.robolectric.RobolectricTestRunner
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -42,6 +43,7 @@ import kotlin.test.assertEquals
 // https://github.com/square/retrofit/issues/3330
 // https://github.com/Kotlin/kotlinx.coroutines/issues/1204
 @ExperimentalCoroutinesApi
+@RunWith(RobolectricTestRunner::class)
 internal class DohProviderTests {
 
     private val domain = "example.com"
