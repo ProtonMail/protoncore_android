@@ -125,8 +125,10 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         if (!response.isSuccessful) {
             val errorBody = response.peekBody(MAX_ERROR_BYTES).string()
             val protonError = errorBody.deserializeOrNull(ProtonErrorData.serializer())?.apiResultData
-            if (protonError != null)
+            if (protonError != null) {
+                response.close()
                 throw ProtonErrorException(response, protonError)
+            }
         }
 
         return response

@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.data.doh
 
+import android.util.Base64
 import me.proton.core.network.data.safeApiCall
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohService
@@ -25,7 +26,6 @@ import me.proton.core.util.kotlin.Logger
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import org.apache.commons.codec.binary.Base32
-import org.apache.commons.codec.binary.Base64
 import org.minidns.dnsmessage.DnsMessage
 import org.minidns.dnsmessage.Question
 import org.minidns.record.Record
@@ -83,8 +83,8 @@ class DnsOverHttpsProviderRFC8484(
             .setRecursionDesired(true)
             .setQuestion(question)
             .build()
-        val queryMessageBase64 = Base64(true).encodeToString(
-            queryMessage.toArray())
+        val queryMessageBase64 = Base64.encodeToString(queryMessage.toArray(),
+            Base64.URL_SAFE or Base64.NO_PADDING or Base64.NO_WRAP)
 
         val response = safeApiCall(networkManager, logger, api) {
             api.getServers(baseUrl.removeSuffix("/"), queryMessageBase64)
