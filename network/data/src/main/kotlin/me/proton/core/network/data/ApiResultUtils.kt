@@ -37,9 +37,9 @@ internal suspend fun <Api, T> safeApiCall(
     val result = try {
         ApiResult.Success(block(api))
     } catch (e: ProtonErrorException) {
-        parseHttpError(e.response, e.protonData)
+        parseHttpError(e.response, e.protonData, e)
     } catch (e: HttpException) {
-        parseHttpError(e.response()!!.raw(), null)
+        parseHttpError(e.response()!!.raw(), null, e)
     } catch (e: SerializationException) {
         ApiResult.Error.Parse(e)
     } catch (e: CertificateException) {
@@ -56,16 +56,20 @@ internal suspend fun <Api, T> safeApiCall(
     return result
 }
 
-private fun <T> parseHttpError(response: Response, protonData: ApiResult.Error.ProtonData?): ApiResult<T> {
+private fun <T> parseHttpError(
+    response: Response,
+    protonData: ApiResult.Error.ProtonData?,
+    cause: Exception
+): ApiResult<T> {
     val retryAfter = response.headers["Retry-After"]?.toIntOrNull()
     return if (response.code == ApiResult.HTTP_TOO_MANY_REQUESTS && retryAfter != null) {
         ApiResult.Error.TooManyRequest(retryAfter, protonData)
     } else {
-        ApiResult.Error.Http(response.code, response.message, protonData)
+        ApiResult.Error.Http(response.code, response.message, protonData, cause)
     }
 }
 
-internal class ProtonErrorException(
+internal data class ProtonErrorException(
     val response: Response,
     val protonData: ApiResult.Error.ProtonData
 ) : IOException()
