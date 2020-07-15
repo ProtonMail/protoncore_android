@@ -19,7 +19,7 @@ package me.proton.core.network.domain
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withTimeoutOrNull
-import java.lang.Exception
+import kotlin.Exception
 
 /**
  * Result of the safe API call.
@@ -51,8 +51,14 @@ sealed class ApiResult<out T> {
          * @property message HTTP message.
          * @property proton Proton-specific HTTP error data.
          */
-        open class Http(val httpCode: Int, val message: String, val proton: ProtonData? = null) : Error(null)
-        class ProtonData(val code: Int, val error: String)
+        open class Http(
+            val httpCode: Int,
+            val message: String,
+            val proton: ProtonData? = null,
+            cause: Exception? = null
+        ) : Error(cause)
+
+        data class ProtonData(val code: Int, val error: String)
 
         /**
          * Parsing error. Should not normally happen.

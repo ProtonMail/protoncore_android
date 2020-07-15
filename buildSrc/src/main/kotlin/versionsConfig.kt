@@ -32,7 +32,7 @@ fun initVersions() {
 
     // region Others
     `mockK version` =                           "1.10.0"        // Released: Apr 19, 2020
-    `retrofit version` =                        "2.6.1"         // Released: Jul 31, 2019
+    `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.4.0"         // Released: Apr 12, 2019
     `timber version` =                          "4.7.1"         // Released:
     `viewStateStore version` =                  "1.3-beta-3"    // Released: Oct 03, 2019
@@ -48,8 +48,8 @@ const val `androidUi version` =             "0.1.0-dev08"   // Released: Apr 03,
 // endregion
 
 // region Other
-const val `apacheCommon-codec version` =    "1.12"          // Released: Feb 13, 2019
-const val `okHttp-logging version` =        "3.12.5"        // Updated
+const val `apacheCommon-codec version` =    "1.14"          // Released: Dec 31, 2019
+const val `okHttp version` =                "4.8.0"         // Released: Jul 11, 2020
 // endregion
 
 // region Gradle
