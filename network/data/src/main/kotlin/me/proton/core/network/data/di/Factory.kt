@@ -18,6 +18,7 @@
 package me.proton.core.network.data.di
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ObsoleteCoroutinesApi
@@ -129,7 +130,8 @@ class ApiFactory(
     internal val jsonConverter =
         ProtonCoreConfig.defaultJsonStringFormat.asConverterFactory("application/json".toMediaType())
 
-    internal val baseOkHttpClient by lazy {
+    @VisibleForTesting
+    val baseOkHttpClient by lazy {
         val builder = OkHttpClient.Builder()
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
