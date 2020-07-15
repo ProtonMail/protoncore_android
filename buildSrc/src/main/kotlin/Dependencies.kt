@@ -3,7 +3,7 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 val DependencyHandler.`apacheCommon-codec` get() = dependency("commons-codec", module = "commons-codec") version `apacheCommon-codec version`
-val DependencyHandler.`okHttp-logging` get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp-logging version`
+val DependencyHandler.`okHttp-logging` get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp version`
 val DependencyHandler.`lint-core` get() = lint()
 val DependencyHandler.`lint-api` get() = lint("api")
 val DependencyHandler.`lint-checks` get() = lint("checks")

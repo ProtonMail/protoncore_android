@@ -13,9 +13,6 @@ android()
 
 dependencies {
 
-    val okHttpVersion = "4.7.2"
-    val retrofitVersion = "2.9.0"
-
     api(
         project(Module.kotlinUtil)
     )
@@ -27,19 +24,19 @@ dependencies {
         `kotlin-jdk7`,
         `coroutines-core`,
         `serialization`,
+        `retrofit`,
         `retrofit-kotlin-serialization`,
+        `apacheCommon-codec`,
+        `okHttp-logging`,
 
-        squareup("retrofit2", "retrofit") version retrofitVersion,
-        squareup("okhttp3", "logging-interceptor") version okHttpVersion,
         dependency("org.minidns", module = "minidns-hla") version "0.3.4",
-        dependency("commons-codec", module = "commons-codec") version "1.14",
         dependency("com.datatheorem.android.trustkit", module = "trustkit") version "1.1.2"
     )
 
     testImplementation(
         project(Module.kotlinTest),
         project(Module.androidTest),
-        squareup("okhttp3", "mockwebserver") version okHttpVersion,
-        squareup("retrofit2", "converter-scalars") version retrofitVersion
+        squareup("okhttp3", "mockwebserver") version `okHttp version`,
+        squareup("retrofit2", "converter-scalars") version `retrofit version`
     )
 }
