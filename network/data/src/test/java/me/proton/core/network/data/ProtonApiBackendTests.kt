@@ -30,13 +30,17 @@ import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkPrefs
 import me.proton.core.network.data.util.MockUserData
 import me.proton.core.network.data.util.TestRetrofitApi
+import me.proton.core.network.data.util.TestTLSHelper
 import me.proton.core.network.data.util.prepareResponse
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
+import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.HttpURLConnection
 import kotlin.test.*
@@ -45,11 +49,19 @@ import kotlin.test.*
 // https://github.com/square/retrofit/issues/3330
 // https://github.com/Kotlin/kotlinx.coroutines/issues/1204
 @ExperimentalCoroutinesApi
+@RunWith(RobolectricTestRunner::class)
 internal class ProtonApiBackendTests {
 
+    val scope = CoroutineScope(TestCoroutineDispatcher())
+
+    private val testTlsHelper = TestTLSHelper()
     lateinit var apiFactory: ApiFactory
     lateinit var webServer: MockWebServer
+
     lateinit var backend: ProtonApiBackend<TestRetrofitApi>
+    lateinit var logger: MockLogger
+    lateinit var client: MockApiClient
+    lateinit var user: MockUserData
 
     private var isNetworkAvailable = true
 
@@ -61,18 +73,24 @@ internal class ProtonApiBackendTests {
     @BeforeTest
     fun before() {
         MockKAnnotations.init(this)
-        val logger = MockLogger()
-        val client = MockApiClient()
-        val scope = CoroutineScope(TestCoroutineDispatcher())
+        logger = MockLogger()
+        client = MockApiClient()
         prefs = MockNetworkPrefs()
         apiFactory = ApiFactory("https://example.com/", client, logger, networkManager, prefs, scope)
-        val user = MockUserData()
+        user = MockUserData()
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
 
         isNetworkAvailable = true
-        webServer = MockWebServer()
-        backend = ProtonApiBackend(
+        webServer = testTlsHelper.createMockServer()
+
+        backend = createBackend {
+            testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
+        }
+    }
+
+    private fun createBackend(pinningInit: (OkHttpClient.Builder) -> Unit) =
+        ProtonApiBackend(
             webServer.url("/").toString(),
             client,
             logger,
@@ -84,9 +102,8 @@ internal class ProtonApiBackendTests {
             ),
             TestRetrofitApi::class,
             networkManager,
-            {} // TODO: test pinning
+            pinningInit
         )
-    }
 
     @AfterTest
     fun after() {
@@ -196,5 +213,51 @@ internal class ProtonApiBackendTests {
 
         val result = backend(ApiManager.Call(0) { test() })
         assertEquals(false, result.valueOrNull?.bool)
+    }
+
+    @Test
+    fun `test pinning error`() = runBlocking {
+        val badBackend = createBackend {
+            testTlsHelper.initPinning(it, TestTLSHelper.BAD_PINS)
+        }
+
+        webServer.prepareResponse(
+            HttpURLConnection.HTTP_OK,
+            """{ "Number": 5, "String": "foo" }""")
+
+        val result = badBackend(ApiManager.Call(0) { test() })
+        assertTrue(result is ApiResult.Error.Certificate)
+    }
+
+    @Test
+    fun `test spki leaf pinning ok`() = runBlocking {
+        val altBackend = createBackend { builder ->
+            testTlsHelper.setupSPKIleafPinning(builder, TestTLSHelper.TEST_PINS.toList().map {
+                it.removePrefix("sha256/")
+            })
+        }
+
+        webServer.prepareResponse(
+            HttpURLConnection.HTTP_OK,
+            """{ "Number": 5, "String": "foo" }""")
+
+        val result = altBackend(ApiManager.Call(0) { test() })
+        assertTrue(result is ApiResult.Success)
+    }
+
+    @Test
+    fun `test spki leaf pinning error`() = runBlocking {
+        val badAltBackend = createBackend { builder ->
+            testTlsHelper.setupSPKIleafPinning(builder, TestTLSHelper.BAD_PINS.toList().map {
+                it.removePrefix("sha256/")
+            })
+        }
+
+        webServer.prepareResponse(
+            HttpURLConnection.HTTP_OK,
+            """{ "Number": 5, "String": "foo" }""")
+
+        val result = badAltBackend(ApiManager.Call(0) { test() })
+        assertTrue(result is ApiResult.Error.Certificate)
     }
 }

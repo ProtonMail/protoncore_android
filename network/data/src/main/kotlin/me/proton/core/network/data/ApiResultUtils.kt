@@ -27,6 +27,7 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 import java.security.cert.CertificateException
 import javax.net.ssl.SSLHandshakeException
+import javax.net.ssl.SSLPeerUnverifiedException
 
 internal suspend fun <Api, T> safeApiCall(
     networkManager: NetworkManager,
@@ -45,6 +46,8 @@ internal suspend fun <Api, T> safeApiCall(
     } catch (e: CertificateException) {
         ApiResult.Error.Certificate(e)
     } catch (e: SSLHandshakeException) {
+        ApiResult.Error.Certificate(e)
+    } catch (e: SSLPeerUnverifiedException) {
         ApiResult.Error.Certificate(e)
     } catch (e: SocketTimeoutException) {
         ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), e)
