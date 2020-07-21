@@ -1,0 +1,15 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="FunctionName" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <scope name="Tests" level="None" enabled="true" />
+      <scope name="Shared Tests" level="None" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="ObjectPropertyName" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <scope name="Build config" level="None" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="RemoveRedundantBackticks" enabled="true" level="WARNING" enabled_by_default="true">
+      <scope name="Build config" level="None" enabled="true" />
+    </inspection_tool>
+  </profile>
+</component>
