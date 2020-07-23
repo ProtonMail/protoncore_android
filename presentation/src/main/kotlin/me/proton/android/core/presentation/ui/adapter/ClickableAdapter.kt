@@ -1,27 +1,6 @@
-/*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
- *
- * ProtonCore is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * ProtonCore is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-@file:Suppress("unused", "MemberVisibilityCanBePrivate") // Public APIs
-
 package me.proton.android.core.presentation.ui.adapter
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
@@ -31,60 +10,44 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * A common interface for Adapters that has clickable items [T]
- * @author Davide Farella
+ * A common interface for Adapters that have clickable items [UiModel]
  */
-interface ClickableAdapter<T, VH : ClickableAdapter.ViewHolder<T>> {
-
-    @set:Deprecated("This should not be mutable. It will be immutable from 0.3.x")
-    var onItemClick: (T) -> Unit
+interface ClickableAdapter<UiModel> {
 
     /**
-     * An invoker for [onItemClick], we use it so the [ViewHolder] will always use the updated
-     * [onItemClick] even if it changes after the [ViewHolder] is created.
+     * A callback that will be triggered when an item is clicked, has [UiModel] as lambda parameter
      */
-    private val clickListenerInvoker: (T) -> Unit get() = { onItemClick(it) }
-
-    @set:Deprecated("This should not be mutable. It will be immutable from 0.3.x")
-    var onItemLongClick: (T) -> Unit
+    val onItemClick: (UiModel) -> Unit
 
     /**
-     * An invoker for [onItemLongClick], we use it so the [ViewHolder] will always use the updated
-     * [onItemLongClick] even if it changes after the [ViewHolder] is created.
+     * A callback that will be triggered when an item is long clicked, has [UiModel] as lambda parameter
      */
-    private val longClickListenerInvoker: (T) -> Unit get() = { onItemLongClick(it) }
+    val onItemLongClick: (UiModel) -> Unit
 
-    /** Prepare the given [ViewHolder] with click listeners */
-    private fun prepareViewHolder(holder: VH) {
-        holder.aClickListener = this.clickListenerInvoker
-        holder.aLongClickListener = this.longClickListenerInvoker
 
-    }
+    /**
+     * Base [RecyclerView.ViewHolder] for [ClickableAdapter] implementations
+     *
+     * #### Generics
+     * @param UiModel type of the model to be rendered
+     * @param ViewRef type for the reference to the [View] to render on
+     *   it could be a [View] or a ViewBinding reference
+     *
+     * #### Constructor parameters
+     * @param viewRef reference to the view, type [ViewRef]
+     * @param clickListener lambda triggered when an element is clicked, it receives [UiModel] as parameter
+     * @param longClickListener lambda triggered when an element is long-clicked, it receives [UiModel] as parameter
+     */
+    abstract class ViewHolder<UiModel, ViewRef : Any>(
+        protected val viewRef: ViewRef,
+        protected val clickListener: (UiModel) -> Unit,
+        protected val longClickListener: (UiModel) -> Unit = {}
+    ) : RecyclerView.ViewHolder(viewRef.getView()) {
 
-    /** Calls private [prepareViewHolder] on the receiver [ViewHolder] */
-    fun prepareClickListeners(holder: VH) {
-        prepareViewHolder(holder)
-    }
-
-    /** A base [RecyclerView.ViewHolder] for [ClickableAdapter] implementations */
-    @Suppress("PropertyName") // Internal click listeners
-    abstract class ViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        /** @return [Context] from [itemView]  */
         protected val context: Context get() = itemView.context
 
-        /** @return Click listener for this [ViewHolder] */
-        protected val clickListener get() = aClickListener
-
-        /** @return Long click listener for this [ViewHolder] */
-        protected val longClickListener get() = aLongClickListener
-
-        internal lateinit var aClickListener: (T) -> Unit
-        internal lateinit var aLongClickListener: (T) -> Unit
-
-
-        /** Populate the [View] with the given [item] [T] */
-        open fun onBind(item: T) {
+        /** Populate the [View] with the given [item] [UiModel] */
+        open fun onBind(item: UiModel) {
             itemView.setOnClickListener { clickListener(item) }
             itemView.setOnLongClickListener {
                 longClickListener(item)
@@ -92,21 +55,35 @@ interface ClickableAdapter<T, VH : ClickableAdapter.ViewHolder<T>> {
             }
         }
 
-        /** @return a [ColorInt] from [context] */
         @ColorInt
         protected fun getColor(@ColorRes resId: Int) =
-                ContextCompat.getColor(context, resId)
+            ContextCompat.getColor(context, resId)
 
-        /** @return a [Drawable] from [context] */
         protected fun getDrawable(@DrawableRes resId: Int) =
-                ContextCompat.getDrawable(context, resId)!!
+            ContextCompat.getDrawable(context, resId)!!
 
-        /** @return a [CharSequence] String from [context] */
         protected fun getString(@StringRes resId: Int): CharSequence =
-                context.getString(resId)
+            context.getString(resId)
 
-        /** @return a [CharSequence] Text from [context] */
         protected fun getText(@StringRes resId: Int): CharSequence =
-                context.getText(resId)
+            context.getText(resId)
+
+
+        protected companion object {
+            /**
+             * @return [View] from receiver [V]
+             * @param V must be a [View] or a ViewBinding references
+             *
+             * @throws IllegalArgumentException if [V] constraints are not satisfied
+             */
+            fun <V : Any> V.getView(): View {
+                val viewRefClass = this::class
+
+                return if (this is View) this
+                else viewRefClass.members.find { it.name == "getRoot" }?.call(this) as? View
+                    ?: throw IllegalArgumentException("Impossible to get a View for ViewHolder from constructor " +
+                        "parameter of type ${viewRefClass.simpleName}, use a View or a ViewBinding reference")
+            }
+        }
     }
 }
