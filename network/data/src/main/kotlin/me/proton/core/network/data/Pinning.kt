@@ -31,31 +31,37 @@ import javax.net.ssl.X509TrustManager
  *
  * @param okBuilder builder to introduce pinning to.
  * @param host host for which pins are added.
- * @param pins list of pins in okhttp format.
+ * @param pins list of pins (base64, SHA-256). When empty pinning will be disabled (should be used
+ *   only for testing).
  */
 internal fun initPinning(okBuilder: OkHttpClient.Builder, host: String, pins: Array<String>) {
-    val pinner = CertificatePinner.Builder()
-        .add("**.$host", *pins)
-        .build()
-    okBuilder.certificatePinner(pinner)
+    if (pins.isNotEmpty()) {
+        val pinner = CertificatePinner.Builder()
+            .add("**.$host", *pins.map { "sha256/$it" }.toTypedArray())
+            .build()
+        okBuilder.certificatePinner(pinner)
+    }
 }
 
 /**
  * Inits given okhttp builder with leaf SPKI pinning. Accepts certificate chain iff leaf certificate
- * SPKI matches one of the [spkiPins].
+ * SPKI matches one of the [pins].
  *
  * @param okBuilder builder to introduce pinning to.
- * @param spkiPins list of sha-256 SPKI hashes.
+ * @param pins list of pins (base64, SHA-256). When empty, pinning will be disabled and default
+ *   certificate verification will be used (should be used only for testing).
  */
-internal fun initSPKIleafPinning(builder: OkHttpClient.Builder, spkiPins: List<String>) {
-    val trustManager = LeafSPKIPinningTrustManager(spkiPins)
-    val sslContext = SSLContext.getInstance("TLS")
-    sslContext.init(null, arrayOf(trustManager), null)
-    builder.sslSocketFactory(sslContext.socketFactory, trustManager)
-    builder.hostnameVerifier(HostnameVerifier { _, _ ->
-        // Verification is based solely on SPKI pinning of leaf certificate
-        true
-    })
+internal fun initSPKIleafPinning(builder: OkHttpClient.Builder, pins: List<String>) {
+    if (pins.isNotEmpty()) {
+        val trustManager = LeafSPKIPinningTrustManager(pins)
+        val sslContext = SSLContext.getInstance("TLS")
+        sslContext.init(null, arrayOf(trustManager), null)
+        builder.sslSocketFactory(sslContext.socketFactory, trustManager)
+        builder.hostnameVerifier(HostnameVerifier { _, _ ->
+            // Verification is based solely on SPKI pinning of leaf certificate
+            true
+        })
+    }
 }
 
 internal class LeafSPKIPinningTrustManager(pinnedSPKIHashes: List<String>) : X509TrustManager {

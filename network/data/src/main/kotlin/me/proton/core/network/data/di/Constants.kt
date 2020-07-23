@@ -20,16 +20,16 @@ package me.proton.core.network.data.di
 object Constants {
 
     /**
-     * Certificate pins for Proton API in OkHttp format.
+     * Certificate pins for Proton API (base64, SHA-256).
      */
-    val DEFAULT_PINS = arrayOf(
-        "sha256/IEwk65VSaxv3s1/88vF/rM8PauJoIun3rzVCX5mLS3M",
-        "sha256/drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=",
-        "sha256/YRGlaY0jyJ4Jw2/4M8FIftwbDIQfh8Sdro96CeEel54=",
-        "sha256/AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw=")
+    val DEFAULT_SPKI_PINS = arrayOf(
+        "IEwk65VSaxv3s1/88vF/rM8PauJoIun3rzVCX5mLS3M",
+        "drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=",
+        "YRGlaY0jyJ4Jw2/4M8FIftwbDIQfh8Sdro96CeEel54=",
+        "AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw=")
 
     /**
-     * SPKI pins for alternative Proton API leaf certificates (SHA-256).
+     * SPKI pins for alternative Proton API leaf certificates (base64, SHA-256).
      */
     val ALTERNATIVE_API_SPKI_PINS = listOf(
         "EU6TS9MO0L/GsDHvVc9D5fChYLNy5JdGYpJw0ccgetM=",
