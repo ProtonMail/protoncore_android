@@ -56,7 +56,11 @@ sealed class ApiResult<out T> {
             val message: String,
             val proton: ProtonData? = null,
             cause: Exception? = null
-        ) : Error(cause)
+        ) : Error(cause) {
+
+            override fun toString() =
+                "${this::class.simpleName}: httpCode=$httpCode message=$message, proton=$proton cause=$cause"
+        }
 
         data class ProtonData(val code: Int, val error: String)
 
