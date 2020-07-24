@@ -1,50 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="?android:windowBackground"
+        android:paddingTop="@dimen/parent_padding">
 
-        <!-- TODO there should be a search header here above the recycler -->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/filterEditTextLayout"
-            style="@style/ProtonButton.Borderless.Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_top_margin"
-            android:autofillHints="@string/input_email_for_human_verification"
-            android:hint="@string/email_hint"
-            android:padding="0dp"
-            app:endIconDrawable="@drawable/vector_clear"
-            app:endIconMode="custom"
-            app:endIconTint="@color/dark_gray"
-            app:hintAnimationEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/closeButton"
+            android:layout_width="@dimen/human_verification_close_button"
+            android:layout_height="@dimen/human_verification_close_button"
+            android:layout_marginStart="@dimen/parent_padding"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/filterEditText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/filterEditText"
+            app:srcCompat="@drawable/ic_close" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/filterEditText"
-                style="@style/ProtonEditText.Border.Grey"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/filterEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:layout_marginStart="@dimen/view_separation_margin"
+            android:background="@drawable/default_search_edit_text"
+            android:textCursorDrawable="@null"
+            app:iconifiedByDefault="false"
+            app:layout_constraintBottom_toTopOf="@+id/countriesList"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/closeButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryBackground="@null"
+            app:queryHint="@string/human_verification_search" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/countriesList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/default_top_margin"
             android:paddingHorizontal="@dimen/normal_margin"
             android:paddingBottom="@dimen/normal_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filterEditTextLayout" />
+            app:layout_constraintTop_toBottomOf="@id/filterEditText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

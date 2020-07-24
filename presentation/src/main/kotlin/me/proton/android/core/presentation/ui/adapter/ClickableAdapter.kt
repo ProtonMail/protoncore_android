@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 @file:Suppress("unused", "MemberVisibilityCanBePrivate") // Public APIs
 
 package me.proton.android.core.presentation.ui.adapter
@@ -18,7 +36,6 @@ import androidx.recyclerview.widget.RecyclerView
  */
 interface ClickableAdapter<T, VH : ClickableAdapter.ViewHolder<T>> {
 
-    // TODO: make it immutable and remove relative invoker
     @set:Deprecated("This should not be mutable. It will be immutable from 0.3.x")
     var onItemClick: (T) -> Unit
 
@@ -28,7 +45,6 @@ interface ClickableAdapter<T, VH : ClickableAdapter.ViewHolder<T>> {
      */
     private val clickListenerInvoker: (T) -> Unit get() = { onItemClick(it) }
 
-    // TODO: make it immutable and remove relative invoker
     @set:Deprecated("This should not be mutable. It will be immutable from 0.3.x")
     var onItemLongClick: (T) -> Unit
 
@@ -40,8 +56,8 @@ interface ClickableAdapter<T, VH : ClickableAdapter.ViewHolder<T>> {
 
     /** Prepare the given [ViewHolder] with click listeners */
     private fun prepareViewHolder(holder: VH) {
-        holder._clickListener = this.clickListenerInvoker
-        holder._longClickListener = this.longClickListenerInvoker
+        holder.aClickListener = this.clickListenerInvoker
+        holder.aLongClickListener = this.longClickListenerInvoker
 
     }
 
@@ -58,13 +74,13 @@ interface ClickableAdapter<T, VH : ClickableAdapter.ViewHolder<T>> {
         protected val context: Context get() = itemView.context
 
         /** @return Click listener for this [ViewHolder] */
-        protected val clickListener get() = _clickListener
+        protected val clickListener get() = aClickListener
 
         /** @return Long click listener for this [ViewHolder] */
-        protected val longClickListener get() = _longClickListener
+        protected val longClickListener get() = aLongClickListener
 
-        internal lateinit var _clickListener: (T) -> Unit
-        internal lateinit var _longClickListener: (T) -> Unit
+        internal lateinit var aClickListener: (T) -> Unit
+        internal lateinit var aLongClickListener: (T) -> Unit
 
 
         /** Populate the [View] with the given [item] [T] */

@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 @file:Suppress("unused") // Public APIs
 
 package me.proton.android.core.presentation.utils
@@ -19,7 +37,7 @@ import androidx.annotation.LayoutRes
  *
  * @param block takes *position* [Int]
  */
-inline fun <T: Adapter> AdapterView<T>.onItemSelected(crossinline block: (position: Int) -> Unit) {
+inline fun <T : Adapter> AdapterView<T>.onItemSelected(crossinline block: (position: Int) -> Unit) {
     onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
         /**
@@ -88,3 +106,8 @@ inline fun View.onClick(crossinline block: () -> Unit) {
  */
 fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
+
+/**
+ * Clears the edit text content.
+ */
+fun EditText.clearText() = setText("")

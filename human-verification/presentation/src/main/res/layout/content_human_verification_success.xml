@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -36,7 +35,7 @@
 
         <EditText
             android:id="@+id/emailEditText"
-            style="@style/ProtonEditText.Border.Grey"
+            style="@style/ProtonEditText.Border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_top_margin"
@@ -66,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_top_margin"
             android:text="@string/human_verification_already_have_code"
+            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/getVerificationCodeButton" />

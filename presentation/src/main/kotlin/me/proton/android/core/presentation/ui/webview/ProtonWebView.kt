@@ -25,7 +25,7 @@ import android.util.AttributeSet
 import android.webkit.WebView
 
 /**
- * Created by dinokadrikj on 5/22/20.
+ * @author Dino Kadrikj.
  */
 class ProtonWebView : WebView {
     constructor(context: Context) : super(getFixedContext(context))

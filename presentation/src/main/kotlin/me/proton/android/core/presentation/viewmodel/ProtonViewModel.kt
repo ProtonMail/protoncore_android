@@ -21,8 +21,8 @@ package me.proton.android.core.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 
 /**
- * Created by dinokadrikj on 5/26/20.
+ * TBD.
+ *
+ * @author Dino Kadrikj.
  */
-abstract class ProtonViewModel : ViewModel() {
-
-}
+abstract class ProtonViewModel : ViewModel()

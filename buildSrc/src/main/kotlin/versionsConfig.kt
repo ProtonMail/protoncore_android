@@ -18,8 +18,7 @@ fun initVersions() {
     `android-arch version` =                    "2.1.0"         // Released: Sep 06, 2019
     `constraint-layout version` =               "2.0.0-beta4"   // Released: Jun 17, 2019
     `espresso version` =                        "3.2.0"         // Released: May 30, 2019
-    `fragment version` =                        "1.2.0-alpha03" // Released: Apr 05, 2020
-    `fragment version`
+    `fragment version` =                        "1.3.0-alpha04" // Released: Apr 05, 2020
     `ktx version` =                             "1.2.0-beta01"  // Released: Oct 11, 2019
     `lifecycle version` =                       "2.2.0"  // Released: Oct 11, 2019
     `material version` =                        "1.2.0-alpha02" // Updated: May 24, 2020
@@ -35,8 +34,11 @@ fun initVersions() {
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.4.0"         // Released: Apr 12, 2019
     `timber version` =                          "4.7.1"         // Released:
-    `viewStateStore version` =                  "1.3-beta-3"    // Released: Oct 03, 2019
-    `hilt-android version` =                    "2.28-alpha" // Released: Jun 10, 2020
+    `viewStateStore version` =                  "1.4-beta-4"    // Released: Oct 03, 2019
+    `hilt-android version` =                    "2.28-alpha"    // Released: Jun 10, 2020
+    `hilt-androidx version` =                   "1.0.0-alpha01" // Released: Jun 12, 2020
+    `assistedInject version` =                  "0.5.2"         // Released: Nov 22, 2019
+    `dagger version` =                          "2.28"          // Released: May 04, 2018
     // endregion
 }
 
@@ -54,7 +56,7 @@ const val `okHttp version` =                "4.8.0"         // Released: Jul 11,
 // endregion
 
 // region Gradle
-const val `easyGradle version` =            "1.5-beta-8"    // Released: Jun 14, 2020
+const val `easyGradle version` =            "1.5-beta-9"    // Released: Jun 14, 2020
 // endregion
 
 // region Plugins

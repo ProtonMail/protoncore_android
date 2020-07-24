@@ -18,15 +18,19 @@
   -->
 
 <resources>
+    <!-- TODO: there are new dimensions defined by the designers, should be updated -->
     <!-- region layout margins -->
-    <dimen name="normal_margin">5dp</dimen>
-    <dimen name="default_top_margin">10dp</dimen>
+    <dimen name="normal_margin">8dp</dimen>
+    <dimen name="double_margin">12dp</dimen>
+    <dimen name="default_top_margin">12dp</dimen>
+    <dimen name="view_separation_margin">16dp</dimen>
     <dimen name="double_top_margin">20dp</dimen>
-    <dimen name="default_view_vertical_space">10dp</dimen>
-    <dimen name="parent_padding">10dp</dimen>
+    <dimen name="default_view_vertical_space">8dp</dimen>
+    <dimen name="default_view_horizontal_space">8dp</dimen>
+    <dimen name="parent_padding">8dp</dimen>
     <!-- endregion -->
 
     <!-- region view margins -->
-    <dimen name="input_padding">10dp</dimen>
+    <dimen name="input_padding">8dp</dimen>
     <!-- endregion -->
 </resources>

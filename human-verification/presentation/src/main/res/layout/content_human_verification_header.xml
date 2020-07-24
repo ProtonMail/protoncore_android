@@ -21,43 +21,64 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerHumanVerification"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingTop="@dimen/parent_padding">
+        android:layout_height="@dimen/human_verification_header_height"
+        android:paddingStart="@dimen/parent_padding"
+        android:paddingTop="@dimen/parent_padding"
+        android:paddingEnd="@dimen/parent_padding">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/closeButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@null"
-            android:tint="@color/dark_gray"
+            android:layout_width="@dimen/human_verification_close_button"
+            android:layout_height="@dimen/human_verification_close_button"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:srcCompat="@drawable/vector_cancel_close" />
+            app:srcCompat="@drawable/ic_close" />
 
         <android.widget.Button
             android:id="@+id/helpButton"
             style="@style/ProtonButton.Borderless"
-            android:layout_width="60dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/human_verification_help_button_width"
+            android:layout_height="@dimen/human_verification_help_button_height"
             android:padding="0dp"
-            android:text="@string/help"
-            android:textColor="@color/gray"
+            android:text="@string/human_verification_help"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/human_verification_title"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:text="@string/human_verification_title"
+                android:textSize="@dimen/human_verification_title_size" />
+
+            <TextView
+                android:id="@+id/optionsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/gray"
+                android:text="@string/human_verification_title_options"
+                android:textSize="@dimen/human_verification_subtitle_size" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

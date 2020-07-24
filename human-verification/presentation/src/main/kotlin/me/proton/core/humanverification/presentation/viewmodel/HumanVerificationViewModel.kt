@@ -19,38 +19,50 @@
 package me.proton.core.humanverification.presentation.viewmodel
 
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
 /**
- * Created by dinokadrikj on 5/25/20.
+ * View model class to serve the main Human Verification screen.
+ *
+ * @param availableVerificationMethods receives a list of all available methods that the API is
+ * currently supporting for this particular user and device.
+ * The UI should present the verification methods for each one of them.
+ *
+ * @author Dino Kadrikj.
  */
-class HumanVerificationViewModel(private val availableVerificationMethods: List<String>) : ProtonViewModel(), ViewStateStoreScope {
-    // TODO: dino currently working with strings,change later to enums or something else typesafety
-    private lateinit var currentActiveVerificationMethod: String
+class HumanVerificationViewModel(private val availableVerificationMethods: List<String>) :
+    ProtonViewModel(), ViewStateStoreScope {
 
-    val activeMethod = ViewStateStore<String>()
+    private lateinit var currentActiveVerificationMethod: TokenType
+
+    val activeMethod = ViewStateStore<String>().lock
     val enabledMethods = ViewStateStore<List<String>>().lock
 
     init {
-        enabledMethods.set(availableVerificationMethods, true)
+        if (availableVerificationMethods.isEmpty()) {
+            throw NotEnoughVerificationOptions("Please provide at least 1 verification method")
+        }
+
+        enabledMethods.setData(data = availableVerificationMethods, dropOnSame = true)
         defineActiveVerificationMethod()
     }
 
-    fun defineActiveVerificationMethod(userSelectedMethod: String? = null) {
+    /**
+     * Sets the currently active verification method that the user chose.
+     */
+    fun defineActiveVerificationMethod(userSelectedMethod: TokenType? = null) {
         userSelectedMethod?.let {
             currentActiveVerificationMethod = it
         } ?: run {
-            currentActiveVerificationMethod = availableVerificationMethods.sorted()[0]
+            currentActiveVerificationMethod =
+                TokenType.fromString(availableVerificationMethods.sorted()[0])
         }
-        activeMethod.set(currentActiveVerificationMethod, false)
-    }
-
-    /**
-     * Submits the human verification token to the API for every verification method supported
-     * (Captcha, Email and SMS).
-     */
-    fun submitHumanVerificationToken(token: String) {
-
+        activeMethod.setData(
+            data = currentActiveVerificationMethod.tokenTypeValue,
+            dropOnSame = false
+        )
     }
 }

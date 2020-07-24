@@ -17,82 +17,147 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?android:windowBackground"
         android:padding="@dimen/parent_padding">
 
-        <TextView
-            android:id="@+id/callingCodeText"
-            style="@style/ProtonEditText.Border.Grey"
-            android:layout_width="65dp"
-            android:layout_height="55dp"
-            android:enabled="false"
-            android:singleLine="true"
-            android:textAllCaps="true"
-            android:textCursorDrawable="@null"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/actionButtons"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/smsEditTextLayout"
-            app:layout_constrainedHeight="true"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/smsEditTextLayout"
-            style="@style/ProtonButton.Borderless.Layout"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:autofillHints="@string/input_sms_for_human_verification"
-            android:hint="XXX XXX XXX"
-            android:padding="0dp"
-            app:endIconDrawable="@drawable/vector_clear"
-            app:endIconMode="custom"
-            app:endIconTint="@color/dark_gray"
-            app:hintAnimationEnabled="false"
-            app:layout_constrainedHeight="true"
-            app:layout_constraintBottom_toTopOf="@+id/actionButtons"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/callingCodeText"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/smsEditText"
-                style="@style/ProtonEditText.Border.Grey"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:inputType="text|phone" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:id="@+id/actionButtons"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/smsEditTextLayout">
+            android:layout_height="match_parent">
 
-            <android.widget.Button
-                android:id="@+id/getVerificationCodeButton"
-                style="@style/ProtonButton.Action"
+            <TextView
+                android:id="@+id/title"
+                style="@style/ProtonTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:text="@string/human_verification_option_sms_subtitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/header"
+                style="@style/ProtonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_top_margin"
-                android:text="@string/human_verification_get_verification_code" />
+                android:text="@string/human_verification_option_sms"
+                android:textAllCaps="true"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title" />
 
-            <android.widget.Button
-                android:id="@+id/proceedButton"
-                style="@style/ProtonButton.Borderless"
+            <TextView
+                android:id="@+id/callingCodeText"
+                style="@style/ProtonEditText.Border.Disabled"
+                android:layout_width="90dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_drop_down"
+                android:focusable="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textCursorDrawable="@null"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintBottom_toTopOf="@+id/actionButtons"
+                app:layout_constraintEnd_toStartOf="@+id/smsEditTextLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header"
+                tools:text="+123-1" />
+
+            <RelativeLayout
+                android:id="@+id/smsEditTextLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                app:layout_constraintBottom_toTopOf="@+id/actionButtons"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/callingCodeText"
+                app:layout_constraintTop_toBottomOf="@id/header">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/smsEditText"
+                    style="@style/ProtonEditText.Border"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:gravity="start|center_vertical"
+                    android:hint="@string/sms_hint"
+                    android:inputType="text|phone"
+                    tools:text="123456789" />
+
+                <ToggleButton
+                    android:id="@+id/phoneClearButton"
+                    android:layout_width="@dimen/edit_text_action_button"
+                    android:layout_height="32dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:button="@drawable/ic_filled_times_circle"
+                    android:textOff=""
+                    android:textOn=""
+                    android:textSize="0sp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/actionButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_top_margin"
-                android:text="@string/human_verification_already_have_code" />
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/smsEditTextLayout">
 
-        </LinearLayout>
+                <FrameLayout
+                    android:id="@+id/getVerificationCodeButtonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/double_top_margin">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <android.widget.Button
+                        android:id="@+id/getVerificationCodeButton"
+                        style="@style/ProtonButton.Action"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/human_verification_get_verification_code" />
+
+                    <!-- this is a temporary solution, we should make it custom view later -->
+                    <ProgressBar
+                        android:id="@+id/progress"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:elevation="3dp"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/white"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <android.widget.Button
+                    android:id="@+id/proceedButton"
+                    style="@style/ProtonButton.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/double_top_margin"
+                    android:text="@string/human_verification_already_have_code"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/fragmentCountriesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 </layout>

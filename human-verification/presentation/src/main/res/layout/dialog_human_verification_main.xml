@@ -23,12 +23,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?android:windowBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:windowBackground">
+            android:layout_height="wrap_content">
 
             <include
                 android:id="@+id/headerNavigation"
@@ -40,15 +40,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/headerOptions"
-                layout="@layout/content_human_verification_options"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/verificationOptions"
+                style="@style/HumanVerificationTabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
                 android:layout_marginBottom="@dimen/default_view_vertical_space"
+                android:gravity="center_horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerNavigation" />
+                app:layout_constraintTop_toBottomOf="@id/headerNavigation"
+                app:tabGravity="fill"
+                app:tabMaxWidth="0dp"
+                app:tabMode="fixed">
+
+            </com.google.android.material.tabs.TabLayout>
 
             <FrameLayout
                 android:id="@+id/fragmentOptionsContainer"
@@ -57,7 +64,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerOptions" />
+                app:layout_constraintTop_toBottomOf="@id/verificationOptions" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

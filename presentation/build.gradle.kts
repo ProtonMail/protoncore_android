@@ -22,8 +22,6 @@ import util.libVersion
 
 plugins {
     `android-library`
-    `kotlin-android`
-    `kotlin-android-extensions`
     `kotlin-serialization`
 }
 
@@ -41,7 +39,9 @@ dependencies {
         `kotlin-reflect`,
         `coroutines-android`,
         `constraint-layout`,
-        serialization
+        `serialization`,
+        `activity`,
+        fragment
     )
 
     // Android

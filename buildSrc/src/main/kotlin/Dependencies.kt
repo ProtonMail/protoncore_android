@@ -20,7 +20,3 @@ val DependencyHandler.`dokka-gradle-plugin` get() = jetbrains("dokka", moduleSuf
 fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =
     android("tools.lint", "lint", moduleSuffix, version)
 // endregion
-
-// region hilt
-val DependencyHandler.`hilt-lifecycle-viewmodel` get() = androidx("hilt", moduleSuffix = "lifecycle-viewmodel") version "1.0.0-alpha01"
-// endregion

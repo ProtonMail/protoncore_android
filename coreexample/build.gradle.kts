@@ -21,6 +21,8 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     `android-application`
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android(Version(0, 1))
@@ -37,10 +39,11 @@ dependencies {
 //        project(Module.settings),
 
         // Human Verification
-        project(Module.humanVerificationPresentation),
+        project(Module.humanVerification),
 
         // Presentation
         project(Module.presentation),
+        project(Module.network),
 
         `kotlin-jdk7`,
         `kotlin-reflect`,
@@ -55,6 +58,9 @@ dependencies {
         `material`,
         `viewStateStore`,
         `android-work-runtime`,
+        `hilt-android`,
+        `hilt-androidx-annotations`,
+        `hilt-androidx-viewModel`,
 
         // Other
         `timber`
@@ -63,7 +69,14 @@ dependencies {
     // Android
     compileOnly(`android-annotation`)
 
+    kapt(
+        `assistedInject-processor-dagger`,
+        `hilt-android-compiler`,
+        `hilt-androidx-compiler`
+    )
+
     // Other
+    compileOnly(`assistedInject-annotations-dagger`)
 
     // Test
     testImplementation(project(Module.androidTest))

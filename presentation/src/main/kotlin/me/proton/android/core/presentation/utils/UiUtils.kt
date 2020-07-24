@@ -22,12 +22,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
 /**
- * Created by dinokadrikj on 5/15/20.
+ * @author Dino Kadrikj.
  */
-
 inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> FragmentTransaction) {
     val transaction = beginTransaction()
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
     transaction.block()
     transaction.commit()
 }

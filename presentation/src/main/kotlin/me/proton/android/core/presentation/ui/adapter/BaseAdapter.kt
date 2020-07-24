@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 @file:Suppress("unused", "MemberVisibilityCanBePrivate") // Public APIs
 
 package me.proton.android.core.presentation.ui.adapter
@@ -5,6 +23,8 @@ package me.proton.android.core.presentation.ui.adapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.calculateDiff
 import androidx.recyclerview.widget.RecyclerView
+import me.proton.android.core.presentation.ui.adapter.BaseAdapter.DiffCallback
+import me.proton.android.core.presentation.ui.adapter.BaseAdapter.ItemsComparator
 
 /**
  * A [RecyclerView.Adapter] that contains a [List] of [UiModel] items.
@@ -75,7 +95,8 @@ abstract class BaseAdapter<UiModel, ViewHolder : ClickableAdapter.ViewHolder<UiM
      * @param itemsComparator an [ItemsComparator] of [T] for compare old items to new items.
      */
     class DiffCallback<T>(
-        private val oldList: List<T>, private val newList: List<T>,
+        private val oldList: List<T>,
+        private val newList: List<T>,
         private val itemsComparator: ItemsComparator<T>
     ) : DiffUtil.Callback() {
 
