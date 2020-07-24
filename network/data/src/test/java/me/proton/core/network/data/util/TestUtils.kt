@@ -76,7 +76,7 @@ class TestTLSHelper {
     }
 
     companion object {
-        val TEST_PINS = arrayOf("sha256/d/dc7p/QKB+PnyVi/JOHUQxrZpfGc2LEdq43JGGii4k=")
-        val BAD_PINS  = arrayOf("sha256/a/dc7p/QKB+PnyVi/JOHUQxrZpfGc2LEdq43JGGii4k=")
+        val TEST_PINS = arrayOf("d/dc7p/QKB+PnyVi/JOHUQxrZpfGc2LEdq43JGGii4k=")
+        val BAD_PINS  = arrayOf("a/dc7p/QKB+PnyVi/JOHUQxrZpfGc2LEdq43JGGii4k=")
     }
 }

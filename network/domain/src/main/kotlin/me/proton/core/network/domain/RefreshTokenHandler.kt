@@ -44,7 +44,8 @@ class RefreshTokenHandler<Api>(
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> =
-        if (error is ApiResult.Error.Http && error.httpCode == HTTP_UNAUTHORIZED) {
+        if (error is ApiResult.Error.Http && error.httpCode == HTTP_UNAUTHORIZED &&
+                userData.refreshToken.isNotEmpty()) {
             // If request started before last token refresh there's no need for refresh
             if (call.timestampMs < lastRefreshTimeMs || refreshTokens(backend) is ApiResult.Success)
                 backend(call)

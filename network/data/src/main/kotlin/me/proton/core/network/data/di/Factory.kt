@@ -79,14 +79,16 @@ class ApiFactory(
      * @param userData [UserData] to be used in the [ApiManager].
      * @param interfaceClass Kotlin class for [Api] interface.
      * @param clientErrorHandlers Extra error handlers provided by the client.
-     * @param certificatePins Overrides [Constants.DEFAULT_PINS]
+     * @param certificatePins Overrides [Constants.DEFAULT_SPKI_PINS]
+     * @param alternativeApiPins Overrides [Constants.ALTERNATIVE_API_SPKI_PINS]
      * @return [ApiManager] instance.
      */
     fun <Api : BaseRetrofitApi> ApiManager(
         userData: UserData,
         interfaceClass: KClass<Api>,
         clientErrorHandlers: List<ApiErrorHandler<Api>> = emptyList(),
-        certificatePins: Array<String> = Constants.DEFAULT_PINS
+        certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
+        alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
             initPinning(builder, URI(baseUrl).host, certificatePins)
@@ -107,7 +109,7 @@ class ApiFactory(
             createBaseErrorHandlers<Api>(userData, ::javaMonoClockMs, mainScope) + clientErrorHandlers
 
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
-            initSPKIleafPinning(builder, Constants.ALTERNATIVE_API_SPKI_PINS)
+            initSPKIleafPinning(builder, alternativeApiPins)
         }
         val dohApiHandler = DohApiHandler(apiClient, primaryBackend, dohProvider, prefs, ::javaWallClockMs) { baseUrl ->
             ProtonApiBackend(

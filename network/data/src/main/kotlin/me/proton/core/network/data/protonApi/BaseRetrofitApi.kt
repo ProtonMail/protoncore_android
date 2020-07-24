@@ -29,7 +29,7 @@ interface BaseRetrofitApi {
     @POST("auth/refresh")
     suspend fun refreshToken(@Body body: RefreshTokenRequest): RefreshTokenResponse
 
-    @GET("test/ping")
+    @GET("tests/ping")
     suspend fun ping()
 }
 
