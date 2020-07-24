@@ -4,7 +4,6 @@ import util.libVersion
 
 plugins {
     `kotlin-library`
-    `kotlin-serialization`
 }
 
 //libVersion = Version(0, 1, 0)
@@ -13,13 +12,17 @@ dependencies {
 
     implementation(
 
-        project(Module.kotlinUtil),
         `coroutines-core`,
         // project(Module.domain)
 
         // Kotlin
-        `kotlin-jdk7`,
-        `serialization`
+        `kotlin-jdk7`
+    )
+
+    api (
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
+        `dagger-android`
     )
 
     testImplementation(project(Module.kotlinTest))

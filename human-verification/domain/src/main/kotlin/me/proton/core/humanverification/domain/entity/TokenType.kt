@@ -19,11 +19,29 @@
 package me.proton.core.humanverification.domain.entity
 
 /**
- * Data entity class that represents a country which holds some information like name and calling code.
  * @author Dino Kadrikj.
  */
-data class Country(
-    val code: String, // Country code
-    val name: String,
-    val callingCode: Int
-)
+const val VERIFICATION_OPTION_CAPTCHA = "captcha"
+const val VERIFICATION_OPTION_EMAIL = "email"
+const val VERIFICATION_OPTION_SMS = "sms"
+const val VERIFICATION_OPTION_PAYMENT = "payment"
+const val VERIFICATION_OPTION_HAS_CODE = "hasCode" // internal
+
+/**
+ * Enumeration for all supported verification types.
+ */
+enum class TokenType(val tokenTypeValue: String) {
+    SMS(VERIFICATION_OPTION_SMS),
+    EMAIL(VERIFICATION_OPTION_EMAIL),
+    CAPTCHA(VERIFICATION_OPTION_CAPTCHA),
+    PAYMENT(VERIFICATION_OPTION_PAYMENT), // currently unused
+    HAS_CODE(VERIFICATION_OPTION_HAS_CODE); // internal
+
+    companion object {
+        fun fromString(tokenTypeValue: String?): TokenType {
+            return values().find {
+                tokenTypeValue == it.tokenTypeValue
+            } ?: SMS
+        }
+    }
+}

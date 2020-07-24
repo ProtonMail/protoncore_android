@@ -16,14 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.domain.entity
+package me.proton.core.humanverification.domain.exception
 
 /**
- * Data entity class that represents a country which holds some information like name and calling code.
+ * Represents an exception that an invalid (unsupported) verification type (method) has been passed.
+ *
  * @author Dino Kadrikj.
  */
-data class Country(
-    val code: String, // Country code
-    val name: String,
-    val callingCode: Int
-)
+class InvalidValidationOptionException(message: String) : RuntimeException(message)

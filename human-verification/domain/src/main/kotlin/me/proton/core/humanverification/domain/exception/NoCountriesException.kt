@@ -16,14 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.domain.entity
+package me.proton.core.humanverification.domain.exception
 
 /**
- * Data entity class that represents a country which holds some information like name and calling code.
+ * Represents exception if the local countries resources are empty or there is a problem in
+ * loading/reading them.
+ *
  * @author Dino Kadrikj.
  */
-data class Country(
-    val code: String, // Country code
-    val name: String,
-    val callingCode: Int
-)
+class NoCountriesException : RuntimeException()

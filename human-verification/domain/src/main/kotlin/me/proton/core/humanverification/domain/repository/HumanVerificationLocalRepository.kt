@@ -16,14 +16,28 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.domain.entity
+package me.proton.core.humanverification.domain.repository
+
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.humanverification.domain.entity.Country
+import me.proton.core.util.kotlin.Invokable
 
 /**
- * Data entity class that represents a country which holds some information like name and calling code.
+ * Local repository interface that defines all operations that later the data layer (module) should
+ * implement. All of these operations are local and read from local resources. Anyway, run them on
+ * an IO thread.
+ *
  * @author Dino Kadrikj.
  */
-data class Country(
-    val code: String, // Country code
-    val name: String,
-    val callingCode: Int
-)
+interface HumanVerificationLocalRepository : Invokable {
+
+    /**
+     * Returns all [Country] list.
+     */
+    fun allCountries(mostUsedIncluded: Boolean): Flow<List<Country>>
+
+    /**
+     * Returns the most used [Country] list of countries.
+     */
+    fun mostUsedCountries(): Flow<List<Country>>
+}

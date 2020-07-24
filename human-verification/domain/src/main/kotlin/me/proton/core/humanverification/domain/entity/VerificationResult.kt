@@ -19,11 +19,15 @@
 package me.proton.core.humanverification.domain.entity
 
 /**
- * Data entity class that represents a country which holds some information like name and calling code.
+ * Informs the observer from the presentation module for the success of the verification operation.
+ * It is simple, [Success] or [Error] information.
+ * Currently no more details of the error needed.
+ *
  * @author Dino Kadrikj.
  */
-data class Country(
-    val code: String, // Country code
-    val name: String,
-    val callingCode: Int
-)
+sealed class VerificationResult {
+
+    object Success : VerificationResult()
+
+    class Error(val message: String?) : VerificationResult()
+}

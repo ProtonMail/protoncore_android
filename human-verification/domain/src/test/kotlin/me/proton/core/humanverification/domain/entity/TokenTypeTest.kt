@@ -18,12 +18,29 @@
 
 package me.proton.core.humanverification.domain.entity
 
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
 /**
- * Data entity class that represents a country which holds some information like name and calling code.
  * @author Dino Kadrikj.
  */
-data class Country(
-    val code: String, // Country code
-    val name: String,
-    val callingCode: Int
-)
+internal class TokenTypeTest {
+
+    @Test
+    fun `from string returns correct type`() {
+        val expected = TokenType.EMAIL
+        val input = "email"
+
+        val result = TokenType.fromString(input)
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `from string unknown returns default`() {
+        val expected = TokenType.SMS
+        val input = "sometype"
+
+        val result = TokenType.fromString(input)
+        assertEquals(expected, result)
+    }
+}

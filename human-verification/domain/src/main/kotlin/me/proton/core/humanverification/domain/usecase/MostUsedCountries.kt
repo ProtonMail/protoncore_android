@@ -16,14 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.domain.entity
+package me.proton.core.humanverification.domain.usecase
+
+import me.proton.core.humanverification.domain.repository.HumanVerificationLocalRepository
+import javax.inject.Inject
 
 /**
- * Data entity class that represents a country which holds some information like name and calling code.
+ * Proton Core.
+ * Use case that fetches the most used countries.
+ *
  * @author Dino Kadrikj.
  */
-data class Country(
-    val code: String, // Country code
-    val name: String,
-    val callingCode: Int
-)
+class MostUsedCountries @Inject
+constructor(private val humanVerificationLocalRepository: HumanVerificationLocalRepository) {
+
+    /** Returns the top most used countries. */
+    operator fun invoke() = humanVerificationLocalRepository.mostUsedCountries()
+}

@@ -16,14 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.domain.entity
+package me.proton.core.humanverification.domain
+
+import javax.inject.Qualifier
 
 /**
- * Data entity class that represents a country which holds some information like name and calling code.
  * @author Dino Kadrikj.
  */
-data class Country(
-    val code: String, // Country code
-    val name: String,
-    val callingCode: Int
-)
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CurrentUsername
