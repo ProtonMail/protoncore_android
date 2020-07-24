@@ -16,20 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.data.entity
+package me.proton.core.network.data.protonApi
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.humanverification.data.api.HumanVerificationFields.API_HUMAN_VERIFICATION_METHODS
-import me.proton.core.humanverification.data.api.HumanVerificationFields.API_HUMAN_VERIFICATION_TOKEN
 
 /**
- * Response class for Human Verification serialization.
  * @author Dino Kadrikj.
  */
-@Serializable data class HumanVerificationResponse(
-    @SerialName(API_HUMAN_VERIFICATION_METHODS)
-    val verifyMethods: List<String>, // Only provided if Direct = 1
-    @SerialName(API_HUMAN_VERIFICATION_TOKEN)
-    val token: String
-)
+const val API_CODE = "Code" // TODO: this should be replaced with the more broader constant after rebase
+@Serializable
+class GenericResponse(@SerialName(API_CODE) val code: Int)

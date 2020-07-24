@@ -15,21 +15,31 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-package me.proton.core.humanverification.data.entity
-
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import me.proton.core.humanverification.data.api.HumanVerificationFields.API_HUMAN_VERIFICATION_METHODS
-import me.proton.core.humanverification.data.api.HumanVerificationFields.API_HUMAN_VERIFICATION_TOKEN
+package me.proton.core.humanverification.data.api
 
 /**
- * Response class for Human Verification serialization.
  * @author Dino Kadrikj.
  */
-@Serializable data class HumanVerificationResponse(
-    @SerialName(API_HUMAN_VERIFICATION_METHODS)
-    val verifyMethods: List<String>, // Only provided if Direct = 1
-    @SerialName(API_HUMAN_VERIFICATION_TOKEN)
-    val token: String
-)
+object HumanVerificationFields {
+
+    // region local data
+    const val COUNTRY_CODE = "country_code"
+    const val COUNTRY = "country_en"
+    const val PHONE = "phone_code"
+    // endregion
+
+    // region api
+    const val API_PHONE = "Phone"
+    const val API_ADDRESS = "Address"
+    const val API_USERNAME = "Username"
+    const val API_TYPE = "Type"
+    const val API_DESTINATION = "Destination"
+    const val API_TOKEN = "Token"
+    const val API_TOKEN_TYPE = "TokenType"
+    const val API_HUMAN_VERIFICATION_METHODS = "HumanVerificationMethods"
+    const val API_HUMAN_VERIFICATION_TOKEN = "HumanVerificationToken"
+    // endregion
+
+    const val API_CODE = "Code"
+
+}

@@ -20,16 +20,16 @@ package me.proton.core.humanverification.data.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.humanverification.data.api.HumanVerificationFields.API_HUMAN_VERIFICATION_METHODS
-import me.proton.core.humanverification.data.api.HumanVerificationFields.API_HUMAN_VERIFICATION_TOKEN
+import me.proton.core.humanverification.data.api.HumanVerificationFields.API_TOKEN
+import me.proton.core.humanverification.data.api.HumanVerificationFields.API_TOKEN_TYPE
 
 /**
- * Response class for Human Verification serialization.
  * @author Dino Kadrikj.
  */
-@Serializable data class HumanVerificationResponse(
-    @SerialName(API_HUMAN_VERIFICATION_METHODS)
-    val verifyMethods: List<String>, // Only provided if Direct = 1
-    @SerialName(API_HUMAN_VERIFICATION_TOKEN)
-    val token: String
+@Serializable
+data class HumanVerificationBody(
+    @SerialName(API_TOKEN)
+    val token: String,
+    @SerialName(API_TOKEN_TYPE)
+    val tokenType: String
 )

@@ -15,21 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
+package me.proton.core.humanverification.data.repository.util
 
-package me.proton.core.humanverification.data.entity
-
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import me.proton.core.humanverification.data.api.HumanVerificationFields.API_HUMAN_VERIFICATION_METHODS
-import me.proton.core.humanverification.data.api.HumanVerificationFields.API_HUMAN_VERIFICATION_TOKEN
+import me.proton.core.humanverification.data.api.HumanVerificationApi
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import retrofit2.http.GET
 
 /**
- * Response class for Human Verification serialization.
  * @author Dino Kadrikj.
  */
-@Serializable data class HumanVerificationResponse(
-    @SerialName(API_HUMAN_VERIFICATION_METHODS)
-    val verifyMethods: List<String>, // Only provided if Direct = 1
-    @SerialName(API_HUMAN_VERIFICATION_TOKEN)
-    val token: String
-)
+interface TestHumanVerificationApi : BaseRetrofitApi, HumanVerificationApi {
+    @GET("test")
+    suspend fun test(): String
+}

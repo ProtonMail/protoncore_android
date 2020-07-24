@@ -13,17 +13,20 @@ android()
 
 dependencies {
 
-    implementation(
+    api(
 
         project(Module.kotlinUtil),
         project(Module.humanVerificationDomain),
-        // project(Module.data)
+        project(Module.network),
 
         // Kotlin
         `kotlin-jdk7`,
         `serialization`,
         `coroutines-core`,
         // Android
+        `okHttp-logging`,
+        `retrofit-kotlin-serialization`,
+        `retrofit`,
         `android-ktx`
     )
 
