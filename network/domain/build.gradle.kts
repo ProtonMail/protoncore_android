@@ -1,5 +1,4 @@
 import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 import util.libVersion
 
 plugins {
@@ -12,8 +11,10 @@ libVersion = Version(0, 1, 4)
 dependencies {
 
     implementation(
+
         project(Module.kotlinUtil),
 
+        // Kotlin
         `kotlin-jdk7`,
         `coroutines-core`,
         `serialization`
