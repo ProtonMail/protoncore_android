@@ -1,0 +1,13 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:me.proton.android.core.presentation.utils$clearText(android.widget.EditText)me.proton.android.core.presentation.utils/android.widget.-edit-text/clear-text.html
+$dokka.location:me.proton.android.core.presentation.utils$inTransaction(androidx.fragment.app.FragmentManager, kotlin.Function1((androidx.fragment.app.FragmentTransaction, )))me.proton.android.core.presentation.utils/androidx.fragment.app.-fragment-manager/in-transaction.html
+$dokka.location:me.proton.android.core.presentation.utils$inflate(android.view.ViewGroup, kotlin.Int, kotlin.Boolean)me.proton.android.core.presentation.utils/android.view.-view-group/inflate.html
+$dokka.location:me.proton.android.core.presentation.utils$onClick(android.view.View, kotlin.Function0((kotlin.Unit)))me.proton.android.core.presentation.utils/android.view.-view/on-click.html
+$dokka.location:me.proton.android.core.presentation.utils$onItemSelected(android.widget.AdapterView((me.proton.android.core.presentation.utils.onItemSelected.T)), kotlin.Function1((kotlin.Int, kotlin.Unit)))me.proton.android.core.presentation.utils/android.widget.-adapter-view/on-item-selected.html
+$dokka.location:me.proton.android.core.presentation.utils$onTextChange(android.widget.EditText, kotlin.Function1((kotlin.CharSequence, kotlin.Unit)))me.proton.android.core.presentation.utils/android.widget.-edit-text/on-text-change.html
+me.proton.android.core.presentation.ui
+me.proton.android.core.presentation.ui.adapter
+me.proton.android.core.presentation.ui.webview
+me.proton.android.core.presentation.utils
+me.proton.android.core.presentation.viewmodel

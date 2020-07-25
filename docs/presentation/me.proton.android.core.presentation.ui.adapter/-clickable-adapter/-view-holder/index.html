@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ClickableAdapter.ViewHolder - presentation</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">presentation</a>&nbsp;/&nbsp;<a href="../../index.html">me.proton.android.core.presentation.ui.adapter</a>&nbsp;/&nbsp;<a href="../index.html">ClickableAdapter</a>&nbsp;/&nbsp;<a href="./index.html">ViewHolder</a><br/>
+<br/>
+<h1>ViewHolder</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code>
+<p>A base <a href="#">RecyclerView.ViewHolder</a> for <a href="../index.html">ClickableAdapter</a> implementations</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>A base <a href="#">RecyclerView.ViewHolder</a> for <a href="../index.html">ClickableAdapter</a> implementations</p>
+<code><span class="identifier">ViewHolder</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ClickableAdapter.ViewHolder$<init>(android.view.View)/itemView">itemView</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="click-listener.html">clickListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">clickListener</span><span class="symbol">: </span><span class="symbol">(</span><span class="identifier">T</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="context.html">context</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="long-click-listener.html">longClickListener</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">longClickListener</span><span class="symbol">: </span><span class="symbol">(</span><span class="identifier">T</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="get-color.html">getColor</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getColor</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ClickableAdapter.ViewHolder$getColor(kotlin.Int)/resId">resId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-drawable.html">getDrawable</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getDrawable</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ClickableAdapter.ViewHolder$getDrawable(kotlin.Int)/resId">resId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/graphics/drawable/Drawable.html"><span class="identifier">Drawable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-string.html">getString</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getString</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ClickableAdapter.ViewHolder$getString(kotlin.Int)/resId">resId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-text.html">getText</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getText</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ClickableAdapter.ViewHolder$getText(kotlin.Int)/resId">resId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-bind.html">onBind</a></h4>
+</td>
+<td>
+<p>Populate the <a href="https://developer.android.com/reference/android/view/View.html">View</a> with the given <a href="index.html#T">item</a></p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onBind</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ClickableAdapter.ViewHolder$onBind(me.proton.android.core.presentation.ui.adapter.ClickableAdapter.ViewHolder.T)/item">item</span><span class="symbol">:</span>&nbsp;<span class="identifier">T</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

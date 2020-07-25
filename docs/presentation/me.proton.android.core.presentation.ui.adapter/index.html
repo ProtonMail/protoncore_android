@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>me.proton.android.core.presentation.ui.adapter - presentation</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">presentation</a>&nbsp;/&nbsp;<a href="./index.html">me.proton.android.core.presentation.ui.adapter</a><br/>
+<br/>
+<h2>Package me.proton.android.core.presentation.ui.adapter</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-base-adapter/index.html">BaseAdapter</a></h4>
+</td>
+<td>
+<p>A <a href="#">RecyclerView.Adapter</a> that contains a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> of <a href="-base-adapter/index.html#UiModel">UiModel</a> items.
+Implements <a href="-clickable-adapter/index.html">ClickableAdapter</a></p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseAdapter</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">, </span><span class="identifier">ViewHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="-clickable-adapter/index.html"><span class="identifier">ClickableAdapter</span></a><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">,</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-base-paged-adapter/index.html">BasePagedAdapter</a></h4>
+</td>
+<td>
+<p>A <a href="#">PagedListAdapter</a> that contains a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> of <a href="-base-paged-adapter/index.html#UiModel">UiModel</a> items.
+Inherit from <a href="#">PagedListAdapter</a>.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BasePagedAdapter</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">, </span><span class="identifier">ViewHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">PagedListAdapter</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">,</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="-clickable-adapter/index.html"><span class="identifier">ClickableAdapter</span></a><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">,</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-clickable-adapter/index.html">ClickableAdapter</a></h4>
+</td>
+<td>
+<p>A common interface for Adapters that has clickable items <a href="-clickable-adapter/index.html#T">T</a></p>
+<code><span class="keyword">interface </span><span class="identifier">ClickableAdapter</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">VH</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-selectable-adapter/index.html">SelectableAdapter</a></h4>
+</td>
+<td>
+<p>A common interface for Adapters that has clickable and selectable items <a href="-selectable-adapter/index.html#T">T</a>
+Inherit from <a href="-clickable-adapter/index.html">ClickableAdapter</a></p>
+<code><span class="keyword">interface </span><span class="identifier">SelectableAdapter</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">VH</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-clickable-adapter/index.html"><span class="identifier">ClickableAdapter</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">,</span>&nbsp;<span class="identifier">VH</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

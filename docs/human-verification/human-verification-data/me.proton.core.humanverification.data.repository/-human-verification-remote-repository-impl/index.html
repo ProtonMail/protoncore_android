@@ -1,0 +1,62 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>HumanVerificationRemoteRepositoryImpl - human-verification-data</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">human-verification-data</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.humanverification.data.repository</a>&nbsp;/&nbsp;<a href="./index.html">HumanVerificationRemoteRepositoryImpl</a><br/>
+<br/>
+<h1>HumanVerificationRemoteRepositoryImpl</h1>
+<code><span class="keyword">class </span><span class="identifier">HumanVerificationRemoteRepositoryImpl</span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../me.proton.core.humanverification.data.api/-human-verification-api/index.html"><span class="identifier">HumanVerificationApi</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">HumanVerificationRemoteRepository</span></code>
+<p>Implementation of the <a href="#">HumanVerificationRemoteRepository</a>.
+Sends the verification code to the API. Supports only <a href="#">TokenType.EMAIL</a> and <a href="#">TokenType.SMS</a></p>
+<p><strong>Author</strong><br/>
+Dino Kadrikj.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Implementation of the <a href="#">HumanVerificationRemoteRepository</a>.
+Sends the verification code to the API. Supports only <a href="#">TokenType.EMAIL</a> and <a href="#">TokenType.SMS</a></p>
+<code><span class="identifier">HumanVerificationRemoteRepositoryImpl</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl$<init>(me.proton.core.network.domain.ApiManager((me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl.T)), kotlin.String)/api">api</span><span class="symbol">:</span>&nbsp;<span class="identifier">ApiManager</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl$<init>(me.proton.core.network.domain.ApiManager((me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl.T)), kotlin.String)/username">username</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="send-verification-code-email-address.html">sendVerificationCodeEmailAddress</a></h4>
+</td>
+<td>
+<p>Send the email address verification code to the API.</p>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">sendVerificationCodeEmailAddress</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl$sendVerificationCodeEmailAddress(kotlin.String)/emailAddress">emailAddress</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">VerificationResult</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="send-verification-code-phone-number.html">sendVerificationCodePhoneNumber</a></h4>
+</td>
+<td>
+<p>Send the sms verification code to the API.</p>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">sendVerificationCodePhoneNumber</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl$sendVerificationCodePhoneNumber(kotlin.String)/phoneNumber">phoneNumber</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">VerificationResult</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="verify-code.html">verifyCode</a></h4>
+</td>
+<td>
+<p>Verifies the verification code (token) against the API.
+Token is actually the code that has been sent to the user (or the captcha code) and that
+needs verification.</p>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">verifyCode</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl$verifyCode(kotlin.String, kotlin.String)/tokenType">tokenType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl$verifyCode(kotlin.String, kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">VerificationResult</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

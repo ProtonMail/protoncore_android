@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SelectableAdapter - presentation</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">presentation</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.android.core.presentation.ui.adapter</a>&nbsp;/&nbsp;<a href="./index.html">SelectableAdapter</a><br/>
+<br/>
+<h1>SelectableAdapter</h1>
+<code><span class="keyword">interface </span><span class="identifier">SelectableAdapter</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">VH</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-clickable-adapter/index.html"><span class="identifier">ClickableAdapter</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">,</span>&nbsp;<span class="identifier">VH</span><span class="symbol">&gt;</span></code>
+<p>A common interface for Adapters that has clickable and selectable items <a href="index.html#T">T</a>
+Inherit from <a href="../-clickable-adapter/index.html">ClickableAdapter</a></p>
+<p><strong>Author</strong><br/>
+Davide Farella</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-view-holder/index.html">ViewHolder</a></h4>
+</td>
+<td>
+<p>A base <a href="#">RecyclerView.ViewHolder</a> for <a href="./index.html">SelectableAdapter</a> implementations
+Inherit from <a href="../-clickable-adapter/-view-holder/index.html">ClickableAdapter.ViewHolder</a></p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-item-select.html">onItemSelect</a></h4>
+</td>
+<td>
+<p>A callback that will be triggered when an item selection is changed</p>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">onItemSelect</span><span class="symbol">: </span><span class="symbol">(</span><span class="identifier">T</span><span class="symbol">,</span>&nbsp;<span class="identifier">isSelected</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="prepare-click-listeners.html">prepareClickListeners</a></h4>
+</td>
+<td>
+<p>Calls private prepareViewHolder on the receiver <a href="-view-holder/index.html">ViewHolder</a></p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">prepareClickListeners</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.SelectableAdapter$prepareClickListeners(me.proton.android.core.presentation.ui.adapter.SelectableAdapter.VH)/holder">holder</span><span class="symbol">:</span>&nbsp;<span class="identifier">VH</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

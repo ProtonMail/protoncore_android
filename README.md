@@ -110,7 +110,7 @@ Test Android Instrumented: **0.1.1** - _released on: Jun 17, 2020_
 
 Domain: **0.1** - _released on: Jul 03, 2020_
 
-Presentation: **0** - _released on: ND_
+Presentation: **0.1** - _released on: Jul 25, 2020_
 
 Data: **0** - _released on: ND_
 
@@ -118,11 +118,11 @@ Data: **0** - _released on: ND_
 
 ### Network
 
-Network: **0.1.6** - _released on: Jul 24, 2020_
+Network: **0.1.7** - _released on: Jul 25, 2020_
 
 Network Domain: **0.1.4** - _released on: Jul 24, 2020_
 
-Network Data: **0.1.6** - _released on: Jul 24, 2020_
+Network Data: **0.1.7** - _released on: Jul 25, 2020_
 
 ### Crypto
 
@@ -156,10 +156,10 @@ Settings Data: **0** - _released on: ND_
 
 ### Human Verification
 
-Human Verification: **0** - _released on: ND_
+Human Verification: **0.1** - _released on: Jul 25, 2020_
 
-Human Verification Domain: **0** - _released on: ND_
+Human Verification Domain: **0.1** - _released on: Jul 25, 2020_
 
-Human Verification Presentation: **0** - _released on: ND_
+Human Verification Presentation: **0.1** - _released on: Jul 25, 2020_
 
-Human Verification Data: **0** - _released on: ND_
+Human Verification Data: **0.1** - _released on: Jul 25, 2020_

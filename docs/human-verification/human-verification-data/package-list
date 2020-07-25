@@ -1,0 +1,8 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:me.proton.core.humanverification.data$mapToVerificationResult(me.proton.core.network.domain.ApiResult((kotlin.Any)))me.proton.core.humanverification.data/me.proton.core.network.domain.-api-result/map-to-verification-result.html
+$dokka.location:me.proton.core.humanverification.data$readFromAssets(android.content.Context, kotlin.String)me.proton.core.humanverification.data/android.content.-context/read-from-assets.html
+me.proton.core.humanverification.data
+me.proton.core.humanverification.data.api
+me.proton.core.humanverification.data.entity
+me.proton.core.humanverification.data.repository

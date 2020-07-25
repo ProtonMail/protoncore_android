@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ClickableAdapter - presentation</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">presentation</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.android.core.presentation.ui.adapter</a>&nbsp;/&nbsp;<a href="./index.html">ClickableAdapter</a><br/>
+<br/>
+<h1>ClickableAdapter</h1>
+<code><span class="keyword">interface </span><span class="identifier">ClickableAdapter</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">VH</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>A common interface for Adapters that has clickable items <a href="index.html#T">T</a></p>
+<p><strong>Author</strong><br/>
+Davide Farella</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-view-holder/index.html">ViewHolder</a></h4>
+</td>
+<td>
+<p>A base <a href="#">RecyclerView.ViewHolder</a> for <a href="./index.html">ClickableAdapter</a> implementations</p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-item-click.html">onItemClick</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">onItemClick</span><span class="symbol">: </span><span class="symbol">(</span><span class="identifier">T</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-item-long-click.html">onItemLongClick</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">onItemLongClick</span><span class="symbol">: </span><span class="symbol">(</span><span class="identifier">T</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="prepare-click-listeners.html">prepareClickListeners</a></h4>
+</td>
+<td>
+<p>Calls private <a href="#">prepareViewHolder</a> on the receiver <a href="-view-holder/index.html">ViewHolder</a></p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">prepareClickListeners</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ClickableAdapter$prepareClickListeners(me.proton.android.core.presentation.ui.adapter.ClickableAdapter.VH)/holder">holder</span><span class="symbol">:</span>&nbsp;<span class="identifier">VH</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-base-adapter/index.html">BaseAdapter</a></h4>
+</td>
+<td>
+<p>A <a href="#">RecyclerView.Adapter</a> that contains a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> of <a href="../-base-adapter/index.html#UiModel">UiModel</a> items.
+Implements <a href="./index.html">ClickableAdapter</a></p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BaseAdapter</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">, </span><span class="identifier">ViewHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">ClickableAdapter</span></a><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">,</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-base-paged-adapter/index.html">BasePagedAdapter</a></h4>
+</td>
+<td>
+<p>A <a href="#">PagedListAdapter</a> that contains a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> of <a href="../-base-paged-adapter/index.html#UiModel">UiModel</a> items.
+Inherit from <a href="#">PagedListAdapter</a>.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">BasePagedAdapter</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">, </span><span class="identifier">ViewHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">PagedListAdapter</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">,</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">ClickableAdapter</span></a><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">,</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../-selectable-adapter/index.html">SelectableAdapter</a></h4>
+</td>
+<td>
+<p>A common interface for Adapters that has clickable and selectable items <a href="../-selectable-adapter/index.html#T">T</a>
+Inherit from <a href="./index.html">ClickableAdapter</a></p>
+<code><span class="keyword">interface </span><span class="identifier">SelectableAdapter</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">, </span><span class="identifier">VH</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ClickableAdapter</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">,</span>&nbsp;<span class="identifier">VH</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

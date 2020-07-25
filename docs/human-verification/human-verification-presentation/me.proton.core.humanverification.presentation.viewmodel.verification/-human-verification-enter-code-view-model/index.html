@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>HumanVerificationEnterCodeViewModel - human-verification-presentation</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">human-verification-presentation</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.humanverification.presentation.viewmodel.verification</a>&nbsp;/&nbsp;<a href="./index.html">HumanVerificationEnterCodeViewModel</a><br/>
+<br/>
+<h1>HumanVerificationEnterCodeViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">HumanVerificationEnterCodeViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ProtonViewModel</span><span class="symbol">, </span><span class="identifier">ViewStateStoreScope</span></code>
+<p>View model class that handles the input of the verification code (token) previously sent to any
+destination <a href="#">TokenType.EMAIL</a> or <a href="#">TokenType.SMS</a>.
+It will contact the API in order to verify that the entered code is the correct one.</p>
+<p><strong>Author</strong><br/>
+Dino Kadrikj.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>View model class that handles the input of the verification code (token) previously sent to any
+destination <a href="#">TokenType.EMAIL</a> or <a href="#">TokenType.SMS</a>.
+It will contact the API in order to verify that the entered code is the correct one.</p>
+<code><span class="identifier">HumanVerificationEnterCodeViewModel</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel$<init>(me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination, me.proton.core.humanverification.domain.usecase.VerifyCode)/resendVerificationCodeToDestination">resendVerificationCodeToDestination</span><span class="symbol">:</span>&nbsp;<span class="identifier">ResendVerificationCodeToDestination</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel$<init>(me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination, me.proton.core.humanverification.domain.usecase.VerifyCode)/verifyCode">verifyCode</span><span class="symbol">:</span>&nbsp;<span class="identifier">VerifyCode</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="code-verification-result.html">codeVerificationResult</a></h4>
+</td>
+<td>
+<p>Code is sometimes referred as a token, so token on BE and code on UI, it is same thing.</p>
+<code><span class="keyword">val </span><span class="identifier">codeVerificationResult</span><span class="symbol">: </span><span class="identifier">LockedViewStateStore</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="destination.html">destination</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">destination</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="token-type.html">tokenType</a></h4>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">tokenType</span><span class="symbol">: </span><span class="identifier">TokenType</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="verification-code-resend-status.html">verificationCodeResendStatus</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">verificationCodeResendStatus</span><span class="symbol">: </span><span class="identifier">LockedViewStateStore</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="resend-code.html">resendCode</a></h4>
+</td>
+<td>
+<p>This function resends another token to the same previously set destination.</p>
+<code><span class="keyword">fun </span><span class="identifier">resendCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="verify-token-code.html">verifyTokenCode</a></h4>
+</td>
+<td>
+<p>Verifies the entered token on the API.</p>
+<code><span class="keyword">fun </span><span class="identifier">verifyTokenCode</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel$verifyTokenCode(me.proton.core.humanverification.domain.entity.TokenType, kotlin.String)/tokenType">tokenType</span><span class="symbol">:</span>&nbsp;<span class="identifier">TokenType</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel$verifyTokenCode(me.proton.core.humanverification.domain.entity.TokenType, kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Job</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

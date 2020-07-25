@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SendVerificationCodeToPhoneDestination - human-verification-domain</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">human-verification-domain</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.humanverification.domain.usecase</a>&nbsp;/&nbsp;<a href="./index.html">SendVerificationCodeToPhoneDestination</a><br/>
+<br/>
+<h1>SendVerificationCodeToPhoneDestination</h1>
+<code><span class="keyword">class </span><span class="identifier">SendVerificationCodeToPhoneDestination</span></code>
+<p>Use case for sending the verification code to any destination chosen by the user, based on the
+verification type (method), which can be captcha, email, sms etc..</p>
+<p>Depends on the <a href="../../me.proton.core.humanverification.domain.repository/-human-verification-remote-repository/index.html">HumanVerificationRemoteRepository</a> for contacting the API.</p>
+<h3>Parameters</h3>
+<p><a name="humanVerificationRemoteRepository"></a>
+<code>humanVerificationRemoteRepository</code> - the remote repository interface implementation.</p>
+<p><strong>Author</strong><br/>
+Dino Kadrikj.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Use case for sending the verification code to any destination chosen by the user, based on the
+verification type (method), which can be captcha, email, sms etc..</p>
+<code><span class="identifier">SendVerificationCodeToPhoneDestination</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination$<init>(me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository)/humanVerificationRemoteRepository">humanVerificationRemoteRepository</span><span class="symbol">:</span>&nbsp;<a href="../../me.proton.core.humanverification.domain.repository/-human-verification-remote-repository/index.html"><span class="identifier">HumanVerificationRemoteRepository</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="invoke.html">invoke</a></h4>
+</td>
+<td>
+<p>Sends the verification code (token) to the API.</p>
+<code><span class="keyword">suspend</span> <span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">invoke</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination$invoke(kotlin.String)/phoneNumber">phoneNumber</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../me.proton.core.humanverification.domain.entity/-verification-result/index.html"><span class="identifier">VerificationResult</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

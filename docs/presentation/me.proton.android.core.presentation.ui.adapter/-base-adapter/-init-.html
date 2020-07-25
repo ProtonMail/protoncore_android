@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BaseAdapter.<init> - presentation</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">presentation</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.android.core.presentation.ui.adapter</a>&nbsp;/&nbsp;<a href="index.html">BaseAdapter</a>&nbsp;/&nbsp;<a href="./-init-.html">&lt;init&gt;</a><br/>
+<br/>
+<h1>&lt;init&gt;</h1>
+<a name="me.proton.android.core.presentation.ui.adapter.BaseAdapter$&lt;init&gt;(me.proton.android.core.presentation.ui.adapter.BaseAdapter.ItemsComparator((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel, kotlin.Unit)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel, kotlin.Unit)))"></a>
+<code><span class="identifier">BaseAdapter</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.BaseAdapter$<init>(me.proton.android.core.presentation.ui.adapter.BaseAdapter.ItemsComparator((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel, kotlin.Unit)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel, kotlin.Unit)))/itemsComparator">itemsComparator</span><span class="symbol">:</span>&nbsp;<span class="identifier">ItemsComparator</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.BaseAdapter$<init>(me.proton.android.core.presentation.ui.adapter.BaseAdapter.ItemsComparator((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel, kotlin.Unit)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel, kotlin.Unit)))/onItemClick">onItemClick</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">UiModel</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">, </span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.BaseAdapter$<init>(me.proton.android.core.presentation.ui.adapter.BaseAdapter.ItemsComparator((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel, kotlin.Unit)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.BaseAdapter.UiModel, kotlin.Unit)))/onItemLongClick">onItemLongClick</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">UiModel</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">)</span></code>
+<p>A <a href="#">RecyclerView.Adapter</a> that contains a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> of <a href="index.html#UiModel">UiModel</a> items.
+Implements <a href="../-clickable-adapter/index.html">ClickableAdapter</a></p>
+<p>A basic implementations expects</p>
+<ul><li>an implementation of <a href="-items-comparator/index.html">ItemsComparator</a> that will be passed to the constructor</li>
+<li>an implementation of <a href="../-clickable-adapter/-view-holder/index.html">ClickableAdapter.ViewHolder</a> that will be passes ad generic <a href="index.html#UiModel">UiModel</a> and
+will be created by overriding <a href="#">onCreateViewHolder</a></li>
+</ul>
+<p>A basic usage only require <a href="items.html">items</a> to be set and <a href="#">DiffUtil</a> will handle everything.
+<a href="../-clickable-adapter/on-item-click.html">ClickableAdapter.onItemClick</a> and <a href="../-clickable-adapter/on-item-long-click.html">ClickableAdapter.onItemLongClick</a> can be set.</p>
+<h3>Parameters</h3>
+<p><a name="itemsComparator"></a>
+<code>itemsComparator</code> - a REQUIRED <a href="-items-comparator/index.html">ItemsComparator</a> of <a href="index.html#UiModel">UiModel</a> that will be used from
+<a href="-diff-callback/index.html">DiffCallback</a> for compare the items.</p>
+<p><strong>Author</strong><br/>
+Davide Farella</p>
+</BODY>
+</HTML>

@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>HumanVerificationViewModel - human-verification-presentation</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">human-verification-presentation</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.humanverification.presentation.viewmodel</a>&nbsp;/&nbsp;<a href="./index.html">HumanVerificationViewModel</a><br/>
+<br/>
+<h1>HumanVerificationViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">HumanVerificationViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ProtonViewModel</span><span class="symbol">, </span><span class="identifier">ViewStateStoreScope</span></code>
+<p>View model class to serve the main Human Verification screen.</p>
+<h3>Parameters</h3>
+<p><a name="availableVerificationMethods"></a>
+<code>availableVerificationMethods</code> - receives a list of all available methods that the API is
+currently supporting for this particular user and device.
+The UI should present the verification methods for each one of them.</p>
+<p><strong>Author</strong><br/>
+Dino Kadrikj.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>View model class to serve the main Human Verification screen.</p>
+<code><span class="identifier">HumanVerificationViewModel</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel$<init>(kotlin.collections.List((kotlin.String)))/availableVerificationMethods">availableVerificationMethods</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="active-method.html">activeMethod</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">activeMethod</span><span class="symbol">: </span><span class="identifier">LockedViewStateStore</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="enabled-methods.html">enabledMethods</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">enabledMethods</span><span class="symbol">: </span><span class="identifier">LockedViewStateStore</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="define-active-verification-method.html">defineActiveVerificationMethod</a></h4>
+</td>
+<td>
+<p>Sets the currently active verification method that the user chose.</p>
+<code><span class="keyword">fun </span><span class="identifier">defineActiveVerificationMethod</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel$defineActiveVerificationMethod(me.proton.core.humanverification.domain.entity.TokenType)/userSelectedMethod">userSelectedMethod</span><span class="symbol">:</span>&nbsp;<span class="identifier">TokenType</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
