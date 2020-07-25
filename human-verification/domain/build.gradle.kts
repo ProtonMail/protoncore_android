@@ -6,7 +6,7 @@ plugins {
     `kotlin-library`
 }
 
-//libVersion = Version(0, 1, 0)
+libVersion = Version(0, 1, 0)
 
 dependencies {
 
