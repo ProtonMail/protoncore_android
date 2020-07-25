@@ -18,16 +18,36 @@
 
 package me.proton.android.core.coreexample
 
-import ch.protonmail.libs.coreexample.R
-import ch.protonmail.libs.coreexample.databinding.ActivityMainBinding
-import me.proton.android.core.coreexample.viewmodel.MainViewModel
-import me.proton.android.core.presentation.ui.ContentLayout
+import android.os.Bundle
+import android.widget.Toast
+import dagger.hilt.android.AndroidEntryPoint
+import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.presentation.ui.ProtonActivity
+import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
+import me.proton.core.humanverification.presentation.utils.showHumanVerification
 
-@ContentLayout(R.layout.activity_main)
-class MainActivity : ProtonActivity<ActivityMainBinding, MainViewModel>() {
+@AndroidEntryPoint
+class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
-    override fun initViewModel() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
+        supportFragmentManager.setFragmentResultListener(
+            HumanVerificationDialogFragment.KEY_VERIFICATION_DONE,
+            this
+        ) { _, bundle ->
+            val tokenCode = bundle.getString(HumanVerificationDialogFragment.ARG_TOKEN_CODE)
+            val tokenType = bundle.getString(HumanVerificationDialogFragment.ARG_TOKEN_TYPE)
+
+            Toast.makeText(this, "Code $tokenCode done with $tokenType", Toast.LENGTH_LONG).show()
+        }
+
+        binding.humanVerification.setOnClickListener {
+            supportFragmentManager.showHumanVerification(
+                largeLayout = false
+            )
+        }
     }
+
+    override fun layoutId(): Int = R.layout.activity_main
 }

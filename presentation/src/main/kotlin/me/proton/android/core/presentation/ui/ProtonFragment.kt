@@ -25,41 +25,29 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import me.proton.android.core.presentation.utils.getAnnotatedLayout
 
 /**
- * Created by dinokadrikj on 5/15/20.
- *
  * Base Proton Fragment from which all project fragments should extend.
+ *
+ * @author Dino Kadrikj.
  */
-abstract class ProtonFragment<VM : ViewModel, DB : ViewDataBinding> : Fragment() {
-
-    lateinit var viewModel: VM
+abstract class ProtonFragment<DB : ViewDataBinding> : Fragment() {
 
     private var internalBinding: DB? = null
     protected val binding: DB
         get() = internalBinding
             ?: throw IllegalStateException("Accessing binding outside of lifecycle")
 
-    open fun onViewCreated() {}
-
-    abstract fun initViewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initViewModel()
-    }
+    protected abstract fun layoutId(): Int
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        internalBinding = DataBindingUtil.inflate(inflater, getAnnotatedLayout(), container, false)
+        internalBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         binding.setLifecycleOwner { lifecycle }
         super.onCreateView(inflater, container, savedInstanceState)
-        onViewCreated()
         return binding.root
     }
 

@@ -6,7 +6,7 @@ plugins {
     `android-library`
 }
 
-libVersion = Version(0, 1, 6)
+libVersion = Version(0, 1, 7)
 
 android()
 

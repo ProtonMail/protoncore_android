@@ -18,4 +18,10 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.proton.android.core.presentation">
+
+    <application
+        android:theme="@style/ProtonTheme">
+
+    </application>
+
 </manifest>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+
+    <color name="colorPrimary">@color/purple</color>
+    <color name="colorPrimaryDark">@color/purple_darker</color>
+    <color name="colorAccent">@color/dark_gray</color>
+
+    <!-- base colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="proton_black">#17181C</color>
+    <color name="red">#E84018</color>
+    <color name="green">#43BE31</color>
+
+    <color name="dark">#272B39</color>
+    <color name="light_gray">#F0F3FA</color>
+    <color name="gray">#BABDC6</color>
+    <color name="dark_gray">#494D56</color>
+    <color name="purple">#657EE4</color>
+    <color name="purple_darker">#6573FF</color>
+    <color name="purple_washed">#A1B1EE</color>
+
+    <!-- text section -->
+    <color name="color_title">@color/black</color>
+    <color name="color_subtitles">@color/dark_gray</color>
+
+    <!-- buttons section -->
+    <color name="button_selected">@color/dark</color>
+    <color name="button_unselected">@color/light_gray</color>
+    <color name="button_primary_unselected">@color/purple</color>
+    <color name="button_primary_disabled">@color/purple_washed</color>
+
+    <!-- input elements section -->
+    <color name="input_border">@color/purple</color>
+    <color name="input_background">#F5F6FA</color>
+</resources>

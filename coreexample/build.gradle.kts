@@ -16,60 +16,72 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
+
 plugins {
     `android-application`
-    `kotlin-android`
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
-val version = Version(0, 1, 0)
-archivesBaseName = archiveNameFor(ProtonCore.core_example, version)
-
-android(version)
+android(Version(0, 1))
 
 dependencies {
     implementation(
-        // Auth
-        project(Module.auth),
+        // Auth - off for now
+//        project(Module.auth),
 
-        // Contacts
-        project(Module.contacts),
+        // Contacts - off for now
+//        project(Module.contacts),
 
-        // Settings
-        project(Module.settings),
+        // Settings - off for now
+//        project(Module.settings),
+
+        // Human Verification
+        project(Module.humanVerification),
 
         // Presentation
         project(Module.presentation),
+        project(Module.network),
 
         `kotlin-jdk7`,
         `kotlin-reflect`,
         `coroutines-android`,
 
         // Android
-        activity,
-        appcompat,
-        fragment,
+        `activity`,
+        `appcompat`,
+        `fragment`,
         `lifecycle-viewModel`,
         `constraint-layout`,
-        material,
-        viewStateStore,
+        `material`,
+        `viewStateStore`,
         `android-work-runtime`,
+        `hilt-android`,
+        `hilt-androidx-annotations`,
+        `hilt-androidx-viewModel`,
 
         // Other
-        timber
+        `timber`
     )
 
     // Android
     compileOnly(`android-annotation`)
 
+    kapt(
+        `assistedInject-processor-dagger`,
+        `hilt-android-compiler`,
+        `hilt-androidx-compiler`
+    )
+
     // Other
+    compileOnly(`assistedInject-annotations-dagger`)
 
     // Test
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))
 
-    // Lint
-    lintChecks(project(Module.lint))
+    // Lint - off temporary
+//    lintChecks(project(Module.lint))
 }
-
-dokka()
-// publish(Module.auth, version)
