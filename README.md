@@ -110,7 +110,7 @@ Test Android Instrumented: **0.1.1** - _released on: Jun 17, 2020_
 
 Domain: **0.1** - _released on: Jul 03, 2020_
 
-Presentation: **0.1** - _released on: Jul 25, 2020_
+Presentation: **0.2** - _released on: Jul 28, 2020_
 
 Data: **0** - _released on: ND_
 
