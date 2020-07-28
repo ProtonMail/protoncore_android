@@ -25,35 +25,32 @@ plugins {
     `kotlin-serialization`
 }
 
-libVersion = Version(0, 1, 0)
+libVersion = Version(0, 2, 0)
 
-android(libVersion!!)
+android()
 
 dependencies {
-    // Core
-    // implementation(project(Module.))
 
-    // Kotlin
-    api(
+    implementation(
+
+        project(Module.kotlinUtil),
+        project(Module.domain),
+
+        // Kotlin
         `kotlin-jdk7`,
         `kotlin-reflect`,
         `coroutines-android`,
-        `constraint-layout`,
-        `serialization`,
+
+        // Android
         `activity`,
-        fragment
+        `appcompat`,
+        `constraint-layout`,
+        `fragment`,
+        `material`
     )
 
     // Android
-    compileOnly(
-        `paging-runtime`,
-        `android-annotation`)
-    api(
-        appcompat,
-        material
-    )
-
-    // Other
+    compileOnly(`android-annotation`)
 
     // Test
     testImplementation(project(Module.androidTest))

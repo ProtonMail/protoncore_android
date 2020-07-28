@@ -52,14 +52,15 @@ const val `androidUi version` =             "0.1.0-dev08"   // Released: Apr 03,
 
 // region Other
 const val `apacheCommon-codec version` =    "1.14"          // Released: Dec 31, 2019
+const val `miniDsn version` =               "1.0.0"         // Released: Jul 18, 2020
 const val `okHttp version` =                "4.8.0"         // Released: Jul 11, 2020
+const val `trustKit version` =              "1.1.3"         // Released: Apr 30, 2020
 // endregion
 
 // region Gradle
-const val `easyGradle version` =            "1.5-beta-9"    // Released: Jun 14, 2020
+const val `easyGradle version` =            "1.5-beta-10"   // Released: Jun 27, 2020
 // endregion
 
 // region Plugins
 const val `dokka-plugin version` =          "0.10.1"        // Released: Feb 04, 2020
-const val `maven-publish-plugin version` =  "0.11.1"        // Released: Mar 30, 2020
 // endregion

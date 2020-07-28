@@ -1,5 +1,4 @@
 import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 import util.libVersion
 
 plugins {
@@ -12,17 +11,15 @@ dependencies {
 
     implementation(
 
-        `coroutines-core`,
-        // project(Module.domain)
+        project(Module.kotlinUtil),
+        project(Module.domain),
 
         // Kotlin
-        `kotlin-jdk7`
-    )
+        `kotlin-jdk8`,
+        `coroutines-core`,
 
-    api (
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        `dagger-android`
+        // Android
+        `dagger`
     )
 
     testImplementation(project(Module.kotlinTest))

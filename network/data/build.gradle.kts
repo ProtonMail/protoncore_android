@@ -13,30 +13,30 @@ android()
 
 dependencies {
 
-    api(
-        project(Module.kotlinUtil)
-    )
-
     implementation(
+
+        project(Module.kotlinUtil),
         project(Module.sharedPreferencesUtil),
         project(Module.networkDomain),
 
+        // Kotlin
         `kotlin-jdk7`,
         `coroutines-core`,
         `serialization`,
+
+        // Other
+        `apacheCommon-codec`,
+        `miniDsn`,
+        `okHttp-logging`,
         `retrofit`,
         `retrofit-kotlin-serialization`,
-        `apacheCommon-codec`,
-        `okHttp-logging`,
-
-        dependency("org.minidns", module = "minidns-hla") version "0.3.4",
-        dependency("com.datatheorem.android.trustkit", module = "trustkit") version "1.1.2"
+        `trustKit`
     )
 
     testImplementation(
         project(Module.kotlinTest),
         project(Module.androidTest),
-        squareup("okhttp3", "mockwebserver") version `okHttp version`,
-        squareup("retrofit2", "converter-scalars") version `retrofit version`
+        `retrofit-scalars-converter`,
+        `mockWebServer`
     )
 }

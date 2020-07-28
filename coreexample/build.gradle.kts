@@ -28,55 +28,45 @@ plugins {
 android(Version(0, 1))
 
 dependencies {
+
     implementation(
-        // Auth - off for now
-//        project(Module.auth),
 
-        // Contacts - off for now
-//        project(Module.contacts),
-
-        // Settings - off for now
-//        project(Module.settings),
-
-        // Human Verification
+        project(Module.kotlinUtil),
         project(Module.humanVerification),
-
-        // Presentation
         project(Module.presentation),
         project(Module.network),
 
         `kotlin-jdk7`,
-        `kotlin-reflect`,
         `coroutines-android`,
 
         // Android
         `activity`,
         `appcompat`,
-        `fragment`,
-        `lifecycle-viewModel`,
         `constraint-layout`,
+        `fragment`,
+        `hilt-android`,
+        `lifecycle-viewModel`,
+        `hilt-androidx-annotations`,
+        `hilt-androidx-viewModel`,
         `material`,
         `viewStateStore`,
         `android-work-runtime`,
-        `hilt-android`,
-        `hilt-androidx-annotations`,
-        `hilt-androidx-viewModel`,
 
         // Other
+        `retrofit`,
         `timber`
     )
 
-    // Android
-    compileOnly(`android-annotation`)
+    compileOnly(
+        `android-annotation`,
+        `assistedInject-annotations-dagger`
+    )
 
     kapt(
         `assistedInject-processor-dagger`,
         `hilt-android-compiler`,
         `hilt-androidx-compiler`
     )
-
-    // Other
-    compileOnly(`assistedInject-annotations-dagger`)
 
     // Test
     testImplementation(project(Module.androidTest))

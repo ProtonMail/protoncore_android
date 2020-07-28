@@ -18,23 +18,25 @@ dependencies {
     implementation(
 
         project(Module.kotlinUtil),
+        project(Module.domain),
+        project(Module.networkDomain),
         project(Module.presentation),
         project(Module.humanVerificationDomain),
-        project(Module.networkDomain),
+
         // Kotlin
         `kotlin-jdk7`,
+        `coroutines-android`,
 
         // Android
         `android-ktx`,
+        `appcompat`,
+        `constraint-layout`,
         `fragment`,
-        `viewStateStore`,
-        `coroutines-core`
-    )
-
-    api(
-        `lifecycle-viewModel`,
         `hilt-android`,
-        `hilt-androidx-viewModel`
+        `hilt-androidx-viewModel`,
+        `lifecycle-viewModel`,
+        `material`,
+        `viewStateStore`
     )
 
     kapt(
