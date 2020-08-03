@@ -37,7 +37,7 @@ import java.util.Properties
  */
 fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 
-    `detekt version` = "1.9.1" // Released: May 17, 2020
+    `detekt version` = "1.10.0" // Released: Jul 07, 2020
     `detect-code-analysis version` = "0.3.2" // Released:
 
     val reportsDirPath = "config/detekt/reports"
