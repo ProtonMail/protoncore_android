@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ProtonTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/brand</item>
+        <item name="colorPrimaryVariant">@color/brand_darker_20</item>
+        <!-- secondary colors are not present in the designs, may be changed!! -->
+        <item name="colorSecondary">@android:color/white</item>
+        <item name="colorSecondaryVariant">@color/layout_background</item>
+        <item name="colorSurface">@color/layout_background</item>
+        <item name="colorOnSurface">@color/brand</item>
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="colorOnBackground">@color/brand</item>
+        <item name="colorError">@color/signal_error</item>
+        <item name="colorOnError">@android:color/white</item>
+    </style>
+</resources>

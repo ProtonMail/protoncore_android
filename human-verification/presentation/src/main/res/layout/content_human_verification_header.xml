@@ -31,7 +31,7 @@
             android:layout_width="@dimen/human_verification_close_button"
             android:layout_height="@dimen/human_verification_close_button"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@color/black"
+            android:tint="@color/icon_default"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +45,7 @@
             android:padding="0dp"
             android:text="@string/human_verification_help"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/brand"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:textColor="@color/black"
+                android:textColor="@color/text_default"
                 android:text="@string/human_verification_title"
                 android:textSize="@dimen/human_verification_title_size" />
 
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:textColor="@color/gray"
+                android:textColor="@color/text_secondary"
                 android:text="@string/human_verification_title_options"
                 android:textSize="@dimen/human_verification_subtitle_size" />
 

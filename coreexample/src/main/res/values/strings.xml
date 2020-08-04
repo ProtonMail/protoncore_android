@@ -18,4 +18,5 @@
 
 <resources>
     <string name="app_name">CoreExample</string>
+    <string name="human_verification">Human Verification</string>
 </resources>

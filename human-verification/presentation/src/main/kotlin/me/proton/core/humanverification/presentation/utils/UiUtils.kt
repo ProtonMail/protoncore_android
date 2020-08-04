@@ -163,11 +163,11 @@ internal fun Context.openBrowserLink(link: String) {
 }
 
 internal fun View.errorSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.background_red)
+    snack(messageRes = messageRes, color = R.drawable.background_error)
 }
 
 internal fun View.successSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.background_green)
+    snack(messageRes = messageRes, color = R.drawable.background_success)
 }
 
 private fun View.snack(
@@ -184,7 +184,7 @@ private fun View.snack(
 ) {
     Snackbar.make(this, message, length).apply {
         view.background = context.resources.getDrawable(color, null)
-        setTextColor(context.resources.getColor(R.color.white))
+        setTextColor(context.resources.getColor(R.color.text_light))
     }.show()
 }
 

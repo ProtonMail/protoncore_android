@@ -44,7 +44,7 @@
             android:layout_marginTop="@dimen/double_top_margin"
             android:text="@string/human_verification_option_email"
             android:textAllCaps="true"
-            android:textColor="@color/gray"
+            android:textColor="@color/text_secondary"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +106,7 @@
                 android:layout_gravity="center_vertical|end"
                 android:elevation="3dp"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/white"
+                android:indeterminateTint="@color/icon_light"
                 android:visibility="gone" />
         </FrameLayout>
 

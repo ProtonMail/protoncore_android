@@ -19,36 +19,56 @@
 
 <resources>
 
-    <color name="colorPrimary">@color/purple</color>
-    <color name="colorPrimaryDark">@color/purple_darker</color>
-    <color name="colorAccent">@color/dark_gray</color>
+    <!-- brand colors -->
+    <color name="brand">#657EE4</color>
+    <color name="brand_darker_20">#5064B6</color>
+    <color name="brand_darker_40">#3C4B88</color>
+    <color name="brand_lighter_40">#A2B1EE</color>
 
-    <!-- base colors -->
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="proton_black">#17181C</color>
-    <color name="red">#E84018</color>
-    <color name="green">#43BE31</color>
+    <!-- interaction colors -->
+    <color name="interaction_default">@color/brand</color>
+    <color name="interaction_pressed">@color/brand_darker_20</color>
+    <color name="interaction_disabled">@color/brand_lighter_40</color>
 
-    <color name="dark">#272B39</color>
-    <color name="light_gray">#F0F3FA</color>
-    <color name="gray">#BABDC6</color>
-    <color name="dark_gray">#494D56</color>
-    <color name="purple">#657EE4</color>
-    <color name="purple_darker">#6573FF</color>
-    <color name="purple_washed">#A1B1EE</color>
+    <color name="interaction_neutral">#727680</color>
+    <color name="interaction_neutral_pressed">#000000</color>
+    <color name="interaction_neutral_disabled">#BABDC6</color>
+
+    <!-- layout colors -->
+    <color name="layout_dark">#000000</color>
+    <color name="layout_secondary">#727680</color>
+    <color name="layout_weak">#BABDC6</color>
+    <color name="layout_lines">#EAECF1</color>
+    <color name="layout_background">#F5F6FA</color>
+    <color name="layout_light">#FFFFFF</color>
+
+    <!-- text colors -->
+    <color name="text_default">#262A33</color>
+    <color name="text_secondary">#727680</color>
+    <color name="text_weak">#BABDC6</color>
+    <color name="text_light">#FFFFFF</color>
+
+    <!-- icon colors -->
+    <color name="icon_default">#000000</color>
+    <color name="icon_secondary">#727680</color>
+    <color name="icon_weak">#BABDC6</color>
+    <color name="icon_light">#FFFFFF</color>
+
+    <!-- signal colors -->
+    <color name="signal_error">#E84118</color>
+    <color name="signal_warning">#FBC531</color>
+    <color name="signal_success">#44BD32</color>
 
     <!-- text section -->
-    <color name="color_title">@color/black</color>
-    <color name="color_subtitles">@color/dark_gray</color>
+    <color name="color_title">@color/text_default</color>
+    <color name="color_subtitles">@color/text_secondary</color>
 
-    <!-- buttons section -->
-    <color name="button_selected">@color/dark</color>
-    <color name="button_unselected">@color/light_gray</color>
-    <color name="button_primary_unselected">@color/purple</color>
-    <color name="button_primary_disabled">@color/purple_washed</color>
+    <!-- proton buttons section -->
+    <color name="button_action">@color/brand</color>
+    <color name="button_action_pressed">@color/brand_darker_40</color>
+    <color name="button_action_disabled">@color/brand_lighter_40</color>
 
-    <!-- input elements section -->
-    <color name="input_border">@color/purple</color>
-    <color name="input_background">#F5F6FA</color>
+    <!-- proton input elements section -->
+    <color name="input_border">@color/brand</color>
+    <color name="input_background">@color/layout_background</color>
 </resources>

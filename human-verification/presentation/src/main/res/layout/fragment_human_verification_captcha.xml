@@ -39,6 +39,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:background="@android:color/transparent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -52,6 +53,6 @@
             android:layout_gravity="center"
             android:elevation="3dp"
             android:indeterminate="true"
-            android:indeterminateTint="@color/colorPrimary" />
+            android:indeterminateTint="@color/brand" />
     </FrameLayout>
 </layout>

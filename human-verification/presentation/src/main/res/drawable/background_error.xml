@@ -16,9 +16,12 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/dark" android:state_selected="true" />
-    <item android:color="@color/dark" android:state_pressed="true" />
-    <item android:color="@color/dark" android:state_checked="true" />
-    <item android:color="@color/light_gray" />
-</selector>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/signal_error" />
+    <corners android:radius="5dp" />
+    <padding
+        android:left="@dimen/parent_padding"
+        android:right="@dimen/parent_padding" />
+</shape>
+

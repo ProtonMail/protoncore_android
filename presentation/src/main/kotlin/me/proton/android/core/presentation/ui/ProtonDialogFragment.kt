@@ -71,7 +71,7 @@ abstract class ProtonDialogFragment<DB : ViewDataBinding> : DialogFragment() {
         // request a window without the title
         dialog.window?.apply {
             requestFeature(Window.FEATURE_NO_TITLE)
-            statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
+            statusBarColor = ContextCompat.getColor(requireContext(), R.color.layout_light)
         }
         return dialog
     }
