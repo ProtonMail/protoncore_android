@@ -27,6 +27,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import me.proton.android.core.coreexample.Constants.BASE_URL
 import me.proton.android.core.coreexample.api.CoreExampleApi
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
@@ -36,9 +37,13 @@ import me.proton.core.humanverification.data.repository.HumanVerificationRemoteR
 import me.proton.core.humanverification.domain.CurrentUsername
 import me.proton.core.humanverification.domain.repository.HumanVerificationLocalRepository
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
+import me.proton.core.humanverification.presentation.HumanVerificationChannel
+import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
+import me.proton.core.humanverification.presentation.utils.HumanVerificationBinder
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.di.NetworkManager
 import me.proton.core.network.data.di.NetworkPrefs
+import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
@@ -57,7 +62,8 @@ object ApplicationModule {
     fun provideCurrentUsername() = "testcurrentusername"
 
     @Provides
-    fun provideCurrentUser(): User = User("testSession", "testAccessToken", "testRefreshToken")
+    fun provideCurrentUser(): User =
+        User("testSession", "testAccessToken", "testRefreshToken")
 
     @Provides
     @Singleton
@@ -68,14 +74,35 @@ object ApplicationModule {
     @Singleton
     fun provideNetworkPrefs(@ApplicationContext context: Context) = NetworkPrefs(context)
 
+    @HumanVerificationChannel
     @Provides
     @Singleton
-    fun provideApiFactory(networkManager: NetworkManager, networkPrefs: NetworkPrefs): ApiFactory {
-        return ApiFactory(
-            BASE_URL, CoreExampleApiClient(), CoreExampleLogger(), networkManager, networkPrefs,
-            CoroutineScope(Job() + Dispatchers.Default)
-        )
-    }
+    fun humanVerificationChannelProvider(): Channel<HumanVerificationResult> = Channel()
+
+    @Provides
+    @Singleton
+    fun provideHumanVerificationBinder(
+        @ApplicationContext context: Context,
+        @HumanVerificationChannel channel: Channel<HumanVerificationResult>,
+        user: User
+    ): HumanVerificationBinder = HumanVerificationBinder(context, channel, user)
+
+    @Provides
+    @Singleton
+    fun provideApiClient(
+        binder: HumanVerificationBinder
+    ): ApiClient = CoreExampleApiClient(binder)
+
+    @Provides
+    @Singleton
+    fun provideApiFactory(
+        apiClient: ApiClient,
+        networkManager: NetworkManager,
+        networkPrefs: NetworkPrefs
+    ): ApiFactory = ApiFactory(
+        BASE_URL, apiClient, CoreExampleLogger(), networkManager, networkPrefs,
+        CoroutineScope(Job() + Dispatchers.Default)
+    )
 
     @Provides
     @CoreExampleApiManager
