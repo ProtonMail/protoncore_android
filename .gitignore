@@ -52,6 +52,7 @@ proguard/
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries/**
+.idea/misc.xml
 # Do not exclude project Dictionary
 !.idea/**/dictionaries/project.xml
 .idea/**/shelf
