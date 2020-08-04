@@ -31,7 +31,16 @@
 <tbody>
 <tr>
 <td>
-<h4><a href="../-proton-force-update-handler/index.html">ProtonForceUpdateHandler</a></h4>
+<h4><a href="../../me.proton.core.network.domain.handlers/-human-verification-handler/index.html">HumanVerificationHandler</a></h4>
+</td>
+<td>
+<p>Handles the 9001 error response code and passes the details that come together with it to the
+client to process it further.</p>
+<code><span class="keyword">class </span><span class="identifier">HumanVerificationHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../me.proton.core.network.domain.handlers/-one-off-job-handler/index.html"><span class="identifier">OneOffJobHandler</span></a><span class="symbol">&lt;</span><a href="../../me.proton.core.network.domain.humanverification/-human-verification-details/index.html"><span class="identifier">HumanVerificationDetails</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">ApiErrorHandler</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../me.proton.core.network.domain.handlers/-proton-force-update-handler/index.html">ProtonForceUpdateHandler</a></h4>
 </td>
 <td>
 <p>Handles force update response.</p>
@@ -39,11 +48,11 @@
 </tr>
 <tr>
 <td>
-<h4><a href="../-refresh-token-handler/index.html">RefreshTokenHandler</a></h4>
+<h4><a href="../../me.proton.core.network.domain.handlers/-refresh-token-handler/index.html">RefreshTokenHandler</a></h4>
 </td>
 <td>
 <p>Handler for Authorization error, will attempt refreshing access token and repeat original call.</p>
-<code><span class="keyword">class </span><span class="identifier">RefreshTokenHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ApiErrorHandler</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">class </span><span class="identifier">RefreshTokenHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../me.proton.core.network.domain.handlers/-one-off-job-handler/index.html"><span class="identifier">OneOffJobHandler</span></a><span class="symbol">&lt;</span><a href="../-api-backend/index.html"><span class="identifier">ApiBackend</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../-api-result/index.html"><span class="identifier">ApiResult</span></a><span class="symbol">&lt;</span><span class="identifier">Tokens</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">ApiErrorHandler</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
 </tr>
 </tbody>
 </table>

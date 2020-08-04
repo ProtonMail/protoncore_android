@@ -49,6 +49,20 @@ should exist per baseUrl.</p>
 <p>Gets the list of alternative baseUrls for Proton API.</p>
 </tr>
 <tr>
+<h5><a href="../me.proton.core.network.domain.humanverification/-human-verification-details/index.html">me.proton.core.network.domain.humanverification.HumanVerificationDetails</a></h5>
+<p>Holds the currently available verification methods and if among them is captcha, then the
+captcha token also.</p>
+</tr>
+<tr>
+<h5><a href="../me.proton.core.network.domain.handlers/-human-verification-handler/index.html">me.proton.core.network.domain.handlers.HumanVerificationHandler</a></h5>
+<p>Handles the 9001 error response code and passes the details that come together with it to the
+client to process it further.</p>
+</tr>
+<tr>
+<h5><a href="../me.proton.core.network.domain.humanverification/-human-verification-headers/index.html">me.proton.core.network.domain.humanverification.HumanVerificationHeaders</a></h5>
+<p>Holds the values for Human Verification headers (verification type/method and the value).</p>
+</tr>
+<tr>
 <h5><a href="../me.proton.core.network.domain/-network-manager/index.html">me.proton.core.network.domain.NetworkManager</a></h5>
 <p>Allows checking connectivity state (disconnected/metered/unmetered).</p>
 </tr>
@@ -60,11 +74,16 @@ should exist per baseUrl.</p>
 <h5><a href="../me.proton.core.network.domain/-network-status/index.html">me.proton.core.network.domain.NetworkStatus</a></h5>
 </tr>
 <tr>
-<h5><a href="../me.proton.core.network.domain/-proton-force-update-handler/index.html">me.proton.core.network.domain.handlers.ProtonForceUpdateHandler</a></h5>
+<h5><a href="../me.proton.core.network.domain.handlers/-one-off-job-handler/index.html">me.proton.core.network.domain.handlers.OneOffJobHandler</a></h5>
+<p>Generic one-off job handler. Use this class in a situations when there is a need to execute a single
+blocking one-off job. It will make sure only single job is running until completed.</p>
+</tr>
+<tr>
+<h5><a href="../me.proton.core.network.domain.handlers/-proton-force-update-handler/index.html">me.proton.core.network.domain.handlers.ProtonForceUpdateHandler</a></h5>
 <p>Handles force update response.</p>
 </tr>
 <tr>
-<h5><a href="../me.proton.core.network.domain/-refresh-token-handler/index.html">me.proton.core.network.domain.handlers.RefreshTokenHandler</a></h5>
+<h5><a href="../me.proton.core.network.domain.handlers/-refresh-token-handler/index.html">me.proton.core.network.domain.handlers.RefreshTokenHandler</a></h5>
 <p>Handler for Authorization error, will attempt refreshing access token and repeat original call.</p>
 </tr>
 <tr>
@@ -74,6 +93,10 @@ should exist per baseUrl.</p>
 <tr>
 <h5><a href="../me.proton.core.network.domain/-user-data/index.html">me.proton.core.network.domain.UserData</a></h5>
 <p>Getters and setters for user info bound to a given <a href="../me.proton.core.network.domain/-api-manager/index.html">ApiManager</a> instance.</p>
+</tr>
+<tr>
+<h5><a href="../me.proton.core.network.domain.humanverification/-verification-method/index.html">me.proton.core.network.domain.humanverification.VerificationMethod</a></h5>
+<p>All possible verification methods enum.</p>
 </tr>
 </tbody>
 </table>

@@ -1,7 +1,9 @@
 $dokka.format:html
 $dokka.linkExtension:html
-
+$dokka.location:me.proton.core.network.data.mapper$parseDetails(me.proton.core.network.domain.ApiResult.Error.ProtonData, kotlin.Int, me.proton.core.network.data.protonApi.Details)me.proton.core.network.data.mapper/me.proton.core.network.domain.-api-result.-error.-proton-data/parse-details.html
 me.proton.core.network.data
 me.proton.core.network.data.di
 me.proton.core.network.data.doh
+me.proton.core.network.data.humanverification
+me.proton.core.network.data.mapper
 me.proton.core.network.data.protonApi

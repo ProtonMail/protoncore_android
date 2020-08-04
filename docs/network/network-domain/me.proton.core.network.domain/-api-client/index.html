@@ -117,6 +117,16 @@ calls in a single API call by the client.</p>
 <p>Tells client to force update (this client will no longer be accepted by the API).</p>
 <code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">forceUpdate</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
+<tr>
+<td>
+<h4><a href="human-verification.html">humanVerification</a></h4>
+</td>
+<td>
+<p>Tells the client that a human verification flow should be initiated. Any API call made without
+the human verification headers will return the same error, so in order the API communication
+to continue normally the human verification headers are needed.</p>
+<code><span class="keyword">abstract</span> <span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">humanVerification</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.network.domain.ApiClient$humanVerification(me.proton.core.network.domain.humanverification.HumanVerificationDetails)/humanVerificationDetails">humanVerificationDetails</span><span class="symbol">:</span>&nbsp;<a href="../../me.proton.core.network.domain.humanverification/-human-verification-details/index.html"><span class="identifier">HumanVerificationDetails</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
 </tbody>
 </table>
 </BODY>

@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>me.proton.core.network.domain.handlers - network-domain</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">network-domain</a>&nbsp;/&nbsp;<a href="./index.html">me.proton.core.network.domain.handlers</a><br/>
+<br/>
+<h2>Package me.proton.core.network.domain.handlers</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-human-verification-handler/index.html">HumanVerificationHandler</a></h4>
+</td>
+<td>
+<p>Handles the 9001 error response code and passes the details that come together with it to the
+client to process it further.</p>
+<code><span class="keyword">class </span><span class="identifier">HumanVerificationHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-one-off-job-handler/index.html"><span class="identifier">OneOffJobHandler</span></a><span class="symbol">&lt;</span><a href="../me.proton.core.network.domain.humanverification/-human-verification-details/index.html"><span class="identifier">HumanVerificationDetails</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../me.proton.core.network.domain/-api-error-handler/index.html"><span class="identifier">ApiErrorHandler</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-one-off-job-handler/index.html">OneOffJobHandler</a></h4>
+</td>
+<td>
+<p>Generic one-off job handler. Use this class in a situations when there is a need to execute a single
+blocking one-off job. It will make sure only single job is running until completed.</p>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">OneOffJobHandler</span><span class="symbol">&lt;</span><span class="identifier">IN</span><span class="symbol">, </span><span class="identifier">OUT</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-proton-force-update-handler/index.html">ProtonForceUpdateHandler</a></h4>
+</td>
+<td>
+<p>Handles force update response.</p>
+<code><span class="keyword">class </span><span class="identifier">ProtonForceUpdateHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../me.proton.core.network.domain/-api-error-handler/index.html"><span class="identifier">ApiErrorHandler</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-refresh-token-handler/index.html">RefreshTokenHandler</a></h4>
+</td>
+<td>
+<p>Handler for Authorization error, will attempt refreshing access token and repeat original call.</p>
+<code><span class="keyword">class </span><span class="identifier">RefreshTokenHandler</span><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-one-off-job-handler/index.html"><span class="identifier">OneOffJobHandler</span></a><span class="symbol">&lt;</span><a href="../me.proton.core.network.domain/-api-backend/index.html"><span class="identifier">ApiBackend</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span><span class="symbol">,</span>&nbsp;<a href="../me.proton.core.network.domain/-api-result/index.html"><span class="identifier">ApiResult</span></a><span class="symbol">&lt;</span><span class="identifier">Tokens</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../me.proton.core.network.domain/-api-error-handler/index.html"><span class="identifier">ApiErrorHandler</span></a><span class="symbol">&lt;</span><span class="identifier">Api</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

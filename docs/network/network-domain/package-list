@@ -2,3 +2,5 @@ $dokka.format:html
 $dokka.linkExtension:html
 
 me.proton.core.network.domain
+me.proton.core.network.domain.handlers
+me.proton.core.network.domain.humanverification
