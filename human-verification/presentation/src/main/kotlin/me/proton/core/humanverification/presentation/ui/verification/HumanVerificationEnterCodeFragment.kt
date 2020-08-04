@@ -89,22 +89,16 @@ class HumanVerificationEnterCodeFragment :
                 destination
             )
         } ?: run {
-            binding.title.text =
-                getString(R.string.human_verification_enter_code_subtitle_already_have_code)
+            binding.title.text = getString(R.string.human_verification_enter_code_subtitle_already_have_code)
         }
 
         binding.apply {
-            // this should go later inside the custom edit text input view
-            // (validation also with error text below the view)
+            // this should go inside the custom edit text input view (validation also with error text below the view)
             headerNavigation.closeButton.apply {
                 binding.headerNavigation.closeButton.setImageResource(R.drawable.ic_arrow_left)
-                onClick {
-                    onBackPressed()
-                }
+                onClick { onBackPressed() }
             }
-            headerNavigation.helpButton.onClick {
-                childFragmentManager.showHelp()
-            }
+            headerNavigation.helpButton.onClick { childFragmentManager.showHelp() }
             verificationCodeEditText.addTextChangedListener {
                 it?.let {
                     if (it.isNotEmpty()) {
@@ -115,6 +109,7 @@ class HumanVerificationEnterCodeFragment :
             verifyButton.onClick {
                 verificationCodeEditText.text.toString()
                     .validate({ verificationCodeEditText.setInputError() }, {
+                        viewModel.verificationComplete(tokenType, it)
                         parentFragmentManager.setFragmentResult(
                             KEY_VERIFICATION_DONE,
                             bundleOf(
@@ -124,9 +119,7 @@ class HumanVerificationEnterCodeFragment :
                         )
                     })
             }
-            requestReplacementButton.onClick {
-                viewModel.resendCode()
-            }
+            requestReplacementButton.onClick { viewModel.resendCode() }
         }
 
         viewModel.codeVerificationResult.observe(viewLifecycleOwner) {

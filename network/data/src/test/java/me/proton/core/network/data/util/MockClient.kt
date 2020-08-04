@@ -20,6 +20,8 @@ package me.proton.core.network.data.util
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.UserData
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
 import me.proton.core.util.kotlin.Logger
 
 class MockUserData : UserData {
@@ -29,6 +31,7 @@ class MockUserData : UserData {
     override var sessionUid: String = "uid"
     override var accessToken: String = "accessToken"
     override var refreshToken: String = "refreshToken"
+    override var humanVerificationHandler: HumanVerificationHeaders? = null
 
     override fun forceLogout() {
         loggedOut = true
@@ -38,6 +41,7 @@ class MockUserData : UserData {
 class MockApiClient : ApiClient {
 
     var forceUpdated = false
+    var humanVerified = false
 
     override var shouldUseDoh = true
     override val appVersionHeader = "TestApp_1.0"
@@ -49,6 +53,16 @@ class MockApiClient : ApiClient {
     override fun forceUpdate() {
         forceUpdated = true
     }
+
+    /**
+     * Tells the client that a human verification flow should be initiated. Any API call made without
+     * the human verification headers will return the same error, so in order the API communication
+     * to continue normally the human verification headers are needed.
+     */
+    override suspend fun humanVerification(humanVerificationDetails: HumanVerificationDetails): Boolean {
+        return true
+    }
+
 }
 
 class MockNetworkPrefs : NetworkPrefs {

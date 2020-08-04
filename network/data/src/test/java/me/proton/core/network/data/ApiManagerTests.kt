@@ -45,7 +45,9 @@ import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
-import me.proton.core.network.domain.ProtonForceUpdateHandler
+import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.VerificationMethod
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -93,7 +95,7 @@ internal class ApiManagerTests {
 
         coEvery { dohService.getAlternativeBaseUrls(any()) } returns listOf(proxy1url)
         val dohProvider = DohProvider(baseUrl, apiClient, listOf(dohService), scope, prefs, ::time)
-        dohApiHandler = DohApiHandler(apiClient, backend, dohProvider, prefs, ::wallTime) {
+        dohApiHandler = DohApiHandler(apiClient, backend, dohProvider, prefs, ::wallTime, ::time) {
             altBackend1
         }
         ApiManagerImpl.failRequestBeforeTimeMs = Long.MIN_VALUE
@@ -341,11 +343,33 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test DoH timeout`() = runBlockingTest {
-        coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Error.Connection(true)
+    fun `test DoH no timeout for human verification`() = runBlockingTest {
+        coEvery { backend.invoke<TestResult>(any()) } coAnswers { // or for proxy, or have test for both
+            delay(2 * apiClient.dohTimeoutMs)
+            success5foo
+        }
+
+        coEvery { backend.invoke<TestResult>(any()) } returns success5foo
         coEvery { backend.isPotentiallyBlocked() } returns true
         coEvery { altBackend1.invoke<TestResult>(any()) } coAnswers {
-            delay(apiClient.dohTimeoutMs)
+            success5foo
+        }
+
+        val result = apiManager.invoke { test() }
+        assertTrue(result is ApiResult.Success)
+    }
+
+    @Test
+    fun `test DoH timeout`() = runBlockingTest {
+        time = 100_000L // this will set the api call timestamp to 100K
+        coEvery { backend.invoke<TestResult>(any()) } coAnswers {
+            delay(apiClient.dohTimeoutMs + 1)
+            time += apiClient.dohTimeoutMs + 1
+            ApiResult.Error.Connection(true)
+        }
+
+        coEvery { backend.isPotentiallyBlocked() } returns true
+        coEvery { altBackend1.invoke<TestResult>(any()) } coAnswers {
             success5foo
         }
 

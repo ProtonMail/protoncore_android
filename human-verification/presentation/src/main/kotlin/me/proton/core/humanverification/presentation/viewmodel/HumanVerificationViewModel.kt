@@ -18,30 +18,44 @@
 
 package me.proton.core.humanverification.presentation.viewmodel
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.launch
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.presentation.HumanVerificationChannel
+import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
+import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
 /**
  * View model class to serve the main Human Verification screen.
  *
- * @param availableVerificationMethods receives a list of all available methods that the API is
- * currently supporting for this particular user and device.
- * The UI should present the verification methods for each one of them.
- *
+ * @param channel the result channel.
  * @author Dino Kadrikj.
  */
-class HumanVerificationViewModel(private val availableVerificationMethods: List<String>) :
+class HumanVerificationViewModel @ViewModelInject constructor(
+    @HumanVerificationChannel private val channel: Channel<HumanVerificationResult>,
+    @Assisted private val savedStateHandle: SavedStateHandle
+) :
     ProtonViewModel(), ViewStateStoreScope {
 
     private lateinit var currentActiveVerificationMethod: TokenType
 
     val activeMethod = ViewStateStore<String>().lock
     val enabledMethods = ViewStateStore<List<String>>().lock
+    private var availableVerificationMethods: List<String> =
+        savedStateHandle.get<List<String>>(HumanVerificationDialogFragment.ARG_VERIFICATION_OPTIONS)!!
 
     init {
+        // A list of all available methods that the API is currently supporting for this particular user and device.
+        // The UI should present the verification methods for each one of them.
+        // It is safe to use !! here, guaranteed that there will be at least 1 verification method available
         if (availableVerificationMethods.isEmpty()) {
             throw NotEnoughVerificationOptions("Please provide at least 1 verification method")
         }
@@ -64,5 +78,11 @@ class HumanVerificationViewModel(private val availableVerificationMethods: List<
             data = currentActiveVerificationMethod.tokenTypeValue,
             dropOnSame = false
         )
+    }
+
+    fun onClose() {
+        viewModelScope.launch {
+            channel.send(HumanVerificationResult(false))
+        }
     }
 }

@@ -32,6 +32,7 @@ class DohApiHandler<Api>(
     private val dohProvider: DohProvider,
     private val prefs: NetworkPrefs,
     private val wallClockMs: () -> Long,
+    private val monoClockMs: () -> Long,
     private val createAltBackend: (baseUrl: String) -> ApiBackend<Api>
 ) {
 
@@ -102,6 +103,9 @@ class DohApiHandler<Api>(
     ): ApiResult<T>? {
         val alternatives = prefs.alternativeBaseUrls?.shuffled()
         alternatives?.forEach { baseUrl ->
+            if (monoClockMs() - call.timestampMs > apiClient.dohTimeoutMs) {
+                return ApiResult.Error.Timeout(true, null)
+            }
             val backend = createAltBackend(baseUrl)
             val result = callHandler(backend, call)
             if (!result.isPotentialBlocking) {

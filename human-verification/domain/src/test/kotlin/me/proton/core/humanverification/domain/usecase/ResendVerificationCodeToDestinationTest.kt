@@ -32,7 +32,7 @@ import org.junit.Test
 import org.junit.rules.ExpectedException
 
 /**
- * Proton Core
+ * Tests the ResendVerificationCodeToDestination use case.
  *
  * @author Dino Kadrikj.
  */

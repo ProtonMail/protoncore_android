@@ -31,7 +31,7 @@ import me.proton.core.humanverification.domain.utils.testCountriesMostUsed
 import org.junit.Test
 
 /**
- * Proton Core.
+ * Tests the MostUsedCountries use case.
  *
  * @author Dino Kadrikj.
  */

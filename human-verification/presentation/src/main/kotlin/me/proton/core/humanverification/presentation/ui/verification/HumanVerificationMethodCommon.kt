@@ -26,7 +26,6 @@ import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogF
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCode
 
 /**
- * Proton Core.
  * Base class for all verification methods.
  *
  * @author Dino Kadrikj.

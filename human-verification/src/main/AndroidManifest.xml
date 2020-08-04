@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="me.proton.core.humanverification" />
+<manifest package="me.proton.core.humanverification"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+
+        <activity android:name=".presentation.ui.HumanVerificationActivity"/>
+
+    </application>
+</manifest>

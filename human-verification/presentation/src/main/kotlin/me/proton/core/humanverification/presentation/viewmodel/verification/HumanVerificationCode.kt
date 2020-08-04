@@ -23,7 +23,6 @@ import studio.forface.viewstatestore.LockedViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
 /**
- * Proton Core.
  * Interface that exposes 2 LiveData properties which are needed to avoid code duplication in the
  * Verification method fragments.
  *

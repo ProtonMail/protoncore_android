@@ -19,9 +19,8 @@
 package me.proton.core.network.data
 
 /**
- * Proton Core.
- *
  * Contains general constants response codes.
+ *
  * @author Dino Kadrikj.
  */
 object ResponseCodes {

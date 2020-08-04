@@ -31,7 +31,7 @@ import org.junit.Test
 import org.junit.rules.ExpectedException
 
 /**
- * Proton Core
+ * Tests the SendVerificationCodeToEmailDestination use case.
  *
  * @author Dino Kadrikj.
  */

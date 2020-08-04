@@ -16,18 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.viewmodel
+package me.proton.core.humanverification.presentation.entity
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import me.proton.core.humanverification.domain.entity.TokenType
 
 /**
- * Factory class for [HumanVerificationViewModel] construction.
- *
+ * Human Verification result entity.
  * @author Dino Kadrikj.
  */
-class HumanVerificationViewModelFactory(private val availableVerificationMethods: List<String>) :
-    ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        HumanVerificationViewModel(availableVerificationMethods) as T
-}
+data class HumanVerificationResult(
+    val success: Boolean,
+    val tokenType: TokenType? = null,
+    val tokenCode: String? = null
+)
