@@ -19,6 +19,7 @@
 package me.proton.android.core.coreexample.user
 
 import me.proton.core.network.domain.UserData
+import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
 
 /**
  * @author Dino Kadrikj.
@@ -26,8 +27,10 @@ import me.proton.core.network.domain.UserData
 class User(
     override val sessionUid: String,
     override var accessToken: String,
-    override var refreshToken: String
+    override var refreshToken: String,
+    override var humanVerificationHandler: HumanVerificationHeaders? = null
 ) : UserData {
+
     /**
      * Tells client to force logout (because e.g. token refresh unrecoverably failed).
      */

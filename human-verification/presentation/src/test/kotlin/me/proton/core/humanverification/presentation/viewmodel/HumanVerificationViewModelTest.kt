@@ -19,6 +19,9 @@
 package me.proton.core.humanverification.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.SavedStateHandle
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
@@ -37,11 +40,14 @@ class HumanVerificationViewModelTest {
 
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
+    private val savedStateHandle = mockk<SavedStateHandle>()
 
     @Test
     fun `correct initialization`() {
         val availableMethods = listOf(TokenType.EMAIL.tokenTypeValue, TokenType.CAPTCHA.tokenTypeValue)
-        val viewModel = HumanVerificationViewModel(availableMethods)
+        every { savedStateHandle.get<List<String>>(any())} returns availableMethods
+
+        val viewModel = HumanVerificationViewModel(mockk(), savedStateHandle)
         val result = viewModel.enabledMethods.state()
         assertNotNull(result)
         assertIs<ViewState.Success<List<String>>>(result)
@@ -52,13 +58,17 @@ class HumanVerificationViewModelTest {
     @Test(expected = NotEnoughVerificationOptions::class)
     fun `incorrect initialization throws exception`() {
         val availableMethods = emptyList<String>()
-        HumanVerificationViewModel(availableMethods)
+        every { savedStateHandle.get<List<String>>(any())} returns availableMethods
+
+        HumanVerificationViewModel(mockk(), savedStateHandle)
     }
 
     @Test
     fun `active method correctly set`() {
         val availableMethods = listOf(TokenType.EMAIL.tokenTypeValue, TokenType.CAPTCHA.tokenTypeValue, TokenType.SMS.tokenTypeValue)
-        val viewModel = HumanVerificationViewModel(availableMethods)
+        every { savedStateHandle.get<List<String>>(any())} returns availableMethods
+
+        val viewModel = HumanVerificationViewModel(mockk(), savedStateHandle)
         val result = viewModel.activeMethod.state()
         assertNotNull(result)
         assertIs<ViewState.Success<String>>(result)
@@ -69,7 +79,9 @@ class HumanVerificationViewModelTest {
     @Test
     fun `active method correctly set option 2`() {
         val availableMethods = listOf(TokenType.EMAIL.tokenTypeValue, TokenType.SMS.tokenTypeValue)
-        val viewModel = HumanVerificationViewModel(availableMethods)
+        every { savedStateHandle.get<List<String>>(any())} returns availableMethods
+
+        val viewModel = HumanVerificationViewModel(mockk(), savedStateHandle)
         val result = viewModel.activeMethod.state()
         assertNotNull(result)
         assertIs<ViewState.Success<String>>(result)

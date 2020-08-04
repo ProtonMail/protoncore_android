@@ -22,11 +22,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.humanverification.domain.usecase.VerifyCode
+import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.exception.TokenCodeVerificationException
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -54,7 +56,8 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
     private val viewModel by lazy {
         HumanVerificationEnterCodeViewModel(
             resendVerificationCodeToDestination,
-            verifyCode
+            verifyCode,
+            mockk<Channel<HumanVerificationResult>>()
         )
     }
 

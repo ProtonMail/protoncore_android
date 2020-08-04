@@ -22,7 +22,6 @@ import me.proton.core.humanverification.domain.repository.HumanVerificationLocal
 import javax.inject.Inject
 
 /**
- * Proton Core.
  * Use case that fetches the most used countries.
  *
  * @author Dino Kadrikj.

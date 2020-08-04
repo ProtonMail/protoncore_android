@@ -19,6 +19,7 @@ package me.proton.core.network.domain
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withTimeoutOrNull
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import kotlin.Exception
 
 /**
@@ -62,7 +63,9 @@ sealed class ApiResult<out T> {
                 "${this::class.simpleName}: httpCode=$httpCode message=$message, proton=$proton cause=$cause"
         }
 
-        data class ProtonData(val code: Int, val error: String)
+        // detekt warning here is fine, the human verification details is optional, and if present in the response it is
+        // set later, thus var.
+        data class ProtonData(val code: Int, val error: String, var humanVerification: HumanVerificationDetails? = null)
 
         /**
          * Parsing error. Should not normally happen.

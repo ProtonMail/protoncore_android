@@ -15,12 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-package me.proton.core.network.domain
+package me.proton.core.network.domain.handlers
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.withContext
+import me.proton.core.network.domain.ApiBackend
+import me.proton.core.network.domain.ApiErrorHandler
+import me.proton.core.network.domain.ApiManager
+import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.UserData
 
 /**
  * Handler for Authorization error, will attempt refreshing access token and repeat original call.
@@ -33,11 +35,11 @@ import kotlinx.coroutines.withContext
 class RefreshTokenHandler<Api>(
     private val userData: UserData,
     private val monoClockMs: () -> Long,
-    private val networkMainScope: CoroutineScope
-) : ApiErrorHandler<Api> {
+    networkMainScope: CoroutineScope
+) : OneOffJobHandler<ApiBackend<Api>, ApiResult<ApiBackend.Tokens>>(networkMainScope),
+    ApiErrorHandler<Api> {
 
     private var lastRefreshTimeMs: Long = Long.MIN_VALUE
-    private var refreshJob: Deferred<ApiResult<ApiBackend.Tokens>>? = null
 
     override suspend fun <T> invoke(
         backend: ApiBackend<Api>,
@@ -45,9 +47,10 @@ class RefreshTokenHandler<Api>(
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> =
         if (error is ApiResult.Error.Http && error.httpCode == HTTP_UNAUTHORIZED &&
-                userData.refreshToken.isNotEmpty()) {
+            userData.refreshToken.isNotEmpty()
+        ) {
             // If request started before last token refresh there's no need for refresh
-            if (call.timestampMs < lastRefreshTimeMs || refreshTokens(backend) is ApiResult.Success)
+            if (call.timestampMs < lastRefreshTimeMs || startOneOffJob(backend, ::refreshTokens) is ApiResult.Success)
                 backend(call)
             else
                 error
@@ -56,25 +59,20 @@ class RefreshTokenHandler<Api>(
         }
 
     // If refresh is active for another call just wait for it's result instead of starting another.
-    private suspend fun refreshTokens(backend: ApiBackend<Api>): ApiResult<ApiBackend.Tokens> =
-        withContext(networkMainScope.coroutineContext) {
-            refreshJob = refreshJob ?: async {
-                val refreshResult = backend.refreshTokens()
-                when {
-                    refreshResult is ApiResult.Success -> {
-                        userData.accessToken = refreshResult.value.access
-                        userData.refreshToken = refreshResult.value.refresh
-                        lastRefreshTimeMs = monoClockMs()
-                    }
-                    refreshResult is ApiResult.Error.Http && refreshResult.httpCode in FORCE_LOGOUT_HTTP_CODES -> {
-                        userData.forceLogout()
-                    }
-                }
-                refreshJob = null
-                refreshResult
+    private suspend fun refreshTokens(backend: ApiBackend<Api>): ApiResult<ApiBackend.Tokens> {
+        val refreshResult = backend.refreshTokens()
+        when {
+            refreshResult is ApiResult.Success -> {
+                userData.accessToken = refreshResult.value.access
+                userData.refreshToken = refreshResult.value.refresh
+                lastRefreshTimeMs = monoClockMs()
             }
-            refreshJob!!.await()
+            refreshResult is ApiResult.Error.Http && refreshResult.httpCode in FORCE_LOGOUT_HTTP_CODES -> {
+                userData.forceLogout()
+            }
         }
+        return refreshResult
+    }
 
     companion object {
         const val HTTP_UNAUTHORIZED = 401

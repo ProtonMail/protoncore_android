@@ -18,6 +18,7 @@
 
 package me.proton.core.humanverification.presentation.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -29,13 +30,13 @@ import me.proton.android.core.presentation.utils.onClick
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationMainBinding
+import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.utils.showEnterCode
 import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationCaptchaContent
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationEmailContent
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationSMSContent
 import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel
-import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModelFactory
 
 /**
  * Shows the dialog for the Human Verification options and option procedures.
@@ -47,7 +48,7 @@ class HumanVerificationDialogFragment :
     ProtonDialogFragment<DialogHumanVerificationMainBinding>() {
 
     companion object {
-        private const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
+        const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
         private const val ARG_CAPTCHA_TOKEN = "arg.captcha-token"
         const val ARG_DESTINATION = "arg.destination"
         const val ARG_TOKEN_CODE = "arg.token-code"
@@ -76,9 +77,8 @@ class HumanVerificationDialogFragment :
             }
     }
 
-    private val viewModel by viewModels<HumanVerificationViewModel> {
-        HumanVerificationViewModelFactory(requireArguments().get(ARG_VERIFICATION_OPTIONS) as List<String>)
-    }
+    private val viewModel by viewModels<HumanVerificationViewModel>()
+    private lateinit var resultListener: OnResultListener
 
     private val captchaToken: String? by lazy {
         requireArguments().get(ARG_CAPTCHA_TOKEN) as String?
@@ -100,6 +100,11 @@ class HumanVerificationDialogFragment :
             val tokenType = bundle.getString(ARG_TOKEN_TYPE)
             onClose(tokenType, tokenCode)
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        resultListener = context as OnResultListener
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -172,13 +177,7 @@ class HumanVerificationDialogFragment :
 
     private fun onClose(tokenType: String? = null, tokenCode: String? = null) {
         if (!tokenType.isNullOrEmpty() && !tokenCode.isNullOrEmpty()) {
-            parentFragmentManager.setFragmentResult(
-                KEY_VERIFICATION_DONE,
-                bundleOf(
-                    ARG_TOKEN_CODE to tokenCode,
-                    ARG_TOKEN_TYPE to tokenType
-                )
-            )
+            resultListener.setResult(HumanVerificationResult(true, TokenType.fromString(tokenType), tokenCode))
             dismissAllowingStateLoss()
             return
         }
@@ -190,8 +189,14 @@ class HumanVerificationDialogFragment :
             if (backStackEntryCount >= 1) {
                 popBackStack()
             } else {
+                viewModel.onClose()
+                resultListener.setResult(HumanVerificationResult(false))
                 dismissAllowingStateLoss()
             }
         }
+    }
+
+    interface OnResultListener {
+        fun setResult(result: HumanVerificationResult)
     }
 }

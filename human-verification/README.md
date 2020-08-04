@@ -21,7 +21,7 @@ Example response that requires human verification:
             "invite",
             "coupon"
         ],
-    "HumanVerificationToken": "........",
+    "HumanVerificationToken": "........"
     }
 }
 ```
@@ -85,6 +85,19 @@ binding.humanVerification.setOnClickListener {
 ```
 
 Listening for result:
+Your activity needs to implement the onResultListener:
+
+```kotlin
+class ClientActivity : AppCompatActivity(), OnResultListener {
+
+    override fun setResult(result: HumanVerificationResult) {
+        
+    }
+}
+```
+
+or, if the Human Verification is started from another Fragment:
+
 ```kotlin
 supportFragmentManager.setFragmentResultListener(
             HumanVerificationDialogFragment.KEY_VERIFICATION_DONE,
@@ -92,13 +105,67 @@ supportFragmentManager.setFragmentResultListener(
         ) { _, bundle ->
             val tokenCode = bundle.getString(HumanVerificationDialogFragment.ARG_TOKEN_CODE)
             val tokenType = bundle.getString(HumanVerificationDialogFragment.ARG_TOKEN_TYPE)
-
-            // at this point Client should proceed executing (retrying) the same 
-            // request but this time with human verification headers
+            
         }
 ```
+#### Method #2 (using Activity) preferred option!!
+Example code:
 
-#### Method #2 (using Activity) TBD!
+You can start the `HumanVerificationActivity` via Intent:
+```kotlin
+val humanVerificationIntent = Intent(this, HumanVerificationActivity::class.java)
+startActivity(humanVerificationIntent)
+```
+
+and pass the extras:
+```kotlin
+humanVerificationIntent.putExtras(bundleOf(
+            HumanVerificationActivity.ARG_VERIFICATION_OPTIONS to verificationMethods,
+            HumanVerificationActivity.ARG_CAPTCHA_TOKEN to captchaVerificationToken
+        ))
+```
+In order to receive the results you could do it via kotlin `Channel`:
+The module has a helper class `HumanVerificationBinder` to help clients start Human Verification 
+and receive results easily. Check the CoreExample app from Core project.
+
+Note: The same channel should be set to the `HumanVerificationBinder` and to the 
+`HumanVerificationEnterCodeViewModel`. But, you do not need to bother with these implementation 
+details and only set the Hilt dependencies as:
+
+```kotlin
+@Provides
+    @Singleton
+    fun provideHumanVerificationBinder(
+        @ApplicationContext context: Context,
+        channel: Channel<HumanVerificationResult>,
+        user: User
+    ): HumanVerificationBinder {
+        return HumanVerificationBinder(context, channel, user)
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiClient(binder: HumanVerificationBinder
+    ): ApiClient {
+        return CoreExampleApiClient(binder)
+    }
+```
+Anyway, the clients can implement their own custom logic, just remember the channel instance should
+be the same.
+
+Or, as an option 2 to receive results in a regular way with Activity result (for custom solutions), 
+by receiving this bundle:
+```kotlin
+const val ARG_TOKEN_CODE = "arg.token-code"
+const val ARG_TOKEN_TYPE = "arg.token-type"
+
+bundleOf(
+    ARG_TOKEN_CODE to result.tokenCode,
+    ARG_TOKEN_TYPE to result.tokenType
+)
+```
+
+More on listening for Activity result can be found [here](https://developer.android.com/reference/kotlin/androidx/activity/result/ActivityResultCallback). 
 
 ## Note
 For more information on how to integrate, please check the [CoreExample](https://gitlab.protontech.ch/proton/mobile/android/proton-libs/-/tree/master/coreexample)

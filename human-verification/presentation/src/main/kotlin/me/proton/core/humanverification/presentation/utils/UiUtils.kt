@@ -51,13 +51,15 @@ const val TAG_HUMAN_VERIFICATION_HELP = "human_verification_help"
 const val TOKEN_DEFAULT = "signup"
 const val HOST_DEFAULT = "api.protonmail.ch"
 
+val defaultVerificationMethods = listOf(
+    TokenType.CAPTCHA.tokenTypeValue,
+    TokenType.EMAIL.tokenTypeValue,
+    TokenType.SMS.tokenTypeValue
+)
+
 /** Shows the human verification dialog. */
 fun FragmentManager.showHumanVerification(
-    availableVerificationMethods: List<String> = listOf(
-        TokenType.CAPTCHA.tokenTypeValue,
-        TokenType.EMAIL.tokenTypeValue,
-        TokenType.SMS.tokenTypeValue
-    ),
+    availableVerificationMethods: List<String> = defaultVerificationMethods,
     captchaToken: String? = null,
     largeLayout: Boolean
 ) {

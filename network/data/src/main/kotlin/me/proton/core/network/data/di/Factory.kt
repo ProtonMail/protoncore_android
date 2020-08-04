@@ -39,9 +39,10 @@ import me.proton.core.network.domain.DohApiHandler
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.ProtonForceUpdateHandler
-import me.proton.core.network.domain.RefreshTokenHandler
 import me.proton.core.network.domain.UserData
+import me.proton.core.network.domain.handlers.HumanVerificationHandler
+import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
+import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.MediaType.Companion.toMediaType
@@ -111,7 +112,14 @@ class ApiFactory(
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
             initSPKIleafPinning(builder, alternativeApiPins)
         }
-        val dohApiHandler = DohApiHandler(apiClient, primaryBackend, dohProvider, prefs, ::javaWallClockMs) { baseUrl ->
+        val dohApiHandler = DohApiHandler(
+            apiClient,
+            primaryBackend,
+            dohProvider,
+            prefs,
+            ::javaWallClockMs,
+            ::javaMonoClockMs
+        ) { baseUrl ->
             ProtonApiBackend(
                 baseUrl,
                 apiClient,
@@ -151,8 +159,13 @@ class ApiFactory(
         monoClockMs: () -> Long,
         networkMainScope: CoroutineScope
     ) = listOf(
-        RefreshTokenHandler<Api>(userData, monoClockMs, networkMainScope),
-        ProtonForceUpdateHandler(apiClient)
+        RefreshTokenHandler<Api>(
+            userData,
+            monoClockMs,
+            networkMainScope
+        ),
+        ProtonForceUpdateHandler(apiClient),
+        HumanVerificationHandler(apiClient, networkMainScope)
     )
 
     private val dohProvider by lazy {

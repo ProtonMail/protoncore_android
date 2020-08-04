@@ -17,6 +17,8 @@
  */
 package me.proton.core.network.domain
 
+import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
+
 /**
  * Getters and setters for user info bound to a given [ApiManager] instance.
  */
@@ -36,6 +38,11 @@ interface UserData {
      * Refresh token to be used for access token refreshing.
      */
     var refreshToken: String
+
+    /**
+     * Getter for `x-pm-human-verification-token-type` and `x-pm-human-verification-token`.
+     */
+    var humanVerificationHandler: HumanVerificationHeaders?
 
     /**
      * Tells client to force logout (because e.g. token refresh unrecoverably failed).

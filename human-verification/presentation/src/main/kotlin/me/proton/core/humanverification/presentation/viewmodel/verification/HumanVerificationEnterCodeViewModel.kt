@@ -21,12 +21,15 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.humanverification.domain.usecase.VerifyCode
+import me.proton.core.humanverification.presentation.HumanVerificationChannel
+import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.exception.TokenCodeVerificationException
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import studio.forface.viewstatestore.ViewStateStore
@@ -41,7 +44,8 @@ import studio.forface.viewstatestore.ViewStateStoreScope
  */
 class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
     private val resendVerificationCodeToDestination: ResendVerificationCodeToDestination,
-    private val verifyCode: VerifyCode
+    private val verifyCode: VerifyCode,
+    @HumanVerificationChannel private val channel: Channel<HumanVerificationResult>
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     lateinit var tokenType: TokenType
@@ -56,6 +60,12 @@ class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
      * Code is sometimes referred as a token, so token on BE and code on UI, it is same thing.
      */
     val codeVerificationResult = ViewStateStore<Boolean>().lock
+
+    fun verificationComplete(tokenType: TokenType, token: String) {
+        viewModelScope.launch(Dispatchers.Main) {
+            channel.send(HumanVerificationResult(true, tokenType, token))
+        }
+    }
 
     /**
      * Verifies the entered token on the API.

@@ -19,6 +19,8 @@ package me.proton.core.network.data.protonApi
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.network.data.humanverification.VerificationMethodApi
+import me.proton.core.network.data.mapper.parseDetails
 import me.proton.core.network.domain.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -36,7 +38,19 @@ interface BaseRetrofitApi {
 @Serializable
 data class ProtonErrorData(
     @SerialName("Code") val code: Int,
-    @SerialName("Error") val error: String
+    @SerialName("Error") val error: String,
+    @SerialName("Details") val details: Details? = null
 ) {
-    val apiResultData get() = ApiResult.Error.ProtonData(code, error)
+    val apiResultData get() = ApiResult.Error.ProtonData(code, error).parseDetails(code, details)
 }
+
+/**
+ * This class should hold all possible Details entries that the Android client is intrested in the future.
+ */
+@Serializable
+data class Details(
+    @SerialName("HumanVerificationMethods")
+    val verificationMethods: List<VerificationMethodApi>? = null,
+    @SerialName("HumanVerificationToken")
+    val verificationToken: String? = null
+)

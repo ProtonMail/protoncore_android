@@ -15,27 +15,29 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-package me.proton.core.network.domain
+
+package me.proton.core.network.data.humanverification
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
- * Handles force update response.
+ * Enum with all possible verification options that the system supports.
  *
- * @param Api API interface.
- * @property apiClient [ApiClient] instance.
+ * @author Dino Kadrikj.
  */
-class ProtonForceUpdateHandler<Api>(private val apiClient: ApiClient) : ApiErrorHandler<Api> {
-
-    override suspend fun <T> invoke(
-        backend: ApiBackend<Api>,
-        error: ApiResult.Error,
-        call: ApiManager.Call<Api, T>
-    ): ApiResult<T> {
-        if (error is ApiResult.Error.Http && error.proton?.code == ERROR_CODE_FORCE_UPDATE)
-            apiClient.forceUpdate()
-        return error
-    }
-
-    companion object {
-        const val ERROR_CODE_FORCE_UPDATE = 5003
-    }
+@Serializable
+enum class VerificationMethodApi {
+    @SerialName("sms")
+    PHONE,
+    @SerialName("email")
+    EMAIL,
+    @SerialName("captcha")
+    CAPTCHA,
+    @SerialName("payment")
+    PAYMENT,
+    @SerialName("invite")
+    INVITE,
+    @SerialName("coupon")
+    COUPON
 }

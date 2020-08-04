@@ -60,9 +60,7 @@ class ApiManagerImpl<Api>(
             forceNoRetryOnConnectionErrors ->
                 handledCall(primaryBackend, call)
             client.shouldUseDoh ->
-                ApiResult.withTimeout(client.dohProxyRefreshTimeoutMs) {
-                    dohApiHandler(::handledCall, call)
-                }
+                dohApiHandler(::handledCall, call)
             else ->
                 callWithBackoff(call)
         }

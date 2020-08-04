@@ -109,6 +109,10 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         if (original.header("Accept") == null) {
             request.header("Accept", "application/vnd.protonmail.v1+json")
         }
+        userData.humanVerificationHandler?.let {
+            request.addHeader("x-pm-human-verification-token-type", it.tokenType)
+            request.addHeader("x-pm-human-verification-token", it.tokenCode)
+        }
         val uid = userData.sessionUid
         val accessToken = userData.accessToken
         if (uid.isNotEmpty())
