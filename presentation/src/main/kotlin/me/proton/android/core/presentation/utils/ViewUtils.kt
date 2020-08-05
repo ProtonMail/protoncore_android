@@ -71,6 +71,11 @@ inline fun <T : Adapter> AdapterView<T>.onItemSelected(crossinline block: (posit
     }
 }
 
+/**
+ * Clears the edit text content.
+ */
+fun EditText.clearText() = setText("")
+
 /** Execute the [listener] on [TextWatcher.onTextChanged] */
 inline fun EditText.onTextChange(crossinline listener: (CharSequence) -> Unit): TextWatcher {
     val watcher = object : TextWatcher {
@@ -106,8 +111,3 @@ inline fun View.onClick(crossinline block: () -> Unit) {
  */
 fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
-
-/**
- * Clears the edit text content.
- */
-fun EditText.clearText() = setText("")

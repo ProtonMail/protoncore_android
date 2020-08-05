@@ -20,9 +20,9 @@ fun initVersions() {
     `espresso version` =                        "3.2.0"         // Released: May 30, 2019
     `fragment version` =                        "1.3.0-alpha04" // Released: Apr 05, 2020
     `ktx version` =                             "1.2.0-beta01"  // Released: Oct 11, 2019
-    `lifecycle version` =                       "2.2.0"  // Released: Oct 11, 2019
-    `material version` =                        "1.2.0-alpha02" // Updated: May 24, 2020
-    `android-paging version` =                  "2.1.0"         // Released: Jan 26, 2019
+    `lifecycle version` =                       "2.2.0"         // Released: Oct 11, 2019
+    `material version` =                        "1.2.0-alpha02" // Released: May 24, 2020
+    `android-paging version` =                  "3.0.0-alpha02" // Released: Jun 24, 2020
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
 
     `android-test version` =                    "1.2.0"         // Released: May 31, 2019
@@ -30,15 +30,15 @@ fun initVersions() {
     // endregion
 
     // region Others
+    `assistedInject version` =                  "0.5.2"         // Released: Nov 22, 2019
+    `dagger version` =                          "2.28"          // Released: May 04, 2018
+    `hilt-android version` =                    "2.28-alpha"    // Released: Jun 10, 2020
+    `hilt-androidx version` =                   "1.0.0-alpha01" // Released: Jun 12, 2020
     `mockK version` =                           "1.10.0"        // Released: Apr 19, 2020
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.4.0"         // Released: Apr 12, 2019
     `timber version` =                          "4.7.1"         // Released:
     `viewStateStore version` =                  "1.4-beta-4"    // Released: Oct 03, 2019
-    `hilt-android version` =                    "2.28-alpha"    // Released: Jun 10, 2020
-    `hilt-androidx version` =                   "1.0.0-alpha01" // Released: Jun 12, 2020
-    `assistedInject version` =                  "0.5.2"         // Released: Nov 22, 2019
-    `dagger version` =                          "2.28"          // Released: May 04, 2018
     // endregion
 }
 
