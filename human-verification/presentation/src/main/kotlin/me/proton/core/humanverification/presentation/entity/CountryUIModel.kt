@@ -19,6 +19,7 @@
 package me.proton.core.humanverification.presentation.entity
 
 import android.os.Parcelable
+import androidx.recyclerview.widget.DiffUtil
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -30,4 +31,15 @@ data class CountryUIModel(
     val callingCode: Int,
     val name: String,
     val flagId: Int = 0
-) : Parcelable
+) : Parcelable {
+
+    companion object {
+        val DiffCallback = object : DiffUtil.ItemCallback<CountryUIModel>() {
+            override fun areItemsTheSame(oldItem: CountryUIModel, newItem: CountryUIModel) =
+                oldItem.countryCode == newItem.countryCode
+
+            override fun areContentsTheSame(oldItem: CountryUIModel, newItem: CountryUIModel) =
+                oldItem == newItem
+        }
+    }
+}

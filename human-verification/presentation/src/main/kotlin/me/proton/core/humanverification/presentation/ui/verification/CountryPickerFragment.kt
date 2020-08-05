@@ -18,6 +18,7 @@
 
 package me.proton.core.humanverification.presentation.ui.verification
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
@@ -26,15 +27,17 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonDialogFragment
+import me.proton.android.core.presentation.ui.adapter.ProtonAdapter
 import me.proton.android.core.presentation.utils.onClick
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentCountryPickerBinding
+import me.proton.core.humanverification.presentation.databinding.ItemCountryBinding
 import me.proton.core.humanverification.presentation.entity.CountryUIModel
-import me.proton.core.humanverification.presentation.ui.adapter.CountriesListAdapter
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment.Companion.BUNDLE_KEY_COUNTRY
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment.Companion.KEY_COUNTRY_SELECTED
 import me.proton.core.humanverification.presentation.utils.removeCountryPicker
 import me.proton.core.humanverification.presentation.viewmodel.verification.CountryPickerViewModel
+import me.proton.core.util.kotlin.containsNoCase
 import java.util.Locale
 
 /**
@@ -48,9 +51,18 @@ class CountryPickerFragment :
 
     private val viewModel by viewModels<CountryPickerViewModel>()
 
-    private val countriesAdapter by lazy {
-        CountriesListAdapter(::selectCountry)
-    }
+    @SuppressLint("SetTextI18n")
+    private val countriesAdapter = ProtonAdapter(
+        { parent, inflater -> ItemCountryBinding.inflate(inflater, parent, false) },
+        { country ->
+            callingCodeText.text = "+${country.callingCode}"
+            name.text = country.name
+            flag.setImageResource(country.flagId)
+        },
+        onFilter = { country, query -> country.name containsNoCase query },
+        onItemClick = ::selectCountry,
+        diffCallback = CountryUIModel.DiffCallback
+    )
 
     override fun layoutId(): Int = R.layout.fragment_country_picker
 
