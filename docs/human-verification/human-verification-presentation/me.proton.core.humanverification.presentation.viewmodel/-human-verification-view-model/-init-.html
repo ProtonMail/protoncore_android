@@ -8,14 +8,12 @@
 <a href="../../index.html">human-verification-presentation</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.humanverification.presentation.viewmodel</a>&nbsp;/&nbsp;<a href="index.html">HumanVerificationViewModel</a>&nbsp;/&nbsp;<a href="./-init-.html">&lt;init&gt;</a><br/>
 <br/>
 <h1>&lt;init&gt;</h1>
-<a name="me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel$&lt;init&gt;(kotlin.collections.List((kotlin.String)))"></a>
-<code><span class="identifier">HumanVerificationViewModel</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel$<init>(kotlin.collections.List((kotlin.String)))/availableVerificationMethods">availableVerificationMethods</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span></code>
+<a name="me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel$&lt;init&gt;(kotlinx.coroutines.channels.Channel((me.proton.core.humanverification.presentation.entity.HumanVerificationResult)), androidx.lifecycle.SavedStateHandle)"></a>
+<code><span class="identifier">HumanVerificationViewModel</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel$<init>(kotlinx.coroutines.channels.Channel((me.proton.core.humanverification.presentation.entity.HumanVerificationResult)), androidx.lifecycle.SavedStateHandle)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">Channel</span><span class="symbol">&lt;</span><a href="../../me.proton.core.humanverification.presentation.entity/-human-verification-result/index.html"><span class="identifier">HumanVerificationResult</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel$<init>(kotlinx.coroutines.channels.Channel((me.proton.core.humanverification.presentation.entity.HumanVerificationResult)), androidx.lifecycle.SavedStateHandle)/savedStateHandle">savedStateHandle</span><span class="symbol">:</span>&nbsp;<span class="identifier">SavedStateHandle</span><span class="symbol">)</span></code>
 <p>View model class to serve the main Human Verification screen.</p>
 <h3>Parameters</h3>
-<p><a name="availableVerificationMethods"></a>
-<code>availableVerificationMethods</code> - receives a list of all available methods that the API is
-currently supporting for this particular user and device.
-The UI should present the verification methods for each one of them.</p>
+<p><a name="channel"></a>
+<code>channel</code> - the result channel.</p>
 <p><strong>Author</strong><br/>
 Dino Kadrikj.</p>
 </BODY>
