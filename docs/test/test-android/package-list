@@ -1,0 +1,6 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+me.proton.core.test.android
+me.proton.core.test.android.lifecycle
+me.proton.core.test.android.mocks

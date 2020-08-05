@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>me.proton.core.test.android - test-android</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">test-android</a>&nbsp;/&nbsp;<a href="./index.html">me.proton.core.test.android</a><br/>
+<br/>
+<h2>Package me.proton.core.test.android</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-arch-test/index.html">ArchTest</a></h4>
+</td>
+<td>
+<p>An interface meant to be implemented by a Test Suite that uses <code>androidx.arch</code> components.
+It applies <a href="#">InstantTaskExecutorRule</a>
+Example:</p>
+<code><span class="keyword">interface </span><span class="identifier">ArchTest</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-executors-test/index.html">ExecutorsTest</a></h4>
+</td>
+<td>
+<p>An interface meant to be implemented by a Test Suite that uses Android code that internally uses Executors.
+Example:</p>
+<code><span class="keyword">interface </span><span class="identifier">ExecutorsTest</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-executors-test-rule/index.html">ExecutorsTestRule</a></h4>
+</td>
+<td>
+<p>A JUnit Test Rule that set a Main Dispatcher</p>
+<code><span class="keyword">class </span><span class="identifier">ExecutorsTestRule</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">TestWatcher</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-main-thread-executor-service/index.html">MainThreadExecutorService</a></h4>
+</td>
+<td>
+<p>An <a href="https://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ExecutorService.html">ExecutorService</a> that will run on the Main ( current ) thread</p>
+<code><span class="keyword">class </span><span class="identifier">MainThreadExecutorService</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/concurrent/ExecutorService.html"><span class="identifier">ExecutorService</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="executors-test.html">executorsTest</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">executorsTest</span><span class="symbol">: </span><a href="-executors-test/index.html"><span class="identifier">ExecutorsTest</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

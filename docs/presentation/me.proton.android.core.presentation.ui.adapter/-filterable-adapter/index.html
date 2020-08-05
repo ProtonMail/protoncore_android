@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>FilterableAdapter - presentation</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">presentation</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.android.core.presentation.ui.adapter</a>&nbsp;/&nbsp;<a href="./index.html">FilterableAdapter</a><br/>
+<br/>
+<h1>FilterableAdapter</h1>
+<code><span class="keyword">interface </span><span class="identifier">FilterableAdapter</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">, </span><span class="identifier">ModelsList</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/Filterable.html"><span class="identifier">Filterable</span></a></code>
+<p>Common interface for Adapters that are filterable</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="unfiltered-list.html">unfilteredList</a></h4>
+</td>
+<td>
+<p>A reference to all the items without any filter applied.
+This must be be updated in sub-classes, every time an update for items is received.
+e.g. override <a href="#">androidx.recyclerview.widget.ListAdapter.submitList</a> for Adapters that inherit from
+<a href="#">androidx.recyclerview.widget.ListAdapter</a></p>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">unfilteredList</span><span class="symbol">: </span><span class="identifier">ModelsList</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="get-filter.html">getFilter</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getFilter</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/Filter.html"><span class="identifier">Filter</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-filter.html">onFilter</a></h4>
+</td>
+<td>
+<p>Perform a filter on a single element of the <a href="unfiltered-list.html">unfilteredList</a>
+Default doesn't apply any filter</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onFilter</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.FilterableAdapter$onFilter(me.proton.android.core.presentation.ui.adapter.FilterableAdapter.UiModel, kotlin.CharSequence)/element">element</span><span class="symbol">:</span>&nbsp;<span class="identifier">UiModel</span><span class="symbol">, </span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.FilterableAdapter$onFilter(me.proton.android.core.presentation.ui.adapter.FilterableAdapter.UiModel, kotlin.CharSequence)/constraint">constraint</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-sequence/index.html"><span class="identifier">CharSequence</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="submit-filtered-list.html">submitFilteredList</a></h4>
+</td>
+<td>
+<p>Publish filtered results as list</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">submitFilteredList</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.FilterableAdapter$submitFilteredList(me.proton.android.core.presentation.ui.adapter.FilterableAdapter.ModelsList)/list">list</span><span class="symbol">:</span>&nbsp;<span class="identifier">ModelsList</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../-proton-adapter/index.html">ProtonAdapter</a></h4>
+</td>
+<td>
+<p>A <a href="#">ListAdapter</a> for <a href="#">RecyclerView</a> that contains a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> of <a href="../-proton-adapter/index.html#UiModel">UiModel</a> items.
+Implements <a href="../-clickable-adapter/index.html">ClickableAdapter</a></p>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">ProtonAdapter</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">, </span><span class="identifier">ViewRef</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">, </span><span class="identifier">ViewHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">,</span>&nbsp;<span class="identifier">ViewRef</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ListAdapter</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">,</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="../-clickable-adapter/index.html"><span class="identifier">ClickableAdapter</span></a><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">FilterableAdapter</span></a><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

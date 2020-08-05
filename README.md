@@ -102,7 +102,7 @@ Util Gradle: **0.1.9** - _released on: Aug 04, 2020_
 
 Test Kotlin: **0.1** - _released on: Jun 10, 2020_
 
-Test Android: **0.1** - _released on: May 30, 2020_
+Test Android: **0.2** - _released on: Aug 05, 2020_
 
 Test Android Instrumented: **0.1.1** - _released on: Jun 17, 2020_
 
@@ -110,7 +110,7 @@ Test Android Instrumented: **0.1.1** - _released on: Jun 17, 2020_
 
 Domain: **0.1** - _released on: Jul 03, 2020_
 
-Presentation: **0.2.1** - _released on: Aug 05, 2020_
+Presentation: **0.2.2** - _released on: Aug 05, 2020_
 
 Data: **0** - _released on: ND_
 

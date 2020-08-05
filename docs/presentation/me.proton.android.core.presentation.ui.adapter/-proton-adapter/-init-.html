@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ProtonAdapter.<init> - presentation</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">presentation</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.android.core.presentation.ui.adapter</a>&nbsp;/&nbsp;<a href="index.html">ProtonAdapter</a>&nbsp;/&nbsp;<a href="./-init-.html">&lt;init&gt;</a><br/>
+<br/>
+<h1>&lt;init&gt;</h1>
+<a name="me.proton.android.core.presentation.ui.adapter.ProtonAdapter$&lt;init&gt;(kotlin.Function1((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel, kotlin.Unit)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel, kotlin.Unit)), androidx.recyclerview.widget.DiffUtil.ItemCallback((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel)))"></a>
+<code><span class="identifier">ProtonAdapter</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ProtonAdapter$<init>(kotlin.Function1((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel, kotlin.Unit)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel, kotlin.Unit)), androidx.recyclerview.widget.DiffUtil.ItemCallback((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel)))/onItemClick">onItemClick</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">UiModel</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">, </span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ProtonAdapter$<init>(kotlin.Function1((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel, kotlin.Unit)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel, kotlin.Unit)), androidx.recyclerview.widget.DiffUtil.ItemCallback((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel)))/onItemLongClick">onItemLongClick</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">UiModel</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">, </span><span class="identifier" id="me.proton.android.core.presentation.ui.adapter.ProtonAdapter$<init>(kotlin.Function1((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel, kotlin.Unit)), kotlin.Function1((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel, kotlin.Unit)), androidx.recyclerview.widget.DiffUtil.ItemCallback((me.proton.android.core.presentation.ui.adapter.ProtonAdapter.UiModel)))/diffCallback">diffCallback</span><span class="symbol">:</span>&nbsp;<span class="identifier">ItemCallback</span><span class="symbol">&lt;</span><span class="identifier">UiModel</span><span class="symbol">&gt;</span><span class="symbol">)</span></code>
+<p>A <a href="#">ListAdapter</a> for <a href="#">RecyclerView</a> that contains a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> of <a href="index.html#UiModel">UiModel</a> items.
+Implements <a href="../-clickable-adapter/index.html">ClickableAdapter</a></p>
+<p>A basic implementations expects</p>
+<ul><li>an implementation of <a href="#">DiffUtil.ItemCallback</a> of <a href="index.html#UiModel">UiModel</a></li>
+<li>an implementation of <a href="../-clickable-adapter/-view-holder/index.html">ClickableAdapter.ViewHolder</a> that will be passes a generic <a href="index.html#UiModel">UiModel</a> and will be created by
+overriding <a href="#">onCreateViewHolder</a></li>
+</ul>
+<h3>Parameters</h3>
+<p><a name="onItemClick"></a>
+<code>onItemClick</code> - A lambda with <a href="index.html#UiModel">UiModel</a> as parameter that will be triggered when an item is clicked</p>
+<p><a name="onItemLongClick"></a>
+<code>onItemLongClick</code> - A lambda with <a href="index.html#UiModel">UiModel</a> as parameter that will be triggered when an item is long clicked</p>
+<p><a name="diffCallback"></a>
+<code>diffCallback</code> - a REQUIRED implementation on <a href="#">DiffUtil.ItemCallback</a> of <a href="index.html#UiModel">UiModel</a> that will be used for compare
+the items.</p>
+</BODY>
+</HTML>
