@@ -32,7 +32,7 @@
             android:layout_height="@dimen/human_verification_close_button"
             android:layout_marginStart="@dimen/parent_padding"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@color/black"
+            android:tint="@color/icon_default"
             app:layout_constraintBottom_toBottomOf="@+id/filterEditText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/filterEditText"

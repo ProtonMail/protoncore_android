@@ -22,8 +22,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:background="@color/layout_light"
     android:padding="@dimen/parent_padding">
 
     <ImageView
@@ -31,6 +30,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginEnd="@dimen/default_top_margin"
+        android:contentDescription="@string/human_verification_close"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

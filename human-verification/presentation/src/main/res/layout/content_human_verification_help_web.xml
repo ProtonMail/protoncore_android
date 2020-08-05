@@ -43,7 +43,7 @@
             android:gravity="start|center_vertical"
             android:text="@string/human_verification_help_website_title"
             android:textSize="18sp"
-            android:textColor="@color/black"
+            android:textColor="@color/text_default"
             app:layout_constraintStart_toEndOf="@id/icon"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +51,7 @@
             android:layout_width="38dp"
             android:layout_height="32dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@color/black"
+            android:tint="@color/icon_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_arrow_right" />
@@ -63,7 +63,7 @@
             android:gravity="start"
             android:text="@string/human_verification_help_website"
             android:textSize="18sp"
-            android:textColor="@color/black"
+            android:textColor="@color/text_default"
             android:layout_marginTop="@dimen/default_top_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintStart_toEndOf="parent"

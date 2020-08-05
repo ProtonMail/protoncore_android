@@ -17,9 +17,9 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/purple_darker" android:state_selected="true" />
-    <item android:color="@color/purple_darker" android:state_pressed="true" />
-    <item android:color="@color/purple_darker" android:state_checked="true" />
-    <item android:color="@color/purple_washed" android:state_enabled="false" />
-    <item android:color="@color/purple" />
+    <item android:color="@color/button_action_pressed" android:state_selected="true" />
+    <item android:color="@color/button_action_pressed" android:state_pressed="true" />
+    <item android:color="@color/button_action_pressed" android:state_checked="true" />
+    <item android:color="@color/button_action_disabled" android:state_enabled="false" />
+    <item android:color="@color/button_action" />
 </selector>
