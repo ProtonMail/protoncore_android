@@ -26,6 +26,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
@@ -184,7 +185,7 @@ private fun View.snack(
 ) {
     Snackbar.make(this, message, length).apply {
         view.background = context.resources.getDrawable(color, null)
-        setTextColor(context.resources.getColor(R.color.text_light))
+        setTextColor(ContextCompat.getColor(context, R.color.text_light))
     }.show()
 }
 
