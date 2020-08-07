@@ -27,6 +27,7 @@ dependencies {
     api(
         project(Module.androidTest).apply {
             exclude(`mockk`)
+            exclude(`robolectric`)
         },
 
         // MockK
