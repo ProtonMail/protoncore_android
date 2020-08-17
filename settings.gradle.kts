@@ -45,7 +45,12 @@ include(
     ":human-verification",
     ":human-verification:domain",
     ":human-verification:presentation",
-    ":human-verification:data"
+    ":human-verification:data",
+    // Auth
+    ":auth",
+    ":auth:presentation",
+    ":auth:domain",
+    ":auth:data"
 )
 
 // Demo app
@@ -71,6 +76,13 @@ project(":test:android:instrumented").name = "test-android-instrumented"
 project(":network").name = "network"
 project(":network:domain").name = "network-domain"
 project(":network:data").name = "network-data"
+
+
+// Auth
+project(":auth").name = "auth"
+project(":auth:domain").name = "auth-domain"
+project(":auth:presentation").name = "auth-presentation"
+project(":auth:data").name = "auth-data"
 
 // Contacts
 // ":contacts",
