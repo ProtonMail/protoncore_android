@@ -32,9 +32,11 @@ dependencies {
     implementation(
 
         project(Module.kotlinUtil),
-        project(Module.humanVerification),
         project(Module.presentation),
         project(Module.network),
+        // features
+        project(Module.humanVerification),
+        project(Module.auth),
 
         `kotlin-jdk7`,
         `coroutines-android`,

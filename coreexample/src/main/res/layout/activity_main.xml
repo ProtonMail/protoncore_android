@@ -45,6 +45,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/humanVerification" />
 
+        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+            android:id="@+id/login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_top_margin"
+            android:text="@string/login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/customViews" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -19,10 +19,17 @@
 package me.proton.android.core.coreexample
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled
 import dagger.hilt.android.HiltAndroidApp
 
 /**
  * @author Dino Kadrikj.
  */
 @HiltAndroidApp
-class CoreExampleApp : Application()
+class CoreExampleApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+        setCompatVectorFromResourcesEnabled(true)
+    }
+}
