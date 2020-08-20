@@ -24,6 +24,17 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="ProtonTextView.Title" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/text_default</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ProtonTextView.Subtitle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="ProtonTextView.InputHeader">
         <item name="android:textColor">@drawable/selector_input_header_color</item>
         <item name="android:textSize">14sp</item>
