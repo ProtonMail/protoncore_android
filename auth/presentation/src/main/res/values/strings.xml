@@ -27,4 +27,10 @@
     <string name="auth_sign_in_action">Sign in</string>
     <string name="auth_need_help">Need help?</string>
     <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
+    <string name="auth_help_title">How can we help?</string>
+    <string name="auth_help_option_forgot_username">Forgot username</string>
+    <string name="auth_help_option_forgot_password">Forgot password</string>
+    <string name="auth_help_option_other">Other sign-in issues</string>
+    <string name="auth_help_other">Still need help? Contact us directly.</string>
+    <string name="auth_help_option_customer_support">Customer support</string>
 </resources>
