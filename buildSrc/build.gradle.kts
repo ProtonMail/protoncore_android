@@ -30,7 +30,7 @@ dependencies {
     val android =       "4.0.0"         // Released: May 28, 2020
     val dokka =         "0.10.0"        // Released: Oct 07, 2019
     val easyGradle =    "1.5-beta-10"    // Released: Jun 14, 2020
-    val protonGradle =  "0.1.4"         // Released: Jun 16, 2020
+    val protonGradle =  "0.1.10"         // Released: Aug 20, 2020
 
     // Needed for setup Android config
     implementation("com.android.tools.build:gradle:$android")
