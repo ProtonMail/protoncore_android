@@ -16,20 +16,25 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.viewmodel
+package me.proton.core.auth.presentation.ui
 
-import me.proton.android.core.presentation.viewmodel.ProtonViewModel
+import android.os.Build
+import android.os.Bundle
+import android.view.View
+import androidx.databinding.ViewDataBinding
+import me.proton.android.core.presentation.ui.ProtonActivity
 
 /**
- * View model class serving the Login activity.
+ * Base class for all Auth activities that handles the window flags.
  * @author Dino Kadrikj.
  */
-class LoginViewModel : ProtonViewModel() {
+abstract class ProtonAuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
 
-    /**
-     * Will attempt to log the user in. TBD!
-     */
-    fun doLogin(username: String, password: String) {
-        // TBD
+    override fun onCreate(savedInstanceState: Bundle?) {
+        window.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+        super.onCreate(savedInstanceState)
     }
 }
