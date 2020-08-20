@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.utils
+package me.proton.android.core.presentation.utils
 
 import me.proton.android.core.presentation.ui.view.ProtonInput
 

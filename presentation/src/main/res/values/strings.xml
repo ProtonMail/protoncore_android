@@ -19,5 +19,5 @@
 <resources>
 
     <!-- base common presentation strings -->
-
+    <string name="presentation_browser_missing">Can not find browser to open the link.</string>
 </resources>

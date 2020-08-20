@@ -149,19 +149,6 @@ internal fun CountryPickerFragment.removeCountryPicker() {
     }
 }
 
-internal fun Context.openBrowserLink(link: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-    intent.resolveActivity(packageManager)?.let {
-        startActivity(intent)
-    } ?: run {
-        Toast.makeText(
-            this,
-            getString(R.string.human_verification_browser_missing),
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-}
-
 internal fun View.errorSnack(@StringRes messageRes: Int) {
     snack(messageRes = messageRes, color = R.drawable.background_error)
 }

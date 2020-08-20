@@ -18,8 +18,13 @@
 
 package me.proton.android.core.presentation.utils
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import me.proton.android.core.presentation.R
 
 /**
  * @author Dino Kadrikj.
@@ -28,4 +33,17 @@ inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> Fragme
     val transaction = beginTransaction()
     transaction.block()
     transaction.commit()
+}
+
+fun Context.openBrowserLink(link: String) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+    intent.resolveActivity(packageManager)?.let {
+        startActivity(intent)
+    } ?: run {
+        Toast.makeText(
+            this,
+            getString(R.string.presentation_browser_missing),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 }
