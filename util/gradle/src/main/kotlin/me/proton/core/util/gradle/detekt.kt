@@ -33,11 +33,7 @@ import org.gradle.kotlin.dsl.register
 import studio.forface.easygradle.dsl.*
 import java.io.BufferedWriter
 import java.io.File
-import java.io.FileInputStream
 import java.net.URL
-import java.net.URLEncoder
-import java.util.Base64
-import java.util.Properties
 
 /**
  * Setup Detekt for whole Project.
@@ -167,37 +163,10 @@ internal open class MergeDetektReports : DefaultTask() {
 @OptIn(ExperimentalStdlibApi::class)
 @Suppress("TooGenericExceptionCaught", "SameParameterValue")
 private fun downloadDetektConfig(path: String, to: File) {
-    val accessToken =
-        try {
-            Properties().apply { load(FileInputStream("local.properties")) }["gitToken"] as String
-        } catch (e: Exception) {
-            System.getenv("GIT_TOKEN")
-        }
-
-    requireNotNull(accessToken) {
-        """
-        'gitToken' not defined in local.properties. 
-        Define it locally as 'gitToken=MY_ACCESS_TOKEN' and on CI as environment variable named 'GIT_TOKEN' 
-        Get/generate access token from: https://gitlab.protontech.ch/profile/personal_access_tokens
-        """.trimIndent()
-    }
-
-    val repositoryId = 416
-    val encodedPath = URLEncoder.encode(path, "utf-8")
-
     try {
-        val json = URL(
-            "https://gitlab.protontech.ch" +
-                "/api/v4/projects/$repositoryId/repository/files/$encodedPath?ref=master&private_token=$accessToken"
-        ).openStream().bufferedReader().readText()
-
-        val encodedContent = json
-            .substringAfter("\"content\":")
-            .substringBeforeLast("}")
-            .trim()
-            .removeSurrounding("\"")
-
-        val content = Base64.getDecoder().decode(encodedContent).decodeToString()
+        val url = "https://raw.githubusercontent.com/ProtonMail/protoncore_android/master/$path"
+        println("Fetching Detekt rule-set from $url")
+        val content = URL(url).openStream().bufferedReader().readText()
         // Checking start of the file is enough, if some part is missing we would not be able to decode it
         require(content.startsWith("# Integrity check *")) { "Integrity check not passed" }
 
