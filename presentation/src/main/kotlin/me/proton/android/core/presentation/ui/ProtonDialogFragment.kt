@@ -19,6 +19,7 @@
 package me.proton.android.core.presentation.ui
 
 import android.app.Dialog
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,6 +60,12 @@ abstract class ProtonDialogFragment<DB : ViewDataBinding> : DialogFragment() {
         internalBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         binding.setLifecycleOwner { lifecycle }
         super.onCreateView(inflater, container, savedInstanceState)
+
+        dialog?.window?.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = ContextCompat.getColor(requireContext(), R.color.layout_light)
+        }
         return binding.root
     }
 
@@ -69,10 +76,7 @@ abstract class ProtonDialogFragment<DB : ViewDataBinding> : DialogFragment() {
             }
         }
         // request a window without the title
-        dialog.window?.apply {
-            requestFeature(Window.FEATURE_NO_TITLE)
-            statusBarColor = ContextCompat.getColor(requireContext(), R.color.layout_light)
-        }
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         return dialog
     }
 
