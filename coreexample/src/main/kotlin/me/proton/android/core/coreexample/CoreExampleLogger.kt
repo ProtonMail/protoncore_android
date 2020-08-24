@@ -24,7 +24,12 @@ import me.proton.core.util.kotlin.Logger
  * @author Dino Kadrikj.
  */
 class CoreExampleLogger : Logger {
-    override fun e(e: Throwable) {
+
+    override fun e(tag: String, msg: String?, e: Throwable?) {
+        // dummy
+    }
+
+    override fun i(tag: String, msg: String) {
         // dummy
     }
 }

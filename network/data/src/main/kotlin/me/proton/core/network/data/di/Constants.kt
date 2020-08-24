@@ -42,5 +42,7 @@ object Constants {
      */
     val DOH_PROVIDERS_URLS =
         arrayOf("https://dns11.quad9.net/dns-query/", "https://dns.google/dns-query/")
+
+    const val LOG_TAG: String = "net"
 }
 

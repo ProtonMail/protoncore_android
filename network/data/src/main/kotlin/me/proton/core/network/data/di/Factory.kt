@@ -47,7 +47,6 @@ import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import java.net.URI
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
@@ -146,11 +145,6 @@ class ApiFactory(
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .readTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
-        if (apiClient.enableDebugLogging) {
-            builder.addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-        }
         builder.build()
     }
 
@@ -170,7 +164,7 @@ class ApiFactory(
 
     private val dohProvider by lazy {
         val dohServices = Constants.DOH_PROVIDERS_URLS.map { serviceUrl ->
-            DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, networkManager, logger)
+            DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, apiClient, networkManager, logger)
         }
         DohProvider(baseUrl, apiClient, dohServices, mainScope, prefs, ::javaMonoClockMs)
     }

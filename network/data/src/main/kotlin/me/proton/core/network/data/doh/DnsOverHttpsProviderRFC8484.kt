@@ -18,7 +18,9 @@
 package me.proton.core.network.data.doh
 
 import android.util.Base64
+import me.proton.core.network.data.initLogging
 import me.proton.core.network.data.safeApiCall
+import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkManager
@@ -40,6 +42,7 @@ import java.util.concurrent.TimeUnit
 class DnsOverHttpsProviderRFC8484(
     baseOkHttpClient: OkHttpClient,
     private val baseUrl: String,
+    client: ApiClient,
     private val networkManager: NetworkManager,
     private val logger: Logger
 ) : DohService {
@@ -65,6 +68,7 @@ class DnsOverHttpsProviderRFC8484(
             .connectTimeout(TIMEOUT_S, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT_S, TimeUnit.SECONDS)
             .readTimeout(TIMEOUT_S, TimeUnit.SECONDS)
+            .initLogging(client, logger)
 
         val okClient = httpClientBuilder.build()
         api = Retrofit.Builder()
