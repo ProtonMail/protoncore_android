@@ -31,6 +31,12 @@ class MockUserData : UserData {
     override var sessionUid: String = "uid"
     override var accessToken: String = "accessToken"
     override var refreshToken: String = "refreshToken"
+
+    override fun updateTokens(access: String, refresh: String) {
+        accessToken = access
+        refreshToken = refresh
+    }
+
     override var humanVerificationHandler: HumanVerificationHeaders? = null
 
     override fun forceLogout() {

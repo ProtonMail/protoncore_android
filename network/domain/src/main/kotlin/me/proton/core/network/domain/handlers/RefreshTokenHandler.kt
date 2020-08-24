@@ -63,8 +63,9 @@ class RefreshTokenHandler<Api>(
         val refreshResult = backend.refreshTokens()
         when {
             refreshResult is ApiResult.Success -> {
-                userData.accessToken = refreshResult.value.access
-                userData.refreshToken = refreshResult.value.refresh
+                userData.updateTokens(
+                    access = refreshResult.value.access,
+                    refresh = refreshResult.value.refresh)
                 lastRefreshTimeMs = monoClockMs()
             }
             refreshResult is ApiResult.Error.Http && refreshResult.httpCode in FORCE_LOGOUT_HTTP_CODES -> {

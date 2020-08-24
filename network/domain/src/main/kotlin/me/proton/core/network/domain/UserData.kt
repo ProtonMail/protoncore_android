@@ -30,14 +30,19 @@ interface UserData {
     val sessionUid: String
 
     /**
-     * Setter and getter for access token to be used for 'Authorization' header.
+     * Access token to be used for 'Authorization' header.
      */
-    var accessToken: String
+    val accessToken: String
 
     /**
      * Refresh token to be used for access token refreshing.
      */
-    var refreshToken: String
+    val refreshToken: String
+
+    /**
+     * Update access and refresh tokens.
+     */
+    fun updateTokens(access: String, refresh: String)
 
     /**
      * Getter for `x-pm-human-verification-token-type` and `x-pm-human-verification-token`.

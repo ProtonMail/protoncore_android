@@ -31,6 +31,11 @@ class User(
     override var humanVerificationHandler: HumanVerificationHeaders? = null
 ) : UserData {
 
+    override fun updateTokens(access: String, refresh: String) {
+        accessToken = access
+        refreshToken = refresh
+    }
+
     /**
      * Tells client to force logout (because e.g. token refresh unrecoverably failed).
      */
