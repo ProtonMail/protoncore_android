@@ -23,6 +23,7 @@ import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.UserData
+import java.util.concurrent.TimeUnit
 
 /**
  * Handler for Authorization error, will attempt refreshing access token and repeat original call.
@@ -49,8 +50,9 @@ class RefreshTokenHandler<Api>(
         if (error is ApiResult.Error.Http && error.httpCode == HTTP_UNAUTHORIZED &&
             userData.refreshToken.isNotEmpty()
         ) {
-            // If request started before last token refresh there's no need for refresh
-            if (call.timestampMs < lastRefreshTimeMs || startOneOffJob(backend, ::refreshTokens) is ApiResult.Success)
+            // Don't attempt to refresh if successful refresh completed recently
+            val refreshedRecently = call.timestampMs <= lastRefreshTimeMs + REFRESH_COOLDOWN_MS
+            if (refreshedRecently || startOneOffJob(backend, ::refreshTokens) is ApiResult.Success)
                 backend(call)
             else
                 error
@@ -78,5 +80,6 @@ class RefreshTokenHandler<Api>(
     companion object {
         const val HTTP_UNAUTHORIZED = 401
         val FORCE_LOGOUT_HTTP_CODES = listOf(400, 422)
+        val REFRESH_COOLDOWN_MS = TimeUnit.MINUTES.toMillis(1)
     }
 }

@@ -23,6 +23,7 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
+import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.domain.NetworkManager
 import okhttp3.OkHttpClient
@@ -63,9 +64,11 @@ internal class DohProviderTests {
         isNetworkAvailable = true
         webServer = MockWebServer()
         val okHttpClient = OkHttpClient.Builder().build()
+        val client = MockApiClient()
         dohProvider = DnsOverHttpsProviderRFC8484(
             okHttpClient,
             webServer.url("/").toString(),
+            client,
             networkManager,
             MockLogger()
         )

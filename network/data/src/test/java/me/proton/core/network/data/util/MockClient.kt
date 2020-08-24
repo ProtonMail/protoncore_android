@@ -79,7 +79,9 @@ class MockNetworkPrefs : NetworkPrefs {
 
 class MockLogger : Logger {
 
-    override fun e(e: Throwable) {
-        e.printStackTrace()
+    override fun e(tag: String, msg: String?, e: Throwable?) {
+        e?.printStackTrace()
     }
+
+    override fun i(tag: String, msg: String) {}
 }
