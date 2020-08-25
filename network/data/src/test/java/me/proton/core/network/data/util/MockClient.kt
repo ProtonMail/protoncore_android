@@ -31,6 +31,12 @@ class MockUserData : UserData {
     override var sessionUid: String = "uid"
     override var accessToken: String = "accessToken"
     override var refreshToken: String = "refreshToken"
+
+    override fun updateTokens(access: String, refresh: String) {
+        accessToken = access
+        refreshToken = refresh
+    }
+
     override var humanVerificationHandler: HumanVerificationHeaders? = null
 
     override fun forceLogout() {
@@ -73,7 +79,9 @@ class MockNetworkPrefs : NetworkPrefs {
 
 class MockLogger : Logger {
 
-    override fun e(e: Throwable) {
-        e.printStackTrace()
+    override fun e(tag: String, msg: String?, e: Throwable?) {
+        e?.printStackTrace()
     }
+
+    override fun i(tag: String, msg: String) {}
 }

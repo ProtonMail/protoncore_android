@@ -22,5 +22,6 @@ package me.proton.core.util.kotlin
  */
 interface Logger {
 
-    fun e(e: Throwable)
+    fun e(tag: String, msg: String?, e: Throwable? = null)
+    fun i(tag: String, msg: String)
 }
