@@ -118,11 +118,11 @@ Data: **0** - _released on: ND_
 
 ### Network
 
-Network: **0.2** - _released on: Aug 04, 2020_
+Network: **0.2.1** - _released on: Aug 25, 2020_
 
-Network Domain: **0.2** - _released on: Aug 04, 2020_
+Network Domain: **0.2.1** - _released on: Aug 25, 2020_
 
-Network Data: **0.2** - _released on: Aug 04, 2020_
+Network Data: **0.2.1** - _released on: Aug 25, 2020_
 
 ### Crypto
 
