@@ -29,22 +29,22 @@ internal fun OkHttpClient.Builder.initLogging(client: ApiClient, logger: Logger)
         addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         })
-        addInterceptor { chain ->
-            val request = chain.request()
-            val auth = request.header("Authorization").formatToken(client)
-            logger.i(Constants.LOG_TAG, with(request) {
-                "--> $method $url (auth $auth)"
-            })
+    }
+    addInterceptor { chain ->
+        val request = chain.request()
+        val auth = request.header("Authorization").formatToken(client)
+        logger.i(Constants.LOG_TAG, with(request) {
+            "--> $method $url (auth $auth)"
+        })
 
-            val startMs = SystemClock.elapsedRealtime()
-            val response = chain.proceed(request)
-            val durationMs = SystemClock.elapsedRealtime() - startMs
-            logger.i(Constants.LOG_TAG, with(response) {
-                "<-- $code $message ${request.method} ${request.url} (${durationMs}ms)"
-            })
+        val startMs = SystemClock.elapsedRealtime()
+        val response = chain.proceed(request)
+        val durationMs = SystemClock.elapsedRealtime() - startMs
+        logger.i(Constants.LOG_TAG, with(response) {
+            "<-- $code $message ${request.method} ${request.url} (${durationMs}ms)"
+        })
 
-            response
-        }
+        response
     }
     return this
 }
