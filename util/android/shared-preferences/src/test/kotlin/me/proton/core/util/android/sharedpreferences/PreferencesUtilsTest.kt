@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package me.proton.core.util.android.sharedpreferences
 
 import androidx.core.content.edit
@@ -31,7 +49,22 @@ internal class PreferencesUtilsTest {
     @Test
     fun `set by type inference`() {
         p.edit { put("key", 5) }
+        @Suppress("RemoveExplicitTypeArguments") // Bug: It is needed
         assertEquals(5, p.get<Int?>("key"))
+    }
+
+    @Test
+    fun `remove by minusAssign`() {
+        p["key"] = 5
+        assertTrue("key" in p)
+
+        p -= "key"
+        assertFalse("key" in p)
+    }
+
+    @Test
+    fun `minusAssign doesn't throw exception if key is not found`() {
+        p -= "hello"
     }
     // endregion
 

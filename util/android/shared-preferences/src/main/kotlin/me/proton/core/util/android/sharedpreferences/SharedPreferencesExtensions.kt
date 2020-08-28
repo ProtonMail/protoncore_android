@@ -154,6 +154,11 @@ inline operator fun <reified T : Any?> SharedPreferences.get(key: String): T? {
 inline operator fun <reified T : Any> SharedPreferences.set(key: String, value: T?) = edit { put(key, value) }
 
 /**
+ * Remove entry with given [key]
+ */
+operator fun SharedPreferences.minusAssign(key: String) = edit { remove(key) }
+
+/**
  * Put value [T] into [SharedPreferences]
  * @throws IllegalArgumentException if [PrefType] is not satisfied
  */
