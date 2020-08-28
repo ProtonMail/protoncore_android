@@ -45,7 +45,7 @@ debugTests:
   tags:
     - android
   script:
-    - ./gradlew -Pci --console=plain testDebugUnitTest
+    - ./gradlew -Pci --console=plain allTest
 
 include:
   - project: 'agarroux/publish-github'

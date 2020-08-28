@@ -16,40 +16,31 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import me.proton.core.util.gradle.*
-import setup.setupPublishing
-import setup.setupTests
+package setup
+
+import org.gradle.api.Project
+import studio.forface.easygradle.dsl.*
 
 /**
- * Registered tasks:
- * * `allTest`
- * * `detekt`
- * * `dokka`
- * * `multiModuleDetekt` [setupDetekt]
- * * `publishAll` [setupPublishing]
+ * Setup Tests for whole Project.
+ * It will create a Gradle Task called "allTest" that will invoke "test" for jvm modules and "testDebugUnitTest" for
+ * Android ones
+ *
+ * @param filter filter [Project.subprojects] to attach Publishing to
+ *
+ *
+ * @author Davide Farella
  */
+fun Project.setupTests(filter: (Project) -> Boolean = { true }) {
 
-buildscript {
-    initVersions()
-
-    repositories(repos)
-    dependencies(classpathDependencies)
+    // Configure sub-projects
+    for (sub in subprojects.filter(filter)) {
+        sub.tasks.register("allTest") {
+            if (isAndroid) dependsOn("testDebugUnitTest")
+            else if (isJvm) dependsOn("test")
+        }
+    }
 }
 
-allprojects {
-    repositories(repos)
-}
-
-setupKotlin(
-    "-XXLanguage:+NewInference",
-    "-Xuse-experimental=kotlin.Experimental",
-    "-XXLanguage:+InlineClasses"
-)
-setupTests()
-setupDetekt()
-setupDokka()
-setupPublishing()
-
-tasks.register("clean", Delete::class.java) {
-    delete(rootProject.buildDir)
-}
+val Project.isJvm get() =
+    plugins.hasPlugin("java-library")
