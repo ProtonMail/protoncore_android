@@ -11,6 +11,7 @@
         <value>
           <package name="studio.forface.easygradle.dsl" alias="false" withSubpackages="false" />
           <package name="studio.forface.easygradle.dsl.android" alias="false" withSubpackages="false" />
+          <package name="me.proton.core.util.gradle" alias="false" withSubpackages="true" />
           <package name="kotlinx.android.synthetic" alias="false" withSubpackages="true" />
         </value>
       </option>
