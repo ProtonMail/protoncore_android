@@ -1,103 +1,78 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 rootProject.name = "Proton Core"
 
-// Common
-include(
-    // Utils
-    // ":lint",
-    ":util:kotlin",
-    ":util:android:shared-preferences",
-    ":util:android:work-manager",
-    ":util:gradle",
-    // Test
-    ":test:kotlin",
-    ":test:android",
-    ":test:android:instrumented"
-)
 
-// Shared
-include(
-    ":domain",
-    ":presentation"
-    // ":data"
-)
+val (projects, modules) = rootDir.projectsAndModules()
+val namedModules = modules.map { it to it.drop(1).replace(":", "-") }
 
-// Support
-include(
-    // Network
-    ":network",
-    ":network:domain",
-    ":network:data"
-)
+println("Projects: ${projects.sorted().joinToString()}")
+println("Modules: ${namedModules.sortedBy { it.first }.joinToString { "${it.first} as ${it.second}" } }")
 
-// Features
-include(
-    // Contacts
-    // ":contacts",
-    // ":contacts:domain",
-    // ":contacts:presentation",
-    // ":contacts:data",
-    // Settings
-    // ":settings",
-    // ":settings:domain",
-    // ":settings:presentation",
-    // ":settings:data",
-    // Human Verification
-    ":human-verification",
-    ":human-verification:domain",
-    ":human-verification:presentation",
-    ":human-verification:data",
-    // Auth
-    ":auth",
-    ":auth:presentation",
-    ":auth:domain",
-    ":auth:data"
-)
+for (p in projects) includeBuild(p)
+for (m in modules) include(m)
 
-// Demo app
-include(
-    ":coreexample"
-)
+for (m in namedModules) project(m.first).name = m.second
 
-// * * * * * * *
-// NAMING BELOW
-// * * * * * *
-
-// Common
-project(":util:kotlin").name = "util-kotlin"
-project(":util:android").name = "util-android"
-project(":util:android:shared-preferences").name = "util-android-shared-preferences"
-project(":util:android:work-manager").name = "util-android-work-manager"
-project(":util:gradle").name = "util-gradle"
-project(":test:kotlin").name = "test-kotlin"
-project(":test:android").name = "test-android"
-project(":test:android:instrumented").name = "test-android-instrumented"
-
-// Network
-project(":network").name = "network"
-project(":network:domain").name = "network-domain"
-project(":network:data").name = "network-data"
+enableFeaturePreview("GRADLE_METADATA")
 
 
-// Auth
-project(":auth").name = "auth"
-project(":auth:domain").name = "auth-domain"
-project(":auth:presentation").name = "auth-presentation"
-project(":auth:data").name = "auth-data"
+fun File.projectsAndModules(): Pair<Set<String>, Set<String>> {
+    val blacklist = setOf(
+        ".git",
+        ".gradle",
+        ".idea",
+        "buildSrc",
+        "config",
+        "build",
+        "src"
+    )
 
-// Contacts
-// ":contacts",
-// ":contacts:domain",
-// ":contacts:presentation",
-// ":contacts:data",
+    fun File.childrenDirectories() = listFiles { _, name -> name !in blacklist }!!
+        .filter { it.isDirectory }
 
-// Settings
-// ":settings",
-// ":settings:domain",
-// ":settings:presentation",
-// ":settings:data",
+    fun File.isProject() =
+        File(this, "settings.gradle.kts").exists() || File(this, "settings.gradle").exists()
 
-// Human Verification
-project(":human-verification").name = "human-verification"
-project(":human-verification:domain").name = "human-verification-domain"
-project(":human-verification:presentation").name = "human-verification-presentation"
-project(":human-verification:data").name = "human-verification-data"
+    fun File.isModule() = !isProject() &&
+        File(this, "build.gradle.kts").exists() || File(this, "build.gradle").exists()
+
+
+    val modules = mutableSetOf<String>()
+    val projects = mutableSetOf<String>()
+
+    fun File.find(name: String? = null): List<File> = childrenDirectories().flatMap {
+        val newName = (name ?: "") + it.name
+        when {
+            it.isProject() -> {
+                projects += newName
+                emptyList()
+            }
+            it.isModule() -> {
+                modules += ":$newName"
+                it.find("$newName:")
+            }
+            else -> it.find("$newName:")
+        }
+    }
+
+    find()
+
+    return projects to modules
+}
