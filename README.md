@@ -90,11 +90,11 @@ In order to use the all-in-one Detekt configuration, you must have a `buildSrc` 
 
 ### Utils
 
-Util Android Shared Preferences: **0.1.1** - _released on: Jul 06, 2020_
+Util Android Shared Preferences: **0.1.2** - _released on: Aug 31, 2020_
 
 Util Android Work Manager: **0.1** - _released on: Jun 22, 2020_
 
-Util Kotlin: **0.1.5** - _released on: Aug 25, 2020_
+Util Kotlin: **0.1.6** - _released on: Aug 31, 2020_
 
 Util Gradle: **0.1.11** - _released on: Aug 21, 2020_
 
