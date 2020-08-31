@@ -1,21 +1,41 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+@file:Suppress("unused")
+
 package me.proton.core.util.android.sharedpreferences
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import me.proton.core.util.kotlin.EMPTY_STRING
-import me.proton.core.util.kotlin.deserialize
-import me.proton.core.util.kotlin.deserializeList
-import me.proton.core.util.kotlin.deserializeMap
-import me.proton.core.util.kotlin.filterNullValues
-import me.proton.core.util.kotlin.safe
-import me.proton.core.util.kotlin.serialize
 import me.proton.core.util.android.sharedpreferences.PrefType.BOOLEAN
 import me.proton.core.util.android.sharedpreferences.PrefType.FLOAT
 import me.proton.core.util.android.sharedpreferences.PrefType.INT
 import me.proton.core.util.android.sharedpreferences.PrefType.LONG
 import me.proton.core.util.android.sharedpreferences.PrefType.SERIALIZABLE
 import me.proton.core.util.android.sharedpreferences.PrefType.STRING
+import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.util.kotlin.NeedSerializable
+import me.proton.core.util.kotlin.deserialize
+import me.proton.core.util.kotlin.deserializeList
+import me.proton.core.util.kotlin.deserializeMap
+import me.proton.core.util.kotlin.filterNullValues
+import me.proton.core.util.kotlin.safe
+import me.proton.core.util.kotlin.serialize
 import kotlin.reflect.KClass
 
 /*
@@ -91,11 +111,11 @@ fun <T> SharedPreferences.nullableGet(key: String, block: () -> T): T? {
 @JvmName("nonNullGet")
 inline fun <reified T : Any> SharedPreferences.get(key: String, default: T): T {
     return when (PrefType.get<T>()) {
-        BOOLEAN ->  getBoolean(key, default as Boolean) as T
-        FLOAT ->    getFloat(key, default as Float) as T
-        INT ->      getInt(key, default as Int) as T
-        LONG ->     getLong(key, default as Long) as T
-        STRING ->   getString(key, default as String) as T
+        BOOLEAN -> getBoolean(key, default as Boolean) as T
+        FLOAT -> getFloat(key, default as Float) as T
+        INT -> getInt(key, default as Int) as T
+        LONG -> getLong(key, default as Long) as T
+        STRING -> getString(key, default as String) as T
         SERIALIZABLE -> getString(key, default.serialize())!!.deserialize()
     }
 }
@@ -134,6 +154,11 @@ inline operator fun <reified T : Any?> SharedPreferences.get(key: String): T? {
 inline operator fun <reified T : Any> SharedPreferences.set(key: String, value: T?) = edit { put(key, value) }
 
 /**
+ * Remove entry with given [key]
+ */
+operator fun SharedPreferences.minusAssign(key: String) = edit { remove(key) }
+
+/**
  * Put value [T] into [SharedPreferences]
  * @throws IllegalArgumentException if [PrefType] is not satisfied
  */
@@ -143,11 +168,11 @@ inline fun <reified T : Any> SharedPreferences.Editor.put(key: String, value: T?
         return
     }
     when (PrefType.get(value::class)) {
-        BOOLEAN ->  putBoolean(key, value as Boolean)
-        FLOAT ->    putFloat(key, value as Float)
-        INT ->      putInt(key, value as Int)
-        LONG ->     putLong(key, value as Long)
-        STRING ->   putString(key, value as String)
+        BOOLEAN -> putBoolean(key, value as Boolean)
+        FLOAT -> putFloat(key, value as Float)
+        INT -> putInt(key, value as Int)
+        LONG -> putLong(key, value as Long)
+        STRING -> putString(key, value as String)
         SERIALIZABLE -> putString(key, value.serialize())
     }
 }
