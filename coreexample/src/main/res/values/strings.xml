@@ -19,4 +19,24 @@
 <resources>
     <string name="app_name">CoreExample</string>
     <string name="human_verification">Human Verification</string>
+    <string name="custom_views">Custom Views</string>
+
+    <string name="example_hint">Hint</string>
+    <string name="example_hint_disabled">Hint Disabled input</string>
+    <string name="example_label">Label</string>
+    <string name="example_assistive_text">Assistive text</string>
+    <string name="example_assistive_text_disabled">Disabled Input Assistive text</string>
+
+    <string name="example_password_hint">Password Hint</string>
+    <string name="example_password_label">Password Label</string>
+    <string name="example_password_assistive_text">Password Assistive text</string>
+
+    <string name="example_error_hint">Error Hint</string>
+    <string name="example_error_label">Error Label</string>
+    <string name="example_error_assistive_text">Error Assistive text</string>
+
+    <string name="example_default_button">Default text</string>
+    <string name="example_text_only">Text only</string>
+    <string name="example_loading">Loading</string>
+    <string name="example_loading_text_only">Loading</string>
 </resources>

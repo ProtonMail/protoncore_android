@@ -18,16 +18,14 @@
   -->
 
 <resources>
-    <dimen name="human_verification_min_width">300dp</dimen>
-    <dimen name="human_verification_min_height">450dp</dimen>
-
-    <dimen name="human_verification_width">400dp</dimen>
     <dimen name="human_verification_header_height">60dp</dimen>
     <dimen name="human_verification_close_button">24dp</dimen>
-    <dimen name="human_verification_help_button_height">24dp</dimen>
     <dimen name="human_verification_help_button_width">60dp</dimen>
     <dimen name="human_verification_title_size">20sp</dimen>
     <dimen name="human_verification_subtitle_size">16sp</dimen>
-
+    <dimen name="human_verification_action_buttons_top_margin">44dp</dimen>
+    <dimen name="human_verification_calling_code_input_width">96dp</dimen>
     <dimen name="edit_text_action_button">32dp</dimen>
+    <dimen name="human_verification_parent_padding_vertical">16dp</dimen>
+    <dimen name="human_verification_parent_padding_horizontal">24dp</dimen>
 </resources>

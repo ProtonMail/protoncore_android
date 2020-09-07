@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/protonInputLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/ProtonTextView.InputHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_top_margin"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/inputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:text="Input Header" />
+
+    <FrameLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/input_height"
+        app:layout_constraintBottom_toTopOf="@id/assistiveText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input"
+            style="@style/ProtonEditText.Border"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:layout_gravity="start|center_vertical"
+            android:gravity="start|center_vertical"
+            android:inputType="text"
+            tools:hint="Input Hint" />
+
+        <ToggleButton
+            android:id="@+id/inputActionButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:gravity="center"
+            android:layout_gravity="end|center"
+            android:background="@drawable/selector_action_button"
+            android:button="@drawable/ic_clear"
+            android:textOff=""
+            android:textOn=""
+            android:textSize="0sp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/assistiveText"
+        style="@style/ProtonTextView.InputFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/in_between_views_top_margin_s"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout"
+        tools:text="Optional assistive text" />
+</merge>

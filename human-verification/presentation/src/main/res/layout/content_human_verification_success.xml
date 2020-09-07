@@ -46,9 +46,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/emailHeader" />
 
-        <android.widget.Button
+        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/getVerificationCodeButton"
-            style="@style/ProtonButton.Action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_top_margin"
@@ -57,15 +56,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/emailEditText" />
 
-
-        <android.widget.Button
+        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/proceedButton"
-            style="@style/ProtonButton.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_top_margin"
             android:text="@string/human_verification_already_have_code"
-            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/getVerificationCodeButton" />

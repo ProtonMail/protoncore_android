@@ -57,6 +57,7 @@ proguard/
 !.idea/**/dictionaries/project.xml
 .idea/**/shelf
 .idea/runConfigurations.xml
+.idea/assetWizardSettings.xml
 
 # Generated files
 .idea/**/contentModel.xml

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+
+    <declare-styleable name="ProtonProgressButton">
+        <!-- Whether the loading state must be set on click. Default is true -->
+        <attr name="autoLoading" format="boolean" />
+        <attr name="initialState" format="enum">
+            <enum name="idle" value="0"/>
+            <enum name="loading" value="1"/>
+        </attr>
+        <!-- This must be an animated drawable -->
+        <attr name="progressDrawable" format="reference" />
+    </declare-styleable>
+
+
+    <declare-styleable name="ProtonInput">
+        <attr name="label" format="string" />
+        <attr name="assistiveText" format="string" />
+        <attr name="android:text" />
+        <attr name="android:hint" format="string" />
+        <attr name="android:inputType" />
+        <attr name="android:enabled" />
+    </declare-styleable>
+</resources>

@@ -25,7 +25,4 @@
         android:right="@dimen/input_padding"
         android:top="@dimen/input_padding" />
     <corners android:radius="2dp" />
-    <stroke
-        android:width="1dp"
-        android:color="@color/input_border" />
 </shape>

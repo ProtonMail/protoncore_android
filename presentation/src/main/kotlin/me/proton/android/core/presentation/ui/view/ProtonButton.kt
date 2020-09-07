@@ -16,27 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package ch.protonmail.libs.presentation
+package me.proton.android.core.presentation.ui.view
 
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
-
-import org.junit.Test
-import org.junit.runner.RunWith
-
-import org.junit.Assert.*
+import android.content.Context
+import android.util.AttributeSet
+import com.google.android.material.button.MaterialButton
 
 /**
- * Instrumented test, which will execute on an Android device.
+ * Default button which comes with a predefined style and extends from [MaterialButton].
+ * Current subclasses are:
+ *  - [ProtonProgressButton]
  *
- * See [testing documentation](http://d.android.com/tools/testing).
+ * @author Dino Kadrikj.
  */
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("ch.protonmail.presentation.test", appContext.packageName)
-    }
-}
+open class ProtonButton @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = com.google.android.material.R.attr.materialButtonStyle
+) : MaterialButton(context, attrs, defStyleAttr)
+

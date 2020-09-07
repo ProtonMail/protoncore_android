@@ -21,19 +21,15 @@ package me.proton.core.humanverification.presentation.ui.verification
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonFragment
-import me.proton.android.core.presentation.utils.clearText
 import me.proton.android.core.presentation.utils.onClick
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEmailBinding
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
 import me.proton.core.humanverification.presentation.utils.errorSnack
-import me.proton.core.humanverification.presentation.utils.removeInputError
-import me.proton.core.humanverification.presentation.utils.setInputError
 import me.proton.core.humanverification.presentation.utils.validate
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEmailViewModel
 
@@ -80,28 +76,19 @@ internal class HumanVerificationEmailFragment :
         humanVerificationBase.onViewCreated(
             owner = viewLifecycleOwner,
             parentFragmentManager = parentFragmentManager,
-            onVerificationCodeError = ::hideProgressAndEnableResend
+            loadable = binding.getVerificationCodeButton,
+            onVerificationCodeError = ::onError
         )
 
         recoveryEmailAddress?.let {
-            binding.emailEditText.setText(recoveryEmailAddress)
+            binding.emailEditText.inputText = it
         }
         binding.apply {
-            emailClearButton.onClick {
-                binding.emailEditText.clearText()
-            }
             getVerificationCodeButton.onClick {
-                emailEditText.text.toString().validate({ emailEditText.setInputError() }, {
-                    showProgressAndDisableResend()
+                emailEditText.validate({ emailEditText.setInputError() }, {
+                    getVerificationCodeButton.setLoading()
                     viewModel.sendVerificationCode(it)
                 })
-            }
-            emailEditText.addTextChangedListener {
-                it?.let {
-                    if (it.isNotEmpty()) {
-                        emailEditText.removeInputError()
-                    }
-                }
             }
             proceedButton.onClick {
                 humanVerificationBase.onGetCodeClicked(parentFragmentManager)
@@ -116,14 +103,7 @@ internal class HumanVerificationEmailFragment :
 
     override fun layoutId(): Int = R.layout.fragment_human_verification_email
 
-    private fun showProgressAndDisableResend() = with(binding) {
-        progress.visibility = View.VISIBLE
-        getVerificationCodeButton.isEnabled = false
-    }
-
-    private fun hideProgressAndEnableResend() = with(binding) {
-        progress.visibility = View.GONE
-        getVerificationCodeButton.isEnabled = true
+    private fun onError() = with(binding) {
         root.errorSnack(R.string.human_verification_sending_failed)
     }
 }

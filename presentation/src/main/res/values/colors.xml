@@ -31,6 +31,7 @@
     <color name="interaction_disabled">@color/brand_lighter_40</color>
 
     <color name="interaction_neutral">#727680</color>
+    <color name="interaction_ripple">#55727680</color>
     <color name="interaction_neutral_pressed">#000000</color>
     <color name="interaction_neutral_disabled">#BABDC6</color>
 
@@ -67,6 +68,10 @@
     <color name="button_action">@color/brand</color>
     <color name="button_action_pressed">@color/brand_darker_40</color>
     <color name="button_action_disabled">@color/brand_lighter_40</color>
+    <color name="button_text">@android:color/transparent</color>
+    <color name="button_text_pressed">@color/layout_background</color>
+    <color name="button_text_disabled">@android:color/transparent</color>
+    <color name="button_text_disabled_foreground">@color/interaction_neutral_disabled</color>
 
     <!-- proton input elements section -->
     <color name="input_border">@color/brand</color>

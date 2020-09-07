@@ -13,7 +13,7 @@ import kotlin.test.assertEquals
  * Test suite for [ProtonAdapter]
  */
 @RunWith(RobolectricTestRunner::class)
-internal class ProtonAdapterTest: ExecutorsTest by executorsTest {
+internal class ProtonAdapterTest : ExecutorsTest by executorsTest {
     
     private data class ExampleUiModel(val id: Int, val name: String) {
          companion object {
@@ -30,7 +30,7 @@ internal class ProtonAdapterTest: ExecutorsTest by executorsTest {
     }
 
     @Test
-    fun `filter works correctly`() {
+    fun filterWorksCorrectly() {
 
         // GIVEN
         val adapter = ProtonAdapter(

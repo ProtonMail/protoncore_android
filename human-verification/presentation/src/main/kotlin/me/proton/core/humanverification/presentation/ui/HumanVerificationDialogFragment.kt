@@ -115,7 +115,9 @@ class HumanVerificationDialogFragment :
         viewModel.activeMethod.observe(viewLifecycleOwner) {
             doOnData { setActiveVerificationMethod(TokenType.fromString(it)) }
         }
-        binding.headerNavigation.closeButton.onClick(::onClose)
+        binding.headerNavigation.closeButton.onClick {
+            onClose(null, null)
+        }
         binding.headerNavigation.helpButton.onClick {
             childFragmentManager.showHelp()
         }
@@ -135,7 +137,7 @@ class HumanVerificationDialogFragment :
         })
     }
 
-    override fun getStyleResource(): Int = R.style.ProtonTheme_Dialog_Picker
+    override fun getStyleResource(): Int = R.style.ProtonDialog_Picker
 
     override fun layoutId(): Int = R.layout.dialog_human_verification_main
 

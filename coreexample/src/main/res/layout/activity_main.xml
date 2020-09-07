@@ -16,8 +16,8 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context="me.proton.android.core.coreexample.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,16 +25,26 @@
         android:layout_height="match_parent"
         android:padding="@dimen/parent_padding">
 
-        <android.widget.Button
+        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/humanVerification"
-            style="@style/ProtonButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/human_verification"
-            android:background="@color/interaction_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+            android:id="@+id/customViews"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_top_margin"
+            android:text="@string/custom_views"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/humanVerification" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
