@@ -32,6 +32,12 @@ object Module {
 
     // region Features
     // Contacts
+    const val auth = ":auth"
+    const val authDomain = "$auth:auth-domain"
+    const val authPresentation = "$auth:auth-presentation"
+    const val authData = "$auth:auth-data"
+
+    // Contacts
     const val contacts = ":contacts"
     const val contactsDomain = "$contacts:contacts-domain"
     const val contactsPresentation = "$contacts:contacts-presentation"

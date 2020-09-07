@@ -1,45 +1,20 @@
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
+import util.libVersion
+
 plugins {
     `android-library`
-    `kotlin-android`
-    `kotlin-android-extensions`
-    `kotlin-serialization`
 }
 
-val version = Version(0, 1, 0)
-archivesBaseName = archiveNameFor(ProtonCore.auth, version)
+//libVersion = Version(0, 1, 0)
 
-android(version)
+android()
 
 dependencies {
-    // Core
-    implementation(project(Module.core))
-
-    // Api
-    implementation(project(Module.api))
-
-    // Crypto
-    implementation(project(Module.crypto))
-
-    // Kotlin
-    implementation(
-        `kotlin-jdk7`,
-        `kotlin-reflect`,
-        `coroutines-android`,
-        `serialization`
+    api(
+        project(Module.authPresentation),
+        project(Module.authDomain),
+        project(Module.authData)
     )
-
-    // Android
-    compileOnly(`android-annotation`)
-
-    // Other
-    implementation(`retrofit`)
-
-    // Test
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
-
-    // Lint
-    lintChecks(project(Module.lint))
 }
 
-// publish(Module.auth, version)

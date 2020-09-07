@@ -16,27 +16,29 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package ch.protonmail.libs.coreexample
+import studio.forface.easygradle.dsl.*
+import util.libVersion
 
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+plugins {
+    `kotlin-library`
+}
 
-import org.junit.Test
-import org.junit.runner.RunWith
+//libVersion = Version(0, 1, 0)
 
-import org.junit.Assert.*
+dependencies {
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("ch.protonmail.libs.coreexample", appContext.packageName)
-    }
+    implementation(
+
+        project(Module.kotlinUtil),
+        project(Module.domain),
+
+        // Kotlin
+        `kotlin-jdk8`,
+        `coroutines-core`,
+
+        // Android
+        `dagger`
+    )
+
+    testImplementation(project(Module.kotlinTest))
 }
