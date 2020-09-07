@@ -21,7 +21,10 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/human_verification_parent_padding_horizontal"
+        android:paddingTop="@dimen/human_verification_parent_padding_vertical"
+        android:paddingEnd="@dimen/human_verification_parent_padding_horizontal">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -37,9 +40,9 @@
                     android:id="@+id/captchaWebView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@android:color/transparent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

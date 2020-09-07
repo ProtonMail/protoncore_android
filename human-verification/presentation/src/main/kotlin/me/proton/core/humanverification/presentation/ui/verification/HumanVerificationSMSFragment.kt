@@ -22,11 +22,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonFragment
-import me.proton.android.core.presentation.utils.clearText
 import me.proton.android.core.presentation.utils.onClick
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
@@ -34,8 +32,6 @@ import me.proton.core.humanverification.presentation.databinding.FragmentHumanVe
 import me.proton.core.humanverification.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
 import me.proton.core.humanverification.presentation.utils.errorSnack
-import me.proton.core.humanverification.presentation.utils.removeInputError
-import me.proton.core.humanverification.presentation.utils.setInputError
 import me.proton.core.humanverification.presentation.utils.showCountryPicker
 import me.proton.core.humanverification.presentation.utils.validate
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationSMSViewModel
@@ -77,7 +73,8 @@ internal class HumanVerificationSMSFragment :
         humanVerificationBase.onViewCreated(
             owner = viewLifecycleOwner,
             parentFragmentManager = parentFragmentManager,
-            onVerificationCodeError = ::hideProgressAndEnableResend
+            loadable = binding.getVerificationCodeButton,
+            onVerificationCodeError = ::onError
         )
 
         childFragmentManager.setFragmentResultListener(KEY_COUNTRY_SELECTED, this) { _, bundle ->
@@ -86,28 +83,18 @@ internal class HumanVerificationSMSFragment :
         }
 
         binding.apply {
-            phoneClearButton.onClick { smsEditText.clearText() }
-
             callingCodeText.setOnClickListener {
                 childFragmentManager.showCountryPicker()
             }
 
             getVerificationCodeButton.setOnClickListener {
-                smsEditText.text.toString().validate({ binding.smsEditText.setInputError() }, {
-                    showProgressAndDisableResend()
+                smsEditText.validate({ binding.smsEditText.setInputError() }, {
+                    getVerificationCodeButton.setLoading()
                     viewModel.sendVerificationCodeToDestination(
                         countryCallingCode = callingCodeText.text.toString(), // this is not expected to be empty
                         phoneNumber = it
                     )
                 })
-            }
-
-            smsEditText.addTextChangedListener {
-                it?.let {
-                    if (it.isNotEmpty()) {
-                        smsEditText.removeInputError()
-                    }
-                }
             }
 
             proceedButton.onClick {
@@ -129,18 +116,11 @@ internal class HumanVerificationSMSFragment :
     override fun layoutId(): Int = R.layout.fragment_human_verification_sms
 
     private fun onValidationError() {
-        hideProgressAndEnableResend()
+        onError()
         binding.smsEditText.setInputError()
     }
 
-    private fun showProgressAndDisableResend() = with(binding) {
-        progress.visibility = View.VISIBLE
-        getVerificationCodeButton.isEnabled = false
-    }
-
-    private fun hideProgressAndEnableResend() = with(binding) {
-        progress.visibility = View.GONE
-        getVerificationCodeButton.isEnabled = true
+    private fun onError() = with(binding) {
         root.errorSnack(R.string.human_verification_sending_failed)
     }
 }

@@ -18,18 +18,20 @@
 
 package me.proton.core.humanverification.presentation.utils
 
+import me.proton.android.core.presentation.ui.view.ProtonInput
+
 /**
  * @return the [String] if valid (not null and not empty), otherwise return `null`
  *
  * @param onValidationFailed executed if the validation failed.
  * @param onValidationSuccess executed if the validation succeeds.
  */
-inline fun String?.validate(
+inline fun ProtonInput.validate(
     onValidationFailed: () -> Unit,
     onValidationSuccess: (String) -> Unit
 ) =
-    if (this == null || isBlank()) {
+    if (inputText == null || inputText.toString().isBlank()) {
         onValidationFailed()
     } else {
-        onValidationSuccess(this)
+        onValidationSuccess(inputText.toString())
     }

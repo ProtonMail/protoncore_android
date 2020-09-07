@@ -21,7 +21,6 @@ package me.proton.core.humanverification.presentation.ui.verification
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonDialogFragment
@@ -33,8 +32,6 @@ import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogF
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.ARG_TOKEN_CODE
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.KEY_VERIFICATION_DONE
 import me.proton.core.humanverification.presentation.utils.errorSnack
-import me.proton.core.humanverification.presentation.utils.removeInputError
-import me.proton.core.humanverification.presentation.utils.setInputError
 import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.utils.successSnack
 import me.proton.core.humanverification.presentation.utils.validate
@@ -99,15 +96,8 @@ class HumanVerificationEnterCodeFragment :
                 onClick { onBackPressed() }
             }
             headerNavigation.helpButton.onClick { childFragmentManager.showHelp() }
-            verificationCodeEditText.addTextChangedListener {
-                it?.let {
-                    if (it.isNotEmpty()) {
-                        verificationCodeEditText.removeInputError()
-                    }
-                }
-            }
             verifyButton.onClick {
-                verificationCodeEditText.text.toString()
+                verificationCodeEditText
                     .validate({ verificationCodeEditText.setInputError() }, {
                         viewModel.verificationComplete(tokenType, it)
                         parentFragmentManager.setFragmentResult(
@@ -127,7 +117,7 @@ class HumanVerificationEnterCodeFragment :
                 parentFragmentManager.setFragmentResult(
                     KEY_VERIFICATION_DONE,
                     bundleOf(
-                        ARG_TOKEN_CODE to binding.verificationCodeEditText.text.toString(),
+                        ARG_TOKEN_CODE to binding.verificationCodeEditText.inputText,
                         HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
                     )
                 )
@@ -143,20 +133,16 @@ class HumanVerificationEnterCodeFragment :
     override fun layoutId(): Int = R.layout.fragment_human_verification_enter_code
 
     private fun showErrorCode() {
-        showProgress(false)
+        binding.verifyButton.setIdle()
         view?.errorSnack(R.string.human_verification_incorrect_code)
     }
 
     private fun showCodeResent() {
-        showProgress(false)
+        binding.verifyButton.setIdle()
         view?.successSnack(R.string.human_verification_resent_code)
     }
 
-    private fun showProgress(show: Boolean) = with(binding) {
-        progress.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    override fun getStyleResource(): Int = R.style.ProtonTheme_Dialog_Picker
+    override fun getStyleResource(): Int = R.style.ProtonDialog_Picker
 
     override fun onBackPressed() {
         dismissAllowingStateLoss()

@@ -21,6 +21,7 @@ package me.proton.core.humanverification.presentation.ui.verification
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
+import me.proton.android.core.presentation.ui.view.Loadable
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCode
@@ -54,6 +55,7 @@ internal class HumanVerificationMethodCommon(
     fun onViewCreated(
         owner: LifecycleOwner,
         parentFragmentManager: FragmentManager,
+        loadable: Loadable? = null,
         onVerificationCodeError: () -> Unit
     ) {
         viewModel.verificationCodeStatus.observe(owner) {
@@ -61,6 +63,7 @@ internal class HumanVerificationMethodCommon(
                 onGetCodeClicked(parentFragmentManager)
             }
             doOnError {
+                loadable?.loadingComplete()
                 onVerificationCodeError()
             }
         }

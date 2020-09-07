@@ -22,7 +22,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -187,12 +186,4 @@ private fun View.snack(
         view.background = context.resources.getDrawable(color, null)
         setTextColor(ContextCompat.getColor(context, R.color.text_light))
     }.show()
-}
-
-fun EditText.setInputError() = apply {
-    background = resources.getDrawable(R.drawable.default_edit_text_error, null)
-}
-
-fun EditText.removeInputError() = apply {
-    background = resources.getDrawable(R.drawable.default_edit_text, null)
 }

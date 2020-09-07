@@ -35,7 +35,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/parent_padding">
+            android:paddingStart="@dimen/human_verification_parent_padding_horizontal"
+            android:paddingTop="@dimen/human_verification_parent_padding_vertical"
+            android:paddingEnd="@dimen/human_verification_parent_padding_horizontal">
 
             <TextView
                 android:id="@+id/title"
@@ -49,91 +51,37 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/header"
-                style="@style/ProtonTextView"
+            <me.proton.android.core.presentation.ui.view.ProtonInput
+                android:id="@+id/verificationCodeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_top_margin"
-                android:text="@string/human_verification_code"
-                android:textAllCaps="true"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp"
+                android:hint="@string/verification_code_hint"
+                app:label="@string/human_verification_code"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title" />
 
-            <RelativeLayout
-                android:id="@+id/verificationCodeEditTextLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_top_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/header">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/verificationCodeEditText"
-                    style="@style/ProtonEditText.Border"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_gravity="start|center_vertical"
-                    android:gravity="start|center_vertical"
-                    android:hint="@string/verification_code_hint"
-                    android:inputType="text" />
-
-                <ToggleButton
-                    android:id="@+id/emailClearButton"
-                    android:layout_width="@dimen/edit_text_action_button"
-                    android:layout_height="32dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@null"
-                    android:button="@drawable/ic_filled_times_circle"
-                    android:textOff=""
-                    android:textOn=""
-                    android:textSize="0sp" />
-            </RelativeLayout>
-
-            <FrameLayout
-                android:id="@+id/verifyButtonLayout"
+            <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/verifyButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_top_margin"
+                android:layout_marginTop="@dimen/human_verification_action_buttons_top_margin"
+                android:text="@string/human_verification_verify"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/verificationCodeEditTextLayout">
+                app:layout_constraintTop_toBottomOf="@id/verificationCodeEditText" />
 
-                <android.widget.Button
-                    android:id="@+id/verifyButton"
-                    style="@style/ProtonButton.Action"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/human_verification_verify" />
-
-                <!-- this is a temporary solution, we should make it custom view later -->
-                <ProgressBar
-                    android:id="@+id/progress"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical|end"
-                    android:elevation="3dp"
-                    android:indeterminate="true"
-                    android:indeterminateTint="@color/icon_light"
-                    android:visibility="gone" />
-            </FrameLayout>
-
-            <android.widget.Button
+            <me.proton.android.core.presentation.ui.view.ProtonProgressButton
                 android:id="@+id/requestReplacementButton"
-                style="@style/ProtonButton.Borderless"
+                style="@style/ProtonButton.Borderless.Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_top_margin"
                 android:text="@string/human_verification_request_replacement_code"
-                android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/verifyButtonLayout" />
+                app:layout_constraintTop_toBottomOf="@id/verifyButton" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </layout>
