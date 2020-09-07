@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ProtonProgressButton - presentation</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">presentation</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.android.core.presentation.ui.view</a>&nbsp;/&nbsp;<a href="./index.html">ProtonProgressButton</a><br/>
+<br/>
+<h1>ProtonProgressButton</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ProtonProgressButton</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-proton-button/index.html"><span class="identifier">ProtonButton</span></a><span class="symbol">, </span><a href="../-loadable/index.html"><span class="identifier">Loadable</span></a></code>
+<p>Custom Proton button that includes a loading spinner (indefinite progress).
+Supports normal button mode (default) or text-only mode by supplying the  appropriate style.</p>
+<p>The styles are default <code>@style/ProtonButton</code> (which is a default button style in <code>ProtonTheme</code> and is not
+mandatory to be set.
+The other style is <code>@style/ProtonButton.Borderless.Text</code> for the text-only button.
+This one needs to be set in the xml.</p>
+<p>There are 2 <a href="-state/index.html">State</a>s supported (<a href="-state/-i-d-l-e.html">IDLE</a> and <a href="-state/-l-o-a-d-i-n-g.html">LOADING</a>), and the they can be controlled with the public functions
+exposed.</p>
+<p>Note: ProgressButton includes a spinner (indefinite progress) which can be turned on or off with the <a href="set-loading.html">setLoading</a>
+and <a href="loading-complete.html">loadingComplete</a> functions. <a href="loading-complete.html">loadingComplete</a> is part of <a href="../-loadable/index.html">Loadable</a> interface, for more convenient use.</p>
+<p><strong>Author</strong><br/>
+Dino Kadrikj.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-state/index.html">State</a></h4>
+</td>
+<td>
+<p>Represents the state of the button. It can be <a href="-state/-i-d-l-e.html">IDLE</a> to act as a normal button, but also <a href="-state/-l-o-a-d-i-n-g.html">LOADING</a> for a
+long running operations.</p>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">State</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Custom Proton button that includes a loading spinner (indefinite progress).
+Supports normal button mode (default) or text-only mode by supplying the  appropriate style.</p>
+<code><span class="identifier">ProtonProgressButton</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.view.ProtonProgressButton$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="me.proton.android.core.presentation.ui.view.ProtonProgressButton$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/attrs">attrs</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="me.proton.android.core.presentation.ui.view.ProtonProgressButton$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/defStyleAttr">defStyleAttr</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;com.google.android.material.R.attr.materialButtonStyle<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="auto-loading.html">autoLoading</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">autoLoading</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="current-state.html">currentState</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">currentState</span><span class="symbol">: </span><span class="identifier">State</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="loading-complete.html">loadingComplete</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">loadingComplete</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-detached-from-window.html">onDetachedFromWindow</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onDetachedFromWindow</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-idle.html">setIdle</a></h4>
+</td>
+<td>
+<p>Sets the <a href="-state/index.html">State</a> to <a href="-state/-i-d-l-e.html">IDLE</a>. The loading spinner will no longer be visible.</p>
+<code><span class="keyword">fun </span><span class="identifier">setIdle</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-loading.html">setLoading</a></h4>
+</td>
+<td>
+<p>Sets the <a href="-state/index.html">State</a> to <a href="-state/-l-o-a-d-i-n-g.html">LOADING</a>. Indefinite loading spinner will be visible until <a href="loading-complete.html">loadingComplete</a> or <a href="set-idle.html">setIdle</a>
+is called.</p>
+<code><span class="keyword">fun </span><span class="identifier">setLoading</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-on-click-listener.html">setOnClickListener</a></h4>
+</td>
+<td>
+<p>Sets the click listener.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setOnClickListener</span><span class="symbol">(</span><span class="identifier" id="me.proton.android.core.presentation.ui.view.ProtonProgressButton$setOnClickListener(android.view.View.OnClickListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View/OnClickListener.html"><span class="identifier">OnClickListener</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -8,6 +8,7 @@ $dokka.location:me.proton.android.core.presentation.utils$onItemSelected(android
 $dokka.location:me.proton.android.core.presentation.utils$onTextChange(android.widget.EditText, kotlin.Function1((kotlin.CharSequence, kotlin.Unit)))me.proton.android.core.presentation.utils/android.widget.-edit-text/on-text-change.html
 me.proton.android.core.presentation.ui
 me.proton.android.core.presentation.ui.adapter
+me.proton.android.core.presentation.ui.view
 me.proton.android.core.presentation.ui.webview
 me.proton.android.core.presentation.utils
 me.proton.android.core.presentation.viewmodel

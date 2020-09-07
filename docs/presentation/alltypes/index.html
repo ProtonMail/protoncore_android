@@ -29,6 +29,13 @@
 <h5><a href="../me.proton.android.core.presentation.utils/androidx.fragment.app.-fragment-manager/index.html">androidx.fragment.app.FragmentManager</a></h5>
 </tr>
 <tr>
+<h5><a href="../me.proton.android.core.presentation.ui.view/-loadable/index.html">me.proton.android.core.presentation.ui.view.Loadable</a></h5>
+<p>Provides interface function to signalize the loading is complete and the class implementing this interface should
+do some action on this event.
+Used for Custom Views that support 'loading' state within them.
+Currently it is used for <a href="../me.proton.android.core.presentation.ui.view/-proton-button/index.html">ProtonButton</a>.</p>
+</tr>
+<tr>
 <h5><a href="../me.proton.android.core.presentation.ui/-proton-activity/index.html">me.proton.android.core.presentation.ui.ProtonActivity</a></h5>
 <p>Base Proton Activity from which all project activities should extend.</p>
 </tr>
@@ -38,12 +45,32 @@
 Implements <a href="../me.proton.android.core.presentation.ui.adapter/-clickable-adapter/index.html">ClickableAdapter</a></p>
 </tr>
 <tr>
+<h5><a href="../me.proton.android.core.presentation.ui.view/-proton-button/index.html">me.proton.android.core.presentation.ui.view.ProtonButton</a></h5>
+<p>Default button which comes with a predefined style and extends from <a href="#">MaterialButton</a>.
+Current subclasses are:</p>
+</tr>
+<tr>
 <h5><a href="../me.proton.android.core.presentation.ui/-proton-dialog-fragment/index.html">me.proton.android.core.presentation.ui.ProtonDialogFragment</a></h5>
 <p>Base Proton Fragment from which all project fragments should extend.</p>
 </tr>
 <tr>
 <h5><a href="../me.proton.android.core.presentation.ui/-proton-fragment/index.html">me.proton.android.core.presentation.ui.ProtonFragment</a></h5>
 <p>Base Proton Fragment from which all project fragments should extend.</p>
+</tr>
+<tr>
+<h5><a href="../me.proton.android.core.presentation.ui.view/-proton-input/index.html">me.proton.android.core.presentation.ui.view.ProtonInput</a></h5>
+<p>Custom Proton input (advanced complex <a href="https://developer.android.com/reference/android/widget/EditText.html">EditText</a>) view.
+Includes an <a href="https://developer.android.com/reference/android/widget/EditText.html">EditText</a> as a default input view, additionally it includes a Label which is located above the
+input view and an optional assistive text located below the input view.
+The assistive text can act also as a validation error message if an error message is passed in <a href="../me.proton.android.core.presentation.ui.view/-proton-input/set-input-error.html">setInputError</a>
+function.
+ProtonInput supports displaying error according to the latest Proton Android design guidelines, so, the client
+does not need to worry about.</p>
+</tr>
+<tr>
+<h5><a href="../me.proton.android.core.presentation.ui.view/-proton-progress-button/index.html">me.proton.android.core.presentation.ui.view.ProtonProgressButton</a></h5>
+<p>Custom Proton button that includes a loading spinner (indefinite progress).
+Supports normal button mode (default) or text-only mode by supplying the  appropriate style.</p>
 </tr>
 <tr>
 <h5><a href="../me.proton.android.core.presentation.viewmodel/-proton-view-model/index.html">me.proton.android.core.presentation.viewmodel.ProtonViewModel</a></h5>
