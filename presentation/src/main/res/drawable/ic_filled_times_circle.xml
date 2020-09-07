@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
@@ -17,21 +16,13 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<resources>
-    <!-- region layout margins -->
-    <dimen name="normal_margin">8dp</dimen>
-    <dimen name="double_margin">12dp</dimen>
-    <dimen name="default_top_margin">12dp</dimen>
-    <dimen name="in_between_views_top_margin">8dp</dimen>
-    <dimen name="in_between_views_top_margin_s">4dp</dimen>
-    <dimen name="view_separation_margin">16dp</dimen>
-    <dimen name="double_top_margin">20dp</dimen>
-    <dimen name="default_view_vertical_space">8dp</dimen>
-    <dimen name="default_view_horizontal_space">8dp</dimen>
-    <dimen name="parent_padding">8dp</dimen>
-    <!-- endregion -->
-
-    <!-- region view margins -->
-    <dimen name="input_padding">8dp</dimen>
-    <!-- endregion -->
-</resources>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+  <path
+      android:pathData="M16,6.667c2.475,0 4.85,0.983 6.6,2.733s2.733,4.125 2.733,6.6c0,5.155 -4.178,9.333 -9.333,9.333S6.667,21.155 6.667,16 10.845,6.667 16,6.667zM20.2,10.867L16,15.053l-4.2,-4.186 -0.933,0.933 4.186,4.2 -4.186,4.2 0.933,0.933 4.2,-4.186 4.2,4.186 0.933,-0.933 -4.186,-4.2 4.186,-4.2 -0.933,-0.933z"
+      android:fillColor="@color/icon_secondary"
+      android:fillType="evenOdd"/>
+</vector>

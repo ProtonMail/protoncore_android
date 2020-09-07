@@ -16,13 +16,14 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="@color/input_background" />
-    <padding
-        android:bottom="@dimen/input_padding"
-        android:left="@dimen/input_padding"
-        android:right="@dimen/input_padding"
-        android:top="@dimen/input_padding" />
-    <corners android:radius="2dp" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/button_text_pressed" android:state_selected="true" />
+    <item android:color="@color/button_text_pressed" android:state_pressed="true" />
+    <item android:color="@color/button_text_pressed" android:state_checked="true" />
+    <item android:color="@color/button_text_disabled" android:state_enabled="false" />
+    <item android:color="@color/button_text_pressed" android:state_active="true" />
+    <item android:color="@color/button_text_pressed" android:state_activated="true" />
+    <item android:color="@color/button_text" android:state_active="false" />
+    <item android:color="@color/button_text" android:state_activated="false" />
+    <item android:color="@color/button_text" />
+</selector>
