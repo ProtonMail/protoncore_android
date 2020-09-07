@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="me.proton.android.core.coreexample.ui.CustomViewsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/parent_padding">
+
+            <me.proton.android.core.presentation.ui.view.ProtonButton
+                android:id="@+id/defaultButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/example_default_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <me.proton.android.core.presentation.ui.view.ProtonButton
+                android:id="@+id/defaultDisabledButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:enabled="false"
+                android:text="@string/example_default_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/defaultButton" />
+
+            <me.proton.android.core.presentation.ui.view.ProtonButton
+                android:id="@+id/textOnlyButton"
+                style="@style/ProtonButton.Borderless.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:text="@string/example_text_only"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/defaultDisabledButton" />
+
+            <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/loadingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:text="@string/example_loading"
+                app:initialState="loading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOnlyButton" />
+
+            <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/loadingTextOnlyButton"
+                style="@style/ProtonButton.Borderless.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:text="@string/example_loading_text_only"
+                app:initialState="loading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loadingButton" />
+
+            <me.proton.android.core.presentation.ui.view.ProtonInput
+                android:id="@+id/inputExample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_top_margin"
+                android:hint="@string/example_hint"
+                app:assistiveText="@string/example_assistive_text"
+                app:label="@string/example_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loadingTextOnlyButton" />
+
+            <me.proton.android.core.presentation.ui.view.ProtonInput
+                android:id="@+id/inputDisabledExample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_top_margin"
+                android:hint="@string/example_hint_disabled"
+                app:assistiveText="@string/example_assistive_text_disabled"
+                app:label="@string/example_label"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inputExample" />
+
+            <me.proton.android.core.presentation.ui.view.ProtonInput
+                android:id="@+id/passwordExample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_top_margin"
+                android:hint="@string/example_password_hint"
+                android:inputType="textPassword"
+                app:assistiveText="@string/example_password_assistive_text"
+                app:label="@string/example_password_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inputDisabledExample" />
+
+
+            <me.proton.android.core.presentation.ui.view.ProtonInput
+                android:id="@+id/errorExample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_top_margin"
+                android:hint="@string/example_error_hint"
+                android:inputType="text"
+                app:assistiveText="@string/example_error_assistive_text"
+                app:label="@string/example_error_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/passwordExample" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
+
