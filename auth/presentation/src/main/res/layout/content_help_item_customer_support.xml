@@ -22,8 +22,8 @@
     <FrameLayout
         android:id="@+id/itemHelpLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/auth_help_item_height"
-        android:minHeight="@dimen/auth_help_item_height"
+        android:layout_height="@dimen/help_item_height"
+        android:minHeight="@dimen/help_item_height"
         android:clickable="true"
         android:focusable="true">
 

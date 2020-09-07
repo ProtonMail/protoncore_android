@@ -58,7 +58,7 @@ class LoginActivity : ProtonAuthActivity<ActivityLoginBinding>() {
      * invalid input.
      */
     private fun validateAndAttemptLogin() {
-        usernameInput.text.validate(
+        usernameInput.validate(
             onValidationFailed = { usernameInput.setInputError() },
             onValidationSuccess = ::validatePasswordAndLogin
         )
@@ -68,7 +68,7 @@ class LoginActivity : ProtonAuthActivity<ActivityLoginBinding>() {
      * If the username is valid, this function will try to validate the password and to execute the login.
      */
     private fun validatePasswordAndLogin(username: String) {
-        passwordInput.text.validate(
+        passwordInput.validate(
             onValidationFailed = { passwordInput.setInputError() },
             onValidationSuccess = {
                 signInButton.setLoading()

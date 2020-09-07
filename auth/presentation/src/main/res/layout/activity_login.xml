@@ -36,18 +36,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/auth_parent_default_padding"
-                android:paddingEnd="@dimen/auth_parent_default_padding"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headerImage">
+                android:paddingEnd="@dimen/auth_parent_default_padding">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/headerImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_hand_key" />
 
                 <TextView

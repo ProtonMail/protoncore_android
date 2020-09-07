@@ -56,13 +56,11 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }
 
         binding.customViews.onClick {
-            val customViewsIntent = Intent(this, CustomViewsActivity::class.java)
-            startActivity(customViewsIntent)
+            startActivity(Intent(this, CustomViewsActivity::class.java))
         }
 
         binding.login.onClick {
-            val loginIntent = Intent(this, LoginActivity::class.java)
-            startActivity(loginIntent)
+            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 

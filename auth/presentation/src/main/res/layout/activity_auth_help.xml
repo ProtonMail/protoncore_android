@@ -43,7 +43,7 @@
                     style="@style/ProtonTextView.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="96dp"
+                    android:layout_marginTop="@dimen/auth_no_toolbar_top_margin"
                     android:text="@string/auth_help_title" />
 
                 <include
@@ -51,28 +51,19 @@
                     layout="@layout/content_help_item_forgot_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/auth_content_top_margin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title" />
+                    android:layout_marginTop="@dimen/auth_content_top_margin" />
 
                 <include
                     android:id="@+id/helpOptionForgotPassword"
                     layout="@layout/content_help_item_forgot_password"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/helpOptionForgotUsername" />
+                    android:layout_height="wrap_content" />
 
                 <include
                     android:id="@+id/helpOptionOtherIssues"
                     layout="@layout/content_help_item_other_issues"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/helpOptionForgotPassword" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/ProtonTextView.Subtitle"
@@ -86,13 +77,9 @@
                     layout="@layout/content_help_item_customer_support"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/auth_content_top_margin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/helpOptionOtherIssues" />
+                    android:layout_marginTop="@dimen/auth_content_top_margin" />
 
             </LinearLayout>
-
         </ScrollView>
 
         <androidx.appcompat.widget.AppCompatImageButton

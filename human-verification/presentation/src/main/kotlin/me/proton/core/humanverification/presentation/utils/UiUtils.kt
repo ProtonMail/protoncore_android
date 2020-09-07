@@ -18,11 +18,7 @@
 
 package me.proton.core.humanverification.presentation.utils
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
