@@ -21,29 +21,61 @@ package me.proton.android.core.presentation.utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.view.View
 import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.snackbar.Snackbar
 import me.proton.android.core.presentation.R
 
 /**
  * @author Dino Kadrikj.
  */
+
 inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> FragmentTransaction) {
     val transaction = beginTransaction()
     transaction.block()
     transaction.commit()
 }
 
-fun Context.openBrowserLink(link: String) {
+fun Context.openLinkInBrowser(link: String) {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
     intent.resolveActivity(packageManager)?.let {
         startActivity(intent)
-    } ?: run {
-        Toast.makeText(
-            this,
-            getString(R.string.presentation_browser_missing),
-            Toast.LENGTH_SHORT
-        ).show()
-    }
+    } ?: Toast.makeText(
+        this,
+        getString(R.string.presentation_browser_missing),
+        Toast.LENGTH_SHORT
+    ).show()
 }
+
+fun View.errorSnack(@StringRes messageRes: Int) {
+    snack(messageRes = messageRes, color = R.drawable.background_error)
+}
+
+fun View.successSnack(@StringRes messageRes: Int) {
+    snack(messageRes = messageRes, color = R.drawable.background_success)
+}
+
+private fun View.snack(
+    @StringRes messageRes: Int,
+    @DrawableRes color: Int
+) {
+    snack(message = resources.getString(messageRes), color = color)
+}
+
+private fun View.snack(
+    message: String,
+    length: Int = Snackbar.LENGTH_LONG,
+    @DrawableRes color: Int
+) {
+    Snackbar.make(this, message, length).apply {
+        view.background = context.resources.getDrawable(color, null)
+        setTextColor(ContextCompat.getColor(context, R.color.text_light))
+    }.show()
+}
+
+
