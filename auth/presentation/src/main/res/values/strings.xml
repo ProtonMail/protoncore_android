@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="auth_password">Password</string>
+    <string name="auth_password_label">Password</string>
+    <string name="auth_email_username">Email or username</string>
+    <string name="auth_email_username_hint">example@protonmail.com</string>
+    <string name="auth_account_details">Enter your Proton Account details below</string>
+    <string name="auth_sign_in">Sign in</string>
+    <string name="auth_sign_in_action">Sign in</string>
+    <string name="auth_need_help">Need help?</string>
+    <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
+    <string name="auth_help_title">How can we help?</string>
+    <string name="auth_help_option_forgot_username">Forgot username</string>
+    <string name="auth_help_option_forgot_password">Forgot password</string>
+    <string name="auth_help_option_other">Other sign-in issues</string>
+    <string name="auth_help_other">Still need help? Contact us directly.</string>
+    <string name="auth_help_option_customer_support">Customer support</string>
+</resources>

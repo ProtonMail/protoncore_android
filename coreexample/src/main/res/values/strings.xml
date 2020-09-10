@@ -20,6 +20,7 @@
     <string name="app_name">CoreExample</string>
     <string name="human_verification">Human Verification</string>
     <string name="custom_views">Custom Views</string>
+    <string name="login">Login</string>
 
     <string name="example_hint">Hint</string>
     <string name="example_hint_disabled">Hint Disabled input</string>

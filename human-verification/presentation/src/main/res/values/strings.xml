@@ -58,6 +58,5 @@
     <string name="human_verification_captcha_failed">Captcha verification failed. Please try one more time or choose another verification option.</string>
 
     <string name="human_verification_calling_code_template">+%s</string>
-    <string name="human_verification_browser_missing">Can not find browser to open the link.</string>
     <string name="human_verification_captcha_no_connectivity">No connectivity. Could not load captcha.</string>
 </resources>

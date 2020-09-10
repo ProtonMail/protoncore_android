@@ -18,32 +18,20 @@
 
 package me.proton.android.core.presentation.utils
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import me.proton.android.core.presentation.R
+import me.proton.android.core.presentation.ui.view.ProtonInput
 
 /**
- * @author Dino Kadrikj.
+ * @return the [String] if valid (not null and not empty), otherwise return `null`
+ *
+ * @param onValidationFailed executed if the validation failed.
+ * @param onValidationSuccess executed if the validation succeeds.
  */
-inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> FragmentTransaction) {
-    val transaction = beginTransaction()
-    transaction.block()
-    transaction.commit()
-}
-
-fun Context.openBrowserLink(link: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-    intent.resolveActivity(packageManager)?.let {
-        startActivity(intent)
-    } ?: run {
-        Toast.makeText(
-            this,
-            getString(R.string.presentation_browser_missing),
-            Toast.LENGTH_SHORT
-        ).show()
+inline fun ProtonInput.validate(
+    onValidationFailed: () -> Unit,
+    onValidationSuccess: (String) -> Unit
+) =
+    if (inputText == null || inputText.toString().isBlank()) {
+        onValidationFailed()
+    } else {
+        onValidationSuccess(inputText.toString())
     }
-}

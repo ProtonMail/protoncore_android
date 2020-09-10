@@ -22,9 +22,9 @@ import android.os.Bundle
 import android.view.View
 import me.proton.android.core.presentation.ui.ProtonDialogFragment
 import me.proton.android.core.presentation.utils.onClick
+import me.proton.android.core.presentation.utils.openBrowserLink
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationHelpBinding
-import me.proton.core.humanverification.presentation.utils.openBrowserLink
 
 /**
  * @author Dino Kadrikj.

@@ -27,10 +27,11 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/icon"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/normal_margin"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="@id/websiteVerificationTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_lightbulp" />
@@ -38,20 +39,21 @@
         <TextView
             android:id="@+id/websiteVerificationTitle"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
+            android:layout_height="@dimen/help_item_height"
             android:layout_marginStart="@dimen/normal_margin"
             android:gravity="start|center_vertical"
             android:text="@string/human_verification_help_website_title"
-            android:textSize="18sp"
             android:textColor="@color/text_default"
+            android:textSize="@dimen/human_verification_help_item_text_size"
             app:layout_constraintStart_toEndOf="@id/icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="38dp"
-            android:layout_height="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:tint="@color/icon_default"
+            app:layout_constraintBottom_toBottomOf="@id/websiteVerificationTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_arrow_right" />
@@ -60,14 +62,14 @@
             android:id="@+id/websiteVerificationDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/human_verification_help_item_description_start_margin"
+            android:layout_marginTop="@dimen/default_top_margin"
             android:gravity="start"
             android:text="@string/human_verification_help_website"
-            android:textSize="18sp"
             android:textColor="@color/text_default"
-            android:layout_marginTop="@dimen/default_top_margin"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/human_verification_help_item_text_size"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/websiteVerificationTitle"
-            android:layout_marginStart="42dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/websiteVerificationTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

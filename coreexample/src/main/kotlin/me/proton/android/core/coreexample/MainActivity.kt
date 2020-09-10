@@ -31,6 +31,7 @@ import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.onClick
+import me.proton.core.auth.presentation.ui.LoginActivity
 import me.proton.core.humanverification.presentation.HumanVerificationChannel
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.HumanVerificationActivity
@@ -55,8 +56,11 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }
 
         binding.customViews.onClick {
-            val customViewsIntent = Intent(this, CustomViewsActivity::class.java)
-            startActivity(customViewsIntent)
+            startActivity(Intent(this, CustomViewsActivity::class.java))
+        }
+
+        binding.login.onClick {
+            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 

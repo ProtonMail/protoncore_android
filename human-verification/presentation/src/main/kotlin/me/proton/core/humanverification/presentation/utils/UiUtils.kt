@@ -18,11 +18,7 @@
 
 package me.proton.core.humanverification.presentation.utils
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -146,19 +142,6 @@ internal fun FragmentManager.showCountryPicker() {
 internal fun CountryPickerFragment.removeCountryPicker() {
     parentFragmentManager.inTransaction {
         remove(this@removeCountryPicker)
-    }
-}
-
-internal fun Context.openBrowserLink(link: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-    intent.resolveActivity(packageManager)?.let {
-        startActivity(intent)
-    } ?: run {
-        Toast.makeText(
-            this,
-            getString(R.string.human_verification_browser_missing),
-            Toast.LENGTH_SHORT
-        ).show()
     }
 }
 

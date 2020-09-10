@@ -16,20 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample
+package me.proton.core.auth.presentation.ui
 
-import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled
-import dagger.hilt.android.HiltAndroidApp
+import android.os.Build
+import android.os.Bundle
+import android.view.View
+import androidx.databinding.ViewDataBinding
+import me.proton.android.core.presentation.ui.ProtonActivity
 
 /**
+ * Base class for all Auth activities that handles the window flags.
  * @author Dino Kadrikj.
  */
-@HiltAndroidApp
-class CoreExampleApp : Application() {
-    override fun onCreate() {
-        super.onCreate()
+abstract class ProtonAuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
 
-        setCompatVectorFromResourcesEnabled(true)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+        super.onCreate(savedInstanceState)
     }
 }

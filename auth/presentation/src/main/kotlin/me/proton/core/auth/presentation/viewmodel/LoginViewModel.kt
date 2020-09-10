@@ -16,22 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.utils
+package me.proton.core.auth.presentation.viewmodel
 
-import me.proton.android.core.presentation.ui.view.ProtonInput
+import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 
 /**
- * @return the [String] if valid (not null and not empty), otherwise return `null`
- *
- * @param onValidationFailed executed if the validation failed.
- * @param onValidationSuccess executed if the validation succeeds.
+ * View model class serving the Login activity.
+ * @author Dino Kadrikj.
  */
-inline fun ProtonInput.validate(
-    onValidationFailed: () -> Unit,
-    onValidationSuccess: (String) -> Unit
-) =
-    if (inputText == null || inputText.toString().isBlank()) {
-        onValidationFailed()
-    } else {
-        onValidationSuccess(inputText.toString())
+class LoginViewModel : ProtonViewModel() {
+
+    /**
+     * Will attempt to log the user in. TBD!
+     */
+    fun doLogin(username: String, password: String) {
+        // TBD
     }
+}
