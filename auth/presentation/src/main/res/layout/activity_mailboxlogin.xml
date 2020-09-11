@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/loginContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:windowBackground">
+
+        <ScrollView
+            android:id="@+id/scrollContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/auth_parent_default_padding"
+                android:paddingTop="104dp"
+                android:paddingEnd="@dimen/auth_parent_default_padding">
+
+                <TextView
+                    android:id="@+id/titleText"
+                    style="@style/ProtonTextView.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_mailbox_title" />
+
+                <me.proton.android.core.presentation.ui.view.ProtonInput
+                    android:id="@+id/mailboxPasswordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/auth_content_top_margin"
+                    android:inputType="textPassword"
+                    app:label="@string/auth_mailbox_password_label" />
+
+                <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/unlockButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/auth_content_separator_top_margin"
+                    android:text="@string/auth_mailbox_unlock_action" />
+
+                <me.proton.android.core.presentation.ui.view.ProtonButton
+                    android:id="@+id/forgotPasswordButton"
+                    style="@style/ProtonButton.Borderless.Text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/auth_view_items_top_margin"
+                    android:text="@string/auth_forgot_password" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_marginStart="@dimen/auth_close_button_margin_start"
+            android:layout_marginTop="@dimen/auth_close_button_margin_top"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:elevation="4dp"
+            app:srcCompat="@drawable/ic_back_no_toolbar" />
+    </FrameLayout>
+</layout>

@@ -32,5 +32,9 @@
             android:name=".presentation.ui.AuthHelpActivity"
             android:theme="@style/ProtonTheme.NoToolbar" />
 
+        <activity
+            android:name=".presentation.ui.TwoFactorActivity"
+            android:theme="@style/ProtonTheme.NoToolbar" />
+
     </application>
 </manifest>
