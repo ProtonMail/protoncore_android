@@ -156,10 +156,10 @@ Settings Data: **0** - _released on: ND_
 
 ### Human Verification
 
-Human Verification: **0.1.3** - _released on: Sep 10, 2020_
+Human Verification: **0.1.4** - _released on: Sep 11, 2020_
 
 Human Verification Domain: **0.1** - _released on: Jul 25, 2020_
 
-Human Verification Presentation: **0.1.3** - _released on: Sep 10, 2020_
+Human Verification Presentation: **0.1.4** - _released on: Sep 11, 2020_
 
 Human Verification Data: **0.1** - _released on: Jul 25, 2020_
