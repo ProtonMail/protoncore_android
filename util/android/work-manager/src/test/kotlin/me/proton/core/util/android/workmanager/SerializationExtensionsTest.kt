@@ -25,6 +25,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class SerializationExtensionsTest {
 
@@ -63,6 +64,30 @@ class SerializationExtensionsTest {
         assertEquals(
             TestWorkInput("hello", 15),
             worker.input(TestWorkInput.serializer())
+        )
+    }
+
+    @Test
+    fun `throws proper exception if no data is found`() {
+        val worker = mockk<ListenableWorker> {
+            every { inputData } returns workDataOf()
+        }
+        val message = assertFailsWith<IllegalStateException> { worker.input(TestWorkInput.serializer()) }.message
+        assertEquals(
+            "No serializable data found for this Data model",
+            message
+        )
+    }
+
+    @Test
+    fun `throws proper exception if data is not of the requested type`() {
+        val worker = mockk<ListenableWorker> {
+            every { inputData } returns workDataOf(SERIALIZED_DATA_KEY to "hello")
+        }
+        val message = assertFailsWith<IllegalStateException> { worker.input(TestWorkInput.serializer()) }.message
+        assertEquals(
+            "Serializable data is found for this Data model, but cannot be deserialized for the requested type",
+            message
         )
     }
 

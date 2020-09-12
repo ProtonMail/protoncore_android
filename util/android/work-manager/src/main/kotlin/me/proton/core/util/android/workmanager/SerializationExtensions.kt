@@ -29,7 +29,7 @@ import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationStrategy
-import me.proton.core.util.kotlin.deserialize
+import me.proton.core.util.kotlin.deserializeOrNull
 import me.proton.core.util.kotlin.serialize
 
 /*
@@ -65,7 +65,14 @@ inline fun <reified T : Any> WorkInfo.outputData(
  */
 inline fun <reified T : Any> Data.deserialize(
     deserializer: DeserializationStrategy<T>? = null
-): T = getString(SERIALIZED_DATA_KEY)!!.deserialize(deserializer)
+): T {
+    val serialized = checkNotNull(getString(SERIALIZED_DATA_KEY)) {
+        "No serializable data found for this Data model"
+    }
+    return checkNotNull(serialized.deserializeOrNull(deserializer)) {
+        "Serializable data is found for this Data model, but cannot be deserialized for the requested type"
+    }
+}
 
 /**
  * @return [Data] created by serializing receiver [T]
