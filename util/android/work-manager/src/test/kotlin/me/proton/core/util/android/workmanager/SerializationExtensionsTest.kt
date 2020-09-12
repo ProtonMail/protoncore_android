@@ -19,7 +19,10 @@
 package me.proton.core.util.android.workmanager
 
 import androidx.work.Data
+import androidx.work.ListenableWorker
 import androidx.work.workDataOf
+import io.mockk.every
+import io.mockk.mockk
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -50,6 +53,17 @@ class SerializationExtensionsTest {
         val data = workDataOf(SERIALIZED_DATA_KEY to """{"name":"hello","number":15}""")
         val result = data.deserialize(TestWorkInput.serializer())
         assertEquals(TestWorkInput("hello", 15), result)
+    }
+
+    @Test
+    fun `ListenableWorker can get proper input`() {
+        val worker = mockk<ListenableWorker> {
+            every { inputData } returns workDataOf(SERIALIZED_DATA_KEY to """{"name":"hello","number":15}""")
+        }
+        assertEquals(
+            TestWorkInput("hello", 15),
+            worker.input(TestWorkInput.serializer())
+        )
     }
 
     private val Data.content get() = keyValueMap.values.first()

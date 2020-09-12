@@ -51,7 +51,7 @@ internal const val SERIALIZED_DATA_KEY = "serialized_data_key"
  * @throws KotlinNullPointerException if no serialized data in present in [Data]
  */
 inline fun <reified T : Any> WorkInfo.outputData(
-    deserializer: DeserializationStrategy<T>?
+    deserializer: DeserializationStrategy<T>? = null
 ): T = outputData.deserialize(deserializer)
 
 /**
@@ -77,6 +77,19 @@ inline fun <reified T : Any> Data.deserialize(
 inline fun <reified T : Any> T.toWorkData(
     serializer: SerializationStrategy<T>? = null
 ): Data = workDataOf(SERIALIZED_DATA_KEY to serialize(serializer))
+
+/**
+ * @return [T] deserialized from [ListenableWorker.getInputData]
+ *
+ * @param T must be a class annotate with [Serializable]
+ * @param deserializer optional [DeserializationStrategy] of [T], if no value is passed, the
+ *   [ImplicitReflectionSerializer] will be used
+ *
+ * @throws KotlinNullPointerException if no serialized data in present in [Data]
+ */
+inline fun <reified T : Any> ListenableWorker.input(
+    deserializer: DeserializationStrategy<T>? = null
+) = inputData.deserialize(deserializer)
 
 /** @return [ListenableWorker.Result.Success] with a data */
 inline fun <reified T : Any> ListenableWorker.success(data: T): ListenableWorker.Result.Success =
