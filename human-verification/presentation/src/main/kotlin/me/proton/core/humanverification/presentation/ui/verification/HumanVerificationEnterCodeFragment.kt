@@ -24,7 +24,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonDialogFragment
+import me.proton.android.core.presentation.utils.errorSnack
 import me.proton.android.core.presentation.utils.onClick
+import me.proton.android.core.presentation.utils.successSnack
 import me.proton.android.core.presentation.utils.validate
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
@@ -32,9 +34,7 @@ import me.proton.core.humanverification.presentation.databinding.FragmentHumanVe
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.ARG_TOKEN_CODE
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.KEY_VERIFICATION_DONE
-import me.proton.core.humanverification.presentation.utils.errorSnack
 import me.proton.core.humanverification.presentation.utils.showHelp
-import me.proton.core.humanverification.presentation.utils.successSnack
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 
 /**
@@ -98,16 +98,19 @@ class HumanVerificationEnterCodeFragment :
             headerNavigation.helpButton.onClick { childFragmentManager.showHelp() }
             verifyButton.onClick {
                 verificationCodeEditText
-                    .validate({ verificationCodeEditText.setInputError() }, {
-                        viewModel.verificationComplete(tokenType, it)
-                        parentFragmentManager.setFragmentResult(
-                            KEY_VERIFICATION_DONE,
-                            bundleOf(
-                                ARG_TOKEN_CODE to it,
-                                HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
+                    .validate(
+                        { verificationCodeEditText.setInputError() },
+                        {
+                            viewModel.verificationComplete(tokenType, it)
+                            parentFragmentManager.setFragmentResult(
+                                KEY_VERIFICATION_DONE,
+                                bundleOf(
+                                    ARG_TOKEN_CODE to it,
+                                    HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
+                                )
                             )
-                        )
-                    })
+                        }
+                    )
             }
             requestReplacementButton.onClick { viewModel.resendCode() }
         }

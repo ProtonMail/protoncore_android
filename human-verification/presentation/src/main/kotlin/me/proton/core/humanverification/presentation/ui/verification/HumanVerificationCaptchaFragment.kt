@@ -28,12 +28,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonFragment
+import me.proton.android.core.presentation.utils.errorSnack
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
-import me.proton.core.humanverification.presentation.utils.errorSnack
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCaptchaViewModel
 
 /**
@@ -112,7 +112,7 @@ internal class HumanVerificationCaptchaFragment :
         binding.run {
             captchaWebView.loadUrl(
                 "https://secure.protonmail.com/captcha/captcha.html?token=${humanVerificationBase.urlToken}" +
-                        "&client=android&host=$host"
+                    "&client=android&host=$host"
             )
         }
     }

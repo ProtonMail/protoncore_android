@@ -25,6 +25,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonFragment
+import me.proton.android.core.presentation.utils.errorSnack
 import me.proton.android.core.presentation.utils.onClick
 import me.proton.android.core.presentation.utils.validate
 import me.proton.core.humanverification.domain.entity.TokenType
@@ -32,7 +33,6 @@ import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationSmsBinding
 import me.proton.core.humanverification.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
-import me.proton.core.humanverification.presentation.utils.errorSnack
 import me.proton.core.humanverification.presentation.utils.showCountryPicker
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationSMSViewModel
 
@@ -88,13 +88,16 @@ internal class HumanVerificationSMSFragment :
             }
 
             getVerificationCodeButton.setOnClickListener {
-                smsEditText.validate({ binding.smsEditText.setInputError() }, {
-                    getVerificationCodeButton.setLoading()
-                    viewModel.sendVerificationCodeToDestination(
-                        countryCallingCode = callingCodeText.text.toString(), // this is not expected to be empty
-                        phoneNumber = it
-                    )
-                })
+                smsEditText.validate(
+                    { binding.smsEditText.setInputError() },
+                    {
+                        getVerificationCodeButton.setLoading()
+                        viewModel.sendVerificationCodeToDestination(
+                            countryCallingCode = callingCodeText.text.toString(), // this is not expected to be empty
+                            phoneNumber = it
+                        )
+                    }
+                )
             }
 
             proceedButton.onClick {
