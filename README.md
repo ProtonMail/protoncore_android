@@ -110,7 +110,7 @@ Test Android Instrumented: **0.1.2** - _released on: Sep 14, 2020_
 
 Domain: **0.1** - _released on: Jul 03, 2020_
 
-Presentation: **0.3.2** - _released on: Sep 10, 2020_
+Presentation: **0.3.3** - _released on: Sep 14, 2020_
 
 Data: **0** - _released on: ND_
 
@@ -156,10 +156,10 @@ Settings Data: **0** - _released on: ND_
 
 ### Human Verification
 
-Human Verification: **0.1.4** - _released on: Sep 11, 2020_
+Human Verification: **0.1.5** - _released on: Sep 14, 2020_
 
 Human Verification Domain: **0.1** - _released on: Jul 25, 2020_
 
-Human Verification Presentation: **0.1.4** - _released on: Sep 11, 2020_
+Human Verification Presentation: **0.1.5** - _released on: Sep 14, 2020_
 
 Human Verification Data: **0.1** - _released on: Jul 25, 2020_
