@@ -1,0 +1,95 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package me.proton.core.util.android.workmanager
+
+import androidx.work.Data
+import androidx.work.ListenableWorker
+import androidx.work.workDataOf
+import io.mockk.every
+import io.mockk.mockk
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+
+class SerializationExtensionsTest {
+
+    @Test
+    fun `can create WorkData with explicit serializer`() {
+        val input = TestWorkInput("hello", 15)
+        val result = input.toWorkData(TestWorkInput.serializer())
+        assertEquals(
+            """{"name":"hello","number":15}""",
+            result.content
+        )
+    }
+
+    @Test
+    fun `can create WorkData with implicit serializer`() {
+        val input = TestWorkInput("hello", 15)
+        val result = input.toWorkData()
+        assertEquals(
+            """{"name":"hello","number":15}""",
+            result.content
+        )
+    }
+
+    @Test
+    fun `can deserialize WorkData`() {
+        val data = workDataOf(SERIALIZED_DATA_KEY to """{"name":"hello","number":15}""")
+        val result = data.deserialize(TestWorkInput.serializer())
+        assertEquals(TestWorkInput("hello", 15), result)
+    }
+
+    @Test
+    fun `ListenableWorker can get proper input`() {
+        val worker = mockk<ListenableWorker> {
+            every { inputData } returns workDataOf(SERIALIZED_DATA_KEY to """{"name":"hello","number":15}""")
+        }
+        assertEquals(
+            TestWorkInput("hello", 15),
+            worker.input(TestWorkInput.serializer())
+        )
+    }
+
+    @Test
+    fun `throws proper exception if no data is found`() {
+        val worker = mockk<ListenableWorker> {
+            every { inputData } returns workDataOf()
+        }
+        val message = assertFailsWith<IllegalStateException> { worker.input(TestWorkInput.serializer()) }.message
+        assertEquals(
+            "No serializable data found for this Data model",
+            message
+        )
+    }
+
+    @Test
+    fun `throws proper exception if data is not of the requested type`() {
+        val worker = mockk<ListenableWorker> {
+            every { inputData } returns workDataOf(SERIALIZED_DATA_KEY to "hello")
+        }
+        val message = assertFailsWith<IllegalStateException> { worker.input(TestWorkInput.serializer()) }.message
+        assertEquals(
+            "Serializable data is found for this Data model, but cannot be deserialized for the requested type",
+            message
+        )
+    }
+
+    private val Data.content get() = keyValueMap.values.first()
+}
