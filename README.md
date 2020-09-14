@@ -92,7 +92,7 @@ In order to use the all-in-one Detekt configuration, you must have a `buildSrc` 
 
 Util Android Shared Preferences: **0.1.2** - _released on: Aug 31, 2020_
 
-Util Android Work Manager: **0.1** - _released on: Jun 22, 2020_
+Util Android Work Manager: **0.1.1** - _released on: Sep 14, 2020_
 
 Util Kotlin: **0.1.6** - _released on: Aug 31, 2020_
 
@@ -104,7 +104,7 @@ Test Kotlin: **0.1** - _released on: Jun 10, 2020_
 
 Test Android: **0.2** - _released on: Aug 05, 2020_
 
-Test Android Instrumented: **0.1.1** - _released on: Jun 17, 2020_
+Test Android Instrumented: **0.1.2** - _released on: Sep 14, 2020_
 
 ## Shared
 

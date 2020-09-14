@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>WorkRequestObserver - util-android-work-manager</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">util-android-work-manager</a>&nbsp;/&nbsp;<a href="../index.html">me.proton.core.util.android.workmanager</a>&nbsp;/&nbsp;<a href="./index.html">WorkRequestObserver</a><br/>
+<br/>
+<h1>WorkRequestObserver</h1>
+<code><span class="keyword">class </span><span class="identifier">WorkRequestObserver</span></code>
+<p>An entity that allow us to observe a <a href="#">WorkRequest</a> in a nice concise style.
+It will be generate by <a href="#">WorkRequest.observe</a> extensions, and allow us to set callback like the following:</p>
+<ul><li><a href="on-success.html">onSuccess</a> with a <a href="#">Data</a></li>
+<li><a href="on-success.html">onSuccess</a> with a deserialized object</li>
+<li><a href="on-failure.html">onFailure</a></li>
+<li><a href="on-state-change.html">onStateChange</a> with a <a href="#">WorkInfo.State</a></li>
+</ul>
+<p><strong>Author</strong><br/>
+Davide Farella</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>An entity that allow us to observe a <a href="#">WorkRequest</a> in a nice concise style.
+It will be generate by <a href="#">WorkRequest.observe</a> extensions, and allow us to set callback like the following:</p>
+<code><span class="identifier">WorkRequestObserver</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-failure.html">onFailure</a></h4>
+</td>
+<td>
+<p>Executes <a href="on-failure.html#me.proton.core.util.android.workmanager.WorkRequestObserver$onFailure(kotlin.Function0((kotlin.Unit)))/block">block</a> when relative Work is Succeed</p>
+<code><span class="keyword">fun </span><span class="identifier">onFailure</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.workmanager.WorkRequestObserver$onFailure(kotlin.Function0((kotlin.Unit)))/block">block</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-state-change.html">onStateChange</a></h4>
+</td>
+<td>
+<p>Executes <a href="on-state-change.html#me.proton.core.util.android.workmanager.WorkRequestObserver$onStateChange(kotlin.Function1((androidx.work.WorkInfo.State, kotlin.Unit)))/block">block</a> when relative Work is Succeed</p>
+<code><span class="keyword">fun </span><span class="identifier">onStateChange</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.workmanager.WorkRequestObserver$onStateChange(kotlin.Function1((androidx.work.WorkInfo.State, kotlin.Unit)))/block">block</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">state</span><span class="symbol">:</span>&nbsp;<span class="identifier">State</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-success.html">onSuccess</a></h4>
+</td>
+<td>
+<p>Executes <a href="on-success.html#me.proton.core.util.android.workmanager.WorkRequestObserver$onSuccess(kotlin.Function1((androidx.work.Data, kotlin.Unit)))/block">block</a> with <a href="#">Data</a> when relative Work is Succeed</p>
+<code><span class="keyword">fun </span><span class="identifier">onSuccess</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.workmanager.WorkRequestObserver$onSuccess(kotlin.Function1((androidx.work.Data, kotlin.Unit)))/block">block</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">workData</span><span class="symbol">:</span>&nbsp;<span class="identifier">Data</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span> <span class="identifier">onSuccess</span><span class="symbol">(</span><span class="identifier" id="me.proton.core.util.android.workmanager.WorkRequestObserver$onSuccess(kotlin.Function1((me.proton.core.util.android.workmanager.WorkRequestObserver.onSuccess.T, kotlin.Unit)))/block">block</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">T</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
