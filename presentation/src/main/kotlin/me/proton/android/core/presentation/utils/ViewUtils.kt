@@ -28,7 +28,12 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.EditText
+import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import me.proton.android.core.presentation.R
 
 /**
  * Shortcut for [AdapterView.setOnItemSelectedListener]
@@ -111,3 +116,42 @@ inline fun View.onClick(crossinline block: () -> Unit) {
  */
 fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
+
+/**
+ * Shows red error snack bar. Usually as a general way to display various errors to the user.
+ */
+fun View.errorSnack(@StringRes messageRes: Int) {
+    snack(messageRes = messageRes, color = R.drawable.background_error)
+}
+
+/**
+ * Shows green success snack bar. Usually as a general way to display success result of an operation to the user.
+ */
+fun View.successSnack(@StringRes messageRes: Int) {
+    snack(messageRes = messageRes, color = R.drawable.background_success)
+}
+
+/**
+ * General snack bar util function which takes message and color as config.
+ * The default showing length is [Snackbar.LENGTH_LONG].
+ */
+fun View.snack(
+    @StringRes messageRes: Int,
+    @DrawableRes color: Int
+) {
+    snack(message = resources.getString(messageRes), color = color)
+}
+
+/**
+ * General snack bar util function which takes message, color and length as config.
+ */
+fun View.snack(
+    message: String,
+    length: Int = Snackbar.LENGTH_LONG,
+    @DrawableRes color: Int
+) {
+    Snackbar.make(this, message, length).apply {
+        view.background = context.resources.getDrawable(color, null)
+        setTextColor(ContextCompat.getColor(context, R.color.text_light))
+    }.show()
+}
