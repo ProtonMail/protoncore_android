@@ -81,7 +81,7 @@ internal class HumanVerificationEmailFragment :
         )
 
         recoveryEmailAddress?.let {
-            binding.emailEditText.inputText = it
+            binding.emailEditText.text = it
         }
         binding.apply {
             getVerificationCodeButton.onClick {

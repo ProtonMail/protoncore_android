@@ -120,7 +120,7 @@ class HumanVerificationEnterCodeFragment :
                 parentFragmentManager.setFragmentResult(
                     KEY_VERIFICATION_DONE,
                     bundleOf(
-                        ARG_TOKEN_CODE to binding.verificationCodeEditText.inputText,
+                        ARG_TOKEN_CODE to binding.verificationCodeEditText.text,
                         HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
                     )
                 )

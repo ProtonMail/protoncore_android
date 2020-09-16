@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
                     android:hint="@string/auth_email_username_hint"
-                    app:assistiveText="@string/auth_login_assistive_text"
+                    app:help="@string/auth_login_assistive_text"
                     app:label="@string/auth_email_username" />
 
                 <me.proton.android.core.presentation.ui.view.ProtonInput

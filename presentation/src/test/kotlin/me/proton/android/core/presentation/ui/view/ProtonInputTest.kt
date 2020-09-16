@@ -25,9 +25,10 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
-import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import me.proton.android.core.presentation.R
 import org.junit.Before
 import org.junit.Test
@@ -40,10 +41,7 @@ import kotlin.test.assertTrue
 
 /**
  * Custom input view tests.
- *
- * @author Dino Kadrikj.
  */
-
 @RunWith(RobolectricTestRunner::class)
 class ProtonInputTest {
 
@@ -54,9 +52,9 @@ class ProtonInputTest {
     fun beforeEveryTest() {
         val activityController = Robolectric.buildActivity(AppCompatActivity::class.java)
         activity = activityController.get()
-        protonInput =
-            LayoutInflater.from(activity)
-                .inflate(R.layout.proton_input, ProtonInput(activity, null)) as ProtonInput
+        protonInput = LayoutInflater.from(activity).inflate(
+            R.layout.proton_input, ProtonInput(activity, null)
+        ) as ProtonInput
 
         val parent = FrameLayout(activity)
         parent.addView(protonInput)
@@ -65,149 +63,122 @@ class ProtonInputTest {
 
     @Test
     fun `view ordering is correct`() {
-        val inputViewParent = protonInput.getChildAt(1)
-        assertTrue(inputViewParent is FrameLayout)
-        assertEquals(2, inputViewParent.childCount)
-        val editText = inputViewParent.getChildAt(0)
-        val toggleButton = inputViewParent.getChildAt(1)
+        val editText = protonInput.findViewById<TextInputEditText>(R.id.input)
+        val labelView = protonInput.findViewById<TextView>(R.id.label)
+
         assertTrue(editText is EditText)
-        assertTrue(toggleButton is ToggleButton)
+        assertTrue(labelView is TextView)
     }
 
     @Test
     fun `label initially is gone`() {
         val labelView = protonInput.findViewById<TextView>(R.id.label)
+
         assertEquals(labelView.visibility, View.GONE)
     }
 
     @Test
     fun `set label makes it visible`() {
         val labelView = protonInput.findViewById<TextView>(R.id.label)
-        protonInput.inputLabel = "test label"
+
+        protonInput.labelText = "test label"
         assertEquals(View.VISIBLE, labelView.visibility)
         assertEquals("test label", labelView.text.toString())
     }
 
     @Test
-    fun `set label NULL makes it gone and text emmpty`() {
+    fun `set label NULL makes it gone and text empty`() {
         val labelView = protonInput.findViewById<TextView>(R.id.label)
-        protonInput.inputLabel = null
+
+        protonInput.labelText = null
         assertEquals(View.GONE, labelView.visibility)
         assertEquals("", labelView.text.toString())
     }
 
     @Test
-    fun `set assistvive text makes it visible`() {
-        val assistiveText = protonInput.findViewById<TextView>(R.id.assistiveText)
-        protonInput.inputAssistiveText = "test assistive"
-        assertEquals(View.VISIBLE, assistiveText.visibility)
-        assertEquals("test assistive", assistiveText.text.toString())
-    }
-
-    @Test
-    fun `set assistvive text NULL makes it gone and text empty`() {
-        val assistiveText = protonInput.findViewById<TextView>(R.id.assistiveText)
-        protonInput.inputAssistiveText = null
-        assertEquals(View.GONE, assistiveText.visibility)
-        assertEquals("", assistiveText.text.toString())
-    }
-
-    @Test
     fun `set text works correctly`() {
-        val inputViewParent = protonInput.getChildAt(1) as FrameLayout
-        val editText = inputViewParent.getChildAt(0) as EditText
-        protonInput.inputText = "test text"
+        val editText = protonInput.findViewById<TextInputEditText>(R.id.input)
+
+        protonInput.text = "test text"
         assertEquals(View.VISIBLE, editText.visibility)
         assertEquals("test text", editText.text.toString())
     }
 
     @Test
     fun `set text NULL does not make input gone and text is empty`() {
-        val inputViewParent = protonInput.getChildAt(1) as FrameLayout
-        val editText = inputViewParent.getChildAt(0) as EditText
-        protonInput.inputText = null
+        val editText = protonInput.findViewById<TextInputEditText>(R.id.input)
+
+        protonInput.text = null
         assertEquals(View.VISIBLE, editText.visibility)
         assertEquals("", editText.text.toString())
     }
 
     @Test
     fun `display error message works as expected`() {
-        val inputViewParent = protonInput.getChildAt(1) as FrameLayout
-        val editText = inputViewParent.getChildAt(0) as EditText
+        val inputLayout = protonInput.findViewById<TextInputLayout>(R.id.inputLayout)
         val labelView = protonInput.findViewById<TextView>(R.id.label)
-        val assistiveText = protonInput.findViewById<TextView>(R.id.assistiveText)
 
-        protonInput.inputLabel = "test label"
-        protonInput.inputAssistiveText = "test assistive"
+        protonInput.labelText = "test label"
+        protonInput.helpText = "test assistive"
         protonInput.setInputError()
-        assertEquals(ContextCompat.getColor(protonInput.context, R.color.signal_error), labelView.currentTextColor)
-        assertEquals(ContextCompat.getColor(protonInput.context, R.color.signal_error), assistiveText.currentTextColor)
 
-        val expectedDrawable = editText.resources.getDrawable(R.drawable.default_edit_text_error, null)
-        val drawable = editText.background
-        assertEquals(shadowOf(expectedDrawable).createdFromResId, shadowOf(drawable).createdFromResId)
+        assertEquals(ContextCompat.getColor(protonInput.context, R.color.signal_error), labelView.currentTextColor)
+        assertEquals(protonInput.helpText, inputLayout.error)
     }
 
     @Test
     fun `set input error custom message shown`() {
-        val inputViewParent = protonInput.getChildAt(1) as FrameLayout
-        val editText = inputViewParent.getChildAt(0) as EditText
+        val inputLayout = protonInput.findViewById<TextInputLayout>(R.id.inputLayout)
+        val editText = protonInput.findViewById<TextInputEditText>(R.id.input)
         val labelView = protonInput.findViewById<TextView>(R.id.label)
-        val assistiveText = protonInput.findViewById<TextView>(R.id.assistiveText)
 
-        protonInput.inputLabel = "test label"
-        protonInput.inputAssistiveText = "test assistive"
-        protonInput.inputText = "test text"
+        protonInput.labelText = "test label"
+        protonInput.helpText = "test assistive"
+        protonInput.text = "test text"
         protonInput.setInputError("test error message")
 
         assertEquals("test text", editText.text.toString())
         assertEquals("test label", labelView.text.toString())
-        assertEquals("test error message", assistiveText.text.toString())
+        assertEquals("test error message", inputLayout.error)
     }
-
 
     @Test
     fun `remove input error text works correctly`() {
-        val inputViewParent = protonInput.getChildAt(1) as FrameLayout
-        val editText = inputViewParent.getChildAt(0) as EditText
+        val inputLayout = protonInput.findViewById<TextInputLayout>(R.id.inputLayout)
+        val editText = protonInput.findViewById<TextInputEditText>(R.id.input)
         val labelView = protonInput.findViewById<TextView>(R.id.label)
-        val assistiveText = protonInput.findViewById<TextView>(R.id.assistiveText)
 
-        protonInput.inputLabel = "test label"
-        protonInput.inputAssistiveText = "test assistive"
-        protonInput.inputText = "test text"
+        protonInput.labelText = "test label"
+        protonInput.helpText = "test assistive"
+        protonInput.text = "test text"
         protonInput.setInputError("test error message")
 
-        protonInput.removeInputError()
+        protonInput.clearInputError()
         assertEquals("test text", editText.text.toString())
         assertEquals("test label", labelView.text.toString())
-        assertEquals("test assistive", assistiveText.text.toString())
+        assertEquals(null, inputLayout.error)
     }
 
     @Test
     fun `remove input error colors works correctly`() {
-        val inputViewParent = protonInput.getChildAt(1) as FrameLayout
-        val editText = inputViewParent.getChildAt(0) as EditText
+        val editText = protonInput.findViewById<TextInputEditText>(R.id.input)
         val labelView = protonInput.findViewById<TextView>(R.id.label)
-        val assistiveText = protonInput.findViewById<TextView>(R.id.assistiveText)
 
-        protonInput.inputLabel = "test label"
-        protonInput.inputAssistiveText = "test assistive"
-        protonInput.inputText = "test text"
+        protonInput.labelText = "test label"
+        protonInput.helpText = "test assistive"
+        protonInput.text = "test text"
 
         val originalLabelColor = labelView.currentTextColor
-        val originalAssistiveColor = assistiveText.currentTextColor
         val originalInputEditTextBackground = editText.background
 
         protonInput.setInputError("test error message")
-        protonInput.removeInputError()
+        protonInput.clearInputError()
 
         assertEquals(
             shadowOf(originalInputEditTextBackground).createdFromResId,
             shadowOf(editText.background).createdFromResId
         )
         assertEquals(originalLabelColor, labelView.currentTextColor)
-        assertEquals(originalAssistiveColor, assistiveText.currentTextColor)
     }
 
     @Test

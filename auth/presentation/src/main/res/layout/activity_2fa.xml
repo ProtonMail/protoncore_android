@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
-                    app:assistiveText="@string/auth_2fa_assistive_text"
+                    app:help="@string/auth_2fa_assistive_text"
                     app:label="@string/auth_2fa_label" />
 
                 <me.proton.android.core.presentation.ui.view.ProtonProgressButton

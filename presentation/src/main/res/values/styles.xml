@@ -36,13 +36,13 @@
     </style>
 
     <style name="ProtonTextView.InputHeader">
-        <item name="android:textColor">@drawable/selector_input_header_color</item>
+        <item name="android:textColor">@color/selector_input_header_color</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ProtonTextView.InputFooter">
-        <item name="android:textColor">@drawable/selector_input_footer_color</item>
+        <item name="android:textColor">@color/selector_input_footer_color</item>
         <item name="android:textSize">12sp</item>
     </style>
 
@@ -53,15 +53,45 @@
         <item name="android:paddingLeft">8dp</item>
     </style>
 
-    <style name="ProtonEditText.Border" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:textColor">@drawable/selector_input_color</item>
-        <item name="android:textColorHint">@drawable/selector_input_hint_color</item>
-        <item name="android:textSize">@dimen/input_text_size</item>
-        <item name="android:background">@drawable/selector_default_edit_text_background</item>
+    <style name="ProtonEditText.Border">
+        <item name="android:background">@drawable/default_edit_text</item>
     </style>
 
     <style name="ProtonEditText.Border.Disabled">
         <item name="android:background">@drawable/default_edit_text_disabled</item>
+    </style>
+
+    <style name="ProtonInput.TextInputLayout.Border" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:textColor">@color/selector_input_color</item>
+        <item name="android:textColorHint">@color/selector_input_hint_color</item>
+        <item name="android:textSize">@dimen/input_text_size</item>
+        <item name="boxBackgroundColor">@color/input_background</item>
+        <item name="endIconTint">@color/text_secondary</item>
+        <item name="helperTextTextAppearance">@style/ProtonTextView.InputFooter</item>
+        <item name="helperTextTextColor">@color/selector_input_footer_color</item>
+        <item name="hintTextColor">@color/selector_input_hint_color</item>
+        <item name="suffixTextColor">@color/text_secondary</item>
+    </style>
+
+    <style name="ProtonInput.TextInputLayout.Border.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="android:textColor">@color/selector_input_color</item>
+        <item name="android:textColorHint">@color/selector_input_hint_color</item>
+        <item name="android:textSize">@dimen/input_text_size</item>
+        <item name="boxStrokeColor">@color/input_background</item>
+        <item name="boxBackgroundColor">@color/input_background</item>
+        <item name="endIconTint">@color/text_secondary</item>
+        <item name="helperTextTextAppearance">@style/ProtonTextView.InputFooter</item>
+        <item name="helperTextTextColor">@color/selector_input_footer_color</item>
+        <item name="hintTextColor">@color/selector_input_hint_color</item>
+        <item name="suffixTextColor">@color/text_secondary</item>
+    </style>
+
+    <style name="ProtonInput.TextInputLayout.Border.NoBackground">
+        <item name="boxBackgroundColor">@null</item>
+    </style>
+
+    <style name="ProtonInput.TextInputLayout.Border.Disabled">
+        <item name="boxStrokeColor">@color/input_background</item>
     </style>
 
     <style name="ProtonButton" parent="Widget.MaterialComponents.Button">

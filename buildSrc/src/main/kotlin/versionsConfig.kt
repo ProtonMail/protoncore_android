@@ -21,7 +21,7 @@ fun initVersions() {
     `fragment version` =                        "1.3.0-alpha04" // Released: Apr 05, 2020
     `ktx version` =                             "1.2.0-beta01"  // Released: Oct 11, 2019
     `lifecycle version` =                       "2.2.0"         // Released: Oct 11, 2019
-    `material version` =                        "1.2.0-alpha02" // Released: May 24, 2020
+    `material version` =                        "1.2.1"         // Released: Sep 03, 2020
     `android-paging version` =                  "3.0.0-alpha02" // Released: Jun 24, 2020
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
 
