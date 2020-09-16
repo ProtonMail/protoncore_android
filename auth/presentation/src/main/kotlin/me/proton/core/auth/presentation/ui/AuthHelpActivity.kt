@@ -20,7 +20,7 @@ package me.proton.core.auth.presentation.ui
 
 import android.os.Bundle
 import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.openBrowserLink
+import me.proton.android.core.presentation.utils.openLinkInBrowser
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityAuthHelpBinding
 
@@ -39,16 +39,16 @@ class AuthHelpActivity : ProtonAuthActivity<ActivityAuthHelpBinding>() {
             }
 
             helpOptionCustomerSupport.itemHelpLayout.onClick {
-                openBrowserLink(getString(R.string.contact_support_link))
+                openLinkInBrowser(getString(R.string.contact_support_link))
             }
             helpOptionOtherIssues.itemHelpLayout.onClick {
-                openBrowserLink(getString(R.string.common_login_problems_link))
+                openLinkInBrowser(getString(R.string.common_login_problems_link))
             }
             helpOptionForgotPassword.itemHelpLayout.onClick {
-                openBrowserLink(getString(R.string.forgot_password_link))
+                openLinkInBrowser(getString(R.string.forgot_password_link))
             }
             helpOptionForgotUsername.itemHelpLayout.onClick {
-                openBrowserLink(getString(R.string.forgot_username_link))
+                openLinkInBrowser(getString(R.string.forgot_username_link))
             }
         }
     }

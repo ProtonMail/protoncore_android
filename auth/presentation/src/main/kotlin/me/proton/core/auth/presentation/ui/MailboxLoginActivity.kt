@@ -20,7 +20,7 @@ package me.proton.core.auth.presentation.ui
 
 import android.os.Bundle
 import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.openBrowserLink
+import me.proton.android.core.presentation.utils.openLinkInBrowser
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityMailboxloginBinding
 
@@ -41,7 +41,7 @@ class MailboxLoginActivity : ProtonAuthActivity<ActivityMailboxloginBinding>() {
             }
 
             forgotPasswordButton.onClick {
-                openBrowserLink(getString(R.string.forgot_password_link))
+                openLinkInBrowser(getString(R.string.forgot_password_link))
             }
         }
     }

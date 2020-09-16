@@ -51,31 +51,3 @@ fun Context.openLinkInBrowser(link: String) {
         Toast.LENGTH_SHORT
     ).show()
 }
-
-fun View.errorSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.background_error)
-}
-
-fun View.successSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.background_success)
-}
-
-private fun View.snack(
-    @StringRes messageRes: Int,
-    @DrawableRes color: Int
-) {
-    snack(message = resources.getString(messageRes), color = color)
-}
-
-private fun View.snack(
-    message: String,
-    length: Int = Snackbar.LENGTH_LONG,
-    @DrawableRes color: Int
-) {
-    Snackbar.make(this, message, length).apply {
-        view.background = context.resources.getDrawable(color, null)
-        setTextColor(ContextCompat.getColor(context, R.color.text_light))
-    }.show()
-}
-
-
