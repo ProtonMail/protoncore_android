@@ -16,31 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import util.libVersion
+package me.proton.core.test.kotlin
 
-plugins {
-    `kotlin-library`
-}
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import me.proton.core.util.kotlin.DispatcherProvider
 
-libVersion = Version(0, 1, 1)
-
-dependencies {
-
-    // Base dependencies
-    implementation(
-        `kotlin-jdk7`,
-        `coroutines-core`
-    )
-    compileOnly(project(Module.kotlinUtil))
-    testImplementation(project(Module.kotlinUtil))
-
-    // Test dependencies
-    api(
-        `kotlin-test`,
-        `kotlin-test-junit`,
-        `coroutines-test`,
-
-        `mockk`
-    )
+/**
+ * Implementation of [DispatcherProvider] meant to be used for tests
+ */
+val TestDispatcherProvider = object : DispatcherProvider {
+    override val Main: TestCoroutineDispatcher = TestCoroutineDispatcher()
+    override val Io = Main
+    override val Comp = Main
 }
