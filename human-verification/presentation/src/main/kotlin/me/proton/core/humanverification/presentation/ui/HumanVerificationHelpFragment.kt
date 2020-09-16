@@ -22,7 +22,7 @@ import android.os.Bundle
 import android.view.View
 import me.proton.android.core.presentation.ui.ProtonDialogFragment
 import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.openBrowserLink
+import me.proton.android.core.presentation.utils.openLinkInBrowser
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationHelpBinding
 
@@ -43,10 +43,10 @@ class HumanVerificationHelpFragment :
             headerNavigation.helpButton.visibility = View.GONE
             headerNavigation.optionsTitle.text = getString(R.string.human_verification_help)
             verificationManual.manualVerificationLayout.onClick {
-                requireContext().openBrowserLink(getString(R.string.manual_verification_link))
+                requireContext().openLinkInBrowser(getString(R.string.manual_verification_link))
             }
             verificationHelp.helpLayout.onClick {
-                requireContext().openBrowserLink(getString(R.string.verification_help_link))
+                requireContext().openLinkInBrowser(getString(R.string.verification_help_link))
             }
         }
     }
