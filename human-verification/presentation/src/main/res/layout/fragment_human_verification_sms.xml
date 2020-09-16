@@ -17,8 +17,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -46,29 +45,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_top_margin"
-            android:layout_marginBottom="@dimen/input_padding"
             android:text="@string/human_verification_option_sms"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-        <TextView
+        <me.proton.android.core.presentation.ui.view.ProtonAutoCompleteInput
             android:id="@+id/callingCodeText"
-            style="@style/ProtonEditText.Border.Disabled"
             android:layout_width="@dimen/human_verification_calling_code_input_width"
-            android:layout_height="@dimen/input_height"
-            android:layout_marginTop="@dimen/default_top_margin"
-            android:clickable="true"
-            android:drawableEnd="@drawable/ic_drop_down"
-            android:focusable="true"
-            android:gravity="center"
-            android:singleLine="true"
-            android:textAllCaps="true"
-            android:textCursorDrawable="@null"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/input_padding"
+            android:inputType="none"
             app:layout_constraintEnd_toStartOf="@id/smsEditText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header"
-            tools:text="+123-1" />
+            app:layout_constraintTop_toBottomOf="@id/header" />
 
         <me.proton.android.core.presentation.ui.view.ProtonInput
             android:id="@+id/smsEditText"

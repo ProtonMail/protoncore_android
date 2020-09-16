@@ -45,4 +45,15 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="ProtonAutoCompleteInput">
+        <attr name="android:text" />
+        <attr name="android:hint" />
+        <attr name="android:inputType" />
+        <attr name="android:enabled" />
+        <attr name="label" />
+        <attr name="help" />
+        <attr name="suffix" />
+        <attr name="prefix" />
+    </declare-styleable>
+
 </resources>

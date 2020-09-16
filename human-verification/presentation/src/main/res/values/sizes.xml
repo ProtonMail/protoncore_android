@@ -24,7 +24,7 @@
     <dimen name="human_verification_title_size">20sp</dimen>
     <dimen name="human_verification_subtitle_size">16sp</dimen>
     <dimen name="human_verification_action_buttons_top_margin">44dp</dimen>
-    <dimen name="human_verification_calling_code_input_width">96dp</dimen>
+    <dimen name="human_verification_calling_code_input_width">114dp</dimen>
     <dimen name="edit_text_action_button">32dp</dimen>
     <dimen name="human_verification_parent_padding_vertical">16dp</dimen>
     <dimen name="human_verification_parent_padding_horizontal">@dimen/default_gap</dimen>
