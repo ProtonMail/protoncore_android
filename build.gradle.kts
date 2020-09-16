@@ -43,7 +43,10 @@ allprojects {
 setupKotlin(
     "-XXLanguage:+NewInference",
     "-Xuse-experimental=kotlin.Experimental",
-    "-XXLanguage:+InlineClasses"
+    // Enables inline classes
+    "-XXLanguage:+InlineClasses",
+    // Enables experimental Coroutines from coroutines-test artifact, like `runBlockingTest`
+    "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
 )
 setupTests()
 setupDetekt()
