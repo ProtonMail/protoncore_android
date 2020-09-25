@@ -90,7 +90,7 @@ class PerformLogin @Inject constructor(
                 emit(LoginState.Error.Message(errorMessage, code == RESPONSE_CODE_INCORRECT_CREDENTIALS))
             }.onSuccess { sessionInfo ->
                 var result = sessionInfo
-                if (sessionInfo.isSecondFactorNeeded && !sessionInfo.isMailboxLoginNeeded) {
+                if (sessionInfo.isSecondFactorNeeded && !sessionInfo.isTwoPassModeNeeded) {
                     result = sessionInfo.copy(loginPassword = password)
                 }
                 emit(LoginState.Success(result))

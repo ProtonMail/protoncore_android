@@ -28,17 +28,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import me.proton.android.core.coreexample.Constants.BASE_URL
-import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.domain.ClientSecret
-import me.proton.core.auth.domain.entity.Account
-import me.proton.core.auth.domain.entity.KeySalts
-import me.proton.core.auth.domain.entity.LoginInfo
-import me.proton.core.auth.domain.entity.ScopeInfo
-import me.proton.core.auth.domain.entity.SecondFactorProof
-import me.proton.core.auth.domain.entity.SessionInfo
-import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.domain.arch.DataResult
+import me.proton.core.data.crypto.EncryptedString
+import me.proton.core.data.crypto.StringCrypto
+import me.proton.core.domain.entity.Product
 import me.proton.core.humanverification.data.repository.HumanVerificationLocalRepositoryImpl
 import me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl
 import me.proton.core.humanverification.domain.repository.HumanVerificationLocalRepository
@@ -50,9 +45,6 @@ import me.proton.core.network.data.di.NetworkPrefs
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.session.Session
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.DispatcherProvider
@@ -89,95 +81,34 @@ object ApplicationModule {
     )
 
     @Provides
-    fun provideSessionProvider(): SessionProvider = object : SessionProvider {
-        override fun getSession(sessionId: SessionId): Session? {
-            TODO("AccountManagerImpl implement SessionProvider.")
-        }
-    }
+    @Singleton
+    fun provideApiProvider(apiFactory: ApiFactory): ApiProvider =
+        ApiProvider(apiFactory)
 
     @Provides
-    fun provideSessionListener(): SessionListener = object : SessionListener {
-        override fun onSessionTokenRefreshed(session: Session) {
-            TODO("AccountManagerImpl implement SessionListener")
-        }
-
-        override fun onSessionForceLogout(session: Session) {
-            TODO("AccountManagerImpl implement SessionListener")
-        }
-
-        override suspend fun onHumanVerificationNeeded(
-            session: Session,
-            details: HumanVerificationDetails?
-        ): SessionListener.HumanVerificationResult {
-            TODO("AccountManagerImpl implement SessionListener")
-        }
-    }
+    @Singleton
+    fun provideProduct(): Product =
+        Product.Calendar
 
     @Provides
-    fun provideAuthRepository(apiProvider: ApiProvider): AuthRepository = object : AuthRepository {
-        /**
-         * Get Login Info needed to start the login process.
-         */
-        override suspend fun getLoginInfo(username: String, clientSecret: String): DataResult<LoginInfo> {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Perform Login to create a session (accessToken, refreshToken, sessionId, ...).
-         */
-        override suspend fun performLogin(
-            username: String,
-            clientSecret: String,
-            clientEphemeral: String,
-            clientProof: String,
-            srpSession: String
-        ): DataResult<SessionInfo> {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Perform Two Factor for the Login process for a given [SessionId].
-         */
-        override suspend fun performSecondFactor(
-            sessionId: SessionId,
-            secondFactorProof: SecondFactorProof
-        ): DataResult<ScopeInfo> {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Returns the basic user information for a given [SessionId].
-         */
-        override suspend fun getUser(sessionId: SessionId): DataResult<User> {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Returns the key salt information for a given [SessionId].
-         */
-        override suspend fun getSalts(sessionId: SessionId): DataResult<KeySalts> {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Perform Two Factor for the Login process for a given [SessionId].
-         */
-        override suspend fun revokeSession(sessionId: SessionId): DataResult<Boolean> {
-            TODO("Not yet implemented")
-        }
-
+    @Singleton
+    fun provideStringCrypto(): StringCrypto = object : StringCrypto {
+        // TODO: Provide concrete StringCrypto implementation.
+        override fun encrypt(value: String): EncryptedString = EncryptedString(value)
+        override fun decrypt(value: EncryptedString): String = value.encrypted
     }
 
     @Provides
     @Singleton
-    fun provideApiProvider(apiFactory: ApiFactory): ApiProvider =
-        ApiProvider(apiFactory)
+    fun provideAuthRepository(apiProvider: ApiProvider): AuthRepository =
+        AuthRepositoryImpl(apiProvider)
 
     @Provides
     fun provideLocalRepository(@ApplicationContext context: Context): HumanVerificationLocalRepository =
         HumanVerificationLocalRepositoryImpl(context)
 
     @Provides
+    @Singleton
     fun provideRemoteRepository(apiProvider: ApiProvider): HumanVerificationRemoteRepository =
         HumanVerificationRemoteRepositoryImpl(apiProvider)
 
@@ -190,71 +121,5 @@ object ApplicationModule {
         override val Io = Dispatchers.IO
         override val Comp = Dispatchers.Default
         override val Main = Dispatchers.Main
-    }
-
-    @Provides
-    @Singleton
-    fun provideAccountWorkflowHandler(): AccountWorkflowHandler = object : AccountWorkflowHandler {
-        /**
-         * Handle a new [Session] for a new or existing [Account] from Login workflow.
-         */
-        override suspend fun handleSession(account: Account, session: Session) {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Handle TwoPassMode success.
-         */
-        override suspend fun handleTwoPassModeSuccess(sessionId: SessionId) {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Handle TwoPassMode failure.
-         *
-         * Note: The Workflow must succeed within maximum 10 min of authentication.
-         */
-        override suspend fun handleTwoPassModeFailed(sessionId: SessionId) {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Handle SecondFactor success.
-         *
-         * @param updatedScopes the new updated full list of scopes.
-         */
-        override suspend fun handleSecondFactorSuccess(sessionId: SessionId, updatedScopes: List<String>) {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Handle SecondFactor failure.
-         *
-         * Note: Maximum number of failure is 3, then the session will be invalidated and API will return HTTP 401.
-         */
-        override suspend fun handleSecondFactorFailed(sessionId: SessionId) {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Handle HumanVerification success.
-         *
-         * Note: TokenType and tokenCode must be part of the next API calls.
-         */
-        override suspend fun handleHumanVerificationSuccess(
-            sessionId: SessionId,
-            tokenType: String,
-            tokenCode: String
-        ) {
-            TODO("Not yet implemented")
-        }
-
-        /**
-         * Handle HumanVerification failure.
-         */
-        override suspend fun handleHumanVerificationFailed(sessionId: SessionId) {
-            TODO("Not yet implemented")
-        }
-
     }
 }

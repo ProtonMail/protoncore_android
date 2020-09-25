@@ -40,7 +40,10 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.presentation),
+
+        // Features
         project(Module.authDomain),
+        project(Module.accountDomain),
         project(Module.humanVerificationDomain),
         project(Module.humanVerificationPresentation),
 

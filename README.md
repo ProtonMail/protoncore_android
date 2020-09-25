@@ -117,6 +117,29 @@ Crypto Data: **0** - _released on: ND_
 
 ## Features
 
+### Account
+
+Account: **0** - _released on: ND_
+
+Account Domain: **0** - _released on: ND_
+
+Account Presentation: **0** - _released on: ND_
+
+Account Data: **0** - _released on: ND_
+
+
+### Account Manager
+
+Account Manager: **0** - _released on: ND_
+
+Account Manager Domain: **0** - _released on: ND_
+
+Account Manager Presentation: **0** - _released on: ND_
+
+Account Manager Data: **0** - _released on: ND_
+
+Account Manager Dagger: **0** - _released on: ND_
+
 ### Contacts
 
 Contacts: **0** - _released on: ND_
@@ -126,6 +149,7 @@ Contacts Domain: **0** - _released on: ND_
 Contacts Presentation: **0** - _released on: ND_
 
 Contacts Data: **0** - _released on: ND_
+
 
 ### Settings
 
