@@ -21,17 +21,15 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.humanverification.domain.usecase.VerifyCode
-import me.proton.core.humanverification.presentation.HumanVerificationChannel
-import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.exception.TokenCodeVerificationException
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
+import me.proton.core.network.domain.session.SessionId
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -44,8 +42,7 @@ import studio.forface.viewstatestore.ViewStateStoreScope
  */
 class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
     private val resendVerificationCodeToDestination: ResendVerificationCodeToDestination,
-    private val verifyCode: VerifyCode,
-    @HumanVerificationChannel private val channel: Channel<HumanVerificationResult>
+    private val verifyCode: VerifyCode
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     lateinit var tokenType: TokenType
@@ -61,12 +58,6 @@ class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
      */
     val codeVerificationResult = ViewStateStore<Boolean>().lock
 
-    fun verificationComplete(tokenType: TokenType, token: String) {
-        viewModelScope.launch(Dispatchers.Main) {
-            channel.send(HumanVerificationResult(true, tokenType, token))
-        }
-    }
-
     /**
      * Verifies the entered token on the API.
      *
@@ -74,9 +65,9 @@ class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
      * @param token the token that user entered and that has been previously sent to his destination
      * depending of the [TokenType]
      */
-    fun verifyTokenCode(tokenType: TokenType, token: String) =
+    fun verifyTokenCode(sessionId: SessionId, tokenType: TokenType, token: String) =
         viewModelScope.launch(Dispatchers.IO) {
-            val result = verifyCode(tokenType.name, token)
+            val result = verifyCode(sessionId, tokenType.name, token)
             if (result is VerificationResult.Success) {
                 codeVerificationResult.post(true)
             } else {
@@ -87,10 +78,10 @@ class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
     /**
      * This function resends another token to the same previously set destination.
      */
-    fun resendCode() {
+    fun resendCode(sessionId: SessionId) {
         destination?.let {
             viewModelScope.launch(Dispatchers.IO) {
-                val result = resendVerificationCodeToDestination(tokenType, it)
+                val result = resendVerificationCodeToDestination(sessionId, tokenType, it)
                 if (result is VerificationResult.Success) {
                     verificationCodeResendStatus.post(true)
                 } else {

@@ -77,7 +77,8 @@ internal class HumanVerificationMethodCommon(
      */
     fun onGetCodeClicked(parentFragmentManager: FragmentManager) {
         parentFragmentManager.setFragmentResult(
-            HumanVerificationDialogFragment.KEY_PHASE_TWO, bundleOf(
+            HumanVerificationDialogFragment.KEY_PHASE_TWO,
+            bundleOf(
                 HumanVerificationDialogFragment.ARG_DESTINATION to destination,
                 HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
             )

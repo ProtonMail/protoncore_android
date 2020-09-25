@@ -34,7 +34,7 @@ class TestResult(
     @SerialName("Bool") val bool: Boolean = true
 )
 
-interface TestExtensionRetrofitApi {
+interface TestExtensionRetrofitApi : BaseRetrofitApi {
 
     @GET("test")
     suspend fun test(): TestResult
@@ -47,5 +47,4 @@ interface TestExtensionRetrofitApi {
     suspend fun testLongTimeouts(@Tag tag: Any?): String
 }
 
-interface TestRetrofitApi : BaseRetrofitApi,
-    TestExtensionRetrofitApi
+interface TestRetrofitApi : TestExtensionRetrofitApi

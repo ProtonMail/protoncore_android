@@ -29,6 +29,7 @@ import me.proton.core.humanverification.domain.exception.EmptyDestinationExcepti
 import me.proton.core.humanverification.domain.exception.NoCountriesException
 import me.proton.core.humanverification.domain.usecase.MostUsedCountryCode
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.coroutinesTest
@@ -48,6 +49,8 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
 
     private val mostUsedUseCase = mockk<MostUsedCountryCode>()
     private val sendToPhoneDestinationUseCase = mockk<SendVerificationCodeToPhoneDestination>()
+
+    private val sessionId: SessionId = SessionId("id")
 
     private val viewModel by lazy {
         HumanVerificationSMSViewModel(
@@ -81,8 +84,8 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     @Test
     fun `send verification code to phone number success`() = runBlockingTest {
         coEvery { mostUsedUseCase.invoke() } returns flowOf(0)
-        coEvery { sendToPhoneDestinationUseCase.invoke(any()) } returns VerificationResult.Success
-        viewModel.sendVerificationCodeToDestination("+0", "123456789")
+        coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns VerificationResult.Success
+        viewModel.sendVerificationCodeToDestination(sessionId, "+0", "123456789")
         assertIs<ViewState.Success<Boolean>>(viewModel.verificationCodeStatus.awaitNext())
     }
 
@@ -90,10 +93,10 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     fun `send verification code to phone number invalid`() = runBlockingTest {
         // given
         coEvery { mostUsedUseCase.invoke() } returns flowOf(0)
-        coEvery { sendToPhoneDestinationUseCase.invoke(any()) } returns VerificationResult.Success
+        coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns VerificationResult.Success
 
         // when
-        viewModel.sendVerificationCodeToDestination("", "")
+        viewModel.sendVerificationCodeToDestination(sessionId, "", "")
         val result = viewModel.validation.awaitNext()
 
         // then

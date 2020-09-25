@@ -31,6 +31,7 @@ import me.proton.core.humanverification.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.presentation.exception.TokenCodeVerificationException
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
+import me.proton.core.network.domain.session.SessionId
 import studio.forface.viewstatestore.LockedViewStateStore
 import studio.forface.viewstatestore.ViewState
 import studio.forface.viewstatestore.ViewStateStore
@@ -68,13 +69,13 @@ constructor(
     /**
      * Contacts the API and sends the human verification token code.
      */
-    fun verifyTokenCode(token: String?) {
+    fun verifyTokenCode(sessionId: SessionId, token: String?) {
         requireNotNull(token)
         if (token.isEmpty()) {
             throw IllegalArgumentException("Verification token is empty.")
         }
         viewModelScope.launch(Dispatchers.IO) {
-            val result = verifyCode(TokenType.CAPTCHA.name, token)
+            val result = verifyCode(sessionId, TokenType.CAPTCHA.name, token)
             if (result is VerificationResult.Success) {
                 codeVerificationResult.post(true)
             } else {

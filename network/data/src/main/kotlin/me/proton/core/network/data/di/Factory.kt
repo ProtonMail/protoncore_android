@@ -39,10 +39,12 @@ import me.proton.core.network.domain.DohApiHandler
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.UserData
 import me.proton.core.network.domain.handlers.HumanVerificationHandler
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.MediaType.Companion.toMediaType
@@ -62,6 +64,8 @@ class ApiFactory(
     private val logger: Logger,
     private val networkManager: NetworkManager,
     private val prefs: NetworkPrefs,
+    private val sessionProvider: SessionProvider,
+    private val sessionListener: SessionListener,
     scope: CoroutineScope
 ) {
 
@@ -76,15 +80,15 @@ class ApiFactory(
      * Instantiates ApiManager for given [Api] interface and user.
      *
      * @param Api Retrofit interface defined by the client, must inherit from [BaseRetrofitApi].
-     * @param userData [UserData] to be used in the [ApiManager].
+     * @param sessionId [SessionId] to be used in the [create].
      * @param interfaceClass Kotlin class for [Api] interface.
      * @param clientErrorHandlers Extra error handlers provided by the client.
      * @param certificatePins Overrides [Constants.DEFAULT_SPKI_PINS]
      * @param alternativeApiPins Overrides [Constants.ALTERNATIVE_API_SPKI_PINS]
-     * @return [ApiManager] instance.
+     * @return Created instance.
      */
-    fun <Api : BaseRetrofitApi> ApiManager(
-        userData: UserData,
+    fun <Api : BaseRetrofitApi> create(
+        sessionId: SessionId? = null,
         interfaceClass: KClass<Api>,
         clientErrorHandlers: List<ApiErrorHandler<Api>> = emptyList(),
         certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
@@ -97,7 +101,8 @@ class ApiFactory(
             baseUrl,
             apiClient,
             logger,
-            userData,
+            sessionId,
+            sessionProvider,
             baseOkHttpClient,
             listOf(jsonConverter),
             interfaceClass,
@@ -106,7 +111,7 @@ class ApiFactory(
         )
 
         val errorHandlers =
-            createBaseErrorHandlers<Api>(userData, ::javaMonoClockMs, mainScope) + clientErrorHandlers
+            createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs, mainScope) + clientErrorHandlers
 
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
             initSPKIleafPinning(builder, alternativeApiPins)
@@ -123,7 +128,8 @@ class ApiFactory(
                 baseUrl,
                 apiClient,
                 logger,
-                userData,
+                sessionId,
+                sessionProvider,
                 baseOkHttpClient,
                 listOf(jsonConverter),
                 interfaceClass,
@@ -133,7 +139,8 @@ class ApiFactory(
         }
 
         return ApiManagerImpl(
-            apiClient, primaryBackend, dohApiHandler, networkManager, errorHandlers, ::javaMonoClockMs)
+            apiClient, primaryBackend, dohApiHandler, networkManager, errorHandlers, ::javaMonoClockMs
+        )
     }
 
     internal val jsonConverter =
@@ -149,17 +156,24 @@ class ApiFactory(
     }
 
     internal fun <Api> createBaseErrorHandlers(
-        userData: UserData,
+        sessionId: SessionId?,
         monoClockMs: () -> Long,
         networkMainScope: CoroutineScope
     ) = listOf(
         RefreshTokenHandler<Api>(
-            userData,
+            sessionId,
+            sessionProvider,
+            sessionListener,
             monoClockMs,
             networkMainScope
         ),
         ProtonForceUpdateHandler(apiClient),
-        HumanVerificationHandler(apiClient, networkMainScope)
+        HumanVerificationHandler(
+            sessionId,
+            sessionProvider,
+            sessionListener,
+            networkMainScope
+        )
     )
 
     private val dohProvider by lazy {

@@ -20,18 +20,52 @@ package me.proton.android.core.presentation.utils
 
 import me.proton.android.core.presentation.ui.view.ProtonInput
 
-/**
- * @return the [String] if valid (not null and not empty), otherwise return `null`
- *
- * @param onValidationFailed executed if the validation failed.
- * @param onValidationSuccess executed if the validation succeeds.
- */
-inline fun ProtonInput.validate(
-    onValidationFailed: () -> Unit,
-    onValidationSuccess: (String) -> Unit
-) =
-    if (text == null || text.toString().isBlank()) {
-        onValidationFailed()
-    } else {
-        onValidationSuccess(text.toString())
+fun ProtonInput.validate(validationType: ValidationType = ValidationType.NotBlank) =
+    InputValidationResult(this, validationType)
+
+fun ProtonInput.validateUsername() =
+    InputValidationResult(this, ValidationType.Username)
+
+fun ProtonInput.validatePassword() =
+    InputValidationResult(this, ValidationType.Password)
+
+fun ProtonInput.validateEmail() =
+    InputValidationResult(this, ValidationType.Email)
+
+enum class ValidationType {
+    NotBlank,
+    Username,
+    Password,
+    Email,
+}
+
+data class InputValidationResult(
+    val input: ProtonInput,
+    val validationType: ValidationType = ValidationType.NotBlank
+) {
+    val text = input.text.toString()
+    val isValid = when (validationType) {
+        ValidationType.NotBlank -> validateNotBlank()
+        ValidationType.Username -> validateUsername()
+        ValidationType.Password -> validatePassword()
+        ValidationType.Email -> validateEmail()
     }
+
+    private fun validateNotBlank() = text.isNotBlank()
+
+    private fun validateUsername() = validateNotBlank()
+
+    private fun validatePassword() = validateNotBlank()
+
+    private fun validateEmail() = validateNotBlank()
+}
+
+inline fun InputValidationResult.onFailure(action: () -> Unit): InputValidationResult {
+    if (!isValid) action()
+    return this
+}
+
+inline fun InputValidationResult.onSuccess(action: (text: String) -> Unit): InputValidationResult {
+    if (isValid) action(text)
+    return this
+}

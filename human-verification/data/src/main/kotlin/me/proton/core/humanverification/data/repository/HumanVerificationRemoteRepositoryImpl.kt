@@ -27,7 +27,8 @@ import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
-import me.proton.core.network.domain.ApiManager
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * Implementation of the [HumanVerificationRemoteRepository].
@@ -35,9 +36,8 @@ import me.proton.core.network.domain.ApiManager
  *
  * @author Dino Kadrikj.
  */
-class HumanVerificationRemoteRepositoryImpl<T : HumanVerificationApi>(
-    private val api: ApiManager<T>,
-    private val username: String
+class HumanVerificationRemoteRepositoryImpl(
+    private val apiProvider: ApiProvider
 ) : HumanVerificationRemoteRepository {
 
     /**
@@ -48,15 +48,18 @@ class HumanVerificationRemoteRepositoryImpl<T : HumanVerificationApi>(
      *
      * @throws EmptyDestinationException if the destination value is empty.
      */
-    override suspend fun sendVerificationCodePhoneNumber(phoneNumber: String): VerificationResult {
+    override suspend fun sendVerificationCodePhoneNumber(
+        sessionId: SessionId,
+        phoneNumber: String
+    ): VerificationResult {
         if (phoneNumber.isEmpty()) {
             throw EmptyDestinationException("Provide valid sms destination.")
         }
         val destination = Destination(phoneNumber = phoneNumber)
 
-        val verificationBody = VerificationBody(username, TokenType.SMS.tokenTypeValue, destination)
+        val verificationBody = VerificationBody(TokenType.SMS.tokenTypeValue, destination)
 
-        val apiResult = api {
+        val apiResult = apiProvider.get<HumanVerificationApi>(sessionId).invoke {
             sendVerificationCode(verificationBody)
         }
 
@@ -71,16 +74,19 @@ class HumanVerificationRemoteRepositoryImpl<T : HumanVerificationApi>(
      *
      * @throws EmptyDestinationException if the destination value is empty.
      */
-    override suspend fun sendVerificationCodeEmailAddress(emailAddress: String): VerificationResult {
+    override suspend fun sendVerificationCodeEmailAddress(
+        sessionId: SessionId,
+        emailAddress: String
+    ): VerificationResult {
         if (emailAddress.isEmpty()) {
             throw EmptyDestinationException("Provide valid email destination.")
         }
         val destination = Destination(emailAddress = emailAddress)
 
         val verificationBody =
-            VerificationBody(username, TokenType.EMAIL.tokenTypeValue, destination)
+            VerificationBody(TokenType.EMAIL.tokenTypeValue, destination)
 
-        val apiResult = api {
+        val apiResult = apiProvider.get<HumanVerificationApi>(sessionId).invoke {
             sendVerificationCode(verificationBody)
         }
 
@@ -95,8 +101,8 @@ class HumanVerificationRemoteRepositoryImpl<T : HumanVerificationApi>(
      * @param tokenType the token type [TokenType]
      * @param token the verification code (token) value
      */
-    override suspend fun verifyCode(tokenType: String, token: String): VerificationResult {
-        val apiResult = api {
+    override suspend fun verifyCode(sessionId: SessionId, tokenType: String, token: String): VerificationResult {
+        val apiResult = apiProvider.get<HumanVerificationApi>(sessionId).invoke {
             postHumanVerification(HumanVerificationBody(token, tokenType))
         }
         return apiResult.mapToVerificationResult()

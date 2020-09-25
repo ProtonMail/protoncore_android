@@ -19,7 +19,6 @@
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,16 +27,13 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.usecase.VerifyCode
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.test.kotlin.assertEquals
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.test.kotlin.assertTrue
 import me.proton.core.test.kotlin.coroutinesTest
 import org.junit.Rule
 import org.junit.Test
 import studio.forface.viewstatestore.ViewState
-import java.lang.IllegalArgumentException
-import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -51,6 +47,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest by coroutinesTest {
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
 
+    private val sessionId: SessionId = SessionId("id")
     private val verifyCode = mockk<VerifyCode>()
     private val networkManager = mockk<NetworkManager>()
 
@@ -97,7 +94,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest by coroutinesTest {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Unmetered)
         viewModel.networkConnectionState.awaitNext()
-        assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode(null) }
+        assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode(sessionId, null) }
     }
 
     @Test
@@ -106,6 +103,6 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest by coroutinesTest {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Unmetered)
         viewModel.networkConnectionState.awaitNext()
-        assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode("") }
+        assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode(sessionId, "") }
     }
 }

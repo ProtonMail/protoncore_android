@@ -49,11 +49,17 @@ object Module {
     // endregion
 
     // region Features
-    // Contacts
+    // Authentication
     const val auth = ":auth"
     const val authDomain = "$auth:auth-domain"
     const val authPresentation = "$auth:auth-presentation"
     const val authData = "$auth:auth-data"
+
+    // AccountManager
+    const val accountManager = ":account-manager"
+    const val accountManagerDomain = "$accountManager:account-manager-domain"
+    const val accountManagerPresentation = "$accountManager:account-manager-presentation"
+    const val accountManagerData = "$accountManager:account-manager-data"
 
     // Contacts
     const val contacts = ":contacts"

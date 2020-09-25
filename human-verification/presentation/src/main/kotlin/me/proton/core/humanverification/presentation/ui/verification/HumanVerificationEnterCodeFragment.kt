@@ -26,6 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonDialogFragment
 import me.proton.android.core.presentation.utils.errorSnack
 import me.proton.android.core.presentation.utils.onClick
+import me.proton.android.core.presentation.utils.onFailure
+import me.proton.android.core.presentation.utils.onSuccess
 import me.proton.android.core.presentation.utils.successSnack
 import me.proton.android.core.presentation.utils.validate
 import me.proton.core.humanverification.domain.entity.TokenType
@@ -36,6 +38,7 @@ import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogF
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.KEY_VERIFICATION_DONE
 import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * @author Dino Kadrikj.
@@ -45,25 +48,28 @@ class HumanVerificationEnterCodeFragment :
     ProtonDialogFragment<FragmentHumanVerificationEnterCodeBinding>() {
 
     companion object {
+        private const val ARG_SESSION_ID = "arg.sessionId"
         private const val ARG_DESTINATION = "arg.destination"
         private const val ARG_TOKEN_TYPE = "arg.enter-code-token-type"
 
         operator fun invoke(
+            sessionId: SessionId,
             tokenType: TokenType,
             destination: String?
-        ): HumanVerificationEnterCodeFragment =
-            HumanVerificationEnterCodeFragment().apply {
-                val args =
-                    bundleOf(
-                        ARG_DESTINATION to destination,
-                        ARG_TOKEN_TYPE to tokenType.tokenTypeValue
-                    )
-                if (arguments != null) requireArguments().putAll(args)
-                else arguments = args
-            }
+        ) = HumanVerificationEnterCodeFragment().apply {
+            arguments = bundleOf(
+                ARG_SESSION_ID to sessionId,
+                ARG_DESTINATION to destination,
+                ARG_TOKEN_TYPE to tokenType.tokenTypeValue
+            )
+        }
     }
 
     private val viewModel by viewModels<HumanVerificationEnterCodeViewModel>()
+
+    private val sessionId: SessionId by lazy {
+        requireArguments().get(ARG_SESSION_ID) as SessionId
+    }
 
     private val destination: String? by lazy {
         val value = requireArguments().get(ARG_DESTINATION) as String?
@@ -97,22 +103,19 @@ class HumanVerificationEnterCodeFragment :
             }
             headerNavigation.helpButton.onClick { childFragmentManager.showHelp() }
             verifyButton.onClick {
-                verificationCodeEditText
-                    .validate(
-                        { verificationCodeEditText.setInputError() },
-                        {
-                            viewModel.verificationComplete(tokenType, it)
-                            parentFragmentManager.setFragmentResult(
-                                KEY_VERIFICATION_DONE,
-                                bundleOf(
-                                    ARG_TOKEN_CODE to it,
-                                    HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
-                                )
+                verificationCodeEditText.validate()
+                    .onFailure { verificationCodeEditText.setInputError() }
+                    .onSuccess {
+                        parentFragmentManager.setFragmentResult(
+                            KEY_VERIFICATION_DONE,
+                            bundleOf(
+                                ARG_TOKEN_CODE to it,
+                                HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
                             )
-                        }
-                    )
+                        )
+                    }
             }
-            requestReplacementButton.onClick { viewModel.resendCode() }
+            requestReplacementButton.onClick { viewModel.resendCode(sessionId) }
         }
 
         viewModel.codeVerificationResult.observe(viewLifecycleOwner) {

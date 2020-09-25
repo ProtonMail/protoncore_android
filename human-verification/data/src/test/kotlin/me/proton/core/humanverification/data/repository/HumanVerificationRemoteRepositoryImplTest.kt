@@ -17,16 +17,22 @@
  */
 package me.proton.core.humanverification.data.repository
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.mockk
+import io.mockk.every
+import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.humanverification.data.repository.util.TestHumanVerificationApi
+import me.proton.core.humanverification.data.api.HumanVerificationApi
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.session.SessionId
+import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -37,110 +43,123 @@ import kotlin.test.assertTrue
 @ExperimentalCoroutinesApi
 class HumanVerificationRemoteRepositoryImplTest {
 
-    private val username = "testusername"
+    private val sessionId: SessionId = SessionId("id")
     private val testPhoneNumber = "+123456789"
     private val testEmailAddress = "test@email.com"
 
     private val successResponse = GenericResponse(1000)
     private val errorResponse = "test error response"
     private val errorResponseCode = 422
-    private val apiManager = mockk<ApiManager<TestHumanVerificationApi>>(relaxed = true)
+
+    @RelaxedMockK
+    private lateinit var apiFactory: ApiFactory
+    private lateinit var apiProvider: ApiProvider
+
+    @RelaxedMockK
+    private lateinit var apiManager: ApiManager<HumanVerificationApi>
+
+    @Before
+    fun before() {
+        MockKAnnotations.init(this)
+        apiProvider = ApiProvider(apiFactory)
+        every { apiFactory.create(sessionId, HumanVerificationApi::class) } returns apiManager
+    }
 
     @Test(expected = EmptyDestinationException::class)
     fun `send code pass empty email`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
-        remoteRepository.sendVerificationCodeEmailAddress("")
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
+        remoteRepository.sendVerificationCodeEmailAddress(sessionId, "")
     }
 
     @Test(expected = EmptyDestinationException::class)
     fun `send code pass empty sms`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
-        remoteRepository.sendVerificationCodePhoneNumber("")
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
+        remoteRepository.sendVerificationCodePhoneNumber(sessionId, "")
     }
 
     @Test
     fun `send code pass email`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
-        val mockedResult = me.proton.core.network.domain.ApiResult.Success(successResponse)
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
+        val mockedResult = ApiResult.Success(successResponse)
         coEvery { apiManager.invoke<GenericResponse>(any(), any()) } returns mockedResult
 
-        val result = remoteRepository.sendVerificationCodeEmailAddress(testEmailAddress)
+        val result = remoteRepository.sendVerificationCodeEmailAddress(sessionId, testEmailAddress)
         assertEquals(VerificationResult.Success, result)
     }
 
     @Test
     fun `send code pass sms`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
-        val mockedResult = me.proton.core.network.domain.ApiResult.Success(successResponse)
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
+        val mockedResult = ApiResult.Success(successResponse)
         coEvery { apiManager.invoke<GenericResponse>(any(), any()) } returns mockedResult
 
-        val result = remoteRepository.sendVerificationCodePhoneNumber(testPhoneNumber)
+        val result = remoteRepository.sendVerificationCodePhoneNumber(sessionId, testPhoneNumber)
         assertEquals(VerificationResult.Success, result)
     }
 
     @Test
     fun `send code pass email error`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
         val mockedResult = ApiResult.Error.Http(errorResponseCode, errorResponse)
         coEvery { apiManager.invoke<Any>(any(), any()) } returns mockedResult
 
-        val result = remoteRepository.sendVerificationCodeEmailAddress(testEmailAddress)
+        val result = remoteRepository.sendVerificationCodeEmailAddress(sessionId, testEmailAddress)
         assertTrue(result is VerificationResult.Error)
     }
 
     @Test
     fun `send code pass sms error`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
         val mockedResult = ApiResult.Error.Http(errorResponseCode, errorResponse)
         coEvery { apiManager.invoke<Any>(any(), any()) } returns mockedResult
 
-        val result = remoteRepository.sendVerificationCodePhoneNumber(testPhoneNumber)
+        val result = remoteRepository.sendVerificationCodePhoneNumber(sessionId, testPhoneNumber)
         assertTrue(result is VerificationResult.Error)
     }
 
     @Test
     fun `send verification token sms`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
-        val mockedResult = me.proton.core.network.domain.ApiResult.Success(successResponse)
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
+        val mockedResult = ApiResult.Success(successResponse)
         coEvery { apiManager.invoke<GenericResponse>(any(), any()) } returns mockedResult
-        val result = remoteRepository.sendVerificationCodePhoneNumber(testPhoneNumber)
+        val result = remoteRepository.sendVerificationCodePhoneNumber(sessionId, testPhoneNumber)
         assertEquals(VerificationResult.Success, result)
     }
 
     @Test
     fun `send verification token email`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
-        val mockedResult = me.proton.core.network.domain.ApiResult.Success(successResponse)
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
+        val mockedResult = ApiResult.Success(successResponse)
         coEvery { apiManager.invoke<GenericResponse>(any(), any()) } returns mockedResult
-        val result = remoteRepository.sendVerificationCodeEmailAddress(testEmailAddress)
+        val result = remoteRepository.sendVerificationCodeEmailAddress(sessionId, testEmailAddress)
         assertEquals(VerificationResult.Success, result)
     }
 
     @Test
     fun `send verification token error sms`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
         val mockedResult = ApiResult.Error.Http(errorResponseCode, errorResponse)
         coEvery { apiManager.invoke<Any>(any(), any()) } returns mockedResult
-        val result = remoteRepository.sendVerificationCodePhoneNumber(testPhoneNumber)
+        val result = remoteRepository.sendVerificationCodePhoneNumber(sessionId, testPhoneNumber)
         assertTrue(result is VerificationResult.Error)
     }
 
     @Test
     fun `send verification token error email`() = runBlockingTest {
         val remoteRepository =
-            HumanVerificationRemoteRepositoryImpl(api = apiManager, username = username)
+            HumanVerificationRemoteRepositoryImpl(apiProvider)
         val mockedResult = ApiResult.Error.Http(errorResponseCode, errorResponse)
         coEvery { apiManager.invoke<Any>(any(), any()) } returns mockedResult
-        val result = remoteRepository.sendVerificationCodeEmailAddress(testEmailAddress)
+        val result = remoteRepository.sendVerificationCodeEmailAddress(sessionId, testEmailAddress)
         assertTrue(result is VerificationResult.Error)
     }
 }

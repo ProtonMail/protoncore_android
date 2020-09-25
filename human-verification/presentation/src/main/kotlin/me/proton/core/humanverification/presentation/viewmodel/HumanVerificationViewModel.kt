@@ -21,13 +21,8 @@ package me.proton.core.humanverification.presentation.viewmodel
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.presentation.HumanVerificationChannel
-import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import studio.forface.viewstatestore.ViewStateStore
@@ -36,11 +31,9 @@ import studio.forface.viewstatestore.ViewStateStoreScope
 /**
  * View model class to serve the main Human Verification screen.
  *
- * @param channel the result channel.
  * @author Dino Kadrikj.
  */
 class HumanVerificationViewModel @ViewModelInject constructor(
-    @HumanVerificationChannel private val channel: Channel<HumanVerificationResult>,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) :
     ProtonViewModel(), ViewStateStoreScope {
@@ -78,11 +71,5 @@ class HumanVerificationViewModel @ViewModelInject constructor(
             data = currentActiveVerificationMethod.tokenTypeValue,
             dropOnSame = false
         )
-    }
-
-    fun onClose() {
-        viewModelScope.launch {
-            channel.send(HumanVerificationResult(false))
-        }
     }
 }

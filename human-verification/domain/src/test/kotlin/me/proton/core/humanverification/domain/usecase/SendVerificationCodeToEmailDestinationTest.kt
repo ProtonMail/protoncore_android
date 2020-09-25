@@ -25,6 +25,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
+import me.proton.core.network.domain.session.SessionId
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -44,14 +45,15 @@ class SendVerificationCodeToEmailDestinationTest {
     @JvmField
     var thrown: ExpectedException = ExpectedException.none()
 
+    private val sessionId: SessionId = SessionId("id")
     private val testEmail = "test@protonmail.com"
 
     @Test
     fun `sends verification token to API email`() = runBlockingTest {
         val useCase = SendVerificationCodeToEmailDestination(remoteRepository)
-        coEvery { remoteRepository.sendVerificationCodeEmailAddress(any()) } returns VerificationResult.Success
+        coEvery { remoteRepository.sendVerificationCodeEmailAddress(any(), any()) } returns VerificationResult.Success
 
-        val result = useCase.invoke(testEmail)
+        val result = useCase.invoke(sessionId, testEmail)
         assertEquals(VerificationResult.Success, result)
     }
 
@@ -61,7 +63,6 @@ class SendVerificationCodeToEmailDestinationTest {
 
         thrown.expect(EmptyDestinationException::class.java)
         thrown.expectMessage("Provide valid email destination.")
-
-        useCase.invoke("")
+        useCase.invoke(sessionId, "")
     }
 }

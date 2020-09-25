@@ -19,35 +19,49 @@ package me.proton.core.network.data.util
 
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.UserData
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.util.kotlin.Logger
 
-class MockUserData : UserData {
+object MockSession {
+    fun getDefault() = Session(
+        sessionId = SessionId("uid"),
+        accessToken = "accessToken",
+        refreshToken = "refreshToken",
+        headers = null,
+        scopes = listOf("mail", "vpn", "calendar")
+    )
 
-    var loggedOut = false
+    fun getWithHeader(header: HumanVerificationHeaders) = Session(
+        sessionId = SessionId("uid"),
+        accessToken = "accessToken",
+        refreshToken = "refreshToken",
+        headers = header,
+        scopes = listOf("mail", "vpn", "calendar")
+    )
+}
 
-    override var sessionUid: String = "uid"
-    override var accessToken: String = "accessToken"
-    override var refreshToken: String = "refreshToken"
-
-    override fun updateTokens(access: String, refresh: String) {
-        accessToken = access
-        refreshToken = refresh
+class MockSessionListener(
+    private val onTokenRefreshed: (Session) -> Unit = { },
+    private val onForceLogout: (Session) -> Unit = { },
+    private val onVerificationNeeded: (Session, HumanVerificationDetails?) -> SessionListener.HumanVerificationResult = { _, _ ->
+        SessionListener.HumanVerificationResult.Success
     }
-
-    override var humanVerificationHandler: HumanVerificationHeaders? = null
-
-    override fun forceLogout() {
-        loggedOut = true
-    }
+) : SessionListener {
+    override fun onSessionTokenRefreshed(session: Session) = onTokenRefreshed(session)
+    override fun onSessionForceLogout(session: Session) = onForceLogout(session)
+    override suspend fun onHumanVerificationNeeded(
+        session: Session,
+        details: HumanVerificationDetails?
+    ): SessionListener.HumanVerificationResult = onVerificationNeeded(session, details)
 }
 
 class MockApiClient : ApiClient {
 
     var forceUpdated = false
-    var humanVerified = false
 
     override var shouldUseDoh = true
     override val appVersionHeader = "TestApp_1.0"
@@ -59,16 +73,6 @@ class MockApiClient : ApiClient {
     override fun forceUpdate() {
         forceUpdated = true
     }
-
-    /**
-     * Tells the client that a human verification flow should be initiated. Any API call made without
-     * the human verification headers will return the same error, so in order the API communication
-     * to continue normally the human verification headers are needed.
-     */
-    override suspend fun humanVerification(humanVerificationDetails: HumanVerificationDetails): Boolean {
-        return true
-    }
-
 }
 
 class MockNetworkPrefs : NetworkPrefs {

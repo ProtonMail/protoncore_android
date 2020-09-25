@@ -22,15 +22,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.humanverification.data.api.HumanVerificationFields.API_DESTINATION
 import me.proton.core.humanverification.data.api.HumanVerificationFields.API_TYPE
-import me.proton.core.humanverification.data.api.HumanVerificationFields.API_USERNAME
 
 /**
  * @author Dino Kadrikj.
  */
 @Serializable
 data class VerificationBody(
-    @SerialName(API_USERNAME)
-    val username: String? = null,
     @SerialName(API_TYPE)
     val type: String? = null,
     @SerialName(API_DESTINATION)

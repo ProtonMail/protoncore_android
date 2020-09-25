@@ -22,6 +22,7 @@ import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.InvalidValidationOptionException
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
+import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 /**
@@ -34,8 +35,9 @@ import javax.inject.Inject
  *
  * @author Dino Kadrikj.
  */
-class ResendVerificationCodeToDestination @Inject
-constructor(private val humanVerificationRemoteRepository: HumanVerificationRemoteRepository) {
+class ResendVerificationCodeToDestination @Inject constructor(
+    private val humanVerificationRemoteRepository: HumanVerificationRemoteRepository
+) {
 
     /**
      * Send the verification code (token) to the API. This is an alternative function with slightly
@@ -48,12 +50,14 @@ constructor(private val humanVerificationRemoteRepository: HumanVerificationRemo
      * @throws InvalidValidationOptionException if the verification type (method) does not support
      * sending the verification code (currently supported [TokenType.EMAIL] and [TokenType.SMS]
      */
-    suspend operator fun invoke(tokenType: TokenType, destination: String): VerificationResult {
+    suspend operator fun invoke(sessionId: SessionId, tokenType: TokenType, destination: String): VerificationResult {
         return when (tokenType) {
             TokenType.SMS -> humanVerificationRemoteRepository.sendVerificationCodePhoneNumber(
+                sessionId,
                 destination
             )
             TokenType.EMAIL -> humanVerificationRemoteRepository.sendVerificationCodeEmailAddress(
+                sessionId,
                 destination
             )
             else -> throw InvalidValidationOptionException("Invalid verification type selected")

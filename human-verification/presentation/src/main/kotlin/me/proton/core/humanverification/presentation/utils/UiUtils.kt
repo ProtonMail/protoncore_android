@@ -18,16 +18,10 @@
 
 package me.proton.core.humanverification.presentation.utils
 
-import android.view.View
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.google.android.material.snackbar.Snackbar
 import me.proton.android.core.presentation.utils.inTransaction
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationHelpFragment
 import me.proton.core.humanverification.presentation.ui.verification.CountryPickerFragment
@@ -35,6 +29,7 @@ import me.proton.core.humanverification.presentation.ui.verification.HumanVerifi
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationEmailFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationEnterCodeFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * @author Dino Kadrikj.
@@ -55,12 +50,13 @@ val defaultVerificationMethods = listOf(
 
 /** Shows the human verification dialog. */
 fun FragmentManager.showHumanVerification(
+    sessionId: SessionId,
     availableVerificationMethods: List<String> = defaultVerificationMethods,
     captchaToken: String? = null,
     largeLayout: Boolean
 ) {
 
-    val newFragment = HumanVerificationDialogFragment(availableVerificationMethods, captchaToken)
+    val newFragment = HumanVerificationDialogFragment(sessionId, availableVerificationMethods, captchaToken)
     if (largeLayout) {
         // For large screens (tablets), we show the fragment as a dialog
         newFragment.show(this, TAG_HUMAN_VERIFICATION_DIALOG)
@@ -79,10 +75,11 @@ fun FragmentManager.showHumanVerification(
  */
 internal fun FragmentManager.showHumanVerificationCaptchaContent(
     containerId: Int = android.R.id.content,
+    sessionId: SessionId,
     token: String?,
     host: String = HOST_DEFAULT
 ): Fragment {
-    val captchaFragment = HumanVerificationCaptchaFragment(token ?: TOKEN_DEFAULT, host)
+    val captchaFragment = HumanVerificationCaptchaFragment(sessionId, token ?: TOKEN_DEFAULT, host)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, captchaFragment)
@@ -92,9 +89,10 @@ internal fun FragmentManager.showHumanVerificationCaptchaContent(
 
 internal fun FragmentManager.showHumanVerificationEmailContent(
     containerId: Int = android.R.id.content,
+    sessionId: SessionId,
     token: String = TOKEN_DEFAULT
 ) {
-    val emailFragment = HumanVerificationEmailFragment(token)
+    val emailFragment = HumanVerificationEmailFragment(sessionId, token)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, emailFragment)
@@ -102,10 +100,11 @@ internal fun FragmentManager.showHumanVerificationEmailContent(
 }
 
 internal fun FragmentManager.showHumanVerificationSMSContent(
+    sessionId: SessionId,
     containerId: Int = android.R.id.content,
     token: String = TOKEN_DEFAULT
 ) {
-    val smsFragment = HumanVerificationSMSFragment(token)
+    val smsFragment = HumanVerificationSMSFragment(sessionId, token)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, smsFragment)
@@ -113,10 +112,11 @@ internal fun FragmentManager.showHumanVerificationSMSContent(
 }
 
 internal fun FragmentManager.showEnterCode(
+    sessionId: SessionId,
     tokenType: TokenType,
     destination: String?
 ) {
-    val enterCodeFragment = HumanVerificationEnterCodeFragment(tokenType, destination)
+    val enterCodeFragment = HumanVerificationEnterCodeFragment(sessionId, tokenType, destination)
     inTransaction {
         setCustomAnimations(0, 0)
         add(enterCodeFragment, TAG_HUMAN_VERIFICATION_ENTER_CODE)

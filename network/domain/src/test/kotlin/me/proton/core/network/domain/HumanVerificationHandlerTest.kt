@@ -28,23 +28,29 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.domain.handlers.HumanVerificationHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 import org.junit.Test
 import kotlin.test.assertNotNull
 
 /**
  * Tests for Human Verification domain handler.
- *
- * @author Dino Kadrikj.
  */
 @ExperimentalCoroutinesApi
 class HumanVerificationHandlerTest {
-    private val apiClient = mockk<ApiClient>(relaxed = true)
+
+    private val sessionId: SessionId = SessionId("id")
+    private val sessionListener = mockk<SessionListener>(relaxed = true)
+    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
+
     val scope = CoroutineScope(TestCoroutineDispatcher())
     val apiBackend = mockk<ApiBackend<Any>>()
 
     @Test
     fun `test human verification called`() = runBlockingTest {
-        val humanVerificationDetails = HumanVerificationDetails(listOf(VerificationMethod.CAPTCHA, VerificationMethod.EMAIL), "test")
+        val humanVerificationDetails =
+            HumanVerificationDetails(listOf(VerificationMethod.CAPTCHA, VerificationMethod.EMAIL), "test")
         val apiResult = ApiResult.Error.Http(
             422,
             "Human Verification required",
@@ -54,11 +60,13 @@ class HumanVerificationHandlerTest {
                 humanVerificationDetails
             )
         )
-        coEvery { apiClient.humanVerification(any()) } returns true
+
+        coEvery { sessionListener.onHumanVerificationNeeded(any(), any()) } returns SessionListener.HumanVerificationResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
         val humanVerificationHandler =
-            HumanVerificationHandler<Any>(apiClient, scope)
+            HumanVerificationHandler<Any>(sessionId, sessionProvider, sessionListener, scope)
+
         val result = humanVerificationHandler.invoke(
             backend = apiBackend,
             error = apiResult,
@@ -67,8 +75,7 @@ class HumanVerificationHandlerTest {
 
         assertNotNull(result)
         coVerify(exactly = 1) {
-            apiClient
-                .humanVerification(humanVerificationDetails)
+            sessionListener.onHumanVerificationNeeded(any(), humanVerificationDetails)
         }
     }
 
@@ -82,8 +89,10 @@ class HumanVerificationHandlerTest {
                 "Some error"
             )
         )
+
         val humanVerificationHandler =
-            HumanVerificationHandler<Any>(apiClient, scope)
+            HumanVerificationHandler<Any>(sessionId, sessionProvider, sessionListener, scope)
+
         val result = humanVerificationHandler.invoke(
             backend = mockk(),
             error = apiResult,
@@ -92,8 +101,7 @@ class HumanVerificationHandlerTest {
 
         assertNotNull(result)
         coVerify(exactly = 0) {
-            apiClient
-                .humanVerification(any())
+            sessionListener.onHumanVerificationNeeded(any(), any())
         }
     }
 
@@ -104,8 +112,10 @@ class HumanVerificationHandlerTest {
             "Some error",
             null
         )
+
         val humanVerificationHandler =
-            HumanVerificationHandler<Any>(apiClient, scope)
+            HumanVerificationHandler<Any>(sessionId, sessionProvider, sessionListener, scope)
+
         val result = humanVerificationHandler.invoke(
             backend = mockk(),
             error = apiResult,
@@ -114,8 +124,7 @@ class HumanVerificationHandlerTest {
 
         assertNotNull(result)
         coVerify(exactly = 0) {
-            apiClient
-                .humanVerification(any())
+            sessionListener.onHumanVerificationNeeded(any(), any())
         }
     }
 
@@ -124,8 +133,10 @@ class HumanVerificationHandlerTest {
         val apiResult = ApiResult.Error.Connection(
             false
         )
+
         val humanVerificationHandler =
-            HumanVerificationHandler<Any>(apiClient, scope)
+            HumanVerificationHandler<Any>(sessionId, sessionProvider, sessionListener, scope)
+
         val result = humanVerificationHandler.invoke(
             backend = mockk(),
             error = apiResult,
@@ -134,8 +145,7 @@ class HumanVerificationHandlerTest {
 
         assertNotNull(result)
         coVerify(exactly = 0) {
-            apiClient
-                .humanVerification(any())
+            sessionListener.onHumanVerificationNeeded(any(), any())
         }
     }
 

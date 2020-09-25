@@ -20,13 +20,12 @@ package me.proton.core.network.domain.humanverification
 
 /**
  * All possible verification methods enum.
- * @author Dino Kadrikj.
  */
-enum class VerificationMethod {
-    PHONE,
-    EMAIL,
-    CAPTCHA,
-    PAYMENT,
-    INVITE,
-    COUPON
+enum class VerificationMethod(val value: String) {
+    PHONE("sms"),
+    EMAIL("email"),
+    CAPTCHA("captcha"),
+    PAYMENT("payment"),
+    INVITE("invite"),
+    COUPON("coupon")
 }

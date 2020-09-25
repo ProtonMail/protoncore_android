@@ -17,7 +17,6 @@
  */
 package me.proton.core.network.domain
 
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import java.util.concurrent.TimeUnit
 
 /**
@@ -87,11 +86,4 @@ interface ApiClient {
      * Tells client to force update (this client will no longer be accepted by the API).
      */
     fun forceUpdate()
-
-    /**
-     * Tells the client that a human verification flow should be initiated. Any API call made without
-     * the human verification headers will return the same error, so in order the API communication
-     * to continue normally the human verification headers are needed.
-     */
-    suspend fun humanVerification(humanVerificationDetails: HumanVerificationDetails): Boolean
 }

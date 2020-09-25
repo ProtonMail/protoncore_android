@@ -73,7 +73,8 @@ class ApiManagerImpl<Api>(
             if (retryCount < client.backoffRetryCount && shouldRetry(result)) {
                 val delayCoefficient = sample(
                     2.0.pow(retryCount.toDouble()),
-                    2.0.pow(retryCount + 1.0))
+                    2.0.pow(retryCount + 1.0)
+                )
                 delay(client.backoffBaseDelayMs * delayCoefficient.toLong())
                 retryCount++
             } else {

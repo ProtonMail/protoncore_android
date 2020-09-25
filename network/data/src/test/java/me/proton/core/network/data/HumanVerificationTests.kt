@@ -18,7 +18,9 @@
 
 package me.proton.core.network.data
 
+import io.mockk.MockKAnnotations
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
@@ -26,18 +28,31 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import me.proton.core.network.data.di.ApiFactory
-import me.proton.core.network.data.util.*
-import me.proton.core.network.domain.*
+import me.proton.core.network.data.util.MockApiClient
+import me.proton.core.network.data.util.MockLogger
+import me.proton.core.network.data.util.MockNetworkPrefs
+import me.proton.core.network.data.util.MockSession
+import me.proton.core.network.data.util.MockSessionListener
+import me.proton.core.network.data.util.TestRetrofitApi
+import me.proton.core.network.data.util.TestTLSHelper
+import me.proton.core.network.data.util.prepareResponse
+import me.proton.core.network.domain.ApiManager
+import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.equalsNoCase
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -80,30 +95,51 @@ internal class HumanVerificationTests {
             }
         """.trimIndent()
 
-    val scope = CoroutineScope(TestCoroutineDispatcher())
+    private val scope = CoroutineScope(TestCoroutineDispatcher())
 
     private val testTlsHelper = TestTLSHelper()
-    lateinit var apiFactory: ApiFactory
-    lateinit var webServer: MockWebServer
+    private lateinit var apiFactory: ApiFactory
+    private lateinit var webServer: MockWebServer
 
-    lateinit var backend: ProtonApiBackend<TestRetrofitApi>
-    lateinit var logger: MockLogger
-    lateinit var client: MockApiClient
-    val user = mockk<UserData>()
+    private lateinit var backend: ProtonApiBackend<TestRetrofitApi>
+    private lateinit var logger: MockLogger
+    private lateinit var client: MockApiClient
+
+    private lateinit var session: Session
+
+    @MockK
+    private lateinit var sessionProvider: SessionProvider
+    private var sessionListener: SessionListener = MockSessionListener(
+        onTokenRefreshed = { session -> this.session = session }
+    )
 
     private var isNetworkAvailable = true
-
-    val networkManager = mockk<NetworkManager>()
+    private val networkManager = mockk<NetworkManager>()
 
     private lateinit var prefs: NetworkPrefs
 
-    @Before
+    @BeforeTest
     fun before() {
+        MockKAnnotations.init(this)
+
         logger = MockLogger()
         client = MockApiClient()
         prefs = MockNetworkPrefs()
+
+        session = MockSession.getDefault()
+        every { sessionProvider.getSession(any()) } returns session
+
         apiFactory =
-            ApiFactory("https://example.com/", client, logger, networkManager, prefs, scope)
+            ApiFactory(
+                "https://example.com/",
+                client,
+                logger,
+                networkManager,
+                prefs,
+                sessionProvider,
+                sessionListener,
+                scope
+            )
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
 
         isNetworkAvailable = true
@@ -119,7 +155,8 @@ internal class HumanVerificationTests {
             webServer.url("/").toString(),
             client,
             logger,
-            user,
+            session.sessionId,
+            sessionProvider,
             apiFactory.baseOkHttpClient,
             listOf(
                 ScalarsConverterFactory.create(),
@@ -141,10 +178,6 @@ internal class HumanVerificationTests {
             422,
             humanVerificationResponse
         )
-        every { user.humanVerificationHandler } returns null
-        every { user.sessionUid } returns "uId"
-        every { user.accessToken } returns "accessToken"
-        every { user.refreshToken } returns "refreshToken"
 
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Http)
@@ -163,10 +196,6 @@ internal class HumanVerificationTests {
             422,
             otherDetailsResponse
         )
-        every { user.humanVerificationHandler } returns null
-        every { user.sessionUid } returns "uId"
-        every { user.accessToken } returns "accessToken"
-        every { user.refreshToken } returns "refreshToken"
 
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Http)
@@ -182,15 +211,16 @@ internal class HumanVerificationTests {
             422,
             humanVerificationResponse
         )
-        val humanVerificationHeaders = spyk(HumanVerificationHeaders(
-            "captcha",
-            "captcha token"
-        ))
-        every { user.humanVerificationHandler } returns humanVerificationHeaders
-        every { user.sessionUid } returns "uId"
-        every { user.accessToken } returns "accessToken"
-        every { user.refreshToken } returns "refreshToken"
+        val humanVerificationHeaders = spyk(
+            HumanVerificationHeaders(
+                "captcha",
+                "captcha token"
+            )
+        )
 
+        every { sessionProvider.getSession(any()) } returns MockSession.getWithHeader(
+            humanVerificationHeaders
+        )
 
         backend(ApiManager.Call(0) { test() })
         val headers = webServer.takeRequest().headers

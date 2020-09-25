@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 package me.proton.core.network.domain
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import kotlin.Exception
 
 /**
  * Result of the safe API call.
@@ -43,7 +43,7 @@ sealed class ApiResult<out T> {
      * Base class for error result.
      * @param cause [Exception] exception that caused this error for debugging purposes.
      */
-    sealed class Error(val cause: Exception?) : ApiResult<Nothing>() {
+    sealed class Error(val cause: Throwable?) : ApiResult<Nothing>() {
 
         /**
          * HTTP error.
@@ -56,7 +56,7 @@ sealed class ApiResult<out T> {
             val httpCode: Int,
             val message: String,
             val proton: ProtonData? = null,
-            cause: Exception? = null
+            cause: Throwable? = null
         ) : Error(cause) {
 
             override fun toString() =
@@ -70,14 +70,14 @@ sealed class ApiResult<out T> {
         /**
          * Parsing error. Should not normally happen.
          */
-        class Parse(cause: Exception?) : Error(cause)
+        class Parse(cause: Throwable?) : Error(cause)
 
         /**
          * Base class for connection errors (no response available)
          *
          * @property potentialBlock [true] if our API might have been blocked.
          */
-        open class Connection(val potentialBlock: Boolean, cause: Exception? = null) : Error(cause) {
+        open class Connection(val potentialBlock: Boolean, cause: Throwable? = null) : Error(cause) {
             override val isPotentialBlocking get() = potentialBlock
         }
 
@@ -86,12 +86,12 @@ sealed class ApiResult<out T> {
          *
          * @param potentialBlock [true] if our API might have been blocked.
          */
-        class Timeout(potentialBlock: Boolean, cause: Exception? = null) : Connection(potentialBlock, cause)
+        class Timeout(potentialBlock: Boolean, cause: Throwable? = null) : Connection(potentialBlock, cause)
 
         /**
          * Certificate verification failed.
          */
-        class Certificate(cause: Exception) : Connection(true, cause)
+        class Certificate(cause: Throwable) : Connection(true, cause)
 
         /**
          * No connectivity.
@@ -114,9 +114,29 @@ sealed class ApiResult<out T> {
     open val valueOrNull: T? get() = null
 
     /**
+     * Value for successful calls or throw wrapped error if exist.
+     */
+    val valueOrThrow: T get() {
+        throwIfError()
+        return checkNotNull(valueOrNull)
+    }
+
+    /**
+     * Returns the encapsulated [Throwable] exception if this instance is [Error] or `null` otherwise.
+     */
+    val exceptionOrNull: Throwable? get() = if (this is Error) cause else null
+
+    /**
      * [true] for failed calls potentially caused by blocking.
      */
     open val isPotentialBlocking: Boolean get() = false
+
+    /**
+     * Throws exception if this instance is [Error].
+     */
+    fun throwIfError() {
+        if (this is Error) doThrow()
+    }
 
     companion object {
 
@@ -133,4 +153,11 @@ sealed class ApiResult<out T> {
 
         const val HTTP_TOO_MANY_REQUESTS = 429
     }
+}
+
+fun ApiResult.Error.doThrow(): Nothing {
+    if (cause == null)
+        throw RuntimeException(this::class.java.simpleName)
+    else
+        throw cause
 }
