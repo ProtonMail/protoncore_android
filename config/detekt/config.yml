@@ -214,7 +214,7 @@ exceptions:
      - NumberFormatException
      - ParseException
      - MalformedURLException
-     allowedExceptionNameRegex: '_|(ignore|expected).*'
+    allowedExceptionNameRegex: '_|(ignore|expected).*'
   ThrowingExceptionFromFinally:
     active: true
   ThrowingExceptionInMain:
