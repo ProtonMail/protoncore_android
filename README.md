@@ -96,7 +96,7 @@ Util Android Work Manager: **0.1.1** - _released on: Sep 14, 2020_
 
 Util Kotlin: **0.1.6** - _released on: Aug 31, 2020_
 
-Util Gradle: **0.1.11** - _released on: Aug 21, 2020_
+Util Gradle: **0.2.0** - _released on: Oct 07, 2020_
 
 ### Test
 

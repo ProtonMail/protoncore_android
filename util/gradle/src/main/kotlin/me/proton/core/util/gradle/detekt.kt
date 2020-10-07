@@ -60,7 +60,8 @@ fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
     val detektReportsDir = File(rootDir, reportsDirPath)
     val configFile = File(rootDir, configFilePath)
 
-    downloadDetektConfig(configFilePath, configFile)
+    if (rootProject.name != "Proton Core")
+        downloadDetektConfig(configFilePath, configFile)
 
     if (!configFile.exists()) {
         println("Detekt configuration file not found!")
