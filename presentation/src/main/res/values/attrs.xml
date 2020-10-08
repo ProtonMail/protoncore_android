@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -23,20 +22,38 @@
         <!-- Whether the loading state must be set on click. Default is true -->
         <attr name="autoLoading" format="boolean" />
         <attr name="initialState" format="enum">
-            <enum name="idle" value="0"/>
-            <enum name="loading" value="1"/>
+            <enum name="idle" value="0" />
+            <enum name="loading" value="1" />
         </attr>
         <!-- This must be an animated drawable -->
         <attr name="progressDrawable" format="reference" />
     </declare-styleable>
 
-
     <declare-styleable name="ProtonInput">
-        <attr name="label" format="string" />
-        <attr name="assistiveText" format="string" />
         <attr name="android:text" />
-        <attr name="android:hint" format="string" />
+        <attr name="android:hint" />
         <attr name="android:inputType" />
         <attr name="android:enabled" />
+        <attr name="label" format="string" />
+        <attr name="help" format="string" />
+        <attr name="suffix" format="string" />
+        <attr name="prefix" format="string" />
+        <attr name="actionMode" format="enum">
+            <enum name="none" value="0" />
+            <enum name="clear_text" value="1" />
+            <enum name="password_toggle" value="2" />
+        </attr>
     </declare-styleable>
+
+    <declare-styleable name="ProtonAutoCompleteInput">
+        <attr name="android:text" />
+        <attr name="android:hint" />
+        <attr name="android:inputType" />
+        <attr name="android:enabled" />
+        <attr name="label" />
+        <attr name="help" />
+        <attr name="suffix" />
+        <attr name="prefix" />
+    </declare-styleable>
+
 </resources>

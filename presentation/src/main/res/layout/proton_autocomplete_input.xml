@@ -33,27 +33,22 @@
         android:layout_marginBottom="@dimen/input_padding"
         android:visibility="gone"
         tools:text="Input Header"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayout"
-        style="@style/ProtonInput.TextInputLayout.Border"
+        style="@style/ProtonInput.TextInputLayout.Border.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        app:hintEnabled="false"
-        tools:endIconDrawable="@drawable/ic_clear"
-        tools:endIconMode="clear_text"
-        tools:helperText="Optional help text"
-        tools:suffixText="\@protonmail.com">
+        app:hintEnabled="false">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <AutoCompleteTextView
             android:id="@+id/input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
+            android:layout_height="match_parent"
+            android:inputType="none"
             android:textColor="@color/selector_input_color"
-            tools:text="firstname.lastname" />
+            tools:text="+41" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -51,12 +51,5 @@ class CustomViewsActivity : ProtonActivity<ActivityCustomViewsBinding>() {
 
         binding.inputExample.inputType = InputType.TYPE_CLASS_PHONE
         binding.errorExample.setInputError("Error in your text")
-        // just an example to remove the error UI after some delay
-        lifecycleScope.launchWhenCreated {
-            delay(DELAY)
-            binding.errorExample.removeInputError()
-        }
     }
 }
-
-private const val DELAY = 5000L

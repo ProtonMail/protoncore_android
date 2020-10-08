@@ -30,8 +30,8 @@ inline fun ProtonInput.validate(
     onValidationFailed: () -> Unit,
     onValidationSuccess: (String) -> Unit
 ) =
-    if (inputText == null || inputText.toString().isBlank()) {
+    if (text == null || text.toString().isBlank()) {
         onValidationFailed()
     } else {
-        onValidationSuccess(inputText.toString())
+        onValidationSuccess(text.toString())
     }

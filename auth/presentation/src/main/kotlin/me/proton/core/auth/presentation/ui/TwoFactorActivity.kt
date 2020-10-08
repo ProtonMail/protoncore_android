@@ -55,9 +55,9 @@ class TwoFactorActivity : ProtonAuthActivity<Activity2faBinding>() {
      */
     private fun Activity2faBinding.switchToRecovery() {
         mode = Mode.RECOVERY_CODE
-        twoFactorInput.inputText = ""
-        twoFactorInput.inputAssistiveText = getString(R.string.auth_2fa_recovery_code_assistive_text)
-        twoFactorInput.inputLabel = getString(R.string.auth_2fa_recovery_code_label)
+        twoFactorInput.text = ""
+        twoFactorInput.helpText = getString(R.string.auth_2fa_recovery_code_assistive_text)
+        twoFactorInput.labelText = getString(R.string.auth_2fa_recovery_code_label)
         twoFactorInput.inputType = InputType.TYPE_CLASS_TEXT
         recoveryCodeButton.text = getString(R.string.auth_2fa_use_2fa_code)
     }
@@ -67,9 +67,9 @@ class TwoFactorActivity : ProtonAuthActivity<Activity2faBinding>() {
      */
     private fun Activity2faBinding.switchToTwoFactor() {
         mode = Mode.TWO_FACTOR
-        twoFactorInput.inputText = ""
-        twoFactorInput.inputAssistiveText = getString(R.string.auth_2fa_assistive_text)
-        twoFactorInput.inputLabel = getString(R.string.auth_2fa_label)
+        twoFactorInput.text = ""
+        twoFactorInput.helpText = getString(R.string.auth_2fa_assistive_text)
+        twoFactorInput.labelText = getString(R.string.auth_2fa_label)
         twoFactorInput.inputType = InputType.TYPE_CLASS_NUMBER
         recoveryCodeButton.text = getString(R.string.auth_2fa_use_recovery_code)
     }

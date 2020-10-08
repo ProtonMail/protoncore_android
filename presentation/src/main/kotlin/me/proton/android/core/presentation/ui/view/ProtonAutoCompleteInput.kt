@@ -22,29 +22,20 @@ import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.Filterable
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
+import android.widget.ListAdapter
 import androidx.core.content.withStyledAttributes
-import androidx.core.widget.addTextChangedListener
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import me.proton.android.core.presentation.R
-import me.proton.android.core.presentation.databinding.ProtonInputBinding
+import me.proton.android.core.presentation.databinding.ProtonAutocompleteInputBinding
 import me.proton.android.core.presentation.ui.isInputTypePassword
 import me.proton.android.core.presentation.ui.setTextOrGoneIfNull
 
 /**
- * Custom Proton input (advanced complex [EditText]) view.
- *
- * Includes an [TextInputEditText], additionally it includes a Label above the input view and an optional help
- * text located below the input view.
- *
- * The help text can also act as a validation error message (through [setInputError]).
- *
- * ProtonInput supports displaying error according to the latest Proton Android design guidelines, so, the client
- * does not need to worry about.
+ * Custom Proton AutoComplete Input (base on a [TextInputLayout] containing a [AutoCompleteTextView]).
  */
-class ProtonInput : LinearLayout {
+// See https://material.io/develop/android/components/text-fields ("Implementing an exposed dropdown menu").
+open class ProtonAutoCompleteInput : LinearLayout {
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -71,26 +62,20 @@ class ProtonInput : LinearLayout {
         init(context, attrs)
     }
 
-    private val binding = ProtonInputBinding.inflate(LayoutInflater.from(context), this)
+    private val binding = ProtonAutocompleteInputBinding.inflate(LayoutInflater.from(context), this)
 
     private fun init(context: Context, attrs: AttributeSet? = null) {
         orientation = VERTICAL
 
-        context.withStyledAttributes(attrs, R.styleable.ProtonInput) {
-            text = getString(R.styleable.ProtonInput_android_text)
-            labelText = getString(R.styleable.ProtonInput_label)
-            hintText = getString(R.styleable.ProtonInput_android_hint)
-            helpText = getString(R.styleable.ProtonInput_help)
-            prefixText = getString(R.styleable.ProtonInput_prefix)
-            suffixText = getString(R.styleable.ProtonInput_suffix)
-            inputType = getInteger(R.styleable.ProtonInput_android_inputType, InputType.TYPE_CLASS_TEXT)
-            isEnabled = getBoolean(R.styleable.ProtonInput_android_enabled, true)
-            setActionMode(getInt(R.styleable.ProtonInput_actionMode, 0))
-        }
-
-        // Clear error on text changed.
-        binding.input.addTextChangedListener { editable ->
-            if (editable?.isNotEmpty() == true) clearInputError()
+        context.withStyledAttributes(attrs, R.styleable.ProtonAutoCompleteInput) {
+            text = getString(R.styleable.ProtonAutoCompleteInput_android_text) ?: ""
+            labelText = getString(R.styleable.ProtonAutoCompleteInput_label)
+            hintText = getString(R.styleable.ProtonAutoCompleteInput_android_hint) ?: ""
+            helpText = getString(R.styleable.ProtonAutoCompleteInput_help)
+            prefixText = getString(R.styleable.ProtonAutoCompleteInput_prefix)
+            suffixText = getString(R.styleable.ProtonAutoCompleteInput_suffix)
+            inputType = getInteger(R.styleable.ProtonAutoCompleteInput_android_inputType, InputType.TYPE_CLASS_TEXT)
+            isEnabled = getBoolean(R.styleable.ProtonAutoCompleteInput_android_enabled, true)
         }
     }
 
@@ -114,7 +99,7 @@ class ProtonInput : LinearLayout {
         }
 
     /**
-     * The input [EditText] hint value.
+     * The input [EditText] hint value
      */
     var hintText: CharSequence?
         get() = binding.input.hint
@@ -185,48 +170,17 @@ class ProtonInput : LinearLayout {
     override fun isEnabled(): Boolean = binding.inputLayout.isEnabled
 
     /**
-     * Set the error UI layout to the ProtonInput view.
-     *
-     * Not only the [EditText] but also if visible the label and the help text.
-     *
-     * @param error error message to show. If [String.isNullOrEmpty], helpText is taken instead.
+     * Set the adapter for the underlining [AutoCompleteTextView].
      */
-    fun setInputError(error: String? = null) {
-        binding.inputLayout.error = error ?: helpText ?: " "
-        binding.inputLayout.errorIconDrawable = null
-        binding.label.setTextColor(ContextCompat.getColor(context, R.color.signal_error))
+    fun <T> setAdapter(adapter: T) where T : ListAdapter, T : Filterable {
+        binding.input.setAdapter(adapter)
     }
 
-    /**
-     * Clear the error UI layout of the ProtonInput view.
-     */
-    fun clearInputError() {
-        binding.inputLayout.error = null
-        binding.label.setTextColor(ContextCompat.getColor(context, R.color.color_title))
-    }
-
-    /**
-     * Set the action mode for the end icon.
-     */
-    fun setActionMode(mode: Int) {
-        // See ProtonInput attributes (attrs.xml).
-        when (mode) {
-            // None
-            0 -> {
-                binding.inputLayout.endIconMode = TextInputLayout.END_ICON_NONE
-                binding.inputLayout.setEndIconActivated(false)
-            }
-            // Clear Text
-            1 -> {
-                binding.inputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
-                binding.inputLayout.setEndIconActivated(true)
-            }
-            // PasswordToggle
-            2 -> {
-                binding.inputLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
-                binding.inputLayout.setEndIconActivated(true)
-            }
-        }
+    override fun setOnClickListener(listener: OnClickListener) {
+        binding.inputLayout.setOnClickListener(listener)
+        binding.inputLayout.setEndIconOnClickListener(listener)
+        binding.input.setOnClickListener(listener)
+        binding.label.setOnClickListener(listener)
     }
     // endregion
 }
