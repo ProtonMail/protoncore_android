@@ -16,27 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    `kotlin-dsl`
+package me.proton.core.util.gradle
+
+import org.gradle.api.Project
+
+/**
+ * @return [List] of [Project] where the first item is the Root Project and the last on is the receiver one
+ * @author Davide Farella
+ */
+@OptIn(ExperimentalStdlibApi::class)
+fun Project.hierarchy() = buildList {
+    var current: Project? = this@hierarchy
+    while (current != null) {
+        add(0, current)
+        current = current.parent
+    }
 }
-
-repositories {
-    google()
-    jcenter()
-    maven("https://dl.bintray.com/proton/Core-publishing")
-}
-
-dependencies {
-    val android =       "4.0.0"         // Released: May 28, 2020
-    val dokka =         "0.10.0"        // Released: Oct 07, 2019
-    val easyGradle =    "1.5-beta-10"   // Released: Jun 14, 2020
-
-    // Needed for setup Android config
-    implementation("com.android.tools.build:gradle:$android")
-    // Needed for setup KDoc generation for publishing
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:$dokka")
-    // Set of utils for Gradle
-    implementation("studio.forface.easygradle:dsl-android:$easyGradle")
-}
-
-kotlinDslPluginOptions.jvmTarget.set("1.8")

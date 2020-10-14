@@ -16,27 +16,41 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import org.gradle.kotlin.dsl.implementation
+import studio.forface.easygradle.dsl.Version
+
 plugins {
     `kotlin-dsl`
+    kotlin("jvm")
+    `java-gradle-plugin`
+}
+
+val plugin = PluginConfig(
+    name = "Detekt",
+    version = Version(0, 1)
+)
+pluginConfig = plugin
+
+group = plugin.group
+version = plugin.version
+
+gradlePlugin {
+    plugins {
+        create(plugin.id) {
+            id = plugin.id
+            implementationClass = "ProtonDetektPlugin"
+            version = plugin.version
+        }
+    }
 }
 
 repositories {
     google()
     jcenter()
-    maven("https://dl.bintray.com/proton/Core-publishing")
 }
 
 dependencies {
-    val android =       "4.0.0"         // Released: May 28, 2020
-    val dokka =         "0.10.0"        // Released: Oct 07, 2019
-    val easyGradle =    "1.5-beta-10"   // Released: Jun 14, 2020
-
-    // Needed for setup Android config
-    implementation("com.android.tools.build:gradle:$android")
-    // Needed for setup KDoc generation for publishing
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:$dokka")
-    // Set of utils for Gradle
-    implementation("studio.forface.easygradle:dsl-android:$easyGradle")
+    implementation(gradleApi())
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.14.1")
+    implementation("studio.forface.easygradle:dsl:2.1")
 }
-
-kotlinDslPluginOptions.jvmTarget.set("1.8")

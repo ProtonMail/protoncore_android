@@ -16,18 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import me.proton.core.util.gradle.*
-import setup.setupPublishing
-import setup.setupTests
-
 /**
  * Registered tasks:
- * * `allTest`
- * * `detekt`
+ * * `allTest` ( 'me.proton.tests' plugin )
+ * * `detekt` ( 'me.proton.detekt' plugin )
+ * * `multiModuleDetekt` ( 'me.proton.detekt' plugin )
+ * * `publishAll` ( 'me.proton.publish-libraries' plugin )
  * * `dokka`
- * * `multiModuleDetekt` [setupDetekt]
- * * `publishAll` [setupPublishing]
  */
+
+plugins {
+    id("core")
+    id("me.proton.detekt")
+    id("me.proton.kotlin")
+    id("me.proton.publish-libraries")
+    id("me.proton.tests")
+}
 
 buildscript {
     initVersions()
@@ -40,7 +44,7 @@ allprojects {
     repositories(repos)
 }
 
-setupKotlin(
+kotlinCompilerArgs(
     "-XXLanguage:+NewInference",
     "-Xuse-experimental=kotlin.Experimental",
     // Enables inline classes
@@ -48,10 +52,7 @@ setupKotlin(
     // Enables experimental Coroutines from coroutines-test artifact, like `runBlockingTest`
     "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
 )
-setupTests()
-setupDetekt()
-setupDokka()
-setupPublishing()
+// setupDokka()
 
 tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)

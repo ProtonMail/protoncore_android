@@ -16,12 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:Suppress("unused")
-
-package me.proton.core.util.gradle
-
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.DefaultTask
+import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
@@ -34,6 +31,13 @@ import studio.forface.easygradle.dsl.*
 import java.io.BufferedWriter
 import java.io.File
 import java.net.URL
+
+abstract class ProtonDetektPlugin : Plugin<Project> {
+
+    override fun apply(target: Project) {
+        target.setupDetekt()
+    }
+}
 
 /**
  * Setup Detekt for whole Project.
@@ -49,7 +53,7 @@ import java.net.URL
  *
  * @author Davide Farella
  */
-fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
+private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 
     `detekt version` = "1.11.2" // Released: Aug 19, 2020
     `detect-code-analysis version` = "0.3.2" // Released:
@@ -107,8 +111,10 @@ fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 }
 
 internal open class MergeDetektReports : DefaultTask() {
-    @InputDirectory lateinit var reportsDir: File
-    @Input var outputName: String = "mergedReport.json"
+    @InputDirectory
+    lateinit var reportsDir: File
+    @Input
+    var outputName: String = "mergedReport.json"
 
     @TaskAction
     fun run() {
@@ -179,3 +185,4 @@ private fun downloadDetektConfig(path: String, to: File) {
         println("Cannot download Detekt configuration: ${t.message}")
     }
 }
+

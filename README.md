@@ -1,17 +1,5 @@
 # Usage
-Add `maven("https://dl.bintray.com/proton/Core-publishing")` in your repositories block in Gradle
-```kotlin
-// <root>/build.gradle.kts
-allprojects{
-    repositories {
-        google()
-        jcenter()
-        maven("https://dl.bintray.com/proton/Core-publishing")
-        // other...
-    }
-}
-```
-then add the desired library as following
+Add the desired library as following
 ```kotlin
 implementation("me.proton.core:<name-of-the-lib>:<version>")
 ```
@@ -30,39 +18,28 @@ implementation("~:network:~")
 while the first one is suitable for multi-module projects, the latter is the suggested solution for monolithic clients.
 
 ## Setup Detekt
-In order to use the all-in-one Detekt configuration, you must have a `buildSrc` module.
-1. create a directory called `buildSrc` in your root
+In order to use the all-in-one Detekt configuration, you have to:
 
-2. create inside a file called `build.gradle.kts` with the following content
+1. Setup Plugin
+    Kotlin Gradle DSL:
     ```kotlin
     plugins {
-        `kotlin-dsl`
-    }
-    
-    repositories {
-        jcenter()
-        maven("https://dl.bintray.com/proton/Core-publishing")
-    }
-    
-    dependencies {
-        implementation("me.proton.core:util-gradle:<latest-version>")
+        id("me.proton.detekt") version protonDetektVersion
     }
     ```
+    Regular Groovy script:
+    ```groovy
+    buildscript {
+      
+        dependencies {
+            classpath("me.proton:detekt:$protonDetektVersion")
+        }
+    }
     
-3. Run a sync
-
-4. Add `import me.proton.core.util.gradle.*` at the top of your `build.gradle.kts` and `setupDetekt()` at the bottom of it.
-
-   If you are not using `kotlin-dsl`, create a file `dsl.gradle.kts` in your root, with the following content
-
-   ```kotlin
-   import me.proton.core.util.gradle.*
-   setupDetekt()
-   ```
-
-   and then `apply from: 'dsl.gradle.kts'` as the bottom of your `build.gradle`
-   
-5. Setup the following stage in your `.gitlab-ci`
+    apply(plugin = "me.proton.detekt")
+    ```
+    
+2. Setup the following stage in your `.gitlab-ci`
 
     ```yaml
     stages:
@@ -86,6 +63,14 @@ In order to use the all-in-one Detekt configuration, you must have a `buildSrc` 
 
 # Last versions
 
+## Plugins
+
+Detekt: **0.1** - _released on: Oct 09, 2020_
+
+Kotlin: **0.1** - _released on: Oct 09, 2020_
+
+Tests: **0.1** - _released on: Oct 09, 2020_
+
 ## Common
 
 ### Utils
@@ -95,8 +80,6 @@ Util Android Shared Preferences: **0.1.2** - _released on: Aug 31, 2020_
 Util Android Work Manager: **0.1.1** - _released on: Sep 14, 2020_
 
 Util Kotlin: **0.1.6** - _released on: Aug 31, 2020_
-
-Util Gradle: **0.2** - _released on: Oct 07, 2020_
 
 ### Test
 

@@ -16,31 +16,36 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package setup
-
+import org.gradle.api.Plugin
 import org.gradle.api.Project
-import studio.forface.easygradle.dsl.*
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+abstract class ProtonKotlinPlugin : Plugin<Project> {
+    override fun apply(target: Project) = Unit
+}
 
 /**
- * Setup Tests for whole Project.
- * It will create a Gradle Task called "allTest" that will invoke "test" for jvm modules and "testDebugUnitTest" for
- * Android ones
+ * Setup Kotlin for whole Project.
+ * It will setup Kotlin compile options to sub-projects
  *
- * @param filter filter [Project.subprojects] to attach Publishing to
+ * @param extraCompilerArgs
  *
  *
  * @author Davide Farella
  */
-fun Project.setupTests(filter: (Project) -> Boolean = { true }) {
+fun Project.kotlinCompilerArgs(vararg extraCompilerArgs: String) {
 
     // Configure sub-projects
-    for (sub in subprojects.filter(filter)) {
-        sub.tasks.register("allTest") {
-            if (isAndroid) dependsOn("testDebugUnitTest")
-            else if (isJvm) dependsOn("test")
+    for (sub in subprojects) {
+
+        // Options for Kotlin
+        sub.tasks.withType<KotlinCompile> {
+            // Ignore IDE errors
+            kotlinOptions {
+                jvmTarget = "1.8"
+                freeCompilerArgs = freeCompilerArgs + extraCompilerArgs
+            }
         }
     }
 }
-
-val Project.isJvm get() =
-    plugins.hasPlugin("java-library")
