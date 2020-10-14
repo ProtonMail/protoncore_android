@@ -22,13 +22,8 @@ config/detekt/reports/
 # Gradle files
 .gradle/
 build/
-gradle
 gradlew
 gradlew.bat
-# Do not exclude our Util Gradle module
-!gradle/plugin/**
-!util/gradle
-!util/gradle/**/gradle
 
 # Local configuration file (sdk path, etc)
 local.properties
