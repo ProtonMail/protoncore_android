@@ -26,7 +26,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-android(Version(0, 1, 1))
+android(Version(0, 2, 0))
 
 dependencies {
 
@@ -38,6 +38,7 @@ dependencies {
         // features
         project(Module.humanVerification),
         project(Module.auth),
+        project(Module.gopenpgp),
         project(Module.domain),
 
         `kotlin-jdk7`,
@@ -50,11 +51,13 @@ dependencies {
         `fragment`,
         `hilt-android`,
         `lifecycle-viewModel`,
+        `lifecycle-extensions`,
         `hilt-androidx-annotations`,
         `hilt-androidx-viewModel`,
         `material`,
         `viewStateStore`,
         `android-work-runtime`,
+        `room-ktx`,
 
         // Other
         `retrofit`,
@@ -69,7 +72,8 @@ dependencies {
     kapt(
         `assistedInject-processor-dagger`,
         `hilt-android-compiler`,
-        `hilt-androidx-compiler`
+        `hilt-androidx-compiler`,
+        `room-compiler`
     )
 
     // Test

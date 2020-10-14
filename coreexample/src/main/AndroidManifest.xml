@@ -38,6 +38,8 @@
         </activity>
         <activity android:name=".ui.CustomViewsActivity"
             android:configChanges="orientation"/>
+        <activity android:name=".ui.LogoutActivity"
+            android:configChanges="orientation"/>
     </application>
 
 </manifest>
