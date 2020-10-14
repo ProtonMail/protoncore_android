@@ -16,14 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.ScriptHandlerScope
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+rootProject.name = "Core Gradle plugins"
 
-val ScriptHandlerScope.classpathDependencies: DependencyHandlerScope.() -> Unit get() = {
-    classpath(`kotlin-gradle-plugin`)
-    classpath(`serialization-gradle-plugin`)
-    classpath(`android-gradle-plugin`)
-    classpath(`hilt-android-gradle-plugin`)
+includeBuild("publish")
+
+include(
+    "detekt",
+    "kotlin",
+    "tests"
+)
+
+enableFeaturePreview("GRADLE_METADATA")
+
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://plugins.gradle.org/m2/")
+    }
 }

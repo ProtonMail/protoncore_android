@@ -16,14 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.ScriptHandlerScope
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+plugins {
+    val kotlinVersion = "1.4.10"
+    val easyGradle = "0.1"
 
-val ScriptHandlerScope.classpathDependencies: DependencyHandlerScope.() -> Unit get() = {
-    classpath(`kotlin-gradle-plugin`)
-    classpath(`serialization-gradle-plugin`)
-    classpath(`android-gradle-plugin`)
-    classpath(`hilt-android-gradle-plugin`)
+    kotlin("jvm") version kotlinVersion
+    id("studio.forface.easygradle") version easyGradle
+}
+
+subprojects {
+    apply<studio.forface.easygradle.dsl.EasyGradlePlugin>()
+}
+
+repositories {
+    mavenCentral()
 }

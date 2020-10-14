@@ -16,14 +16,37 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.ScriptHandlerScope
 import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-val ScriptHandlerScope.classpathDependencies: DependencyHandlerScope.() -> Unit get() = {
-    classpath(`kotlin-gradle-plugin`)
-    classpath(`serialization-gradle-plugin`)
-    classpath(`android-gradle-plugin`)
-    classpath(`hilt-android-gradle-plugin`)
+/**
+ * The list of the developers working on the Projects
+ * @author Davide Farella
+ */
+internal val PublishConfig.applyDevelopers: PublishConfig.DevelopersBuilder.() -> Unit get() = {
+    developers {
+
+        developer {
+            id = "4face"
+            name = "Davide Farella"
+            email = "4face91@protonmail.com"
+        }
+
+        developer {
+            name = "Mateusz Markowicz"
+            email = "poniekad@protonmail.com"
+            id = email
+        }
+
+        developer {
+            name = "Algirdas Pundzius"
+            email = "algirdas.pundzius@protonmail.com"
+            id = email
+        }
+
+        developer {
+            name = "Dino Kadrikj"
+            email = "kadrikj@protonmail.com"
+            id = email
+        }
+    }
 }

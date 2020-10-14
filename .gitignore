@@ -26,6 +26,7 @@ gradle
 gradlew
 gradlew.bat
 # Do not exclude our Util Gradle module
+!gradle/plugin/**
 !util/gradle
 !util/gradle/**/gradle
 
@@ -58,6 +59,7 @@ proguard/
 .idea/**/shelf
 .idea/runConfigurations.xml
 .idea/assetWizardSettings.xml
+.idea/sonarlint/issuestore
 
 # Generated files
 .idea/**/contentModel.xml

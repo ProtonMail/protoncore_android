@@ -16,14 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.ScriptHandlerScope
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
 import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-val ScriptHandlerScope.classpathDependencies: DependencyHandlerScope.() -> Unit get() = {
-    classpath(`kotlin-gradle-plugin`)
-    classpath(`serialization-gradle-plugin`)
-    classpath(`android-gradle-plugin`)
-    classpath(`hilt-android-gradle-plugin`)
-}
+var Project.libVersion
+    get() = if (hasProperty("libVersion")) extra["libVersion"] as? Version else null
+    set(value) { extra["libVersion"] = value }

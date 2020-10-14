@@ -16,14 +16,38 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.ScriptHandlerScope
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+plugins {
+    `kotlin-dsl`
+    kotlin("jvm")
+    `java-gradle-plugin`
+}
 
-val ScriptHandlerScope.classpathDependencies: DependencyHandlerScope.() -> Unit get() = {
-    classpath(`kotlin-gradle-plugin`)
-    classpath(`serialization-gradle-plugin`)
-    classpath(`android-gradle-plugin`)
-    classpath(`hilt-android-gradle-plugin`)
+object Plugin {
+    const val group = "me.proton"
+    const val id = "publish-libraries"
+    const val version = "0.1"
+}
+
+group = Plugin.group
+version = Plugin.version
+
+gradlePlugin {
+    plugins {
+        create("${Plugin.id}Plugin") {
+            id = "${Plugin.group}.${Plugin.id}"
+            implementationClass = "ProtonPublishLibrariesPlugin"
+            version = Plugin.version
+        }
+    }
+}
+
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    implementation(gradleApi())
+    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.4.10")
+    implementation("studio.forface.easygradle:dsl:1.5-beta-10")
 }
