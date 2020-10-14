@@ -16,8 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import com.gradle.publish.PluginBundleExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.named
 import org.jetbrains.dokka.gradle.DokkaTask
 import studio.forface.easygradle.dsl.*
@@ -25,9 +29,10 @@ import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
+abstract class ProtonPublishPluginsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.setupPublishing()
+        target.subprojects { this@ProtonPublishPluginsPlugin.apply(this) }
+        target.setupModule()
     }
 }
 
@@ -51,30 +56,43 @@ fun Project.setupPublishing(filter: (Project) -> Boolean = { true }) {
 private fun Project.setupModule() {
     afterEvaluate {
 
-        val bintrayApiKey = System.getenv()["BINTRAY_PUBLISH_KEY"] ?: " "
-        if (libVersion != null) {
+        val key = extra.properties["gradle.publish.key"] ?: System.getenv()["GRADLE_PORTAL_KEY"]
+        val secret = extra.properties["gradle.publish.secret"] ?: System.getenv()["GRADLE_PORTAL_SECRET"]
+        extra["gradle.publish.key"] = key
+        extra["gradle.publish.secret"] = secret
+
+        if (pluginConfig != null) {
 
             archivesBaseName = archiveName
 
-            // Setup maven publish config
-            publish {
-                version = libVersion!!
-                developers(applyDevelopers)
+            // Setup Gradle publish config
+            apply(plugin = "com.gradle.plugin-publish")
+            configure<PluginBundleExtension> {
+                val url = "https://github.com/ProtonMail/protoncore_android"
+                website = url
+                vcsUrl = url
+                description = "Proton Gradle plugin"
+                tags = listOf(
+                    "Android",
+                    "plugin",
+                    "Proton",
+                    "ProtonTechnologies",
+                    "ProtonMail",
+                    "ProtonVpn",
+                    "ProtonCalendar",
+                    "ProtonDrive"
+                )
 
-                apiKey = bintrayApiKey
-
-                // Temporary solution since files are already published on Bintray.
-                override = true
+                plugins.getByName(pluginConfig!!.id).displayName = pluginConfig!!.name
             }
 
             with(ReleaseManager(this)) {
-                if (bintrayApiKey.isNotBlank()) {
+                if (key != null && secret != null) {
 
                     // Setup pre publish
                     val prePublish = tasks.create("prePublish") {
                         doFirst {
-                            moveArchives("releases")
-                            generateKdocIfNeeded()
+                            // TODO generateKdocIfNeeded()
                             updateReadme()
                             printToNewReleasesFile()
                         }
@@ -84,7 +102,7 @@ private fun Project.setupModule() {
                     tasks.register("publishAll") {
                         dependsOn(prePublish)
                         if (isNewVersion)
-                            dependsOn(tasks.getByName("uploadArchives"))
+                            dependsOn(tasks.getByName("publishPlugins"))
                     }
                 } else {
                     // Force Dokka update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
@@ -102,16 +120,15 @@ private fun Project.setupModule() {
 }
 
 /**
- * This class will organize libraries release.
+ * This class will organize plugins release.
  *
  * It can:
- * * Move jar/aar archives into '/folderName/<libName>'
- * * Generate KDoc if new library is available
+ * * Generate KDoc if new plugin is available
  * * Update readme with new version
  * * Print update to new_releases.tmp
  *
- * @param forceRefresh Generally all the processes are executed only of [Project.libVersion] is different from the one
- *   in the readme. If this parameter is set to `true`, they will run in any case.
+ * @param forceRefresh Generally all the processes are executed only of [Project.pluginConfig] [PluginConfig.version]
+ * is different from the one in the readme. If this parameter is set to `true`, they will run in any case.
  *   Default is `false`
  *
  * @author Davide Farella
@@ -123,49 +140,10 @@ class ReleaseManager internal constructor(
 
     private val prevVersion = README_VERSION_REGEX.find(README_FILE.readText())?.groupValues?.get(1)
         ?: throw IllegalArgumentException("Cannot find version for $name: $README_VERSION_REGEX")
-    private val versionName = libVersion!!.versionName
+    private val versionName = pluginConfig!!.version.versionName
 
     val isNewVersion = forceRefresh || prevVersion != versionName
     private val shouldRefresh = forceRefresh || isNewVersion
-
-    /** Move jar/aar archives into '/[folderName]/<libName>' */
-    fun moveArchives(folderName: String) {
-        // Setup folder
-        val newDir = File(rootDir, folderName + File.separator + name)
-        if (!newDir.exists()) newDir.mkdirs()
-
-        moveJars(into = newDir)
-        moveAars(into = newDir)
-    }
-
-    private fun moveJars(into: File) {
-        JAR_DIRECTORY.listFiles()?.forEach { file ->
-            val newFile = File(into, file.name.replace("-$versionName", ""))
-            // If file is absent
-            if (!newFile.exists()) {
-                file.copyTo(newFile)
-            }
-            // DO NOT DELETE JAR FILE, IT'S REQUIRED BY JetifyTransform
-        }
-    }
-
-    private fun moveAars(into: File) {
-        AAR_DIRECTORY.listFiles()?.forEach { file ->
-            if ("release" in file.name) {
-                val newFile = File(
-                    into,
-                    file.name
-                        .replace("-release", "")
-                        .replace("-$versionName", "")
-                )
-                // If file is absent
-                if (!newFile.exists()) {
-                    file.copyTo(newFile)
-                }
-            }
-            file.delete()
-        }
-    }
 
     /** Generate KDoc if new library is available */
     fun generateKdocIfNeeded() {
@@ -197,12 +175,10 @@ class ReleaseManager internal constructor(
     }
 
     private companion object {
-        val Project.JAR_DIRECTORY get() = File(buildDir, "libs")
-        val Project.AAR_DIRECTORY get() = File(buildDir, "outputs" + File.separator + "aar")
-        val Project.README_FILE get() = File(rootDir, "README.md")
+        val Project.README_FILE get() = File(rootDir.parentFile.parentFile, "README.md")
         val Project.README_VERSION_REGEX get() =
             readmeVersion("^$humanReadableName", "(.+)", "(.+)").toRegex(RegexOption.MULTILINE)
-        val Project.NEW_RELEASES_FILE get() = File(rootDir, "new_releases.tmp")
+        val Project.NEW_RELEASES_FILE get() = File(rootDir.parentFile.parentFile, "new_releases.tmp")
             .also { file ->
                 // 10 min lifetime
                 if (file.lastModified() < System.currentTimeMillis() - 10 * 60 * 1000) file.delete()
@@ -213,4 +189,3 @@ class ReleaseManager internal constructor(
             """$name: \*\*$version\*\* - _released on: ${timestamp}_"""
     }
 }
-

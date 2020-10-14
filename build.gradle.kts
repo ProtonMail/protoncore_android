@@ -24,7 +24,6 @@
  * * `publishAll` ( 'me.proton.publish-libraries' plugin )
  * * `dokka`
  */
-
 plugins {
     id("core")
     id("me.proton.detekt")

@@ -16,14 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    val kotlinVersion = "1.4.10"
-    val publishVersion = "0.4"
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
+import studio.forface.easygradle.dsl.*
+import java.util.Locale
 
-    kotlin("jvm") version kotlinVersion
-    id("me.proton.publish-plugins") version publishVersion
-}
+var Project.pluginConfig
+    get() = if (hasProperty("pluginConfig")) extra["pluginConfig"] as? PluginConfig else null
+    set(value) { extra["pluginConfig"] = value }
 
-repositories {
-    mavenCentral()
+data class PluginConfig(
+    val name: String,
+    val version: Version,
+    val group: String = "me.proton"
+) {
+    val id = "$group.$name".toLowerCase(Locale.US)
 }
