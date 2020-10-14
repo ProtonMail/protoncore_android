@@ -17,7 +17,7 @@
  */
 
 import studio.forface.easygradle.dsl.*
-import util.libVersion
+
 
 plugins {
     `kotlin-library`

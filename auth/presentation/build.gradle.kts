@@ -18,11 +18,11 @@
 
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
-import util.libVersion
+
 
 plugins {
     `android-library`
-    `kotlin-android-extensions`
+    kotlin("android.extensions")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
 }

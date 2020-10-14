@@ -17,7 +17,6 @@
  */
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
-import util.libVersion
 
 plugins {
     `android-library`
