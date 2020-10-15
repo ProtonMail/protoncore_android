@@ -44,10 +44,12 @@ gradlePlugin {
 repositories {
     google()
     jcenter()
+    maven("https://plugins.gradle.org/m2/")
 }
 
 dependencies {
     implementation(gradleApi())
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.4.10")
-    implementation("studio.forface.easygradle:dsl:1.5-beta-10")
+    implementation("studio.forface.easygradle:dsl:2.6")
+    implementation("gradle.plugin.EasyPublish:plugin:0.2.4")
 }

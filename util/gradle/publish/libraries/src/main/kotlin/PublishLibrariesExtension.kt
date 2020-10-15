@@ -17,9 +17,18 @@
  */
 
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.extra
-import studio.forface.easygradle.dsl.*
+import javax.inject.Inject
 
-var Project.libVersion
-    get() = if (hasProperty("libVersion")) extra.properties["libVersion"] as? Version else null
-    set(value) { extra["libVersion"] = value }
+@Suppress("UnnecessaryAbstractClass")
+abstract class PublishLibrariesExtension @Inject constructor (private val project: Project) {
+
+    var libVersion
+        get() = project.libVersion
+        set(value) {
+            project.libVersion = value
+        }
+
+    companion object {
+        const val NAME = "libVersion"
+    }
+}

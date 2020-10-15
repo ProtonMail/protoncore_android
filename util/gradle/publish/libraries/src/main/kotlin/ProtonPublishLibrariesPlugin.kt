@@ -18,37 +18,36 @@
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.named
 import org.jetbrains.dokka.gradle.DokkaTask
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.publish.publish
+import studio.forface.easygradle.publish.version
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
-abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        target.setupPublishing()
-    }
-}
-
 
 /**
  * Setup Publishing for whole Project.
  * It will setup publishing to sub-projects by generating KDoc, generating aar, updating readme and publish new versions
  * to Bintray
  *
- * @param filter filter [Project.subprojects] to attach Publishing to
- *
- *
  * @author Davide Farella
  */
-fun Project.setupPublishing(filter: (Project) -> Boolean = { true }) {
+abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
-    // Configure sub-projects
-    for (sub in subprojects.filter(filter)) sub.setupModule()
+    override fun apply(target: Project) {
+        target.extensions.create(PublishLibrariesExtension.NAME, PublishLibrariesExtension::class.java, target)
+        target.setupPublishing()
+
+        target.subprojects {
+            apply<ProtonPublishLibrariesPlugin>()
+        }
+    }
 }
 
-private fun Project.setupModule() {
+private fun Project.setupPublishing() {
     afterEvaluate {
 
         val bintrayApiKey = System.getenv()["BINTRAY_PUBLISH_KEY"] ?: " "
