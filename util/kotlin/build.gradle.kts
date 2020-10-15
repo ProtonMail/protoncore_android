@@ -20,11 +20,12 @@ import studio.forface.easygradle.dsl.*
 
 
 plugins {
-    `kotlin-library`
-    `kotlin-serialization`
+    `java-library`
+    kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 1, 6)
+libVersion = Version(0, 1, 7)
 
 dependencies {
 

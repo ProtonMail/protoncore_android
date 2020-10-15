@@ -20,7 +20,8 @@ import studio.forface.easygradle.dsl.*
 
 
 plugins {
-    `kotlin-library`
+    `java-library`
+    kotlin("jvm")
 }
 
 libVersion = Version(0, 1, 1)

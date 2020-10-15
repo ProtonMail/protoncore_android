@@ -19,8 +19,9 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    `android-library`
-    `kotlin-serialization`
+    id("com.android.library")
+    kotlin("android")
+    kotlin("plugin.serialization")
 }
 
 //libVersion = Version(0, 1, 0)

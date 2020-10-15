@@ -20,7 +20,8 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    `android-application`
+    id("com.android.application")
+    kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
 }

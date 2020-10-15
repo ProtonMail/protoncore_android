@@ -21,13 +21,14 @@ import studio.forface.easygradle.dsl.android.*
 
 
 plugins {
-    `android-library`
+    id("com.android.library")
+    kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
 }
 
-//libVersion = Version(0, 1, 0)
+// libVersion = Version(0, 1, 0)
 
 android()
 

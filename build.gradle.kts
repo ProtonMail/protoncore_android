@@ -30,17 +30,23 @@ plugins {
     id("me.proton.kotlin")
     id("me.proton.publish-libraries")
     id("me.proton.tests")
+
+    val kotlinVersion = "1.4.10" // Sep 09, 2020
+
+    kotlin("jvm") version kotlinVersion apply false
+    kotlin("plugin.serialization") version kotlinVersion apply false
 }
 
 buildscript {
-    initVersions()
+    repositories.google()
 
-    repositories(repos)
-    dependencies(classpathDependencies)
-}
+    dependencies {
+        val agpVersion = "4.2.0-alpha13"
+        val hiltVersion = "2.29.1-alpha" // Sep 10, 2020
 
-allprojects {
-    repositories(repos)
+        classpath("com.android.tools.build:gradle:$agpVersion")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
+    }
 }
 
 kotlinCompilerArgs(
