@@ -23,6 +23,7 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.named
+import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
 import studio.forface.easygradle.dsl.*
 import java.io.File
@@ -62,6 +63,7 @@ private fun Project.setupModule() {
         extra["gradle.publish.secret"] = secret
 
         if (pluginConfig != null) {
+            apply<DokkaPlugin>()
 
             archivesBaseName = archiveName
 
@@ -92,7 +94,7 @@ private fun Project.setupModule() {
                     // Setup pre publish
                     val prePublish = tasks.create("prePublish") {
                         doFirst {
-                            // TODO generateKdocIfNeeded()
+                            generateKdocIfNeeded()
                             updateReadme()
                             printToNewReleasesFile()
                         }

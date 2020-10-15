@@ -18,7 +18,7 @@
 
 plugins {
     val kotlinVersion = "1.4.10"
-    val publishVersion = "0.4"
+    val publishVersion = "0.7"
 
     kotlin("jvm") version kotlinVersion
     id("me.proton.publish-plugins") version publishVersion

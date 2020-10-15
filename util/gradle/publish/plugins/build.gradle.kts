@@ -26,7 +26,7 @@ plugins {
 object Plugin {
     const val group = "me.proton"
     const val name = "Publish-Plugins"
-    const val version = "0.4"
+    const val version = "0.7"
     val id = "$group.$name".toLowerCase()
 }
 

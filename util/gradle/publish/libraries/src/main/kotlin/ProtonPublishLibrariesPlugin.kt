@@ -20,6 +20,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.named
+import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.publish.publish
@@ -52,6 +53,7 @@ private fun Project.setupPublishing() {
 
         val bintrayApiKey = System.getenv()["BINTRAY_PUBLISH_KEY"] ?: " "
         if (libVersion != null) {
+            apply<DokkaPlugin>()
 
             archivesBaseName = archiveName
 

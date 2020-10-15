@@ -57,7 +57,6 @@ kotlinCompilerArgs(
     "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
     "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
 )
-// setupDokka()
 
 tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)

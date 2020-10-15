@@ -50,6 +50,6 @@ repositories {
 dependencies {
     implementation(gradleApi())
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.4.10")
-    implementation("studio.forface.easygradle:dsl:2.6")
+    implementation("studio.forface.easygradle:dsl:2.7")
     implementation("gradle.plugin.EasyPublish:plugin:0.2.4")
 }
