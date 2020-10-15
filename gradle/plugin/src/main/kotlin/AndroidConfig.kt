@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import com.android.build.gradle.TestedExtension
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.configure
@@ -11,6 +29,7 @@ private val testVersion = Version(0, 0, 0)
  * Dsl for apply the android configuration to a library or application module
  * @author Davide Farella
  */
+@Suppress("UnstableApiUsage")
 fun org.gradle.api.Project.android(
 
     version: Version = testVersion,
@@ -49,7 +68,8 @@ fun org.gradle.api.Project.android(
     }
 
     buildFeatures.viewBinding = true
-    buildFeatures.dataBinding = true
+    // buildFeatures.dataBinding = true
+    dataBinding.isEnabled = true
 
     // Add support for `src/x/kotlin` instead of `src/x/java` only
     sourceSets {

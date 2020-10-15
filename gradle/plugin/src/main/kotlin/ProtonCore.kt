@@ -16,27 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    `kotlin-dsl`
+import org.gradle.api.JavaVersion
+
+/**
+ * An object containing params for the Project
+ * @author Davide Farella
+ */
+object ProtonCore {
+
+    /** The Android API level as target of the App */
+    const val targetSdk = 28
+    /** The Android API level required for run the App */
+    const val minSdk = 21
+    /** The version of the JDK  */
+    val jdkVersion = JavaVersion.VERSION_1_8
 }
-
-repositories {
-    google()
-    jcenter()
-    maven("https://dl.bintray.com/proton/Core-publishing")
-}
-
-dependencies {
-    val android =       "4.0.0"         // Released: May 28, 2020
-    val dokka =         "0.10.0"        // Released: Oct 07, 2019
-    val easyGradle =    "1.5-beta-10"   // Released: Jun 14, 2020
-
-    // Needed for setup Android config
-    implementation("com.android.tools.build:gradle:$android")
-    // Needed for setup KDoc generation for publishing
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:$dokka")
-    // Set of utils for Gradle
-    implementation("studio.forface.easygradle:dsl-android:$easyGradle")
-}
-
-kotlinDslPluginOptions.jvmTarget.set("1.8")

@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
@@ -15,13 +33,6 @@ val DependencyHandler.`lint-core` get() = lint()
 val DependencyHandler.`lint-api` get() = lint("api")
 val DependencyHandler.`lint-checks` get() = lint("checks")
 val DependencyHandler.`lint-tests` get() = lint("tests")
-
-// Gradle
-val DependencyHandler.`easyGradle-android` get() = forface("easygradle", "dsl") version `easyGradle version`
-
-// Plugins
-val DependencyHandler.`detekt-gradle-plugin` get() = detekt("gradle-plugin")
-val DependencyHandler.`dokka-gradle-plugin` get() = jetbrains("dokka", moduleSuffix = "gradle-plugin") version `dokka-plugin version`
 
 // region accessors
 fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =

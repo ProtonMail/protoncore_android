@@ -16,14 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.ScriptHandlerScope
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.maven
+import org.gradle.kotlin.dsl.repositories
 
-val ScriptHandlerScope.classpathDependencies: DependencyHandlerScope.() -> Unit get() = {
-    classpath(`kotlin-gradle-plugin`)
-    classpath(`serialization-gradle-plugin`)
-    classpath(`android-gradle-plugin`)
-    classpath(`hilt-android-gradle-plugin`)
+internal fun Project.applyRepositories() {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven("https://kotlin.bintray.com/kotlinx")
+        maven("https://dl.bintray.com/proton/Core-publishing")
+    }
 }

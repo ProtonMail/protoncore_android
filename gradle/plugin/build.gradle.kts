@@ -19,7 +19,7 @@
 plugins {
     `kotlin-dsl`
     kotlin("jvm") version "1.4.10"
-    id("java-gradle-plugin")
+    `java-gradle-plugin`
 }
 
 group = "me.proton"
@@ -40,10 +40,10 @@ repositories {
 }
 
 dependencies {
-    val easyGradle = "2.1" // Aug 08, 2020
+    val easyGradle = "2.6" // Oct 15, 2020
     val agpVersion = "4.2.0-alpha13" // Oct 01, 2020
 
     implementation(gradleApi())
-    api("studio.forface.easygradle:dsl:$easyGradle")
     compileOnly("com.android.tools.build:gradle:$agpVersion")
+    api("studio.forface.easygradle:dsl-android:$easyGradle")
 }
