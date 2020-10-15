@@ -28,11 +28,13 @@ val DependencyHandler.`trustKit` get() = dependency("com.datatheorem.android.tru
 
 // Other
 val DependencyHandler.`apacheCommon-codec` get() = dependency("commons-codec", module = "commons-codec") version `apacheCommon-codec version`
-val DependencyHandler.`okHttp-logging` get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp version`
+val DependencyHandler.`bcrypt` get() = dependency("at.favre.lib", module = "bcrypt") version `bcrypt version`
+val DependencyHandler.`googleTink` get() = google("crypto.tink", module = "tink-android") version `googleTink version`
 val DependencyHandler.`lint-core` get() = lint()
 val DependencyHandler.`lint-api` get() = lint("api")
 val DependencyHandler.`lint-checks` get() = lint("checks")
 val DependencyHandler.`lint-tests` get() = lint("tests")
+val DependencyHandler.`okHttp-logging` get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp version`
 
 // region accessors
 fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =

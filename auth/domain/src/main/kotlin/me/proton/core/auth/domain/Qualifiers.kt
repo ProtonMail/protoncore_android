@@ -16,23 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.auth.domain
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-}
+import javax.inject.Qualifier
 
-libVersion = Version(0, 2, 1)
-
-dependencies {
-
-    implementation(
-        `kotlin-jdk7`,
-        `coroutines-core`,
-        `serialization-json`
-    )
-
-    testImplementation(project(Module.kotlinTest))
-}
+/**
+ * Hilt Qualifier annotation for ClientSecret value providing.
+ * @author Dino Kadrikj.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ClientSecret

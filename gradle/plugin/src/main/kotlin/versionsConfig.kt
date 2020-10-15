@@ -40,6 +40,7 @@ internal fun initVersions() {
     `material version` =                        "1.2.1"         // Released: Sep 03, 2020
     `android-paging version` =                  "3.0.0-alpha02" // Released: Jun 24, 2020
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
+    `android-room version` =                    "2.2.5"         // Released: Mar 18, 2020
 
     `android-test version` =                    "1.2.0"         // Released: May 31, 2019
     `robolectric version` =                     "4.4"           // Released: Aug 24, 2020
@@ -65,7 +66,11 @@ const val `androidUi version` =             "0.1.0-dev08"   // Released: Apr 03,
 
 // region Other
 const val `apacheCommon-codec version` =    "1.14"          // Released: Dec 31, 2019
+const val `bcrypt version` =                "0.9.0"         // Released: Oct, 2019
+const val `googleTink version` =            "1.4.0"         // Released:
 const val `miniDsn version` =               "1.0.0"         // Released: Jul 18, 2020
 const val `okHttp version` =                "4.8.0"         // Released: Jul 11, 2020
 const val `trustKit version` =              "1.1.3"         // Released: Apr 30, 2020
+
+
 // endregion

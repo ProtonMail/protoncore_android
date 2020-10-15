@@ -16,23 +16,28 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.data.arch.db
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-}
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Transaction
+import androidx.room.Update
 
-libVersion = Version(0, 2, 1)
+abstract class BaseDao<in T> {
 
-dependencies {
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertOrIgnore(vararg entities: T)
 
-    implementation(
-        `kotlin-jdk7`,
-        `coroutines-core`,
-        `serialization-json`
-    )
+    @Transaction
+    open suspend fun insertOrUpdate(vararg entities: T) {
+        update(*entities)
+        insertOrIgnore(*entities)
+    }
 
-    testImplementation(project(Module.kotlinTest))
+    @Update
+    abstract suspend fun update(vararg entities: T)
+
+    @Delete
+    abstract suspend fun delete(vararg entities: T)
 }

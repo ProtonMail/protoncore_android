@@ -25,7 +25,6 @@ import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.onClick
-import me.proton.core.auth.presentation.ui.LoginActivity
 import me.proton.core.humanverification.presentation.ui.HumanVerificationActivity
 
 @AndroidEntryPoint
@@ -47,7 +46,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
         binding.login.onClick {
             // TODO: startLoginWorkflow.
-            startActivity(Intent(this, LoginActivity::class.java))
+//            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 }

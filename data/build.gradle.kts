@@ -15,23 +15,30 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     `java-library`
     kotlin("jvm")
-    kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 2, 1)
+libVersion = Version(0, 1, 0)
 
 dependencies {
 
     implementation(
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
+        project(Module.domain),
+        project(Module.kotlinUtil),
+
+        // Kotlin
         `kotlin-jdk7`,
         `coroutines-core`,
-        `serialization-json`
+
+        // Android
+        `room-ktx`
     )
 
     testImplementation(project(Module.kotlinTest))
