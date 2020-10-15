@@ -18,7 +18,7 @@
 
 plugins {
     val kotlinVersion = "1.4.10"
-    val easyGradle = "0.1"
+    val easyGradle = "2.7"
 
     kotlin("jvm") version kotlinVersion
     id("studio.forface.easygradle") version easyGradle

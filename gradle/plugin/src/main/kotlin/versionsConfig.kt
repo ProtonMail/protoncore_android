@@ -22,14 +22,12 @@ import studio.forface.easygradle.dsl.android.*
 internal fun initVersions() {
 
     // region Kotlin
-    `kotlin version` =                          "1.3.72"        // Released: Apr 14, 2020
-    `coroutines version` =                      "1.3.5"         // Released: Mar 17, 2020
-    `serialization version` =                   "0.20.0"        // Released: Mar 04, 2020
+    `kotlin version` =                          "1.4.10"        // Released: Sep 09, 2020
+    `coroutines version` =                      "1.4.0-M1"      // Released: Oct 13, 2020
+    `serialization version` =                   "1.0.0"         // Released: Oct 08, 2020
     // endregion
 
     // region Android
-    `android-gradle-plugin version` =           "4.0.0-beta03"  // Released: Mar 19, 2020
-
     `activity version` =                        "1.2.0-alpha03" // Released: Apr 05, 2020
     `android-annotation version` =              "1.1.0"         // Released: Jun 05, 2019
     `appcompat version` =                       "1.1.0"         // Released: Sep 06, 2019
@@ -44,7 +42,7 @@ internal fun initVersions() {
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
 
     `android-test version` =                    "1.2.0"         // Released: May 31, 2019
-    `robolectric version` =                     "4.3.1"         // Released: Oct 11, 2019
+    `robolectric version` =                     "4.4"           // Released: Aug 24, 2020
     // endregion
 
     // region Others
@@ -54,14 +52,11 @@ internal fun initVersions() {
     `hilt-androidx version` =                   "1.0.0-alpha01" // Released: Jun 12, 2020
     `mockK version` =                           "1.10.0"        // Released: Apr 19, 2020
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
-    `retrofit-kotlin-serialization version` =   "0.4.0"         // Released: Apr 12, 2019
+    `retrofit-kotlin-serialization version` =   "0.8.0"         // Released: Oct 09, 2020
     `timber version` =                          "4.7.1"         // Released:
     `viewStateStore version` =                  "1.4-beta-4"    // Released: Oct 03, 2019
     // endregion
 }
-
-// region Kotlin
-// endregion
 
 // region Android
 const val `android-tools version` =         "26.6.3"        // Updated: Apr 17, 2020
@@ -73,12 +68,4 @@ const val `apacheCommon-codec version` =    "1.14"          // Released: Dec 31,
 const val `miniDsn version` =               "1.0.0"         // Released: Jul 18, 2020
 const val `okHttp version` =                "4.8.0"         // Released: Jul 11, 2020
 const val `trustKit version` =              "1.1.3"         // Released: Apr 30, 2020
-// endregion
-
-// region Gradle
-const val `easyGradle version` =            "1.5-beta-10"   // Released: Jun 27, 2020
-// endregion
-
-// region Plugins
-const val `dokka-plugin version` =          "0.10.1"        // Released: Feb 04, 2020
 // endregion

@@ -30,20 +30,19 @@ plugins {
     id("me.proton.kotlin")
     id("me.proton.publish-libraries")
     id("me.proton.tests")
-
-    val kotlinVersion = "1.4.10" // Sep 09, 2020
-
-    kotlin("jvm") version kotlinVersion apply false
-    kotlin("plugin.serialization") version kotlinVersion apply false
 }
 
 buildscript {
     repositories.google()
 
     dependencies {
+        val kotlinVersion = "1.4.10" // Sep 09, 2020
         val agpVersion = "4.2.0-alpha13"
         val hiltVersion = "2.29.1-alpha" // Sep 10, 2020
 
+        classpath(kotlin("gradle-plugin", kotlinVersion))
+        classpath(kotlin("serialization", kotlinVersion))
+        classpath("org.jetbrains.dokka:dokka-gradle-plugin:$kotlinVersion")
         classpath("com.android.tools.build:gradle:$agpVersion")
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
     }
@@ -55,7 +54,8 @@ kotlinCompilerArgs(
     // Enables inline classes
     "-XXLanguage:+InlineClasses",
     // Enables experimental Coroutines from coroutines-test artifact, like `runBlockingTest`
-    "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+    "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+    "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
 )
 // setupDokka()
 

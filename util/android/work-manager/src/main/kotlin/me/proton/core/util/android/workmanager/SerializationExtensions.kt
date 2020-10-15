@@ -26,7 +26,6 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkInfo
 import androidx.work.workDataOf
 import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationStrategy
 import me.proton.core.util.kotlin.deserializeOrNull
@@ -45,8 +44,7 @@ internal const val SERIALIZED_DATA_KEY = "serialized_data_key"
  * @return [T] deserialized from receiver [WorkInfo.mOutputData]
  *
  * @param T must be a class annotate with [Serializable]
- * @param deserializer optional [DeserializationStrategy] of [T], if no value is passed, the
- *   [ImplicitReflectionSerializer] will be used
+ * @param deserializer optional [DeserializationStrategy] of [T]
  *
  * @throws KotlinNullPointerException if no serialized data in present in [Data]
  */
@@ -58,8 +56,7 @@ inline fun <reified T : Any> WorkInfo.outputData(
  * @return [T] deserialized from receiver [Data]
  *
  * @param T must be a class annotate with [Serializable]
- * @param deserializer optional [DeserializationStrategy] of [T], if no value is passed, the
- *   [ImplicitReflectionSerializer] will be used
+ * @param deserializer optional [DeserializationStrategy] of [T]
  *
  * @throws KotlinNullPointerException if no serialized data in present in [Data]
  */
@@ -78,8 +75,7 @@ inline fun <reified T : Any> Data.deserialize(
  * @return [Data] created by serializing receiver [T]
  *
  * @param T must be a class annotate with [Serializable]
- * @param serializer optional [SerializationStrategy] of [T], if no value is passed, the
- *   [ImplicitReflectionSerializer] will be used
+ * @param serializer optional [SerializationStrategy] of [T]
  */
 inline fun <reified T : Any> T.toWorkData(
     serializer: SerializationStrategy<T>? = null
@@ -89,8 +85,7 @@ inline fun <reified T : Any> T.toWorkData(
  * @return [T] deserialized from [ListenableWorker.getInputData]
  *
  * @param T must be a class annotate with [Serializable]
- * @param deserializer optional [DeserializationStrategy] of [T], if no value is passed, the
- *   [ImplicitReflectionSerializer] will be used
+ * @param deserializer optional [DeserializationStrategy] of [T]
  *
  * @throws KotlinNullPointerException if no serialized data in present in [Data]
  */

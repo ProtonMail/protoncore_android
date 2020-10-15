@@ -1,12 +1,30 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package me.proton.core.util.android.sharedpreferences
 
 import me.proton.core.test.android.mocks.mockSharedPreferences
 import me.proton.core.util.android.sharedpreferences.internal.SerializableTestChild
 import me.proton.core.util.android.sharedpreferences.internal.SerializableTestClass
+import me.proton.core.util.kotlin.startsWith
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
-import me.proton.core.util.kotlin.startsWith
 
 /**
  * Test suite for serializable items within SharedPreferences
@@ -41,14 +59,15 @@ internal class SerializableTest {
     fun `proper message is displayed if given class is not serializable`() {
 
         // GIVEN
-        val ns =
-            NonSerializableTestClass()
+        val ns = NonSerializableTestClass()
 
         // WHEN
         val block = { p["key2"] = ns }
 
         // THEN
         val message = assertFails(block).localizedMessage
-        assert(message startsWith "Can't locate argument-less serializer for class NonSerializableTestClass.")
+        assert(message startsWith "Serializer for class 'NonSerializableTestClass' is not found.") {
+            message
+        }
     }
 }

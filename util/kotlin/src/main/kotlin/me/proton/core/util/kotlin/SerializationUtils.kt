@@ -1,25 +1,35 @@
-@file:Suppress(
-    "EXPERIMENTAL_API_USAGE" // Explicit serializer
-)
-@file:OptIn(ImplicitReflectionSerializer::class)
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
 package me.proton.core.util.kotlin
 
-import kotlinx.serialization.Decoder
 import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.Encoder
-import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.PrimitiveDescriptor
-import kotlinx.serialization.PrimitiveKind
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.Serializer
-import kotlinx.serialization.parse
-import kotlinx.serialization.parseList
-import kotlinx.serialization.parseMap
-import kotlinx.serialization.stringify
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import me.proton.core.util.kotlin.ProtonCoreConfig.defaultJsonStringFormat
 
 /*
@@ -49,7 +59,10 @@ annotation class NeedSerializable
 @NeedSerializable
 inline fun <reified T : Any> String.deserialize(
     deserializer: DeserializationStrategy<T>? = null
-): T = deserializer?.let { Serializer.parse(deserializer, this) } ?: Serializer.parse(this)
+): T =
+    deserializer
+        ?.let { Serializer.decodeFromString(deserializer, this) }
+        ?: Serializer.decodeFromString(this)
 
 /**
  * @return [T] object from the receiver [String] or null if receiver can't be deserialized to [T].
@@ -71,7 +84,7 @@ inline fun <reified T : Any> String.deserializeOrNull(
  * This uses reflection: TODO improve for avoid it
  */
 @NeedSerializable
-inline fun <reified T : Any> String.deserializeList(): List<T> = Serializer.parseList(this)
+inline fun <reified T : Any> String.deserializeList(): List<T> = Serializer.decodeFromString(this)
 
 /**
  * @return [Map] of [T], [V] object from the receiver [String]
@@ -79,7 +92,7 @@ inline fun <reified T : Any> String.deserializeList(): List<T> = Serializer.pars
  */
 @NeedSerializable
 inline fun <reified T : Any, reified V : Any> String.deserializeMap(): Map<T, V> =
-    Serializer.parseMap(this)
+    Serializer.decodeFromString(this)
 
 
 /**
@@ -91,21 +104,21 @@ inline fun <reified T : Any, reified V : Any> String.deserializeMap(): Map<T, V>
 @NeedSerializable
 inline fun <reified T : Any> T.serialize(
     serializer: SerializationStrategy<T>? = null
-) = serializer?.let { Serializer.stringify(serializer, this) } ?: Serializer.stringify(this)
+) = serializer?.let { Serializer.encodeToString(serializer, this) } ?: Serializer.encodeToString(this)
 
 /**
  * @return [String] from the receiver [List] of [T] object
  * This uses reflection: TODO improve for avoid it
  */
 @NeedSerializable
-inline fun <reified T : Any> List<T>.serialize() = Serializer.stringify(this)
+inline fun <reified T : Any> List<T>.serialize() = Serializer.encodeToString(this)
 
 /**
  * @return [String] from the receiver [Map] of [T] and [V] object
  * This uses reflection: TODO improve for avoid it
  */
 @NeedSerializable
-inline fun <reified T : Any, reified V : Any> Map<T, V>.serialize() = Serializer.stringify(this)
+inline fun <reified T : Any, reified V : Any> Map<T, V>.serialize() = Serializer.encodeToString(this)
 
 
 @PublishedApi
@@ -126,7 +139,7 @@ internal sealed class SerializableTestSealedClass(val value: Int) {
     class Two(value: Int) : SerializableTestSealedClass(value)
 
     companion object {
-        fun build(value: Int) : SerializableTestSealedClass {
+        fun build(value: Int): SerializableTestSealedClass {
             return when (value) {
                 1 -> One(value)
                 2 -> Two(value)
@@ -137,7 +150,7 @@ internal sealed class SerializableTestSealedClass(val value: Int) {
         @Suppress("ClassName", "ClassNaming") // Test class
         @Serializer(forClass = SerializableTestSealedClass::class)
         object _Serializer : KSerializer<SerializableTestSealedClass> {
-            override val descriptor = PrimitiveDescriptor("TestCustomSerializer", PrimitiveKind.STRING)
+            override val descriptor = PrimitiveSerialDescriptor("TestCustomSerializer", PrimitiveKind.STRING)
 
             override fun serialize(encoder: Encoder, value: SerializableTestSealedClass) {
                 val raw = Raw(value.value)
