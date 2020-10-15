@@ -38,6 +38,7 @@ dependencies {
         // features
         project(Module.humanVerification),
         project(Module.auth),
+        project(Module.domain),
 
         `kotlin-jdk7`,
         `coroutines-android`,

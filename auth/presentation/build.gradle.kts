@@ -40,7 +40,9 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.presentation),
+        project(Module.authDomain),
         project(Module.humanVerificationDomain),
+        project(Module.humanVerificationPresentation),
 
         // Kotlin
         `kotlin-jdk7`,
@@ -63,7 +65,10 @@ dependencies {
         `hilt-android-compiler`,
         `hilt-androidx-compiler`
     )
-    compileOnly(`assistedInject-annotations-dagger`)
+    compileOnly(
+        project(Module.gopenpgp),
+        `assistedInject-annotations-dagger`
+    )
 
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))

@@ -119,9 +119,18 @@ fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): 
 
 /**
  * Shows red error snack bar. Usually as a general way to display various errors to the user.
+ *
+ * @param messageRes the String resource error message id
  */
 fun View.errorSnack(@StringRes messageRes: Int) {
     snack(messageRes = messageRes, color = R.drawable.background_error)
+}
+
+/**
+ * Shows red error snack bar. Usually as a general way to display various errors to the user.
+ */
+fun View.errorSnack(message: String) {
+    snack(message = message, color = R.drawable.background_error)
 }
 
 /**
@@ -134,6 +143,8 @@ fun View.successSnack(@StringRes messageRes: Int) {
 /**
  * General snack bar util function which takes message and color as config.
  * The default showing length is [Snackbar.LENGTH_LONG].
+ *
+ * @param messageRes the String resource message id
  */
 fun View.snack(
     @StringRes messageRes: Int,
@@ -144,6 +155,9 @@ fun View.snack(
 
 /**
  * General snack bar util function which takes message, color and length as config.
+ * The default showing length is [Snackbar.LENGTH_LONG].
+ *
+ * @param message the message as String
  */
 fun View.snack(
     message: String,
