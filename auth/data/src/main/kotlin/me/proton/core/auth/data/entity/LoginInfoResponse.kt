@@ -15,39 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("plugin.serialization")
-}
+package me.proton.core.auth.data.entity
 
-//libVersion = Version(0, 1, 0)
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.entity.LoginInfo
 
-android()
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.data),
-        project(Module.domain),
-        project(Module.network),
-        project(Module.authDomain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `serialization-json`,
-        `coroutines-core`,
-
-        // Other
-        `okHttp-logging`,
-        `retrofit`,
-        `retrofit-kotlin-serialization`
+@Serializable
+data class LoginInfoResponse(
+    @SerialName("Modulus")
+    val modulus: String,
+    @SerialName("ServerEphemeral")
+    val serverEphemeral: String,
+    @SerialName("Version")
+    val version: Int,
+    @SerialName("Salt")
+    val salt: String,
+    @SerialName("SRPSession")
+    val srpSession: String
+) {
+    fun toLoginInfo(username: String): LoginInfo = LoginInfo(
+        username = username,
+        modulus = modulus,
+        serverEphemeral = serverEphemeral,
+        version = version,
+        salt = salt,
+        srpSession = srpSession
     )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
 }
