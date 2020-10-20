@@ -26,12 +26,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonFragment
 import me.proton.android.core.presentation.utils.errorSnack
 import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.validate
+import me.proton.android.core.presentation.utils.onFailure
+import me.proton.android.core.presentation.utils.onSuccess
+import me.proton.android.core.presentation.utils.validateEmail
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEmailBinding
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEmailViewModel
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * Fragment that handles human verification with email address.
@@ -39,22 +42,23 @@ import me.proton.core.humanverification.presentation.viewmodel.verification.Huma
  * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
-internal class HumanVerificationEmailFragment :
-    ProtonFragment<FragmentHumanVerificationEmailBinding>() {
+internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVerificationEmailBinding>() {
 
     companion object {
+        private const val ARG_SESSION_ID = "arg.sessionId"
         private const val ARG_RECOVERY_EMAIL = "arg.recoveryemail"
 
         operator fun invoke(
+            sessionId: SessionId,
             token: String,
             recoveryEmailAddress: String? = null
-        ): HumanVerificationEmailFragment =
-            HumanVerificationEmailFragment().apply {
-                val args =
-                    bundleOf(ARG_URL_TOKEN to token, ARG_RECOVERY_EMAIL to recoveryEmailAddress)
-                if (arguments != null) requireArguments().putAll(args)
-                else arguments = args
-            }
+        ) = HumanVerificationEmailFragment().apply {
+            arguments = bundleOf(
+                ARG_SESSION_ID to sessionId,
+                ARG_URL_TOKEN to token,
+                ARG_RECOVERY_EMAIL to recoveryEmailAddress
+            )
+        }
     }
 
     private val viewModel by viewModels<HumanVerificationEmailViewModel>()
@@ -65,6 +69,10 @@ internal class HumanVerificationEmailFragment :
             urlToken = requireArguments().get(ARG_URL_TOKEN) as String,
             tokenType = TokenType.EMAIL
         )
+    }
+
+    private val sessionId: SessionId by lazy {
+        requireArguments().get(ARG_SESSION_ID) as SessionId
     }
 
     private val recoveryEmailAddress: String? by lazy {
@@ -85,13 +93,12 @@ internal class HumanVerificationEmailFragment :
         }
         binding.apply {
             getVerificationCodeButton.onClick {
-                emailEditText.validate(
-                    { emailEditText.setInputError() },
-                    {
+                emailEditText.validateEmail()
+                    .onFailure { emailEditText.setInputError() }
+                    .onSuccess {
                         getVerificationCodeButton.setLoading()
-                        viewModel.sendVerificationCode(it)
+                        viewModel.sendVerificationCode(sessionId, it)
                     }
-                )
             }
             proceedButton.onClick {
                 humanVerificationBase.onGetCodeClicked(parentFragmentManager)

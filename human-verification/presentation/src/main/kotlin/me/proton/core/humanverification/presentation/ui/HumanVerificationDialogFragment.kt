@@ -37,6 +37,7 @@ import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationEmailContent
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationSMSContent
 import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * Shows the dialog for the Human Verification options and option procedures.
@@ -44,10 +45,10 @@ import me.proton.core.humanverification.presentation.viewmodel.HumanVerification
  * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
-class HumanVerificationDialogFragment :
-    ProtonDialogFragment<DialogHumanVerificationMainBinding>() {
+class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerificationMainBinding>() {
 
     companion object {
+        private const val ARG_SESSION_ID = "arg.sessionId"
         const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
         private const val ARG_CAPTCHA_TOKEN = "arg.captcha-token"
         const val ARG_DESTINATION = "arg.destination"
@@ -64,21 +65,24 @@ class HumanVerificationDialogFragment :
          * @param captchaToken if the API returns it, otherwise null
          */
         operator fun invoke(
+            sessionId: SessionId,
             availableVerificationMethods: List<String>,
             captchaToken: String?
-        ): HumanVerificationDialogFragment =
-            HumanVerificationDialogFragment().apply {
-                val args = bundleOf(
-                    ARG_VERIFICATION_OPTIONS to availableVerificationMethods,
-                    ARG_CAPTCHA_TOKEN to captchaToken
-                )
-                if (arguments != null) requireArguments().putAll(args)
-                else arguments = args
-            }
+        ) = HumanVerificationDialogFragment().apply {
+            arguments = bundleOf(
+                ARG_SESSION_ID to sessionId,
+                ARG_VERIFICATION_OPTIONS to availableVerificationMethods,
+                ARG_CAPTCHA_TOKEN to captchaToken
+            )
+        }
     }
 
     private val viewModel by viewModels<HumanVerificationViewModel>()
     private lateinit var resultListener: OnResultListener
+
+    private val sessionId: SessionId by lazy {
+        requireArguments().get(ARG_SESSION_ID) as SessionId
+    }
 
     private val captchaToken: String? by lazy {
         requireArguments().get(ARG_CAPTCHA_TOKEN) as String?
@@ -91,6 +95,7 @@ class HumanVerificationDialogFragment :
             val destination = bundle.getString(ARG_DESTINATION)
             val tokenType = TokenType.fromString(bundle.getString(ARG_TOKEN_TYPE)!!)
             childFragmentManager.showEnterCode(
+                sessionId = sessionId,
                 tokenType = tokenType,
                 destination = destination
             )
@@ -157,17 +162,20 @@ class HumanVerificationDialogFragment :
         when (verificationMethod) {
             TokenType.CAPTCHA -> {
                 childFragmentManager.showHumanVerificationCaptchaContent(
+                    sessionId = sessionId,
                     token = captchaToken,
                     containerId = binding.fragmentOptionsContainer.id
                 )
             }
             TokenType.EMAIL -> {
                 childFragmentManager.showHumanVerificationEmailContent(
+                    sessionId = sessionId,
                     containerId = binding.fragmentOptionsContainer.id
                 )
             }
             TokenType.SMS -> {
                 childFragmentManager.showHumanVerificationSMSContent(
+                    sessionId = sessionId,
                     containerId = binding.fragmentOptionsContainer.id
                 )
             }
@@ -179,7 +187,13 @@ class HumanVerificationDialogFragment :
 
     private fun onClose(tokenType: String? = null, tokenCode: String? = null) {
         if (!tokenType.isNullOrEmpty() && !tokenCode.isNullOrEmpty()) {
-            resultListener.setResult(HumanVerificationResult(true, TokenType.fromString(tokenType), tokenCode))
+            resultListener.setResult(
+                HumanVerificationResult(
+                    sessionId.id,
+                    tokenType,
+                    tokenCode
+                )
+            )
             dismissAllowingStateLoss()
             return
         }
@@ -191,14 +205,13 @@ class HumanVerificationDialogFragment :
             if (backStackEntryCount >= 1) {
                 popBackStack()
             } else {
-                viewModel.onClose()
-                resultListener.setResult(HumanVerificationResult(false))
+                resultListener.setResult(null)
                 dismissAllowingStateLoss()
             }
         }
     }
 
     interface OnResultListener {
-        fun setResult(result: HumanVerificationResult)
+        fun setResult(result: HumanVerificationResult?)
     }
 }

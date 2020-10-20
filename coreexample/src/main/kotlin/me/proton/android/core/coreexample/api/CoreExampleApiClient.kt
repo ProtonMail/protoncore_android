@@ -19,9 +19,7 @@
 package me.proton.android.core.coreexample.api
 
 import android.os.Build
-import me.proton.core.humanverification.presentation.utils.HumanVerificationBinder
 import me.proton.core.network.domain.ApiClient
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import java.util.Locale
 
 /**
@@ -29,9 +27,7 @@ import java.util.Locale
  */
 const val VERSION_NAME = "0.0.1"
 
-class CoreExampleApiClient(
-    val humanVerificationBinder: HumanVerificationBinder
-) : ApiClient {
+class CoreExampleApiClient : ApiClient {
     /**
      * Tells the lib if DoH should be used in a given moment (based e.g. on user setting or whether
      * VPN connection is active). Will be checked before  each API call.
@@ -73,14 +69,4 @@ class CoreExampleApiClient(
     override fun forceUpdate() {
         // dummy example, not implemented for now
     }
-
-    /**
-     * Tells the client that a human verification flow should be initiated. Any API call made without
-     * the human verification headers will return the same error, so in order the API communication
-     * to continue normally the human verification headers are needed.
-     */
-    override suspend fun humanVerification(humanVerificationDetails: HumanVerificationDetails): Boolean =
-        // the client is notified to start the human verification flow in order to obtain the
-        // verification token code
-        humanVerificationBinder.invoke(humanVerificationDetails)
 }

@@ -20,6 +20,7 @@ package me.proton.core.humanverification.domain.usecase
 
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
+import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 /**
@@ -36,6 +37,6 @@ class VerifyCode @Inject constructor(private val humanVerificationRemoteReposito
      * @param tokenType the type of verification method used.
      * @param verificationCode the verification code (token)
      */
-    suspend operator fun invoke(tokenType: String, verificationCode: String): VerificationResult =
-        humanVerificationRemoteRepository.verifyCode(tokenType, verificationCode)
+    suspend operator fun invoke(sessionId: SessionId, tokenType: String, verificationCode: String): VerificationResult =
+        humanVerificationRemoteRepository.verifyCode(sessionId, tokenType, verificationCode)
 }

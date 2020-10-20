@@ -16,15 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation
+package me.proton.core.humanverification.presentation.entity
 
-import javax.inject.Qualifier
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import me.proton.core.network.domain.session.SessionId
 
-/**
- * Hilt Qualifier annotation for Human Verification channel. Similar to @Named annotation in Dagger.
- *
- * @author Dino Kadrikj.
- */
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class HumanVerificationChannel
+@Parcelize
+data class HumanVerificationInput(
+    val sessionId: String,
+    val verificationMethods: List<String>?,
+    val captchaToken: String?
+) : Parcelable

@@ -35,6 +35,7 @@ import me.proton.core.humanverification.presentation.databinding.FragmentHumanVe
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCaptchaViewModel
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * Fragment that handles human verification with Captcha.
@@ -46,16 +47,25 @@ internal class HumanVerificationCaptchaFragment :
     ProtonFragment<FragmentHumanVerificationCaptchaBinding>() {
 
     companion object {
-
+        private const val ARG_SESSION_ID = "arg.sessionId"
         private const val ARG_HOST = "arg.host"
         private const val MAX_PROGRESS = 100
 
-        operator fun invoke(urlToken: String, host: String): HumanVerificationCaptchaFragment =
-            HumanVerificationCaptchaFragment().apply {
-                val args = bundleOf(ARG_URL_TOKEN to urlToken, ARG_HOST to host)
-                if (arguments != null) requireArguments().putAll(args)
-                else arguments = args
-            }
+        operator fun invoke(
+            sessionId: SessionId,
+            urlToken: String,
+            host: String
+        ) = HumanVerificationCaptchaFragment().apply {
+            arguments = bundleOf(
+                ARG_SESSION_ID to sessionId,
+                ARG_URL_TOKEN to urlToken,
+                ARG_HOST to host
+            )
+        }
+    }
+
+    private val sessionId: SessionId by lazy {
+        requireArguments().get(ARG_SESSION_ID) as SessionId
     }
 
     private val host: String by lazy {
@@ -145,7 +155,7 @@ internal class HumanVerificationCaptchaFragment :
         fun receiveResponse(message: String) {
             humanVerificationBase.verificationToken = message
             binding.progress.visibility = View.VISIBLE
-            viewModel.verifyTokenCode(message)
+            viewModel.verifyTokenCode(sessionId, message)
         }
     }
 }

@@ -32,6 +32,7 @@ import me.proton.core.humanverification.domain.usecase.MostUsedCountryCode
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
 import me.proton.core.humanverification.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
+import me.proton.core.network.domain.session.SessionId
 import studio.forface.viewstatestore.LockedViewStateStore
 import studio.forface.viewstatestore.ViewState
 import studio.forface.viewstatestore.ViewStateStore
@@ -67,12 +68,12 @@ internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
      * @param countryCallingCode the calling code part of the phone number
      * @param phoneNumber the phone number that the user entered (without the calling code part)
      */
-    fun sendVerificationCodeToDestination(countryCallingCode: String, phoneNumber: String) {
+    fun sendVerificationCodeToDestination(sessionId: SessionId, countryCallingCode: String, phoneNumber: String) {
         viewModelScope.launch(Dispatchers.IO) {
             if (phoneNumber.isEmpty()) {
                 validation.postError(EmptyDestinationException("Destination phone number: $phoneNumber is invalid."))
             } else {
-                sendVerificationCodeToSMS(countryCallingCode + phoneNumber)
+                sendVerificationCodeToSMS(sessionId, countryCallingCode + phoneNumber)
             }
         }
     }
@@ -97,8 +98,8 @@ internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
      * Contacts the API and sends the verification code to the destination phone number the user
      * has entered in the UI.
      */
-    private suspend fun sendVerificationCodeToSMS(phoneNumber: String) {
-        val deferred = sendVerificationCodeToPhoneDestination.invoke(phoneNumber)
+    private suspend fun sendVerificationCodeToSMS(sessionId: SessionId, phoneNumber: String) {
+        val deferred = sendVerificationCodeToPhoneDestination.invoke(sessionId, phoneNumber)
         if (deferred is VerificationResult.Success) {
             verificationCodeStatus.post(true)
         } else {

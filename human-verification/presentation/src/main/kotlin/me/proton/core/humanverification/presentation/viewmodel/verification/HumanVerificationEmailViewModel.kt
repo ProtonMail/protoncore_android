@@ -29,6 +29,7 @@ import me.proton.core.humanverification.domain.exception.EmptyDestinationExcepti
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.humanverification.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
+import me.proton.core.network.domain.session.SessionId
 import studio.forface.viewstatestore.LockedViewStateStore
 import studio.forface.viewstatestore.ViewState
 import studio.forface.viewstatestore.ViewStateStore
@@ -56,13 +57,13 @@ internal class HumanVerificationEmailViewModel @ViewModelInject constructor(
      *
      * @param email the email address that the user entered as a destination.
      */
-    fun sendVerificationCode(email: String) {
+    fun sendVerificationCode(sessionId: SessionId, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             if (email.isEmpty()) {
                 validation.postError(EmptyDestinationException("Destination email: $email is invalid."))
                 return@launch
             }
-            sendVerificationCodeToEmail(email)
+            sendVerificationCodeToEmail(sessionId, email)
         }
     }
 
@@ -70,8 +71,8 @@ internal class HumanVerificationEmailViewModel @ViewModelInject constructor(
      * Contacts the API and sends the verification code to the destination email address the user
      * has entered in the UI.
      */
-    private suspend fun sendVerificationCodeToEmail(email: String) {
-        val deferred = sendVerificationCodeToEmailDestination.invoke(email)
+    private suspend fun sendVerificationCodeToEmail(sessionId: SessionId, email: String) {
+        val deferred = sendVerificationCodeToEmailDestination.invoke(sessionId, email)
         if (deferred is VerificationResult.Success) {
             verificationCodeStatus.post(true)
         } else {

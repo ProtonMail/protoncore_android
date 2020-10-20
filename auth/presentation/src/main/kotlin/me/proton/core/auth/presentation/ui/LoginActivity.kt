@@ -23,7 +23,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import kotlinx.android.synthetic.main.activity_login.*
 import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.validate
+import me.proton.android.core.presentation.utils.onFailure
+import me.proton.android.core.presentation.utils.onSuccess
+import me.proton.android.core.presentation.utils.validatePassword
+import me.proton.android.core.presentation.utils.validateUsername
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
@@ -58,22 +61,20 @@ class LoginActivity : ProtonAuthActivity<ActivityLoginBinding>() {
      * invalid input.
      */
     private fun validateAndAttemptLogin() {
-        usernameInput.validate(
-            onValidationFailed = { usernameInput.setInputError() },
-            onValidationSuccess = ::validatePasswordAndLogin
-        )
+        usernameInput.validateUsername()
+            .onFailure { usernameInput.setInputError() }
+            .onSuccess { validatePasswordAndLogin(it) }
     }
 
     /**
      * If the username is valid, this function will try to validate the password and to execute the login.
      */
     private fun validatePasswordAndLogin(username: String) {
-        passwordInput.validate(
-            onValidationFailed = { passwordInput.setInputError() },
-            onValidationSuccess = {
+        passwordInput.validatePassword()
+            .onFailure { passwordInput.setInputError() }
+            .onSuccess {
                 signInButton.setLoading()
                 viewModel.doLogin(username, it)
             }
-        )
     }
 }

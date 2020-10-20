@@ -27,9 +27,12 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.TimeoutOverride
-import me.proton.core.network.domain.UserData
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -46,7 +49,8 @@ import kotlin.reflect.KClass
  * @param Api Retrofit interface.
  * @property baseUrl Base url for the API.
  * @property client [ApiClient] to be used with the backend.
- * @property userData [UserData] bound to this backend.
+ * @property sessionId Optional [SessionId].
+ * @property sessionProvider a [SessionProvider] to get the tokens from.
  * @property networkManager [NetworkManager] instance.
  * @param converters Retrofit converters to be used in the backend.
  * @param interfaceClass Kotlin class for [Api].
@@ -57,7 +61,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     override val baseUrl: String,
     private val client: ApiClient,
     private val logger: Logger,
-    private val userData: UserData,
+    private val sessionId: SessionId?,
+    private val sessionProvider: SessionProvider,
     baseOkHttpClient: OkHttpClient,
     converters: List<Converter.Factory>,
     interfaceClass: KClass<Api>,
@@ -112,16 +117,19 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         if (original.header("Accept") == null) {
             request.header("Accept", "application/vnd.protonmail.v1+json")
         }
-        userData.humanVerificationHandler?.let {
-            request.addHeader("x-pm-human-verification-token-type", it.tokenType)
-            request.addHeader("x-pm-human-verification-token", it.tokenCode)
+
+        sessionId?.let { sessionProvider.getSession(it) }?.let { session ->
+            session.headers?.let {
+                request.header("x-pm-human-verification-token-type", it.tokenType)
+                request.header("x-pm-human-verification-token", it.tokenCode)
+            }
+            session.sessionId.id.takeIfNotBlank()?.let { uid ->
+                request.header("x-pm-uid", uid)
+            }
+            session.accessToken.takeIfNotBlank()?.let { accessToken ->
+                request.header("Authorization", accessToken)
+            }
         }
-        val uid = userData.sessionUid
-        val accessToken = userData.accessToken
-        if (uid.isNotEmpty())
-            request.addHeader("x-pm-uid", uid)
-        if (accessToken.isNotEmpty())
-            request.addHeader("Authorization", accessToken)
         return request
     }
 
@@ -137,7 +145,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 throw ProtonErrorException(response, protonError)
             }
         }
-
         return response
     }
 
@@ -147,19 +154,18 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private suspend fun <T> invokeInternal(block: suspend Api.() -> T): ApiResult<T> =
         safeApiCall(networkManager, logger, api, block)
 
-    override suspend fun refreshTokens(): ApiResult<ApiBackend.Tokens> {
+    override suspend fun refreshSession(session: Session): ApiResult<Session> {
         val result = invokeInternal {
-            refreshToken(RefreshTokenRequest(
-                refreshToken = userData.refreshToken, uid = userData.sessionUid))
+            refreshToken(RefreshTokenRequest(uid = session.sessionId.id, refreshToken = session.refreshToken))
         }
         return when (result) {
             is ApiResult.Success -> {
                 logger.i(Constants.LOG_TAG, "set refresh token: ${result.value.refreshToken.formatToken(client)}")
                 logger.i(Constants.LOG_TAG, "set access token: ${result.value.accessToken.formatToken(client)}")
                 ApiResult.Success(
-                    ApiBackend.Tokens(
-                        access = result.value.accessToken,
-                        refresh = result.value.refreshToken
+                    session.refreshWith(
+                        accessToken = result.value.accessToken,
+                        refreshToken = result.value.refreshToken
                     )
                 )
             }

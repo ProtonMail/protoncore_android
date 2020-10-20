@@ -19,7 +19,7 @@
 package me.proton.core.humanverification.domain.repository
 
 import me.proton.core.humanverification.domain.entity.VerificationResult
-import me.proton.core.util.kotlin.Invokable
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * Remote repository interface that defines all operations that the dta layer (module) should
@@ -30,7 +30,7 @@ import me.proton.core.util.kotlin.Invokable
  *
  * @author Dino Kadrikj.
  */
-interface HumanVerificationRemoteRepository : Invokable {
+interface HumanVerificationRemoteRepository {
 
     /**
      * Send the sms verification code to the API.
@@ -38,7 +38,10 @@ interface HumanVerificationRemoteRepository : Invokable {
      * @param phoneNumber or a phone number as a destination where the verification code should be send
      * if the verification type (method) selected is SMS.
      */
-    suspend fun sendVerificationCodePhoneNumber(phoneNumber: String): VerificationResult
+    suspend fun sendVerificationCodePhoneNumber(
+        sessionId: SessionId,
+        phoneNumber: String
+    ): VerificationResult
 
     /**
      * Send the email address verification code to the API.
@@ -46,7 +49,10 @@ interface HumanVerificationRemoteRepository : Invokable {
      * @param emailAddress an email the destination where the verification code should be send
      * if the verification type (method) selected is Email.
      */
-    suspend fun sendVerificationCodeEmailAddress(emailAddress: String): VerificationResult
+    suspend fun sendVerificationCodeEmailAddress(
+        sessionId: SessionId,
+        emailAddress: String
+    ): VerificationResult
 
     /**
      * Token is actually the code that has been sent to the user (or the captcha code) and that
@@ -56,5 +62,9 @@ interface HumanVerificationRemoteRepository : Invokable {
      * @param token the verification token previously sent to the preferred destination depending
      * on the verification method or the captcha token generated from the captcha webview.
      */
-    suspend fun verifyCode(tokenType: String, token: String): VerificationResult
+    suspend fun verifyCode(
+        sessionId: SessionId,
+        tokenType: String,
+        token: String
+    ): VerificationResult
 }

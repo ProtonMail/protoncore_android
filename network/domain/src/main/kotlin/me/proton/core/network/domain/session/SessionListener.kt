@@ -26,17 +26,12 @@ interface SessionListener {
     /**
      * Called when a [Session] token has been successfully refreshed.
      */
-    fun onSessionTokenRefreshed(session: Session) = Unit
-
-    /**
-     * Called when a [Session] token refresh has failed.
-     */
-    fun onSessionTokenRefreshFailed(session: Session) = Unit
+    fun onSessionTokenRefreshed(session: Session)
 
     /**
      * Called when a [Session] has been forced to logout.
      */
-    fun onSessionForceLogout(session: Session) = Unit
+    fun onSessionForceLogout(session: Session)
 
     /**
      * Called when a Human Verification Workflow is needed for a [Session].

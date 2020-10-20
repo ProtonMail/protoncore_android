@@ -21,6 +21,7 @@ package me.proton.core.humanverification.domain.usecase
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
+import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 /**
@@ -44,11 +45,11 @@ constructor(private val humanVerificationRemoteRepository: HumanVerificationRemo
      *
      * @throws EmptyDestinationException if the destination email address is empty
      */
-    suspend operator fun invoke(phoneNumber: String): VerificationResult {
+    suspend operator fun invoke(sessionId: SessionId, phoneNumber: String): VerificationResult {
         if (phoneNumber.isEmpty()) {
             throw EmptyDestinationException("Provide valid sms destination.")
         }
 
-        return humanVerificationRemoteRepository.sendVerificationCodePhoneNumber(phoneNumber)
+        return humanVerificationRemoteRepository.sendVerificationCodePhoneNumber(sessionId, phoneNumber)
     }
 }

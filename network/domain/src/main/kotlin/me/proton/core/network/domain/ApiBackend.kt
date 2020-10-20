@@ -17,6 +17,8 @@
  */
 package me.proton.core.network.domain
 
+import me.proton.core.network.domain.session.Session
+
 /**
  * Class responsible for making an actual API call using underlying HTTP library.
  *
@@ -30,11 +32,11 @@ interface ApiBackend<Api> {
     val baseUrl: String
 
     /**
-     * Update the tokens (access and refresh).
-     * @return [ApiResult] with updated access and refresh tokens.
+     * Refresh the provided [Session] (accessToken, refreshToken, ...).
+     *
+     * @return [ApiResult] with updated [Session].
      */
-    suspend fun refreshTokens(): ApiResult<Tokens>
-    data class Tokens(val refresh: String, val access: String)
+    suspend fun refreshSession(session: Session): ApiResult<Session>
 
     /**
      * Lightweight call checking if API might be blocked.

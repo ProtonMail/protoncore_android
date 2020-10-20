@@ -21,60 +21,48 @@ package me.proton.core.humanverification.presentation.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.ActivityHumanVerificationBinding
+import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
-import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.ARG_TOKEN_CODE
-import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.ARG_TOKEN_TYPE
 import me.proton.core.humanverification.presentation.utils.defaultVerificationMethods
 import me.proton.core.humanverification.presentation.utils.showHumanVerification
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * Activity that "wraps" and handles the whole Human Verification process.
- *
- * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
-class HumanVerificationActivity : ProtonActivity<ActivityHumanVerificationBinding>(),
+class HumanVerificationActivity :
+    ProtonActivity<ActivityHumanVerificationBinding>(),
     HumanVerificationDialogFragment.OnResultListener {
 
     companion object {
-        const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
-        const val ARG_CAPTCHA_TOKEN = "arg.captcha-token"
+        const val ARG_HUMAN_VERIFICATION_INPUT = "arg.humanVerificationInput"
+        const val ARG_HUMAN_VERIFICATION_RESULT = "arg.humanVerificationResult"
     }
 
     override fun layoutId(): Int = R.layout.activity_human_verification
 
-    private val verificationMethods: List<String>? by lazy {
-        intent?.extras?.get(ARG_VERIFICATION_OPTIONS) as List<String>?
-    }
-
-    private val captchaToken: String? by lazy {
-        intent?.extras?.getString(ARG_VERIFICATION_OPTIONS, null)
+    private val input: HumanVerificationInput by lazy {
+        requireNotNull(intent?.getParcelableExtra(ARG_HUMAN_VERIFICATION_INPUT))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager.showHumanVerification(
-            availableVerificationMethods = verificationMethods ?: defaultVerificationMethods,
-            captchaToken = captchaToken,
+            sessionId = SessionId(input.sessionId),
+            availableVerificationMethods = input.verificationMethods ?: defaultVerificationMethods,
+            captchaToken = input.captchaToken,
             largeLayout = false
         )
     }
 
-    override fun setResult(result: HumanVerificationResult) {
-        val intent = Intent()
-        intent.putExtras(
-            bundleOf(
-                ARG_TOKEN_CODE to result.tokenCode,
-                ARG_TOKEN_TYPE to result.tokenType
-            )
-        )
+    override fun setResult(result: HumanVerificationResult?) {
+        val intent = Intent().apply { putExtra(ARG_HUMAN_VERIFICATION_RESULT, result) }
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
-
 }

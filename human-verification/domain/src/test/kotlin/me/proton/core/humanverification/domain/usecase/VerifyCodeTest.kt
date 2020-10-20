@@ -25,6 +25,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
+import me.proton.core.network.domain.session.SessionId
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -37,11 +38,13 @@ class VerifyCodeTest {
 
     private val remoteRepository = mockk<HumanVerificationRemoteRepository>()
 
+    private val sessionId: SessionId = SessionId("id")
+
     @Test
     fun `code verification success`() = runBlockingTest {
         val useCase = VerifyCode(remoteRepository)
-        coEvery { remoteRepository.verifyCode(any(), any()) } returns VerificationResult.Success
-        val result = useCase.invoke(TokenType.EMAIL.tokenTypeValue, "testCode")
+        coEvery { remoteRepository.verifyCode(any(), any(), any()) } returns VerificationResult.Success
+        val result = useCase.invoke(sessionId, TokenType.EMAIL.tokenTypeValue, "testCode")
 
         assertEquals(VerificationResult.Success, result)
     }
@@ -49,8 +52,8 @@ class VerifyCodeTest {
     @Test
     fun `code verification error`() = runBlockingTest {
         val useCase = VerifyCode(remoteRepository)
-        coEvery { remoteRepository.verifyCode(any(), any()) } returns VerificationResult.Error("test error")
-        val result = useCase.invoke(TokenType.EMAIL.tokenTypeValue, "testCode")
+        coEvery { remoteRepository.verifyCode(any(), any(), any()) } returns VerificationResult.Error("test error")
+        val result = useCase.invoke(sessionId, TokenType.EMAIL.tokenTypeValue, "testCode")
 
         assertTrue(result is VerificationResult.Error)
     }

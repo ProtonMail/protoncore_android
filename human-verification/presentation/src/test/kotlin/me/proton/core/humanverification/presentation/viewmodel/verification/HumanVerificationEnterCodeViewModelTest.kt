@@ -22,15 +22,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.humanverification.domain.usecase.VerifyCode
-import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.exception.TokenCodeVerificationException
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.coroutinesTest
@@ -50,14 +49,14 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
     private val resendVerificationCodeToDestination = mockk<ResendVerificationCodeToDestination>()
     private val verifyCode = mockk<VerifyCode>()
 
+    private val sessionId: SessionId = SessionId("id")
     private val testEmail = "test@protonmail.com"
     private val errorResponse = "test error"
 
     private val viewModel by lazy {
         HumanVerificationEnterCodeViewModel(
             resendVerificationCodeToDestination,
-            verifyCode,
-            mockk<Channel<HumanVerificationResult>>()
+            verifyCode
         )
     }
 
@@ -67,12 +66,12 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
         val token = "testToken"
         coEvery {
             verifyCode.invoke(
-                tokenType =
-                any(), verificationCode =
-                any()
+                sessionId = any(),
+                tokenType = any(),
+                verificationCode = any()
             )
         } returns VerificationResult.Success
-        viewModel.verifyTokenCode(tokenType, token)
+        viewModel.verifyTokenCode(sessionId, tokenType, token)
         assertIs<ViewState.Success<Boolean>>(viewModel.codeVerificationResult.awaitNext())
     }
 
@@ -83,12 +82,13 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
         val token = "testToken"
         coEvery {
             verifyCode.invoke(
+                sessionId = any(),
                 tokenType = any(),
                 verificationCode = any()
             )
         } returns VerificationResult.Error(errorResponse)
         // when
-        viewModel.verifyTokenCode(tokenType, token)
+        viewModel.verifyTokenCode(sessionId, tokenType, token)
         val result = viewModel.codeVerificationResult.awaitNext()
         // then
         assertIs<ViewState.Error>(result)
@@ -103,12 +103,13 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
         viewModel.destination = testEmail
         coEvery {
             resendVerificationCodeToDestination.invoke(
+                sessionId = any(),
                 tokenType = any(),
                 destination = any()
             )
         } returns VerificationResult.Success
         // when
-        viewModel.resendCode()
+        viewModel.resendCode(sessionId)
         // then
         assertIs<ViewState.Success<Boolean>>(viewModel.verificationCodeResendStatus.awaitNext())
     }
@@ -121,16 +122,16 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
         viewModel.destination = testEmail
         coEvery {
             resendVerificationCodeToDestination.invoke(
+                sessionId = any(),
                 tokenType = any(),
                 destination = any()
             )
         } returns VerificationResult.Error(errorResponse)
         // when
-        viewModel.resendCode()
+        viewModel.resendCode(sessionId)
         val result = viewModel.verificationCodeResendStatus.awaitNext()
         // then
         assertIs<ViewState.Error>(result)
         assertIs<VerificationCodeSendingException>((result as ViewState.Error).throwable)
     }
 }
-

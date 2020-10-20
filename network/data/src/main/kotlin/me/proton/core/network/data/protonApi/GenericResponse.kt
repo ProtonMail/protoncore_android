@@ -25,5 +25,6 @@ import kotlinx.serialization.Serializable
  * @author Dino Kadrikj.
  */
 const val API_CODE = "Code" // TODO: this should be replaced with the more broader constant after rebase
+
 @Serializable
 class GenericResponse(@SerialName(API_CODE) val code: Int)

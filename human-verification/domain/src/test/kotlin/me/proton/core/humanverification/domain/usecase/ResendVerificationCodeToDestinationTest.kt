@@ -26,6 +26,7 @@ import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.InvalidValidationOptionException
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
+import me.proton.core.network.domain.session.SessionId
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -45,35 +46,37 @@ class ResendVerificationCodeToDestinationTest {
     @JvmField
     var thrown: ExpectedException = ExpectedException.none()
 
+    private val sessionId: SessionId = SessionId("id")
     private val testEmail = "test@protonmail.com"
     private val testPhoneNumber = "+123456789"
 
     @Test
     fun `send verification token with token type email`() = runBlockingTest {
         val useCase = ResendVerificationCodeToDestination(remoteRepository)
-        coEvery { remoteRepository.sendVerificationCodePhoneNumber(any()) } returns VerificationResult.Success
-        coEvery { remoteRepository.sendVerificationCodeEmailAddress(any()) } returns VerificationResult.Success
-        val result = useCase.invoke(TokenType.EMAIL, testEmail)
+        coEvery { remoteRepository.sendVerificationCodePhoneNumber(any(), any()) } returns VerificationResult.Success
+        coEvery { remoteRepository.sendVerificationCodeEmailAddress(any(), any()) } returns VerificationResult.Success
+        val result = useCase.invoke(sessionId, TokenType.EMAIL, testEmail)
         assertEquals(VerificationResult.Success, result)
     }
 
     @Test
     fun `send verification token with token type sms`() = runBlockingTest {
         val useCase = ResendVerificationCodeToDestination(remoteRepository)
-        coEvery { remoteRepository.sendVerificationCodePhoneNumber(any()) } returns VerificationResult.Success
-        coEvery { remoteRepository.sendVerificationCodeEmailAddress(any()) } returns VerificationResult.Success
-        val result = useCase.invoke(TokenType.SMS, testPhoneNumber)
+        coEvery { remoteRepository.sendVerificationCodePhoneNumber(any(), any()) } returns VerificationResult.Success
+        coEvery { remoteRepository.sendVerificationCodeEmailAddress(any(), any()) } returns VerificationResult.Success
+        val result = useCase.invoke(sessionId, TokenType.SMS, testPhoneNumber)
         assertEquals(VerificationResult.Success, result)
     }
 
     @Test
     fun `send verification token with token type invalid option`() = runBlockingTest {
         val useCase = ResendVerificationCodeToDestination(remoteRepository)
-        coEvery { remoteRepository.sendVerificationCodePhoneNumber(any()) } returns VerificationResult.Success
-        coEvery { remoteRepository.sendVerificationCodeEmailAddress(any()) } returns VerificationResult.Success
+        coEvery { remoteRepository.sendVerificationCodePhoneNumber(any(), any()) } returns VerificationResult.Success
+        coEvery { remoteRepository.sendVerificationCodeEmailAddress(any(), any()) } returns VerificationResult.Success
 
         thrown.expect(InvalidValidationOptionException::class.java)
         thrown.expectMessage("Invalid verification type selected")
-        useCase.invoke(TokenType.CAPTCHA, testPhoneNumber)
+
+        useCase.invoke(sessionId, TokenType.CAPTCHA, testPhoneNumber)
     }
 }

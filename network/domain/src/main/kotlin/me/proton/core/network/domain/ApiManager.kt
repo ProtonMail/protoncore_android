@@ -46,5 +46,5 @@ interface ApiManager<Api> {
      * @property timestampMs time of the call.
      * @property block Lambda performing the call on [Api] interface instance.
      */
-    class Call<Api, T>(val timestampMs: Long, val block: suspend Api.() -> T)
+    data class Call<Api, T>(val timestampMs: Long, val block: suspend Api.() -> T)
 }

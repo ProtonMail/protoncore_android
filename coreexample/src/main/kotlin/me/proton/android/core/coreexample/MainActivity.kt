@@ -20,39 +20,25 @@ package me.proton.android.core.coreexample
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.onClick
 import me.proton.core.auth.presentation.ui.LoginActivity
-import me.proton.core.humanverification.presentation.HumanVerificationChannel
-import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.HumanVerificationActivity
-import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
-import me.proton.core.humanverification.presentation.utils.showHumanVerification
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
     override fun layoutId(): Int = R.layout.activity_main
 
-    @Inject
-    @HumanVerificationChannel
-    lateinit var channel: Channel<HumanVerificationResult>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding.humanVerification.onClick {
-            startHumanVerificationAsActivity()
+            // TODO: startHumanVerificationWorkflow.
+            startActivity(Intent(this, HumanVerificationActivity::class.java))
         }
 
         binding.customViews.onClick {
@@ -60,35 +46,8 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }
 
         binding.login.onClick {
+            // TODO: startLoginWorkflow.
             startActivity(Intent(this, LoginActivity::class.java))
         }
-    }
-
-    fun startHumanVerificationAsFragment() {
-        supportFragmentManager.setFragmentResultListener(
-            HumanVerificationDialogFragment.KEY_VERIFICATION_DONE,
-            this
-        ) { _, bundle ->
-            val tokenCode = bundle.getString(HumanVerificationDialogFragment.ARG_TOKEN_CODE)
-            val tokenType = bundle.getString(HumanVerificationDialogFragment.ARG_TOKEN_TYPE)
-
-            Toast.makeText(this, "Fragment: Code $tokenCode done with $tokenType", Toast.LENGTH_LONG).show()
-        }
-
-        supportFragmentManager.showHumanVerification(
-            largeLayout = false
-        )
-    }
-
-    private fun startHumanVerificationAsActivity() {
-        lifecycleScope.launch {
-            withContext(Dispatchers.Main) {
-                val result = channel.receive()
-                Toast.makeText(this@MainActivity, "Channel ${result.tokenCode}", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        val humanVerificationIntent = Intent(this, HumanVerificationActivity::class.java)
-        startActivity(humanVerificationIntent)
     }
 }

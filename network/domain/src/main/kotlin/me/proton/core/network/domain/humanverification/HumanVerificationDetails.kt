@@ -26,5 +26,5 @@ package me.proton.core.network.domain.humanverification
  */
 data class HumanVerificationDetails(
     val verificationMethods: List<VerificationMethod>,
-    val captchaVerificationToken: String?
+    val captchaVerificationToken: String? = null
 )

@@ -27,43 +27,32 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
 import me.proton.android.core.coreexample.Constants.BASE_URL
-import me.proton.android.core.coreexample.api.CoreExampleApi
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
-import me.proton.android.core.coreexample.user.User
 import me.proton.core.humanverification.data.repository.HumanVerificationLocalRepositoryImpl
 import me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl
-import me.proton.core.humanverification.domain.CurrentUsername
 import me.proton.core.humanverification.domain.repository.HumanVerificationLocalRepository
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
-import me.proton.core.humanverification.presentation.HumanVerificationChannel
-import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
-import me.proton.core.humanverification.presentation.utils.HumanVerificationBinder
+import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.di.NetworkManager
 import me.proton.core.network.data.di.NetworkPrefs
 import me.proton.core.network.domain.ApiClient
-import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 import javax.inject.Singleton
 
 /**
  * Application module singleton for Hilt dependencies.
- * @author Dino Kadrikj.
  */
 @Module
 @InstallIn(ApplicationComponent::class)
 object ApplicationModule {
-
-    @CurrentUsername
-    @Provides
-    fun provideCurrentUsername() = "testcurrentusername"
-
-    @Provides
-    fun provideCurrentUser(): User =
-        User("testSession", "testAccessToken", "testRefreshToken")
 
     @Provides
     @Singleton
@@ -72,51 +61,62 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideNetworkPrefs(@ApplicationContext context: Context) = NetworkPrefs(context)
-
-    @HumanVerificationChannel
-    @Provides
-    @Singleton
-    fun humanVerificationChannelProvider(): Channel<HumanVerificationResult> = Channel()
+    fun provideNetworkPrefs(@ApplicationContext context: Context) =
+        NetworkPrefs(context)
 
     @Provides
     @Singleton
-    fun provideHumanVerificationBinder(
-        @ApplicationContext context: Context,
-        @HumanVerificationChannel channel: Channel<HumanVerificationResult>,
-        user: User
-    ): HumanVerificationBinder = HumanVerificationBinder(context, channel, user)
-
-    @Provides
-    @Singleton
-    fun provideApiClient(
-        binder: HumanVerificationBinder
-    ): ApiClient = CoreExampleApiClient(binder)
+    fun provideApiClient(): ApiClient =
+        CoreExampleApiClient()
 
     @Provides
     @Singleton
     fun provideApiFactory(
         apiClient: ApiClient,
         networkManager: NetworkManager,
-        networkPrefs: NetworkPrefs
+        networkPrefs: NetworkPrefs,
+        sessionProvider: SessionProvider,
+        sessionListener: SessionListener
     ): ApiFactory = ApiFactory(
-        BASE_URL, apiClient, CoreExampleLogger(), networkManager, networkPrefs,
+        BASE_URL, apiClient, CoreExampleLogger(), networkManager, networkPrefs, sessionProvider, sessionListener,
         CoroutineScope(Job() + Dispatchers.Default)
     )
 
     @Provides
-    @CoreExampleApiManager
-    fun provideApiManager(apiFactory: ApiFactory, user: User): ApiManager<CoreExampleApi> =
-        apiFactory.ApiManager(user, CoreExampleApi::class)
+    @Singleton
+    fun provideApiProvider(apiFactory: ApiFactory): ApiProvider =
+        ApiProvider(apiFactory)
+
+    @Provides
+    fun provideSessionProvider(): SessionProvider = object : SessionProvider {
+        override fun getSession(sessionId: SessionId): Session? {
+            TODO("AccountManagerImpl implement SessionProvider.")
+        }
+    }
+
+    @Provides
+    fun provideSessionListener(): SessionListener = object : SessionListener {
+        override fun onSessionTokenRefreshed(session: Session) {
+            TODO("AccountManagerImpl implement SessionListener")
+        }
+
+        override fun onSessionForceLogout(session: Session) {
+            TODO("AccountManagerImpl implement SessionListener")
+        }
+
+        override suspend fun onHumanVerificationNeeded(
+            session: Session,
+            details: HumanVerificationDetails?
+        ): SessionListener.HumanVerificationResult {
+            TODO("AccountManagerImpl implement SessionListener")
+        }
+    }
 
     @Provides
     fun provideLocalRepository(@ApplicationContext context: Context): HumanVerificationLocalRepository =
         HumanVerificationLocalRepositoryImpl(context)
 
     @Provides
-    fun provideRemoteRepository(
-        @CurrentUsername currentUsername: String,
-        @CoreExampleApiManager apiManager: ApiManager<CoreExampleApi>
-    ): HumanVerificationRemoteRepository =
-        HumanVerificationRemoteRepositoryImpl(apiManager, currentUsername)
+    fun provideRemoteRepository(apiProvider: ApiProvider): HumanVerificationRemoteRepository =
+        HumanVerificationRemoteRepositoryImpl(apiProvider)
 }

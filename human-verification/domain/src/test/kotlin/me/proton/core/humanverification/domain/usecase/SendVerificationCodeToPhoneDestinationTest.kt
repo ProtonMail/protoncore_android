@@ -25,6 +25,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
+import me.proton.core.network.domain.session.SessionId
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -43,14 +44,15 @@ class SendVerificationCodeToPhoneDestinationTest {
     @JvmField
     var thrown: ExpectedException = none()
 
+    private val sessionId: SessionId = SessionId("id")
     private val testPhoneNumber = "+123456789"
 
     @Test
     fun `send verification token to API sms`() = runBlockingTest {
         val useCase = SendVerificationCodeToPhoneDestination(remoteRepository)
-        coEvery { remoteRepository.sendVerificationCodePhoneNumber(any()) } returns VerificationResult.Success
+        coEvery { remoteRepository.sendVerificationCodePhoneNumber(any(), any()) } returns VerificationResult.Success
 
-        val result = useCase.invoke(testPhoneNumber)
+        val result = useCase.invoke(sessionId, testPhoneNumber)
         assertEquals(VerificationResult.Success, result)
     }
 
@@ -61,6 +63,6 @@ class SendVerificationCodeToPhoneDestinationTest {
         thrown.expect(EmptyDestinationException::class.java)
         thrown.expectMessage("Provide valid sms destination.")
 
-        useCase.invoke("")
+        useCase.invoke(sessionId, "")
     }
 }

@@ -13,6 +13,7 @@ dependencies {
 
         project(Module.kotlinUtil),
         project(Module.domain),
+        project(Module.networkDomain),
 
         // Kotlin
         `kotlin-jdk8`,

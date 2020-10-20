@@ -28,7 +28,8 @@ import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkPrefs
-import me.proton.core.network.data.util.MockUserData
+import me.proton.core.network.data.util.MockSession
+import me.proton.core.network.data.util.MockSessionListener
 import me.proton.core.network.data.util.TestRetrofitApi
 import me.proton.core.network.data.util.TestTLSHelper
 import me.proton.core.network.data.util.prepareResponse
@@ -36,6 +37,9 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -43,7 +47,11 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.HttpURLConnection
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 // Can't use runBlockingTest with MockWebServer. See:
 // https://github.com/square/retrofit/issues/3330
@@ -55,13 +63,21 @@ internal class ProtonApiBackendTests {
     val scope = CoroutineScope(TestCoroutineDispatcher())
 
     private val testTlsHelper = TestTLSHelper()
-    lateinit var apiFactory: ApiFactory
-    lateinit var webServer: MockWebServer
+    private lateinit var apiFactory: ApiFactory
+    private lateinit var webServer: MockWebServer
 
-    lateinit var backend: ProtonApiBackend<TestRetrofitApi>
-    lateinit var logger: MockLogger
-    lateinit var client: MockApiClient
-    lateinit var user: MockUserData
+    private lateinit var backend: ProtonApiBackend<TestRetrofitApi>
+
+    private lateinit var session: Session
+
+    @MockK
+    private lateinit var sessionProvider: SessionProvider
+    private var sessionListener: SessionListener = MockSessionListener(
+        onTokenRefreshed = { session -> this.session = session }
+    )
+
+    private lateinit var logger: MockLogger
+    private lateinit var client: MockApiClient
 
     private var isNetworkAvailable = true
 
@@ -76,12 +92,24 @@ internal class ProtonApiBackendTests {
         logger = MockLogger()
         client = MockApiClient()
         prefs = MockNetworkPrefs()
-        apiFactory = ApiFactory("https://example.com/", client, logger, networkManager, prefs, scope)
-        user = MockUserData()
+
+        session = MockSession.getDefault()
+        every { sessionProvider.getSession(any()) } returns session
+
+        apiFactory = ApiFactory(
+            "https://example.com/",
+            client,
+            logger,
+            networkManager,
+            prefs,
+            sessionProvider,
+            sessionListener,
+            scope
+        )
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
-
         isNetworkAvailable = true
+
         webServer = testTlsHelper.createMockServer()
 
         backend = createBackend {
@@ -94,7 +122,8 @@ internal class ProtonApiBackendTests {
             webServer.url("/").toString(),
             client,
             logger,
-            user,
+            session.sessionId,
+            sessionProvider,
             apiFactory.baseOkHttpClient,
             listOf(
                 ScalarsConverterFactory.create(),
@@ -114,7 +143,8 @@ internal class ProtonApiBackendTests {
     fun `test ok call`() = runBlocking {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "Number": 5, "String": "foo" }""")
+            """{ "Number": 5, "String": "foo" }"""
+        )
 
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Success)
@@ -150,7 +180,8 @@ internal class ProtonApiBackendTests {
     fun `test proton error`() = runBlocking {
         webServer.prepareResponse(
             401,
-            """{ "Code": 10, "Error": "darn!" }""")
+            """{ "Code": 10, "Error": "darn!" }"""
+        )
 
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Http)
@@ -175,7 +206,8 @@ internal class ProtonApiBackendTests {
     fun `test extra field ignored`() = runBlocking {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "Number": 5, "String": "foo", "Extra": "bar" }""")
+            """{ "Number": 5, "String": "foo", "Extra": "bar" }"""
+        )
 
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Success)
@@ -189,7 +221,8 @@ internal class ProtonApiBackendTests {
     fun `test missing field`() = runBlocking {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "NumberTypo": 5, "String": "foo" }""")
+            """{ "NumberTypo": 5, "String": "foo" }"""
+        )
 
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Parse)
@@ -199,7 +232,8 @@ internal class ProtonApiBackendTests {
     fun `test default val`() = runBlocking {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "Number": 5, "String": "foo" }""")
+            """{ "Number": 5, "String": "foo" }"""
+        )
 
         val result = backend(ApiManager.Call(0) { test() })
         assertEquals(true, result.valueOrNull?.bool)
@@ -209,7 +243,8 @@ internal class ProtonApiBackendTests {
     fun `test deserialize bool from int`() = runBlocking {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "Number": 5, "String": "foo", Bool: 0 }""")
+            """{ "Number": 5, "String": "foo", Bool: 0 }"""
+        )
 
         val result = backend(ApiManager.Call(0) { test() })
         assertEquals(false, result.valueOrNull?.bool)
@@ -223,7 +258,8 @@ internal class ProtonApiBackendTests {
 
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "Number": 5, "String": "foo" }""")
+            """{ "Number": 5, "String": "foo" }"""
+        )
 
         val result = badBackend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Certificate)
@@ -239,7 +275,8 @@ internal class ProtonApiBackendTests {
 
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "Number": 5, "String": "foo" }""")
+            """{ "Number": 5, "String": "foo" }"""
+        )
 
         val result = altBackend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Success)
@@ -255,7 +292,8 @@ internal class ProtonApiBackendTests {
 
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "Number": 5, "String": "foo" }""")
+            """{ "Number": 5, "String": "foo" }"""
+        )
 
         val result = badAltBackend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Certificate)

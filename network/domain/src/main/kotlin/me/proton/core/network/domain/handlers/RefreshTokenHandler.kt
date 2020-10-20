@@ -22,22 +22,30 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.UserData
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 import java.util.concurrent.TimeUnit
 
 /**
  * Handler for Authorization error, will attempt refreshing access token and repeat original call.
  *
  * @param Api API interface.
- * @property userData [UserData] provided by the client.
- * @property monoClockMs Monotonic clock with millisecond resolution
- * @property networkMainScope [CoroutineScope] with default single thread dispatcher.
+ *
+ * @param sessionId optional [SessionId].
+ * @param sessionProvider a [SessionProvider] to get the tokens from.
+ * @param sessionListener a [SessionListener] to inform session changed.
+ * @param monoClockMs Monotonic clock with millisecond resolution.
+ * @param networkMainScope [CoroutineScope] with default single thread dispatcher.
  */
 class RefreshTokenHandler<Api>(
-    private val userData: UserData,
+    private val sessionId: SessionId?,
+    private val sessionProvider: SessionProvider,
+    private val sessionListener: SessionListener,
     private val monoClockMs: () -> Long,
     networkMainScope: CoroutineScope
-) : OneOffJobHandler<ApiBackend<Api>, ApiResult<ApiBackend.Tokens>>(networkMainScope),
+) : OneOffJobHandler<ApiBackend<Api>, ApiResult<Session>>(networkMainScope),
     ApiErrorHandler<Api> {
 
     private var lastRefreshTimeMs: Long = Long.MIN_VALUE
@@ -46,40 +54,40 @@ class RefreshTokenHandler<Api>(
         backend: ApiBackend<Api>,
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
-    ): ApiResult<T> =
-        if (error is ApiResult.Error.Http && error.httpCode == HTTP_UNAUTHORIZED &&
-            userData.refreshToken.isNotEmpty()
-        ) {
-            // Don't attempt to refresh if successful refresh completed recently
-            val refreshedRecently = call.timestampMs <= lastRefreshTimeMs + REFRESH_COOLDOWN_MS
-            if (refreshedRecently || startOneOffJob(backend, ::refreshTokens) is ApiResult.Success)
-                backend(call)
-            else
-                error
-        } else {
-            error
-        }
+    ): ApiResult<T> {
+        // Recoverable with refreshToken ?
+        if (error !is ApiResult.Error.Http || error.httpCode != HTTP_UNAUTHORIZED) return error
+
+        // Do we have a refreshToken ?
+        val session: Session? = sessionId?.let { sessionProvider.getSession(it) }
+        if (session == null || session.refreshToken.isBlank()) return error
+
+        // Don't attempt to refresh if successful refresh completed recently.
+        val refreshedRecently = call.timestampMs <= lastRefreshTimeMs + REFRESH_COOL_DOWN_MS
+        if (refreshedRecently || startOneOffJob(backend) { refreshTokens(session, backend) } is ApiResult.Success)
+            return backend(call)
+
+        return error
+    }
 
     // If refresh is active for another call just wait for it's result instead of starting another.
-    private suspend fun refreshTokens(backend: ApiBackend<Api>): ApiResult<ApiBackend.Tokens> {
-        val refreshResult = backend.refreshTokens()
+    private suspend fun refreshTokens(session: Session, backend: ApiBackend<Api>): ApiResult<Session> {
+        val apiResult = backend.refreshSession(session)
         when {
-            refreshResult is ApiResult.Success -> {
-                userData.updateTokens(
-                    access = refreshResult.value.access,
-                    refresh = refreshResult.value.refresh)
+            apiResult is ApiResult.Success -> {
+                sessionListener.onSessionTokenRefreshed(apiResult.value)
                 lastRefreshTimeMs = monoClockMs()
             }
-            refreshResult is ApiResult.Error.Http && refreshResult.httpCode in FORCE_LOGOUT_HTTP_CODES -> {
-                userData.forceLogout()
+            apiResult is ApiResult.Error.Http && apiResult.httpCode in FORCE_LOGOUT_HTTP_CODES -> {
+                sessionListener.onSessionForceLogout(session)
             }
         }
-        return refreshResult
+        return apiResult
     }
 
     companion object {
         const val HTTP_UNAUTHORIZED = 401
         val FORCE_LOGOUT_HTTP_CODES = listOf(400, 422)
-        val REFRESH_COOLDOWN_MS = TimeUnit.MINUTES.toMillis(1)
+        val REFRESH_COOL_DOWN_MS = TimeUnit.MINUTES.toMillis(1)
     }
 }

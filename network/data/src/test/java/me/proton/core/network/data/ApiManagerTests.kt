@@ -33,10 +33,10 @@ import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkManager
 import me.proton.core.network.data.util.MockNetworkPrefs
-import me.proton.core.network.data.util.MockUserData
+import me.proton.core.network.data.util.MockSession
+import me.proton.core.network.data.util.MockSessionListener
 import me.proton.core.network.data.util.TestResult
 import me.proton.core.network.data.util.TestRetrofitApi
-import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiManagerImpl
 import me.proton.core.network.domain.ApiResult
@@ -46,8 +46,9 @@ import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -61,17 +62,31 @@ internal class ApiManagerTests {
     private val proxy1url = "https://proxy1.com/"
     private val success5foo = ApiResult.Success(TestResult(5, "foo"))
 
-    private lateinit var apiFactory: ApiFactory
-
     private lateinit var apiClient: MockApiClient
-    private lateinit var user: MockUserData
+
     private lateinit var networkManager: MockNetworkManager
+
+    private lateinit var session: Session
+
+    @MockK
+    private lateinit var sessionProvider: SessionProvider
+    private var sessionListener: SessionListener = MockSessionListener(
+        onTokenRefreshed = { session -> this.session = session }
+    )
+
+    private lateinit var apiFactory: ApiFactory
     private lateinit var apiManager: ApiManager<TestRetrofitApi>
+
     private lateinit var dohApiHandler: DohApiHandler<TestRetrofitApi>
 
-    @MockK private lateinit var backend: ProtonApiBackend<TestRetrofitApi>
-    @MockK private lateinit var altBackend1: ProtonApiBackend<TestRetrofitApi>
-    @MockK private lateinit var dohService: DohService
+    @MockK
+    private lateinit var backend: ProtonApiBackend<TestRetrofitApi>
+
+    @MockK
+    private lateinit var altBackend1: ProtonApiBackend<TestRetrofitApi>
+
+    @MockK
+    private lateinit var dohService: DohService
 
     private var time = 0L
     private var wallTime = 0L
@@ -85,13 +100,16 @@ internal class ApiManagerTests {
 
         prefs = MockNetworkPrefs()
         apiClient = MockApiClient()
+
+        session = MockSession.getDefault()
+        every { sessionProvider.getSession(any()) } returns session
+
         networkManager = MockNetworkManager()
         networkManager.networkStatus = NetworkStatus.Unmetered
 
         val scope = CoroutineScope(TestCoroutineDispatcher())
-        apiFactory = ApiFactory(baseUrl, apiClient, MockLogger(), networkManager, prefs, scope)
-
-        user = MockUserData()
+        apiFactory =
+            ApiFactory(baseUrl, apiClient, MockLogger(), networkManager, prefs, sessionProvider, sessionListener, scope)
 
         coEvery { dohService.getAlternativeBaseUrls(any()) } returns listOf(proxy1url)
         val dohProvider = DohProvider(baseUrl, apiClient, listOf(dohService), scope, prefs, ::time)
@@ -99,8 +117,10 @@ internal class ApiManagerTests {
             altBackend1
         }
         ApiManagerImpl.failRequestBeforeTimeMs = Long.MIN_VALUE
-        apiManager = ApiManagerImpl(apiClient, backend, dohApiHandler, networkManager,
-            apiFactory.createBaseErrorHandlers(user, ::time, scope), ::time)
+        apiManager = ApiManagerImpl(
+            apiClient, backend, dohApiHandler, networkManager,
+            apiFactory.createBaseErrorHandlers(session.sessionId, ::time, scope), ::time
+        )
 
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Success(TestResult(5, "foo"))
         every { altBackend1.baseUrl } returns proxy1url
@@ -128,7 +148,8 @@ internal class ApiManagerTests {
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
             ApiResult.Error.Timeout(true),
             ApiResult.Error.Timeout(true),
-            ApiResult.Success(TestResult(5, "foo")))
+            ApiResult.Success(TestResult(5, "foo"))
+        )
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Success)
         assertEquals(5, result.value.number)
@@ -141,7 +162,8 @@ internal class ApiManagerTests {
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
             ApiResult.Error.Timeout(true),
             ApiResult.Error.Timeout(true),
-            ApiResult.Success(TestResult(5, "foo")))
+            ApiResult.Success(TestResult(5, "foo"))
+        )
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Error.Timeout)
     }
@@ -151,7 +173,8 @@ internal class ApiManagerTests {
         apiClient.shouldUseDoh = false
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
             ApiResult.Error.Timeout(true),
-            ApiResult.Success(TestResult(5, "foo")))
+            ApiResult.Success(TestResult(5, "foo"))
+        )
         val result = apiManager.invoke(forceNoRetryOnConnectionErrors = true) { test() }
         assertTrue(result is ApiResult.Error.Timeout)
     }
@@ -159,13 +182,13 @@ internal class ApiManagerTests {
     @Test
     fun `test token refresh`() = runBlockingTest {
         coEvery { backend.invoke<TestResult>(any()) } answers {
-            if (user.accessToken == "new_access_token" && user.refreshToken == "new_refresh_token")
+            if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
                 ApiResult.Success(TestResult(5, "foo"))
             else
                 ApiResult.Error.Http(401, "Unauthorized")
         }
-        coEvery { backend.refreshTokens() } returns
-                ApiResult.Success(ApiBackend.Tokens(refresh = "new_refresh_token", access = "new_access_token"))
+        coEvery { backend.refreshSession(session) } returns
+            ApiResult.Success(session.copy(refreshToken = "new_refresh_token", accessToken = "new_access_token"))
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Success)
     }
@@ -174,7 +197,7 @@ internal class ApiManagerTests {
     fun `test token refresh on concurrent calls`() = runBlockingTest {
         var count401 = 0
         coEvery { backend.invoke<TestResult>(any()) } coAnswers {
-            if (user.accessToken == "new_access_token" && user.refreshToken == "new_refresh_token")
+            if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
                 ApiResult.Success(TestResult(5, "foo"))
             else {
                 count401++
@@ -182,8 +205,8 @@ internal class ApiManagerTests {
                 ApiResult.Error.Http(401, "Unauthorized")
             }
         }
-        coEvery { backend.refreshTokens() } coAnswers {
-            ApiResult.Success(ApiBackend.Tokens(refresh = "new_refresh_token", access = "new_access_token"))
+        coEvery { backend.refreshSession(session) } coAnswers {
+            ApiResult.Success(session.copy(refreshToken = "new_refresh_token", accessToken = "new_access_token"))
         }
 
         // concurrent execution of 2 calls, both will receive 401 and eventually succeed but only
@@ -195,36 +218,34 @@ internal class ApiManagerTests {
         assertTrue(result2.await() is ApiResult.Success)
         assertEquals(2, count401)
         coVerify(exactly = 1) {
-            backend.refreshTokens()
+            backend.refreshSession(any())
         }
     }
 
     @Test
     fun `test failed token refresh`() = runBlockingTest {
-        val oldAccessToken = user.accessToken
+        val oldAccessToken = session.accessToken
         coEvery { backend.invoke<TestResult>(any()) } answers {
-            if (user.accessToken == oldAccessToken)
+            if (session.accessToken == oldAccessToken)
                 ApiResult.Error.Http(401, "Unauthorized")
             else
                 ApiResult.Success(TestResult(5, "foo"))
         }
-        coEvery { backend.refreshTokens() } returns
-                ApiResult.Error.Http(400, "")
+        coEvery { backend.refreshSession(session) } returns ApiResult.Error.Http(400, "")
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Error)
-        assertEquals(true, user.loggedOut)
     }
 
     @Test
     fun `test old request token refresh`() = runBlockingTest {
         coEvery { backend.invoke<TestResult>(any()) } answers {
-            if (user.accessToken == "new_access_token" && user.refreshToken == "new_refresh_token")
+            if (session.accessToken == "new_access_token" && session.refreshToken == "new_refresh_token")
                 ApiResult.Success(TestResult(5, "foo"))
             else
                 ApiResult.Error.Http(401, "Unauthorized")
         }
-        coEvery { backend.refreshTokens() } returns
-                ApiResult.Success(ApiBackend.Tokens(refresh = "new_refresh_token", access = "new_access_token"))
+        coEvery { backend.refreshSession(session) } returns
+            ApiResult.Success(session.copy(refreshToken = "new_refresh_token", accessToken = "new_access_token"))
 
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Success)
@@ -240,15 +261,17 @@ internal class ApiManagerTests {
 
         // Token should be refreshed only for the first request
         coVerify(exactly = 1) {
-            backend.refreshTokens()
+            backend.refreshSession(any())
         }
     }
 
     @Test
     fun `test force update`() = runBlockingTest {
         coEvery { backend.invoke<TestResult>(any()) } returns
-                ApiResult.Error.Http(400, "",
-                    ApiResult.Error.ProtonData(ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE, ""))
+            ApiResult.Error.Http(
+                400, "",
+                ApiResult.Error.ProtonData(ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE, "")
+            )
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Error)
         assertEquals(true, apiClient.forceUpdated)
@@ -257,8 +280,8 @@ internal class ApiManagerTests {
     @Test
     fun `test too many requests`() = runBlockingTest {
         coEvery { backend.invoke<TestResult>(any()) } returnsMany listOf(
-                ApiResult.Error.TooManyRequest(5),
-                ApiResult.Success(TestResult(5, "foo"))
+            ApiResult.Error.TooManyRequest(5),
+            ApiResult.Success(TestResult(5, "foo"))
         )
 
         time = 0
