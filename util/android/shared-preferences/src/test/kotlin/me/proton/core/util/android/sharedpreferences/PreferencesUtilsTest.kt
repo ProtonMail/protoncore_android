@@ -93,6 +93,24 @@ internal class PreferencesUtilsTest {
         p["key"] = setOf("hello", "world")
         assertEquals(setOf("hello", "world"), p.get("key", emptySet()))
     }
+
+    @Test
+    fun `set and get for generic Set`() {
+        p["key"] = setOf(8, 9)
+        assertEquals(setOf(8, 9), p.get("key", emptySet()))
+    }
+
+    @Test
+    fun `set and get for generic List`() {
+        p["key"] = listOf(10f, 11f)
+        assertEquals(listOf(10f, 11f), p.get("key", emptyList()))
+    }
+
+    @Test
+    fun `set and get for generic Map`() {
+        p["key"] = mapOf("first" to 12.5, "second" to 13.5)
+        assertEquals(mapOf("first" to 12.5, "second" to 13.5), p.get("key", emptyMap()))
+    }
     // endregion
 
     @Test
