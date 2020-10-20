@@ -102,7 +102,7 @@ Util Gradle: **0.2** - _released on: Oct 07, 2020_
 
 Test Kotlin: **0.1.1** - _released on: Sep 16, 2020_
 
-Test Android: **0.2** - _released on: Aug 05, 2020_
+Test Android: **0.2.1** - _released on: Oct 20, 2020_
 
 Test Android Instrumented: **0.1.2** - _released on: Sep 14, 2020_
 
