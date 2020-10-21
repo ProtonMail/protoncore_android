@@ -19,14 +19,13 @@
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
-
 plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 1, 2)
+libVersion = Version(0, 2, 0)
 
 android()
 
@@ -38,7 +37,7 @@ dependencies {
 
         // Kotlin
         `kotlin-jdk7`,
-        `serialization`,
+        `serialization-json`,
 
         // Android
         `android-ktx`

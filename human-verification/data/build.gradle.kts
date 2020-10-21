@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 1, 0)
+libVersion = Version(0, 2, 0)
 
 android()
 
@@ -38,7 +38,7 @@ dependencies {
 
         // Kotlin
         `kotlin-jdk7`,
-        `serialization`,
+        `serialization-json`,
         `coroutines-core`,
 
         // Other
@@ -50,4 +50,3 @@ dependencies {
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))
 }
-

@@ -37,7 +37,7 @@ dependencies {
 
         // Kotlin
         `kotlin-jdk7`,
-        `serialization`,
+        `serialization-json`,
         `coroutines-core`,
 
         // Other

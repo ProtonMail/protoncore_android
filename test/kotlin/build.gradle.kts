@@ -18,13 +18,12 @@
 
 import studio.forface.easygradle.dsl.*
 
-
 plugins {
     `java-library`
     kotlin("jvm")
 }
 
-libVersion = Version(0, 1, 1)
+libVersion = Version(0, 2, 0)
 
 dependencies {
 

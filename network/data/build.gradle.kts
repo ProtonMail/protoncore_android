@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 2, 3)
+libVersion = Version(0, 3, 0)
 
 android()
 
@@ -40,7 +40,7 @@ dependencies {
         // Kotlin
         `kotlin-jdk7`,
         `coroutines-core`,
-        `serialization`,
+        `serialization-json`,
 
         // Other
         `apacheCommon-codec`,
