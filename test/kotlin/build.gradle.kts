@@ -17,13 +17,13 @@
  */
 
 import studio.forface.easygradle.dsl.*
-import util.libVersion
 
 plugins {
-    `kotlin-library`
+    `java-library`
+    kotlin("jvm")
 }
 
-libVersion = Version(0, 1, 1)
+libVersion = Version(0, 2, 0)
 
 dependencies {
 

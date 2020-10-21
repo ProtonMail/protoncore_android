@@ -16,26 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import util.libVersion
-
 plugins {
-    `kotlin-dsl`
-    `kotlin-library`
+    val kotlinVersion = "1.4.10"
+    val publishVersion = "0.7"
+
+    kotlin("jvm") version kotlinVersion
+    id("me.proton.publish-plugins") version publishVersion
 }
 
-libVersion = Version(0, 2, 0)
-
-dependencies {
-
-    implementation(
-        `kotlin-jdk7`,
-
-        `kotlin-gradle-plugin`,
-        `detekt-gradle-plugin`,
-        `dokka-gradle-plugin`
-    )
-    api(`easyGradle-android`)
-
-    testImplementation(project(Module.kotlinTest))
+repositories {
+    mavenCentral()
 }

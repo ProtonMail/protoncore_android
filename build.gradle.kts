@@ -16,42 +16,47 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import me.proton.core.util.gradle.*
-import setup.setupPublishing
-import setup.setupTests
-
 /**
  * Registered tasks:
- * * `allTest`
- * * `detekt`
+ * * `allTest` ( 'me.proton.tests' plugin )
+ * * `detekt` ( 'me.proton.detekt' plugin )
+ * * `multiModuleDetekt` ( 'me.proton.detekt' plugin )
+ * * `publishAll` ( 'me.proton.publish-libraries' plugin )
  * * `dokka`
- * * `multiModuleDetekt` [setupDetekt]
- * * `publishAll` [setupPublishing]
  */
+plugins {
+    id("core")
+    id("me.proton.detekt")
+    id("me.proton.kotlin")
+    id("me.proton.publish-libraries")
+    id("me.proton.tests")
+}
 
 buildscript {
-    initVersions()
+    repositories.google()
 
-    repositories(repos)
-    dependencies(classpathDependencies)
+    dependencies {
+        val kotlinVersion = "1.4.10" // Sep 09, 2020
+        val agpVersion = "4.2.0-alpha13"
+        val hiltVersion = "2.29.1-alpha" // Sep 10, 2020
+
+        classpath(kotlin("gradle-plugin", kotlinVersion))
+        classpath(kotlin("serialization", kotlinVersion))
+        classpath("org.jetbrains.dokka:dokka-gradle-plugin:$kotlinVersion")
+        classpath("com.android.tools.build:gradle:$agpVersion")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
+    }
 }
 
-allprojects {
-    repositories(repos)
-}
-
-setupKotlin(
+kotlinCompilerArgs(
     "-XXLanguage:+NewInference",
     "-Xuse-experimental=kotlin.Experimental",
     // Enables inline classes
     "-XXLanguage:+InlineClasses",
     // Enables experimental Coroutines from coroutines-test artifact, like `runBlockingTest`
-    "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+    "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+    "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
 )
-setupTests()
-setupDetekt()
-setupDokka()
-setupPublishing()
 
 tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)

@@ -77,6 +77,22 @@ publishBintray:
           - docs
           - README.md
 
+publishGradlePortal:
+  stage: publish
+  tags:
+    - android
+  script:
+    - ./gradlew -p util/gradle assemble && ./gradlew -p util/gradle publishAll
+  only:
+    - master
+  artifacts:
+    expire_in: 10 days
+    paths:
+      - new_releases.tmp
+      - releases
+      - docs
+      - README.md
+
 commitRelease:
   stage: commit
   needs:

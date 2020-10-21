@@ -17,12 +17,11 @@
  */
 package me.proton.core.network.data.protonApi
 
-import kotlinx.serialization.Decoder
-import kotlinx.serialization.Encoder
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialDescriptor
-import kotlinx.serialization.SerializationException
-import kotlinx.serialization.json.JsonInput
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * Kotlin Boolean serializer that can deserialize Boolean from both bool and int json values
@@ -31,20 +30,17 @@ import kotlinx.serialization.json.JsonInput
  */
 class IntToBoolSerializer : KSerializer<Boolean> {
 
-    override fun deserialize(decoder: Decoder): Boolean {
-        val json = (decoder as? JsonInput)?.decodeJson()
-        val bool = json?.primitive?.booleanOrNull
-        if (bool != null)
-            return bool
-        val int = json?.primitive?.intOrNull
-            ?: throw SerializationException("boolean or int required")
-        return int != 0
-    }
+    override val descriptor =
+        PrimitiveSerialDescriptor(IntToBoolSerializer::class.qualifiedName!!, PrimitiveKind.STRING)
 
-    override val descriptor: SerialDescriptor
-        get() = SerialDescriptor(IntToBoolSerializer::class.qualifiedName!!)
+    override fun deserialize(decoder: Decoder): Boolean =
+        decoder.decodeString().toBooleanFromInt()
 
     override fun serialize(encoder: Encoder, value: Boolean) {
         encoder.encodeBoolean(value)
     }
+
+    private fun String.toBooleanFromInt() =
+        toBoolean() || toIntOrNull()?.let { it > 0 } ?: false
 }
+

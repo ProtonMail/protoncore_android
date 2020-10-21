@@ -17,21 +17,21 @@
  */
 
 import studio.forface.easygradle.dsl.*
-import util.libVersion
 
 plugins {
-    `kotlin-library`
-    `kotlin-serialization`
+    `java-library`
+    kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 1, 6)
+libVersion = Version(0, 2, 0)
 
 dependencies {
 
     implementation(
         `kotlin-jdk7`,
         `coroutines-core`,
-        `serialization`
+        `serialization-json`
     )
 
     testImplementation(project(Module.kotlinTest))

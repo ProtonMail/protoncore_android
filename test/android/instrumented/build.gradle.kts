@@ -18,13 +18,13 @@
 
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
-import util.libVersion
 
 plugins {
-    `android-library`
+    id("com.android.library")
+    kotlin("android")
 }
 
-libVersion = Version(0, 1, 2)
+libVersion = Version(0, 2, 0)
 
 android()
 
@@ -43,10 +43,7 @@ dependencies {
 
     // Test dependencies
     api(
-        project(Module.androidTest).apply {
-            exclude(`mockk`)
-            exclude(`robolectric`)
-        },
+        project(Module.androidTest) exclude `mockk` exclude `robolectric`,
 
         // MockK
         `mockk-android`,

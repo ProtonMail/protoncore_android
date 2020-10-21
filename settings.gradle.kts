@@ -20,17 +20,26 @@ rootProject.name = "Proton Core"
 
 
 val (projects, modules) = rootDir.projectsAndModules()
+val namedProjects = projects.map { it to it.replace("/", "-") }
 val namedModules = modules.map { it to it.drop(1).replace(":", "-") }
 
-println("Projects: ${projects.sorted().joinToString()}")
+println("Projects: ${namedProjects.sortedBy { it.first }.joinToString { "${it.first} as ${it.second}" } }")
 println("Modules: ${namedModules.sortedBy { it.first }.joinToString { "${it.first} as ${it.second}" } }")
 
-for (p in projects) includeBuild(p)
+for ((p, n) in namedProjects) includeBuild(p) { name = n }
 for (m in modules) include(m)
 
 for (m in namedModules) project(m.first).name = m.second
 
 enableFeaturePreview("GRADLE_METADATA")
+
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://plugins.gradle.org/m2/")
+    }
+}
 
 
 fun File.projectsAndModules(): Pair<Set<String>, Set<String>> {
@@ -57,14 +66,14 @@ fun File.projectsAndModules(): Pair<Set<String>, Set<String>> {
     val modules = mutableSetOf<String>()
     val projects = mutableSetOf<String>()
 
-    fun File.find(name: String? = null): List<File> = childrenDirectories().flatMap {
+    fun File.find(name: String? = null, includeModules: Boolean = true): List<File> = childrenDirectories().flatMap {
         val newName = (name ?: "") + it.name
         when {
             it.isProject() -> {
                 projects += newName
-                emptyList()
+                it.find("$newName:", includeModules = false)
             }
-            it.isModule() -> {
+            it.isModule() && includeModules -> {
                 modules += ":$newName"
                 it.find("$newName:")
             }
@@ -74,5 +83,7 @@ fun File.projectsAndModules(): Pair<Set<String>, Set<String>> {
 
     find()
 
-    return projects to modules
+    // we need to replace here since some Projects have a Module as a parent folder
+    val formattedProjects = projects.map { it.replace(":", "/") }.toSet()
+    return formattedProjects to modules
 }

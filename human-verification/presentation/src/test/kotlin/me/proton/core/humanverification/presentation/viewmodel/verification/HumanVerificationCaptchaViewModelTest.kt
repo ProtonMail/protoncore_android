@@ -30,7 +30,6 @@ import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.test.kotlin.coroutinesTest
 import org.junit.Rule
 import org.junit.Test
 import studio.forface.viewstatestore.ViewState
@@ -42,7 +41,7 @@ import kotlin.test.assertTrue
  * @author Dino Kadrikj.
  */
 @ExperimentalCoroutinesApi
-class HumanVerificationCaptchaViewModelTest : CoroutinesTest by coroutinesTest {
+class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
 
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
@@ -63,7 +62,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest by coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Metered)
-        assertIs<ViewState.Success<Boolean>>(viewModel.networkConnectionState.awaitNext())
+        assertIs<ViewState.Success<Boolean>>(viewModel.networkConnectionState.await())
         val result = viewModel.networkConnectionState.awaitData()
         assertTrue(result)
     }
@@ -73,7 +72,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest by coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Unmetered)
-        assertIs<ViewState.Success<Boolean>>(viewModel.networkConnectionState.awaitNext())
+        assertIs<ViewState.Success<Boolean>>(viewModel.networkConnectionState.await())
         val result = viewModel.networkConnectionState.awaitData()
         assertTrue(result)
     }
@@ -83,7 +82,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest by coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Disconnected)
-        assertIs<ViewState.Success<Boolean>>(viewModel.networkConnectionState.awaitNext())
+        assertIs<ViewState.Success<Boolean>>(viewModel.networkConnectionState.await())
         val result = viewModel.networkConnectionState.awaitData()
         assertFalse(result)
     }
@@ -93,7 +92,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest by coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Unmetered)
-        viewModel.networkConnectionState.awaitNext()
+        viewModel.networkConnectionState.await()
         assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode(sessionId, null) }
     }
 
@@ -102,7 +101,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest by coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Unmetered)
-        viewModel.networkConnectionState.awaitNext()
+        viewModel.networkConnectionState.await()
         assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode(sessionId, "") }
     }
 }
