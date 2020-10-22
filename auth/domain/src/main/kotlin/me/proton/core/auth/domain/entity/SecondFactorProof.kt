@@ -16,23 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.auth.domain.entity
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-}
+sealed class SecondFactorProof {
 
-libVersion = Version(0, 2, 1)
+    /**
+     * The 2FA code here is string, because the same will be used for recovery code (which happens on the same route).
+     */
+    data class SecondFactorCode(
+        val code: String
+    ) : SecondFactorProof()
 
-dependencies {
-
-    implementation(
-        `kotlin-jdk7`,
-        `coroutines-core`,
-        `serialization-json`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+    data class SecondFactorSignature(
+        val keyHandle: String,
+        val clientData: String,
+        val signatureData: String
+    ) : SecondFactorProof()
 }

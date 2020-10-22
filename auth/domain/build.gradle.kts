@@ -32,13 +32,18 @@ dependencies {
 
         project(Module.kotlinUtil),
         project(Module.domain),
+        project(Module.networkDomain),
 
         // Kotlin
         `kotlin-jdk8`,
         `coroutines-core`,
 
         // Android
-        `dagger`
+        `dagger`,
+
+        // Other
+        `bcrypt`,
+        `googleTink`
     )
 
     testImplementation(project(Module.kotlinTest))

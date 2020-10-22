@@ -16,23 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.auth.domain.entity
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-}
+data class KeySalts(
+    val salts: List<KeySalt>
+)
 
-libVersion = Version(0, 2, 1)
-
-dependencies {
-
-    implementation(
-        `kotlin-jdk7`,
-        `coroutines-core`,
-        `serialization-json`
-    )
-
-    testImplementation(project(Module.kotlinTest))
-}
+data class KeySalt(
+    val keyId: String,
+    val keySalt: String
+)
