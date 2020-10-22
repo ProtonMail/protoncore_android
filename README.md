@@ -79,7 +79,7 @@ Util Android Shared Preferences: **0.2** - _released on: Oct 21, 2020_
 
 Util Android Work Manager: **0.2** - _released on: Oct 21, 2020_
 
-Util Kotlin: **0.2** - _released on: Oct 21, 2020_
+Util Kotlin: **0.2.1** - _released on: Oct 22, 2020_
 
 ### Test
 
@@ -95,7 +95,7 @@ Domain: **0.2** - _released on: Oct 21, 2020_
 
 Presentation: **0.4** - _released on: Oct 21, 2020_
 
-Data: **0** - _released on: ND_
+Data: **0.1** - _released on: Oct 22, 2020_
 
 ## Support
 
