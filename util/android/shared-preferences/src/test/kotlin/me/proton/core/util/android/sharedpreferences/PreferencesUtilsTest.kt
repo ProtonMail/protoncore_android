@@ -19,39 +19,99 @@
 package me.proton.core.util.android.sharedpreferences
 
 import androidx.core.content.edit
-import me.proton.core.test.android.mocks.mockSharedPreferences
+import me.proton.core.test.android.mocks.newMockSharedPreferences
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Test suite for Preferences's DSL
+ * Test suite for Preferences' DSL
  * @author Davide Farella
  */
 internal class PreferencesUtilsTest {
 
-    private val p = mockSharedPreferences
+    private val p = newMockSharedPreferences
 
     // region get - set
+    // region get
     @Test
-    fun `get non null by type inference`() {
+    fun `get non null Int by type inference`() {
         val number = p.get("key", 4)
         assertEquals(4, number)
     }
 
     @Test
-    fun `get nullable by type inference`() {
+    fun `get nullable Int by type inference`() {
         val number: Int? = p["key"]
         assertEquals(null, number)
     }
+    // endregion
 
+    // region set
     @Test
     fun `set by type inference`() {
         p.edit { put("key", 5) }
         @Suppress("RemoveExplicitTypeArguments") // Bug: It is needed
         assertEquals(5, p.get<Int?>("key"))
     }
+    // endregion
+
+    // region set + get by type
+    @Test
+    fun `set and get for Boolean`() {
+        p["key"] = true
+        assertEquals(true, p.get("key", false))
+    }
+
+    @Test
+    fun `set and get for Float`() {
+        p["key"] = 5f
+        assertEquals(5f, p.get("key", 0f))
+    }
+
+    @Test
+    fun `set and get for Int`() {
+        p["key"] = 6
+        assertEquals(6, p.get("key", 0))
+    }
+
+    @Test
+    fun `set and get for Long`() {
+        p["key"] = 7L
+        assertEquals(7L, p.get("key", 0L))
+    }
+
+    @Test
+    fun `set and get for String`() {
+        p["key"] = "hi"
+        assertEquals("hi", p.get("key", "bye"))
+    }
+
+    @Test
+    fun `set and get for StringSet`() {
+        p["key"] = setOf("hello", "world")
+        assertEquals(setOf("hello", "world"), p.get("key", emptySet()))
+    }
+
+    @Test
+    fun `set and get for generic Set`() {
+        p["key"] = setOf(8, 9)
+        assertEquals(setOf(8, 9), p.get("key", emptySet()))
+    }
+
+    @Test
+    fun `set and get for generic List`() {
+        p["key"] = listOf(10f, 11f)
+        assertEquals(listOf(10f, 11f), p.get("key", emptyList()))
+    }
+
+    @Test
+    fun `set and get for generic Map`() {
+        p["key"] = mapOf("first" to 12.5, "second" to 13.5)
+        assertEquals(mapOf("first" to 12.5, "second" to 13.5), p.get("key", emptyMap()))
+    }
+    // endregion
 
     @Test
     fun `remove by minusAssign`() {
@@ -70,7 +130,7 @@ internal class PreferencesUtilsTest {
 
     // region clear
     @Test
-    fun `clearAll removed all preferences`() {
+    fun `clearAll remove all preferences`() {
         p.edit {
             put("key1", 1)
             put("key2", true)
