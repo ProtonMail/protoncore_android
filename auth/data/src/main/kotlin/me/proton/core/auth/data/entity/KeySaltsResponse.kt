@@ -15,39 +15,33 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("plugin.serialization")
+package me.proton.core.auth.data.entity
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.entity.KeySalt
+import me.proton.core.auth.domain.entity.KeySalts
+
+@Serializable
+data class KeySaltsResponse(
+    @SerialName("KeySalts")
+    val salts: List<KeySaltInfo>
+) {
+    fun toKeySalts(): KeySalts = KeySalts(
+        salts = salts.map { it.toKeySalt() }
+    )
 }
 
-//libVersion = Version(0, 1, 0)
-
-android()
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.data),
-        project(Module.domain),
-        project(Module.network),
-        project(Module.authDomain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `serialization-json`,
-        `coroutines-core`,
-
-        // Other
-        `okHttp-logging`,
-        `retrofit`,
-        `retrofit-kotlin-serialization`
+@Serializable
+data class KeySaltInfo(
+    @SerialName("ID")
+    val keyId: String,
+    @SerialName("KeySalt")
+    val keySalt: String
+) {
+    fun toKeySalt() = KeySalt(
+        keyId = keyId,
+        keySalt = keySalt
     )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
 }
