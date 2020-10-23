@@ -23,7 +23,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.slot
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
@@ -43,7 +42,6 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
-@ExperimentalCoroutinesApi
 class AccountManagerImplTest {
 
     private lateinit var accountManager: AccountManagerImpl

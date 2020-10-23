@@ -21,7 +21,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import me.proton.core.network.data.di.ApiFactory
@@ -56,7 +55,6 @@ import kotlin.test.assertTrue
 // Can't use runBlockingTest with MockWebServer. See:
 // https://github.com/square/retrofit/issues/3330
 // https://github.com/Kotlin/kotlinx.coroutines/issues/1204
-@ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
 internal class ProtonApiBackendTests {
 

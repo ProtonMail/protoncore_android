@@ -21,7 +21,6 @@ package me.proton.core.auth.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -37,7 +36,6 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class PerformLogoutTest {
     private val authRepository = mockk<AuthRepository>(relaxed = true)
 

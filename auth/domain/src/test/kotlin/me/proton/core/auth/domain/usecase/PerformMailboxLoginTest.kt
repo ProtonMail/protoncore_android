@@ -22,7 +22,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.crypto.CryptoProvider
@@ -43,7 +42,6 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class PerformMailboxLoginTest {
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val cryptoProvider = mockk<CryptoProvider>(relaxed = true)

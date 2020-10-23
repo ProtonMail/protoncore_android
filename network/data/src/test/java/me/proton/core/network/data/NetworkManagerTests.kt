@@ -17,7 +17,6 @@
  */
 package me.proton.core.network.data
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
@@ -29,7 +28,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@ExperimentalCoroutinesApi
 internal class NetworkManagerTests {
 
     private lateinit var networkManager: MockNetworkManager

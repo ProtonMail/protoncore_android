@@ -20,7 +20,6 @@ package me.proton.core.humanverification.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
@@ -37,7 +36,6 @@ import org.junit.rules.ExpectedException
  *
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class ResendVerificationCodeToDestinationTest {
 
     private val remoteRepository = mockk<HumanVerificationRemoteRepository>()

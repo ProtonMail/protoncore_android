@@ -22,7 +22,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.domain.handlers.HumanVerificationHandler
@@ -37,7 +36,6 @@ import kotlin.test.assertNotNull
 /**
  * Tests for Human Verification domain handler.
  */
-@ExperimentalCoroutinesApi
 class HumanVerificationHandlerTest {
 
     private val sessionId: SessionId = SessionId("id")

@@ -21,7 +21,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.data.api.HumanVerificationApi
 import me.proton.core.humanverification.domain.entity.VerificationResult
@@ -40,7 +39,6 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class HumanVerificationRemoteRepositoryImplTest {
 
     private val sessionId: SessionId = SessionId("id")

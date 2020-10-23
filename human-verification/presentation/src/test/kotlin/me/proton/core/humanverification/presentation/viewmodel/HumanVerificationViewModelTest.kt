@@ -22,7 +22,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.test.kotlin.assertIs
@@ -35,7 +34,6 @@ import kotlin.test.assertNotNull
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class HumanVerificationViewModelTest {
 
     @get:Rule

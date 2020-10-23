@@ -21,7 +21,6 @@ package me.proton.core.auth.data.repository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.domain.entity.KeySalt
@@ -47,7 +46,6 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class AuthRepositoryImplTest {
 
     // region mocks

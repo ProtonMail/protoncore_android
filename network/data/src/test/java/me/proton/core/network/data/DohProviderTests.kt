@@ -20,7 +20,6 @@ package me.proton.core.network.data
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
 import me.proton.core.network.data.util.MockApiClient
@@ -43,7 +42,6 @@ import kotlin.test.assertEquals
 // Can't use runBlockingTest with MockWebServer. See:
 // https://github.com/square/retrofit/issues/3330
 // https://github.com/Kotlin/kotlinx.coroutines/issues/1204
-@ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
 internal class DohProviderTests {
 

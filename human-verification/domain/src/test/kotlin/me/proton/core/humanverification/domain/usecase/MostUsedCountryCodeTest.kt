@@ -20,7 +20,6 @@ package me.proton.core.humanverification.domain.usecase
 
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
@@ -35,7 +34,6 @@ import org.junit.Test
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class MostUsedCountryCodeTest {
 
     private val localRepository = mockk<HumanVerificationLocalRepository>()

@@ -21,7 +21,6 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
@@ -39,7 +38,6 @@ import kotlin.test.assertEquals
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class HumanVerificationEmailViewModelTest : CoroutinesTest by coroutinesTest {
 
     @get:Rule
