@@ -93,7 +93,7 @@ Test Android Instrumented: **0.2** - _released on: Oct 21, 2020_
 
 Domain: **0.2** - _released on: Oct 21, 2020_
 
-Presentation: **0.4** - _released on: Oct 21, 2020_
+Presentation: **0.4.1** - _released on: Oct 23, 2020_
 
 Data: **0.1** - _released on: Oct 22, 2020_
 
