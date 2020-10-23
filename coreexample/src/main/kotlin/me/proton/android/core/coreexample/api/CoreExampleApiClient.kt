@@ -21,13 +21,14 @@ package me.proton.android.core.coreexample.api
 import android.os.Build
 import me.proton.core.network.domain.ApiClient
 import java.util.Locale
+import javax.inject.Inject
 
 /**
  * @author Dino Kadrikj.
  */
 const val VERSION_NAME = "0.0.1"
 
-class CoreExampleApiClient : ApiClient {
+class CoreExampleApiClient @Inject constructor() : ApiClient {
     /**
      * Tells the lib if DoH should be used in a given moment (based e.g. on user setting or whether
      * VPN connection is active). Will be checked before  each API call.

@@ -50,6 +50,7 @@ fun org.gradle.api.Project.android(
         // SDK
         minSdkVersion(minSdk)
         targetSdkVersion(targetSdk)
+        ndkVersion = "20.0.5594570"
 
         // Other
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -104,6 +105,10 @@ fun org.gradle.api.Project.android(
         exclude("org/codehaus/plexus/*.xml")
         exclude("org/cyberneko/html/res/*.txt")
         exclude("org/cyberneko/html/res/*.properties")
+        pickFirst("lib/armeabi-v7a/libgojni.so")
+        pickFirst("lib/arm64-v8a/libgojni.so")
+        pickFirst("lib/x86/libgojni.so")
+        pickFirst("lib/x86_64/libgojni.so")
     }
 
     apply(config)

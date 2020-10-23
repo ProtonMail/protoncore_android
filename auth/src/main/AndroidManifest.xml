@@ -33,7 +33,11 @@
             android:theme="@style/ProtonTheme.NoToolbar" />
 
         <activity
-            android:name=".presentation.ui.TwoFactorActivity"
+            android:name=".presentation.ui.SecondFactorActivity"
+            android:theme="@style/ProtonTheme.NoToolbar" />
+
+        <activity
+            android:name=".presentation.ui.MailboxLoginActivity"
             android:theme="@style/ProtonTheme.NoToolbar" />
 
     </application>

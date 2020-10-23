@@ -19,6 +19,8 @@
 package me.proton.android.core.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 
 /**
  * TBD.
