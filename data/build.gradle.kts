@@ -40,8 +40,7 @@ dependencies {
         `coroutines-core`,
 
         // Android
-        `room-ktx`,
-        `security-crypto`
+        `room-ktx`
     )
 
     testImplementation(project(Module.kotlinTest))

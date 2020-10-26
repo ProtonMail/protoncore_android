@@ -49,8 +49,8 @@ object AccountManagerModule {
 
     @Provides
     @Singleton
-    fun provideStringCrypto(@ApplicationContext context: Context): StringCrypto =
-        KeyStoreStringCrypto(context)
+    fun provideStringCrypto(): StringCrypto =
+        KeyStoreStringCrypto()
 
     @Provides
     @Singleton

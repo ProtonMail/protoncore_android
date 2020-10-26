@@ -18,75 +18,60 @@
 
 package me.proton.core.data.crypto
 
-import android.content.Context
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
 import android.util.Base64
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
-import java.security.SecureRandom
+import java.security.KeyStore
 import java.util.Arrays
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
-import javax.crypto.spec.IvParameterSpec
-import javax.crypto.spec.SecretKeySpec
+import javax.crypto.spec.GCMParameterSpec
 
 /**
- * [StringCrypto] implementation base on Android [MasterKey] and [EncryptedSharedPreferences].
+ * [StringCrypto] implementation base on Android KeyStore System.
+ *
+ * @see <a href="https://developer.android.com/training/articles/keystore">Android KeyStore System</a>
+ * @see [KeyStore]
+ * @see [KeyGenParameterSpec]
  */
 class KeyStoreStringCrypto(
-    context: Context,
     masterKeyAlias: String = DEFAULT_MASTER_KEY_ALIAS
 ) : StringCrypto {
 
-    private val encryptedSharedPrefFileName = "${KeyStoreStringCrypto::class.java.name}-encryptedSharedPref"
-    private val secretPrefKey = "${KeyStoreStringCrypto::class.java.name}-secretKey"
-
+    private val androidKeyStore = "AndroidKeyStore"
     private val cipherTransformation = "AES/GCM/NoPadding"
     private val cipherIvBytes = 12
-    private val keyGeneratorAlgorithm = "AES"
+    private val cipherGCMTagBits = 128
     private val keySize = 256
 
-    private val secureRandom by lazy {
-        SecureRandom()
-    }
-
-    private val masterKey by lazy {
-        MasterKey.Builder(context, masterKeyAlias)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-    }
-
-    private val encryptedSharedPreferences by lazy {
-        EncryptedSharedPreferences.create(
-            context,
-            encryptedSharedPrefFileName,
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-    }
-
     private val secretKey by lazy {
-        val secretKeyBase64 = encryptedSharedPreferences.getString(secretPrefKey, null) ?: generateSecretKeyBase64()
-        val secretKeyByteArray = Base64.decode(secretKeyBase64, Base64.NO_WRAP)
-        SecretKeySpec(secretKeyByteArray, keyGeneratorAlgorithm)
-    }
-
-    private fun generateSecretKeyBase64(): String {
-        val generator = KeyGenerator.getInstance(keyGeneratorAlgorithm).apply { init(keySize, secureRandom) }
-        val secretKey = generator.generateKey()
-        val secretKeyBase64 = Base64.encodeToString(secretKey.encoded, Base64.NO_WRAP)
-        encryptedSharedPreferences.edit().putString(secretPrefKey, secretKeyBase64).apply()
-        return secretKeyBase64
+        val keyStore = KeyStore.getInstance(androidKeyStore)
+        keyStore.load(null)
+        if (keyStore.containsAlias(masterKeyAlias)) {
+            keyStore.getKey(masterKeyAlias, null)
+        } else {
+            KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, androidKeyStore).let {
+                it.init(
+                    KeyGenParameterSpec.Builder(
+                        masterKeyAlias,
+                        KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                    )
+                        .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                        .setKeySize(keySize)
+                        .build()
+                )
+                it.generateKey()
+            }
+        }
     }
 
     override fun encrypt(value: String): EncryptedString {
         val unencryptedByteArray = value.encodeToByteArray()
         val cipher = Cipher.getInstance(cipherTransformation)
-        val iv = ByteArray(cipherIvBytes)
-        secureRandom.nextBytes(iv)
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey, IvParameterSpec(iv))
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
         val cipherByteArray = cipher.doFinal(unencryptedByteArray)
-        val encryptedByteArray = iv + cipherByteArray
+        val encryptedByteArray = cipher.iv + cipherByteArray
         return EncryptedString(Base64.encodeToString(encryptedByteArray, Base64.NO_WRAP))
     }
 
@@ -95,7 +80,7 @@ class KeyStoreStringCrypto(
         val cipher = Cipher.getInstance(cipherTransformation)
         val iv = Arrays.copyOf(encryptedByteArray, cipherIvBytes)
         val cipherByteArray = Arrays.copyOfRange(encryptedByteArray, cipherIvBytes, encryptedByteArray.size)
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, IvParameterSpec(iv))
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, GCMParameterSpec(cipherGCMTagBits, iv))
         val unencryptedByteArray = cipher.doFinal(cipherByteArray)
         return unencryptedByteArray.decodeToString()
     }
