@@ -18,10 +18,27 @@
 
 package me.proton.core.data.crypto
 
+/**
+ * This interface provides an [encrypt] function on [String] and a [decrypt] function on [EncryptedString].
+ */
 interface StringCrypto {
+    /**
+     * Encrypt a [String] [value] and return an [EncryptedString].
+     */
     fun encrypt(value: String): EncryptedString
+
+    /**
+     * Decrypt an [EncryptedString] [value] and return a [String].
+     */
     fun decrypt(value: EncryptedString): String
 }
 
+/**
+ * Decrypt an [EncryptedString] using a [StringCrypto].
+ */
 fun EncryptedString.decrypt(stringCrypto: StringCrypto) = stringCrypto.decrypt(this)
+
+/**
+ * Encrypt a [String] using a [StringCrypto].
+ */
 fun String.encrypt(stringCrypto: StringCrypto) = stringCrypto.encrypt(this)

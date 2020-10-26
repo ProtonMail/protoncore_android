@@ -31,8 +31,6 @@ import me.proton.android.core.coreexample.Constants.BASE_URL
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.data.crypto.EncryptedString
-import me.proton.core.data.crypto.StringCrypto
 import me.proton.core.domain.entity.Product
 import me.proton.core.humanverification.data.repository.HumanVerificationLocalRepositoryImpl
 import me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl
@@ -89,14 +87,6 @@ object ApplicationModule {
     @Singleton
     fun provideProduct(): Product =
         Product.Calendar
-
-    @Provides
-    @Singleton
-    fun provideStringCrypto(): StringCrypto = object : StringCrypto {
-        // TODO: Provide concrete StringCrypto implementation.
-        override fun encrypt(value: String): EncryptedString = EncryptedString(value)
-        override fun decrypt(value: EncryptedString): String = value.encrypted
-    }
 
     @Provides
     @Singleton

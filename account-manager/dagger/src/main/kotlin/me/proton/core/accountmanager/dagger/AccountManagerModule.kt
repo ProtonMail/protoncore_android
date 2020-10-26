@@ -31,6 +31,7 @@ import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.data.crypto.KeyStoreStringCrypto
 import me.proton.core.data.crypto.StringCrypto
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.session.SessionListener
@@ -45,6 +46,11 @@ object AccountManagerModule {
     @Singleton
     fun provideAccountManagerDatabase(@ApplicationContext context: Context): AccountManagerDatabase =
         AccountManagerDatabase.buildDatabase(context)
+
+    @Provides
+    @Singleton
+    fun provideStringCrypto(@ApplicationContext context: Context): StringCrypto =
+        KeyStoreStringCrypto(context)
 
     @Provides
     @Singleton

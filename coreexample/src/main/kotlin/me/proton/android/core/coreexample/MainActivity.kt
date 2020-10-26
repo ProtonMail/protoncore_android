@@ -113,6 +113,8 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 }
             }.launchIn(lifecycleScope)
 
+        accountManager.getSessions().onEach { }.launchIn(lifecycleScope)
+
         accountManager.observe(lifecycleScope)
             .onAccountAdded { }
             .onAccountDisabled { }
