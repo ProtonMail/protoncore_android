@@ -16,25 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.auth.domain.usecase
 
-data class User(
-    val id: String,
-    val name: String,
-    val usedSpace: Long,
-    val currency: String,
-    val credit: Int,
-    val maxSpace: Long,
-    val maxUpload: Long,
-    val role: Int,
-    val private: Boolean,
-    val subscribed: Boolean,
-    val delinquent: Boolean,
-    val email: String,
-    val displayName: String,
-    val keys: List<UserKey>,
-    val generatedMailboxPassphrase: ByteArray? = null,
-    val addresses: Addresses? = null
-) {
-    val primaryKey = keys.find { it.primary == 1 }
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import me.proton.core.auth.domain.entity.Addresses
+import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.domain.arch.DataResult
+import me.proton.core.network.domain.session.SessionId
+import javax.inject.Inject
+
+/**
+ * Fetches all addresses associated with the account/user executing this request.
+ * @author Dino Kadrikj.
+ */
+class FetchAddresses @Inject constructor(private val authRepository: AuthRepository) {
+
+    operator fun invoke(
+        sessionId: SessionId
+    ): Flow<DataResult<Addresses>> = flow {
+        val result = authRepository.getAddresses(sessionId)
+        emit(result)
+    }
 }

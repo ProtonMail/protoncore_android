@@ -18,23 +18,19 @@
 
 package me.proton.core.auth.domain.entity
 
-data class User(
-    val id: String,
-    val name: String,
-    val usedSpace: Long,
-    val currency: String,
-    val credit: Int,
-    val maxSpace: Long,
-    val maxUpload: Long,
-    val role: Int,
-    val private: Boolean,
-    val subscribed: Boolean,
-    val delinquent: Boolean,
-    val email: String,
-    val displayName: String,
-    val keys: List<UserKey>,
-    val generatedMailboxPassphrase: ByteArray? = null,
-    val addresses: Addresses? = null
-) {
-    val primaryKey = keys.find { it.primary == 1 }
+enum class AccountType {
+    /**
+     * Account with the lowest level of setup. No email address is associated with it.
+     */
+    Username,
+
+    /**
+     * Account with at least one internal email address associated with it.
+     */
+    Internal,
+
+    /**
+     * Account with at least one external email address associated with it.
+     */
+    External
 }

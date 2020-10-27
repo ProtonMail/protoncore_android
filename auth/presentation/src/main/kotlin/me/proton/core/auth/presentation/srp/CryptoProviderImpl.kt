@@ -20,6 +20,9 @@ package me.proton.core.auth.presentation.srp
 
 import com.proton.gopenpgp.crypto.Crypto
 import me.proton.core.auth.domain.crypto.CryptoProvider
+import me.proton.core.auth.domain.entity.Auth
+import me.proton.core.auth.domain.entity.KeySecurity
+import me.proton.core.auth.domain.entity.KeyType
 import javax.inject.Inject
 
 /**
@@ -39,5 +42,45 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
             // means that the unlock check has failed. This is how gopenpgp works.
             false
         }
+    }
+
+    /**
+     * Generates new private key.
+     *
+     * @param username the username for which the key will be generated
+     * @param passphrase the mailbox entered/generated passphrase
+     * @param keyType the type of key (see [KeyType])
+     * @param keySecurity the key length (bits)
+     *
+     * @return the new private key as String.
+     */
+    override fun generateNewPrivateKey(
+        username: String,
+        domain: String,
+        passphrase: ByteArray,
+        keyType: KeyType,
+        keySecurity: KeySecurity
+    ): String {
+        TODO("Not yet implemented. This will be implemented in the Presentation module MR.")
+    }
+
+    /**
+     * Generates new signed key list for a key.
+     *
+     * @param passphrase the mailbox entered/generated passphrase
+     *
+     * @return a pair of key-list in JSON format and it's signature
+     */
+    override fun generateSignedKeyList(key: String, passphrase: ByteArray): Pair<String, String> {
+        TODO("Not yet implemented. This will be implemented in the Presentation module MR.")
+    }
+
+    override fun calculatePasswordVerifier(
+        username: String,
+        passphrase: ByteArray,
+        modulusId: String,
+        modulus: String
+    ): Auth {
+        TODO("Not yet implemented. This will be implemented in the Presentation module MR.")
     }
 }

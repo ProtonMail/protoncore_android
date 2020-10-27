@@ -18,23 +18,12 @@
 
 package me.proton.core.auth.domain.entity
 
-data class User(
-    val id: String,
-    val name: String,
-    val usedSpace: Long,
-    val currency: String,
-    val credit: Int,
-    val maxSpace: Long,
-    val maxUpload: Long,
-    val role: Int,
-    val private: Boolean,
-    val subscribed: Boolean,
-    val delinquent: Boolean,
-    val email: String,
-    val displayName: String,
-    val keys: List<UserKey>,
-    val generatedMailboxPassphrase: ByteArray? = null,
-    val addresses: Addresses? = null
-) {
-    val primaryKey = keys.find { it.primary == 1 }
+/**
+ * Defines the all supported key types.
+ * @author Dino Kadrikj.
+ */
+enum class KeyType(private val value: String) {
+    RSA("rsa"), X25519("x25519");
+
+    override fun toString(): String = value
 }
