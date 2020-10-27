@@ -70,4 +70,5 @@ interface AuthRepository {
      * Perform Two Factor for the Login process for a given [SessionId].
      */
     suspend fun revokeSession(sessionId: SessionId): DataResult<Boolean>
+
 }

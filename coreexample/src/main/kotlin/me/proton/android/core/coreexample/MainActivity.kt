@@ -25,19 +25,33 @@ import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.onClick
-import me.proton.core.humanverification.presentation.ui.HumanVerificationActivity
+import me.proton.core.auth.presentation.AuthOrchestrator
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.network.domain.session.SessionId
 
 @AndroidEntryPoint
 class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
     override fun layoutId(): Int = R.layout.activity_main
 
+    private val authWorkflowLauncher = AuthOrchestrator()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        authWorkflowLauncher.register(this)
         binding.humanVerification.onClick {
-            // TODO: startHumanVerificationWorkflow.
-            startActivity(Intent(this, HumanVerificationActivity::class.java))
+            authWorkflowLauncher.startHumanVerificationWorkflow(
+                SessionId("sessionId"),
+                HumanVerificationDetails(
+                    listOf(
+                        VerificationMethod.CAPTCHA,
+                        VerificationMethod.EMAIL,
+                        VerificationMethod.PHONE
+                    )
+                )
+            )
         }
 
         binding.customViews.onClick {
@@ -45,8 +59,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }
 
         binding.login.onClick {
-            // TODO: startLoginWorkflow.
-//            startActivity(Intent(this, LoginActivity::class.java))
+            authWorkflowLauncher.startLoginWorkflow()
         }
     }
 }

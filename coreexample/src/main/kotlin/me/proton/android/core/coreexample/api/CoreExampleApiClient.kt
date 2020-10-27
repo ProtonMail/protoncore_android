@@ -26,7 +26,7 @@ import javax.inject.Inject
 /**
  * @author Dino Kadrikj.
  */
-const val VERSION_NAME = "0.0.1"
+const val VERSION_NAME = "1.14.0" // imitating ProtonMail version
 
 class CoreExampleApiClient @Inject constructor() : ApiClient {
     /**
@@ -40,7 +40,7 @@ class CoreExampleApiClient @Inject constructor() : ApiClient {
      * Client's value for 'x-pm-appversion' header.
      */
     override val appVersionHeader: String
-        get() = "0.0.1"
+        get() = "Android_1.14.0"
 
     /**
      * Client's value for 'User-Agent' header.
