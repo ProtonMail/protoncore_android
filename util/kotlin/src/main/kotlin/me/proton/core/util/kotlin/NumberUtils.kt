@@ -19,3 +19,11 @@ fun Int.toBoolean() = when (this) {
 
 /** @return `true` if receiver [Int] is `1`, else `false` */
 fun Int.toBooleanOrFalse() = this == 1
+
+/**
+ * @return `1` if receiver [Boolean] is `true` or `0` if receiver is `false`.
+ */
+fun Boolean.toInt() = when (this) {
+    true -> 1
+    false -> 0
+}

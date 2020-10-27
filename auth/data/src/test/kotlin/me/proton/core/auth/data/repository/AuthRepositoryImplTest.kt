@@ -23,9 +23,14 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.auth.domain.entity.Address
+import me.proton.core.auth.domain.entity.AddressType
+import me.proton.core.auth.domain.entity.Addresses
+import me.proton.core.auth.domain.entity.FullAddressKey
 import me.proton.core.auth.domain.entity.KeySalt
 import me.proton.core.auth.domain.entity.KeySalts
 import me.proton.core.auth.domain.entity.LoginInfo
+import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -41,6 +46,7 @@ import org.junit.Before
 import org.junit.Test
 import java.net.ConnectException
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -346,5 +352,330 @@ class AuthRepositoryImplTest {
         assertTrue(response is DataResult.Error.Remote)
         assertEquals("connection refused", response.message)
         assertEquals(0, response.protonCode)
+    }
+
+    @Test
+    fun `username availability returns available`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(true)
+        // WHEN
+        val response = repository.isUsernameAvailable("test-username")
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertTrue(response.value)
+    }
+
+    @Test
+    fun `username availability returns unavailable`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(false)
+        // WHEN
+        val response = repository.isUsernameAvailable("test-username")
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertFalse(response.value)
+    }
+
+    @Test
+    fun `username availability API error`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test API error")
+        )
+        // WHEN
+        val response = repository.isUsernameAvailable("test-username")
+        // THEN
+        assertTrue(response is DataResult.Error.Message)
+        assertEquals("test API error", response.message)
+        assertEquals(1, response.code)
+        assertFalse(response.validation)
+    }
+
+    @Test
+    fun `available domains returns success list`() = runBlockingTest {
+        // GIVEN
+        val result = listOf("protonmail.com", "protonmail.ch")
+        coEvery { apiManager.invoke<List<String>>(any(), any()) } returns ApiResult.Success(result)
+        // WHEN
+        val response = repository.getAvailableDomains()
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertEquals(2, response.value.size)
+    }
+
+    @Test
+    fun `available domains returns empty list`() = runBlockingTest {
+        // GIVEN
+        val result = emptyList<String>()
+        coEvery { apiManager.invoke<List<String>>(any(), any()) } returns ApiResult.Success(result)
+        // WHEN
+        val response = repository.getAvailableDomains()
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertEquals(0, response.value.size)
+    }
+
+    @Test
+    fun `available domains returns API error`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<List<String>>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test API error")
+        )
+        // WHEN
+        val response = repository.getAvailableDomains()
+        // THEN
+        assertTrue(response is DataResult.Error.Message)
+        assertEquals("test API error", response.message)
+        assertEquals(1, response.code)
+        assertFalse(response.validation)
+    }
+
+    @Test
+    fun `random modulus returns success`() = runBlockingTest {
+        // GIVEN
+        val result = Modulus("test-modulusId", "test-modulus")
+        coEvery { apiManager.invoke<Modulus>(any(), any()) } returns ApiResult.Success(result)
+        // WHEN
+        val response = repository.randomModulus()
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertEquals(result, response.value)
+    }
+
+    @Test
+    fun `random modulus returns API error`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<Modulus>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test API error")
+        )
+        // WHEN
+        val response = repository.randomModulus()
+        // THEN
+        assertTrue(response is DataResult.Error.Message)
+        assertEquals("test API error", response.message)
+        assertEquals(1, response.code)
+        assertFalse(response.validation)
+    }
+
+    @Test
+    fun `get addresses returns success`() = runBlockingTest {
+        // GIVEN
+        val result = Addresses(
+            addresses = listOf(
+                Address(
+                    id = "test-address-id",
+                    domainId = "test-domain-id",
+                    email = "test-email",
+                    canSend = true,
+                    canReceive = true,
+                    status = 1,
+                    type = AddressType.ORIGINAL,
+                    order = 1,
+                    displayName = "test-display-name",
+                    signature = "test-signature",
+                    hasKeys = false,
+                    keys = emptyList()
+                )
+            )
+        )
+        coEvery { apiManager.invoke<Addresses>(any(), any()) } returns ApiResult.Success(result)
+        // WHEN
+        val response = repository.getAddresses(SessionId(testSessionId))
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertEquals(result, response.value)
+        assertEquals(1, response.value.addresses.size)
+    }
+
+    @Test
+    fun `get addresses returns success empty list`() = runBlockingTest {
+        // GIVEN
+        val result = Addresses(
+            addresses = emptyList()
+        )
+        coEvery { apiManager.invoke<Addresses>(any(), any()) } returns ApiResult.Success(result)
+        // WHEN
+        val response = repository.getAddresses(SessionId(testSessionId))
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertEquals(result, response.value)
+        assertEquals(0, response.value.addresses.size)
+    }
+
+    @Test
+    fun `get addresses returns API error`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<Addresses>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test API error")
+        )
+        // WHEN
+        val response = repository.getAddresses(SessionId(testSessionId))
+        // THEN
+        assertTrue(response is DataResult.Error.Message)
+        assertEquals("test API error", response.message)
+        assertEquals(1, response.code)
+        assertFalse(response.validation)
+    }
+
+    @Test
+    fun `set username success`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(true)
+        // WHEN
+        val response = repository.setUsername(SessionId(testSessionId), "test-username")
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertTrue(response.value)
+    }
+
+    @Test
+    fun `set username unsuccessful response`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(false)
+        // WHEN
+        val response = repository.setUsername(SessionId(testSessionId), "test-username")
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertFalse(response.value)
+    }
+
+    @Test
+    fun `set username API error`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test API error")
+        )
+        // WHEN
+        val response = repository.setUsername(SessionId(testSessionId), "test-username")
+        // THEN
+        assertTrue(response is DataResult.Error.Message)
+        assertEquals("test API error", response.message)
+        assertEquals(1, response.code)
+        assertFalse(response.validation)
+    }
+
+    @Test
+    fun `create address returns success`() = runBlockingTest {
+        // GIVEN
+        val result = Address(
+            id = "test-address-id",
+            domainId = "test-domain-id",
+            email = "test-email",
+            canSend = true,
+            canReceive = true,
+            status = 1,
+            type = AddressType.ORIGINAL,
+            order = 1,
+            displayName = "test-display-name",
+            signature = "test-signature",
+            hasKeys = false,
+            keys = emptyList()
+        )
+        coEvery { apiManager.invoke<Address>(any(), any()) } returns ApiResult.Success(result)
+        // WHEN
+        val response = repository.createAddress(SessionId(testSessionId), "test-domain", "test-display-name")
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertEquals(result, response.value)
+        assertEquals("test-display-name", response.value.displayName)
+    }
+
+    @Test
+    fun `create address returns API error`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<Address>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test API error")
+        )
+        // WHEN
+        val response = repository.createAddress(SessionId(testSessionId), "test-domain", "test-display-name")
+        // THEN
+        assertTrue(response is DataResult.Error.Message)
+        assertEquals("test API error", response.message)
+        assertEquals(1, response.code)
+        assertFalse(response.validation)
+    }
+
+    @Test
+    fun `create address key returns success`() = runBlockingTest {
+        // GIVEN
+        val testPrivateKey = "test-privateKey"
+        val result = FullAddressKey(
+            id = "test-keyId",
+            version = 1,
+            flags = 1,
+            privateKey = testPrivateKey,
+            token = "test-token",
+            signature = "test-signature",
+            fingerprints = listOf("test-fingerprint"),
+            fingerprint = "test-fingerprint",
+            activation = "test-activation",
+            primary = true,
+            active = true
+        )
+        coEvery { apiManager.invoke<FullAddressKey>(any(), any()) } returns ApiResult.Success(result)
+        // WHEN
+        val response = repository.createAddressKey(
+            SessionId(testSessionId), "test-addressId", testPrivateKey, true,
+            "test-sklData", "test-sklSignature"
+        )
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertEquals(result, response.value)
+    }
+
+    @Test
+    fun `create address key returns API error`() = runBlockingTest {
+        // GIVEN
+        val testPrivateKey = "test-privateKey"
+        coEvery { apiManager.invoke<FullAddressKey>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test API error")
+        )
+        // WHEN
+        val response = repository.createAddressKey(
+            SessionId(testSessionId), "test-addressId", testPrivateKey, true,
+            "test-sklData", "test-sklSignature"
+        )
+        // THEN
+        assertTrue(response is DataResult.Error.Message)
+        assertEquals("test API error", response.message)
+        assertEquals(1, response.code)
+        assertFalse(response.validation)
+    }
+
+    @Test
+    fun `setup address key returns success`() = runBlockingTest {
+        // GIVEN
+        val successUser = mockk<User>()
+        coEvery { apiManager.invoke<User>(any(), any()) } returns ApiResult.Success(successUser)
+        // WHEN
+        val response = repository.setupAddressKeys("test-primaryKey", "test-keySalt", mockk(), mockk())
+        // THEN
+        assertTrue(response is DataResult.Success)
+        assertNotNull(response.value)
+        assertEquals(successUser, response.value)
+    }
+
+    @Test
+    fun `setup address key returns API error`() = runBlockingTest {
+        // GIVEN
+        coEvery { apiManager.invoke<User>(any(), any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test API error")
+        )
+        // WHEN
+        val response = repository.setupAddressKeys("test-primaryKey", "test-keySalt", mockk(), mockk())
+        // THEN
+        assertTrue(response is DataResult.Error.Message)
+        assertEquals("test API error", response.message)
+        assertEquals(1, response.code)
+        assertFalse(response.validation)
     }
 }
