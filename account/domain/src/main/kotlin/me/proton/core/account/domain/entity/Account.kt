@@ -29,3 +29,11 @@ data class Account(
     val sessionId: SessionId?,
     val sessionState: SessionState?
 )
+
+fun Account.isReady() = state == AccountState.Ready
+fun Account.isDisabled() = state == AccountState.Disabled
+fun Account.isTwoPassModeNeeded() = state == AccountState.TwoPassModeNeeded
+
+fun Account.isAuthenticated() = sessionState == SessionState.Authenticated
+fun Account.isSecondFactorNeeded() = sessionState == SessionState.SecondFactorNeeded
+fun Account.isHumanVerificationNeeded() = sessionState == SessionState.HumanVerificationNeeded

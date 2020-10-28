@@ -20,16 +20,9 @@ package me.proton.core.account.domain.entity
 
 enum class AccountState {
     /**
-     * First state emitted after adding a new [Account], it is not yet [Ready] to use.
-     *
-     * Note: Usually followed by [Initializing] and/or [Ready].
-     */
-    Added,
-
-    /**
      * State emitted if this [Account] need more step(s) to be [Ready] to use.
      */
-    Initializing,
+    NotReady,
 
     /**
      * A two pass mode is needed.

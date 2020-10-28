@@ -58,10 +58,14 @@ internal class NetworkManagerTests {
         networkManager.networkStatus = NetworkStatus.Unmetered
         flow2.cancel()
 
-        assertEquals(listOf(NetworkStatus.Unmetered, NetworkStatus.Metered, NetworkStatus.Disconnected),
-            collectedStates1.toList())
-        assertEquals(listOf(NetworkStatus.Metered, NetworkStatus.Disconnected, NetworkStatus.Unmetered),
-            collectedStates2.toList())
+        assertEquals(
+            listOf(NetworkStatus.Unmetered, NetworkStatus.Metered, NetworkStatus.Disconnected),
+            collectedStates1.toList()
+        )
+        assertEquals(
+            listOf(NetworkStatus.Metered, NetworkStatus.Disconnected, NetworkStatus.Unmetered),
+            collectedStates2.toList()
+        )
 
         assertFalse(networkManager.registered)
     }

@@ -19,9 +19,11 @@
 package me.proton.core.accountmanager.domain
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
@@ -36,3 +38,6 @@ fun AccountManager.getPrimaryAccount(): Flow<Account?> =
     getPrimaryUserId().flatMapLatest { userId ->
         userId?.let { getAccount(it) } ?: flowOf(null)
     }
+
+fun AccountManager.getAccounts(state: AccountState): Flow<List<Account>> =
+    getAccounts().map { list -> list.filter { it.state == state } }.distinctUntilChanged()

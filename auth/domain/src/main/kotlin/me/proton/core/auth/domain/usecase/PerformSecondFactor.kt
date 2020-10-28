@@ -46,7 +46,7 @@ class PerformSecondFactor @Inject constructor(
         data class Success(
             val sessionId: SessionId,
             val scopeInfo: ScopeInfo,
-            val isMailboxLoginNeeded: Boolean = false
+            val isTwoPassModeNeeded: Boolean
         ) : SecondFactorState()
 
         sealed class Error : SecondFactorState() {
@@ -61,7 +61,8 @@ class PerformSecondFactor @Inject constructor(
      */
     operator fun invoke(
         sessionId: SessionId,
-        secondFactorCode: String
+        secondFactorCode: String,
+        isTwoPassModeNeeded: Boolean = false
     ): Flow<SecondFactorState> = flow {
 
         if (secondFactorCode.isEmpty()) {
@@ -73,11 +74,11 @@ class PerformSecondFactor @Inject constructor(
 
         authRepository.performSecondFactor(
             sessionId,
-            SecondFactorProof.SecondFactorCode(secondFactorCode)
+            SecondFactorProof.SecondFactorCode(secondFactorCode),
         ).onFailure { errorMessage, _ ->
             emit(SecondFactorState.Error.Message(errorMessage))
         }.onSuccess { scopeInfo ->
-            emit(SecondFactorState.Success(sessionId, scopeInfo))
+            emit(SecondFactorState.Success(sessionId, scopeInfo, isTwoPassModeNeeded))
         }
     }
 }

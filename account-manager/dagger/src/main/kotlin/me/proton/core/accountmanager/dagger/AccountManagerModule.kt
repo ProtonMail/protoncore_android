@@ -28,9 +28,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.data.AccountManagerImpl
+import me.proton.core.accountmanager.data.SessionManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.data.crypto.KeyStoreStringCrypto
 import me.proton.core.data.crypto.StringCrypto
 import me.proton.core.domain.entity.Product
@@ -63,8 +65,19 @@ object AccountManagerModule {
 
     @Provides
     @Singleton
-    fun provideAccountManagerImpl(product: Product, accountRepository: AccountRepository): AccountManagerImpl =
-        AccountManagerImpl(product, accountRepository)
+    fun provideAccountManagerImpl(
+        product: Product,
+        accountRepository: AccountRepository,
+        authRepository: AuthRepository
+    ): AccountManagerImpl =
+        AccountManagerImpl(product, accountRepository, authRepository)
+
+    @Provides
+    @Singleton
+    fun provideSessionManagerImpl(
+        accountRepository: AccountRepository
+    ): SessionManagerImpl =
+        SessionManagerImpl(accountRepository)
 }
 
 @Module
@@ -78,8 +91,8 @@ interface AccountManagerBindModule {
     fun bindAccountWorkflowHandler(accountManagerImpl: AccountManagerImpl): AccountWorkflowHandler
 
     @Binds
-    fun bindSessionProvider(accountManagerImpl: AccountManagerImpl): SessionProvider
+    fun bindSessionProvider(sessionManagerImpl: SessionManagerImpl): SessionProvider
 
     @Binds
-    fun bindSessionListener(accountManagerImpl: AccountManagerImpl): SessionListener
+    fun bindSessionListener(sessionManagerImpl: SessionManagerImpl): SessionListener
 }

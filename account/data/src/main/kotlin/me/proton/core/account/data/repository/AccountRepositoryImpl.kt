@@ -30,13 +30,16 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
-import me.proton.core.data.db.CommonConverters
 import me.proton.core.data.crypto.StringCrypto
 import me.proton.core.data.crypto.encrypt
+import me.proton.core.data.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.exhaustive
+import java.util.concurrent.ConcurrentHashMap
 
 class AccountRepositoryImpl(
     private val product: Product,
@@ -47,6 +50,8 @@ class AccountRepositoryImpl(
     private val accountDao = db.accountDao()
     private val sessionDao = db.sessionDao()
     private val accountMetadataDao = db.accountMetadataDao()
+
+    private val humanVerificationDetails: ConcurrentHashMap<SessionId, HumanVerificationDetails?> = ConcurrentHashMap()
 
     private suspend fun updateAccountMetadata(userId: UserId) =
         accountMetadataDao.insertOrUpdate(
@@ -91,8 +96,11 @@ class AccountRepositoryImpl(
             .map { it?.toSession(stringCrypto) }
             .distinctUntilChanged()
 
-    override fun getSessionOrNull(sessionId: SessionId): Session? =
+    override suspend fun getSessionOrNull(sessionId: SessionId): Session? =
         sessionDao.get(sessionId.id)?.toSession(stringCrypto)
+
+    override suspend fun getSessionIdOrNull(userId: UserId): SessionId? =
+        sessionDao.getSessionId(userId.id)?.let { SessionId(it) }
 
     override suspend fun createOrUpdateAccountSession(account: Account, session: Session) {
         require(session.isValid()) {
@@ -102,7 +110,7 @@ class AccountRepositoryImpl(
         db.inTransaction {
             accountDao.insertOrUpdate(
                 account.copy(
-                    state = AccountState.Initializing,
+                    state = AccountState.NotReady,
                     sessionId = null,
                     sessionState = null
                 ).toAccountEntity()
@@ -133,22 +141,19 @@ class AccountRepositoryImpl(
             when (state) {
                 AccountState.Ready -> updateAccountMetadata(userId)
                 AccountState.Disabled,
-                AccountState.Removed -> deleteAccountMetadata(userId)
-                AccountState.Added,
-                AccountState.Initializing,
+                AccountState.Removed,
+                AccountState.NotReady,
                 AccountState.TwoPassModeNeeded,
                 AccountState.TwoPassModeSuccess,
-                AccountState.TwoPassModeFailed -> Unit
-            }
+                AccountState.TwoPassModeFailed -> deleteAccountMetadata(userId)
+            }.exhaustive
             accountDao.updateAccountState(userId.id, state)
         }
     }
 
     override suspend fun updateAccountState(sessionId: SessionId, state: AccountState) {
-        db.inTransaction {
-            getAccountOrNull(sessionId)?.let {
-                updateAccountState(it.userId, state)
-            }
+        getAccountOrNull(sessionId)?.let {
+            updateAccountState(it.userId, state)
         }
     }
 
@@ -176,5 +181,12 @@ class AccountRepositoryImpl(
             }
             updateAccountMetadata(userId)
         }
+    }
+
+    override suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails? =
+        humanVerificationDetails[id]
+
+    override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails?) {
+        humanVerificationDetails[id] = details
     }
 }

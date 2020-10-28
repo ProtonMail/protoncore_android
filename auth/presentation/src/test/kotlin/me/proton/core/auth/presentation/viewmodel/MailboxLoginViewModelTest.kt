@@ -123,18 +123,12 @@ class MailboxLoginViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `failed mailbox login invokes failed on account manager`() = coroutinesTest {
-        // GIVEN
-        coEvery { useCase.invoke(SessionId(testSessionId), testPassword.toByteArray()) } returns flowOf(
-            PerformMailboxLogin.MailboxLoginState.Processing,
-            PerformMailboxLogin.MailboxLoginState.Error.Message("test error")
-        )
+    fun `stop mailbox login invokes failed on account manager`() = coroutinesTest {
         // WHEN
-        viewModel.startMailboxLoginFlow(SessionId(testSessionId), testPassword.toByteArray())
+        viewModel.stopMailboxLoginFlow(SessionId(testSessionId))
         // THEN
         val arguments = slot<SessionId>()
         coVerify(exactly = 1) { accountManager.handleTwoPassModeFailed(capture(arguments)) }
         coVerify(exactly = 0) { accountManager.handleTwoPassModeSuccess(any()) }
-        assertEquals(testSessionId, arguments.captured.id)
     }
 }

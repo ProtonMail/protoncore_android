@@ -36,6 +36,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.sharedPreferencesUtil),
         project(Module.networkDomain),
+        project(Module.domain),
 
         // Kotlin
         `kotlin-jdk7`,

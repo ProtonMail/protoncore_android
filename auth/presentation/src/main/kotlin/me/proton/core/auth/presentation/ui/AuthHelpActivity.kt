@@ -19,7 +19,6 @@
 package me.proton.core.auth.presentation.ui
 
 import android.os.Bundle
-import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.onClick
 import me.proton.android.core.presentation.utils.openBrowserLink
 import me.proton.core.auth.presentation.R
@@ -29,12 +28,11 @@ import me.proton.core.auth.presentation.databinding.ActivityAuthHelpBinding
  * Authentication help Activity which offers common authentication problems help.
  * @author Dino Kadrikj.
  */
-class AuthHelpActivity : ProtonActivity<ActivityAuthHelpBinding>(), AuthActivityComponent<ActivityAuthHelpBinding> by AuthActivityDelegate() {
+class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>() {
     override fun layoutId(): Int = R.layout.activity_auth_help
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initializeAuth(this)
         binding.apply {
             closeButton.onClick {
                 finish()
@@ -53,9 +51,5 @@ class AuthHelpActivity : ProtonActivity<ActivityAuthHelpBinding>(), AuthActivity
                 openBrowserLink(getString(R.string.forgot_username_link))
             }
         }
-    }
-
-    override fun showLoading(loading: Boolean) {
-        // no-operation
     }
 }

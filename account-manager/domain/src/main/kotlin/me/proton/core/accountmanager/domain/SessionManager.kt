@@ -16,20 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity
+package me.proton.core.accountmanager.domain
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-import me.proton.core.auth.domain.entity.ScopeInfo
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 
-@Parcelize
-data class ScopeResult(
-    val sessionId: String,
-    val scopes: List<String>,
-    val isTwoPassModeNeeded: Boolean = false
-) : Parcelable {
-
-    constructor(sessionId: SessionId, scopeInfo: ScopeInfo, isMailboxLoginNeeded: Boolean = false) :
-        this(sessionId.id, scopeInfo.scopes, isMailboxLoginNeeded)
-}
+interface SessionManager : SessionProvider, SessionListener

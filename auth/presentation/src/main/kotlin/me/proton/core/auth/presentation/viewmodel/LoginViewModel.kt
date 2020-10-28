@@ -54,16 +54,14 @@ class LoginViewModel @ViewModelInject constructor(
         username: String,
         password: ByteArray
     ) {
-        performLogin(username, password)
-            .onEach {
-                if (it is PerformLogin.LoginState.Success) {
-                    // on success result, contact account manager
-                    onSuccess(it)
-                }
-                // inform the view for each state change
-                loginState.post(it)
+        performLogin(username, password).onEach {
+            if (it is PerformLogin.LoginState.Success) {
+                // on success result, contact account manager
+                onSuccess(it)
             }
-            .launchIn(viewModelScope)
+            // inform the view for each state change
+            loginState.post(it)
+        }.launchIn(viewModelScope)
     }
 
     private suspend fun onSuccess(success: PerformLogin.LoginState.Success) {

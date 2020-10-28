@@ -20,14 +20,14 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.util.kotlin.DispatcherProvider
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -44,27 +44,20 @@ class SecondFactorViewModel @ViewModelInject constructor(
     fun startSecondFactorFlow(
         sessionId: SessionId,
         secondFactorCode: String,
-        isMailboxLoginNeeded: Boolean
+        isTwoPassModeNeeded: Boolean = false
     ) {
-        performSecondFactor(sessionId, secondFactorCode)
-            .onEach {
-                when (it) {
-                    is PerformSecondFactor.SecondFactorState.Success -> {
-                        secondFactorState.post(it.copy(isMailboxLoginNeeded = isMailboxLoginNeeded))
-                        accountWorkflowHandler.handleSecondFactorSuccess(
-                            sessionId = sessionId,
-                            updatedScopes = it.scopeInfo.scopes
-                        )
-                    }
-                    is PerformSecondFactor.SecondFactorState.Error -> {
-                        secondFactorState.post(it)
-                        accountWorkflowHandler.handleSecondFactorFailed(sessionId)
-                    }
-                    else -> {
-                        secondFactorState.post(it)
-                    }
-                }
+        performSecondFactor(sessionId, secondFactorCode, isTwoPassModeNeeded).onEach {
+            if (it is PerformSecondFactor.SecondFactorState.Success) {
+                accountWorkflowHandler.handleSecondFactorSuccess(
+                    sessionId = sessionId,
+                    updatedScopes = it.scopeInfo.scopes
+                )
             }
-            .launchIn(viewModelScope)
+            secondFactorState.post(it)
+        }.launchIn(viewModelScope)
     }
+
+    fun stopSecondFactorFlow(
+        sessionId: SessionId
+    ): Job = viewModelScope.launch { accountWorkflowHandler.handleSecondFactorFailed(sessionId) }
 }

@@ -21,34 +21,32 @@ package me.proton.core.accountmanager.data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
+import me.proton.core.account.domain.entity.isReady
+import me.proton.core.account.domain.entity.isSecondFactorNeeded
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.onSessionStateChanged
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.arch.extension.onEntityChanged
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionListener
-import me.proton.core.network.domain.session.SessionProvider
-import java.util.concurrent.ConcurrentHashMap
 
 class AccountManagerImpl constructor(
     product: Product,
-    private val accountRepository: AccountRepository
-) : AccountManager(product), AccountWorkflowHandler, SessionProvider, SessionListener {
-
-    private val humanVerificationDetails: ConcurrentHashMap<SessionId, HumanVerificationDetails?> = ConcurrentHashMap()
+    private val accountRepository: AccountRepository,
+    private val authRepository: AuthRepository
+) : AccountManager(product), AccountWorkflowHandler {
 
     private suspend fun removeSession(sessionId: SessionId) {
-        // TODO: Revoke session (fire and forget, need Auth module).
+        authRepository.revokeSession(sessionId)
         accountRepository.deleteSession(sessionId)
     }
 
@@ -100,7 +98,7 @@ class AccountManagerImpl constructor(
 
     override fun onHumanVerificationNeeded(): Flow<Pair<Account, HumanVerificationDetails?>> =
         onSessionStateChanged(SessionState.HumanVerificationNeeded)
-            .map { it to it.sessionId?.let { id -> humanVerificationDetails[id] } }
+            .map { it to it.sessionId?.let { id -> accountRepository.getHumanVerificationDetails(id) } }
 
     override fun getPrimaryUserId(): Flow<UserId?> =
         accountRepository.getPrimaryUserId()
@@ -111,30 +109,31 @@ class AccountManagerImpl constructor(
     // region AccountWorkflowHandler
 
     override suspend fun handleSession(account: Account, session: Session) {
-        val initializing = when {
-            account.state == AccountState.TwoPassModeNeeded -> true
-            account.sessionState == SessionState.SecondFactorNeeded -> true
-            else -> false
-        }
-        val updatedAccount = if (initializing) account.copy(state = AccountState.Initializing) else account
-        accountRepository.createOrUpdateAccountSession(updatedAccount, session)
+        // Account state must be != Ready if SecondFactorNeeded.
+        val state = if (account.isReady() && account.isSecondFactorNeeded()) AccountState.NotReady else account.state
+        accountRepository.createOrUpdateAccountSession(account.copy(state = state), session)
     }
 
     override suspend fun handleTwoPassModeSuccess(sessionId: SessionId) {
         accountRepository.updateAccountState(sessionId, AccountState.TwoPassModeSuccess)
-        accountRepository.updateAccountState(sessionId, AccountState.Ready)
+        accountRepository.getAccountOrNull(sessionId)?.let { account ->
+            if (account.sessionState == SessionState.Authenticated)
+                accountRepository.updateAccountState(sessionId, AccountState.Ready)
+        }
     }
 
     override suspend fun handleTwoPassModeFailed(sessionId: SessionId) {
         accountRepository.updateAccountState(sessionId, AccountState.TwoPassModeFailed)
-        disableAccount(sessionId)
     }
 
     override suspend fun handleSecondFactorSuccess(sessionId: SessionId, updatedScopes: List<String>) {
         accountRepository.updateSessionScopes(sessionId, updatedScopes)
         accountRepository.updateSessionState(sessionId, SessionState.SecondFactorSuccess)
         accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
-        accountRepository.updateAccountState(sessionId, AccountState.Ready)
+        accountRepository.getAccountOrNull(sessionId)?.let { account ->
+            if (account.state != AccountState.TwoPassModeNeeded)
+                accountRepository.updateAccountState(sessionId, AccountState.Ready)
+        }
     }
 
     override suspend fun handleSecondFactorFailed(sessionId: SessionId) {
@@ -152,51 +151,7 @@ class AccountManagerImpl constructor(
     override suspend fun handleHumanVerificationFailed(sessionId: SessionId) {
         accountRepository.updateSessionHeaders(sessionId, null, null)
         accountRepository.updateSessionState(sessionId, SessionState.HumanVerificationFailed)
-        disableAccount(sessionId)
     }
-
-    // endregion
-
-    // region SessionListener
-
-    override suspend fun onSessionTokenRefreshed(session: Session) {
-        accountRepository.updateSessionToken(session.sessionId, session.accessToken, session.refreshToken)
-        accountRepository.updateSessionState(session.sessionId, SessionState.Authenticated)
-    }
-
-    override suspend fun onSessionForceLogout(session: Session) {
-        accountRepository.updateSessionState(session.sessionId, SessionState.ForceLogout)
-        accountRepository.getAccountOrNull(session.sessionId)?.let { account ->
-            accountRepository.updateAccountState(account.userId, AccountState.Disabled)
-        }
-    }
-
-    override suspend fun onHumanVerificationNeeded(
-        session: Session,
-        details: HumanVerificationDetails?
-    ): SessionListener.HumanVerificationResult {
-        humanVerificationDetails[session.sessionId] = details
-        accountRepository.updateSessionState(session.sessionId, SessionState.HumanVerificationNeeded)
-        accountRepository.updateAccountState(session.sessionId, AccountState.Initializing)
-
-        // Wait for HumanVerification Success or Failure.
-        val state = accountRepository.getAccount(session.sessionId)
-            .map { it?.sessionState }
-            .filter { it == SessionState.HumanVerificationSuccess || it == SessionState.HumanVerificationFailed }
-            .first()
-
-        return when (state) {
-            null -> SessionListener.HumanVerificationResult.Failure
-            SessionState.HumanVerificationSuccess -> SessionListener.HumanVerificationResult.Success
-            else -> SessionListener.HumanVerificationResult.Failure
-        }
-    }
-
-    // endregion
-
-    // region SessionProvider
-
-    override fun getSession(sessionId: SessionId): Session? = accountRepository.getSessionOrNull(sessionId)
 
     // endregion
 }

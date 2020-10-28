@@ -30,6 +30,7 @@ android()
 dependencies {
 
     implementation(
+        project(Module.kotlinUtil),
         project(Module.data),
         project(Module.domain),
         project(Module.network),

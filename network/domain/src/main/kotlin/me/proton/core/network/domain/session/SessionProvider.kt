@@ -18,6 +18,16 @@
 
 package me.proton.core.network.domain.session
 
+import me.proton.core.domain.entity.UserId
+
 interface SessionProvider {
-    fun getSession(sessionId: SessionId): Session?
+    /**
+     * Get [Session], if exist, by sessionId.
+     */
+    suspend fun getSession(sessionId: SessionId): Session?
+
+    /**
+     * Get [SessionId], if exist, by userId.
+     */
+    suspend fun getSessionId(userId: UserId): SessionId?
 }

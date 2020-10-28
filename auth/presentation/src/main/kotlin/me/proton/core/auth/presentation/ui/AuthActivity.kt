@@ -18,20 +18,30 @@
 
 package me.proton.core.auth.presentation.ui
 
-/**
- * Interface common for all authentication activities.
- *
- * @author Dino Kadrikj.
- */
-interface AuthActivity {
+import android.os.Build
+import android.os.Bundle
+import android.view.View
+import androidx.databinding.ViewDataBinding
+import me.proton.android.core.presentation.ui.ProtonActivity
+import me.proton.android.core.presentation.utils.errorSnack
+import me.proton.core.auth.presentation.R
 
-    /**
-     * Instructs the activity to show loading animation (custom for eacch activity).
-     */
-    fun showLoading(loading: Boolean)
+abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
 
-    /**
-     * Provide default implementation for error UI.
-     */
-    fun showError(message: String?)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+    }
+
+    open fun showLoading(loading: Boolean) {
+        // No op
+    }
+
+    open fun showError(message: String?) {
+        showLoading(false)
+        binding.root.errorSnack(message = message ?: getString(R.string.auth_login_general_error))
+    }
 }

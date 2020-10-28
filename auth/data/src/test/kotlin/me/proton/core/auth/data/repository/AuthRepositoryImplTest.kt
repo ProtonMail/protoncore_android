@@ -36,6 +36,7 @@ import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import org.junit.Before
 import org.junit.Test
 import java.net.ConnectException
@@ -49,6 +50,7 @@ import kotlin.test.assertTrue
 class AuthRepositoryImplTest {
 
     // region mocks
+    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
     private val apiFactory = mockk<ApiFactory>(relaxed = true)
     private val apiManager = mockk<ApiManager<AuthenticationApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
@@ -82,7 +84,8 @@ class AuthRepositoryImplTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        apiProvider = ApiProvider(apiFactory)
+        coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
+        apiProvider = ApiProvider(apiFactory, sessionProvider)
         every { apiFactory.create(interfaceClass = AuthenticationApi::class) } returns apiManager
         every { apiFactory.create(SessionId(testSessionId), interfaceClass = AuthenticationApi::class) } returns apiManager
         repository = AuthRepositoryImpl(apiProvider)

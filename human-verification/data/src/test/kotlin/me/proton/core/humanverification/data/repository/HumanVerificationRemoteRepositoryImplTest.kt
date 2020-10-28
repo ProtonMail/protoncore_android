@@ -31,6 +31,7 @@ import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -50,6 +51,8 @@ class HumanVerificationRemoteRepositoryImplTest {
     private val errorResponseCode = 422
 
     @RelaxedMockK
+    private lateinit var sessionProvider: SessionProvider
+    @RelaxedMockK
     private lateinit var apiFactory: ApiFactory
     private lateinit var apiProvider: ApiProvider
 
@@ -59,7 +62,7 @@ class HumanVerificationRemoteRepositoryImplTest {
     @Before
     fun before() {
         MockKAnnotations.init(this)
-        apiProvider = ApiProvider(apiFactory)
+        apiProvider = ApiProvider(apiFactory, sessionProvider)
         every { apiFactory.create(sessionId, HumanVerificationApi::class) } returns apiManager
     }
 

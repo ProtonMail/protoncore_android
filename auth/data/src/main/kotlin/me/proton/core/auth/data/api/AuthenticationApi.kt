@@ -28,10 +28,12 @@ import me.proton.core.auth.data.entity.SecondFactorResponse
 import me.proton.core.auth.data.entity.UserResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
+import me.proton.core.network.domain.TimeoutOverride
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Tag
 
 interface AuthenticationApi : BaseRetrofitApi {
 
@@ -45,7 +47,7 @@ interface AuthenticationApi : BaseRetrofitApi {
     suspend fun performSecondFactor(@Body request: SecondFactorRequest): SecondFactorResponse
 
     @DELETE("auth")
-    suspend fun revokeSession(): GenericResponse
+    suspend fun revokeSession(@Tag timeout: TimeoutOverride): GenericResponse
 
     @GET("users")
     suspend fun getUser(): UserResponse

@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.data
 
+import kotlinx.coroutines.runBlocking
 import me.proton.core.network.data.di.Constants
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.ProtonErrorData
@@ -97,15 +98,13 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     }
 
     private fun handleTimeoutTag(chain: Interceptor.Chain): Interceptor.Chain {
-        val tag = chain.request().tag()
-        return if (tag is TimeoutOverride) {
+        val tag = chain.request().tag(TimeoutOverride::class.java)
+        return tag?.let {
             chain
                 .withConnectTimeout(tag.connectionTimeoutSeconds, TimeUnit.SECONDS)
                 .withReadTimeout(tag.readTimeoutSeconds, TimeUnit.SECONDS)
                 .withWriteTimeout(tag.writeTimeoutSeconds, TimeUnit.SECONDS)
-        } else {
-            chain
-        }
+        } ?: chain
     }
 
     private fun prepareHeaders(original: Request): Request.Builder {
@@ -118,7 +117,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             request.header("Accept", "application/vnd.protonmail.v1+json")
         }
 
-        sessionId?.let { sessionProvider.getSession(it) }?.let { session ->
+        sessionId?.let { runBlocking { sessionProvider.getSession(it) } }?.let { session ->
             session.headers?.let {
                 request.header("x-pm-human-verification-token-type", it.tokenType)
                 request.header("x-pm-human-verification-token", it.tokenCode)

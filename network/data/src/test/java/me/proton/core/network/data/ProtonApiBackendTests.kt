@@ -18,6 +18,7 @@
 package me.proton.core.network.data
 
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.CoroutineScope
@@ -92,7 +93,8 @@ internal class ProtonApiBackendTests {
         prefs = MockNetworkPrefs()
 
         session = MockSession.getDefault()
-        every { sessionProvider.getSession(any()) } returns session
+        coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
+        coEvery { sessionProvider.getSession(any()) } returns session
 
         apiFactory = ApiFactory(
             "https://example.com/",

@@ -30,12 +30,12 @@ import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.data.arch.ApiResultMapper
+import me.proton.core.data.arch.toDataResponse
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.ResponseCodes
+import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.util.kotlin.invoke
 
 /**
  * Implementation of the [AuthRepository].
@@ -44,8 +44,7 @@ import me.proton.core.util.kotlin.invoke
  * @author Dino Kadrikj.
  */
 class AuthRepositoryImpl(
-    private val provider: ApiProvider,
-    private val apiResultMapper: ApiResultMapper = ApiResultMapper()
+    private val provider: ApiProvider
 ) : AuthRepository {
 
     /**
@@ -60,13 +59,10 @@ class AuthRepositoryImpl(
     override suspend fun getLoginInfo(
         username: String,
         clientSecret: String
-    ): DataResult<LoginInfo> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>().invoke {
-                val request = LoginInfoRequest(username, clientSecret)
-                getLoginInfo(request).toLoginInfo(username)
-            }.toDataResponse()
-        }
+    ): DataResult<LoginInfo> = provider.get<AuthenticationApi>().invoke {
+        val request = LoginInfoRequest(username, clientSecret)
+        getLoginInfo(request).toLoginInfo(username)
+    }.toDataResponse()
 
     /**
      * Performs the login request to the API to try to get a valid Access Token and Session for the Account/username.
@@ -85,13 +81,10 @@ class AuthRepositoryImpl(
         clientEphemeral: String,
         clientProof: String,
         srpSession: String
-    ): DataResult<SessionInfo> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>().invoke {
-                val request = LoginRequest(username, clientSecret, clientEphemeral, clientProof, srpSession)
-                performLogin(request).toSessionInfo(username)
-            }.toDataResponse()
-        }
+    ): DataResult<SessionInfo> = provider.get<AuthenticationApi>().invoke {
+        val request = LoginRequest(username, clientSecret, clientEphemeral, clientProof, srpSession)
+        performLogin(request).toSessionInfo(username)
+    }.toDataResponse()
 
     /**
      * Performs the second factor request for the Accounts that have second factor enabled.
@@ -104,23 +97,21 @@ class AuthRepositoryImpl(
     override suspend fun performSecondFactor(
         sessionId: SessionId,
         secondFactorProof: SecondFactorProof
-    ): DataResult<ScopeInfo> = apiResultMapper {
-        provider.get<AuthenticationApi>(sessionId).invoke {
-            val request = when (secondFactorProof) {
-                is SecondFactorProof.SecondFactorCode -> SecondFactorRequest(
-                    secondFactorCode = secondFactorProof.code
+    ): DataResult<ScopeInfo> = provider.get<AuthenticationApi>(sessionId).invoke {
+        val request = when (secondFactorProof) {
+            is SecondFactorProof.SecondFactorCode -> SecondFactorRequest(
+                secondFactorCode = secondFactorProof.code
+            )
+            is SecondFactorProof.SecondFactorSignature -> SecondFactorRequest(
+                universalTwoFactorRequest = UniversalTwoFactorRequest(
+                    keyHandle = secondFactorProof.keyHandle,
+                    clientData = secondFactorProof.clientData,
+                    signatureData = secondFactorProof.signatureData
                 )
-                is SecondFactorProof.SecondFactorSignature -> SecondFactorRequest(
-                    universalTwoFactorRequest = UniversalTwoFactorRequest(
-                        keyHandle = secondFactorProof.keyHandle,
-                        clientData = secondFactorProof.clientData,
-                        signatureData = secondFactorProof.signatureData
-                    )
-                )
-            }
-            performSecondFactor(request).toScopeInfo()
-        }.toDataResponse()
-    }
+            )
+        }
+        performSecondFactor(request).toScopeInfo()
+    }.toDataResponse()
 
     /**
      * Revokes the session for the user. In particular this is practically logging out the user from the backend.
@@ -130,11 +121,15 @@ class AuthRepositoryImpl(
      * @return boolean result of the logout/session revoking operation.
      */
     override suspend fun revokeSession(sessionId: SessionId): DataResult<Boolean> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>(sessionId).invoke {
-                revokeSession().code.isSuccessResponse()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>(sessionId).invoke(true) {
+            revokeSession(
+                TimeoutOverride(
+                    connectionTimeoutSeconds = 1,
+                    readTimeoutSeconds = 1,
+                    writeTimeoutSeconds = 1
+                )
+            ).code.isSuccessResponse()
+        }.toDataResponse()
 
     /**
      * Fetches the full user details from the API.
@@ -144,12 +139,9 @@ class AuthRepositoryImpl(
      * @return [User] object with full user details.
      */
     override suspend fun getUser(sessionId: SessionId): DataResult<User> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>(sessionId).invoke {
-                val userResponse = getUser()
-                userResponse.user.toUser()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            getUser().user.toUser()
+        }.toDataResponse()
 
     /**
      * Fetches the user-keys salts from the API.
@@ -159,11 +151,9 @@ class AuthRepositoryImpl(
      * @return [KeySalts] containing salts for all user keys.
      */
     override suspend fun getSalts(sessionId: SessionId): DataResult<KeySalts> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>(sessionId).invoke {
-                getSalts().toKeySalts()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            getSalts().toKeySalts()
+        }.toDataResponse()
 }
 
 internal fun Int.isSuccessResponse(): Boolean = this == ResponseCodes.OK

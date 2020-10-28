@@ -22,8 +22,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.data.entity.SessionEntity
-import me.proton.core.data.db.BaseDao
 import me.proton.core.data.crypto.EncryptedString
+import me.proton.core.data.db.BaseDao
 import me.proton.core.domain.entity.Product
 
 @Dao
@@ -36,17 +36,20 @@ abstract class SessionDao : BaseDao<SessionEntity>() {
     abstract fun findBySessionId(sessionId: String): Flow<SessionEntity?>
 
     @Query("SELECT * FROM SessionEntity WHERE sessionId = :sessionId")
-    abstract fun get(sessionId: String): SessionEntity?
+    abstract suspend fun get(sessionId: String): SessionEntity?
+
+    @Query("SELECT sessionId FROM SessionEntity WHERE userId = :userId")
+    abstract suspend fun getSessionId(userId: String): String?
 
     @Query("DELETE FROM SessionEntity WHERE sessionId = :sessionId")
     abstract suspend fun delete(sessionId: String)
 
     @Query("UPDATE SessionEntity SET scopes = :scopes WHERE sessionId = :sessionId")
-    abstract fun updateScopes(sessionId: String, scopes: String)
+    abstract suspend fun updateScopes(sessionId: String, scopes: String)
 
     @Query("UPDATE SessionEntity SET humanHeaderTokenType = :tokenType, humanHeaderTokenCode = :tokenCode WHERE sessionId = :sessionId")
-    abstract fun updateHeaders(sessionId: String, tokenType: EncryptedString?, tokenCode: EncryptedString?)
+    abstract suspend fun updateHeaders(sessionId: String, tokenType: EncryptedString?, tokenCode: EncryptedString?)
 
     @Query("UPDATE SessionEntity SET accessToken = :accessToken, refreshToken = :refreshToken WHERE sessionId = :sessionId")
-    abstract fun updateToken(sessionId: String, accessToken: EncryptedString, refreshToken: EncryptedString)
+    abstract suspend fun updateToken(sessionId: String, accessToken: EncryptedString, refreshToken: EncryptedString)
 }

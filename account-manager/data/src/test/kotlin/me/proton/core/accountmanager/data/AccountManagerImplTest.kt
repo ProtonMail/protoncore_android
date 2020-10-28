@@ -17,27 +17,19 @@
  */
 package me.proton.core.accountmanager.data
 
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.slot
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
-import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionListener
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -45,9 +37,6 @@ import kotlin.test.assertEquals
 class AccountManagerImplTest {
 
     private lateinit var accountManager: AccountManagerImpl
-
-    @RelaxedMockK
-    private lateinit var accountRepository: AccountRepository
 
     private val session1 = Session(
         sessionId = SessionId("session1"),
@@ -66,145 +55,25 @@ class AccountManagerImplTest {
         sessionState = SessionState.Authenticated
     )
 
-    private val flowOfAccountLists = mutableListOf<List<Account>>()
-    private val flowOfSessionLists = mutableListOf<List<Session>>()
-
-    @Suppress("LongMethod")
-    private fun setupUpdateListsFlow() {
-        val userIdSlot = slot<UserId>()
-        val sessionIdSlot = slot<SessionId>()
-        val accountStateSlot = slot<AccountState>()
-        val sessionStateSlot = slot<SessionState>()
-        val updatedScopesSlot = slot<List<String>>()
-        val tokenTypeSlot = slot<String>()
-        val tokenCodeSlot = slot<String>()
-        val accessTokenSlot = slot<String>()
-        val refreshTokenSlot = slot<String>()
-
-        // Initial state.
-        flowOfAccountLists.clear()
-        flowOfSessionLists.clear()
-        flowOfAccountLists.add(listOf(account1))
-        flowOfSessionLists.add(listOf(session1))
-
-        // For each updateAccountState -> emit a new updated List<Account> from getAccounts().
-        coEvery { accountRepository.updateAccountState(capture(userIdSlot), capture(accountStateSlot)) } answers {
-            flowOfAccountLists.add(
-                listOf(
-                    flowOfAccountLists.last().first { it.userId == userIdSlot.captured }.copy(
-                        userId = userIdSlot.captured,
-                        state = accountStateSlot.captured
-                    )
-                )
-            )
-        }
-
-        // For each updateSessionState -> emit a new updated List<Account> from getAccounts().
-        coEvery { accountRepository.updateSessionState(capture(sessionIdSlot), capture(sessionStateSlot)) } answers {
-            flowOfAccountLists.add(
-                listOf(
-                    flowOfAccountLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
-                        sessionId = sessionIdSlot.captured,
-                        sessionState = sessionStateSlot.captured
-                    )
-                )
-            )
-        }
-
-        // For each updateSessionScopes -> emit a new updated List<Session> from getSessions().
-        coEvery { accountRepository.updateSessionScopes(capture(sessionIdSlot), capture(updatedScopesSlot)) } answers {
-            flowOfSessionLists.add(
-                listOf(
-                    flowOfSessionLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
-                        sessionId = sessionIdSlot.captured,
-                        scopes = updatedScopesSlot.captured
-                    )
-                )
-            )
-        }
-
-        // For each updateSessionHeaders -> emit a new updated List<Session> from getSessions().
-        coEvery {
-            accountRepository.updateSessionHeaders(
-                capture(sessionIdSlot),
-                capture(tokenTypeSlot),
-                capture(tokenCodeSlot)
-            )
-        } answers {
-            flowOfSessionLists.add(
-                listOf(
-                    flowOfSessionLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
-                        sessionId = sessionIdSlot.captured,
-                        headers = HumanVerificationHeaders(
-                            tokenTypeSlot.captured,
-                            tokenCodeSlot.captured
-                        )
-                    )
-                )
-            )
-        }
-
-        // For each updateSessionToken -> emit a new updated List<Session> from getSessions().
-        coEvery {
-            accountRepository.updateSessionToken(
-                capture(sessionIdSlot),
-                capture(accessTokenSlot),
-                capture(refreshTokenSlot)
-            )
-        } answers {
-            flowOfSessionLists.add(
-                listOf(
-                    session1.copy(
-                        sessionId = sessionIdSlot.captured,
-                        accessToken = accessTokenSlot.captured,
-                        refreshToken = refreshTokenSlot.captured
-                    )
-                )
-            )
-        }
-
-        // Emit last state with same id if exist.
-        coEvery { accountRepository.getAccountOrNull(capture(userIdSlot)) } answers {
-            flowOfAccountLists.last().firstOrNull { it.userId == userIdSlot.captured }
-        }
-        coEvery { accountRepository.getAccountOrNull(capture(sessionIdSlot)) } answers {
-            flowOfAccountLists.last().firstOrNull { it.sessionId == sessionIdSlot.captured }
-        }
-
-        // Emit all state with same id if exist.
-        coEvery { accountRepository.getAccount(capture(sessionIdSlot)) } answers {
-            val filteredLists = flowOfAccountLists.map { list ->
-                list.firstOrNull { it.sessionId == sessionIdSlot.captured }
-            }
-            flowOf(*filteredLists.toTypedArray())
-        }
-
-        // Finally, emit all flow of Lists.
-        every { accountRepository.getAccounts() } answers {
-            flowOf(*flowOfAccountLists.toTypedArray())
-        }
-        every { accountRepository.getSessions() } answers {
-            flowOf(*flowOfSessionLists.toTypedArray())
-        }
-    }
+    private val mocks = RepositoryMocks(session1, account1)
 
     @Before
     fun beforeEveryTest() {
-        MockKAnnotations.init(this)
+        mocks.init()
 
-        accountManager = AccountManagerImpl(Product.Calendar, accountRepository)
+        accountManager = AccountManagerImpl(Product.Calendar, mocks.accountRepository, mocks.authRepository)
     }
 
     @Test
     fun `add user with session`() = runBlockingTest {
         accountManager.addAccount(account1, session1)
 
-        coVerify(exactly = 1) { accountRepository.createOrUpdateAccountSession(any(), any()) }
+        coVerify(exactly = 1) { mocks.accountRepository.createOrUpdateAccountSession(any(), any()) }
     }
 
     @Test
     fun `on account state changed`() = runBlockingTest {
-        every { accountRepository.getAccounts() } returns flowOf(
+        every { mocks.accountRepository.getAccounts() } returns flowOf(
             listOf(account1),
             listOf(account1),
             listOf(account1.copy(state = AccountState.Disabled))
@@ -221,7 +90,7 @@ class AccountManagerImplTest {
 
     @Test
     fun `on session state changed`() = runBlockingTest {
-        every { accountRepository.getAccounts() } returns flowOf(
+        every { mocks.accountRepository.getAccounts() } returns flowOf(
             listOf(account1),
             listOf(account1),
             listOf(account1.copy(sessionState = SessionState.ForceLogout))
@@ -238,9 +107,9 @@ class AccountManagerImplTest {
 
     @Test
     fun `on handleTwoPassModeSuccess`() = runBlockingTest {
-        setupUpdateListsFlow()
+        mocks.setupAccountRepository()
 
-        accountManager.handleTwoPassModeSuccess(account1.userId)
+        accountManager.handleTwoPassModeSuccess(account1.sessionId!!)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
         assertEquals(3, stateLists.size)
@@ -251,20 +120,19 @@ class AccountManagerImplTest {
 
     @Test
     fun `on handleTwoPassModeFailed`() = runBlockingTest {
-        setupUpdateListsFlow()
+        mocks.setupAccountRepository()
 
-        accountManager.handleTwoPassModeFailed(account1.userId)
+        accountManager.handleTwoPassModeFailed(account1.sessionId!!)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(3, stateLists.size)
+        assertEquals(2, stateLists.size)
         assertEquals(account1.state, stateLists[0].state)
         assertEquals(AccountState.TwoPassModeFailed, stateLists[1].state)
-        assertEquals(AccountState.Disabled, stateLists[2].state)
     }
 
     @Test
     fun `on handleSecondFactorSuccess`() = runBlockingTest {
-        setupUpdateListsFlow()
+        mocks.setupAccountRepository()
 
         val newScopes = listOf("scope1", "scope2")
 
@@ -288,7 +156,8 @@ class AccountManagerImplTest {
 
     @Test
     fun `on handleSecondFactorFailed`() = runBlockingTest {
-        setupUpdateListsFlow()
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
 
         accountManager.handleSecondFactorFailed(session1.sessionId)
 
@@ -305,7 +174,7 @@ class AccountManagerImplTest {
 
     @Test
     fun `on handleHumanVerificationSuccess`() = runBlockingTest {
-        setupUpdateListsFlow()
+        mocks.setupAccountRepository()
 
         val tokenType = "newTokenType"
         val tokenCode = "newTokenCode"
@@ -331,107 +200,17 @@ class AccountManagerImplTest {
 
     @Test
     fun `on handleHumanVerificationFailed`() = runBlockingTest {
-        setupUpdateListsFlow()
+        mocks.setupAccountRepository()
 
         accountManager.handleHumanVerificationFailed(session1.sessionId)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(2, stateLists.size)
+        assertEquals(1, stateLists.size)
         assertEquals(account1.state, stateLists[0].state)
-        assertEquals(AccountState.Disabled, stateLists[1].state)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
         assertEquals(2, sessionStateLists.size)
         assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
         assertEquals(SessionState.HumanVerificationFailed, sessionStateLists[1].sessionState)
-    }
-
-    @Test
-    fun `on onSessionTokenRefreshed`() = runBlockingTest {
-        setupUpdateListsFlow()
-
-        val newAccessToken = "newAccessToken"
-        val newRefreshToken = "newRefreshToken"
-
-        accountManager.onSessionTokenRefreshed(
-            session1.refreshWith(
-                accessToken = newAccessToken,
-                refreshToken = newRefreshToken
-            )
-        )
-
-        val sessionLists = accountManager.getSessions().toList()
-        assertEquals(2, sessionLists.size)
-        assertEquals(session1.accessToken, sessionLists[0][0].accessToken)
-        assertEquals(session1.refreshToken, sessionLists[0][0].refreshToken)
-        assertEquals(newAccessToken, sessionLists[1][0].accessToken)
-        assertEquals(newRefreshToken, sessionLists[1][0].refreshToken)
-    }
-
-    @Test
-    fun `on onSessionForceLogout`() = runBlockingTest {
-        setupUpdateListsFlow()
-
-        accountManager.onSessionForceLogout(session1)
-
-        val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(2, stateLists.size)
-        assertEquals(account1.state, stateLists[0].state)
-        assertEquals(AccountState.Disabled, stateLists[1].state)
-
-        val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.ForceLogout, sessionStateLists[1].sessionState)
-    }
-
-    @Test
-    fun `on onHumanVerificationNeeded success`() = runBlockingTest {
-        setupUpdateListsFlow()
-
-        val humanVerificationDetails = HumanVerificationDetails(
-            verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null
-        )
-
-        coEvery { accountRepository.getAccount(any<SessionId>()) } returns flowOf(
-            account1,
-            account1.copy(sessionState = SessionState.HumanVerificationNeeded),
-            account1.copy(sessionState = SessionState.HumanVerificationSuccess)
-        )
-
-        val result = accountManager.onHumanVerificationNeeded(session1, humanVerificationDetails)
-
-        val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.HumanVerificationNeeded, sessionStateLists[1].sessionState)
-
-        assertEquals(SessionListener.HumanVerificationResult.Success, result)
-    }
-
-    @Test
-    fun `on onHumanVerificationNeeded failed`() = runBlockingTest {
-        setupUpdateListsFlow()
-
-        val humanVerificationDetails = HumanVerificationDetails(
-            verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null
-        )
-
-        coEvery { accountRepository.getAccount(any<SessionId>()) } returns flowOf(
-            account1,
-            account1.copy(sessionState = SessionState.HumanVerificationNeeded),
-            account1.copy(sessionState = SessionState.HumanVerificationFailed)
-        )
-
-        val result = accountManager.onHumanVerificationNeeded(session1, humanVerificationDetails)
-
-        val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.HumanVerificationNeeded, sessionStateLists[1].sessionState)
-
-        assertEquals(SessionListener.HumanVerificationResult.Failure, result)
     }
 }

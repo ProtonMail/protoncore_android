@@ -49,8 +49,8 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
     companion object {
         private const val ARG_SESSION_ID = "arg.sessionId"
-        const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
         private const val ARG_CAPTCHA_TOKEN = "arg.captcha-token"
+        const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
         const val ARG_DESTINATION = "arg.destination"
         const val ARG_TOKEN_CODE = "arg.token-code"
         const val ARG_TOKEN_TYPE = "arg.token-type"
@@ -65,7 +65,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
          * @param captchaToken if the API returns it, otherwise null
          */
         operator fun invoke(
-            sessionId: SessionId,
+            sessionId: String,
             availableVerificationMethods: List<String>,
             captchaToken: String?
         ) = HumanVerificationDialogFragment().apply {
@@ -81,7 +81,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
     private lateinit var resultListener: OnResultListener
 
     private val sessionId: SessionId by lazy {
-        requireArguments().get(ARG_SESSION_ID) as SessionId
+        SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
     }
 
     private val captchaToken: String? by lazy {
@@ -187,13 +187,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
     private fun onClose(tokenType: String? = null, tokenCode: String? = null) {
         if (!tokenType.isNullOrEmpty() && !tokenCode.isNullOrEmpty()) {
-            resultListener.setResult(
-                HumanVerificationResult(
-                    sessionId.id,
-                    tokenType,
-                    tokenCode
-                )
-            )
+            resultListener.setResult(HumanVerificationResult(sessionId.id, tokenType, tokenCode))
             dismissAllowingStateLoss()
             return
         }
@@ -205,7 +199,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             if (backStackEntryCount >= 1) {
                 popBackStack()
             } else {
-                resultListener.setResult(null)
+                resultListener.setResult(HumanVerificationResult(sessionId.id, null, null))
                 dismissAllowingStateLoss()
             }
         }

@@ -16,20 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.ui
+package me.proton.core.auth.presentation.entity
 
-import androidx.databinding.ViewDataBinding
-import me.proton.android.core.presentation.ui.ProtonActivity
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-/**
- * Bridge between authentication activities and the interface.
- *
- * @author Dino Kadrikj.
- */
-interface AuthActivityComponent<DB : ViewDataBinding> : AuthActivity {
-
-    /**
-     * Sets and initializes the authentication activity that want to implement [AuthActivity].
-     */
-    fun initializeAuth(protonAuthActivity: ProtonActivity<DB>)
-}
+@Parcelize
+data class SecondFactorInput(
+    val sessionId: String,
+    val isTwoPassModeNeeded: Boolean
+) : Parcelable

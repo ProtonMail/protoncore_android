@@ -100,7 +100,8 @@ internal class ApiManagerTests {
         apiClient = MockApiClient()
 
         session = MockSession.getDefault()
-        every { sessionProvider.getSession(any()) } returns session
+        coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
+        coEvery { sessionProvider.getSession(any()) } returns session
 
         networkManager = MockNetworkManager()
         networkManager.networkStatus = NetworkStatus.Unmetered

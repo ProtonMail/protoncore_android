@@ -18,21 +18,30 @@
 
 package me.proton.core.network.data
 
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
+import java.lang.ref.Reference
 import java.lang.ref.WeakReference
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 
 /**
  * Provide [ApiManager] instance bound to a specific [SessionId].
  */
 class ApiProvider(
-    val apiFactory: ApiFactory
+    val apiFactory: ApiFactory,
+    val sessionProvider: SessionProvider
 ) {
-    val instances: ConcurrentHashMap<String, ConcurrentHashMap<String, WeakReference<ApiManager<*>>>> =
+    val instances: ConcurrentHashMap<String, ConcurrentHashMap<String, Reference<ApiManager<*>>>> =
         ConcurrentHashMap()
+
+    suspend inline fun <reified Api : BaseRetrofitApi> get(
+        userId: UserId
+    ): ApiManager<out Api> = get(sessionProvider.getSessionId(userId))
 
     inline fun <reified Api : BaseRetrofitApi> get(
         sessionId: SessionId? = null
@@ -44,7 +53,9 @@ class ApiProvider(
         val className = Api::class.java.name
         return instances
             .getOrPut(sessionName) { ConcurrentHashMap() }
-            .getOrPut(className) { WeakReference(apiFactory.create(sessionId, Api::class)) }
-            .get() as ApiManager<out Api>
+            .getOrPutWeakRef(className) { apiFactory.create(sessionId, Api::class) } as ApiManager<out Api>
     }
+
+    fun <K, V> ConcurrentMap<K, Reference<V>>.getOrPutWeakRef(key: K, defaultValue: () -> V): V =
+        this[key]?.get() ?: defaultValue().apply { put(key, WeakReference(this)) }
 }

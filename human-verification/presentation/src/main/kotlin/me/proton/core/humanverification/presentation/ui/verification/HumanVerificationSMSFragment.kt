@@ -53,7 +53,10 @@ internal class HumanVerificationSMSFragment :
         internal const val KEY_COUNTRY_SELECTED = "key.country_selected"
         internal const val BUNDLE_KEY_COUNTRY = "bundle.country"
 
-        operator fun invoke(sessionId: SessionId, token: String) = HumanVerificationSMSFragment().apply {
+        operator fun invoke(
+            sessionId: String,
+            token: String
+        ) = HumanVerificationSMSFragment().apply {
             arguments = bundleOf(
                 ARG_SESSION_ID to sessionId,
                 ARG_URL_TOKEN to token
@@ -64,7 +67,7 @@ internal class HumanVerificationSMSFragment :
     private val viewModel by viewModels<HumanVerificationSMSViewModel>()
 
     private val sessionId: SessionId by lazy {
-        requireArguments().get(ARG_SESSION_ID) as SessionId
+        SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
     }
 
     private val humanVerificationBase by lazy {

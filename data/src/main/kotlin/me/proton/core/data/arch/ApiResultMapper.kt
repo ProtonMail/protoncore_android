@@ -21,20 +21,17 @@ package me.proton.core.data.arch
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.ResponseSource
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.util.kotlin.Invokable
 import me.proton.core.util.kotlin.exhaustive
 
-class ApiResultMapper : Invokable {
-    fun <T> ApiResult<T>.toDataResponse(): DataResult<T> = when (this) {
-        is ApiResult.Success -> DataResult.Success(value, ResponseSource.Remote)
-        is ApiResult.Error.Http -> {
-            DataResult.Error.Message(
-                message = proton?.error ?: message,
-                source = ResponseSource.Remote,
-                code = proton?.code ?: 0 // 0 means no code is present
-            )
-        }
-        is ApiResult.Error.Parse -> DataResult.Error.Message(cause?.message, ResponseSource.Remote)
-        is ApiResult.Error.Connection -> DataResult.Error.Message(cause?.message, ResponseSource.Remote)
-    }.exhaustive
-}
+fun <T> ApiResult<T>.toDataResponse(): DataResult<T> = when (this) {
+    is ApiResult.Success -> DataResult.Success(value, ResponseSource.Remote)
+    is ApiResult.Error.Http -> {
+        DataResult.Error.Message(
+            message = proton?.error ?: message,
+            source = ResponseSource.Remote,
+            code = proton?.code ?: 0 // 0 means no code is present
+        )
+    }
+    is ApiResult.Error.Parse -> DataResult.Error.Message(cause?.message, ResponseSource.Remote)
+    is ApiResult.Error.Connection -> DataResult.Error.Message(cause?.message, ResponseSource.Remote)
+}.exhaustive

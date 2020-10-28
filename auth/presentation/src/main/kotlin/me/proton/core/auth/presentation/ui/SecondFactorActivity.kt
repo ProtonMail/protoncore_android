@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.text.InputType
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.hideKeyboard
 import me.proton.android.core.presentation.utils.onClick
 import me.proton.android.core.presentation.utils.onFailure
@@ -35,6 +34,7 @@ import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.ScopeResult
+import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.exhaustive
@@ -45,15 +45,10 @@ import me.proton.core.util.kotlin.exhaustive
  * Optional, only shown for accounts with 2FA login enabled.
  */
 @AndroidEntryPoint
-class SecondFactorActivity : ProtonActivity<Activity2faBinding>(),
-    AuthActivityComponent<Activity2faBinding> by AuthActivityDelegate() {
+class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
 
-    private val sessionId: SessionId by lazy {
-        intent?.extras?.get(ARG_SESSION_ID) as SessionId
-    }
-
-    private val twoPassMode: Boolean by lazy {
-        intent?.extras?.get(ARG_TWO_PASS_MODE) as Boolean
+    private val input: SecondFactorInput by lazy {
+        requireNotNull(intent?.extras?.getParcelable(ARG_SECOND_FACTOR_INPUT))
     }
 
     // initial mode is the second factor input mode.
@@ -65,10 +60,10 @@ class SecondFactorActivity : ProtonActivity<Activity2faBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initializeAuth(this)
+
         binding.apply {
             closeButton.onClick {
-                finish()
+                onBackPressed()
             }
 
             recoveryCodeButton.onClick {
@@ -87,7 +82,7 @@ class SecondFactorActivity : ProtonActivity<Activity2faBinding>(),
                 is PerformSecondFactor.SecondFactorState.Success -> onSuccess(
                     it.sessionId,
                     it.scopeInfo,
-                    it.isMailboxLoginNeeded
+                    it.isTwoPassModeNeeded
                 )
                 is PerformSecondFactor.SecondFactorState.Error.Message -> onError(false, it.message)
                 is PerformSecondFactor.SecondFactorState.Error.EmptyCredentials -> {
@@ -111,20 +106,29 @@ class SecondFactorActivity : ProtonActivity<Activity2faBinding>(),
             secondFactorInput.validate()
                 .onFailure { secondFactorInput.setInputError() }
                 .onSuccess { secondFactorCode ->
-                    viewModel.startSecondFactorFlow(sessionId, secondFactorCode, twoPassMode)
+                    viewModel.startSecondFactorFlow(
+                        sessionId = SessionId(input.sessionId),
+                        secondFactorCode = secondFactorCode,
+                        isTwoPassModeNeeded = input.isTwoPassModeNeeded
+                    )
                 }
+        }
+    }
+
+    override fun onBackPressed() {
+        viewModel.stopSecondFactorFlow(SessionId(input.sessionId)).invokeOnCompletion {
+            finish()
         }
     }
 
     /**
      * Invoked on successful completed mailbox login operation.
      */
-    private fun onSuccess(sessionId: SessionId, scopeInfo: ScopeInfo, isMailboxLoginNeeded: Boolean) {
-        val intent =
-            Intent().putExtra(
-                ARG_SCOPE_RESULT,
-                ScopeResult(sessionId, scopeInfo, isMailboxLoginNeeded)
-            )
+    private fun onSuccess(sessionId: SessionId, scopeInfo: ScopeInfo, isTwoPassModeNeeded: Boolean) {
+        val intent = Intent().putExtra(
+            ARG_SCOPE_RESULT,
+            ScopeResult(sessionId, scopeInfo, isTwoPassModeNeeded)
+        )
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -173,8 +177,7 @@ class SecondFactorActivity : ProtonActivity<Activity2faBinding>(),
     }
 
     companion object {
-        const val ARG_SESSION_ID = "arg.sessionId"
-        const val ARG_TWO_PASS_MODE = "arg.twoPassMode"
+        const val ARG_SECOND_FACTOR_INPUT = "arg.secondFactorInput"
         const val ARG_SCOPE_RESULT = "arg.scopeResult"
     }
 }

@@ -23,6 +23,7 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 
@@ -65,7 +66,12 @@ interface AccountRepository {
     /**
      * Get [Session], by sessionId.
      */
-    fun getSessionOrNull(sessionId: SessionId): Session?
+    suspend fun getSessionOrNull(sessionId: SessionId): Session?
+
+    /**
+     * Get [SessionId], by userId.
+     */
+    suspend fun getSessionIdOrNull(userId: UserId): SessionId?
 
     /**
      * Create or update an [Account], locally.
@@ -121,4 +127,14 @@ interface AccountRepository {
      * Set the primary [UserId].
      */
     suspend fun setAsPrimary(userId: UserId)
+
+    /**
+     * Get [HumanVerificationDetails], if exist, by sessionId.
+     */
+    suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails?
+
+    /**
+     * Set [HumanVerificationDetails], by sessionId.
+     */
+    suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails?)
 }

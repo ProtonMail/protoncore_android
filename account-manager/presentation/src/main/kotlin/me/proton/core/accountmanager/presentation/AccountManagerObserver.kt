@@ -91,7 +91,6 @@ class AccountManagerObserver(
         onAccountRemovedListener = block
     }
 
-
     internal fun setOnSessionHumanVerificationNeeded(block: suspend (Account) -> Unit) {
         onSessionHumanVerificationNeededListener = block
     }

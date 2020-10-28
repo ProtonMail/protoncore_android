@@ -26,9 +26,10 @@ import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.crypto.SrpProofProvider
-import me.proton.core.auth.domain.entity.Account
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.PerformLogin
@@ -232,7 +233,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val account = accountArgument.captured
         val session = sessionArgument.captured
         assertNotNull(account)
-        assertTrue(account.isTwoPassModeNeeded)
+        assertEquals(AccountState.TwoPassModeNeeded, account.state)
         assertEquals(testSessionId, session.sessionId.id)
     }
 }

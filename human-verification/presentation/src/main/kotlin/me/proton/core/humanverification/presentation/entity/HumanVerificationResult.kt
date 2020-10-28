@@ -20,7 +20,6 @@ package me.proton.core.humanverification.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import me.proton.core.network.domain.session.SessionId
 
 /**
  * Human Verification result entity.
@@ -28,6 +27,6 @@ import me.proton.core.network.domain.session.SessionId
 @Parcelize
 data class HumanVerificationResult(
     val sessionId: String,
-    val tokenType: String,
-    val tokenCode: String
+    val tokenType: String?,
+    val tokenCode: String?
 ) : Parcelable

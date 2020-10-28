@@ -80,8 +80,8 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideApiProvider(apiFactory: ApiFactory): ApiProvider =
-        ApiProvider(apiFactory)
+    fun provideApiProvider(apiFactory: ApiFactory, sessionProvider: SessionProvider): ApiProvider =
+        ApiProvider(apiFactory, sessionProvider)
 
     @Provides
     @Singleton
@@ -105,11 +105,4 @@ object ApplicationModule {
     @Provides
     @ClientSecret
     fun provideClientSecret(): String = ""
-
-    @Provides
-    fun provideDispatcherProvider() = object : DispatcherProvider {
-        override val Io = Dispatchers.IO
-        override val Comp = Dispatchers.Default
-        override val Main = Dispatchers.Main
-    }
 }

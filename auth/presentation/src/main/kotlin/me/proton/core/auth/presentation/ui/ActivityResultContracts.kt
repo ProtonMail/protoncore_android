@@ -23,9 +23,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.auth.presentation.entity.ScopeResult
+import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SessionResult
 import me.proton.core.auth.presentation.entity.UserResult
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 
 class StartLogin : ActivityResultContract<List<String>, SessionResult?>() {
@@ -41,11 +41,11 @@ class StartLogin : ActivityResultContract<List<String>, SessionResult?>() {
     }
 }
 
-class StartSecondFactor : ActivityResultContract<SessionId, ScopeResult?>() {
+class StartSecondFactor : ActivityResultContract<SecondFactorInput, ScopeResult?>() {
 
-    override fun createIntent(context: Context, sessionId: SessionId) =
+    override fun createIntent(context: Context, inupt: SecondFactorInput) =
         Intent(context, SecondFactorActivity::class.java).apply {
-            putExtra(SecondFactorActivity.ARG_SESSION_ID, sessionId.id)
+            putExtra(SecondFactorActivity.ARG_SECOND_FACTOR_INPUT, inupt)
         }
 
     override fun parseResult(resultCode: Int, result: Intent?): ScopeResult? {
@@ -54,11 +54,11 @@ class StartSecondFactor : ActivityResultContract<SessionId, ScopeResult?>() {
     }
 }
 
-class StartMailboxLogin : ActivityResultContract<SessionId, UserResult?>() {
+class StartTwoPassMode : ActivityResultContract<SessionId, UserResult?>() {
 
-    override fun createIntent(context: Context, sessionId: SessionId) =
+    override fun createIntent(context: Context, inupt: SessionId) =
         Intent(context, MailboxLoginActivity::class.java).apply {
-            putExtra(MailboxLoginActivity.ARG_SESSION_ID, sessionId.id)
+            putExtra(MailboxLoginActivity.ARG_SESSION_ID, inupt.id)
         }
 
     override fun parseResult(resultCode: Int, result: Intent?): UserResult? {
