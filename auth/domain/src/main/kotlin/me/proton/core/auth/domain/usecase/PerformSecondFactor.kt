@@ -52,6 +52,7 @@ class PerformSecondFactor @Inject constructor(
         sealed class Error : SecondFactorState() {
             data class Message(val message: String?, val localError: Int = 0) : Error()
             object EmptyCredentials : Error()
+            object Unrecoverable : Error()
         }
     }
 
@@ -75,10 +76,19 @@ class PerformSecondFactor @Inject constructor(
         authRepository.performSecondFactor(
             sessionId,
             SecondFactorProof.SecondFactorCode(secondFactorCode),
-        ).onFailure { errorMessage, _ ->
-            emit(SecondFactorState.Error.Message(errorMessage))
+        ).onFailure { errorMessage, _, httpCode ->
+            when (httpCode) {
+                HTTP_ERROR_BAD_REQUEST,
+                HTTP_ERROR_UNAUTHORIZED -> emit(SecondFactorState.Error.Unrecoverable)
+                else -> emit(SecondFactorState.Error.Message(errorMessage))
+            }
         }.onSuccess { scopeInfo ->
             emit(SecondFactorState.Success(sessionId, scopeInfo, isTwoPassModeNeeded))
         }
+    }
+
+    companion object {
+        const val HTTP_ERROR_UNAUTHORIZED = 401
+        const val HTTP_ERROR_BAD_REQUEST = 400
     }
 }

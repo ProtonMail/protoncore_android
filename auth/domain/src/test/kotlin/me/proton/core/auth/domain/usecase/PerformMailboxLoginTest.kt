@@ -84,10 +84,13 @@ class PerformMailboxLoginTest {
     fun beforeEveryTest() {
         // GIVEN
         useCase = PerformMailboxLogin(authRepository, cryptoProvider)
-        coEvery { authRepository.getUser(SessionId(testSessionId)) } returns DataResult.Success(userResult, ResponseSource.Remote)
+        coEvery { authRepository.getUser(SessionId(testSessionId)) } returns DataResult.Success(
+            ResponseSource.Remote,
+            userResult
+        )
         coEvery { authRepository.getSalts(SessionId(testSessionId)) } returns DataResult.Success(
-            keySaltsResult,
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            keySaltsResult
         )
 
         every {
@@ -128,7 +131,8 @@ class PerformMailboxLoginTest {
     fun `mailbox login no primary key events list is correct`() = runBlockingTest {
         // GIVEN
         coEvery { authRepository.getUser(SessionId(testSessionId)) } returns DataResult.Success(
-            userResult.copy(keys = emptyList()), ResponseSource.Remote
+            ResponseSource.Remote,
+            userResult.copy(keys = emptyList())
         )
         // WHEN
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()
@@ -143,10 +147,10 @@ class PerformMailboxLoginTest {
     fun `mailbox login no key salts for primary key events list is correct`() = runBlockingTest {
         // GIVEN
         coEvery { authRepository.getSalts(SessionId(testSessionId)) } returns DataResult.Success(
+            ResponseSource.Remote,
             KeySalts(
                 salts = listOf(KeySalt(keyId = "test-key-id2", keySalt = "test-key-salt2"))
-            ),
-            ResponseSource.Remote
+            )
         )
         // WHEN
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()
@@ -178,8 +182,8 @@ class PerformMailboxLoginTest {
     @Test
     fun `mailbox login error user response`() = runBlockingTest {
         // GIVEN
-        coEvery { authRepository.getUser(SessionId(testSessionId)) } returns DataResult.Error.Message(
-            "Invalid user response", ResponseSource.Remote
+        coEvery { authRepository.getUser(SessionId(testSessionId)) } returns DataResult.Error.Remote(
+            "Invalid user response"
         )
         // WHEN
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()
@@ -194,9 +198,8 @@ class PerformMailboxLoginTest {
     @Test
     fun `mailbox login error salts response`() = runBlockingTest {
         // GIVEN
-        coEvery { authRepository.getSalts(SessionId(testSessionId)) } returns DataResult.Error.Message(
-            "Invalid salts response",
-            ResponseSource.Remote
+        coEvery { authRepository.getSalts(SessionId(testSessionId)) } returns DataResult.Error.Remote(
+            "Invalid salts response"
         )
         // WHEN
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()

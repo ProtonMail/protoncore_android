@@ -84,11 +84,11 @@ class PerformMailboxLogin @Inject constructor(
             Pair(user.await(), salts.await())
         }
 
-        userResult.onFailure { errorMessage, _ ->
+        userResult.onFailure { errorMessage, _, _ ->
             emit(MailboxLoginState.Error.Message(errorMessage))
             return@flow
         }
-        saltsResult.onFailure { errorMessage, _ ->
+        saltsResult.onFailure { errorMessage, _, _ ->
             emit(MailboxLoginState.Error.Message(errorMessage))
             return@flow
         }

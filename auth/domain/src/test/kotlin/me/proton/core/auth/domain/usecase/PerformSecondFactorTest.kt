@@ -54,7 +54,8 @@ class PerformSecondFactorTest {
     fun beforeEveryTest() {
         // GIVEN
         coEvery { authRepository.performSecondFactor(SessionId(testSessionId), any()) } returns DataResult.Success(
-            testScopeInfo.copy(scope = testScope), ResponseSource.Remote
+            ResponseSource.Remote,
+            testScopeInfo.copy(scope = testScope)
         )
         useCase = PerformSecondFactor(authRepository)
     }
@@ -94,7 +95,7 @@ class PerformSecondFactorTest {
                 SessionId(testSessionId),
                 any()
             )
-        } returns DataResult.Error.Message("Invalid Second Factor code", ResponseSource.Remote)
+        } returns DataResult.Error.Remote("Invalid Second Factor code")
         // WHEN
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testSecondFactorCode).toList()
         // THEN

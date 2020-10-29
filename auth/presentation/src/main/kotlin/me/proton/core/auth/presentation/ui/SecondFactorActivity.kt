@@ -88,6 +88,10 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                 is PerformSecondFactor.SecondFactorState.Error.EmptyCredentials -> {
                     onError(true, getString(R.string.auth_2fa_error_empty_code))
                 }
+                PerformSecondFactor.SecondFactorState.Error.Unrecoverable -> {
+                    showError(getString(R.string.auth_login_general_error))
+                    onBackPressed()
+                }
             }.exhaustive
         }
     }

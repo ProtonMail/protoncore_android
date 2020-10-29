@@ -113,8 +113,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getLoginInfo(testUsername, testClientSecret)
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test error", response.message)
     }
 
@@ -155,8 +155,8 @@ class AuthRepositoryImplTest {
             testSrpSession
         )
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test login error", response.message)
     }
 
@@ -181,9 +181,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.revokeSession(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test login error", response.message)
-        assertEquals(1, response.code)
+        assertEquals(1, response.protonCode)
     }
 
     @Test
@@ -195,9 +195,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.revokeSession(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("connection refused", response.message)
-        assertEquals(0, response.code)
+        assertEquals(0, response.protonCode)
     }
 
     @Test
@@ -222,8 +222,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getSalts(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test key salts error", response.message)
     }
 
@@ -236,9 +236,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getSalts(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("connection refused", response.message)
-        assertEquals(0, response.code)
+        assertEquals(0, response.protonCode)
     }
 
     @Test
@@ -264,8 +264,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getUser(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test user error", response.message)
     }
 
@@ -278,9 +278,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getUser(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("connection refused", response.message)
-        assertEquals(0, response.code)
+        assertEquals(0, response.protonCode)
     }
 
     @Test
@@ -329,8 +329,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.performSecondFactor(SessionId(testSessionId), SecondFactorProof.SecondFactorCode("123456"))
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test 2fa error", response.message)
     }
 
@@ -343,8 +343,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.performSecondFactor(SessionId(testSessionId), SecondFactorProof.SecondFactorCode("123456"))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("connection refused", response.message)
-        assertEquals(0, response.code)
+        assertEquals(0, response.protonCode)
     }
 }

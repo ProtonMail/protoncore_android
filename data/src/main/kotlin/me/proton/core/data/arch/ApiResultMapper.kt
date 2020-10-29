@@ -24,14 +24,14 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.util.kotlin.exhaustive
 
 fun <T> ApiResult<T>.toDataResponse(): DataResult<T> = when (this) {
-    is ApiResult.Success -> DataResult.Success(value, ResponseSource.Remote)
+    is ApiResult.Success -> DataResult.Success(ResponseSource.Remote, value)
     is ApiResult.Error.Http -> {
-        DataResult.Error.Message(
+        DataResult.Error.Remote(
             message = proton?.error ?: message,
-            source = ResponseSource.Remote,
-            code = proton?.code ?: 0 // 0 means no code is present
+            protonCode = proton?.code ?: 0,
+            httpCode = httpCode
         )
     }
-    is ApiResult.Error.Parse -> DataResult.Error.Message(cause?.message, ResponseSource.Remote)
-    is ApiResult.Error.Connection -> DataResult.Error.Message(cause?.message, ResponseSource.Remote)
+    is ApiResult.Error.Parse -> DataResult.Error.Remote(cause?.message)
+    is ApiResult.Error.Connection -> DataResult.Error.Remote(cause?.message)
 }.exhaustive

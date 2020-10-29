@@ -93,7 +93,7 @@ class PerformLoginSuccessApiResultsTest {
         )
         coEvery {
             authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Success(loginInfoResult, ResponseSource.Remote)
+        } returns DataResult.Success(ResponseSource.Remote, loginInfoResult)
         coEvery {
             authRepository.performLogin(
                 any(),
@@ -102,7 +102,7 @@ class PerformLoginSuccessApiResultsTest {
                 any(),
                 any()
             )
-        } returns DataResult.Success(sessionInfoResult, ResponseSource.Remote)
+        } returns DataResult.Success(ResponseSource.Remote, sessionInfoResult)
     }
 
     @Test
@@ -164,8 +164,8 @@ class PerformLoginSuccessApiResultsTest {
                 any()
             )
         } returns DataResult.Success(
-            sessionInfoResult.copy(secondFactor = SecondFactor(true, null)),
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            sessionInfoResult.copy(secondFactor = SecondFactor(true, null))
         )
         val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
         assertEquals(2, listOfEvents.size)
@@ -188,8 +188,8 @@ class PerformLoginSuccessApiResultsTest {
                 any()
             )
         } returns DataResult.Success(
-            sessionInfoResult.copy(passwordMode = 2, secondFactor = SecondFactor(true, null)),
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            sessionInfoResult.copy(passwordMode = 2, secondFactor = SecondFactor(true, null))
         )
         val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
         assertEquals(2, listOfEvents.size)

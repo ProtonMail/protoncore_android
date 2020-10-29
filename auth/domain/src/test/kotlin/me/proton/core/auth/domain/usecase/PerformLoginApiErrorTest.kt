@@ -90,11 +90,10 @@ class PerformLoginApiErrorTest {
         )
         coEvery {
             authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Error.Message(
+        } returns DataResult.Error.Remote(
             message = "auth-info error",
-            source = ResponseSource.Remote,
-            code = 401,
-            validation = false
+            protonCode = 1234,
+            httpCode = 401
         )
         coEvery {
             authRepository.performLogin(
@@ -104,11 +103,10 @@ class PerformLoginApiErrorTest {
                 any(),
                 any()
             )
-        } returns DataResult.Error.Message(
+        } returns DataResult.Error.Remote(
             message = "auth error",
-            source = ResponseSource.Remote,
-            code = 401,
-            validation = false
+            protonCode = 1234,
+            httpCode = 401
         )
     }
 
@@ -145,7 +143,6 @@ class PerformLoginApiErrorTest {
         val secondEvent = listOfEvents[1]
         assertTrue(firstEvent is PerformLogin.LoginState.Processing)
         assertTrue(secondEvent is PerformLogin.LoginState.Error.Message)
-        assertEquals(0, secondEvent.localError)
         assertFalse(secondEvent.validation)
     }
 
@@ -154,7 +151,7 @@ class PerformLoginApiErrorTest {
         // GIVEN
         coEvery {
             authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Success(loginInfoResult, ResponseSource.Remote)
+        } returns DataResult.Success(ResponseSource.Remote, loginInfoResult)
         // WHEN
         useCase.invoke(testUsername, testPassword.toByteArray()).toList()
         // THEN
@@ -182,7 +179,7 @@ class PerformLoginApiErrorTest {
         // GIVEN
         coEvery {
             authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Success(loginInfoResult, ResponseSource.Remote)
+        } returns DataResult.Success(ResponseSource.Remote, loginInfoResult)
         // WHEN
         val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
         // THEN
@@ -191,7 +188,6 @@ class PerformLoginApiErrorTest {
         val secondEvent = listOfEvents[1]
         assertTrue(firstEvent is PerformLogin.LoginState.Processing)
         assertTrue(secondEvent is PerformLogin.LoginState.Error.Message)
-        assertEquals(0, secondEvent.localError)
         assertFalse(secondEvent.validation)
     }
 
@@ -200,7 +196,7 @@ class PerformLoginApiErrorTest {
         // GIVEN
         coEvery {
             authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Success(loginInfoResult, ResponseSource.Remote)
+        } returns DataResult.Success(ResponseSource.Remote, loginInfoResult)
 
         coEvery {
             authRepository.performLogin(
@@ -210,11 +206,9 @@ class PerformLoginApiErrorTest {
                 any(),
                 any()
             )
-        } returns DataResult.Error.Message(
+        } returns DataResult.Error.Remote(
             message = "auth error",
-            source = ResponseSource.Remote,
-            code = RESPONSE_CODE_INCORRECT_CREDENTIALS,
-            validation = false
+            protonCode = RESPONSE_CODE_INCORRECT_CREDENTIALS,
         )
         // WHEN
         val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
@@ -224,7 +218,6 @@ class PerformLoginApiErrorTest {
         val secondEvent = listOfEvents[1]
         assertTrue(firstEvent is PerformLogin.LoginState.Processing)
         assertTrue(secondEvent is PerformLogin.LoginState.Error.Message)
-        assertEquals(0, secondEvent.localError)
         assertTrue(secondEvent.validation)
     }
 }

@@ -51,7 +51,7 @@ class PerformLogout @Inject constructor(
         emit(LogoutState.Processing)
 
         authRepository.revokeSession(sessionId = sessionId)
-            .onFailure { errorMessage, _ ->
+            .onFailure { errorMessage, _, _ ->
                 emit(LogoutState.Error.Message(errorMessage))
             }
             .onSuccess {
