@@ -117,6 +117,16 @@ Crypto Data: **0** - _released on: ND_
 
 ## Features
 
+### Auth
+
+Auth: **0** - _released on: ND_
+
+Auth Domain: **0** - _released on: ND_
+
+Auth Presentation: **0** - _released on: ND_
+
+Auth Data: **0** - _released on: ND_
+
 ### Account
 
 Account: **0** - _released on: ND_
