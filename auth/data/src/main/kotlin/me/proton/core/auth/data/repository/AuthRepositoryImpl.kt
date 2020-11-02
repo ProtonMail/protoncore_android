@@ -23,11 +23,6 @@ import me.proton.core.auth.data.entity.LoginInfoRequest
 import me.proton.core.auth.data.entity.LoginRequest
 import me.proton.core.auth.data.entity.SecondFactorRequest
 import me.proton.core.auth.data.entity.UniversalTwoFactorRequest
-import me.proton.core.auth.domain.entity.Address
-import me.proton.core.auth.domain.entity.AddressKey
-import me.proton.core.auth.domain.entity.Addresses
-import me.proton.core.auth.domain.entity.Auth
-import me.proton.core.auth.domain.entity.FullAddressKey
 import me.proton.core.auth.data.entity.request.AddressKeyEntity
 import me.proton.core.auth.data.entity.request.AddressKeySetupRequest
 import me.proton.core.auth.data.entity.request.AddressSetupRequest
@@ -53,7 +48,6 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.ResponseCodes
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.util.kotlin.invoke
 import me.proton.core.util.kotlin.toInt
 
 /**
@@ -154,41 +148,33 @@ class AuthRepositoryImpl(
      * Perform check if the chosen username is available.
      */
     override suspend fun isUsernameAvailable(username: String): DataResult<Boolean> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>().invoke {
-                usernameAvailable(username).code.isSuccessResponse()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>().invoke {
+            usernameAvailable(username).code.isSuccessResponse()
+        }.toDataResponse()
 
     /**
      * Gets all available domains on the API.
      */
     override suspend fun getAvailableDomains(): DataResult<List<String>> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>().invoke {
-                getAvailableDomains().domains
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>().invoke {
+            getAvailableDomains().domains
+        }.toDataResponse()
 
     /**
      * Fetches all addresses for the user.
      */
     override suspend fun getAddresses(sessionId: SessionId): DataResult<Addresses> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>(sessionId).invoke {
-                getAddresses().toAddresses()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            getAddresses().toAddresses()
+        }.toDataResponse()
 
     /**
      * Sets a chosen username for a external address.
      */
     override suspend fun setUsername(sessionId: SessionId, username: String): DataResult<Boolean> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>(sessionId).invoke {
-                setUsername(username).code.isSuccessResponse()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            setUsername(username).code.isSuccessResponse()
+        }.toDataResponse()
 
     /**
      * Creates ProtonMail address.
@@ -198,11 +184,9 @@ class AuthRepositoryImpl(
         domain: String,
         displayName: String
     ): DataResult<Address> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>(sessionId).invoke {
-                createAddress(AddressSetupRequest(domain, displayName)).address.toAddress()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            createAddress(AddressSetupRequest(domain, displayName)).address.toAddress()
+        }.toDataResponse()
 
     /**
      * Creates new address key for ProtonMail address.
@@ -216,27 +200,23 @@ class AuthRepositoryImpl(
         signedKeyListData: String,
         signedKeyListSignature: String
     ): DataResult<FullAddressKey> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>(sessionId).invoke {
-                val body = AddressKeySetupRequest(
-                    addressId = addressId,
-                    privateKey = privateKey,
-                    primary = primary.toInt(),
-                    signedKeyList = SignedKeyList(signedKeyListData, signedKeyListSignature)
-                )
-                createAddressKeyOld(body).key.toAddressKey()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            val body = AddressKeySetupRequest(
+                addressId = addressId,
+                privateKey = privateKey,
+                primary = primary.toInt(),
+                signedKeyList = SignedKeyList(signedKeyListData, signedKeyListSignature)
+            )
+            createAddressKeyOld(body).key.toAddressKey()
+        }.toDataResponse()
 
     /**
      * Returns new random modulus generated from the API.
      */
     override suspend fun randomModulus(): DataResult<Modulus> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>().invoke {
-                randomModulus().toModulus()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>().invoke {
+            randomModulus().toModulus()
+        }.toDataResponse()
 
     /**
      * Sets up the address primary key/
@@ -247,19 +227,17 @@ class AuthRepositoryImpl(
         addressKeyList: List<AddressKey>,
         auth: Auth
     ): DataResult<User> =
-        apiResultMapper {
-            provider.get<AuthenticationApi>().invoke {
-                val setupKeysRequest = SetupKeysRequest(
-                    primaryKey = primaryKey,
-                    keySalt = keySalt,
-                    addressKeys = addressKeyList.map {
-                        AddressKeyEntity.fromAddressKeySetup(it)
-                    },
-                    auth = AuthEntity(auth.version, auth.modulusId, auth.salt, auth.verifier)
-                )
-                setupAddressKeys(setupKeysRequest).user.toUser()
-            }.toDataResponse()
-        }
+        provider.get<AuthenticationApi>().invoke {
+            val setupKeysRequest = SetupKeysRequest(
+                primaryKey = primaryKey,
+                keySalt = keySalt,
+                addressKeys = addressKeyList.map {
+                    AddressKeyEntity.fromAddressKeySetup(it)
+                },
+                auth = AuthEntity(auth.version, auth.modulusId, auth.salt, auth.verifier)
+            )
+            setupAddressKeys(setupKeysRequest).user.toUser()
+        }.toDataResponse()
 
     /**
      * Fetches the full user details from the API.

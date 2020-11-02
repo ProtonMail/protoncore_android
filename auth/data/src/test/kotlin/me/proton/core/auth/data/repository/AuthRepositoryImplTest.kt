@@ -385,10 +385,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.isUsernameAvailable("test-username")
         // THEN
-        assertTrue(response is DataResult.Error.Message)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test API error", response.message)
-        assertEquals(1, response.code)
-        assertFalse(response.validation)
+        assertEquals(1, response.protonCode)
     }
 
     @Test
@@ -426,10 +425,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getAvailableDomains()
         // THEN
-        assertTrue(response is DataResult.Error.Message)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test API error", response.message)
-        assertEquals(1, response.code)
-        assertFalse(response.validation)
+        assertEquals(1, response.protonCode)
     }
 
     @Test
@@ -454,10 +452,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.randomModulus()
         // THEN
-        assertTrue(response is DataResult.Error.Message)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test API error", response.message)
-        assertEquals(1, response.code)
-        assertFalse(response.validation)
+        assertEquals(1, response.protonCode)
     }
 
     @Test
@@ -516,10 +513,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getAddresses(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error.Message)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test API error", response.message)
-        assertEquals(1, response.code)
-        assertFalse(response.validation)
+        assertEquals(1, response.protonCode)
     }
 
     @Test
@@ -555,10 +551,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.setUsername(SessionId(testSessionId), "test-username")
         // THEN
-        assertTrue(response is DataResult.Error.Message)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test API error", response.message)
-        assertEquals(1, response.code)
-        assertFalse(response.validation)
+        assertEquals(1, response.protonCode)
     }
 
     @Test
@@ -597,10 +592,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.createAddress(SessionId(testSessionId), "test-domain", "test-display-name")
         // THEN
-        assertTrue(response is DataResult.Error.Message)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test API error", response.message)
-        assertEquals(1, response.code)
-        assertFalse(response.validation)
+        assertEquals(1, response.protonCode)
     }
 
     @Test
@@ -645,10 +639,9 @@ class AuthRepositoryImplTest {
             "test-sklData", "test-sklSignature"
         )
         // THEN
-        assertTrue(response is DataResult.Error.Message)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test API error", response.message)
-        assertEquals(1, response.code)
-        assertFalse(response.validation)
+        assertEquals(1, response.protonCode)
     }
 
     @Test
@@ -673,9 +666,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.setupAddressKeys("test-primaryKey", "test-keySalt", mockk(), mockk())
         // THEN
-        assertTrue(response is DataResult.Error.Message)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test API error", response.message)
-        assertEquals(1, response.code)
-        assertFalse(response.validation)
+        assertEquals(1, response.protonCode)
     }
 }
