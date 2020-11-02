@@ -45,7 +45,7 @@ class AvailableDomains @Inject constructor(private val authRepository: AuthRepos
 
     operator fun invoke() = flow {
         authRepository.getAvailableDomains()
-            .onFailure { message, _ ->
+            .onFailure { message, _, _ ->
                 emit(AvailableDomainsState.Error.Message(message))
             }
             .onSuccess {

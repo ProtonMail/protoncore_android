@@ -73,7 +73,7 @@ class UpdateUsernameOnlyAccount @Inject constructor(
         emit(UpdateUsernameOnlyState.Processing)
         // step 1. create address
         val createAddressResult = authRepository.createAddress(sessionId, domain, username)
-        createAddressResult.onFailure { message, _ ->
+        createAddressResult.onFailure { message, _, _ ->
             emit(UpdateUsernameOnlyState.Error.Message(message))
             return@flow
         }
@@ -81,7 +81,7 @@ class UpdateUsernameOnlyAccount @Inject constructor(
 
         // step 2. fetch a random modulus
         val randomModulusResult = authRepository.randomModulus()
-        randomModulusResult.onFailure { message, _ ->
+        randomModulusResult.onFailure { message, _, _ ->
             emit(UpdateUsernameOnlyState.Error.Message(message))
             return@flow
         }
@@ -115,7 +115,7 @@ class UpdateUsernameOnlyAccount @Inject constructor(
                 modulusId = modulus.modulusId,
                 modulus = modulus.modulus
             )
-        ).onFailure { message, _ ->
+        ).onFailure { message, _, _ ->
             emit(UpdateUsernameOnlyState.Error.Message(message))
         }.onSuccess {
             emit(UpdateUsernameOnlyState.Success(it))

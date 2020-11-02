@@ -122,10 +122,10 @@ class UpdateUsernameOnlyAccountTest {
         // GIVEN
         useCase = UpdateUsernameOnlyAccount(authRepository, cryptoProvider)
         coEvery { authRepository.createAddress(testSessionId, testDomain, testUsername) } returns DataResult.Success(
-            addressResult,
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            addressResult
         )
-        coEvery { authRepository.randomModulus() } returns DataResult.Success(modulus, ResponseSource.Remote)
+        coEvery { authRepository.randomModulus() } returns DataResult.Success(ResponseSource.Remote, modulus)
         every { cryptoProvider.generateNewPrivateKey(any(), any(), any(), any(), any()) } returns testPrivateKey
         every { cryptoProvider.generateSignedKeyList(any(), testPassphrase.toByteArray()) } returns Pair(
             testSignedKeyListData,
@@ -149,7 +149,7 @@ class UpdateUsernameOnlyAccountTest {
             )
         } returns
             DataResult.Success(
-                userResult, ResponseSource.Remote
+                ResponseSource.Remote, userResult
             )
     }
 
@@ -298,8 +298,8 @@ class UpdateUsernameOnlyAccountTest {
                 testDomain,
                 testUsername
             )
-        } returns DataResult.Error.Message(
-            "Invalid response", ResponseSource.Remote
+        } returns DataResult.Error.Remote(
+            "Invalid response"
         )
         // WHEN
         val listOfEvents =
@@ -315,8 +315,8 @@ class UpdateUsernameOnlyAccountTest {
     @Test
     fun `randomModulus API returns Error event`() = runBlockingTest {
         // GIVEN
-        coEvery { authRepository.randomModulus() } returns DataResult.Error.Message(
-            "Invalid response", ResponseSource.Remote
+        coEvery { authRepository.randomModulus() } returns DataResult.Error.Remote(
+            "Invalid response"
         )
         // WHEN
         val listOfEvents =
@@ -380,8 +380,8 @@ class UpdateUsernameOnlyAccountTest {
                 Auth(1, testModulusId, "test-salt", "test-verifier")
             )
         } returns
-            DataResult.Error.Message(
-                "Invalid response", ResponseSource.Remote
+            DataResult.Error.Remote(
+                "Invalid response"
             )
         // WHEN
         val listOfEvents =

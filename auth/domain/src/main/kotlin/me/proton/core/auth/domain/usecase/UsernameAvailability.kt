@@ -52,7 +52,7 @@ class UsernameAvailability @Inject constructor(private val authRepository: AuthR
         emit(UsernameAvailabilityState.Processing)
 
         authRepository.isUsernameAvailable(username)
-            .onFailure { message, code ->
+            .onFailure { message, code, _ ->
                 if (code == RESPONSE_CODE_USERNAME_UNAVAILABLE) {
                     emit(UsernameAvailabilityState.Error.UsernameUnavailable)
                 } else {

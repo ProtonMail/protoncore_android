@@ -84,12 +84,12 @@ class UpdateExternalAccountTest {
         // GIVEN
         useCase = UpdateExternalAccount(authRepository, cryptoProvider)
         coEvery { authRepository.setUsername(testSessionId, testUsername) } returns DataResult.Success(
-            true,
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            true
         )
         coEvery { authRepository.createAddress(testSessionId, testDomain, testUsername) } returns DataResult.Success(
-            address,
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            address
         )
     }
 
@@ -111,8 +111,8 @@ class UpdateExternalAccountTest {
                 testSignedKeyListSignature
             )
         } returns DataResult.Success(
-            mockk(),
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            mockk()
         )
         // WHEN
         val listOfEvents =
@@ -142,8 +142,8 @@ class UpdateExternalAccountTest {
                 testSignedKeyListSignature
             )
         } returns DataResult.Success(
-            mockk(),
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            mockk()
         )
         // WHEN
         useCase.invoke(testSessionId, testUsername, testDomain, testPassphrase.toByteArray()).toList()
@@ -199,8 +199,8 @@ class UpdateExternalAccountTest {
                 testSignedKeyListSignature
             )
         } returns DataResult.Success(
-            mockk(),
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            mockk()
         )
         // WHEN
         useCase.invoke(testSessionId, testUsername, testDomain, testPassphrase.toByteArray()).toList()
@@ -264,8 +264,8 @@ class UpdateExternalAccountTest {
     fun `unsuccessful setUsername returns Error event`() = runBlockingTest {
         // GIVEN
         coEvery { authRepository.setUsername(testSessionId, testUsername) } returns DataResult.Success(
-            false,
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            false
         )
         // WHEN
         val listOfEvents =
@@ -279,8 +279,8 @@ class UpdateExternalAccountTest {
     @Test
     fun `setUsername API returns Error event`() = runBlockingTest {
         // GIVEN
-        coEvery { authRepository.setUsername(testSessionId, testUsername) } returns DataResult.Error.Message(
-            "Invalid response", ResponseSource.Remote
+        coEvery { authRepository.setUsername(testSessionId, testUsername) } returns DataResult.Error.Remote(
+            "Invalid response"
         )
         // WHEN
         val listOfEvents =
@@ -302,8 +302,8 @@ class UpdateExternalAccountTest {
                 testDomain,
                 testUsername
             )
-        } returns DataResult.Error.Message(
-            "Invalid response", ResponseSource.Remote
+        } returns DataResult.Error.Remote(
+            "Invalid response"
         )
         // WHEN
         val listOfEvents =
@@ -373,8 +373,8 @@ class UpdateExternalAccountTest {
                 testSignedKeyListData,
                 testSignedKeyListSignature
             )
-        } returns DataResult.Error.Message(
-            "Invalid response", ResponseSource.Remote
+        } returns DataResult.Error.Remote(
+            "Invalid response"
         )
         // WHEN
         val listOfEvents =

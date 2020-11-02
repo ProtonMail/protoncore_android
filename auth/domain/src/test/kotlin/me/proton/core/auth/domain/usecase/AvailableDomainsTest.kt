@@ -44,7 +44,7 @@ class AvailableDomainsTest {
     fun beforeEveryTest() {
         // GIVEN
         useCase = AvailableDomains(authRepository)
-        coEvery { authRepository.getAvailableDomains() } returns DataResult.Success(domains, ResponseSource.Remote)
+        coEvery { authRepository.getAvailableDomains() } returns DataResult.Success(ResponseSource.Remote, domains)
     }
 
     @Test
@@ -72,7 +72,7 @@ class AvailableDomainsTest {
     @Test
     fun `available domains success no domains response`() = runBlockingTest {
         // GIVEN
-        coEvery { authRepository.getAvailableDomains() } returns DataResult.Success(emptyList(), ResponseSource.Remote)
+        coEvery { authRepository.getAvailableDomains() } returns DataResult.Success(ResponseSource.Remote, emptyList())
         // WHEN
         val listOfEvents = useCase.invoke().toList()
         // THEN
@@ -84,11 +84,9 @@ class AvailableDomainsTest {
     @Test
     fun `available domains error response`() = runBlockingTest {
         // GIVEN
-        coEvery { authRepository.getAvailableDomains() } returns DataResult.Error.Message(
+        coEvery { authRepository.getAvailableDomains() } returns DataResult.Error.Remote(
             message = "api error",
-            source = ResponseSource.Remote,
-            code = 401,
-            validation = false
+            httpCode = 401
         )
         // WHEN
         val listOfEvents = useCase.invoke().toList()

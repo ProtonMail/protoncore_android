@@ -83,11 +83,11 @@ class UpdateExternalAccount @Inject constructor(
         val setUsernameResult = authRepository.setUsername(sessionId, username)
         val createAddressResult = authRepository.createAddress(sessionId, domain, username)
 
-        setUsernameResult.onFailure { message, _ ->
+        setUsernameResult.onFailure { message, _, _ ->
             emit(UpdateExternalAccountState.Error.Message(message))
             return@flow
         }
-        createAddressResult.onFailure { message, _ ->
+        createAddressResult.onFailure { message, _, _ ->
             emit(UpdateExternalAccountState.Error.Message(message))
             return@flow
         }
@@ -114,7 +114,7 @@ class UpdateExternalAccount @Inject constructor(
         authRepository.createAddressKey(
             sessionId = sessionId, addressId = address.id, privateKey = privateKey, primary = true,
             signedKeyListData = signedKeyList.first, signedKeyListSignature = signedKeyList.second
-        ).onFailure { message, _ ->
+        ).onFailure { message, _, _ ->
             emit(UpdateExternalAccountState.Error.Message(message))
         }.onSuccess {
             emit(UpdateExternalAccountState.Success(Addresses(listOf(address.copy(hasKeys = true, keys = listOf(it))))))

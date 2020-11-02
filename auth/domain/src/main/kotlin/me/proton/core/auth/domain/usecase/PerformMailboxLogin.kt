@@ -95,7 +95,7 @@ class PerformMailboxLogin @Inject constructor(
             emit(MailboxLoginState.Error.Message(errorMessage))
             return@flow
         }
-        addressesResult.onFailure { errorMessage, _ ->
+        addressesResult.onFailure { errorMessage, _, _ ->
             emit(MailboxLoginState.Error.Message(errorMessage))
             return@flow
         }
