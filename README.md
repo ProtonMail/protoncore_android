@@ -91,21 +91,21 @@ Test Android Instrumented: **0.2** - _released on: Oct 21, 2020_
 
 ## Shared
 
-Domain: **0.2** - _released on: Oct 21, 2020_
+Domain: **0.2.1** - _released on: Nov 02, 2020_
 
-Presentation: **0.4.1** - _released on: Oct 23, 2020_
+Presentation: **0.4.2** - _released on: Nov 02, 2020_
 
-Data: **0.1** - _released on: Oct 22, 2020_
+Data: **0.1.1** - _released on: Nov 02, 2020_
 
 ## Support
 
 ### Network
 
-Network: **0.3** - _released on: Oct 21, 2020_
+Network: **0.3.1** - _released on: Nov 02, 2020_
 
-Network Domain: **0.3** - _released on: Oct 21, 2020_
+Network Domain: **0.3.1** - _released on: Nov 02, 2020_
 
-Network Data: **0.3** - _released on: Oct 21, 2020_
+Network Data: **0.3.1** - _released on: Nov 02, 2020_
 
 ### Crypto
 
@@ -119,36 +119,36 @@ Crypto Data: **0** - _released on: ND_
 
 ### Auth
 
-Auth: **0** - _released on: ND_
+Auth: **0.1.1** - _released on: Nov 02, 2020_
 
-Auth Domain: **0** - _released on: ND_
+Auth Domain: **0.1.1** - _released on: Nov 02, 2020_
 
-Auth Presentation: **0** - _released on: ND_
+Auth Presentation: **0.1.1** - _released on: Nov 02, 2020_
 
-Auth Data: **0** - _released on: ND_
+Auth Data: **0.1.1** - _released on: Nov 02, 2020_
 
 ### Account
 
-Account: **0** - _released on: ND_
+Account: **0.1.1** - _released on: Nov 02, 2020_
 
-Account Domain: **0** - _released on: ND_
+Account Domain: **0.1.1** - _released on: Nov 02, 2020_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **0** - _released on: ND_
+Account Data: **0.1.1** - _released on: Nov 02, 2020_
 
 
 ### Account Manager
 
-Account Manager: **0** - _released on: ND_
+Account Manager: **0.1.1** - _released on: Nov 02, 2020_
 
-Account Manager Domain: **0** - _released on: ND_
+Account Manager Domain: **0.1.1** - _released on: Nov 02, 2020_
 
-Account Manager Presentation: **0** - _released on: ND_
+Account Manager Presentation: **0.1.1** - _released on: Nov 02, 2020_
 
-Account Manager Data: **0** - _released on: ND_
+Account Manager Data: **0.1.1** - _released on: Nov 02, 2020_
 
-Account Manager Dagger: **0** - _released on: ND_
+Account Manager Dagger: **0.1.1** - _released on: Nov 02, 2020_
 
 ### Contacts
 
@@ -173,10 +173,10 @@ Settings Data: **0** - _released on: ND_
 
 ### Human Verification
 
-Human Verification: **0.2** - _released on: Oct 21, 2020_
+Human Verification: **0.2.1** - _released on: Nov 02, 2020_
 
-Human Verification Domain: **0.2** - _released on: Oct 21, 2020_
+Human Verification Domain: **0.2.1** - _released on: Nov 02, 2020_
 
-Human Verification Presentation: **0.2** - _released on: Oct 21, 2020_
+Human Verification Presentation: **0.2.1** - _released on: Nov 02, 2020_
 
-Human Verification Data: **0.2** - _released on: Oct 21, 2020_
+Human Verification Data: **0.2.1** - _released on: Nov 02, 2020_
