@@ -66,7 +66,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         val isMailboxLoginNeeded = false
         coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode) } returns flowOf(
             PerformSecondFactor.SecondFactorState.Processing,
-            PerformSecondFactor.SecondFactorState.Success(SessionId(testSessionId), testScopeInfo)
+            PerformSecondFactor.SecondFactorState.Success(SessionId(testSessionId), testScopeInfo, isMailboxLoginNeeded)
         )
         val observer = mockk<(PerformSecondFactor.SecondFactorState) -> Unit>(relaxed = true)
         viewModel.secondFactorState.observeDataForever(observer)
@@ -103,7 +103,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         val isMailboxLoginNeeded = false
         coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode) } returns flowOf(
             PerformSecondFactor.SecondFactorState.Processing,
-            PerformSecondFactor.SecondFactorState.Success(SessionId(testSessionId), testScopeInfo)
+            PerformSecondFactor.SecondFactorState.Success(SessionId(testSessionId), testScopeInfo, isMailboxLoginNeeded)
         )
         val observer = mockk<(PerformSecondFactor.SecondFactorState) -> Unit>(relaxed = true)
         viewModel.secondFactorState.observeDataForever(observer)
@@ -119,7 +119,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         val successState = arguments[1]
         assertTrue(processingState is PerformSecondFactor.SecondFactorState.Processing)
         assertTrue(successState is PerformSecondFactor.SecondFactorState.Success)
-        assertFalse(successState.isMailboxLoginNeeded)
+        assertFalse(successState.isTwoPassModeNeeded)
         assertEquals(SessionId(testSessionId), accountManagerArguments.captured)
     }
 
@@ -127,9 +127,9 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     fun `submit 2fa two pass mode flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val isMailboxLoginNeeded = true
-        coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode) } returns flowOf(
+        coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode, isMailboxLoginNeeded) } returns flowOf(
             PerformSecondFactor.SecondFactorState.Processing,
-            PerformSecondFactor.SecondFactorState.Success(SessionId(testSessionId), testScopeInfo)
+            PerformSecondFactor.SecondFactorState.Success(SessionId(testSessionId), testScopeInfo, isMailboxLoginNeeded)
         )
         val observer = mockk<(PerformSecondFactor.SecondFactorState) -> Unit>(relaxed = true)
         viewModel.secondFactorState.observeDataForever(observer)
@@ -145,7 +145,17 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         val successState = arguments[1]
         assertTrue(processingState is PerformSecondFactor.SecondFactorState.Processing)
         assertTrue(successState is PerformSecondFactor.SecondFactorState.Success)
-        assertTrue(successState.isMailboxLoginNeeded)
+        assertTrue(successState.isTwoPassModeNeeded)
         assertEquals(SessionId(testSessionId), accountManagerArguments.captured)
+    }
+
+    @Test
+    fun `stop 2fa invokes failed on account manager`() = coroutinesTest {
+        // WHEN
+        viewModel.stopSecondFactorFlow(SessionId(testSessionId))
+        // THEN
+        val arguments = slot<SessionId>()
+        coVerify(exactly = 1) { accountManager.handleSecondFactorFailed(capture(arguments)) }
+        coVerify(exactly = 0) { accountManager.handleSecondFactorSuccess(any(), any()) }
     }
 }

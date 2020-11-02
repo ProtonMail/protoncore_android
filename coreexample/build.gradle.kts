@@ -35,11 +35,16 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.presentation),
         project(Module.network),
-        // features
+        project(Module.domain),
+        project(Module.data),
+
+        // Features
         project(Module.humanVerification),
         project(Module.auth),
+        project(Module.account),
+        project(Module.accountManager),
+        project(Module.accountManagerDagger),
         project(Module.gopenpgp),
-        project(Module.domain),
 
         `kotlin-jdk7`,
         `coroutines-android`,
@@ -51,13 +56,11 @@ dependencies {
         `fragment`,
         `hilt-android`,
         `lifecycle-viewModel`,
-        `lifecycle-extensions`,
         `hilt-androidx-annotations`,
         `hilt-androidx-viewModel`,
         `material`,
         `viewStateStore`,
         `android-work-runtime`,
-        `room-ktx`,
 
         // Other
         `retrofit`,
@@ -72,8 +75,7 @@ dependencies {
     kapt(
         `assistedInject-processor-dagger`,
         `hilt-android-compiler`,
-        `hilt-androidx-compiler`,
-        `room-compiler`
+        `hilt-androidx-compiler`
     )
 
     // Test

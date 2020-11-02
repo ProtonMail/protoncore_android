@@ -22,30 +22,36 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.domain.handlers.HumanVerificationHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import org.junit.Test
+import kotlin.test.BeforeTest
 import kotlin.test.assertNotNull
 
 /**
  * Tests for Human Verification domain handler.
  */
-@ExperimentalCoroutinesApi
 class HumanVerificationHandlerTest {
 
     private val sessionId: SessionId = SessionId("id")
+    private val session = mockk<Session>(relaxed = true)
     private val sessionListener = mockk<SessionListener>(relaxed = true)
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
 
     val scope = CoroutineScope(TestCoroutineDispatcher())
     val apiBackend = mockk<ApiBackend<Any>>()
+
+    @BeforeTest
+    fun beforeTest() {
+        coEvery { sessionProvider.getSession(any()) } returns session
+    }
 
     @Test
     fun `test human verification called`() = runBlockingTest {
@@ -61,7 +67,12 @@ class HumanVerificationHandlerTest {
             )
         )
 
-        coEvery { sessionListener.onHumanVerificationNeeded(any(), any()) } returns SessionListener.HumanVerificationResult.Success
+        coEvery {
+            sessionListener.onHumanVerificationNeeded(
+                any(),
+                any()
+            )
+        } returns SessionListener.HumanVerificationResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
         val humanVerificationHandler =

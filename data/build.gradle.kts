@@ -19,11 +19,13 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    `java-library`
-    kotlin("jvm")
+    id("com.android.library")
+    kotlin("android")
 }
 
-libVersion = Version(0, 1, 0)
+libVersion = Version(0, 1, 1)
+
+android()
 
 dependencies {
 

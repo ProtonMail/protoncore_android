@@ -44,7 +44,7 @@ data class SessionResult(
 ) : Parcelable {
 
     @IgnoredOnParcel
-    val isMailboxLoginNeeded = passwordMode == 2
+    val isTwoPassModeNeeded = passwordMode == 2
 
     companion object {
 

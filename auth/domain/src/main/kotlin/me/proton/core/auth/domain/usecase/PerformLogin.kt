@@ -51,7 +51,7 @@ class PerformLogin @Inject constructor(
         object Processing : LoginState()
         data class Success(val sessionInfo: SessionInfo) : LoginState()
         sealed class Error : LoginState() {
-            data class Message(val message: String?, val validation: Boolean = false, val localError: Int = 0) : Error()
+            data class Message(val message: String?, val validation: Boolean = false) : Error()
             object EmptyCredentials : Error()
         }
     }
@@ -71,7 +71,7 @@ class PerformLogin @Inject constructor(
         authRepository.getLoginInfo(
             username = username,
             clientSecret = clientSecret
-        ).onFailure { errorMessage, _ ->
+        ).onFailure { errorMessage, _, _ ->
             emit(LoginState.Error.Message(errorMessage))
         }.onSuccess { loginInfo ->
             val clientProofs: SrpProofs = srpProofProvider.generateSrpProofs(
@@ -86,11 +86,11 @@ class PerformLogin @Inject constructor(
                 clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
                 clientProof = Base64.encode(clientProofs.clientProof),
                 srpSession = loginInfo.srpSession
-            ).onFailure { errorMessage, code ->
-                emit(LoginState.Error.Message(errorMessage, code == RESPONSE_CODE_INCORRECT_CREDENTIALS))
+            ).onFailure { errorMessage, protonCode, _ ->
+                emit(LoginState.Error.Message(errorMessage, protonCode == RESPONSE_CODE_INCORRECT_CREDENTIALS))
             }.onSuccess { sessionInfo ->
                 var result = sessionInfo
-                if (sessionInfo.isSecondFactorNeeded && !sessionInfo.isMailboxLoginNeeded) {
+                if (sessionInfo.isSecondFactorNeeded && !sessionInfo.isTwoPassModeNeeded) {
                     result = sessionInfo.copy(loginPassword = password)
                 }
                 emit(LoginState.Success(result))

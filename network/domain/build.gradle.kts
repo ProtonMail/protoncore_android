@@ -24,13 +24,14 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 3, 0)
+libVersion = Version(0, 3, 1)
 
 dependencies {
 
     implementation(
 
         project(Module.kotlinUtil),
+        project(Module.domain),
 
         // Kotlin
         `kotlin-jdk7`,

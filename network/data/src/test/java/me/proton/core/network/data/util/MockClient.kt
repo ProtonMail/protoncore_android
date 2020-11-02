@@ -51,8 +51,8 @@ class MockSessionListener(
         SessionListener.HumanVerificationResult.Success
     }
 ) : SessionListener {
-    override fun onSessionTokenRefreshed(session: Session) = onTokenRefreshed(session)
-    override fun onSessionForceLogout(session: Session) = onForceLogout(session)
+    override suspend fun onSessionTokenRefreshed(session: Session) = onTokenRefreshed(session)
+    override suspend fun onSessionForceLogout(session: Session) = onForceLogout(session)
     override suspend fun onHumanVerificationNeeded(
         session: Session,
         details: HumanVerificationDetails?

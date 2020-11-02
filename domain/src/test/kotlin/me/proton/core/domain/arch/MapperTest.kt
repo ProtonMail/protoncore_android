@@ -1,6 +1,5 @@
 package me.proton.core.domain.arch
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
@@ -11,7 +10,6 @@ import kotlin.test.assertEquals
 /**
  * API test suite for [Mapper]
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 internal class MapperTest {
 
     data class BusinessModel(val i: Int)

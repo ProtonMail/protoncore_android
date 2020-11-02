@@ -24,7 +24,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.crypto.SrpProofProvider
@@ -46,7 +45,6 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class PerformLoginSuccessApiResultsTest {
 
     // region mocks
@@ -95,7 +93,7 @@ class PerformLoginSuccessApiResultsTest {
         )
         coEvery {
             authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Success(loginInfoResult, ResponseSource.Remote)
+        } returns DataResult.Success(ResponseSource.Remote, loginInfoResult)
         coEvery {
             authRepository.performLogin(
                 any(),
@@ -104,7 +102,7 @@ class PerformLoginSuccessApiResultsTest {
                 any(),
                 any()
             )
-        } returns DataResult.Success(sessionInfoResult, ResponseSource.Remote)
+        } returns DataResult.Success(ResponseSource.Remote, sessionInfoResult)
     }
 
     @Test
@@ -166,8 +164,8 @@ class PerformLoginSuccessApiResultsTest {
                 any()
             )
         } returns DataResult.Success(
-            sessionInfoResult.copy(secondFactor = SecondFactor(true, null)),
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            sessionInfoResult.copy(secondFactor = SecondFactor(true, null))
         )
         val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
         assertEquals(2, listOfEvents.size)
@@ -190,8 +188,8 @@ class PerformLoginSuccessApiResultsTest {
                 any()
             )
         } returns DataResult.Success(
-            sessionInfoResult.copy(passwordMode = 2, secondFactor = SecondFactor(true, null)),
-            ResponseSource.Remote
+            ResponseSource.Remote,
+            sessionInfoResult.copy(passwordMode = 2, secondFactor = SecondFactor(true, null))
         )
         val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
         assertEquals(2, listOfEvents.size)

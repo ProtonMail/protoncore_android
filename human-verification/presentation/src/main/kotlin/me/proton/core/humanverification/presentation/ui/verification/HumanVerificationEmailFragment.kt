@@ -49,7 +49,7 @@ internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVeri
         private const val ARG_RECOVERY_EMAIL = "arg.recoveryemail"
 
         operator fun invoke(
-            sessionId: SessionId,
+            sessionId: String,
             token: String,
             recoveryEmailAddress: String? = null
         ) = HumanVerificationEmailFragment().apply {
@@ -72,7 +72,7 @@ internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVeri
     }
 
     private val sessionId: SessionId by lazy {
-        requireArguments().get(ARG_SESSION_ID) as SessionId
+        SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
     }
 
     private val recoveryEmailAddress: String? by lazy {

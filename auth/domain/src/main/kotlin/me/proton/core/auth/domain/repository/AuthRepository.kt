@@ -67,7 +67,7 @@ interface AuthRepository {
     suspend fun getSalts(sessionId: SessionId): DataResult<KeySalts>
 
     /**
-     * Perform Two Factor for the Login process for a given [SessionId].
+     * Revoke session for a given [SessionId].
      */
     suspend fun revokeSession(sessionId: SessionId): DataResult<Boolean>
 

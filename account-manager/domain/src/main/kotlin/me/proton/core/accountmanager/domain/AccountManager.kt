@@ -19,13 +19,13 @@
 package me.proton.core.accountmanager.domain
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.accountmanager.domain.entity.Account
-import me.proton.core.accountmanager.domain.entity.AccountState
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
-import me.proton.core.network.domain.session.SessionId
 
 abstract class AccountManager(
     /**
@@ -38,11 +38,13 @@ abstract class AccountManager(
      *
      * A valid [Session] must be provided, if not, use [startLoginWorkflow] instead.
      *
-     * The [Account.state] will start from [AccountState.Added].
+     * The [Account.state] will start from [AccountState.Ready].
      *
      * Note: This function is usually used for importing accounts from a different storage or during migration.
+     *
+     * @throws IllegalArgumentException if provided [Session] is not valid.
      */
-    abstract suspend fun addAccount(account: Account, session: Session): Account
+    abstract suspend fun addAccount(account: Account, session: Session)
 
     /**
      * Remove an [Account] from [AccountManager], revoking existing [Session] if needed.
@@ -61,12 +63,17 @@ abstract class AccountManager(
     /**
      * Flow of persisted [Account] on this device, by userId.
      */
-    abstract fun getAccount(userId: UserId): Flow<Account>
+    abstract fun getAccount(userId: UserId): Flow<Account?>
 
     /**
      * Flow of all persisted [Account] on this device.
      */
     abstract fun getAccounts(): Flow<List<Account>>
+
+    /**
+     * Flow of all persisted [Session] on this device.
+     */
+    abstract fun getSessions(): Flow<List<Session>>
 
     /**
      * Flow of [Account] where [Account.state] changed.
@@ -83,46 +90,31 @@ abstract class AccountManager(
     abstract fun onSessionStateChanged(): Flow<Account>
 
     /**
-     * Return true if there is a workflow progressing.
+     * Flow of [Account] where [Account.sessionState] changed to [SessionState.HumanVerificationNeeded].
+     *
+     * Note: Initial/first state after subscribing is considered as changed.
      */
-    abstract fun hasWorkflowProgressing(): Boolean
+    abstract fun onHumanVerificationNeeded(): Flow<Pair<Account, HumanVerificationDetails?>>
 
     /**
-     * Stop the current [Account] or [Session] workflow if exist, and change the corresponding state to failed.
-     */
-    abstract fun stopCurrentWorkflow()
-
-    /**
-     * Get the current [UserId], if exist.
+     * Get the primary [UserId], if exist.
      *
-     * The latest added [Account] will automatically be set as the current.
+     * The latest [AccountState.Ready] [Account] will automatically be set as the primary.
      *
-     * @return the current UserId, as long as at least one [Account] exist.
+     * @return the latest primary UserId, as long as at least one [AccountState.Ready] [Account] exist.
      *
-     * @see handleUserSwitch
+     * @see setAsPrimary
      * @see addAccount
      */
-    abstract suspend fun getCurrentUserId(): Flow<UserId?>
+    abstract fun getPrimaryUserId(): Flow<UserId?>
 
     /**
-     * Switch to the given [UserId] as current, if exist.
+     * Set the given [UserId] as primary, if exist.
      *
-     * The previous [UserId] is saved and set back if the current [Account] is removed.
+     * @throws IllegalArgumentException if userId doesn't exist or [AccountState] is not [AccountState.Ready].
      *
-     * @throws IllegalArgumentException if userId doesn't exist.
-     *
-     * @see getCurrentUserId
+     * @see getPrimaryUserId
      * @see removeAccount
      */
-    abstract suspend fun handleUserSwitch(userId: UserId)
-
-    /**
-     * Get current [HumanVerificationDetails] if exist, by sessionId.
-     */
-    abstract suspend fun getHumanVerificationDetails(sessionId: SessionId): HumanVerificationDetails?
-
-    /**
-     * Set current [HumanVerificationDetails], by sessionId.
-     */
-    abstract suspend fun setHumanVerificationDetails(sessionId: SessionId, details: HumanVerificationDetails?)
+    abstract suspend fun setAsPrimary(userId: UserId)
 }

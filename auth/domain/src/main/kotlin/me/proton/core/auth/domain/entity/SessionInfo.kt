@@ -39,7 +39,7 @@ data class SessionInfo(
     val loginPassword: ByteArray? = null
 ) {
     val isSecondFactorNeeded = secondFactor?.enabled == true
-    val isMailboxLoginNeeded = passwordMode == 2
+    val isTwoPassModeNeeded = passwordMode == 2
 }
 
 data class SecondFactor(

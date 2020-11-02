@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 3, 0)
+libVersion = Version(0, 3, 1)
 
 android()
 
@@ -36,6 +36,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.sharedPreferencesUtil),
         project(Module.networkDomain),
+        project(Module.domain),
 
         // Kotlin
         `kotlin-jdk7`,

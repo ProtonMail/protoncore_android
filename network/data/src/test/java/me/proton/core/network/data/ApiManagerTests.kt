@@ -23,7 +23,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -55,7 +54,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-@ExperimentalCoroutinesApi
 internal class ApiManagerTests {
 
     private val baseUrl = "https://primary.com/"
@@ -102,7 +100,8 @@ internal class ApiManagerTests {
         apiClient = MockApiClient()
 
         session = MockSession.getDefault()
-        every { sessionProvider.getSession(any()) } returns session
+        coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
+        coEvery { sessionProvider.getSession(any()) } returns session
 
         networkManager = MockNetworkManager()
         networkManager.networkStatus = NetworkStatus.Unmetered

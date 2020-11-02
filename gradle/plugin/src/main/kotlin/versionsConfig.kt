@@ -72,5 +72,4 @@ const val `miniDsn version` =               "1.0.0"         // Released: Jul 18,
 const val `okHttp version` =                "4.8.0"         // Released: Jul 11, 2020
 const val `trustKit version` =              "1.1.3"         // Released: Apr 30, 2020
 
-
 // endregion

@@ -46,12 +46,13 @@ class PerformSecondFactor @Inject constructor(
         data class Success(
             val sessionId: SessionId,
             val scopeInfo: ScopeInfo,
-            val isMailboxLoginNeeded: Boolean = false
+            val isTwoPassModeNeeded: Boolean
         ) : SecondFactorState()
 
         sealed class Error : SecondFactorState() {
             data class Message(val message: String?, val localError: Int = 0) : Error()
             object EmptyCredentials : Error()
+            object Unrecoverable : Error()
         }
     }
 
@@ -61,7 +62,8 @@ class PerformSecondFactor @Inject constructor(
      */
     operator fun invoke(
         sessionId: SessionId,
-        secondFactorCode: String
+        secondFactorCode: String,
+        isTwoPassModeNeeded: Boolean = false
     ): Flow<SecondFactorState> = flow {
 
         if (secondFactorCode.isEmpty()) {
@@ -73,11 +75,20 @@ class PerformSecondFactor @Inject constructor(
 
         authRepository.performSecondFactor(
             sessionId,
-            SecondFactorProof.SecondFactorCode(secondFactorCode)
-        ).onFailure { errorMessage, _ ->
-            emit(SecondFactorState.Error.Message(errorMessage))
+            SecondFactorProof.SecondFactorCode(secondFactorCode),
+        ).onFailure { errorMessage, _, httpCode ->
+            when (httpCode) {
+                HTTP_ERROR_BAD_REQUEST,
+                HTTP_ERROR_UNAUTHORIZED -> emit(SecondFactorState.Error.Unrecoverable)
+                else -> emit(SecondFactorState.Error.Message(errorMessage))
+            }
         }.onSuccess { scopeInfo ->
-            emit(SecondFactorState.Success(sessionId, scopeInfo))
+            emit(SecondFactorState.Success(sessionId, scopeInfo, isTwoPassModeNeeded))
         }
+    }
+
+    companion object {
+        const val HTTP_ERROR_UNAUTHORIZED = 401
+        const val HTTP_ERROR_BAD_REQUEST = 400
     }
 }

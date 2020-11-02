@@ -53,7 +53,7 @@ class HumanVerificationEnterCodeFragment :
         private const val ARG_TOKEN_TYPE = "arg.enter-code-token-type"
 
         operator fun invoke(
-            sessionId: SessionId,
+            sessionId: String,
             tokenType: TokenType,
             destination: String?
         ) = HumanVerificationEnterCodeFragment().apply {
@@ -68,7 +68,7 @@ class HumanVerificationEnterCodeFragment :
     private val viewModel by viewModels<HumanVerificationEnterCodeViewModel>()
 
     private val sessionId: SessionId by lazy {
-        requireArguments().get(ARG_SESSION_ID) as SessionId
+        SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
     }
 
     private val destination: String? by lazy {

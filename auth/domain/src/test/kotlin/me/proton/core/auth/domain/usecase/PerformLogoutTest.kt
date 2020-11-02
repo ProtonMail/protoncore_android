@@ -21,7 +21,6 @@ package me.proton.core.auth.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -37,7 +36,6 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class PerformLogoutTest {
     private val authRepository = mockk<AuthRepository>(relaxed = true)
 
@@ -48,7 +46,10 @@ class PerformLogoutTest {
     fun beforeEveryTest() {
         // GIVEN
         useCase = PerformLogout(authRepository)
-        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns DataResult.Success(true, ResponseSource.Remote)
+        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns DataResult.Success(
+            ResponseSource.Remote,
+            true
+        )
     }
 
     @Test
@@ -74,9 +75,8 @@ class PerformLogoutTest {
     @Test
     fun `logout api returns error events list is correct`() = runBlockingTest {
         // GIVEN
-        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns DataResult.Error.Message(
-            "Invalid input",
-            ResponseSource.Remote
+        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns DataResult.Error.Remote(
+            "Invalid input"
         )
         // WHEN
         val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
@@ -90,7 +90,10 @@ class PerformLogoutTest {
     @Test
     fun `logout api returns false events list is correct`() = runBlockingTest {
         // GIVEN
-        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns DataResult.Success(false, ResponseSource.Remote)
+        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns DataResult.Success(
+            ResponseSource.Remote,
+            false
+        )
         // WHEN
         val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
         // THEN

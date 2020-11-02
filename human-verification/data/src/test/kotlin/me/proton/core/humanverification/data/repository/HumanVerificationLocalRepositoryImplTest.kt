@@ -22,7 +22,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
@@ -113,7 +112,6 @@ const val testDataCountries =
     """
 
 @InternalCoroutinesApi
-@ExperimentalCoroutinesApi
 class HumanVerificationLocalRepositoryImplTest {
 
     private val context = mockk<Context>(relaxed = true)

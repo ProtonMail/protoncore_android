@@ -18,8 +18,7 @@
 
 package me.proton.core.auth.domain
 
-import me.proton.core.auth.domain.entity.Account
-import me.proton.core.domain.entity.UserId
+import me.proton.core.account.domain.entity.Account
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 

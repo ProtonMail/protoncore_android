@@ -23,7 +23,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.hideKeyboard
 import me.proton.android.core.presentation.utils.onClick
 import me.proton.android.core.presentation.utils.onFailure
@@ -32,7 +31,6 @@ import me.proton.android.core.presentation.utils.validatePassword
 import me.proton.android.core.presentation.utils.validateUsername
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.PerformLogin
-import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
 import me.proton.core.auth.presentation.entity.SessionResult
@@ -43,18 +41,14 @@ import me.proton.core.util.kotlin.exhaustive
  * Login Activity which allows users to Login to any Proton client application.
  */
 @AndroidEntryPoint
-class LoginActivity : ProtonActivity<ActivityLoginBinding>(),
-    AuthActivityComponent<ActivityLoginBinding> by AuthActivityDelegate() {
+class LoginActivity : AuthActivity<ActivityLoginBinding>() {
 
     private val viewModel by viewModels<LoginViewModel>()
-    private val authOrchestrator = AuthOrchestrator()
 
     override fun layoutId(): Int = R.layout.activity_login
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initializeAuth(this)
-        authOrchestrator.register(this)
 
         binding.apply {
             closeButton.onClick {

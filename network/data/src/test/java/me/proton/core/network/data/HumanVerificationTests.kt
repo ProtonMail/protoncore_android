@@ -19,6 +19,7 @@
 package me.proton.core.network.data
 
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -127,7 +128,8 @@ internal class HumanVerificationTests {
         prefs = MockNetworkPrefs()
 
         session = MockSession.getDefault()
-        every { sessionProvider.getSession(any()) } returns session
+        coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
+        coEvery { sessionProvider.getSession(any()) } returns session
 
         apiFactory =
             ApiFactory(
@@ -218,7 +220,7 @@ internal class HumanVerificationTests {
             )
         )
 
-        every { sessionProvider.getSession(any()) } returns MockSession.getWithHeader(
+        coEvery { sessionProvider.getSession(any()) } returns MockSession.getWithHeader(
             humanVerificationHeaders
         )
 

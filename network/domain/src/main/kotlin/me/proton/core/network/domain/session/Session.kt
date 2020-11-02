@@ -27,6 +27,12 @@ data class Session(
     val headers: HumanVerificationHeaders? = null,
     val scopes: List<String>
 ) {
+    fun isValid() = listOf(
+        sessionId.id,
+        accessToken,
+        refreshToken
+    ).all { it.isNotBlank() }
+
     fun refreshWith(accessToken: String, refreshToken: String) = copy(
         accessToken = accessToken,
         refreshToken = refreshToken

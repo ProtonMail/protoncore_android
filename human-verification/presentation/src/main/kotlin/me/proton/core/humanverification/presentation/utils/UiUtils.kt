@@ -56,7 +56,7 @@ fun FragmentManager.showHumanVerification(
     largeLayout: Boolean
 ) {
 
-    val newFragment = HumanVerificationDialogFragment(sessionId, availableVerificationMethods, captchaToken)
+    val newFragment = HumanVerificationDialogFragment(sessionId.id, availableVerificationMethods, captchaToken)
     if (largeLayout) {
         // For large screens (tablets), we show the fragment as a dialog
         newFragment.show(this, TAG_HUMAN_VERIFICATION_DIALOG)
@@ -79,7 +79,7 @@ internal fun FragmentManager.showHumanVerificationCaptchaContent(
     token: String?,
     host: String = HOST_DEFAULT
 ): Fragment {
-    val captchaFragment = HumanVerificationCaptchaFragment(sessionId, token ?: TOKEN_DEFAULT, host)
+    val captchaFragment = HumanVerificationCaptchaFragment(sessionId.id, token ?: TOKEN_DEFAULT, host)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, captchaFragment)
@@ -92,7 +92,7 @@ internal fun FragmentManager.showHumanVerificationEmailContent(
     sessionId: SessionId,
     token: String = TOKEN_DEFAULT
 ) {
-    val emailFragment = HumanVerificationEmailFragment(sessionId, token)
+    val emailFragment = HumanVerificationEmailFragment(sessionId.id, token)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, emailFragment)
@@ -104,7 +104,7 @@ internal fun FragmentManager.showHumanVerificationSMSContent(
     containerId: Int = android.R.id.content,
     token: String = TOKEN_DEFAULT
 ) {
-    val smsFragment = HumanVerificationSMSFragment(sessionId, token)
+    val smsFragment = HumanVerificationSMSFragment(sessionId.id, token)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, smsFragment)
@@ -116,7 +116,7 @@ internal fun FragmentManager.showEnterCode(
     tokenType: TokenType,
     destination: String?
 ) {
-    val enterCodeFragment = HumanVerificationEnterCodeFragment(sessionId, tokenType, destination)
+    val enterCodeFragment = HumanVerificationEnterCodeFragment(sessionId.id, tokenType, destination)
     inTransaction {
         setCustomAnimations(0, 0)
         add(enterCodeFragment, TAG_HUMAN_VERIFICATION_ENTER_CODE)

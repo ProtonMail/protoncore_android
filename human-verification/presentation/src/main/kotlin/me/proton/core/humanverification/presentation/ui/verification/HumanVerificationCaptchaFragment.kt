@@ -43,8 +43,7 @@ import me.proton.core.network.domain.session.SessionId
  * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
-internal class HumanVerificationCaptchaFragment :
-    ProtonFragment<FragmentHumanVerificationCaptchaBinding>() {
+internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVerificationCaptchaBinding>() {
 
     companion object {
         private const val ARG_SESSION_ID = "arg.sessionId"
@@ -52,7 +51,7 @@ internal class HumanVerificationCaptchaFragment :
         private const val MAX_PROGRESS = 100
 
         operator fun invoke(
-            sessionId: SessionId,
+            sessionId: String,
             urlToken: String,
             host: String
         ) = HumanVerificationCaptchaFragment().apply {
@@ -65,7 +64,7 @@ internal class HumanVerificationCaptchaFragment :
     }
 
     private val sessionId: SessionId by lazy {
-        requireArguments().get(ARG_SESSION_ID) as SessionId
+        SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
     }
 
     private val host: String by lazy {

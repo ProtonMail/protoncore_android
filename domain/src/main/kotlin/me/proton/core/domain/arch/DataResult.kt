@@ -30,26 +30,26 @@ enum class ResponseSource {
  * Lets the usecase (that use repository) to be aware that something is loading and from where.
  * Useful when client needs to support offline mode.
  */
-sealed class DataResult<out T> {
+sealed class DataResult<out T>(open val source: ResponseSource) {
 
-    abstract val source: ResponseSource
+    data class Processing<T>(override val source: ResponseSource) : DataResult<T>(source)
 
-    data class Success<T>(
-        val value: T,
-        override val source: ResponseSource
-    ) : DataResult<T>()
+    data class Success<T>(override val source: ResponseSource, val value: T) : DataResult<T>(source)
 
-    sealed class Error<T> : DataResult<T>() {
+    sealed class Error<T>(
+        override val source: ResponseSource,
+        open val message: String?
+    ) : DataResult<T>(source) {
 
-        abstract val message: String?
-        abstract val code: Int // the error code, for any potential business logic handling, default is 0
+        data class Local<T>(
+            override val message: String?
+        ) : Error<T>(ResponseSource.Local, message)
 
-        data class Message<T>(
+        data class Remote<T>(
             override val message: String?,
-            override val source: ResponseSource,
-            override val code: Int = 0,
-            val validation: Boolean = false // if it is validation error, default false
-        ) : Error<T>()
+            val protonCode: Int = 0,
+            val httpCode: Int = 0
+        ) : Error<T>(ResponseSource.Remote, message)
     }
 }
 
@@ -57,8 +57,13 @@ sealed class DataResult<out T> {
  * Performs the given [action] if this instance represents an [DataResult.Error].
  * Returns the original `DataResult` unchanged.
  */
-inline fun <T> DataResult<T>.onFailure(action: (message: String?, code: Int) -> Unit): DataResult<T> {
-    if (this is DataResult.Error) action(message, code)
+inline fun <T> DataResult<T>.onFailure(
+    action: (message: String?, protonCode: Int?, httpCode: Int?) -> Unit
+): DataResult<T> {
+    if (this is DataResult.Error.Local)
+        action(message, null, null)
+    else if (this is DataResult.Error.Remote)
+        action(message, protonCode, httpCode)
     return this
 }
 

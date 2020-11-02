@@ -26,9 +26,10 @@ import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.crypto.SrpProofProvider
-import me.proton.core.auth.domain.entity.Account
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.PerformLogin
@@ -215,7 +216,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     fun `login happy path mailbox login needed`() = coroutinesTest {
         // GIVEN
         val sessionInfo = mockk<SessionInfo>(relaxed = true)
-        every { sessionInfo.isMailboxLoginNeeded } returns true
+        every { sessionInfo.isTwoPassModeNeeded } returns true
         every { sessionInfo.sessionId } returns testSessionId
         coEvery { useCase.invoke(any(), any()) } returns flowOf(
             PerformLogin.LoginState.Processing,
@@ -232,7 +233,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val account = accountArgument.captured
         val session = sessionArgument.captured
         assertNotNull(account)
-        assertTrue(account.isMailboxLoginNeeded)
+        assertEquals(AccountState.TwoPassModeNeeded, account.state)
         assertEquals(testSessionId, session.sessionId.id)
     }
 }

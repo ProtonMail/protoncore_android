@@ -20,85 +20,124 @@ package me.proton.core.auth.presentation
 
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.presentation.entity.ScopeResult
+import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SessionResult
 import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.ui.StartLogin
-import me.proton.core.auth.presentation.ui.StartMailboxLogin
 import me.proton.core.auth.presentation.ui.StartSecondFactor
+import me.proton.core.auth.presentation.ui.StartTwoPassMode
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.StartHumanVerification
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.SessionId
+import javax.inject.Inject
 
-class AuthOrchestrator {
+class AuthOrchestrator @Inject constructor(
+    private val accountWorkflowHandler: AccountWorkflowHandler
+) {
 
     // region result launchers
     private var loginWorkflowLauncher: ActivityResultLauncher<List<String>>? = null
-    private var secondFactorWorkflowLauncher: ActivityResultLauncher<SessionId>? = null
-    private var mailboxWorkflowLauncher: ActivityResultLauncher<SessionId>? = null
+    private var secondFactorWorkflowLauncher: ActivityResultLauncher<SecondFactorInput>? = null
+    private var twoPassModeWorkflowLauncher: ActivityResultLauncher<SessionId>? = null
     private var humanWorkflowLauncher: ActivityResultLauncher<HumanVerificationInput>? = null
     // endregion
 
+    private var onUserResultListener: (result: UserResult?) -> Unit = {}
+    private var onSessionResultListener: (result: SessionResult?) -> Unit = {}
+    private var onScopeResultListener: (result: ScopeResult?) -> Unit = {}
+    private var onHumanVerificationResultListener: (result: HumanVerificationResult?) -> Unit = {}
+
+    fun setOnUserResult(block: (result: UserResult?) -> Unit) {
+        onUserResultListener = block
+    }
+
+    fun setOnSessionResult(block: (result: SessionResult?) -> Unit) {
+        onSessionResultListener = block
+    }
+
+    fun setOnScopeResult(block: (result: ScopeResult?) -> Unit) {
+        onScopeResultListener = block
+    }
+
+    fun setOnHumanVerificationResult(block: (result: HumanVerificationResult?) -> Unit) {
+        onHumanVerificationResultListener = block
+    }
+
     // region private module functions
     private fun registerLoginWorkflowLauncher(
-        context: ComponentActivity,
-        onSessionResult: (result: SessionResult?) -> Unit = {}
+        context: ComponentActivity
     ): ActivityResultLauncher<List<String>> =
-        context.registerForActivityResult(StartLogin()) { result ->
+        context.registerForActivityResult(
+            StartLogin()
+        ) { result ->
             result?.let {
                 if (it.isSecondFactorNeeded) {
-                    startSecondFactorWorkflow(SessionId(it.sessionId))
-                } else if (it.isMailboxLoginNeeded) {
-                    startMailboxLoginWorkflow(SessionId(it.sessionId))
+                    startSecondFactorWorkflow(SecondFactorInput(it.sessionId, it.isTwoPassModeNeeded))
+                } else if (it.isTwoPassModeNeeded) {
+                    startTwoPassModeWorkflow(SessionId(it.sessionId))
                 }
-                onSessionResult(it)
             }
+            onSessionResultListener(result)
         }
 
-    private fun registerMailboxLoginWorkflowLauncher(
-        context: ComponentActivity,
-        onUserResult: (result: UserResult?) -> Unit = {}
+    private fun registerTwoPassModeWorkflowLauncher(
+        context: ComponentActivity
     ): ActivityResultLauncher<SessionId> =
-        context.registerForActivityResult(StartMailboxLogin()) {
-            onUserResult(it)
+        context.registerForActivityResult(
+            StartTwoPassMode()
+        ) {
+            onUserResultListener(it)
         }
 
     private fun registerSecondFactorWorkflow(
-        context: ComponentActivity,
-        onScopeResult: (result: ScopeResult?) -> Unit = {}
-    ): ActivityResultLauncher<SessionId> =
-        context.registerForActivityResult(StartSecondFactor()) { result ->
+        context: ComponentActivity
+    ): ActivityResultLauncher<SecondFactorInput> =
+        context.registerForActivityResult(
+            StartSecondFactor()
+        ) { result ->
             result?.let {
-                if (it.isMailboxLoginNeeded) {
-                    startMailboxLoginWorkflow(SessionId(it.sessionId))
+                if (it.isTwoPassModeNeeded) {
+                    startTwoPassModeWorkflow(SessionId(it.sessionId))
                 }
-                onScopeResult(it)
             }
+            onScopeResultListener(result)
         }
 
     private fun registerHumanVerificationWorkflow(
-        context: ComponentActivity,
-        onHumanVerificationResult: (result: HumanVerificationResult?) -> Unit = {}
+        context: ComponentActivity
     ): ActivityResultLauncher<HumanVerificationInput> =
-        context.registerForActivityResult(StartHumanVerification()) {
-            onHumanVerificationResult(it)
+        context.registerForActivityResult(
+            StartHumanVerification()
+        ) { result ->
+            if (result != null) {
+                context.lifecycleScope.launch {
+                    if (!result.tokenType.isNullOrBlank() && !result.tokenCode.isNullOrBlank()) {
+                        accountWorkflowHandler.handleHumanVerificationSuccess(
+                            sessionId = SessionId(result.sessionId),
+                            tokenType = result.tokenType!!,
+                            tokenCode = result.tokenCode!!
+                        )
+                    } else {
+                        accountWorkflowHandler.handleHumanVerificationFailed(
+                            sessionId = SessionId(result.sessionId)
+                        )
+                    }
+                }
+            }
+            onHumanVerificationResultListener(result)
         }
 
     /**
      * Start a Second Factor workflow.
      */
-    private fun startSecondFactorWorkflow(input: SessionId) {
+    private fun startSecondFactorWorkflow(input: SecondFactorInput) {
         secondFactorWorkflowLauncher?.launch(input)
-            ?: throw IllegalStateException("You must call register before any start workflow function!")
-    }
-
-    /**
-     * Start a MailboxLogin workflow.
-     */
-    private fun startMailboxLoginWorkflow(input: SessionId) {
-        mailboxWorkflowLauncher?.launch(input)
             ?: throw IllegalStateException("You must call register before any start workflow function!")
     }
     // endregion
@@ -110,10 +149,10 @@ class AuthOrchestrator {
      * Note: This function have to be called [ComponentActivity.onCreate]] before [ComponentActivity.onResume].
      */
     fun register(context: ComponentActivity) {
-        loginWorkflowLauncher ?: run { loginWorkflowLauncher = registerLoginWorkflowLauncher(context) }
-        humanWorkflowLauncher ?: run { humanWorkflowLauncher = registerHumanVerificationWorkflow(context) }
-        secondFactorWorkflowLauncher ?: run { secondFactorWorkflowLauncher = registerSecondFactorWorkflow(context) }
-        mailboxWorkflowLauncher ?: run { mailboxWorkflowLauncher = registerMailboxLoginWorkflowLauncher(context) }
+        loginWorkflowLauncher = registerLoginWorkflowLauncher(context)
+        humanWorkflowLauncher = registerHumanVerificationWorkflow(context)
+        secondFactorWorkflowLauncher = registerSecondFactorWorkflow(context)
+        twoPassModeWorkflowLauncher = registerTwoPassModeWorkflowLauncher(context)
     }
 
     /**
@@ -121,6 +160,14 @@ class AuthOrchestrator {
      */
     fun startLoginWorkflow(requiredFeatures: List<String> = emptyList()) {
         loginWorkflowLauncher?.launch(requiredFeatures)
+            ?: throw IllegalStateException("You must call register before any start workflow function!")
+    }
+
+    /**
+     * Start a TwoPassMode workflow.
+     */
+    fun startTwoPassModeWorkflow(input: SessionId) {
+        twoPassModeWorkflowLauncher?.launch(input)
             ?: throw IllegalStateException("You must call register before any start workflow function!")
     }
 
@@ -137,4 +184,32 @@ class AuthOrchestrator {
         ) ?: throw IllegalStateException("You must call register before any start workflow function!")
     }
     // endregion
+}
+
+fun AuthOrchestrator.onUserResult(
+    block: (result: UserResult?) -> Unit
+): AuthOrchestrator {
+    setOnUserResult { block(it) }
+    return this
+}
+
+fun AuthOrchestrator.onScopeResult(
+    block: (result: ScopeResult?) -> Unit
+): AuthOrchestrator {
+    setOnScopeResult { block(it) }
+    return this
+}
+
+fun AuthOrchestrator.onSessionResult(
+    block: (result: SessionResult?) -> Unit
+): AuthOrchestrator {
+    setOnSessionResult { block(it) }
+    return this
+}
+
+fun AuthOrchestrator.onHumanVerificationResult(
+    block: (result: HumanVerificationResult?) -> Unit
+): AuthOrchestrator {
+    setOnHumanVerificationResult { block(it) }
+    return this
 }

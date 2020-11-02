@@ -21,7 +21,6 @@ package me.proton.core.auth.data.repository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.domain.entity.KeySalt
@@ -37,6 +36,7 @@ import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import org.junit.Before
 import org.junit.Test
 import java.net.ConnectException
@@ -47,10 +47,10 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class AuthRepositoryImplTest {
 
     // region mocks
+    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
     private val apiFactory = mockk<ApiFactory>(relaxed = true)
     private val apiManager = mockk<ApiManager<AuthenticationApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
@@ -84,7 +84,8 @@ class AuthRepositoryImplTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        apiProvider = ApiProvider(apiFactory)
+        coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
+        apiProvider = ApiProvider(apiFactory, sessionProvider)
         every { apiFactory.create(interfaceClass = AuthenticationApi::class) } returns apiManager
         every { apiFactory.create(SessionId(testSessionId), interfaceClass = AuthenticationApi::class) } returns apiManager
         repository = AuthRepositoryImpl(apiProvider)
@@ -112,8 +113,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getLoginInfo(testUsername, testClientSecret)
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test error", response.message)
     }
 
@@ -154,8 +155,8 @@ class AuthRepositoryImplTest {
             testSrpSession
         )
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test login error", response.message)
     }
 
@@ -180,9 +181,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.revokeSession(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("test login error", response.message)
-        assertEquals(1, response.code)
+        assertEquals(1, response.protonCode)
     }
 
     @Test
@@ -194,9 +195,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.revokeSession(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("connection refused", response.message)
-        assertEquals(0, response.code)
+        assertEquals(0, response.protonCode)
     }
 
     @Test
@@ -221,8 +222,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getSalts(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test key salts error", response.message)
     }
 
@@ -235,9 +236,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getSalts(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("connection refused", response.message)
-        assertEquals(0, response.code)
+        assertEquals(0, response.protonCode)
     }
 
     @Test
@@ -263,8 +264,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getUser(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test user error", response.message)
     }
 
@@ -277,9 +278,9 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.getUser(SessionId(testSessionId))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("connection refused", response.message)
-        assertEquals(0, response.code)
+        assertEquals(0, response.protonCode)
     }
 
     @Test
@@ -328,8 +329,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.performSecondFactor(SessionId(testSessionId), SecondFactorProof.SecondFactorCode("123456"))
         // THEN
-        assertTrue(response is DataResult.Error)
-        assertEquals(1, response.code)
+        assertTrue(response is DataResult.Error.Remote)
+        assertEquals(1, response.protonCode)
         assertEquals("test 2fa error", response.message)
     }
 
@@ -342,8 +343,8 @@ class AuthRepositoryImplTest {
         // WHEN
         val response = repository.performSecondFactor(SessionId(testSessionId), SecondFactorProof.SecondFactorCode("123456"))
         // THEN
-        assertTrue(response is DataResult.Error)
+        assertTrue(response is DataResult.Error.Remote)
         assertEquals("connection refused", response.message)
-        assertEquals(0, response.code)
+        assertEquals(0, response.protonCode)
     }
 }

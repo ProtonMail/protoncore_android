@@ -23,7 +23,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.hideKeyboard
 import me.proton.android.core.presentation.utils.onClick
 import me.proton.android.core.presentation.utils.onFailure
@@ -45,11 +44,10 @@ import me.proton.core.util.kotlin.exhaustive
  * mailbox).
  */
 @AndroidEntryPoint
-class MailboxLoginActivity : ProtonActivity<ActivityMailboxLoginBinding>(),
-    AuthActivityComponent<ActivityMailboxLoginBinding> by AuthActivityDelegate() {
+class MailboxLoginActivity : AuthActivity<ActivityMailboxLoginBinding>() {
 
     private val sessionId: SessionId by lazy {
-        intent?.extras?.get(ARG_SESSION_ID) as SessionId
+        SessionId(requireNotNull(intent?.extras?.getString(ARG_SESSION_ID)))
     }
 
     private val viewModel by viewModels<MailboxLoginViewModel>()
@@ -58,10 +56,10 @@ class MailboxLoginActivity : ProtonActivity<ActivityMailboxLoginBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initializeAuth(this)
+
         binding.apply {
             closeButton.onClick {
-                finish()
+                onBackPressed()
             }
 
             forgotPasswordButton.onClick {
@@ -90,6 +88,12 @@ class MailboxLoginActivity : ProtonActivity<ActivityMailboxLoginBinding>(),
             unlockButton.setLoading()
         } else {
             unlockButton.setIdle()
+        }
+    }
+
+    override fun onBackPressed() {
+        viewModel.stopMailboxLoginFlow(sessionId).invokeOnCompletion {
+            finish()
         }
     }
 

@@ -21,7 +21,6 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.VerificationResult
@@ -41,7 +40,6 @@ import studio.forface.viewstatestore.ViewState
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
 
     @get:Rule

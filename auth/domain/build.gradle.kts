@@ -24,7 +24,7 @@ plugins {
     kotlin("jvm")
 }
 
-// libVersion = Version(0, 1, 0)
+libVersion = Version(0, 1, 1)
 
 dependencies {
 
@@ -33,6 +33,9 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
         project(Module.networkDomain),
+
+        // Features
+        project(Module.accountDomain),
 
         // Kotlin
         `kotlin-jdk8`,

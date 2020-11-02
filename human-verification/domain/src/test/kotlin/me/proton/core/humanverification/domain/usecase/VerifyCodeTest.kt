@@ -20,7 +20,6 @@ package me.proton.core.humanverification.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.entity.TokenType
@@ -33,7 +32,6 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class VerifyCodeTest {
 
     private val remoteRepository = mockk<HumanVerificationRemoteRepository>()

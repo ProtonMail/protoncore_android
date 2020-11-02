@@ -21,7 +21,6 @@ package me.proton.core.auth.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.ScopeInfo
@@ -39,7 +38,6 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-@ExperimentalCoroutinesApi
 class PerformSecondFactorTest {
 
     private val authRepository = mockk<AuthRepository>(relaxed = true)
@@ -56,7 +54,8 @@ class PerformSecondFactorTest {
     fun beforeEveryTest() {
         // GIVEN
         coEvery { authRepository.performSecondFactor(SessionId(testSessionId), any()) } returns DataResult.Success(
-            testScopeInfo.copy(scope = testScope), ResponseSource.Remote
+            ResponseSource.Remote,
+            testScopeInfo.copy(scope = testScope)
         )
         useCase = PerformSecondFactor(authRepository)
     }
@@ -96,7 +95,7 @@ class PerformSecondFactorTest {
                 SessionId(testSessionId),
                 any()
             )
-        } returns DataResult.Error.Message("Invalid Second Factor code", ResponseSource.Remote)
+        } returns DataResult.Error.Remote("Invalid Second Factor code")
         // WHEN
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testSecondFactorCode).toList()
         // THEN

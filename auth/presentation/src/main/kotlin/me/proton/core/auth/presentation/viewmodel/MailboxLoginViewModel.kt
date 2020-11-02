@@ -20,15 +20,14 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.PerformMailboxLogin
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.util.kotlin.DispatcherProvider
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -49,14 +48,15 @@ class MailboxLoginViewModel @ViewModelInject constructor(
         sessionId: SessionId,
         password: ByteArray
     ) {
-        performMailboxLogin(sessionId, password)
-            .onEach {
-                if (it is PerformMailboxLogin.MailboxLoginState.Success) {
-                    accountWorkflowHandler.handleTwoPassModeSuccess(sessionId)
-                } else if (it is PerformMailboxLogin.MailboxLoginState.Error) {
-                    accountWorkflowHandler.handleTwoPassModeFailed(sessionId)
-                }
-                mailboxLoginState.post(it)
-            }.launchIn(viewModelScope)
+        performMailboxLogin(sessionId, password).onEach {
+            if (it is PerformMailboxLogin.MailboxLoginState.Success) {
+                accountWorkflowHandler.handleTwoPassModeSuccess(sessionId)
+            }
+            mailboxLoginState.post(it)
+        }.launchIn(viewModelScope)
     }
+
+    fun stopMailboxLoginFlow(
+        sessionId: SessionId
+    ): Job = viewModelScope.launch { accountWorkflowHandler.handleTwoPassModeFailed(sessionId) }
 }

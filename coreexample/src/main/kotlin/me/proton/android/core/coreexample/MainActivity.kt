@@ -18,48 +18,113 @@
 
 package me.proton.android.core.coreexample
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.onClick
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.SessionState
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.auth.presentation.AuthOrchestrator
+import me.proton.core.auth.presentation.onHumanVerificationResult
+import me.proton.core.auth.presentation.onScopeResult
+import me.proton.core.auth.presentation.onSessionResult
+import me.proton.core.auth.presentation.onUserResult
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.SessionId
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
+    @Inject
+    lateinit var accountManager: AccountManager
+
+    @Inject
+    lateinit var authOrchestrator: AuthOrchestrator
+
     override fun layoutId(): Int = R.layout.activity_main
 
-    private val authWorkflowLauncher = AuthOrchestrator()
-
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        authWorkflowLauncher.register(this)
-        binding.humanVerification.onClick {
-            authWorkflowLauncher.startHumanVerificationWorkflow(
-                SessionId("sessionId"),
-                HumanVerificationDetails(
-                    listOf(
-                        VerificationMethod.CAPTCHA,
-                        VerificationMethod.EMAIL,
-                        VerificationMethod.PHONE
+        authOrchestrator.register(this)
+        authOrchestrator
+            .onUserResult { }
+            .onScopeResult { }
+            .onSessionResult { }
+            .onHumanVerificationResult { }
+
+        with(binding) {
+            humanVerification.onClick {
+                authOrchestrator.startHumanVerificationWorkflow(
+                    SessionId("sessionId"),
+                    HumanVerificationDetails(
+                        listOf(
+                            VerificationMethod.CAPTCHA,
+                            VerificationMethod.EMAIL,
+                            VerificationMethod.PHONE
+                        )
                     )
                 )
-            )
+            }
+            customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
+            login.onClick { authOrchestrator.startLoginWorkflow() }
         }
 
-        binding.customViews.onClick {
-            startActivity(Intent(this, CustomViewsActivity::class.java))
-        }
+        accountManager.getPrimaryAccount().onEach { primary ->
+            binding.primaryAccountText.text = "Primary: ${primary?.username}"
+        }.launchIn(lifecycleScope)
 
-        binding.login.onClick {
-            authWorkflowLauncher.startLoginWorkflow()
-        }
+        accountManager.getAccounts().onEach { accounts ->
+            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow()
+
+            binding.accountsLayout.removeAllViews()
+            accounts.forEach { account ->
+                binding.accountsLayout.addView(
+                    Button(this@MainActivity).apply {
+                        text = "${account.username} -> ${account.state}/${account.sessionState}"
+                        onClick {
+                            lifecycleScope.launch {
+                                when (account.state) {
+                                    AccountState.Ready ->
+                                        accountManager.disableAccount(account.userId)
+                                    AccountState.Disabled ->
+                                        accountManager.removeAccount(account.userId)
+                                    AccountState.NotReady,
+                                    AccountState.TwoPassModeNeeded,
+                                    AccountState.TwoPassModeFailed ->
+                                        when (account.sessionState) {
+                                            SessionState.SecondFactorNeeded,
+                                            SessionState.SecondFactorFailed ->
+                                                accountManager.disableAccount(account.userId)
+                                            SessionState.Authenticated ->
+                                                authOrchestrator.startTwoPassModeWorkflow(account.sessionId!!)
+                                            else -> Unit
+                                        }
+                                    else -> Unit
+                                }
+                            }
+                        }
+                    }
+                )
+            }
+        }.launchIn(lifecycleScope)
+
+        accountManager.onHumanVerificationNeeded().onEach { (account, details) ->
+            authOrchestrator.startHumanVerificationWorkflow(account.sessionId!!, details)
+        }.launchIn(lifecycleScope)
     }
 }
