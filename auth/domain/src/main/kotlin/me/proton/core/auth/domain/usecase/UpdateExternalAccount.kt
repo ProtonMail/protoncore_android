@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import me.proton.core.auth.domain.crypto.CryptoProvider
 import me.proton.core.auth.domain.entity.Addresses
-import me.proton.core.auth.domain.entity.FullAddressKey
 import me.proton.core.auth.domain.entity.KeySecurity
 import me.proton.core.auth.domain.entity.KeyType
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -112,8 +111,12 @@ class UpdateExternalAccount @Inject constructor(
         }
         // step 4. at the end ask the API to create the address key for the new address.
         authRepository.createAddressKey(
-            sessionId = sessionId, addressId = address.id, privateKey = privateKey, primary = true,
-            signedKeyListData = signedKeyList.first, signedKeyListSignature = signedKeyList.second
+            sessionId = sessionId,
+            addressId = address.id,
+            privateKey = privateKey,
+            primary = true,
+            signedKeyListData = signedKeyList.first,
+            signedKeyListSignature = signedKeyList.second
         ).onFailure { message, _, _ ->
             emit(UpdateExternalAccountState.Error.Message(message))
         }.onSuccess {

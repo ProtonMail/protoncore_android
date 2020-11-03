@@ -28,8 +28,8 @@ data class Addresses(
      * Checks if all addresses are of type [AddressType.EXTERNAL].
      * This is useful when determining the [AccountType]. `true` for [AccountType.External].
      */
-    val allExternal = addresses.find {
-        it.type != AddressType.EXTERNAL
+    val allExternal = addresses.all {
+        it.type == AddressType.EXTERNAL
     }
 
     /**
