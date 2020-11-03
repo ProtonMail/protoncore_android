@@ -21,6 +21,10 @@ package me.proton.core.auth.domain.crypto
 import at.favre.lib.crypto.bcrypt.BCrypt
 import at.favre.lib.crypto.bcrypt.Radix64Encoder
 import com.google.crypto.tink.subtle.Base64
+import me.proton.core.auth.domain.entity.Auth
+import me.proton.core.auth.domain.entity.KeySecurity
+import me.proton.core.auth.domain.entity.KeyType
+import java.security.SecureRandom
 
 /**
  * Provides the gopenpgp interfaces for keys passphrase generation and validation.
@@ -43,6 +47,19 @@ interface CryptoProvider {
         return Radix64Encoder.Default().encode(generatedUserPassphraseByteRawHash)
     }
 
+    /**
+     * Creates new random salt.
+     *
+     * @return 16-byte, base64-ed random salt as String, without newline character
+     */
+    fun createNewKeySalt(): String {
+        val salt = ByteArray(16)
+        SecureRandom().nextBytes(salt)
+        var keySalt: String = Base64.encodeToString(salt, Base64.DEFAULT)
+        keySalt = keySalt.substring(0, keySalt.length - 1) // truncate newline character
+        return keySalt
+    }
+
 
     /**
      * Checks if a key could be unlocked by a passphrase.
@@ -53,4 +70,34 @@ interface CryptoProvider {
      * @return whether the [armoredKey] could be unlocked with the [passphrase] provided.
      */
     fun passphraseCanUnlockKey(armoredKey: String, passphrase: ByteArray): Boolean
+
+    /**
+     * Generates new private key.
+     *
+     * @param username the username for which the key will be generated
+     * @param passphrase the mailbox entered/generated passphrase
+     * @param keyType the type of key (see [KeyType])
+     * @param keySecurity the key length (bits)
+     *
+     * @return the new private key as String.
+     */
+    fun generateNewPrivateKey(
+        username: String,
+        domain: String,
+        passphrase: ByteArray,
+        keyType: KeyType,
+        keySecurity: KeySecurity
+    ): String
+
+    /**
+     * Generates new signed key list for a key.
+     *
+     * @param passphrase the mailbox entered/generated passphrase
+     *
+     * @return a pair of key-list in JSON format and it's signature
+     */
+    fun generateSignedKeyList(key: String, passphrase: ByteArray): Pair<String, String>
+
+
+    fun calculatePasswordVerifier(username: String, passphrase: ByteArray, modulusId: String, modulus: String): Auth
 }

@@ -18,23 +18,18 @@
 
 package me.proton.core.auth.domain.entity
 
-data class User(
-    val id: String,
-    val name: String,
-    val usedSpace: Long,
-    val currency: String,
-    val credit: Int,
-    val maxSpace: Long,
-    val maxUpload: Long,
-    val role: Int,
-    val private: Boolean,
-    val subscribed: Boolean,
-    val delinquent: Boolean,
-    val email: String,
-    val displayName: String,
-    val keys: List<UserKey>,
-    val generatedMailboxPassphrase: ByteArray? = null,
-    val addresses: Addresses? = null
-) {
-    val primaryKey = keys.find { it.primary == 1 }
-}
+/**
+ * Represents address setup (locally generated) key.
+ * It is a short version of the [FullAddressKey] that is usually coming from the API.
+ * @author Dino Kadrikj.
+ */
+data class AddressKey(
+    val addressId: String,
+    val privateKey: String,
+    val signedKeyList: SignedKeyList
+)
+
+data class SignedKeyList(
+    val data: String,
+    val signature: String
+)

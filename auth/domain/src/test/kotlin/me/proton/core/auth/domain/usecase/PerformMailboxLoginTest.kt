@@ -25,6 +25,9 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.crypto.CryptoProvider
+import me.proton.core.auth.domain.entity.Address
+import me.proton.core.auth.domain.entity.AddressType
+import me.proton.core.auth.domain.entity.Addresses
 import me.proton.core.auth.domain.entity.KeySalt
 import me.proton.core.auth.domain.entity.KeySalts
 import me.proton.core.auth.domain.entity.User
@@ -80,6 +83,25 @@ class PerformMailboxLoginTest {
         salts = listOf(KeySalt(keyId = "test-key-id", keySalt = "test-key-salt"))
     )
 
+    private val addressesResult = Addresses(
+        addresses = listOf(
+            Address(
+                id = "test-address-id",
+                domainId = "test-domain-id",
+                email = "test-email",
+                canSend = true,
+                canReceive = true,
+                status = 1,
+                type = AddressType.ORIGINAL,
+                order = 1,
+                displayName = "test-display-name",
+                signature = "test-signature",
+                hasKeys = false,
+                keys = emptyList()
+            )
+        )
+    )
+
     @Before
     fun beforeEveryTest() {
         // GIVEN
@@ -91,6 +113,10 @@ class PerformMailboxLoginTest {
         coEvery { authRepository.getSalts(SessionId(testSessionId)) } returns DataResult.Success(
             ResponseSource.Remote,
             keySaltsResult
+        )
+        coEvery { authRepository.getAddresses(SessionId(testSessionId)) } returns DataResult.Success(
+            ResponseSource.Remote,
+            addressesResult
         )
 
         every {

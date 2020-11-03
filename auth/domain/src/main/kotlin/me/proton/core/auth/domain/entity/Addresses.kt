@@ -18,23 +18,22 @@
 
 package me.proton.core.auth.domain.entity
 
-data class User(
-    val id: String,
-    val name: String,
-    val usedSpace: Long,
-    val currency: String,
-    val credit: Int,
-    val maxSpace: Long,
-    val maxUpload: Long,
-    val role: Int,
-    val private: Boolean,
-    val subscribed: Boolean,
-    val delinquent: Boolean,
-    val email: String,
-    val displayName: String,
-    val keys: List<UserKey>,
-    val generatedMailboxPassphrase: ByteArray? = null,
-    val addresses: Addresses? = null
+/**
+ * @author Dino Kadrikj.
+ */
+data class Addresses(
+    val addresses: List<Address>
 ) {
-    val primaryKey = keys.find { it.primary == 1 }
+    /**
+     * Checks if all addresses are of type [AddressType.EXTERNAL].
+     * This is useful when determining the [AccountType]. `true` for [AccountType.External].
+     */
+    val allExternal = addresses.all {
+        it.type == AddressType.EXTERNAL
+    }
+
+    /**
+     * Returns `true` if the account is of type [AccountType.Username].
+     */
+    val usernameOnly = addresses.isEmpty()
 }

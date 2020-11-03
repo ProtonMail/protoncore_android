@@ -18,8 +18,14 @@
 
 package me.proton.core.auth.domain.repository
 
+import me.proton.core.auth.domain.entity.Address
+import me.proton.core.auth.domain.entity.AddressKey
+import me.proton.core.auth.domain.entity.Addresses
+import me.proton.core.auth.domain.entity.Auth
+import me.proton.core.auth.domain.entity.FullAddressKey
 import me.proton.core.auth.domain.entity.KeySalts
 import me.proton.core.auth.domain.entity.LoginInfo
+import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -71,4 +77,60 @@ interface AuthRepository {
      */
     suspend fun revokeSession(sessionId: SessionId): DataResult<Boolean>
 
+    /**
+     * Perform check if the chosen username is available.
+     */
+    suspend fun isUsernameAvailable(username: String): DataResult<Boolean>
+
+    /**
+     * Gets all available domains on the API.
+     */
+    suspend fun getAvailableDomains(): DataResult<List<String>>
+
+    /**
+     * Fetches all addresses for the user.
+     */
+    suspend fun getAddresses(sessionId: SessionId): DataResult<Addresses>
+
+    /**
+     * Sets a chosen username for a external address.
+     */
+    suspend fun setUsername(sessionId: SessionId, username: String): DataResult<Boolean>
+
+    /**
+     * Creates ProtonMail address.
+     */
+    suspend fun createAddress(
+        sessionId: SessionId,
+        domain: String,
+        displayName: String
+    ): DataResult<Address>
+
+    /**
+     * Creates new address key for ProtonMail address.
+     * Expects non-null values for [FullAddressKey] `token` and `signature`.
+     */
+    suspend fun createAddressKey(
+        sessionId: SessionId,
+        addressId: String,
+        privateKey: String,
+        primary: Boolean,
+        signedKeyListData: String,
+        signedKeyListSignature: String
+    ): DataResult<FullAddressKey>
+
+    /**
+     * Asks API to generate new random modulus.
+     */
+    suspend fun randomModulus(): DataResult<Modulus>
+
+    /**
+     * Sets up an address key.
+     */
+    suspend fun setupAddressKeys(
+        primaryKey: String,
+        keySalt: String,
+        addressKeyList: List<AddressKey>,
+        auth: Auth
+    ): DataResult<User>
 }

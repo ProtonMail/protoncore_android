@@ -16,25 +16,28 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.auth.domain.crypto
 
-data class User(
-    val id: String,
-    val name: String,
-    val usedSpace: Long,
-    val currency: String,
-    val credit: Int,
-    val maxSpace: Long,
-    val maxUpload: Long,
-    val role: Int,
-    val private: Boolean,
-    val subscribed: Boolean,
-    val delinquent: Boolean,
-    val email: String,
-    val displayName: String,
-    val keys: List<UserKey>,
-    val generatedMailboxPassphrase: ByteArray? = null,
-    val addresses: Addresses? = null
-) {
-    val primaryKey = keys.find { it.primary == 1 }
+import java.math.BigInteger
+import java.security.SecureRandom
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.Semaphore
+
+/**
+ * Runnable that calculates a prime based on needed primes and length.
+ * @author Dino Kadrikj.
+ */
+class PrimeWorker internal constructor(
+    private val primesNeeded: Semaphore,
+    private val primeChannel: BlockingQueue<BigInteger>,
+    private val bitLength: Int
+) : Runnable {
+
+    override fun run() {
+        var prime: BigInteger
+        do {
+            prime = BigInteger.probablePrime(bitLength, SecureRandom())
+        } while (primesNeeded.tryAcquire() && primeChannel.offer(prime))
+    }
+
 }

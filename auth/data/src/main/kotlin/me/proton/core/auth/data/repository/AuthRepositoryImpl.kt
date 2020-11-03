@@ -23,8 +23,14 @@ import me.proton.core.auth.data.entity.LoginInfoRequest
 import me.proton.core.auth.data.entity.LoginRequest
 import me.proton.core.auth.data.entity.SecondFactorRequest
 import me.proton.core.auth.data.entity.UniversalTwoFactorRequest
+import me.proton.core.auth.domain.entity.Address
+import me.proton.core.auth.domain.entity.AddressKey
+import me.proton.core.auth.domain.entity.Addresses
+import me.proton.core.auth.domain.entity.Auth
+import me.proton.core.auth.domain.entity.FullAddressKey
 import me.proton.core.auth.domain.entity.KeySalts
 import me.proton.core.auth.domain.entity.LoginInfo
+import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -130,6 +136,69 @@ class AuthRepositoryImpl(
                 )
             ).code.isSuccessResponse()
         }.toDataResponse()
+
+    /**
+     * Perform check if the chosen username is available.
+     */
+    override suspend fun isUsernameAvailable(username: String): DataResult<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Gets all available domains on the API.
+     */
+    override suspend fun getAvailableDomains(): DataResult<List<String>> {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Fetches all addresses for the user.
+     */
+    override suspend fun getAddresses(sessionId: SessionId): DataResult<Addresses> {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Sets a chosen username for a external address.
+     */
+    override suspend fun setUsername(sessionId: SessionId, username: String): DataResult<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Creates ProtonMail address.
+     */
+    override suspend fun createAddress(sessionId: SessionId, domain: String, displayName: String): DataResult<Address> {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Creates new address key for ProtonMail address.
+     * Expects non-null values for [FullAddressKey] `token` and `signature`.
+     */
+    override suspend fun createAddressKey(
+        sessionId: SessionId,
+        addressId: String,
+        privateKey: String,
+        primary: Boolean,
+        signedKeyListData: String,
+        signedKeyListSignature: String
+    ): DataResult<FullAddressKey> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun randomModulus(): DataResult<Modulus> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setupAddressKeys(
+        primaryKey: String,
+        keySalt: String,
+        addressKeyList: List<AddressKey>,
+        auth: Auth
+    ): DataResult<User> {
+        TODO("Not yet implemented")
+    }
 
     /**
      * Fetches the full user details from the API.

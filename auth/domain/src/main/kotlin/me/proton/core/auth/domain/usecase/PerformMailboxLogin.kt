@@ -74,14 +74,17 @@ class PerformMailboxLogin @Inject constructor(
         }
         emit(MailboxLoginState.Processing)
 
-        val (userResult, saltsResult) = coroutineScope {
+        val (userResult, saltsResult, addressesResult) = coroutineScope {
             val user = async {
                 authRepository.getUser(sessionId)
             }
             val salts = async {
                 authRepository.getSalts(sessionId)
             }
-            Pair(user.await(), salts.await())
+            val addresses = async {
+                authRepository.getAddresses(sessionId)
+            }
+            Triple(user.await(), salts.await(), addresses.await())
         }
 
         userResult.onFailure { errorMessage, _, _ ->
@@ -92,9 +95,14 @@ class PerformMailboxLogin @Inject constructor(
             emit(MailboxLoginState.Error.Message(errorMessage))
             return@flow
         }
+        addressesResult.onFailure { errorMessage, _, _ ->
+            emit(MailboxLoginState.Error.Message(errorMessage))
+            return@flow
+        }
 
         val user = (userResult as DataResult.Success).value
         val salts = (saltsResult as DataResult.Success).value
+        val addresses = (addressesResult as DataResult.Success).value
 
         if (user.primaryKey == null) {
             emit(MailboxLoginState.Error.NoPrimaryKey)
@@ -114,7 +122,14 @@ class PerformMailboxLogin @Inject constructor(
             return@flow
         }
 
-        emit(MailboxLoginState.Success(user.copy(generatedMailboxPassphrase = generatedMailboxPassphrase)))
+        emit(
+            MailboxLoginState.Success(
+                user.copy(
+                    generatedMailboxPassphrase = generatedMailboxPassphrase,
+                    addresses = addresses
+                )
+            )
+        )
     }
 
     private fun getGeneratedMailboxPassword(mailboxPassword: ByteArray, keySalt: String): ByteArray {
