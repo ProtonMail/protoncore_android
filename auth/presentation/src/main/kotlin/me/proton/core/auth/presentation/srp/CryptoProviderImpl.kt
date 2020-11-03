@@ -61,7 +61,7 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
         keyType: KeyType,
         keySecurity: KeySecurity
     ): String {
-        TODO("Not yet implemented. This will be implemented in the Presentation module MR.")
+        TODO("Not yet implemented")
     }
 
     /**
@@ -72,7 +72,7 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
      * @return a pair of key-list in JSON format and it's signature
      */
     override fun generateSignedKeyList(key: String, passphrase: ByteArray): Pair<String, String> {
-        TODO("Not yet implemented. This will be implemented in the Presentation module MR.")
+        TODO("Not yet implemented")
     }
 
     override fun calculatePasswordVerifier(
@@ -81,6 +81,6 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
         modulusId: String,
         modulus: String
     ): Auth {
-        TODO("Not yet implemented. This will be implemented in the Presentation module MR.")
+        TODO("Not yet implemented")
     }
 }

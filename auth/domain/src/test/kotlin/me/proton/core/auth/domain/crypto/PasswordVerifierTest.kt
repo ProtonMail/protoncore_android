@@ -28,8 +28,6 @@ import java.math.BigInteger
 import kotlin.test.assertEquals
 
 /**
- * Proton Core
- *
  * @author Dino Kadrikj.
  */
 class PasswordVerifierTest {
