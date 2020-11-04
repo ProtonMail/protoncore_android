@@ -24,6 +24,7 @@ import android.view.View
 import androidx.databinding.ViewDataBinding
 import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.errorSnack
+import me.proton.core.auth.domain.usecase.PerformUserSetup
 import me.proton.core.auth.presentation.R
 
 abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
@@ -40,8 +41,31 @@ abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
         // No op
     }
 
+    open fun onError(triggerValidation: Boolean, message: String? = null) {
+        // default no op
+    }
+
     open fun showError(message: String?) {
         showLoading(false)
         binding.root.errorSnack(message = message ?: getString(R.string.auth_login_general_error))
+    }
+
+    protected fun onUserSetupError(state: PerformUserSetup.State.Error) {
+        when (state) {
+            is PerformUserSetup.State.Error.NoPrimaryKey -> onError(
+                false,
+                getString(R.string.auth_mailbox_login_error_no_primary_key)
+            )
+            is PerformUserSetup.State.Error.NoKeySaltsForPrimaryKey -> onError(
+                false,
+                getString(R.string.auth_mailbox_login_error_primary_key_error)
+            )
+            is PerformUserSetup.State.Error.PrimaryKeyInvalidPassphrase -> onError(
+                false,
+                getString(R.string.auth_mailbox_login_error_invalid_passphrase)
+            )
+            is PerformUserSetup.State.Error.Message -> onError(false, state.message)
+            else -> onError(false)
+        }
     }
 }

@@ -45,6 +45,8 @@ dependencies {
         project(Module.accountManager),
         project(Module.accountManagerDagger),
         project(Module.gopenpgp),
+        project(Module.domain),
+        project(Module.data),
 
         `kotlin-jdk7`,
         `coroutines-android`,

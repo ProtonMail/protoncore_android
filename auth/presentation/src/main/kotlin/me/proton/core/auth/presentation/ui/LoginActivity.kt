@@ -30,10 +30,14 @@ import me.proton.android.core.presentation.utils.onSuccess
 import me.proton.android.core.presentation.utils.validatePassword
 import me.proton.android.core.presentation.utils.validateUsername
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
+import me.proton.core.auth.presentation.entity.LoginInput
+import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.SessionResult
+import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.util.kotlin.exhaustive
 
@@ -46,6 +50,10 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
     private val viewModel by viewModels<LoginViewModel>()
 
     override fun layoutId(): Int = R.layout.activity_login
+
+    private val input: LoginInput by lazy {
+        requireNotNull(intent?.extras?.getParcelable(ARG_LOGIN_INPUT))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,10 +72,12 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
 
         viewModel.loginState.observeData {
             when (it) {
-                is PerformLogin.LoginState.Processing -> showLoading(true)
-                is PerformLogin.LoginState.Success -> onSuccess(it.sessionInfo)
-                is PerformLogin.LoginState.Error.Message -> onError(it.validation, it.message)
-                is PerformLogin.LoginState.Error.EmptyCredentials -> onError(
+                is PerformLogin.State.Processing -> showLoading(true)
+                is PerformLogin.State.Success.Login -> onSuccess(it.sessionInfo, null)
+                is PerformLogin.State.Success.UserSetup -> onSuccess(it.sessionInfo, it.user)
+                is PerformLogin.State.Error.UserSetup -> onUserSetupError(it.state)
+                is PerformLogin.State.Error.Message -> onError(it.validation, it.message)
+                is PerformLogin.State.Error.EmptyCredentials -> onError(
                     true,
                     getString(R.string.auth_login_empty_credentials)
                 )
@@ -75,19 +85,21 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
         }
     }
 
-    /**
-     * Invoked on successful completed login operation.
-     */
-    private fun onSuccess(sessionInfo: SessionInfo) {
-        val intent = Intent().putExtra(ARG_SESSION_RESULT, SessionResult.from(sessionInfo))
+    private fun onSuccess(sessionInfo: SessionInfo, user: User?) {
+        val intent = Intent().putExtra(
+            ARG_LOGIN_RESULT,
+            LoginResult(
+                password = binding.passwordInput.toString().toByteArray(),
+                session = SessionResult.from(sessionInfo),
+                user = user?.let { UserResult.from(it) },
+                requiredAccountType = input.requiredAccountType
+            )
+        )
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
 
-    /**
-     * Invoked on error result from login operation.
-     */
-    private fun onError(triggerValidation: Boolean, message: String?) {
+    override fun onError(triggerValidation: Boolean, message: String?) {
         if (triggerValidation) {
             binding.apply {
                 usernameInput.setInputError()
@@ -103,6 +115,8 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
         } else {
             signInButton.setIdle()
         }
+        usernameInput.isEnabled = !loading
+        passwordInput.isEnabled = !loading
     }
 
     private fun onSignInClicked() {
@@ -126,7 +140,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
     }
 
     companion object {
-        const val ARG_REQUIRED_FEATURES = "arg.requiredFeatures"
-        const val ARG_SESSION_RESULT = "arg.sessionResult"
+        const val ARG_LOGIN_INPUT = "arg.loginInput"
+        const val ARG_LOGIN_RESULT = "arg.loginResult"
     }
 }

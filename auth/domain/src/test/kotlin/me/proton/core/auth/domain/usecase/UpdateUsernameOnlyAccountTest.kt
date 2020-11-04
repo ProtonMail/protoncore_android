@@ -98,7 +98,7 @@ class UpdateUsernameOnlyAccountTest {
         role = 1,
         private = true,
         subscribed = true,
-        delinquent = false,
+        delinquent = 0,
         email = "test-email",
         displayName = testDisplayName,
         keys = listOf(
@@ -160,9 +160,9 @@ class UpdateUsernameOnlyAccountTest {
             useCase.invoke(testSessionId, testDomain, testUsername, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Processing>(listOfEvents[0])
+        assertIs<UpdateUsernameOnlyAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Success)
+        assertTrue(secondEvent is UpdateUsernameOnlyAccount.State.Success)
     }
 
     @Test
@@ -266,7 +266,7 @@ class UpdateUsernameOnlyAccountTest {
             useCase.invoke(testSessionId, testDomain, "", testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(1, listOfEvents.size)
-        assertIs<UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Error.EmptyCredentials>(listOfEvents[0])
+        assertIs<UpdateUsernameOnlyAccount.State.Error.EmptyCredentials>(listOfEvents[0])
     }
 
     @Test
@@ -276,7 +276,7 @@ class UpdateUsernameOnlyAccountTest {
             useCase.invoke(testSessionId, testDomain, testUsername, "".toByteArray()).toList()
         // THEN
         assertEquals(1, listOfEvents.size)
-        assertIs<UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Error.EmptyCredentials>(listOfEvents[0])
+        assertIs<UpdateUsernameOnlyAccount.State.Error.EmptyCredentials>(listOfEvents[0])
     }
 
     @Test
@@ -286,7 +286,7 @@ class UpdateUsernameOnlyAccountTest {
             useCase.invoke(testSessionId, "", testUsername, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(1, listOfEvents.size)
-        assertIs<UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Error.EmptyDomain>(listOfEvents[0])
+        assertIs<UpdateUsernameOnlyAccount.State.Error.EmptyDomain>(listOfEvents[0])
     }
 
     @Test
@@ -306,9 +306,9 @@ class UpdateUsernameOnlyAccountTest {
             useCase.invoke(testSessionId, testDomain, testUsername, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Processing>(listOfEvents[0])
+        assertIs<UpdateUsernameOnlyAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Error.Message)
+        assertTrue(secondEvent is UpdateUsernameOnlyAccount.State.Error.Message)
         assertEquals("Invalid response", secondEvent.message)
     }
 
@@ -323,9 +323,9 @@ class UpdateUsernameOnlyAccountTest {
             useCase.invoke(testSessionId, testDomain, testUsername, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Processing>(listOfEvents[0])
+        assertIs<UpdateUsernameOnlyAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Error.Message)
+        assertTrue(secondEvent is UpdateUsernameOnlyAccount.State.Error.Message)
         assertEquals("Invalid response", secondEvent.message)
     }
 
@@ -346,9 +346,9 @@ class UpdateUsernameOnlyAccountTest {
             useCase.invoke(testSessionId, testDomain, testUsername, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Processing>(listOfEvents[0])
+        assertIs<UpdateUsernameOnlyAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Error.GeneratingPrivateKeyFailed)
+        assertTrue(secondEvent is UpdateUsernameOnlyAccount.State.Error.GeneratingPrivateKeyFailed)
         assertEquals("The passphrase for generating key can't be empty.", secondEvent.message)
     }
 
@@ -363,9 +363,9 @@ class UpdateUsernameOnlyAccountTest {
             useCase.invoke(testSessionId, testDomain, testUsername, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Processing>(listOfEvents[0])
+        assertIs<UpdateUsernameOnlyAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Error.GeneratingSignedKeyListFailed)
+        assertTrue(secondEvent is UpdateUsernameOnlyAccount.State.Error.GeneratingSignedKeyListFailed)
         assertEquals("Some gopenpgp exception.", secondEvent.message)
     }
 
@@ -388,9 +388,9 @@ class UpdateUsernameOnlyAccountTest {
             useCase.invoke(testSessionId, testDomain, testUsername, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Processing>(listOfEvents[0])
+        assertIs<UpdateUsernameOnlyAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateUsernameOnlyAccount.UpdateUsernameOnlyState.Error.Message)
+        assertTrue(secondEvent is UpdateUsernameOnlyAccount.State.Error.Message)
         assertEquals("Invalid response", secondEvent.message)
     }
 }

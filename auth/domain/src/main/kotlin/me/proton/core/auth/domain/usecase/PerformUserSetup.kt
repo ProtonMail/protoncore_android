@@ -26,18 +26,19 @@ import me.proton.core.auth.domain.crypto.CryptoProvider
 import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.arch.extension.onEachInstance
 import me.proton.core.domain.arch.onFailure
 import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 /**
- * Performs the mailbox login/password generation and validation.
+ * Performs user setup (user, address and passphrase generation and validation).
  *
  * @param authRepository mandatory authentication repository interface for contacting the api.
  * @param cryptoProvider the crypto provider interface for generation and validation of the passphrase.
  * @author Dino Kadrikj.
  */
-class PerformMailboxLogin @Inject constructor(
+class PerformUserSetup @Inject constructor(
     private val authRepository: AuthRepository,
     private val cryptoProvider: CryptoProvider
 ) {
@@ -45,10 +46,10 @@ class PerformMailboxLogin @Inject constructor(
     /**
      * State sealed class with various (success, error) outcome state subclasses.
      */
-    sealed class MailboxLoginState {
-        object Processing : MailboxLoginState()
-        data class Success(val user: User) : MailboxLoginState()
-        sealed class Error : MailboxLoginState() {
+    sealed class State {
+        object Processing : State()
+        data class Success(val user: User) : State()
+        sealed class Error : State() {
             data class Message(val message: String?) : Error()
             object NoPrimaryKey : Error()
             object NoKeySaltsForPrimaryKey : Error()
@@ -58,21 +59,21 @@ class PerformMailboxLogin @Inject constructor(
     }
 
     /**
-     * Generates the mailbox passphrase, derived from the login password for Single Password Accounts or from
+     * Generates the passphrase, derived from the login password for Single Password Accounts or from
      * the Mailbox Password for Two Password Accounts.
      *
      * @param sessionId for the API calls (fetching users and salts).
-     * @param password the login or mailbox password.
+     * @param password the login password or mailbox password.
      */
     operator fun invoke(
         sessionId: SessionId,
         password: ByteArray
-    ): Flow<MailboxLoginState> = flow {
+    ): Flow<State> = flow {
         if (password.isEmpty()) {
-            emit(MailboxLoginState.Error.EmptyCredentials)
+            emit(State.Error.EmptyCredentials)
             return@flow
         }
-        emit(MailboxLoginState.Processing)
+        emit(State.Processing)
 
         val (userResult, saltsResult, addressesResult) = coroutineScope {
             val user = async {
@@ -88,15 +89,15 @@ class PerformMailboxLogin @Inject constructor(
         }
 
         userResult.onFailure { errorMessage, _, _ ->
-            emit(MailboxLoginState.Error.Message(errorMessage))
+            emit(State.Error.Message(errorMessage))
             return@flow
         }
         saltsResult.onFailure { errorMessage, _, _ ->
-            emit(MailboxLoginState.Error.Message(errorMessage))
+            emit(State.Error.Message(errorMessage))
             return@flow
         }
         addressesResult.onFailure { errorMessage, _, _ ->
-            emit(MailboxLoginState.Error.Message(errorMessage))
+            emit(State.Error.Message(errorMessage))
             return@flow
         }
 
@@ -105,38 +106,35 @@ class PerformMailboxLogin @Inject constructor(
         val addresses = (addressesResult as DataResult.Success).value
 
         if (user.primaryKey == null) {
-            emit(MailboxLoginState.Error.NoPrimaryKey)
+            emit(State.Error.NoPrimaryKey)
             return@flow
         }
 
-        val primaryKeySalt = salts.salts.find { it.keyId == user.primaryKey.id }
+        val primaryKeySalt = salts.salts.find { it.keyId == user.primaryKey.id }?.takeIf { it.keySalt.isNotEmpty() }
         if (primaryKeySalt == null) {
-            emit(MailboxLoginState.Error.NoKeySaltsForPrimaryKey)
+            emit(State.Error.NoKeySaltsForPrimaryKey)
             return@flow
         }
 
-        val generatedMailboxPassphrase = getGeneratedMailboxPassword(password, primaryKeySalt.keySalt)
+        val passphrase = cryptoProvider.generatePassphrase(password, primaryKeySalt.keySalt)
 
-        if (!cryptoProvider.passphraseCanUnlockKey(user.primaryKey.privateKey, generatedMailboxPassphrase)) {
-            emit(MailboxLoginState.Error.PrimaryKeyInvalidPassphrase)
+        if (!cryptoProvider.passphraseCanUnlockKey(user.primaryKey.privateKey, passphrase)) {
+            emit(State.Error.PrimaryKeyInvalidPassphrase)
             return@flow
         }
 
-        emit(
-            MailboxLoginState.Success(
-                user.copy(
-                    generatedMailboxPassphrase = generatedMailboxPassphrase,
-                    addresses = addresses
-                )
-            )
-        )
-    }
-
-    private fun getGeneratedMailboxPassword(mailboxPassword: ByteArray, keySalt: String): ByteArray {
-        return if (keySalt.isNotEmpty()) {
-            cryptoProvider.generateMailboxPassphrase(mailboxPassword, keySalt)
-        } else {
-            mailboxPassword
-        }
+        emit(State.Success(user.copy(passphrase = passphrase, addresses = addresses)))
     }
 }
+
+fun Flow<PerformUserSetup.State>.onProcessing(
+    action: suspend (PerformUserSetup.State.Processing) -> Unit
+) = onEachInstance(action) as Flow<PerformUserSetup.State>
+
+fun Flow<PerformUserSetup.State>.onSuccess(
+    action: suspend (PerformUserSetup.State.Success) -> Unit
+) = onEachInstance(action) as Flow<PerformUserSetup.State>
+
+fun Flow<PerformUserSetup.State>.onError(
+    action: suspend (PerformUserSetup.State.Error) -> Unit
+) = onEachInstance(action) as Flow<PerformUserSetup.State>

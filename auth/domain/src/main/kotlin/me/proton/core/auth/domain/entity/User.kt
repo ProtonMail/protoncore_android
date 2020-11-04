@@ -29,11 +29,11 @@ data class User(
     val role: Int,
     val private: Boolean,
     val subscribed: Boolean,
-    val delinquent: Boolean,
+    val delinquent: Int,
     val email: String,
     val displayName: String,
     val keys: List<UserKey>,
-    val generatedMailboxPassphrase: ByteArray? = null,
+    val passphrase: ByteArray? = null,
     val addresses: Addresses? = null
 ) {
     val primaryKey = keys.find { it.primary == 1 }

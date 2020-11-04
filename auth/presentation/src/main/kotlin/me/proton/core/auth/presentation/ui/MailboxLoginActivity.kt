@@ -29,10 +29,12 @@ import me.proton.android.core.presentation.utils.onFailure
 import me.proton.android.core.presentation.utils.onSuccess
 import me.proton.android.core.presentation.utils.openBrowserLink
 import me.proton.android.core.presentation.utils.validatePassword
+import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.entity.User
-import me.proton.core.auth.domain.usecase.PerformMailboxLogin
+import me.proton.core.auth.domain.usecase.PerformUserSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityMailboxLoginBinding
+import me.proton.core.auth.presentation.entity.TwoPassModeResult
 import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.viewmodel.MailboxLoginViewModel
 import me.proton.core.network.domain.session.SessionId
@@ -48,6 +50,10 @@ class MailboxLoginActivity : AuthActivity<ActivityMailboxLoginBinding>() {
 
     private val sessionId: SessionId by lazy {
         SessionId(requireNotNull(intent?.extras?.getString(ARG_SESSION_ID)))
+    }
+
+    private val requiredAccountType: AccountType by lazy {
+        AccountType.valueOf(requireNotNull(intent?.extras?.getString(ARG_REQUIRED_ACCOUNT_TYPE)))
     }
 
     private val viewModel by viewModels<MailboxLoginViewModel>()
@@ -71,14 +77,25 @@ class MailboxLoginActivity : AuthActivity<ActivityMailboxLoginBinding>() {
 
         viewModel.mailboxLoginState.observeData {
             when (it) {
-                is PerformMailboxLogin.MailboxLoginState.Processing -> showLoading(true)
-                is PerformMailboxLogin.MailboxLoginState.Success -> onSuccess(it.user)
-                is PerformMailboxLogin.MailboxLoginState.Error.Message -> onError(false, it.message)
-                is PerformMailboxLogin.MailboxLoginState.Error.EmptyCredentials -> onError(
+                is PerformUserSetup.State.Processing -> showLoading(true)
+                is PerformUserSetup.State.Success -> onSuccess(it.user)
+                is PerformUserSetup.State.Error.Message -> onError(false, it.message)
+                is PerformUserSetup.State.Error.EmptyCredentials -> onError(
                     true,
                     getString(R.string.auth_mailbox_empty_credentials)
                 )
-                else -> onError(false)
+                is PerformUserSetup.State.Error.NoPrimaryKey -> onError(
+                    false,
+                    getString(R.string.auth_mailbox_login_error_no_primary_key)
+                )
+                is PerformUserSetup.State.Error.NoKeySaltsForPrimaryKey -> onError(
+                    false,
+                    getString(R.string.auth_mailbox_login_error_primary_key_error)
+                )
+                is PerformUserSetup.State.Error.PrimaryKeyInvalidPassphrase -> onError(
+                    false,
+                    getString(R.string.auth_mailbox_login_error_invalid_passphrase)
+                )
             }.exhaustive
         }
     }
@@ -89,6 +106,7 @@ class MailboxLoginActivity : AuthActivity<ActivityMailboxLoginBinding>() {
         } else {
             unlockButton.setIdle()
         }
+        mailboxPasswordInput.isEnabled = !loading
     }
 
     override fun onBackPressed() {
@@ -101,12 +119,17 @@ class MailboxLoginActivity : AuthActivity<ActivityMailboxLoginBinding>() {
      * Invoked on successful completed mailbox login operation.
      */
     private fun onSuccess(user: User) {
-        val intent = Intent().apply { putExtra(ARG_USER_RESULT, UserResult.from(user)) }
+        val intent = Intent().apply {
+            putExtra(
+                ARG_MAILBOX_LOGIN_RESULT,
+                TwoPassModeResult(sessionId.id, UserResult.from(user), requiredAccountType)
+            )
+        }
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
 
-    private fun onError(triggerValidation: Boolean, message: String? = null) {
+    override fun onError(triggerValidation: Boolean, message: String?) {
         if (triggerValidation) {
             binding.mailboxPasswordInput.setInputError()
         }
@@ -121,13 +144,14 @@ class MailboxLoginActivity : AuthActivity<ActivityMailboxLoginBinding>() {
                     mailboxPasswordInput.setInputError()
                 }
                 .onSuccess {
-                    viewModel.startMailboxLoginFlow(sessionId, it.toByteArray())
+                    viewModel.startUserSetup(sessionId, it.toByteArray())
                 }
         }
     }
 
     companion object {
         const val ARG_SESSION_ID = "arg.sessionId"
-        const val ARG_USER_RESULT = "arg.userResult"
+        const val ARG_REQUIRED_ACCOUNT_TYPE = "arg.requiredAccountType"
+        const val ARG_MAILBOX_LOGIN_RESULT = "arg.mailboxLoginResult"
     }
 }

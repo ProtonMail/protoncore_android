@@ -29,7 +29,7 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.crypto.CryptoProvider
 import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.domain.usecase.PerformMailboxLogin
+import me.proton.core.auth.domain.usecase.PerformUserSetup
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -47,7 +47,7 @@ class MailboxLoginViewModelTest : ArchTest, CoroutinesTest {
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val cryptoProvider = mockk<CryptoProvider>(relaxed = true)
     private val accountManager = mockk<AccountWorkflowHandler>(relaxed = true)
-    private val useCase = mockk<PerformMailboxLogin>()
+    private val useCase = mockk<PerformUserSetup>()
     private val testUser = mockk<User>(relaxed = true)
     // endregion
 
@@ -66,25 +66,25 @@ class MailboxLoginViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `mailbox login happy flow states are handled correctly`() = coroutinesTest {
+    fun `mailbox login happy path`() = coroutinesTest {
         // GIVEN
         every { testUser.name } returns testName
         every { testUser.email } returns testEmail
         coEvery { useCase.invoke(SessionId(testSessionId), testPassword.toByteArray()) } returns flowOf(
-            PerformMailboxLogin.MailboxLoginState.Processing,
-            PerformMailboxLogin.MailboxLoginState.Success(testUser)
+            PerformUserSetup.State.Processing,
+            PerformUserSetup.State.Success(testUser)
         )
-        val observer = mockk<(PerformMailboxLogin.MailboxLoginState) -> Unit>(relaxed = true)
+        val observer = mockk<(PerformUserSetup.State) -> Unit>(relaxed = true)
         viewModel.mailboxLoginState.observeDataForever(observer)
         // WHEN
-        viewModel.startMailboxLoginFlow(SessionId(testSessionId), testPassword.toByteArray())
+        viewModel.startUserSetup(SessionId(testSessionId), testPassword.toByteArray())
         // THEN
-        val arguments = mutableListOf<PerformMailboxLogin.MailboxLoginState>()
+        val arguments = mutableListOf<PerformUserSetup.State>()
         verify(exactly = 2) { observer(capture(arguments)) }
         val processingState = arguments[0]
         val successState = arguments[1]
-        assertTrue(processingState is PerformMailboxLogin.MailboxLoginState.Processing)
-        assertTrue(successState is PerformMailboxLogin.MailboxLoginState.Success)
+        assertTrue(processingState is PerformUserSetup.State.Processing)
+        assertTrue(successState is PerformUserSetup.State.Success)
         assertEquals(testUser, successState.user)
         assertEquals(testName, successState.user.name)
         assertEquals(testEmail, successState.user.email)
@@ -94,27 +94,27 @@ class MailboxLoginViewModelTest : ArchTest, CoroutinesTest {
     fun `mailbox login empty password returns correct state of events`() = coroutinesTest {
         // GIVEN
         viewModel =
-            MailboxLoginViewModel(accountManager, PerformMailboxLogin(authRepository, cryptoProvider))
-        val observer = mockk<(PerformMailboxLogin.MailboxLoginState) -> Unit>(relaxed = true)
+            MailboxLoginViewModel(accountManager, PerformUserSetup(authRepository, cryptoProvider))
+        val observer = mockk<(PerformUserSetup.State) -> Unit>(relaxed = true)
         viewModel.mailboxLoginState.observeDataForever(observer)
         // WHEN
-        viewModel.startMailboxLoginFlow(SessionId(testSessionId), "".toByteArray())
+        viewModel.startUserSetup(SessionId(testSessionId), "".toByteArray())
         // THEN
-        val arguments = slot<PerformMailboxLogin.MailboxLoginState>()
+        val arguments = slot<PerformUserSetup.State>()
         verify { observer(capture(arguments)) }
         val argument = arguments.captured
-        assertTrue(argument is PerformMailboxLogin.MailboxLoginState.Error.EmptyCredentials)
+        assertTrue(argument is PerformUserSetup.State.Error.EmptyCredentials)
     }
 
     @Test
     fun `success mailbox login invokes success on account manager`() = coroutinesTest {
         // GIVEN
         coEvery { useCase.invoke(SessionId(testSessionId), testPassword.toByteArray()) } returns flowOf(
-            PerformMailboxLogin.MailboxLoginState.Processing,
-            PerformMailboxLogin.MailboxLoginState.Success(testUser)
+            PerformUserSetup.State.Processing,
+            PerformUserSetup.State.Success(testUser)
         )
         // WHEN
-        viewModel.startMailboxLoginFlow(SessionId(testSessionId), testPassword.toByteArray())
+        viewModel.startUserSetup(SessionId(testSessionId), testPassword.toByteArray())
         // THEN
         val arguments = slot<SessionId>()
         coVerify(exactly = 1) { accountManager.handleTwoPassModeSuccess(capture(arguments)) }

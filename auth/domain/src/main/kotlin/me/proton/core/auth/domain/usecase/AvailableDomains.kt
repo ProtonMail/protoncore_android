@@ -31,28 +31,28 @@ import javax.inject.Inject
  */
 class AvailableDomains @Inject constructor(private val authRepository: AuthRepository) {
 
-    sealed class AvailableDomainsState {
-        data class Success(val availableDomains: List<String>) : AvailableDomainsState() {
+    sealed class State {
+        data class Success(val availableDomains: List<String>) : State() {
             val firstDomainOrDefault =
                 if (availableDomains.isNotEmpty()) "@${availableDomains[0]}" else "@protonmail.com"
         }
 
-        sealed class Error : AvailableDomainsState() {
-            data class Message(val message: String?) : AvailableDomainsState.Error()
-            object NoAvailableDomains : AvailableDomainsState.Error()
+        sealed class Error : State() {
+            data class Message(val message: String?) : State.Error()
+            object NoAvailableDomains : State.Error()
         }
     }
 
     operator fun invoke() = flow {
         authRepository.getAvailableDomains()
             .onFailure { message, _, _ ->
-                emit(AvailableDomainsState.Error.Message(message))
+                emit(State.Error.Message(message))
             }
             .onSuccess {
                 if (it.isEmpty()) {
-                    emit(AvailableDomainsState.Error.NoAvailableDomains)
+                    emit(State.Error.NoAvailableDomains)
                 } else {
-                    emit(AvailableDomainsState.Success(it))
+                    emit(State.Success(it))
                 }
             }
     }

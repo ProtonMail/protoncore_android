@@ -35,10 +35,11 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
+import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.onHumanVerificationResult
 import me.proton.core.auth.presentation.onScopeResult
-import me.proton.core.auth.presentation.onSessionResult
+import me.proton.core.auth.presentation.onLoginResult
 import me.proton.core.auth.presentation.onUserResult
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.VerificationMethod
@@ -61,10 +62,17 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
 
         authOrchestrator.register(this)
+
         authOrchestrator
-            .onUserResult { }
-            .onScopeResult { }
-            .onSessionResult { }
+            .onLoginResult { result ->
+                result
+            }
+            .onUserResult { result ->
+                result
+            }
+            .onScopeResult { result ->
+                result
+            }
             .onHumanVerificationResult { }
 
         with(binding) {
@@ -81,7 +89,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 )
             }
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
-            login.onClick { authOrchestrator.startLoginWorkflow() }
+            login.onClick { authOrchestrator.startLoginWorkflow(AccountType.Username) }
         }
 
         accountManager.getPrimaryAccount().onEach { primary ->
@@ -89,7 +97,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }.launchIn(lifecycleScope)
 
         accountManager.getAccounts().onEach { accounts ->
-            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow()
+            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow(AccountType.Username)
 
             binding.accountsLayout.removeAllViews()
             accounts.forEach { account ->
@@ -111,7 +119,10 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                                             SessionState.SecondFactorFailed ->
                                                 accountManager.disableAccount(account.userId)
                                             SessionState.Authenticated ->
-                                                authOrchestrator.startTwoPassModeWorkflow(account.sessionId!!)
+                                                authOrchestrator.startTwoPassModeWorkflow(
+                                                    account.sessionId?.id!!,
+                                                    AccountType.Username
+                                                )
                                             else -> Unit
                                         }
                                     else -> Unit

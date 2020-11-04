@@ -66,9 +66,9 @@ class PerformSecondFactorTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testSecondFactorCode).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformSecondFactor.SecondFactorState.Processing)
+        assertTrue(listOfEvents[0] is PerformSecondFactor.State.Processing)
         val successEvent = listOfEvents[1]
-        assertTrue(successEvent is PerformSecondFactor.SecondFactorState.Success)
+        assertTrue(successEvent is PerformSecondFactor.State.Success.SecondFactor)
         assertEquals(testSessionId, successEvent.sessionId.id)
         assertEquals(testScope, successEvent.scopeInfo.scope)
         assertEquals(2, successEvent.scopeInfo.scopes.size)
@@ -100,9 +100,9 @@ class PerformSecondFactorTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testSecondFactorCode).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformSecondFactor.SecondFactorState.Processing)
+        assertTrue(listOfEvents[0] is PerformSecondFactor.State.Processing)
         val errorEvent = listOfEvents[1]
-        assertTrue(errorEvent is PerformSecondFactor.SecondFactorState.Error.Message)
+        assertTrue(errorEvent is PerformSecondFactor.State.Error.Message)
         assertEquals("Invalid Second Factor code", errorEvent.message)
     }
 
@@ -111,6 +111,6 @@ class PerformSecondFactorTest {
         // WHEN
         val listOfEvents = useCase.invoke(SessionId(testSessionId), "").toList()
         assertEquals(1, listOfEvents.size)
-        assertIs<PerformSecondFactor.SecondFactorState.Error.EmptyCredentials>(listOfEvents[0])
+        assertIs<PerformSecondFactor.State.Error.EmptyCredentials>(listOfEvents[0])
     }
 }

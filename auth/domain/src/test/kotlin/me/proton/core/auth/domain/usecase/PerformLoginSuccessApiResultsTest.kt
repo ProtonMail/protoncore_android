@@ -133,24 +133,23 @@ class PerformLoginSuccessApiResultsTest {
         assertEquals(2, listOfEvents.size)
         val firstEvent = listOfEvents[0]
         val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.LoginState.Processing)
-        assertTrue(secondEvent is PerformLogin.LoginState.Success)
+        assertTrue(firstEvent is PerformLogin.State.Processing)
+        assertTrue(secondEvent is PerformLogin.State.Success.Login)
         assertNotNull(secondEvent.sessionInfo)
-        assertNull(secondEvent.sessionInfo.loginPassword)
     }
 
     @Test
     fun `login empty username emits error`() = runBlockingTest {
         val listOfEvents = useCase.invoke("", testPassword.toByteArray()).toList()
         assertEquals(1, listOfEvents.size)
-        assertIs<PerformLogin.LoginState.Error.EmptyCredentials>(listOfEvents[0])
+        assertIs<PerformLogin.State.Error.EmptyCredentials>(listOfEvents[0])
     }
 
     @Test
     fun `login empty password emits error`() = runBlockingTest {
         val listOfEvents = useCase.invoke(testUsername, "".toByteArray()).toList()
         assertEquals(1, listOfEvents.size)
-        assertIs<PerformLogin.LoginState.Error.EmptyCredentials>(listOfEvents[0])
+        assertIs<PerformLogin.State.Error.EmptyCredentials>(listOfEvents[0])
     }
 
     @Test
@@ -171,10 +170,9 @@ class PerformLoginSuccessApiResultsTest {
         assertEquals(2, listOfEvents.size)
         val firstEvent = listOfEvents[0]
         val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.LoginState.Processing)
-        assertTrue(secondEvent is PerformLogin.LoginState.Success)
+        assertTrue(firstEvent is PerformLogin.State.Processing)
+        assertTrue(secondEvent is PerformLogin.State.Success.Login)
         assertNotNull(secondEvent.sessionInfo)
-        assertNotNull(secondEvent.sessionInfo.loginPassword)
     }
 
     @Test
@@ -195,9 +193,8 @@ class PerformLoginSuccessApiResultsTest {
         assertEquals(2, listOfEvents.size)
         val firstEvent = listOfEvents[0]
         val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.LoginState.Processing)
-        assertTrue(secondEvent is PerformLogin.LoginState.Success)
+        assertTrue(firstEvent is PerformLogin.State.Processing)
+        assertTrue(secondEvent is PerformLogin.State.Success.Login)
         assertNotNull(secondEvent.sessionInfo)
-        assertNull(secondEvent.sessionInfo.loginPassword)
     }
 }

@@ -136,7 +136,7 @@ class ProtonInput : LinearLayout {
      */
     var suffixText: CharSequence?
         get() = binding.inputLayout.suffixText
-        private set(value) {
+        set(value) {
             binding.inputLayout.suffixText = value
         }
 
@@ -145,7 +145,7 @@ class ProtonInput : LinearLayout {
      */
     var prefixText: CharSequence?
         get() = binding.inputLayout.prefixText
-        private set(value) {
+        set(value) {
             binding.inputLayout.prefixText = value
         }
 

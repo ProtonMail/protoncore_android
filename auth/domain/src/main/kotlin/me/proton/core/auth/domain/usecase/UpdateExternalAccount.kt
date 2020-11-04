@@ -48,10 +48,10 @@ class UpdateExternalAccount @Inject constructor(
     /**
      * State sealed class with various (success, error) outcome state subclasses.
      */
-    sealed class UpdateExternalAccountState {
-        object Processing : UpdateExternalAccountState()
-        data class Success(val address: Addresses) : UpdateExternalAccountState()
-        sealed class Error : UpdateExternalAccountState() {
+    sealed class State {
+        object Processing : State()
+        data class Success(val address: Addresses) : State()
+        sealed class Error : State() {
             data class Message(val message: String?) : Error()
             object EmptyCredentials : Error()
             object EmptyDomain : Error()
@@ -68,30 +68,30 @@ class UpdateExternalAccount @Inject constructor(
         username: String,
         domain: String,
         passphrase: ByteArray
-    ): Flow<UpdateExternalAccountState> = flow {
+    ): Flow<State> = flow {
         if (username.isEmpty() || passphrase.isEmpty()) {
-            emit(UpdateExternalAccountState.Error.EmptyCredentials)
+            emit(State.Error.EmptyCredentials)
             return@flow
         }
         if (domain.isEmpty()) {
-            emit(UpdateExternalAccountState.Error.EmptyDomain)
+            emit(State.Error.EmptyDomain)
             return@flow
         }
-        emit(UpdateExternalAccountState.Processing)
+        emit(State.Processing)
         // step.1 set the username and create address with displayName equal to username
         val setUsernameResult = authRepository.setUsername(sessionId, username)
         val createAddressResult = authRepository.createAddress(sessionId, domain, username)
 
         setUsernameResult.onFailure { message, _, _ ->
-            emit(UpdateExternalAccountState.Error.Message(message))
+            emit(State.Error.Message(message))
             return@flow
         }
         createAddressResult.onFailure { message, _, _ ->
-            emit(UpdateExternalAccountState.Error.Message(message))
+            emit(State.Error.Message(message))
             return@flow
         }
         if (!(setUsernameResult as DataResult.Success).value) {
-            emit(UpdateExternalAccountState.Error.SetUsernameFailed)
+            emit(State.Error.SetUsernameFailed)
             return@flow
         }
         val address = (createAddressResult as DataResult.Success).value
@@ -99,14 +99,14 @@ class UpdateExternalAccount @Inject constructor(
         val privateKey = try {
             cryptoProvider.generateNewPrivateKey(username, domain, passphrase, KeyType.RSA, KeySecurity.HIGH)
         } catch (privateKeyException: Exception) { // gopenpgp library throws generic exception
-            emit(UpdateExternalAccountState.Error.GeneratingPrivateKeyFailed(privateKeyException.message))
+            emit(State.Error.GeneratingPrivateKeyFailed(privateKeyException.message))
             return@flow
         }
         // step 3. and generate signed key list for the newly generated private key.
         val signedKeyList = try {
             cryptoProvider.generateSignedKeyList(privateKey, passphrase)
         } catch (signedKeyListException: Exception) { // gopenpgp library throws generic exception
-            emit(UpdateExternalAccountState.Error.GeneratingSignedKeyListFailed(signedKeyListException.message))
+            emit(State.Error.GeneratingSignedKeyListFailed(signedKeyListException.message))
             return@flow
         }
         // step 4. at the end ask the API to create the address key for the new address.
@@ -118,9 +118,9 @@ class UpdateExternalAccount @Inject constructor(
             signedKeyListData = signedKeyList.first,
             signedKeyListSignature = signedKeyList.second
         ).onFailure { message, _, _ ->
-            emit(UpdateExternalAccountState.Error.Message(message))
+            emit(State.Error.Message(message))
         }.onSuccess {
-            emit(UpdateExternalAccountState.Success(Addresses(listOf(address.copy(hasKeys = true, keys = listOf(it))))))
+            emit(State.Success(Addresses(listOf(address.copy(hasKeys = true, keys = listOf(it))))))
         }
     }
 }

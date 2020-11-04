@@ -40,5 +40,13 @@
             android:name=".presentation.ui.MailboxLoginActivity"
             android:theme="@style/ProtonTheme.NoToolbar" />
 
+        <activity
+            android:name=".presentation.ui.CreateAddressActivity"
+            android:theme="@style/ProtonTheme.NoToolbar" />
+
+        <activity
+            android:name=".presentation.ui.CreateAddressResultActivity"
+            android:theme="@style/ProtonTheme.NoToolbar" />
+
     </application>
 </manifest>

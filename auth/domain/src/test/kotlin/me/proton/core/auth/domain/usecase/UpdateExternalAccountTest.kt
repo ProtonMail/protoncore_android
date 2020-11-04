@@ -119,9 +119,9 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, testUsername, testDomain, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Processing>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateExternalAccount.UpdateExternalAccountState.Success)
+        assertTrue(secondEvent is UpdateExternalAccount.State.Success)
     }
 
     @Test
@@ -237,7 +237,7 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, "", testDomain, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(1, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Error.EmptyCredentials>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Error.EmptyCredentials>(listOfEvents[0])
     }
 
     @Test
@@ -247,7 +247,7 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, testUsername, testDomain, "".toByteArray()).toList()
         // THEN
         assertEquals(1, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Error.EmptyCredentials>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Error.EmptyCredentials>(listOfEvents[0])
     }
 
     @Test
@@ -257,7 +257,7 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, testUsername, "", testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(1, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Error.EmptyDomain>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Error.EmptyDomain>(listOfEvents[0])
     }
 
     @Test
@@ -272,8 +272,8 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, testUsername, testDomain, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Processing>(listOfEvents[0])
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Error.SetUsernameFailed>(listOfEvents[1])
+        assertIs<UpdateExternalAccount.State.Processing>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Error.SetUsernameFailed>(listOfEvents[1])
     }
 
     @Test
@@ -287,9 +287,9 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, testUsername, testDomain, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Processing>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateExternalAccount.UpdateExternalAccountState.Error.Message)
+        assertTrue(secondEvent is UpdateExternalAccount.State.Error.Message)
         assertEquals("Invalid response", secondEvent.message)
     }
 
@@ -310,9 +310,9 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, testUsername, testDomain, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Processing>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateExternalAccount.UpdateExternalAccountState.Error.Message)
+        assertTrue(secondEvent is UpdateExternalAccount.State.Error.Message)
         assertEquals("Invalid response", secondEvent.message)
     }
 
@@ -333,9 +333,9 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, testUsername, testDomain, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Processing>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateExternalAccount.UpdateExternalAccountState.Error.GeneratingPrivateKeyFailed)
+        assertTrue(secondEvent is UpdateExternalAccount.State.Error.GeneratingPrivateKeyFailed)
         assertEquals("The passphrase for generating key can't be empty.", secondEvent.message)
     }
 
@@ -350,9 +350,9 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, testUsername, testDomain, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Processing>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateExternalAccount.UpdateExternalAccountState.Error.GeneratingSignedKeyListFailed)
+        assertTrue(secondEvent is UpdateExternalAccount.State.Error.GeneratingSignedKeyListFailed)
         assertEquals("Some gopenpgp exception.", secondEvent.message)
     }
 
@@ -381,9 +381,9 @@ class UpdateExternalAccountTest {
             useCase.invoke(testSessionId, testUsername, testDomain, testPassphrase.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UpdateExternalAccount.UpdateExternalAccountState.Processing>(listOfEvents[0])
+        assertIs<UpdateExternalAccount.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UpdateExternalAccount.UpdateExternalAccountState.Error.Message)
+        assertTrue(secondEvent is UpdateExternalAccount.State.Error.Message)
         assertEquals("Invalid response", secondEvent.message)
     }
 }

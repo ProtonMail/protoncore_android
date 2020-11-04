@@ -16,21 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.domain.arch.extension
 
-enum class AccountType {
-    /**
-     * Account with no email addresses associated with it.
-     */
-    Username,
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 
-    /**
-     * Account with at least one internal email address associated with it.
-     */
-    Internal,
-
-    /**
-     * Account with at least one external email address associated with it.
-     */
-    External
-}
+inline fun <reified I> Flow<*>.onEachInstance(crossinline action: suspend (I) -> Unit) =
+    onEach { if (it is I) action(it) }

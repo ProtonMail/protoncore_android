@@ -30,11 +30,14 @@ import me.proton.android.core.presentation.utils.onFailure
 import me.proton.android.core.presentation.utils.onSuccess
 import me.proton.android.core.presentation.utils.validate
 import me.proton.core.auth.domain.entity.ScopeInfo
+import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.ScopeResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput
+import me.proton.core.auth.presentation.entity.SecondFactorResult
+import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.exhaustive
@@ -78,17 +81,15 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
 
         viewModel.secondFactorState.observeData {
             when (it) {
-                is PerformSecondFactor.SecondFactorState.Processing -> showLoading(true)
-                is PerformSecondFactor.SecondFactorState.Success -> onSuccess(
-                    it.sessionId,
-                    it.scopeInfo,
-                    it.isTwoPassModeNeeded
-                )
-                is PerformSecondFactor.SecondFactorState.Error.Message -> onError(false, it.message)
-                is PerformSecondFactor.SecondFactorState.Error.EmptyCredentials -> {
+                is PerformSecondFactor.State.Processing -> showLoading(true)
+                is PerformSecondFactor.State.Success.SecondFactor -> onSuccess(it.sessionId, it.scopeInfo, null)
+                is PerformSecondFactor.State.Success.UserSetup -> onSuccess(it.sessionId, it.scopeInfo, it.user)
+                is PerformSecondFactor.State.Error.UserSetup -> onUserSetupError(it.state)
+                is PerformSecondFactor.State.Error.Message -> onError(false, it.message)
+                is PerformSecondFactor.State.Error.EmptyCredentials -> {
                     onError(true, getString(R.string.auth_2fa_error_empty_code))
                 }
-                PerformSecondFactor.SecondFactorState.Error.Unrecoverable -> {
+                is PerformSecondFactor.State.Error.Unrecoverable -> {
                     showError(getString(R.string.auth_login_general_error))
                     onBackPressed()
                 }
@@ -102,6 +103,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
         } else {
             authenticateButton.setIdle()
         }
+        secondFactorInput.isEnabled = !loading
     }
 
     private fun onAuthenticateClicked() {
@@ -111,6 +113,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                 .onFailure { secondFactorInput.setInputError() }
                 .onSuccess { secondFactorCode ->
                     viewModel.startSecondFactorFlow(
+                        password = input.password,
                         sessionId = SessionId(input.sessionId),
                         secondFactorCode = secondFactorCode,
                         isTwoPassModeNeeded = input.isTwoPassModeNeeded
@@ -125,19 +128,21 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
         }
     }
 
-    /**
-     * Invoked on successful completed mailbox login operation.
-     */
-    private fun onSuccess(sessionId: SessionId, scopeInfo: ScopeInfo, isTwoPassModeNeeded: Boolean) {
+    private fun onSuccess(sessionId: SessionId, scopeInfo: ScopeInfo, user: User?) {
         val intent = Intent().putExtra(
-            ARG_SCOPE_RESULT,
-            ScopeResult(sessionId, scopeInfo, isTwoPassModeNeeded)
+            ARG_SECOND_FACTOR_RESULT,
+            SecondFactorResult(
+                scope = ScopeResult(sessionId.id, scopeInfo.scopes),
+                user = user?.let { UserResult.from(it) },
+                isTwoPassModeNeeded = input.isTwoPassModeNeeded,
+                requiredAccountType = input.requiredAccountType
+            )
         )
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
 
-    private fun onError(triggerValidation: Boolean, message: String?) {
+    override fun onError(triggerValidation: Boolean, message: String?) {
         if (triggerValidation) {
             binding.secondFactorInput.setInputError()
         }
@@ -182,6 +187,6 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
 
     companion object {
         const val ARG_SECOND_FACTOR_INPUT = "arg.secondFactorInput"
-        const val ARG_SCOPE_RESULT = "arg.scopeResult"
+        const val ARG_SECOND_FACTOR_RESULT = "arg.secondFactorResult"
     }
 }

@@ -141,8 +141,8 @@ class PerformLoginApiErrorTest {
         assertEquals(2, listOfEvents.size)
         val firstEvent = listOfEvents[0]
         val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.LoginState.Processing)
-        assertTrue(secondEvent is PerformLogin.LoginState.Error.Message)
+        assertTrue(firstEvent is PerformLogin.State.Processing)
+        assertTrue(secondEvent is PerformLogin.State.Error.Message)
         assertFalse(secondEvent.validation)
     }
 
@@ -186,8 +186,8 @@ class PerformLoginApiErrorTest {
         assertEquals(2, listOfEvents.size)
         val firstEvent = listOfEvents[0]
         val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.LoginState.Processing)
-        assertTrue(secondEvent is PerformLogin.LoginState.Error.Message)
+        assertTrue(firstEvent is PerformLogin.State.Processing)
+        assertTrue(secondEvent is PerformLogin.State.Error.Message)
         assertFalse(secondEvent.validation)
     }
 
@@ -216,8 +216,8 @@ class PerformLoginApiErrorTest {
         assertEquals(2, listOfEvents.size)
         val firstEvent = listOfEvents[0]
         val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.LoginState.Processing)
-        assertTrue(secondEvent is PerformLogin.LoginState.Error.Message)
+        assertTrue(firstEvent is PerformLogin.State.Processing)
+        assertTrue(secondEvent is PerformLogin.State.Error.Message)
         assertTrue(secondEvent.validation)
     }
 }

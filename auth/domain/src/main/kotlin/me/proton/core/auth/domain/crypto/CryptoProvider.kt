@@ -40,7 +40,7 @@ interface CryptoProvider {
      *
      * @return BCrypt version of the passphrase
      */
-    fun generateMailboxPassphrase(passphrase: ByteArray, encodedSalt: String): ByteArray {
+    fun generatePassphrase(passphrase: ByteArray, encodedSalt: String): ByteArray {
         val decodedKeySalt: ByteArray = Base64.decode(encodedSalt, Base64.DEFAULT)
         val generatedUserPassphraseByteRawHash =
             BCrypt.with(BCrypt.Version.VERSION_2Y).hashRaw(10, decodedKeySalt, passphrase).rawHash
