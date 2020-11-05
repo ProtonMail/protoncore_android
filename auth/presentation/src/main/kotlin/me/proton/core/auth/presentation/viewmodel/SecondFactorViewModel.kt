@@ -22,11 +22,16 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
+import me.proton.core.auth.domain.usecase.PerformUserSetup
+import me.proton.core.auth.domain.usecase.onError
+import me.proton.core.auth.domain.usecase.onProcessing
+import me.proton.core.auth.domain.usecase.onSecondFactorSuccess
+import me.proton.core.auth.domain.usecase.onSuccess
 import me.proton.core.network.domain.session.SessionId
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
@@ -36,25 +41,50 @@ import studio.forface.viewstatestore.ViewStateStoreScope
  */
 class SecondFactorViewModel @ViewModelInject constructor(
     private val accountWorkflowHandler: AccountWorkflowHandler,
-    private val performSecondFactor: PerformSecondFactor
+    private val performSecondFactor: PerformSecondFactor,
+    private val performUserSetup: PerformUserSetup
 ) : ProtonViewModel(), ViewStateStoreScope {
 
-    val secondFactorState = ViewStateStore<PerformSecondFactor.SecondFactorState>().lock
+    val secondFactorState = ViewStateStore<PerformSecondFactor.State>().lock
 
     fun startSecondFactorFlow(
         sessionId: SessionId,
+        password: ByteArray,
         secondFactorCode: String,
-        isTwoPassModeNeeded: Boolean = false
+        isTwoPassModeNeeded: Boolean
     ) {
-        performSecondFactor(sessionId, secondFactorCode, isTwoPassModeNeeded).onEach {
-            if (it is PerformSecondFactor.SecondFactorState.Success) {
-                accountWorkflowHandler.handleSecondFactorSuccess(
-                    sessionId = sessionId,
-                    updatedScopes = it.scopeInfo.scopes
-                )
+        performSecondFactor(sessionId, secondFactorCode)
+            .onProcessing { secondFactorState.post(it) }
+            .onSecondFactorSuccess { success ->
+                accountWorkflowHandler.handleSecondFactorSuccess(sessionId, success.scopeInfo.scopes)
+                // No more steps -> directly setup user.
+                if (!isTwoPassModeNeeded) {
+                    // Raise Success.UserSetup.
+                    setupUser(password, success.sessionId, success.scopeInfo)
+                } else {
+                    // Raise Success.SecondFactor.
+                    secondFactorState.post(
+                        PerformSecondFactor.State.Success.SecondFactor(
+                            success.sessionId,
+                            success.scopeInfo
+                        )
+                    )
+                }
             }
-            secondFactorState.post(it)
-        }.launchIn(viewModelScope)
+            .onError { secondFactorState.post(it) }
+            .launchIn(viewModelScope)
+    }
+
+    private fun setupUser(password: ByteArray, sessionId: SessionId, scopeInfo: ScopeInfo) {
+        performUserSetup(sessionId, password)
+            .onSuccess { success ->
+                secondFactorState.post(PerformSecondFactor.State.Success.UserSetup(sessionId, scopeInfo, success.user))
+            }
+            .onError { error ->
+                accountWorkflowHandler.handleSecondFactorFailed(sessionId)
+                secondFactorState.post(PerformSecondFactor.State.Error.UserSetup(error))
+            }
+            .launchIn(viewModelScope)
     }
 
     fun stopSecondFactorFlow(

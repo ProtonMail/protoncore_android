@@ -36,11 +36,12 @@ data class UserResult(
     val role: Int,
     val private: Boolean,
     val subscribed: Boolean,
-    val delinquent: Boolean,
+    val delinquent: Int,
     val email: String,
     val displayName: String,
     val keys: List<UserKeyResult>,
-    val generatedMailboxPassphrase: ByteArray?
+    val passphrase: ByteArray?,
+    val addresses: AddressesResult? = null
 ) : Parcelable {
 
     @IgnoredOnParcel
@@ -62,7 +63,8 @@ data class UserResult(
             email = user.email,
             displayName = user.displayName,
             keys = user.keys.map { UserKeyResult.from(it) },
-            generatedMailboxPassphrase = user.generatedMailboxPassphrase
+            passphrase = user.passphrase,
+            addresses = user.addresses?.let { AddressesResult.from(it) }
         )
     }
 }

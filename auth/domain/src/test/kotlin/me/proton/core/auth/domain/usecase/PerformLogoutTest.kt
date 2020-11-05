@@ -58,9 +58,9 @@ class PerformLogoutTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformLogout.LogoutState.Processing)
+        assertTrue(listOfEvents[0] is PerformLogout.State.Processing)
         val successEvent = listOfEvents[1]
-        assertTrue(successEvent is PerformLogout.LogoutState.Success)
+        assertTrue(successEvent is PerformLogout.State.Success)
         assertTrue(successEvent.sessionRevoked)
     }
 
@@ -82,9 +82,9 @@ class PerformLogoutTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformLogout.LogoutState.Processing)
+        assertTrue(listOfEvents[0] is PerformLogout.State.Processing)
         val successEvent = listOfEvents[1]
-        assertTrue(successEvent is PerformLogout.LogoutState.Error)
+        assertTrue(successEvent is PerformLogout.State.Error)
     }
 
     @Test
@@ -98,9 +98,9 @@ class PerformLogoutTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformLogout.LogoutState.Processing)
+        assertTrue(listOfEvents[0] is PerformLogout.State.Processing)
         val successEvent = listOfEvents[1]
-        assertTrue(successEvent is PerformLogout.LogoutState.Success)
+        assertTrue(successEvent is PerformLogout.State.Success)
         assertFalse(successEvent.sessionRevoked)
     }
 }

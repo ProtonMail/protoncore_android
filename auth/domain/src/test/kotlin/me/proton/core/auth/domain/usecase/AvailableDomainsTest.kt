@@ -54,7 +54,7 @@ class AvailableDomainsTest {
         // THEN
         assertEquals(1, listOfEvents.size)
         val event = listOfEvents[0]
-        assertTrue(event is AvailableDomains.AvailableDomainsState.Success)
+        assertTrue(event is AvailableDomains.State.Success)
         assertEquals(domains, event.availableDomains)
     }
 
@@ -65,7 +65,7 @@ class AvailableDomainsTest {
         // THEN
         assertEquals(1, listOfEvents.size)
         val event = listOfEvents[0]
-        assertTrue(event is AvailableDomains.AvailableDomainsState.Success)
+        assertTrue(event is AvailableDomains.State.Success)
         assertEquals("@protonmail.com", event.firstDomainOrDefault)
     }
 
@@ -78,7 +78,7 @@ class AvailableDomainsTest {
         // THEN
         assertEquals(1, listOfEvents.size)
         val event = listOfEvents[0]
-        assertTrue(event is AvailableDomains.AvailableDomainsState.Error.NoAvailableDomains)
+        assertTrue(event is AvailableDomains.State.Error.NoAvailableDomains)
     }
 
     @Test
@@ -93,7 +93,7 @@ class AvailableDomainsTest {
         // THEN
         assertEquals(1, listOfEvents.size)
         val event = listOfEvents[0]
-        assertTrue(event is AvailableDomains.AvailableDomainsState.Error.Message)
+        assertTrue(event is AvailableDomains.State.Error.Message)
         assertEquals("api error", event.message)
     }
 }

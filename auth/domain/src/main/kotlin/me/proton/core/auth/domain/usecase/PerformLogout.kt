@@ -39,23 +39,23 @@ class PerformLogout @Inject constructor(
     /**
      * State sealed class with various (success, error) outcome state subclasses.
      */
-    sealed class LogoutState {
-        object Processing : LogoutState()
-        data class Success(val sessionRevoked: Boolean) : LogoutState()
-        sealed class Error : LogoutState() {
+    sealed class State {
+        object Processing : State()
+        data class Success(val sessionRevoked: Boolean) : State()
+        sealed class Error : State() {
             data class Message(val message: String?) : Error()
         }
     }
 
-    operator fun invoke(sessionId: SessionId): Flow<LogoutState> = flow {
-        emit(LogoutState.Processing)
+    operator fun invoke(sessionId: SessionId): Flow<State> = flow {
+        emit(State.Processing)
 
         authRepository.revokeSession(sessionId = sessionId)
             .onFailure { errorMessage, _, _ ->
-                emit(LogoutState.Error.Message(errorMessage))
+                emit(State.Error.Message(errorMessage))
             }
             .onSuccess {
-                emit(LogoutState.Success(it))
+                emit(State.Success(it))
             }
     }
 }

@@ -22,11 +22,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.usecase.PerformMailboxLogin
+import me.proton.core.auth.domain.usecase.PerformUserSetup
+import me.proton.core.auth.domain.usecase.onError
+import me.proton.core.auth.domain.usecase.onProcessing
+import me.proton.core.auth.domain.usecase.onSuccess
 import me.proton.core.network.domain.session.SessionId
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
@@ -36,24 +38,26 @@ import studio.forface.viewstatestore.ViewStateStoreScope
  */
 class MailboxLoginViewModel @ViewModelInject constructor(
     private val accountWorkflowHandler: AccountWorkflowHandler,
-    private val performMailboxLogin: PerformMailboxLogin
+    private val performUserSetup: PerformUserSetup
 ) : ProtonViewModel(), ViewStateStoreScope {
 
-    val mailboxLoginState = ViewStateStore<PerformMailboxLogin.MailboxLoginState>().lock
+    val mailboxLoginState = ViewStateStore<PerformUserSetup.State>().lock
 
     /**
      * Attempts the mailbox login flow. This includes whole procedure with passphrase generation and API handling.
      */
-    fun startMailboxLoginFlow(
+    fun startUserSetup(
         sessionId: SessionId,
         password: ByteArray
     ) {
-        performMailboxLogin(sessionId, password).onEach {
-            if (it is PerformMailboxLogin.MailboxLoginState.Success) {
+        performUserSetup(sessionId, password)
+            .onProcessing { mailboxLoginState.post(it) }
+            .onSuccess {
                 accountWorkflowHandler.handleTwoPassModeSuccess(sessionId)
+                mailboxLoginState.post(it)
             }
-            mailboxLoginState.post(it)
-        }.launchIn(viewModelScope)
+            .onError { mailboxLoginState.post(it) }
+            .launchIn(viewModelScope)
     }
 
     fun stopMailboxLoginFlow(

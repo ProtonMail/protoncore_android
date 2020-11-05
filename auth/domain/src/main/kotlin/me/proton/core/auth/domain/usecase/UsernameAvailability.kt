@@ -32,34 +32,34 @@ import javax.inject.Inject
  */
 class UsernameAvailability @Inject constructor(private val authRepository: AuthRepository) {
 
-    sealed class UsernameAvailabilityState {
-        object Processing : UsernameAvailabilityState()
+    sealed class State {
+        object Processing : State()
         data class Success(val available: Boolean, val username: String, val domain: String? = null) :
-            UsernameAvailabilityState()
+            State()
 
-        sealed class Error : UsernameAvailabilityState() {
+        sealed class Error : State() {
             data class Message(val message: String?) : Error()
             object UsernameUnavailable : Error()
             object EmptyUsername : Error()
         }
     }
 
-    operator fun invoke(username: String): Flow<UsernameAvailabilityState> = flow {
+    operator fun invoke(username: String): Flow<State> = flow {
         if (username.isBlank()) {
-            emit(UsernameAvailabilityState.Error.EmptyUsername)
+            emit(State.Error.EmptyUsername)
             return@flow
         }
-        emit(UsernameAvailabilityState.Processing)
+        emit(State.Processing)
 
         authRepository.isUsernameAvailable(username)
             .onFailure { message, code, _ ->
                 if (code == RESPONSE_CODE_USERNAME_UNAVAILABLE) {
-                    emit(UsernameAvailabilityState.Error.UsernameUnavailable)
+                    emit(State.Error.UsernameUnavailable)
                 } else {
-                    emit(UsernameAvailabilityState.Error.Message(message))
+                    emit(State.Error.Message(message))
                 }
             }.onSuccess {
-                emit(UsernameAvailabilityState.Success(it, username))
+                emit(State.Success(it, username))
             }
     }
 

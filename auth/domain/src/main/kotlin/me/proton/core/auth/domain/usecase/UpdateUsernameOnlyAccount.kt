@@ -44,10 +44,10 @@ class UpdateUsernameOnlyAccount @Inject constructor(
     /**
      * State sealed class with various (success, error) outcome state subclasses.
      */
-    sealed class UpdateUsernameOnlyState {
-        object Processing : UpdateUsernameOnlyState()
-        data class Success(val user: User) : UpdateUsernameOnlyState()
-        sealed class Error : UpdateUsernameOnlyState() {
+    sealed class State {
+        object Processing : State()
+        data class Success(val user: User) : State()
+        sealed class Error : State() {
             data class Message(val message: String?) : Error()
             object EmptyCredentials : Error()
             object EmptyDomain : Error()
@@ -56,25 +56,26 @@ class UpdateUsernameOnlyAccount @Inject constructor(
         }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     operator fun invoke(
         sessionId: SessionId,
         domain: String,
         username: String,
         passphrase: ByteArray
-    ): Flow<UpdateUsernameOnlyState> = flow {
+    ): Flow<State> = flow {
         if (username.isEmpty() || passphrase.isEmpty()) {
-            emit(UpdateUsernameOnlyState.Error.EmptyCredentials)
+            emit(State.Error.EmptyCredentials)
             return@flow
         }
         if (domain.isEmpty()) {
-            emit(UpdateUsernameOnlyState.Error.EmptyDomain)
+            emit(State.Error.EmptyDomain)
             return@flow
         }
-        emit(UpdateUsernameOnlyState.Processing)
+        emit(State.Processing)
         // step 1. create address
         val createAddressResult = authRepository.createAddress(sessionId, domain, username)
         createAddressResult.onFailure { message, _, _ ->
-            emit(UpdateUsernameOnlyState.Error.Message(message))
+            emit(State.Error.Message(message))
             return@flow
         }
         val address = (createAddressResult as DataResult.Success).value
@@ -82,7 +83,7 @@ class UpdateUsernameOnlyAccount @Inject constructor(
         // step 2. fetch a random modulus
         val randomModulusResult = authRepository.randomModulus()
         randomModulusResult.onFailure { message, _, _ ->
-            emit(UpdateUsernameOnlyState.Error.Message(message))
+            emit(State.Error.Message(message))
             return@flow
         }
         val modulus = (randomModulusResult as DataResult.Success).value
@@ -90,14 +91,14 @@ class UpdateUsernameOnlyAccount @Inject constructor(
         val privateKey = try {
             cryptoProvider.generateNewPrivateKey(username, domain, passphrase, KeyType.RSA, KeySecurity.HIGH)
         } catch (privateKeyException: Exception) { // gopenpgp library throws generic exception
-            emit(UpdateUsernameOnlyState.Error.GeneratingPrivateKeyFailed(privateKeyException.message))
+            emit(State.Error.GeneratingPrivateKeyFailed(privateKeyException.message))
             return@flow
         }
 
         val signedKeyList = try {
             cryptoProvider.generateSignedKeyList(privateKey, passphrase)
         } catch (signedKeyListException: Exception) { // gopenpgp library throws generic exception
-            emit(UpdateUsernameOnlyState.Error.GeneratingSignedKeyListFailed(signedKeyListException.message))
+            emit(State.Error.GeneratingSignedKeyListFailed(signedKeyListException.message))
             return@flow
         }
         // step 4. setup address key
@@ -105,9 +106,7 @@ class UpdateUsernameOnlyAccount @Inject constructor(
             primaryKey = privateKey,
             keySalt = "",
             addressKeyList = listOf(
-                AddressKey(
-                    address.id, privateKey, SignedKeyList(signedKeyList.first, signedKeyList.second)
-                )
+                AddressKey(address.id, privateKey, SignedKeyList(signedKeyList.first, signedKeyList.second))
             ),
             auth = cryptoProvider.calculatePasswordVerifier(
                 username = username,
@@ -116,9 +115,9 @@ class UpdateUsernameOnlyAccount @Inject constructor(
                 modulus = modulus.modulus
             )
         ).onFailure { message, _, _ ->
-            emit(UpdateUsernameOnlyState.Error.Message(message))
+            emit(State.Error.Message(message))
         }.onSuccess {
-            emit(UpdateUsernameOnlyState.Success(it))
+            emit(State.Success(it))
         }
     }
 }

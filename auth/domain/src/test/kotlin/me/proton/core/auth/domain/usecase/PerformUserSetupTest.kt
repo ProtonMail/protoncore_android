@@ -45,7 +45,7 @@ import kotlin.test.assertTrue
 /**
  * @author Dino Kadrikj.
  */
-class PerformMailboxLoginTest {
+class PerformUserSetupTest {
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val cryptoProvider = mockk<CryptoProvider>(relaxed = true)
 
@@ -53,7 +53,7 @@ class PerformMailboxLoginTest {
     private val testMailboxPassword = "test-mailbox-password"
     private val testGeneratedPassphrase = "test-generated-passphrase"
 
-    private lateinit var useCase: PerformMailboxLogin
+    private lateinit var useCase: PerformUserSetup
     private val userResult = User(
         id = "test-id",
         name = "test-name",
@@ -65,7 +65,7 @@ class PerformMailboxLoginTest {
         role = 1,
         private = true,
         subscribed = true,
-        delinquent = false,
+        delinquent = 0,
         email = "test-email",
         displayName = "test-display-name",
         keys = listOf(
@@ -105,7 +105,7 @@ class PerformMailboxLoginTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformMailboxLogin(authRepository, cryptoProvider)
+        useCase = PerformUserSetup(authRepository, cryptoProvider)
         coEvery { authRepository.getUser(SessionId(testSessionId)) } returns DataResult.Success(
             ResponseSource.Remote,
             userResult
@@ -120,7 +120,7 @@ class PerformMailboxLoginTest {
         )
 
         every {
-            cryptoProvider.generateMailboxPassphrase(
+            cryptoProvider.generatePassphrase(
                 testMailboxPassword.toByteArray(),
                 any()
             )
@@ -137,11 +137,11 @@ class PerformMailboxLoginTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformMailboxLogin.MailboxLoginState.Processing)
+        assertTrue(listOfEvents[0] is PerformUserSetup.State.Processing)
         val successEvent = listOfEvents[1]
-        assertTrue(successEvent is PerformMailboxLogin.MailboxLoginState.Success)
+        assertTrue(successEvent is PerformUserSetup.State.Success)
         val user = successEvent.user
-        assertNotNull(user.generatedMailboxPassphrase)
+        assertNotNull(user.passphrase)
     }
 
     @Test
@@ -164,9 +164,9 @@ class PerformMailboxLoginTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformMailboxLogin.MailboxLoginState.Processing)
+        assertTrue(listOfEvents[0] is PerformUserSetup.State.Processing)
         val errorEvent = listOfEvents[1]
-        assertTrue(errorEvent is PerformMailboxLogin.MailboxLoginState.Error.NoPrimaryKey)
+        assertTrue(errorEvent is PerformUserSetup.State.Error.NoPrimaryKey)
     }
 
     @Test
@@ -182,16 +182,16 @@ class PerformMailboxLoginTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformMailboxLogin.MailboxLoginState.Processing)
+        assertTrue(listOfEvents[0] is PerformUserSetup.State.Processing)
         val errorEvent = listOfEvents[1]
-        assertTrue(errorEvent is PerformMailboxLogin.MailboxLoginState.Error.NoKeySaltsForPrimaryKey)
+        assertTrue(errorEvent is PerformUserSetup.State.Error.NoKeySaltsForPrimaryKey)
     }
 
     @Test
     fun `mailbox login empty generated mailbox passphrase`() = runBlockingTest {
         // GIVEN
         every {
-            cryptoProvider.generateMailboxPassphrase(
+            cryptoProvider.generatePassphrase(
                 testMailboxPassword.toByteArray(),
                 any()
             )
@@ -200,9 +200,9 @@ class PerformMailboxLoginTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformMailboxLogin.MailboxLoginState.Processing)
+        assertTrue(listOfEvents[0] is PerformUserSetup.State.Processing)
         val errorEvent = listOfEvents[1]
-        assertTrue(errorEvent is PerformMailboxLogin.MailboxLoginState.Error.PrimaryKeyInvalidPassphrase)
+        assertTrue(errorEvent is PerformUserSetup.State.Error.PrimaryKeyInvalidPassphrase)
     }
 
     @Test
@@ -215,9 +215,9 @@ class PerformMailboxLoginTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformMailboxLogin.MailboxLoginState.Processing)
+        assertTrue(listOfEvents[0] is PerformUserSetup.State.Processing)
         val errorEvent = listOfEvents[1]
-        assertTrue(errorEvent is PerformMailboxLogin.MailboxLoginState.Error.Message)
+        assertTrue(errorEvent is PerformUserSetup.State.Error.Message)
         assertEquals("Invalid user response", errorEvent.message)
     }
 
@@ -231,9 +231,9 @@ class PerformMailboxLoginTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId), testMailboxPassword.toByteArray()).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformMailboxLogin.MailboxLoginState.Processing)
+        assertTrue(listOfEvents[0] is PerformUserSetup.State.Processing)
         val errorEvent = listOfEvents[1]
-        assertTrue(errorEvent is PerformMailboxLogin.MailboxLoginState.Error.Message)
+        assertTrue(errorEvent is PerformUserSetup.State.Error.Message)
         assertEquals("Invalid salts response", errorEvent.message)
     }
 }

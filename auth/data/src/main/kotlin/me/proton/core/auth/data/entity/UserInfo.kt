@@ -68,7 +68,7 @@ data class UserInfo(
         role = role,
         private = private.toBoolean(),
         subscribed = subscribed.toBoolean(),
-        delinquent = delinquent.toBoolean(),
+        delinquent = delinquent,
         email = email,
         displayName = displayName,
         keys = keys.map {

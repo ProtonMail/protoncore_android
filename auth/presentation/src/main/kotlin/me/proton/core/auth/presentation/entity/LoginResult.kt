@@ -16,21 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.auth.presentation.entity
 
-enum class AccountType {
-    /**
-     * Account with no email addresses associated with it.
-     */
-    Username,
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import me.proton.core.auth.domain.entity.AccountType
 
-    /**
-     * Account with at least one internal email address associated with it.
-     */
-    Internal,
-
-    /**
-     * Account with at least one external email address associated with it.
-     */
-    External
-}
+/**
+ * @author Dino Kadrikj.
+ */
+@Parcelize
+data class LoginResult(
+    val password: ByteArray,
+    val session: SessionResult,
+    val user: UserResult?,
+    val requiredAccountType: AccountType
+) : Parcelable

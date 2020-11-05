@@ -25,7 +25,9 @@ import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.crypto.SrpProofProvider
 import me.proton.core.auth.domain.crypto.SrpProofs
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.domain.arch.extension.onEachInstance
 import me.proton.core.domain.arch.onFailure
 import me.proton.core.domain.arch.onSuccess
 import javax.inject.Inject
@@ -47,32 +49,38 @@ class PerformLogin @Inject constructor(
     /**
      * State sealed class with various (success, error) outcome state subclasses.
      */
-    sealed class LoginState {
-        object Processing : LoginState()
-        data class Success(val sessionInfo: SessionInfo) : LoginState()
-        sealed class Error : LoginState() {
+    sealed class State {
+        object Processing : State()
+
+        sealed class Success : State() {
+            class Login(val sessionInfo: SessionInfo) : Success()
+            class UserSetup(val sessionInfo: SessionInfo, val user: User) : Success()
+        }
+
+        sealed class Error : State() {
             data class Message(val message: String?, val validation: Boolean = false) : Error()
             object EmptyCredentials : Error()
+            data class UserSetup(val state: PerformUserSetup.State.Error) : Error()
         }
     }
 
     operator fun invoke(
         username: String,
         password: ByteArray
-    ): Flow<LoginState> = flow {
+    ): Flow<State> = flow {
 
         if (username.isBlank() || password.isEmpty()) {
-            emit(LoginState.Error.EmptyCredentials)
+            emit(State.Error.EmptyCredentials)
             return@flow
         }
 
-        emit(LoginState.Processing)
+        emit(State.Processing)
 
         authRepository.getLoginInfo(
             username = username,
             clientSecret = clientSecret
         ).onFailure { errorMessage, _, _ ->
-            emit(LoginState.Error.Message(errorMessage))
+            emit(State.Error.Message(errorMessage))
         }.onSuccess { loginInfo ->
             val clientProofs: SrpProofs = srpProofProvider.generateSrpProofs(
                 username = username,
@@ -87,13 +95,9 @@ class PerformLogin @Inject constructor(
                 clientProof = Base64.encode(clientProofs.clientProof),
                 srpSession = loginInfo.srpSession
             ).onFailure { errorMessage, protonCode, _ ->
-                emit(LoginState.Error.Message(errorMessage, protonCode == RESPONSE_CODE_INCORRECT_CREDENTIALS))
+                emit(State.Error.Message(errorMessage, protonCode == RESPONSE_CODE_INCORRECT_CREDENTIALS))
             }.onSuccess { sessionInfo ->
-                var result = sessionInfo
-                if (sessionInfo.isSecondFactorNeeded && !sessionInfo.isTwoPassModeNeeded) {
-                    result = sessionInfo.copy(loginPassword = password)
-                }
-                emit(LoginState.Success(result))
+                emit(State.Success.Login(sessionInfo))
             }
         }
     }
@@ -102,3 +106,15 @@ class PerformLogin @Inject constructor(
         const val RESPONSE_CODE_INCORRECT_CREDENTIALS = 8002
     }
 }
+
+fun Flow<PerformLogin.State>.onProcessing(
+    action: suspend (PerformLogin.State.Processing) -> Unit
+) = onEachInstance(action) as Flow<PerformLogin.State>
+
+fun Flow<PerformLogin.State>.onLoginSuccess(
+    action: suspend (PerformLogin.State.Success.Login) -> Unit
+) = onEachInstance(action) as Flow<PerformLogin.State>
+
+fun Flow<PerformLogin.State>.onError(
+    action: suspend (PerformLogin.State.Error) -> Unit
+) = onEachInstance(action) as Flow<PerformLogin.State>

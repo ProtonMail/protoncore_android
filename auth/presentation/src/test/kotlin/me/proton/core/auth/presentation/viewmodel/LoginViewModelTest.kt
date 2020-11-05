@@ -33,6 +33,7 @@ import me.proton.core.auth.domain.crypto.SrpProofProvider
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.PerformLogin
+import me.proton.core.auth.domain.usecase.PerformUserSetup
 import me.proton.core.network.domain.session.Session
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -53,7 +54,8 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val srpProofProvider = mockk<SrpProofProvider>(relaxed = true)
     private val accountManager = mockk<AccountWorkflowHandler>(relaxed = true)
-    private val useCase = mockk<PerformLogin>()
+    private val useCasePerformLogin = mockk<PerformLogin>()
+    private val useCaseMailboxLogin = mockk<PerformUserSetup>()
     // endregion
 
     // region test data
@@ -66,7 +68,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
-        viewModel = LoginViewModel(accountManager, useCase)
+        viewModel = LoginViewModel(accountManager, useCasePerformLogin, useCaseMailboxLogin)
     }
 
     @Test
@@ -74,20 +76,24 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val sessionInfo = mockk<SessionInfo>(relaxed = true)
         every { sessionInfo.username } returns testUserName
-        coEvery { useCase.invoke(any(), any()) } returns flowOf(
-            PerformLogin.LoginState.Processing,
-            PerformLogin.LoginState.Success(sessionInfo)
+        coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
+            PerformLogin.State.Processing,
+            PerformLogin.State.Success.Login(sessionInfo)
         )
-        val observer = mockk<(PerformLogin.LoginState) -> Unit>(relaxed = true)
+        coEvery { useCaseMailboxLogin.invoke(any(), any()) } returns flowOf(
+            PerformUserSetup.State.Processing,
+            PerformUserSetup.State.Success(mockk())
+        )
+        val observer = mockk<(PerformLogin.State) -> Unit>(relaxed = true)
         viewModel.loginState.observeDataForever(observer)
         // WHEN
         viewModel.startLoginWorkflow(testUserName, testPassword.toByteArray())
         // THEN
-        val arguments = mutableListOf<PerformLogin.LoginState>()
+        val arguments = mutableListOf<PerformLogin.State>()
         verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<PerformLogin.LoginState.Processing>(arguments[0])
+        assertIs<PerformLogin.State.Processing>(arguments[0])
         val successState = arguments[1]
-        assertTrue(successState is PerformLogin.LoginState.Success)
+        assertTrue(successState is PerformLogin.State.Success.UserSetup)
         assertEquals(sessionInfo, successState.sessionInfo)
         assertEquals(testUserName, successState.sessionInfo.username)
     }
@@ -97,20 +103,20 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val sessionInfo = mockk<SessionInfo>()
         every { sessionInfo.username } returns testUserName
-        coEvery { useCase.invoke(any(), any()) } returns flowOf(
-            PerformLogin.LoginState.Processing,
-            PerformLogin.LoginState.Error.Message(message = "test error")
+        coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
+            PerformLogin.State.Processing,
+            PerformLogin.State.Error.Message(message = "test error")
         )
-        val observer = mockk<(PerformLogin.LoginState) -> Unit>(relaxed = true)
+        val observer = mockk<(PerformLogin.State) -> Unit>(relaxed = true)
         viewModel.loginState.observeDataForever(observer)
         // WHEN
         viewModel.startLoginWorkflow(testUserName, testPassword.toByteArray())
         // THEN
-        val arguments = mutableListOf<PerformLogin.LoginState>()
+        val arguments = mutableListOf<PerformLogin.State>()
         verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<PerformLogin.LoginState.Processing>(arguments[0])
+        assertIs<PerformLogin.State.Processing>(arguments[0])
         val errorState = arguments[1]
-        assertTrue(errorState is PerformLogin.LoginState.Error.Message)
+        assertTrue(errorState is PerformLogin.State.Error.Message)
         assertEquals("test error", errorState.message)
     }
 
@@ -119,19 +125,20 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         viewModel = LoginViewModel(
             accountManager,
-            PerformLogin(authRepository, srpProofProvider, "test-client-secret")
+            PerformLogin(authRepository, srpProofProvider, "test-client-secret"),
+            useCaseMailboxLogin
         )
-        val observer = mockk<(PerformLogin.LoginState) -> Unit>(relaxed = true)
+        val observer = mockk<(PerformLogin.State) -> Unit>(relaxed = true)
         viewModel.loginState.observeDataForever(observer)
         // WHEN
         viewModel.startLoginWorkflow("", testPassword.toByteArray())
         // THEN
-        val arguments = mutableListOf<PerformLogin.LoginState>()
+        val arguments = mutableListOf<PerformLogin.State>()
         verify {
             observer(capture(arguments))
         }
         val errorState = arguments[0]
-        assertTrue(errorState is PerformLogin.LoginState.Error.EmptyCredentials)
+        assertTrue(errorState is PerformLogin.State.Error.EmptyCredentials)
     }
 
     @Test
@@ -139,19 +146,20 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         viewModel = LoginViewModel(
             accountManager,
-            PerformLogin(authRepository, srpProofProvider, "test-client-secret")
+            PerformLogin(authRepository, srpProofProvider, "test-client-secret"),
+            useCaseMailboxLogin
         )
-        val observer = mockk<(PerformLogin.LoginState) -> Unit>(relaxed = true)
+        val observer = mockk<(PerformLogin.State) -> Unit>(relaxed = true)
         viewModel.loginState.observeDataForever(observer)
         // WHEN
         viewModel.startLoginWorkflow(testUserName, "".toByteArray())
         // THEN
-        val arguments = mutableListOf<PerformLogin.LoginState>()
+        val arguments = mutableListOf<PerformLogin.State>()
         verify {
             observer(capture(arguments))
         }
         val errorState = arguments[0]
-        assertTrue(errorState is PerformLogin.LoginState.Error.EmptyCredentials)
+        assertTrue(errorState is PerformLogin.State.Error.EmptyCredentials)
     }
 
     @Test
@@ -161,23 +169,27 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockk<SessionInfo>(relaxed = true)
         every { sessionInfo.username } returns testUserName
         every { sessionInfo.accessToken } returns testAccessToken
-        coEvery { useCase.invoke(any(), any()) } returns flowOf(
-            PerformLogin.LoginState.Processing,
-            PerformLogin.LoginState.Success(sessionInfo)
+        coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
+            PerformLogin.State.Processing,
+            PerformLogin.State.Success.Login(sessionInfo)
         )
-        val observer = mockk<(PerformLogin.LoginState) -> Unit>(relaxed = true)
+        coEvery { useCaseMailboxLogin.invoke(any(), any()) } returns flowOf(
+            PerformUserSetup.State.Processing,
+            PerformUserSetup.State.Success(mockk())
+        )
+        val observer = mockk<(PerformLogin.State) -> Unit>(relaxed = true)
         viewModel.loginState.observeDataForever(observer)
         // WHEN
         viewModel.startLoginWorkflow(testUserName, testPassword.toByteArray())
         // THEN
-        val arguments = mutableListOf<PerformLogin.LoginState>()
+        val arguments = mutableListOf<PerformLogin.State>()
         val accountArgument = slot<Account>()
         val sessionArgument = slot<Session>()
         verify(exactly = 2) { observer(capture(arguments)) }
         coVerify(exactly = 1) { accountManager.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        assertIs<PerformLogin.LoginState.Processing>(arguments[0])
+        assertIs<PerformLogin.State.Processing>(arguments[0])
         val successState = arguments[1]
-        assertTrue(successState is PerformLogin.LoginState.Success)
+        assertTrue(successState is PerformLogin.State.Success.UserSetup)
         assertEquals(sessionInfo, successState.sessionInfo)
         assertEquals(testUserName, successState.sessionInfo.username)
         val account = accountArgument.captured
@@ -193,11 +205,15 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockk<SessionInfo>(relaxed = true)
         every { sessionInfo.isSecondFactorNeeded } returns true
         every { sessionInfo.sessionId } returns testSessionId
-        coEvery { useCase.invoke(any(), any()) } returns flowOf(
-            PerformLogin.LoginState.Processing,
-            PerformLogin.LoginState.Success(sessionInfo)
+        coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
+            PerformLogin.State.Processing,
+            PerformLogin.State.Success.Login(sessionInfo)
         )
-        val observer = mockk<(PerformLogin.LoginState) -> Unit>(relaxed = true)
+        coEvery { useCaseMailboxLogin.invoke(any(), any()) } returns flowOf(
+            PerformUserSetup.State.Processing,
+            PerformUserSetup.State.Success(mockk())
+        )
+        val observer = mockk<(PerformLogin.State) -> Unit>(relaxed = true)
         viewModel.loginState.observeDataForever(observer)
         // WHEN
         viewModel.startLoginWorkflow(testUserName, testPassword.toByteArray())
@@ -218,11 +234,11 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockk<SessionInfo>(relaxed = true)
         every { sessionInfo.isTwoPassModeNeeded } returns true
         every { sessionInfo.sessionId } returns testSessionId
-        coEvery { useCase.invoke(any(), any()) } returns flowOf(
-            PerformLogin.LoginState.Processing,
-            PerformLogin.LoginState.Success(sessionInfo)
+        coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
+            PerformLogin.State.Processing,
+            PerformLogin.State.Success.Login(sessionInfo)
         )
-        val observer = mockk<(PerformLogin.LoginState) -> Unit>(relaxed = true)
+        val observer = mockk<(PerformLogin.State) -> Unit>(relaxed = true)
         viewModel.loginState.observeDataForever(observer)
         // WHEN
         viewModel.startLoginWorkflow(testUserName, testPassword.toByteArray())

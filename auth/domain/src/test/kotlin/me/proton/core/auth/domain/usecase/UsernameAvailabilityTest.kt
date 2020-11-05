@@ -25,13 +25,10 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.ResponseSource
-import me.proton.core.test.kotlin.assertEquals
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.test.kotlin.assertTrue
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
@@ -56,9 +53,9 @@ class UsernameAvailabilityTest {
         val listOfEvents = useCase.invoke(testUsername).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UsernameAvailability.UsernameAvailabilityState.Processing>(listOfEvents[0])
+        assertIs<UsernameAvailability.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UsernameAvailability.UsernameAvailabilityState.Success)
+        assertTrue(secondEvent is UsernameAvailability.State.Success)
         assertTrue(secondEvent.available)
     }
 
@@ -72,9 +69,9 @@ class UsernameAvailabilityTest {
         val listOfEvents = useCase.invoke(testUsername).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UsernameAvailability.UsernameAvailabilityState.Processing>(listOfEvents[0])
+        assertIs<UsernameAvailability.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UsernameAvailability.UsernameAvailabilityState.Error.UsernameUnavailable)
+        assertTrue(secondEvent is UsernameAvailability.State.Error.UsernameUnavailable)
     }
 
     @Test
@@ -86,7 +83,7 @@ class UsernameAvailabilityTest {
         // THEN
         assertEquals(1, listOfEvents.size)
         val event = listOfEvents[0]
-        assertTrue(event is UsernameAvailability.UsernameAvailabilityState.Error.EmptyUsername)
+        assertTrue(event is UsernameAvailability.State.Error.EmptyUsername)
     }
 
     @Test
@@ -99,9 +96,9 @@ class UsernameAvailabilityTest {
         val listOfEvents = useCase.invoke(testUsername).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertIs<UsernameAvailability.UsernameAvailabilityState.Processing>(listOfEvents[0])
+        assertIs<UsernameAvailability.State.Processing>(listOfEvents[0])
         val secondEvent = listOfEvents[1]
-        assertTrue(secondEvent is UsernameAvailability.UsernameAvailabilityState.Error.Message)
+        assertTrue(secondEvent is UsernameAvailability.State.Error.Message)
         assertEquals("api error", secondEvent.message)
     }
 }

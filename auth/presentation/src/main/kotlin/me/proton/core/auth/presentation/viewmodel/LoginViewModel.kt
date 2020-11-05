@@ -21,13 +21,18 @@ package me.proton.core.auth.presentation.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.PerformLogin
+import me.proton.core.auth.domain.usecase.PerformUserSetup
+import me.proton.core.auth.domain.usecase.onError
+import me.proton.core.auth.domain.usecase.onLoginSuccess
+import me.proton.core.auth.domain.usecase.onProcessing
+import me.proton.core.auth.domain.usecase.onSuccess
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
@@ -39,10 +44,11 @@ import studio.forface.viewstatestore.ViewStateStoreScope
  */
 class LoginViewModel @ViewModelInject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
-    private val performLogin: PerformLogin
+    private val performLogin: PerformLogin,
+    private val performUserSetup: PerformUserSetup
 ) : ProtonViewModel(), ViewStateStoreScope {
 
-    val loginState = ViewStateStore<PerformLogin.LoginState>().lock
+    val loginState = ViewStateStore<PerformLogin.State>().lock
 
     /**
      * Attempts to make the login call.
@@ -54,37 +60,50 @@ class LoginViewModel @ViewModelInject constructor(
         username: String,
         password: ByteArray
     ) {
-        performLogin(username, password).onEach {
-            if (it is PerformLogin.LoginState.Success) {
-                // on success result, contact account manager
-                onSuccess(it)
+        performLogin(username, password)
+            .onProcessing { loginState.post(it) }
+            .onLoginSuccess {
+                handleSessionInfo(it.sessionInfo)
+                // No more steps -> directly setup user.
+                if (!it.sessionInfo.isTwoPassModeNeeded && !it.sessionInfo.isSecondFactorNeeded) {
+                    // Raise Success.UserSetup.
+                    setupUser(password, it.sessionInfo)
+                } else {
+                    // Raise Success.Login.
+                    loginState.post(PerformLogin.State.Success.Login(it.sessionInfo))
+                }
             }
-            // inform the view for each state change
-            loginState.post(it)
-        }.launchIn(viewModelScope)
+            .onError { loginState.post(it) }
+            .launchIn(viewModelScope)
     }
 
-    private suspend fun onSuccess(success: PerformLogin.LoginState.Success) {
-        val result = success.sessionInfo
+    private fun setupUser(password: ByteArray, sessionInfo: SessionInfo) {
+        performUserSetup(SessionId(sessionInfo.sessionId), password)
+            .onSuccess { loginState.post(PerformLogin.State.Success.UserSetup(sessionInfo, it.user)) }
+            .onError { loginState.post(PerformLogin.State.Error.UserSetup(it)) }
+            .launchIn(viewModelScope)
+    }
+
+    private suspend fun handleSessionInfo(sessionInfo: SessionInfo) {
+        val sessionState =
+            if (sessionInfo.isSecondFactorNeeded) SessionState.SecondFactorNeeded else SessionState.Authenticated
 
         val accountState =
-            if (result.isTwoPassModeNeeded) AccountState.TwoPassModeNeeded else AccountState.Ready
-        val sessionState =
-            if (result.isSecondFactorNeeded) SessionState.SecondFactorNeeded else SessionState.Authenticated
+            if (sessionInfo.isTwoPassModeNeeded) AccountState.TwoPassModeNeeded else AccountState.Ready
 
         val account = Account(
-            username = result.username,
-            userId = UserId(result.userId),
+            username = sessionInfo.username,
+            userId = UserId(sessionInfo.userId),
             email = null,
-            sessionId = SessionId(result.sessionId),
+            sessionId = SessionId(sessionInfo.sessionId),
             state = accountState,
             sessionState = sessionState
         )
         val session = Session(
-            sessionId = SessionId(result.sessionId),
-            accessToken = result.accessToken,
-            refreshToken = result.refreshToken,
-            scopes = result.scopes
+            sessionId = SessionId(sessionInfo.sessionId),
+            accessToken = sessionInfo.accessToken,
+            refreshToken = sessionInfo.refreshToken,
+            scopes = sessionInfo.scopes
         )
         accountWorkflow.handleSession(account, session)
     }

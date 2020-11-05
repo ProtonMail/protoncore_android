@@ -22,7 +22,6 @@ import android.os.Parcelable
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import me.proton.core.auth.domain.entity.SessionInfo
-import me.proton.core.network.domain.session.SessionId
 
 @Parcelize
 data class SessionResult(
@@ -39,7 +38,6 @@ data class SessionResult(
     val serverProof: String,
     val localId: Int,
     val passwordMode: Int,
-    val loginPassword: ByteArray? = null,
     val isSecondFactorNeeded: Boolean
 ) : Parcelable {
 
@@ -62,7 +60,6 @@ data class SessionResult(
             serverProof = sessionInfo.serverProof,
             localId = sessionInfo.localId,
             passwordMode = sessionInfo.passwordMode,
-            loginPassword = sessionInfo.loginPassword,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded
         )
     }

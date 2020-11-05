@@ -20,16 +20,9 @@ package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import me.proton.core.auth.domain.entity.ScopeInfo
-import me.proton.core.network.domain.session.SessionId
 
 @Parcelize
 data class ScopeResult(
     val sessionId: String,
-    val scopes: List<String>,
-    val isTwoPassModeNeeded: Boolean = false
-) : Parcelable {
-
-    constructor(sessionId: SessionId, scopeInfo: ScopeInfo, isMailboxLoginNeeded: Boolean = false) :
-        this(sessionId.id, scopeInfo.scopes, isMailboxLoginNeeded)
-}
+    val scopes: List<String>
+) : Parcelable

@@ -33,6 +33,7 @@ import me.proton.core.auth.domain.entity.User
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.network.domain.session.SessionId
 
+@Suppress("LongParameterList")
 interface AuthRepository {
 
     /**
