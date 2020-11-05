@@ -91,9 +91,9 @@ Test Android Instrumented: **0.2** - _released on: Oct 21, 2020_
 
 ## Shared
 
-Domain: **0.2.1** - _released on: Nov 02, 2020_
+Domain: **0.2.2** - _released on: Nov 05, 2020_
 
-Presentation: **0.4.2** - _released on: Nov 02, 2020_
+Presentation: **0.4.3** - _released on: Nov 05, 2020_
 
 Data: **0.1.1** - _released on: Nov 02, 2020_
 
@@ -119,13 +119,13 @@ Crypto Data: **0** - _released on: ND_
 
 ### Auth
 
-Auth: **0.1.1** - _released on: Nov 02, 2020_
+Auth: **0.1.2** - _released on: Nov 05, 2020_
 
-Auth Domain: **0.1.1** - _released on: Nov 02, 2020_
+Auth Domain: **0.1.2** - _released on: Nov 05, 2020_
 
-Auth Presentation: **0.1.1** - _released on: Nov 02, 2020_
+Auth Presentation: **0.1.2** - _released on: Nov 05, 2020_
 
-Auth Data: **0.1.1** - _released on: Nov 02, 2020_
+Auth Data: **0.1.2** - _released on: Nov 05, 2020_
 
 ### Account
 
