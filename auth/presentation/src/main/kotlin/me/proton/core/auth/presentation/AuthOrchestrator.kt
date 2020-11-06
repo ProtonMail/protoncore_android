@@ -97,7 +97,7 @@ class AuthOrchestrator @Inject constructor(
                         )
                     }
                     it.session.isTwoPassModeNeeded -> {
-                        startTwoPassModeWorkflow(it.session.sessionId, it.requiredAccountType)
+                        startTwoPassModeWorkflow(SessionId(it.session.sessionId), it.requiredAccountType)
                     }
                     else -> it.user?.let { user ->
                         onUserProvided(user, result.session.sessionId, result.requiredAccountType)
@@ -138,7 +138,7 @@ class AuthOrchestrator @Inject constructor(
         ) { result ->
             result?.let {
                 if (it.isTwoPassModeNeeded) {
-                    startTwoPassModeWorkflow(it.scope.sessionId, it.requiredAccountType)
+                    startTwoPassModeWorkflow(SessionId(it.scope.sessionId), it.requiredAccountType)
                 } else {
                     onUserResultListener(requireNotNull(it.user))
                 }
@@ -265,9 +265,9 @@ class AuthOrchestrator @Inject constructor(
     /**
      * Start a TwoPassMode workflow.
      */
-    fun startTwoPassModeWorkflow(sessionId: String, requiredAccountType: AccountType) {
+    fun startTwoPassModeWorkflow(sessionId: SessionId, requiredAccountType: AccountType) {
         twoPassModeWorkflowLauncher?.launch(
-            TwoPassModeInput(sessionId, requiredAccountType)
+            TwoPassModeInput(sessionId.id, requiredAccountType)
         ) ?: throw IllegalStateException("You must call register before any start workflow function!")
     }
 

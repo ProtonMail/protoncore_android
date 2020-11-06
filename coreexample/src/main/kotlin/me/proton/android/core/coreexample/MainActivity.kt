@@ -120,7 +120,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                                                 accountManager.disableAccount(account.userId)
                                             SessionState.Authenticated ->
                                                 authOrchestrator.startTwoPassModeWorkflow(
-                                                    account.sessionId?.id!!,
+                                                    account.sessionId!!,
                                                     AccountType.Username
                                                 )
                                             else -> Unit
