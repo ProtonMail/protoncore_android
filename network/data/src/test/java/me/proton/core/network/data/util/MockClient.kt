@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.data.util
 
+import android.util.Log
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
@@ -25,6 +26,7 @@ import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.util.kotlin.Logger
+import me.proton.core.util.kotlin.LoggerLogTag
 
 object MockSession {
     fun getDefault() = Session(
@@ -82,10 +84,39 @@ class MockNetworkPrefs : NetworkPrefs {
 }
 
 class MockLogger : Logger {
-
-    override fun e(tag: String, msg: String?, e: Throwable?) {
-        e?.printStackTrace()
+    override fun e(tag: String, e: Throwable) {
+        Log.e(tag, "no message", e)
     }
 
-    override fun i(tag: String, msg: String) {}
+    override fun e(tag: String, e: Throwable, message: String) {
+        Log.e(tag, message, e)
+    }
+
+    override fun i(tag: String, message: String) {
+        Log.i(tag, message)
+    }
+
+    override fun i(tag: String, e: Throwable, message: String) {
+        Log.i(tag, message, e)
+    }
+
+    override fun d(tag: String, message: String) {
+        Log.d(tag, message)
+    }
+
+    override fun d(tag: String, e: Throwable, message: String) {
+        Log.d(tag, message, e)
+    }
+
+    override fun v(tag: String, message: String) {
+        Log.v(tag, message)
+    }
+
+    override fun v(tag: String, e: Throwable, message: String) {
+        Log.v(tag, message, e)
+    }
+
+    override fun log(tag: LoggerLogTag, message: String) {
+        Log.d(tag.name, message)
+    }
 }

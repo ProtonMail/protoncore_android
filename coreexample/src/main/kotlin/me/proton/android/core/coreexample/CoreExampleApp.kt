@@ -19,16 +19,36 @@
 package me.proton.android.core.coreexample
 
 import android.app.Application
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 
-/**
- * @author Dino Kadrikj.
- */
 @HiltAndroidApp
 class CoreExampleApp : Application() {
+
+    private class CrashReportingTree : Timber.Tree() {
+        override fun log(priority: Int, tag: String?, message: String, e: Throwable?) {
+            if (priority == Log.VERBOSE || priority == Log.DEBUG) return
+            /*when (priority) {
+                Log.VERBOSE,
+                Log.DEBUG -> Unit
+                Log.ERROR -> CrashLibrary.logError()
+                Log.WARN -> CrashLibrary.logWarning()
+                else -> CrashLibrary.log()
+            }*/
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        } else {
+            Timber.plant(CrashReportingTree())
+        }
 
         setCompatVectorFromResourcesEnabled(true)
     }

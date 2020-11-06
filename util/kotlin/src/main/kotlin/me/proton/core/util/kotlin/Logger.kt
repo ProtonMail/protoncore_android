@@ -17,11 +17,45 @@
  */
 package me.proton.core.util.kotlin
 
+import org.jetbrains.annotations.NonNls
+
 /**
  * Abstract logger for Proton core. Should be used instead of directly logging to e.g. logcat.
  */
 interface Logger {
+    /** Log an error exception. */
+    fun e(tag: String, e: Throwable)
 
-    fun e(tag: String, msg: String?, e: Throwable? = null)
-    fun i(tag: String, msg: String)
+    /** Log an error exception and a message. */
+    fun e(tag: String, e: Throwable, @NonNls message: String)
+
+    /** Log an info message. */
+    fun i(tag: String, @NonNls message: String)
+
+    /** Log an info exception and a message. */
+    fun i(tag: String, e: Throwable, @NonNls message: String)
+
+    /** Log a debug message. */
+    fun d(tag: String, @NonNls message: String)
+
+    /** Log a debug exception and a message. */
+    fun d(tag: String, e: Throwable, @NonNls message: String)
+
+    /** Log a verbose message. */
+    fun v(tag: String, @NonNls message: String)
+
+    /** Log a verbose exception and a message. */
+    fun v(tag: String, e: Throwable, @NonNls message: String)
+
+    /**
+     * Log a message that do not belong to any level.
+     *
+     * Implementation of this function have to filter on [LoggerLogTag], then map/forward it according their own logic.
+     *
+     * Note: Use this only if you know on which [LoggerLogTag] you have to filter.
+     */
+    fun log(tag: LoggerLogTag, @NonNls message: String)
 }
+
+/** Type for all tags used in conjunction with [Logger.log]. */
+inline class LoggerLogTag(val name: String)

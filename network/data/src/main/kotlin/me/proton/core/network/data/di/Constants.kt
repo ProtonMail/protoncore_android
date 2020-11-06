@@ -26,7 +26,8 @@ object Constants {
         "IEwk65VSaxv3s1/88vF/rM8PauJoIun3rzVCX5mLS3M",
         "drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=",
         "YRGlaY0jyJ4Jw2/4M8FIftwbDIQfh8Sdro96CeEel54=",
-        "AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw=")
+        "AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw="
+    )
 
     /**
      * SPKI pins for alternative Proton API leaf certificates (base64, SHA-256).
@@ -35,14 +36,12 @@ object Constants {
         "EU6TS9MO0L/GsDHvVc9D5fChYLNy5JdGYpJw0ccgetM=",
         "iKPIHPnDNqdkvOnTClQ8zQAIKG0XavaPkcEo0LBAABA=",
         "MSlVrBCdL0hKyczvgYVSRNm88RicyY04Q2y5qrBt0xA=",
-        "C2UxW0T1Ckl9s+8cXfjXxlEqwAfPM4HiW2y3UdtBeCw=")
+        "C2UxW0T1Ckl9s+8cXfjXxlEqwAfPM4HiW2y3UdtBeCw="
+    )
 
     /**
      * DNS over HTTPS services urls.
      */
     val DOH_PROVIDERS_URLS =
         arrayOf("https://dns11.quad9.net/dns-query/", "https://dns.google/dns-query/")
-
-    const val LOG_TAG: String = "net"
 }
-
