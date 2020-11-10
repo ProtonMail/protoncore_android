@@ -21,13 +21,13 @@ package me.proton.android.core.presentation.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import me.proton.android.core.presentation.R
@@ -58,6 +58,16 @@ fun Context.openBrowserLink(link: String) {
 fun AppCompatActivity.hideKeyboard() {
     hideKeyboard(currentFocus ?: window.decorView.rootView)
 }
+
+/**
+ * @return true if current [Configuration] UiMode is in Night Mode.
+ *
+ * Note: This differ from the current System's default ([AppCompatDelegate.getDefaultNightMode]).
+ *
+ * @see <a href="https://developer.android.com/guide/topics/ui/look-and-feel/darktheme">DarkTheme</a>
+ */
+fun AppCompatActivity.isNightMode() =
+    resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

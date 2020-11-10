@@ -18,28 +18,49 @@
 
 <resources>
 
-    <style name="ProtonTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/brand</item>
-        <item name="colorPrimaryVariant">@color/brand_darker_20</item>
-        <item name="colorOnPrimary">@color/brand_darker_40</item>
-        <!-- secondary colors are not present in the designs, may be changed!! -->
-        <item name="colorSecondary">@color/brand_darker_40</item>
-        <item name="colorSecondaryVariant">@color/layout_background</item>
-        <item name="colorSurface">@color/layout_background</item>
-        <item name="colorOnSurface">@color/brand</item>
-        <item name="android:colorBackground">@android:color/white</item>
-        <item name="colorOnBackground">@color/brand</item>
-        <item name="colorError">@color/signal_error</item>
-        <item name="colorOnError">@android:color/white</item>
-        <item name="colorControlHighlight">@color/interaction_ripple</item>
+    <style name="ProtonTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
+        <!-- Material color attributes -->
+        <item name="android:colorBackground">@color/background_norm</item>
+        <item name="colorSurface">@color/background_secondary</item>
+
+        <item name="colorPrimary">?brand</item>
+        <item name="colorPrimaryVariant">?brand_darken_20</item>
+        <item name="colorSecondary">?brand_lighten_40</item>
+        <item name="colorSecondaryVariant">?brand_lighten_20</item>
+        <item name="colorError">@color/notification_error</item>
+
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimarySurface">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSurface">?brand</item>
+        <item name="colorOnBackground">?brand</item>
+
+        <!-- Edge-to-edge app content: https://developer.android.com/training/gestures/gesturenav#edge-to-edge -->
+        <item name="android:navigationBarColor">?colorSecondaryVariant</item>
+
+        <!-- Remap legacy AppCompat attributes to MaterialComponent attributes -->
+        <item name="colorPrimaryDark">?colorPrimaryVariant</item>
+        <item name="colorAccent">?colorSecondary</item>
+        <item name="colorControlHighlight">?colorSecondary</item>
+
+        <!-- Material styles override -->
         <item name="materialButtonStyle">@style/ProtonButton</item>
-        <item name="android:textViewStyle">@style/ProtonTextView</item>
+
+        <!-- App specific attributes -->
+        <item name="brand">@color/cornflower_blue</item>
+        <item name="brand_darken_20">@color/san_marino</item>
+        <item name="brand_darken_40">@color/chambray</item>
+        <item name="brand_lighten_20">@color/portage</item>
+        <item name="brand_lighten_40">@color/perano</item>
     </style>
 
-    <style name="ProtonTheme.NoToolbar" parent="ProtonTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="ProtonTheme.Vpn" parent="ProtonTheme">
+        <item name="brand">@color/fruit_salad</item>
+        <item name="brand_darken_20">@color/goblin</item>
+        <item name="brand_darken_40">@color/green_pea</item>
+        <item name="brand_lighten_20">@color/mantis</item>
+        <item name="brand_lighten_40">@color/fern</item>
     </style>
+
 </resources>

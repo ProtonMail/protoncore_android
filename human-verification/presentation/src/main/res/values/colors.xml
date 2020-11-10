@@ -18,6 +18,6 @@
   -->
 
 <resources>
-    <color name="humanVerificationTabItemText">#636771</color>
-    <color name="humanVerificationCallingCode">#80848e</color>
+    <color name="humanVerificationTabItemText">@color/text_weak</color>
+    <color name="humanVerificationCallingCode">@color/text_hint</color>
 </resources>

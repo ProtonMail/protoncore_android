@@ -25,28 +25,28 @@
 
         <activity
             android:name=".presentation.ui.LoginActivity"
-            android:theme="@style/ProtonTheme.NoToolbar"
+            android:theme="@style/ProtonTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
             android:name=".presentation.ui.AuthHelpActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+            android:theme="@style/ProtonTheme" />
 
         <activity
             android:name=".presentation.ui.SecondFactorActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+            android:theme="@style/ProtonTheme" />
 
         <activity
             android:name=".presentation.ui.MailboxLoginActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+            android:theme="@style/ProtonTheme" />
 
         <activity
             android:name=".presentation.ui.CreateAddressActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+            android:theme="@style/ProtonTheme" />
 
         <activity
             android:name=".presentation.ui.CreateAddressResultActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+            android:theme="@style/ProtonTheme" />
 
     </application>
 </manifest>

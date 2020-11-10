@@ -17,6 +17,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="me.proton.android.core.coreexample">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -28,7 +29,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/ProtonTheme">
+        android:theme="@style/ProtonTheme"
+        tools:replace="android:theme">
         <activity android:name="me.proton.android.core.coreexample.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,10 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.CustomViewsActivity"
-            android:configChanges="orientation"/>
-        <activity android:name=".ui.LogoutActivity"
-            android:configChanges="orientation"/>
+        <activity
+            android:name=".ui.CustomViewsActivity"
+            android:configChanges="orientation" />
     </application>
 
 </manifest>

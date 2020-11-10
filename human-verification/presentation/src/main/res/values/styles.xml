@@ -21,11 +21,11 @@
 
     <style name="HumanVerificationTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabMaxWidth">0dp</item>
-        <item name="tabIndicatorColor">@color/layout_dark</item>
+        <item name="tabIndicatorColor">@color/text_norm</item>
         <item name="tabPaddingStart">6dp</item>
         <item name="tabPaddingEnd">6dp</item>
         <item name="tabTextAppearance">@style/HumanVerificationTabTextAppearance</item>
-        <item name="tabSelectedTextColor">@color/text_default</item>
+        <item name="tabSelectedTextColor">@color/text_norm</item>
         <item name="tabBackground">@drawable/background_tab_item</item>
     </style>
 

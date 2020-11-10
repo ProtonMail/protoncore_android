@@ -18,12 +18,14 @@
 
 package me.proton.core.auth.presentation.ui
 
-import android.os.Build
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.databinding.ViewDataBinding
 import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.android.core.presentation.utils.errorSnack
+import me.proton.android.core.presentation.utils.isNightMode
 import me.proton.core.auth.domain.usecase.PerformUserSetup
 import me.proton.core.auth.presentation.R
 
@@ -32,9 +34,12 @@ abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        }
+        val flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+            if (!isNightMode()) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
+
+        window.decorView.systemUiVisibility = flags
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.statusBarColor = Color.TRANSPARENT
     }
 
     open fun showLoading(loading: Boolean) {

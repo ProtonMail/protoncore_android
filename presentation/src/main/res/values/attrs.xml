@@ -18,6 +18,15 @@
 
 <resources>
 
+    <declare-styleable name="AppTheme">
+        <!-- Brand specific attributes -->
+        <attr name="brand" format="reference" />
+        <attr name="brand_darken_40" format="reference" />
+        <attr name="brand_darken_20" format="reference" />
+        <attr name="brand_lighten_40" format="reference" />
+        <attr name="brand_lighten_20" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="ProtonProgressButton">
         <!-- Whether the loading state must be set on click. Default is true -->
         <attr name="autoLoading" format="boolean" />

@@ -166,6 +166,6 @@ fun View.snack(
 ) {
     Snackbar.make(this, message, length).apply {
         view.background = context.resources.getDrawable(color, null)
-        setTextColor(ContextCompat.getColor(context, R.color.text_light))
+        setTextColor(ContextCompat.getColor(context, R.color.white))
     }.show()
 }

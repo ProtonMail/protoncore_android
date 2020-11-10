@@ -18,62 +18,75 @@
   -->
 
 <resources>
+    <!-- color palette -->
 
-    <!-- brand colors -->
-    <color name="brand">#657EE4</color>
-    <color name="brand_darker_20">#5064B6</color>
-    <color name="brand_darker_40">#3C4B88</color>
-    <color name="brand_lighter_40">#A2B1EE</color>
+    <color name="woodsmoke">#17181C</color>
+    <color name="charade">#25272C</color>
+    <color name="tuna">#303239</color>
+    <color name="abbey">#494D55</color>
+    <color name="storm_gray">#727680</color>
+    <color name="santas_gray">#9CA0AA</color>
+    <color name="french_gray">#BABDC6</color>
+    <color name="mischka">#DADCE3</color>
+    <color name="athens_gray">#EAECF1</color>
+    <color name="whisper">#F5F6FA</color>
+    <color name="white">#FFFFFF</color>
 
-    <!-- interaction colors -->
-    <color name="interaction_default">@color/brand</color>
-    <color name="interaction_pressed">@color/brand_darker_20</color>
-    <color name="interaction_disabled">@color/brand_lighter_40</color>
+    <color name="chambray">#3C4B88</color>
+    <color name="san_marino">#5064B6</color>
+    <color name="cornflower_blue">#657EE4</color>
+    <color name="portage">#8498E9</color>
+    <color name="perano">#A2B1EE</color>
 
-    <color name="interaction_neutral">#727680</color>
-    <color name="interaction_ripple">#55727680</color>
-    <color name="interaction_neutral_pressed">#000000</color>
-    <color name="interaction_neutral_disabled">#BABDC6</color>
+    <color name="green_pea">#2F6336</color>
+    <color name="goblin">#3E8347</color>
+    <color name="fruit_salad">#4DA358</color>
+    <color name="mantis">#71B579</color>
+    <color name="fern">#94C89B</color>
 
-    <!-- layout colors -->
-    <color name="layout_dark">#000000</color>
-    <color name="layout_secondary">#727680</color>
-    <color name="layout_weak">#BABDC6</color>
-    <color name="layout_lines">#EAECF1</color>
-    <color name="layout_background">#F5F6FA</color>
-    <color name="layout_light">#FFFFFF</color>
+    <color name="pomegranate">#E84118</color>
+    <color name="lime_green">#44BD32</color>
+    <color name="saffron">#FBC531</color>
 
-    <!-- text colors -->
-    <color name="text_default">#262A33</color>
-    <color name="text_secondary">#727680</color>
-    <color name="text_weak">#BABDC6</color>
-    <color name="text_light">#FFFFFF</color>
+    <!-- design color aliases -->
 
-    <!-- icon colors -->
-    <color name="icon_default">#000000</color>
-    <color name="icon_secondary">#727680</color>
-    <color name="icon_weak">#BABDC6</color>
-    <color name="icon_light">#FFFFFF</color>
+    <color name="shade_100">@color/woodsmoke</color>
+    <color name="shade_80">@color/storm_gray</color>
+    <color name="shade_60">@color/santas_gray</color>
+    <color name="shade_40">@color/mischka</color>
+    <color name="shade_50">@color/french_gray</color>
+    <color name="shade_20">@color/athens_gray</color>
+    <color name="shade_10">@color/whisper</color>
+    <color name="shade_0">@color/white</color>
 
-    <!-- signal colors -->
-    <color name="signal_error">#E84118</color>
-    <color name="signal_warning">#FBC531</color>
-    <color name="signal_success">#44BD32</color>
+    <!-- colors to use in the app -->
 
-    <!-- text section -->
-    <color name="color_title">@color/text_default</color>
-    <color name="color_subtitles">@color/text_secondary</color>
+    <color name="text_norm">@color/shade_100</color>
+    <color name="text_weak">@color/shade_80</color>
+    <color name="text_hint">@color/shade_60</color>
+    <color name="text_disabled">@color/shade_50</color>
+    <color name="text_inverted">@color/shade_0</color>
 
-    <!-- proton buttons section -->
-    <color name="button_action">@color/brand</color>
-    <color name="button_action_pressed">@color/brand_darker_40</color>
-    <color name="button_action_disabled">@color/brand_lighter_40</color>
-    <color name="button_text">@android:color/transparent</color>
-    <color name="button_text_pressed">@color/layout_background</color>
-    <color name="button_text_disabled">@android:color/transparent</color>
-    <color name="button_text_disabled_foreground">@color/interaction_neutral_disabled</color>
+    <color name="icon_norm">@color/shade_100</color>
+    <color name="icon_weak">@color/shade_80</color>
+    <color name="icon_hint">@color/shade_60</color>
+    <color name="icon_disabled">@color/shade_50</color>
+    <color name="icon_inverted">@color/shade_0</color>
 
-    <!-- proton input elements section -->
-    <color name="input_border">@color/brand</color>
-    <color name="input_background">@color/layout_background</color>
+    <color name="interaction_weak">@color/shade_20</color>
+    <color name="interaction_weak_pressed">@color/shade_40</color>
+    <color name="interaction_weak_disabled">@color/shade_10</color>
+
+    <color name="interaction_strong">@color/shade_100</color>
+    <color name="interaction_strong_pressed">@color/shade_80</color>
+
+    <color name="background_norm">@color/shade_0</color>
+    <color name="background_secondary">@color/shade_10</color>
+
+    <color name="separator_norm">@color/shade_20</color>
+
+    <color name="notification_error">@color/pomegranate</color>
+    <color name="notification_success">@color/lime_green</color>
+    <color name="notification_warning">@color/saffron</color>
+
 </resources>

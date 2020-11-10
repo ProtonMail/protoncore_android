@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -17,12 +16,16 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:state_pressed="true"
-        android:state_enabled="true"
-        android:drawable="@drawable/ripple_action_button"/>
-    <item
-        android:state_enabled="true"
-        android:drawable="@android:color/transparent" />
-</selector>
+<resources>
+    <!-- design color aliases -->
+
+    <color name="shade_100">@color/white</color>
+    <color name="shade_80">@color/santas_gray</color>
+    <color name="shade_60">@color/storm_gray</color>
+    <color name="shade_50">@color/abbey</color>
+    <color name="shade_40">@color/abbey</color>
+    <color name="shade_20">@color/tuna</color>
+    <color name="shade_10">@color/charade</color>
+    <color name="shade_0">@color/woodsmoke</color>
+
+</resources>

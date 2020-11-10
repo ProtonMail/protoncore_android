@@ -18,7 +18,7 @@
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="@color/signal_error" />
+    <solid android:color="@color/notification_error" />
     <corners android:radius="5dp" />
     <padding
         android:left="@dimen/parent_padding"

@@ -42,7 +42,7 @@
             android:layout_marginTop="@dimen/default_top_margin"
             android:layout_marginEnd="@dimen/parent_padding"
             android:text="@string/human_verification_help_title"
-            android:textColor="@color/text_default"
+            android:textColor="@color/text_norm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/headerNavigation" />
@@ -69,7 +69,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/layout_lines" />
+                android:background="@color/separator_norm" />
 
             <include
                 android:id="@+id/verificationHelp"
@@ -82,7 +82,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/layout_lines" />
+                android:background="@color/separator_norm" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -125,7 +125,7 @@ class ProtonInputTest {
         protonInput.helpText = "test assistive"
         protonInput.setInputError()
 
-        assertEquals(ContextCompat.getColor(protonInput.context, R.color.signal_error), labelView.currentTextColor)
+        assertEquals(ContextCompat.getColor(protonInput.context, R.color.notification_error), labelView.currentTextColor)
         assertEquals(protonInput.helpText, inputLayout.error)
     }
 

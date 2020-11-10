@@ -31,7 +31,7 @@
             android:layout_width="@dimen/human_verification_close_button"
             android:layout_height="@dimen/human_verification_close_button"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@color/icon_default"
+            android:tint="@color/icon_norm"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/human_verification_title"
-                android:textColor="@color/text_default"
+                android:textColor="@color/text_norm"
                 android:textSize="@dimen/human_verification_title_size" />
 
             <TextView
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/human_verification_title_options"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/text_hint"
                 android:textSize="@dimen/human_verification_subtitle_size" />
 
         </LinearLayout>

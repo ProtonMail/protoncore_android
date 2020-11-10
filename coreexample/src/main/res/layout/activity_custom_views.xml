@@ -61,6 +61,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/defaultDisabledButton" />
 
+            <me.proton.android.core.presentation.ui.view.ProtonButton
+                android:id="@+id/outlinedButton"
+                style="@style/ProtonButton.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:text="@string/example_outlined"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOnlyButton" />
+
+            <me.proton.android.core.presentation.ui.view.ProtonButton
+                android:id="@+id/outlinedButtonDisabled"
+                style="@style/ProtonButton.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:enabled="false"
+                android:text="@string/example_outlined"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/outlinedButton" />
+
             <me.proton.android.core.presentation.ui.view.ProtonProgressButton
                 android:id="@+id/loadingButton"
                 android:layout_width="match_parent"
@@ -70,7 +93,7 @@
                 app:initialState="loading"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textOnlyButton" />
+                app:layout_constraintTop_toBottomOf="@id/outlinedButtonDisabled" />
 
             <me.proton.android.core.presentation.ui.view.ProtonProgressButton
                 android:id="@+id/loadingTextOnlyButton"

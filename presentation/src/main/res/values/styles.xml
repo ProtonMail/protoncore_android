@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -20,35 +19,28 @@
 <resources>
 
     <style name="ProtonTextView" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/text_default</item>
         <item name="android:textSize">18sp</item>
     </style>
 
     <style name="ProtonTextView.Title" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/text_default</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ProtonTextView.Subtitle" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/text_secondary</item>
         <item name="android:textSize">14sp</item>
     </style>
 
     <style name="ProtonTextView.InputHeader">
-        <item name="android:textColor">@color/selector_input_header_color</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ProtonTextView.InputFooter">
-        <item name="android:textColor">@color/selector_input_footer_color</item>
         <item name="android:textSize">12sp</item>
     </style>
 
     <style name="ProtonEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textColor">@color/text_light</item>
-        <item name="android:textColorHint">@color/text_weak</item>
         <item name="android:textSize">@dimen/input_text_size</item>
         <item name="android:paddingLeft">8dp</item>
     </style>
@@ -57,77 +49,41 @@
         <item name="android:background">@drawable/default_edit_text</item>
     </style>
 
-    <style name="ProtonEditText.Border.Disabled">
-        <item name="android:background">@drawable/default_edit_text_disabled</item>
-    </style>
-
     <style name="ProtonInput.TextInputLayout.Border" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="android:textColor">@color/selector_input_color</item>
-        <item name="android:textColorHint">@color/selector_input_hint_color</item>
         <item name="android:textSize">@dimen/input_text_size</item>
-        <item name="boxBackgroundColor">@color/input_background</item>
-        <item name="endIconTint">@color/text_secondary</item>
-        <item name="helperTextTextAppearance">@style/ProtonTextView.InputFooter</item>
-        <item name="helperTextTextColor">@color/selector_input_footer_color</item>
-        <item name="hintTextColor">@color/selector_input_hint_color</item>
-        <item name="suffixTextColor">@color/text_secondary</item>
+        <item name="boxBackgroundColor">@color/background_secondary</item>
+        <item name="helperTextTextColor">?brand</item>
     </style>
 
     <style name="ProtonInput.TextInputLayout.Border.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
-        <item name="android:textColor">@color/selector_input_color</item>
-        <item name="android:textColorHint">@color/selector_input_hint_color</item>
         <item name="android:textSize">@dimen/input_text_size</item>
-        <item name="boxStrokeColor">@color/input_background</item>
-        <item name="boxBackgroundColor">@color/input_background</item>
-        <item name="endIconTint">@color/text_secondary</item>
-        <item name="helperTextTextAppearance">@style/ProtonTextView.InputFooter</item>
-        <item name="helperTextTextColor">@color/selector_input_footer_color</item>
-        <item name="hintTextColor">@color/selector_input_hint_color</item>
-        <item name="suffixTextColor">@color/text_secondary</item>
-    </style>
-
-    <style name="ProtonInput.TextInputLayout.Border.NoBackground">
-        <item name="boxBackgroundColor">@null</item>
-    </style>
-
-    <style name="ProtonInput.TextInputLayout.Border.Disabled">
-        <item name="boxStrokeColor">@color/input_background</item>
+        <item name="boxBackgroundColor">@color/background_secondary</item>
+        <item name="helperTextTextColor">?brand</item>
     </style>
 
     <style name="ProtonButton" parent="Widget.MaterialComponents.Button">
-        <!-- insets top and bottom (default 6dp) make the button appear much smaller. Thus, set to
-         0dp to keep consistent dimensions according to the design guidelines. -->
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="backgroundTint">@color/selector_default_button_background</item>
-        <item name="android:textColor">@color/text_light</item>
     </style>
 
-    <style name="ProtonButton.Box.Borderless" parent="ProtonButton">
-        <item name="boxStrokeColor">@null</item>
-        <item name="boxStrokeWidth">0dp</item>
-        <item name="boxStrokeWidthFocused">0dp</item>
-        <item name="background">?attr/selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="ProtonButton.Borderless" parent="Widget.MaterialComponents.Button.TextButton">
-        <!-- insets top and bottom (default 6dp) make the button appear much smaller. Thus, set to
-         0dp to keep consistent dimensions according to the design guidelines. -->
+    <style name="ProtonButton.Borderless.Text" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="android:textColor">@color/selector_borderless_button_foreground</item>
-        <item name="backgroundTint">@color/selector_borderless_button_background</item>
-    </style>
-
-    <style name="ProtonButton.Borderless.Text" parent="ProtonButton.Borderless">
-        <item name="android:textColor">@color/selector_borderless_button_foreground</item>
         <item name="textAllCaps">false</item>
-        <item name="drawableTint">@color/brand</item>
+        <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
     </style>
 
-    <style name="ProtonDialog.Picker" parent="Theme.AppCompat.Light">
+    <style name="ProtonButton.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
+        <item name="strokeColor">@color/btn_stroke_color_selector</item>
+    </style>
+
+    <style name="ProtonDialog.Picker" parent="ProtonTheme">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/layout_light</item>
+        <item name="android:windowBackground">@color/background_norm</item>
     </style>
 
 </resources>

@@ -194,7 +194,7 @@ class ProtonInput : LinearLayout {
     fun setInputError(error: String? = null) {
         binding.inputLayout.error = error ?: helpText ?: " "
         binding.inputLayout.errorIconDrawable = null
-        binding.label.setTextColor(ContextCompat.getColor(context, R.color.signal_error))
+        binding.label.setTextColor(ContextCompat.getColor(context, R.color.notification_error))
     }
 
     /**
@@ -202,7 +202,7 @@ class ProtonInput : LinearLayout {
      */
     fun clearInputError() {
         binding.inputLayout.error = null
-        binding.label.setTextColor(ContextCompat.getColor(context, R.color.color_title))
+        binding.label.setTextColor(ContextCompat.getColor(context, R.color.text_norm))
     }
 
     /**
