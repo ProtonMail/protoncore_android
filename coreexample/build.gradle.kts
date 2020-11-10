@@ -26,7 +26,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-android(Version(0, 2, 0))
+android(Version(0, 2, 1))
 
 dependencies {
 
