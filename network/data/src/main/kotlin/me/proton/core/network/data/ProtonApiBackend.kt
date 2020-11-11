@@ -125,7 +125,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 request.header("x-pm-uid", uid)
             }
             session.accessToken.takeIfNotBlank()?.let { accessToken ->
-                request.header("Authorization", accessToken)
+                request.header("Authorization", "Bearer $accessToken")
             }
         }
         return request
