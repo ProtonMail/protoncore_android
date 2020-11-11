@@ -75,7 +75,8 @@
                     android:layout_marginTop="@dimen/auth_content_top_margin"
                     android:hint="@string/auth_password"
                     android:inputType="textPassword"
-                    app:label="@string/auth_password_label" />
+                    app:label="@string/auth_password_label"
+                    app:actionMode="password_toggle" />
 
                 <me.proton.android.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/signInButton"
