@@ -18,7 +18,6 @@
 package me.proton.core.network.data
 
 import android.os.SystemClock
-import me.proton.core.network.data.di.Constants
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.util.kotlin.Logger
 import okhttp3.OkHttpClient
@@ -26,25 +25,33 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 internal fun OkHttpClient.Builder.initLogging(client: ApiClient, logger: Logger): OkHttpClient.Builder {
     if (client.enableDebugLogging) {
-        addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
-    }
-    addInterceptor { chain ->
-        val request = chain.request()
-        val auth = request.header("Authorization").formatToken(client)
-        logger.i(Constants.LOG_TAG, with(request) {
-            "--> $method $url (auth $auth)"
-        })
+        // HttpLoggingInterceptor generate log messages and forward them into provided Logger.
+        addInterceptor(
+            HttpLoggingInterceptor(
+                logger = object : HttpLoggingInterceptor.Logger {
+                    override fun log(message: String) = logger.d(LogTag.DEFAULT, message)
+                }
+            ).apply { level = HttpLoggingInterceptor.Level.BODY }
+        )
+    } else {
+        // Generate log messages with our custom format.
+        addInterceptor { chain ->
+            val request = chain.request()
+            val auth = request.header("Authorization").formatToken(client)
+            logger.log(
+                LogTag.API_CALL,
+                with(request) { "--> $method $url (auth $auth)" },
+            )
 
-        val startMs = SystemClock.elapsedRealtime()
-        val response = chain.proceed(request)
-        val durationMs = SystemClock.elapsedRealtime() - startMs
-        logger.i(Constants.LOG_TAG, with(response) {
-            "<-- $code $message ${request.method} ${request.url} (${durationMs}ms)"
-        })
-
-        response
+            val startMs = SystemClock.elapsedRealtime()
+            val response = chain.proceed(request)
+            val durationMs = SystemClock.elapsedRealtime() - startMs
+            logger.log(
+                LogTag.API_CALL,
+                with(response) { "<-- $code $message ${request.method} ${request.url} (${durationMs}ms)" }
+            )
+            response
+        }
     }
     return this
 }
@@ -55,4 +62,4 @@ internal fun String?.formatToken(client: ApiClient) = when {
     else -> "${take(TOKEN_PREFIX_LENGTH)}..."
 }
 
-const val TOKEN_PREFIX_LENGTH = 5
+internal const val TOKEN_PREFIX_LENGTH = 5

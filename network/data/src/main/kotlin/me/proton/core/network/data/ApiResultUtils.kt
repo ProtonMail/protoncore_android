@@ -18,7 +18,6 @@
 package me.proton.core.network.data
 
 import kotlinx.serialization.SerializationException
-import me.proton.core.network.data.di.Constants
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.util.kotlin.Logger
@@ -56,7 +55,7 @@ internal suspend fun <Api, T> safeApiCall(
         ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
     }
     if (result is ApiResult.Error)
-        result.cause?.let { logger.e(Constants.LOG_TAG, null, it) }
+        result.cause?.let { logger.e(LogTag.DEFAULT, it) }
     return result
 }
 

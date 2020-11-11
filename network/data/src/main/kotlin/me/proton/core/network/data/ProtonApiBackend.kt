@@ -18,7 +18,6 @@
 package me.proton.core.network.data
 
 import kotlinx.coroutines.runBlocking
-import me.proton.core.network.data.di.Constants
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.ProtonErrorData
 import me.proton.core.network.data.protonApi.RefreshTokenRequest
@@ -159,8 +158,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         }
         return when (result) {
             is ApiResult.Success -> {
-                logger.i(Constants.LOG_TAG, "set refresh token: ${result.value.refreshToken.formatToken(client)}")
-                logger.i(Constants.LOG_TAG, "set access token: ${result.value.accessToken.formatToken(client)}")
+                logger.log(LogTag.REFRESH_TOKEN, "new access token: ${result.value.accessToken.formatToken(client)}")
+                logger.log(LogTag.REFRESH_TOKEN, "new refresh token: ${result.value.refreshToken.formatToken(client)}")
                 ApiResult.Success(
                     session.refreshWith(
                         accessToken = result.value.accessToken,
