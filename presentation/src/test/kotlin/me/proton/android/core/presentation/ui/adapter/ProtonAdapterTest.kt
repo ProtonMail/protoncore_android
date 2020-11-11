@@ -18,6 +18,7 @@
 
 package me.proton.android.core.presentation.ui.adapter
 
+import android.os.Build
 import android.os.Looper.getMainLooper
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -26,12 +27,14 @@ import me.proton.core.test.android.executorsTest
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
  * Test suite for [ProtonAdapter]
  */
+@Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 internal class ProtonAdapterTest : ExecutorsTest by executorsTest {
     

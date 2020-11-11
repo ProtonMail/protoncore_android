@@ -25,7 +25,7 @@ import org.gradle.api.JavaVersion
 object ProtonCore {
 
     /** The Android API level as target of the App */
-    const val targetSdk = 28
+    const val targetSdk = 30
     /** The Android API level required for run the App */
     const val minSdk = 23
     /** The version of the JDK  */

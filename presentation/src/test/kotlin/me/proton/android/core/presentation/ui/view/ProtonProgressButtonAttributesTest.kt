@@ -18,6 +18,7 @@
 
 package me.proton.android.core.presentation.ui.view
 
+import android.os.Build
 import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -36,6 +38,7 @@ import kotlin.test.assertTrue
  *
  * @author Dino Kadrikj.
  */
+@Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 class ProtonProgressButtonAttributesTest {
 

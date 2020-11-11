@@ -18,6 +18,7 @@
 
 package me.proton.core.network.data
 
+import android.os.Build
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -52,6 +53,7 @@ import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
@@ -64,6 +66,7 @@ import kotlin.test.assertTrue
  *
  * @author Dino Kadrikj.
  */
+@Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 internal class HumanVerificationTests {
 

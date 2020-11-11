@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.data
 
+import android.os.Build
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -45,6 +46,7 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.HttpURLConnection
 import kotlin.test.AfterTest
@@ -56,6 +58,7 @@ import kotlin.test.assertTrue
 // Can't use runBlockingTest with MockWebServer. See:
 // https://github.com/square/retrofit/issues/3330
 // https://github.com/Kotlin/kotlinx.coroutines/issues/1204
+@Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 internal class ProtonApiBackendTests {
 
