@@ -129,6 +129,7 @@ interface AuthRepository {
      * Sets up an address key.
      */
     suspend fun setupAddressKeys(
+        sessionId: SessionId,
         primaryKey: String,
         keySalt: String,
         addressKeyList: List<AddressKey>,

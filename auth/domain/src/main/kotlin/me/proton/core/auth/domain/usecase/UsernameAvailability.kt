@@ -53,7 +53,7 @@ class UsernameAvailability @Inject constructor(private val authRepository: AuthR
 
         authRepository.isUsernameAvailable(username)
             .onFailure { message, code, _ ->
-                if (code == RESPONSE_CODE_USERNAME_UNAVAILABLE) {
+                if (code == RESPONSE_CODE_USERNAME_UN_AVAILABLE) {
                     emit(State.Error.UsernameUnavailable)
                 } else {
                     emit(State.Error.Message(message))
@@ -64,6 +64,6 @@ class UsernameAvailability @Inject constructor(private val authRepository: AuthR
     }
 
     companion object {
-        const val RESPONSE_CODE_USERNAME_UNAVAILABLE = 12106
+        const val RESPONSE_CODE_USERNAME_UN_AVAILABLE = 12106
     }
 }

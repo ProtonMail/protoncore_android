@@ -33,8 +33,10 @@ class AvailableDomains @Inject constructor(private val authRepository: AuthRepos
 
     sealed class State {
         data class Success(val availableDomains: List<String>) : State() {
-            val firstDomainOrDefault =
+            val firstDomainOrDefaultPresentation =
                 if (availableDomains.isNotEmpty()) "@${availableDomains[0]}" else "@protonmail.com"
+            val firstDomainOrDefault =
+                if (availableDomains.isNotEmpty()) availableDomains[0] else "protonmail.com"
         }
 
         sealed class Error : State() {

@@ -20,7 +20,7 @@ package me.proton.core.auth.domain.entity
 
 data class User(
     val id: String,
-    val name: String,
+    val name: String?,
     val usedSpace: Long,
     val currency: String,
     val credit: Int,
@@ -30,11 +30,11 @@ data class User(
     val private: Boolean,
     val subscribed: Boolean,
     val delinquent: Int,
-    val email: String,
-    val displayName: String,
+    val email: String?,
+    val displayName: String?,
     val keys: List<UserKey>,
     val passphrase: ByteArray? = null,
-    val addresses: Addresses? = null
+    val addresses: Addresses = Addresses(emptyList())
 ) {
     val primaryKey = keys.find { it.primary == 1 }
 }
