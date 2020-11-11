@@ -153,5 +153,9 @@ class AccountManagerImpl constructor(
         accountRepository.updateSessionState(sessionId, SessionState.HumanVerificationFailed)
     }
 
+    override suspend fun handleAccountReady(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.Ready)
+    }
+
     // endregion
 }
