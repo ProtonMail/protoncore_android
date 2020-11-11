@@ -46,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/emailHeader" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/getVerificationCodeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/emailEditText" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/proceedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -23,11 +23,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.databinding.ViewDataBinding
-import me.proton.android.core.presentation.ui.ProtonActivity
-import me.proton.android.core.presentation.utils.errorSnack
-import me.proton.android.core.presentation.utils.isNightMode
 import me.proton.core.auth.domain.usecase.PerformUserSetup
 import me.proton.core.auth.presentation.R
+import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.isNightMode
 
 abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
 

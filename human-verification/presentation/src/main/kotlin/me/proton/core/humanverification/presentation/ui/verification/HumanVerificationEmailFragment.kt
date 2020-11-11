@@ -23,18 +23,18 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.ui.ProtonFragment
-import me.proton.android.core.presentation.utils.errorSnack
-import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.onFailure
-import me.proton.android.core.presentation.utils.onSuccess
-import me.proton.android.core.presentation.utils.validateEmail
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEmailBinding
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEmailViewModel
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.onFailure
+import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.validateEmail
 
 /**
  * Fragment that handles human verification with email address.

@@ -21,8 +21,8 @@ package me.proton.core.humanverification.domain.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Test

@@ -29,8 +29,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
-import me.proton.android.core.presentation.ui.ProtonActivity
-import me.proton.android.core.presentation.utils.onClick
+import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.onClick
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager

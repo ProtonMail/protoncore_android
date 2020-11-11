@@ -38,7 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonInput
+        <me.proton.core.presentation.ui.view.ProtonInput
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/getVerificationCodeButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
@@ -59,7 +59,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/emailEditText" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/proceedButton"
             style="@style/ProtonButton.Borderless.Text"
             android:layout_width="match_parent"

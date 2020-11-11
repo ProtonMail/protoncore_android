@@ -54,7 +54,7 @@
                     android:layout_marginTop="@dimen/auth_subtitle_top_margin"
                     android:text="@string/auth_create_address_subtitle" />
 
-                <me.proton.android.core.presentation.ui.view.ProtonInput
+                <me.proton.core.presentation.ui.view.ProtonInput
                     android:id="@+id/usernameInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                     android:inputType="text"
                     app:label="@string/auth_username" />
 
-                <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/nextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

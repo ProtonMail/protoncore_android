@@ -25,10 +25,10 @@ import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
-import me.proton.core.auth.presentation.entity.TwoPassModeResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
+import me.proton.core.auth.presentation.entity.TwoPassModeResult
 import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.network.domain.session.SessionId
 

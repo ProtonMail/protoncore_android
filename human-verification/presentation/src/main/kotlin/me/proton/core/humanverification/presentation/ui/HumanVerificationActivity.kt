@@ -22,7 +22,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.ui.ProtonActivity
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.ActivityHumanVerificationBinding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
@@ -30,6 +29,7 @@ import me.proton.core.humanverification.presentation.entity.HumanVerificationRes
 import me.proton.core.humanverification.presentation.utils.defaultVerificationMethods
 import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.ui.ProtonActivity
 
 /**
  * Activity that "wraps" and handles the whole Human Verification process.

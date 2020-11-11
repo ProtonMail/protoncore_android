@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="@string/current_accounts" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonInput
+        <me.proton.core.presentation.ui.view.ProtonInput
             android:id="@+id/usernameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loadingTextOnlyButton" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonButton
+        <me.proton.core.presentation.ui.view.ProtonButton
             android:id="@+id/logoutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

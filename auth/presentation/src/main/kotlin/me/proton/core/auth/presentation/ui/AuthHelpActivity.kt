@@ -19,10 +19,10 @@
 package me.proton.core.auth.presentation.ui
 
 import android.os.Bundle
-import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.openBrowserLink
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityAuthHelpBinding
+import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.openBrowserLink
 
 /**
  * Authentication help Activity which offers common authentication problems help.

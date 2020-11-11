@@ -25,8 +25,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.ui.ProtonDialogFragment
-import me.proton.android.core.presentation.utils.onClick
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationMainBinding
@@ -38,6 +36,8 @@ import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationSMSContent
 import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.utils.onClick
 
 /**
  * Shows the dialog for the Human Verification options and option procedures.

@@ -37,7 +37,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_close" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonButton
+        <me.proton.core.presentation.ui.view.ProtonButton
             style="@style/ProtonButton.Borderless.Text"
             android:id="@+id/helpButton"
             android:layout_width="@dimen/human_verification_help_button_width"
