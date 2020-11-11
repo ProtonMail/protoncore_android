@@ -73,6 +73,11 @@ class MailboxLoginActivity : AuthActivity<ActivityMailboxLoginBinding>() {
             }
 
             unlockButton.onClick(::onUnlockClicked)
+            mailboxPasswordInput.setOnFocusChangeListener { _, _ ->
+                mailboxPasswordInput.validatePassword()
+                    .onFailure { mailboxPasswordInput.setInputError() }
+                    .onSuccess { mailboxPasswordInput.clearInputError() }
+            }
         }
 
         viewModel.mailboxLoginState.observeData {

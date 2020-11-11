@@ -85,7 +85,7 @@ data class AddressesResult(
 @Parcelize
 data class AddressResult(
     val id: String,
-    val domainId: String,
+    val domainId: String?,
     val email: String,
     val canSend: Boolean,
     val canReceive: Boolean,

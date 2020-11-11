@@ -22,7 +22,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput
@@ -72,50 +71,47 @@ class StartTwoPassMode : ActivityResultContract<TwoPassModeInput, TwoPassModeRes
     }
 }
 
-class StartCreateAddressResult : ActivityResultContract<CreateAddressInput, UserResult?>() {
+class StartUsernameChooseForAccountUpgrade : ActivityResultContract<CreateAddressInput, UserResult?>() {
 
     override fun createIntent(context: Context, input: CreateAddressInput) =
         Intent(context, CreateAddressActivity::class.java).apply {
             putExtra(CreateAddressActivity.ARG_SESSION_ID, input.sessionId.id)
             putExtra(CreateAddressActivity.ARG_USER, input.user)
             putExtra(CreateAddressActivity.ARG_EXTERNAL_EMAIL, input.externalEmail)
-            putExtra(CreateAddressActivity.ARG_EXTERNAL_EMAIL, input.externalEmail)
         }
 
     override fun parseResult(resultCode: Int, result: Intent?): UserResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(MailboxLoginActivity.ARG_MAILBOX_LOGIN_RESULT)
+        return result?.getParcelableExtra(CreateAddressActivity.ARG_USER_RESULT)
     }
 }
 
-class StartUpgradeUsernameOnlyAccount : ActivityResultContract<UpgradeUsernameOnlyAccountInput, UserResult?>() {
+class StartAccountUpgrade : ActivityResultContract<UpgradeInput, UserResult?>() {
 
-    override fun createIntent(context: Context, input: UpgradeUsernameOnlyAccountInput) =
+    override fun createIntent(context: Context, input: UpgradeInput) =
         Intent(context, CreateAddressResultActivity::class.java).apply {
             putExtra(CreateAddressResultActivity.ARG_SESSION_ID, input.sessionId.id)
             putExtra(CreateAddressResultActivity.ARG_USER, input.user)
             putExtra(CreateAddressResultActivity.ARG_USERNAME, input.username)
-            putExtra(CreateAddressResultActivity.ARG_EXTERNAL_EMAIL, input.domain)
+            putExtra(CreateAddressResultActivity.ARG_DOMAIN, input.domain)
         }
 
     override fun parseResult(resultCode: Int, result: Intent?): UserResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(MailboxLoginActivity.ARG_MAILBOX_LOGIN_RESULT)
+        return result?.getParcelableExtra(CreateAddressResultActivity.ARG_USER_RESULT)
     }
 }
 
 data class CreateAddressInput(
     val sessionId: SessionId,
     val externalEmail: String?,
-    val user: UserResult,
-    val requiredAccountType: AccountType,
-    val currentAccountType: AccountType
+    val user: UserResult
 )
 
-data class UpgradeUsernameOnlyAccountInput(
+data class UpgradeInput(
     val sessionId: SessionId,
     val user: UserResult,
     val username: String,
-    val domain: String
+    val domain: String? = null
 )
 

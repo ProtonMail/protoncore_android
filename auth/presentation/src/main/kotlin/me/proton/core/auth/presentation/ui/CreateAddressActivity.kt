@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.presentation.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -49,16 +50,20 @@ import me.proton.core.presentation.utils.validateUsername
 @AndroidEntryPoint
 class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
 
-    private val externalEmail: String by lazy {
-        intent?.extras?.get(ARG_EXTERNAL_EMAIL) as String
-    }
-
     private val sessionId: SessionId by lazy {
-        intent?.extras?.get(ARG_SESSION_ID) as SessionId
+        SessionId(requireNotNull(intent?.extras?.getString(ARG_SESSION_ID)))
     }
 
     private val user: UserResult by lazy {
         intent?.extras?.get(ARG_USER) as UserResult
+    }
+
+    private val startForResult = registerForActivityResult(StartAccountUpgrade()) { result ->
+        if (result != null) {
+            val intent = Intent().apply { putExtra(ARG_USER_RESULT, result) }
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
     }
 
     private val viewModel by viewModels<CreateAddressViewModel>()
@@ -79,7 +84,10 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
                 nextButton.isEnabled = true
                 usernameInput.apply {
                     requestFocus()
-                    suffixText = (it as AvailableDomains.State.Success).firstDomainOrDefault
+                    suffixText = (it as AvailableDomains.State.Success).firstDomainOrDefaultPresentation
+                    validate()
+                        .onFailure { setInputError() }
+                        .onSuccess { clearInputError() }
                 }
             }
         }
@@ -91,7 +99,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
                     it.domain?.let { domain ->
                         onUsernameAvailable(it.username, domain)
                     } ?: run {
-                        showError("Domain must be set!")
+                        showError(getString(R.string.auth_create_address_error_domain))
                     }
                 }
                 is UsernameAvailability.State.Error.Message ->
@@ -128,13 +136,18 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
     }
 
     private fun onUsernameAvailable(username: String, domain: String) {
-        startActivity(Intent(this, CreateAddressResultActivity::class.java).apply {
-            putExtra(CreateAddressResultActivity.ARG_SESSION_ID, sessionId.id)
-            putExtra(CreateAddressResultActivity.ARG_USERNAME, username)
-            putExtra(CreateAddressResultActivity.ARG_EXTERNAL_EMAIL, externalEmail)
-            putExtra(CreateAddressResultActivity.ARG_DOMAIN, domain)
-            putExtra(CreateAddressResultActivity.ARG_USER, user)
-        })
+        with(binding.nextButton) {
+            setIdle()
+            isEnabled = true
+        }
+        startForResult.launch(
+            UpgradeInput(
+                sessionId = sessionId,
+                user = user,
+                username = username,
+                domain = domain
+            )
+        )
     }
 
     private fun onUsernameUnavailable(message: String? = null, invalidInput: Boolean) {
@@ -150,5 +163,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
         const val ARG_SESSION_ID = "arg.sessionId"
         const val ARG_EXTERNAL_EMAIL = "arg.externalEmail"
         const val ARG_USER = "arg.user"
+
+        const val ARG_USER_RESULT = "arg.userResult"
     }
 }

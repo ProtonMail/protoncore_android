@@ -26,12 +26,16 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.entity.User
+import me.proton.core.auth.domain.usecase.GetUser
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.PerformUserSetup
 import me.proton.core.auth.domain.usecase.onError
 import me.proton.core.auth.domain.usecase.onLoginSuccess
 import me.proton.core.auth.domain.usecase.onProcessing
 import me.proton.core.auth.domain.usecase.onSuccess
+import me.proton.core.auth.domain.usecase.onUserError
+import me.proton.core.auth.domain.usecase.onUserSuccess
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
@@ -45,7 +49,8 @@ import studio.forface.viewstatestore.ViewStateStoreScope
 class LoginViewModel @ViewModelInject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val performLogin: PerformLogin,
-    private val performUserSetup: PerformUserSetup
+    private val performUserSetup: PerformUserSetup,
+    private val getUser: GetUser
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     val loginState = ViewStateStore<PerformLogin.State>().lock
@@ -63,22 +68,54 @@ class LoginViewModel @ViewModelInject constructor(
         performLogin(username, password)
             .onProcessing { loginState.post(it) }
             .onLoginSuccess {
+                // first storing the session is mandatory for executing subsequent requests
                 handleSessionInfo(it.sessionInfo)
-                // No more steps -> directly setup user.
-                if (!it.sessionInfo.isTwoPassModeNeeded && !it.sessionInfo.isSecondFactorNeeded) {
-                    // Raise Success.UserSetup.
-                    setupUser(password, it.sessionInfo)
+                // because of API bug, we need to verify if the PasswordMode 2 is really needed (user keys not empty)
+                if (!it.sessionInfo.isSecondFactorNeeded) {
+                    // BUT, we can not execute user request if second factor is needed (no sufficient scope)
+                    getUser(SessionId(it.sessionInfo.sessionId))
+                        .onUserSuccess { userResult ->
+                            onUserDetails(password, it.sessionInfo, userResult.user)
+                        }
+                        .onUserError { setupError ->
+                            loginState.post(PerformLogin.State.Error.FetchUser(setupError))
+                        }
+                        .launchIn(viewModelScope)
                 } else {
                     // Raise Success.Login.
-                    loginState.post(PerformLogin.State.Success.Login(it.sessionInfo))
+                    loginState.post(
+                        PerformLogin.State.Success.Login(it.sessionInfo)
+                    )
                 }
             }
             .onError { loginState.post(it) }
             .launchIn(viewModelScope)
     }
 
-    private fun setupUser(password: ByteArray, sessionInfo: SessionInfo) {
-        performUserSetup(SessionId(sessionInfo.sessionId), password)
+    private suspend fun onUserDetails(password: ByteArray, sessionInfo: SessionInfo, user: User) {
+        if (sessionInfo.isTwoPassModeNeeded && user.keys.isEmpty()) {
+            // this is because of a bug on the API, where accounts with no keys return PasswordMode = 2
+            accountWorkflow.handleTwoPassModeSuccess(SessionId(sessionInfo.sessionId))
+        }
+        // No more steps -> directly setup user.
+        if (!sessionInfo.isTwoPassModeNeeded && user.keys.isNotEmpty() && !sessionInfo.isSecondFactorNeeded) {
+            // Raise Success.UserSetup.
+            setupUser(password, sessionInfo, user)
+        } else {
+            // Raise Success.Login.
+            loginState.post(
+                PerformLogin.State.Success.UserSetup(
+                    if (user.keys.isEmpty())
+                        sessionInfo.copy(passwordMode = 1)
+                    else sessionInfo,
+                    user.copy(passphrase = password)
+                )
+            )
+        }
+    }
+
+    private fun setupUser(password: ByteArray, sessionInfo: SessionInfo, user: User? = null) {
+        performUserSetup(SessionId(sessionInfo.sessionId), password, user)
             .onSuccess { loginState.post(PerformLogin.State.Success.UserSetup(sessionInfo, it.user)) }
             .onError { loginState.post(PerformLogin.State.Error.UserSetup(it)) }
             .launchIn(viewModelScope)
@@ -87,9 +124,8 @@ class LoginViewModel @ViewModelInject constructor(
     private suspend fun handleSessionInfo(sessionInfo: SessionInfo) {
         val sessionState =
             if (sessionInfo.isSecondFactorNeeded) SessionState.SecondFactorNeeded else SessionState.Authenticated
-
         val accountState =
-            if (sessionInfo.isTwoPassModeNeeded) AccountState.TwoPassModeNeeded else AccountState.Ready
+            if (sessionInfo.isTwoPassModeNeeded) AccountState.TwoPassModeNeeded else AccountState.NotReady
 
         val account = Account(
             username = sessionInfo.username,

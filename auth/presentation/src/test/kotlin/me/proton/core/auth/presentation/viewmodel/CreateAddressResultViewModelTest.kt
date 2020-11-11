@@ -26,6 +26,7 @@ import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.auth.domain.entity.Addresses
+import me.proton.core.auth.domain.usecase.AvailableDomains
 import me.proton.core.auth.domain.usecase.UpdateExternalAccount
 import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.entity.AddressesResult
@@ -46,6 +47,7 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
     private val updateExternalAccountUseCase = mockk<UpdateExternalAccount>(relaxed = true)
     private val updateUsernameOnlyUseCase = mockk<UpdateUsernameOnlyAccount>(relaxed = true)
+    private val availableDomainsUseCase = mockk<AvailableDomains>(relaxed = true)
     // endregion
 
     // region test data
@@ -59,7 +61,10 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
-        viewModel = CreateAddressResultViewModel(updateExternalAccountUseCase, updateUsernameOnlyUseCase)
+        coEvery { availableDomainsUseCase.invoke() } returns flowOf(
+            AvailableDomains.State.Success(listOf("protonmail.com", "protonmail.ch"))
+        )
+        viewModel = CreateAddressResultViewModel(updateExternalAccountUseCase, updateUsernameOnlyUseCase, availableDomainsUseCase)
     }
 
     @Test
@@ -73,7 +78,7 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
             updateExternalAccountUseCase.invoke(
                 testSessionId,
                 testUsername,
-                testDomain,
+                any(),
                 testPassphrase.toByteArray()
             )
         } returns
@@ -105,7 +110,7 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
         every { addresses.allExternal } returns true
         every { addresses.usernameOnly } returns false
 
-        viewModel = CreateAddressResultViewModel(UpdateExternalAccount(mockk(), mockk()), updateUsernameOnlyUseCase)
+        viewModel = CreateAddressResultViewModel(UpdateExternalAccount(mockk(), mockk()), updateUsernameOnlyUseCase, availableDomainsUseCase)
 
         val observer = mockk<(UpdateExternalAccount.State) -> Unit>(relaxed = true)
         viewModel.externalAccountUpgradeState.observeDataForever(observer)
@@ -125,7 +130,7 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
         every { addresses.allExternal } returns true
         every { addresses.usernameOnly } returns false
 
-        viewModel = CreateAddressResultViewModel(UpdateExternalAccount(mockk(), mockk()), updateUsernameOnlyUseCase)
+        viewModel = CreateAddressResultViewModel(UpdateExternalAccount(mockk(), mockk()), updateUsernameOnlyUseCase, availableDomainsUseCase)
 
         val observer = mockk<(UpdateExternalAccount.State) -> Unit>(relaxed = true)
         viewModel.externalAccountUpgradeState.observeDataForever(observer)
@@ -139,26 +144,6 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `upgrade external empty domain`() = coroutinesTest {
-        // GIVEN
-        val addresses = mockk<AddressesResult>(relaxed = true)
-        every { addresses.allExternal } returns true
-        every { addresses.usernameOnly } returns false
-
-        viewModel = CreateAddressResultViewModel(UpdateExternalAccount(mockk(), mockk()), updateUsernameOnlyUseCase)
-
-        val observer = mockk<(UpdateExternalAccount.State) -> Unit>(relaxed = true)
-        viewModel.externalAccountUpgradeState.observeDataForever(observer)
-        // WHEN
-        viewModel.upgradeAccount(addresses, testSessionId, testUsername, "", testPassphrase.toByteArray())
-        // THEN
-        val arguments = mutableListOf<UpdateExternalAccount.State>()
-        verify(exactly = 1) { observer(capture(arguments)) }
-        val state = arguments[0]
-        assertIs<UpdateExternalAccount.State.Error.EmptyDomain>(state)
-    }
-
-    @Test
     fun `upgrade external empty addresses`() = coroutinesTest {
         // GIVEN
         val addresses = mockk<AddressesResult>(relaxed = true)
@@ -169,7 +154,7 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
             updateExternalAccountUseCase.invoke(
                 testSessionId,
                 testUsername,
-                testDomain,
+                any(),
                 testPassphrase.toByteArray()
             )
         } returns
@@ -203,7 +188,7 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
             updateExternalAccountUseCase.invoke(
                 testSessionId,
                 testUsername,
-                testDomain,
+                any(),
                 testPassphrase.toByteArray()
             )
         } returns
@@ -233,7 +218,7 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
         coEvery {
             updateUsernameOnlyUseCase.invoke(
                 testSessionId,
-                testDomain,
+                any(),
                 testUsername,
                 testPassphrase.toByteArray()
             )
@@ -269,7 +254,7 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
         every { addresses.usernameOnly } returns true
 
         viewModel =
-            CreateAddressResultViewModel(updateExternalAccountUseCase, UpdateUsernameOnlyAccount(mockk(), mockk()))
+            CreateAddressResultViewModel(updateExternalAccountUseCase, UpdateUsernameOnlyAccount(mockk(), mockk()), availableDomainsUseCase)
 
         val observer = mockk<(UpdateUsernameOnlyAccount.State) -> Unit>(relaxed = true)
         viewModel.usernameOnlyAccountUpgradeState.observeDataForever(observer)
@@ -290,7 +275,7 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
         every { addresses.usernameOnly } returns true
 
         viewModel =
-            CreateAddressResultViewModel(updateExternalAccountUseCase, UpdateUsernameOnlyAccount(mockk(), mockk()))
+            CreateAddressResultViewModel(updateExternalAccountUseCase, UpdateUsernameOnlyAccount(mockk(), mockk()), availableDomainsUseCase)
 
         val observer = mockk<(UpdateUsernameOnlyAccount.State) -> Unit>(relaxed = true)
         viewModel.usernameOnlyAccountUpgradeState.observeDataForever(observer)
@@ -301,26 +286,5 @@ class CreateAddressResultViewModelTest : ArchTest, CoroutinesTest {
         verify(exactly = 1) { observer(capture(arguments)) }
         val state = arguments[0]
         assertIs<UpdateUsernameOnlyAccount.State.Error.EmptyCredentials>(state)
-    }
-
-    @Test
-    fun `upgrade username-only empty domain`() = coroutinesTest {
-        // GIVEN
-        val addresses = mockk<AddressesResult>(relaxed = true)
-        every { addresses.allExternal } returns false
-        every { addresses.usernameOnly } returns true
-
-        viewModel =
-            CreateAddressResultViewModel(updateExternalAccountUseCase, UpdateUsernameOnlyAccount(mockk(), mockk()))
-
-        val observer = mockk<(UpdateUsernameOnlyAccount.State) -> Unit>(relaxed = true)
-        viewModel.usernameOnlyAccountUpgradeState.observeDataForever(observer)
-        // WHEN
-        viewModel.upgradeAccount(addresses, testSessionId, testUsername, "", testPassphrase.toByteArray())
-        // THEN
-        val arguments = mutableListOf<UpdateUsernameOnlyAccount.State>()
-        verify(exactly = 1) { observer(capture(arguments)) }
-        val state = arguments[0]
-        assertIs<UpdateUsernameOnlyAccount.State.Error.EmptyDomain>(state)
     }
 }

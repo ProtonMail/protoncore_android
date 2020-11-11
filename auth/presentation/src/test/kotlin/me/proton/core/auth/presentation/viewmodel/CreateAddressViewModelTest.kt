@@ -66,7 +66,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         val successState = arguments[0]
         assertTrue(successState is AvailableDomains.State.Success)
         assertEquals(listOf("protonmail.com", "protonmail.ch"), successState.availableDomains)
-        assertEquals("@protonmail.com", successState.firstDomainOrDefault)
+        assertEquals("@protonmail.com", successState.firstDomainOrDefaultPresentation)
     }
 
     @Test

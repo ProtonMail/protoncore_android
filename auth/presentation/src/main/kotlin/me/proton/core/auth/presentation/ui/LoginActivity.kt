@@ -25,6 +25,7 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.entity.User
+import me.proton.core.auth.domain.usecase.GetUser
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
@@ -68,6 +69,16 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
             }
 
             signInButton.onClick(::onSignInClicked)
+            usernameInput.setOnFocusChangeListener { _, _ ->
+                usernameInput.validateUsername()
+                    .onFailure { usernameInput.setInputError() }
+                    .onSuccess { usernameInput.clearInputError() }
+            }
+            passwordInput.setOnFocusChangeListener { _, _ ->
+                passwordInput.validatePassword()
+                    .onFailure { passwordInput.setInputError() }
+                    .onSuccess { passwordInput.clearInputError() }
+            }
         }
 
         viewModel.loginState.observeData {
@@ -81,6 +92,10 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                     true,
                     getString(R.string.auth_login_empty_credentials)
                 )
+                is PerformLogin.State.Error.FetchUser -> onError(
+                    false,
+                    (it.state as GetUser.UserState.Error.Message).message
+                )
             }.exhaustive
         }
     }
@@ -89,7 +104,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
         val intent = Intent().putExtra(
             ARG_LOGIN_RESULT,
             LoginResult(
-                password = binding.passwordInput.toString().toByteArray(),
+                password = binding.passwordInput.text.toString().toByteArray(),
                 session = SessionResult.from(sessionInfo),
                 user = user?.let { UserResult.from(it) },
                 requiredAccountType = input.requiredAccountType

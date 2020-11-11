@@ -77,6 +77,11 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
             }
 
             authenticateButton.onClick(::onAuthenticateClicked)
+            secondFactorInput.setOnFocusChangeListener { _, _ ->
+                secondFactorInput.validate()
+                    .onFailure { secondFactorInput.setInputError() }
+                    .onSuccess { secondFactorInput.clearInputError() }
+            }
         }
 
         viewModel.secondFactorState.observeData {

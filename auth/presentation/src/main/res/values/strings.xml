@@ -60,6 +60,7 @@
     <string name="auth_username_next_action">Next</string>
 
     <string name="auth_create_address_result_title">%s is available</string>
+    <string name="auth_create_address_result_title_username">%1$s%2$s will be your new ProtonMail email address.</string>
     <string name="auth_create_address_result_subtitle">You will use this address to log in to all Proton services.</string>
     <string name="auth_create_address_result_recovery_title">Your recovery email address is:</string>
     <string name="auth_create_address_create">Create address</string>
