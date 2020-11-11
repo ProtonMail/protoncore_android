@@ -28,6 +28,7 @@ import me.proton.core.auth.data.entity.SecondFactorResponse
 import me.proton.core.auth.data.entity.UserResponse
 import me.proton.core.auth.data.entity.request.AddressKeySetupRequest
 import me.proton.core.auth.data.entity.request.AddressSetupRequest
+import me.proton.core.auth.data.entity.request.SetUsernameRequest
 import me.proton.core.auth.data.entity.request.SetupKeysRequest
 import me.proton.core.auth.data.entity.response.AddressKeySetupResponse
 import me.proton.core.auth.data.entity.response.AddressSetupResponse
@@ -75,7 +76,7 @@ interface AuthenticationApi : BaseRetrofitApi {
     suspend fun getAddresses(): AddressesResponse
 
     @PUT("settings/username")
-    suspend fun setUsername(@Query("Username") username: String): GenericResponse
+    suspend fun setUsername(@Body request: SetUsernameRequest): GenericResponse
 
     @POST("addresses/setup")
     suspend fun createAddress(@Body request: AddressSetupRequest): AddressSetupResponse
@@ -86,7 +87,7 @@ interface AuthenticationApi : BaseRetrofitApi {
     @POST("keys")
     suspend fun createAddressKeyOld(@Body request: AddressKeySetupRequest): AddressKeySetupResponse
 
-    @POST("auth/modulus")
+    @GET("auth/modulus")
     suspend fun randomModulus(): ModulusResponse
 
     @POST("keys/setup")
