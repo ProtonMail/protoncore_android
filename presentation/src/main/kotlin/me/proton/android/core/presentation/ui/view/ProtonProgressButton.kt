@@ -82,6 +82,7 @@ open class ProtonProgressButton @JvmOverloads constructor(
         when (state) {
             IDLE -> {
                 isActivated = false
+                isClickable = true
                 setCompoundDrawables(null, null, null, null)
                 setPadding(paddingRight, paddingTop, paddingRight, paddingBottom)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) progressDrawable.reset()
@@ -92,6 +93,7 @@ open class ProtonProgressButton @JvmOverloads constructor(
                 setPadding(totalPaddingRight, paddingTop, paddingRight, paddingBottom)
                 progressDrawable.start()
                 isActivated = true
+                isClickable = false
             }
         }
     }
