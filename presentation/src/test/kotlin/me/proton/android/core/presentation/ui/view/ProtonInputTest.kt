@@ -18,6 +18,7 @@
 
 package me.proton.android.core.presentation.ui.view
 
+import android.os.Build
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -36,12 +37,14 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
  * Custom input view tests.
  */
+@Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 class ProtonInputTest {
 

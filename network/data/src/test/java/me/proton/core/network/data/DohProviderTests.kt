@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.data
 
+import android.os.Build
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -34,6 +35,7 @@ import org.minidns.dnsmessage.DnsMessage
 import org.minidns.record.Record
 import org.minidns.record.TXT
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -42,6 +44,7 @@ import kotlin.test.assertEquals
 // Can't use runBlockingTest with MockWebServer. See:
 // https://github.com/square/retrofit/issues/3330
 // https://github.com/Kotlin/kotlinx.coroutines/issues/1204
+@Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 internal class DohProviderTests {
 

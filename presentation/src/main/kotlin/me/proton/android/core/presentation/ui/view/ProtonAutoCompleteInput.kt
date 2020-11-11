@@ -176,7 +176,7 @@ open class ProtonAutoCompleteInput : LinearLayout {
         binding.input.setAdapter(adapter)
     }
 
-    override fun setOnClickListener(listener: OnClickListener) {
+    override fun setOnClickListener(listener: OnClickListener?) {
         binding.inputLayout.setOnClickListener(listener)
         binding.inputLayout.setEndIconOnClickListener(listener)
         binding.input.setOnClickListener(listener)
