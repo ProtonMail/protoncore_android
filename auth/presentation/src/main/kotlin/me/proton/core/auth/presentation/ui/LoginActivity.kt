@@ -94,7 +94,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                 )
                 is PerformLogin.State.Error.FetchUser -> onError(
                     false,
-                    (it.state as GetUser.UserState.Error.Message).message
+                    (it.state as GetUser.State.Error.Message).message
                 )
             }.exhaustive
         }

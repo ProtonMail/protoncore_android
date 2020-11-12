@@ -67,7 +67,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_separator_top_margin"
-                    android:text="@string/auth_username_next_action" />
+                    android:text="@string/auth_username_next_action"
+                    android:enabled="false"/>
             </LinearLayout>
         </ScrollView>
 

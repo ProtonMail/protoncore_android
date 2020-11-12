@@ -74,8 +74,8 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         coEvery { useCaseGetUser.invoke(any()) } returns flowOf(
-            GetUser.UserState.Processing,
-            GetUser.UserState.Success(userMock)
+            GetUser.State.Processing,
+            GetUser.State.Success(userMock)
         )
         every { userMock.keys } returns listOf(mockk())
         viewModel = LoginViewModel(accountHandler, useCasePerformLogin, useCaseMailboxLogin, useCaseGetUser)
@@ -124,8 +124,8 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { sessionInfo.isSecondFactorNeeded } returns false
         every { sessionInfo.isTwoPassModeNeeded } returns false
         coEvery { useCaseGetUser.invoke(any()) } returns flowOf(
-            GetUser.UserState.Processing,
-            GetUser.UserState.Error.Message("test-error")
+            GetUser.State.Processing,
+            GetUser.State.Error.Message("test-error")
         )
         coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
             PerformLogin.State.Processing,
@@ -142,7 +142,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         assertIs<PerformLogin.State.Processing>(arguments[0])
         val state = arguments[1]
         assertTrue(state is PerformLogin.State.Error.FetchUser)
-        assertEquals("test-error", (state.state as GetUser.UserState.Error.Message).message)
+        assertEquals("test-error", (state.state as GetUser.State.Error.Message).message)
         val accountArgument = slot<Account>()
         val sessionArgument = slot<Session>()
         coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }

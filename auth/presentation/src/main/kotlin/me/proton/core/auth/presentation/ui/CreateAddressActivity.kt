@@ -34,7 +34,9 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.validate
 import me.proton.core.presentation.utils.validateUsername
+import me.proton.core.util.kotlin.exhaustive
 
 /**
  * Creates a ProtonMail address when needed.
@@ -55,7 +57,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
     }
 
     private val user: UserResult by lazy {
-        intent?.extras?.get(ARG_USER) as UserResult
+        requireNotNull(intent?.extras?.getParcelable(ARG_USER))
     }
 
     private val startForResult = registerForActivityResult(StartAccountUpgrade()) { result ->
@@ -72,47 +74,34 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding.apply {
-            closeButton.onClick {
-                finish()
-            }
-            nextButton.apply {
-                onClick(::onNextClicked)
-                isEnabled = false // this will protect from premature next button clicks
-            }
-            viewModel.domainsState.observeData {
-                nextButton.isEnabled = true
-                usernameInput.apply {
-                    requestFocus()
-                    suffixText = (it as AvailableDomains.State.Success).firstDomainOrDefaultPresentation
-                    validate()
-                        .onFailure { setInputError() }
-                        .onSuccess { clearInputError() }
-                }
-            }
+            closeButton.onClick { finish() }
+            nextButton.onClick(::onNextClicked)
         }
 
-        viewModel.state.observeData {
+        viewModel.domainsState.observeData {
+            when (it) {
+                is AvailableDomains.State.Success -> onDomainAvailable(it)
+                is AvailableDomains.State.Error.Message -> showError(it.message)
+                is AvailableDomains.State.Error.NoAvailableDomains -> {
+                    showError(getString(R.string.auth_create_address_error_no_available_domain))
+                }
+            }.exhaustive
+        }
+
+        viewModel.usernameState.observeData {
             when (it) {
                 is UsernameAvailability.State.Processing -> showLoading(true)
-                is UsernameAvailability.State.Success -> {
-                    it.domain?.let { domain ->
-                        onUsernameAvailable(it.username, domain)
-                    } ?: run {
-                        showError(getString(R.string.auth_create_address_error_domain))
-                    }
+                is UsernameAvailability.State.Success -> onUsernameAvailable(it.username, viewModel.domain)
+                is UsernameAvailability.State.Error.Message -> onUsernameUnavailable(it.message, false)
+                is UsernameAvailability.State.Error.EmptyUsername -> onUsernameUnavailable(invalidInput = true)
+                is UsernameAvailability.State.Error.UsernameUnavailable -> {
+                    onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable), true)
                 }
-                is UsernameAvailability.State.Error.Message ->
-                    onUsernameUnavailable(it.message, false)
-                is UsernameAvailability.State.Error.EmptyUsername -> onUsernameUnavailable(
-                    invalidInput = true
-                )
-                is UsernameAvailability.State.Error.UsernameUnavailable -> onUsernameUnavailable(
-                    getString(R.string.auth_create_address_error_username_unavailable),
-                    true
-                )
-            }
+            }.exhaustive
         }
+
         viewModel.getAvailableDomains()
     }
 
@@ -129,10 +118,18 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
             hideKeyboard()
             validateUsername()
                 .onFailure { setInputError() }
-                .onSuccess {
-                    viewModel.checkUsernameAvailability(it)
-                }
+                .onSuccess { viewModel.checkUsernameAvailability(it) }
         }
+    }
+
+    private fun onDomainAvailable(it: AvailableDomains.State.Success) {
+        with(binding.usernameInput) {
+            suffixText = "@${it.firstOrDefault}"
+            validate()
+                .onFailure { setInputError() }
+                .onSuccess { clearInputError() }
+        }
+        binding.nextButton.isEnabled = true
     }
 
     private fun onUsernameAvailable(username: String, domain: String) {
@@ -151,11 +148,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
     }
 
     private fun onUsernameUnavailable(message: String? = null, invalidInput: Boolean) {
-        if (invalidInput) {
-            binding.apply {
-                usernameInput.setInputError()
-            }
-        }
+        if (invalidInput) binding.usernameInput.setInputError()
         showError(message)
     }
 

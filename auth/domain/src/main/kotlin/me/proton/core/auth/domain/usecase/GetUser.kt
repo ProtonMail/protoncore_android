@@ -41,10 +41,10 @@ class GetUser @Inject constructor(
     /**
      * State sealed class with various (success, error) outcome state subclasses.
      */
-    sealed class UserState {
-        object Processing : UserState()
-        data class Success(val user: User) : UserState()
-        sealed class Error : UserState() {
+    sealed class State {
+        object Processing : State()
+        data class Success(val user: User) : State()
+        sealed class Error : State() {
             data class Message(val message: String?) : Error()
         }
     }
@@ -54,23 +54,19 @@ class GetUser @Inject constructor(
      * the Mailbox Password for Two Password Accounts.
      *
      */
-    operator fun invoke(sessionId: SessionId): Flow<UserState> = flow {
-        emit(UserState.Processing)
+    operator fun invoke(sessionId: SessionId): Flow<State> = flow {
+        emit(State.Processing)
 
         authRepository.getUser(sessionId)
-            .onFailure { errorMessage, _, _ ->
-                emit(UserState.Error.Message(errorMessage))
-            }
-            .onSuccess {
-                emit(UserState.Success(it))
-            }
+            .onFailure { errorMessage, _, _ -> emit(State.Error.Message(errorMessage)) }
+            .onSuccess { emit(State.Success(it)) }
     }
 }
 
-fun Flow<GetUser.UserState>.onUserSuccess(
-    action: suspend (GetUser.UserState.Success) -> Unit
-) = onEachInstance(action) as Flow<GetUser.UserState>
+fun Flow<GetUser.State>.onSuccess(
+    action: suspend (GetUser.State.Success) -> Unit
+) = onEachInstance(action) as Flow<GetUser.State>
 
-fun Flow<GetUser.UserState>.onUserError(
-    action: suspend (GetUser.UserState.Error) -> Unit
-) = onEachInstance(action) as Flow<GetUser.UserState>
+fun Flow<GetUser.State>.onError(
+    action: suspend (GetUser.State.Error) -> Unit
+) = onEachInstance(action) as Flow<GetUser.State>

@@ -69,9 +69,9 @@ class GetUserTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is GetUser.UserState.Processing)
+        assertTrue(listOfEvents[0] is GetUser.State.Processing)
         val successEvent = listOfEvents[1]
-        assertTrue(successEvent is GetUser.UserState.Success)
+        assertTrue(successEvent is GetUser.State.Success)
         val user = successEvent.user
         assertNotNull(user)
         assertEquals("test-id", user.id)
@@ -93,9 +93,9 @@ class GetUserTest {
         val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
         // THEN
         assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is GetUser.UserState.Processing)
+        assertTrue(listOfEvents[0] is GetUser.State.Processing)
         val errorEvent = listOfEvents[1]
-        assertTrue(errorEvent is GetUser.UserState.Error.Message)
+        assertTrue(errorEvent is GetUser.State.Error.Message)
         assertEquals("user-error", errorEvent.message)
     }
 }

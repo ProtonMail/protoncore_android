@@ -34,8 +34,7 @@ class UsernameAvailability @Inject constructor(private val authRepository: AuthR
 
     sealed class State {
         object Processing : State()
-        data class Success(val available: Boolean, val username: String, val domain: String? = null) :
-            State()
+        data class Success(val available: Boolean, val username: String) : State()
 
         sealed class Error : State() {
             data class Message(val message: String?) : Error()

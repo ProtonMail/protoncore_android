@@ -112,7 +112,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             UsernameAvailability.State.Success(true, "test-username", "test-domain")
         )
         val observer = mockk<(UsernameAvailability.State) -> Unit>(relaxed = true)
-        viewModel.state.observeDataForever(observer)
+        viewModel.usernameState.observeDataForever(observer)
         // WHEN
         viewModel.checkUsernameAvailability("test-username")
         // THEN
@@ -133,7 +133,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             UsernameAvailability.State.Error.Message("username is unavailable")
         )
         val observer = mockk<(UsernameAvailability.State) -> Unit>(relaxed = true)
-        viewModel.state.observeDataForever(observer)
+        viewModel.usernameState.observeDataForever(observer)
         // WHEN
         viewModel.checkUsernameAvailability("test-username")
         // THEN
@@ -152,7 +152,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         viewModel = CreateAddressViewModel(UsernameAvailability(mockk()), availableDomainsUseCase)
         val observer = mockk<(UsernameAvailability.State) -> Unit>(relaxed = true)
-        viewModel.state.observeDataForever(observer)
+        viewModel.usernameState.observeDataForever(observer)
         // WHEN
         viewModel.checkUsernameAvailability("")
         // THEN

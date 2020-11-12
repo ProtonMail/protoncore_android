@@ -68,7 +68,7 @@
     <string name="auth_create_address_terms">By clicking Create address, you agree with Proton\'s <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a></string>
 
     <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
-    <string name="auth_create_address_error_domain">Domain should not be empty.</string>
+    <string name="auth_create_address_error_no_available_domain">No available domain.</string>
     <string name="auth_create_address_error_private_key">Generating private key failed.</string>
     <string name="auth_create_address_error_signed_key_list">Generating key list failed.</string>
     <string name="auth_create_address_error_setusername">Associating username has failed.</string>
