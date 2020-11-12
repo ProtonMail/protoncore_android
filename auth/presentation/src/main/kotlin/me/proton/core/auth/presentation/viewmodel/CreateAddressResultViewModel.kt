@@ -22,11 +22,11 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.auth.domain.usecase.UpdateExternalAccount
 import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.entity.AddressesResult
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.viewmodel.ProtonViewModel
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 

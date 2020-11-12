@@ -59,7 +59,7 @@
                     android:layout_marginTop="@dimen/auth_subtitle_top_margin"
                     android:text="@string/auth_account_details" />
 
-                <me.proton.android.core.presentation.ui.view.ProtonInput
+                <me.proton.core.presentation.ui.view.ProtonInput
                     android:id="@+id/usernameInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,23 +68,24 @@
                     app:help="@string/auth_login_assistive_text"
                     app:label="@string/auth_email_username" />
 
-                <me.proton.android.core.presentation.ui.view.ProtonInput
+                <me.proton.core.presentation.ui.view.ProtonInput
                     android:id="@+id/passwordInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
                     android:hint="@string/auth_password"
                     android:inputType="textPassword"
-                    app:label="@string/auth_password_label" />
+                    app:label="@string/auth_password_label"
+                    app:actionMode="password_toggle" />
 
-                <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/signInButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_separator_top_margin"
                     android:text="@string/auth_sign_in_action" />
 
-                <me.proton.android.core.presentation.ui.view.ProtonButton
+                <me.proton.core.presentation.ui.view.ProtonButton
                     android:id="@+id/helpButton"
                     style="@style/ProtonButton.Borderless.Text"
                     android:layout_width="match_parent"
@@ -104,6 +105,7 @@
             android:layout_marginTop="@dimen/auth_close_button_margin_top"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:elevation="4dp"
-            app:srcCompat="@drawable/ic_close_no_toolbar" />
+            app:srcCompat="@drawable/ic_close_no_toolbar"
+            android:fitsSystemWindows="true"/>
     </FrameLayout>
 </layout>

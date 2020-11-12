@@ -26,9 +26,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.ui.ProtonDialogFragment
-import me.proton.android.core.presentation.ui.adapter.ProtonAdapter
-import me.proton.android.core.presentation.utils.onClick
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentCountryPickerBinding
 import me.proton.core.humanverification.presentation.databinding.ItemCountryBinding
@@ -37,6 +34,9 @@ import me.proton.core.humanverification.presentation.ui.verification.HumanVerifi
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment.Companion.KEY_COUNTRY_SELECTED
 import me.proton.core.humanverification.presentation.utils.removeCountryPicker
 import me.proton.core.humanverification.presentation.viewmodel.verification.CountryPickerViewModel
+import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.ui.adapter.ProtonAdapter
+import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.containsNoCase
 import java.util.Locale
 

@@ -22,8 +22,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:windowBackground"
-        android:fitsSystemWindows="true">
+        android:background="?android:windowBackground">
 
         <!-- the scroll view is needed for landscape orientation -->
         <ScrollView
@@ -91,7 +90,8 @@
             android:layout_marginTop="@dimen/auth_close_button_margin_top"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:elevation="4dp"
-            app:srcCompat="@drawable/ic_close_no_toolbar" />
+            app:srcCompat="@drawable/ic_close_no_toolbar"
+            android:fitsSystemWindows="true"/>
 
     </FrameLayout>
 </layout>

@@ -23,7 +23,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import me.proton.android.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.usecase.VerifyCode
@@ -32,6 +31,7 @@ import me.proton.core.humanverification.presentation.exception.TokenCodeVerifica
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.viewmodel.ProtonViewModel
 import studio.forface.viewstatestore.LockedViewStateStore
 import studio.forface.viewstatestore.ViewState
 import studio.forface.viewstatestore.ViewStateStore

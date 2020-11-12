@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/auth_mailbox_title" />
 
-                <me.proton.android.core.presentation.ui.view.ProtonInput
+                <me.proton.core.presentation.ui.view.ProtonInput
                     android:id="@+id/mailboxPasswordInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -55,14 +55,14 @@
                     android:hint="@string/auth_mailbox_password"
                     app:label="@string/auth_mailbox_password_label" />
 
-                <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/unlockButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_separator_top_margin"
                     android:text="@string/auth_mailbox_unlock_action" />
 
-                <me.proton.android.core.presentation.ui.view.ProtonButton
+                <me.proton.core.presentation.ui.view.ProtonButton
                     android:id="@+id/forgotPasswordButton"
                     style="@style/ProtonButton.Borderless.Text"
                     android:layout_width="match_parent"
@@ -82,6 +82,7 @@
             android:layout_marginTop="@dimen/auth_close_button_margin_top"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:elevation="4dp"
-            app:srcCompat="@drawable/ic_back_no_toolbar" />
+            app:srcCompat="@drawable/ic_back_no_toolbar"
+            android:fitsSystemWindows="true"/>
     </FrameLayout>
 </layout>

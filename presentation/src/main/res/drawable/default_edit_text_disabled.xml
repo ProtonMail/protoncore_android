@@ -20,7 +20,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid
-        android:color="@color/input_background" />
+        android:color="@color/background_secondary" />
     <padding
         android:bottom="@dimen/input_padding"
         android:left="@dimen/input_padding"
@@ -30,5 +30,5 @@
         android:radius="2dp" />
     <stroke
         android:width="1dp"
-        android:color="@color/input_background" />
+        android:color="@color/background_secondary" />
 </shape>

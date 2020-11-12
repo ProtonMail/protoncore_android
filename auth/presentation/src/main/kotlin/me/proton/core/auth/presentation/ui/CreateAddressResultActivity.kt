@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.utils.onClick
 import me.proton.core.auth.domain.usecase.UpdateExternalAccount
 import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.R
@@ -33,6 +32,7 @@ import me.proton.core.auth.presentation.entity.AddressesResult
 import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.viewmodel.CreateAddressResultViewModel
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.utils.onClick
 
 /**
  * Second step in the address creation flow. Displays the results from the username availability and triggers the

@@ -23,13 +23,6 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.ui.ProtonDialogFragment
-import me.proton.android.core.presentation.utils.errorSnack
-import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.onFailure
-import me.proton.android.core.presentation.utils.onSuccess
-import me.proton.android.core.presentation.utils.successSnack
-import me.proton.android.core.presentation.utils.validate
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEnterCodeBinding
@@ -39,6 +32,13 @@ import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogF
 import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.onFailure
+import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.successSnack
+import me.proton.core.presentation.utils.validate
 
 /**
  * @author Dino Kadrikj.

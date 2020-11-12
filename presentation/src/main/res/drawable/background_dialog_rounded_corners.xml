@@ -19,7 +19,7 @@
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="@color/layout_light" />
+    <solid android:color="@color/background_norm" />
     <corners android:radius="12dp" />
     <padding android:left="@dimen/parent_padding" android:right="@dimen/parent_padding" />
 </shape>

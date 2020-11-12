@@ -50,7 +50,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonAutoCompleteInput
+        <me.proton.core.presentation.ui.view.ProtonAutoCompleteInput
             android:id="@+id/callingCodeText"
             android:layout_width="@dimen/human_verification_calling_code_input_width"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonInput
+        <me.proton.core.presentation.ui.view.ProtonInput
             android:id="@+id/smsEditText"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -71,7 +71,7 @@
             app:layout_constraintStart_toEndOf="@id/callingCodeText"
             app:layout_constraintTop_toTopOf="@+id/callingCodeText" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/getVerificationCodeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/callingCodeText" />
 
-        <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/proceedButton"
             style="@style/ProtonButton.Borderless.Text"
             android:layout_width="match_parent"

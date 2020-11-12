@@ -47,7 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="none"
-            android:textColor="@color/selector_input_color"
             tools:text="+41" />
 
     </com.google.android.material.textfield.TextInputLayout>

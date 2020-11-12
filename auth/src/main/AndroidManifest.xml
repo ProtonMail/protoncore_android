@@ -20,33 +20,19 @@
     package="me.proton.core.auth">
 
     <application
-        android:allowBackup="true"
         android:supportsRtl="true">
 
-        <activity
-            android:name=".presentation.ui.LoginActivity"
-            android:theme="@style/ProtonTheme.NoToolbar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".presentation.ui.LoginActivity" />
 
-        <activity
-            android:name=".presentation.ui.AuthHelpActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+        <activity android:name=".presentation.ui.AuthHelpActivity" />
 
-        <activity
-            android:name=".presentation.ui.SecondFactorActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+        <activity android:name=".presentation.ui.SecondFactorActivity" />
 
-        <activity
-            android:name=".presentation.ui.MailboxLoginActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+        <activity android:name=".presentation.ui.MailboxLoginActivity" />
 
-        <activity
-            android:name=".presentation.ui.CreateAddressActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+        <activity android:name=".presentation.ui.CreateAddressActivity" />
 
-        <activity
-            android:name=".presentation.ui.CreateAddressResultActivity"
-            android:theme="@style/ProtonTheme.NoToolbar" />
+        <activity android:name=".presentation.ui.CreateAddressResultActivity" />
 
     </application>
 </manifest>

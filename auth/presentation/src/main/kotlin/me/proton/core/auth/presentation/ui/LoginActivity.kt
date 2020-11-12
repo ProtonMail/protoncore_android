@@ -23,12 +23,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.utils.hideKeyboard
-import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.onFailure
-import me.proton.android.core.presentation.utils.onSuccess
-import me.proton.android.core.presentation.utils.validatePassword
-import me.proton.android.core.presentation.utils.validateUsername
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.usecase.PerformLogin
@@ -39,6 +33,12 @@ import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.SessionResult
 import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
+import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.onFailure
+import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.validatePassword
+import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.util.kotlin.exhaustive
 
 /**

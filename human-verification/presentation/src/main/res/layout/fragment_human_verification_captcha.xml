@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <me.proton.android.core.presentation.ui.webview.ProtonWebView
+                <me.proton.core.presentation.ui.webview.ProtonWebView
                     android:id="@+id/captchaWebView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -56,6 +56,6 @@
             android:layout_gravity="center"
             android:elevation="3dp"
             android:indeterminate="true"
-            android:indeterminateTint="@color/brand" />
+            android:indeterminateTint="?brand" />
     </FrameLayout>
 </layout>

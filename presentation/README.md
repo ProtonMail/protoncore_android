@@ -62,7 +62,7 @@ Supported attributes:
 
 Example usage:
 ```xml
-<me.proton.android.core.presentation.ui.view.ProtonProgressButton
+<me.proton.core.presentation.ui.view.ProtonProgressButton
     android:id="@+id/loadingButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -95,7 +95,7 @@ Supported attributes:
 ```
 Example usage (for password mode just set `android:inputType="textPassword"`):
 ```xml
-<me.proton.android.core.presentation.ui.view.ProtonInput
+<me.proton.core.presentation.ui.view.ProtonInput
     android:id="@+id/inputExample"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

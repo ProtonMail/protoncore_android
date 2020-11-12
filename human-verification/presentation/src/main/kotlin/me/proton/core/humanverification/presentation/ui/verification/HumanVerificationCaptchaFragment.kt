@@ -27,8 +27,6 @@ import android.webkit.WebView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.ui.ProtonFragment
-import me.proton.android.core.presentation.utils.errorSnack
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
@@ -36,6 +34,8 @@ import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogF
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCaptchaViewModel
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.errorSnack
 
 /**
  * Fragment that handles human verification with Captcha.

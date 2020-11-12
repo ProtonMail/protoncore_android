@@ -20,11 +20,11 @@ package me.proton.core.humanverification.presentation.ui
 
 import android.os.Bundle
 import android.view.View
-import me.proton.android.core.presentation.ui.ProtonDialogFragment
-import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.openBrowserLink
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationHelpBinding
+import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.openBrowserLink
 
 /**
  * @author Dino Kadrikj.

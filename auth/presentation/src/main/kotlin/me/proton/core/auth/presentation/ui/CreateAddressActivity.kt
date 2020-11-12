@@ -22,11 +22,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.android.core.presentation.utils.hideKeyboard
-import me.proton.android.core.presentation.utils.onClick
-import me.proton.android.core.presentation.utils.onFailure
-import me.proton.android.core.presentation.utils.onSuccess
-import me.proton.android.core.presentation.utils.validateUsername
 import me.proton.core.auth.domain.usecase.AvailableDomains
 import me.proton.core.auth.domain.usecase.UsernameAvailability
 import me.proton.core.auth.presentation.R
@@ -34,6 +29,11 @@ import me.proton.core.auth.presentation.databinding.ActivityCreateAddressBinding
 import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.viewmodel.CreateAddressViewModel
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.onFailure
+import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.validateUsername
 
 /**
  * Creates a ProtonMail address when needed.

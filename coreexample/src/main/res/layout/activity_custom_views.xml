@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/parent_padding">
 
-            <me.proton.android.core.presentation.ui.view.ProtonButton
+            <me.proton.core.presentation.ui.view.ProtonButton
                 android:id="@+id/defaultButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <me.proton.android.core.presentation.ui.view.ProtonButton
+            <me.proton.core.presentation.ui.view.ProtonButton
                 android:id="@+id/defaultDisabledButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/defaultButton" />
 
-            <me.proton.android.core.presentation.ui.view.ProtonButton
+            <me.proton.core.presentation.ui.view.ProtonButton
                 android:id="@+id/textOnlyButton"
                 style="@style/ProtonButton.Borderless.Text"
                 android:layout_width="match_parent"
@@ -61,7 +61,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/defaultDisabledButton" />
 
-            <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+            <me.proton.core.presentation.ui.view.ProtonButton
+                android:id="@+id/outlinedButton"
+                style="@style/ProtonButton.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:text="@string/example_outlined"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textOnlyButton" />
+
+            <me.proton.core.presentation.ui.view.ProtonButton
+                android:id="@+id/outlinedButtonDisabled"
+                style="@style/ProtonButton.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:enabled="false"
+                android:text="@string/example_outlined"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/outlinedButton" />
+
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
                 android:id="@+id/loadingButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,9 +93,9 @@
                 app:initialState="loading"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textOnlyButton" />
+                app:layout_constraintTop_toBottomOf="@id/outlinedButtonDisabled" />
 
-            <me.proton.android.core.presentation.ui.view.ProtonProgressButton
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
                 android:id="@+id/loadingTextOnlyButton"
                 style="@style/ProtonButton.Borderless.Text"
                 android:layout_width="match_parent"
@@ -84,7 +107,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/loadingButton" />
 
-            <me.proton.android.core.presentation.ui.view.ProtonInput
+            <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/inputExample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,7 +120,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/loadingTextOnlyButton" />
 
-            <me.proton.android.core.presentation.ui.view.ProtonInput
+            <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/inputDisabledExample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,7 +133,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/inputExample" />
 
-            <me.proton.android.core.presentation.ui.view.ProtonInput
+            <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/passwordExample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,7 +147,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/inputDisabledExample" />
 
-            <me.proton.android.core.presentation.ui.view.ProtonInput
+            <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/errorExample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,7 +160,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/passwordExample" />
 
-            <me.proton.android.core.presentation.ui.view.ProtonInput
+            <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/inputSuffixExample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

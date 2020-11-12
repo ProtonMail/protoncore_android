@@ -35,7 +35,6 @@ import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**

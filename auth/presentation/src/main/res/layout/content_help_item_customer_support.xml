@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/icon_default"
+                android:tint="@color/icon_norm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -74,6 +74,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/horizontal_separator_height"
             android:layout_gravity="bottom"
-            android:background="@color/layout_weak" />
+            android:background="@color/separator_norm" />
     </FrameLayout>
 </layout>

@@ -20,13 +20,11 @@ package me.proton.android.core.coreexample.ui
 
 import android.os.Bundle
 import android.text.InputType
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.delay
 import me.proton.android.core.coreexample.R
 import me.proton.android.core.coreexample.databinding.ActivityCustomViewsBinding
-import me.proton.android.core.presentation.ui.ProtonActivity
-import me.proton.android.core.presentation.ui.view.ProtonProgressButton
-import me.proton.android.core.presentation.utils.onClick
+import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.ui.view.ProtonProgressButton
+import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.forEach
 
 /**
