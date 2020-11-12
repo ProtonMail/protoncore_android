@@ -66,7 +66,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         val successState = arguments[0]
         assertTrue(successState is AvailableDomains.State.Success)
         assertEquals(listOf("protonmail.com", "protonmail.ch"), successState.availableDomains)
-        assertEquals("@protonmail.com", successState.firstDomainOrDefaultPresentation)
+        assertEquals("protonmail.com", successState.firstOrDefault)
     }
 
     @Test
@@ -109,7 +109,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         coEvery { usernameAvailabilityUseCase.invoke("test-username") } returns flowOf(
             UsernameAvailability.State.Processing,
-            UsernameAvailability.State.Success(true, "test-username", "test-domain")
+            UsernameAvailability.State.Success(true, "test-username")
         )
         val observer = mockk<(UsernameAvailability.State) -> Unit>(relaxed = true)
         viewModel.usernameState.observeDataForever(observer)

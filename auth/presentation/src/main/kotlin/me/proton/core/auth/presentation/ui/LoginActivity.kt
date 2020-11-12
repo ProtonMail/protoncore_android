@@ -69,12 +69,12 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
             }
 
             signInButton.onClick(::onSignInClicked)
-            usernameInput.setOnFocusChangeListener { _, _ ->
+            usernameInput.setOnFocusLostListener { _, _ ->
                 usernameInput.validateUsername()
                     .onFailure { usernameInput.setInputError() }
                     .onSuccess { usernameInput.clearInputError() }
             }
-            passwordInput.setOnFocusChangeListener { _, _ ->
+            passwordInput.setOnFocusLostListener { _, _ ->
                 passwordInput.validatePassword()
                     .onFailure { passwordInput.setInputError() }
                     .onSuccess { passwordInput.clearInputError() }

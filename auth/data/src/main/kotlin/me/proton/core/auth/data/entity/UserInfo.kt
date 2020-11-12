@@ -44,9 +44,9 @@ data class UserInfo(
     @SerialName("Private")
     val private: Int, // boolean
     @SerialName("Subscribed")
-    val subscribed: Int, // boolean
+    val subscribed: Int,
     @SerialName("Services")
-    val services: Int, // boolean??
+    val services: Int, // boolean
     @SerialName("Delinquent")
     val delinquent: Int, // boolean
     @SerialName("Email")

@@ -66,7 +66,7 @@ class AvailableDomainsTest {
         assertEquals(1, listOfEvents.size)
         val event = listOfEvents[0]
         assertTrue(event is AvailableDomains.State.Success)
-        assertEquals("@protonmail.com", event.firstDomainOrDefaultPresentation)
+        assertEquals("protonmail.com", event.firstOrDefault)
     }
 
     @Test

@@ -23,7 +23,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.widget.addTextChangedListener
@@ -206,7 +205,7 @@ class ProtonInput : LinearLayout {
         binding.label.setTextColor(ContextCompat.getColor(context, R.color.text_norm))
     }
 
-    override fun setOnFocusChangeListener(listener: OnFocusChangeListener) {
+    fun setOnFocusLostListener(listener: OnFocusChangeListener) {
         binding.input.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) listener.onFocusChange(v, hasFocus)
         }
