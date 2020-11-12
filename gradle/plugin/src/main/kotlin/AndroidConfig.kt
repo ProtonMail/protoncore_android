@@ -36,6 +36,7 @@ fun org.gradle.api.Project.android(
     appId: String? = null,
     minSdk: Int = ProtonCore.minSdk,
     targetSdk: Int = ProtonCore.targetSdk,
+    useDataBinding: Boolean = false,
     config: ExtraConfig = {}
 
 ) = (this as ExtensionAware).extensions.configure<TestedExtension> {
@@ -68,9 +69,10 @@ fun org.gradle.api.Project.android(
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
 
-    buildFeatures.viewBinding = true
-    // buildFeatures.dataBinding = true
-    dataBinding.isEnabled = true
+    // Data/View Binding turned off by default to prevent unneeded generation.
+    // You must turn it on if you need it in your module:  android(useDataBinding = true).
+    buildFeatures.viewBinding = useDataBinding
+    dataBinding.isEnabled = useDataBinding
 
     // Add support for `src/x/kotlin` instead of `src/x/java` only
     sourceSets {
