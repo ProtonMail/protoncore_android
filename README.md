@@ -75,9 +75,9 @@ Tests: **0.1** - _released on: Oct 09, 2020_
 
 ### Utils
 
-Util Android Shared Preferences: **0.2** - _released on: Oct 21, 2020_
+Util Android Shared Preferences: **0.2.1** - _released on: Nov 12, 2020_
 
-Util Android Work Manager: **0.2** - _released on: Oct 21, 2020_
+Util Android Work Manager: **0.2.1** - _released on: Nov 12, 2020_
 
 Util Kotlin: **0.2.2** - _released on: Nov 11, 2020_
 
@@ -85,27 +85,27 @@ Util Kotlin: **0.2.2** - _released on: Nov 11, 2020_
 
 Test Kotlin: **0.2** - _released on: Oct 21, 2020_
 
-Test Android: **0.3** - _released on: Oct 21, 2020_
+Test Android: **0.3.1** - _released on: Nov 12, 2020_
 
 Test Android Instrumented: **0.2** - _released on: Oct 21, 2020_
 
 ## Shared
 
-Domain: **0.2.2** - _released on: Nov 05, 2020_
+Domain: **0.2.3** - _released on: Nov 12, 2020_
 
-Presentation: **0.4.4** - _released on: Nov 12, 2020_
+Presentation: **0.4.5** - _released on: Nov 12, 2020_
 
-Data: **0.1.1** - _released on: Nov 02, 2020_
+Data: **0.1.2** - _released on: Nov 12, 2020_
 
 ## Support
 
 ### Network
 
-Network: **0.3.2** - _released on: Nov 11, 2020_
+Network: **0.3.3** - _released on: Nov 12, 2020_
 
-Network Domain: **0.3.2** - _released on: Nov 11, 2020_
+Network Domain: **0.3.3** - _released on: Nov 12, 2020_
 
-Network Data: **0.3.2** - _released on: Nov 11, 2020_
+Network Data: **0.3.3** - _released on: Nov 12, 2020_
 
 ### Crypto
 
@@ -119,36 +119,36 @@ Crypto Data: **0** - _released on: ND_
 
 ### Auth
 
-Auth: **0.1.4** - _released on: Nov 12, 2020_
+Auth: **0.1.5** - _released on: Nov 12, 2020_
 
-Auth Domain: **0.1.3** - _released on: Nov 11, 2020_
+Auth Domain: **0.1.5** - _released on: Nov 12, 2020_
 
-Auth Presentation: **0.1.4** - _released on: Nov 12, 2020_
+Auth Presentation: **0.1.5** - _released on: Nov 12, 2020_
 
-Auth Data: **0.1.3** - _released on: Nov 11, 2020_
+Auth Data: **0.1.5** - _released on: Nov 12, 2020_
 
 ### Account
 
-Account: **0.1.1** - _released on: Nov 02, 2020_
+Account: **0.1.2** - _released on: Nov 12, 2020_
 
-Account Domain: **0.1.1** - _released on: Nov 02, 2020_
+Account Domain: **0.1.2** - _released on: Nov 12, 2020_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **0.1.1** - _released on: Nov 02, 2020_
+Account Data: **0.1.2** - _released on: Nov 12, 2020_
 
 
 ### Account Manager
 
-Account Manager: **0.1.1** - _released on: Nov 02, 2020_
+Account Manager: **0.1.2** - _released on: Nov 12, 2020_
 
-Account Manager Domain: **0.1.1** - _released on: Nov 02, 2020_
+Account Manager Domain: **0.1.2** - _released on: Nov 12, 2020_
 
-Account Manager Presentation: **0.1.1** - _released on: Nov 02, 2020_
+Account Manager Presentation: **0.1.2** - _released on: Nov 12, 2020_
 
-Account Manager Data: **0.1.1** - _released on: Nov 02, 2020_
+Account Manager Data: **0.1.2** - _released on: Nov 12, 2020_
 
-Account Manager Dagger: **0.1.1** - _released on: Nov 02, 2020_
+Account Manager Dagger: **0.1.2** - _released on: Nov 12, 2020_
 
 ### Contacts
 
@@ -173,10 +173,10 @@ Settings Data: **0** - _released on: ND_
 
 ### Human Verification
 
-Human Verification: **0.2.2** - _released on: Nov 12, 2020_
+Human Verification: **0.2.3** - _released on: Nov 12, 2020_
 
-Human Verification Domain: **0.2.1** - _released on: Nov 02, 2020_
+Human Verification Domain: **0.2.3** - _released on: Nov 12, 2020_
 
-Human Verification Presentation: **0.2.2** - _released on: Nov 12, 2020_
+Human Verification Presentation: **0.2.3** - _released on: Nov 12, 2020_
 
-Human Verification Data: **0.2.1** - _released on: Nov 02, 2020_
+Human Verification Data: **0.2.3** - _released on: Nov 12, 2020_
