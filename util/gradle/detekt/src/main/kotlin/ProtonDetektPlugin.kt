@@ -55,7 +55,7 @@ abstract class ProtonDetektPlugin : Plugin<Project> {
  */
 private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 
-    `detekt version` = "1.11.2" // Released: Aug 19, 2020
+    `detekt version` = "1.14.2" // Released: Oct 20, 2020
     `detect-code-analysis version` = "0.3.2" // Released:
 
     val reportsDirPath = "config/detekt/reports"
