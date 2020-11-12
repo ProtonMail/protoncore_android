@@ -23,7 +23,7 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(0, 1, 1)
+libVersion = Version(0, 1, 2)
 
 android()
 
@@ -33,7 +33,6 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.networkDomain),
         project(Module.domain),
-        project(Module.kotlinUtil),
 
         // Kotlin
         `kotlin-jdk7`,

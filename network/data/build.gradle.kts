@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 3, 2)
+libVersion = Version(0, 3, 3)
 
 android()
 
@@ -44,6 +44,7 @@ dependencies {
         `serialization-json`,
 
         // Other
+        `android-annotation`,
         `apacheCommon-codec`,
         `miniDsn`,
         `okHttp-logging`,
