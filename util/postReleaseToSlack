@@ -9,7 +9,7 @@ fi
 
 printMessage() {
 cat <<EOT
-  Hello <!channel> :wave:
+  Hello devs :wave:
 
 $(cat new_releases.tmp | sed 's/^/:gift: */g; s/$/*/g')
 EOT
@@ -23,4 +23,4 @@ curl \
   --fail \
   -H 'Content-type: application/json' \
   --data "{\"mrkdwn\": true, \"text\": \"$body\"}" \
-  "$V4_CHANNEL_WEBHOOK"
+  "$ANDROID_DEVS_CHANNEL_WEBHOOK"
