@@ -97,7 +97,7 @@ class UpdateUsernameOnlyAccountTest {
         maxUpload = 1,
         role = 1,
         private = true,
-        subscribed = true,
+        subscribed = 1,
         delinquent = 0,
         email = "test-email",
         displayName = testDisplayName,
@@ -127,14 +127,14 @@ class UpdateUsernameOnlyAccountTest {
         )
         coEvery { authRepository.randomModulus() } returns DataResult.Success(ResponseSource.Remote, modulus)
         every { cryptoProvider.generateNewPrivateKey(any(), any(), any(), any(), any()) } returns testPrivateKey
-        every { cryptoProvider.generateSignedKeyList(any(), testPassphrase.toByteArray()) } returns Pair(
+        every { cryptoProvider.generateSignedKeyList(any(), any()) } returns Pair(
             testSignedKeyListData,
             testSignedKeyListSignature
         )
         coEvery {
             cryptoProvider.calculatePasswordVerifier(
                 testUsername,
-                testPassphrase.toByteArray(),
+                any(),
                 testModulusId,
                 testModulus
             )
@@ -142,6 +142,7 @@ class UpdateUsernameOnlyAccountTest {
             authResult
         coEvery {
             authRepository.setupAddressKeys(
+                testSessionId,
                 testPrivateKey,
                 "",
                 any(),
@@ -197,6 +198,7 @@ class UpdateUsernameOnlyAccountTest {
         val authArgument = slot<Auth>()
         coVerify {
             authRepository.setupAddressKeys(
+                testSessionId,
                 capture(primaryKeyArgument), capture(keySaltArgument), capture(addressKeyListArgument),
                 capture(authArgument)
             )
@@ -220,6 +222,7 @@ class UpdateUsernameOnlyAccountTest {
     @Test
     fun `update username-only account Crypto arguments are correct`() = runBlockingTest {
         // WHEN
+        every { cryptoProvider.generatePassphrase(testPassphrase.toByteArray(), any()) } returns "test-generated-pass".toByteArray()
         useCase.invoke(testSessionId, testDomain, testUsername, testPassphrase.toByteArray()).toList()
         // THEN
         val usernameArgument = slot<String>()
@@ -236,14 +239,14 @@ class UpdateUsernameOnlyAccountTest {
 
         assertEquals(testUsername, usernameArgument.captured)
         assertEquals(testDomain, domainArgument.captured)
-        assertEquals(testPassphrase, String(passphraseArgument.captured))
+        assertEquals("test-generated-pass", String(passphraseArgument.captured))
         assertEquals(KeyType.RSA, keyTypeArgument.captured)
         assertEquals(KeySecurity.HIGH, keySecurityArgument.captured)
 
         val keyArgument = slot<String>()
         verify { cryptoProvider.generateSignedKeyList(capture(keyArgument), capture(passphraseArgument)) }
         assertEquals(testPrivateKey, keyArgument.captured)
-        assertEquals(testPassphrase, String(passphraseArgument.captured))
+        assertEquals("test-generated-pass", String(passphraseArgument.captured))
 
         val modulusIdArgument = slot<String>()
         val modulusArgument = slot<String>()
@@ -254,7 +257,7 @@ class UpdateUsernameOnlyAccountTest {
             )
         }
         assertEquals(testUsername, usernameArgument.captured)
-        assertEquals(testPassphrase, String(passphraseArgument.captured))
+        assertEquals("test-generated-pass", String(passphraseArgument.captured))
         assertEquals(testModulusId, modulusIdArgument.captured)
         assertEquals(testModulus, modulusArgument.captured)
     }
@@ -355,8 +358,9 @@ class UpdateUsernameOnlyAccountTest {
     @Test
     fun `generating SignedKeyList failure returns Error event`() = runBlockingTest {
         // GIVEN
+        every { cryptoProvider.generatePassphrase(testPassphrase.toByteArray(), any()) } returns "test-generated-pass".toByteArray()
         every {
-            cryptoProvider.generateSignedKeyList(any(), testPassphrase.toByteArray())
+            cryptoProvider.generateSignedKeyList(any(), "test-generated-pass".toByteArray())
         } throws RuntimeException("Some gopenpgp exception.")
         // WHEN
         val listOfEvents =
@@ -374,6 +378,7 @@ class UpdateUsernameOnlyAccountTest {
         // GIVEN
         coEvery {
             authRepository.setupAddressKeys(
+                testSessionId,
                 testPrivateKey,
                 "",
                 any(),

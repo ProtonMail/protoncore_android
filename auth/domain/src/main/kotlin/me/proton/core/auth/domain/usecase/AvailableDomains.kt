@@ -18,8 +18,10 @@
 
 package me.proton.core.auth.domain.usecase
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.domain.arch.extension.onEachInstance
 import me.proton.core.domain.arch.onFailure
 import me.proton.core.domain.arch.onSuccess
 import javax.inject.Inject
@@ -33,8 +35,7 @@ class AvailableDomains @Inject constructor(private val authRepository: AuthRepos
 
     sealed class State {
         data class Success(val availableDomains: List<String>) : State() {
-            val firstDomainOrDefault =
-                if (availableDomains.isNotEmpty()) "@${availableDomains[0]}" else "@protonmail.com"
+            val firstOrDefault = availableDomains.firstOrNull() ?: "protonmail.com"
         }
 
         sealed class Error : State() {
@@ -57,3 +58,11 @@ class AvailableDomains @Inject constructor(private val authRepository: AuthRepos
             }
     }
 }
+
+fun Flow<AvailableDomains.State>.onSuccess(
+    action: suspend (AvailableDomains.State.Success) -> Unit
+) = onEachInstance(action) as Flow<AvailableDomains.State>
+
+fun Flow<AvailableDomains.State>.onError(
+    action: suspend (AvailableDomains.State.Error) -> Unit
+) = onEachInstance(action) as Flow<AvailableDomains.State>

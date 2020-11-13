@@ -22,8 +22,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.view.View
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.presentation.utils.onClick
+import me.proton.core.auth.domain.usecase.AvailableDomains
 import me.proton.core.auth.domain.usecase.UpdateExternalAccount
 import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.R
@@ -32,7 +35,6 @@ import me.proton.core.auth.presentation.entity.AddressesResult
 import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.viewmodel.CreateAddressResultViewModel
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.presentation.utils.onClick
 
 /**
  * Second step in the address creation flow. Displays the results from the username availability and triggers the
@@ -44,7 +46,7 @@ import me.proton.core.presentation.utils.onClick
 class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBinding>() {
 
     private val sessionId: SessionId by lazy {
-        intent?.extras?.get(MailboxLoginActivity.ARG_SESSION_ID) as SessionId
+        SessionId(requireNotNull(intent?.extras?.getString(ARG_SESSION_ID)))
     }
 
     private val user: UserResult by lazy {
@@ -55,12 +57,12 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
         intent?.extras?.get(ARG_USERNAME) as String
     }
 
-    private val externalEmail: String by lazy {
-        intent?.extras?.get(ARG_EXTERNAL_EMAIL) as String
+    private val externalEmail: String? by lazy {
+        intent?.extras?.get(ARG_EXTERNAL_EMAIL) as String?
     }
 
-    private val domain: String by lazy {
-        intent?.extras?.get(ARG_DOMAIN) as String
+    private val domain: String? by lazy {
+        intent?.extras?.get(ARG_DOMAIN) as String?
     }
 
     private val viewModel by viewModels<CreateAddressResultViewModel>()
@@ -79,8 +81,26 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
                 // login state.
                 viewModel.upgradeAccount(user.addresses, sessionId, username, domain, user.passphrase!!)
             }
-            externalEmailText.text = externalEmail
-            titleText.text = String.format(getString(R.string.auth_create_address_result_title), username)
+            if (externalEmail == null) {
+                // this means we are upgrading username-only account
+                viewModel.domainsState.observeData {
+                    if (it is AvailableDomains.State.Success) {
+                        titleText.text =
+                            String.format(
+                                getString(
+                                    R.string.auth_create_address_result_title_username,
+                                    username,
+                                    it.firstOrDefault
+                                )
+                            )
+                    }
+                }
+                resultText.visibility = View.GONE
+                externalEmailText.visibility = View.GONE
+            } else {
+                externalEmailText.text = externalEmail
+                titleText.text = String.format(getString(R.string.auth_create_address_result_title), username)
+            }
             termsConditionsText.movementMethod = LinkMovementMethod.getInstance()
         }
 
@@ -99,7 +119,7 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
                 getString(R.string.auth_create_address_error_credentials)
             )
             is UpdateExternalAccount.State.Error.EmptyDomain -> showError(
-                getString(R.string.auth_create_address_error_domain)
+                getString(R.string.auth_create_address_error_no_available_domain)
             )
             is UpdateExternalAccount.State.Error.SetUsernameFailed -> showError(
                 getString(R.string.auth_create_address_error_setusername)
@@ -122,7 +142,7 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
                 getString(R.string.auth_create_address_error_credentials)
             )
             is UpdateUsernameOnlyAccount.State.Error.EmptyDomain -> showError(
-                getString(R.string.auth_create_address_error_domain)
+                getString(R.string.auth_create_address_error_no_available_domain)
             )
             is UpdateUsernameOnlyAccount.State.Error.GeneratingPrivateKeyFailed -> showError(
                 getString(R.string.auth_create_address_error_private_key)

@@ -16,22 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.auth.data.entity.request
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-libVersion = Version(0, 1, 6)
-
-android()
-
-dependencies {
-    api(
-        project(Module.authPresentation),
-        project(Module.authDomain),
-        project(Module.authData)
-    )
-}
-
+/**
+ * @author Dino Kadrikj.
+ */
+@Serializable
+data class SetUsernameRequest(
+    @SerialName("Username")
+    val username: String
+)

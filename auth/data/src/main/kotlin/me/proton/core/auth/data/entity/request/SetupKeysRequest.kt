@@ -27,9 +27,13 @@ import me.proton.core.auth.domain.entity.AddressKey
  */
 @Serializable
 data class SetupKeysRequest(
+    @SerialName("PrimaryKey")
     val primaryKey: String,
+    @SerialName("KeySalt")
     val keySalt: String,
+    @SerialName("AddressKeys")
     val addressKeys: List<AddressKeyEntity>,
+    @SerialName("Auth")
     val auth: AuthEntity
 )
 

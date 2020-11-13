@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.AvailableDomains
 import me.proton.core.auth.domain.usecase.UsernameAvailability
+import me.proton.core.auth.domain.usecase.onSuccess
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
@@ -37,33 +38,25 @@ class CreateAddressViewModel @ViewModelInject constructor(
     private val availableDomains: AvailableDomains
 ) : ProtonViewModel(), ViewStateStoreScope {
 
-    val state = ViewStateStore<UsernameAvailability.State>().lock
+    val usernameState = ViewStateStore<UsernameAvailability.State>().lock
     val domainsState = ViewStateStore<AvailableDomains.State>().lock
 
-    var domain: String? = null
+    lateinit var domain: String
 
-    fun getAvailableDomains() {
+    init {
+        getAvailableDomains()
+    }
+
+    private fun getAvailableDomains() {
         availableDomains()
-            .onEach {
-                if (it is AvailableDomains.State.Success) {
-                    domain = it.firstDomainOrDefault
-                }
-                domainsState.post(it)
-            }
+            .onSuccess { domain = it.firstOrDefault }
+            .onEach { domainsState.post(it) }
             .launchIn(viewModelScope)
     }
 
-    fun checkUsernameAvailability(
-        username: String
-    ) {
+    fun checkUsernameAvailability(username: String) {
         usernameAvailability(username)
-            .onEach {
-                if (it is UsernameAvailability.State.Success) {
-                    state.post(it.copy(domain = domain))
-                } else {
-                    state.post(it)
-                }
-            }
+            .onEach { usernameState.post(it) }
             .launchIn(viewModelScope)
     }
 }

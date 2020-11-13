@@ -27,6 +27,7 @@ import me.proton.core.auth.data.entity.request.AddressKeyEntity
 import me.proton.core.auth.data.entity.request.AddressKeySetupRequest
 import me.proton.core.auth.data.entity.request.AddressSetupRequest
 import me.proton.core.auth.data.entity.request.AuthEntity
+import me.proton.core.auth.data.entity.request.SetUsernameRequest
 import me.proton.core.auth.data.entity.request.SetupKeysRequest
 import me.proton.core.auth.data.entity.request.SignedKeyList
 import me.proton.core.auth.domain.entity.Address
@@ -173,7 +174,7 @@ class AuthRepositoryImpl(
      */
     override suspend fun setUsername(sessionId: SessionId, username: String): DataResult<Boolean> =
         provider.get<AuthenticationApi>(sessionId).invoke {
-            setUsername(username).code.isSuccessResponse()
+            setUsername(SetUsernameRequest(username)).code.isSuccessResponse()
         }.toDataResponse()
 
     /**
@@ -222,12 +223,13 @@ class AuthRepositoryImpl(
      * Sets up the address primary key/
      */
     override suspend fun setupAddressKeys(
+        sessionId: SessionId,
         primaryKey: String,
         keySalt: String,
         addressKeyList: List<AddressKey>,
         auth: Auth
     ): DataResult<User> =
-        provider.get<AuthenticationApi>().invoke {
+        provider.get<AuthenticationApi>(sessionId).invoke {
             val setupKeysRequest = SetupKeysRequest(
                 primaryKey = primaryKey,
                 keySalt = keySalt,

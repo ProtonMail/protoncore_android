@@ -22,8 +22,10 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.usecase.AvailableDomains
 import me.proton.core.auth.domain.usecase.UpdateExternalAccount
 import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
+import me.proton.core.auth.domain.usecase.onSuccess
 import me.proton.core.auth.presentation.entity.AddressesResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -36,24 +38,44 @@ import studio.forface.viewstatestore.ViewStateStoreScope
  */
 class CreateAddressResultViewModel @ViewModelInject constructor(
     private val updateExternalAccount: UpdateExternalAccount,
-    private val updateUsernameOnlyAccount: UpdateUsernameOnlyAccount
+    private val updateUsernameOnlyAccount: UpdateUsernameOnlyAccount,
+    private val availableDomains: AvailableDomains
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     val externalAccountUpgradeState = ViewStateStore<UpdateExternalAccount.State>().lock
     val usernameOnlyAccountUpgradeState = ViewStateStore<UpdateUsernameOnlyAccount.State>().lock
+    val domainsState = ViewStateStore<AvailableDomains.State>().lock
+
+    lateinit var domain: String
+
+    init {
+        getAvailableDomains()
+    }
+
+    private fun getAvailableDomains() {
+        availableDomains()
+            .onSuccess { domain = it.firstOrDefault }
+            .onEach { domainsState.post(it) }
+            .launchIn(viewModelScope)
+    }
 
     fun upgradeAccount(
         addresses: AddressesResult?,
         sessionId: SessionId,
         username: String,
-        domain: String,
+        domain: String? = null,
         passphrase: ByteArray
     ) {
         addresses?.let {
-            if (it.allExternal) {
-                upgradeExternalAccount(sessionId, username, domain, passphrase)
+            if (!it.usernameOnly && it.allExternal) {
+                upgradeExternalAccount(
+                    sessionId,
+                    username,
+                    domain ?: this@CreateAddressResultViewModel.domain,
+                    passphrase
+                )
             } else {
-                upgradeUsernameOnlyAccount(sessionId, username, domain, passphrase)
+                upgradeUsernameOnlyAccount(sessionId, username, this@CreateAddressResultViewModel.domain, passphrase)
             }
         }
     }

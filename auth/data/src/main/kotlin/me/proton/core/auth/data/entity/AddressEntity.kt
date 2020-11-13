@@ -32,7 +32,7 @@ data class AddressEntity(
     @SerialName("ID")
     val id: String,
     @SerialName("DomainID")
-    val domainId: String,
+    val domainId: String?,
     @SerialName("Email")
     val email: String,
     @SerialName("Send")
@@ -52,7 +52,7 @@ data class AddressEntity(
     @SerialName("HasKeys")
     val hasKeys: Int, // boolean (binary)
     @SerialName("Keys")
-    val keys: List<FullAddressKeyEntity>
+    val keys: List<FullAddressKeyEntity>? = null
 ) {
     fun toAddress(): Address =
         Address(
@@ -67,8 +67,8 @@ data class AddressEntity(
             displayName = displayName,
             signature = signature,
             hasKeys = hasKeys.toBoolean(),
-            keys = keys.map {
+            keys = keys?.map {
                 it.toAddressKey()
-            }
+            } ?: emptyList()
         )
 }

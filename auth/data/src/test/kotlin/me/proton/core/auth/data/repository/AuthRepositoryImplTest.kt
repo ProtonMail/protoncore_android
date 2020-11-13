@@ -650,7 +650,8 @@ class AuthRepositoryImplTest {
         val successUser = mockk<User>()
         coEvery { apiManager.invoke<User>(any(), any()) } returns ApiResult.Success(successUser)
         // WHEN
-        val response = repository.setupAddressKeys("test-primaryKey", "test-keySalt", mockk(), mockk())
+        val response =
+            repository.setupAddressKeys(SessionId(testSessionId), "test-primaryKey", "test-keySalt", mockk(), mockk())
         // THEN
         assertTrue(response is DataResult.Success)
         assertNotNull(response.value)
@@ -664,7 +665,8 @@ class AuthRepositoryImplTest {
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test API error")
         )
         // WHEN
-        val response = repository.setupAddressKeys("test-primaryKey", "test-keySalt", mockk(), mockk())
+        val response =
+            repository.setupAddressKeys(SessionId(testSessionId), "test-primaryKey", "test-keySalt", mockk(), mockk())
         // THEN
         assertTrue(response is DataResult.Error.Remote)
         assertEquals("test API error", response.message)

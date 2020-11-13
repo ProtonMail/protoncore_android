@@ -89,7 +89,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 )
             }
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
-            login.onClick { authOrchestrator.startLoginWorkflow(AccountType.Username) }
+            login.onClick { authOrchestrator.startLoginWorkflow(AccountType.Internal) }
         }
 
         accountManager.getPrimaryAccount().onEach { primary ->
@@ -97,7 +97,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }.launchIn(lifecycleScope)
 
         accountManager.getAccounts().onEach { accounts ->
-            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow(AccountType.Username)
+            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow(AccountType.Internal)
 
             binding.accountsLayout.removeAllViews()
             accounts.forEach { account ->

@@ -28,7 +28,7 @@ data class UserInfo(
     @SerialName("ID")
     val id: String,
     @SerialName("Name")
-    val name: String,
+    val name: String?,
     @SerialName("UsedSpace")
     val usedSpace: Long,
     @SerialName("Currency")
@@ -44,15 +44,15 @@ data class UserInfo(
     @SerialName("Private")
     val private: Int, // boolean
     @SerialName("Subscribed")
-    val subscribed: Int, // boolean
+    val subscribed: Int,
     @SerialName("Services")
-    val services: Int, // boolean??
+    val services: Int, // boolean
     @SerialName("Delinquent")
     val delinquent: Int, // boolean
     @SerialName("Email")
-    val email: String,
+    val email: String? = null,
     @SerialName("DisplayName")
-    val displayName: String,
+    val displayName: String?,
     @SerialName("Keys")
     val keys: List<UserKeyInfo>
 ) {
@@ -67,7 +67,7 @@ data class UserInfo(
         maxUpload = maxUpload,
         role = role,
         private = private.toBoolean(),
-        subscribed = subscribed.toBoolean(),
+        subscribed = subscribed,
         delinquent = delinquent,
         email = email,
         displayName = displayName,

@@ -88,36 +88,39 @@ class UpdateUsernameOnlyAccount @Inject constructor(
         }
         val modulus = (randomModulusResult as DataResult.Success).value
         // step 3. generate new private key and signed key list
+        val randomSalt = cryptoProvider.createNewKeySalt()
+        val generatedPassphrase = cryptoProvider.generatePassphrase(passphrase, randomSalt)
         val privateKey = try {
-            cryptoProvider.generateNewPrivateKey(username, domain, passphrase, KeyType.RSA, KeySecurity.HIGH)
+            cryptoProvider.generateNewPrivateKey(username, domain, generatedPassphrase, KeyType.RSA, KeySecurity.HIGH)
         } catch (privateKeyException: Exception) { // gopenpgp library throws generic exception
             emit(State.Error.GeneratingPrivateKeyFailed(privateKeyException.message))
             return@flow
         }
 
         val signedKeyList = try {
-            cryptoProvider.generateSignedKeyList(privateKey, passphrase)
+            cryptoProvider.generateSignedKeyList(privateKey, generatedPassphrase)
         } catch (signedKeyListException: Exception) { // gopenpgp library throws generic exception
             emit(State.Error.GeneratingSignedKeyListFailed(signedKeyListException.message))
             return@flow
         }
         // step 4. setup address key
         authRepository.setupAddressKeys(
+            sessionId = sessionId,
             primaryKey = privateKey,
-            keySalt = "",
+            keySalt = randomSalt,
             addressKeyList = listOf(
                 AddressKey(address.id, privateKey, SignedKeyList(signedKeyList.first, signedKeyList.second))
             ),
             auth = cryptoProvider.calculatePasswordVerifier(
                 username = username,
-                passphrase = passphrase,
+                passphrase = generatedPassphrase,
                 modulusId = modulus.modulusId,
                 modulus = modulus.modulus
             )
         ).onFailure { message, _, _ ->
             emit(State.Error.Message(message))
         }.onSuccess {
-            emit(State.Success(it))
+            emit(State.Success(it.copy(passphrase = generatedPassphrase)))
         }
     }
 }

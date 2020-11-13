@@ -25,7 +25,7 @@ package me.proton.core.auth.domain.entity
  */
 data class Address(
     val id: String,
-    val domainId: String,
+    val domainId: String?,
     val email: String,
     val canSend: Boolean,
     val canReceive: Boolean,

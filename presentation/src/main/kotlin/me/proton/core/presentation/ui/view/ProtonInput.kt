@@ -205,6 +205,12 @@ class ProtonInput : LinearLayout {
         binding.label.setTextColor(ContextCompat.getColor(context, R.color.text_norm))
     }
 
+    fun setOnFocusLostListener(listener: OnFocusChangeListener) {
+        binding.input.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) listener.onFocusChange(v, hasFocus)
+        }
+    }
+
     /**
      * Set the action mode for the end icon.
      */

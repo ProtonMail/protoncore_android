@@ -27,7 +27,7 @@ import me.proton.core.auth.domain.entity.UserKey
 @Parcelize
 data class UserResult(
     val id: String,
-    val name: String,
+    val name: String?,
     val usedSpace: Long,
     val currency: String,
     val credit: Int,
@@ -35,13 +35,13 @@ data class UserResult(
     val maxUpload: Long,
     val role: Int,
     val private: Boolean,
-    val subscribed: Boolean,
+    val subscribed: Int,
     val delinquent: Int,
-    val email: String,
-    val displayName: String,
+    val email: String?,
+    val displayName: String?,
     val keys: List<UserKeyResult>,
     val passphrase: ByteArray?,
-    val addresses: AddressesResult? = null
+    val addresses: AddressesResult = AddressesResult(emptyList())
 ) : Parcelable {
 
     @IgnoredOnParcel

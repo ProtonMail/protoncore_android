@@ -19,6 +19,8 @@
 package me.proton.core.auth.domain
 
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 
@@ -70,4 +72,9 @@ interface AccountWorkflowHandler {
      * Handle HumanVerification failure.
      */
     suspend fun handleHumanVerificationFailed(sessionId: SessionId)
+
+    /**
+     * Directly sets the account into a [AccountState.Ready] state.
+     */
+    suspend fun handleAccountReady(userId: UserId)
 }

@@ -21,23 +21,23 @@ package me.proton.core.auth.presentation.srp
 import android.util.Base64
 import com.proton.gopenpgp.crypto.ClearTextMessage
 import com.proton.gopenpgp.crypto.Crypto
-import me.proton.core.auth.domain.crypto.CryptoProvider
-import me.proton.core.auth.domain.entity.Auth
-import me.proton.core.auth.domain.entity.KeySecurity
-import me.proton.core.auth.domain.entity.KeyType
-import javax.inject.Inject
 import com.proton.gopenpgp.crypto.KeyRing
 import com.proton.gopenpgp.crypto.PlainMessage
 import com.proton.gopenpgp.helper.Helper
 import com.proton.gopenpgp.srp.Srp
+import me.proton.core.auth.domain.crypto.CryptoProvider
 import me.proton.core.auth.domain.crypto.PasswordVerifier
 import me.proton.core.auth.domain.crypto.PrimeGenerator
+import me.proton.core.auth.domain.entity.Auth
+import me.proton.core.auth.domain.entity.KeySecurity
+import me.proton.core.auth.domain.entity.KeyType
 import me.proton.core.auth.domain.entity.Primes
 import me.proton.core.auth.domain.exception.EmptyCredentialsException
 import me.proton.core.auth.domain.exception.InvalidPrimeException
 import me.proton.core.auth.domain.exception.KeyGenerationException
 import java.math.BigInteger
 import java.security.SecureRandom
+import javax.inject.Inject
 
 /**
  * @author Dino Kadrikj.
@@ -115,7 +115,8 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
      */
     override fun generateSignedKeyList(key: String, passphrase: ByteArray): Pair<String, String> {
         val keyFingerprint: String = Crypto.newKeyFromArmored(key).fingerprint
-        val keyList = """
+        val keyList =
+            """
                         [
                             {
                                 "Fingerprint": "$keyFingerprint",
@@ -165,7 +166,10 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
      * Crypto Helper doesn't have this method, so we have our own implementation
      */
     private fun generateRSAKeyWithPrimes(
-        name: String, email: String, passphrase: ByteArray, bits: Int,
+        name: String,
+        email: String,
+        passphrase: ByteArray,
+        bits: Int,
         primes: Primes
     ): String {
         val key = Crypto.generateRSAKeyWithPrimes(

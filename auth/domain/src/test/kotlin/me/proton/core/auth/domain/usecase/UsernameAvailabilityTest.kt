@@ -44,7 +44,10 @@ class UsernameAvailabilityTest {
     fun beforeEveryTest() {
         // GIVEN
         useCase = UsernameAvailability(authRepository)
-        coEvery { authRepository.isUsernameAvailable(testUsername) } returns DataResult.Success(ResponseSource.Remote, true)
+        coEvery { authRepository.isUsernameAvailable(testUsername) } returns DataResult.Success(
+            ResponseSource.Remote,
+            true
+        )
     }
 
     @Test
@@ -64,7 +67,8 @@ class UsernameAvailabilityTest {
         // GIVEN
         coEvery { authRepository.isUsernameAvailable(testUsername) } returns DataResult.Error.Remote(
             message = "username unavailaable",
-            protonCode = 12106)
+            protonCode = 12106
+        )
         // WHEN
         val listOfEvents = useCase.invoke(testUsername).toList()
         // THEN
@@ -77,7 +81,10 @@ class UsernameAvailabilityTest {
     @Test
     fun `empty username returns error state`() = runBlockingTest {
         // GIVEN
-        coEvery { authRepository.isUsernameAvailable(testUsername) } returns DataResult.Success(ResponseSource.Remote, false)
+        coEvery { authRepository.isUsernameAvailable(testUsername) } returns DataResult.Success(
+            ResponseSource.Remote,
+            false
+        )
         // WHEN
         val listOfEvents = useCase.invoke("").toList()
         // THEN
@@ -91,7 +98,8 @@ class UsernameAvailabilityTest {
         // GIVEN
         coEvery { authRepository.isUsernameAvailable(testUsername) } returns DataResult.Error.Remote(
             message = "api error",
-            httpCode = 401)
+            httpCode = 401
+        )
         // WHEN
         val listOfEvents = useCase.invoke(testUsername).toList()
         // THEN
