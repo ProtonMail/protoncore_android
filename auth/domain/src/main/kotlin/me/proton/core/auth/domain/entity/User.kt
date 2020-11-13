@@ -28,7 +28,7 @@ data class User(
     val maxUpload: Long,
     val role: Int,
     val private: Boolean,
-    val subscribed: Boolean,
+    val subscribed: Int,
     val delinquent: Int,
     val email: String?,
     val displayName: String?,

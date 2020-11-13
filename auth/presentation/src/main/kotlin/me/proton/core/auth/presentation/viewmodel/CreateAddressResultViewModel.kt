@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.AvailableDomains
 import me.proton.core.auth.domain.usecase.UpdateExternalAccount
 import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
+import me.proton.core.auth.domain.usecase.onSuccess
 import me.proton.core.auth.presentation.entity.AddressesResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -44,19 +45,17 @@ class CreateAddressResultViewModel @ViewModelInject constructor(
     val externalAccountUpgradeState = ViewStateStore<UpdateExternalAccount.State>().lock
     val usernameOnlyAccountUpgradeState = ViewStateStore<UpdateUsernameOnlyAccount.State>().lock
     val domainsState = ViewStateStore<AvailableDomains.State>().lock
+
     lateinit var domain: String
+
     init {
         getAvailableDomains()
     }
 
     private fun getAvailableDomains() {
         availableDomains()
-            .onEach {
-                domainsState.post(it)
-                if (it is AvailableDomains.State.Success) {
-                    domain = it.firstOrDefault
-                }
-            }
+            .onSuccess { domain = it.firstOrDefault }
+            .onEach { domainsState.post(it) }
             .launchIn(viewModelScope)
     }
 

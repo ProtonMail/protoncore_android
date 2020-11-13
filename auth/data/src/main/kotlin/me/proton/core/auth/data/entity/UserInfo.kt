@@ -67,7 +67,7 @@ data class UserInfo(
         maxUpload = maxUpload,
         role = role,
         private = private.toBoolean(),
-        subscribed = subscribed.toBoolean(),
+        subscribed = subscribed,
         delinquent = delinquent,
         email = email,
         displayName = displayName,

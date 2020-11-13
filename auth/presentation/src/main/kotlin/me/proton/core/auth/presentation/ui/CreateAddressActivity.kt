@@ -101,8 +101,6 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
                 }
             }.exhaustive
         }
-
-        viewModel.getAvailableDomains()
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {

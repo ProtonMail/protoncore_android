@@ -28,7 +28,6 @@ import me.proton.core.auth.domain.usecase.UsernameAvailability
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
-import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -45,21 +44,15 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
 
     private lateinit var viewModel: CreateAddressViewModel
 
-    @Before
-    fun beforeEveryTest() {
-        viewModel = CreateAddressViewModel(usernameAvailabilityUseCase, availableDomainsUseCase)
-    }
-
     @Test
     fun `available domains happy path`() = coroutinesTest {
         // GIVEN
         coEvery { availableDomainsUseCase.invoke() } returns flowOf(
             AvailableDomains.State.Success(listOf("protonmail.com", "protonmail.ch"))
         )
+        viewModel = CreateAddressViewModel(usernameAvailabilityUseCase, availableDomainsUseCase)
         val observer = mockk<(AvailableDomains.State) -> Unit>(relaxed = true)
         viewModel.domainsState.observeDataForever(observer)
-        // WHEN
-        viewModel.getAvailableDomains()
         // THEN
         val arguments = mutableListOf<AvailableDomains.State>()
         verify(exactly = 1) { observer(capture(arguments)) }
@@ -75,10 +68,9 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         coEvery { availableDomainsUseCase.invoke() } returns flowOf(
             AvailableDomains.State.Error.NoAvailableDomains
         )
+        viewModel = CreateAddressViewModel(usernameAvailabilityUseCase, availableDomainsUseCase)
         val observer = mockk<(AvailableDomains.State) -> Unit>(relaxed = true)
         viewModel.domainsState.observeDataForever(observer)
-        // WHEN
-        viewModel.getAvailableDomains()
         // THEN
         val arguments = mutableListOf<AvailableDomains.State>()
         verify(exactly = 1) { observer(capture(arguments)) }
@@ -92,10 +84,9 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         coEvery { availableDomainsUseCase.invoke() } returns flowOf(
             AvailableDomains.State.Error.Message("API error")
         )
+        viewModel = CreateAddressViewModel(usernameAvailabilityUseCase, availableDomainsUseCase)
         val observer = mockk<(AvailableDomains.State) -> Unit>(relaxed = true)
         viewModel.domainsState.observeDataForever(observer)
-        // WHEN
-        viewModel.getAvailableDomains()
         // THEN
         val arguments = mutableListOf<AvailableDomains.State>()
         verify(exactly = 1) { observer(capture(arguments)) }
@@ -111,6 +102,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             UsernameAvailability.State.Processing,
             UsernameAvailability.State.Success(true, "test-username")
         )
+        viewModel = CreateAddressViewModel(usernameAvailabilityUseCase, availableDomainsUseCase)
         val observer = mockk<(UsernameAvailability.State) -> Unit>(relaxed = true)
         viewModel.usernameState.observeDataForever(observer)
         // WHEN
@@ -132,6 +124,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             UsernameAvailability.State.Processing,
             UsernameAvailability.State.Error.Message("username is unavailable")
         )
+        viewModel = CreateAddressViewModel(usernameAvailabilityUseCase, availableDomainsUseCase)
         val observer = mockk<(UsernameAvailability.State) -> Unit>(relaxed = true)
         viewModel.usernameState.observeDataForever(observer)
         // WHEN
@@ -143,8 +136,6 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         val state = arguments[1]
         assertTrue(state is UsernameAvailability.State.Error.Message)
         assertEquals("username is unavailable", state.message)
-
-
     }
 
     @Test

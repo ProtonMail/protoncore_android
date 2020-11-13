@@ -97,7 +97,7 @@ class UpdateUsernameOnlyAccountTest {
         maxUpload = 1,
         role = 1,
         private = true,
-        subscribed = true,
+        subscribed = 1,
         delinquent = 0,
         email = "test-email",
         displayName = testDisplayName,

@@ -43,7 +43,11 @@ class CreateAddressViewModel @ViewModelInject constructor(
 
     lateinit var domain: String
 
-    fun getAvailableDomains() {
+    init {
+        getAvailableDomains()
+    }
+
+    private fun getAvailableDomains() {
         availableDomains()
             .onSuccess { domain = it.firstOrDefault }
             .onEach { domainsState.post(it) }
