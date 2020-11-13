@@ -93,7 +93,7 @@ Test Android Instrumented: **0.2** - _released on: Oct 21, 2020_
 
 Domain: **0.2.3** - _released on: Nov 12, 2020_
 
-Presentation: **0.4.5** - _released on: Nov 12, 2020_
+Presentation: **0.4.6** - _released on: Nov 13, 2020_
 
 Data: **0.1.2** - _released on: Nov 12, 2020_
 
@@ -101,11 +101,11 @@ Data: **0.1.2** - _released on: Nov 12, 2020_
 
 ### Network
 
-Network: **0.3.3** - _released on: Nov 12, 2020_
+Network: **0.3.4** - _released on: Nov 13, 2020_
 
 Network Domain: **0.3.3** - _released on: Nov 12, 2020_
 
-Network Data: **0.3.3** - _released on: Nov 12, 2020_
+Network Data: **0.3.4** - _released on: Nov 13, 2020_
 
 ### Crypto
 
@@ -119,13 +119,13 @@ Crypto Data: **0** - _released on: ND_
 
 ### Auth
 
-Auth: **0.1.5** - _released on: Nov 12, 2020_
+Auth: **0.1.6** - _released on: Nov 13, 2020_
 
-Auth Domain: **0.1.5** - _released on: Nov 12, 2020_
+Auth Domain: **0.1.6** - _released on: Nov 13, 2020_
 
-Auth Presentation: **0.1.5** - _released on: Nov 12, 2020_
+Auth Presentation: **0.1.6** - _released on: Nov 13, 2020_
 
-Auth Data: **0.1.5** - _released on: Nov 12, 2020_
+Auth Data: **0.1.6** - _released on: Nov 13, 2020_
 
 ### Account
 
@@ -140,13 +140,13 @@ Account Data: **0.1.2** - _released on: Nov 12, 2020_
 
 ### Account Manager
 
-Account Manager: **0.1.2** - _released on: Nov 12, 2020_
+Account Manager: **0.1.3** - _released on: Nov 13, 2020_
 
 Account Manager Domain: **0.1.2** - _released on: Nov 12, 2020_
 
 Account Manager Presentation: **0.1.2** - _released on: Nov 12, 2020_
 
-Account Manager Data: **0.1.2** - _released on: Nov 12, 2020_
+Account Manager Data: **0.1.3** - _released on: Nov 13, 2020_
 
 Account Manager Dagger: **0.1.2** - _released on: Nov 12, 2020_
 
