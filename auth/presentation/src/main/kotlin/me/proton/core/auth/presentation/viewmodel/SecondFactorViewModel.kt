@@ -24,13 +24,18 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.entity.ScopeInfo
+import me.proton.core.auth.domain.entity.User
+import me.proton.core.auth.domain.usecase.GetUser
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PerformUserSetup
+import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.domain.usecase.onError
 import me.proton.core.auth.domain.usecase.onProcessing
 import me.proton.core.auth.domain.usecase.onSecondFactorSuccess
 import me.proton.core.auth.domain.usecase.onSuccess
+import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import studio.forface.viewstatestore.ViewStateStore
@@ -40,9 +45,11 @@ import studio.forface.viewstatestore.ViewStateStoreScope
  * View Model that serves the Second Factor authentication.
  */
 class SecondFactorViewModel @ViewModelInject constructor(
-    private val accountWorkflowHandler: AccountWorkflowHandler,
+    private val accountWorkflow: AccountWorkflowHandler,
     private val performSecondFactor: PerformSecondFactor,
-    private val performUserSetup: PerformUserSetup
+    private val performUserSetup: PerformUserSetup,
+    private val updateUsernameOnlyAccount: UpdateUsernameOnlyAccount,
+    private val getUser: GetUser,
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     val secondFactorState = ViewStateStore<PerformSecondFactor.State>().lock
@@ -51,43 +58,94 @@ class SecondFactorViewModel @ViewModelInject constructor(
         sessionId: SessionId,
         password: ByteArray,
         secondFactorCode: String,
-        isTwoPassModeNeeded: Boolean
+        isTwoPassModeNeeded: Boolean,
+        requiredAccountType: AccountType
     ) {
         performSecondFactor(sessionId, secondFactorCode)
             .onProcessing { secondFactorState.post(it) }
             .onSecondFactorSuccess { success ->
-                accountWorkflowHandler.handleSecondFactorSuccess(sessionId, success.scopeInfo.scopes)
+                accountWorkflow.handleSecondFactorSuccess(sessionId, success.scopeInfo.scopes)
                 // No more steps -> directly setup user.
-                if (!isTwoPassModeNeeded) {
-                    // Raise Success.UserSetup.
-                    setupUser(password, success.sessionId, success.scopeInfo)
-                } else {
-                    // Raise Success.SecondFactor.
-                    secondFactorState.post(
-                        PerformSecondFactor.State.Success.SecondFactor(
-                            success.sessionId,
-                            success.scopeInfo
-                        )
-                    )
-                }
+                getUser(sessionId)
+                    .onSuccess { userResult ->
+                        onUserDetails(sessionId, password, userResult.user, success.scopeInfo, isTwoPassModeNeeded, requiredAccountType)
+                    }
+                    .onError { error -> secondFactorState.post(PerformSecondFactor.State.Error.FetchUser(error))
+                    }
+                    .launchIn(viewModelScope)
             }
             .onError { secondFactorState.post(it) }
             .launchIn(viewModelScope)
     }
 
-    private fun setupUser(password: ByteArray, sessionId: SessionId, scopeInfo: ScopeInfo) {
-        performUserSetup(sessionId, password)
+    /**
+     * Execute a routine when user details result is back from the API.
+     */
+    private suspend fun onUserDetails(
+        sessionId: SessionId,
+        password: ByteArray,
+        user: User,
+        scopeInfo: ScopeInfo,
+        isTwoPassModeNeeded: Boolean,
+        requiredAccountType: AccountType
+    ) {
+        if (isTwoPassModeNeeded && user.keys.isEmpty()) {
+            // This is because of a bug on the API, where accounts with no keys return PasswordMode = 2.
+            accountWorkflow.handleTwoPassModeSuccess(sessionId)
+        }
+        val userResult = UserResult.from(user)
+        if (!isTwoPassModeNeeded && user.keys.isNotEmpty()) {
+            // Raise Success.SecondFactor.
+            secondFactorState.post(
+                PerformSecondFactor.State.Success.SecondFactor(
+                    sessionId,
+                    scopeInfo
+                )
+            )
+        } else {
+            if (userResult.addresses.currentAccountType() == AccountType.Username
+                && !userResult.addresses.satisfiesAccountType(requiredAccountType)
+            ) {
+                // we upgrade it
+                upgradeUsernameOnlyAccount(
+                    sessionId = sessionId,
+                    username = user.name!!, // for these accounts [AccountType.Username], name should always be present.
+                    passphrase = password,
+                    scopeInfo = scopeInfo,
+                    user = user
+                )
+            }
+        }
+    }
+
+    private fun setupUser(password: ByteArray, sessionId: SessionId, scopeInfo: ScopeInfo, user: User) {
+        performUserSetup(sessionId, password, user)
             .onSuccess { success ->
                 secondFactorState.post(PerformSecondFactor.State.Success.UserSetup(sessionId, scopeInfo, success.user))
             }
             .onError { error ->
-                accountWorkflowHandler.handleSecondFactorFailed(sessionId)
+                accountWorkflow.handleSecondFactorFailed(sessionId)
                 secondFactorState.post(PerformSecondFactor.State.Error.UserSetup(error))
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun upgradeUsernameOnlyAccount(
+        sessionId: SessionId,
+        username: String,
+        passphrase: ByteArray,
+        scopeInfo: ScopeInfo,
+        user: User
+    ) {
+        updateUsernameOnlyAccount(sessionId = sessionId, username = username, passphrase = passphrase)
+            .onSuccess { setupUser(passphrase, sessionId, scopeInfo, user) }
+            .onError {
+                secondFactorState.post(PerformSecondFactor.State.Error.AccountUpgrade(it))
             }
             .launchIn(viewModelScope)
     }
 
     fun stopSecondFactorFlow(
         sessionId: SessionId
-    ): Job = viewModelScope.launch { accountWorkflowHandler.handleSecondFactorFailed(sessionId) }
+    ): Job = viewModelScope.launch { accountWorkflow.handleSecondFactorFailed(sessionId) }
 }

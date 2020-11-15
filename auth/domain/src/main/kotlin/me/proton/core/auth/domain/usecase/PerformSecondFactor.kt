@@ -63,7 +63,9 @@ class PerformSecondFactor @Inject constructor(
             data class Message(val message: String?, val localError: Int = 0) : Error()
             object EmptyCredentials : Error()
             object Unrecoverable : Error()
-            data class UserSetup(val state: PerformUserSetup.State.Error) : State.Error()
+            data class UserSetup(val state: PerformUserSetup.State.Error) : Error()
+            data class FetchUser(val state: GetUser.State) : Error()
+            data class AccountUpgrade(val state: UpdateUsernameOnlyAccount.State.Error) : Error()
         }
     }
 

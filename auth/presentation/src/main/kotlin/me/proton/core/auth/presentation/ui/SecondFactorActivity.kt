@@ -26,7 +26,9 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.User
+import me.proton.core.auth.domain.usecase.GetUser
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
+import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.ScopeResult
@@ -98,6 +100,14 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                     showError(getString(R.string.auth_login_general_error))
                     onBackPressed()
                 }
+                is PerformSecondFactor.State.Error.FetchUser -> onError(
+                    false,
+                    (it.state as GetUser.State.Error.Message).message
+                )
+                is PerformSecondFactor.State.Error.AccountUpgrade -> onError(
+                    false,
+                    (it.state as UpdateUsernameOnlyAccount.State.Error.Message).message
+                )
             }.exhaustive
         }
     }
@@ -121,7 +131,8 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                         password = input.password,
                         sessionId = SessionId(input.sessionId),
                         secondFactorCode = secondFactorCode,
-                        isTwoPassModeNeeded = input.isTwoPassModeNeeded
+                        isTwoPassModeNeeded = input.isTwoPassModeNeeded,
+                        requiredAccountType = input.requiredAccountType
                     )
                 }
         }

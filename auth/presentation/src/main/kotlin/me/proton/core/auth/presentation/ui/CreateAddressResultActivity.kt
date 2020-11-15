@@ -79,7 +79,7 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
             createAddressButton.onClick {
                 // If there is no generated mailbox passphrase here, then we should revert the whole process to the
                 // login state.
-                viewModel.upgradeAccount(user.addresses, sessionId, username, domain, user.passphrase!!)
+                viewModel.upgradeAccount(sessionId, username, domain, user.passphrase!!)
             }
             if (externalEmail == null) {
                 // this means we are upgrading username-only account
@@ -105,7 +105,6 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
         }
 
         viewModel.externalAccountUpgradeState.observeData(::onExternalAccountResultState)
-        viewModel.usernameOnlyAccountUpgradeState.observeData(::onUsernameOnlyResultState)
     }
 
     private fun onExternalAccountResultState(state: UpdateExternalAccount.State) {

@@ -64,7 +64,7 @@ data class UserResult(
             displayName = user.displayName,
             keys = user.keys.map { UserKeyResult.from(it) },
             passphrase = user.passphrase,
-            addresses = user.addresses?.let { AddressesResult.from(it) }
+            addresses = AddressesResult.from(user.addresses)
         )
     }
 }

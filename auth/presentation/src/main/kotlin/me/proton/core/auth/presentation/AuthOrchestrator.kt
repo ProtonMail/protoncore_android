@@ -24,7 +24,6 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.AccountType
-import me.proton.core.auth.presentation.entity.AddressesResult
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.ScopeResult
@@ -36,8 +35,6 @@ import me.proton.core.auth.presentation.ui.StartUsernameChooseForAccountUpgrade
 import me.proton.core.auth.presentation.ui.StartLogin
 import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
-import me.proton.core.auth.presentation.ui.StartAccountUpgrade
-import me.proton.core.auth.presentation.ui.UpgradeInput
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
@@ -56,7 +53,6 @@ class AuthOrchestrator @Inject constructor(
     private var twoPassModeWorkflowLauncher: ActivityResultLauncher<TwoPassModeInput>? = null
     private var humanWorkflowLauncher: ActivityResultLauncher<HumanVerificationInput>? = null
     private var createAddressLauncher: ActivityResultLauncher<CreateAddressInput>? = null
-    private var upgradeLauncher: ActivityResultLauncher<UpgradeInput>? = null
     // endregion
 
     private var onLoginResultListener: (result: LoginResult?) -> Unit = {}
@@ -116,7 +112,13 @@ class AuthOrchestrator @Inject constructor(
     ) {
         user.addresses.let { addresses ->
             if (!addresses.satisfiesAccountType(requiredAccountType)) {
-                startUpgradeAccountWorkflow(addresses, user, sessionId)
+                startCreateAddressWorkflow(
+                    CreateAddressInput(
+                        sessionId = SessionId(sessionId),
+                        externalEmail = user.email, // this should be checked in real world, maybe username?
+                        user = user
+                    )
+                )
             } else {
                 context.lifecycleScope.launch {
                     accountWorkflowHandler.handleAccountReady(userId = UserId(user.id))
@@ -189,20 +191,6 @@ class AuthOrchestrator @Inject constructor(
             }
         }
 
-    private fun registerUpgradeUsernameOnlyResult(
-        context: ComponentActivity
-    ): ActivityResultLauncher<UpgradeInput> =
-        context.registerForActivityResult(
-            StartAccountUpgrade()
-        ) { result ->
-            result?.let {
-                context.lifecycleScope.launch {
-                    accountWorkflowHandler.handleAccountReady(userId = UserId(it.id))
-                }
-                onUserResultListener(result)
-            }
-        }
-
     private fun startSecondFactorWorkflow(
         sessionId: String,
         isTwoPassModeNeeded: Boolean,
@@ -218,35 +206,6 @@ class AuthOrchestrator @Inject constructor(
         createAddressLauncher?.launch(input)
             ?: throw IllegalStateException("You must call register before any start workflow function!")
     }
-
-    private fun startUpgradeUsernameWorkflow(input: UpgradeInput) {
-        upgradeLauncher?.launch(input)
-            ?: throw IllegalStateException("You must call register before any start workflow function!")
-    }
-
-    private fun startUpgradeAccountWorkflow(
-        addressResult: AddressesResult,
-        user: UserResult,
-        sessionId: String
-    ) {
-        if (addressResult.currentAccountType() == AccountType.Username) {
-            startUpgradeUsernameWorkflow(
-                UpgradeInput(
-                    sessionId = SessionId(sessionId),
-                    user = user,
-                    username = user.name ?: "" // should be checked
-                )
-            )
-        } else {
-            startCreateAddressWorkflow(
-                CreateAddressInput(
-                    sessionId = SessionId(sessionId),
-                    externalEmail = user.email, // this should be checked in real world, maybe username?
-                    user = user
-                )
-            )
-        }
-    }
     // endregion
 
     // region public API
@@ -261,7 +220,6 @@ class AuthOrchestrator @Inject constructor(
         secondFactorWorkflowLauncher = registerSecondFactorResult(context)
         twoPassModeWorkflowLauncher = registerTwoPassModeResult(context)
         createAddressLauncher = registerCreateAddressResult(context)
-        upgradeLauncher = registerUpgradeUsernameOnlyResult(context)
     }
 
     /**

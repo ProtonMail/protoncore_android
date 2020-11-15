@@ -27,6 +27,7 @@ import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.usecase.GetUser
 import me.proton.core.auth.domain.usecase.PerformLogin
+import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
 import me.proton.core.auth.presentation.entity.LoginInput
@@ -96,6 +97,10 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                     false,
                     (it.state as GetUser.State.Error.Message).message
                 )
+                is PerformLogin.State.Error.AccountUpgrade -> onError(
+                    false,
+                    (it.state as UpdateUsernameOnlyAccount.State.Error.Message).message
+                )
             }.exhaustive
         }
     }
@@ -149,7 +154,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                 .onFailure { passwordInput.setInputError() }
                 .onSuccess { password ->
                     signInButton.setLoading()
-                    viewModel.startLoginWorkflow(username, password.toByteArray())
+                    viewModel.startLoginWorkflow(username, password.toByteArray(), input.requiredAccountType)
                 }
         }
     }
