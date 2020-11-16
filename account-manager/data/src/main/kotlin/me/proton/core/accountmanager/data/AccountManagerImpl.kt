@@ -68,8 +68,8 @@ class AccountManagerImpl constructor(
 
     override suspend fun removeAccount(userId: UserId) {
         accountRepository.getAccountOrNull(userId)?.let { account ->
-            accountRepository.updateAccountState(account.userId, AccountState.Removed)
             account.sessionId?.let { removeSession(it) }
+            accountRepository.updateAccountState(account.userId, AccountState.Removed)
             accountRepository.deleteAccount(account.userId)
         }
     }
@@ -87,16 +87,18 @@ class AccountManagerImpl constructor(
     override fun getSessions(): Flow<List<Session>> =
         accountRepository.getSessions()
 
+    // TODO: Use accountRepository.onAccountStateChanged().
     override fun onAccountStateChanged(): Flow<Account> = getAccounts().onEntityChanged(
         getEntityKey = { it.userId },
         equalPredicate = { previous, current -> previous.state == current.state },
-        emitNewEntity = true
+        emitNewEntity = false
     ).distinctUntilChanged()
 
+    // TODO: Use accountRepository.onSessionStateChanged().
     override fun onSessionStateChanged(): Flow<Account> = getAccounts().onEntityChanged(
-        getEntityKey = { it.sessionId },
+        getEntityKey = { it.userId },
         equalPredicate = { previous, current -> previous.sessionState == current.sessionState },
-        emitNewEntity = true
+        emitNewEntity = false
     ).filter { it.sessionState != null }.distinctUntilChanged()
 
     override fun onHumanVerificationNeeded(): Flow<Pair<Account, HumanVerificationDetails?>> =

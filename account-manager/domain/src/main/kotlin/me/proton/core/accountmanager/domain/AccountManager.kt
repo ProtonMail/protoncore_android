@@ -77,22 +77,16 @@ abstract class AccountManager(
 
     /**
      * Flow of [Account] where [Account.state] changed.
-     *
-     * Note: Initial/first state after subscribing is considered as changed.
      */
     abstract fun onAccountStateChanged(): Flow<Account>
 
     /**
      * Flow of [Account] where [Account.sessionState] changed.
-     *
-     * Note: Initial/first state after subscribing is considered as changed.
      */
     abstract fun onSessionStateChanged(): Flow<Account>
 
     /**
      * Flow of [Account] where [Account.sessionState] changed to [SessionState.HumanVerificationNeeded].
-     *
-     * Note: Initial/first state after subscribing is considered as changed.
      */
     abstract fun onHumanVerificationNeeded(): Flow<Pair<Account, HumanVerificationDetails?>>
 

@@ -122,6 +122,9 @@ class AccountRepositoryImplTest {
         coEvery { db.inTransaction(capture(transactionLambda)) } coAnswers {
             transactionLambda.captured.invoke()
         }
+
+        coEvery { accountDao.getByUserId(any()) } returns account1
+        coEvery { accountDao.getBySessionId(any()) } returns account1
     }
 
     @Test

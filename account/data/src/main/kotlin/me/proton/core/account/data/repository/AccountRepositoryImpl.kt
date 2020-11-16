@@ -19,6 +19,8 @@
 package me.proton.core.account.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -53,6 +55,9 @@ class AccountRepositoryImpl(
 
     private val humanVerificationDetails: ConcurrentHashMap<SessionId, HumanVerificationDetails?> = ConcurrentHashMap()
 
+    private val accountStateChanged = MutableSharedFlow<Account>()
+    private val sessionStateChanged = MutableSharedFlow<Account>()
+
     private suspend fun updateAccountMetadata(userId: UserId) =
         accountMetadataDao.insertOrUpdate(
             AccountMetadataEntity(
@@ -81,10 +86,10 @@ class AccountRepositoryImpl(
             .distinctUntilChanged()
 
     override suspend fun getAccountOrNull(userId: UserId): Account? =
-        accountDao.findByUserId(userId.id).firstOrNull()?.toAccount()
+        accountDao.getByUserId(userId.id)?.toAccount()
 
     override suspend fun getAccountOrNull(sessionId: SessionId): Account? =
-        accountDao.findBySessionId(sessionId.id).firstOrNull()?.toAccount()
+        accountDao.getBySessionId(sessionId.id)?.toAccount()
 
     override fun getSessions(): Flow<List<Session>> =
         sessionDao.findAll(product).map { list ->
@@ -136,6 +141,12 @@ class AccountRepositoryImpl(
         }
     }
 
+    override fun onAccountStateChanged(): Flow<Account> =
+        accountStateChanged.asSharedFlow().distinctUntilChanged()
+
+    override fun onSessionStateChanged(): Flow<Account> =
+        sessionStateChanged.asSharedFlow().distinctUntilChanged()
+
     override suspend fun updateAccountState(userId: UserId, state: AccountState) {
         db.inTransaction {
             when (state) {
@@ -148,17 +159,20 @@ class AccountRepositoryImpl(
                 AccountState.TwoPassModeFailed -> deleteAccountMetadata(userId)
             }.exhaustive
             accountDao.updateAccountState(userId.id, state)
+            getAccountOrNull(userId)?.let { accountStateChanged.emit(it) }
         }
     }
 
     override suspend fun updateAccountState(sessionId: SessionId, state: AccountState) {
-        getAccountOrNull(sessionId)?.let {
-            updateAccountState(it.userId, state)
-        }
+        getAccountOrNull(sessionId)?.let { updateAccountState(it.userId, state) }
     }
 
-    override suspend fun updateSessionState(sessionId: SessionId, state: SessionState) =
-        accountDao.updateSessionState(sessionId.id, state)
+    override suspend fun updateSessionState(sessionId: SessionId, state: SessionState) {
+        db.inTransaction {
+            accountDao.updateSessionState(sessionId.id, state)
+            getAccountOrNull(sessionId)?.let { sessionStateChanged.emit(it) }
+        }
+    }
 
     override suspend fun updateSessionScopes(sessionId: SessionId, scopes: List<String>) =
         sessionDao.updateScopes(sessionId.id, CommonConverters.fromListOfStringToString(scopes).orEmpty())

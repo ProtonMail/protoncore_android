@@ -83,9 +83,8 @@ class AccountManagerImplTest {
         assertEquals(3, accountLists.size)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(2, stateLists.size)
-        assertEquals(account1.state, stateLists[0].state)
-        assertEquals(AccountState.Disabled, stateLists[1].state)
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.Disabled, stateLists[0].state)
     }
 
     @Test
@@ -100,9 +99,8 @@ class AccountManagerImplTest {
         assertEquals(3, accountLists.size)
 
         val stateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, stateLists.size)
-        assertEquals(account1.sessionState, stateLists[0].sessionState)
-        assertEquals(SessionState.ForceLogout, stateLists[1].sessionState)
+        assertEquals(1, stateLists.size)
+        assertEquals(SessionState.ForceLogout, stateLists[0].sessionState)
     }
 
     @Test
@@ -112,10 +110,9 @@ class AccountManagerImplTest {
         accountManager.handleTwoPassModeSuccess(account1.sessionId!!)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(3, stateLists.size)
-        assertEquals(account1.state, stateLists[0].state)
-        assertEquals(AccountState.TwoPassModeSuccess, stateLists[1].state)
-        assertEquals(AccountState.Ready, stateLists[2].state)
+        assertEquals(2, stateLists.size)
+        assertEquals(AccountState.TwoPassModeSuccess, stateLists[0].state)
+        assertEquals(AccountState.Ready, stateLists[1].state)
     }
 
     @Test
@@ -125,9 +122,8 @@ class AccountManagerImplTest {
         accountManager.handleTwoPassModeFailed(account1.sessionId!!)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(2, stateLists.size)
-        assertEquals(account1.state, stateLists[0].state)
-        assertEquals(AccountState.TwoPassModeFailed, stateLists[1].state)
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.TwoPassModeFailed, stateLists[0].state)
     }
 
     @Test
@@ -139,8 +135,7 @@ class AccountManagerImplTest {
         accountManager.handleSecondFactorSuccess(session1.sessionId, newScopes)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(account1.state, stateLists[0].state)
+        assertEquals(0, stateLists.size)
 
         val sessionLists = accountManager.getSessions().toList()
         assertEquals(2, sessionLists.size)
@@ -148,10 +143,9 @@ class AccountManagerImplTest {
         assertEquals(newScopes, sessionLists[1][0].scopes)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(3, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.SecondFactorSuccess, sessionStateLists[1].sessionState)
-        assertEquals(SessionState.Authenticated, sessionStateLists[2].sessionState)
+        assertEquals(2, sessionStateLists.size)
+        assertEquals(SessionState.SecondFactorSuccess, sessionStateLists[0].sessionState)
+        assertEquals(SessionState.Authenticated, sessionStateLists[1].sessionState)
     }
 
     @Test
@@ -162,14 +156,12 @@ class AccountManagerImplTest {
         accountManager.handleSecondFactorFailed(session1.sessionId)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(2, stateLists.size)
-        assertEquals(account1.state, stateLists[0].state)
-        assertEquals(AccountState.Disabled, stateLists[1].state)
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.Disabled, stateLists[0].state)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.SecondFactorFailed, sessionStateLists[1].sessionState)
+        assertEquals(1, sessionStateLists.size)
+        assertEquals(SessionState.SecondFactorFailed, sessionStateLists[0].sessionState)
     }
 
     @Test
@@ -183,8 +175,7 @@ class AccountManagerImplTest {
         accountManager.handleHumanVerificationSuccess(session1.sessionId, tokenType, tokenCode)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(account1.state, stateLists[0].state)
+        assertEquals(0, stateLists.size)
 
         val sessionLists = accountManager.getSessions().toList()
         assertEquals(2, sessionLists.size)
@@ -192,10 +183,9 @@ class AccountManagerImplTest {
         assertEquals(headers, sessionLists[1][0].headers)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(3, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.HumanVerificationSuccess, sessionStateLists[1].sessionState)
-        assertEquals(SessionState.Authenticated, sessionStateLists[2].sessionState)
+        assertEquals(2, sessionStateLists.size)
+        assertEquals(SessionState.HumanVerificationSuccess, sessionStateLists[0].sessionState)
+        assertEquals(SessionState.Authenticated, sessionStateLists[1].sessionState)
     }
 
     @Test
@@ -205,12 +195,10 @@ class AccountManagerImplTest {
         accountManager.handleHumanVerificationFailed(session1.sessionId)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(account1.state, stateLists[0].state)
+        assertEquals(0, stateLists.size)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.HumanVerificationFailed, sessionStateLists[1].sessionState)
+        assertEquals(1, sessionStateLists.size)
+        assertEquals(SessionState.HumanVerificationFailed, sessionStateLists[0].sessionState)
     }
 }
