@@ -46,7 +46,10 @@ class AccountManagerImpl constructor(
 ) : AccountManager(product), AccountWorkflowHandler {
 
     private suspend fun removeSession(sessionId: SessionId) {
-        authRepository.revokeSession(sessionId)
+        accountRepository.getAccountOrNull(sessionId)?.let { account ->
+            if (account.sessionState != SessionState.ForceLogout)
+                authRepository.revokeSession(sessionId)
+        }
         accountRepository.deleteSession(sessionId)
     }
 
