@@ -19,8 +19,9 @@
 package me.proton.core.domain.arch.extension
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.scan
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Emit sequentially all [Entity] that doesn't match the [equalPredicate] between consecutive [List] of [Entity]
@@ -53,29 +54,21 @@ fun <Entity, Key> Flow<List<Entity>>.onEntityChanged(
     getEntityKey: (Entity) -> Key,
     equalPredicate: (old: Entity, new: Entity) -> Boolean = { old, new -> old == new },
     emitNewEntity: Boolean = true
-): Flow<Entity> = scan(
-    // Map[Key] = Pair<Entity, hasChanged>.
-    mutableMapOf<Key, Pair<Entity, Boolean>>(),
-    { oldMap, newList ->
-        val newKeyList = mutableMapOf<Key, Entity>()
+): Flow<Entity> = flow {
+    val map = ConcurrentHashMap<Key, Entity>()
+    collect { newList ->
+        val newKeySet = mutableSetOf<Key>()
 
-        // Compare equality for each Entity List.
         newList.forEach { new ->
             val key = getEntityKey(new)
-            val old = oldMap[key]
-            val hasChanged = old?.first?.let { !equalPredicate(it, new) } ?: emitNewEntity
-            oldMap[key] = Pair(new, hasChanged)
-
-            // Remember current Entity Keys.
-            newKeyList[key] = new
+            newKeySet.add(key)
+            val old = map[key]
+            val hasChanged = if (old != null) !equalPredicate(old, new) else emitNewEntity
+            if (hasChanged) emit(new)
+            map[key] = new
         }
 
-        // Remove not anymore existing Entity and return.
-        oldMap.filter { newKeyList.containsKey(it.key) }.toMutableMap()
-    }
-).transform { changesMap ->
-    changesMap.forEach {
-        val (entity, hasChanged) = it.value
-        if (hasChanged) emit(entity)
+        val oldKeys = map.filterKeys { !newKeySet.contains(it) }
+        oldKeys.forEach { map.remove(it.key) }
     }
 }
