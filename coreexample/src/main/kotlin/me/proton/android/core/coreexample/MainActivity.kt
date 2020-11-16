@@ -24,26 +24,33 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
-import me.proton.core.presentation.ui.ProtonActivity
-import me.proton.core.presentation.utils.onClick
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
+import me.proton.core.accountmanager.presentation.observe
+import me.proton.core.accountmanager.presentation.onAccountDisabled
+import me.proton.core.accountmanager.presentation.onAccountRemoved
 import me.proton.core.auth.domain.entity.AccountType
+import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.onHumanVerificationResult
-import me.proton.core.auth.presentation.onScopeResult
 import me.proton.core.auth.presentation.onLoginResult
+import me.proton.core.auth.presentation.onScopeResult
 import me.proton.core.auth.presentation.onUserResult
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.onClick
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -54,6 +61,9 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
     @Inject
     lateinit var authOrchestrator: AuthOrchestrator
+
+    @Inject
+    lateinit var authRepository: AuthRepository
 
     override fun layoutId(): Int = R.layout.activity_main
 
@@ -137,5 +147,25 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         accountManager.onHumanVerificationNeeded().onEach { (account, details) ->
             authOrchestrator.startHumanVerificationWorkflow(account.sessionId!!, details)
         }.launchIn(lifecycleScope)
+
+        // Used to test session ForceLogout.
+        accountManager.observe(lifecycleScope)
+            .onAccountDisabled {
+                Timber.d("onAccountDisabled -> $it")
+                // accountManager.removeAccount(it.userId)
+            }
+            .onAccountRemoved {
+                Timber.d("onAccountRemoved -> $it")
+            }
+
+        // Api Call every 10sec (e.g. to test ForceLogout).
+        lifecycleScope.launch {
+            while (true) {
+                delay(10000)
+                accountManager.getPrimaryAccount().firstOrNull()?.let { account ->
+                    account.sessionId?.let { authRepository.getUser(it) }
+                }
+            }
+        }
     }
 }
