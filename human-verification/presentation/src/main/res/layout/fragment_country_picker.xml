@@ -24,19 +24,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:windowBackground"
-        android:paddingTop="@dimen/parent_padding">
+        android:paddingTop="@dimen/parent_padding"
+        android:paddingStart="@dimen/parent_padding"
+        android:paddingEnd="@dimen/parent_padding" >
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/closeButton"
-            android:layout_width="@dimen/human_verification_close_button"
-            android:layout_height="@dimen/human_verification_close_button"
-            android:layout_marginStart="@dimen/parent_padding"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@color/icon_norm"
+            style="@style/ProtonButton.Navigation.Borderless"
+            app:icon="@drawable/ic_close"
             app:layout_constraintBottom_toBottomOf="@+id/filterEditText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/filterEditText"
-            app:srcCompat="@drawable/ic_close" />
+            app:layout_constraintTop_toTopOf="@+id/filterEditText" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/filterEditText"

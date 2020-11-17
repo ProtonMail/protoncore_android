@@ -19,7 +19,6 @@
 
 <resources>
     <dimen name="human_verification_header_height">60dp</dimen>
-    <dimen name="human_verification_close_button">24dp</dimen>
     <dimen name="human_verification_help_button_width">60dp</dimen>
     <dimen name="human_verification_title_size">20sp</dimen>
     <dimen name="human_verification_subtitle_size">16sp</dimen>

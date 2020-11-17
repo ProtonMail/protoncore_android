@@ -42,7 +42,6 @@
         android:layout_height="wrap_content"
         app:errorEnabled="true"
         app:hintEnabled="false"
-        tools:endIconDrawable="@drawable/ic_clear"
         tools:endIconMode="clear_text"
         tools:helperText="Optional help text"
         tools:suffixText="\@protonmail.com">
