@@ -36,8 +36,8 @@
         <item name="colorOnSurface">?brand</item>
         <item name="colorOnBackground">?brand</item>
 
-        <!-- Edge-to-edge app content: https://developer.android.com/training/gestures/gesturenav#edge-to-edge -->
-        <item name="android:navigationBarColor">?colorSecondaryVariant</item>
+        <!-- Edge-to-edge app content -->
+        <item name="android:navigationBarColor">@color/nav_bar</item>
 
         <!-- Remap legacy AppCompat attributes to MaterialComponent attributes -->
         <item name="colorPrimaryDark">?colorPrimaryVariant</item>
