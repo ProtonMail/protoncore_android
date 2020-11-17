@@ -36,6 +36,14 @@
         <item name="colorOnSurface">?brand</item>
         <item name="colorOnBackground">?brand</item>
 
+        <!-- Text colors -->
+        <item name="android:textColor">@color/text_norm</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="android:textColorPrimary">@color/text_norm</item>
+        <item name="android:textColorPrimaryInverse">@color/text_inverted</item>
+        <item name="android:textColorSecondary">@color/text_weak</item>
+        <item name="android:textColorSecondaryInverse">@color/text_inverted</item>
+
         <!-- Edge-to-edge app content -->
         <item name="android:navigationBarColor">@color/nav_bar</item>
 
