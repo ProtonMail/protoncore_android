@@ -151,8 +151,8 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         // Used to test session ForceLogout.
         accountManager.observe(lifecycleScope)
             .onAccountDisabled {
-                Timber.d("onAccountDisabled -> $it")
-                // accountManager.removeAccount(it.userId)
+                Timber.d("onAccountDisabled -> remove $it")
+                accountManager.removeAccount(it.userId)
             }
             .onAccountRemoved {
                 Timber.d("onAccountRemoved -> $it")

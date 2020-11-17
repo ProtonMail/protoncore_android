@@ -43,6 +43,7 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.exhaustive
 import java.util.concurrent.ConcurrentHashMap
 
+@Suppress("TooManyFunctions")
 class AccountRepositoryImpl(
     private val product: Product,
     private val db: AccountDatabase,
@@ -55,8 +56,19 @@ class AccountRepositoryImpl(
 
     private val humanVerificationDetails: ConcurrentHashMap<SessionId, HumanVerificationDetails?> = ConcurrentHashMap()
 
-    private val accountStateChanged = MutableSharedFlow<Account>()
-    private val sessionStateChanged = MutableSharedFlow<Account>()
+    // Accept 10 nested/concurrent state changes -> extraBufferCapacity.
+    private val accountStateChanged = MutableSharedFlow<Account>(extraBufferCapacity = 10)
+    private val sessionStateChanged = MutableSharedFlow<Account>(extraBufferCapacity = 10)
+
+    private fun tryEmitAccountStateChanged(account: Account) {
+        if (!accountStateChanged.tryEmit(account))
+            throw IllegalStateException("Too many nested account state changes, extra buffer capacity exceeded.")
+    }
+
+    private fun tryEmitSessionStateChanged(account: Account) {
+        if (!sessionStateChanged.tryEmit(account))
+            throw IllegalStateException("Too many nested session state changes, extra buffer capacity exceeded.")
+    }
 
     private suspend fun updateAccountMetadata(userId: UserId) =
         accountMetadataDao.insertOrUpdate(
@@ -159,7 +171,7 @@ class AccountRepositoryImpl(
                 AccountState.TwoPassModeFailed -> deleteAccountMetadata(userId)
             }.exhaustive
             accountDao.updateAccountState(userId.id, state)
-            getAccountOrNull(userId)?.let { accountStateChanged.emit(it) }
+            getAccountOrNull(userId)?.let { tryEmitAccountStateChanged(it) }
         }
     }
 
@@ -170,7 +182,7 @@ class AccountRepositoryImpl(
     override suspend fun updateSessionState(sessionId: SessionId, state: SessionState) {
         db.inTransaction {
             accountDao.updateSessionState(sessionId.id, state)
-            getAccountOrNull(sessionId)?.let { sessionStateChanged.emit(it) }
+            getAccountOrNull(sessionId)?.let { tryEmitSessionStateChanged(it) }
         }
     }
 

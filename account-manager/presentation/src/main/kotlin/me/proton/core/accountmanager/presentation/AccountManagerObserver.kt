@@ -46,8 +46,7 @@ class AccountManagerObserver(
 
     init {
         accountManager.onAccountStateChanged().onEach {
-            // Launch a new Job to make sure listeners can properly finish their suspend callback,
-            // because if listeners change AccountState within the callback, suspend callback could be cancelled.
+            // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
             scope.launch {
                 when (it.state) {
                     AccountState.NotReady,
@@ -62,8 +61,7 @@ class AccountManagerObserver(
         }.launchIn(scope)
 
         accountManager.onSessionStateChanged().onEach {
-            // Launch a new Job to make sure listeners can properly finish their suspend callback,
-            // because if listeners change AccountState within the callback, suspend callback could be cancelled.
+            // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
             scope.launch {
                 when (it.sessionState) {
                     null -> Unit // Nothing to do.

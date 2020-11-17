@@ -72,38 +72,6 @@ class AccountManagerImplTest {
     }
 
     @Test
-    fun `on account state changed`() = runBlockingTest {
-        every { mocks.accountRepository.getAccounts() } returns flowOf(
-            listOf(account1),
-            listOf(account1),
-            listOf(account1.copy(state = AccountState.Disabled))
-        )
-
-        val accountLists = accountManager.getAccounts().toList()
-        assertEquals(3, accountLists.size)
-
-        val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(AccountState.Disabled, stateLists[0].state)
-    }
-
-    @Test
-    fun `on session state changed`() = runBlockingTest {
-        every { mocks.accountRepository.getAccounts() } returns flowOf(
-            listOf(account1),
-            listOf(account1),
-            listOf(account1.copy(sessionState = SessionState.ForceLogout))
-        )
-
-        val accountLists = accountManager.getAccounts().toList()
-        assertEquals(3, accountLists.size)
-
-        val stateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(SessionState.ForceLogout, stateLists[0].sessionState)
-    }
-
-    @Test
     fun `on handleTwoPassModeSuccess`() = runBlockingTest {
         mocks.setupAccountRepository()
 
@@ -135,7 +103,8 @@ class AccountManagerImplTest {
         accountManager.handleSecondFactorSuccess(session1.sessionId, newScopes)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(0, stateLists.size)
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.Ready, stateLists[0].state)
 
         val sessionLists = accountManager.getSessions().toList()
         assertEquals(2, sessionLists.size)
@@ -175,7 +144,8 @@ class AccountManagerImplTest {
         accountManager.handleHumanVerificationSuccess(session1.sessionId, tokenType, tokenCode)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(0, stateLists.size)
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.Ready, stateLists[0].state)
 
         val sessionLists = accountManager.getSessions().toList()
         assertEquals(2, sessionLists.size)
