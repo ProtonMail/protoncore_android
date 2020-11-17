@@ -61,16 +61,7 @@ class CreateAddressResultViewModel @ViewModelInject constructor(
         domain: String? = null,
         passphrase: ByteArray
     ) {
-        upgradeExternalAccount(
-            sessionId,
-            username,
-            domain ?: this@CreateAddressResultViewModel.domain,
-            passphrase
-        )
-    }
-
-    private fun upgradeExternalAccount(sessionId: SessionId, username: String, domain: String, passphrase: ByteArray) {
-        updateExternalAccount(sessionId, username, domain, passphrase)
+        updateExternalAccount(sessionId, username, domain ?: this@CreateAddressResultViewModel.domain, passphrase)
             .onEach {
                 externalAccountUpgradeState.post(it)
             }

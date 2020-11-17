@@ -95,13 +95,28 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                 )
                 is PerformLogin.State.Error.FetchUser -> onError(
                     false,
-                    (it.state as GetUser.State.Error.Message).message
+                    (it.state as GetUser.State.Error.Message).message // this succeeds because it is the only option.
                 )
-                is PerformLogin.State.Error.AccountUpgrade -> onError(
-                    false,
-                    (it.state as UpdateUsernameOnlyAccount.State.Error.Message).message
-                )
+                is PerformLogin.State.Error.AccountUpgrade -> onUpdateAccountError(it.state)
             }.exhaustive
+        }
+    }
+
+    private fun onUpdateAccountError(errorState: UpdateUsernameOnlyAccount.State.Error) {
+        when (errorState) {
+            is UpdateUsernameOnlyAccount.State.Error.Message -> showError(errorState.message)
+            is UpdateUsernameOnlyAccount.State.Error.EmptyCredentials -> showError(
+                getString(R.string.auth_create_address_error_credentials)
+            )
+            is UpdateUsernameOnlyAccount.State.Error.EmptyDomain -> showError(
+                getString(R.string.auth_create_address_error_no_available_domain)
+            )
+            is UpdateUsernameOnlyAccount.State.Error.GeneratingPrivateKeyFailed -> showError(
+                getString(R.string.auth_create_address_error_private_key)
+            )
+            is UpdateUsernameOnlyAccount.State.Error.GeneratingSignedKeyListFailed -> showError(
+                getString(R.string.auth_create_address_error_signed_key_list)
+            )
         }
     }
 
@@ -111,7 +126,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
             LoginResult(
                 password = binding.passwordInput.text.toString().toByteArray(),
                 session = SessionResult.from(sessionInfo),
-                user = user?.let { UserResult.from(it) },
+                user = user?.let { UserResult.from(it, input.requiredAccountType) },
                 requiredAccountType = input.requiredAccountType
             )
         )

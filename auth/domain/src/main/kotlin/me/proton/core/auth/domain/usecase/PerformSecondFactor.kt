@@ -49,13 +49,16 @@ class PerformSecondFactor @Inject constructor(
         sealed class Success : State() {
             class SecondFactor(
                 val sessionId: SessionId,
-                val scopeInfo: ScopeInfo
+                val scopeInfo: ScopeInfo,
+                val user: User? = null,
+                val isTwoPassModeNeeded: Boolean? = null
             ) : Success()
 
             class UserSetup(
                 val sessionId: SessionId,
                 val scopeInfo: ScopeInfo,
-                val user: User
+                val user: User,
+                val isTwoPassModeNeeded: Boolean
             ) : Success()
         }
 

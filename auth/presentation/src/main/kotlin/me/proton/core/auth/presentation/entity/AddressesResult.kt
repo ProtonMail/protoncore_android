@@ -19,9 +19,7 @@
 package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
-import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.entity.Address
 import me.proton.core.auth.domain.entity.AddressType
 import me.proton.core.auth.domain.entity.Addresses
@@ -34,46 +32,6 @@ import me.proton.core.auth.domain.entity.FullAddressKey
 data class AddressesResult(
     val addresses: List<AddressResult>
 ) : Parcelable {
-
-    /**
-     * Checks if all addresses are of type [AddressType.EXTERNAL].
-     * This is useful when determining the [AccountType]. `true` for [AccountType.External].
-     */
-    @IgnoredOnParcel
-    val allExternal = addresses.all {
-        it.type == AddressType.EXTERNAL
-    }
-
-    /**
-     * Returns `true` if the account is of type [AccountType.Username].
-     */
-    @IgnoredOnParcel
-    val usernameOnly = addresses.isEmpty()
-
-    /**
-     * Client supplies the minimal [accountType] it needs to operate. The result is if current account satisfies the
-     * required account.
-     */
-    fun satisfiesAccountType(accountType: AccountType): Boolean {
-        return when (accountType) {
-            // if client needs Username account, then it should be fie with any account type
-            AccountType.Username -> true
-            // if client needs External account, we return true only if current account is External or Internal
-            AccountType.External -> !usernameOnly
-            // if client needs Internal only account to operate, we return true if current account is Internal only
-            AccountType.Internal -> !usernameOnly && !allExternal
-        }
-    }
-
-    /**
-     * Determines and returns current [AccountType].
-     */
-    fun currentAccountType(): AccountType =
-        when {
-            usernameOnly -> { AccountType.Username }
-            allExternal -> { AccountType.External }
-            else -> { AccountType.Internal }
-        }
 
     companion object {
         fun from(addresses: Addresses) = AddressesResult(

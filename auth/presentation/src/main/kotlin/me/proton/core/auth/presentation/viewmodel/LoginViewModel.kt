@@ -36,7 +36,6 @@ import me.proton.core.auth.domain.usecase.onError
 import me.proton.core.auth.domain.usecase.onLoginSuccess
 import me.proton.core.auth.domain.usecase.onProcessing
 import me.proton.core.auth.domain.usecase.onSuccess
-import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
@@ -79,7 +78,8 @@ class LoginViewModel @ViewModelInject constructor(
                     // But, we can not execute user request if second factor is needed (no sufficient scope).
                     getUser(SessionId(it.sessionInfo.sessionId))
                         .onSuccess { success ->
-                            onUserDetails(username, password, it.sessionInfo, success.user, requiredAccountType) }
+                            onUserDetails(username, password, it.sessionInfo, success.user, requiredAccountType)
+                        }
                         .onError { error -> loginState.post(PerformLogin.State.Error.FetchUser(error)) }
                         .launchIn(viewModelScope)
                 } else {
@@ -101,31 +101,31 @@ class LoginViewModel @ViewModelInject constructor(
         user: User,
         requiredAccountType: AccountType
     ) {
-        if (sessionInfo.isTwoPassModeNeeded && user.keys.isEmpty()) {
+        val session = if (sessionInfo.isTwoPassModeNeeded && user.keys.isEmpty()) {
             // This is because of a bug on the API, where accounts with no keys return PasswordMode = 2.
             accountWorkflow.handleTwoPassModeSuccess(SessionId(sessionInfo.sessionId))
+            sessionInfo.copy(passwordMode = 1)
+        } else {
+            sessionInfo
         }
-        val userResult = UserResult.from(user)
-        if (!sessionInfo.isTwoPassModeNeeded && user.keys.isNotEmpty()) {
+        if (!session.isTwoPassModeNeeded && user.keys.isNotEmpty()) {
             // If Password mode is 1 pass, we directly setup the user (aka Mailbox Login)
-            setupUser(password, sessionInfo, user)
+            setupUser(password, session, user)
         } else {
             // if there are no Address Keys and the current AccountType (Username) does not meet the required.
-            if (userResult.addresses.currentAccountType() == AccountType.Username
-                && !userResult.addresses.satisfiesAccountType(requiredAccountType)
-            ) {
+            if (user.keys.isEmpty() && !user.addresses.satisfiesAccountType(requiredAccountType)) {
                 // we upgrade it
                 upgradeUsernameOnlyAccount(
                     username = username,
                     password = password,
-                    sessionInfo = sessionInfo,
+                    sessionInfo = session,
                     user = user
                 )
             } else {
                 // otherwise we raise Success.Login if there are Address Keys present.
                 loginState.post(
                     PerformLogin.State.Success.UserSetup(
-                        sessionInfo = if (user.keys.isEmpty()) sessionInfo.copy(passwordMode = 1) else sessionInfo,
+                        sessionInfo = session,
                         user = user.copy(passphrase = password)
                     )
                 )

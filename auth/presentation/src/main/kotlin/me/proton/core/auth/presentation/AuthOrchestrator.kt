@@ -97,7 +97,7 @@ class AuthOrchestrator @Inject constructor(
                         startTwoPassModeWorkflow(SessionId(it.session.sessionId), it.requiredAccountType)
                     }
                     else -> it.user?.let { user ->
-                        onUserProvided(context, user, result.session.sessionId, result.requiredAccountType)
+                        onUserProvided(context, user, result.session.sessionId)
                     }
                 }
             }
@@ -107,24 +107,21 @@ class AuthOrchestrator @Inject constructor(
     private fun onUserProvided(
         context: ComponentActivity,
         user: UserResult,
-        sessionId: String,
-        requiredAccountType: AccountType
+        sessionId: String
     ) {
-        user.addresses.let { addresses ->
-            if (!addresses.satisfiesAccountType(requiredAccountType)) {
-                startCreateAddressWorkflow(
-                    CreateAddressInput(
-                        sessionId = SessionId(sessionId),
-                        externalEmail = user.email, // this should be checked in real world, maybe username?
-                        user = user
-                    )
+        if (!user.satisfiesAccountType) {
+            startCreateAddressWorkflow(
+                CreateAddressInput(
+                    sessionId = SessionId(sessionId),
+                    externalEmail = user.email, // this should be checked in real world, maybe username?
+                    user = user
                 )
-            } else {
-                context.lifecycleScope.launch {
-                    accountWorkflowHandler.handleAccountReady(userId = UserId(user.id))
-                }
-                onUserResultListener(user)
+            )
+        } else {
+            context.lifecycleScope.launch {
+                accountWorkflowHandler.handleAccountReady(userId = UserId(user.id))
             }
+            onUserResultListener(user)
         }
     }
 
@@ -134,7 +131,7 @@ class AuthOrchestrator @Inject constructor(
         context.registerForActivityResult(
             StartTwoPassMode()
         ) { result ->
-            result?.let { onUserProvided(context, it.user, it.sessionId, it.requiredAccountType) }
+            result?.let { onUserProvided(context, it.user, it.sessionId) }
         }
 
     private fun registerSecondFactorResult(

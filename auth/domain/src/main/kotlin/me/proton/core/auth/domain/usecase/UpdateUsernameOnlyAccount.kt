@@ -26,6 +26,7 @@ import me.proton.core.auth.domain.entity.KeySecurity
 import me.proton.core.auth.domain.entity.KeyType
 import me.proton.core.auth.domain.entity.SignedKeyList
 import me.proton.core.auth.domain.entity.User
+import me.proton.core.auth.domain.entity.firstOrDefault
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.extension.onEachInstance
@@ -93,7 +94,13 @@ class UpdateUsernameOnlyAccount @Inject constructor(
         val randomSalt = cryptoProvider.createNewKeySalt()
         val generatedPassphrase = cryptoProvider.generatePassphrase(passphrase, randomSalt)
         val privateKey = try {
-            cryptoProvider.generateNewPrivateKey(username, finalDomain, generatedPassphrase, KeyType.RSA, KeySecurity.HIGH)
+            cryptoProvider.generateNewPrivateKey(
+                username,
+                finalDomain,
+                generatedPassphrase,
+                KeyType.RSA,
+                KeySecurity.HIGH
+            )
         } catch (privateKeyException: Exception) { // gopenpgp library throws generic exception
             emit(State.Error.GeneratingPrivateKeyFailed(privateKeyException.message))
             return@flow
@@ -127,14 +134,14 @@ class UpdateUsernameOnlyAccount @Inject constructor(
     }
 
     /**
-     * Returns defeult domain.
+     * Returns default domain.
      */
-    suspend fun getDomain(): String? {
+    private suspend fun getDomain(): String? {
         val availableDomainsResult = authRepository.getAvailableDomains()
         availableDomainsResult.onFailure { _, _, _ ->
             return null
         }
-        return AvailableDomains.State.Success((availableDomainsResult as DataResult.Success).value).firstOrDefault
+        return (availableDomainsResult as DataResult.Success).value.firstOrDefault()
     }
 }
 

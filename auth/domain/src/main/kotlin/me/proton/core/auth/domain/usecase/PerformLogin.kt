@@ -62,7 +62,7 @@ class PerformLogin @Inject constructor(
             object EmptyCredentials : Error()
             data class UserSetup(val state: PerformUserSetup.State.Error) : Error()
             data class AccountUpgrade(val state: UpdateUsernameOnlyAccount.State.Error) : Error()
-            data class FetchUser(val state: GetUser.State) : Error()
+            data class FetchUser(val state: GetUser.State.Error) : Error()
         }
     }
 

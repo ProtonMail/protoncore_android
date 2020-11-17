@@ -16,17 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.entity.response
-
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import me.proton.core.auth.domain.entity.Domain
+package me.proton.core.auth.domain.entity
 
 /**
  * @author Dino Kadrikj.
  */
-@Serializable
-data class AvailableDomainsResponse(
-    @SerialName("Domains")
-    val domains: List<Domain>
-)
+typealias Domain = String
+
+fun List<Domain>.firstOrDefault() = firstOrNull() ?: "protonmail.com"

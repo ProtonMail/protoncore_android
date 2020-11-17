@@ -35,7 +35,6 @@ import me.proton.core.auth.domain.usecase.onError
 import me.proton.core.auth.domain.usecase.onProcessing
 import me.proton.core.auth.domain.usecase.onSecondFactorSuccess
 import me.proton.core.auth.domain.usecase.onSuccess
-import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import studio.forface.viewstatestore.ViewStateStore
@@ -89,39 +88,52 @@ class SecondFactorViewModel @ViewModelInject constructor(
         isTwoPassModeNeeded: Boolean,
         requiredAccountType: AccountType
     ) {
-        if (isTwoPassModeNeeded && user.keys.isEmpty()) {
+        val isTwoPass = if (isTwoPassModeNeeded && user.keys.isEmpty()) {
             // This is because of a bug on the API, where accounts with no keys return PasswordMode = 2.
             accountWorkflow.handleTwoPassModeSuccess(sessionId)
-        }
-        val userResult = UserResult.from(user)
-        if (!isTwoPassModeNeeded && user.keys.isNotEmpty()) {
-            // Raise Success.SecondFactor.
-            secondFactorState.post(
-                PerformSecondFactor.State.Success.SecondFactor(
-                    sessionId,
-                    scopeInfo
-                )
-            )
+            false
         } else {
-            if (userResult.addresses.currentAccountType() == AccountType.Username
-                && !userResult.addresses.satisfiesAccountType(requiredAccountType)
-            ) {
+            isTwoPassModeNeeded
+        }
+        if (!isTwoPass && user.keys.isNotEmpty()) {
+            // Raise Success.SecondFactor.
+            setupUser(password, sessionId, scopeInfo, user, isTwoPass)
+        } else {
+            if (user.keys.isEmpty() && !user.addresses.satisfiesAccountType(requiredAccountType)) {
                 // we upgrade it
                 upgradeUsernameOnlyAccount(
                     sessionId = sessionId,
                     username = user.name!!, // for these accounts [AccountType.Username], name should always be present.
                     passphrase = password,
                     scopeInfo = scopeInfo,
-                    user = user
+                    user = user,
+                    isTwoPassModeNeeded = isTwoPass
+                )
+            } else {
+                secondFactorState.post(
+                    PerformSecondFactor.State.Success.SecondFactor(sessionId, scopeInfo, user, isTwoPass)
                 )
             }
         }
     }
 
-    private fun setupUser(password: ByteArray, sessionId: SessionId, scopeInfo: ScopeInfo, user: User) {
+    private fun setupUser(
+        password: ByteArray,
+        sessionId: SessionId,
+        scopeInfo: ScopeInfo,
+        user: User,
+        isTwoPassModeNeeded: Boolean
+    ) {
         performUserSetup(sessionId, password, user)
             .onSuccess { success ->
-                secondFactorState.post(PerformSecondFactor.State.Success.UserSetup(sessionId, scopeInfo, success.user))
+                secondFactorState.post(
+                    PerformSecondFactor.State.Success.UserSetup(
+                        sessionId,
+                        scopeInfo,
+                        success.user,
+                        isTwoPassModeNeeded
+                    )
+                )
             }
             .onError { error ->
                 accountWorkflow.handleSecondFactorFailed(sessionId)
@@ -135,10 +147,11 @@ class SecondFactorViewModel @ViewModelInject constructor(
         username: String,
         passphrase: ByteArray,
         scopeInfo: ScopeInfo,
-        user: User
+        user: User,
+        isTwoPassModeNeeded: Boolean
     ) {
         updateUsernameOnlyAccount(sessionId = sessionId, username = username, passphrase = passphrase)
-            .onSuccess { setupUser(passphrase, sessionId, scopeInfo, user) }
+            .onSuccess { setupUser(passphrase, sessionId, scopeInfo, user, isTwoPassModeNeeded) }
             .onError {
                 secondFactorState.post(PerformSecondFactor.State.Error.AccountUpgrade(it))
             }

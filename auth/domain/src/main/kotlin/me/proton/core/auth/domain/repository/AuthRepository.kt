@@ -22,6 +22,7 @@ import me.proton.core.auth.domain.entity.Address
 import me.proton.core.auth.domain.entity.AddressKey
 import me.proton.core.auth.domain.entity.Addresses
 import me.proton.core.auth.domain.entity.Auth
+import me.proton.core.auth.domain.entity.Domain
 import me.proton.core.auth.domain.entity.FullAddressKey
 import me.proton.core.auth.domain.entity.KeySalts
 import me.proton.core.auth.domain.entity.LoginInfo
@@ -86,7 +87,7 @@ interface AuthRepository {
     /**
      * Gets all available domains on the API.
      */
-    suspend fun getAvailableDomains(): DataResult<List<String>>
+    suspend fun getAvailableDomains(): DataResult<List<Domain>>
 
     /**
      * Fetches all addresses for the user.
