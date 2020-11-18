@@ -21,11 +21,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class RefreshTokenRequest(
-    @SerialName("UID") val uid: String,
-    @SerialName("RefreshToken") val refreshToken: String,
-    @SerialName("ResponseType") val responseType: String = "token",
-    @SerialName("GrantType") val grantType: String = "refresh_token",
-    @SerialName("RedirectURI") val redirectUri: String = "http://protonmail.ch"
-    // TODO: undocumented fields: ClientID, State
+data class RefreshTokenRequest(
+    @SerialName("UID")
+    val uid: String,
+    @SerialName("RefreshToken")
+    val refreshToken: String,
+    @SerialName("ResponseType")
+    val responseType: String = "token",
+    @SerialName("GrantType")
+    val grantType: String = "refresh_token",
+    @SerialName("RedirectURI")
+    val redirectUri: String = "http://protonmail.ch"
 )

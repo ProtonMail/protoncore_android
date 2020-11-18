@@ -31,5 +31,6 @@ object ProtonCoreConfig : Invokable {
     var defaultJsonStringFormat: StringFormat = Json {
         ignoreUnknownKeys = true
         isLenient = true
+        encodeDefaults = true
     }
 }
