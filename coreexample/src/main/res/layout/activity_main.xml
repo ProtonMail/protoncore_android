@@ -55,6 +55,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/customViews" />
 
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
+            android:id="@+id/force_update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_top_margin"
+            android:text="@string/force_update"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login" />
+
         <LinearLayout
             android:id="@+id/titleLayout"
             android:layout_width="match_parent"
@@ -63,7 +73,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login">
+            app:layout_constraintTop_toBottomOf="@id/force_update">
 
             <TextView
                 android:id="@+id/accountsText"

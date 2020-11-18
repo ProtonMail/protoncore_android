@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -17,12 +18,5 @@
   -->
 
 <resources>
-
-    <!-- base common presentation strings -->
-    <string name="presentation_browser_missing">Can not find browser to open the link.</string>
-    <string name="presentation_force_update_title">Update required.</string>
-    <string name="presentation_force_update_message">This version of the app is no longer supported, please update to continue using it.</string>
-    <string name="presentation_force_update_learn_more">Learn more</string>
-    <string name="presentation_force_update_update">Update</string>
-    <string name="presentation_market_missing">Can not find market application installed on the device. Please go to the store and update the application.</string>
+    <string name="force_update_link">https://protonmail.com/support/knowledge-base/update-required</string>
 </resources>

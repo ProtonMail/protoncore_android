@@ -31,11 +31,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import me.proton.core.presentation.R
+import me.proton.core.presentation.ui.alert.ForceUpdateDialog
 
 
 /**
  * @author Dino Kadrikj.
  */
+private const val TAG_FORCE_UPDATE_DIALOG = "force_update_dialog"
+
 inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> FragmentTransaction) {
     val transaction = beginTransaction()
     transaction.block()
@@ -50,6 +53,26 @@ fun Context.openBrowserLink(link: String) {
         Toast.makeText(
             this,
             getString(R.string.presentation_browser_missing),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+}
+
+fun Context.openMarketLink() {
+    val uri = Uri.parse("market://details?id=$packageName")
+    val storeIntent = Intent(Intent.ACTION_VIEW, uri).apply {
+        addFlags(
+            Intent.FLAG_ACTIVITY_NO_HISTORY or
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+        )
+    }
+    storeIntent.resolveActivity(packageManager)?.let {
+        startActivity(storeIntent)
+    } ?: run {
+        Toast.makeText(
+            this,
+            getString(R.string.presentation_market_missing),
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -72,4 +95,25 @@ fun AppCompatActivity.isNightMode() =
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+/**
+ * Presents to the user non dismissable dialog to inform that the current version of the application is no longer
+ * supported.
+ *
+ * @param apiErrorMessage the error message returned from the API that triggered force update required error.
+ * @param learnMoreURL an option if the client want's to override the default URL.
+ * @param largeLayout how to present the dialog (default false)
+ */
+fun FragmentManager.showForceUpdate(apiErrorMessage: String, learnMoreURL: String? = null, largeLayout: Boolean = false) {
+    val updateDialogFragment = ForceUpdateDialog(apiErrorMessage, learnMoreURL)
+    if (largeLayout) {
+        // For large screens (tablets), we show the fragment as a dialog
+        updateDialogFragment.show(this, TAG_FORCE_UPDATE_DIALOG)
+    } else {
+        // The smaller screens (phones), we show the fragment fullscreen
+        inTransaction {
+            add(updateDialogFragment, TAG_FORCE_UPDATE_DIALOG)
+        }
+    }
 }

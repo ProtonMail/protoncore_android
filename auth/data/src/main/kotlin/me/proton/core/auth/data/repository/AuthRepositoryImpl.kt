@@ -43,7 +43,6 @@ import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.entity.User
-import me.proton.core.auth.domain.entity.firstOrDefault
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.data.arch.toDataResponse
 import me.proton.core.domain.arch.DataResult

@@ -24,8 +24,6 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -50,6 +48,7 @@ import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.showForceUpdate
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -100,6 +99,11 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
             login.onClick { authOrchestrator.startLoginWorkflow(AccountType.Internal) }
+            forceUpdate.onClick {
+                supportFragmentManager.showForceUpdate(
+                    apiErrorMessage = "Error Message coming from the API."
+                )
+            }
         }
 
         accountManager.getPrimaryAccount().onEach { primary ->
