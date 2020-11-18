@@ -25,7 +25,7 @@ plugins {
     kotlin("android.extensions")
 }
 
-libVersion = Version(0, 1, 2)
+libVersion = Version(0, 1, 4)
 
 android()
 

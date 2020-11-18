@@ -19,8 +19,6 @@
 package me.proton.core.accountmanager.data
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
@@ -32,7 +30,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.onSessionStateChanged
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.domain.arch.extension.onEntityChanged
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
@@ -46,7 +43,10 @@ class AccountManagerImpl constructor(
 ) : AccountManager(product), AccountWorkflowHandler {
 
     private suspend fun removeSession(sessionId: SessionId) {
-        authRepository.revokeSession(sessionId)
+        accountRepository.getAccountOrNull(sessionId)?.let { account ->
+            if (account.sessionState != SessionState.ForceLogout)
+                authRepository.revokeSession(sessionId)
+        }
         accountRepository.deleteSession(sessionId)
     }
 
@@ -65,8 +65,8 @@ class AccountManagerImpl constructor(
 
     override suspend fun removeAccount(userId: UserId) {
         accountRepository.getAccountOrNull(userId)?.let { account ->
-            accountRepository.updateAccountState(account.userId, AccountState.Removed)
             account.sessionId?.let { removeSession(it) }
+            accountRepository.updateAccountState(account.userId, AccountState.Removed)
             accountRepository.deleteAccount(account.userId)
         }
     }
@@ -84,17 +84,11 @@ class AccountManagerImpl constructor(
     override fun getSessions(): Flow<List<Session>> =
         accountRepository.getSessions()
 
-    override fun onAccountStateChanged(): Flow<Account> = getAccounts().onEntityChanged(
-        getEntityKey = { it.userId },
-        equalPredicate = { previous, current -> previous.state == current.state },
-        emitNewEntity = true
-    ).distinctUntilChanged()
+    override fun onAccountStateChanged(): Flow<Account> =
+        accountRepository.onAccountStateChanged()
 
-    override fun onSessionStateChanged(): Flow<Account> = getAccounts().onEntityChanged(
-        getEntityKey = { it.sessionId },
-        equalPredicate = { previous, current -> previous.sessionState == current.sessionState },
-        emitNewEntity = true
-    ).filter { it.sessionState != null }.distinctUntilChanged()
+    override fun onSessionStateChanged(): Flow<Account> =
+        accountRepository.onSessionStateChanged()
 
     override fun onHumanVerificationNeeded(): Flow<Pair<Account, HumanVerificationDetails?>> =
         onSessionStateChanged(SessionState.HumanVerificationNeeded)

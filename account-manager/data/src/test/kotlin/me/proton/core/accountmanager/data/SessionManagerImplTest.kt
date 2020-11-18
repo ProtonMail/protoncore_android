@@ -97,14 +97,12 @@ class SessionManagerImplTest {
         sessionManager.onSessionForceLogout(session1)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(2, stateLists.size)
-        assertEquals(account1.state, stateLists[0].state)
-        assertEquals(AccountState.Disabled, stateLists[1].state)
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.Disabled, stateLists[0].state)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.ForceLogout, sessionStateLists[1].sessionState)
+        assertEquals(1, sessionStateLists.size)
+        assertEquals(SessionState.ForceLogout, sessionStateLists[0].sessionState)
     }
 
     @Test
@@ -125,9 +123,8 @@ class SessionManagerImplTest {
         val result = sessionManager.onHumanVerificationNeeded(session1, humanVerificationDetails)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.HumanVerificationNeeded, sessionStateLists[1].sessionState)
+        assertEquals(1, sessionStateLists.size)
+        assertEquals(SessionState.HumanVerificationNeeded, sessionStateLists[0].sessionState)
 
         assertEquals(SessionListener.HumanVerificationResult.Success, result)
     }
@@ -150,9 +147,8 @@ class SessionManagerImplTest {
         val result = sessionManager.onHumanVerificationNeeded(session1, humanVerificationDetails)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(account1.sessionState, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.HumanVerificationNeeded, sessionStateLists[1].sessionState)
+        assertEquals(1, sessionStateLists.size)
+        assertEquals(SessionState.HumanVerificationNeeded, sessionStateLists[0].sessionState)
 
         assertEquals(SessionListener.HumanVerificationResult.Failure, result)
     }

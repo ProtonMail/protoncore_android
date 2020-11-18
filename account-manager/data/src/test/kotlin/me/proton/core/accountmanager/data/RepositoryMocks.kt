@@ -49,6 +49,9 @@ class RepositoryMocks(
     private val flowOfAccountLists = mutableListOf<List<Account>>()
     private val flowOfSessionLists = mutableListOf<List<Session>>()
 
+    private val flowOfAccountStateChangedLists = mutableListOf<Account>()
+    private val flowOfSessionStateChangedLists = mutableListOf<Account>()
+
     fun init() {
         MockKAnnotations.init(this)
     }
@@ -70,15 +73,21 @@ class RepositoryMocks(
         flowOfSessionLists.clear()
         flowOfAccountLists.add(listOf(account))
         flowOfSessionLists.add(listOf(session))
+        flowOfAccountStateChangedLists.clear()
+        flowOfSessionStateChangedLists.clear()
 
         // For each updateAccountState -> emit a new updated List<Account> from getAccounts().
         coEvery { accountRepository.updateAccountState(capture(userIdSlot), capture(accountStateSlot)) } answers {
             flowOfAccountLists.add(
                 listOf(
                     flowOfAccountLists.last().first { it.userId == userIdSlot.captured }.copy(
-                        userId = userIdSlot.captured,
                         state = accountStateSlot.captured
                     )
+                )
+            )
+            flowOfAccountStateChangedLists.add(
+                flowOfAccountLists.last().first { it.userId == userIdSlot.captured }.copy(
+                    state = accountStateSlot.captured
                 )
             )
         }
@@ -86,9 +95,13 @@ class RepositoryMocks(
             flowOfAccountLists.add(
                 listOf(
                     flowOfAccountLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
-                        sessionId = sessionIdSlot.captured,
                         state = accountStateSlot.captured
                     )
+                )
+            )
+            flowOfAccountStateChangedLists.add(
+                flowOfAccountLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
+                    state = accountStateSlot.captured
                 )
             )
         }
@@ -98,9 +111,13 @@ class RepositoryMocks(
             flowOfAccountLists.add(
                 listOf(
                     flowOfAccountLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
-                        sessionId = sessionIdSlot.captured,
                         sessionState = sessionStateSlot.captured
                     )
+                )
+            )
+            flowOfSessionStateChangedLists.add(
+                flowOfAccountLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
+                    sessionState = sessionStateSlot.captured
                 )
             )
         }
@@ -110,7 +127,6 @@ class RepositoryMocks(
             flowOfSessionLists.add(
                 listOf(
                     flowOfSessionLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
-                        sessionId = sessionIdSlot.captured,
                         scopes = updatedScopesSlot.captured
                     )
                 )
@@ -128,7 +144,6 @@ class RepositoryMocks(
             flowOfSessionLists.add(
                 listOf(
                     flowOfSessionLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
-                        sessionId = sessionIdSlot.captured,
                         headers = HumanVerificationHeaders(
                             tokenTypeSlot.captured,
                             tokenCodeSlot.captured
@@ -179,6 +194,12 @@ class RepositoryMocks(
         }
         every { accountRepository.getSessions() } answers {
             flowOf(*flowOfSessionLists.toTypedArray())
+        }
+        every { accountRepository.onAccountStateChanged() } answers {
+            flowOf(*flowOfAccountStateChangedLists.toTypedArray())
+        }
+        every { accountRepository.onSessionStateChanged() } answers {
+            flowOf(*flowOfSessionStateChangedLists.toTypedArray())
         }
     }
 

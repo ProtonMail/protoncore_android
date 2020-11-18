@@ -104,8 +104,8 @@ class AuthOrchestrator @Inject constructor(
                         onUserProvided(context, user, result.session.sessionId, result.requiredAccountType)
                     }
                 }
-                onLoginResultListener(result)
             }
+            onLoginResultListener(result)
         }
 
     private fun onUserProvided(

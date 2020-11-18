@@ -21,6 +21,7 @@ package me.proton.core.accountmanager.presentation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
@@ -45,29 +46,35 @@ class AccountManagerObserver(
 
     init {
         accountManager.onAccountStateChanged().onEach {
-            when (it.state) {
-                AccountState.NotReady,
-                AccountState.TwoPassModeSuccess -> Unit // Hide those states.
-                AccountState.TwoPassModeNeeded -> onAccountTwoPassModeNeededListener.invoke(it)
-                AccountState.TwoPassModeFailed -> onAccountTwoPassModeFailedListener.invoke(it)
-                AccountState.Ready -> onAccountReadyListener.invoke(it)
-                AccountState.Disabled -> onAccountDisabledListener.invoke(it)
-                AccountState.Removed -> onAccountRemovedListener.invoke(it)
-            }.exhaustive
+            // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
+            scope.launch {
+                when (it.state) {
+                    AccountState.NotReady,
+                    AccountState.TwoPassModeSuccess -> Unit // Hide those states.
+                    AccountState.TwoPassModeNeeded -> onAccountTwoPassModeNeededListener.invoke(it)
+                    AccountState.TwoPassModeFailed -> onAccountTwoPassModeFailedListener.invoke(it)
+                    AccountState.Ready -> onAccountReadyListener.invoke(it)
+                    AccountState.Disabled -> onAccountDisabledListener.invoke(it)
+                    AccountState.Removed -> onAccountRemovedListener.invoke(it)
+                }.exhaustive
+            }
         }.launchIn(scope)
 
         accountManager.onSessionStateChanged().onEach {
-            when (it.sessionState) {
-                null -> Unit // Nothing to do.
-                SessionState.SecondFactorNeeded,
-                SessionState.SecondFactorSuccess,
-                SessionState.SecondFactorFailed,
-                SessionState.HumanVerificationSuccess -> Unit // Hide those states.
-                SessionState.HumanVerificationNeeded -> onSessionHumanVerificationNeededListener.invoke(it)
-                SessionState.HumanVerificationFailed -> onSessionHumanVerificationFailedListener.invoke(it)
-                SessionState.Authenticated -> onSessionAuthenticatedListener.invoke(it)
-                SessionState.ForceLogout -> onSessionForceLogoutListener.invoke(it)
-            }.exhaustive
+            // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
+            scope.launch {
+                when (it.sessionState) {
+                    null -> Unit // Nothing to do.
+                    SessionState.SecondFactorNeeded,
+                    SessionState.SecondFactorSuccess,
+                    SessionState.SecondFactorFailed,
+                    SessionState.HumanVerificationSuccess -> Unit // Hide those states.
+                    SessionState.HumanVerificationNeeded -> onSessionHumanVerificationNeededListener.invoke(it)
+                    SessionState.HumanVerificationFailed -> onSessionHumanVerificationFailedListener.invoke(it)
+                    SessionState.Authenticated -> onSessionAuthenticatedListener.invoke(it)
+                    SessionState.ForceLogout -> onSessionForceLogoutListener.invoke(it)
+                }.exhaustive
+            }
         }.launchIn(scope)
     }
 

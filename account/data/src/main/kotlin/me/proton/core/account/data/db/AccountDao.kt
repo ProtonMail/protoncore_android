@@ -38,6 +38,12 @@ abstract class AccountDao : BaseDao<AccountEntity>() {
     @Query("SELECT * FROM AccountEntity WHERE sessionId = :sessionId")
     abstract fun findBySessionId(sessionId: String): Flow<AccountEntity?>
 
+    @Query("SELECT * FROM AccountEntity WHERE userId = :userId")
+    abstract suspend fun getByUserId(userId: String): AccountEntity?
+
+    @Query("SELECT * FROM AccountEntity WHERE sessionId = :sessionId")
+    abstract suspend fun getBySessionId(sessionId: String): AccountEntity?
+
     @Query("UPDATE AccountEntity SET state = :state WHERE userId = :userId")
     abstract suspend fun updateAccountState(userId: String, state: AccountState)
 

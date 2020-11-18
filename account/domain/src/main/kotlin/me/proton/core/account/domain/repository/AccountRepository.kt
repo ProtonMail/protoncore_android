@@ -89,6 +89,16 @@ interface AccountRepository {
     suspend fun deleteSession(sessionId: SessionId)
 
     /**
+     * Flow of [Account] where [Account.state] changed.
+     */
+    fun onAccountStateChanged(): Flow<Account>
+
+    /**
+     * Flow of [Account] where [Account.sessionState] changed.
+     */
+    fun onSessionStateChanged(): Flow<Account>
+
+    /**
      * Update [AccountState], by [UserId], locally.
      */
     suspend fun updateAccountState(userId: UserId, state: AccountState)

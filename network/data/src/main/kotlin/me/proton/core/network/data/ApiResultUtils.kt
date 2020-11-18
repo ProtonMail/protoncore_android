@@ -72,7 +72,7 @@ private fun <T> parseHttpError(
     }
 }
 
-internal data class ProtonErrorException(
+data class ProtonErrorException(
     val response: Response,
     val protonData: ApiResult.Error.ProtonData
 ) : IOException()
