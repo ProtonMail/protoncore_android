@@ -19,6 +19,8 @@
 
 <resources>
     <!-- color palette -->
+    <color name="transparent">#00000000</color>
+    <color name="scrim">#C3000000</color>
 
     <color name="woodsmoke">#17181C</color>
     <color name="charade">#25272C</color>
@@ -88,5 +90,8 @@
     <color name="notification_error">@color/pomegranate</color>
     <color name="notification_success">@color/lime_green</color>
     <color name="notification_warning">@color/saffron</color>
+
+    <!-- navigation bar color -->
+    <color name="nav_bar">@color/transparent</color>
 
 </resources>

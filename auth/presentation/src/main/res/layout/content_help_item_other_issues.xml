@@ -23,6 +23,7 @@
         android:id="@+id/itemHelpLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/help_item_height"
+        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
         android:minHeight="@dimen/help_item_height">
@@ -54,7 +55,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_arrow_right" />
+                app:srcCompat="@drawable/ic_arrow_forward" />
 
             <TextView
                 android:layout_width="0dp"

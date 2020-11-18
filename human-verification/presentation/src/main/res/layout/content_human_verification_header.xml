@@ -26,20 +26,17 @@
         android:paddingTop="@dimen/parent_padding"
         android:paddingEnd="@dimen/parent_padding">
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/closeButton"
-            android:layout_width="@dimen/human_verification_close_button"
-            android:layout_height="@dimen/human_verification_close_button"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@color/icon_norm"
+            style="@style/ProtonButton.Navigation.Borderless"
+            app:icon="@drawable/ic_close"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <me.proton.core.presentation.ui.view.ProtonButton
-            style="@style/ProtonButton.Borderless.Text"
             android:id="@+id/helpButton"
+            style="@style/ProtonButton.Borderless.Text"
             android:layout_width="@dimen/human_verification_help_button_width"
             android:layout_height="wrap_content"
             android:text="@string/human_verification_help"

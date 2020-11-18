@@ -22,6 +22,7 @@
         android:id="@+id/helpLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true">
 
@@ -56,7 +57,7 @@
             app:layout_constraintBottom_toBottomOf="@id/websiteVerificationTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_arrow_right" />
+            app:srcCompat="@drawable/ic_arrow_forward" />
 
         <TextView
             android:id="@+id/websiteVerificationDescription"

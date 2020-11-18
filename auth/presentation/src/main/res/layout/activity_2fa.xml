@@ -22,13 +22,21 @@
     <FrameLayout
         android:id="@+id/loginContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="?android:windowBackground">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/closeButton"
+            style="@style/ProtonButton.Navigation"
+            android:layout_marginStart="@dimen/auth_close_button_margin_start"
+            android:layout_marginTop="@dimen/auth_close_button_margin_top"
+            app:icon="@drawable/ic_close" />
 
         <ScrollView
             android:id="@+id/scrollContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/auth_no_toolbar_top_margin"
             android:scrollbars="none">
 
             <LinearLayout
@@ -36,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/auth_parent_default_padding"
-                android:paddingTop="104dp"
                 android:paddingEnd="@dimen/auth_parent_default_padding">
 
                 <TextView
@@ -50,8 +57,8 @@
                     android:id="@+id/secondFactorInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
+                    android:inputType="number"
                     app:help="@string/auth_2fa_assistive_text"
                     app:label="@string/auth_2fa_label" />
 
@@ -71,18 +78,9 @@
                     android:text="@string/auth_2fa_use_recovery_code" />
 
             </LinearLayout>
+
         </ScrollView>
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/closeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|start"
-            android:layout_marginStart="@dimen/auth_close_button_margin_start"
-            android:layout_marginTop="@dimen/auth_close_button_margin_top"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:elevation="4dp"
-            app:srcCompat="@drawable/ic_back_no_toolbar"
-            android:fitsSystemWindows="true"/>
     </FrameLayout>
+
 </layout>

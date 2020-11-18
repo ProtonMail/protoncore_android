@@ -98,7 +98,7 @@ class HumanVerificationEnterCodeFragment :
         binding.apply {
             // this should go inside the custom edit text input view (validation also with error text below the view)
             headerNavigation.closeButton.apply {
-                binding.headerNavigation.closeButton.setImageResource(R.drawable.ic_arrow_left)
+                binding.headerNavigation.closeButton.setIconResource(R.drawable.ic_arrow_back)
                 onClick { onBackPressed() }
             }
             headerNavigation.helpButton.onClick { childFragmentManager.showHelp() }

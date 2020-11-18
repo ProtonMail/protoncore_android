@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -16,13 +16,8 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="32dp"
-    android:height="32dp"
-    android:viewportWidth="32"
-    android:viewportHeight="32">
-  <path
-      android:fillColor="@color/icon_norm"
-      android:pathData="M23.8,9.133L22.867,8.2 16,15.053 9.133,8.2 8.2,9.133 15.053,16 8.2,22.867 9.133,23.8 16,16.947 22.867,23.8 23.8,22.867 16.947,16z"
-      android:fillType="evenOdd"/>
-</vector>
+<resources>
+
+    <color name="nav_bar">@color/scrim</color>
+
+</resources>

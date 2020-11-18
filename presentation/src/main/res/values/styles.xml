@@ -29,6 +29,7 @@
 
     <style name="ProtonTextView.Subtitle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_weak</item>
     </style>
 
     <style name="ProtonTextView.InputHeader">
@@ -79,6 +80,24 @@
         <item name="textAllCaps">false</item>
         <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
         <item name="strokeColor">@color/btn_stroke_color_selector</item>
+    </style>
+
+    <style name="ProtonButton.Navigation" parent="ProtonButton">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="backgroundTint">@color/interaction_weak</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="iconTint">@color/icon_norm</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconSize">40dp</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="rippleColor">?brand</item>
+    </style>
+
+    <style name="ProtonButton.Navigation.Borderless" parent="ProtonButton.Navigation">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
     </style>
 
     <style name="ProtonDialog.Picker" parent="ProtonTheme">
