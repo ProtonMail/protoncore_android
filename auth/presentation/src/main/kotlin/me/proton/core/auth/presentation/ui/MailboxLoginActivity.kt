@@ -127,7 +127,7 @@ class MailboxLoginActivity : AuthActivity<ActivityMailboxLoginBinding>() {
         val intent = Intent().apply {
             putExtra(
                 ARG_MAILBOX_LOGIN_RESULT,
-                TwoPassModeResult(sessionId.id, UserResult.from(user), requiredAccountType)
+                TwoPassModeResult(sessionId.id, UserResult.from(user, requiredAccountType))
             )
         }
         setResult(Activity.RESULT_OK, intent)

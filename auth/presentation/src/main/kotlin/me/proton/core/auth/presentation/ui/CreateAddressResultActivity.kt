@@ -28,10 +28,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.auth.domain.usecase.AvailableDomains
 import me.proton.core.auth.domain.usecase.UpdateExternalAccount
-import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityCreateAddressResultBinding
-import me.proton.core.auth.presentation.entity.AddressesResult
 import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.viewmodel.CreateAddressResultViewModel
 import me.proton.core.network.domain.session.SessionId
@@ -79,7 +77,7 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
             createAddressButton.onClick {
                 // If there is no generated mailbox passphrase here, then we should revert the whole process to the
                 // login state.
-                viewModel.upgradeAccount(user.addresses, sessionId, username, domain, user.passphrase!!)
+                viewModel.upgradeAccount(sessionId, username, domain, user.passphrase!!)
             }
             if (externalEmail == null) {
                 // this means we are upgrading username-only account
@@ -105,7 +103,6 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
         }
 
         viewModel.externalAccountUpgradeState.observeData(::onExternalAccountResultState)
-        viewModel.usernameOnlyAccountUpgradeState.observeData(::onUsernameOnlyResultState)
     }
 
     private fun onExternalAccountResultState(state: UpdateExternalAccount.State) {
@@ -113,7 +110,7 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
             is UpdateExternalAccount.State.Processing -> showLoading(true)
             is UpdateExternalAccount.State.Error.Message -> showError(state.message)
             is UpdateExternalAccount.State.Success -> {
-                onSuccess(user.copy(addresses = AddressesResult.from(state.address)))
+                onSuccess(user)
             }
             is UpdateExternalAccount.State.Error.EmptyCredentials -> showError(
                 getString(R.string.auth_create_address_error_credentials)
@@ -128,26 +125,6 @@ class CreateAddressResultActivity : AuthActivity<ActivityCreateAddressResultBind
                 getString(R.string.auth_create_address_error_private_key)
             )
             is UpdateExternalAccount.State.Error.GeneratingSignedKeyListFailed -> showError(
-                getString(R.string.auth_create_address_error_signed_key_list)
-            )
-        }
-    }
-
-    private fun onUsernameOnlyResultState(state: UpdateUsernameOnlyAccount.State) {
-        when (state) {
-            is UpdateUsernameOnlyAccount.State.Processing -> showLoading(true)
-            is UpdateUsernameOnlyAccount.State.Error.Message -> showError(state.message)
-            is UpdateUsernameOnlyAccount.State.Success -> onSuccess(UserResult.from(state.user))
-            is UpdateUsernameOnlyAccount.State.Error.EmptyCredentials -> showError(
-                getString(R.string.auth_create_address_error_credentials)
-            )
-            is UpdateUsernameOnlyAccount.State.Error.EmptyDomain -> showError(
-                getString(R.string.auth_create_address_error_no_available_domain)
-            )
-            is UpdateUsernameOnlyAccount.State.Error.GeneratingPrivateKeyFailed -> showError(
-                getString(R.string.auth_create_address_error_private_key)
-            )
-            is UpdateUsernameOnlyAccount.State.Error.GeneratingSignedKeyListFailed -> showError(
                 getString(R.string.auth_create_address_error_signed_key_list)
             )
         }

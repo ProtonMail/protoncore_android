@@ -26,7 +26,9 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.User
+import me.proton.core.auth.domain.usecase.GetUser
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
+import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.ScopeResult
@@ -87,8 +89,18 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
         viewModel.secondFactorState.observeData {
             when (it) {
                 is PerformSecondFactor.State.Processing -> showLoading(true)
-                is PerformSecondFactor.State.Success.SecondFactor -> onSuccess(it.sessionId, it.scopeInfo, null)
-                is PerformSecondFactor.State.Success.UserSetup -> onSuccess(it.sessionId, it.scopeInfo, it.user)
+                is PerformSecondFactor.State.Success.SecondFactor -> onSuccess(
+                    it.sessionId,
+                    it.scopeInfo,
+                    it.user,
+                    it.isTwoPassModeNeeded ?: input.isTwoPassModeNeeded
+                )
+                is PerformSecondFactor.State.Success.UserSetup -> onSuccess(
+                    it.sessionId,
+                    it.scopeInfo,
+                    it.user,
+                    it.isTwoPassModeNeeded
+                )
                 is PerformSecondFactor.State.Error.UserSetup -> onUserSetupError(it.state)
                 is PerformSecondFactor.State.Error.Message -> onError(false, it.message)
                 is PerformSecondFactor.State.Error.EmptyCredentials -> {
@@ -98,6 +110,14 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                     showError(getString(R.string.auth_login_general_error))
                     onBackPressed()
                 }
+                is PerformSecondFactor.State.Error.FetchUser -> onError(
+                    false,
+                    (it.state as GetUser.State.Error.Message).message
+                )
+                is PerformSecondFactor.State.Error.AccountUpgrade -> onError(
+                    false,
+                    (it.state as UpdateUsernameOnlyAccount.State.Error.Message).message
+                )
             }.exhaustive
         }
     }
@@ -121,7 +141,8 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                         password = input.password,
                         sessionId = SessionId(input.sessionId),
                         secondFactorCode = secondFactorCode,
-                        isTwoPassModeNeeded = input.isTwoPassModeNeeded
+                        isTwoPassModeNeeded = input.isTwoPassModeNeeded,
+                        requiredAccountType = input.requiredAccountType
                     )
                 }
         }
@@ -133,13 +154,13 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
         }
     }
 
-    private fun onSuccess(sessionId: SessionId, scopeInfo: ScopeInfo, user: User?) {
+    private fun onSuccess(sessionId: SessionId, scopeInfo: ScopeInfo, user: User?, isTwoPassModeNeeded: Boolean) {
         val intent = Intent().putExtra(
             ARG_SECOND_FACTOR_RESULT,
             SecondFactorResult(
                 scope = ScopeResult(sessionId.id, scopeInfo.scopes),
-                user = user?.let { UserResult.from(it) },
-                isTwoPassModeNeeded = input.isTwoPassModeNeeded,
+                user = user?.let { UserResult.from(it, input.requiredAccountType) },
+                isTwoPassModeNeeded = isTwoPassModeNeeded,
                 requiredAccountType = input.requiredAccountType
             )
         )

@@ -26,8 +26,10 @@ import me.proton.core.auth.domain.entity.KeySecurity
 import me.proton.core.auth.domain.entity.KeyType
 import me.proton.core.auth.domain.entity.SignedKeyList
 import me.proton.core.auth.domain.entity.User
+import me.proton.core.auth.domain.entity.firstOrDefault
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.arch.extension.onEachInstance
 import me.proton.core.domain.arch.onFailure
 import me.proton.core.domain.arch.onSuccess
 import me.proton.core.network.domain.session.SessionId
@@ -59,7 +61,7 @@ class UpdateUsernameOnlyAccount @Inject constructor(
     @Suppress("TooGenericExceptionCaught")
     operator fun invoke(
         sessionId: SessionId,
-        domain: String,
+        domain: String? = null,
         username: String,
         passphrase: ByteArray
     ): Flow<State> = flow {
@@ -67,13 +69,14 @@ class UpdateUsernameOnlyAccount @Inject constructor(
             emit(State.Error.EmptyCredentials)
             return@flow
         }
-        if (domain.isEmpty()) {
+        val finalDomain = domain ?: getDomain() ?: ""
+        if (finalDomain.isEmpty()) {
             emit(State.Error.EmptyDomain)
             return@flow
         }
         emit(State.Processing)
         // step 1. create address
-        val createAddressResult = authRepository.createAddress(sessionId, domain, username)
+        val createAddressResult = authRepository.createAddress(sessionId, finalDomain, username)
         createAddressResult.onFailure { message, _, _ ->
             emit(State.Error.Message(message))
             return@flow
@@ -91,7 +94,13 @@ class UpdateUsernameOnlyAccount @Inject constructor(
         val randomSalt = cryptoProvider.createNewKeySalt()
         val generatedPassphrase = cryptoProvider.generatePassphrase(passphrase, randomSalt)
         val privateKey = try {
-            cryptoProvider.generateNewPrivateKey(username, domain, generatedPassphrase, KeyType.RSA, KeySecurity.HIGH)
+            cryptoProvider.generateNewPrivateKey(
+                username,
+                finalDomain,
+                generatedPassphrase,
+                KeyType.RSA,
+                KeySecurity.HIGH
+            )
         } catch (privateKeyException: Exception) { // gopenpgp library throws generic exception
             emit(State.Error.GeneratingPrivateKeyFailed(privateKeyException.message))
             return@flow
@@ -123,4 +132,23 @@ class UpdateUsernameOnlyAccount @Inject constructor(
             emit(State.Success(it.copy(passphrase = generatedPassphrase)))
         }
     }
+
+    /**
+     * Returns default domain.
+     */
+    private suspend fun getDomain(): String? {
+        val availableDomainsResult = authRepository.getAvailableDomains()
+        availableDomainsResult.onFailure { _, _, _ ->
+            return null
+        }
+        return (availableDomainsResult as DataResult.Success).value.firstOrDefault()
+    }
 }
+
+fun Flow<UpdateUsernameOnlyAccount.State>.onSuccess(
+    action: suspend (UpdateUsernameOnlyAccount.State.Success) -> Unit
+) = onEachInstance(action) as Flow<UpdateUsernameOnlyAccount.State>
+
+fun Flow<UpdateUsernameOnlyAccount.State>.onError(
+    action: suspend (UpdateUsernameOnlyAccount.State.Error) -> Unit
+) = onEachInstance(action) as Flow<UpdateUsernameOnlyAccount.State>

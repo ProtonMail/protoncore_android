@@ -59,6 +59,7 @@
                     android:layout_marginTop="@dimen/auth_content_top_margin"
                     android:hint="@string/auth_mailbox_password"
                     android:inputType="textPassword"
+                    app:actionMode="password_toggle"
                     app:label="@string/auth_mailbox_password_label" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton

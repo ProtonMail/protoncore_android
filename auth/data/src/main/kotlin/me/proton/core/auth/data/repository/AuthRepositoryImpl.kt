@@ -34,6 +34,7 @@ import me.proton.core.auth.domain.entity.Address
 import me.proton.core.auth.domain.entity.AddressKey
 import me.proton.core.auth.domain.entity.Addresses
 import me.proton.core.auth.domain.entity.Auth
+import me.proton.core.auth.domain.entity.Domain
 import me.proton.core.auth.domain.entity.FullAddressKey
 import me.proton.core.auth.domain.entity.KeySalts
 import me.proton.core.auth.domain.entity.LoginInfo
@@ -42,6 +43,7 @@ import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.entity.User
+import me.proton.core.auth.domain.entity.firstOrDefault
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.data.arch.toDataResponse
 import me.proton.core.domain.arch.DataResult
@@ -156,7 +158,7 @@ class AuthRepositoryImpl(
     /**
      * Gets all available domains on the API.
      */
-    override suspend fun getAvailableDomains(): DataResult<List<String>> =
+    override suspend fun getAvailableDomains(): DataResult<List<Domain>> =
         provider.get<AuthenticationApi>().invoke {
             getAvailableDomains().domains
         }.toDataResponse()

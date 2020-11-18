@@ -28,6 +28,5 @@ import me.proton.core.auth.domain.entity.AccountType
 @Parcelize
 data class TwoPassModeResult(
     val sessionId: String,
-    val user: UserResult,
-    val requiredAccountType: AccountType
+    val user: UserResult
 ) : Parcelable

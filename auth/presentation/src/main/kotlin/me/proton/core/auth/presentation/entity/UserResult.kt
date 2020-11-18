@@ -19,10 +19,9 @@
 package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
+import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.entity.User
-import me.proton.core.auth.domain.entity.UserKey
 
 @Parcelize
 data class UserResult(
@@ -39,16 +38,12 @@ data class UserResult(
     val delinquent: Int,
     val email: String?,
     val displayName: String?,
-    val keys: List<UserKeyResult>,
     val passphrase: ByteArray?,
-    val addresses: AddressesResult = AddressesResult(emptyList())
+    val satisfiesAccountType: Boolean
 ) : Parcelable {
 
-    @IgnoredOnParcel
-    val primaryKey = keys.find { it.primary == 1 }
-
     companion object {
-        fun from(user: User) = UserResult(
+        fun from(user: User, requiredAccountType: AccountType) = UserResult(
             id = user.id,
             name = user.name,
             usedSpace = user.usedSpace,
@@ -62,30 +57,8 @@ data class UserResult(
             delinquent = user.delinquent,
             email = user.email,
             displayName = user.displayName,
-            keys = user.keys.map { UserKeyResult.from(it) },
             passphrase = user.passphrase,
-            addresses = user.addresses?.let { AddressesResult.from(it) }
-        )
-    }
-}
-
-@Parcelize
-data class UserKeyResult(
-    val id: String,
-    val version: Int,
-    val privateKey: String,
-    val fingerprint: String,
-    val activation: String? = null,
-    val primary: Int
-) : Parcelable {
-    companion object {
-        fun from(key: UserKey) = UserKeyResult(
-            id = key.id,
-            version = key.version,
-            privateKey = key.privateKey,
-            fingerprint = key.fingerprint,
-            activation = key.activation,
-            primary = key.primary
+            satisfiesAccountType = user.addresses.satisfiesAccountType(requiredAccountType)
         )
     }
 }

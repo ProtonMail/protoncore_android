@@ -20,15 +20,22 @@ package me.proton.core.auth.presentation.viewmodel
 
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.entity.ScopeInfo
+import me.proton.core.auth.domain.entity.User
+import me.proton.core.auth.domain.entity.UserKey
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.domain.usecase.GetUser
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PerformUserSetup
+import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -49,6 +56,9 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     private val useCaseUserSetup = mockk<PerformUserSetup>()
     private lateinit var viewModel: SecondFactorViewModel
     private val testScopeInfo = mockk<ScopeInfo>(relaxed = true)
+    private val useCaseGetUser = mockk<GetUser>()
+    private val useCaseUpdateUsernameOnly = mockk<UpdateUsernameOnlyAccount>(relaxed = true)
+    private val userMock = mockk<User>()
     // endregion
 
     // region test data
@@ -59,13 +69,28 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
-        viewModel = SecondFactorViewModel(accountManager, useCase, useCaseUserSetup)
+        coEvery { useCaseGetUser.invoke(any()) } returns flowOf(
+            GetUser.State.Processing,
+            GetUser.State.Success(userMock)
+        )
+        every { userMock.keys } returns listOf(
+            UserKey(
+                "test-id",
+                1,
+                "test-private-key",
+                "test-fingerprint",
+                null,
+                1
+            )
+        )
+        viewModel = SecondFactorViewModel(accountManager, useCase, useCaseUserSetup, useCaseUpdateUsernameOnly, useCaseGetUser)
     }
 
     @Test
     fun `submit 2fa happy flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val isMailboxLoginNeeded = false
+        val requiredAccountType = AccountType.Internal// TODO: test with username
         coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode) } returns flowOf(
             PerformSecondFactor.State.Processing,
             PerformSecondFactor.State.Success.SecondFactor(SessionId(testSessionId), testScopeInfo)
@@ -74,6 +99,10 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             PerformUserSetup.State.Processing,
             PerformUserSetup.State.Success(mockk())
         )
+        coEvery { useCaseUserSetup.invoke(any(), any(), any()) } returns flowOf(
+            PerformUserSetup.State.Processing,
+            PerformUserSetup.State.Success(userMock)
+        )
         val observer = mockk<(PerformSecondFactor.State) -> Unit>(relaxed = true)
         viewModel.secondFactorState.observeDataForever(observer)
         // WHEN
@@ -81,7 +110,8 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             SessionId(testSessionId),
             testLoginPassword,
             testSecondFactorCode,
-            isMailboxLoginNeeded
+            isMailboxLoginNeeded,
+            requiredAccountType
         )
         // THEN
         val arguments = mutableListOf<PerformSecondFactor.State>()
@@ -96,15 +126,16 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     fun `submit empty 2fa states flow are handled correctly`() = coroutinesTest {
         // GIVEN
         val isMailboxLoginNeeded = false
+        val requiredAccountType = AccountType.Internal// TODO: test with username
         coEvery { useCaseUserSetup.invoke(any(), any()) } returns flowOf(
             PerformUserSetup.State.Processing,
             PerformUserSetup.State.Success(mockk())
         )
-        viewModel = SecondFactorViewModel(accountManager, PerformSecondFactor(authRepository), useCaseUserSetup)
+        viewModel = SecondFactorViewModel(accountManager, PerformSecondFactor(authRepository), useCaseUserSetup, useCaseUpdateUsernameOnly, useCaseGetUser)
         val observer = mockk<(PerformSecondFactor.State) -> Unit>(relaxed = true)
         viewModel.secondFactorState.observeDataForever(observer)
         // WHEN
-        viewModel.startSecondFactorFlow(SessionId(testSessionId), testLoginPassword, "", isMailboxLoginNeeded)
+        viewModel.startSecondFactorFlow(SessionId(testSessionId), testLoginPassword, "", isMailboxLoginNeeded, requiredAccountType)
         // THEN
         val arguments = slot<PerformSecondFactor.State>()
         verify { observer(capture(arguments)) }
@@ -116,6 +147,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     fun `submit 2fa single pass mode flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val isMailboxLoginNeeded = false
+        val requiredAccountType = AccountType.Internal// TODO: test with username
         coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode) } returns flowOf(
             PerformSecondFactor.State.Processing,
             PerformSecondFactor.State.Success.SecondFactor(SessionId(testSessionId), testScopeInfo)
@@ -124,6 +156,10 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             PerformUserSetup.State.Processing,
             PerformUserSetup.State.Success(mockk())
         )
+        coEvery { useCaseUserSetup.invoke(any(), any(), any()) } returns flowOf(
+            PerformUserSetup.State.Processing,
+            PerformUserSetup.State.Success(userMock)
+        )
         val observer = mockk<(PerformSecondFactor.State) -> Unit>(relaxed = true)
         viewModel.secondFactorState.observeDataForever(observer)
         // WHEN
@@ -131,7 +167,8 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             SessionId(testSessionId),
             testLoginPassword,
             testSecondFactorCode,
-            isMailboxLoginNeeded
+            isMailboxLoginNeeded,
+            requiredAccountType
         )
         // THEN
         val arguments = mutableListOf<PerformSecondFactor.State>()
@@ -150,6 +187,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     fun `submit 2fa two pass mode flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val isMailboxLoginNeeded = true
+        val requiredAccountType = AccountType.Internal// TODO: test with username
         coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode) } returns flowOf(
             PerformSecondFactor.State.Processing,
             PerformSecondFactor.State.Success.SecondFactor(SessionId(testSessionId), testScopeInfo)
@@ -165,7 +203,8 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             SessionId(testSessionId),
             testLoginPassword,
             testSecondFactorCode,
-            isMailboxLoginNeeded
+            isMailboxLoginNeeded,
+            requiredAccountType
         )
         // THEN
         val arguments = mutableListOf<PerformSecondFactor.State>()

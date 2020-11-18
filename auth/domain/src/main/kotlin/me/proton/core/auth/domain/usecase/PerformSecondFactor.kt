@@ -49,13 +49,16 @@ class PerformSecondFactor @Inject constructor(
         sealed class Success : State() {
             class SecondFactor(
                 val sessionId: SessionId,
-                val scopeInfo: ScopeInfo
+                val scopeInfo: ScopeInfo,
+                val user: User? = null,
+                val isTwoPassModeNeeded: Boolean? = null
             ) : Success()
 
             class UserSetup(
                 val sessionId: SessionId,
                 val scopeInfo: ScopeInfo,
-                val user: User
+                val user: User,
+                val isTwoPassModeNeeded: Boolean
             ) : Success()
         }
 
@@ -63,7 +66,9 @@ class PerformSecondFactor @Inject constructor(
             data class Message(val message: String?, val localError: Int = 0) : Error()
             object EmptyCredentials : Error()
             object Unrecoverable : Error()
-            data class UserSetup(val state: PerformUserSetup.State.Error) : State.Error()
+            data class UserSetup(val state: PerformUserSetup.State.Error) : Error()
+            data class FetchUser(val state: GetUser.State) : Error()
+            data class AccountUpgrade(val state: UpdateUsernameOnlyAccount.State.Error) : Error()
         }
     }
 
