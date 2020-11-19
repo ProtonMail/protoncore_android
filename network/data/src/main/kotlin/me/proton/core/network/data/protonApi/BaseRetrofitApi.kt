@@ -37,9 +37,12 @@ interface BaseRetrofitApi {
 
 @Serializable
 data class ProtonErrorData(
-    @SerialName("Code") val code: Int,
-    @SerialName("Error") val error: String,
-    @SerialName("Details") val details: Details? = null
+    @SerialName("Code")
+    val code: Int,
+    @SerialName("Error")
+    val error: String,
+    @SerialName("Details")
+    val details: Details? = null
 ) {
     val apiResultData get() = ApiResult.Error.ProtonData(code, error).parseDetails(code, details)
 }

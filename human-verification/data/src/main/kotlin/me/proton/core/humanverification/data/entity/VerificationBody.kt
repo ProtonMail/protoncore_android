@@ -29,7 +29,7 @@ import me.proton.core.humanverification.data.api.HumanVerificationFields.API_TYP
 @Serializable
 data class VerificationBody(
     @SerialName(API_TYPE)
-    val type: String? = null,
+    val type: String,
     @SerialName(API_DESTINATION)
-    val destination: Destination? = null
+    val destination: Destination
 )
