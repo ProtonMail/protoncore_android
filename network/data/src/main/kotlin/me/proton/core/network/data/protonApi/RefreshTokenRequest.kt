@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.data.protonApi
 
+import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -26,10 +27,10 @@ data class RefreshTokenRequest(
     val uid: String,
     @SerialName("RefreshToken")
     val refreshToken: String,
-    @SerialName("ResponseType")
+    @SerialName("ResponseType") @Required
     val responseType: String = "token",
-    @SerialName("GrantType")
+    @SerialName("GrantType") @Required
     val grantType: String = "refresh_token",
-    @SerialName("RedirectURI")
+    @SerialName("RedirectURI") @Required
     val redirectUri: String = "http://protonmail.ch"
 )
