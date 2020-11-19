@@ -158,14 +158,14 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 Timber.d("onAccountRemoved -> $it")
             }
 
-        // Api Call every 10sec (e.g. to test ForceLogout).
-        lifecycleScope.launch {
-            while (true) {
-                delay(10000)
-                accountManager.getPrimaryAccount().firstOrNull()?.let { account ->
-                    account.sessionId?.let { authRepository.getUser(it) }
-                }
-            }
-        }
+        // Api Call every 10sec (e.g. to test ForceLogout). - commeted for now, move it into another activity
+//        lifecycleScope.launch {
+//            while (true) {
+//                delay(10000)
+//                accountManager.getPrimaryAccount().firstOrNull()?.let { account ->
+//                    account.sessionId?.let { authRepository.getUser(it) }
+//                }
+//            }
+//        }
     }
 }

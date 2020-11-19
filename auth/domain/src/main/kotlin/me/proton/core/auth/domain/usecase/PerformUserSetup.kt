@@ -67,8 +67,7 @@ class PerformUserSetup @Inject constructor(
      */
     operator fun invoke(
         sessionId: SessionId,
-        password: ByteArray,
-        userInput: User? = null
+        password: ByteArray
     ): Flow<State> = flow {
         if (password.isEmpty()) {
             emit(State.Error.EmptyCredentials)
@@ -86,10 +85,10 @@ class PerformUserSetup @Inject constructor(
             val addressesJob = async {
                 authRepository.getAddresses(sessionId)
             }
-            Triple(if (userInput != null) null else userJob.await(), saltsJob.await(), addressesJob.await())
+            Triple(userJob.await(), saltsJob.await(), addressesJob.await())
         }
 
-        userResult?.onFailure { errorMessage, _, _ ->
+        userResult.onFailure { errorMessage, _, _ ->
             emit(State.Error.Message(errorMessage))
             return@flow
         }
@@ -102,7 +101,7 @@ class PerformUserSetup @Inject constructor(
             return@flow
         }
 
-        val user = userInput ?: (userResult as DataResult.Success).value
+        val user = (userResult as DataResult.Success).value
         val salts = (saltsResult as DataResult.Success).value
         val addresses = (addressesResult as DataResult.Success).value
 
