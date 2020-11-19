@@ -242,7 +242,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             PerformLogin.State.Processing,
             PerformLogin.State.Success.Login(sessionInfo)
         )
-        coEvery { useCaseUserSetup.invoke(any(), any(), any()) } returns flowOf(
+        coEvery { useCaseUserSetup.invoke(any(), any()) } returns flowOf(
             PerformUserSetup.State.Processing,
             PerformUserSetup.State.Success(userMock)
         )
@@ -283,7 +283,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             PerformLogin.State.Processing,
             PerformLogin.State.Success.Login(sessionInfo)
         )
-        coEvery { useCaseUserSetup.invoke(any(), any(), any()) } returns flowOf(
+        coEvery { useCaseUserSetup.invoke(any(), any()) } returns flowOf(
             PerformUserSetup.State.Processing,
             PerformUserSetup.State.Success(userMock)
         )
@@ -475,7 +475,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             PerformLogin.State.Processing,
             PerformLogin.State.Success.Login(sessionInfo)
         )
-        coEvery { useCaseUserSetup.invoke(any(), any(), any()) } returns flowOf(
+        coEvery { useCaseUserSetup.invoke(any(), any()) } returns flowOf(
             PerformUserSetup.State.Processing,
             PerformUserSetup.State.Success(mockk())
         )

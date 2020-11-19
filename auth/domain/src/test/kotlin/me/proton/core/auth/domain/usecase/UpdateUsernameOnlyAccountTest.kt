@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.domain.usecase
 
+import io.mockk.called
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -30,6 +31,7 @@ import me.proton.core.auth.domain.crypto.CryptoProvider
 import me.proton.core.auth.domain.entity.Address
 import me.proton.core.auth.domain.entity.AddressKey
 import me.proton.core.auth.domain.entity.AddressType
+import me.proton.core.auth.domain.entity.Addresses
 import me.proton.core.auth.domain.entity.Auth
 import me.proton.core.auth.domain.entity.KeySecurity
 import me.proton.core.auth.domain.entity.KeyType
@@ -124,6 +126,11 @@ class UpdateUsernameOnlyAccountTest {
         coEvery { authRepository.createAddress(testSessionId, testDomain, testUsername) } returns DataResult.Success(
             ResponseSource.Remote,
             addressResult
+        )
+        // GIVEN
+        coEvery { authRepository.getAddresses(testSessionId) } returns DataResult.Success(
+            ResponseSource.Remote,
+            Addresses(emptyList())
         )
         coEvery { authRepository.randomModulus() } returns DataResult.Success(ResponseSource.Remote, modulus)
         every { cryptoProvider.generateNewPrivateKey(any(), any(), any(), any(), any()) } returns testPrivateKey
@@ -257,7 +264,57 @@ class UpdateUsernameOnlyAccountTest {
             )
         }
         assertEquals(testUsername, usernameArgument.captured)
+        assertEquals(testPassphrase, String(passphraseArgument.captured))
+        assertEquals(testModulusId, modulusIdArgument.captured)
+        assertEquals(testModulus, modulusArgument.captured)
+    }
+
+    @Test
+    fun `update username-only account with existing address`() = runBlockingTest {
+        // GIVEN
+        coEvery { authRepository.getAddresses(testSessionId) } returns DataResult.Success(
+            ResponseSource.Remote,
+            Addresses(listOf(addressResult))
+        )
+        // WHEN
+        every { cryptoProvider.generatePassphrase(testPassphrase.toByteArray(), any()) } returns "test-generated-pass".toByteArray()
+        useCase.invoke(testSessionId, testDomain, testUsername, testPassphrase.toByteArray()).toList()
+        // THEN
+        val usernameArgument = slot<String>()
+        val domainArgument = slot<String>()
+        val passphraseArgument = slot<ByteArray>()
+        val keyTypeArgument = slot<KeyType>()
+        val keySecurityArgument = slot<KeySecurity>()
+        verify {
+            cryptoProvider.generateNewPrivateKey(
+                capture(usernameArgument), capture(domainArgument),
+                capture(passphraseArgument), capture(keyTypeArgument), capture(keySecurityArgument)
+            )
+        }
+
+        coVerify(exactly = 0) { authRepository.createAddress(any(), any(), any()) }
+
+        assertEquals(testUsername, usernameArgument.captured)
+        assertEquals(testDomain, domainArgument.captured)
         assertEquals("test-generated-pass", String(passphraseArgument.captured))
+        assertEquals(KeyType.RSA, keyTypeArgument.captured)
+        assertEquals(KeySecurity.HIGH, keySecurityArgument.captured)
+
+        val keyArgument = slot<String>()
+        verify { cryptoProvider.generateSignedKeyList(capture(keyArgument), capture(passphraseArgument)) }
+        assertEquals(testPrivateKey, keyArgument.captured)
+        assertEquals("test-generated-pass", String(passphraseArgument.captured))
+
+        val modulusIdArgument = slot<String>()
+        val modulusArgument = slot<String>()
+        verify {
+            cryptoProvider.calculatePasswordVerifier(
+                capture(usernameArgument), capture(passphraseArgument),
+                capture(modulusIdArgument), capture(modulusArgument)
+            )
+        }
+        assertEquals(testUsername, usernameArgument.captured)
+        assertEquals(testPassphrase, String(passphraseArgument.captured))
         assertEquals(testModulusId, modulusIdArgument.captured)
         assertEquals(testModulus, modulusArgument.captured)
     }

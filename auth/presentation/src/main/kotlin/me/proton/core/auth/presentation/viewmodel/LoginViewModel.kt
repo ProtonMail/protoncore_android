@@ -110,7 +110,7 @@ class LoginViewModel @ViewModelInject constructor(
         }
         if (!session.isTwoPassModeNeeded && user.keys.isNotEmpty()) {
             // If Password mode is 1 pass, we directly setup the user (aka Mailbox Login)
-            setupUser(password, session, user)
+            setupUser(password, session)
         } else {
             // if there are no Address Keys and the current AccountType (Username) does not meet the required.
             if (user.keys.isEmpty() && !user.addresses.satisfiesAccountType(requiredAccountType)) {
@@ -144,13 +144,13 @@ class LoginViewModel @ViewModelInject constructor(
             username = username,
             passphrase = password
         )
-            .onSuccess { setupUser(password, sessionInfo, user) }
+            .onSuccess { setupUser(password, sessionInfo) }
             .onError { loginState.post(PerformLogin.State.Error.AccountUpgrade(it)) }
             .launchIn(viewModelScope)
     }
 
-    private fun setupUser(password: ByteArray, sessionInfo: SessionInfo, user: User) {
-        performUserSetup(SessionId(sessionInfo.sessionId), password, user)
+    private fun setupUser(password: ByteArray, sessionInfo: SessionInfo) {
+        performUserSetup(SessionId(sessionInfo.sessionId), password)
             .onSuccess { loginState.post(PerformLogin.State.Success.UserSetup(sessionInfo, it.user)) }
             .onError { loginState.post(PerformLogin.State.Error.UserSetup(it)) }
             .launchIn(viewModelScope)

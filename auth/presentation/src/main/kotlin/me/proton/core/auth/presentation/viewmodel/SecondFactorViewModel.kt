@@ -97,7 +97,7 @@ class SecondFactorViewModel @ViewModelInject constructor(
         }
         if (!isTwoPass && user.keys.isNotEmpty()) {
             // Raise Success.SecondFactor.
-            setupUser(password, sessionId, scopeInfo, user, isTwoPass)
+            setupUser(password, sessionId, scopeInfo, isTwoPass)
         } else {
             if (user.keys.isEmpty() && !user.addresses.satisfiesAccountType(requiredAccountType)) {
                 // we upgrade it
@@ -106,7 +106,6 @@ class SecondFactorViewModel @ViewModelInject constructor(
                     username = user.name!!, // for these accounts [AccountType.Username], name should always be present.
                     passphrase = password,
                     scopeInfo = scopeInfo,
-                    user = user,
                     isTwoPassModeNeeded = isTwoPass
                 )
             } else {
@@ -121,10 +120,9 @@ class SecondFactorViewModel @ViewModelInject constructor(
         password: ByteArray,
         sessionId: SessionId,
         scopeInfo: ScopeInfo,
-        user: User,
         isTwoPassModeNeeded: Boolean
     ) {
-        performUserSetup(sessionId, password, user)
+        performUserSetup(sessionId, password)
             .onSuccess { success ->
                 secondFactorState.post(
                     PerformSecondFactor.State.Success.UserSetup(
@@ -147,11 +145,10 @@ class SecondFactorViewModel @ViewModelInject constructor(
         username: String,
         passphrase: ByteArray,
         scopeInfo: ScopeInfo,
-        user: User,
         isTwoPassModeNeeded: Boolean
     ) {
         updateUsernameOnlyAccount(sessionId = sessionId, username = username, passphrase = passphrase)
-            .onSuccess { setupUser(passphrase, sessionId, scopeInfo, user, isTwoPassModeNeeded) }
+            .onSuccess { setupUser(passphrase, sessionId, scopeInfo, isTwoPassModeNeeded) }
             .onError {
                 secondFactorState.post(PerformSecondFactor.State.Error.AccountUpgrade(it))
             }

@@ -21,6 +21,7 @@ package me.proton.core.auth.domain.usecase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import me.proton.core.auth.domain.crypto.CryptoProvider
+import me.proton.core.auth.domain.entity.Address
 import me.proton.core.auth.domain.entity.AddressKey
 import me.proton.core.auth.domain.entity.KeySecurity
 import me.proton.core.auth.domain.entity.KeyType
@@ -76,12 +77,16 @@ class UpdateUsernameOnlyAccount @Inject constructor(
         }
         emit(State.Processing)
         // step 1. create address
-        val createAddressResult = authRepository.createAddress(sessionId, finalDomain, username)
-        createAddressResult.onFailure { message, _, _ ->
-            emit(State.Error.Message(message))
-            return@flow
-        }
-        val address = (createAddressResult as DataResult.Success).value
+        val existingAddress = getAddress(sessionId)
+        val address = if (existingAddress == null) {
+            // try to create address
+            val createAddressResult = authRepository.createAddress(sessionId, finalDomain, username)
+            createAddressResult.onFailure { message, _, _ ->
+                emit(State.Error.Message(message))
+                return@flow
+            }
+            (createAddressResult as DataResult.Success).value
+        } else existingAddress
 
         // step 2. fetch a random modulus
         val randomModulusResult = authRepository.randomModulus()
@@ -122,7 +127,7 @@ class UpdateUsernameOnlyAccount @Inject constructor(
             ),
             auth = cryptoProvider.calculatePasswordVerifier(
                 username = username,
-                passphrase = generatedPassphrase,
+                passphrase = passphrase,
                 modulusId = modulus.modulusId,
                 modulus = modulus.modulus
             )
@@ -142,6 +147,14 @@ class UpdateUsernameOnlyAccount @Inject constructor(
             return null
         }
         return (availableDomainsResult as DataResult.Success).value.firstOrDefault()
+    }
+
+    private suspend fun getAddress(sessionId: SessionId): Address? {
+        // try to get addresses
+        val addressesResult = authRepository.getAddresses(sessionId)
+        return if (addressesResult is DataResult.Success) {
+            addressesResult.value.addresses.firstOrNull()
+        } else null
     }
 }
 
