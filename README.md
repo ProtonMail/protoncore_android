@@ -79,7 +79,7 @@ Util Android Shared Preferences: **0.2.1** - _released on: Nov 12, 2020_
 
 Util Android Work Manager: **0.2.1** - _released on: Nov 12, 2020_
 
-Util Kotlin: **0.2.3** - _released on: Nov 18, 2020_
+Util Kotlin: **0.2.4** - _released on: Nov 19, 2020_
 
 ### Test
 
@@ -101,11 +101,11 @@ Data: **0.1.2** - _released on: Nov 12, 2020_
 
 ### Network
 
-Network: **0.3.5** - _released on: Nov 18, 2020_
+Network: **0.3.6** - _released on: Nov 19, 2020_
 
 Network Domain: **0.3.3** - _released on: Nov 12, 2020_
 
-Network Data: **0.3.5** - _released on: Nov 18, 2020_
+Network Data: **0.3.6** - _released on: Nov 19, 2020_
 
 ### Crypto
 
@@ -119,11 +119,11 @@ Crypto Data: **0** - _released on: ND_
 
 ### Auth
 
-Auth: **0.2** - _released on: Nov 18, 2020_
+Auth: **0.2.1** - _released on: Nov 19, 2020_
 
-Auth Domain: **0.2** - _released on: Nov 18, 2020_
+Auth Domain: **0.2.1** - _released on: Nov 19, 2020_
 
-Auth Presentation: **0.2** - _released on: Nov 18, 2020_
+Auth Presentation: **0.2.1** - _released on: Nov 19, 2020_
 
 Auth Data: **0.2** - _released on: Nov 18, 2020_
 
