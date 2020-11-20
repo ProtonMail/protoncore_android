@@ -32,7 +32,7 @@ data class AddressEntity(
     @SerialName("ID")
     val id: String,
     @SerialName("DomainID")
-    val domainId: String?,
+    val domainId: String? = null,
     @SerialName("Email")
     val email: String,
     @SerialName("Send")
@@ -46,9 +46,9 @@ data class AddressEntity(
     @SerialName("Order")
     val order: Int,
     @SerialName("DisplayName")
-    val displayName: String,
+    val displayName: String? = null,
     @SerialName("Signature")
-    val signature: String,
+    val signature: String? = null,
     @SerialName("HasKeys")
     val hasKeys: Int, // boolean (binary)
     @SerialName("Keys")

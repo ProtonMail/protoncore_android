@@ -28,7 +28,7 @@ data class UserInfo(
     @SerialName("ID")
     val id: String,
     @SerialName("Name")
-    val name: String?,
+    val name: String? = null,
     @SerialName("UsedSpace")
     val usedSpace: Long,
     @SerialName("Currency")
@@ -52,7 +52,7 @@ data class UserInfo(
     @SerialName("Email")
     val email: String? = null,
     @SerialName("DisplayName")
-    val displayName: String?,
+    val displayName: String? = null,
     @SerialName("Keys")
     val keys: List<UserKeyInfo>
 ) {

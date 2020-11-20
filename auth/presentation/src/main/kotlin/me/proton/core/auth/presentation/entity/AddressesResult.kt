@@ -50,8 +50,8 @@ data class AddressResult(
     val status: Int,
     val type: AddressType,
     val order: Int,
-    val displayName: String,
-    val signature: String,
+    val displayName: String?,
+    val signature: String?,
     val hasKeys: Boolean,
     val keys: List<FullAddressKeyResult>
 ) : Parcelable {
@@ -80,9 +80,9 @@ data class FullAddressKeyResult(
     val flags: Int,
     val privateKey: String,
     val token: String?,
-    val signature: String?,
-    val fingerprint: String,
-    val fingerprints: List<String>,
+    val signature: String? = null,
+    val fingerprint: String? = null,
+    val fingerprints: List<String>? = null,
     val activation: String? = null,
     val primary: Boolean,
     val active: Boolean

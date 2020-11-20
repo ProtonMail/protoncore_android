@@ -19,6 +19,6 @@
 package me.proton.core.auth.domain.entity
 
 data class ScopeInfo(
-    val scope: String,
+    val scope: String? = null,
     val scopes: List<String>
 )

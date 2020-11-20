@@ -38,7 +38,7 @@ data class KeySaltInfo(
     @SerialName("ID")
     val keyId: String,
     @SerialName("KeySalt")
-    val keySalt: String
+    val keySalt: String? = null
 ) {
     fun toKeySalt() = KeySalt(
         keyId = keyId,

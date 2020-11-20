@@ -30,7 +30,7 @@ data class SecondFactorInfo(
     @SerialName("Enabled")
     val enabled: Int,
     @SerialName("U2F")
-    val universalTwoFactor: UniversalTwoFactorInfo?
+    val universalTwoFactor: UniversalTwoFactorInfo? = null
 ) {
     fun toSecondFactor() = SecondFactor(
         enabled = enabled.toBoolean(),

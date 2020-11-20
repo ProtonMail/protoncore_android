@@ -25,15 +25,15 @@ package me.proton.core.auth.domain.entity
  */
 data class Address(
     val id: String,
-    val domainId: String?,
+    val domainId: String? = null,
     val email: String,
     val canSend: Boolean,
     val canReceive: Boolean,
     val status: Int,
     val type: AddressType,
     val order: Int,
-    val displayName: String,
-    val signature: String,
+    val displayName: String? = null,
+    val signature: String? = null,
     val hasKeys: Boolean,
     val keys: List<FullAddressKey>
 )
@@ -46,10 +46,10 @@ data class FullAddressKey(
     val version: Int,
     val flags: Int,
     val privateKey: String,
-    val token: String?,
-    val signature: String?,
-    val fingerprint: String,
-    val fingerprints: List<String>,
+    val token: String? = null,
+    val signature: String? = null,
+    val fingerprint: String? = null,
+    val fingerprints: List<String>? = null,
     val activation: String? = null,
     val primary: Boolean,
     val active: Boolean

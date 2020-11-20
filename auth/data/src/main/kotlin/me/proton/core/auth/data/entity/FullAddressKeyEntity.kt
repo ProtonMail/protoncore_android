@@ -37,13 +37,13 @@ data class FullAddressKeyEntity(
     @SerialName("PrivateKey")
     val privateKey: String,
     @SerialName("Token")
-    val token: String?,
+    val token: String? = null,
     @SerialName("Signature")
-    val signature: String?,
+    val signature: String? = null,
     @SerialName("Fingerprint")
-    val fingerprint: String,
+    val fingerprint: String? = null,
     @SerialName("Fingerprints")
-    val fingerprints: List<String>,
+    val fingerprints: List<String>? = null,
     @SerialName("Activation")
     val activation: String? = null,
     @SerialName("Primary")
