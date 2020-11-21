@@ -110,8 +110,8 @@ class PerformUserSetup @Inject constructor(
             return@flow
         }
 
-        val primaryKeySalt = salts.salts.find { it.keyId == user.primaryKey.id }?.takeIf { it.keySalt.isNotEmpty() }
-        if (primaryKeySalt == null) {
+        val primaryKeySalt = salts.salts.find { it.keyId == user.primaryKey.id }?.takeIf { !it.keySalt.isNullOrEmpty() }
+        if (primaryKeySalt?.keySalt == null) {
             emit(State.Error.NoKeySaltsForPrimaryKey)
             return@flow
         }

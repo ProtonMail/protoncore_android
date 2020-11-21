@@ -24,5 +24,5 @@ data class KeySalts(
 
 data class KeySalt(
     val keyId: String,
-    val keySalt: String
+    val keySalt: String? = null
 )

@@ -31,7 +31,7 @@ data class UserKeyInfo(
     @SerialName("PrivateKey")
     val privateKey: String,
     @SerialName("Fingerprint")
-    val fingerprint: String,
+    val fingerprint: String? = null,
     @SerialName("Activation")
     val activation: String? = null,
     @SerialName("Primary")

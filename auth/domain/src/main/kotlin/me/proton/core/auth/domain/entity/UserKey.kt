@@ -22,7 +22,7 @@ data class UserKey(
     val id: String,
     val version: Int,
     val privateKey: String,
-    val fingerprint: String,
+    val fingerprint: String? = null,
     val activation: String? = null,
     val primary: Int
 )

@@ -25,7 +25,7 @@ import me.proton.core.auth.domain.entity.ScopeInfo
 @Serializable
 data class SecondFactorResponse(
     @SerialName("Scope")
-    val scope: String,
+    val scope: String? = null,
     @SerialName("Scopes")
     val scopes: List<String>
 ) {
