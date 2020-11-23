@@ -66,8 +66,10 @@ class CoreExampleApiClient @Inject constructor() : ApiClient {
 
     /**
      * Tells client to force update (this client will no longer be accepted by the API).
+     *
+     * @param errorMessage the localized error message the user should see.
      */
-    override fun forceUpdate() {
+    override fun forceUpdate(errorMessage: String) {
         // dummy example, not implemented for now
     }
 }
