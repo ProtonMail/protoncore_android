@@ -28,17 +28,17 @@ internal fun initVersions() {
     // endregion
 
     // region Android
-    `activity version` =                        "1.2.0-alpha03" // Released: Apr 05, 2020
+    `activity version` =                        "1.2.0-beta01"  // Released: Oct 01, 2020
     `android-annotation version` =              "1.1.0"         // Released: Jun 05, 2019
-    `appcompat version` =                       "1.1.0"         // Released: Sep 06, 2019
+    `appcompat version` =                       "1.2.0"         // Released: Aug 19, 2020
     `android-arch version` =                    "2.1.0"         // Released: Sep 06, 2019
-    `constraint-layout version` =               "2.0.0-beta4"   // Released: Jun 17, 2019
+    `constraint-layout version` =               "2.0.4"         // Released: Oct 29, 2020
     `espresso version` =                        "3.2.0"         // Released: May 30, 2019
-    `fragment version` =                        "1.3.0-alpha04" // Released: Apr 05, 2020
-    `ktx version` =                             "1.2.0-beta01"  // Released: Oct 11, 2019
+    `fragment version` =                        "1.3.0-beta01"  // Released: Oct 01, 2020
+    `ktx version` =                             "1.3.2"         // Released: Oct 01, 2020
     `lifecycle version` =                       "2.2.0"         // Released: Oct 11, 2019
     `material version` =                        "1.2.1"         // Released: Sep 03, 2020
-    `android-paging version` =                  "3.0.0-alpha02" // Released: Jun 24, 2020
+    `android-paging version` =                  "2.1.2"         // Released: Mar 18, 2020
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
     `android-room version` =                    "2.2.5"         // Released: Mar 18, 2020
 

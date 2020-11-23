@@ -129,7 +129,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
     private fun verificationDone() {
         parentFragmentManager.setFragmentResult(
             HumanVerificationDialogFragment.KEY_VERIFICATION_DONE,
-            null
+            bundleOf()
         )
     }
 

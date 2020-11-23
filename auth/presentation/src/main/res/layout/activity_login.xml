@@ -19,16 +19,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
+    <me.proton.core.presentation.ui.view.ZeroInsetLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:windowBackground">
 
-        <com.google.android.material.button.MaterialButton
+        <me.proton.core.presentation.ui.view.ProtonNavigationButton
             android:id="@+id/closeButton"
             style="@style/ProtonButton.Navigation"
-            android:layout_marginStart="@dimen/auth_close_button_margin_start"
-            android:layout_marginTop="@dimen/auth_close_button_margin_top"
+            android:layout_marginStart="@dimen/button_nav_margin_start"
+            android:layout_marginTop="@dimen/button_nav_margin_top"
             app:icon="@drawable/ic_close" />
 
         <ScrollView
@@ -71,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
                     android:hint="@string/auth_email_username_hint"
+                    android:inputType="text|textEmailAddress|textNoSuggestions"
                     app:help="@string/auth_login_assistive_text"
                     app:label="@string/auth_email_username" />
 
@@ -103,6 +104,6 @@
 
         </ScrollView>
 
-    </FrameLayout>
+    </me.proton.core.presentation.ui.view.ZeroInsetLayout>
 
 </layout>

@@ -41,6 +41,30 @@
         <activity
             android:name=".ui.CustomViewsActivity"
             android:configChanges="orientation" />
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.AuthHelpActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.CreateAddressActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.CreateAddressResultActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.LoginActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.MailboxLoginActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.SecondFactorActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
