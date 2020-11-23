@@ -100,11 +100,9 @@ class ProtonInputTest {
 
     @Test
     fun `set text works correctly`() {
-        val editText = protonInput.findViewById<TextInputEditText>(R.id.input)
-
         protonInput.text = "test text"
-        assertEquals(View.VISIBLE, editText.visibility)
-        assertEquals("test text", editText.text.toString())
+
+        assertEquals("test text", protonInput.text.toString())
     }
 
     @Test
@@ -132,24 +130,20 @@ class ProtonInputTest {
     @Test
     fun `set input error custom message shown`() {
         val inputLayout = protonInput.findViewById<TextInputLayout>(R.id.inputLayout)
-        val editText = protonInput.findViewById<TextInputEditText>(R.id.input)
-        val labelView = protonInput.findViewById<TextView>(R.id.label)
 
         protonInput.labelText = "test label"
         protonInput.helpText = "test assistive"
         protonInput.text = "test text"
         protonInput.setInputError("test error message")
 
-        assertEquals("test text", editText.text.toString())
-        assertEquals("test label", labelView.text.toString())
+        assertEquals("test text", protonInput.text.toString())
+        assertEquals("test label", protonInput.labelText.toString())
         assertEquals("test error message", inputLayout.error)
     }
 
     @Test
     fun `remove input error text works correctly`() {
         val inputLayout = protonInput.findViewById<TextInputLayout>(R.id.inputLayout)
-        val editText = protonInput.findViewById<TextInputEditText>(R.id.input)
-        val labelView = protonInput.findViewById<TextView>(R.id.label)
 
         protonInput.labelText = "test label"
         protonInput.helpText = "test assistive"
@@ -157,8 +151,8 @@ class ProtonInputTest {
         protonInput.setInputError("test error message")
 
         protonInput.clearInputError()
-        assertEquals("test text", editText.text.toString())
-        assertEquals("test label", labelView.text.toString())
+        assertEquals("test text", protonInput.text.toString())
+        assertEquals("test label", protonInput.labelText.toString())
         assertEquals(null, inputLayout.error)
     }
 

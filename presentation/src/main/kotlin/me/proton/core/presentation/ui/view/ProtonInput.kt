@@ -88,6 +88,9 @@ class ProtonInput : LinearLayout {
             setActionMode(getInt(R.styleable.ProtonInput_actionMode, 0))
         }
 
+        // Set internal input id.
+        binding.input.id = id
+
         // Clear error on text changed.
         binding.input.addTextChangedListener { editable ->
             if (editable?.isNotEmpty() == true) clearInputError()
