@@ -106,14 +106,18 @@ fun Context.hideKeyboard(view: View) {
  * @param largeLayout how to present the dialog (default false)
  */
 fun FragmentManager.showForceUpdate(apiErrorMessage: String, learnMoreURL: String? = null, largeLayout: Boolean = false) {
-    val updateDialogFragment = ForceUpdateDialog(apiErrorMessage, learnMoreURL)
-    if (largeLayout) {
-        // For large screens (tablets), we show the fragment as a dialog
-        updateDialogFragment.show(this, TAG_FORCE_UPDATE_DIALOG)
-    } else {
-        // The smaller screens (phones), we show the fragment fullscreen
-        inTransaction {
-            add(updateDialogFragment, TAG_FORCE_UPDATE_DIALOG)
+    findFragmentByTag(TAG_FORCE_UPDATE_DIALOG).let {
+        it ?: let {
+            val updateDialogFragment = ForceUpdateDialog(apiErrorMessage, learnMoreURL)
+            if (largeLayout) {
+                // For large screens (tablets), we show the fragment as a dialog
+                updateDialogFragment.show(this, TAG_FORCE_UPDATE_DIALOG)
+            } else {
+                // The smaller screens (phones), we show the fragment fullscreen
+                inTransaction {
+                    add(updateDialogFragment, TAG_FORCE_UPDATE_DIALOG)
+                }
+            }
         }
     }
 }

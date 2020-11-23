@@ -18,10 +18,10 @@
 
 package me.proton.core.presentation.ui.alert
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import me.proton.core.presentation.R
