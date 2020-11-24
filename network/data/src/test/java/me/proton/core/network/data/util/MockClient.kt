@@ -70,9 +70,10 @@ class MockApiClient : ApiClient {
     override val userAgent = "Test/1.0 (Android 10; brand model)"
 
     override val enableDebugLogging: Boolean = true
+
     override var backoffRetryCount = 2
 
-    override fun forceUpdate() {
+    override fun forceUpdate(errorMessage: String) {
         forceUpdated = true
     }
 }

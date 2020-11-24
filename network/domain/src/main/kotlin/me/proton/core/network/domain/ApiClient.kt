@@ -84,6 +84,8 @@ interface ApiClient {
 
     /**
      * Tells client to force update (this client will no longer be accepted by the API).
+     *
+     * @param errorMessage the localized error message the user should see.
      */
-    fun forceUpdate()
+    fun forceUpdate(errorMessage: String)
 }
