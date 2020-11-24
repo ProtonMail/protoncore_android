@@ -93,7 +93,7 @@ Test Android Instrumented: **0.2** - _released on: Oct 21, 2020_
 
 Domain: **0.2.4** - _released on: Nov 18, 2020_
 
-Presentation: **0.5** - _released on: Nov 24, 2020_
+Presentation: **0.5.1** - _released on: Nov 24, 2020_
 
 Data: **0.1.2** - _released on: Nov 12, 2020_
 
@@ -101,9 +101,9 @@ Data: **0.1.2** - _released on: Nov 12, 2020_
 
 ### Network
 
-Network: **0.3.6** - _released on: Nov 19, 2020_
+Network: **0.3.7** - _released on: Nov 24, 2020_
 
-Network Domain: **0.3.3** - _released on: Nov 12, 2020_
+Network Domain: **0.3.4** - _released on: Nov 24, 2020_
 
 Network Data: **0.3.6** - _released on: Nov 19, 2020_
 
