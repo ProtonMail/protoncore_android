@@ -25,11 +25,9 @@
         android:layout_height="wrap_content"
         android:background="?android:windowBackground">
 
-        <com.google.android.material.button.MaterialButton
+        <me.proton.core.presentation.ui.view.ProtonNavigationButton
             android:id="@+id/closeButton"
             style="@style/ProtonButton.Navigation"
-            android:layout_marginStart="@dimen/auth_close_button_margin_start"
-            android:layout_marginTop="@dimen/auth_close_button_margin_top"
             app:icon="@drawable/ic_close" />
 
         <ScrollView
@@ -66,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
-                    android:inputType="text"
+                    android:inputType="text|textNoSuggestions"
                     app:label="@string/auth_username" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton

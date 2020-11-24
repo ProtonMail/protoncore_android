@@ -83,8 +83,8 @@
     </style>
 
     <style name="ProtonButton.Navigation" parent="ProtonButton">
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">@dimen/button_nav_size</item>
+        <item name="android:layout_height">@dimen/button_nav_size</item>
         <item name="backgroundTint">@color/interaction_weak</item>
         <item name="cornerRadius">24dp</item>
         <item name="iconTint">@color/icon_norm</item>

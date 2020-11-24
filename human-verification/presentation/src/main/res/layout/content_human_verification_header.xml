@@ -26,7 +26,7 @@
         android:paddingTop="@dimen/parent_padding"
         android:paddingEnd="@dimen/parent_padding">
 
-        <com.google.android.material.button.MaterialButton
+        <me.proton.core.presentation.ui.view.ProtonNavigationButton
             android:id="@+id/closeButton"
             style="@style/ProtonButton.Navigation.Borderless"
             app:icon="@drawable/ic_close"

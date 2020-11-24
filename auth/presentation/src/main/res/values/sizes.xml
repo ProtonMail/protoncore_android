@@ -31,7 +31,5 @@
 
     <dimen name="horizontal_separator_height">1px</dimen>
 
-    <dimen name="auth_close_button_margin_start">16dp</dimen>
-    <dimen name="auth_close_button_margin_top">48dp</dimen>
-    <dimen name="auth_no_toolbar_top_margin">112dp</dimen>
+    <dimen name="auth_no_toolbar_top_margin">120dp</dimen>
 </resources>

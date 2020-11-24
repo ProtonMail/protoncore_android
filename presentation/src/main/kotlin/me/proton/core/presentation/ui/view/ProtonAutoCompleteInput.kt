@@ -77,6 +77,9 @@ open class ProtonAutoCompleteInput : LinearLayout {
             inputType = getInteger(R.styleable.ProtonAutoCompleteInput_android_inputType, InputType.TYPE_CLASS_TEXT)
             isEnabled = getBoolean(R.styleable.ProtonAutoCompleteInput_android_enabled, true)
         }
+
+        // Set internal input id.
+        binding.input.id = id
     }
 
     // region Public API

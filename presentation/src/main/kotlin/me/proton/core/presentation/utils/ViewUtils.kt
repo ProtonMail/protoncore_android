@@ -32,6 +32,12 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginBottom
+import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
+import androidx.core.view.marginTop
 import com.google.android.material.snackbar.Snackbar
 import me.proton.core.presentation.R
 
@@ -169,3 +175,38 @@ fun View.snack(
         setTextColor(ContextCompat.getColor(context, R.color.white))
     }.show()
 }
+
+fun View.requestApplyInsetsWhenAttached() {
+    if (isAttachedToWindow) {
+        requestApplyInsets()
+    } else {
+        addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(view: View) {
+                view.removeOnAttachStateChangeListener(this)
+                view.requestApplyInsets()
+            }
+
+            override fun onViewDetachedFromWindow(v: View) = Unit
+        })
+    }
+}
+
+fun View.doOnApplyWindowInsets(block: (View, WindowInsetsCompat, InitialMargin, InitialPadding) -> Unit) {
+    val initialMargin = recordInitialMarginForView(this)
+    val initialPadding = recordInitialPaddingForView(this)
+    ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+        block(view, insets, initialMargin, initialPadding)
+        insets
+    }
+    requestApplyInsetsWhenAttached()
+}
+
+data class InitialMargin(val start: Int, val top: Int, val end: Int, val bottom: Int)
+private fun recordInitialMarginForView(view: View) = InitialMargin(
+    view.marginStart, view.marginTop, view.marginEnd, view.marginBottom
+)
+
+data class InitialPadding(val start: Int, val top: Int, val end: Int, val bottom: Int)
+private fun recordInitialPaddingForView(view: View) = InitialPadding(
+    view.paddingStart, view.paddingTop, view.paddingEnd, view.paddingBottom
+)
