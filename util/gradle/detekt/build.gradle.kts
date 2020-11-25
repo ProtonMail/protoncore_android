@@ -27,7 +27,7 @@ plugins {
 
 val plugin = PluginConfig(
     name = "Detekt",
-    version = Version(0, 1)
+    version = Version(0, 2)
 )
 pluginConfig = plugin
 
@@ -51,6 +51,6 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.14.1")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.14.2")
     implementation("studio.forface.easygradle:dsl:2.7")
 }
