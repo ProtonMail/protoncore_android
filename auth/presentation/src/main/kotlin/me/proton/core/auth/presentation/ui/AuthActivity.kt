@@ -38,7 +38,7 @@ abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
             if (!isNightMode()) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
 
         window.decorView.systemUiVisibility = flags
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = Color.TRANSPARENT
     }
 

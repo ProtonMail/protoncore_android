@@ -125,7 +125,8 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
                                 "Primary": 1
                             }
                         ]
-                        """.trimIndent()
+                        """
+                .trimIndent()
 
         val signedKeyList = signTextDetached(keyList, key, passphrase)
         return Pair(keyList, signedKeyList)

@@ -29,8 +29,10 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.crypto.CryptoProvider
 import me.proton.core.auth.domain.entity.Address
 import me.proton.core.auth.domain.entity.AddressType
+import me.proton.core.auth.domain.entity.Addresses
 import me.proton.core.auth.domain.entity.KeySecurity
 import me.proton.core.auth.domain.entity.KeyType
+import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.exception.EmptyCredentialsException
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.arch.DataResult
@@ -61,6 +63,8 @@ class UpdateExternalAccountTest {
     private val testAddressId = "test-addressId"
     private val testSignedKeyListData = "test-signedKeyListData"
     private val testSignedKeyListSignature = "test-signedKeyListSignature"
+    private val testModulusId = "test-modulusId"
+    private val testModulus = "test-modulus"
 
     private val address = Address(
         id = testAddressId,
@@ -76,6 +80,7 @@ class UpdateExternalAccountTest {
         hasKeys = false,
         keys = emptyList()
     )
+    private val modulus = Modulus(testModulusId, testModulus)
 
     // endregion
 
@@ -87,17 +92,29 @@ class UpdateExternalAccountTest {
             ResponseSource.Remote,
             true
         )
+        coEvery { authRepository.getAddresses(testSessionId) } returns DataResult.Success(
+            ResponseSource.Remote,
+            Addresses(emptyList())
+        )
         coEvery { authRepository.createAddress(testSessionId, testDomain, testUsername) } returns DataResult.Success(
             ResponseSource.Remote,
             address
         )
+        coEvery { authRepository.randomModulus() } returns DataResult.Success(ResponseSource.Remote, modulus)
+        every { cryptoProvider.generateNewPrivateKey(any(), any(), any(), any(), any()) } returns testPrivateKey
     }
 
     @Test
     fun `update external account happy path`() = runBlockingTest {
         // GIVEN
+        every {
+            cryptoProvider.generatePassphrase(
+                testPassphrase.toByteArray(),
+                any()
+            )
+        } returns "test-generated-pass".toByteArray()
         every { cryptoProvider.generateNewPrivateKey(any(), any(), any(), any(), any()) } returns testPrivateKey
-        every { cryptoProvider.generateSignedKeyList(any(), testPassphrase.toByteArray()) } returns Pair(
+        every { cryptoProvider.generateSignedKeyList(any(), "test-generated-pass".toByteArray()) } returns Pair(
             testSignedKeyListData,
             testSignedKeyListSignature
         )
@@ -127,8 +144,14 @@ class UpdateExternalAccountTest {
     @Test
     fun `update external account API arguments are correct`() = runBlockingTest {
         // GIVEN
+        every {
+            cryptoProvider.generatePassphrase(
+                testPassphrase.toByteArray(),
+                any()
+            )
+        } returns "test-generated-pass".toByteArray()
         every { cryptoProvider.generateNewPrivateKey(any(), any(), any(), any(), any()) } returns testPrivateKey
-        every { cryptoProvider.generateSignedKeyList(any(), testPassphrase.toByteArray()) } returns Pair(
+        every { cryptoProvider.generateSignedKeyList(any(), "test-generated-pass".toByteArray()) } returns Pair(
             testSignedKeyListData,
             testSignedKeyListSignature
         )
@@ -184,8 +207,14 @@ class UpdateExternalAccountTest {
 
     @Test
     fun `update external account Crypto arguments are correct`() = runBlockingTest {
+        every {
+            cryptoProvider.generatePassphrase(
+                testPassphrase.toByteArray(),
+                any()
+            )
+        } returns "test-generated-pass".toByteArray()
         every { cryptoProvider.generateNewPrivateKey(any(), any(), any(), any(), any()) } returns testPrivateKey
-        every { cryptoProvider.generateSignedKeyList(any(), testPassphrase.toByteArray()) } returns Pair(
+        every { cryptoProvider.generateSignedKeyList(any(), "test-generated-pass".toByteArray()) } returns Pair(
             testSignedKeyListData,
             testSignedKeyListSignature
         )
@@ -220,14 +249,14 @@ class UpdateExternalAccountTest {
 
         assertEquals(testUsername, usernameArgument.captured)
         assertEquals(testDomain, domainArgument.captured)
-        assertEquals(testPassphrase, String(passphraseArgument.captured))
+        assertEquals("test-generated-pass", String(passphraseArgument.captured))
         assertEquals(KeyType.RSA, keyTypeArgument.captured)
         assertEquals(KeySecurity.HIGH, keySecurityArgument.captured)
 
         val keyArgument = slot<String>()
         verify { cryptoProvider.generateSignedKeyList(capture(keyArgument), capture(passphraseArgument)) }
         assertEquals(testPrivateKey, keyArgument.captured)
-        assertEquals(testPassphrase, String(passphraseArgument.captured))
+        assertEquals("test-generated-pass", String(passphraseArgument.captured))
     }
 
     @Test
@@ -343,7 +372,13 @@ class UpdateExternalAccountTest {
     fun `generating SignedKeyList failure returns Error event`() = runBlockingTest {
         // GIVEN
         every {
-            cryptoProvider.generateSignedKeyList(any(), testPassphrase.toByteArray())
+            cryptoProvider.generatePassphrase(
+                testPassphrase.toByteArray(),
+                any()
+            )
+        } returns "test-generated-pass".toByteArray()
+        every {
+            cryptoProvider.generateSignedKeyList(any(), "test-generated-pass".toByteArray())
         } throws RuntimeException("Some gopenpgp exception.")
         // WHEN
         val listOfEvents =
@@ -359,8 +394,14 @@ class UpdateExternalAccountTest {
     @Test
     fun `create Address API failure returns Error event`() = runBlockingTest {
         // GIVEN
+        every {
+            cryptoProvider.generatePassphrase(
+                testPassphrase.toByteArray(),
+                any()
+            )
+        } returns "test-generated-pass".toByteArray()
         every { cryptoProvider.generateNewPrivateKey(any(), any(), any(), any(), any()) } returns testPrivateKey
-        every { cryptoProvider.generateSignedKeyList(any(), testPassphrase.toByteArray()) } returns Pair(
+        every { cryptoProvider.generateSignedKeyList(any(), "test-generated-pass".toByteArray()) } returns Pair(
             testSignedKeyListData,
             testSignedKeyListSignature
         )

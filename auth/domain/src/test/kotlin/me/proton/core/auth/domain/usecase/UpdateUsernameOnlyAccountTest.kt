@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.domain.usecase
 
-import io.mockk.called
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -127,7 +126,6 @@ class UpdateUsernameOnlyAccountTest {
             ResponseSource.Remote,
             addressResult
         )
-        // GIVEN
         coEvery { authRepository.getAddresses(testSessionId) } returns DataResult.Success(
             ResponseSource.Remote,
             Addresses(emptyList())

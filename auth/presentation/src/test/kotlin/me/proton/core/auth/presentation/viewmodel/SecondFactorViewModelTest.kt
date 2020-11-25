@@ -90,7 +90,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     fun `submit 2fa happy flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val isMailboxLoginNeeded = false
-        val requiredAccountType = AccountType.Internal// TODO: test with username
+        val requiredAccountType = AccountType.Internal
         coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode) } returns flowOf(
             PerformSecondFactor.State.Processing,
             PerformSecondFactor.State.Success.SecondFactor(SessionId(testSessionId), testScopeInfo)
@@ -126,7 +126,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     fun `submit empty 2fa states flow are handled correctly`() = coroutinesTest {
         // GIVEN
         val isMailboxLoginNeeded = false
-        val requiredAccountType = AccountType.Internal// TODO: test with username
+        val requiredAccountType = AccountType.Internal
         coEvery { useCaseUserSetup.invoke(any(), any()) } returns flowOf(
             PerformUserSetup.State.Processing,
             PerformUserSetup.State.Success(mockk())
@@ -147,7 +147,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     fun `submit 2fa single pass mode flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val isMailboxLoginNeeded = false
-        val requiredAccountType = AccountType.Internal// TODO: test with username
+        val requiredAccountType = AccountType.Internal
         coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode) } returns flowOf(
             PerformSecondFactor.State.Processing,
             PerformSecondFactor.State.Success.SecondFactor(SessionId(testSessionId), testScopeInfo)
@@ -187,7 +187,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     fun `submit 2fa two pass mode flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val isMailboxLoginNeeded = true
-        val requiredAccountType = AccountType.Internal// TODO: test with username
+        val requiredAccountType = AccountType.Internal
         coEvery { useCase.invoke(SessionId(testSessionId), testSecondFactorCode) } returns flowOf(
             PerformSecondFactor.State.Processing,
             PerformSecondFactor.State.Success.SecondFactor(SessionId(testSessionId), testScopeInfo)

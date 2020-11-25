@@ -21,6 +21,8 @@ package me.proton.core.auth.domain.usecase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import me.proton.core.auth.domain.crypto.CryptoProvider
+import me.proton.core.auth.domain.entity.Address
+import me.proton.core.auth.domain.entity.AddressType
 import me.proton.core.auth.domain.entity.Addresses
 import me.proton.core.auth.domain.entity.KeySecurity
 import me.proton.core.auth.domain.entity.KeyType
@@ -80,31 +82,38 @@ class UpdateExternalAccount @Inject constructor(
         emit(State.Processing)
         // step.1 set the username and create address with displayName equal to username
         val setUsernameResult = authRepository.setUsername(sessionId, username)
-        val createAddressResult = authRepository.createAddress(sessionId, domain, username)
-
         setUsernameResult.onFailure { message, _, _ ->
             emit(State.Error.Message(message))
             return@flow
         }
-        createAddressResult.onFailure { message, _, _ ->
-            emit(State.Error.Message(message))
-            return@flow
-        }
+
+        val existingAddress = getAddress(sessionId)
+        val address = if (existingAddress == null) {
+            // try to create address
+            val createAddressResult = authRepository.createAddress(sessionId, domain, username)
+            createAddressResult.onFailure { message, _, _ ->
+                emit(State.Error.Message(message))
+                return@flow
+            }
+            (createAddressResult as DataResult.Success).value
+        } else existingAddress
+
         if (!(setUsernameResult as DataResult.Success).value) {
             emit(State.Error.SetUsernameFailed)
             return@flow
         }
-        val address = (createAddressResult as DataResult.Success).value
         // step 2. generate new private key.
+        val randomSalt = cryptoProvider.createNewKeySalt()
+        val generatedPassphrase = cryptoProvider.generatePassphrase(passphrase, randomSalt)
         val privateKey = try {
-            cryptoProvider.generateNewPrivateKey(username, domain, passphrase, KeyType.RSA, KeySecurity.HIGH)
+            cryptoProvider.generateNewPrivateKey(username, domain, generatedPassphrase, KeyType.RSA, KeySecurity.HIGH)
         } catch (privateKeyException: Exception) { // gopenpgp library throws generic exception
             emit(State.Error.GeneratingPrivateKeyFailed(privateKeyException.message))
             return@flow
         }
         // step 3. and generate signed key list for the newly generated private key.
         val signedKeyList = try {
-            cryptoProvider.generateSignedKeyList(privateKey, passphrase)
+            cryptoProvider.generateSignedKeyList(privateKey, generatedPassphrase)
         } catch (signedKeyListException: Exception) { // gopenpgp library throws generic exception
             emit(State.Error.GeneratingSignedKeyListFailed(signedKeyListException.message))
             return@flow
@@ -122,5 +131,18 @@ class UpdateExternalAccount @Inject constructor(
         }.onSuccess {
             emit(State.Success(Addresses(listOf(address.copy(hasKeys = true, keys = listOf(it))))))
         }
+    }
+
+    /**
+     * Returns the address with type [AddressType.ORIGINAL]
+     */
+    private suspend fun getAddress(sessionId: SessionId): Address? {
+        // try to get addresses
+        val addressesResult = authRepository.getAddresses(sessionId)
+        return if (addressesResult is DataResult.Success) {
+            addressesResult.value.addresses.firstOrNull {
+                it.type == AddressType.ORIGINAL
+            }
+        } else null
     }
 }
