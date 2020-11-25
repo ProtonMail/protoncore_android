@@ -67,9 +67,17 @@ class SecondFactorViewModel @ViewModelInject constructor(
                 // No more steps -> directly setup user.
                 getUser(sessionId)
                     .onSuccess { userResult ->
-                        onUserDetails(sessionId, password, userResult.user, success.scopeInfo, isTwoPassModeNeeded, requiredAccountType)
+                        onUserDetails(
+                            sessionId,
+                            password,
+                            userResult.user,
+                            success.scopeInfo,
+                            isTwoPassModeNeeded,
+                            requiredAccountType
+                        )
                     }
-                    .onError { error -> secondFactorState.post(PerformSecondFactor.State.Error.FetchUser(error))
+                    .onError { error ->
+                        secondFactorState.post(PerformSecondFactor.State.Error.FetchUser(error))
                     }
                     .launchIn(viewModelScope)
             }

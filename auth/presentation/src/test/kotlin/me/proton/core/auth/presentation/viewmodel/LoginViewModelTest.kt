@@ -41,7 +41,6 @@ import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.PerformUserSetup
 import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.network.domain.session.Session
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -326,7 +325,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     fun `login get user error flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val sessionInfo = mockk<SessionInfo>(relaxed = true)
-        val requiredAccountType = AccountType.Internal// TODO: test with username
+        val requiredAccountType = AccountType.Internal
         every { sessionInfo.username } returns testUserName
         every { sessionInfo.isSecondFactorNeeded } returns false
         every { sessionInfo.isTwoPassModeNeeded } returns false
