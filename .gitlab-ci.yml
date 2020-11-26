@@ -1,14 +1,4 @@
-image: gitlab.protontech.ch:4567/protonvpn/android/android-app:protonish5
-
-variables:
-  ANDROID_COMPILE_SDK: "28"
-  ANDROID_BUILD_TOOLS: "28.0.2"
-  ANDROID_SDK_TOOLS:   "4333796"
-
-before_script:
-  - if [[ -n "$http_proxy" ]]; then export JAVA_TOOL_OPTIONS="-Dhttp.proxyHost=$( echo ${http_proxy##http://} | cut -d':' -f1 ) -Dhttp.proxyPort=$( echo ${http_proxy##http://} | cut -d':' -f2 ) -Dhttps.proxyHost=$( echo ${https_proxy##http://} | cut -d':' -f1 ) -Dhttps.proxyPort=$( echo ${https_proxy##http://} | cut -d':' -f2 ) -Dhttp.nonProxyHosts=\"$( echo $no_proxy | tr ',' '|' )\""; fi
-  - export GRADLE_USER_HOME=`pwd`/.gradle
-  - chmod +x ./gradlew
+image: gitlab.protontech.ch:4567/protonvpn/android/android-app-new:latest
 
 stages:
   - analyze
@@ -22,7 +12,7 @@ stages:
 detekt analysis:
   stage: analyze
   tags:
-    - android
+    - medium
   script:
     - ./gradlew multiModuleDetekt
   artifacts:
@@ -33,7 +23,7 @@ detekt analysis:
 assemble:
   stage: build
   tags:
-    - android
+    - large
   script:
     - ./gradlew assemble
   # artifacts:
@@ -43,7 +33,7 @@ assemble:
 debugTests:
   stage: test
   tags:
-    - android
+    - large
   script:
     - ./gradlew -Pci --console=plain allTest
 
@@ -64,7 +54,7 @@ release-publish-github:
 publishBintray:
   stage: publish
   tags:
-    - android
+    - large
   script:
     - ./gradlew assemble && ./gradlew publishAll
   only:
@@ -80,7 +70,7 @@ publishBintray:
 publishGradlePortal:
   stage: publish
   tags:
-    - android
+    - large
   script:
     - ./gradlew -p util/gradle assemble && ./gradlew -p util/gradle publishAll
   only:
