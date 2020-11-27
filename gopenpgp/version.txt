@@ -1,1 +1,5 @@
-2.1.1
+gopenpgp: 2.1.1
+golang: 15.5.5
+
+from: https://gitlab.protontech.ch/android/shared/gopenpgp-builds
+commit: 1396e719f8fae524e83909ab0da77699e650bf9d
