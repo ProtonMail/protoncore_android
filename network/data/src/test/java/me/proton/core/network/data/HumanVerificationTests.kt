@@ -116,6 +116,7 @@ internal class HumanVerificationTests {
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
     )
+    private val cookieStore = mockk<ProtonCookieStore>()
 
     private var isNetworkAvailable = true
     private val networkManager = mockk<NetworkManager>()
@@ -133,6 +134,7 @@ internal class HumanVerificationTests {
         session = MockSession.getDefault()
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
+        every { cookieStore.get(any()) } returns emptyList()
 
         apiFactory =
             ApiFactory(
@@ -143,6 +145,7 @@ internal class HumanVerificationTests {
                 prefs,
                 sessionProvider,
                 sessionListener,
+                cookieStore,
                 scope
             )
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
@@ -211,7 +214,6 @@ internal class HumanVerificationTests {
 
     @Test
     fun `test human verification headers`() = runBlocking {
-
         webServer.prepareResponse(
             422,
             humanVerificationResponse

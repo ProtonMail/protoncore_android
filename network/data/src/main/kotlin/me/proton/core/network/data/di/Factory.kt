@@ -27,6 +27,7 @@ import kotlinx.coroutines.plus
 import me.proton.core.network.data.NetworkManagerImpl
 import me.proton.core.network.data.NetworkPrefsImpl
 import me.proton.core.network.data.ProtonApiBackend
+import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
 import me.proton.core.network.data.initPinning
 import me.proton.core.network.data.initSPKIleafPinning
@@ -47,8 +48,11 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.ProtonCoreConfig
+import okhttp3.JavaNetCookieJar
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import java.net.CookieManager
+import java.net.CookiePolicy
 import java.net.URI
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
@@ -66,6 +70,7 @@ class ApiFactory(
     private val prefs: NetworkPrefs,
     private val sessionProvider: SessionProvider,
     private val sessionListener: SessionListener,
+    private val cookieStore: ProtonCookieStore,
     scope: CoroutineScope
 ) {
 
@@ -148,7 +153,13 @@ class ApiFactory(
 
     @VisibleForTesting
     val baseOkHttpClient by lazy {
+        val cookieManager = CookieManager(
+            cookieStore,
+            CookiePolicy.ACCEPT_ALL
+        )
+        CookieManager.setDefault(cookieManager)
         val builder = OkHttpClient.Builder()
+            .cookieJar(JavaNetCookieJar(cookieManager))
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .readTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)

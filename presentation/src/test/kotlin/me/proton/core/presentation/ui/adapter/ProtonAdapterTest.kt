@@ -37,19 +37,19 @@ import kotlin.test.assertEquals
 @Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 internal class ProtonAdapterTest : ExecutorsTest by executorsTest {
-    
+
     private data class ExampleUiModel(val id: Int, val name: String) {
-         companion object {
-             val DiffCallback = object : DiffUtil.ItemCallback<ExampleUiModel>() {
+        companion object {
+            val DiffCallback = object : DiffUtil.ItemCallback<ExampleUiModel>() {
 
-                 override fun areItemsTheSame(oldItem: ExampleUiModel, newItem: ExampleUiModel) =
-                     oldItem.id == newItem.id
+                override fun areItemsTheSame(oldItem: ExampleUiModel, newItem: ExampleUiModel) =
+                    oldItem.id == newItem.id
 
-                 override fun areContentsTheSame(oldItem: ExampleUiModel, newItem: ExampleUiModel) =
-                     oldItem == newItem
+                override fun areContentsTheSame(oldItem: ExampleUiModel, newItem: ExampleUiModel) =
+                    oldItem == newItem
 
-             }
-         }
+            }
+        }
     }
 
     @Test
@@ -57,7 +57,7 @@ internal class ProtonAdapterTest : ExecutorsTest by executorsTest {
 
         // GIVEN
         val adapter = ProtonAdapter(
-            getView = { parent, _ ->  TextView(parent.context) },
+            getView = { parent, _ -> TextView(parent.context) },
             onBind = {},
             diffCallback = ExampleUiModel.DiffCallback,
             onFilter = { element, constraint -> constraint in element.name }

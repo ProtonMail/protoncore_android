@@ -16,21 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.network.data
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import android.content.Context
+import net.gotev.cookiestore.SharedPreferencesCookieStore
 
-libVersion = Version(0, 4, 0)
-
-android()
-
-dependencies {
-
-    api(
-        project(Module.networkDomain),
-        project(Module.networkData)
-    )
-}
+/**
+ * Wraps the [SharedPreferencesCookieStore] so that it constraint the cookie file name to be unique across clients.
+ * @author Dino Kadrikj.
+ */
+class ProtonCookieStore(context: Context) : SharedPreferencesCookieStore(context, "protonCookieStore")
