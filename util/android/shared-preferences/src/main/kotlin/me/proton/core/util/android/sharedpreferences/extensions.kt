@@ -97,7 +97,7 @@ fun <T> SharedPreferences.nullableGet(key: String, block: () -> T): T? {
     return if (contains(key)) {
         try {
             block()
-        } catch (e: ClassCastException) {
+        } catch (ignored: ClassCastException) {
             null
         }
     } else {

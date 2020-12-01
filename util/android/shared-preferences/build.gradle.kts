@@ -37,6 +37,7 @@ dependencies {
 
         // Kotlin
         `kotlin-jdk7`,
+        `coroutines-core`,
         `serialization-json`,
 
         // Android
