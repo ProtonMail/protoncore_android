@@ -23,6 +23,7 @@ import studio.forface.easygradle.dsl.android.*
 // Network
 val DependencyHandler.`miniDsn` get() = dependency("org.minidns", module = "minidns-hla") version `miniDsn version`
 val DependencyHandler.`retrofit-scalars-converter` get() = squareup("retrofit2", "converter-scalars") version `retrofit version`
+val DependencyHandler.`okhttp-url-connection` get() = squareup("okhttp3", "okhttp-urlconnection") version `okHttp-url-connection version`
 val DependencyHandler.`mockWebServer` get() = squareup("okhttp3", "mockwebserver") version `okHttp version`
 val DependencyHandler.`trustKit` get() = dependency("com.datatheorem.android.trustkit", module = "trustkit") version `trustKit version`
 
@@ -30,6 +31,7 @@ val DependencyHandler.`trustKit` get() = dependency("com.datatheorem.android.tru
 val DependencyHandler.`apacheCommon-codec` get() = dependency("commons-codec", module = "commons-codec") version `apacheCommon-codec version`
 val DependencyHandler.`bcrypt` get() = dependency("at.favre.lib", module = "bcrypt") version `bcrypt version`
 val DependencyHandler.`googleTink` get() = google("crypto.tink", module = "tink-android") version `googleTink version`
+val DependencyHandler.`gotev-cookieStore` get() = dependency("net.gotev", module = "cookie-store") version `gotev-cookieStore version`
 val DependencyHandler.`lint-core` get() = lint()
 val DependencyHandler.`lint-api` get() = lint("api")
 val DependencyHandler.`lint-checks` get() = lint("checks")

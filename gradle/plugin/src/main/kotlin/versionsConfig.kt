@@ -67,9 +67,11 @@ const val `androidUi version` =             "0.1.0-dev08"   // Released: Apr 03,
 // region Other
 const val `apacheCommon-codec version` =    "1.14"          // Released: Dec 31, 2019
 const val `bcrypt version` =                "0.9.0"         // Released: Oct, 2019
+const val `gotev-cookieStore version` =     "1.3.1"         // Released: Oct 24, 2020
 const val `googleTink version` =            "1.4.0"         // Released:
 const val `miniDsn version` =               "1.0.0"         // Released: Jul 18, 2020
 const val `okHttp version` =                "4.8.0"         // Released: Jul 11, 2020
+const val `okHttp-url-connection version` = "4.9.0"         // Released: Sep, 2020
 const val `trustKit version` =              "1.1.3"         // Released: Apr 30, 2020
 
 // endregion

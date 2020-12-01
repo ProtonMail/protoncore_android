@@ -22,6 +22,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -77,6 +78,7 @@ internal class ProtonApiBackendTests {
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
     )
+    private val cookieStore = mockk<ProtonCookieStore>()
 
     private lateinit var logger: MockLogger
     private lateinit var client: MockApiClient
@@ -98,6 +100,7 @@ internal class ProtonApiBackendTests {
         session = MockSession.getDefault()
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
+        every { cookieStore.get(any()) } returns emptyList()
 
         apiFactory = ApiFactory(
             "https://example.com/",
@@ -107,6 +110,7 @@ internal class ProtonApiBackendTests {
             prefs,
             sessionProvider,
             sessionListener,
+            cookieStore,
             scope
         )
 
@@ -257,7 +261,8 @@ internal class ProtonApiBackendTests {
     fun `can deserialize true from 1`() = runBlocking {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "Number": 5, "String": "foo", Bool: 1 }""")
+            """{ "Number": 5, "String": "foo", Bool: 1 }"""
+        )
 
         val result = backend(ApiManager.Call(0) { test() })
         assertEquals(true, result.valueOrNull?.bool)
@@ -267,7 +272,8 @@ internal class ProtonApiBackendTests {
     fun `can deserialize true from 5`() = runBlocking {
         webServer.prepareResponse(
             HttpURLConnection.HTTP_OK,
-            """{ "Number": 5, "String": "foo", Bool: 5 }""")
+            """{ "Number": 5, "String": "foo", Bool: 5 }"""
+        )
 
         val result = backend(ApiManager.Call(0) { test() })
         assertEquals(true, result.valueOrNull?.bool)

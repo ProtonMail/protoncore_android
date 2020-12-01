@@ -22,6 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -108,7 +109,17 @@ internal class ApiManagerTests {
 
         val scope = CoroutineScope(TestCoroutineDispatcher())
         apiFactory =
-            ApiFactory(baseUrl, apiClient, MockLogger(), networkManager, prefs, sessionProvider, sessionListener, scope)
+            ApiFactory(
+                baseUrl,
+                apiClient,
+                MockLogger(),
+                networkManager,
+                prefs,
+                sessionProvider,
+                sessionListener,
+                mockk(),
+                scope
+            )
 
         coEvery { dohService.getAlternativeBaseUrls(any()) } returns listOf(proxy1url)
         val dohProvider = DohProvider(baseUrl, apiClient, listOf(dohService), scope, prefs, ::time)

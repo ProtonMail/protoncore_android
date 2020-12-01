@@ -37,6 +37,7 @@ import me.proton.core.humanverification.data.repository.HumanVerificationRemoteR
 import me.proton.core.humanverification.domain.repository.HumanVerificationLocalRepository
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.di.NetworkManager
 import me.proton.core.network.data.di.NetworkPrefs
@@ -67,6 +68,7 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideApiFactory(
+        @ApplicationContext context: Context,
         apiClient: ApiClient,
         networkManager: NetworkManager,
         networkPrefs: NetworkPrefs,
@@ -74,7 +76,7 @@ object ApplicationModule {
         sessionListener: SessionListener
     ): ApiFactory = ApiFactory(
         BASE_URL, apiClient, CoreExampleLogger(), networkManager, networkPrefs, sessionProvider, sessionListener,
-        CoroutineScope(Job() + Dispatchers.Default)
+        ProtonCookieStore(context), CoroutineScope(Job() + Dispatchers.Default)
     )
 
     @Provides
