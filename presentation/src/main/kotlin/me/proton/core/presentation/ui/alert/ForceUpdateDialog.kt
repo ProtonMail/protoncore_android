@@ -71,13 +71,17 @@ class ForceUpdateDialog : DialogFragment() {
             alertDialog.apply {
                 setOnShowListener {
                     // workaround to prevent the dialog to auto-dismiss on button click
-                    val positiveButton = getButton(AlertDialog.BUTTON_POSITIVE)
-                    val neutralButton = getButton(AlertDialog.BUTTON_NEUTRAL)
-                    positiveButton.onClick {
-                        requireContext().openMarketLink()
+                    getButton(AlertDialog.BUTTON_POSITIVE).apply {
+                        isAllCaps = false
+                        onClick {
+                            requireContext().openMarketLink()
+                        }
                     }
-                    neutralButton.onClick {
-                        requireContext().openBrowserLink(learnMoreURL)
+                    getButton(AlertDialog.BUTTON_NEUTRAL).apply {
+                        isAllCaps = false
+                        onClick {
+                            requireContext().openBrowserLink(learnMoreURL)
+                        }
                     }
                 }
                 setCanceledOnTouchOutside(false)
