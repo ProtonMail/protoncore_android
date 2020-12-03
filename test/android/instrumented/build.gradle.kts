@@ -24,7 +24,7 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(0, 2, 0)
+libVersion = Version(0, 2, 1)
 
 android()
 
@@ -51,7 +51,6 @@ dependencies {
         // Android
         `espresso`,
         `android-work-testing`,
-        `android-test-core`,
         `android-test-runner`,
         `android-test-rules`
     )
