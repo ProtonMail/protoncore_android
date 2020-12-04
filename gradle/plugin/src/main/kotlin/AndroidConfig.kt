@@ -51,7 +51,7 @@ fun org.gradle.api.Project.android(
         // SDK
         minSdkVersion(minSdk)
         targetSdkVersion(targetSdk)
-        ndkVersion = "20.0.5594570"
+        ndkVersion = "21.3.6528147"
 
         // Other
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
