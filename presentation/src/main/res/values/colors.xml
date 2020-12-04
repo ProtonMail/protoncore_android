@@ -47,16 +47,16 @@
     <color name="fern">#94C89B</color>
 
     <color name="pomegranate">#E84118</color>
-    <color name="lime_green">#44BD32</color>
-    <color name="saffron">#FBC531</color>
+    <color name="apple">#44BD32</color>
+    <color name="sunglow">#FBC531</color>
 
     <!-- design color aliases -->
 
     <color name="shade_100">@color/woodsmoke</color>
     <color name="shade_80">@color/storm_gray</color>
     <color name="shade_60">@color/santas_gray</color>
-    <color name="shade_40">@color/mischka</color>
     <color name="shade_50">@color/french_gray</color>
+    <color name="shade_40">@color/mischka</color>
     <color name="shade_20">@color/athens_gray</color>
     <color name="shade_10">@color/whisper</color>
     <color name="shade_0">@color/white</color>
@@ -82,14 +82,18 @@
     <color name="interaction_strong">@color/shade_100</color>
     <color name="interaction_strong_pressed">@color/shade_80</color>
 
+    <color name="interaction_norm">@color/cornflower_blue</color>
+    <color name="interaction_norm_pressed">@color/san_marino</color>
+    <color name="interaction_norm_disabled">@color/perano</color>
+
     <color name="background_norm">@color/shade_0</color>
     <color name="background_secondary">@color/shade_10</color>
 
     <color name="separator_norm">@color/shade_20</color>
 
     <color name="notification_error">@color/pomegranate</color>
-    <color name="notification_success">@color/lime_green</color>
-    <color name="notification_warning">@color/saffron</color>
+    <color name="notification_success">@color/apple</color>
+    <color name="notification_warning">@color/sunglow</color>
 
     <!-- navigation bar color -->
     <color name="nav_bar">@color/transparent</color>
