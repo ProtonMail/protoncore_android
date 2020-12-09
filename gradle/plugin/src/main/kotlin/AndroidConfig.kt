@@ -51,6 +51,7 @@ fun org.gradle.api.Project.android(
         // SDK
         minSdkVersion(minSdk)
         targetSdkVersion(targetSdk)
+        buildToolsVersion = "30.0.2"
         ndkVersion = "21.3.6528147"
 
         // Other
