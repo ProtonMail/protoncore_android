@@ -28,10 +28,10 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/icon"
+            style="@style/ProtonImage.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/normal_margin"
-            android:background="@null"
             app:layout_constraintBottom_toBottomOf="@id/websiteVerificationTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +40,7 @@
         <TextView
             android:id="@+id/websiteVerificationTitle"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/help_item_height"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/normal_margin"
             android:gravity="start|center_vertical"
             android:text="@string/human_verification_help_website_title"
@@ -49,26 +49,14 @@
             app:layout_constraintStart_toEndOf="@id/icon"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@color/icon_norm"
-            app:layout_constraintBottom_toBottomOf="@id/websiteVerificationTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_arrow_forward" />
-
         <TextView
             android:id="@+id/websiteVerificationDescription"
+            style="@style/ProtonTextView.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/human_verification_help_item_description_start_margin"
-            android:layout_marginTop="@dimen/default_top_margin"
             android:gravity="start"
             android:text="@string/human_verification_help_website"
-            android:textColor="@color/text_norm"
-            android:textSize="@dimen/human_verification_help_item_text_size"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/websiteVerificationTitle" />

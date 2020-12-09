@@ -19,16 +19,16 @@
 <resources>
 
     <style name="ProtonTextView" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
     </style>
 
     <style name="ProtonTextView.Title" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">@dimen/default_title_text_size</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ProtonTextView.Subtitle" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/default_subtitle_text_size</item>
         <item name="android:textColor">@color/text_weak</item>
     </style>
 
@@ -53,13 +53,13 @@
     <style name="ProtonInput.TextInputLayout.Border" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="android:textSize">@dimen/input_text_size</item>
         <item name="boxBackgroundColor">@color/background_secondary</item>
-        <item name="helperTextTextColor">?brand</item>
+        <item name="helperTextTextColor">?attr/brand_norm</item>
     </style>
 
     <style name="ProtonInput.TextInputLayout.Border.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
         <item name="android:textSize">@dimen/input_text_size</item>
         <item name="boxBackgroundColor">@color/background_secondary</item>
-        <item name="helperTextTextColor">?brand</item>
+        <item name="helperTextTextColor">?attr/brand_norm</item>
     </style>
 
     <style name="ProtonButton" parent="Widget.MaterialComponents.Button">
@@ -91,7 +91,7 @@
         <item name="iconPadding">0dp</item>
         <item name="iconSize">40dp</item>
         <item name="iconGravity">textEnd</item>
-        <item name="rippleColor">?brand</item>
+        <item name="rippleColor">?attr/brand_norm</item>
     </style>
 
     <style name="ProtonButton.Navigation.Borderless" parent="ProtonButton.Navigation">
@@ -105,4 +105,7 @@
         <item name="android:windowBackground">@color/background_norm</item>
     </style>
 
+    <style name="ProtonImage.ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@null</item>
+    </style>
 </resources>

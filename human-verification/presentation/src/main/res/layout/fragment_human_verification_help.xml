@@ -28,21 +28,18 @@
             layout="@layout/content_human_verification_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_view_vertical_space"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/helpSubtitle"
-            style="@style/ProtonTextView"
+            style="@style/ProtonTextView.Subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/parent_padding"
-            android:layout_marginTop="@dimen/default_top_margin"
-            android:layout_marginEnd="@dimen/parent_padding"
+            android:layout_marginStart="@dimen/double_top_margin"
+            android:layout_marginTop="@dimen/double_top_margin"
             android:text="@string/human_verification_help_title"
-            android:textColor="@color/text_norm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/headerNavigation" />
@@ -50,9 +47,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_top_margin"
+            android:layout_marginStart="@dimen/double_margin"
             android:layout_marginTop="@dimen/double_margin"
-            android:layout_marginEnd="@dimen/default_top_margin"
+            android:layout_marginEnd="@dimen/double_margin"
             android:orientation="vertical"
             android:padding="@dimen/parent_padding"
             app:layout_constraintEnd_toEndOf="parent"

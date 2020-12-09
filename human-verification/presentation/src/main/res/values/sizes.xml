@@ -18,16 +18,20 @@
   -->
 
 <resources>
-    <dimen name="human_verification_header_height">60dp</dimen>
-    <dimen name="human_verification_help_button_width">60dp</dimen>
-    <dimen name="human_verification_title_size">20sp</dimen>
-    <dimen name="human_verification_subtitle_size">16sp</dimen>
-    <dimen name="human_verification_action_buttons_top_margin">44dp</dimen>
-    <dimen name="human_verification_calling_code_input_width">114dp</dimen>
-    <dimen name="edit_text_action_button">32dp</dimen>
-    <dimen name="human_verification_parent_padding_vertical">16dp</dimen>
-    <dimen name="human_verification_parent_padding_horizontal">@dimen/default_gap</dimen>
-    <dimen name="human_verification_help_item_description_start_margin">42dp</dimen>
+    <!-- general dimensions sizes -->
+    <dimen name="human_verification_header_height">64dp</dimen>
+    <dimen name="human_verification_help_button_width">64dp</dimen>
+    <dimen name="human_verification_calling_code_input_width">120dp</dimen>
 
-    <dimen name="human_verification_help_item_text_size">18sp</dimen>
+    <!-- general dimensions gaps -->
+    <dimen name="human_verification_action_buttons_top_margin">32dp</dimen> <!-- this value is lowered because of TextInputEditText.helperText default size. Original 44dp -->
+    <dimen name="human_verification_sms_action_button_top_margin">48dp</dimen> <!-- this value is lowered because of TextInputEditText.helperText default size. Original 44dp -->
+
+    <dimen name="human_verification_parent_padding_vertical">24dp</dimen>
+    <dimen name="human_verification_parent_padding_horizontal">@dimen/default_gap</dimen>
+    <dimen name="human_verification_help_item_description_start_margin">40dp</dimen>
+
+    <!-- text sizes -->
+    <dimen name="human_verification_help_item_text_size">@dimen/default_text_size</dimen>
+    <dimen name="human_verification_subtitle_size">@dimen/default_subtitle_text_size</dimen>
 </resources>

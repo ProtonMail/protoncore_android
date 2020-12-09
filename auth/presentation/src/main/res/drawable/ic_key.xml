@@ -1,4 +1,11 @@
 <!--~ Copyright (c) 2020 Proton Technologies AG ~ This file is part of Proton Technologies AG and ProtonCore. ~ ~ ProtonCore is free software: you can redistribute it and/or modify ~ it under the terms of the GNU General Public License as published by ~ the Free Software Foundation, either version 3 of the License, or ~ (at your option) any later version. ~ ~ ProtonCore is distributed in the hope that it will be useful, ~ but WITHOUT ANY WARRANTY; without even the implied warranty of ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the ~ GNU General Public License for more details. ~ ~ You should have received a copy of the GNU General Public License ~ along with ProtonCore. If not, see <https://www.gnu.org/licenses/>.-->
-<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
-    <path android:pathData="M21.375 5.775L22.5 4.71 19.83 2.1l-9.255 9.24c-2.223-1.61-5.312-1.23-7.078 0.87-1.767 2.101-1.61 5.21 0.357 7.123 1.968 1.913 5.08 1.982 7.13 0.157s2.343-4.923 0.67-7.1l5.88-5.88 1.5 1.5L20.1 6.96l-1.5-1.5 1.245-1.245 1.53 1.56zm-11.22 12.45c-1.466 1.462-3.838 1.46-5.301-0.004-1.463-1.465-1.463-3.837 0-5.301 1.463-1.465 3.835-1.467 5.3-0.005 1.453 1.472 1.453 3.838 0 5.31z" android:fillColor="#17181C" android:fillType="evenOdd"/>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@color/icon_norm"
+        android:fillType="evenOdd"
+        android:pathData="M21.375 5.775L22.5 4.71 19.83 2.1l-9.255 9.24c-2.223-1.61-5.312-1.23-7.078 0.87-1.767 2.101-1.61 5.21 0.357 7.123 1.968 1.913 5.08 1.982 7.13 0.157s2.343-4.923 0.67-7.1l5.88-5.88 1.5 1.5L20.1 6.96l-1.5-1.5 1.245-1.245 1.53 1.56zm-11.22 12.45c-1.466 1.462-3.838 1.46-5.301-0.004-1.463-1.465-1.463-3.837 0-5.301 1.463-1.465 3.835-1.467 5.3-0.005 1.453 1.472 1.453 3.838 0 5.31z" />
 </vector>

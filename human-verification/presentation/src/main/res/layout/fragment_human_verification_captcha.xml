@@ -56,6 +56,6 @@
             android:layout_gravity="center"
             android:elevation="3dp"
             android:indeterminate="true"
-            android:indeterminateTint="?brand" />
+            android:indeterminateTint="?attr/brand_norm" />
     </FrameLayout>
 </layout>
