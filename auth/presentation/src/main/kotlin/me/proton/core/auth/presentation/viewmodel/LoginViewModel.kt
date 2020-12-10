@@ -119,7 +119,7 @@ class LoginViewModel @ViewModelInject constructor(
                     username = username,
                     password = password,
                     sessionInfo = session,
-                    user = user
+                    userId = UserId(user.id)
                 )
             } else {
                 // otherwise we raise Success.Login if there are Address Keys present.
@@ -137,7 +137,7 @@ class LoginViewModel @ViewModelInject constructor(
         username: String,
         password: ByteArray,
         sessionInfo: SessionInfo,
-        user: User
+        userId: UserId
     ) {
         updateUsernameOnlyAccount(
             sessionId = SessionId(sessionInfo.sessionId),
@@ -145,7 +145,10 @@ class LoginViewModel @ViewModelInject constructor(
             passphrase = password
         )
             .onSuccess { setupUser(password, sessionInfo) }
-            .onError { loginState.post(PerformLogin.State.Error.AccountUpgrade(it)) }
+            .onError {
+                accountWorkflow.handleAccountNotReady(userId)
+                loginState.post(PerformLogin.State.Error.AccountUpgrade(it))
+            }
             .launchIn(viewModelScope)
     }
 

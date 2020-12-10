@@ -35,6 +35,7 @@ import me.proton.core.auth.domain.usecase.onError
 import me.proton.core.auth.domain.usecase.onProcessing
 import me.proton.core.auth.domain.usecase.onSecondFactorSuccess
 import me.proton.core.auth.domain.usecase.onSuccess
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import studio.forface.viewstatestore.ViewStateStore
@@ -114,7 +115,8 @@ class SecondFactorViewModel @ViewModelInject constructor(
                     username = user.name!!, // for these accounts [AccountType.Username], name should always be present.
                     passphrase = password,
                     scopeInfo = scopeInfo,
-                    isTwoPassModeNeeded = isTwoPass
+                    isTwoPassModeNeeded = isTwoPass,
+                    userId = UserId(user.id)
                 )
             } else {
                 secondFactorState.post(
@@ -153,11 +155,13 @@ class SecondFactorViewModel @ViewModelInject constructor(
         username: String,
         passphrase: ByteArray,
         scopeInfo: ScopeInfo,
-        isTwoPassModeNeeded: Boolean
+        isTwoPassModeNeeded: Boolean,
+        userId: UserId
     ) {
         updateUsernameOnlyAccount(sessionId = sessionId, username = username, passphrase = passphrase)
             .onSuccess { setupUser(passphrase, sessionId, scopeInfo, isTwoPassModeNeeded) }
             .onError {
+                accountWorkflow.handleAccountNotReady(userId)
                 secondFactorState.post(PerformSecondFactor.State.Error.AccountUpgrade(it))
             }
             .launchIn(viewModelScope)
