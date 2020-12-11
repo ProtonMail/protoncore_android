@@ -85,7 +85,7 @@
                     layout="@layout/content_help_item_customer_support"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/auth_content_top_margin" />
+                    android:layout_marginTop="@dimen/auth_content_separator_top_margin" />
 
             </LinearLayout>
 

@@ -40,7 +40,7 @@ class HumanVerificationHelpFragment :
             binding.headerNavigation.closeButton.onClick {
                 onBackPressed()
             }
-            headerNavigation.helpButton.visibility = View.GONE
+            headerNavigation.helpButton.visibility = View.INVISIBLE
             headerNavigation.title.text = getString(R.string.human_verification_help)
             verificationManual.manualVerificationLayout.onClick {
                 requireContext().openBrowserLink(getString(R.string.manual_verification_link))

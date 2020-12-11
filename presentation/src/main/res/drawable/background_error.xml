@@ -21,7 +21,7 @@
     <solid android:color="@color/notification_error" />
     <corners android:radius="5dp" />
     <padding
-        android:left="@dimen/parent_padding"
-        android:right="@dimen/parent_padding" />
+        android:left="@dimen/corner_padding"
+        android:right="@dimen/corner_padding" />
 </shape>
 

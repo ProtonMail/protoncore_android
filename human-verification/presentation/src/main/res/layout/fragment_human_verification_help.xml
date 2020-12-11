@@ -15,6 +15,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -37,7 +38,7 @@
             style="@style/ProtonTextView.Subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/double_top_margin"
+            android:layout_marginStart="@dimen/default_gap"
             android:layout_marginTop="@dimen/double_top_margin"
             android:text="@string/human_verification_help_title"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,11 +48,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/double_margin"
-            android:layout_marginTop="@dimen/double_margin"
-            android:layout_marginEnd="@dimen/double_margin"
+            android:layout_marginStart="@dimen/default_gap"
+            android:layout_marginTop="@dimen/human_verification_help_content_top_margin"
+            android:layout_marginEnd="@dimen/default_gap"
             android:orientation="vertical"
-            android:padding="@dimen/parent_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/helpSubtitle">
@@ -60,8 +60,7 @@
                 android:id="@+id/verificationManual"
                 layout="@layout/content_human_verification_help_manual"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_view_vertical_space" />
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
@@ -73,8 +72,7 @@
                 layout="@layout/content_human_verification_help_web"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_top_margin"
-                android:layout_marginBottom="@dimen/default_view_vertical_space" />
+                android:layout_marginTop="@dimen/double_top_margin" />
 
             <View
                 android:layout_width="match_parent"

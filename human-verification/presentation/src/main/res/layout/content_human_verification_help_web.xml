@@ -31,7 +31,7 @@
             style="@style/ProtonImage.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/normal_margin"
+            android:layout_marginEnd="@dimen/default_margin"
             app:layout_constraintBottom_toBottomOf="@id/websiteVerificationTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,25 +39,22 @@
 
         <TextView
             android:id="@+id/websiteVerificationTitle"
-            android:layout_width="wrap_content"
+            style="@style/HumanVerification.Help.Title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/normal_margin"
-            android:gravity="start|center_vertical"
+            android:layout_marginStart="@dimen/default_margin"
             android:text="@string/human_verification_help_website_title"
-            android:textColor="@color/text_norm"
-            android:textSize="@dimen/human_verification_help_item_text_size"
             app:layout_constraintStart_toEndOf="@id/icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/websiteVerificationDescription"
             style="@style/ProtonTextView.Subtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/human_verification_help_item_description_start_margin"
-            android:gravity="start"
             android:text="@string/human_verification_help_website"
-            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/websiteVerificationTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>

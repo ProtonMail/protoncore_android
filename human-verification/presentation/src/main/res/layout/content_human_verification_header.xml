@@ -22,9 +22,9 @@
         android:id="@+id/headerHumanVerification"
         android:layout_width="match_parent"
         android:layout_height="@dimen/human_verification_header_height"
-        android:paddingStart="@dimen/parent_padding"
-        android:paddingTop="@dimen/parent_padding"
-        android:paddingEnd="@dimen/parent_padding">
+        android:paddingStart="@dimen/human_verification_header_horizontal_margin"
+        android:paddingTop="@dimen/default_gap"
+        android:paddingEnd="@dimen/human_verification_header_horizontal_margin">
 
         <me.proton.core.presentation.ui.view.ProtonNavigationButton
             android:id="@+id/closeButton"
@@ -47,8 +47,9 @@
         <TextView
             android:id="@+id/title"
             style="@style/NavigationHeader.Title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/human_verification_header_title_margin"
             android:text="@string/human_verification_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/closeButton"

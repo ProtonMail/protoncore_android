@@ -38,16 +38,16 @@ class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>() {
                 finish()
             }
 
-            helpOptionCustomerSupport.itemHelpLayout.onClick {
+            helpOptionCustomerSupport.root.onClick {
                 openBrowserLink(getString(R.string.contact_support_link))
             }
-            helpOptionOtherIssues.itemHelpLayout.onClick {
+            helpOptionOtherIssues.root.onClick {
                 openBrowserLink(getString(R.string.common_login_problems_link))
             }
-            helpOptionForgotPassword.itemHelpLayout.onClick {
+            helpOptionForgotPassword.root.onClick {
                 openBrowserLink(getString(R.string.forgot_password_link))
             }
-            helpOptionForgotUsername.itemHelpLayout.onClick {
+            helpOptionForgotUsername.root.onClick {
                 openBrowserLink(getString(R.string.forgot_username_link))
             }
         }

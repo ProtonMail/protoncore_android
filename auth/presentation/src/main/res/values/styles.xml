@@ -18,12 +18,9 @@
   -->
 
 <resources>
-    <!-- general dimensions sizes -->
-    <dimen name="human_verification_header_height">64dp</dimen>
-    <dimen name="human_verification_help_button_width">64dp</dimen>
-    <dimen name="human_verification_calling_code_input_width">120dp</dimen>
-
-    <!-- text sizes -->
-    <dimen name="human_verification_help_item_text_size">@dimen/default_text_size</dimen>
-    <dimen name="human_verification_subtitle_size">@dimen/default_subtitle_text_size</dimen>
+    <style name="AuthContent">
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingStart">@dimen/auth_parent_default_padding</item>
+        <item name="android:paddingEnd">@dimen/auth_parent_default_padding</item>
+    </style>
 </resources>

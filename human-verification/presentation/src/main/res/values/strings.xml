@@ -34,7 +34,7 @@
     <string name="human_verification_option_sms_subtitle">Your phone number will only be used for this one-time verification.</string>
     <string name="human_verification_get_verification_code">Get verification code</string>
     <string name="human_verification_already_have_code">I already have a code</string>
-    <string name="human_verification_request_replacement_code">Request replacement code</string>
+    <string name="human_verification_request_replacement_code">Did not receive the code?</string>
     <string name="human_verification_verify">Verify</string> <!-- To verify the entered code - action -->
     <string name="human_verification_help_title">Do you need any help with human verification?</string>
     <string name="human_verification_code">Verification Code</string>

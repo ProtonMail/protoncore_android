@@ -19,17 +19,11 @@
 
 <resources>
     <!-- region layout margins -->
-    <dimen name="normal_margin">8dp</dimen>
-    <dimen name="double_margin">12dp</dimen>
+    <dimen name="default_margin">8dp</dimen>
     <dimen name="default_top_margin">12dp</dimen>
-    <dimen name="in_between_views_top_margin">8dp</dimen>
-    <dimen name="in_between_views_top_margin_s">4dp</dimen>
-    <dimen name="view_separation_margin">16dp</dimen>
     <dimen name="double_top_margin">24dp</dimen>
-    <dimen name="default_view_vertical_space">8dp</dimen>
-    <dimen name="default_view_horizontal_space">8dp</dimen>
-    <dimen name="parent_padding">8dp</dimen>
     <!-- endregion -->
+    <dimen name="corner_padding">8dp</dimen>
 
     <!-- region view margins -->
     <dimen name="input_padding">8dp</dimen>

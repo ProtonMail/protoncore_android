@@ -38,11 +38,9 @@
             android:scrollbars="none">
 
             <LinearLayout
+                style="@style/AuthContent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/auth_parent_default_padding"
-                android:paddingEnd="@dimen/auth_parent_default_padding">
+                android:layout_height="wrap_content">
 
                 <View
                     android:layout_width="match_parent"

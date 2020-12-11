@@ -36,6 +36,15 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="HumanVerification.Help.Title" parent="ProtonTextView.Title">
+        <item name="android:textColor">@color/text_norm</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">start|center_vertical</item>
+    </style>
+
+    <style name="HumanVerification.Help.Subtitle" parent="ProtonTextView.Subtitle">
+    </style>
+
     <!-- navigation -->
     <style name="NavigationHeader.Title" parent="ProtonTextView.Title">
         <item name="android:textSize">@dimen/default_title_text_size</item>
