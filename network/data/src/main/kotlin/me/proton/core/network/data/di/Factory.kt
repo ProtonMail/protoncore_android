@@ -96,8 +96,8 @@ class ApiFactory(
         sessionId: SessionId? = null,
         interfaceClass: KClass<Api>,
         clientErrorHandlers: List<ApiErrorHandler<Api>> = emptyList(),
-        certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
-        alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS
+        certificatePins: Array<String>,
+        alternativeApiPins: List<String>
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
             initPinning(builder, URI(baseUrl).host, certificatePins)

@@ -27,6 +27,7 @@ import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.di.ApiFactory
+import me.proton.core.network.data.di.Constants
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
@@ -63,7 +64,12 @@ class HumanVerificationRemoteRepositoryImplTest {
     fun before() {
         MockKAnnotations.init(this)
         apiProvider = ApiProvider(apiFactory, sessionProvider)
-        every { apiFactory.create(sessionId, HumanVerificationApi::class) } returns apiManager
+        every {
+            apiFactory.create(
+                sessionId, HumanVerificationApi::class, certificatePins = Constants.DEFAULT_SPKI_PINS,
+                alternativeApiPins = Constants.ALTERNATIVE_API_SPKI_PINS
+            )
+        } returns apiManager
     }
 
     @Test(expected = EmptyDestinationException::class)
