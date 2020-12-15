@@ -83,6 +83,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
                 1
             )
         )
+        every { userMock.id } returns "test-userId"
         viewModel = SecondFactorViewModel(accountManager, useCase, useCaseUserSetup, useCaseUpdateUsernameOnly, useCaseGetUser)
     }
 

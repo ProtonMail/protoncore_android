@@ -94,16 +94,15 @@ class LoginViewModel @ViewModelInject constructor(
     /**
      * Execute a routine when user details result is back from the API.
      */
-    private suspend fun onUserDetails(
+    private fun onUserDetails(
         username: String,
         password: ByteArray,
         sessionInfo: SessionInfo,
         user: User,
         requiredAccountType: AccountType
     ) {
+        // identifies if the account is really two pass mode account (api bug)
         val session = if (sessionInfo.isTwoPassModeNeeded && user.keys.isEmpty()) {
-            // This is because of a bug on the API, where accounts with no keys return PasswordMode = 2.
-            accountWorkflow.handleTwoPassModeSuccess(SessionId(sessionInfo.sessionId))
             sessionInfo.copy(passwordMode = 1)
         } else {
             sessionInfo
@@ -118,8 +117,7 @@ class LoginViewModel @ViewModelInject constructor(
                 upgradeUsernameOnlyAccount(
                     username = username,
                     password = password,
-                    sessionInfo = session,
-                    user = user
+                    sessionInfo = session
                 )
             } else {
                 // otherwise we raise Success.Login if there are Address Keys present.
@@ -136,23 +134,34 @@ class LoginViewModel @ViewModelInject constructor(
     private fun upgradeUsernameOnlyAccount(
         username: String,
         password: ByteArray,
-        sessionInfo: SessionInfo,
-        user: User
+        sessionInfo: SessionInfo
     ) {
         updateUsernameOnlyAccount(
             sessionId = SessionId(sessionInfo.sessionId),
             username = username,
             passphrase = password
         )
-            .onSuccess { setupUser(password, sessionInfo) }
-            .onError { loginState.post(PerformLogin.State.Error.AccountUpgrade(it)) }
+            .onSuccess {
+                accountWorkflow.handleAccountReady(UserId(sessionInfo.userId))
+                setupUser(password, sessionInfo)
+            }
+            .onError {
+                accountWorkflow.handleAccountNotReady(UserId(sessionInfo.userId))
+                loginState.post(PerformLogin.State.Error.AccountUpgrade(it))
+            }
             .launchIn(viewModelScope)
     }
 
     private fun setupUser(password: ByteArray, sessionInfo: SessionInfo) {
         performUserSetup(SessionId(sessionInfo.sessionId), password)
-            .onSuccess { loginState.post(PerformLogin.State.Success.UserSetup(sessionInfo, it.user)) }
-            .onError { loginState.post(PerformLogin.State.Error.UserSetup(it)) }
+            .onSuccess {
+                accountWorkflow.handleAccountReady(UserId(sessionInfo.userId))
+                loginState.post(PerformLogin.State.Success.UserSetup(sessionInfo, it.user))
+            }
+            .onError {
+                accountWorkflow.handleAccountNotReady(UserId(sessionInfo.userId))
+                loginState.post(PerformLogin.State.Error.UserSetup(it))
+            }
             .launchIn(viewModelScope)
     }
 

@@ -35,6 +35,7 @@ import me.proton.core.auth.domain.usecase.onError
 import me.proton.core.auth.domain.usecase.onProcessing
 import me.proton.core.auth.domain.usecase.onSecondFactorSuccess
 import me.proton.core.auth.domain.usecase.onSuccess
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import studio.forface.viewstatestore.ViewStateStore
@@ -88,7 +89,7 @@ class SecondFactorViewModel @ViewModelInject constructor(
     /**
      * Execute a routine when user details result is back from the API.
      */
-    private suspend fun onUserDetails(
+    private fun onUserDetails(
         sessionId: SessionId,
         password: ByteArray,
         user: User,
@@ -97,15 +98,13 @@ class SecondFactorViewModel @ViewModelInject constructor(
         requiredAccountType: AccountType
     ) {
         val isTwoPass = if (isTwoPassModeNeeded && user.keys.isEmpty()) {
-            // This is because of a bug on the API, where accounts with no keys return PasswordMode = 2.
-            accountWorkflow.handleTwoPassModeSuccess(sessionId)
             false
         } else {
             isTwoPassModeNeeded
         }
         if (!isTwoPass && user.keys.isNotEmpty()) {
             // Raise Success.SecondFactor.
-            setupUser(password, sessionId, scopeInfo, isTwoPass)
+            setupUser(password, sessionId, UserId(user.id), scopeInfo, isTwoPass)
         } else {
             if (user.keys.isEmpty() && !user.addresses.satisfiesAccountType(requiredAccountType)) {
                 // we upgrade it
@@ -114,7 +113,8 @@ class SecondFactorViewModel @ViewModelInject constructor(
                     username = user.name!!, // for these accounts [AccountType.Username], name should always be present.
                     passphrase = password,
                     scopeInfo = scopeInfo,
-                    isTwoPassModeNeeded = isTwoPass
+                    isTwoPassModeNeeded = isTwoPass,
+                    userId = UserId(user.id)
                 )
             } else {
                 secondFactorState.post(
@@ -127,11 +127,13 @@ class SecondFactorViewModel @ViewModelInject constructor(
     private fun setupUser(
         password: ByteArray,
         sessionId: SessionId,
+        userId: UserId,
         scopeInfo: ScopeInfo,
         isTwoPassModeNeeded: Boolean
     ) {
         performUserSetup(sessionId, password)
             .onSuccess { success ->
+                accountWorkflow.handleAccountReady(userId)
                 secondFactorState.post(
                     PerformSecondFactor.State.Success.UserSetup(
                         sessionId,
@@ -142,6 +144,7 @@ class SecondFactorViewModel @ViewModelInject constructor(
                 )
             }
             .onError { error ->
+                accountWorkflow.handleAccountNotReady(userId)
                 accountWorkflow.handleSecondFactorFailed(sessionId)
                 secondFactorState.post(PerformSecondFactor.State.Error.UserSetup(error))
             }
@@ -153,11 +156,16 @@ class SecondFactorViewModel @ViewModelInject constructor(
         username: String,
         passphrase: ByteArray,
         scopeInfo: ScopeInfo,
-        isTwoPassModeNeeded: Boolean
+        isTwoPassModeNeeded: Boolean,
+        userId: UserId
     ) {
         updateUsernameOnlyAccount(sessionId = sessionId, username = username, passphrase = passphrase)
-            .onSuccess { setupUser(passphrase, sessionId, scopeInfo, isTwoPassModeNeeded) }
+            .onSuccess {
+                accountWorkflow.handleAccountNotReady(userId)
+                setupUser(passphrase, sessionId, userId, scopeInfo, isTwoPassModeNeeded)
+            }
             .onError {
+                accountWorkflow.handleAccountNotReady(userId)
                 secondFactorState.post(PerformSecondFactor.State.Error.AccountUpgrade(it))
             }
             .launchIn(viewModelScope)
