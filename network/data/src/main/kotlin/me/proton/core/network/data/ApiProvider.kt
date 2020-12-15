@@ -20,6 +20,7 @@ package me.proton.core.network.data
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.di.ApiFactory
+import me.proton.core.network.data.di.Constants
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.session.SessionId
@@ -44,7 +45,9 @@ class ApiProvider(
     ): ApiManager<out Api> = get(sessionProvider.getSessionId(userId))
 
     inline fun <reified Api : BaseRetrofitApi> get(
-        sessionId: SessionId? = null
+        sessionId: SessionId? = null,
+        certificatePins: Array<String>? = null,
+        alternativeApiPins: List<String>? = null
     ): ApiManager<out Api> {
         // ConcurrentHashMap does not allow null to be used as a key or value.
         // If sessionId == null -> sessionName = "null".
@@ -53,7 +56,14 @@ class ApiProvider(
         val className = Api::class.java.name
         return instances
             .getOrPut(sessionName) { ConcurrentHashMap() }
-            .getOrPutWeakRef(className) { apiFactory.create(sessionId, Api::class) } as ApiManager<out Api>
+            .getOrPutWeakRef(className) {
+                apiFactory.create(
+                    sessionId = sessionId,
+                    interfaceClass = Api::class,
+                    certificatePins = certificatePins ?: Constants.DEFAULT_SPKI_PINS,
+                    alternativeApiPins = alternativeApiPins ?: Constants.ALTERNATIVE_API_SPKI_PINS
+                )
+            } as ApiManager<out Api>
     }
 
     fun <K, V> ConcurrentMap<K, Reference<V>>.getOrPutWeakRef(key: K, defaultValue: () -> V): V =

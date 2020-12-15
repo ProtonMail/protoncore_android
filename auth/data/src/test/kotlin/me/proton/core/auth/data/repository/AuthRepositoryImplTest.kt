@@ -38,6 +38,7 @@ import me.proton.core.auth.domain.entity.User
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.di.ApiFactory
+import me.proton.core.network.data.di.Constants
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
@@ -92,8 +93,21 @@ class AuthRepositoryImplTest {
         // GIVEN
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
         apiProvider = ApiProvider(apiFactory, sessionProvider)
-        every { apiFactory.create(interfaceClass = AuthenticationApi::class) } returns apiManager
-        every { apiFactory.create(SessionId(testSessionId), interfaceClass = AuthenticationApi::class) } returns apiManager
+        every {
+            apiFactory.create(
+                interfaceClass = AuthenticationApi::class,
+                certificatePins = Constants.DEFAULT_SPKI_PINS,
+                alternativeApiPins = Constants.ALTERNATIVE_API_SPKI_PINS
+            )
+        } returns apiManager
+        every {
+            apiFactory.create(
+                SessionId(testSessionId),
+                interfaceClass = AuthenticationApi::class,
+                certificatePins = Constants.DEFAULT_SPKI_PINS,
+                alternativeApiPins = Constants.ALTERNATIVE_API_SPKI_PINS
+            )
+        } returns apiManager
         repository = AuthRepositoryImpl(apiProvider)
     }
 
