@@ -19,7 +19,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
+    <me.proton.core.presentation.ui.view.ZeroInsetLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:windowBackground">
@@ -34,7 +34,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/auth_no_toolbar_top_margin"
             android:scrollbars="none">
 
             <LinearLayout
@@ -43,6 +42,10 @@
                 android:orientation="vertical"
                 android:paddingStart="@dimen/auth_parent_default_padding"
                 android:paddingEnd="@dimen/auth_parent_default_padding">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/auth_no_toolbar_top_margin"/>
 
                 <TextView
                     android:id="@+id/title"
@@ -88,6 +91,6 @@
 
         </ScrollView>
 
-    </FrameLayout>
+    </me.proton.core.presentation.ui.view.ZeroInsetLayout>
 
 </layout>
