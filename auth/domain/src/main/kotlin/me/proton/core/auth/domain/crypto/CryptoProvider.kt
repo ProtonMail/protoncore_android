@@ -18,13 +18,12 @@
 
 package me.proton.core.auth.domain.crypto
 
-import at.favre.lib.crypto.bcrypt.BCrypt
-import at.favre.lib.crypto.bcrypt.Radix64Encoder
 import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.entity.Auth
 import me.proton.core.auth.domain.entity.KeySecurity
 import me.proton.core.auth.domain.entity.KeyType
 import java.security.SecureRandom
+
 
 /**
  * Provides the gopenpgp interfaces for keys passphrase generation and validation.
@@ -38,14 +37,9 @@ interface CryptoProvider {
      * @param passphrase the passphrase from which the generated BCrypt phrase should be derived
      * @param encodedSalt the Base64 encoded salt
      *
-     * @return BCrypt version of the passphrase
+     * @return generated passphrase
      */
-    fun generatePassphrase(passphrase: ByteArray, encodedSalt: String): ByteArray {
-        val decodedKeySalt: ByteArray = Base64.decode(encodedSalt, Base64.DEFAULT)
-        val generatedUserPassphraseByteRawHash =
-            BCrypt.with(BCrypt.Version.VERSION_2Y).hashRaw(10, decodedKeySalt, passphrase).rawHash
-        return Radix64Encoder.Default().encode(generatedUserPassphraseByteRawHash)
-    }
+    fun generatePassphrase(passphrase: ByteArray, encodedSalt: String): ByteArray
 
     /**
      * Creates new random salt.

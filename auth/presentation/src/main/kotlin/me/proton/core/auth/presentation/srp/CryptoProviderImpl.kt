@@ -38,6 +38,7 @@ import me.proton.core.auth.domain.exception.KeyGenerationException
 import java.math.BigInteger
 import java.security.SecureRandom
 import javax.inject.Inject
+import at.favre.lib.crypto.bcrypt.Radix64Encoder
 
 /**
  * @author Dino Kadrikj.
@@ -46,6 +47,21 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
 
     companion object {
         const val CURRENT_AUTH_VERSION = 4
+    }
+
+    /**
+     * Generates passphrase using provided salt.
+     *
+     * @param passphrase the passphrase from which the generated BCrypt phrase should be derived
+     * @param encodedSalt the Base64 encoded salt
+     *
+     * @return generated passphrase
+     */
+    override fun generatePassphrase(passphrase: ByteArray, encodedSalt: String): ByteArray {
+        val decodedKeySalt: ByteArray = Base64.decode(encodedSalt, Base64.DEFAULT)
+        val generatedPassphrase: String = Srp.mailboxPassword(String(passphrase), decodedKeySalt)
+        return generatedPassphrase.replace("$2y$10$", "")
+            .replace(String(Radix64Encoder.Default().encode(decodedKeySalt)), "").toByteArray()
     }
 
     @Suppress("TooGenericExceptionCaught")

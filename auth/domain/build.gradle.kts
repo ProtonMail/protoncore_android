@@ -24,7 +24,7 @@ plugins {
     kotlin("jvm")
 }
 
-libVersion = Version(0, 2, 4)
+libVersion = Version(0, 2, 5)
 
 dependencies {
 
@@ -45,7 +45,6 @@ dependencies {
         `dagger`,
 
         // Other
-        `bcrypt`,
         `googleTink`
     )
 
