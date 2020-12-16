@@ -95,7 +95,7 @@ class LoginViewModel @ViewModelInject constructor(
      * Execute a routine when user details result is back from the API.
      */
     private fun onUserDetails(
-        username: String,
+        usernameInput: String,
         password: ByteArray,
         sessionInfo: SessionInfo,
         user: User,
@@ -114,10 +114,14 @@ class LoginViewModel @ViewModelInject constructor(
             // if there are no Address Keys and the current AccountType (Username) does not meet the required.
             if (user.keys.isEmpty() && !user.addresses.satisfiesAccountType(requiredAccountType)) {
                 // we upgrade it
+                val emailParts = user.email?.split("@")
+                val username = emailParts?.get(0) ?: usernameInput
+                val domain = emailParts?.get(1)
                 upgradeUsernameOnlyAccount(
                     username = username,
                     password = password,
-                    sessionInfo = session
+                    sessionInfo = session,
+                    domain = domain
                 )
             } else {
                 // otherwise we raise Success.Login if there are Address Keys present.
@@ -134,12 +138,14 @@ class LoginViewModel @ViewModelInject constructor(
     private fun upgradeUsernameOnlyAccount(
         username: String,
         password: ByteArray,
+        domain: String? = null,
         sessionInfo: SessionInfo
     ) {
         updateUsernameOnlyAccount(
             sessionId = SessionId(sessionInfo.sessionId),
             username = username,
-            passphrase = password
+            passphrase = password,
+            domain = domain
         )
             .onSuccess {
                 accountWorkflow.handleAccountReady(UserId(sessionInfo.userId))
