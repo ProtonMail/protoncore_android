@@ -277,6 +277,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { sessionInfo.isTwoPassModeNeeded } returns false
         every { sessionInfo.isSecondFactorNeeded } returns false
         every { userMock.copy(passphrase = any()) } returns mockk()
+        every { userMock.email } returns null
 
         coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
             PerformLogin.State.Processing,

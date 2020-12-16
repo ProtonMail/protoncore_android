@@ -132,16 +132,8 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
     override fun generateSignedKeyList(key: String, passphrase: ByteArray): Pair<String, String> {
         val keyFingerprint: String = Crypto.newKeyFromArmored(key).fingerprint
         val keyList =
-            """
-                        [
-                            {
-                                "Fingerprint": "$keyFingerprint",
-                                "SHA256Fingerprints": ${String(Helper.getJsonSHA256Fingerprints(key))},
-                                "Flags": 3,
-                                "Primary": 1
-                            }
-                        ]
-                        """
+            // this line should be continuous without any trailing whitespaces
+            """[{"Fingerprint": "$keyFingerprint", "SHA256Fingerprints": ${String(Helper.getJsonSHA256Fingerprints(key))}, "Flags": 3, "Primary": 1}]"""
                 .trimIndent()
 
         val signedKeyList = signTextDetached(keyList, key, passphrase)
