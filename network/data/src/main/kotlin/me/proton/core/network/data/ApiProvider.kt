@@ -35,7 +35,9 @@ import java.util.concurrent.ConcurrentMap
  */
 class ApiProvider(
     val apiFactory: ApiFactory,
-    val sessionProvider: SessionProvider
+    val sessionProvider: SessionProvider,
+    val certificatePins: Array<String>? = null,
+    val alternativeApiPins: List<String>? = null
 ) {
     val instances: ConcurrentHashMap<String, ConcurrentHashMap<String, Reference<ApiManager<*>>>> =
         ConcurrentHashMap()
@@ -45,9 +47,7 @@ class ApiProvider(
     ): ApiManager<out Api> = get(sessionProvider.getSessionId(userId))
 
     inline fun <reified Api : BaseRetrofitApi> get(
-        sessionId: SessionId? = null,
-        certificatePins: Array<String>? = null,
-        alternativeApiPins: List<String>? = null
+        sessionId: SessionId? = null
     ): ApiManager<out Api> {
         // ConcurrentHashMap does not allow null to be used as a key or value.
         // If sessionId == null -> sessionName = "null".
