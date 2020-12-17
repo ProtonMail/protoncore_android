@@ -9,29 +9,6 @@ function main {
     exit 0
   fi
 
-  # Custom PK for the bot so we can commit
-  if [ -z "$CI_SSH_PRIVATE_KEY" ]; then
-    echo "=> You must set the variable CI_SSH_PRIVATE_KEY to be able to commit"
-    exit 1
-  fi
-
-  # The bot has an identity too.
-  if [ -z "$GIT_CI_EMAIL" ] || [ -z "$GIT_CI_USERNAME" ]; then
-    echo "=> You must set the variables GIT_CI_EMAIL and GIT_CI_USERNAME to be able to commit"
-    exit 1
-  fi
-
-  echo "=> load SSH env for the bot";
-  which ssh-agent || apt-get -y install openssh-client
-  eval $(ssh-agent -s)
-  echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-  mkdir ~/.ssh 2> /dev/null;
-  ssh-keyscan -t rsa ${CI_SERVER_HOST} > ~/.ssh/known_hosts
-
-  git config --global user.email "$GIT_CI_EMAIL"
-  git config --global user.name "$GIT_CI_USERNAME"
-  git config --global url."https://".insteadOf git://
-
   git checkout --track origin/master
 
   # Take https format and convert it to a SSH one so we can push from the CI
