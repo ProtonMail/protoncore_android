@@ -101,11 +101,11 @@ Data: **0.1.2** - _released on: Nov 12, 2020_
 
 ### Network
 
-Network: **0.4** - _released on: Dec 01, 2020_
+Network: **0.4.1** - _released on: Dec 17, 2020_
 
 Network Domain: **0.3.4** - _released on: Nov 24, 2020_
 
-Network Data: **0.4** - _released on: Dec 01, 2020_
+Network Data: **0.4.1** - _released on: Dec 17, 2020_
 
 ### Crypto
 
@@ -119,11 +119,11 @@ Crypto Data: **0** - _released on: ND_
 
 ### Auth
 
-Auth: **0.2.4** - _released on: Nov 25, 2020_
+Auth: **0.2.7** - _released on: Dec 17, 2020_
 
-Auth Domain: **0.2.4** - _released on: Nov 25, 2020_
+Auth Domain: **0.2.5** - _released on: Dec 17, 2020_
 
-Auth Presentation: **0.2.4** - _released on: Nov 25, 2020_
+Auth Presentation: **0.2.7** - _released on: Dec 17, 2020_
 
 Auth Data: **0.2.4** - _released on: Nov 25, 2020_
 
