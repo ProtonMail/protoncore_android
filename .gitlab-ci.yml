@@ -1,5 +1,13 @@
 image: gitlab.protontech.ch:4567/protonvpn/android/android-app-new:latest
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .gradle
+    - '**/build'
+    - '**/**/build'
+    - '**/**/**/build'
+
 stages:
   - analyze
   - build
