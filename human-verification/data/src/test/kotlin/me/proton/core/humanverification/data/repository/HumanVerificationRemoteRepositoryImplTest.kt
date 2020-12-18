@@ -65,10 +65,7 @@ class HumanVerificationRemoteRepositoryImplTest {
         MockKAnnotations.init(this)
         apiProvider = ApiProvider(apiFactory, sessionProvider)
         every {
-            apiFactory.create(
-                sessionId, HumanVerificationApi::class, certificatePins = Constants.DEFAULT_SPKI_PINS,
-                alternativeApiPins = Constants.ALTERNATIVE_API_SPKI_PINS
-            )
+            apiFactory.create(sessionId, HumanVerificationApi::class)
         } returns apiManager
     }
 
