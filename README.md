@@ -75,9 +75,9 @@ Tests: **0.1** - _released on: Oct 09, 2020_
 
 ### Utils
 
-Util Android Shared Preferences: **0.2.2** - _released on: Dec 03, 2020_
+Util Android Shared Preferences: **0.2.3** - _released on: Dec 18, 2020_
 
-Util Android Work Manager: **0.2.1** - _released on: Nov 12, 2020_
+Util Android Work Manager: **0.2.2** - _released on: Dec 18, 2020_
 
 Util Kotlin: **0.2.4** - _released on: Nov 19, 2020_
 
@@ -85,9 +85,9 @@ Util Kotlin: **0.2.4** - _released on: Nov 19, 2020_
 
 Test Kotlin: **0.2** - _released on: Oct 21, 2020_
 
-Test Android: **0.3.2** - _released on: Dec 03, 2020_
+Test Android: **0.3.3** - _released on: Dec 18, 2020_
 
-Test Android Instrumented: **0.2.1** - _released on: Dec 03, 2020_
+Test Android Instrumented: **0.2.2** - _released on: Dec 18, 2020_
 
 ## Shared
 
