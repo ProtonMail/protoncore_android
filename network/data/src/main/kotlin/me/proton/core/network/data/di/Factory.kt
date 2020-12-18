@@ -71,7 +71,9 @@ class ApiFactory(
     private val sessionProvider: SessionProvider,
     private val sessionListener: SessionListener,
     private val cookieStore: ProtonCookieStore,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    private val certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
+    private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
 ) {
 
     @OptIn(ObsoleteCoroutinesApi::class)
@@ -96,8 +98,8 @@ class ApiFactory(
         sessionId: SessionId? = null,
         interfaceClass: KClass<Api>,
         clientErrorHandlers: List<ApiErrorHandler<Api>> = emptyList(),
-        certificatePins: Array<String>,
-        alternativeApiPins: List<String>
+        certificatePins: Array<String> = this@ApiFactory.certificatePins,
+        alternativeApiPins: List<String> = this@ApiFactory.alternativeApiPins
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
             initPinning(builder, URI(baseUrl).host, certificatePins)

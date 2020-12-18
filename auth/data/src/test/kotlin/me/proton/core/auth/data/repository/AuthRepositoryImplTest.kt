@@ -95,17 +95,13 @@ class AuthRepositoryImplTest {
         apiProvider = ApiProvider(apiFactory, sessionProvider)
         every {
             apiFactory.create(
-                interfaceClass = AuthenticationApi::class,
-                certificatePins = Constants.DEFAULT_SPKI_PINS,
-                alternativeApiPins = Constants.ALTERNATIVE_API_SPKI_PINS
+                interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
         every {
             apiFactory.create(
                 SessionId(testSessionId),
-                interfaceClass = AuthenticationApi::class,
-                certificatePins = Constants.DEFAULT_SPKI_PINS,
-                alternativeApiPins = Constants.ALTERNATIVE_API_SPKI_PINS
+                interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
         repository = AuthRepositoryImpl(apiProvider)
