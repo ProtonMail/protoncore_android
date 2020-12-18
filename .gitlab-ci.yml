@@ -41,7 +41,7 @@ assemble:
 debugTests:
   stage: test
   tags:
-    - large
+    - medium
   script:
     - ./gradlew -Pci --console=plain allTest
 
@@ -51,6 +51,8 @@ include:
 
 release-publish-github:
   stage: publish
+  tags:
+    - small
   only:
     - master
   variables:
@@ -62,7 +64,7 @@ release-publish-github:
 publishMaven:
   stage: publish
   tags:
-    - large
+    - small
   script:
     - ./gradlew assemble && ./gradlew publishNewRelease --no-daemon --no-parallel
   only:
@@ -78,7 +80,7 @@ publishMaven:
 publishGradlePortal:
   stage: publish
   tags:
-    - large
+    - small
   script:
     - ./gradlew -p util/gradle assemble && ./gradlew -p util/gradle publishAll
   only:
@@ -93,6 +95,8 @@ publishGradlePortal:
 
 commitRelease:
   stage: commit
+  tags:
+    - small
   needs:
       - job: publishMaven
         artifacts: true
@@ -103,6 +107,8 @@ commitRelease:
 
 postReleaseToSlack:
   stage: slackRelease
+  tags:
+    - small
   needs:
       - job: publishMaven
         artifacts: true
