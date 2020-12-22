@@ -140,15 +140,15 @@ Account Data: **0.1.3** - _released on: Nov 18, 2020_
 
 ### Account Manager
 
-Account Manager: **0.1.4** - _released on: Nov 18, 2020_
+Account Manager: **0.1.5** - _released on: Dec 22, 2020_
 
-Account Manager Domain: **0.1.4** - _released on: Nov 18, 2020_
+Account Manager Domain: **0.1.5** - _released on: Dec 22, 2020_
 
-Account Manager Presentation: **0.1.4** - _released on: Nov 18, 2020_
+Account Manager Presentation: **0.1.5** - _released on: Dec 22, 2020_
 
-Account Manager Data: **0.1.4** - _released on: Nov 18, 2020_
+Account Manager Data: **0.1.5** - _released on: Dec 22, 2020_
 
-Account Manager Dagger: **0.1.2** - _released on: Nov 12, 2020_
+Account Manager Dagger: **0.1.5** - _released on: Dec 22, 2020_
 
 ### Contacts
 
