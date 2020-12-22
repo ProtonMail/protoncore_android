@@ -119,13 +119,13 @@ Crypto Data: **0** - _released on: ND_
 
 ### Auth
 
-Auth: **0.2.7** - _released on: Dec 17, 2020_
+Auth: **0.2.8** - _released on: Dec 22, 2020_
 
-Auth Domain: **0.2.5** - _released on: Dec 17, 2020_
+Auth Domain: **0.2.8** - _released on: Dec 22, 2020_
 
-Auth Presentation: **0.2.7** - _released on: Dec 17, 2020_
+Auth Presentation: **0.2.8** - _released on: Dec 22, 2020_
 
-Auth Data: **0.2.4** - _released on: Nov 25, 2020_
+Auth Data: **0.2.8** - _released on: Dec 22, 2020_
 
 ### Account
 
