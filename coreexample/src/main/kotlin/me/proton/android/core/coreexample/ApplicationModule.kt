@@ -28,6 +28,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import me.proton.android.core.coreexample.Constants.BASE_URL
+import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -76,7 +77,7 @@ object ApplicationModule {
         sessionListener: SessionListener
     ): ApiFactory = ApiFactory(
         BASE_URL, apiClient, CoreExampleLogger(), networkManager, networkPrefs, sessionProvider, sessionListener,
-        ProtonCookieStore(context), CoroutineScope(Job() + Dispatchers.Default)
+        ProtonCookieStore(context), CoroutineScope(Job() + Dispatchers.Default), emptyArray(), emptyList()
     )
 
     @Provides
@@ -88,6 +89,11 @@ object ApplicationModule {
     @Singleton
     fun provideProduct(): Product =
         Product.Calendar
+
+    @Provides
+    @Singleton
+    fun provideCoreExampleRepository(apiProvider: ApiProvider): CoreExampleRepository =
+        CoreExampleRepository(apiProvider)
 
     @Provides
     @Singleton

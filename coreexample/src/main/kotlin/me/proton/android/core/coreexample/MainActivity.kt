@@ -27,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.core.account.domain.entity.AccountState
@@ -63,6 +64,9 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
     @Inject
     lateinit var authRepository: AuthRepository
+
+    @Inject
+    lateinit var coreExampleRepository: CoreExampleRepository
 
     override fun layoutId(): Int = R.layout.activity_main
 
@@ -103,6 +107,12 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 supportFragmentManager.showForceUpdate(
                     apiErrorMessage = "Error Message coming from the API."
                 )
+            }
+
+            triggerHumanVer.onClick {
+                accountManager.getPrimaryUserId().onEach {
+                    coreExampleRepository.triggerHumanVerification(it!!)
+                }.launchIn(lifecycleScope)
             }
         }
 
