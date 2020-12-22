@@ -161,7 +161,7 @@ class SecondFactorViewModel @ViewModelInject constructor(
     ) {
         updateUsernameOnlyAccount(sessionId = sessionId, username = username, passphrase = passphrase)
             .onSuccess {
-                accountWorkflow.handleAccountNotReady(userId)
+                accountWorkflow.handleAccountReady(userId)
                 setupUser(passphrase, sessionId, userId, scopeInfo, isTwoPassModeNeeded)
             }
             .onError {
