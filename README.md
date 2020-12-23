@@ -101,11 +101,11 @@ Data: **0.1.2** - _released on: Nov 12, 2020_
 
 ### Network
 
-Network: **0.4.3** - _released on: Dec 18, 2020_
+Network: **0.4.4** - _released on: Dec 23, 2020_
 
-Network Domain: **0.4.3** - _released on: Dec 18, 2020_
+Network Domain: **0.4.4** - _released on: Dec 23, 2020_
 
-Network Data: **0.4.3** - _released on: Dec 18, 2020_
+Network Data: **0.4.4** - _released on: Dec 23, 2020_
 
 ### Crypto
 
