@@ -61,6 +61,8 @@ import kotlin.reflect.KClass
  * Factory for creating [ApiManager] instances. There should be a single instance per [baseUrl].
  *
  * @param baseUrl Base url for the api e.g. "https://api.protonvpn.ch/"
+ * @param cookieStore The cookie store. If set to null, a default InMemory cookie store will be used. Otherwise, for
+ * permanent Cookie Store please use instance of [ProtonCookieStore].
  */
 class ApiFactory(
     private val baseUrl: String,
@@ -70,7 +72,7 @@ class ApiFactory(
     private val prefs: NetworkPrefs,
     private val sessionProvider: SessionProvider,
     private val sessionListener: SessionListener,
-    private val cookieStore: ProtonCookieStore,
+    private val cookieStore: ProtonCookieStore?,
     scope: CoroutineScope,
     private val certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
     private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
@@ -155,16 +157,19 @@ class ApiFactory(
 
     @VisibleForTesting
     val baseOkHttpClient by lazy {
-        val cookieManager = CookieManager(
-            cookieStore,
-            CookiePolicy.ACCEPT_ALL
-        )
-        CookieManager.setDefault(cookieManager)
         val builder = OkHttpClient.Builder()
-            .cookieJar(JavaNetCookieJar(cookieManager))
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .readTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
+
+        if (cookieStore != null) {
+            val cookieManager = CookieManager(
+                cookieStore,
+                CookiePolicy.ACCEPT_ALL
+            )
+            CookieManager.setDefault(cookieManager)
+            builder.cookieJar(JavaNetCookieJar(cookieManager))
+        }
         builder.build()
     }
 
