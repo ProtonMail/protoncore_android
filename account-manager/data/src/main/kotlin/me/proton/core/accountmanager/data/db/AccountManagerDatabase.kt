@@ -28,6 +28,7 @@ import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.db.AccountConverters
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
+import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.data.db.CommonConverters
 
@@ -36,7 +37,8 @@ import me.proton.core.data.db.CommonConverters
         // account-data
         AccountEntity::class,
         AccountMetadataEntity::class,
-        SessionEntity::class
+        SessionEntity::class,
+        HumanVerificationDetailsEntity::class
     ],
     version = 1
 )

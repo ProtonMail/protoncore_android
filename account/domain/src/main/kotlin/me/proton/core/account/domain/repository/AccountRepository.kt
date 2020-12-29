@@ -146,5 +146,10 @@ interface AccountRepository {
     /**
      * Set [HumanVerificationDetails], by sessionId.
      */
-    suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails?)
+    suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails)
+
+    /**
+     * Marks the human verification details as completed (successfully).
+     */
+    suspend fun updateHumanVerificationCompleted(id: SessionId)
 }

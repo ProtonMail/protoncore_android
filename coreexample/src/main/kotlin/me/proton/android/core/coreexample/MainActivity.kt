@@ -37,6 +37,7 @@ import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountRemoved
+import me.proton.core.accountmanager.presentation.onSessionHumanVerificationNeeded
 import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.presentation.AuthOrchestrator
@@ -110,14 +111,26 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
 
             triggerHumanVer.onClick {
-                accountManager.getPrimaryUserId().onEach {
-                    coreExampleRepository.triggerHumanVerification(it!!)
+                accountManager.getPrimaryUserId().onEach { userId ->
+                    userId?.let {
+                        coreExampleRepository.triggerHumanVerification(it)
+                    }
                 }.launchIn(lifecycleScope)
             }
         }
 
         accountManager.getPrimaryAccount().onEach { primary ->
             binding.primaryAccountText.text = "Primary: ${primary?.username}"
+        }.launchIn(lifecycleScope)
+
+        accountManager.isHumanVerificationBlockedPrimary().onEach { pair ->
+            pair?.let {
+                val account = it.first
+                val humandetails = it.second
+                if (listOf(SessionState.HumanVerificationNeeded, SessionState.HumanVerificationFailed).contains(account.sessionState)) {
+                    authOrchestrator.startHumanVerificationWorkflow(account.sessionId!!, humandetails)
+                }
+            }
         }.launchIn(lifecycleScope)
 
         accountManager.getAccounts().onEach { accounts ->
@@ -170,6 +183,9 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
             .onAccountRemoved {
                 Timber.d("onAccountRemoved -> $it")
+            }
+            .onSessionHumanVerificationNeeded {
+                Timber.d("onHumanVerificationNeeded -> $it")
             }
 
         // Api Call every 10sec (e.g. to test ForceLogout). - commeted for now, move it into another activity

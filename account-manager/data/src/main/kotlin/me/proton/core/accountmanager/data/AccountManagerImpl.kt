@@ -19,6 +19,8 @@
 package me.proton.core.accountmanager.data
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
@@ -100,6 +102,15 @@ class AccountManagerImpl constructor(
     override suspend fun setAsPrimary(userId: UserId) =
         accountRepository.setAsPrimary(userId)
 
+    override fun isHumanVerificationBlockedPrimary(): Flow<Pair<Account, HumanVerificationDetails?>?> =
+        getPrimaryUserId().flatMapLatest { userId ->
+            if (userId != null) {
+                getAccount(userId).map { it!! to accountRepository.getHumanVerificationDetails(it.sessionId!!) }
+            } else {
+                flowOf(null)
+            }
+        }
+
     // region AccountWorkflowHandler
 
     override suspend fun handleSession(account: Account, session: Session) {
@@ -138,8 +149,8 @@ class AccountManagerImpl constructor(
     override suspend fun handleHumanVerificationSuccess(sessionId: SessionId, tokenType: String, tokenCode: String) {
         accountRepository.updateSessionHeaders(sessionId, tokenType, tokenCode)
         accountRepository.updateSessionState(sessionId, SessionState.HumanVerificationSuccess)
+        accountRepository.updateHumanVerificationCompleted(sessionId)
         accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
-        accountRepository.updateAccountState(sessionId, AccountState.Ready)
     }
 
     override suspend fun handleHumanVerificationFailed(sessionId: SessionId) {

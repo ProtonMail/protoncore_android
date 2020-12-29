@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountMetadataEntity
+import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
 import me.proton.core.account.data.extension.toAccountEntity
 import me.proton.core.account.data.extension.toSessionEntity
 import me.proton.core.account.domain.entity.Account
@@ -41,7 +42,6 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.exhaustive
-import java.util.concurrent.ConcurrentHashMap
 
 @Suppress("TooManyFunctions")
 class AccountRepositoryImpl(
@@ -53,8 +53,7 @@ class AccountRepositoryImpl(
     private val accountDao = db.accountDao()
     private val sessionDao = db.sessionDao()
     private val accountMetadataDao = db.accountMetadataDao()
-
-    private val humanVerificationDetails: ConcurrentHashMap<SessionId, HumanVerificationDetails?> = ConcurrentHashMap()
+    private val humanVerificationDetailsDao = db.humanVerificationDetailsDao()
 
     // Accept 10 nested/concurrent state changes -> extraBufferCapacity.
     private val accountStateChanged = MutableSharedFlow<Account>(extraBufferCapacity = 10)
@@ -209,10 +208,32 @@ class AccountRepositoryImpl(
         }
     }
 
-    override suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails? =
-        humanVerificationDetails[id]
+    override suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails? {
+        return humanVerificationDetailsDao.getBySessionIdAndStatus(id.id, false)?.toHumanVerificationDetails()
+    }
 
-    override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails?) {
-        humanVerificationDetails[id] = details
+    override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails) {
+        with(details) {
+            getAccountOrNull(id)?.let {
+                humanVerificationDetailsDao.insertOrIgnore(
+                    HumanVerificationDetailsEntity(
+                        userId = it.userId.id,
+                        sessionId = id.id,
+                        verificationMethods = verificationMethods.map { method ->
+                            method.value
+                        },
+                        captchaVerificationToken = captchaVerificationToken,
+                        completed = false
+                    )
+                )
+            }
+        }
+    }
+
+    /**
+     * Marks the human verification details as completed (successfully).
+     */
+    override suspend fun updateHumanVerificationCompleted(id: SessionId) {
+        humanVerificationDetailsDao.updateHumanVerificationStatus(id.id, true)
     }
 }
