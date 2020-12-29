@@ -18,13 +18,23 @@
   -->
 
 <resources>
-    <!-- region -->
-    <dimen name="input_text_size">16sp</dimen>
-    <dimen name="input_height">48dp</dimen>
+    <!-- general dimensions sizes -->
     <dimen name="button_height">48dp</dimen>
+    <dimen name="input_height">48dp</dimen>
+    <dimen name="list_item_height">48dp</dimen>
     <dimen name="button_nav_size">40dp</dimen>
+
+    <!-- general dimensions gaps -->
+    <dimen name="default_gap">16dp</dimen>
+    <dimen name="default_text_top_margin">8dp</dimen>
+
     <dimen name="button_nav_margin_start">16dp</dimen>
     <dimen name="button_nav_margin_top">40dp</dimen>
-    <dimen name="default_gap">24dp</dimen>
-    <dimen name="help_item_height">48dp</dimen>
+
+    <!-- text sizes -->
+    <dimen name="input_text_size">16sp</dimen>
+    <dimen name="default_text_size">18sp</dimen>
+    <dimen name="default_title_text_size">18sp</dimen>
+    <dimen name="default_subtitle_text_size">14sp</dimen>
+
 </resources>

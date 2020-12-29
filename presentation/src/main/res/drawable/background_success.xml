@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -21,6 +20,8 @@
     android:shape="rectangle">
     <solid android:color="@color/notification_success" />
     <corners android:radius="5dp" />
-    <padding android:left="@dimen/parent_padding" android:right="@dimen/parent_padding" />
+    <padding
+        android:left="@dimen/corner_padding"
+        android:right="@dimen/corner_padding" />
 </shape>
 

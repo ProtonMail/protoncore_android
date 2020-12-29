@@ -24,7 +24,7 @@
         <item name="android:colorBackground">@color/background_norm</item>
         <item name="colorSurface">@color/background_secondary</item>
 
-        <item name="colorPrimary">?brand</item>
+        <item name="colorPrimary">?attr/brand_norm</item>
         <item name="colorPrimaryVariant">?brand_darken_20</item>
         <item name="colorSecondary">?brand_lighten_40</item>
         <item name="colorSecondaryVariant">?brand_lighten_20</item>
@@ -33,8 +33,8 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnPrimarySurface">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="colorOnSurface">?brand</item>
-        <item name="colorOnBackground">?brand</item>
+        <item name="colorOnSurface">?attr/brand_norm</item>
+        <item name="colorOnBackground">?attr/brand_norm</item>
 
         <!-- Text colors -->
         <item name="android:textColor">@color/text_norm</item>
@@ -56,7 +56,7 @@
         <item name="materialButtonStyle">@style/ProtonButton</item>
 
         <!-- App specific attributes -->
-        <item name="brand">@color/cornflower_blue</item>
+        <item name="brand_norm">@color/cornflower_blue</item>
         <item name="brand_darken_20">@color/san_marino</item>
         <item name="brand_darken_40">@color/chambray</item>
         <item name="brand_lighten_20">@color/portage</item>
@@ -64,7 +64,7 @@
     </style>
 
     <style name="ProtonTheme.Vpn" parent="ProtonTheme">
-        <item name="brand">@color/fruit_salad</item>
+        <item name="brand_norm">@color/fruit_salad</item>
         <item name="brand_darken_20">@color/goblin</item>
         <item name="brand_darken_40">@color/green_pea</item>
         <item name="brand_lighten_20">@color/mantis</item>

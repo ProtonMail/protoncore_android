@@ -29,10 +29,9 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/ProtonTextView"
+            style="@style/ProtonTextView.Subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_top_margin"
             android:text="@string/human_verification_option_sms_subtitle"
             app:layout_constraintBottom_toTopOf="@id/header"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,11 +74,11 @@
             android:id="@+id/getVerificationCodeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/human_verification_action_buttons_top_margin"
+            android:layout_marginTop="@dimen/human_verification_sms_action_button_top_margin"
             android:text="@string/human_verification_get_verification_code"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/callingCodeText" />
+            app:layout_constraintTop_toBottomOf="@id/smsEditText" />
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/proceedButton"

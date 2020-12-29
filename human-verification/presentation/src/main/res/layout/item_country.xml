@@ -23,7 +23,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/background_norm"
-    android:padding="@dimen/parent_padding">
+    android:paddingTop="@dimen/human_verification_country_picker_item_padding"
+    android:paddingBottom="@dimen/human_verification_country_picker_item_padding">
 
     <ImageView
         android:id="@+id/flag"
@@ -53,7 +54,7 @@
         style="@style/ProtonTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_view_horizontal_space"
+        android:layout_marginStart="@dimen/human_verification_calling_code_title_margin"
         android:gravity="start"
         android:maxLines="1"
         android:minLines="1"

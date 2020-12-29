@@ -22,9 +22,9 @@
         android:id="@+id/headerHumanVerification"
         android:layout_width="match_parent"
         android:layout_height="@dimen/human_verification_header_height"
-        android:paddingStart="@dimen/parent_padding"
-        android:paddingTop="@dimen/parent_padding"
-        android:paddingEnd="@dimen/parent_padding">
+        android:paddingStart="@dimen/human_verification_header_horizontal_margin"
+        android:paddingTop="@dimen/default_gap"
+        android:paddingEnd="@dimen/human_verification_header_horizontal_margin">
 
         <me.proton.core.presentation.ui.view.ProtonNavigationButton
             android:id="@+id/closeButton"
@@ -36,7 +36,7 @@
 
         <me.proton.core.presentation.ui.view.ProtonButton
             android:id="@+id/helpButton"
-            style="@style/ProtonButton.Borderless.Text"
+            style="@style/NavigationHeader.Button"
             android:layout_width="@dimen/human_verification_help_button_width"
             android:layout_height="wrap_content"
             android:text="@string/human_verification_help"
@@ -44,35 +44,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/title"
+            style="@style/NavigationHeader.Title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
+            android:layout_marginStart="@dimen/human_verification_header_title_margin"
+            android:text="@string/human_verification_title"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/human_verification_title"
-                android:textColor="@color/text_norm"
-                android:textSize="@dimen/human_verification_title_size" />
-
-            <TextView
-                android:id="@+id/optionsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/human_verification_title_options"
-                android:textColor="@color/text_hint"
-                android:textSize="@dimen/human_verification_subtitle_size" />
-
-        </LinearLayout>
+            app:layout_constraintStart_toEndOf="@id/closeButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

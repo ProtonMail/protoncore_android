@@ -29,8 +29,7 @@
             android:id="@+id/headerNavigation"
             layout="@layout/content_human_verification_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_view_vertical_space" />
+            android:layout_height="wrap_content" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -41,12 +40,11 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/ProtonTextView"
+                style="@style/ProtonTextView.Subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_top_margin"
                 android:text="@string/human_verification_enter_code_subtitle"
-                android:textColor="@color/text_norm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
