@@ -22,8 +22,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onSubscription
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
@@ -152,11 +154,15 @@ class AccountRepositoryImpl(
         }
     }
 
-    override fun onAccountStateChanged(): Flow<Account> =
-        accountStateChanged.asSharedFlow().distinctUntilChanged()
+    override fun onAccountStateChanged(initialState: Boolean): Flow<Account> =
+        accountStateChanged.asSharedFlow()
+            .onSubscription { if (initialState) getAccounts().first().forEach { emit(it) } }
+            .distinctUntilChanged()
 
-    override fun onSessionStateChanged(): Flow<Account> =
-        sessionStateChanged.asSharedFlow().distinctUntilChanged()
+    override fun onSessionStateChanged(initialState: Boolean): Flow<Account> =
+        sessionStateChanged.asSharedFlow()
+            .onSubscription { if (initialState) getAccounts().first().forEach { emit(it) } }
+            .distinctUntilChanged()
 
     override suspend fun updateAccountState(userId: UserId, state: AccountState) {
         db.inTransaction {

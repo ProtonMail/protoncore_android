@@ -36,8 +36,14 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
+import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
+import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
+import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionHumanVerificationNeeded
+import me.proton.core.accountmanager.presentation.onSessionHumanVerificationFailed
+import me.proton.core.accountmanager.presentation.onSessionSecondFactorFailed
+import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.presentation.AuthOrchestrator
@@ -184,8 +190,26 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             .onAccountRemoved {
                 Timber.d("onAccountRemoved -> $it")
             }
+            .onAccountReady {
+                Timber.d("onAccountReady -> $it")
+            }
+            .onSessionSecondFactorNeeded {
+                Timber.d("onSessionSecondFactorNeeded -> $it")
+            }
+            .onSessionSecondFactorFailed {
+                Timber.d("onSessionSecondFactorFailed -> $it")
+            }
+            .onAccountTwoPassModeNeeded {
+                Timber.d("onAccountTwoPassModeNeeded -> $it")
+            }
+            .onAccountTwoPassModeFailed {
+                Timber.d("onAccountTwoPassModeNeeded -> $it")
+            }
             .onSessionHumanVerificationNeeded {
-                Timber.d("onHumanVerificationNeeded -> $it")
+                Timber.d("onSessionHumanVerificationNeeded -> $it")
+            }
+            .onSessionHumanVerificationFailed {
+                Timber.d("onSessionHumanVerificationFailed -> $it")
             }
 
         // Api Call every 10sec (e.g. to test ForceLogout). - commeted for now, move it into another activity

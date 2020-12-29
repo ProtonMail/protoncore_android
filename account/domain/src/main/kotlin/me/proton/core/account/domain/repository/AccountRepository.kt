@@ -90,13 +90,17 @@ interface AccountRepository {
 
     /**
      * Flow of [Account] where [Account.state] changed.
+     *
+     * @param initialState if true, initial state for all accounts will be raised on subscription.
      */
-    fun onAccountStateChanged(): Flow<Account>
+    fun onAccountStateChanged(initialState: Boolean): Flow<Account>
 
     /**
      * Flow of [Account] where [Account.sessionState] changed.
+     *
+     * @param initialState if true, initial state for all accounts will be raised on subscription.
      */
-    fun onSessionStateChanged(): Flow<Account>
+    fun onSessionStateChanged(initialState: Boolean): Flow<Account>
 
     /**
      * Update [AccountState], by [UserId], locally.

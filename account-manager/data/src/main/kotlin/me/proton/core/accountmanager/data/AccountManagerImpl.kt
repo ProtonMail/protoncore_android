@@ -29,7 +29,7 @@ import me.proton.core.account.domain.entity.isReady
 import me.proton.core.account.domain.entity.isSecondFactorNeeded
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.onSessionStateChanged
+import me.proton.core.accountmanager.domain.onSessionState
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.Product
@@ -86,14 +86,14 @@ class AccountManagerImpl constructor(
     override fun getSessions(): Flow<List<Session>> =
         accountRepository.getSessions()
 
-    override fun onAccountStateChanged(): Flow<Account> =
-        accountRepository.onAccountStateChanged()
+    override fun onAccountStateChanged(initialState: Boolean): Flow<Account> =
+        accountRepository.onAccountStateChanged(initialState)
 
-    override fun onSessionStateChanged(): Flow<Account> =
-        accountRepository.onSessionStateChanged()
+    override fun onSessionStateChanged(initialState: Boolean): Flow<Account> =
+        accountRepository.onSessionStateChanged(initialState)
 
     override fun onHumanVerificationNeeded(): Flow<Pair<Account, HumanVerificationDetails?>> =
-        onSessionStateChanged(SessionState.HumanVerificationNeeded)
+        onSessionState(SessionState.HumanVerificationNeeded)
             .map { it to it.sessionId?.let { id -> accountRepository.getHumanVerificationDetails(id) } }
 
     override fun getPrimaryUserId(): Flow<UserId?> =

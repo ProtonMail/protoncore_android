@@ -26,92 +26,26 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.accountmanager.domain.onAccountState
+import me.proton.core.accountmanager.domain.onSessionState
 
 class AccountManagerObserver(
-    scope: CoroutineScope,
-    accountManager: AccountManager
+    private val scope: CoroutineScope,
+    private val accountManager: AccountManager
 ) {
 
-    private var onAccountTwoPassModeNeededListener: suspend (Account) -> Unit = {}
-    private var onAccountTwoPassModeFailedListener: suspend (Account) -> Unit = {}
-    private var onAccountReadyListener: suspend (Account) -> Unit = {}
-    private var onAccountDisabledListener: suspend (Account) -> Unit = {}
-    private var onAccountRemovedListener: suspend (Account) -> Unit = {}
-
-    private var onSessionHumanVerificationNeededListener: suspend (Account) -> Unit = {}
-    private var onSessionHumanVerificationFailedListener: suspend (Account) -> Unit = {}
-    private var onSessionAuthenticatedListener: suspend (Account) -> Unit = {}
-    private var onSessionForceLogoutListener: suspend (Account) -> Unit = {}
-
-    init {
-        accountManager.onAccountStateChanged().onEach {
+    internal fun addAccountStateListener(state: AccountState, initialState: Boolean, block: suspend (Account) -> Unit) {
+        accountManager.onAccountState(state, initialState).onEach {
             // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
-            scope.launch {
-                when (it.state) {
-                    AccountState.NotReady,
-                    AccountState.TwoPassModeSuccess -> Unit // Hide those states.
-                    AccountState.TwoPassModeNeeded -> onAccountTwoPassModeNeededListener.invoke(it)
-                    AccountState.TwoPassModeFailed -> onAccountTwoPassModeFailedListener.invoke(it)
-                    AccountState.Ready -> onAccountReadyListener.invoke(it)
-                    AccountState.Disabled -> onAccountDisabledListener.invoke(it)
-                    AccountState.Removed -> onAccountRemovedListener.invoke(it)
-                }.exhaustive
-            }
-        }.launchIn(scope)
-
-        accountManager.onSessionStateChanged().onEach {
-            // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
-            scope.launch {
-                when (it.sessionState) {
-                    null -> Unit // Nothing to do.
-                    SessionState.SecondFactorNeeded,
-                    SessionState.SecondFactorSuccess,
-                    SessionState.SecondFactorFailed,
-                    SessionState.HumanVerificationSuccess -> Unit // Hide those states.
-                    SessionState.HumanVerificationNeeded -> onSessionHumanVerificationNeededListener.invoke(it)
-                    SessionState.HumanVerificationFailed -> onSessionHumanVerificationFailedListener.invoke(it)
-                    SessionState.Authenticated -> onSessionAuthenticatedListener.invoke(it)
-                    SessionState.ForceLogout -> onSessionForceLogoutListener.invoke(it)
-                }.exhaustive
-            }
+            scope.launch { block(it) }
         }.launchIn(scope)
     }
 
-    internal fun setOnAccountTwoPassModeNeeded(block: suspend (Account) -> Unit) {
-        onAccountTwoPassModeNeededListener = block
-    }
-
-    internal fun setOnAccountTwoPassModeFailed(block: suspend (Account) -> Unit) {
-        onAccountTwoPassModeFailedListener = block
-    }
-
-    internal fun setOnAccountReady(block: suspend (Account) -> Unit) {
-        onAccountReadyListener = block
-    }
-
-    internal fun setOnAccountDisabled(block: suspend (Account) -> Unit) {
-        onAccountDisabledListener = block
-    }
-
-    internal fun setOnAccountRemoved(block: suspend (Account) -> Unit) {
-        onAccountRemovedListener = block
-    }
-
-    internal fun setOnSessionHumanVerificationNeeded(block: suspend (Account) -> Unit) {
-        onSessionHumanVerificationNeededListener = block
-    }
-
-    internal fun setOnSessionHumanVerificationFailed(block: suspend (Account) -> Unit) {
-        onSessionHumanVerificationFailedListener = block
-    }
-
-    internal fun setOnSessionAuthenticated(block: suspend (Account) -> Unit) {
-        onSessionAuthenticatedListener = block
-    }
-
-    internal fun setOnSessionForceLogout(block: suspend (Account) -> Unit) {
-        onSessionForceLogoutListener = block
+    internal fun addSessionStateListener(state: SessionState, initialState: Boolean, block: suspend (Account) -> Unit) {
+        accountManager.onSessionState(state, initialState).onEach {
+            // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
+            scope.launch { block(it) }
+        }.launchIn(scope)
     }
 }
 
@@ -119,64 +53,89 @@ fun AccountManager.observe(scope: CoroutineScope) =
     AccountManagerObserver(scope, this)
 
 fun AccountManagerObserver.onAccountTwoPassModeNeeded(
+    initialState: Boolean = true,
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
-    setOnAccountTwoPassModeNeeded { block(it) }
+    addAccountStateListener(AccountState.TwoPassModeNeeded, initialState, block)
     return this
 }
 
 fun AccountManagerObserver.onAccountTwoPassModeFailed(
+    initialState: Boolean = true,
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
-    setOnAccountTwoPassModeFailed { block(it) }
+    addAccountStateListener(AccountState.TwoPassModeFailed, initialState, block)
     return this
 }
 
 fun AccountManagerObserver.onAccountReady(
+    initialState: Boolean = true,
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
-    setOnAccountReady { block(it) }
+    addAccountStateListener(AccountState.Ready, initialState, block)
     return this
 }
 
 fun AccountManagerObserver.onAccountDisabled(
+    initialState: Boolean = true,
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
-    setOnAccountDisabled { block(it) }
+    addAccountStateListener(AccountState.Disabled, initialState, block)
     return this
 }
 
 fun AccountManagerObserver.onAccountRemoved(
+    initialState: Boolean = true,
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
-    setOnAccountRemoved { block(it) }
+    addAccountStateListener(AccountState.Removed, initialState, block)
     return this
 }
 
 fun AccountManagerObserver.onSessionHumanVerificationNeeded(
+    initialState: Boolean = true,
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
-    setOnSessionHumanVerificationNeeded { block(it) }
+    addSessionStateListener(SessionState.HumanVerificationNeeded, initialState, block)
     return this
 }
 
 fun AccountManagerObserver.onSessionHumanVerificationFailed(
+    initialState: Boolean = true,
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
-    setOnSessionHumanVerificationFailed { block(it) }
+    addSessionStateListener(SessionState.HumanVerificationFailed, initialState, block)
+    return this
+}
+
+fun AccountManagerObserver.onSessionSecondFactorNeeded(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addSessionStateListener(SessionState.SecondFactorNeeded, initialState, block)
+    return this
+}
+
+fun AccountManagerObserver.onSessionSecondFactorFailed(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addSessionStateListener(SessionState.SecondFactorFailed, initialState, block)
     return this
 }
 
 fun AccountManagerObserver.onSessionAuthenticated(
+    initialState: Boolean = true,
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
-    setOnSessionAuthenticated { block(it) }
+    addSessionStateListener(SessionState.Authenticated, initialState, block)
     return this
 }
 
 fun AccountManagerObserver.onSessionForceLogout(
+    initialState: Boolean = true,
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
-    setOnSessionForceLogout { block(it) }
+    addSessionStateListener(SessionState.ForceLogout, initialState, block)
     return this
 }
