@@ -15,36 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.crypto.common.simple
 
-libVersion = Version(0, 2, 1)
+/**
+ * Encrypted [String] provided by [SimpleCrypto.encrypt].
+ */
+typealias EncryptedString = String
 
-android(minSdk = 23)
+/**
+ * Decrypt an [EncryptedString] using a [SimpleCrypto].
+ */
+fun EncryptedString.decrypt(crypto: SimpleCrypto) = crypto.decrypt(this)
 
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.data),
-        project(Module.domain),
-        project(Module.crypto),
-        project(Module.network),
-        project(Module.accountDomain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Other
-        `room-ktx`
-    )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
-}
+/**
+ * Encrypt a [String] using a [SimpleCrypto].
+ */
+fun String.encrypt(crypto: SimpleCrypto) = crypto.encrypt(this)

@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
+
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
@@ -23,27 +24,30 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(0, 2, 1)
+//libVersion = Version(0, 1, 0)
 
 android(minSdk = 23)
 
 dependencies {
-
     implementation(
+
         project(Module.kotlinUtil),
-        project(Module.data),
-        project(Module.domain),
-        project(Module.crypto),
-        project(Module.network),
-        project(Module.accountDomain),
+        project(Module.cryptoCommon),
 
         // Kotlin
-        `kotlin-jdk7`,
+        `kotlin-jdk8`,
         `coroutines-core`,
 
+        // Android
+        `room-runtime`,
+
         // Other
-        `room-ktx`
+        `bcrypt`,
+        `googleTink`
     )
+
+    compileOnly(project(Module.gopenpgp))
+    androidTestImplementation(project(Module.gopenpgp))
 
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))

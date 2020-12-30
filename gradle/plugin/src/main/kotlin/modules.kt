@@ -70,6 +70,11 @@ object Module {
     const val accountManagerData = "$accountManager:account-manager-data"
     const val accountManagerDagger = "$accountManager:account-manager-dagger"
 
+    // Crypto
+    const val crypto = ":crypto"
+    const val cryptoCommon = "$crypto:crypto-common"
+    const val cryptoAndroid = "$crypto:crypto-android"
+
     // Contacts
     const val contacts = ":contacts"
     const val contactsDomain = "$contacts:contacts-domain"

@@ -103,6 +103,8 @@ fun org.gradle.api.Project.android(
         exclude("licenses/*.TXT")
         exclude("licenses/*.xml")
         exclude("META-INF/*.txt")
+        exclude("META-INF/AL2.0")
+        exclude("META-INF/LGPL2.1")
         exclude("META-INF/plexus/*.xml")
         exclude("org/apache/maven/project/*.xml")
         exclude("org/codehaus/plexus/*.xml")

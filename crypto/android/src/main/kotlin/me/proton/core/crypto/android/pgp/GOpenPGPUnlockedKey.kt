@@ -15,36 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.crypto.android.pgp
 
-libVersion = Version(0, 2, 1)
+import com.proton.gopenpgp.crypto.Key
+import me.proton.core.crypto.common.pgp.Unarmored
+import me.proton.core.crypto.common.pgp.UnlockedKey
 
-android(minSdk = 23)
+class GOpenPGPUnlockedKey(private val unlockedKey: Key) : UnlockedKey {
 
-dependencies {
+    private val lazyValue = lazy { unlockedKey.serialize() }
 
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.data),
-        project(Module.domain),
-        project(Module.crypto),
-        project(Module.network),
-        project(Module.accountDomain),
+    override val value: Unarmored by lazyValue
 
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Other
-        `room-ktx`
-    )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    override fun close() {
+        if (lazyValue.isInitialized()) value.fill(0)
+        unlockedKey.clearPrivateParams()
+    }
 }

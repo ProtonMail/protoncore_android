@@ -47,6 +47,7 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.util.kotlin.Logger
 import javax.inject.Singleton
 
 /**
@@ -68,16 +69,23 @@ object ApplicationModule {
 
     @Provides
     @Singleton
+    fun provideLogger(): Logger =
+        CoreExampleLogger()
+
+    @Provides
+    @Singleton
     fun provideApiFactory(
         @ApplicationContext context: Context,
+        logger: Logger,
         apiClient: ApiClient,
         networkManager: NetworkManager,
         networkPrefs: NetworkPrefs,
         sessionProvider: SessionProvider,
         sessionListener: SessionListener
     ): ApiFactory = ApiFactory(
-        BASE_URL, apiClient, CoreExampleLogger(), networkManager, networkPrefs, sessionProvider, sessionListener,
-        ProtonCookieStore(context), CoroutineScope(Job() + Dispatchers.Default), emptyArray(), emptyList()
+        BASE_URL, apiClient, logger, networkManager, networkPrefs, sessionProvider, sessionListener,
+        ProtonCookieStore(context), CoroutineScope(Job() + Dispatchers.Default),
+        emptyArray(), emptyList()
     )
 
     @Provides

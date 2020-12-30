@@ -22,7 +22,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.data.entity.SessionEntity
-import me.proton.core.data.crypto.EncryptedString
+import me.proton.core.crypto.common.simple.EncryptedString
 import me.proton.core.data.db.BaseDao
 import me.proton.core.domain.entity.Product
 

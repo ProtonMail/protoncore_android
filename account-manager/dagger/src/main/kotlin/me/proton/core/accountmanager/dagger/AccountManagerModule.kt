@@ -33,8 +33,10 @@ import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.data.crypto.KeyStoreStringCrypto
-import me.proton.core.data.crypto.StringCrypto
+import me.proton.core.crypto.android.context.AndroidCryptoContext
+import me.proton.core.crypto.android.simple.KeyStoreSimpleCrypto
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.simple.SimpleCrypto
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -51,17 +53,24 @@ object AccountManagerModule {
 
     @Provides
     @Singleton
-    fun provideStringCrypto(): StringCrypto =
-        KeyStoreStringCrypto()
+    fun provideSimpleCrypto(): SimpleCrypto =
+        KeyStoreSimpleCrypto.default
+
+    @Provides
+    @Singleton
+    fun provideCryptoContext(
+        simpleCrypto: SimpleCrypto
+    ): CryptoContext =
+        AndroidCryptoContext(simpleCrypto)
 
     @Provides
     @Singleton
     fun provideAccountRepository(
         product: Product,
         accountManagerDatabase: AccountManagerDatabase,
-        stringCrypto: StringCrypto
+        simpleCrypto: SimpleCrypto
     ): AccountRepository =
-        AccountRepositoryImpl(product, accountManagerDatabase, stringCrypto)
+        AccountRepositoryImpl(product, accountManagerDatabase, simpleCrypto)
 
     @Provides
     @Singleton

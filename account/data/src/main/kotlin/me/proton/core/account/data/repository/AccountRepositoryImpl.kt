@@ -34,8 +34,8 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
-import me.proton.core.data.crypto.StringCrypto
-import me.proton.core.data.crypto.encrypt
+import me.proton.core.crypto.common.simple.encrypt
+import me.proton.core.crypto.common.simple.SimpleCrypto
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -48,7 +48,7 @@ import me.proton.core.util.kotlin.exhaustive
 class AccountRepositoryImpl(
     private val product: Product,
     private val db: AccountDatabase,
-    private val stringCrypto: StringCrypto
+    private val simpleCrypto: SimpleCrypto
 ) : AccountRepository {
 
     private val accountDao = db.accountDao()
@@ -110,16 +110,16 @@ class AccountRepositoryImpl(
 
     override fun getSessions(): Flow<List<Session>> =
         sessionDao.findAll(product).map { list ->
-            list.map { it.toSession(stringCrypto) }
+            list.map { it.toSession(simpleCrypto) }
         }.distinctUntilChanged()
 
     override fun getSession(sessionId: SessionId): Flow<Session?> =
         sessionDao.findBySessionId(sessionId.id)
-            .map { it?.toSession(stringCrypto) }
+            .map { it?.toSession(simpleCrypto) }
             .distinctUntilChanged()
 
     override suspend fun getSessionOrNull(sessionId: SessionId): Session? =
-        sessionDao.get(sessionId.id)?.toSession(stringCrypto)
+        sessionDao.get(sessionId.id)?.toSession(simpleCrypto)
 
     override suspend fun getSessionIdOrNull(userId: UserId): SessionId? =
         sessionDao.getSessionId(userId.id)?.let { SessionId(it) }
@@ -141,7 +141,7 @@ class AccountRepositoryImpl(
         // Update/raise provided state with session.
         db.inTransaction {
             val sessionState = account.sessionState ?: SessionState.Authenticated
-            sessionDao.insertOrUpdate(session.toSessionEntity(account.userId, product, stringCrypto))
+            sessionDao.insertOrUpdate(session.toSessionEntity(account.userId, product, simpleCrypto))
             accountDao.addSession(account.userId.id, session.sessionId.id)
             updateAccountState(account.userId, account.state)
             updateSessionState(session.sessionId, sessionState)
@@ -199,10 +199,10 @@ class AccountRepositoryImpl(
         sessionDao.updateScopes(sessionId.id, CommonConverters.fromListOfStringToString(scopes).orEmpty())
 
     override suspend fun updateSessionHeaders(sessionId: SessionId, tokenType: String?, tokenCode: String?) =
-        sessionDao.updateHeaders(sessionId.id, tokenType?.encrypt(stringCrypto), tokenCode?.encrypt(stringCrypto))
+        sessionDao.updateHeaders(sessionId.id, tokenType?.encrypt(simpleCrypto), tokenCode?.encrypt(simpleCrypto))
 
     override suspend fun updateSessionToken(sessionId: SessionId, accessToken: String, refreshToken: String) =
-        sessionDao.updateToken(sessionId.id, accessToken.encrypt(stringCrypto), refreshToken.encrypt(stringCrypto))
+        sessionDao.updateToken(sessionId.id, accessToken.encrypt(simpleCrypto), refreshToken.encrypt(simpleCrypto))
 
     override fun getPrimaryUserId(): Flow<UserId?> =
         accountMetadataDao.observeLatestPrimary(product).map { it?.let { UserId(it.userId) } }

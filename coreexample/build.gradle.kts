@@ -27,6 +27,7 @@ plugins {
 }
 
 android(
+    minSdk = 23,
     version = Version(0, 3, 1),
     useDataBinding = true
 )
@@ -42,14 +43,15 @@ dependencies {
         project(Module.data),
 
         // Features
-        project(Module.humanVerification),
-        project(Module.auth),
         project(Module.account),
         project(Module.accountManager),
         project(Module.accountManagerDagger),
-        project(Module.gopenpgp),
-        project(Module.domain),
+        project(Module.auth),
+        project(Module.crypto),
         project(Module.data),
+        project(Module.domain),
+        project(Module.gopenpgp),
+        project(Module.humanVerification),
 
         `kotlin-jdk7`,
         `coroutines-android`,

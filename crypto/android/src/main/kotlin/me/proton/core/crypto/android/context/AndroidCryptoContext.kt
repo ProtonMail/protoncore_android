@@ -15,36 +15,22 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.crypto.android.context
 
-libVersion = Version(0, 2, 1)
+import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
+import me.proton.core.crypto.android.simple.KeyStoreSimpleCrypto
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.PGPCrypto
+import me.proton.core.crypto.common.simple.SimpleCrypto
 
-android(minSdk = 23)
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.data),
-        project(Module.domain),
-        project(Module.crypto),
-        project(Module.network),
-        project(Module.accountDomain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Other
-        `room-ktx`
-    )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
-}
+/**
+ * [CryptoContext] for Android platform.
+ *
+ * @see KeyStoreSimpleCrypto
+ * @see GOpenPGPCrypto
+ */
+class AndroidCryptoContext(
+    override val simpleCrypto: SimpleCrypto = KeyStoreSimpleCrypto.default,
+    override val pgpCrypto: PGPCrypto = GOpenPGPCrypto()
+) : CryptoContext

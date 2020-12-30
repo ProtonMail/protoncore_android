@@ -15,36 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.crypto.common.pgp
 
-libVersion = Version(0, 2, 1)
+import java.io.Closeable
 
-android(minSdk = 23)
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.data),
-        project(Module.domain),
-        project(Module.crypto),
-        project(Module.network),
-        project(Module.accountDomain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Other
-        `room-ktx`
-    )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+/**
+ * Unlocked unarmored [ByteArray], implementing [Closeable] to clear memory after usage.
+ */
+interface UnlockedKey : Closeable {
+    val value: Unarmored
 }

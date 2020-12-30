@@ -27,7 +27,7 @@ plugins {
 
 libVersion = Version(0, 2, 0)
 
-android {
+android(minSdk = 23) {
     defaultConfig {
         javaCompileOptions {
             annotationProcessorOptions {
