@@ -41,8 +41,8 @@ fun AccountManager.onAccountState(state: AccountState, initialState: Boolean = t
  *
  * @param initialState if true (default), initial state for all accounts in this [state] will be raised on subscription.
  */
-fun AccountManager.onSessionState(state: SessionState, initialState: Boolean = true): Flow<Account> =
-    onSessionStateChanged(initialState).filter { it.sessionState == state }
+fun AccountManager.onSessionState(vararg state: SessionState, initialState: Boolean = true): Flow<Account> =
+    onSessionStateChanged(initialState).filter { state.contains(it.sessionState) }
 
 fun AccountManager.getPrimaryAccount(): Flow<Account?> =
     getPrimaryUserId().flatMapLatest { userId ->

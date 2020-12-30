@@ -93,7 +93,7 @@ class AccountManagerImpl constructor(
         accountRepository.onSessionStateChanged(initialState)
 
     override fun onHumanVerificationNeeded(): Flow<Pair<Account, HumanVerificationDetails?>> =
-        onSessionState(SessionState.HumanVerificationNeeded)
+        onSessionState(SessionState.HumanVerificationNeeded, SessionState.HumanVerificationFailed, initialState = true)
             .map { it to it.sessionId?.let { id -> accountRepository.getHumanVerificationDetails(id) } }
 
     override fun getPrimaryUserId(): Flow<UserId?> =
@@ -101,15 +101,6 @@ class AccountManagerImpl constructor(
 
     override suspend fun setAsPrimary(userId: UserId) =
         accountRepository.setAsPrimary(userId)
-
-    override fun isHumanVerificationBlockedPrimary(): Flow<Pair<Account, HumanVerificationDetails?>?> =
-        getPrimaryUserId().flatMapLatest { userId ->
-            if (userId != null) {
-                getAccount(userId).map { it!! to accountRepository.getHumanVerificationDetails(it.sessionId!!) }
-            } else {
-                flowOf(null)
-            }
-        }
 
     // region AccountWorkflowHandler
 
@@ -151,6 +142,7 @@ class AccountManagerImpl constructor(
         accountRepository.updateSessionState(sessionId, SessionState.HumanVerificationSuccess)
         accountRepository.updateHumanVerificationCompleted(sessionId)
         accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
+        accountRepository.updateAccountState(sessionId, AccountState.Ready)
     }
 
     override suspend fun handleHumanVerificationFailed(sessionId: SessionId) {

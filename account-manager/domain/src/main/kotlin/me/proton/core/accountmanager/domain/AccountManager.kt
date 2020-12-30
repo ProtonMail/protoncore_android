@@ -117,6 +117,4 @@ abstract class AccountManager(
      * @see removeAccount
      */
     abstract suspend fun setAsPrimary(userId: UserId)
-
-    abstract fun isHumanVerificationBlockedPrimary(): Flow<Pair<Account, HumanVerificationDetails?>?>
 }

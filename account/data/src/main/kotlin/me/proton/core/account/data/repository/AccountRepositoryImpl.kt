@@ -220,19 +220,16 @@ class AccountRepositoryImpl(
 
     override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails) {
         with(details) {
-            getAccountOrNull(id)?.let {
-                humanVerificationDetailsDao.insertOrIgnore(
-                    HumanVerificationDetailsEntity(
-                        userId = it.userId.id,
-                        sessionId = id.id,
-                        verificationMethods = verificationMethods.map { method ->
-                            method.value
-                        },
-                        captchaVerificationToken = captchaVerificationToken,
-                        completed = false
-                    )
+            humanVerificationDetailsDao.insertOrIgnore(
+                HumanVerificationDetailsEntity(
+                    sessionId = id.id,
+                    verificationMethods = verificationMethods.map { method ->
+                        method.value
+                    },
+                    captchaVerificationToken = captchaVerificationToken,
+                    completed = false
                 )
-            }
+            )
         }
     }
 

@@ -129,16 +129,6 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             binding.primaryAccountText.text = "Primary: ${primary?.username}"
         }.launchIn(lifecycleScope)
 
-        accountManager.isHumanVerificationBlockedPrimary().onEach { pair ->
-            pair?.let {
-                val account = it.first
-                val humandetails = it.second
-                if (listOf(SessionState.HumanVerificationNeeded, SessionState.HumanVerificationFailed).contains(account.sessionState)) {
-                    authOrchestrator.startHumanVerificationWorkflow(account.sessionId!!, humandetails)
-                }
-            }
-        }.launchIn(lifecycleScope)
-
         accountManager.getAccounts().onEach { accounts ->
             if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow(AccountType.Internal)
 
@@ -210,6 +200,8 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
             .onSessionHumanVerificationFailed {
                 Timber.d("onSessionHumanVerificationFailed -> $it")
+                // on failed human verification, we do not allow the user to have any interaction with the application.
+                finish()
             }
 
         // Api Call every 10sec (e.g. to test ForceLogout). - commeted for now, move it into another activity

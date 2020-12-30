@@ -54,6 +54,7 @@ class SessionManagerImpl(
         details: HumanVerificationDetails
     ): SessionListener.HumanVerificationResult {
         accountRepository.setHumanVerificationDetails(session.sessionId, details)
+        accountRepository.updateAccountState(session.sessionId, AccountState.NotReady)
         accountRepository.updateSessionState(session.sessionId, SessionState.HumanVerificationNeeded)
 
         // Wait for HumanVerification Success or Failure.

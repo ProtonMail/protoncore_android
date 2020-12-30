@@ -28,21 +28,19 @@ import me.proton.core.network.domain.humanverification.VerificationMethod
  * @author Dino Kadrikj.
  */
 @Entity(
-    primaryKeys = ["userId"],
+    primaryKeys = ["sessionId"],
     indices = [
-        Index("sessionId"),
-        Index("userId")
+        Index("sessionId")
     ],
     foreignKeys = [
         ForeignKey(
-            entity = AccountEntity::class,
-            parentColumns = ["userId"],
-            childColumns = ["userId"]
+            entity = SessionEntity::class,
+            parentColumns = ["sessionId"],
+            childColumns = ["sessionId"]
         )
     ]
 )
 data class HumanVerificationDetailsEntity(
-    val userId: String,
     val sessionId: String,
     val verificationMethods: List<String>,
     val captchaVerificationToken: String? = null,

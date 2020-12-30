@@ -29,6 +29,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.account.data.db.AccountDao
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.db.AccountMetadataDao
+import me.proton.core.account.data.db.HumanVerificationDetailsDao
 import me.proton.core.account.data.db.SessionDao
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.SessionEntity
@@ -59,6 +60,9 @@ class AccountRepositoryImplTest {
 
     @RelaxedMockK
     private lateinit var metadataDao: AccountMetadataDao
+
+    @RelaxedMockK
+    private lateinit var humanVerificationDao: HumanVerificationDetailsDao
 
     private val account1 = AccountEntity(
         userId = "user1",
@@ -116,6 +120,7 @@ class AccountRepositoryImplTest {
         every { db.accountDao() } returns accountDao
         every { db.sessionDao() } returns sessionDao
         every { db.accountMetadataDao() } returns metadataDao
+        every { db.humanVerificationDetailsDao() } returns humanVerificationDao
 
         mockkStatic("androidx.room.RoomDatabaseKt")
         val transactionLambda = slot<suspend () -> Unit>()
