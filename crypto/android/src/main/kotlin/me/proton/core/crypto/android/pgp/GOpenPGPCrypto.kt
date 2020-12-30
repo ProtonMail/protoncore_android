@@ -52,9 +52,28 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
+    private fun <R> List<CloseableUnlockedKey>.use(block: (List<CloseableUnlockedKey>) -> R): R {
+        try {
+            return block(this)
+        } finally {
+            forEach { it.close() }
+        }
+    }
+
     private fun newKey(key: Unarmored) = CloseableUnlockedKey(Crypto.newKey(key))
-    private fun newKeyRing(key: CloseableUnlockedKey) = CloseableUnlockedKeyRing(Crypto.newKeyRing(key.value))
-    private fun newKeyRing(key: Armored) = Crypto.newKeyRing(Crypto.newKeyFromArmored(key))
+    private fun newKeys(keys: List<Unarmored>) = keys.map { newKey(it) }
+
+    private fun newKeyRing(key: CloseableUnlockedKey) =
+        CloseableUnlockedKeyRing(Crypto.newKeyRing(key.value))
+
+    private fun newKeyRing(keys: List<CloseableUnlockedKey>) =
+        CloseableUnlockedKeyRing(Crypto.newKeyRing(null).apply { keys.forEach { addKey(it.value) } })
+
+    private fun newKeyRing(key: Armored) =
+        Crypto.newKeyRing(Crypto.newKeyFromArmored(key))
+
+    private fun newKeyRing(keys: List<Armored>) =
+        Crypto.newKeyRing(null).apply { keys.map { Crypto.newKeyFromArmored(it) }.forEach { addKey(it) } }
 
     override fun lock(
         unlockedKey: Unarmored,
@@ -187,15 +206,15 @@ class GOpenPGPCrypto : PGPCrypto {
     ): EncryptedMessage = encryptAndSign(PlainMessage(data), publicKey, unlockedKey)
 
     private inline fun <T> decryptAndVerify(
-        message: EncryptedMessage,
-        publicKey: Armored,
-        unlockedKey: Unarmored,
-        block: (PlainMessage) -> T
+        msg: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>,
+        crossinline block: (PlainMessage) -> T
     ): T {
-        val pgpMessage = Crypto.newPGPMessageFromArmored(message)
-        val publicKeyRing = newKeyRing(publicKey)
-        return newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
+        val pgpMessage = Crypto.newPGPMessageFromArmored(msg)
+        val publicKeyRing = newKeyRing(publicKeys)
+        return newKeys(unlockedKeys).use { keys ->
+            newKeyRing(keys).use { keyRing ->
                 block(keyRing.value.decrypt(pgpMessage, publicKeyRing, Crypto.getUnixTime()))
             }
         }
@@ -203,15 +222,15 @@ class GOpenPGPCrypto : PGPCrypto {
 
     override fun decryptAndVerifyText(
         message: EncryptedMessage,
-        publicKey: Armored,
-        unlockedKey: Unarmored
-    ): String = decryptAndVerify(message, publicKey, unlockedKey) { it.string }
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>
+    ): String = decryptAndVerify(message, publicKeys, unlockedKeys) { it.string }
 
     override fun decryptAndVerifyData(
         message: EncryptedMessage,
-        publicKey: Armored,
-        unlockedKey: Unarmored
-    ): ByteArray = decryptAndVerify(message, publicKey, unlockedKey) { it.binary }
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>
+    ): ByteArray = decryptAndVerify(message, publicKeys, unlockedKeys) { it.binary }
 
     override fun getPublicKey(
         privateKey: Armored

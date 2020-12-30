@@ -68,8 +68,6 @@ interface PGPCrypto {
      *
      * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
      *
-     * @throws [Throwable] if [plainText] cannot be verified.
-     *
      * @see [signText]
      */
     fun verifyText(plainText: String, signature: Armored, publicKey: Armored, validAtUtc: Long): Boolean
@@ -79,9 +77,7 @@ interface PGPCrypto {
      *
      * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
      *
-     * @throws [Throwable] if [data] cannot be verified.
-     *
-     * @see signData
+     * @see [signData]
      */
     fun verifyData(data: ByteArray, signature: Armored, publicKey: Armored, validAtUtc: Long): Boolean
 
@@ -92,7 +88,7 @@ interface PGPCrypto {
      *
      * @throws [Throwable] if [message] cannot be decrypted.
      *
-     * @see encryptText
+     * @see [encryptText]
      */
     fun decryptText(message: EncryptedMessage, unlockedKey: Unarmored): String
 
@@ -101,7 +97,7 @@ interface PGPCrypto {
      *
      * @throws [Throwable] if [message] cannot be decrypted.
      *
-     * @see encryptData
+     * @see [encryptData]
      */
     fun decryptData(message: EncryptedMessage, unlockedKey: Unarmored): ByteArray
 
@@ -142,24 +138,32 @@ interface PGPCrypto {
     fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
 
     /**
-     * Decrypt [message] as [String] using [unlockedKey] and verify using [publicKey].
+     * Decrypt [message] as [String] using [unlockedKeys] and verify using [publicKeys].
      *
      * Note: String canonicalization/standardization is applied.
      *
      * @throws [Throwable] if [message] cannot be decrypted or verified.
      *
-     * @see encryptAndSignText
+     * @see [encryptAndSignText]
      */
-    fun decryptAndVerifyText(message: EncryptedMessage, publicKey: Armored, unlockedKey: Unarmored): String
+    fun decryptAndVerifyText(
+        message: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>
+    ): String
 
     /**
-     * Decrypt [message] as [ByteArray] using [unlockedKey] and verify using [publicKey].
+     * Decrypt [message] as [ByteArray] using [unlockedKeys] and verify using [publicKeys].
      *
      * @throws [Throwable] if [message] cannot be decrypted or verified.
      *
-     * @see encryptAndSignData
+     * @see [encryptAndSignData]
      */
-    fun decryptAndVerifyData(message: EncryptedMessage, publicKey: Armored, unlockedKey: Unarmored): ByteArray
+    fun decryptAndVerifyData(
+        message: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>
+    ): ByteArray
 
     /**
      * Get [Armored] public key from [privateKey].
