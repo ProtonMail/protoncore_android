@@ -27,7 +27,7 @@ plugins {
 
 //libVersion = Version(0, 1, 0)
 
-android()
+android(minSdk = 23)
 
 dependencies {
     implementation(
@@ -55,6 +55,13 @@ dependencies {
         `store4`
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    androidTestImplementation(
+        project(Module.androidInstrumentedTest),
+        project(Module.domain),
+        project(Module.auth),
+        project(Module.account),
+        project(Module.accountManager),
+        project(Module.cryptoAndroid),
+        project(Module.gopenpgp)
+    )
 }

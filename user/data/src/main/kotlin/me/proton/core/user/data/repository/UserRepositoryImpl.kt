@@ -94,7 +94,10 @@ class UserRepositoryImpl(
     // region PassphraseRepository
 
     override suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray) =
-        userDao.setPassphrase(userId.id, passphrase)
+        db.inTransaction {
+            requireNotNull(userDao.getByUserId(userId.id)) { "Cannot set passphrase, User doesn't exist in DB." }
+            userDao.setPassphrase(userId.id, passphrase)
+        }
 
     override suspend fun getPassphrase(userId: UserId): EncryptedByteArray? =
         userDao.getPassphrase(userId.id)

@@ -47,6 +47,8 @@ dependencies {
         project(Module.accountManagerDomain),
         project(Module.accountManagerPresentation),
         project(Module.authDomain),
+        project(Module.user),
+        project(Module.key),
 
         // Android
         `android-ktx`,

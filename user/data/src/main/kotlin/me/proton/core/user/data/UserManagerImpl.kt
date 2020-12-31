@@ -20,8 +20,8 @@ package me.proton.core.user.data
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.simple.PlainByteArray
 import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.crypto.common.simple.PlainByteArray
 import me.proton.core.crypto.common.simple.encrypt
 import me.proton.core.crypto.common.simple.use
 import me.proton.core.domain.arch.DataResult
@@ -94,7 +94,6 @@ class UserManagerImpl(
             return Error.PrimaryKeyInvalidPassphrase
         }
 
-        userRepository.createOrUpdateUserLocal(user)
         passphraseRepository.setPassphrase(userId, passphrase)
         return Success
     }

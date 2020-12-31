@@ -16,23 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.session
+package me.proton.core.user.data
 
-import me.proton.core.domain.entity.UserId
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.domain.ApiManager
+import me.proton.core.network.domain.ApiResult
 
-interface SessionProvider {
-    /**
-     * Get [Session], if exist, by sessionId.
-     */
-    suspend fun getSession(sessionId: SessionId): Session?
-
-    /**
-     * Get [SessionId], if exist, by userId.
-     */
-    suspend fun getSessionId(userId: UserId): SessionId?
-
-    /**
-     * Get [UserId], if exist, by sessionId.
-     */
-    suspend fun getUserId(sessionId: SessionId): UserId?
+class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<Api> {
+    override suspend fun <T> invoke(
+        forceNoRetryOnConnectionErrors: Boolean,
+        block: suspend Api.() -> T
+    ): ApiResult<T> = ApiResult.Success(block.invoke(api))
 }

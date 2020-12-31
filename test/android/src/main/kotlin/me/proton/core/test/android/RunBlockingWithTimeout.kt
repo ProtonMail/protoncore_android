@@ -16,23 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.session
+package me.proton.core.test.android
 
-import me.proton.core.domain.entity.UserId
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 
-interface SessionProvider {
-    /**
-     * Get [Session], if exist, by sessionId.
-     */
-    suspend fun getSession(sessionId: SessionId): Session?
-
-    /**
-     * Get [SessionId], if exist, by userId.
-     */
-    suspend fun getSessionId(userId: UserId): SessionId?
-
-    /**
-     * Get [UserId], if exist, by sessionId.
-     */
-    suspend fun getUserId(sessionId: SessionId): UserId?
-}
+/**
+ * Runs a new coroutine and **blocks** the current thread until its completion, or if the [timeout][timeMillis]
+ * was exceeded, throws a [TimeoutCancellationException].
+ */
+fun <T> runBlockingWithTimeout(timeMillis: Long = 10_000, block: suspend CoroutineScope.() -> T): T =
+    runBlocking {
+        withTimeout(timeMillis) {
+            block(this)
+        }
+    }

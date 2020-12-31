@@ -51,7 +51,7 @@ internal fun initVersions() {
     `dagger version` =                          "2.28"          // Released: May 04, 2018
     `hilt-android version` =                    "2.28-alpha"    // Released: Jun 10, 2020
     `hilt-androidx version` =                   "1.0.0-alpha01" // Released: Jun 12, 2020
-    `mockK version` =                           "1.10.2"        // Released: Sep 27, 2020
+    `mockK version` =                           "1.10.4"        // Released: Dec 28, 2020
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.8.0"         // Released: Oct 09, 2020
     `timber version` =                          "4.7.1"         // Released:

@@ -19,8 +19,6 @@
 package me.proton.core.accountmanager.data
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
