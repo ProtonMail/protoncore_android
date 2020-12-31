@@ -37,6 +37,7 @@ val DependencyHandler.`lint-api` get() = lint("api")
 val DependencyHandler.`lint-checks` get() = lint("checks")
 val DependencyHandler.`lint-tests` get() = lint("tests")
 val DependencyHandler.`okHttp-logging` get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp version`
+val DependencyHandler.`store4` get() = dependency("com.dropbox.mobile.store", module = "store4") version `store4 version`
 
 // region accessors
 fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =

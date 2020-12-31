@@ -121,27 +121,32 @@ fun PGPCrypto.encryptAndSignDataOrNull(
 ): EncryptedMessage? = runCatching { encryptAndSignData(data, publicKey, unlockedKey) }.getOrNull()
 
 /**
- * @return [String], or `null` if [message] cannot be decrypted and verified.
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @return [DecryptedText], or `null` if [message] cannot be decrypted.
  *
  * @see [PGPCrypto.decryptAndVerifyText]
  */
 fun PGPCrypto.decryptAndVerifyTextOrNull(
     message: EncryptedMessage,
     publicKeys: List<Armored>,
-    unlockedKeys: List<Unarmored>
-): String? = runCatching { decryptAndVerifyText(message, publicKeys, unlockedKeys) }.getOrNull()
+    unlockedKeys: List<Unarmored>,
+    validAtUtc: Long = 0
+): DecryptedText? = runCatching { decryptAndVerifyText(message, publicKeys, unlockedKeys, validAtUtc) }.getOrNull()
 
 /**
- * @return [ByteArray], or `null` if [message] cannot be decrypted and verified.
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @return [DecryptedData], or `null` if [message] cannot be decrypted.
  *
  * @see [PGPCrypto.decryptAndVerifyData]
  */
 fun PGPCrypto.decryptAndVerifyDataOrNull(
     message: EncryptedMessage,
     publicKeys: List<Armored>,
-    unlockedKeys: List<Unarmored>
-): ByteArray? = runCatching { decryptAndVerifyData(message, publicKeys, unlockedKeys) }.getOrNull()
-
+    unlockedKeys: List<Unarmored>,
+    validAtUtc: Long = 0
+): DecryptedData? = runCatching { decryptAndVerifyData(message, publicKeys, unlockedKeys, validAtUtc) }.getOrNull()
 
 /**
  * @return [Armored] public key, or `null` if public key cannot be extracted from [privateKey].

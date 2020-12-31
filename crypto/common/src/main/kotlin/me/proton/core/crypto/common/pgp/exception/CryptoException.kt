@@ -24,7 +24,7 @@ package me.proton.core.crypto.common.pgp.exception
  * This is a generic exception type that can be thrown during the problem at any stage of the Cryptographic process,
  * including encrypting, decrypting, signing or verifying.
  */
-open class CryptoException : Throwable {
+open class CryptoException : Exception {
     /**
      * Creates an instance of [CryptoException] without any details.
      */

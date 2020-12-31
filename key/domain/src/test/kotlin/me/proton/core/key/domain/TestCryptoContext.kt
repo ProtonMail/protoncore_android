@@ -20,11 +20,14 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.DecryptedData
+import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
+import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.simple.EncryptedByteArray
 import me.proton.core.crypto.common.simple.EncryptedString
 import me.proton.core.crypto.common.simple.PlainByteArray
@@ -142,20 +145,28 @@ class TestCryptoContext : CryptoContext {
         override fun decryptAndVerifyText(
             message: EncryptedMessage,
             publicKeys: List<Armored>,
-            unlockedKeys: List<Unarmored>
-        ): String = message.decryptMessage(unlockedKeys.first()).let {
-            check(it.startsWith("TEXT"))
-            it.extractMessage()
-        }
+            unlockedKeys: List<Unarmored>,
+            validAtUtc: Long
+        ): DecryptedText = DecryptedText(
+            message.decryptMessage(unlockedKeys.first()).let {
+                check(it.startsWith("TEXT"))
+                it.extractMessage()
+            },
+            VerificationStatus.Success
+        )
 
         override fun decryptAndVerifyData(
             message: EncryptedMessage,
             publicKeys: List<Armored>,
-            unlockedKeys: List<Unarmored>
-        ): ByteArray = message.decryptMessage(unlockedKeys.first()).let {
-            check(it.startsWith("BINARY"))
-            it.extractMessage().toByteArray()
-        }
+            unlockedKeys: List<Unarmored>,
+            validAtUtc: Long
+        ): DecryptedData = DecryptedData(
+            message.decryptMessage(unlockedKeys.first()).let {
+                check(it.startsWith("BINARY"))
+                it.extractMessage().toByteArray()
+            },
+            VerificationStatus.Success
+        )
 
         override fun getPublicKey(privateKey: Armored): Armored = privateKey
 

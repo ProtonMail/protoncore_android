@@ -18,14 +18,17 @@
 
 package me.proton.core.key.domain.repository
 
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PrivateKeySalt
 
 interface KeySaltRepository {
     /**
-     * Get [PrivateKeySalt] list, by [userId].
+     * Get [PrivateKeySalt] list, using [sessionUserId].
+     *
+     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
      */
-    suspend fun getKeySalts(userId: UserId): List<PrivateKeySalt>
+    suspend fun getKeySalts(sessionUserId: SessionUserId, refresh: Boolean = true): List<PrivateKeySalt>
 
     /**
      * Clear all persisted [PrivateKeySalt], by [userId].

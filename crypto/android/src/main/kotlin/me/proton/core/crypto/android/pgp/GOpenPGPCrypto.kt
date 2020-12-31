@@ -26,7 +26,11 @@ import com.proton.gopenpgp.crypto.Key
 import com.proton.gopenpgp.crypto.KeyRing
 import com.proton.gopenpgp.crypto.PGPSignature
 import com.proton.gopenpgp.crypto.PlainMessage
+import com.proton.gopenpgp.helper.ExplicitVerifyMessage
+import com.proton.gopenpgp.helper.Helper
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.DecryptedData
+import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.Signature
@@ -226,13 +230,14 @@ class GOpenPGPCrypto : PGPCrypto {
         msg: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        crossinline block: (PlainMessage) -> T
+        validAtUtc: Long,
+        crossinline block: (ExplicitVerifyMessage) -> T
     ): T {
         val pgpMessage = Crypto.newPGPMessageFromArmored(msg)
         val publicKeyRing = newKeyRing(publicKeys)
         return newKeys(unlockedKeys).use { keys ->
             newKeyRing(keys).use { keyRing ->
-                block(keyRing.value.decrypt(pgpMessage, publicKeyRing, Crypto.getUnixTime()))
+                block(Helper.decryptExplicitVerify(pgpMessage, keyRing.value, publicKeyRing, validAtUtc))
             }
         }
     }
@@ -240,18 +245,30 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun decryptAndVerifyText(
         message: EncryptedMessage,
         publicKeys: List<Armored>,
-        unlockedKeys: List<Unarmored>
-    ): String = runCatching {
-        decryptAndVerify(message, publicKeys, unlockedKeys) { it.string }
-    }.getOrElse { throw CryptoException("Message cannot be decrypted or verified.", it) }
+        unlockedKeys: List<Unarmored>,
+        validAtUtc: Long,
+    ): DecryptedText = runCatching {
+        decryptAndVerify(message, publicKeys, unlockedKeys, validAtUtc) {
+            DecryptedText(
+                it.message.string,
+                it.signatureVerificationError.toVerificationStatus()
+            )
+        }
+    }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
     override fun decryptAndVerifyData(
         message: EncryptedMessage,
         publicKeys: List<Armored>,
-        unlockedKeys: List<Unarmored>
-    ): ByteArray = runCatching {
-        decryptAndVerify(message, publicKeys, unlockedKeys) { it.binary }
-    }.getOrElse { throw CryptoException("Message cannot be decrypted or verified.", it) }
+        unlockedKeys: List<Unarmored>,
+        validAtUtc: Long,
+    ): DecryptedData = runCatching {
+        decryptAndVerify(message, publicKeys, unlockedKeys, validAtUtc) {
+            DecryptedData(
+                it.message.binary,
+                it.signatureVerificationError.toVerificationStatus()
+            )
+        }
+    }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
     override fun getPublicKey(
         privateKey: Armored
