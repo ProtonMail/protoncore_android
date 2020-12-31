@@ -16,20 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.core.user.domain.extension
 
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.user.domain.entity.UserAddressKey
 
-data class PrivateKey(
-    val key: Armored,
-    val isPrimary: Boolean,
-    internal val passphrase: EncryptedByteArray?
-) {
-    /**
-     * True if no passphrase is associated, thereby only public crypto functions are available.
-     *
-     * False if a passphrase is associated, thereby public and private crypto functions are available.
-     */
-    val isLocked = passphrase == null
-}
+private const val MASK_CAN_VERIFY_SIGNATURE = 1 // 01
+private const val MASK_CAN_ENCRYPT_VALUE = 2 // 10
+
+fun UserAddressKey.canEncrypt(): Boolean = flags.and(MASK_CAN_ENCRYPT_VALUE) == MASK_CAN_ENCRYPT_VALUE
+fun UserAddressKey.canVerifySignature(): Boolean = flags.and(MASK_CAN_VERIFY_SIGNATURE) == MASK_CAN_VERIFY_SIGNATURE

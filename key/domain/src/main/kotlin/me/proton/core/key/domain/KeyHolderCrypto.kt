@@ -36,6 +36,18 @@ import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
  * Executes the given [block] function for a [KeyHolder] on a [KeyHolderContext] and then close any associated
  * key resources whether an exception is thrown or not.
  *
+ * Example:
+ * ```
+ * keyholder.useKeys(context) {
+ *     val text = "text"
+ *
+ *     val encryptedText = encryptText(text)
+ *     val signedText = signText(text)
+ *
+ *     val decryptedText = decryptText(encryptedText)
+ *     val isVerified = verifyText(decryptedText, signedText)
+ * }
+ * ```
  * @param context [CryptoContext] providing any needed dependencies for Crypto functions.
  * @param block a function allowing usage of [KeyHolderContext] extension functions.
  * @return the result of [block] function invoked on this [KeyHolder].
