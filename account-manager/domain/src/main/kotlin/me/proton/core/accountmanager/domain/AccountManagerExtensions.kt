@@ -33,8 +33,8 @@ import me.proton.core.account.domain.entity.SessionState
  *
  * @param initialState if true (default), initial state for all accounts in this [state] will be raised on subscription.
  */
-fun AccountManager.onAccountState(state: AccountState, initialState: Boolean = true): Flow<Account> =
-    onAccountStateChanged(initialState).filter { it.state == state }
+fun AccountManager.onAccountState(vararg state: AccountState, initialState: Boolean = true): Flow<Account> =
+    onAccountStateChanged(initialState).filter { state.contains(it.state) }
 
 /**
  * Flow of Account where [Account.sessionState] equals [state].

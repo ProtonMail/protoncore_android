@@ -22,33 +22,17 @@ import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.data.db.BaseDao
 
 @Dao
 abstract class HumanVerificationDetailsDao : BaseDao<HumanVerificationDetailsEntity>() {
 
-    @Query("SELECT * FROM HumanVerificationDetailsEntity")
-    abstract fun findAll(): Flow<List<HumanVerificationDetailsEntity>>
-
     @Query("SELECT * FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId")
     abstract fun findBySessionId(sessionId: String): Flow<HumanVerificationDetailsEntity?>
-
-    @Query("SELECT * FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId AND completed = :completed")
-    abstract fun findBySessionIdAndStatus(sessionId: String, completed: Boolean): Flow<HumanVerificationDetailsEntity?>
 
     @Query("SELECT * FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId")
     abstract suspend fun getBySessionId(sessionId: String): HumanVerificationDetailsEntity?
 
-    @Query("SELECT * FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId AND completed = :completed")
-    abstract suspend fun getBySessionIdAndStatus(sessionId: String, completed: Boolean): HumanVerificationDetailsEntity?
-
-    @Query("UPDATE HumanVerificationDetailsEntity SET completed = :completed WHERE sessionId = :sessionId")
-    abstract suspend fun updateHumanVerificationStatus(sessionId: String, completed: Boolean)
-
     @Query("DELETE FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId")
     abstract suspend fun delete(sessionId: String)
-
-    @Query("DELETE FROM HumanVerificationDetailsEntity")
-    abstract suspend fun deleteAll()
 }

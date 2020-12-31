@@ -43,13 +43,10 @@ import me.proton.core.network.domain.humanverification.VerificationMethod
 data class HumanVerificationDetailsEntity(
     val sessionId: String,
     val verificationMethods: List<String>,
-    val captchaVerificationToken: String? = null,
-    val completed: Boolean = false
+    val captchaVerificationToken: String? = null
 ) {
     fun toHumanVerificationDetails() = HumanVerificationDetails(
-        verificationMethods = verificationMethods.map {
-            VerificationMethod.getByValue(it)
-        },
+        verificationMethods = verificationMethods.map { VerificationMethod.getByValue(it) },
         captchaVerificationToken = captchaVerificationToken
     )
 }

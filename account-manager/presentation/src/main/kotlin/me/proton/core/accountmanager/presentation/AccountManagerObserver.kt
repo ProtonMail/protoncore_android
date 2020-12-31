@@ -35,7 +35,7 @@ class AccountManagerObserver(
 ) {
 
     internal fun addAccountStateListener(state: AccountState, initialState: Boolean, block: suspend (Account) -> Unit) {
-        accountManager.onAccountState(state, initialState).onEach {
+        accountManager.onAccountState(state, initialState = initialState).onEach {
             // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
             scope.launch { block(it) }
         }.launchIn(scope)

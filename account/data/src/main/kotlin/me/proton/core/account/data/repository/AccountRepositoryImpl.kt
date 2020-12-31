@@ -215,28 +215,24 @@ class AccountRepositoryImpl(
     }
 
     override suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails? {
-        return humanVerificationDetailsDao.getBySessionIdAndStatus(id.id, false)?.toHumanVerificationDetails()
+        return humanVerificationDetailsDao.getBySessionId(id.id)?.toHumanVerificationDetails()
     }
 
     override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails) {
         with(details) {
-            humanVerificationDetailsDao.insertOrIgnore(
+            humanVerificationDetailsDao.insertOrUpdate(
                 HumanVerificationDetailsEntity(
                     sessionId = id.id,
                     verificationMethods = verificationMethods.map { method ->
                         method.value
                     },
-                    captchaVerificationToken = captchaVerificationToken,
-                    completed = false
+                    captchaVerificationToken = captchaVerificationToken
                 )
             )
         }
     }
 
-    /**
-     * Marks the human verification details as completed (successfully).
-     */
     override suspend fun updateHumanVerificationCompleted(id: SessionId) {
-        humanVerificationDetailsDao.updateHumanVerificationStatus(id.id, true)
+        humanVerificationDetailsDao.delete(sessionId = id.id)
     }
 }

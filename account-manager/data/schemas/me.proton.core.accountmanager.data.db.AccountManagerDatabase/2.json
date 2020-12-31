@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "92feef0ef52ecf835fb3370cf51cc4c9",
+    "identityHash": "8f2d47a37e6885b56fbe15a475139c47",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -246,7 +246,7 @@
       },
       {
         "tableName": "HumanVerificationDetailsEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sessionId` TEXT NOT NULL, `verificationMethods` TEXT NOT NULL, `captchaVerificationToken` TEXT, `completed` INTEGER NOT NULL, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sessionId` TEXT NOT NULL, `verificationMethods` TEXT NOT NULL, `captchaVerificationToken` TEXT, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "sessionId",
@@ -265,12 +265,6 @@
             "columnName": "captchaVerificationToken",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "completed",
-            "columnName": "completed",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
@@ -307,7 +301,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '92feef0ef52ecf835fb3370cf51cc4c9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8f2d47a37e6885b56fbe15a475139c47')"
     ]
   }
 }

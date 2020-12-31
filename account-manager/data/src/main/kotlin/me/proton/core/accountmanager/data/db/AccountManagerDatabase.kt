@@ -56,7 +56,6 @@ abstract class AccountManagerDatabase :
             return Room
                 .databaseBuilder(context, AccountManagerDatabase::class.java, "db-account-manager")
                 .addMigrations(MIGRATION_1_2)
-                .fallbackToDestructiveMigration()
                 .build()
         }
     }
