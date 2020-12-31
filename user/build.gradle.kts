@@ -30,7 +30,7 @@ android()
 dependencies {
     api(
         //project(Module.userPresentation),
-        project(Module.userDomain)
-        //project(Module.userData)
+        project(Module.userDomain),
+        project(Module.userData)
     )
 }

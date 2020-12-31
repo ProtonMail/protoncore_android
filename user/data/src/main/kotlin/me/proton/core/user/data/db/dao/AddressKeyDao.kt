@@ -15,33 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.user.data.db.dao
 
-libVersion = Version(0, 2, 2)
+import androidx.room.Dao
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.data.db.BaseDao
+import me.proton.core.user.data.entity.AddressKeyEntity
 
-android()
+@Dao
+abstract class AddressKeyDao : BaseDao<AddressKeyEntity>() {
 
-dependencies {
+    @Query("SELECT * FROM AddressKeyEntity WHERE addressId = :addressId")
+    abstract fun findAllByAddressId(addressId: String): Flow<List<AddressKeyEntity>>
 
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        project(Module.domain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Android
-        `room-ktx`,
-        `store4`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+    @Query("SELECT * FROM AddressKeyEntity WHERE addressId = :addressId")
+    abstract suspend fun getAllByAddressId(addressId: String): List<AddressKeyEntity>
 }
