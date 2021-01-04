@@ -101,11 +101,11 @@ Data: **0.1.2** - _released on: Nov 12, 2020_
 
 ### Network
 
-Network: **0.4.4** - _released on: Dec 23, 2020_
+Network: **0.4.5** - _released on: Jan 04, 2021_
 
-Network Domain: **0.4.4** - _released on: Dec 23, 2020_
+Network Domain: **0.4.5** - _released on: Jan 04, 2021_
 
-Network Data: **0.4.4** - _released on: Dec 23, 2020_
+Network Data: **0.4.5** - _released on: Jan 04, 2021_
 
 ### Crypto
 
@@ -119,36 +119,36 @@ Crypto Data: **0** - _released on: ND_
 
 ### Auth
 
-Auth: **0.2.8** - _released on: Dec 22, 2020_
+Auth: **0.2.9** - _released on: Jan 04, 2021_
 
-Auth Domain: **0.2.8** - _released on: Dec 22, 2020_
+Auth Domain: **0.2.9** - _released on: Jan 04, 2021_
 
-Auth Presentation: **0.2.8** - _released on: Dec 22, 2020_
+Auth Presentation: **0.2.9** - _released on: Jan 04, 2021_
 
-Auth Data: **0.2.8** - _released on: Dec 22, 2020_
+Auth Data: **0.2.9** - _released on: Jan 04, 2021_
 
 ### Account
 
-Account: **0.1.3** - _released on: Nov 18, 2020_
+Account: **0.1.4** - _released on: Jan 04, 2021_
 
-Account Domain: **0.1.3** - _released on: Nov 18, 2020_
+Account Domain: **0.1.4** - _released on: Jan 04, 2021_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **0.1.3** - _released on: Nov 18, 2020_
+Account Data: **0.1.4** - _released on: Jan 04, 2021_
 
 
 ### Account Manager
 
-Account Manager: **0.1.5** - _released on: Dec 22, 2020_
+Account Manager: **0.1.6** - _released on: Jan 04, 2021_
 
-Account Manager Domain: **0.1.5** - _released on: Dec 22, 2020_
+Account Manager Domain: **0.1.6** - _released on: Jan 04, 2021_
 
-Account Manager Presentation: **0.1.5** - _released on: Dec 22, 2020_
+Account Manager Presentation: **0.1.6** - _released on: Jan 04, 2021_
 
-Account Manager Data: **0.1.5** - _released on: Dec 22, 2020_
+Account Manager Data: **0.1.6** - _released on: Jan 04, 2021_
 
-Account Manager Dagger: **0.1.5** - _released on: Dec 22, 2020_
+Account Manager Dagger: **0.1.6** - _released on: Jan 04, 2021_
 
 ### Contacts
 
@@ -173,10 +173,10 @@ Settings Data: **0** - _released on: ND_
 
 ### Human Verification
 
-Human Verification: **0.2.4** - _released on: Nov 18, 2020_
+Human Verification: **0.2.5** - _released on: Jan 04, 2021_
 
 Human Verification Domain: **0.2.3** - _released on: Nov 12, 2020_
 
-Human Verification Presentation: **0.2.4** - _released on: Nov 18, 2020_
+Human Verification Presentation: **0.2.5** - _released on: Jan 04, 2021_
 
 Human Verification Data: **0.2.3** - _released on: Nov 12, 2020_
