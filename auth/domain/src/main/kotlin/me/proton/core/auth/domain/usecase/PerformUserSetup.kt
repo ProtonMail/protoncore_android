@@ -25,20 +25,20 @@ import kotlinx.coroutines.flow.flow
 import me.proton.core.auth.domain.crypto.CryptoProvider
 import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.simple.use
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.extension.onEachInstance
 import me.proton.core.domain.arch.onFailure
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 /**
  * Performs user setup (user, address and passphrase generation and validation).
- *
- * @param authRepository mandatory authentication repository interface for contacting the api.
- * @param cryptoProvider the crypto provider interface for generation and validation of the passphrase.
- * @author Dino Kadrikj.
  */
 class PerformUserSetup @Inject constructor(
+    private val userManager: UserManager,
     private val authRepository: AuthRepository,
     private val cryptoProvider: CryptoProvider
 ) {
@@ -121,6 +121,12 @@ class PerformUserSetup @Inject constructor(
         if (!cryptoProvider.passphraseCanUnlockKey(user.primaryKey.privateKey, passphrase)) {
             emit(State.Error.PrimaryKeyInvalidPassphrase)
             return@flow
+        }
+
+        // TODO: Remove this temporary workaround.
+        // TODO: Change password parameter to PlainByteArray.
+        password.use {
+            userManager.unlockWithPassword(UserId(user.id), it, refresh = true)
         }
 
         emit(State.Success(user.copy(passphrase = passphrase, addresses = addresses)))

@@ -33,9 +33,12 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
         project(Module.networkDomain),
+        project(Module.cryptoCommon),
 
         // Features
         project(Module.accountDomain),
+        project(Module.userDomain),
+        project(Module.keyDomain),
 
         // Kotlin
         `kotlin-jdk8`,

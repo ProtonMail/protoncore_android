@@ -46,6 +46,8 @@ dependencies {
         project(Module.accountDomain),
         project(Module.humanVerificationDomain),
         project(Module.humanVerificationPresentation),
+        project(Module.userDomain),
+        project(Module.keyDomain),
 
         // Kotlin
         `kotlin-jdk7`,

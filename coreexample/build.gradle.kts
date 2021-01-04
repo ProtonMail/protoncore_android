@@ -52,6 +52,8 @@ dependencies {
         project(Module.domain),
         project(Module.gopenpgp),
         project(Module.humanVerification),
+        project(Module.key),
+        project(Module.user),
 
         `kotlin-jdk7`,
         `coroutines-android`,

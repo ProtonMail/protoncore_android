@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample
+package me.proton.android.core.coreexample.di
 
 import android.content.Context
 import dagger.Module
@@ -29,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import me.proton.android.core.coreexample.Constants.BASE_URL
 import me.proton.android.core.coreexample.api.CoreExampleRepository
+import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository

@@ -22,6 +22,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,9 @@ import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
+import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
+import me.proton.android.core.coreexample.viewmodel.UserAddressKeyViewModel
+import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
@@ -78,6 +82,10 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
     @Inject
     lateinit var coreExampleRepository: CoreExampleRepository
+
+    private val userKeyViewModel: UserKeyViewModel by viewModels()
+    private val userAddressKeyViewModel: UserAddressKeyViewModel by viewModels()
+    private val publicAddressViewModel: PublicAddressViewModel by viewModels()
 
     override fun layoutId(): Int = R.layout.activity_main
 
@@ -221,5 +229,19 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 //                }
             }
         }
+//            }
+//        }
+
+        userKeyViewModel.getUserKeyState().onEach { state ->
+            binding.primaryAccountKeyState.text = "User Key State: ${state::class.java.simpleName}"
+        }.launchIn(lifecycleScope)
+
+        userAddressKeyViewModel.getUserAddressKeyState().onEach { state ->
+            binding.primaryAccountAddressKeyState.text = "Address Key State: ${state::class.java.simpleName}"
+        }.launchIn(lifecycleScope)
+
+        publicAddressViewModel.getPublicAddressState().onEach { state ->
+            binding.primaryAccountPublicAddressState.text = "Public Address State: ${state::class.java.simpleName}"
+        }.launchIn(lifecycleScope)
     }
 }
