@@ -43,7 +43,7 @@ interface SessionListener {
      */
     suspend fun onHumanVerificationNeeded(
         session: Session,
-        details: HumanVerificationDetails?
+        details: HumanVerificationDetails
     ): HumanVerificationResult
 
     sealed class HumanVerificationResult {

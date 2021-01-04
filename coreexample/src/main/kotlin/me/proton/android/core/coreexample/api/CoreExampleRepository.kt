@@ -16,22 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.android.core.coreexample.api
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.data.ApiProvider
 
-libVersion = Version(0, 2, 5)
+/**
+ * Proton Core
+ * @author Dino Kadrikj.
+ */
+class CoreExampleRepository(
+    private val provider: ApiProvider
+) {
 
-android()
-
-dependencies {
-
-    api(
-        project(Module.humanVerificationDomain),
-        project(Module.humanVerificationData),
-        project(Module.humanVerificationPresentation)
-    )
+    suspend fun triggerHumanVerification(userId: UserId) =
+        provider.get<CoreExampleApi>(userId).invoke() {
+            triggerHumanVerification()
+        }
 }

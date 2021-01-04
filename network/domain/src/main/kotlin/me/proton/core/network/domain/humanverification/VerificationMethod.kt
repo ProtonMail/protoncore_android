@@ -18,14 +18,22 @@
 
 package me.proton.core.network.domain.humanverification
 
+import me.proton.core.util.kotlin.equalsNoCase
+import java.util.Locale
+
 /**
  * All possible verification methods enum.
  */
 enum class VerificationMethod(val value: String) {
-    PHONE("sms"),
+    PHONE("sms"), // the default one, should be always present
     EMAIL("email"),
     CAPTCHA("captcha"),
     PAYMENT("payment"),
     INVITE("invite"),
-    COUPON("coupon")
+    COUPON("coupon");
+
+    companion object {
+        val map = values().associateBy { it.value }
+        fun getByValue(value: String) = map[value.toLowerCase(Locale.ROOT)] ?: PHONE
+    }
 }

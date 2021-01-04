@@ -18,8 +18,6 @@
 package me.proton.core.accountmanager.data
 
 import io.mockk.coVerify
-import io.mockk.every
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.account.domain.entity.Account

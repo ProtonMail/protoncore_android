@@ -51,7 +51,7 @@ class SessionManagerImpl(
 
     override suspend fun onHumanVerificationNeeded(
         session: Session,
-        details: HumanVerificationDetails?
+        details: HumanVerificationDetails
     ): SessionListener.HumanVerificationResult {
         accountRepository.setHumanVerificationDetails(session.sessionId, details)
         accountRepository.updateAccountState(session.sessionId, AccountState.NotReady)

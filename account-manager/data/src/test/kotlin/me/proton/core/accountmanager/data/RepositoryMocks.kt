@@ -195,10 +195,10 @@ class RepositoryMocks(
         every { accountRepository.getSessions() } answers {
             flowOf(*flowOfSessionLists.toTypedArray())
         }
-        every { accountRepository.onAccountStateChanged() } answers {
+        every { accountRepository.onAccountStateChanged(any()) } answers {
             flowOf(*flowOfAccountStateChangedLists.toTypedArray())
         }
-        every { accountRepository.onSessionStateChanged() } answers {
+        every { accountRepository.onSessionStateChanged(any()) } answers {
             flowOf(*flowOfSessionStateChangedLists.toTypedArray())
         }
     }

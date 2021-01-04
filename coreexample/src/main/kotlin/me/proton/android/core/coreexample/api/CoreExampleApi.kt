@@ -18,17 +18,16 @@
 
 package me.proton.android.core.coreexample.api
 
-import me.proton.core.humanverification.data.api.HumanVerificationApi
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.RefreshTokenResponse
+import me.proton.core.network.data.protonApi.GenericResponse
 import retrofit2.http.GET
 
 /**
  * @author Dino Kadrikj.
  */
-interface CoreExampleApi : BaseRetrofitApi, HumanVerificationApi {
+interface CoreExampleApi : BaseRetrofitApi {
 
-    @GET("tests/humanverification")
-    suspend fun testHumanVerification(): RefreshTokenResponse
+    @GET("internal/tests/humanverification")
+    suspend fun triggerHumanVerification(): GenericResponse
 
 }

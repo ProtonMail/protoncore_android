@@ -22,10 +22,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onSubscription
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountMetadataEntity
+import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
 import me.proton.core.account.data.extension.toAccountEntity
 import me.proton.core.account.data.extension.toSessionEntity
 import me.proton.core.account.domain.entity.Account
@@ -41,7 +44,6 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.exhaustive
-import java.util.concurrent.ConcurrentHashMap
 
 @Suppress("TooManyFunctions")
 class AccountRepositoryImpl(
@@ -53,8 +55,7 @@ class AccountRepositoryImpl(
     private val accountDao = db.accountDao()
     private val sessionDao = db.sessionDao()
     private val accountMetadataDao = db.accountMetadataDao()
-
-    private val humanVerificationDetails: ConcurrentHashMap<SessionId, HumanVerificationDetails?> = ConcurrentHashMap()
+    private val humanVerificationDetailsDao = db.humanVerificationDetailsDao()
 
     // Accept 10 nested/concurrent state changes -> extraBufferCapacity.
     private val accountStateChanged = MutableSharedFlow<Account>(extraBufferCapacity = 10)
@@ -153,11 +154,15 @@ class AccountRepositoryImpl(
         }
     }
 
-    override fun onAccountStateChanged(): Flow<Account> =
-        accountStateChanged.asSharedFlow().distinctUntilChanged()
+    override fun onAccountStateChanged(initialState: Boolean): Flow<Account> =
+        accountStateChanged.asSharedFlow()
+            .onSubscription { if (initialState) getAccounts().first().forEach { emit(it) } }
+            .distinctUntilChanged()
 
-    override fun onSessionStateChanged(): Flow<Account> =
-        sessionStateChanged.asSharedFlow().distinctUntilChanged()
+    override fun onSessionStateChanged(initialState: Boolean): Flow<Account> =
+        sessionStateChanged.asSharedFlow()
+            .onSubscription { if (initialState) getAccounts().first().forEach { emit(it) } }
+            .distinctUntilChanged()
 
     override suspend fun updateAccountState(userId: UserId, state: AccountState) {
         db.inTransaction {
@@ -209,10 +214,25 @@ class AccountRepositoryImpl(
         }
     }
 
-    override suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails? =
-        humanVerificationDetails[id]
+    override suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails? {
+        return humanVerificationDetailsDao.getBySessionId(id.id)?.toHumanVerificationDetails()
+    }
 
-    override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails?) {
-        humanVerificationDetails[id] = details
+    override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails) {
+        with(details) {
+            humanVerificationDetailsDao.insertOrUpdate(
+                HumanVerificationDetailsEntity(
+                    sessionId = id.id,
+                    verificationMethods = verificationMethods.map { method ->
+                        method.value
+                    },
+                    captchaVerificationToken = captchaVerificationToken
+                )
+            )
+        }
+    }
+
+    override suspend fun updateHumanVerificationCompleted(id: SessionId) {
+        humanVerificationDetailsDao.delete(sessionId = id.id)
     }
 }

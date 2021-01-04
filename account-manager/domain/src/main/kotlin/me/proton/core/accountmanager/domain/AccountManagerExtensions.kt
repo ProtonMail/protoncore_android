@@ -28,11 +28,21 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 
-fun AccountManager.onAccountStateChanged(state: AccountState): Flow<Account> =
-    onAccountStateChanged().filter { it.state == state }
+/**
+ * Flow of Account where [Account.state] equals [state].
+ *
+ * @param initialState if true (default), initial state for all accounts in this [state] will be raised on subscription.
+ */
+fun AccountManager.onAccountState(vararg state: AccountState, initialState: Boolean = true): Flow<Account> =
+    onAccountStateChanged(initialState).filter { state.contains(it.state) }
 
-fun AccountManager.onSessionStateChanged(state: SessionState): Flow<Account> =
-    onSessionStateChanged().filter { it.sessionState == state }
+/**
+ * Flow of Account where [Account.sessionState] equals [state].
+ *
+ * @param initialState if true (default), initial state for all accounts in this [state] will be raised on subscription.
+ */
+fun AccountManager.onSessionState(vararg state: SessionState, initialState: Boolean = true): Flow<Account> =
+    onSessionStateChanged(initialState).filter { state.contains(it.sessionState) }
 
 fun AccountManager.getPrimaryAccount(): Flow<Account?> =
     getPrimaryUserId().flatMapLatest { userId ->

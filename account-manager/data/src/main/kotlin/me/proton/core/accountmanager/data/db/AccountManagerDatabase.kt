@@ -28,7 +28,9 @@ import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.db.AccountConverters
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
+import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.accountmanager.data.db.migration.MIGRATION_1_2
 import me.proton.core.data.db.CommonConverters
 
 @Database(
@@ -36,9 +38,10 @@ import me.proton.core.data.db.CommonConverters
         // account-data
         AccountEntity::class,
         AccountMetadataEntity::class,
-        SessionEntity::class
+        SessionEntity::class,
+        HumanVerificationDetailsEntity::class
     ],
-    version = 1
+    version = 2
 )
 @TypeConverters(
     CommonConverters::class,
@@ -52,6 +55,7 @@ abstract class AccountManagerDatabase :
         fun buildDatabase(context: Context): AccountManagerDatabase {
             return Room
                 .databaseBuilder(context, AccountManagerDatabase::class.java, "db-account-manager")
+                .addMigrations(MIGRATION_1_2)
                 .build()
         }
     }

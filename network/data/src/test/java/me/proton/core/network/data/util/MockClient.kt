@@ -57,7 +57,7 @@ class MockSessionListener(
     override suspend fun onSessionForceLogout(session: Session) = onForceLogout(session)
     override suspend fun onHumanVerificationNeeded(
         session: Session,
-        details: HumanVerificationDetails?
+        details: HumanVerificationDetails
     ): SessionListener.HumanVerificationResult = onVerificationNeeded(session, details)
 }
 

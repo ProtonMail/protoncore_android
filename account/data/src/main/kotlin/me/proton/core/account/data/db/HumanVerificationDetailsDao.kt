@@ -18,11 +18,21 @@
 
 package me.proton.core.account.data.db
 
-import me.proton.core.data.db.Database
+import androidx.room.Dao
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
+import me.proton.core.data.db.BaseDao
 
-interface AccountDatabase : Database {
-    fun accountDao(): AccountDao
-    fun sessionDao(): SessionDao
-    fun accountMetadataDao(): AccountMetadataDao
-    fun humanVerificationDetailsDao(): HumanVerificationDetailsDao
+@Dao
+abstract class HumanVerificationDetailsDao : BaseDao<HumanVerificationDetailsEntity>() {
+
+    @Query("SELECT * FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId")
+    abstract fun findBySessionId(sessionId: String): Flow<HumanVerificationDetailsEntity?>
+
+    @Query("SELECT * FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId")
+    abstract suspend fun getBySessionId(sessionId: String): HumanVerificationDetailsEntity?
+
+    @Query("DELETE FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId")
+    abstract suspend fun delete(sessionId: String)
 }
