@@ -114,7 +114,7 @@ class SessionManagerImplTest {
             captchaVerificationToken = null
         )
 
-        coEvery {  mocks.accountRepository.getAccount(any<SessionId>()) } returns flowOf(
+        coEvery {  mocks.accountRepository.onSessionStateChanged(any()) } returns flowOf(
             account1,
             account1.copy(sessionState = SessionState.HumanVerificationNeeded),
             account1.copy(sessionState = SessionState.HumanVerificationSuccess)
@@ -123,8 +123,8 @@ class SessionManagerImplTest {
         val result = sessionManager.onHumanVerificationNeeded(session1, humanVerificationDetails)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(1, sessionStateLists.size)
-        assertEquals(SessionState.HumanVerificationNeeded, sessionStateLists[0].sessionState)
+        assertEquals(3, sessionStateLists.size)
+        assertEquals(SessionState.Authenticated, sessionStateLists[0].sessionState)
 
         assertEquals(SessionListener.HumanVerificationResult.Success, result)
     }
@@ -138,7 +138,7 @@ class SessionManagerImplTest {
             captchaVerificationToken = null
         )
 
-        coEvery {  mocks.accountRepository.getAccount(any<SessionId>()) } returns flowOf(
+        coEvery {  mocks.accountRepository.onSessionStateChanged(any()) } returns flowOf(
             account1,
             account1.copy(sessionState = SessionState.HumanVerificationNeeded),
             account1.copy(sessionState = SessionState.HumanVerificationFailed)
@@ -147,8 +147,8 @@ class SessionManagerImplTest {
         val result = sessionManager.onHumanVerificationNeeded(session1, humanVerificationDetails)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(1, sessionStateLists.size)
-        assertEquals(SessionState.HumanVerificationNeeded, sessionStateLists[0].sessionState)
+        assertEquals(3, sessionStateLists.size)
+        assertEquals(SessionState.Authenticated, sessionStateLists[0].sessionState)
 
         assertEquals(SessionListener.HumanVerificationResult.Failure, result)
     }

@@ -141,10 +141,6 @@ class AccountManagerImplTest {
 
         accountManager.handleHumanVerificationSuccess(session1.sessionId, tokenType, tokenCode)
 
-        val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(AccountState.Ready, stateLists[0].state)
-
         val sessionLists = accountManager.getSessions().toList()
         assertEquals(2, sessionLists.size)
         assertEquals(session1.headers, sessionLists[0][0].headers)
@@ -166,7 +162,8 @@ class AccountManagerImplTest {
         assertEquals(0, stateLists.size)
 
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(1, sessionStateLists.size)
+        assertEquals(2, sessionStateLists.size)
         assertEquals(SessionState.HumanVerificationFailed, sessionStateLists[0].sessionState)
+        assertEquals(SessionState.Authenticated, sessionStateLists[1].sessionState)
     }
 }

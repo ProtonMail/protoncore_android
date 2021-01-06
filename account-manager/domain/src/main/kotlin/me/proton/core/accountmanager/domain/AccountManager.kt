@@ -26,6 +26,7 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionId
 
 abstract class AccountManager(
     /**
@@ -94,10 +95,10 @@ abstract class AccountManager(
      *
      * Note: Initial state for all accounts in this state will be raised on subscription.
      */
-    abstract fun onHumanVerificationNeeded(): Flow<Pair<Account, HumanVerificationDetails?>>
+    abstract fun onHumanVerificationNeeded(initialState: Boolean = true): Flow<Pair<Account, HumanVerificationDetails?>>
 
     /**
-     * Get the primary [UserId], if exist.
+     * Get the primary [UserId], if exist as flow.
      *
      * The latest [AccountState.Ready] [Account] will automatically be set as the primary.
      *
