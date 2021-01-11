@@ -92,8 +92,8 @@ class AccountManagerImpl constructor(
     override fun onSessionStateChanged(initialState: Boolean): Flow<Account> =
         accountRepository.onSessionStateChanged(initialState)
 
-    override fun onHumanVerificationNeeded(): Flow<Pair<Account, HumanVerificationDetails?>> =
-        onSessionState(SessionState.HumanVerificationNeeded, SessionState.HumanVerificationFailed, initialState = true)
+    override fun onHumanVerificationNeeded(initialState: Boolean): Flow<Pair<Account, HumanVerificationDetails?>> =
+        onSessionState(SessionState.HumanVerificationNeeded, initialState = initialState)
             .map { it to it.sessionId?.let { id -> accountRepository.getHumanVerificationDetails(id) } }
 
     override fun getPrimaryUserId(): Flow<UserId?> =
@@ -142,12 +142,12 @@ class AccountManagerImpl constructor(
         accountRepository.updateSessionState(sessionId, SessionState.HumanVerificationSuccess)
         accountRepository.updateHumanVerificationCompleted(sessionId)
         accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
-        accountRepository.updateAccountState(sessionId, AccountState.Ready)
     }
 
     override suspend fun handleHumanVerificationFailed(sessionId: SessionId) {
         accountRepository.updateSessionHeaders(sessionId, null, null)
         accountRepository.updateSessionState(sessionId, SessionState.HumanVerificationFailed)
+        accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
     }
 
     override suspend fun handleAccountReady(userId: UserId) {

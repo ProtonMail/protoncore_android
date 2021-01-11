@@ -54,12 +54,12 @@ class SessionManagerImpl(
         details: HumanVerificationDetails
     ): SessionListener.HumanVerificationResult {
         accountRepository.setHumanVerificationDetails(session.sessionId, details)
-        accountRepository.updateAccountState(session.sessionId, AccountState.NotReady)
         accountRepository.updateSessionState(session.sessionId, SessionState.HumanVerificationNeeded)
 
         // Wait for HumanVerification Success or Failure.
-        val state = accountRepository.getAccount(session.sessionId)
-            .map { it?.sessionState }
+        val state = accountRepository.onSessionStateChanged(true)
+            .filter { it.sessionId == session.sessionId }
+            .map { it.sessionState }
             .filter { it == SessionState.HumanVerificationSuccess || it == SessionState.HumanVerificationFailed }
             .first()
 

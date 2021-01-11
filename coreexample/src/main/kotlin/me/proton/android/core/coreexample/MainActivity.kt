@@ -24,6 +24,9 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -40,10 +43,11 @@ import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
-import me.proton.core.accountmanager.presentation.onSessionHumanVerificationNeeded
 import me.proton.core.accountmanager.presentation.onSessionHumanVerificationFailed
+import me.proton.core.accountmanager.presentation.onSessionHumanVerificationNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorFailed
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
+import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.presentation.AuthOrchestrator
@@ -93,7 +97,9 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             .onScopeResult { result ->
                 result
             }
-            .onHumanVerificationResult { }
+            .onHumanVerificationResult {
+
+            }
 
         with(binding) {
             humanVerification.onClick {
@@ -117,11 +123,11 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
 
             triggerHumanVer.onClick {
-                accountManager.getPrimaryUserId().onEach { userId ->
-                    userId?.let {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    accountManager.getPrimaryUserId().first()?.let {
                         coreExampleRepository.triggerHumanVerification(it)
                     }
-                }.launchIn(lifecycleScope)
+                }
             }
         }
 
@@ -167,7 +173,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
         }.launchIn(lifecycleScope)
 
-        accountManager.onHumanVerificationNeeded().onEach { (account, details) ->
+        accountManager.onHumanVerificationNeeded(initialState = true).onEach { (account, details) ->
             authOrchestrator.startHumanVerificationWorkflow(account.sessionId!!, details)
         }.launchIn(lifecycleScope)
 
@@ -200,18 +206,20 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
             .onSessionHumanVerificationFailed {
                 Timber.d("onSessionHumanVerificationFailed -> $it")
-                // on failed human verification, we do not allow the user to have any interaction with the application.
-                finish()
             }
 
         // Api Call every 10sec (e.g. to test ForceLogout). - commeted for now, move it into another activity
-//        lifecycleScope.launch {
-//            while (true) {
-//                delay(10000)
+        lifecycleScope.launch {
+
+            while (true) {
+                delay(20000)
 //                accountManager.getPrimaryAccount().firstOrNull()?.let { account ->
 //                    account.sessionId?.let { authRepository.getUser(it) }
 //                }
-//            }
-//        }
+                accountManager.getPrimaryUserId().first()?.let {
+                    coreExampleRepository.triggerHumanVerification(it)
+                }
+            }
+        }
     }
 }
