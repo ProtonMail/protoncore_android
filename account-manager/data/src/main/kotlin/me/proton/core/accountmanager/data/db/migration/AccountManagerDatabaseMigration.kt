@@ -27,7 +27,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         // Added Table HumanVerificationDetailsEntity
-        database.execSQL("CREATE TABLE IF NOT EXISTS `HumanVerificationDetailsEntity` (`sessionId` TEXT NOT NULL, `verificationMethods` TEXT NOT NULL, `captchaVerificationToken` TEXT, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE NO ACTION )")
+        database.execSQL("CREATE TABLE IF NOT EXISTS `HumanVerificationDetailsEntity` (`sessionId` TEXT NOT NULL, `verificationMethods` TEXT NOT NULL, `captchaVerificationToken` TEXT, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
         database.execSQL("CREATE INDEX IF NOT EXISTS `index_HumanVerificationDetailsEntity_sessionId` ON `HumanVerificationDetailsEntity` (`sessionId`)")
 
     }
