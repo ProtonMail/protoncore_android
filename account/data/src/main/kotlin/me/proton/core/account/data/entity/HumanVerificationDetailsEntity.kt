@@ -36,7 +36,8 @@ import me.proton.core.network.domain.humanverification.VerificationMethod
         ForeignKey(
             entity = SessionEntity::class,
             parentColumns = ["sessionId"],
-            childColumns = ["sessionId"]
+            childColumns = ["sessionId"],
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )
