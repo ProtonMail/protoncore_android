@@ -140,13 +140,13 @@ Account Data: **0.1.4** - _released on: Jan 04, 2021_
 
 ### Account Manager
 
-Account Manager: **0.1.6** - _released on: Jan 04, 2021_
+Account Manager: **0.1.7** - _released on: Jan 11, 2021_
 
-Account Manager Domain: **0.1.6** - _released on: Jan 04, 2021_
+Account Manager Domain: **0.1.7** - _released on: Jan 11, 2021_
 
-Account Manager Presentation: **0.1.6** - _released on: Jan 04, 2021_
+Account Manager Presentation: **0.1.7** - _released on: Jan 11, 2021_
 
-Account Manager Data: **0.1.6** - _released on: Jan 04, 2021_
+Account Manager Data: **0.1.7** - _released on: Jan 11, 2021_
 
 Account Manager Dagger: **0.1.6** - _released on: Jan 04, 2021_
 
