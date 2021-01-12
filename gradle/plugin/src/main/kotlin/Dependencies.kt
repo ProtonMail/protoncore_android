@@ -42,3 +42,13 @@ val DependencyHandler.`okHttp-logging` get() = squareup("okhttp3", module = "log
 fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =
     android("tools.lint", "lint", moduleSuffix, version)
 // endregion
+
+// region Instrumentation tests
+val DependencyHandler.`espresso-contrib` get() = androidx("test.espresso", module = "espresso-contrib") version `espresso version`
+val DependencyHandler.`espresso-intents` get() = androidx("test.espresso", module = "espresso-intents") version `espresso version`
+val DependencyHandler.falcon get() = dependency("com.jraska", module = "falcon") version `falcon version`
+val DependencyHandler.`orchestrator` get() = androidx("test", module = "orchestrator") version `android-test version`
+val DependencyHandler.uiautomator get() = androidx("test.uiautomator", module = "uiautomator") version `uiautomator version`
+val DependencyHandler.preference get() = androidx("preference", module = "preference") version `preference version`
+val DependencyHandler.`jsonsimple` get() = dependency("com.googlecode.json-simple", module = "json-simple") version `json-simple version`
+// endregion
