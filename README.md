@@ -129,26 +129,26 @@ Auth Data: **0.2.9** - _released on: Jan 04, 2021_
 
 ### Account
 
-Account: **0.1.5** - _released on: Jan 11, 2021_
+Account: **0.2** - _released on: Jan 12, 2021_
 
-Account Domain: **0.1.5** - _released on: Jan 11, 2021_
+Account Domain: **0.2** - _released on: Jan 12, 2021_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **0.1.5** - _released on: Jan 11, 2021_
+Account Data: **0.2** - _released on: Jan 12, 2021_
 
 
 ### Account Manager
 
-Account Manager: **0.1.7** - _released on: Jan 11, 2021_
+Account Manager: **0.2** - _released on: Jan 12, 2021_
 
-Account Manager Domain: **0.1.7** - _released on: Jan 11, 2021_
+Account Manager Domain: **0.2** - _released on: Jan 12, 2021_
 
-Account Manager Presentation: **0.1.7** - _released on: Jan 11, 2021_
+Account Manager Presentation: **0.2** - _released on: Jan 12, 2021_
 
-Account Manager Data: **0.1.7** - _released on: Jan 11, 2021_
+Account Manager Data: **0.2** - _released on: Jan 12, 2021_
 
-Account Manager Dagger: **0.1.6** - _released on: Jan 04, 2021_
+Account Manager Dagger: **0.2** - _released on: Jan 12, 2021_
 
 ### Contacts
 
