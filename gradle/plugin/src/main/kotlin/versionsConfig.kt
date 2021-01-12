@@ -33,7 +33,7 @@ internal fun initVersions() {
     `appcompat version` =                       "1.2.0"         // Released: Aug 19, 2020
     `android-arch version` =                    "2.1.0"         // Released: Sep 06, 2019
     `constraint-layout version` =               "2.0.4"         // Released: Oct 29, 2020
-    `espresso version` =                        "3.2.0"         // Released: May 30, 2019
+    `espresso version` =                        "3.3.0"         // Released: Aug 25, 2020
     `fragment version` =                        "1.3.0-beta01"  // Released: Oct 01, 2020
     `ktx version` =                             "1.3.2"         // Released: Oct 01, 2020
     `lifecycle version` =                       "2.2.0"         // Released: Oct 11, 2019
@@ -42,7 +42,7 @@ internal fun initVersions() {
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
     `android-room version` =                    "2.2.5"         // Released: Mar 18, 2020
 
-    `android-test version` =                    "1.2.0"         // Released: May 31, 2019
+    `android-test version` =                    "1.3.0"         // Released: Aug 25, 2020
     `robolectric version` =                     "4.4"           // Released: Aug 24, 2020
     // endregion
 
@@ -74,4 +74,11 @@ const val `okHttp version` =                "4.8.0"         // Released: Jul 11,
 const val `okHttp-url-connection version` = "4.9.0"         // Released: Sep, 2020
 const val `trustKit version` =              "1.1.3"         // Released: Apr 30, 2020
 
+// endregion
+
+// region Instrumentation Tests
+const val `falcon version` =                    "2.1.1"         // Released: Sep 24, 2018
+const val `uiautomator version` =               "2.2.0"         // Released: Oct 25, 2018
+const val `preference version` =                "1.1.1"         // Released: Apr 15, 2020
+const val `json-simple version` =               "1.1.1"         // Released: Mar 21, 2012
 // endregion
