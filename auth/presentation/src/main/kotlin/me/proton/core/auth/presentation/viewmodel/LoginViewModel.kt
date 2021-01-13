@@ -78,7 +78,7 @@ class LoginViewModel @ViewModelInject constructor(
                     // But, we can not execute user request if second factor is needed (no sufficient scope).
                     getUser(SessionId(it.sessionInfo.sessionId))
                         .onSuccess { success ->
-                            onUserDetails(username, password, it.sessionInfo, success.user, requiredAccountType)
+                            onUserDetails(password, it.sessionInfo, success.user, requiredAccountType)
                         }
                         .onError { error -> loginState.post(PerformLogin.State.Error.FetchUser(error)) }
                         .launchIn(viewModelScope)
@@ -95,7 +95,6 @@ class LoginViewModel @ViewModelInject constructor(
      * Execute a routine when user details result is back from the API.
      */
     private fun onUserDetails(
-        usernameInput: String,
         password: ByteArray,
         sessionInfo: SessionInfo,
         user: User,
@@ -114,14 +113,10 @@ class LoginViewModel @ViewModelInject constructor(
             // if there are no Address Keys and the current AccountType (Username) does not meet the required.
             if (user.keys.isEmpty() && !user.addresses.satisfiesAccountType(requiredAccountType)) {
                 // we upgrade it
-                val emailParts = user.email?.split("@")
-                val username = emailParts?.get(0) ?: usernameInput
-                val domain = emailParts?.get(1)
                 upgradeUsernameOnlyAccount(
-                    username = username,
+                    username = checkNotNull(user.name) { "For account type `Username`, name should always be present." },
                     password = password,
-                    sessionInfo = session,
-                    domain = domain
+                    sessionInfo = session
                 )
             } else {
                 // otherwise we raise Success.Login if there are Address Keys present.

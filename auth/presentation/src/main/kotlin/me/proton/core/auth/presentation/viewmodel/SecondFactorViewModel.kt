@@ -110,7 +110,7 @@ class SecondFactorViewModel @ViewModelInject constructor(
                 // we upgrade it
                 upgradeUsernameOnlyAccount(
                     sessionId = sessionId,
-                    username = user.name!!, // for these accounts [AccountType.Username], name should always be present.
+                    username = checkNotNull(user.name) { "For account type `Username`, name should always be present." },
                     passphrase = password,
                     scopeInfo = scopeInfo,
                     isTwoPassModeNeeded = isTwoPass,
