@@ -155,6 +155,19 @@ class AccountRepositoryImplTest {
     }
 
     @Test
+    fun `update account state but account do not exist`() = runBlockingTest {
+        // No user exist in DB.
+        coEvery { accountDao.getByUserId(any()) } returns null
+
+        accountRepository.updateAccountState(account1.toAccount().userId, AccountState.Ready)
+
+        // AccountDao.updateAccountState call can be done.
+        coVerify(exactly = 1) { accountDao.updateAccountState(any(), any()) }
+        // But MetadataDao.insertOrUpdate cannot!
+        coVerify(exactly = 0) { metadataDao.insertOrUpdate(*anyVararg()) }
+    }
+
+    @Test
     fun `update account state Removed`() = runBlockingTest {
         accountRepository.updateAccountState(account1.toAccount().userId, AccountState.Removed)
 
