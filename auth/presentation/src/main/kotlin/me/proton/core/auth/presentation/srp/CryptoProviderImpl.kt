@@ -47,6 +47,7 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
 
     companion object {
         const val CURRENT_AUTH_VERSION = 4
+        const val SECONDS_24H = 86400L
     }
 
     /**
@@ -100,6 +101,7 @@ class CryptoProviderImpl @Inject constructor() : CryptoProvider {
             throw EmptyCredentialsException("The passphrase for generating key can't be empty.")
         }
 
+        Crypto.setKeyGenerationOffset(-1 * SECONDS_24H) // set offset 24h in the past
         if (keyType === KeyType.RSA) {
             // Generate some primes as the go library is quite slow. On android we can use SSL + multithreading
             // This reduces the generation time from 3 minutes to 1 second.

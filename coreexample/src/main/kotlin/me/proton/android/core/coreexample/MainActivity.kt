@@ -216,9 +216,9 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 //                accountManager.getPrimaryAccount().firstOrNull()?.let { account ->
 //                    account.sessionId?.let { authRepository.getUser(it) }
 //                }
-                accountManager.getPrimaryUserId().first()?.let {
-                    coreExampleRepository.triggerHumanVerification(it)
-                }
+//                accountManager.getPrimaryUserId().first()?.let {
+//                    coreExampleRepository.triggerHumanVerification(it)
+//                }
             }
         }
     }
