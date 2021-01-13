@@ -129,13 +129,13 @@ Auth Data: **0.3** - _released on: Jan 13, 2021_
 
 ### Account
 
-Account: **0.2** - _released on: Jan 12, 2021_
+Account: **0.2.1** - _released on: Jan 13, 2021_
 
 Account Domain: **0.2** - _released on: Jan 12, 2021_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **0.2** - _released on: Jan 12, 2021_
+Account Data: **0.2.1** - _released on: Jan 13, 2021_
 
 
 ### Account Manager
