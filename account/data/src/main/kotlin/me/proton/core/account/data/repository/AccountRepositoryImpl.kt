@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onSubscription
 import me.proton.core.account.data.db.AccountDatabase
@@ -71,14 +70,19 @@ class AccountRepositoryImpl(
             throw IllegalStateException("Too many nested session state changes, extra buffer capacity exceeded.")
     }
 
-    private suspend fun updateAccountMetadata(userId: UserId) =
-        accountMetadataDao.insertOrUpdate(
-            AccountMetadataEntity(
-                userId = userId.id,
-                product = product,
-                primaryAtUtc = System.currentTimeMillis()
-            )
-        )
+    private suspend fun tryInsertOrUpdateAccountMetadata(userId: UserId) {
+        db.inTransaction {
+            accountDao.getByUserId(userId.id)?.let {
+                accountMetadataDao.insertOrUpdate(
+                    AccountMetadataEntity(
+                        userId = userId.id,
+                        product = product,
+                        primaryAtUtc = System.currentTimeMillis()
+                    )
+                )
+            }
+        }
+    }
 
     private suspend fun deleteAccountMetadata(userId: UserId) =
         accountMetadataDao.delete(userId.id, product)
@@ -167,7 +171,7 @@ class AccountRepositoryImpl(
     override suspend fun updateAccountState(userId: UserId, state: AccountState) {
         db.inTransaction {
             when (state) {
-                AccountState.Ready -> updateAccountMetadata(userId)
+                AccountState.Ready -> tryInsertOrUpdateAccountMetadata(userId)
                 AccountState.Disabled,
                 AccountState.Removed,
                 AccountState.NotReady,
@@ -206,33 +210,26 @@ class AccountRepositoryImpl(
 
     override suspend fun setAsPrimary(userId: UserId) {
         db.inTransaction {
-            val state = accountDao.findByUserId(userId.id).firstOrNull()?.state
+            val state = accountDao.getByUserId(userId.id)?.state
             check(state == AccountState.Ready) {
                 "Account is not ${AccountState.Ready}, it cannot be set as primary."
             }
-            updateAccountMetadata(userId)
+            tryInsertOrUpdateAccountMetadata(userId)
         }
     }
 
-    override suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails? {
-        return humanVerificationDetailsDao.getBySessionId(id.id)?.toHumanVerificationDetails()
-    }
+    override suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails? =
+        humanVerificationDetailsDao.getBySessionId(id.id)?.toHumanVerificationDetails()
 
-    override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails) {
-        with(details) {
-            humanVerificationDetailsDao.insertOrUpdate(
-                HumanVerificationDetailsEntity(
-                    sessionId = id.id,
-                    verificationMethods = verificationMethods.map { method ->
-                        method.value
-                    },
-                    captchaVerificationToken = captchaVerificationToken
-                )
+    override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails) =
+        humanVerificationDetailsDao.insertOrUpdate(
+            HumanVerificationDetailsEntity(
+                sessionId = id.id,
+                verificationMethods = details.verificationMethods.map { method -> method.value },
+                captchaVerificationToken = details.captchaVerificationToken
             )
-        }
-    }
+        )
 
-    override suspend fun updateHumanVerificationCompleted(id: SessionId) {
+    override suspend fun updateHumanVerificationCompleted(id: SessionId) =
         humanVerificationDetailsDao.delete(sessionId = id.id)
-    }
 }
