@@ -95,7 +95,7 @@ Domain: **0.2.4** - _released on: Nov 18, 2020_
 
 Presentation: **0.5.3** - _released on: Jan 04, 2021_
 
-Data: **0.1.2** - _released on: Nov 12, 2020_
+Data: **0.1.3** - _released on: Jan 14, 2021_
 
 ## Support
 
