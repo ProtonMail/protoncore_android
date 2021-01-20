@@ -19,9 +19,9 @@
 package me.proton.core.account.data.extension
 
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.crypto.common.simple.encrypt
+import me.proton.core.crypto.common.simple.SimpleCrypto
 import me.proton.core.data.db.CommonConverters
-import me.proton.core.data.crypto.StringCrypto
-import me.proton.core.data.crypto.encrypt
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
@@ -29,7 +29,7 @@ import me.proton.core.network.domain.session.Session
 fun Session.toSessionEntity(
     userId: UserId,
     product: Product,
-    crypto: StringCrypto
+    crypto: SimpleCrypto
 ): SessionEntity = SessionEntity(
     userId = userId.id,
     sessionId = sessionId.id,

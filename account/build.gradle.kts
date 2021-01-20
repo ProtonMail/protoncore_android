@@ -6,9 +6,9 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(0, 2, 1)
+libVersion = Version(0, 2, 2)
 
-android()
+android(minSdk = 23)
 
 dependencies {
     api(

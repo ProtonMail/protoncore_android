@@ -23,9 +23,9 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(0, 2, 1)
+libVersion = Version(0, 2, 2)
 
-android()
+android(minSdk = 23)
 
 dependencies {
 
@@ -33,6 +33,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.data),
         project(Module.domain),
+        project(Module.crypto),
         project(Module.network),
         project(Module.accountDomain),
 

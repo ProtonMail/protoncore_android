@@ -19,7 +19,6 @@
 package me.proton.core.data.db
 
 import androidx.room.TypeConverter
-import me.proton.core.data.crypto.EncryptedString
 import me.proton.core.domain.entity.Product
 
 class CommonConverters {
@@ -36,14 +35,6 @@ class CommonConverters {
     @TypeConverter
     fun fromStringToProduct(value: String?): Product? = value?.let {
         Product.valueOf(value)
-    }
-
-    @TypeConverter
-    fun fromEncryptedStringToString(value: EncryptedString?): String? = value?.encrypted
-
-    @TypeConverter
-    fun fromStringToEncryptedString(value: String?): EncryptedString? = value?.let {
-        EncryptedString(value)
     }
 
     companion object {

@@ -21,10 +21,10 @@ package me.proton.core.account.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import me.proton.core.crypto.common.simple.EncryptedString
+import me.proton.core.crypto.common.simple.decrypt
+import me.proton.core.crypto.common.simple.SimpleCrypto
 import me.proton.core.data.db.CommonConverters
-import me.proton.core.data.crypto.EncryptedString
-import me.proton.core.data.crypto.StringCrypto
-import me.proton.core.data.crypto.decrypt
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
 import me.proton.core.network.domain.session.Session
@@ -55,7 +55,7 @@ data class SessionEntity(
     val scopes: String,
     val product: Product
 ) {
-    fun toSession(crypto: StringCrypto): Session = Session(
+    fun toSession(crypto: SimpleCrypto): Session = Session(
         sessionId = SessionId(sessionId),
         accessToken = accessToken.decrypt(crypto),
         refreshToken = refreshToken.decrypt(crypto),

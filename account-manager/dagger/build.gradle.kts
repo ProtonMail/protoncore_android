@@ -27,9 +27,9 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(0, 2, 0)
+libVersion = Version(0, 2, 2)
 
-android()
+android(minSdk = 23)
 
 dependencies {
 
@@ -37,6 +37,7 @@ dependencies {
 
         project(Module.kotlinUtil),
         project(Module.network),
+        project(Module.crypto),
         project(Module.domain),
         project(Module.data),
 

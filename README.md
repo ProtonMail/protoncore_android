@@ -111,9 +111,9 @@ Network Data: **0.4.5** - _released on: Jan 04, 2021_
 
 Crypto: **0** - _released on: ND_
 
-Crypto Domain: **0** - _released on: ND_
+Crypto Common: **0** - _released on: ND_
 
-Crypto Data: **0** - _released on: ND_
+Crypto Android: **0** - _released on: ND_
 
 ## Features
 

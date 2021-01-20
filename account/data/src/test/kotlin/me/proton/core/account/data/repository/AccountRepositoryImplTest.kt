@@ -36,8 +36,10 @@ import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
-import me.proton.core.data.crypto.EncryptedString
-import me.proton.core.data.crypto.StringCrypto
+import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.crypto.common.simple.EncryptedString
+import me.proton.core.crypto.common.simple.PlainByteArray
+import me.proton.core.crypto.common.simple.SimpleCrypto
 import me.proton.core.domain.entity.Product
 import org.junit.Before
 import org.junit.Test
@@ -48,9 +50,6 @@ class AccountRepositoryImplTest {
 
     @MockK
     private lateinit var db: AccountDatabase
-
-    @MockK
-    private lateinit var stringCrypto: StringCrypto
 
     @RelaxedMockK
     private lateinit var accountDao: AccountDao
@@ -64,6 +63,13 @@ class AccountRepositoryImplTest {
     @RelaxedMockK
     private lateinit var humanVerificationDao: HumanVerificationDetailsDao
 
+    private val simpleCrypto = object : SimpleCrypto {
+        override fun encrypt(value: String): EncryptedString = value
+        override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array)
+        override fun decrypt(value: EncryptedString): String = value
+        override fun decrypt(value: EncryptedByteArray): PlainByteArray = PlainByteArray(value.array)
+    }
+
     private val account1 = AccountEntity(
         userId = "user1",
         username = "username",
@@ -76,8 +82,8 @@ class AccountRepositoryImplTest {
     private val session1 = SessionEntity(
         userId = account1.userId,
         sessionId = "session1",
-        accessToken = EncryptedString("accessToken"),
-        refreshToken = EncryptedString("refreshToken"),
+        accessToken = "accessToken",
+        refreshToken = "refreshToken",
         scopes = "full,calendar,mail",
         humanHeaderTokenType = null,
         humanHeaderTokenCode = null,
@@ -87,8 +93,8 @@ class AccountRepositoryImplTest {
     private val sessionInvalid = SessionEntity(
         userId = "",
         sessionId = "sessionInvalid",
-        accessToken = EncryptedString(""),
-        refreshToken = EncryptedString(""),
+        accessToken = "",
+        refreshToken = "",
         scopes = "full,calendar,mail",
         humanHeaderTokenType = null,
         humanHeaderTokenCode = null,
@@ -99,21 +105,9 @@ class AccountRepositoryImplTest {
     fun beforeEveryTest() {
         MockKAnnotations.init(this)
 
-        setupStringCrypto()
         setupAccountDatabase()
 
-        accountRepository = AccountRepositoryImpl(Product.Calendar, db, stringCrypto)
-    }
-
-    private fun setupStringCrypto() {
-        val stringSlot = slot<String>()
-        every { stringCrypto.encrypt(capture(stringSlot)) } answers {
-            EncryptedString(stringSlot.captured)
-        }
-        val encryptedStringSlot = slot<EncryptedString>()
-        every { stringCrypto.decrypt(capture(encryptedStringSlot)) } answers {
-            encryptedStringSlot.captured.encrypted
-        }
+        accountRepository = AccountRepositoryImpl(Product.Calendar, db, simpleCrypto)
     }
 
     private fun setupAccountDatabase() {
@@ -134,7 +128,7 @@ class AccountRepositoryImplTest {
 
     @Test
     fun `add user with session`() = runBlockingTest {
-        accountRepository.createOrUpdateAccountSession(account1.toAccount(), session1.toSession(stringCrypto))
+        accountRepository.createOrUpdateAccountSession(account1.toAccount(), session1.toSession(simpleCrypto))
 
         coVerify(exactly = 1) { accountDao.insertOrUpdate(*anyVararg()) }
         coVerify(exactly = 1) { sessionDao.insertOrUpdate(*anyVararg()) }
@@ -143,7 +137,7 @@ class AccountRepositoryImplTest {
 
     @Test(expected = IllegalArgumentException::class)
     fun `add user with invalid session`() = runBlockingTest {
-        accountRepository.createOrUpdateAccountSession(account1.toAccount(), sessionInvalid.toSession(stringCrypto))
+        accountRepository.createOrUpdateAccountSession(account1.toAccount(), sessionInvalid.toSession(simpleCrypto))
     }
 
     @Test
