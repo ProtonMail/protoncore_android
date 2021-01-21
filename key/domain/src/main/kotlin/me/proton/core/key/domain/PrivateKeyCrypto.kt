@@ -21,6 +21,7 @@ package me.proton.core.key.domain
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.pgp.unlockOrNull
 import me.proton.core.crypto.common.simple.decrypt
 import me.proton.core.key.domain.entity.key.PrivateKey
@@ -32,7 +33,7 @@ import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 /**
  * Get fingerprint from this [PrivateKey].
  *
- * @throws [Throwable] if fingerprint cannot be extracted.
+ * @throws [CryptoException] if fingerprint cannot be extracted.
  */
 fun PrivateKey.fingerprint(context: CryptoContext) =
     context.pgpCrypto.getFingerprint(key)
@@ -40,7 +41,7 @@ fun PrivateKey.fingerprint(context: CryptoContext) =
 /**
  * Get [PublicKey] from [PrivateKey].
  *
- * @throws [Throwable] if public key cannot be extracted.
+ * @throws [CryptoException] if public key cannot be extracted.
  */
 fun PrivateKey.publicKey(context: CryptoContext): PublicKey =
     context.pgpCrypto.getPublicKey(key).let { PublicKey(it, isPrimary) }
@@ -48,7 +49,7 @@ fun PrivateKey.publicKey(context: CryptoContext): PublicKey =
 /**
  * Encrypt [text] using this [PublicKey].
  *
- * @throws [Throwable] if [text] cannot be encrypted.
+ * @throws [CryptoException] if [text] cannot be encrypted.
  *
  * @see [PublicKey.encryptData]
  */
@@ -58,7 +59,7 @@ fun PrivateKey.encryptText(context: CryptoContext, text: String): EncryptedMessa
 /**
  * Encrypt [data] using this [PublicKey].
  *
- * @throws [Throwable] if [data] cannot be encrypted.
+ * @throws [CryptoException] if [data] cannot be encrypted.
  *
  * @see [PrivateKey.encryptText]
  */
@@ -70,7 +71,7 @@ fun PrivateKey.encryptData(context: CryptoContext, data: ByteArray): EncryptedMe
  *
  * @return [UnlockedPrivateKey] implementing Closeable to clear memory after usage.
  *
- * @throws [Throwable] if [PrivateKey] cannot be unlocked.
+ * @throws [CryptoException] if [PrivateKey] cannot be unlocked.
  *
  * @see [PrivateKey.unlockOrNull]
  * @see [UnlockedPrivateKey.lock]
@@ -111,7 +112,7 @@ fun PrivateKey.canUnlock(context: CryptoContext): Boolean =
  *
  * Note: String canonicalization/standardization is applied.
  *
- * @throws [IllegalArgumentException] if [message] cannot be decrypted.
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [PrivateKeyRing.decryptTextOrNull]
  * @see [PublicKeyRing.encryptText]
@@ -122,7 +123,7 @@ fun PrivateKeyRing.decryptText(message: EncryptedMessage): String =
 /**
  * Decrypt [message] as [ByteArray] using this [PrivateKeyRing.keys].
  *
- * @throws [IllegalArgumentException] if [message] cannot be decrypted.
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [PrivateKeyRing.decryptDataOrNull]
  * @see [PublicKeyRing.encryptData]
@@ -153,7 +154,7 @@ fun PrivateKeyRing.decryptDataOrNull(message: EncryptedMessage): ByteArray? =
 /**
  * Sign [text] using primary [UnlockedPrivateKey].
  *
- * @throws [Throwable] if [text] cannot be signed.
+ * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [PublicKeyRing.verifyText]
  */
@@ -163,7 +164,7 @@ fun PrivateKeyRing.signText(text: String): Signature =
 /**
  * Sign [data] using primary [UnlockedPrivateKey].
  *
- * @throws [Throwable] if [data] cannot be signed.
+ * @throws [CryptoException] if [data] cannot be signed.
  *
  * @see [PublicKeyRing.verifyData]
  */

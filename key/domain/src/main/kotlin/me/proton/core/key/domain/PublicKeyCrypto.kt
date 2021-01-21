@@ -21,6 +21,7 @@ package me.proton.core.key.domain
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
@@ -56,7 +57,7 @@ fun PublicKey.verifyData(
 /**
  * Encrypt [text] using this [PublicKey].
  *
- * @throws [Throwable] if [text] cannot be encrypted.
+ * @throws [CryptoException] if [text] cannot be encrypted.
  *
  * @see [UnlockedPrivateKey.decryptText]
  */
@@ -66,7 +67,7 @@ fun PublicKey.encryptText(context: CryptoContext, text: String): EncryptedMessag
 /**
  * Encrypt [data] using this [PublicKey].
  *
- * @throws [Throwable] if [data] cannot be encrypted.
+ * @throws [CryptoException] if [data] cannot be encrypted.
  *
  * @see [UnlockedPrivateKey.decryptText]
  */
@@ -76,7 +77,7 @@ fun PublicKey.encryptData(context: CryptoContext, data: ByteArray): EncryptedMes
 /**
  * Get fingerprint from this [PublicKey].
  *
- * @throws [Throwable] if fingerprint cannot be extracted.
+ * @throws [CryptoException] if fingerprint cannot be extracted.
  */
 fun PublicKey.fingerprint(context: CryptoContext) =
     context.pgpCrypto.getFingerprint(key)

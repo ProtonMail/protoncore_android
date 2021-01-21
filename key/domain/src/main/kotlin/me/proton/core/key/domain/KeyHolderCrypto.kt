@@ -23,6 +23,7 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
@@ -56,7 +57,7 @@ fun <R> KeyHolder.useKeys(context: CryptoContext, block: KeyHolderContext.() -> 
  *
  * Note: String canonicalization/standardization is applied.
  *
- * @throws [IllegalArgumentException] if [message] cannot be decrypted.
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptTextOrNull]
  * @see [KeyHolderContext.encryptText]
@@ -67,7 +68,7 @@ fun KeyHolderContext.decryptText(message: EncryptedMessage): String =
 /**
  * Decrypt [message] as [ByteArray] using [PrivateKeyRing].
  *
- * @throws [IllegalArgumentException] if [message] cannot be decrypted.
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptDataOrNull]
  * @see [KeyHolderContext.encryptData]
@@ -100,7 +101,7 @@ fun KeyHolderContext.decryptDataOrNull(message: EncryptedMessage): ByteArray? =
 /**
  * Sign [text] using [PrivateKeyRing].
  *
- * @throws [Throwable] if [text] cannot be signed.
+ * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [KeyHolderContext.verifyText]
  */
@@ -110,7 +111,7 @@ fun KeyHolderContext.signText(text: String): Signature =
 /**
  * Sign [data] using [PrivateKeyRing].
  *
- * @throws [Throwable] if [data] cannot be signed.
+ * @throws [CryptoException] if [data] cannot be signed.
  *
  * @see [KeyHolderContext.verifyData]
  */
@@ -144,7 +145,7 @@ fun KeyHolderContext.verifyData(data: ByteArray, signature: Signature, validAtUt
 /**
  * Encrypt [text] using [PublicKeyRing].
  *
- * @throws [Throwable] if [text] cannot be encrypted.
+ * @throws [CryptoException] if [text] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptText]
  */
@@ -154,7 +155,7 @@ fun KeyHolderContext.encryptText(text: String): EncryptedMessage =
 /**
  * Encrypt [data] using [PublicKeyRing].
  *
- * @throws [Throwable] if [data] cannot be encrypted.
+ * @throws [CryptoException] if [data] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptData]
  */
@@ -164,7 +165,7 @@ fun KeyHolderContext.encryptData(data: ByteArray): EncryptedMessage =
 /**
  * Encrypt [text] using [PublicKeyRing] and sign using [PrivateKeyRing] in an embedded [EncryptedMessage].
  *
- * @throws [Throwable] if [text] cannot be encrypted or signed.
+ * @throws [CryptoException] if [text] cannot be encrypted or signed.
  *
  * @see [KeyHolderContext.decryptAndVerifyText].
  */
@@ -178,7 +179,7 @@ fun KeyHolderContext.encryptAndSignText(text: String): EncryptedMessage =
 /**
  * Encrypt [data] using [PublicKeyRing] and sign using [PrivateKeyRing] in an embedded [EncryptedMessage].
  *
- * @throws [Throwable] if [data] cannot be encrypted or signed.
+ * @throws [CryptoException] if [data] cannot be encrypted or signed.
  *
  * @see [KeyHolderContext.decryptAndVerifyData].
  */
@@ -194,7 +195,7 @@ fun KeyHolderContext.encryptAndSignData(data: ByteArray): EncryptedMessage =
  *
  * Note: String canonicalization/standardization is applied.
  *
- * @throws [Throwable] if [message] cannot be decrypted or verified.
+ * @throws [CryptoException] if [message] cannot be decrypted or verified.
  *
  * @see [KeyHolderContext.encryptAndSignText]
  */
@@ -208,7 +209,7 @@ fun KeyHolderContext.decryptAndVerifyText(message: EncryptedMessage): String =
 /**
  * Decrypt [message] as [ByteArray] using [PrivateKeyRing] and verify using [PublicKeyRing].
  *
- * @throws [Throwable] if [message] cannot be decrypted or verified.
+ * @throws [CryptoException] if [message] cannot be decrypted or verified.
  *
  * @see [KeyHolderContext.encryptAndSignData]
  */

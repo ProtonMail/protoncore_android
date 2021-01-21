@@ -21,6 +21,7 @@ package me.proton.core.key.domain
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -62,7 +63,7 @@ fun PublicAddress.verifyData(
 /**
  * Encrypt [text] using this [PublicAddress.primaryKey].
  *
- * @throws [Throwable] if [text] cannot be encrypted.
+ * @throws [CryptoException] if [text] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptText]
  */
@@ -72,7 +73,7 @@ fun PublicAddress.encryptText(context: CryptoContext, text: String): EncryptedMe
 /**
  * Encrypt [data] using this [PublicAddress.primaryKey].
  *
- * @throws [Throwable] if [data] cannot be encrypted.
+ * @throws [CryptoException] if [data] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptText]
  */

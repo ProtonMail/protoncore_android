@@ -20,6 +20,7 @@ package me.proton.core.crypto.android.pgp
 
 import android.util.Base64
 import com.proton.gopenpgp.crypto.Crypto
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.simple.use
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -95,7 +96,7 @@ internal class GOpenPGPCryptoTest {
         }
     }
 
-    @Test(expected = Throwable::class)
+    @Test(expected = CryptoException::class)
     fun unlockPrivateKeyWithWrongPassphrase() {
         // GIVEN
         val privateKey = TestKey.privateKey
@@ -220,7 +221,7 @@ internal class GOpenPGPCryptoTest {
         }
     }
 
-    @Test(expected = Throwable::class)
+    @Test(expected = CryptoException::class)
     fun decryptEncryptedMessageWithWrongKey() {
         // GIVEN
         val encrypted =

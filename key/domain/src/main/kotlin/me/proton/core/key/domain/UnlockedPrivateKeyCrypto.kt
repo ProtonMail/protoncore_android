@@ -23,6 +23,7 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.decryptDataOrNull
 import me.proton.core.crypto.common.pgp.decryptTextOrNull
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.simple.EncryptedByteArray
 import me.proton.core.crypto.common.simple.decrypt
 import me.proton.core.key.domain.entity.key.PrivateKey
@@ -33,25 +34,25 @@ import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 /**
  * Decrypt [message] as [String].
  *
- * @throws [IllegalArgumentException] if [message] cannot be decrypted.
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [PrivateKeyRing.decryptText]
  */
 fun List<UnlockedPrivateKey>.decryptText(context: CryptoContext, message: EncryptedMessage): String {
     forEach { it.decryptTextOrNull(context, message)?.let { decrypted -> return decrypted } }
-    throw IllegalArgumentException("Cannot decrypt message with current Key list.")
+    throw CryptoException("Cannot decrypt message with provided Key list.")
 }
 
 /**
  * Decrypt [message] as [ByteArray].
  *
- * @throws [IllegalArgumentException] if [message] cannot be decrypted.
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [PrivateKeyRing.decryptData]
  */
 fun List<UnlockedPrivateKey>.decryptData(context: CryptoContext, message: EncryptedMessage): ByteArray {
     forEach { it.decryptDataOrNull(context, message)?.let { decrypted -> return decrypted } }
-    throw IllegalArgumentException("Cannot decrypt message with current Key list.")
+    throw CryptoException("Cannot decrypt message with provided Key list.")
 }
 
 /**
@@ -81,7 +82,7 @@ fun List<UnlockedPrivateKey>.decryptDataOrNull(context: CryptoContext, message: 
 /**
  * Decrypt [message] as [String].
  *
- * @throws [IllegalArgumentException] if [message] cannot be decrypted.
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [UnlockedPrivateKey.decryptTextOrNull]
  */
@@ -91,7 +92,7 @@ fun UnlockedPrivateKey.decryptText(context: CryptoContext, message: EncryptedMes
 /**
  * Decrypt [message] as [ByteArray].
  *
- * @throws [IllegalArgumentException] if [message] cannot be decrypted.
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [UnlockedPrivateKey.decryptDataOrNull]
  */
@@ -121,7 +122,7 @@ fun UnlockedPrivateKey.decryptDataOrNull(context: CryptoContext, message: Encryp
 /**
  * Sign [text] using this [UnlockedPrivateKey].
  *
- * @throws [Throwable] if [text] cannot be signed.
+ * @throws [CryptoException] if [text] cannot be signed.
  *
  * @see [PublicKey.verifyText]
  */
@@ -131,7 +132,7 @@ fun UnlockedPrivateKey.signText(context: CryptoContext, text: String): Signature
 /**
  * Sign [data] using this [UnlockedPrivateKey].
  *
- * @throws [Throwable] if [data] cannot be signed.
+ * @throws [CryptoException] if [data] cannot be signed.
  *
  * @see [PublicKey.verifyData]
  */
@@ -141,7 +142,7 @@ fun UnlockedPrivateKey.signData(context: CryptoContext, data: ByteArray): Signat
 /**
  * Lock this [UnlockedPrivateKey] using [passphrase].
  *
- * @throws [Throwable] if [UnlockedPrivateKey] cannot be locked using [passphrase].
+ * @throws [CryptoException] if [UnlockedPrivateKey] cannot be locked using [passphrase].
  *
  * @see [PrivateKey.unlock]
  */

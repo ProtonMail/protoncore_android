@@ -18,11 +18,13 @@
 
 package me.proton.core.key.domain
 
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.extension.primary
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -129,7 +131,7 @@ class KeyHolderExtensionsTests {
         }
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun useKeys_useWrongKeyHolder() {
         val message = "message"
 
@@ -138,8 +140,7 @@ class KeyHolderExtensionsTests {
         }.also {
             keyHolder2.useKeys(context) {
                 assertNull(decryptTextOrNull(it))
-
-                decryptText(it) // Throw IllegalArgumentException.
+                assertFailsWith(CryptoException::class) { decryptText(it) }
             }
         }
     }
