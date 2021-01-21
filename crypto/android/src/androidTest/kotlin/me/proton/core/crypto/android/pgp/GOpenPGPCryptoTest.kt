@@ -20,6 +20,7 @@ package me.proton.core.crypto.android.pgp
 
 import android.util.Base64
 import com.proton.gopenpgp.crypto.Crypto
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.simple.use
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -95,7 +96,7 @@ internal class GOpenPGPCryptoTest {
         }
     }
 
-    @Test(expected = Throwable::class)
+    @Test(expected = CryptoException::class)
     fun unlockPrivateKeyWithWrongPassphrase() {
         // GIVEN
         val privateKey = TestKey.privateKey
@@ -127,7 +128,7 @@ internal class GOpenPGPCryptoTest {
 
                 val message = "message\r\nnewline"
                 val encryptedOriginal = crypto.encryptAndSignText(message, publicKey, unlockedKey.value)
-                val decryptedText = crypto.decryptAndVerifyText(encryptedOriginal, publicKey, lockedUnlocked.value)
+                val decryptedText = crypto.decryptAndVerifyText(encryptedOriginal, listOf(publicKey), listOf(lockedUnlocked.value))
 
                 assertEquals(
                     expected = message.trimIndent(),
@@ -220,7 +221,7 @@ internal class GOpenPGPCryptoTest {
         }
     }
 
-    @Test(expected = Throwable::class)
+    @Test(expected = CryptoException::class)
     fun decryptEncryptedMessageWithWrongKey() {
         // GIVEN
         val encrypted =
@@ -310,7 +311,7 @@ internal class GOpenPGPCryptoTest {
             val encryptedAndSigned = crypto.encryptAndSignText(message, publicKey, unlockedKey.value)
 
             // THEN
-            val decryptedText = crypto.decryptAndVerifyText(encryptedAndSigned, publicKey, unlockedKey.value)
+            val decryptedText = crypto.decryptAndVerifyText(encryptedAndSigned, listOf(publicKey), listOf(unlockedKey.value))
 
             assertEquals(
                 expected = message,
@@ -332,7 +333,7 @@ internal class GOpenPGPCryptoTest {
             val encryptedAndSigned = crypto.encryptAndSignData(data, publicKey, unlockedKey.value)
 
             // THEN
-            val decryptedData = crypto.decryptAndVerifyData(encryptedAndSigned, publicKey, unlockedKey.value)
+            val decryptedData = crypto.decryptAndVerifyData(encryptedAndSigned, listOf(publicKey), listOf(unlockedKey.value))
 
             decryptedData.use {
                 assertTrue(data.contentEquals(it.array))

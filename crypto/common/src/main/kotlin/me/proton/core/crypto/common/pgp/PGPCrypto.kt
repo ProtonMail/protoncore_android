@@ -19,6 +19,7 @@
 package me.proton.core.crypto.common.pgp
 
 import me.proton.core.crypto.common.simple.use
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 
 /**
  * PGP Cryptographic interface (e.g. [lock], [unlock], [encryptData], [decryptData], [signData], [verifyData], ...).
@@ -28,7 +29,7 @@ interface PGPCrypto {
     /**
      * Lock [unlockedKey] using [passphrase].
      *
-     * @throws [Throwable] if [unlockedKey] cannot be locked using [passphrase].
+     * @throws [CryptoException] if [unlockedKey] cannot be locked using [passphrase].
      *
      * @see [unlock]
      */
@@ -39,7 +40,7 @@ interface PGPCrypto {
      *
      * @return [UnlockedKey] implementing Closeable to clear memory after usage.
      *
-     * @throws [Throwable] if [privateKey] cannot be unlocked using [passphrase].
+     * @throws [CryptoException] if [privateKey] cannot be unlocked using [passphrase].
      *
      * @see [lock]
      */
@@ -48,7 +49,7 @@ interface PGPCrypto {
     /**
      * Sign [plainText] using [unlockedKey].
      *
-     * @throws [Throwable] if [plainText] cannot be signed.
+     * @throws [CryptoException] if [plainText] cannot be signed.
      *
      * @see [verifyText]
      */
@@ -57,7 +58,7 @@ interface PGPCrypto {
     /**
      * Sign [data] using [unlockedKey].
      *
-     * @throws [Throwable] if [data] cannot be signed.
+     * @throws [CryptoException] if [data] cannot be signed.
      *
      * @see [verifyData]
      */
@@ -68,8 +69,6 @@ interface PGPCrypto {
      *
      * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
      *
-     * @throws [Throwable] if [plainText] cannot be verified.
-     *
      * @see [signText]
      */
     fun verifyText(plainText: String, signature: Armored, publicKey: Armored, validAtUtc: Long): Boolean
@@ -79,9 +78,7 @@ interface PGPCrypto {
      *
      * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
      *
-     * @throws [Throwable] if [data] cannot be verified.
-     *
-     * @see signData
+     * @see [signData]
      */
     fun verifyData(data: ByteArray, signature: Armored, publicKey: Armored, validAtUtc: Long): Boolean
 
@@ -90,25 +87,25 @@ interface PGPCrypto {
      *
      * Note: String canonicalization/standardization is applied.
      *
-     * @throws [Throwable] if [message] cannot be decrypted.
+     * @throws [CryptoException] if [message] cannot be decrypted.
      *
-     * @see encryptText
+     * @see [encryptText]
      */
     fun decryptText(message: EncryptedMessage, unlockedKey: Unarmored): String
 
     /**
      * Decrypt [message] as [ByteArray] using [unlockedKey].
      *
-     * @throws [Throwable] if [message] cannot be decrypted.
+     * @throws [CryptoException] if [message] cannot be decrypted.
      *
-     * @see encryptData
+     * @see [encryptData]
      */
     fun decryptData(message: EncryptedMessage, unlockedKey: Unarmored): ByteArray
 
     /**
      * Encrypt [plainText] using [publicKey].
      *
-     * @throws [Throwable] if [plainText] cannot be encrypted.
+     * @throws [CryptoException] if [plainText] cannot be encrypted.
      *
      * @see [decryptText].
      */
@@ -117,7 +114,7 @@ interface PGPCrypto {
     /**
      * Encrypt [data] using [publicKey].
      *
-     * @throws [Throwable] if [data] cannot be encrypted.
+     * @throws [CryptoException] if [data] cannot be encrypted.
      *
      * @see [decryptData].
      */
@@ -126,7 +123,7 @@ interface PGPCrypto {
     /**
      * Encrypt [plainText] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
      *
-     * @throws [Throwable] if [plainText] cannot be encrypted or signed.
+     * @throws [CryptoException] if [plainText] cannot be encrypted or signed.
      *
      * @see [decryptAndVerifyText].
      */
@@ -135,43 +132,51 @@ interface PGPCrypto {
     /**
      * Encrypt [data] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
      *
-     * @throws [Throwable] if [data] cannot be encrypted or signed.
+     * @throws [CryptoException] if [data] cannot be encrypted or signed.
      *
      * @see [decryptAndVerifyData].
      */
     fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
 
     /**
-     * Decrypt [message] as [String] using [unlockedKey] and verify using [publicKey].
+     * Decrypt [message] as [String] using [unlockedKeys] and verify using [publicKeys].
      *
      * Note: String canonicalization/standardization is applied.
      *
-     * @throws [Throwable] if [message] cannot be decrypted or verified.
+     * @throws [CryptoException] if [message] cannot be decrypted or verified.
      *
-     * @see encryptAndSignText
+     * @see [encryptAndSignText]
      */
-    fun decryptAndVerifyText(message: EncryptedMessage, publicKey: Armored, unlockedKey: Unarmored): String
+    fun decryptAndVerifyText(
+        message: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>
+    ): String
 
     /**
-     * Decrypt [message] as [ByteArray] using [unlockedKey] and verify using [publicKey].
+     * Decrypt [message] as [ByteArray] using [unlockedKeys] and verify using [publicKeys].
      *
-     * @throws [Throwable] if [message] cannot be decrypted or verified.
+     * @throws [CryptoException] if [message] cannot be decrypted or verified.
      *
-     * @see encryptAndSignData
+     * @see [encryptAndSignData]
      */
-    fun decryptAndVerifyData(message: EncryptedMessage, publicKey: Armored, unlockedKey: Unarmored): ByteArray
+    fun decryptAndVerifyData(
+        message: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>
+    ): ByteArray
 
     /**
      * Get [Armored] public key from [privateKey].
      *
-     * @throws [Throwable] if public key cannot be extracted from [privateKey].
+     * @throws [CryptoException] if public key cannot be extracted from [privateKey].
      */
     fun getPublicKey(privateKey: Armored): Armored
 
     /**
      * Get fingerprint from [key].
      *
-     * @throws [Throwable] if fingerprint cannot be extracted from [key].
+     * @throws [CryptoException] if fingerprint cannot be extracted from [key].
      */
     fun getFingerprint(key: Armored): String
 

@@ -75,6 +75,11 @@ object Module {
     const val cryptoCommon = "$crypto:crypto-common"
     const val cryptoAndroid = "$crypto:crypto-android"
 
+    // Key
+    const val key = ":key"
+    const val keyDomain = "$key:key-domain"
+    const val keyData = "$key:key-data"
+
     // Contacts
     const val contacts = ":contacts"
     const val contactsDomain = "$contacts:contacts-domain"

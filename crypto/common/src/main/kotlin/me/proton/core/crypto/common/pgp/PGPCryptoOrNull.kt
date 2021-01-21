@@ -127,9 +127,9 @@ fun PGPCrypto.encryptAndSignDataOrNull(
  */
 fun PGPCrypto.decryptAndVerifyTextOrNull(
     message: EncryptedMessage,
-    publicKey: Armored,
-    unlockedKey: Unarmored
-): String? = runCatching { decryptAndVerifyText(message, publicKey, unlockedKey) }.getOrNull()
+    publicKeys: List<Armored>,
+    unlockedKeys: List<Unarmored>
+): String? = runCatching { decryptAndVerifyText(message, publicKeys, unlockedKeys) }.getOrNull()
 
 /**
  * @return [ByteArray], or `null` if [message] cannot be decrypted and verified.
@@ -138,9 +138,9 @@ fun PGPCrypto.decryptAndVerifyTextOrNull(
  */
 fun PGPCrypto.decryptAndVerifyDataOrNull(
     message: EncryptedMessage,
-    publicKey: Armored,
-    unlockedKey: Unarmored
-): ByteArray? = runCatching { decryptAndVerifyData(message, publicKey, unlockedKey) }.getOrNull()
+    publicKeys: List<Armored>,
+    unlockedKeys: List<Unarmored>
+): ByteArray? = runCatching { decryptAndVerifyData(message, publicKeys, unlockedKeys) }.getOrNull()
 
 
 /**
