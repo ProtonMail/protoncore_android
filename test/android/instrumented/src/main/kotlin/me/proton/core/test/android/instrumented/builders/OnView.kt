@@ -37,6 +37,7 @@ import me.proton.core.test.android.instrumented.uiwaits.UIWaits.waitUntilViewIsG
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf
 import java.util.ArrayList
@@ -45,39 +46,92 @@ import java.util.ArrayList
  * Builder like class that allows to write [ViewActions] and [ViewAssertion] for single [View].
  */
 class OnView {
-    private var id: Int? = null
-    private var text: String? = null
-    private var parentMatcher: Matcher<View>? = null
-    private var clazz: Class<*>? = null
-    private var viewMatcher: Matcher<View>? = null
     private var tag: Any? = null
-    private var hint: String? = null
+
+    private var isCompletelyDisplayed: Boolean = false
+    private var hasLinks: Boolean = false
+    private var hasFocus: Boolean = false
+    private var hasContentDescription: Boolean = false
+    private var isClickable: Boolean = false
+    private var isChecked: Boolean = false
+    private var isFocusable: Boolean = false
+    private var isFocused: Boolean = false
+    private var isNotChecked: Boolean = false
+    private var isSelected: Boolean = false
+    private var supportsInputMethods: Boolean = false
+
+    private var clazz: Class<*>? = null
+
+    private var childCount: Int? = null
+    private var displayedPercentage: Int? = null
     private var hintId: Int? = null
-    private var visibility: ViewMatchers.Visibility? = null
+    private var inputType: Int? = null
+    private var imeAction: Int? = null
+    private var id: Int? = null
+    private var tagKey: Int? = null
+
+    private var ancestorMatcher: Matcher<View>? = null
+    private var childMatcher: Matcher<View>? = null
     private var contentDescMatcher: Matcher<out CharSequence?>? = null
+    private var descendantMatcher: Matcher<View>? = null
+    private var parentMatcher: Matcher<View>? = null
+    private var siblingMatcher: Matcher<View>? = null
+
+    private var className: String? = null
     private var contentDescText: String? = null
     private var contentDescTextId: Int? = null
-    private var ancestorMatcher: Matcher<View>? = null
+    private var errorText: String? = null
+    private var hint: String? = null
+    private var resourceName: String? = null
+    private var spinnerText: String? = null
+    private var substring: String? = null
+    private var text: String? = null
+
+    private var visibility: ViewMatchers.Visibility? = null
 
 
     /** [View] properties. **/
-    fun withId(@IdRes id: Int) = apply { this.id = id }
-
-    fun withText(@StringRes textId: Int) = apply { this.text = stringFromResource(textId) }
-
-    fun withText(text: String) = apply { this.text = text }
-
-    fun withParent(parentView: OnView) = apply { this.parentMatcher = parentView.matcher() }
-
     fun instanceOf(clazz: Class<*>?) = apply { this.clazz = clazz }
 
-    fun isDescendantOf(ancestorView: OnView) = apply { this.viewMatcher = ancestorView.matcher() }
+    fun isClickable() = apply { this.isClickable = true }
 
-    fun withTag(tag: Any) = apply { this.tag = tag }
+    fun isChecked() = apply { this.isChecked = true }
 
-    fun withHint(hint: String) = apply { this.hint = hint }
+    fun isCompletelyDisplayed() = apply { this.isCompletelyDisplayed = true }
 
-    fun withHint(@StringRes hintId: Int) = apply { this.hintId = hintId }
+    fun isDescendantOf(ancestorView: OnView) = apply { this.ancestorMatcher = ancestorView.matcher() }
+
+    fun isDisplayingAtLeast(displayedPercentage: Int) = apply { this.displayedPercentage = displayedPercentage }
+
+    fun isFocusable() = apply { this.isFocusable = true }
+
+    fun isFocused() = apply { this.isFocused = true }
+
+    fun isNotChecked() = apply { this.isNotChecked = true }
+
+    fun isSelected() = apply { this.isSelected = true }
+
+    fun hasChildCount(childCount: Int) = apply { this.childCount = childCount }
+
+    fun hasContentDescription() = apply { this.hasContentDescription = true }
+
+    fun hasDescendant(descendantView: OnView) = apply { this.descendantMatcher = descendantView.matcher() }
+
+    fun hasErrorText(errorText: String) = apply { this.errorText = errorText }
+
+    fun hasFocus() = apply { this.hasFocus = true }
+
+    fun hasImeAction(imeAction: Int) = apply { this.imeAction = imeAction }
+
+    fun hasLinks() = apply { this.hasLinks = true }
+
+    fun hasSibling(siblingView: OnView) = apply { this.siblingMatcher = siblingView.matcher() }
+
+    fun supportsInputMethods() = apply { this.supportsInputMethods = true }
+
+    fun withChild(childMatcher: OnView) = apply { this.childMatcher = childMatcher.matcher() }
+
+    fun withClassName(className: String) = apply { this.className = className }
 
     fun withContentDesc(contentDescText: String) = apply { this.contentDescText = contentDescText }
 
@@ -85,6 +139,30 @@ class OnView {
 
     fun withContentDesc(contentDescMatcher: Matcher<out CharSequence?>?) =
         apply { this.contentDescMatcher = contentDescMatcher }
+
+    fun withHint(hint: String) = apply { this.hint = hint }
+
+    fun withHint(@StringRes hintId: Int) = apply { this.hintId = hintId }
+
+    fun withId(@IdRes id: Int) = apply { this.id = id }
+
+    fun withInputType(inputType: Int) = apply { this.inputType = inputType }
+
+    fun withParent(parentView: OnView) = apply { this.parentMatcher = parentView.matcher() }
+
+    fun withResourceName(resourceName: String) = apply { this.resourceName = resourceName }
+
+    fun withSubstring(substring: String) = apply { this.substring = substring }
+
+    fun withSpinnerText(spinnerText: String) = apply { this.spinnerText = spinnerText }
+
+    fun withTag(tag: Any) = apply { this.tag = tag }
+
+    fun withTagKey(tagKey: Int) = apply { this.tagKey = tagKey }
+
+    fun withText(@StringRes textId: Int) = apply { this.text = stringFromResource(textId) }
+
+    fun withText(text: String) = apply { this.text = text }
 
     fun withVisibility(visibility: ViewMatchers.Visibility) = apply { this.visibility = visibility }
 
@@ -135,16 +213,32 @@ class OnView {
             .check(ViewAssertions.matches(ViewMatchers.withText(CoreMatchers.containsString(text))))
     }
 
+    fun checkIsChecked() = apply {
+        waitForView(viewInteraction()).check(ViewAssertions.matches(ViewMatchers.isChecked()))
+    }
+
+    fun checkIsNotChecked() = apply {
+        waitForView(viewInteraction()).check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isChecked())))
+    }
+
     fun checkDisplayed() = apply { viewInteraction().check(ViewAssertions.matches(ViewMatchers.isDisplayed())) }
+
+    fun checkDoesNotExist() = apply { waitUntilViewIsGone(viewInteraction()) }
 
     fun checkDisabled() = apply {
         waitForView(viewInteraction()).check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isEnabled())))
     }
 
-    fun checkDoesNotExist() = apply { waitUntilViewIsGone(viewInteraction()) }
+    fun checkEnabled() = apply {
+        waitForView(viewInteraction()).check(ViewAssertions.matches(ViewMatchers.isEnabled()))
+    }
 
     fun checkNotDisplayed() = apply {
         viewInteraction().check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isDisplayed())))
+    }
+
+    fun checkSelected() = apply {
+        waitForView(viewInteraction()).check(ViewAssertions.matches(ViewMatchers.isSelected()))
     }
 
 
@@ -174,6 +268,12 @@ class OnView {
         if (text != null) {
             matchers.add(ViewMatchers.withText(text))
         }
+        if (spinnerText != null) {
+            matchers.add(ViewMatchers.withSpinnerText(spinnerText))
+        }
+        if (substring != null) {
+            matchers.add(ViewMatchers.withSubstring(substring))
+        }
         if (clazz != null) {
             matchers.add(CoreMatchers.instanceOf(clazz))
         }
@@ -183,14 +283,26 @@ class OnView {
         if (tag != null) {
             matchers.add(ViewMatchers.withTagValue(`is`(tag)))
         }
+        if (tagKey != null) {
+            matchers.add(ViewMatchers.withTagKey(tagKey!!))
+        }
         if (hint != null) {
             matchers.add(ViewMatchers.withHint(hint))
+        }
+        if (inputType != null) {
+            matchers.add(ViewMatchers.withInputType(inputType!!))
         }
         if (visibility != null) {
             matchers.add(ViewMatchers.withEffectiveVisibility(visibility))
         }
         if (parentMatcher != null) {
             matchers.add(ViewMatchers.withParent(parentMatcher))
+        }
+        if (className != null) {
+            matchers.add(ViewMatchers.withClassName(equalTo(className)))
+        }
+        if (resourceName != null) {
+            matchers.add(ViewMatchers.withResourceName(resourceName))
         }
         if (contentDescMatcher != null) {
             matchers.add(ViewMatchers.withContentDescription(contentDescMatcher))
@@ -200,6 +312,51 @@ class OnView {
         }
         if (contentDescTextId != null) {
             matchers.add(ViewMatchers.withContentDescription(contentDescTextId!!))
+        }
+        if (descendantMatcher != null) {
+            matchers.add(ViewMatchers.hasDescendant(descendantMatcher))
+        }
+        if (siblingMatcher != null) {
+            matchers.add(ViewMatchers.hasSibling(siblingMatcher))
+        }
+        if (displayedPercentage != null) {
+            matchers.add(ViewMatchers.isDisplayingAtLeast(displayedPercentage!!))
+        }
+        if (errorText != null) {
+            matchers.add(ViewMatchers.hasErrorText(errorText))
+        }
+        if (childCount != null) {
+            matchers.add(ViewMatchers.hasChildCount(childCount!!))
+        }
+        if (imeAction != null) {
+            matchers.add(ViewMatchers.hasImeAction(imeAction!!))
+        }
+        if (supportsInputMethods) {
+            matchers.add(ViewMatchers.supportsInputMethods())
+        }
+        if (isCompletelyDisplayed) {
+            matchers.add(ViewMatchers.isCompletelyDisplayed())
+        }
+        if (isClickable) {
+            matchers.add(ViewMatchers.isClickable())
+        }
+        if (isChecked) {
+            matchers.add(ViewMatchers.isChecked())
+        }
+        if (isFocusable) {
+            matchers.add(ViewMatchers.isFocusable())
+        }
+        if (isFocused) {
+            matchers.add(ViewMatchers.isFocused())
+        }
+        if (isNotChecked) {
+            matchers.add(ViewMatchers.isNotChecked())
+        }
+        if (isSelected) {
+            matchers.add(ViewMatchers.isSelected())
+        }
+        if (hasLinks) {
+            matchers.add(ViewMatchers.hasLinks())
         }
         return AllOf.allOf(matchers)
     }
