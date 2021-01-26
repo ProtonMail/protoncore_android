@@ -68,7 +68,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
-                    android:hint="@string/auth_email_username_hint"
                     android:inputType="text|textEmailAddress|textNoSuggestions"
                     app:help="@string/auth_login_assistive_text"
                     app:label="@string/auth_email_username" />
@@ -78,7 +77,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
-                    android:hint="@string/auth_password"
                     android:inputType="textPassword"
                     app:actionMode="password_toggle"
                     app:label="@string/auth_password_label" />

@@ -18,10 +18,8 @@
   -->
 
 <resources>
-    <string name="auth_password">Password</string>
     <string name="auth_password_label">Password</string>
     <string name="auth_email_username">Email or username</string>
-    <string name="auth_email_username_hint">example@protonmail.com</string>
     <string name="auth_account_details">Enter your Proton Account details below</string>
     <string name="auth_sign_in">Sign in</string>
     <string name="auth_sign_in_action">Sign in</string>
@@ -45,7 +43,6 @@
     <string name="auth_2fa_error_empty_code">Two-factor code should not be empty</string>
 
     <string name="auth_mailbox_title">Unlock your mailbox</string>
-    <string name="auth_mailbox_password">Mailbox password</string>
     <string name="auth_mailbox_password_label">Mailbox password</string>
     <string name="auth_mailbox_unlock_action">Unlock</string>
     <string name="auth_forgot_password">Forgot password</string>

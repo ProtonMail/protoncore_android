@@ -38,7 +38,7 @@
     <string name="human_verification_verify">Verify</string> <!-- To verify the entered code - action -->
     <string name="human_verification_help_title">Do you need any help with human verification?</string>
     <string name="human_verification_code">Verification Code</string>
-    <string name="human_verification_search">Search</string>
+    <string name="human_verification_search">Search country</string>
     <string name="email">Email</string>
     <string name="email_hint">example@protonmail.com</string>
     <string name="sms_hint">Phone number</string>
