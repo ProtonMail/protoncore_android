@@ -21,8 +21,8 @@ package me.proton.core.user.data.api
 import me.proton.core.key.data.api.response.AddressesResponse
 import me.proton.core.key.data.api.response.SingleAddressResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.user.data.api.request.SetupAddressRequest
-import me.proton.core.user.data.api.response.SetupAddressResponse
+import me.proton.core.user.data.api.request.CreateAddressRequest
+import me.proton.core.user.data.api.response.CreateAddressResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -37,6 +37,5 @@ interface AddressApi : BaseRetrofitApi {
     suspend fun getAddress(@Path("id") id: String): SingleAddressResponse
 
     @POST("addresses/setup")
-    suspend fun setupAddress(@Body request: SetupAddressRequest): SetupAddressResponse
-
+    suspend fun createAddress(@Body request: CreateAddressRequest): CreateAddressResponse
 }

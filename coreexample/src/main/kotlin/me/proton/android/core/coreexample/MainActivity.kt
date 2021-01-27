@@ -26,7 +26,6 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -43,28 +42,28 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountDisabled
+import me.proton.core.accountmanager.presentation.onAccountChangePasswordNeeded
 import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.accountmanager.presentation.onAccountRemoved
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
+import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
 import me.proton.core.accountmanager.presentation.onSessionHumanVerificationFailed
 import me.proton.core.accountmanager.presentation.onSessionHumanVerificationNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorFailed
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
-import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.onHumanVerificationResult
 import me.proton.core.auth.presentation.onLoginResult
 import me.proton.core.auth.presentation.onScopeResult
-import me.proton.core.auth.presentation.onUserResult
+import me.proton.core.auth.presentation.ui.showPasswordChangeDialog
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.VerificationMethod
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.showForceUpdate
+import me.proton.core.user.domain.entity.UserType
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -99,20 +98,17 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             .onLoginResult { result ->
                 result
             }
-            .onUserResult { result ->
-                result
-            }
             .onScopeResult { result ->
                 result
             }
-            .onHumanVerificationResult {
-
+            .onHumanVerificationResult { result ->
+                result
             }
 
         with(binding) {
             humanVerification.onClick {
                 authOrchestrator.startHumanVerificationWorkflow(
-                    SessionId("sessionId"),
+                    "sessionId",
                     HumanVerificationDetails(
                         listOf(
                             VerificationMethod.CAPTCHA,
@@ -123,7 +119,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 )
             }
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
-            login.onClick { authOrchestrator.startLoginWorkflow(AccountType.Internal) }
+            login.onClick { authOrchestrator.startLoginWorkflow(UserType.Internal) }
             forceUpdate.onClick {
                 supportFragmentManager.showForceUpdate(
                     apiErrorMessage = "Error Message coming from the API."
@@ -144,7 +140,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }.launchIn(lifecycleScope)
 
         accountManager.getAccounts().onEach { accounts ->
-            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow(AccountType.Internal)
+            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow(UserType.Internal)
 
             binding.accountsLayout.removeAllViews()
             accounts.forEach { account ->
@@ -156,9 +152,10 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                                 when (account.state) {
                                     AccountState.Ready ->
                                         accountManager.disableAccount(account.userId)
+                                    AccountState.NotReady,
+                                    AccountState.ChangePasswordNeeded,
                                     AccountState.Disabled ->
                                         accountManager.removeAccount(account.userId)
-                                    AccountState.NotReady,
                                     AccountState.TwoPassModeNeeded,
                                     AccountState.TwoPassModeFailed ->
                                         when (account.sessionState) {
@@ -167,11 +164,16 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                                                 accountManager.disableAccount(account.userId)
                                             SessionState.Authenticated ->
                                                 authOrchestrator.startTwoPassModeWorkflow(
-                                                    account.sessionId!!,
-                                                    AccountType.Username
+                                                    account.sessionId?.id!!,
+                                                    UserType.Username
                                                 )
                                             else -> Unit
                                         }
+                                    AccountState.CreateAddressNeeded ->
+                                        authOrchestrator.startChooseAddressWorkflow(
+                                            account.sessionId?.id!!,
+                                            account.username
+                                        )
                                     else -> Unit
                                 }
                             }
@@ -182,7 +184,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }.launchIn(lifecycleScope)
 
         accountManager.onHumanVerificationNeeded(initialState = true).onEach { (account, details) ->
-            authOrchestrator.startHumanVerificationWorkflow(account.sessionId!!, details)
+            authOrchestrator.startHumanVerificationWorkflow(account.sessionId?.id!!, details)
         }.launchIn(lifecycleScope)
 
         // Used to test session ForceLogout.
@@ -207,7 +209,13 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 Timber.d("onAccountTwoPassModeNeeded -> $it")
             }
             .onAccountTwoPassModeFailed {
-                Timber.d("onAccountTwoPassModeNeeded -> $it")
+                Timber.d("onAccountTwoPassModeFailed -> $it")
+            }
+            .onAccountCreateAddressNeeded {
+                Timber.d("onAccountCreateAddressNeeded -> $it")
+            }
+            .onAccountChangePasswordNeeded {
+                Timber.d("onAccountChangePasswordNeeded -> $it")
             }
             .onSessionHumanVerificationNeeded {
                 Timber.d("onSessionHumanVerificationNeeded -> $it")
@@ -215,22 +223,6 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             .onSessionHumanVerificationFailed {
                 Timber.d("onSessionHumanVerificationFailed -> $it")
             }
-
-        // Api Call every 10sec (e.g. to test ForceLogout). - commeted for now, move it into another activity
-        lifecycleScope.launch {
-
-            while (true) {
-                delay(20000)
-//                accountManager.getPrimaryAccount().firstOrNull()?.let { account ->
-//                    account.sessionId?.let { authRepository.getUser(it) }
-//                }
-//                accountManager.getPrimaryUserId().first()?.let {
-//                    coreExampleRepository.triggerHumanVerification(it)
-//                }
-            }
-        }
-//            }
-//        }
 
         userKeyViewModel.getUserKeyState().onEach { state ->
             binding.primaryAccountKeyState.text = "User Key State: ${state::class.java.simpleName}"

@@ -55,7 +55,7 @@ internal val MIGRATION_2_3 = object : Migration(2, 3) {
         database.execSQL("CREATE TABLE IF NOT EXISTS `PublicAddressEntity` (`email` TEXT NOT NULL, `recipientType` INTEGER NOT NULL, `mimeType` TEXT, PRIMARY KEY(`email`))")
         database.execSQL("CREATE INDEX IF NOT EXISTS `index_PublicAddressEntity_email` ON `PublicAddressEntity` (`email`)")
 
-        database.execSQL("CREATE TABLE IF NOT EXISTS `PublicAddressKeyEntity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `email` TEXT NOT NULL, `flags` INTEGER NOT NULL, `publicKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, FOREIGN KEY(`email`) REFERENCES `PublicAddressEntity`(`email`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+        database.execSQL("CREATE TABLE IF NOT EXISTS `PublicAddressKeyEntity` (`email` TEXT NOT NULL, `flags` INTEGER NOT NULL, `publicKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, PRIMARY KEY(`email`, `publicKey`), FOREIGN KEY(`email`) REFERENCES `PublicAddressEntity`(`email`) ON UPDATE NO ACTION ON DELETE CASCADE )")
         database.execSQL("CREATE INDEX IF NOT EXISTS `index_PublicAddressKeyEntity_email` ON `PublicAddressKeyEntity` (`email`)")
     }
 }

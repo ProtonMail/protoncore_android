@@ -36,8 +36,6 @@ enum class AccountState {
 
     /**
      * The two pass mode has been successful.
-     *
-     * Note: Usually followed by [Ready].
      */
     TwoPassModeSuccess,
 
@@ -47,6 +45,38 @@ enum class AccountState {
      * Note: Client should consider calling [startLoginWorkflow].
      */
     TwoPassModeFailed,
+
+    /**
+     * Change Password is needed.
+     *
+     * Note: Usually followed by [Disabled] as the session will be revoked.
+     */
+    ChangePasswordNeeded,
+
+    /**
+     * Choose Username and Create an Address is needed.
+     *
+     * Note: Usually followed by either [CreateAddressSuccess] or [CreateAddressFailed].
+     *
+     * @see [CreateAddressSuccess]
+     * @see [CreateAddressFailed].
+     */
+    CreateAddressNeeded,
+
+    /**
+     * The address creation has been successful.
+     */
+    CreateAddressSuccess,
+
+    /**
+     * The address creation has failed.
+     */
+    CreateAddressFailed,
+
+    /**
+     * Unlock User primary key has failed.
+     */
+    UnlockFailed,
 
     /**
      * The [Account] is ready to use and contains a valid [Session].

@@ -18,104 +18,25 @@
 
 package me.proton.core.auth.domain.usecase
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
-import me.proton.core.auth.domain.entity.User
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.domain.arch.extension.onEachInstance
-import me.proton.core.domain.arch.onFailure
-import me.proton.core.domain.arch.onSuccess
 import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 /**
  * Performs Second Factor operation, for accounts that have enabled it.
- *
- * @param authRepository mandatory dependency for contacting the API.
- * @author Dino Kadrikj.
  */
 class PerformSecondFactor @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-
-    /**
-     * State sealed class with various (success, error) outcome state subclasses.
-     */
-    sealed class State {
-        object Processing : State()
-
-        sealed class Success : State() {
-            class SecondFactor(
-                val sessionId: SessionId,
-                val scopeInfo: ScopeInfo,
-                val user: User? = null,
-                val isTwoPassModeNeeded: Boolean? = null
-            ) : Success()
-
-            class UserSetup(
-                val sessionId: SessionId,
-                val scopeInfo: ScopeInfo,
-                val user: User,
-                val isTwoPassModeNeeded: Boolean
-            ) : Success()
-        }
-
-        sealed class Error : State() {
-            data class Message(val message: String?, val localError: Int = 0) : Error()
-            object EmptyCredentials : Error()
-            object Unrecoverable : Error()
-            data class UserSetup(val state: PerformUserSetup.State.Error) : Error()
-            data class FetchUser(val state: GetUser.State) : Error()
-            data class AccountUpgrade(val state: UpdateUsernameOnlyAccount.State.Error) : Error()
-        }
-    }
-
     /**
      * Currently only supported Second Factor Code.
      * U2F still not supported.
      */
-    operator fun invoke(
-        sessionId: SessionId,
-        secondFactorCode: String
-    ): Flow<State> = flow {
-
-        if (secondFactorCode.isEmpty()) {
-            emit(State.Error.EmptyCredentials)
-            return@flow
-        }
-
-        emit(State.Processing)
-
+    suspend operator fun invoke(sessionId: SessionId, secondFactorCode: String): ScopeInfo =
         authRepository.performSecondFactor(
-            sessionId,
-            SecondFactorProof.SecondFactorCode(secondFactorCode),
-        ).onFailure { errorMessage, _, httpCode ->
-            when (httpCode) {
-                HTTP_ERROR_BAD_REQUEST,
-                HTTP_ERROR_UNAUTHORIZED -> emit(State.Error.Unrecoverable)
-                else -> emit(State.Error.Message(errorMessage))
-            }
-        }.onSuccess { scopeInfo ->
-            emit(State.Success.SecondFactor(sessionId, scopeInfo))
-        }
-    }
-
-    companion object {
-        const val HTTP_ERROR_UNAUTHORIZED = 401
-        const val HTTP_ERROR_BAD_REQUEST = 400
-    }
+            sessionId = sessionId,
+            secondFactorProof = SecondFactorProof.SecondFactorCode(secondFactorCode),
+        )
 }
-
-fun Flow<PerformSecondFactor.State>.onProcessing(
-    action: suspend (PerformSecondFactor.State.Processing) -> Unit
-) = onEachInstance(action) as Flow<PerformSecondFactor.State>
-
-fun Flow<PerformSecondFactor.State>.onSecondFactorSuccess(
-    action: suspend (PerformSecondFactor.State.Success.SecondFactor) -> Unit
-) = onEachInstance(action) as Flow<PerformSecondFactor.State>
-
-fun Flow<PerformSecondFactor.State>.onError(
-    action: suspend (PerformSecondFactor.State.Error) -> Unit
-) = onEachInstance(action) as Flow<PerformSecondFactor.State>

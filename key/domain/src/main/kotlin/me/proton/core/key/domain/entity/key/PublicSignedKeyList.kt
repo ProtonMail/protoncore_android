@@ -18,7 +18,9 @@
 
 package me.proton.core.key.domain.entity.key
 
+import me.proton.core.crypto.common.pgp.Signature
+
 data class PublicSignedKeyList(
     val data: String,
-    val signature: String
+    val signature: Signature
 )

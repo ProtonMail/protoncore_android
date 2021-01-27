@@ -22,7 +22,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.account.data.entity.AccountEntity
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 
 @Entity(
     primaryKeys = ["userId"],

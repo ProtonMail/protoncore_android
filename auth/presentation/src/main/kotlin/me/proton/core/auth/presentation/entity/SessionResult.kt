@@ -45,7 +45,6 @@ data class SessionResult(
     val isTwoPassModeNeeded = passwordMode == 2
 
     companion object {
-
         fun from(sessionInfo: SessionInfo): SessionResult = SessionResult(
             username = sessionInfo.username,
             accessToken = sessionInfo.accessToken,

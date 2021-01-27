@@ -76,9 +76,8 @@ class AccountManagerImplTest {
         accountManager.handleTwoPassModeSuccess(account1.sessionId!!)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(2, stateLists.size)
+        assertEquals(1, stateLists.size)
         assertEquals(AccountState.TwoPassModeSuccess, stateLists[0].state)
-        assertEquals(AccountState.Ready, stateLists[1].state)
     }
 
     @Test
@@ -99,10 +98,6 @@ class AccountManagerImplTest {
         val newScopes = listOf("scope1", "scope2")
 
         accountManager.handleSecondFactorSuccess(session1.sessionId, newScopes)
-
-        val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(AccountState.Ready, stateLists[0].state)
 
         val sessionLists = accountManager.getSessions().toList()
         assertEquals(2, sessionLists.size)

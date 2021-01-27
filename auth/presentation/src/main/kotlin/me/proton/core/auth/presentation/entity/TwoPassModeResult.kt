@@ -20,13 +20,8 @@ package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import me.proton.core.auth.domain.entity.AccountType
 
-/**
- * @author Dino Kadrikj.
- */
 @Parcelize
 data class TwoPassModeResult(
-    val sessionId: String,
-    val user: UserResult
+    val sessionId: String
 ) : Parcelable

@@ -32,10 +32,10 @@ import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.EncryptedString
-import me.proton.core.crypto.common.simple.PlainByteArray
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.UsersResponse
@@ -66,7 +66,7 @@ class UserRepositoryImplTests {
     private val userApi = mockk<UserApi>(relaxed = true)
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
-        simpleCrypto = object : SimpleCrypto {
+        keyStoreCrypto = object : KeyStoreCrypto {
             override fun encrypt(value: String): EncryptedString = value
             override fun decrypt(value: EncryptedString): String = value
             override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array.copyOf())
@@ -96,7 +96,7 @@ class UserRepositoryImplTests {
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
             Product.Mail,
-            AccountRepositoryImpl(Product.Mail, db, cryptoContext.simpleCrypto),
+            AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
             mockk(relaxed = true)
         )
 
@@ -120,7 +120,7 @@ class UserRepositoryImplTests {
         }
 
         // WHEN
-        val user = userRepository.getUser(TestUsers.User1.id)
+        val user = userRepository.getUserFlow(TestUsers.User1.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
             .filterNotNull()
@@ -144,11 +144,11 @@ class UserRepositoryImplTests {
         }
 
         // Fetch User (add to cache/DB) and set passphrase -> unlock User.
-        userRepository.getUserBlocking(userId)
+        userRepository.getUser(userId)
         userRepository.setPassphrase(userId, passphrase)
 
         // WHEN
-        val user = userRepository.getUser(userId)
+        val user = userRepository.getUserFlow(userId)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
             .filterNot { it?.keys?.areAllLocked() ?: true }
@@ -170,7 +170,7 @@ class UserRepositoryImplTests {
         }
 
         // Add User1 in DB.
-        userRepository.getUserBlocking(TestUsers.User1.id)
+        userRepository.getUser(TestUsers.User1.id)
 
         // WHEN
         // Try setPassphrase for User2.
@@ -188,14 +188,14 @@ class UserRepositoryImplTests {
         }
 
         // Fetch User (add to cache/DB) and set passphrase -> unlock User.
-        userRepository.getUserBlocking(userId)
+        userRepository.getUser(userId)
         userRepository.setPassphrase(userId, passphrase)
         assertNotNull(userRepository.getPassphrase(userId))
 
         // WHEN
         userRepository.clearPassphrase(userId)
 
-        val user = userRepository.getUserBlocking(userId)
+        val user = userRepository.getUser(userId)
 
         // THEN
         assertNotNull(user)
@@ -215,7 +215,7 @@ class UserRepositoryImplTests {
         }
 
         // Fetch User (add to cache/DB).
-        val oldUser = userRepository.getUserBlocking(userId)
+        val oldUser = userRepository.getUser(userId)
         assertEquals(TestUsers.User1.response.credit, oldUser.credit)
 
         coEvery { userApi.getUsers() } answers {
@@ -223,7 +223,7 @@ class UserRepositoryImplTests {
         }
 
         // WHEN
-        val user = userRepository.getUserBlocking(userId)
+        val user = userRepository.getUser(userId)
 
         // THEN
         assertNotNull(user)
@@ -241,7 +241,7 @@ class UserRepositoryImplTests {
         }
 
         // Fetch User (add to cache/DB).
-        val oldUser = userRepository.getUserBlocking(userId)
+        val oldUser = userRepository.getUser(userId)
         assertEquals(TestUsers.User1.response.credit, oldUser.credit)
 
         coEvery { userApi.getUsers() } answers {
@@ -249,7 +249,7 @@ class UserRepositoryImplTests {
         }
 
         // WHEN
-        val user = userRepository.getUserBlocking(userId, refresh = true)
+        val user = userRepository.getUser(userId, refresh = true)
 
         // THEN
         assertNotNull(user)
@@ -268,7 +268,7 @@ class UserRepositoryImplTests {
         }
 
         // Fetch User (add to cache/DB).
-        val oldUser = userRepository.getUserBlocking(userId)
+        val oldUser = userRepository.getUser(userId)
         userRepository.setPassphrase(userId, passphrase)
         assertNotNull(userRepository.getPassphrase(userId))
 
@@ -279,7 +279,7 @@ class UserRepositoryImplTests {
         }
 
         // WHEN
-        val user = userRepository.getUserBlocking(userId, refresh = true)
+        val user = userRepository.getUser(userId, refresh = true)
 
         // THEN
         assertNotNull(user)

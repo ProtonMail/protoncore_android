@@ -25,16 +25,12 @@ import android.text.InputType
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.domain.entity.ScopeInfo
-import me.proton.core.auth.domain.entity.User
-import me.proton.core.auth.domain.usecase.GetUser
-import me.proton.core.auth.domain.usecase.PerformSecondFactor
-import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
+import me.proton.core.auth.presentation.entity.NextStep
 import me.proton.core.auth.presentation.entity.ScopeResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
-import me.proton.core.auth.presentation.entity.UserResult
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.utils.hideKeyboard
@@ -53,7 +49,7 @@ import me.proton.core.util.kotlin.exhaustive
 class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
 
     private val input: SecondFactorInput by lazy {
-        requireNotNull(intent?.extras?.getParcelable(ARG_SECOND_FACTOR_INPUT))
+        requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
     // initial mode is the second factor input mode.
@@ -88,36 +84,17 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
 
         viewModel.secondFactorState.observeData {
             when (it) {
-                is PerformSecondFactor.State.Processing -> showLoading(true)
-                is PerformSecondFactor.State.Success.SecondFactor -> onSuccess(
-                    it.sessionId,
-                    it.scopeInfo,
-                    it.user,
-                    it.isTwoPassModeNeeded ?: input.isTwoPassModeNeeded
-                )
-                is PerformSecondFactor.State.Success.UserSetup -> onSuccess(
-                    it.sessionId,
-                    it.scopeInfo,
-                    it.user,
-                    it.isTwoPassModeNeeded
-                )
-                is PerformSecondFactor.State.Error.UserSetup -> onUserSetupError(it.state)
-                is PerformSecondFactor.State.Error.Message -> onError(false, it.message)
-                is PerformSecondFactor.State.Error.EmptyCredentials -> {
-                    onError(true, getString(R.string.auth_2fa_error_empty_code))
-                }
-                is PerformSecondFactor.State.Error.Unrecoverable -> {
+                is SecondFactorViewModel.State.Processing -> showLoading(true)
+                is SecondFactorViewModel.State.Success.UserUnLocked -> onSuccess(it.scopeInfo, NextStep.None)
+                is SecondFactorViewModel.State.Need.TwoPassMode -> onSuccess(it.scopeInfo, NextStep.TwoPassMode)
+                is SecondFactorViewModel.State.Need.ChooseUsername -> onSuccess(it.scopeInfo, NextStep.ChooseAddress)
+                is SecondFactorViewModel.State.Need.ChangePassword -> onChangePassword()
+                is SecondFactorViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
+                is SecondFactorViewModel.State.Error.Message -> onError(false, it.message)
+                is SecondFactorViewModel.State.Error.Unrecoverable -> {
                     showError(getString(R.string.auth_login_general_error))
                     onBackPressed()
                 }
-                is PerformSecondFactor.State.Error.FetchUser -> onError(
-                    false,
-                    (it.state as GetUser.State.Error.Message).message
-                )
-                is PerformSecondFactor.State.Error.AccountUpgrade -> onError(
-                    false,
-                    (it.state as UpdateUsernameOnlyAccount.State.Error.Message).message
-                )
             }.exhaustive
         }
     }
@@ -139,29 +116,35 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                 .onSuccess { secondFactorCode ->
                     viewModel.startSecondFactorFlow(
                         password = input.password,
-                        sessionId = SessionId(input.sessionId),
-                        secondFactorCode = secondFactorCode,
-                        isTwoPassModeNeeded = input.isTwoPassModeNeeded,
-                        requiredAccountType = input.requiredAccountType
+                        requiredUserType = input.requiredUserType,
+                        session = input.session,
+                        secondFactorCode = secondFactorCode
                     )
                 }
         }
     }
 
     override fun onBackPressed() {
-        viewModel.stopSecondFactorFlow(SessionId(input.sessionId)).invokeOnCompletion {
-            finish()
-        }
+        viewModel.stopSecondFactorFlow(SessionId(input.session.sessionId))
+            .invokeOnCompletion { finish() }
     }
 
-    private fun onSuccess(sessionId: SessionId, scopeInfo: ScopeInfo, user: User?, isTwoPassModeNeeded: Boolean) {
+    private fun onChangePassword() {
+        showLoading(false)
+        supportFragmentManager.showPasswordChangeDialog(this)
+    }
+
+    private fun onSuccess(
+        scopeInfo: ScopeInfo,
+        nextStep: NextStep
+    ) {
         val intent = Intent().putExtra(
-            ARG_SECOND_FACTOR_RESULT,
+            ARG_RESULT,
             SecondFactorResult(
-                scope = ScopeResult(sessionId.id, scopeInfo.scopes),
-                user = user?.let { UserResult.from(it, input.requiredAccountType) },
-                isTwoPassModeNeeded = isTwoPassModeNeeded,
-                requiredAccountType = input.requiredAccountType
+                session = input.session,
+                scope = ScopeResult(input.session.sessionId, scopeInfo.scopes),
+                requiredUserType = input.requiredUserType,
+                nextStep = nextStep
             )
         )
         setResult(Activity.RESULT_OK, intent)
@@ -212,7 +195,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
     }
 
     companion object {
-        const val ARG_SECOND_FACTOR_INPUT = "arg.secondFactorInput"
-        const val ARG_SECOND_FACTOR_RESULT = "arg.secondFactorResult"
+        const val ARG_INPUT = "arg.secondFactorInput"
+        const val ARG_RESULT = "arg.secondFactorResult"
     }
 }

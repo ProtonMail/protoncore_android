@@ -34,8 +34,8 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
-import me.proton.core.crypto.common.simple.encrypt
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -48,7 +48,7 @@ import me.proton.core.util.kotlin.exhaustive
 class AccountRepositoryImpl(
     private val product: Product,
     private val db: AccountDatabase,
-    private val simpleCrypto: SimpleCrypto
+    private val keyStoreCrypto: KeyStoreCrypto
 ) : AccountRepository {
 
     private val accountDao = db.accountDao()
@@ -110,16 +110,16 @@ class AccountRepositoryImpl(
 
     override fun getSessions(): Flow<List<Session>> =
         sessionDao.findAll(product).map { list ->
-            list.map { it.toSession(simpleCrypto) }
+            list.map { it.toSession(keyStoreCrypto) }
         }.distinctUntilChanged()
 
     override fun getSession(sessionId: SessionId): Flow<Session?> =
         sessionDao.findBySessionId(sessionId.id)
-            .map { it?.toSession(simpleCrypto) }
+            .map { it?.toSession(keyStoreCrypto) }
             .distinctUntilChanged()
 
     override suspend fun getSessionOrNull(sessionId: SessionId): Session? =
-        sessionDao.get(sessionId.id)?.toSession(simpleCrypto)
+        sessionDao.get(sessionId.id)?.toSession(keyStoreCrypto)
 
     override suspend fun getSessionIdOrNull(userId: UserId): SessionId? =
         sessionDao.getSessionId(userId.id)?.let { SessionId(it) }
@@ -141,7 +141,7 @@ class AccountRepositoryImpl(
         // Update/raise provided state with session.
         db.inTransaction {
             val sessionState = account.sessionState ?: SessionState.Authenticated
-            sessionDao.insertOrUpdate(session.toSessionEntity(account.userId, product, simpleCrypto))
+            sessionDao.insertOrUpdate(session.toSessionEntity(account.userId, product, keyStoreCrypto))
             accountDao.addSession(account.userId.id, session.sessionId.id)
             updateAccountState(account.userId, account.state)
             updateSessionState(session.sessionId, sessionState)
@@ -177,7 +177,12 @@ class AccountRepositoryImpl(
                 AccountState.NotReady,
                 AccountState.TwoPassModeNeeded,
                 AccountState.TwoPassModeSuccess,
-                AccountState.TwoPassModeFailed -> deleteAccountMetadata(userId)
+                AccountState.TwoPassModeFailed,
+                AccountState.ChangePasswordNeeded,
+                AccountState.CreateAddressNeeded,
+                AccountState.CreateAddressSuccess,
+                AccountState.CreateAddressFailed,
+                AccountState.UnlockFailed -> deleteAccountMetadata(userId)
             }.exhaustive
             accountDao.updateAccountState(userId.id, state)
             getAccountOrNull(userId)?.let { tryEmitAccountStateChanged(it) }
@@ -199,10 +204,10 @@ class AccountRepositoryImpl(
         sessionDao.updateScopes(sessionId.id, CommonConverters.fromListOfStringToString(scopes).orEmpty())
 
     override suspend fun updateSessionHeaders(sessionId: SessionId, tokenType: String?, tokenCode: String?) =
-        sessionDao.updateHeaders(sessionId.id, tokenType?.encrypt(simpleCrypto), tokenCode?.encrypt(simpleCrypto))
+        sessionDao.updateHeaders(sessionId.id, tokenType?.encryptWith(keyStoreCrypto), tokenCode?.encryptWith(keyStoreCrypto))
 
     override suspend fun updateSessionToken(sessionId: SessionId, accessToken: String, refreshToken: String) =
-        sessionDao.updateToken(sessionId.id, accessToken.encrypt(simpleCrypto), refreshToken.encrypt(simpleCrypto))
+        sessionDao.updateToken(sessionId.id, accessToken.encryptWith(keyStoreCrypto), refreshToken.encryptWith(keyStoreCrypto))
 
     override fun getPrimaryUserId(): Flow<UserId?> =
         accountMetadataDao.observeLatestPrimary(product).map { it?.let { UserId(it.userId) } }

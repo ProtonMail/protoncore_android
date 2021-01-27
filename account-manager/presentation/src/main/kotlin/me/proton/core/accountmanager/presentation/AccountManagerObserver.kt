@@ -68,6 +68,30 @@ fun AccountManagerObserver.onAccountTwoPassModeFailed(
     return this
 }
 
+fun AccountManagerObserver.onAccountCreateAddressNeeded(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.CreateAddressNeeded, initialState, block)
+    return this
+}
+
+fun AccountManagerObserver.onAccountCreateAddressFailed(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.CreateAddressFailed, initialState, block)
+    return this
+}
+
+fun AccountManagerObserver.onAccountChangePasswordNeeded(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.ChangePasswordNeeded, initialState, block)
+    return this
+}
+
 fun AccountManagerObserver.onAccountReady(
     initialState: Boolean = true,
     block: suspend (Account) -> Unit

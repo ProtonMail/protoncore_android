@@ -20,10 +20,12 @@ package me.proton.core.user.data
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.PlainByteArray
-import me.proton.core.crypto.common.simple.encrypt
-import me.proton.core.crypto.common.simple.use
+import me.proton.core.crypto.common.pgp.PGPCrypto
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.use
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
@@ -31,12 +33,14 @@ import me.proton.core.key.domain.canUnlock
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.repository.KeySaltRepository
-import me.proton.core.user.domain.UnlockResult
-import me.proton.core.user.domain.UnlockResult.Error
-import me.proton.core.user.domain.UnlockResult.Success
+import me.proton.core.key.domain.repository.PrivateKeyRepository
+import me.proton.core.key.domain.signedKeyList
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.extension.hasMigratedKey
+import me.proton.core.user.domain.extension.originalOrNull
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -46,34 +50,48 @@ class UserManagerImpl(
     private val userAddressRepository: UserAddressRepository,
     private val passphraseRepository: PassphraseRepository,
     private val keySaltRepository: KeySaltRepository,
+    private val privateKeyRepository: PrivateKeyRepository,
+    private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
     private val cryptoContext: CryptoContext
 ) : UserManager {
 
-    override fun getUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<User?>> =
-        userRepository.getUser(sessionUserId, refresh = refresh)
+    override fun getUserFlow(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): Flow<DataResult<User?>> = userRepository.getUserFlow(sessionUserId, refresh = refresh)
 
-    override fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
-        userAddressRepository.getAddresses(sessionUserId, refresh = refresh)
+    override suspend fun getUser(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): User = userRepository.getUser(sessionUserId, refresh = refresh)
+
+    override fun getAddressesFlow(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): Flow<DataResult<List<UserAddress>>> = userAddressRepository.getAddressesFlow(sessionUserId, refresh = refresh)
+
+    override suspend fun getAddresses(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): List<UserAddress> = userAddressRepository.getAddresses(sessionUserId, refresh = refresh)
 
     override suspend fun unlockWithPassword(
         userId: UserId,
         password: PlainByteArray,
         refresh: Boolean
     ): UnlockResult {
-        val user = userRepository.getUserBlocking(userId, refresh = refresh)
-        val userPrimaryKey = user.keys.primary() ?: return Error.NoPrimaryKey
+        val user = userRepository.getUser(userId)
+        val userPrimaryKey = user.keys.primary()
+            ?: return UnlockResult.Error.NoPrimaryKey
 
         val salts = keySaltRepository.getKeySalts(userId)
-        val primaryKeySalt = salts.find { it.keyId == userPrimaryKey.keyId }?.takeIf { !it.keySalt.isNullOrEmpty() }
-        if (primaryKeySalt?.keySalt == null) {
-            return Error.NoKeySaltsForPrimaryKey
-        }
+        val primaryKeySalt = salts.find { it.keyId == userPrimaryKey.keyId }?.keySalt?.takeIf { it.isNotEmpty() }
+            ?: return UnlockResult.Error.NoKeySaltsForPrimaryKey
 
-        val encryptedPassphrase = cryptoContext.pgpCrypto.getPassphrase(password.array, primaryKeySalt.keySalt!!).use {
-            it.encrypt(cryptoContext.simpleCrypto)
+        val passphrase = cryptoContext.pgpCrypto.getPassphrase(password.array, primaryKeySalt).use {
+            it.encryptWith(cryptoContext.keyStoreCrypto)
         }
-
-        return unlockWithPassphrase(userId, encryptedPassphrase, refresh = false)
+        return unlockWithPassphrase(userId, passphrase, refresh = false)
     }
 
     override suspend fun unlockWithPassphrase(
@@ -81,34 +99,104 @@ class UserManagerImpl(
         passphrase: EncryptedByteArray,
         refresh: Boolean
     ): UnlockResult {
-        val user = userRepository.getUserBlocking(userId, refresh = refresh)
-        val userPrimaryKey = user.keys.primary() ?: return Error.NoPrimaryKey
+        val user = userRepository.getUser(userId, refresh = refresh)
+        val userPrimaryKey = user.keys.primary()
+            ?: return UnlockResult.Error.NoPrimaryKey
 
-        val updatedPrimaryKey = PrivateKey(
+        val key = PrivateKey(
             userPrimaryKey.privateKey.key,
             userPrimaryKey.privateKey.isPrimary,
             passphrase
         )
 
-        if (!updatedPrimaryKey.canUnlock(cryptoContext)) {
-            return Error.PrimaryKeyInvalidPassphrase
-        }
+        if (!key.canUnlock(cryptoContext))
+            return UnlockResult.Error.PrimaryKeyInvalidPassphrase
 
         passphraseRepository.setPassphrase(userId, passphrase)
-        return Success
+        return UnlockResult.Success
     }
 
     override suspend fun lock(userId: UserId) {
         passphraseRepository.clearPassphrase(userId)
     }
 
-    override suspend fun changePassword(userId: UserId, oldPassword: String, newPassword: String) {
-        TODO("Not yet implemented")
+    override suspend fun changePassword(
+        userId: UserId,
+        oldPassword: String,
+        newPassword: String
+    ) {
+        TODO("Change password not yet implemented")
         // oldPassword: Check if valid.
         // oldPassphrase: Get from DB.
         // passphrase = generatePassphrase(password, keySalt).
         // isOldValid = passphraseCanUnlockKey(privateKey, passphrase).
         // newPassphrase: generate.
-        keySaltRepository.clear(userId)
+        // keySaltRepository.clear(userId)
+    }
+
+    override suspend fun setupPrimaryKeys(
+        sessionUserId: SessionUserId,
+        username: String,
+        domain: String,
+        auth: Auth,
+        password: ByteArray
+    ): User {
+        val primaryKeySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
+        cryptoContext.pgpCrypto.getPassphrase(password, primaryKeySalt).use { passphrase ->
+            // First create a new address, remotely, if needed.
+            val userAddresses = userAddressRepository.getAddresses(sessionUserId)
+            val userAddress = userAddresses.originalOrNull()
+                ?: userAddressRepository.createAddress(
+                    sessionUserId = sessionUserId,
+                    displayName = username,
+                    domain = domain
+                )
+            // Generate a new PrivateKey for User.
+            val privateKey = cryptoContext.pgpCrypto.generateNewPrivateKey(
+                username = username,
+                domain = domain,
+                passphrase = passphrase.array,
+                keyType = PGPCrypto.KeyType.RSA,
+                keySecurity = PGPCrypto.KeySecurity.HIGH
+            )
+            val encryptedPassphrase = passphrase.encryptWith(cryptoContext.keyStoreCrypto)
+            val userPrivateKey = PrivateKey(
+                key = privateKey,
+                isPrimary = true,
+                passphrase = encryptedPassphrase
+            )
+
+            // If User have at least one migrated UserAddressKey (new key format), let's continue like this.
+            val generateOldFormat = !userAddresses.hasMigratedKey()
+
+            // Generate a new UserAddressKey for setupPrimaryKeys.
+            val userAddressKey = userAddressKeySecretProvider.generateUserAddressKey(
+                generateOldFormat = generateOldFormat,
+                userAddress = userAddress,
+                userPrivateKey = userPrivateKey,
+                username = username,
+                domain = domain,
+                isPrimary = true
+            )
+            // Setup initial primary UserKey and UserAddressKey, remotely.
+            privateKeyRepository.setupInitialKeys(
+                sessionUserId = sessionUserId,
+                primaryKey = privateKey,
+                primaryKeySalt = primaryKeySalt,
+                auth = auth,
+                primaryAddressId = userAddress.addressId.id,
+                primaryAddressPrivateKey = userAddressKey.privateKey.key,
+                primaryAddressToken = userAddressKey.token,
+                primaryAddressSignature = userAddressKey.signature,
+                primaryAddressSignedKeyList = userAddressKey.privateKey.signedKeyList(cryptoContext)
+            )
+
+            // We know we can unlock the key with this passphrase as we just generated from it.
+            passphraseRepository.setPassphrase(sessionUserId, encryptedPassphrase)
+
+            // Refresh User and Addresses.
+            userAddressRepository.getAddresses(sessionUserId, refresh = true)
+            return checkNotNull(userRepository.getUser(sessionUserId, refresh = true))
+        }
     }
 }

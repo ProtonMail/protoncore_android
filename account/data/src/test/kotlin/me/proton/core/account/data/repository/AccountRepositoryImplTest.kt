@@ -36,10 +36,10 @@ import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.EncryptedString
-import me.proton.core.crypto.common.simple.PlainByteArray
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.Product
 import org.junit.Before
 import org.junit.Test
@@ -63,7 +63,7 @@ class AccountRepositoryImplTest {
     @RelaxedMockK
     private lateinit var humanVerificationDao: HumanVerificationDetailsDao
 
-    private val simpleCrypto = object : SimpleCrypto {
+    private val simpleCrypto = object : KeyStoreCrypto {
         override fun encrypt(value: String): EncryptedString = value
         override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array)
         override fun decrypt(value: EncryptedString): String = value

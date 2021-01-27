@@ -19,6 +19,7 @@
 package me.proton.android.core.coreexample.di
 
 import android.content.Context
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,11 +29,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import me.proton.android.core.coreexample.Constants.BASE_URL
-import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.android.core.coreexample.CoreExampleLogger
-import me.proton.core.auth.data.repository.AuthRepositoryImpl
+import me.proton.android.core.coreexample.api.CoreExampleApiClient
+import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.auth.domain.ClientSecret
-import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.Product
 import me.proton.core.humanverification.data.repository.HumanVerificationLocalRepositoryImpl
 import me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl
@@ -51,9 +51,6 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger
 import javax.inject.Singleton
 
-/**
- * Application module singleton for Hilt dependencies.
- */
 @Module
 @InstallIn(ApplicationComponent::class)
 object ApplicationModule {
@@ -105,11 +102,6 @@ object ApplicationModule {
         CoreExampleRepository(apiProvider)
 
     @Provides
-    @Singleton
-    fun provideAuthRepository(apiProvider: ApiProvider): AuthRepository =
-        AuthRepositoryImpl(apiProvider)
-
-    @Provides
     fun provideLocalRepository(@ApplicationContext context: Context): HumanVerificationLocalRepository =
         HumanVerificationLocalRepositoryImpl(context)
 
@@ -122,3 +114,11 @@ object ApplicationModule {
     @ClientSecret
     fun provideClientSecret(): String = ""
 }
+
+@Module
+@InstallIn(ApplicationComponent::class)
+abstract class ApplicationBindsModule {
+    @Binds
+    abstract fun provideApiClient(coreExampleApiClient: CoreExampleApiClient): ApiClient
+}
+

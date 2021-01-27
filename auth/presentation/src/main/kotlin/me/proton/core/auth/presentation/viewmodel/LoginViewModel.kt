@@ -20,156 +20,143 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.entity.AccountType
 import me.proton.core.auth.domain.entity.SessionInfo
-import me.proton.core.auth.domain.entity.User
-import me.proton.core.auth.domain.usecase.GetUser
 import me.proton.core.auth.domain.usecase.PerformLogin
-import me.proton.core.auth.domain.usecase.PerformUserSetup
-import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
-import me.proton.core.auth.domain.usecase.onError
-import me.proton.core.auth.domain.usecase.onLoginSuccess
-import me.proton.core.auth.domain.usecase.onProcessing
-import me.proton.core.auth.domain.usecase.onSuccess
+import me.proton.core.auth.domain.usecase.SetupAccountCheck
+import me.proton.core.auth.domain.usecase.SetupOriginalAddress
+import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
+import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.UserType
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
-/**
- * View model class serving the Login activity.
- */
 class LoginViewModel @ViewModelInject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val performLogin: PerformLogin,
-    private val performUserSetup: PerformUserSetup,
-    private val getUser: GetUser,
-    private val updateUsernameOnlyAccount: UpdateUsernameOnlyAccount
+    private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
+    private val setupAccountCheck: SetupAccountCheck,
+    private val setupPrimaryKeys: SetupPrimaryKeys,
+    private val setupOriginalAddress: SetupOriginalAddress
 ) : ProtonViewModel(), ViewStateStoreScope {
 
-    val loginState = ViewStateStore<PerformLogin.State>().lock
+    val loginState = ViewStateStore<State>().lock
 
-    /**
-     * Attempts to make the login call.
-     *
-     * @param username the account's username entered as input
-     * @param password the accounts's password entered as input
-     */
+    sealed class State {
+        object Processing : State()
+        sealed class Success : State() {
+            data class UserUnLocked(val sessionInfo: SessionInfo) : Success()
+        }
+
+        sealed class Need : State() {
+            object ChangePassword : Need()
+            data class SecondFactor(val sessionInfo: SessionInfo) : Need()
+            data class TwoPassMode(val sessionInfo: SessionInfo) : Need()
+            data class ChooseUsername(val sessionInfo: SessionInfo) : Need()
+        }
+
+        sealed class Error : State() {
+            data class CannotUnlockPrimaryKey(val error: UserManager.UnlockResult.Error) : Error()
+            data class Message(val message: String?) : Error()
+        }
+    }
+
     fun startLoginWorkflow(
         username: String,
         password: ByteArray,
-        requiredAccountType: AccountType
-    ) {
-        performLogin(username, password)
-            .onProcessing { loginState.post(it) }
-            .onLoginSuccess {
-                // Storing the session is mandatory for executing subsequent requests.
-                handleSessionInfo(it.sessionInfo)
-                // Because of API bug, we need to verify if the PasswordMode 2 is really needed (user keys not empty).
-                // Also, we can not execute user api call if the account has 2FA, so this has to be done there as well.
-                if (!it.sessionInfo.isSecondFactorNeeded) {
-                    // But, we can not execute user request if second factor is needed (no sufficient scope).
-                    getUser(SessionId(it.sessionInfo.sessionId))
-                        .onSuccess { success ->
-                            onUserDetails(password, it.sessionInfo, success.user, requiredAccountType)
-                        }
-                        .onError { error -> loginState.post(PerformLogin.State.Error.FetchUser(error)) }
-                        .launchIn(viewModelScope)
-                } else {
-                    // Raise Success.Login.
-                    loginState.post(PerformLogin.State.Success.Login(it.sessionInfo))
-                }
-            }
-            .onError { loginState.post(it) }
-            .launchIn(viewModelScope)
-    }
+        requiredUserType: UserType
+    ) = flow {
+        emit(State.Processing)
 
-    /**
-     * Execute a routine when user details result is back from the API.
-     */
-    private suspend fun onUserDetails(
-        password: ByteArray,
-        sessionInfo: SessionInfo,
-        user: User,
-        requiredAccountType: AccountType
-    ) {
-        // identifies if the account is really two pass mode account (api bug)
-        val session = if (sessionInfo.isTwoPassModeNeeded && user.keys.isEmpty()) {
-            sessionInfo.copy(passwordMode = 1)
-        } else {
-            sessionInfo
-        }
-        if (!session.isTwoPassModeNeeded && user.keys.isNotEmpty()) {
-            // If Password mode is 1 pass, we directly setup the user (aka Mailbox Login)
-            setupUser(password, session)
-        } else {
-            // if there are no Address Keys and the current AccountType (Username) does not meet the required.
-            if (user.keys.isEmpty() && !user.addresses.satisfiesAccountType(requiredAccountType)) {
-                if (user.role == 1 && user.private) {
-                    // in this case we just show a dialog for password chooser
-                    accountWorkflow.handleAccountNotReady(UserId(sessionInfo.userId))
-                    loginState.post(PerformLogin.State.Error.PasswordChange)
-                } else {
-                    // we upgrade it
-                    upgradeUsernameOnlyAccount(
-                        username = checkNotNull(user.name) { "For account type `Username`, name should always be present." },
-                        password = password,
-                        sessionInfo = session
-                    )
-                }
-            } else {
-                // otherwise we raise Success.Login if there are Address Keys present.
-                loginState.post(
-                    PerformLogin.State.Success.UserSetup(
-                        sessionInfo = session,
-                        user = user.copy(passphrase = password)
-                    )
-                )
-            }
-        }
-    }
+        val sessionInfo = performLogin.invoke(username, password)
 
-    private fun upgradeUsernameOnlyAccount(
-        username: String,
-        password: ByteArray,
-        domain: String? = null,
+        // Storing the session is mandatory for executing subsequent requests.
+        handleSessionInfo(sessionInfo)
+
+        // If SecondFactorNeeded, we cannot proceed without.
+        if (sessionInfo.isSecondFactorNeeded) {
+            emit(State.Need.SecondFactor(sessionInfo))
+            return@flow
+        }
+
+        // Check if setup keys is needed and if it can be done directly.
+        when (setupAccountCheck.invoke(sessionInfo.sessionId, sessionInfo.isTwoPassModeNeeded, requiredUserType)) {
+            is SetupAccountCheck.Result.TwoPassNeeded -> State.Need.TwoPassMode(sessionInfo)
+            is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(sessionInfo)
+            is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(sessionInfo, password)
+            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(sessionInfo, password)
+            is SetupAccountCheck.Result.SetupOriginalAddressNeeded -> setupOriginalAddress(sessionInfo, password)
+            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(sessionInfo, password)
+        }.let {
+            emit(it)
+        }
+    }.catch { error ->
+        loginState.post(State.Error.Message(error.message))
+    }.onEach { state ->
+        loginState.post(state)
+    }.launchIn(viewModelScope)
+
+    private suspend fun changePassword(
         sessionInfo: SessionInfo
-    ) {
-        updateUsernameOnlyAccount(
-            sessionId = SessionId(sessionInfo.sessionId),
-            username = username,
-            passphrase = password,
-            domain = domain
-        )
-            .onSuccess {
-                accountWorkflow.handleAccountReady(UserId(sessionInfo.userId))
-                setupUser(password, sessionInfo)
-            }
-            .onError {
-                accountWorkflow.handleAccountNotReady(UserId(sessionInfo.userId))
-                loginState.post(PerformLogin.State.Error.AccountUpgrade(it))
-            }
-            .launchIn(viewModelScope)
+    ): State {
+        accountWorkflow.handleAccountChangePasswordNeeded(UserId(sessionInfo.userId))
+        return State.Need.ChangePassword
     }
 
-    private fun setupUser(password: ByteArray, sessionInfo: SessionInfo) {
-        performUserSetup(SessionId(sessionInfo.sessionId), password)
-            .onSuccess {
-                accountWorkflow.handleAccountReady(UserId(sessionInfo.userId))
-                loginState.post(PerformLogin.State.Success.UserSetup(sessionInfo, it.user))
-            }
-            .onError {
-                accountWorkflow.handleAccountNotReady(UserId(sessionInfo.userId))
-                loginState.post(PerformLogin.State.Error.UserSetup(it))
-            }
-            .launchIn(viewModelScope)
+    private suspend fun unlockUserPrimaryKey(
+        session: SessionInfo,
+        password: ByteArray
+    ): State {
+        val result = unlockUserPrimaryKey.invoke(SessionId(session.sessionId), password)
+        return if (result is UserManager.UnlockResult.Success) {
+            accountWorkflow.handleAccountReady(UserId(session.userId))
+            State.Success.UserUnLocked(session)
+        } else {
+            accountWorkflow.handleAccountUnlockFailed(UserId(session.userId))
+            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
+        }
+    }
+
+    private suspend fun setupPrimaryKeys(
+        session: SessionInfo,
+        password: ByteArray
+    ): State {
+        setupPrimaryKeys.invoke(SessionId(session.sessionId), password)
+        return unlockUserPrimaryKey(session, password)
+    }
+
+    private suspend fun setupOriginalAddress(
+        session: SessionInfo,
+        password: ByteArray
+    ): State {
+        val state = unlockUserPrimaryKey(session, password)
+        setupOriginalAddress.invoke(SessionId(session.sessionId))
+        return state
+    }
+
+    private suspend fun chooseUsername(
+        session: SessionInfo,
+        password: ByteArray
+    ): State {
+        val state = unlockUserPrimaryKey(session, password)
+        return if (state is State.Success.UserUnLocked) {
+            accountWorkflow.handleAccountCreateAddressNeeded(UserId(session.userId))
+            State.Need.ChooseUsername(session)
+        } else {
+            state
+        }
     }
 
     private suspend fun handleSessionInfo(sessionInfo: SessionInfo) {

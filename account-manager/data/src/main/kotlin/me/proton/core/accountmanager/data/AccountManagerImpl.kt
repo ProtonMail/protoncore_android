@@ -51,8 +51,8 @@ class AccountManagerImpl constructor(
     }
 
     private suspend fun disableAccount(account: Account) {
-        accountRepository.updateAccountState(account.userId, AccountState.Disabled)
         account.sessionId?.let { removeSession(it) }
+        accountRepository.updateAccountState(account.userId, AccountState.Disabled)
     }
 
     private suspend fun disableAccount(sessionId: SessionId) {
@@ -110,10 +110,6 @@ class AccountManagerImpl constructor(
 
     override suspend fun handleTwoPassModeSuccess(sessionId: SessionId) {
         accountRepository.updateAccountState(sessionId, AccountState.TwoPassModeSuccess)
-        accountRepository.getAccountOrNull(sessionId)?.let { account ->
-            if (account.sessionState == SessionState.Authenticated)
-                accountRepository.updateAccountState(sessionId, AccountState.Ready)
-        }
     }
 
     override suspend fun handleTwoPassModeFailed(sessionId: SessionId) {
@@ -124,10 +120,6 @@ class AccountManagerImpl constructor(
         accountRepository.updateSessionScopes(sessionId, updatedScopes)
         accountRepository.updateSessionState(sessionId, SessionState.SecondFactorSuccess)
         accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
-        accountRepository.getAccountOrNull(sessionId)?.let { account ->
-            if (account.state != AccountState.TwoPassModeNeeded)
-                accountRepository.updateAccountState(sessionId, AccountState.Ready)
-        }
     }
 
     override suspend fun handleSecondFactorFailed(sessionId: SessionId) {
@@ -146,6 +138,28 @@ class AccountManagerImpl constructor(
         accountRepository.updateSessionHeaders(sessionId, null, null)
         accountRepository.updateSessionState(sessionId, SessionState.HumanVerificationFailed)
         accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
+    }
+
+    override suspend fun handleAccountChangePasswordNeeded(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.ChangePasswordNeeded)
+    }
+
+    override suspend fun handleAccountCreateAddressNeeded(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.CreateAddressNeeded)
+    }
+
+    override suspend fun handleAccountCreateAddressSuccess(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.CreateAddressSuccess)
+    }
+
+    override suspend fun handleAccountCreateAddressFailed(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.CreateAddressFailed)
+        disableAccount(userId)
+    }
+
+    override suspend fun handleAccountUnlockFailed(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.UnlockFailed)
+        disableAccount(userId)
     }
 
     override suspend fun handleAccountReady(userId: UserId) {

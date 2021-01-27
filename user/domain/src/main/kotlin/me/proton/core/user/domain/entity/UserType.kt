@@ -20,17 +20,17 @@ package me.proton.core.user.domain.entity
 
 enum class UserType {
     /**
-     * User with no email addresses associated with it.
+     * User with no email address associated with it, but a username.
      */
     Username,
 
     /**
-     * User with at least one internal email address associated with it.
+     * User with at least one internal email address associated with it, and username.
      */
     Internal,
 
     /**
-     * User with at least one external email address associated with it.
+     * User with at least one external email address associated with it, but no username.
      */
     External
 }

@@ -51,7 +51,7 @@
                     style="@style/ProtonTextView.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/auth_create_address_title" />
+                    android:text="@string/auth_create_address_result_title" />
 
                 <TextView
                     android:id="@+id/subtitleText"
@@ -59,24 +59,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_subtitle_top_margin"
-                    android:text="@string/auth_create_address_subtitle" />
+                    android:text="@string/auth_create_address_result_subtitle" />
 
-                <me.proton.core.presentation.ui.view.ProtonInput
-                    android:id="@+id/usernameInput"
+                <TextView
+                    android:id="@+id/resultText"
+                    style="@style/ProtonTextView.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
-                    android:inputType="text|textNoSuggestions"
-                    app:label="@string/auth_username" />
+                    android:text="@string/auth_create_address_result_recovery_title"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/externalEmailText"
+                    style="@style/ProtonTextView.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/auth_subtitle_top_margin"
+                    android:textSize="16sp" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
-                    android:id="@+id/nextButton"
+                    android:id="@+id/createAddressButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_separator_top_margin"
-                    android:enabled="false"
-                    android:text="@string/auth_username_next_action" />
+                    android:text="@string/auth_create_address_create" />
 
+                <TextView
+                    android:id="@+id/termsConditionsText"
+                    style="@style/ProtonTextView.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/auth_content_top_margin"
+                    android:text="@string/auth_create_address_terms"
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </ScrollView>

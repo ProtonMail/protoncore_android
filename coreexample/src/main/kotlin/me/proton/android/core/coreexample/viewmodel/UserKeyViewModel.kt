@@ -20,6 +20,7 @@ package me.proton.android.core.coreexample.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.transformLatest
@@ -34,6 +35,7 @@ import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
 import me.proton.core.user.domain.UserManager
+import timber.log.Timber
 
 class UserKeyViewModel @ViewModelInject constructor(
     private val accountManager: AccountManager,
@@ -42,21 +44,21 @@ class UserKeyViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     sealed class UserKeyState {
-        object Unknown : UserKeyState()
         object Success : UserKeyState()
         sealed class Error : UserKeyState() {
+            data class Message(val message: String?) : Error()
+            object NoPrimaryAccount : Error()
             object KeyLocked : Error()
             object CannotDecrypt : Error()
             object CannotVerify : Error()
         }
     }
 
-    fun getUserKeyState() = accountManager
-        .getPrimaryAccount()
-        .flatMapLatest { primary -> primary?.let { userManager.getUser(it.userId) } ?: flowOf(null) }
+    fun getUserKeyState() = accountManager.getPrimaryAccount()
+        .flatMapLatest { primary -> primary?.let { userManager.getUserFlow(it.userId) } ?: flowOf(null) }
         .transformLatest { result ->
             if (result == null || result !is DataResult.Success || result.value == null) {
-                emit(UserKeyState.Unknown)
+                emit(UserKeyState.Error.NoPrimaryAccount)
                 return@transformLatest
             }
             val user = result.value!!
@@ -75,5 +77,8 @@ class UserKeyViewModel @ViewModelInject constructor(
                     return@useKeys UserKeyState.Error.CannotVerify
             }
             emit(state)
+        }.catch { error ->
+            Timber.e(error)
+            emit(UserKeyState.Error.Message(error.message))
         }
 }

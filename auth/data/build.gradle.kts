@@ -26,7 +26,7 @@ plugins {
 
 libVersion = Version(0, 4, 0)
 
-android()
+android(minSdk = 23)
 
 dependencies {
 

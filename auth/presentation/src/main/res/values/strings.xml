@@ -36,7 +36,7 @@
     <string name="auth_2fa_label">Two-factor code</string>
     <string name="auth_2fa_recovery_code_label">Recovery code</string>
     <string name="auth_2fa_assistive_text">Enter the 6-digit code.</string>
-    <string name="auth_2fa_recovery_code_assistive_text">Enter a 8-character recovery code.</string>
+    <string name="auth_2fa_recovery_code_assistive_text">Enter an 8-character recovery code.</string>
     <string name="auth_2fa_action">Authenticate</string>
     <string name="auth_2fa_use_recovery_code">Use recovery code</string>
     <string name="auth_2fa_use_2fa_code">Use two-factor code</string>

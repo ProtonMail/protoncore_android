@@ -24,8 +24,8 @@ import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.decryptDataOrNull
 import me.proton.core.crypto.common.pgp.decryptTextOrNull
 import me.proton.core.crypto.common.pgp.exception.CryptoException
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.decrypt
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -147,6 +147,6 @@ fun UnlockedPrivateKey.signData(context: CryptoContext, data: ByteArray): Signat
  * @see [PrivateKey.unlock]
  */
 fun UnlockedPrivateKey.lock(context: CryptoContext, passphrase: EncryptedByteArray, isPrimary: Boolean): PrivateKey =
-    passphrase.decrypt(context.simpleCrypto).use { decrypted ->
+    passphrase.decryptWith(context.keyStoreCrypto).use { decrypted ->
         context.pgpCrypto.lock(unlockedKey.value, decrypted.array).let { PrivateKey(it, isPrimary, passphrase) }
     }

@@ -32,10 +32,10 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.exception.CryptoException
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.EncryptedString
-import me.proton.core.crypto.common.simple.PlainByteArray
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.AddressesResponse
@@ -53,6 +53,7 @@ import me.proton.core.user.data.TestAccounts
 import me.proton.core.user.data.TestAddresses
 import me.proton.core.user.data.TestApiManager
 import me.proton.core.user.data.TestUsers
+import me.proton.core.user.data.UserAddressKeySecretProvider
 import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.domain.extension.primary
@@ -73,7 +74,7 @@ class UserAddressRepositoryImplTests {
     private val addressApi = mockk<AddressApi>(relaxed = true)
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
-        simpleCrypto = object : SimpleCrypto {
+        keyStoreCrypto = object : KeyStoreCrypto {
             override fun encrypt(value: String): EncryptedString = value
             override fun decrypt(value: EncryptedString): String = value
             override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array.copyOf())
@@ -102,17 +103,20 @@ class UserAddressRepositoryImplTests {
 
         userRepository = UserRepositoryImpl(db, apiProvider)
         userAddressRepository = UserAddressRepositoryImpl(
-            userRepository,
-            userRepository,
             db,
             apiProvider,
-            cryptoContext
+            userRepository,
+            UserAddressKeySecretProvider(
+                userRepository,
+                userRepository,
+                cryptoContext
+            )
         )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
             Product.Mail,
-            AccountRepositoryImpl(Product.Mail, db, cryptoContext.simpleCrypto),
+            AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
             mockk(relaxed = true)
         )
 
@@ -139,7 +143,7 @@ class UserAddressRepositoryImplTests {
         }
 
         // WHEN
-        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id)
+        val addresses = userAddressRepository.getAddressesFlow(TestUsers.User1.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
             .filterNotNull()
@@ -161,7 +165,7 @@ class UserAddressRepositoryImplTests {
         }
 
         // WHEN
-        val addresses = userAddressRepository.getAddressesBlocking(TestUsers.User1.id)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id)
 
         // THEN
         assertNotNull(addresses)
@@ -179,7 +183,7 @@ class UserAddressRepositoryImplTests {
         }
 
         // WHEN
-        val addresses = userAddressRepository.getAddressesBlocking(TestUsers.User1.id)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id)
 
         // THEN
         addresses.primary()!!.useKeys(cryptoContext) {
@@ -203,11 +207,11 @@ class UserAddressRepositoryImplTests {
         }
 
         // Fetch User (add to cache/DB) and set passphrase -> unlock User.
-        userRepository.getUserBlocking(TestUsers.User1.id)
+        userRepository.getUser(TestUsers.User1.id)
         userRepository.setPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
 
         // WHEN
-        val addresses = userAddressRepository.getAddressesBlocking(TestUsers.User1.id)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id)
 
         // THEN
         addresses.primary()!!.useKeys(cryptoContext) {
@@ -251,11 +255,11 @@ class UserAddressRepositoryImplTests {
         }
 
         // Fetch User (add to cache/DB) and set passphrase -> unlock User.
-        userRepository.getUserBlocking(TestUsers.User2.id)
+        userRepository.getUser(TestUsers.User2.id)
         userRepository.setPassphrase(TestUsers.User2.id, TestUsers.User2.Key1.passphrase)
 
         // WHEN
-        val addresses = userAddressRepository.getAddressesBlocking(TestUsers.User2.id)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User2.id)
 
         // THEN
         addresses.primary()!!.useKeys(cryptoContext) {
@@ -282,7 +286,7 @@ class UserAddressRepositoryImplTests {
         }
 
         // WHEN
-        val addresses = userAddressRepository.getAddressesBlocking(TestUsers.User2.id)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User2.id)
 
         // THEN
         addresses.primary()!!.useKeys(cryptoContext) {

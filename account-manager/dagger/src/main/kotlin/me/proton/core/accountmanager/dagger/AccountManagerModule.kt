@@ -34,9 +34,9 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.android.context.AndroidCryptoContext
-import me.proton.core.crypto.android.simple.KeyStoreSimpleCrypto
+import me.proton.core.crypto.android.simple.AndroidKeyStoreCrypto
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -53,24 +53,24 @@ object AccountManagerModule {
 
     @Provides
     @Singleton
-    fun provideSimpleCrypto(): SimpleCrypto =
-        KeyStoreSimpleCrypto.default
+    fun provideKeyStoreCrypto(): KeyStoreCrypto =
+        AndroidKeyStoreCrypto.default
 
     @Provides
     @Singleton
     fun provideCryptoContext(
-        simpleCrypto: SimpleCrypto
+        keyStoreCrypto: KeyStoreCrypto
     ): CryptoContext =
-        AndroidCryptoContext(simpleCrypto)
+        AndroidCryptoContext(keyStoreCrypto)
 
     @Provides
     @Singleton
     fun provideAccountRepository(
         product: Product,
         accountManagerDatabase: AccountManagerDatabase,
-        simpleCrypto: SimpleCrypto
+        keyStoreCrypto: KeyStoreCrypto
     ): AccountRepository =
-        AccountRepositoryImpl(product, accountManagerDatabase, simpleCrypto)
+        AccountRepositoryImpl(product, accountManagerDatabase, keyStoreCrypto)
 
     @Provides
     @Singleton

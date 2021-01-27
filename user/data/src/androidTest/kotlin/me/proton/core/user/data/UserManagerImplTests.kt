@@ -33,10 +33,10 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.exception.CryptoException
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.EncryptedString
-import me.proton.core.crypto.common.simple.PlainByteArray
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.AddressesResponse
@@ -57,6 +57,7 @@ import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.repository.UserAddressRepositoryImpl
 import me.proton.core.user.data.repository.UserRepositoryImpl
 import me.proton.core.user.domain.UnlockResult
+import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.PassphraseRepository
 import org.junit.After
@@ -76,7 +77,7 @@ class UserManagerImplTests {
     private val addressApi = mockk<AddressApi>(relaxed = true)
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
-        simpleCrypto = object : SimpleCrypto {
+        keyStoreCrypto = object : KeyStoreCrypto {
             override fun encrypt(value: String): EncryptedString = value
             override fun decrypt(value: EncryptedString): String = value
             override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array.copyOf())
@@ -115,17 +116,20 @@ class UserManagerImplTests {
 
         // UserManagerImpl need UserAddressRepository.
         userAddressRepository = UserAddressRepositoryImpl(
-            userRepository,
-            passphraseRepository,
             db,
             apiProvider,
-            cryptoContext
+            userRepository,
+            UserAddressKeySecretProvider(
+                userRepository,
+                userRepository,
+                cryptoContext
+            )
         )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
             Product.Mail,
-            AccountRepositoryImpl(Product.Mail, db, cryptoContext.simpleCrypto),
+            AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
             mockk(relaxed = true)
         )
 
@@ -161,9 +165,9 @@ class UserManagerImplTests {
         val result = userManager.unlockWithPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
 
         // THEN
-        assertIs<UnlockResult.Success>(result)
+        assertIs<UserManager.UnlockResult.Success>(result)
 
-        val user = userManager.getUser(TestUsers.User1.id)
+        val user = userManager.getUserFlow(TestUsers.User1.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
             .filterNot { it?.keys?.areAllLocked() ?: true }
@@ -187,7 +191,7 @@ class UserManagerImplTests {
         userManager.unlockWithPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
 
         // WHEN
-        val user = userManager.getUser(TestUsers.User1.id)
+        val user = userManager.getUserFlow(TestUsers.User1.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
             .filterNot { it?.keys?.areAllLocked() ?: true }
@@ -215,7 +219,7 @@ class UserManagerImplTests {
         }
 
         // WHEN
-        val user = userManager.getUser(TestUsers.User1.id)
+        val user = userManager.getUserFlow(TestUsers.User1.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
             .filterNotNull()
@@ -247,7 +251,7 @@ class UserManagerImplTests {
         }
 
         // WHEN
-        val addresses = userManager.getAddresses(TestUsers.User1.id)
+        val addresses = userManager.getAddressesFlow(TestUsers.User1.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
             .filterNotNull()
@@ -283,7 +287,7 @@ class UserManagerImplTests {
         userManager.unlockWithPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
 
         // WHEN
-        val addresses = userManager.getAddresses(TestUsers.User1.id)
+        val addresses = userManager.getAddressesFlow(TestUsers.User1.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
             .filterNotNull()
@@ -317,7 +321,7 @@ class UserManagerImplTests {
         userManager.unlockWithPassphrase(TestUsers.User2.id, TestUsers.User2.Key1.passphrase)
 
         // WHEN
-        val addresses = userManager.getAddresses(TestUsers.User2.id)
+        val addresses = userManager.getAddressesFlow(TestUsers.User2.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
             .filterNotNull()

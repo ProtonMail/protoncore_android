@@ -20,11 +20,9 @@ package me.proton.android.core.coreexample.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.transformLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
@@ -38,6 +36,7 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
+import timber.log.Timber
 
 class UserAddressKeyViewModel @ViewModelInject constructor(
     private val accountManager: AccountManager,
@@ -46,21 +45,22 @@ class UserAddressKeyViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     sealed class UserAddressKeyState {
-        object Unknown : UserAddressKeyState()
         object Success : UserAddressKeyState()
         sealed class Error : UserAddressKeyState() {
+            data class Message(val message: String?) : Error()
+            object NoPrimaryAccount : Error()
+            object NoPrimaryAddress : Error()
             object KeyLocked : Error()
             object CannotDecrypt : Error()
             object CannotVerify : Error()
         }
     }
 
-    fun getUserAddressKeyState() = accountManager
-        .getPrimaryAccount()
-        .flatMapLatest { primary -> primary?.let { userManager.getUser(it.userId) } ?: flowOf(null) }
+    fun getUserAddressKeyState() = accountManager.getPrimaryAccount()
+        .flatMapLatest { primary -> primary?.let { userManager.getUserFlow(it.userId) } ?: flowOf(null) }
         .transformLatest { result ->
             if (result == null || result !is DataResult.Success || result.value == null) {
-                emit(UserAddressKeyState.Unknown)
+                emit(UserAddressKeyState.Error.NoPrimaryAccount)
                 return@transformLatest
             }
             val user = result.value!!
@@ -69,20 +69,25 @@ class UserAddressKeyViewModel @ViewModelInject constructor(
                 return@transformLatest
             }
 
-            val addresses = userManager.getAddresses(user.userId)
-                .mapLatest { it as? DataResult.Success }
-                .mapLatest { it?.value }
-                .filterNotNull()
-                .firstOrNull()
+            val addresses = userManager.getAddresses(user.userId, refresh = true)
 
-            val state = addresses?.primary()?.useKeys(cryptoContext) {
+            val primary = addresses.primary()
+            if (primary == null) {
+                emit(UserAddressKeyState.Error.NoPrimaryAddress)
+                return@transformLatest
+            }
+
+            val state = primary.useKeys(cryptoContext) {
                 val message = "message"
                 val encrypted = encryptText(message)
                 val signature = signText(message)
                 val decrypted = decryptTextOrNull(encrypted) ?: return@useKeys UserAddressKeyState.Error.CannotDecrypt
                 if (!verifyText(decrypted, signature)) return@useKeys UserAddressKeyState.Error.CannotVerify
                 return@useKeys UserAddressKeyState.Success
-            } ?: UserAddressKeyState.Unknown
+            }
             emit(state)
+        }.catch { error ->
+            Timber.e(error)
+            emit(UserAddressKeyState.Error.Message(error.message))
         }
 }

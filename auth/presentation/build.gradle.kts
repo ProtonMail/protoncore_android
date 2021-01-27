@@ -30,7 +30,10 @@ plugins {
 
 libVersion = Version(0, 4, 0)
 
-android(useDataBinding = true)
+android(
+    minSdk = 23,
+    useDataBinding = true
+)
 
 dependencies {
 
@@ -40,6 +43,7 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.presentation),
+        project(Module.crypto),
 
         // Features
         project(Module.authDomain),
@@ -62,10 +66,7 @@ dependencies {
         `hilt-androidx-viewModel`,
         `lifecycle-viewModel`,
         `material`,
-        `viewStateStore`,
-
-        // Other
-        `bcrypt`
+        `viewStateStore`
     )
 
     kapt(
@@ -73,10 +74,7 @@ dependencies {
         `hilt-android-compiler`,
         `hilt-androidx-compiler`
     )
-    compileOnly(
-        project(Module.gopenpgp),
-        `assistedInject-annotations-dagger`
-    )
+    compileOnly(`assistedInject-annotations-dagger`)
 
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))

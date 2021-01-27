@@ -20,11 +20,9 @@ package me.proton.android.core.coreexample.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.transformLatest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
@@ -33,22 +31,24 @@ import me.proton.core.domain.arch.DataResult
 import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.extension.areAllLocked
-import me.proton.core.key.domain.repository.PublicAddressKeyRepository
+import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
+import timber.log.Timber
 
 class PublicAddressViewModel @ViewModelInject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
-    private val publicAddressKeyRepository: PublicAddressKeyRepository,
+    private val publicAddressRepository: PublicAddressRepository,
     private val cryptoContext: CryptoContext
 ) : ViewModel() {
 
     sealed class PublicAddressState {
-        object Unknown : PublicAddressState()
         object Success : PublicAddressState()
         sealed class Error : PublicAddressState() {
+            data class Message(val message: String?) : Error()
+            object NoPrimaryAccount : Error()
             object NoPrimaryAddress : Error()
             object NoPublicAddress : Error()
             object KeyLocked : Error()
@@ -57,12 +57,11 @@ class PublicAddressViewModel @ViewModelInject constructor(
         }
     }
 
-    fun getPublicAddressState() = accountManager
-        .getPrimaryAccount()
-        .flatMapLatest { primary -> primary?.let { userManager.getUser(it.userId) } ?: flowOf(null) }
+    fun getPublicAddressState() = accountManager.getPrimaryAccount()
+        .flatMapLatest { primary -> primary?.let { userManager.getUserFlow(it.userId) } ?: flowOf(null) }
         .transformLatest { result ->
             if (result == null || result !is DataResult.Success || result.value == null) {
-                emit(PublicAddressState.Unknown)
+                emit(PublicAddressState.Error.NoPrimaryAccount)
                 return@transformLatest
             }
             val user = result.value!!
@@ -73,20 +72,16 @@ class PublicAddressViewModel @ViewModelInject constructor(
 
             // Get Addresses from primary User.
             val addresses = userManager.getAddresses(user.userId, refresh = true)
-                .mapLatest { it as? DataResult.Success }
-                .mapLatest { it?.value }
-                .filterNotNull()
-                .firstOrNull()
 
             // Get Primary address from primary User.
-            val primaryAddress = addresses?.primary()
+            val primaryAddress = addresses.primary()
             if (primaryAddress == null) {
                 emit(PublicAddressState.Error.NoPrimaryAddress)
                 return@transformLatest
             }
 
             // Get PublicAddress from server.
-            val publicAddress = publicAddressKeyRepository.getPublicAddress(user.userId, primaryAddress.email)
+            val publicAddress = publicAddressRepository.getPublicAddress(user.userId, primaryAddress.email)
             if (publicAddress == null) {
                 emit(PublicAddressState.Error.NoPublicAddress)
                 return@transformLatest
@@ -107,5 +102,8 @@ class PublicAddressViewModel @ViewModelInject constructor(
                     return@useKeys PublicAddressState.Success
             }
             emit(state)
+        }.catch { error ->
+            Timber.e(error)
+            emit(PublicAddressState.Error.Message(error.message))
         }
 }

@@ -18,7 +18,7 @@
 
 package me.proton.core.user.data
 
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.UserKeyResponse
 import me.proton.core.key.data.api.response.UserResponse

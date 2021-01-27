@@ -26,7 +26,7 @@ import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
@@ -85,10 +85,10 @@ class UserRepositoryImpl(
     private suspend fun deleteAll() =
         userDao.deleteAll()
 
-    override fun getUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<User>> =
+    override fun getUserFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<User>> =
         store.stream(StoreRequest.cached(sessionUserId, refresh = refresh)).map { it.toDataResult() }
 
-    override suspend fun getUserBlocking(sessionUserId: SessionUserId, refresh: Boolean): User =
+    override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User =
         if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)
 
     // region PassphraseRepository
