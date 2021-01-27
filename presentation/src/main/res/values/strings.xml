@@ -25,4 +25,8 @@
     <string name="presentation_force_update_learn_more">Learn more</string>
     <string name="presentation_force_update_update">Update</string>
     <string name="presentation_market_missing">Can not find market application installed on the device. Please go to the store and update the application.</string>
+
+    <string name="presentation_alert_title">Alert</string>
+    <string name="presentation_alert_ok">OK</string>
+    <string name="presentation_alert_cancel">Cancel</string>
 </resources>

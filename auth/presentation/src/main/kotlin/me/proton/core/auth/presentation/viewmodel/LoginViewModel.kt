@@ -94,7 +94,7 @@ class LoginViewModel @ViewModelInject constructor(
     /**
      * Execute a routine when user details result is back from the API.
      */
-    private fun onUserDetails(
+    private suspend fun onUserDetails(
         password: ByteArray,
         sessionInfo: SessionInfo,
         user: User,
@@ -112,12 +112,18 @@ class LoginViewModel @ViewModelInject constructor(
         } else {
             // if there are no Address Keys and the current AccountType (Username) does not meet the required.
             if (user.keys.isEmpty() && !user.addresses.satisfiesAccountType(requiredAccountType)) {
-                // we upgrade it
-                upgradeUsernameOnlyAccount(
-                    username = checkNotNull(user.name) { "For account type `Username`, name should always be present." },
-                    password = password,
-                    sessionInfo = session
-                )
+                if (user.role == 1 && user.private) {
+                    // in this case we just show a dialog for password chooser
+                    accountWorkflow.handleAccountNotReady(UserId(sessionInfo.userId))
+                    loginState.post(PerformLogin.State.Error.PasswordChange)
+                } else {
+                    // we upgrade it
+                    upgradeUsernameOnlyAccount(
+                        username = checkNotNull(user.name) { "For account type `Username`, name should always be present." },
+                        password = password,
+                        sessionInfo = session
+                    )
+                }
             } else {
                 // otherwise we raise Success.Login if there are Address Keys present.
                 loginState.post(
