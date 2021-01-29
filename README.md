@@ -176,6 +176,14 @@ Contacts Presentation: **0** - _released on: ND_
 
 Contacts Data: **0** - _released on: ND_
 
+### Mail Message
+
+Mail Message: **0** - _released on: ND_
+
+Mail Message Domain: **0** - _released on: ND_
+
+Mail Message Data: **0** - _released on: ND_
+
 ### Settings
 
 Settings: **0** - _released on: ND_

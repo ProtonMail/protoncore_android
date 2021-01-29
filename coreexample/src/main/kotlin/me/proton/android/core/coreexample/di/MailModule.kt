@@ -16,25 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.android.core.coreexample.di
 
-data class PublicAddress(
-    val email: String,
-    val recipientType: Int,
-    val mimeType: String?,
-    val keys: List<PublicAddressKey>,
-    // TODO: val signedKeyList: PublicSignedKeyList
-) {
-    val primaryKey by lazy { keys.first { it.publicKey.isPrimary } }
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import me.proton.core.mailmessage.data.repository.EmailMessageRepositoryImpl
+import me.proton.core.mailmessage.domain.repository.EmailMessageRepository
+import me.proton.core.network.data.ApiProvider
+import javax.inject.Singleton
 
-    val recipient by lazy { Recipient.map[recipientType] }
-}
+@Module
+@InstallIn(ApplicationComponent::class)
+object MailModule {
 
-enum class Recipient(val value: Int) {
-    Internal(1),
-    External(2);
-
-    companion object {
-        val map = values().associateBy { it.value }
-    }
+    @Provides
+    @Singleton
+    fun provideEmailMessageRepositoryImpl(
+        provider: ApiProvider
+    ): EmailMessageRepository = EmailMessageRepositoryImpl(provider)
 }
