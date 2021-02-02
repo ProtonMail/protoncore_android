@@ -9,7 +9,9 @@ use both of them together.
 
 ## Gradle
     implementation "me.proton.core:account-manager:{version}"
-    implementation "me.proton.core:account-manager-dagger:{version}"
+    implementation "me.proton.core:account-manager-dagger:{version}" (*)
+
+(*) Add this dependency if you want to use the Dagger module providing default implementation and DB.
 
 ## Account and Session States
 Account and Session could be in different states in their lifecycle. The Account is a single User
@@ -132,13 +134,13 @@ interested in any state could react an execute any logic.`
 A code example would be:
 
 ```kotlin
-  accountManager.observe(scope)
-    .onAccountReady {
-        // any logic when the account is ready
-    }
-    .onSessionSecondFactorNeeded {
-        // any logic when second factor is required
-    }
+  accountManager.observe(viewModelScope)
+      .onAccountDisabled { accountManager.removeAccount(it.userId) }
+      .onAccountTwoPassModeFailed { accountManager.removeAccount(it.userId) }
+      .onAccountRemoved { cleanUserResources(it.userId) }
+      .onSessionSecondFactorNeeded {
+          // any logic when second factor is required
+      }
 ```
 
 The above functions are extension functions and could be found in
