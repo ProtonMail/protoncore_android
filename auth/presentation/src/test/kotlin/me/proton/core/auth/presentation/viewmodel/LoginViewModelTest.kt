@@ -278,6 +278,8 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { sessionInfo.isSecondFactorNeeded } returns false
         every { userMock.copy(passphrase = any()) } returns mockk()
         every { userMock.name } returns testUserName
+        every { userMock.role } returns 1
+        every { userMock.private } returns false
 
         coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
             PerformLogin.State.Processing,
@@ -560,5 +562,84 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         assertNotNull(account)
         assertEquals(AccountState.TwoPassModeNeeded, account.state)
         assertEquals(testSessionId, session.sessionId.id)
+    }
+
+    @Test
+    fun `login private user of organization returns correct state`() = coroutinesTest {
+        // GIVEN
+        val requiredAccountType = AccountType.Internal
+        val sessionInfo = mockk<SessionInfo>(relaxed = true)
+        every { sessionInfo.username } returns testUserName
+        every { sessionInfo.isTwoPassModeNeeded } returns false
+        every { sessionInfo.isSecondFactorNeeded } returns false
+        coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
+            PerformLogin.State.Processing,
+            PerformLogin.State.Success.Login(sessionInfo)
+        )
+        every { userMock.private } returns true
+        every { userMock.role } returns 1
+
+        val observer = mockk<(PerformLogin.State) -> Unit>(relaxed = true)
+        viewModel.loginState.observeDataForever(observer)
+        // WHEN
+        viewModel.startLoginWorkflow(testUserName, testPassword.toByteArray(), requiredAccountType)
+        // THEN
+        val arguments = mutableListOf<PerformLogin.State>()
+        verify {
+            observer(capture(arguments))
+        }
+        assertEquals(2, arguments.size)
+        val errorState = arguments[1]
+        assertTrue(errorState is PerformLogin.State.Error.PasswordChange)
+    }
+
+    @Test
+    fun `login private user of organization incorrect role not triggered`() = coroutinesTest {
+        // GIVEN
+        val requiredAccountType = AccountType.Internal
+        val sessionInfo = mockk<SessionInfo>(relaxed = true)
+        every { sessionInfo.username } returns testUserName
+        every { sessionInfo.isTwoPassModeNeeded } returns false
+        every { sessionInfo.isSecondFactorNeeded } returns false
+        coEvery { useCasePerformLogin.invoke(any(), any()) } returns flowOf(
+            PerformLogin.State.Processing,
+            PerformLogin.State.Success.Login(sessionInfo)
+        )
+        every { userMock.name } returns testUserName
+        every { userMock.private } returns true
+        every { userMock.role } returns 0
+
+        coEvery {
+            useCaseUpdateUsernameOnly.invoke(
+                any(),
+                any(),
+                testUserName,
+                testPassword.toByteArray()
+            )
+        } returns
+            flowOf(
+                UpdateUsernameOnlyAccount.State.Processing,
+                UpdateUsernameOnlyAccount.State.Success(mockk())
+            )
+
+        coEvery { useCaseUserSetup.invoke(any(), any()) } returns flowOf(
+            PerformUserSetup.State.Processing,
+            PerformUserSetup.State.Success(userMock)
+        )
+
+        val observer = mockk<(PerformLogin.State) -> Unit>(relaxed = true)
+        viewModel.loginState.observeDataForever(observer)
+        // WHEN
+        viewModel.startLoginWorkflow(testUserName, testPassword.toByteArray(), requiredAccountType)
+        // THEN
+        val arguments = mutableListOf<PerformLogin.State>()
+        verify {
+            observer(capture(arguments))
+        }
+        assertEquals(2, arguments.size)
+        val firstState = arguments[0]
+        val secondState = arguments[1]
+        assertTrue(firstState is PerformLogin.State.Processing)
+        assertTrue(secondState is PerformLogin.State.Success.UserSetup)
     }
 }

@@ -98,8 +98,14 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                     (it.state as GetUser.State.Error.Message).message // this succeeds because it is the only option.
                 )
                 is PerformLogin.State.Error.AccountUpgrade -> onUpdateAccountError(it.state)
+                is PerformLogin.State.Error.PasswordChange -> onPasswordChange()
             }.exhaustive
         }
+    }
+
+    private fun onPasswordChange() {
+        showLoading(false)
+        supportFragmentManager.showPasswordChangeDialog(this)
     }
 
     private fun onUpdateAccountError(errorState: UpdateUsernameOnlyAccount.State.Error) {
