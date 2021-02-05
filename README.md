@@ -119,13 +119,13 @@ Crypto Android: **0.2.2** - _released on: Jan 20, 2021_
 
 ### Auth
 
-Auth: **0.3.1** - _released on: Jan 13, 2021_
+Auth: **0.4** - _released on: Feb 05, 2021_
 
-Auth Domain: **0.3.1** - _released on: Jan 13, 2021_
+Auth Domain: **0.4** - _released on: Feb 05, 2021_
 
-Auth Presentation: **0.3.1** - _released on: Jan 13, 2021_
+Auth Presentation: **0.4** - _released on: Feb 05, 2021_
 
-Auth Data: **0.3.1** - _released on: Jan 13, 2021_
+Auth Data: **0.4** - _released on: Feb 05, 2021_
 
 ### Account
 
@@ -140,15 +140,15 @@ Account Data: **0.2.2** - _released on: Jan 20, 2021_
 
 ### Account Manager
 
-Account Manager: **0.2.2** - _released on: Jan 20, 2021_
+Account Manager: **0.2.3** - _released on: Feb 05, 2021_
 
-Account Manager Domain: **0.2.2** - _released on: Jan 20, 2021_
+Account Manager Domain: **0.2.3** - _released on: Feb 05, 2021_
 
-Account Manager Presentation: **0.2.2** - _released on: Jan 20, 2021_
+Account Manager Presentation: **0.2.3** - _released on: Feb 05, 2021_
 
-Account Manager Data: **0.2.2** - _released on: Jan 20, 2021_
+Account Manager Data: **0.2.3** - _released on: Feb 05, 2021_
 
-Account Manager Dagger: **0.2.2** - _released on: Jan 20, 2021_
+Account Manager Dagger: **0.2.3** - _released on: Feb 05, 2021_
 
 ### Contacts
 
