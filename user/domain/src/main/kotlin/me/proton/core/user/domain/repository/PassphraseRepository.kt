@@ -16,20 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.core.user.domain.repository
 
-import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.domain.entity.UserId
 
-data class PrivateKey(
-    val key: Armored,
-    val isPrimary: Boolean,
-    internal val passphrase: EncryptedByteArray?
-) {
+interface PassphraseRepository {
     /**
-     * True if no passphrase is associated, thereby only public crypto functions are available.
-     *
-     * False if a passphrase is associated, thereby public and private crypto functions are available.
+     * Set encrypted [passphrase] for a [userId].
      */
-    val isLocked = passphrase == null
+    suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray)
+
+    /**
+     * Get encrypted passphrase for a [userId], if exist, or `null` otherwise.
+     */
+    suspend fun getPassphrase(userId: UserId): EncryptedByteArray?
+
+    /**
+     * Clear passphrase for a [userId].
+     */
+    suspend fun clearPassphrase(userId: UserId)
 }

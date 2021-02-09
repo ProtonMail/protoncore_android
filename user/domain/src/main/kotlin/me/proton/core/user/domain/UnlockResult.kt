@@ -16,20 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.core.user.domain
 
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-
-data class PrivateKey(
-    val key: Armored,
-    val isPrimary: Boolean,
-    internal val passphrase: EncryptedByteArray?
-) {
-    /**
-     * True if no passphrase is associated, thereby only public crypto functions are available.
-     *
-     * False if a passphrase is associated, thereby public and private crypto functions are available.
-     */
-    val isLocked = passphrase == null
+sealed class UnlockResult {
+    object Success : UnlockResult()
+    sealed class Error : UnlockResult() {
+        object NoPrimaryKey : Error()
+        object NoKeySaltsForPrimaryKey : Error()
+        object PrimaryKeyInvalidPassphrase : Error()
+    }
 }

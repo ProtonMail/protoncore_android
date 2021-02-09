@@ -16,20 +16,25 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.core.user.domain.repository
 
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.user.domain.entity.User
 
-data class PrivateKey(
-    val key: Armored,
-    val isPrimary: Boolean,
-    internal val passphrase: EncryptedByteArray?
-) {
+interface UserRepository {
     /**
-     * True if no passphrase is associated, thereby only public crypto functions are available.
+     * Get [User], using [sessionUserId].
      *
-     * False if a passphrase is associated, thereby public and private crypto functions are available.
+     * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
      */
-    val isLocked = passphrase == null
+    fun getUser(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<User>>
+
+    /**
+     * Get [User], using [sessionUserId].
+     *
+     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
+     */
+    suspend fun getUserBlocking(sessionUserId: SessionUserId, refresh: Boolean = false): User
 }

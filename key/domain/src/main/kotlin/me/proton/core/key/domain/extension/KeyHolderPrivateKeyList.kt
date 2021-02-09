@@ -21,3 +21,10 @@ package me.proton.core.key.domain.extension
 import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
 
 fun List<KeyHolderPrivateKey>.primary(): KeyHolderPrivateKey? = firstOrNull { it.privateKey.isPrimary }
+
+/**
+ * True if no passphrase is associated with any keys, thereby only public crypto functions are available.
+ *
+ * False if at least one passphrase is associated, thereby public and private crypto functions are available.
+ */
+fun List<KeyHolderPrivateKey>.areAllLocked(): Boolean = all { it.privateKey.isLocked }

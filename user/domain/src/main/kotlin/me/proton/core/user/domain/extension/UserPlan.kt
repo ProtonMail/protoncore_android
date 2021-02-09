@@ -16,20 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.core.user.domain.extension
 
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.user.domain.entity.User
 
-data class PrivateKey(
-    val key: Armored,
-    val isPrimary: Boolean,
-    internal val passphrase: EncryptedByteArray?
-) {
-    /**
-     * True if no passphrase is associated, thereby only public crypto functions are available.
-     *
-     * False if a passphrase is associated, thereby public and private crypto functions are available.
-     */
-    val isLocked = passphrase == null
-}
+private const val MASK_MAIL = 1 // 0001
+private const val MASK_VPN = 4 // 0100
+
+private fun User.hasServiceFor(mask: Int): Boolean = mask.and(services) == mask
+private fun User.hasSubscriptionFor(mask: Int): Boolean = mask.and(subscribed) == mask
+
+fun User.hasServiceForMail(): Boolean = hasServiceFor(MASK_MAIL)
+fun User.hasServiceForVpn(): Boolean = hasServiceFor(MASK_VPN)
+
+fun User.hasSubscriptionForMail(): Boolean = hasSubscriptionFor(MASK_MAIL)
+fun User.hasSubscriptionForVpn(): Boolean = hasSubscriptionFor(MASK_VPN)

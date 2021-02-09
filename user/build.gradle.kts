@@ -16,20 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+import studio.forface.easygradle.dsl.*
 
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+plugins {
+    id("com.android.library")
+    kotlin("android")
+}
 
-data class PrivateKey(
-    val key: Armored,
-    val isPrimary: Boolean,
-    internal val passphrase: EncryptedByteArray?
-) {
-    /**
-     * True if no passphrase is associated, thereby only public crypto functions are available.
-     *
-     * False if a passphrase is associated, thereby public and private crypto functions are available.
-     */
-    val isLocked = passphrase == null
+//libVersion = Version(0, 1, 0)
+
+android()
+
+dependencies {
+    api(
+        //project(Module.userPresentation),
+        project(Module.userDomain)
+        //project(Module.userData)
+    )
 }
