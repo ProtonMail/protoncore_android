@@ -22,44 +22,46 @@ import studio.forface.easygradle.dsl.android.*
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 2, 3)
+//libVersion = Version(0, 1, 0)
 
 android(minSdk = 23)
 
 dependencies {
-
     implementation(
-
         project(Module.kotlinUtil),
         project(Module.network),
-        project(Module.crypto),
-        project(Module.domain),
         project(Module.data),
+        project(Module.domain),
+        project(Module.userDomain),
+        project(Module.cryptoCommon),
 
         // Features
-        project(Module.account),
-        project(Module.accountManagerData),
-        project(Module.accountManagerDomain),
-        project(Module.accountManagerPresentation),
-        project(Module.authDomain),
-        project(Module.user),
         project(Module.key),
+        project(Module.account),
 
-        // Android
-        `android-ktx`,
-        `hilt-android`,
-        `room-runtime`
+        // Kotlin
+        `kotlin-jdk7`,
+        `serialization-json`,
+        `coroutines-core`,
+
+        // Other
+        `okHttp-logging`,
+        `retrofit`,
+        `retrofit-kotlin-serialization`,
+        `room-ktx`,
+        `store4`
     )
 
-    kapt(
-        `assistedInject-processor-dagger`,
-        `hilt-android-compiler`,
-        `hilt-androidx-compiler`
+    androidTestImplementation(
+        project(Module.androidInstrumentedTest),
+        project(Module.domain),
+        project(Module.auth),
+        project(Module.account),
+        project(Module.accountManager),
+        project(Module.cryptoAndroid),
+        project(Module.gopenpgp)
     )
-    compileOnly(`assistedInject-annotations-dagger`)
 }

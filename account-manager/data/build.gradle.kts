@@ -46,12 +46,17 @@ dependencies {
         project(Module.domain),
         project(Module.data),
         project(Module.accountManagerDomain),
+        project(Module.crypto),
 
         // Features
         project(Module.authData),
         project(Module.authDomain),
         project(Module.accountData),
         project(Module.accountDomain),
+        project(Module.userData),
+        project(Module.userDomain),
+        project(Module.keyData),
+        project(Module.keyDomain),
 
         // Kotlin
         `kotlin-jdk8`,

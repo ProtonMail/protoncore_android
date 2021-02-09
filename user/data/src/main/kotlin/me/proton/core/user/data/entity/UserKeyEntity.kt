@@ -15,33 +15,35 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.user.data.entity
 
-libVersion = Version(0, 2, 2)
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import me.proton.core.crypto.common.pgp.Armored
 
-android()
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        project(Module.domain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Android
-        `room-ktx`,
-        `store4`
-    )
-
-    testImplementation(project(Module.kotlinTest))
-}
+@Entity(
+    primaryKeys = ["keyId"],
+    indices = [
+        Index("userId"),
+        Index("keyId")
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = UserEntity::class,
+            parentColumns = ["userId"],
+            childColumns = ["userId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+data class UserKeyEntity(
+    val userId: String,
+    val keyId: String,
+    val version: Int,
+    val privateKey: Armored,
+    val isPrimary: Boolean,
+    val fingerprint: String? = null,
+    val activation: Armored? = null
+)

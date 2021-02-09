@@ -15,33 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.user.data
 
-libVersion = Version(0, 2, 2)
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.domain.ApiManager
+import me.proton.core.network.domain.ApiResult
 
-android()
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        project(Module.domain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Android
-        `room-ktx`,
-        `store4`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<Api> {
+    override suspend fun <T> invoke(
+        forceNoRetryOnConnectionErrors: Boolean,
+        block: suspend Api.() -> T
+    ): ApiResult<T> = ApiResult.Success(block.invoke(api))
 }

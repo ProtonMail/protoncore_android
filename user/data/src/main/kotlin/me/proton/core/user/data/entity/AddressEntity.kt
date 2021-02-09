@@ -15,33 +15,37 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.user.data.entity
 
-libVersion = Version(0, 2, 2)
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 
-android()
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        project(Module.domain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Android
-        `room-ktx`,
-        `store4`
-    )
-
-    testImplementation(project(Module.kotlinTest))
-}
+@Entity(
+    primaryKeys = ["addressId"],
+    indices = [
+        Index("addressId"),
+        Index("userId")
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = UserEntity::class,
+            parentColumns = ["userId"],
+            childColumns = ["userId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+data class AddressEntity(
+    val userId: String,
+    val addressId: String,
+    val email: String,
+    val displayName: String? = null,
+    val domainId: String? = null,
+    val canSend: Boolean,
+    val canReceive: Boolean,
+    val enabled: Boolean,
+    val type: Int?,
+    val order: Int
+)

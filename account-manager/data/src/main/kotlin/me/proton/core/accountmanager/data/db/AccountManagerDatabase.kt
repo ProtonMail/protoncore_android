@@ -24,41 +24,69 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.withTransaction
-import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.db.AccountConverters
+import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_1_2
+import me.proton.core.accountmanager.data.db.migration.MIGRATION_2_3
+import me.proton.core.crypto.android.simple.CryptoConverters
 import me.proton.core.data.db.CommonConverters
+import me.proton.core.key.data.db.KeySaltDatabase
+import me.proton.core.key.data.db.PublicAddressDatabase
+import me.proton.core.key.data.entity.KeySaltEntity
+import me.proton.core.key.data.entity.PublicAddressEntity
+import me.proton.core.key.data.entity.PublicAddressKeyEntity
+import me.proton.core.user.data.db.AddressDatabase
+import me.proton.core.user.data.db.UserDatabase
+import me.proton.core.user.data.entity.AddressEntity
+import me.proton.core.user.data.entity.AddressKeyEntity
+import me.proton.core.user.data.entity.UserEntity
+import me.proton.core.user.data.entity.UserKeyEntity
 
 @Database(
     entities = [
         // account-data
         AccountEntity::class,
         AccountMetadataEntity::class,
+        HumanVerificationDetailsEntity::class,
         SessionEntity::class,
-        HumanVerificationDetailsEntity::class
+        // user-data
+        UserEntity::class,
+        UserKeyEntity::class,
+        AddressEntity::class,
+        AddressKeyEntity::class,
+        // key-data
+        KeySaltEntity::class,
+        PublicAddressEntity::class,
+        PublicAddressKeyEntity::class
     ],
-    version = 2
+    version = 3
 )
 @TypeConverters(
     CommonConverters::class,
-    AccountConverters::class
+    AccountConverters::class,
+    CryptoConverters::class
 )
 abstract class AccountManagerDatabase :
     RoomDatabase(),
-    AccountDatabase {
+    AccountDatabase,
+    UserDatabase,
+    AddressDatabase,
+    KeySaltDatabase,
+    PublicAddressDatabase {
+
+    override suspend fun <R> inTransaction(block: suspend () -> R): R = withTransaction(block)
 
     companion object {
         fun buildDatabase(context: Context): AccountManagerDatabase {
             return Room
                 .databaseBuilder(context, AccountManagerDatabase::class.java, "db-account-manager")
                 .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_2_3)
                 .build()
         }
     }
-
-    override suspend fun <R> inTransaction(block: suspend () -> R): R = withTransaction(block)
 }

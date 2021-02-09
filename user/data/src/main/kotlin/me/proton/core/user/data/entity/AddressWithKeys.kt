@@ -15,33 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.user.data.entity
 
-libVersion = Version(0, 2, 2)
+import androidx.room.Embedded
+import androidx.room.Relation
 
-android()
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        project(Module.domain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Android
-        `room-ktx`,
-        `store4`
+data class AddressWithKeys(
+    @Embedded
+    val entity: AddressEntity,
+    @Relation(
+        parentColumn = "addressId",
+        entityColumn = "addressId"
     )
-
-    testImplementation(project(Module.kotlinTest))
-}
+    val keys: List<AddressKeyEntity>
+)

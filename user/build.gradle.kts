@@ -25,12 +25,12 @@ plugins {
 
 //libVersion = Version(0, 1, 0)
 
-android()
+android(minSdk = 23)
 
 dependencies {
     api(
         //project(Module.userPresentation),
-        project(Module.userDomain)
-        //project(Module.userData)
+        project(Module.userDomain),
+        project(Module.userData)
     )
 }

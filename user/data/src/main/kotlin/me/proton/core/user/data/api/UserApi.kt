@@ -15,33 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.user.data.api
 
-libVersion = Version(0, 2, 2)
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.data.protonApi.GenericResponse
+import me.proton.core.key.data.api.response.UsersResponse
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-android()
+interface UserApi : BaseRetrofitApi {
 
-dependencies {
+    @GET("users")
+    suspend fun getUsers(): UsersResponse
 
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        project(Module.domain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Android
-        `room-ktx`,
-        `store4`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+    @GET("users/available")
+    suspend fun usernameAvailable(@Query("Name") username: String): GenericResponse
 }

@@ -15,33 +15,25 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+package me.proton.core.user.data.db.dao
 
-libVersion = Version(0, 2, 2)
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.data.db.BaseDao
+import me.proton.core.user.data.entity.UserEntity
+import me.proton.core.user.data.entity.UserWithKeys
 
-android()
+@Dao
+abstract class UserWithKeysDao : BaseDao<UserEntity>() {
 
-dependencies {
+    @Transaction
+    @Query("SELECT * FROM UserEntity WHERE userId = :userId")
+    abstract fun findByUserId(userId: String): Flow<UserWithKeys?>
 
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkDomain),
-        project(Module.domain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-
-        // Android
-        `room-ktx`,
-        `store4`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+    @Transaction
+    @Query("SELECT * FROM UserEntity WHERE userId = :userId")
+    abstract suspend fun getByUserId(userId: String): UserWithKeys?
 }
