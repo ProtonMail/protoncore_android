@@ -18,7 +18,10 @@
 
 package me.proton.core.key.domain
 
+import me.proton.core.crypto.android.context.AndroidCryptoContext
+import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
+import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.extension.primary
@@ -29,11 +32,24 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-class KeyHolderExtensionsTests {
+class KeyHolderTest {
 
-    private val context = TestCryptoContext()
-    private val keyHolder1: KeyHolder = TestKeyHolder("user1", context, keyCount = 4, passphraseCount = 1)
-    private val keyHolder2: KeyHolder = TestKeyHolder("user2", context, keyCount = 2, passphraseCount = 1)
+    private val context = AndroidCryptoContext()
+    private val keyHolder1: KeyHolder = TestKeyHolder(context, TestKeys.privateKey1, TestKeys.privateKey1_Passphrase)
+    private val keyHolder2: KeyHolder = TestKeyHolder(context, TestKeys.privateKey2, TestKeys.privateKey2_Passphrase)
+
+    private val message =
+        """
+        Lorèm ipsum dolor sit ämet, conséctétür adipiscing elit. Vivamus eget enim a sem volutpat posuere eget eu leo.
+        Sed sollicitudin felis massa, sit amet iaculis justo semper eu.
+        Vivamus suscipit nulla eu orci euismod, ut mattis lorem luctus.
+        Etiam tincidunt non lorem quis sollicitudin. Praesent auctor lacus sed dictum consectetur.
+        Ut sagittis, tortor at maximus efficitur, enim odio rhoncus nisi, eget semper odio odio et purus.
+        Nulla nec cursus libero, eu mollis nibh.
+        Morbi arcu arcu, mattis vitae tristique porttitor, rhoncus nec tortor. Quisque nec sodales enim, volutpat mollis dui.
+        Mauris sit amet interdum mi, in faucibus ex. Quisque volutpat risus mi, eu lacinia odio tempus ac. Nulla facilisi.
+        Fusce fermentum ut turpis at vehicula. Pellentesque ultricies est quis hendrerit convallis. Morbi quis nisi lorem.
+        """.trimIndent()
 
     private fun ByteArray.allEqual(element: Byte) = all { it == element }
 
@@ -52,89 +68,80 @@ class KeyHolderExtensionsTests {
 
     @Test
     fun useKeys_encrypt_sign_decrypt_verify_String() {
-        val message = "message"
-
         keyHolder1.useKeys(context) {
-            val encryptedMessage = encryptText(message)
-            val signature = signText(message)
+            val encryptedText = encryptText(message)
+            val signedText = signText(message)
 
-            val decryptedText = decryptText(encryptedMessage)
-            assertNotNull(decryptTextOrNull(encryptedMessage))
+            val decryptedText = decryptText(encryptedText)
+            assertNotNull(decryptTextOrNull(encryptedText))
 
-            assertTrue(verifyText(decryptedText, signature))
+            assertTrue(verifyText(decryptedText, signedText))
             assertEquals(message, decryptedText)
         }
     }
 
     @Test
     fun useKeys_encrypt_sign_decrypt_verify_ByteArray() {
-        val message = "message"
         val data = message.toByteArray()
 
         keyHolder1.useKeys(context) {
             val encryptedData = encryptData(data)
-            val signatureData = signData(data)
+            val signedData = signData(data)
 
             val decryptedData = decryptData(encryptedData)
             assertNotNull(decryptDataOrNull(encryptedData))
 
-            assertTrue(verifyData(decryptedData, signatureData))
+            assertTrue(verifyData(decryptedData, signedData))
             assertTrue(data.contentEquals(decryptedData))
         }
     }
 
     @Test
     fun useKeys_encryptAndSign_decryptAndVerify_String() {
-        val message = "message"
-
         keyHolder1.useKeys(context) {
-            val encryptedAndSignedMessage = encryptAndSignText(message)
-            val decryptedSignedText = decryptAndVerifyText(encryptedAndSignedMessage)
+            val encryptedSignedText = encryptAndSignText(message)
+            val decryptedSignedText = decryptAndVerifyText(encryptedSignedText)
 
-            assertNotNull(decryptAndVerifyTextOrNull(encryptedAndSignedMessage))
-            assertEquals(message, decryptedSignedText)
+            assertNotNull(decryptAndVerifyTextOrNull(encryptedSignedText))
+            assertEquals(VerificationStatus.Success, decryptedSignedText.status)
+            assertEquals(message, decryptedSignedText.text)
         }
     }
 
     @Test
     fun useKeys_encryptAndSign_decryptAndVerify_ByteArray() {
-        val message = "message"
         val data = message.toByteArray()
 
         keyHolder1.useKeys(context) {
-            val encryptedAndSignedData = encryptAndSignData(data)
-            val decryptedSignedData = decryptAndVerifyData(encryptedAndSignedData)
+            val encryptedSignedData = encryptAndSignData(data)
+            val decryptedSignedData = decryptAndVerifyData(encryptedSignedData)
 
-            assertNotNull(decryptAndVerifyDataOrNull(encryptedAndSignedData))
-            assertTrue(data.contentEquals(decryptedSignedData))
+            assertNotNull(decryptAndVerifyDataOrNull(encryptedSignedData))
+            assertEquals(VerificationStatus.Success, decryptedSignedData.status)
+            assertTrue(data.contentEquals(decryptedSignedData.data))
         }
     }
 
     @Test
     fun useKeys_encrypt_sign__close__decrypt_verify() {
-        val message = "message"
-
         keyHolder1.useKeys(context) {
-            val encryptedMessage = encryptText(message)
-            val signature = signText(message)
+            val encryptedText = encryptText(message)
+            val signedText = signText(message)
 
-            encryptedMessage to signature
+            encryptedText to signedText
         }.also { (encryptedMessage, signature) ->
 
             keyHolder1.useKeys(context) {
-                val decryptedText = decryptText(encryptedMessage)
+                val decryptedMessage = decryptText(encryptedMessage)
 
-                assertNotNull(decryptTextOrNull(encryptedMessage))
-                assertTrue(verifyText(decryptedText, signature))
-                assertEquals(message, decryptedText)
+                assertTrue(verifyText(decryptedMessage, signature))
+                assertEquals(message, decryptedMessage)
             }
         }
     }
 
     @Test
     fun useKeys_useWrongKeyHolder() {
-        val message = "message"
-
         keyHolder1.useKeys(context) {
             encryptText(message)
         }.also {
@@ -153,37 +160,49 @@ class KeyHolderExtensionsTests {
             keyHolderContext = this
 
             assertTrue(privateKeyRing.keys.any())
-            assertTrue(privateKeyRing.unlockedKeys.any())
-            assertNotNull(privateKeyRing.unlockedPrimaryKey)
+            assertNotNull(privateKeyRing.unlockedPrimaryKey.unlockedKey.value)
+            privateKeyRing.unlockedKeys.forEach { assertNotNull(it.unlockedKey.value) }
 
             assertTrue(publicKeyRing.keys.any())
             assertNotNull(publicKeyRing.primaryKey)
         }
 
         // Verify no more unlocked keys bits.
-        assertTrue(keyHolderContext.privateKeyRing.unlockedPrimaryKey.unlockedKey.value.allEqual(0))
+        assertTrue(keyHolderContext.privateKeyRing.unlockedPrimaryKey.unlockedKey.value.allEqual(0) ?: false)
         assertTrue(keyHolderContext.privateKeyRing.unlockedKeys.all { key -> key.unlockedKey.value.allEqual(0) })
     }
 
     @Test
     fun without_useKeys_encrypt__decrypt_with_useKeys() {
-        val message = "message"
+        val encrypted1 = keyHolder1.keys.primary()?.privateKey?.publicKey(context)?.encryptText(context, message)
+        val signature1 = keyHolder1.keys.primary()?.privateKey?.unlock(context)?.signText(context, message)
+        assertNotNull(encrypted1)
+        assertNotNull(signature1)
 
-        val encrypted = keyHolder1.keys.primary()?.privateKey?.publicKey(context)?.encryptText(context, message)
-        assertNotNull(encrypted)
+        val encrypted2 = PublicKey(TestKeys.privateKey1_PublicKey, true).encryptText(context, message)
 
         keyHolder1.useKeys(context) {
-            val decryptedText = decryptText(encrypted)
+            val decrypted1 = decryptText(encrypted1)
+            assertNotNull(decryptTextOrNull(encrypted1))
+            assertTrue(verifyText(decrypted1, signature1))
+            assertEquals(message, decrypted1)
 
-            assertNotNull(decryptTextOrNull(encrypted))
-            assertEquals(message, decryptedText)
+            val decrypted2 = decryptText(encrypted2)
+            assertNotNull(decryptTextOrNull(encrypted2))
+            assertEquals(message, decrypted2)
+        }
+
+        keyHolder2.useKeys(context) {
+            assertNull(decryptTextOrNull(encrypted1))
+            assertNull(decryptTextOrNull(encrypted2))
+
+            assertFailsWith(CryptoException::class) { decryptText(encrypted1) }
+            assertFailsWith(CryptoException::class) { decryptText(encrypted2) }
         }
     }
 
     @Test
     fun without_useKeys_encrypt_decrypt() {
-        val message = "message"
-
         val publicKey = keyHolder1.keys.primary()?.privateKey?.publicKey(context)
         assertNotNull(publicKey)
 
@@ -193,13 +212,12 @@ class KeyHolderExtensionsTests {
         assertNotNull(unlockedPrivateKey)
 
         unlockedPrivateKey.use {
-            val decryptedText = it.decryptText(context, encrypted)
-
+            val decrypted = it.decryptText(context, encrypted)
             assertNotNull(it.decryptTextOrNull(context, encrypted))
-            assertEquals(message, decryptedText)
+            assertEquals(message, decrypted)
 
             val signature = it.signText(context, message)
-            assertTrue(publicKey.verifyText(context, decryptedText, signature))
+            assertTrue(publicKey.verifyText(context, decrypted, signature))
         }
 
         // Verify no more unlocked keys bits.

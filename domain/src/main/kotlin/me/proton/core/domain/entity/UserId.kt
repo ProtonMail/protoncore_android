@@ -19,3 +19,8 @@
 package me.proton.core.domain.entity
 
 data class UserId(val id: String)
+
+/**
+ * Specify which User Session to use for an Api network request, expressed as userId.
+ */
+typealias SessionUserId = UserId

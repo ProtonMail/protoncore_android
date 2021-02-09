@@ -18,8 +18,8 @@
 
 package me.proton.core.crypto.common.pgp
 
-import me.proton.core.crypto.common.simple.use
 import me.proton.core.crypto.common.pgp.exception.CryptoException
+import me.proton.core.crypto.common.simple.use
 
 /**
  * PGP Cryptographic interface (e.g. [lock], [unlock], [encryptData], [decryptData], [signData], [verifyData], ...).
@@ -71,7 +71,7 @@ interface PGPCrypto {
      *
      * @see [signText]
      */
-    fun verifyText(plainText: String, signature: Armored, publicKey: Armored, validAtUtc: Long): Boolean
+    fun verifyText(plainText: String, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
 
     /**
      * Verify [signature] of [data] is correctly signed using [publicKey].
@@ -80,7 +80,7 @@ interface PGPCrypto {
      *
      * @see [signData]
      */
-    fun verifyData(data: ByteArray, signature: Armored, publicKey: Armored, validAtUtc: Long): Boolean
+    fun verifyData(data: ByteArray, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
 
     /**
      * Decrypt [message] as [String] using [unlockedKey].
@@ -143,28 +143,38 @@ interface PGPCrypto {
      *
      * Note: String canonicalization/standardization is applied.
      *
-     * @throws [CryptoException] if [message] cannot be decrypted or verified.
+     * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
      *
+     * @throws [CryptoException] if [message] cannot be decrypted.
+     *
+     * @see [DecryptedText]
+     * @see [VerificationStatus]
      * @see [encryptAndSignText]
      */
     fun decryptAndVerifyText(
         message: EncryptedMessage,
         publicKeys: List<Armored>,
-        unlockedKeys: List<Unarmored>
-    ): String
+        unlockedKeys: List<Unarmored>,
+        validAtUtc: Long = 0
+    ): DecryptedText
 
     /**
      * Decrypt [message] as [ByteArray] using [unlockedKeys] and verify using [publicKeys].
      *
-     * @throws [CryptoException] if [message] cannot be decrypted or verified.
+     * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
      *
+     * @throws [CryptoException] if [message] cannot be decrypted.
+     *
+     * @see [DecryptedData]
+     * @see [VerificationStatus]
      * @see [encryptAndSignData]
      */
     fun decryptAndVerifyData(
         message: EncryptedMessage,
         publicKeys: List<Armored>,
-        unlockedKeys: List<Unarmored>
-    ): ByteArray
+        unlockedKeys: List<Unarmored>,
+        validAtUtc: Long = 0
+    ): DecryptedData
 
     /**
      * Get [Armored] public key from [privateKey].

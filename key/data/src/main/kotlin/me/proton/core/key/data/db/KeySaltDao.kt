@@ -16,21 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.repository
+package me.proton.core.key.data.db
 
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.key.domain.entity.key.PublicAddress
+import androidx.room.Dao
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.data.db.BaseDao
+import me.proton.core.key.data.entity.KeySaltEntity
 
-interface PublicAddressKeyRepository {
-    /**
-     * Get [PublicAddress], by [email], using [sessionUserId].
-     *
-     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
-     */
-    suspend fun getPublicAddress(sessionUserId: SessionUserId, email: String, refresh: Boolean = true): PublicAddress?
+@Dao
+abstract class KeySaltDao : BaseDao<KeySaltEntity>() {
 
-    /**
-     * Clear all persisted [PublicAddress].
-     */
-    suspend fun clearAll()
+    @Query("SELECT * FROM KeySaltEntity WHERE userId = :userId")
+    abstract fun findAllByUserId(userId: String): Flow<List<KeySaltEntity>>
+
+    @Query("DELETE FROM KeySaltEntity WHERE userId = :userId")
+    abstract suspend fun deleteByUserId(userId: String)
+
+    @Query("DELETE FROM KeySaltEntity")
+    abstract suspend fun deleteAll()
+
 }

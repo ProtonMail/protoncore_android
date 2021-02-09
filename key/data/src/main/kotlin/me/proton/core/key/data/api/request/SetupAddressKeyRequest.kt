@@ -16,21 +16,31 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.repository
+package me.proton.core.key.data.api.request
 
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.key.domain.entity.key.PublicAddress
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-interface PublicAddressKeyRepository {
-    /**
-     * Get [PublicAddress], by [email], using [sessionUserId].
-     *
-     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
-     */
-    suspend fun getPublicAddress(sessionUserId: SessionUserId, email: String, refresh: Boolean = true): PublicAddress?
+@Serializable
+data class SetupAddressKeyRequest(
+    @SerialName("AddressID")
+    val addressId: String,
+    @SerialName("PrivateKey")
+    val privateKey: String,
+    @SerialName("Primary")
+    val primary: Int = 0,
+    @SerialName("Token")
+    val token: String? = null,
+    @SerialName("Signature")
+    val signature: String? = null,
+    @SerialName("SignedKeyList")
+    val signedKeyList: SignedKeyListRequest
+)
 
-    /**
-     * Clear all persisted [PublicAddress].
-     */
-    suspend fun clearAll()
-}
+@Serializable
+data class SignedKeyListRequest(
+    @SerialName("Data")
+    val data: String,
+    @SerialName("Signature")
+    val signature: String
+)

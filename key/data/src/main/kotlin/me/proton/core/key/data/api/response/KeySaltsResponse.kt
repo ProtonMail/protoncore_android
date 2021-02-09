@@ -16,21 +16,31 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.repository
+package me.proton.core.key.data.api.response
 
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.key.domain.entity.key.PublicAddress
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.UserId
+import me.proton.core.key.data.entity.KeySaltEntity
 
-interface PublicAddressKeyRepository {
-    /**
-     * Get [PublicAddress], by [email], using [sessionUserId].
-     *
-     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
-     */
-    suspend fun getPublicAddress(sessionUserId: SessionUserId, email: String, refresh: Boolean = true): PublicAddress?
+@Serializable
+data class KeySaltsResponse(
+    @SerialName("KeySalts")
+    val salts: List<KeySaltResponse>
+) {
+    fun toKeySaltEntityList(userId: UserId) = salts.map { it.toKeySalt(userId) }
+}
 
-    /**
-     * Clear all persisted [PublicAddress].
-     */
-    suspend fun clearAll()
+@Serializable
+data class KeySaltResponse(
+    @SerialName("ID")
+    val keyId: String,
+    @SerialName("KeySalt")
+    val keySalt: String? = null
+) {
+    fun toKeySalt(userId: UserId) = KeySaltEntity(
+        userId = userId.id,
+        keyId = keyId,
+        keySalt = keySalt
+    )
 }

@@ -16,21 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.repository
+package me.proton.core.key.data.db
 
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.key.domain.entity.key.PublicAddress
+import me.proton.core.data.db.Database
 
-interface PublicAddressKeyRepository {
-    /**
-     * Get [PublicAddress], by [email], using [sessionUserId].
-     *
-     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
-     */
-    suspend fun getPublicAddress(sessionUserId: SessionUserId, email: String, refresh: Boolean = true): PublicAddress?
-
-    /**
-     * Clear all persisted [PublicAddress].
-     */
-    suspend fun clearAll()
+interface KeySaltDatabase : Database {
+    fun keySaltDao(): KeySaltDao
 }

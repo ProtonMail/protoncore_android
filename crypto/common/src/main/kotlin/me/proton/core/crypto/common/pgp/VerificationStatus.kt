@@ -16,21 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.repository
+package me.proton.core.crypto.common.pgp
 
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.key.domain.entity.key.PublicAddress
+/**
+ * Signature verification status.
+ *
+ * @see [PGPCrypto.decryptAndVerifyText]
+ * @see [PGPCrypto.decryptAndVerifyData]
+ */
+enum class VerificationStatus {
+    /** Embedded signature is correct. */
+    Success,
 
-interface PublicAddressKeyRepository {
-    /**
-     * Get [PublicAddress], by [email], using [sessionUserId].
-     *
-     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
-     */
-    suspend fun getPublicAddress(sessionUserId: SessionUserId, email: String, refresh: Boolean = true): PublicAddress?
+    /** Embedded signature doesn't exist. */
+    NotSigned,
 
-    /**
-     * Clear all persisted [PublicAddress].
-     */
-    suspend fun clearAll()
+    /** Embedded signature doesn't match the provided publicKey to verify. */
+    NotMatchKey,
+
+    /** Embedded signature match the provided publicKey but is incorrect. */
+    Failure,
 }

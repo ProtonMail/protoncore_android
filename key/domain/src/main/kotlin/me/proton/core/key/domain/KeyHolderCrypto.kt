@@ -19,6 +19,8 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.DecryptedData
+import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
@@ -195,29 +197,35 @@ fun KeyHolderContext.encryptAndSignData(data: ByteArray): EncryptedMessage =
  *
  * Note: String canonicalization/standardization is applied.
  *
- * @throws [CryptoException] if [message] cannot be decrypted or verified.
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.encryptAndSignText]
  */
-fun KeyHolderContext.decryptAndVerifyText(message: EncryptedMessage): String =
+fun KeyHolderContext.decryptAndVerifyText(message: EncryptedMessage, validAtUtc: Long = 0): DecryptedText =
     context.pgpCrypto.decryptAndVerifyText(
         message,
         publicKeyRing.keys.map { it.key },
-        privateKeyRing.unlockedKeys.map { it.unlockedKey.value }
+        privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
+        validAtUtc
     )
 
 /**
  * Decrypt [message] as [ByteArray] using [PrivateKeyRing] and verify using [PublicKeyRing].
  *
- * @throws [CryptoException] if [message] cannot be decrypted or verified.
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.encryptAndSignData]
  */
-fun KeyHolderContext.decryptAndVerifyData(message: EncryptedMessage): ByteArray =
+fun KeyHolderContext.decryptAndVerifyData(message: EncryptedMessage, validAtUtc: Long = 0): DecryptedData =
     context.pgpCrypto.decryptAndVerifyData(
         message,
         publicKeyRing.keys.map { it.key },
-        privateKeyRing.unlockedKeys.map { it.unlockedKey.value }
+        privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
+        validAtUtc
     )
 
 /**
@@ -225,27 +233,33 @@ fun KeyHolderContext.decryptAndVerifyData(message: EncryptedMessage): ByteArray 
  *
  * Note: String canonicalization/standardization is applied.
  *
- * @return [String], or `null` if [message] cannot be decrypted or verified.
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @return [DecryptedText], or `null` if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptAndVerifyText]
  */
-fun KeyHolderContext.decryptAndVerifyTextOrNull(message: EncryptedMessage): String? =
+fun KeyHolderContext.decryptAndVerifyTextOrNull(message: EncryptedMessage, validAtUtc: Long = 0): DecryptedText? =
     context.pgpCrypto.decryptAndVerifyTextOrNull(
         message,
         publicKeyRing.keys.map { it.key },
-        privateKeyRing.unlockedKeys.map { it.unlockedKey.value }
+        privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
+        validAtUtc
     )
 
 /**
  * Decrypt [message] as [ByteArray] using [PrivateKeyRing] and verify using [PublicKeyRing].
  *
- * @return [ByteArray], or `null` if [message] cannot be decrypted or verified.
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @return [DecryptedData], or `null` if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptAndVerifyData]
  */
-fun KeyHolderContext.decryptAndVerifyDataOrNull(message: EncryptedMessage): ByteArray? =
+fun KeyHolderContext.decryptAndVerifyDataOrNull(message: EncryptedMessage, validAtUtc: Long = 0): DecryptedData? =
     context.pgpCrypto.decryptAndVerifyDataOrNull(
         message,
         publicKeyRing.keys.map { it.key },
-        privateKeyRing.unlockedKeys.map { it.unlockedKey.value }
+        privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
+        validAtUtc
     )

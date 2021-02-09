@@ -16,21 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.repository
+package me.proton.core.key.data.entity
 
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.key.domain.entity.key.PublicAddress
+import androidx.room.Entity
+import androidx.room.Index
 
-interface PublicAddressKeyRepository {
-    /**
-     * Get [PublicAddress], by [email], using [sessionUserId].
-     *
-     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
-     */
-    suspend fun getPublicAddress(sessionUserId: SessionUserId, email: String, refresh: Boolean = true): PublicAddress?
-
-    /**
-     * Clear all persisted [PublicAddress].
-     */
-    suspend fun clearAll()
-}
+@Entity(
+    primaryKeys = ["email"],
+    indices = [
+        Index("email")
+    ]
+)
+data class PublicAddressEntity(
+    val email: String,
+    val recipientType: Int,
+    val mimeType: String?
+)

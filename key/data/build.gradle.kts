@@ -17,10 +17,12 @@
  */
 
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("plugin.serialization")
 }
 
 //libVersion = Version(0, 1, 0)
@@ -28,8 +30,30 @@ plugins {
 android(minSdk = 23)
 
 dependencies {
-    api(
+    implementation(
+        project(Module.kotlinUtil),
+        project(Module.network),
+        project(Module.data),
+        project(Module.domain),
         project(Module.keyDomain),
-        project(Module.keyData)
+        project(Module.cryptoCommon),
+        project(Module.cryptoAndroid),
+
+        // Kotlin
+        `kotlin-jdk7`,
+        `serialization-json`,
+        `coroutines-core`,
+
+        // Other
+        `okHttp-logging`,
+        `retrofit`,
+        `retrofit-kotlin-serialization`,
+        `room-ktx`,
+        `store4`
     )
+
+    testImplementation(project(Module.androidTest))
+    androidTestImplementation(project(Module.androidInstrumentedTest))
+
+    androidTestImplementation(project(Module.gopenpgp))
 }
