@@ -32,6 +32,8 @@ internal val MIGRATION_1_2 = object : Migration(1, 2) {
 
 internal val MIGRATION_2_3 = object : Migration(2, 3) {
     override fun migrate(database: SupportSQLiteDatabase) {
+        // Added Table SessionDetailsEntity.
+        database.execSQL("CREATE TABLE IF NOT EXISTS `SessionDetailsEntity` (`sessionId` TEXT NOT NULL, `initialEventId` TEXT NOT NULL, `requiredAccountType` TEXT NOT NULL, `secondFactorEnabled` INTEGER NOT NULL, `twoPassModeEnabled` INTEGER NOT NULL, `password` TEXT, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
         // Added Table UserEntity, UserKeyEntity, AddressEntity, AddressKeyEntity, KeySaltEntity, PublicAddressEntity, PublicAddressKeyEntity.
         database.execSQL("CREATE TABLE IF NOT EXISTS `UserEntity` (`userId` TEXT NOT NULL, `email` TEXT, `name` TEXT, `displayName` TEXT, `currency` TEXT NOT NULL, `credit` INTEGER NOT NULL, `usedSpace` INTEGER NOT NULL, `maxSpace` INTEGER NOT NULL, `maxUpload` INTEGER NOT NULL, `role` INTEGER, `private` INTEGER NOT NULL, `subscribed` INTEGER NOT NULL, `services` INTEGER NOT NULL, `delinquent` INTEGER, `passphrase` BLOB, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
         database.execSQL("CREATE INDEX IF NOT EXISTS `index_UserEntity_userId` ON `UserEntity` (`userId`)")

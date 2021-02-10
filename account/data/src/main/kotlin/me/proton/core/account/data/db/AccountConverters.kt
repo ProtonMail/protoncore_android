@@ -20,6 +20,7 @@ package me.proton.core.account.data.db
 
 import androidx.room.TypeConverter
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionState
 
 class AccountConverters {
@@ -38,5 +39,13 @@ class AccountConverters {
     @TypeConverter
     fun fromStringToAccountState(value: String?): AccountState? = value?.let {
         AccountState.valueOf(value)
+    }
+
+    @TypeConverter
+    fun fromAccountTypeToString(value: AccountType?): String? = value?.name
+
+    @TypeConverter
+    fun fromStringToAccountType(value: String?): AccountType? = value?.let {
+        AccountType.valueOf(value)
     }
 }

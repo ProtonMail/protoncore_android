@@ -84,14 +84,6 @@ fun AccountManagerObserver.onAccountCreateAddressFailed(
     return this
 }
 
-fun AccountManagerObserver.onAccountChangePasswordNeeded(
-    initialState: Boolean = true,
-    block: suspend (Account) -> Unit
-): AccountManagerObserver {
-    addAccountStateListener(AccountState.ChangePasswordNeeded, initialState, block)
-    return this
-}
-
 fun AccountManagerObserver.onAccountReady(
     initialState: Boolean = true,
     block: suspend (Account) -> Unit

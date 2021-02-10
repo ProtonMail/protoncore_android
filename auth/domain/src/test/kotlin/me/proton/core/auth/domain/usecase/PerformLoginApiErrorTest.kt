@@ -28,6 +28,7 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.network.domain.ApiException
@@ -45,6 +46,7 @@ class PerformLoginApiErrorTest {
     // region mocks
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
+    private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
 
     // endregion
     // region test data
@@ -77,7 +79,7 @@ class PerformLoginApiErrorTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogin(authRepository, srpCrypto, testClientSecret)
+        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret)
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns SrpProofs(
@@ -104,7 +106,7 @@ class PerformLoginApiErrorTest {
     @Test(expected = ApiException::class)
     fun `login info error invocations work correctly`() = runBlockingTest {
         // WHEN
-        useCase.invoke(testUsername, testPassword.toByteArray())
+        useCase.invoke(testUsername, testPassword)
         // THEN
         verify {
             srpCrypto.generateSrpProofs(
@@ -131,7 +133,7 @@ class PerformLoginApiErrorTest {
     fun `login info error events work correctly`() = runBlockingTest {
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            useCase.invoke(testUsername, testPassword.toByteArray())
+            useCase.invoke(testUsername, testPassword)
         }
         // THEN
         assertIs<ApiResult.Error.Http>(throwable.error)
@@ -142,7 +144,7 @@ class PerformLoginApiErrorTest {
         // GIVEN
         coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns loginInfoResult
         // WHEN
-        useCase.invoke(testUsername, testPassword.toByteArray())
+        useCase.invoke(testUsername, testPassword)
         // THEN
         coVerify { authRepository.getLoginInfo(testUsername, testClientSecret) }
         coVerify(exactly = 1) {

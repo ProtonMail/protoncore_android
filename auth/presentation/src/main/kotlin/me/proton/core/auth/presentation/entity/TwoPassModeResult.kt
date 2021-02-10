@@ -23,5 +23,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TwoPassModeResult(
-    val sessionId: String
+    val userId: String
 ) : Parcelable

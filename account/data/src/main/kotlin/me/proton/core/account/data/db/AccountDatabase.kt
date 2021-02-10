@@ -25,4 +25,5 @@ interface AccountDatabase : Database {
     fun sessionDao(): SessionDao
     fun accountMetadataDao(): AccountMetadataDao
     fun humanVerificationDetailsDao(): HumanVerificationDetailsDao
+    fun sessionDetailsDao(): SessionDetailsDao
 }

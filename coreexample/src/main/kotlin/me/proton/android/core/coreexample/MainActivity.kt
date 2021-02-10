@@ -37,33 +37,22 @@ import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
 import me.proton.android.core.coreexample.viewmodel.UserAddressKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.observe
+import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
+import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
 import me.proton.core.accountmanager.presentation.onAccountDisabled
-import me.proton.core.accountmanager.presentation.onAccountChangePasswordNeeded
-import me.proton.core.accountmanager.presentation.onAccountReady
-import me.proton.core.accountmanager.presentation.onAccountRemoved
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
-import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
-import me.proton.core.accountmanager.presentation.onSessionHumanVerificationFailed
 import me.proton.core.accountmanager.presentation.onSessionHumanVerificationNeeded
-import me.proton.core.accountmanager.presentation.onSessionSecondFactorFailed
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.presentation.AuthOrchestrator
-import me.proton.core.auth.presentation.onHumanVerificationResult
-import me.proton.core.auth.presentation.onLoginResult
-import me.proton.core.auth.presentation.onScopeResult
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.showForceUpdate
-import me.proton.core.user.domain.entity.UserType
-import timber.log.Timber
+import me.proton.core.account.domain.entity.AccountType
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -93,32 +82,9 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
         authOrchestrator.register(this)
 
-        authOrchestrator
-            .onLoginResult { result ->
-                result
-            }
-            .onScopeResult { result ->
-                result
-            }
-            .onHumanVerificationResult { result ->
-                result
-            }
-
         with(binding) {
-            humanVerification.onClick {
-                authOrchestrator.startHumanVerificationWorkflow(
-                    "sessionId",
-                    HumanVerificationDetails(
-                        listOf(
-                            VerificationMethod.CAPTCHA,
-                            VerificationMethod.EMAIL,
-                            VerificationMethod.PHONE
-                        )
-                    )
-                )
-            }
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
-            login.onClick { authOrchestrator.startLoginWorkflow(UserType.Internal) }
+            login.onClick { authOrchestrator.startLoginWorkflow(AccountType.Internal) }
             forceUpdate.onClick {
                 supportFragmentManager.showForceUpdate(
                     apiErrorMessage = "Error Message coming from the API."
@@ -139,7 +105,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }.launchIn(lifecycleScope)
 
         accountManager.getAccounts().onEach { accounts ->
-            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow(UserType.Internal)
+            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow(AccountType.Internal)
 
             binding.accountsLayout.removeAllViews()
             accounts.forEach { account ->
@@ -149,30 +115,12 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                         onClick {
                             lifecycleScope.launch {
                                 when (account.state) {
-                                    AccountState.Ready ->
-                                        accountManager.disableAccount(account.userId)
+                                    AccountState.Ready,
                                     AccountState.NotReady,
-                                    AccountState.ChangePasswordNeeded,
-                                    AccountState.Disabled ->
-                                        accountManager.removeAccount(account.userId)
-                                    AccountState.TwoPassModeNeeded,
-                                    AccountState.TwoPassModeFailed ->
-                                        when (account.sessionState) {
-                                            SessionState.SecondFactorNeeded,
-                                            SessionState.SecondFactorFailed ->
-                                                accountManager.disableAccount(account.userId)
-                                            SessionState.Authenticated ->
-                                                authOrchestrator.startTwoPassModeWorkflow(
-                                                    account.userId,
-                                                    UserType.Username
-                                                )
-                                            else -> Unit
-                                        }
-                                    AccountState.CreateAddressNeeded ->
-                                        authOrchestrator.startChooseAddressWorkflow(
-                                            account.userId,
-                                            account.username
-                                        )
+                                    AccountState.Disabled,
+                                    AccountState.TwoPassModeFailed,
+                                    AccountState.CreateAddressFailed,
+                                    AccountState.UnlockFailed -> accountManager.disableAccount(account.userId)
                                     else -> Unit
                                 }
                             }
@@ -182,46 +130,16 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
         }.launchIn(lifecycleScope)
 
-        accountManager.onHumanVerificationNeeded(initialState = true).onEach { (account, details) ->
-            authOrchestrator.startHumanVerificationWorkflow(account.sessionId?.id!!, details)
-        }.launchIn(lifecycleScope)
-
-        // Used to test session ForceLogout.
-        accountManager.observe(lifecycleScope)
-            .onAccountDisabled {
-                Timber.d("onAccountDisabled -> remove $it")
-                accountManager.removeAccount(it.userId)
-            }
-            .onAccountRemoved {
-                Timber.d("onAccountRemoved -> $it")
-            }
-            .onAccountReady {
-                Timber.d("onAccountReady -> $it")
-            }
-            .onSessionSecondFactorNeeded {
-                Timber.d("onSessionSecondFactorNeeded -> $it")
-            }
-            .onSessionSecondFactorFailed {
-                Timber.d("onSessionSecondFactorFailed -> $it")
-            }
-            .onAccountTwoPassModeNeeded {
-                Timber.d("onAccountTwoPassModeNeeded -> $it")
-            }
-            .onAccountTwoPassModeFailed {
-                Timber.d("onAccountTwoPassModeFailed -> $it")
-            }
-            .onAccountCreateAddressNeeded {
-                Timber.d("onAccountCreateAddressNeeded -> $it")
-            }
-            .onAccountChangePasswordNeeded {
-                Timber.d("onAccountChangePasswordNeeded -> $it")
-            }
-            .onSessionHumanVerificationNeeded {
-                Timber.d("onSessionHumanVerificationNeeded -> $it")
-            }
-            .onSessionHumanVerificationFailed {
-                Timber.d("onSessionHumanVerificationFailed -> $it")
-            }
+        with(authOrchestrator) {
+            accountManager.observe(lifecycleScope)
+                .onSessionSecondFactorNeeded { startSecondFactorWorkflow(it) }
+                .onAccountTwoPassModeNeeded { startTwoPassModeWorkflow(it) }
+                .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
+                .onSessionHumanVerificationNeeded { startHumanVerificationWorkflow(it) }
+                .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
+                .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
+                .onAccountDisabled { accountManager.removeAccount(it.userId) }
+        }
 
         userKeyViewModel.getUserKeyState().onEach { state ->
             binding.primaryAccountKeyState.text = "User Key State: ${state::class.java.simpleName}"

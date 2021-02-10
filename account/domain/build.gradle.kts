@@ -31,6 +31,7 @@ dependencies {
 
         project(Module.kotlinUtil),
         project(Module.domain),
+        project(Module.cryptoCommon),
         project(Module.networkDomain),
 
         // Kotlin

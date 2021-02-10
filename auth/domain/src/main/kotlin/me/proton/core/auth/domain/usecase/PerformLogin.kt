@@ -22,6 +22,10 @@ import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import javax.inject.Inject
@@ -32,27 +36,33 @@ import javax.inject.Inject
 class PerformLogin @Inject constructor(
     private val authRepository: AuthRepository,
     private val srpCrypto: SrpCrypto,
+    private val keyStoreCrypto: KeyStoreCrypto,
     @ClientSecret private val clientSecret: String
 ) {
-    suspend operator fun invoke(username: String, password: ByteArray): SessionInfo {
+    suspend operator fun invoke(
+        username: String,
+        password: EncryptedString
+    ): SessionInfo {
         val loginInfo = authRepository.getLoginInfo(
             username = username,
             clientSecret = clientSecret
         )
-        val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
-            username = username,
-            password = password,
-            version = loginInfo.version.toLong(),
-            salt = loginInfo.salt,
-            modulus = loginInfo.modulus,
-            serverEphemeral = loginInfo.serverEphemeral
-        )
-        return authRepository.performLogin(
-            username = username,
-            clientSecret = clientSecret,
-            clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
-            clientProof = Base64.encode(clientProofs.clientProof),
-            srpSession = loginInfo.srpSession
-        )
+        password.decryptWith(keyStoreCrypto).toByteArray().use {
+            val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
+                username = username,
+                password = it.array,
+                version = loginInfo.version.toLong(),
+                salt = loginInfo.salt,
+                modulus = loginInfo.modulus,
+                serverEphemeral = loginInfo.serverEphemeral
+            )
+            return authRepository.performLogin(
+                username = username,
+                clientSecret = clientSecret,
+                clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
+                clientProof = Base64.encode(clientProofs.clientProof),
+                srpSession = loginInfo.srpSession
+            )
+        }
     }
 }

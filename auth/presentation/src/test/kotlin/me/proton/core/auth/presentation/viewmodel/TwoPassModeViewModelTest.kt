@@ -20,14 +20,15 @@ package me.proton.core.auth.presentation.viewmodel
 
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.UserManager
@@ -44,12 +45,12 @@ class TwoPassModeViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
     private val accountManager = mockk<AccountWorkflowHandler>(relaxed = true)
     private val unlockUserPrimaryKey = mockk<UnlockUserPrimaryKey>()
-    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
+    private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
+
     // endregion
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testSessionId = SessionId("test-session-id")
     private val testPassword = "test-password"
     // endregion
 
@@ -57,23 +58,19 @@ class TwoPassModeViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
-        viewModel = TwoPassModeViewModel(accountManager, unlockUserPrimaryKey, sessionProvider)
-        coEvery { sessionProvider.getUserId(any()) } returns testUserId
+        viewModel = TwoPassModeViewModel(accountManager, unlockUserPrimaryKey, keyStoreCrypto)
+        every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
+        every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
     }
 
     @Test
     fun `mailbox login happy path`() = coroutinesTest {
         // GIVEN
-        coEvery {
-            unlockUserPrimaryKey.invoke(
-                testSessionId,
-                testPassword.toByteArray()
-            )
-        } returns UserManager.UnlockResult.Success
+        coEvery { unlockUserPrimaryKey.invoke(testUserId, testPassword) } returns UserManager.UnlockResult.Success
         val observer = mockk<(TwoPassModeViewModel.State) -> Unit>(relaxed = true)
         viewModel.mailboxLoginState.observeDataForever(observer)
         // WHEN
-        viewModel.tryUnlockUser(testSessionId, testPassword.toByteArray())
+        viewModel.tryUnlockUser(testUserId, testPassword)
         // THEN
         val arguments = mutableListOf<TwoPassModeViewModel.State>()
         verify(exactly = 2) { observer(capture(arguments)) }
@@ -86,27 +83,22 @@ class TwoPassModeViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `success mailbox login invokes success on account manager`() = coroutinesTest {
         // GIVEN
-        coEvery {
-            unlockUserPrimaryKey.invoke(
-                testSessionId,
-                testPassword.toByteArray()
-            )
-        } returns UserManager.UnlockResult.Success
+        coEvery { unlockUserPrimaryKey.invoke(testUserId, testPassword) } returns UserManager.UnlockResult.Success
         // WHEN
-        viewModel.tryUnlockUser(testSessionId, testPassword.toByteArray())
+        viewModel.tryUnlockUser(testUserId, testPassword)
         // THEN
-        val arguments = slot<SessionId>()
+        val arguments = slot<UserId>()
         coVerify(exactly = 1) { accountManager.handleTwoPassModeSuccess(capture(arguments)) }
         coVerify(exactly = 0) { accountManager.handleTwoPassModeFailed(any()) }
-        assertEquals(testSessionId.id, arguments.captured.id)
+        assertEquals(testUserId, arguments.captured)
     }
 
     @Test
     fun `stop mailbox login invokes failed on account manager`() = coroutinesTest {
         // WHEN
-        viewModel.stopMailboxLoginFlow(testSessionId)
+        viewModel.stopMailboxLoginFlow(testUserId)
         // THEN
-        val arguments = slot<SessionId>()
+        val arguments = slot<UserId>()
         coVerify(exactly = 1) { accountManager.handleTwoPassModeFailed(capture(arguments)) }
         coVerify(exactly = 0) { accountManager.handleTwoPassModeSuccess(any()) }
     }

@@ -20,12 +20,9 @@ package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import me.proton.core.user.domain.entity.UserType
 
 @Parcelize
 data class SecondFactorResult(
-    val session: SessionResult,
-    val scope: ScopeResult,
-    val requiredUserType: UserType,
+    val userId: String,
     val nextStep: NextStep
 ) : Parcelable

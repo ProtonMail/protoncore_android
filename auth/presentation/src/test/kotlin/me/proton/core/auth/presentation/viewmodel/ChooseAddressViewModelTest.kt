@@ -22,6 +22,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -38,6 +39,7 @@ import kotlin.test.assertTrue
 class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
+    private val accountWorkflowHandler = mockk<AccountWorkflowHandler>(relaxed = true)
     private val usernameDomainAvailability = mockk<UsernameDomainAvailability>(relaxed = true)
     // endregion
 
@@ -49,7 +51,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
         coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
         // WHEN
         val observer = mockk<(ChooseAddressViewModel.DomainState) -> Unit>(relaxed = true)
-        viewModel = ChooseAddressViewModel(usernameDomainAvailability)
+        viewModel = ChooseAddressViewModel(accountWorkflowHandler, usernameDomainAvailability)
         viewModel.domainsState.observeDataForever(observer)
         // THEN
         val arguments = mutableListOf<ChooseAddressViewModel.DomainState>()
@@ -68,7 +70,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
         )
         // WHEN
         val observer = mockk<(ChooseAddressViewModel.DomainState) -> Unit>(relaxed = true)
-        viewModel = ChooseAddressViewModel(usernameDomainAvailability)
+        viewModel = ChooseAddressViewModel(accountWorkflowHandler, usernameDomainAvailability)
         viewModel.domainsState.observeDataForever(observer)
         // THEN
         val arguments = mutableListOf<ChooseAddressViewModel.DomainState>()
@@ -83,7 +85,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
         coEvery { usernameDomainAvailability.isUsernameAvailable(any()) } returns true
         // WHEN
         val observer = mockk<(ChooseAddressViewModel.UsernameState) -> Unit>(relaxed = true)
-        viewModel = ChooseAddressViewModel(usernameDomainAvailability)
+        viewModel = ChooseAddressViewModel(accountWorkflowHandler, usernameDomainAvailability)
         viewModel.usernameState.observeDataForever(observer)
         viewModel.checkUsernameAvailability("test-username")
         // THEN
@@ -102,7 +104,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
         coEvery { usernameDomainAvailability.isUsernameAvailable(any()) } returns false
         // WHEN
         val observer = mockk<(ChooseAddressViewModel.UsernameState) -> Unit>(relaxed = true)
-        viewModel = ChooseAddressViewModel(usernameDomainAvailability)
+        viewModel = ChooseAddressViewModel(accountWorkflowHandler, usernameDomainAvailability)
         viewModel.usernameState.observeDataForever(observer)
         viewModel.checkUsernameAvailability("test-username")
         // THEN

@@ -21,42 +21,35 @@ package me.proton.core.account.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountDetails
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.account.domain.entity.SessionState
-import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.account.domain.entity.SessionDetails
+import me.proton.core.crypto.common.keystore.EncryptedString
 
 @Entity(
-    primaryKeys = ["userId"],
-    indices = [
-        Index("sessionId"),
-        Index("userId")
-    ],
+    primaryKeys = ["sessionId"],
+    indices = [Index("sessionId")],
     foreignKeys = [
         ForeignKey(
             entity = SessionEntity::class,
             parentColumns = ["sessionId"],
-            childColumns = ["sessionId"]
+            childColumns = ["sessionId"],
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class AccountEntity(
-    val userId: String,
-    val username: String,
-    val email: String?,
-    val state: AccountState,
-    val sessionId: String?,
-    val sessionState: SessionState?
+data class SessionDetailsEntity(
+    val sessionId: String,
+    val initialEventId: String,
+    val requiredAccountType: AccountType,
+    val secondFactorEnabled: Boolean,
+    val twoPassModeEnabled: Boolean,
+    val password: EncryptedString?
 ) {
-    fun toAccount(details: AccountDetails): Account = Account(
-        userId = UserId(userId),
-        username = username,
-        email = email,
-        state = state,
-        sessionId = sessionId?.let { SessionId(sessionId) },
-        sessionState = sessionState,
-        details = details
+    fun toSessionDetails() = SessionDetails(
+        initialEventId = initialEventId,
+        requiredAccountType = requiredAccountType,
+        secondFactorEnabled = secondFactorEnabled,
+        twoPassModeEnabled = twoPassModeEnabled,
+        password = password
     )
 }

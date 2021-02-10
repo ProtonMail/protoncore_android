@@ -25,7 +25,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -34,12 +36,14 @@ import me.proton.core.auth.domain.usecase.SetupAccountCheck
 import me.proton.core.auth.domain.usecase.SetupOriginalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.UserType
+import me.proton.core.account.domain.entity.AccountType
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -49,7 +53,8 @@ class LoginViewModel @ViewModelInject constructor(
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
     private val setupAccountCheck: SetupAccountCheck,
     private val setupPrimaryKeys: SetupPrimaryKeys,
-    private val setupOriginalAddress: SetupOriginalAddress
+    private val setupOriginalAddress: SetupOriginalAddress,
+    private val keyStoreCrypto: KeyStoreCrypto
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     val loginState = ViewStateStore<State>().lock
@@ -57,14 +62,14 @@ class LoginViewModel @ViewModelInject constructor(
     sealed class State {
         object Processing : State()
         sealed class Success : State() {
-            data class UserUnLocked(val sessionInfo: SessionInfo) : Success()
+            data class UserUnLocked(val userId: UserId) : Success()
         }
 
         sealed class Need : State() {
-            object ChangePassword : Need()
-            data class SecondFactor(val sessionInfo: SessionInfo) : Need()
-            data class TwoPassMode(val sessionInfo: SessionInfo) : Need()
-            data class ChooseUsername(val sessionInfo: SessionInfo) : Need()
+            data class ChangePassword(val userId: UserId) : Need()
+            data class SecondFactor(val userId: UserId) : Need()
+            data class TwoPassMode(val userId: UserId) : Need()
+            data class ChooseUsername(val userId: UserId) : Need()
         }
 
         sealed class Error : State() {
@@ -75,30 +80,33 @@ class LoginViewModel @ViewModelInject constructor(
 
     fun startLoginWorkflow(
         username: String,
-        password: ByteArray,
-        requiredUserType: UserType
+        password: String,
+        requiredAccountType: AccountType
     ) = flow {
         emit(State.Processing)
 
-        val sessionInfo = performLogin.invoke(username, password)
+        val encryptedPassword = password.encryptWith(keyStoreCrypto)
+
+        val sessionInfo = performLogin.invoke(username, encryptedPassword)
+        val userId = sessionInfo.userId
 
         // Storing the session is mandatory for executing subsequent requests.
-        handleSessionInfo(sessionInfo)
+        handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)
 
         // If SecondFactorNeeded, we cannot proceed without.
         if (sessionInfo.isSecondFactorNeeded) {
-            emit(State.Need.SecondFactor(sessionInfo))
+            emit(State.Need.SecondFactor(userId))
             return@flow
         }
 
         // Check if setup keys is needed and if it can be done directly.
-        when (setupAccountCheck.invoke(sessionInfo.userId, sessionInfo.isTwoPassModeNeeded, requiredUserType)) {
-            is SetupAccountCheck.Result.TwoPassNeeded -> State.Need.TwoPassMode(sessionInfo)
-            is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(sessionInfo)
-            is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(sessionInfo, password)
-            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(sessionInfo, password)
-            is SetupAccountCheck.Result.SetupOriginalAddressNeeded -> setupOriginalAddress(sessionInfo, password)
-            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(sessionInfo, password)
+        when (setupAccountCheck.invoke(userId, sessionInfo.isTwoPassModeNeeded, requiredAccountType)) {
+            is SetupAccountCheck.Result.TwoPassNeeded -> twoPassMode(userId)
+            is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(userId)
+            is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, encryptedPassword)
+            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, encryptedPassword)
+            is SetupAccountCheck.Result.SetupOriginalAddressNeeded -> setupOriginalAddress(userId, encryptedPassword)
+            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId, encryptedPassword)
         }.let {
             emit(it)
         }
@@ -108,70 +116,98 @@ class LoginViewModel @ViewModelInject constructor(
         loginState.post(state)
     }.launchIn(viewModelScope)
 
-    private suspend fun changePassword(
-        sessionInfo: SessionInfo
+    private suspend fun twoPassMode(
+        userId: UserId,
     ): State {
-        accountWorkflow.handleAccountChangePasswordNeeded(sessionInfo.userId)
-        return State.Need.ChangePassword
+        accountWorkflow.handleTwoPassModeNeeded(userId)
+        return State.Need.TwoPassMode(userId)
+    }
+
+    private suspend fun changePassword(
+        userId: UserId,
+    ): State {
+        accountWorkflow.handleChangePasswordNeeded(userId)
+        return State.Need.ChangePassword(userId)
     }
 
     private suspend fun unlockUserPrimaryKey(
-        session: SessionInfo,
-        password: ByteArray
+        userId: UserId,
+        password: EncryptedString
     ): State {
-        val result = unlockUserPrimaryKey.invoke(session.userId, password)
+        val result = unlockUserPrimaryKey.invoke(userId, password)
         return if (result is UserManager.UnlockResult.Success) {
-            accountWorkflow.handleAccountReady(session.userId)
-            State.Success.UserUnLocked(session)
+            accountWorkflow.handleAccountReady(userId)
+            State.Success.UserUnLocked(userId)
         } else {
-            accountWorkflow.handleAccountUnlockFailed(session.userId)
+            accountWorkflow.handleUnlockFailed(userId)
             State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
         }
     }
 
     private suspend fun setupPrimaryKeys(
-        session: SessionInfo,
-        password: ByteArray
+        userId: UserId,
+        password: EncryptedString
     ): State {
-        setupPrimaryKeys.invoke(session.userId, password)
-        return unlockUserPrimaryKey(session, password)
+        setupPrimaryKeys.invoke(userId, password)
+        return unlockUserPrimaryKey(userId, password)
     }
 
     private suspend fun setupOriginalAddress(
-        session: SessionInfo,
-        password: ByteArray
+        userId: UserId,
+        password: EncryptedString
     ): State {
-        val state = unlockUserPrimaryKey(session, password)
-        setupOriginalAddress.invoke(session.userId)
-        return state
-    }
-
-    private suspend fun chooseUsername(
-        session: SessionInfo,
-        password: ByteArray
-    ): State {
-        val state = unlockUserPrimaryKey(session, password)
-        return if (state is State.Success.UserUnLocked) {
-            accountWorkflow.handleAccountCreateAddressNeeded(session.userId)
-            State.Need.ChooseUsername(session)
+        val result = unlockUserPrimaryKey.invoke(userId, password)
+        return if (result is UserManager.UnlockResult.Success) {
+            setupOriginalAddress.invoke(userId)
+            accountWorkflow.handleAccountReady(userId)
+            State.Success.UserUnLocked(userId)
         } else {
-            state
+            accountWorkflow.handleUnlockFailed(userId)
+            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
         }
     }
 
-    private suspend fun handleSessionInfo(sessionInfo: SessionInfo) {
-        val sessionState =
-            if (sessionInfo.isSecondFactorNeeded) SessionState.SecondFactorNeeded else SessionState.Authenticated
-        val accountState =
-            if (sessionInfo.isTwoPassModeNeeded) AccountState.TwoPassModeNeeded else AccountState.NotReady
+    private suspend fun chooseUsername(
+        userId: UserId,
+        password: EncryptedString
+    ): State {
+        val result = unlockUserPrimaryKey.invoke(userId, password)
+        return if (result is UserManager.UnlockResult.Success) {
+            accountWorkflow.handleCreateAddressNeeded(userId)
+            State.Need.ChooseUsername(userId)
+        } else {
+            accountWorkflow.handleUnlockFailed(userId)
+            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
+        }
+    }
+
+    private suspend fun handleSessionInfo(
+        requiredAccountType: AccountType,
+        sessionInfo: SessionInfo,
+        password: EncryptedString
+    ) {
+        val sessionState = if (sessionInfo.isSecondFactorNeeded)
+            SessionState.SecondFactorNeeded
+        else
+            SessionState.Authenticated
 
         val account = Account(
             username = sessionInfo.username,
             userId = sessionInfo.userId,
-            email = null,
+            email = sessionInfo.username.takeIf { it.contains('@') },
             sessionId = sessionInfo.sessionId,
-            state = accountState,
-            sessionState = sessionState
+            state = AccountState.NotReady,
+            sessionState = sessionState,
+            details = AccountDetails(
+                session = SessionDetails(
+                    initialEventId = sessionInfo.eventId,
+                    requiredAccountType = requiredAccountType,
+                    secondFactorEnabled = sessionInfo.isSecondFactorNeeded,
+                    twoPassModeEnabled = sessionInfo.isTwoPassModeNeeded,
+                    password = password
+                ),
+                humanVerification = null
+            )
         )
         val session = Session(
             sessionId = sessionInfo.sessionId,

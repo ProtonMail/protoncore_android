@@ -20,7 +20,7 @@ package me.proton.core.auth.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.Role
-import me.proton.core.user.domain.entity.UserType
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.user.domain.extension.originalOrNull
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -54,7 +54,7 @@ class SetupAccountCheck @Inject constructor(
     suspend operator fun invoke(
         userId: UserId,
         isTwoPassModeNeeded: Boolean,
-        requiredUserType: UserType
+        requiredAccountType: AccountType
     ): Result {
         val user = userRepository.getUser(userId, refresh = true)
         val hasUsername = !user.name.isNullOrBlank()
@@ -70,10 +70,10 @@ class SetupAccountCheck @Inject constructor(
         val addresses = addressRepository.getAddresses(userId, refresh = true)
         val hasOriginalAddressKey = addresses.originalOrNull()?.keys?.isNotEmpty() ?: false
 
-        return when (requiredUserType) {
-            UserType.Username -> Result.NoSetupNeeded
-            UserType.External -> Result.NoSetupNeeded
-            UserType.Internal -> when {
+        return when (requiredAccountType) {
+            AccountType.Username -> Result.NoSetupNeeded
+            AccountType.External -> Result.NoSetupNeeded
+            AccountType.Internal -> when {
                 !hasUsername -> Result.ChooseUsernameNeeded
                 !hasKeys -> Result.SetupPrimaryKeysNeeded
                 !hasOriginalAddressKey -> Result.SetupOriginalAddressNeeded

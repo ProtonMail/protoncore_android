@@ -21,6 +21,7 @@ import io.mockk.coVerify
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.Product
@@ -50,7 +51,8 @@ class AccountManagerImplTest {
         email = "test@example.com",
         state = AccountState.Ready,
         sessionId = session1.sessionId,
-        sessionState = SessionState.Authenticated
+        sessionState = SessionState.Authenticated,
+        details = AccountDetails(null, null)
     )
 
     private val mocks = RepositoryMocks(session1, account1)

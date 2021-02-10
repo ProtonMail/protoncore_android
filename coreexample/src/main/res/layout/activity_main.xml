@@ -26,16 +26,6 @@
         android:padding="@dimen/parent_padding">
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
-            android:id="@+id/humanVerification"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/human_verification"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/customViews"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,7 +33,7 @@
             android:text="@string/custom_views"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/humanVerification" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/login"
@@ -104,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="-"
-                    tools:text="Primary: -"/>
+                    tools:text="Primary: -" />
 
                 <TextView
                     android:id="@+id/primaryAccountKeyState"
@@ -112,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="-"
-                    tools:text="User Key State: -"/>
+                    tools:text="User Key State: -" />
 
                 <TextView
                     android:id="@+id/primaryAccountAddressKeyState"
@@ -120,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="-"
-                    tools:text="Address Key State: -"/>
+                    tools:text="Address Key State: -" />
 
                 <TextView
                     android:id="@+id/primaryAccountPublicAddressState"
@@ -128,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="-"
-                    tools:text="Public Address State: -"/>
+                    tools:text="Public Address State: -" />
 
             </LinearLayout>
 

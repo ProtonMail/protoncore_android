@@ -16,17 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.account.data.db
 
-data class SessionRefreshInfo(
-    val username: String,
-    val accessToken: String,
-    val expiresIn: Int,
-    val tokenType: String,
-    val scope: String,
-    val scopes: List<String>,
-    val sessionId: String,
-    val userId: String,
-    val refreshToken: String,
-    val localId: Int
-)
+import androidx.room.Dao
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.account.data.entity.SessionDetailsEntity
+import me.proton.core.data.db.BaseDao
+
+@Dao
+abstract class SessionDetailsDao : BaseDao<SessionDetailsEntity>() {
+
+    @Query("SELECT * FROM SessionDetailsEntity WHERE sessionId = :sessionId")
+    abstract fun findBySessionId(sessionId: String): Flow<SessionDetailsEntity?>
+
+    @Query("SELECT * FROM SessionDetailsEntity WHERE sessionId = :sessionId")
+    abstract suspend fun getBySessionId(sessionId: String): SessionDetailsEntity?
+
+    @Query("DELETE FROM SessionDetailsEntity WHERE sessionId = :sessionId")
+    abstract suspend fun delete(sessionId: String)
+}

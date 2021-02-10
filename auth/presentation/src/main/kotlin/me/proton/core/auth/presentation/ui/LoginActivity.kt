@@ -23,14 +23,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.NextStep
-import me.proton.core.auth.presentation.entity.SessionResult
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -81,10 +80,10 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
         viewModel.loginState.observeData {
             when (it) {
                 is LoginViewModel.State.Processing -> showLoading(true)
-                is LoginViewModel.State.Success.UserUnLocked -> onSuccess(it.sessionInfo, NextStep.None)
-                is LoginViewModel.State.Need.SecondFactor -> onSuccess(it.sessionInfo, NextStep.SecondFactor)
-                is LoginViewModel.State.Need.TwoPassMode -> onSuccess(it.sessionInfo, NextStep.TwoPassMode)
-                is LoginViewModel.State.Need.ChooseUsername -> onSuccess(it.sessionInfo, NextStep.ChooseAddress)
+                is LoginViewModel.State.Success.UserUnLocked -> onSuccess(it.userId, NextStep.None)
+                is LoginViewModel.State.Need.SecondFactor -> onSuccess(it.userId, NextStep.SecondFactor)
+                is LoginViewModel.State.Need.TwoPassMode -> onSuccess(it.userId, NextStep.TwoPassMode)
+                is LoginViewModel.State.Need.ChooseUsername -> onSuccess(it.userId, NextStep.ChooseAddress)
                 is LoginViewModel.State.Need.ChangePassword -> onChangePassword()
                 is LoginViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
                 is LoginViewModel.State.Error.Message -> onError(true, it.message)
@@ -94,22 +93,16 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
 
     private fun onChangePassword() {
         showLoading(false)
+        binding.passwordInput.text = ""
         supportFragmentManager.showPasswordChangeDialog(this)
     }
 
     private fun onSuccess(
-        sessionInfo: SessionInfo,
+        userId: UserId,
         nextStep: NextStep
     ) {
-        val intent = Intent().putExtra(
-            ARG_RESULT,
-            LoginResult(
-                password = binding.passwordInput.text.toString().toByteArray(),
-                session = SessionResult.from(sessionInfo),
-                requiredUserType = input.requiredUserType,
-                nextStep = nextStep
-            )
-        )
+        val intent = Intent()
+            .putExtra(ARG_RESULT, LoginResult(userId = userId.id, nextStep = nextStep))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -149,7 +142,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                 .onFailure { passwordInput.setInputError() }
                 .onSuccess { password ->
                     signInButton.setLoading()
-                    viewModel.startLoginWorkflow(username, password.toByteArray(), input.requiredUserType)
+                    viewModel.startLoginWorkflow(username, password, input.requiredAccountType)
                 }
         }
     }

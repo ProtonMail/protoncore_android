@@ -58,7 +58,7 @@ class CreateAddressViewModel @ViewModelInject constructor(
         setupUsername.invoke(userId, username)
         setupOriginalAddress.invoke(userId, domain)
 
-        accountWorkflow.handleAccountCreateAddressSuccess(userId)
+        accountWorkflow.handleCreateAddressSuccess(userId)
         accountWorkflow.handleAccountReady(userId)
 
         emit(State.Success)

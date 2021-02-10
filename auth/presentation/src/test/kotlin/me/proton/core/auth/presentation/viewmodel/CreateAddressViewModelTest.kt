@@ -26,7 +26,6 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.SetupOriginalAddress
 import me.proton.core.auth.domain.usecase.SetupUsername
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -47,7 +46,6 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testSessionId = SessionId("test-sessionId")
     private val testUsername = "test-username"
     private val testDomain = "test-domain"
     // endregion
@@ -59,8 +57,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         viewModel = CreateAddressViewModel(
             accountHandler,
             setupUsername,
-            setupOriginalAddress,
-            sessionProvider
+            setupOriginalAddress
         )
         coEvery { sessionProvider.getUserId(any()) } returns testUserId
     }
@@ -68,13 +65,13 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `setup username and address`() = coroutinesTest {
         // GIVEN
-        coEvery { setupUsername.invoke(testSessionId, testUsername) } returns Unit
-        coEvery { setupOriginalAddress.invoke(testSessionId, testUsername) } returns Unit
+        coEvery { setupUsername.invoke(testUserId, testUsername) } returns Unit
+        coEvery { setupOriginalAddress.invoke(testUserId, testUsername) } returns Unit
 
         val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
         viewModel.upgradeState.observeDataForever(observer)
         // WHEN
-        viewModel.upgradeAccount(testSessionId, testUsername, testDomain)
+        viewModel.upgradeAccount(testUserId, testUsername, testDomain)
         // THEN
         val arguments = mutableListOf<CreateAddressViewModel.State>()
         verify(exactly = 2) { observer(capture(arguments)) }

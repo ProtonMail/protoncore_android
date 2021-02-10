@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityMailboxLoginBinding
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
+import me.proton.core.auth.presentation.entity.TwoPassModeResult
 import me.proton.core.auth.presentation.viewmodel.TwoPassModeViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.hideKeyboard
@@ -77,7 +78,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
         viewModel.mailboxLoginState.observeData {
             when (it) {
                 is TwoPassModeViewModel.State.Processing -> showLoading(true)
-                is TwoPassModeViewModel.State.Success.UserUnLocked -> onSuccess()
+                is TwoPassModeViewModel.State.Success.UserUnLocked -> onSuccess(it.userId)
                 is TwoPassModeViewModel.State.Error.Message -> onError(false, it.message)
                 is TwoPassModeViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
             }.exhaustive
@@ -98,8 +99,9 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
             .invokeOnCompletion { finish() }
     }
 
-    private fun onSuccess() {
+    private fun onSuccess(userId: UserId) {
         val intent = Intent()
+            .putExtra(ARG_RESULT, TwoPassModeResult(userId.id))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -116,7 +118,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
         with(binding) {
             mailboxPasswordInput.validatePassword()
                 .onFailure { mailboxPasswordInput.setInputError() }
-                .onSuccess { viewModel.tryUnlockUser(userId, it.toByteArray()) }
+                .onSuccess { viewModel.tryUnlockUser(userId, it) }
         }
     }
 

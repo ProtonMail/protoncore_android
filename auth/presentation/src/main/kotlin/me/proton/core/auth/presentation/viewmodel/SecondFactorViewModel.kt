@@ -27,21 +27,19 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
 import me.proton.core.auth.domain.usecase.SetupOriginalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
-import me.proton.core.auth.presentation.entity.SessionResult
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.UserType
-import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.account.domain.entity.AccountType
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -52,6 +50,7 @@ class SecondFactorViewModel @ViewModelInject constructor(
     private val setupAccountCheck: SetupAccountCheck,
     private val setupPrimaryKeys: SetupPrimaryKeys,
     private val setupOriginalAddress: SetupOriginalAddress,
+    private val sessionProvider: SessionProvider
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     val secondFactorState = ViewStateStore<State>().lock
@@ -59,13 +58,13 @@ class SecondFactorViewModel @ViewModelInject constructor(
     sealed class State {
         object Processing : State()
         sealed class Success : State() {
-            data class UserUnLocked(val scopeInfo: ScopeInfo) : Success()
+            data class UserUnLocked(val userId: UserId) : Success()
         }
 
         sealed class Need : State() {
-            object ChangePassword : Need()
-            data class TwoPassMode(val scopeInfo: ScopeInfo) : Need()
-            data class ChooseUsername(val scopeInfo: ScopeInfo) : Need()
+            data class ChangePassword(val userId: UserId) : Need()
+            data class TwoPassMode(val userId: UserId) : Need()
+            data class ChooseUsername(val userId: UserId) : Need()
         }
 
         sealed class Error : State() {
@@ -76,31 +75,36 @@ class SecondFactorViewModel @ViewModelInject constructor(
     }
 
     fun stopSecondFactorFlow(
-        sessionId: SessionId
-    ): Job = viewModelScope.launch { accountWorkflow.handleSecondFactorFailed(sessionId) }
+        userId: UserId
+    ): Job = viewModelScope.launch {
+        val sessionId = sessionProvider.getSessionId(userId)
+        checkNotNull(sessionId) { "No session id for this user." }
+        accountWorkflow.handleSecondFactorFailed(sessionId)
+    }
 
     fun startSecondFactorFlow(
-        password: ByteArray,
-        requiredUserType: UserType,
-        session: SessionResult,
+        userId: UserId,
+        password: EncryptedString,
+        requiredAccountType: AccountType,
+        isTwoPassModeNeeded: Boolean,
         secondFactorCode: String
     ) = flow {
         emit(State.Processing)
 
-        val userId = UserId(session.userId)
-        val sessionId = SessionId(session.sessionId)
+        val sessionId = sessionProvider.getSessionId(userId)
+        checkNotNull(sessionId) { "No session id for this user." }
 
         val scopeInfo = performSecondFactor.invoke(sessionId, secondFactorCode)
         accountWorkflow.handleSecondFactorSuccess(sessionId, scopeInfo.scopes)
 
         // Check if setup keys is needed and if it can be done directly.
-        when (setupAccountCheck.invoke(userId, session.isTwoPassModeNeeded, requiredUserType)) {
-            is SetupAccountCheck.Result.TwoPassNeeded -> State.Need.TwoPassMode(scopeInfo)
+        when (setupAccountCheck.invoke(userId, isTwoPassModeNeeded, requiredAccountType)) {
+            is SetupAccountCheck.Result.TwoPassNeeded -> twoPassMode(userId)
             is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(userId)
-            is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, scopeInfo, password)
-            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, scopeInfo, password)
-            is SetupAccountCheck.Result.SetupOriginalAddressNeeded -> setupOriginalAddress(userId, scopeInfo, password)
-            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId, scopeInfo, password)
+            is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, password)
+            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, password)
+            is SetupAccountCheck.Result.SetupOriginalAddressNeeded -> setupOriginalAddress(userId, password)
+            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId, password)
         }.let {
             emit(it)
         }
@@ -113,58 +117,68 @@ class SecondFactorViewModel @ViewModelInject constructor(
         secondFactorState.post(state)
     }.launchIn(viewModelScope)
 
+    private suspend fun twoPassMode(
+        userId: UserId,
+    ): State {
+        accountWorkflow.handleTwoPassModeNeeded(userId)
+        return State.Need.TwoPassMode(userId)
+    }
+
     private suspend fun changePassword(
         userId: UserId
     ): State {
-        accountWorkflow.handleAccountChangePasswordNeeded(userId)
-        return State.Need.ChangePassword
+        accountWorkflow.handleChangePasswordNeeded(userId)
+        return State.Need.ChangePassword(userId)
     }
 
     private suspend fun unlockUserPrimaryKey(
         userId: UserId,
-        scopeInfo: ScopeInfo,
-        password: ByteArray
+        password: EncryptedString
     ): State {
         val result = unlockUserPrimaryKey.invoke(userId, password)
         return if (result == UserManager.UnlockResult.Success) {
             accountWorkflow.handleAccountReady(userId)
-            State.Success.UserUnLocked(scopeInfo)
+            State.Success.UserUnLocked(userId)
         } else {
-            accountWorkflow.handleAccountUnlockFailed(userId)
+            accountWorkflow.handleUnlockFailed(userId)
             State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
         }
     }
 
     private suspend fun setupPrimaryKeys(
         userId: UserId,
-        scopeInfo: ScopeInfo,
-        password: ByteArray
+        password: EncryptedString
     ): State {
         setupPrimaryKeys.invoke(userId, password)
-        return unlockUserPrimaryKey(userId, scopeInfo, password)
+        return unlockUserPrimaryKey(userId, password)
     }
 
     private suspend fun setupOriginalAddress(
         userId: UserId,
-        scopeInfo: ScopeInfo,
-        password: ByteArray
+        password: EncryptedString
     ): State {
-        val state = unlockUserPrimaryKey(userId, scopeInfo, password)
-        setupOriginalAddress.invoke(userId)
-        return state
+        val result = unlockUserPrimaryKey.invoke(userId, password)
+        return if (result is UserManager.UnlockResult.Success) {
+            setupOriginalAddress.invoke(userId)
+            accountWorkflow.handleAccountReady(userId)
+            State.Success.UserUnLocked(userId)
+        } else {
+            accountWorkflow.handleUnlockFailed(userId)
+            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
+        }
     }
 
     private suspend fun chooseUsername(
         userId: UserId,
-        scopeInfo: ScopeInfo,
-        password: ByteArray
+        password: EncryptedString
     ): State {
-        val state = unlockUserPrimaryKey(userId, scopeInfo, password)
-        return if (state is State.Success.UserUnLocked) {
-            accountWorkflow.handleAccountCreateAddressNeeded(userId)
-            State.Need.ChooseUsername(scopeInfo)
+        val result = unlockUserPrimaryKey.invoke(userId, password)
+        return if (result is UserManager.UnlockResult.Success) {
+            accountWorkflow.handleCreateAddressNeeded(userId)
+            State.Need.ChooseUsername(userId)
         } else {
-            state
+            accountWorkflow.handleUnlockFailed(userId)
+            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
         }
     }
 

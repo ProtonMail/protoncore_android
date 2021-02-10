@@ -29,6 +29,7 @@ import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.CreateAddressInput
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -70,7 +71,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
         super.onCreate(savedInstanceState)
 
         binding.apply {
-            closeButton.onClick { finish() }
+            closeButton.onClick(::onBackPressed)
             nextButton.onClick(::onNextClicked)
             subtitleText.text = String.format(getString(R.string.auth_create_address_subtitle, input.recoveryEmail))
         }
@@ -106,6 +107,11 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
         } else {
             nextButton.setIdle()
         }
+    }
+
+    override fun onBackPressed() {
+        viewModel.stopChooseAddressWorkflow(UserId(input.userId))
+            .invokeOnCompletion { finish() }
     }
 
     private fun onNextClicked() {

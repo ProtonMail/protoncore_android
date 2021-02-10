@@ -37,6 +37,7 @@ class StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
 
     override fun createIntent(context: Context, input: LoginInput) =
         Intent(context, LoginActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             putExtra(LoginActivity.ARG_INPUT, input)
         }
 

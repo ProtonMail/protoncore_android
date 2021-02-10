@@ -19,6 +19,10 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
@@ -37,11 +41,12 @@ class SetupPrimaryKeys @Inject constructor(
     private val userManager: UserManager,
     private val authRepository: AuthRepository,
     private val domainRepository: DomainRepository,
-    private val srpCrypto: SrpCrypto
+    private val srpCrypto: SrpCrypto,
+    private val keyStoreCrypto: KeyStoreCrypto
 ) {
     suspend operator fun invoke(
         userId: UserId,
-        password: ByteArray
+        password: EncryptedString
     ) {
         val user = userManager.getUser(userId)
         val username = checkNotNull(user.name) { "Username is needed to setup primary keys." }
@@ -51,13 +56,16 @@ class SetupPrimaryKeys @Inject constructor(
 
         if (user.keys.primary() == null) {
             val modulus = authRepository.randomModulus()
-            val auth = srpCrypto.calculatePasswordVerifier(
-                username = username,
-                password = password,
-                modulusId = modulus.modulusId,
-                modulus = modulus.modulus
-            )
-            userManager.setupPrimaryKeys(userId, username, domain, auth, password)
+
+            password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedPassword ->
+                val auth = srpCrypto.calculatePasswordVerifier(
+                    username = username,
+                    password = decryptedPassword.array,
+                    modulusId = modulus.modulusId,
+                    modulus = modulus.modulus
+                )
+                userManager.setupPrimaryKeys(userId, username, domain, auth, decryptedPassword.array)
+            }
         }
     }
 }

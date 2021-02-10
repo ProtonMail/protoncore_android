@@ -16,9 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.domain.entity
+package me.proton.core.account.domain.entity
 
-enum class UserType {
+enum class AccountType {
     /**
      * User with no email address associated with it, but a username.
      */

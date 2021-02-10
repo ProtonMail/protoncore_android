@@ -22,26 +22,27 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
+import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
-import me.proton.core.auth.presentation.entity.NextStep
-import me.proton.core.auth.presentation.entity.ScopeResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput
-import me.proton.core.auth.presentation.entity.SessionResult
+import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
+import me.proton.core.auth.presentation.entity.TwoPassModeResult
 import me.proton.core.auth.presentation.ui.StartChooseAddress
 import me.proton.core.auth.presentation.ui.StartLogin
 import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
-import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.StartHumanVerification
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.user.domain.entity.UserType
 import javax.inject.Inject
 
 class AuthOrchestrator @Inject constructor(
@@ -57,19 +58,24 @@ class AuthOrchestrator @Inject constructor(
     // endregion
 
     private var onLoginResultListener: (result: LoginResult?) -> Unit = {}
-    private var onScopeResultListener: (result: ScopeResult?) -> Unit = {}
-    private var onHumanVerificationResultListener: (result: HumanVerificationResult?) -> Unit = {}
+    private var onTwoPassModeResultListener: (result: TwoPassModeResult?) -> Unit = {}
+    private var onSecondFactorResultListener: (result: SecondFactorResult?) -> Unit = {}
+    private var onChooseAddressResultListener: (result: ChooseAddressResult?) -> Unit = {}
 
     fun setOnLoginResult(block: (result: LoginResult?) -> Unit) {
         onLoginResultListener = block
     }
 
-    fun setOnScopeResult(block: (result: ScopeResult?) -> Unit) {
-        onScopeResultListener = block
+    fun setOnTwoPassModeResult(block: (result: TwoPassModeResult?) -> Unit) {
+        onTwoPassModeResultListener = block
     }
 
-    fun setOnHumanVerificationResult(block: (result: HumanVerificationResult?) -> Unit) {
-        onHumanVerificationResultListener = block
+    fun setOnSecondFactorResult(block: (result: SecondFactorResult?) -> Unit) {
+        onSecondFactorResultListener = block
+    }
+
+    fun setOnChooseAddressResult(block: (result: ChooseAddressResult?) -> Unit) {
+        onChooseAddressResultListener = block
     }
 
     // region private module functions
@@ -78,16 +84,8 @@ class AuthOrchestrator @Inject constructor(
     ): ActivityResultLauncher<LoginInput> =
         context.registerForActivityResult(
             StartLogin()
-        ) { result ->
-            result?.let {
-                when (it.nextStep) {
-                    NextStep.SecondFactor -> startSecondFactorWorkflow(it.password, it.requiredUserType, it.session)
-                    NextStep.TwoPassMode -> startTwoPassModeWorkflow(UserId(it.session.userId), it.requiredUserType)
-                    NextStep.ChooseAddress -> startChooseAddressWorkflow(UserId(it.session.userId), it.session.username)
-                    NextStep.None -> Unit // Nothing.
-                }
-            }
-            onLoginResultListener(result)
+        ) {
+            onLoginResultListener(it)
         }
 
     private fun registerTwoPassModeResult(
@@ -95,10 +93,8 @@ class AuthOrchestrator @Inject constructor(
     ): ActivityResultLauncher<TwoPassModeInput> =
         context.registerForActivityResult(
             StartTwoPassMode()
-        ) { result ->
-            result?.let {
-                // Nothing.
-            }
+        ) {
+            onTwoPassModeResultListener(it)
         }
 
     private fun registerSecondFactorResult(
@@ -106,16 +102,17 @@ class AuthOrchestrator @Inject constructor(
     ): ActivityResultLauncher<SecondFactorInput> =
         context.registerForActivityResult(
             StartSecondFactor()
-        ) { result ->
-            result?.let {
-                when (it.nextStep) {
-                    NextStep.TwoPassMode -> startTwoPassModeWorkflow(UserId(it.session.userId), it.requiredUserType)
-                    NextStep.ChooseAddress -> startChooseAddressWorkflow(UserId(it.session.userId), it.session.username)
-                    NextStep.SecondFactor,
-                    NextStep.None -> Unit // Nothing.
-                }
-                onScopeResultListener(it.scope)
-            }
+        ) {
+            onSecondFactorResultListener(it)
+        }
+
+    private fun registerChooseAddressResult(
+        context: ComponentActivity
+    ): ActivityResultLauncher<ChooseAddressInput> =
+        context.registerForActivityResult(
+            StartChooseAddress()
+        ) {
+            onChooseAddressResultListener(it)
         }
 
     private fun registerHumanVerificationResult(
@@ -138,27 +135,52 @@ class AuthOrchestrator @Inject constructor(
                         )
                     }
                 }
-                onHumanVerificationResultListener(it)
             }
         }
 
-    private fun registerChooseAddressResult(
-        context: ComponentActivity
-    ): ActivityResultLauncher<ChooseAddressInput> =
-        context.registerForActivityResult(
-            StartChooseAddress()
-        ) { result ->
-            result?.let { }
-        }
+    private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
+        checkNotNull(launcher) { "You must call authOrchestrator.register(context) before starting workflow!" }
 
     private fun startSecondFactorWorkflow(
-        password: ByteArray,
-        requiredUserType: UserType,
-        session: SessionResult
+        userId: UserId,
+        requiredAccountType: AccountType,
+        password: EncryptedString,
+        isTwoPassModeNeeded: Boolean
     ) {
-        secondFactorWorkflowLauncher?.launch(
-            SecondFactorInput(password, requiredUserType, session)
-        ) ?: throw IllegalStateException("You must call register before any start workflow function!")
+        checkRegistered(secondFactorWorkflowLauncher).launch(
+            SecondFactorInput(userId.id, password, requiredAccountType, isTwoPassModeNeeded)
+        )
+    }
+
+    private fun startTwoPassModeWorkflow(
+        userId: UserId,
+        requiredAccountType: AccountType
+    ) {
+        checkRegistered(twoPassModeWorkflowLauncher).launch(
+            TwoPassModeInput(userId.id, requiredAccountType)
+        )
+    }
+
+    private fun startChooseAddressWorkflow(
+        userId: UserId,
+        externalEmail: String
+    ) {
+        checkRegistered(chooseAddressLauncher).launch(
+            ChooseAddressInput(userId.id, recoveryEmail = externalEmail)
+        )
+    }
+
+    private fun startHumanVerificationWorkflow(
+        sessionId: SessionId,
+        details: HumanVerificationDetails?
+    ) {
+        checkRegistered(humanWorkflowLauncher).launch(
+            HumanVerificationInput(
+                sessionId.id,
+                details?.verificationMethods?.map { it.value },
+                details?.captchaVerificationToken
+            )
+        )
     }
     // endregion
 
@@ -178,51 +200,68 @@ class AuthOrchestrator @Inject constructor(
 
     /**
      * Starts the Login workflow.
+     *
+     * @see [onLoginResult]
      */
-    fun startLoginWorkflow(requiredUserType: UserType) {
-        loginWorkflowLauncher?.launch(
-            LoginInput(requiredUserType)
-        ) ?: throw IllegalStateException("You must call register before any start workflow function!")
+    fun startLoginWorkflow(requiredAccountType: AccountType) {
+        checkRegistered(loginWorkflowLauncher).launch(
+            LoginInput(requiredAccountType)
+        )
+    }
+
+    /**
+     * Start a Second Factor workflow.
+     *
+     * @see [onSecondFactorResult]
+     */
+    fun startSecondFactorWorkflow(account: Account) {
+        val requiredAccountType = checkNotNull(account.details.session?.requiredAccountType) {
+            "Required AccountType is null for startSecondFactorWorkflow."
+        }
+        val password = checkNotNull(account.details.session?.password) {
+            "Password is null for startSecondFactorWorkflow."
+        }
+        val twoPassModeEnabled = checkNotNull(account.details.session?.twoPassModeEnabled) {
+            "TwoPassModeEnabled is null for startSecondFactorWorkflow."
+        }
+        startSecondFactorWorkflow(
+            userId = account.userId,
+            requiredAccountType = requiredAccountType,
+            password = password,
+            isTwoPassModeNeeded = twoPassModeEnabled
+        )
     }
 
     /**
      * Start a TwoPassMode workflow.
+     *
+     * @see [onTwoPassModeResult]
      */
-    fun startTwoPassModeWorkflow(userId: UserId, requiredUserType: UserType) {
-        twoPassModeWorkflowLauncher?.launch(
-            TwoPassModeInput(userId.id, requiredUserType)
-        ) ?: throw IllegalStateException("You must call register before any start workflow function!")
+    fun startTwoPassModeWorkflow(account: Account) {
+        val requiredAccountType = checkNotNull(account.details.session?.requiredAccountType) {
+            "Required AccountType is null for startSecondFactorWorkflow."
+        }
+        startTwoPassModeWorkflow(account.userId, requiredAccountType)
     }
 
     /**
      * Start the Choose/Create Address workflow.
+     *
+     * @see [onChooseAddressResult]
      */
-    fun startChooseAddressWorkflow(userId: UserId, externalEmail: String) {
-        chooseAddressLauncher?.launch(
-            ChooseAddressInput(userId.id, recoveryEmail = externalEmail)
-        ) ?: throw IllegalStateException("You must call register before any start workflow function!")
+    fun startChooseAddressWorkflow(account: Account) {
+        val email = checkNotNull(account.email) { "Email is null for startChooseAddressWorkflow." }
+        startChooseAddressWorkflow(account.userId, email)
     }
 
     /**
      * Start a Human Verification workflow.
      */
-    fun startHumanVerificationWorkflow(sessionId: String, details: HumanVerificationDetails?) {
-        humanWorkflowLauncher?.launch(
-            HumanVerificationInput(
-                sessionId,
-                details?.verificationMethods?.map { it.value },
-                details?.captchaVerificationToken
-            )
-        ) ?: throw IllegalStateException("You must call register before any start workflow function!")
+    fun startHumanVerificationWorkflow(account: Account) {
+        val sessionId = checkNotNull(account.sessionId) { "SessionId is null for startHumanVerificationWorkflow." }
+        startHumanVerificationWorkflow(sessionId, account.details.humanVerification)
     }
     // endregion
-}
-
-fun AuthOrchestrator.onScopeResult(
-    block: (result: ScopeResult?) -> Unit
-): AuthOrchestrator {
-    setOnScopeResult { block(it) }
-    return this
 }
 
 fun AuthOrchestrator.onLoginResult(
@@ -232,9 +271,23 @@ fun AuthOrchestrator.onLoginResult(
     return this
 }
 
-fun AuthOrchestrator.onHumanVerificationResult(
-    block: (result: HumanVerificationResult?) -> Unit
+fun AuthOrchestrator.onTwoPassModeResult(
+    block: (result: TwoPassModeResult?) -> Unit
 ): AuthOrchestrator {
-    setOnHumanVerificationResult { block(it) }
+    setOnTwoPassModeResult { block(it) }
+    return this
+}
+
+fun AuthOrchestrator.onSecondFactorResult(
+    block: (result: SecondFactorResult?) -> Unit
+): AuthOrchestrator {
+    setOnSecondFactorResult { block(it) }
+    return this
+}
+
+fun AuthOrchestrator.onChooseAddressResult(
+    block: (result: ChooseAddressResult?) -> Unit
+): AuthOrchestrator {
+    setOnChooseAddressResult { block(it) }
     return this
 }

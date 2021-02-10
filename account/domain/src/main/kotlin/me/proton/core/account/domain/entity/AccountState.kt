@@ -47,13 +47,6 @@ enum class AccountState {
     TwoPassModeFailed,
 
     /**
-     * Change Password is needed.
-     *
-     * Note: Usually followed by [Disabled] as the session will be revoked.
-     */
-    ChangePasswordNeeded,
-
-    /**
      * Choose Username and Create an Address is needed.
      *
      * Note: Usually followed by either [CreateAddressSuccess] or [CreateAddressFailed].

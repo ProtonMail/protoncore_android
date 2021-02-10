@@ -32,11 +32,13 @@ import me.proton.core.auth.domain.usecase.SetupOriginalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.auth.presentation.entity.SessionResult
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.UserType
+import me.proton.core.account.domain.entity.AccountType
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -46,6 +48,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
     private val accountManager = mockk<AccountWorkflowHandler>(relaxed = true)
+    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
     private val performSecondFactor = mockk<PerformSecondFactor>()
     private val unlockUserPrimaryKey = mockk<UnlockUserPrimaryKey>()
     private val setupAccountCheck = mockk<SetupAccountCheck>()
@@ -57,9 +60,10 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     // endregion
 
     // region test data
-    private val testSessionId = "test-session-id"
+    private val testUserId = UserId("test-user-id")
+    private val testSessionId = SessionId("test-session-id")
     private val testSecondFactorCode = "123456"
-    private val testLoginPassword = "123456".toByteArray()
+    private val testLoginPassword = "123456"
     // endregion
 
     private lateinit var viewModel: SecondFactorViewModel
@@ -72,26 +76,29 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             unlockUserPrimaryKey,
             setupAccountCheck,
             setupPrimaryKeys,
-            setupOriginalAddress
+            setupOriginalAddress,
+            sessionProvider
         )
-        every { testSessionResult.sessionId } returns testSessionId
+        coEvery { sessionProvider.getSessionId(any()) } returns testSessionId
+        every { testSessionResult.sessionId } returns testSessionId.id
         every { testSessionResult.isTwoPassModeNeeded } returns false
     }
 
     @Test
     fun `submit 2fa happy flow states are handled correctly`() = coroutinesTest {
         // GIVEN
-        val requiredAccountType = UserType.Internal
-        coEvery { performSecondFactor.invoke(SessionId(testSessionId), testSecondFactorCode) } returns testScopeInfo
+        val requiredAccountType = AccountType.Internal
+        coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
         val observer = mockk<(SecondFactorViewModel.State) -> Unit>(relaxed = true)
         viewModel.secondFactorState.observeDataForever(observer)
         // WHEN
         viewModel.startSecondFactorFlow(
+            testUserId,
             testLoginPassword,
             requiredAccountType,
-            testSessionResult,
+            isTwoPassModeNeeded = false,
             testSecondFactorCode
         )
         // THEN
@@ -106,17 +113,18 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `submit 2fa two pass mode flow states are handled correctly`() = coroutinesTest {
         // GIVEN
-        val requiredAccountType = UserType.Internal
+        val requiredAccountType = AccountType.Internal
         every { testSessionResult.isTwoPassModeNeeded } returns true
-        coEvery { performSecondFactor.invoke(SessionId(testSessionId), testSecondFactorCode) } returns testScopeInfo
+        coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.TwoPassNeeded
         val observer = mockk<(SecondFactorViewModel.State) -> Unit>(relaxed = true)
         viewModel.secondFactorState.observeDataForever(observer)
         // WHEN
         viewModel.startSecondFactorFlow(
+            testUserId,
             testLoginPassword,
             requiredAccountType,
-            testSessionResult,
+            isTwoPassModeNeeded = true,
             testSecondFactorCode
         )
         // THEN
@@ -129,13 +137,13 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         val successState = arguments[1]
         assertTrue(processingState is SecondFactorViewModel.State.Processing)
         assertTrue(successState is SecondFactorViewModel.State.Need.TwoPassMode)
-        assertEquals(SessionId(testSessionId), accountManagerArguments.captured)
+        assertEquals(testSessionId, accountManagerArguments.captured)
     }
 
     @Test
     fun `stop 2fa invokes failed on account manager`() = coroutinesTest {
         // WHEN
-        viewModel.stopSecondFactorFlow(SessionId(testSessionId))
+        viewModel.stopSecondFactorFlow(testUserId)
         // THEN
         val arguments = slot<SessionId>()
         coVerify(exactly = 1) { accountManager.handleSecondFactorFailed(capture(arguments)) }

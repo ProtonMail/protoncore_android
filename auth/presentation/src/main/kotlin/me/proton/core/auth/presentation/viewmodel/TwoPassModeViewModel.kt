@@ -28,6 +28,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
@@ -36,7 +39,8 @@ import studio.forface.viewstatestore.ViewStateStoreScope
 
 class TwoPassModeViewModel @ViewModelInject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
-    private val unlockUserPrimaryKey: UnlockUserPrimaryKey
+    private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
+    private val keyStoreCrypto: KeyStoreCrypto
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     val mailboxLoginState = ViewStateStore<State>().lock
@@ -44,7 +48,7 @@ class TwoPassModeViewModel @ViewModelInject constructor(
     sealed class State {
         object Processing : State()
         sealed class Success : State() {
-            object UserUnLocked : Success()
+            data class UserUnLocked(val userId: UserId) : Success()
         }
 
         sealed class Error : State() {
@@ -59,11 +63,12 @@ class TwoPassModeViewModel @ViewModelInject constructor(
 
     fun tryUnlockUser(
         userId: UserId,
-        password: ByteArray
+        password: String
     ) = flow {
         emit(State.Processing)
 
-        val state = unlockUserPrimaryKey(userId, password)
+        val encryptedPassword = password.encryptWith(keyStoreCrypto)
+        val state = unlockUserPrimaryKey(userId, encryptedPassword)
 
         emit(state)
     }.catch { error ->
@@ -74,15 +79,14 @@ class TwoPassModeViewModel @ViewModelInject constructor(
 
     private suspend fun unlockUserPrimaryKey(
         userId: UserId,
-        password: ByteArray
+        password: EncryptedString
     ): State {
         val result = unlockUserPrimaryKey.invoke(userId, password)
         return if (result == UserManager.UnlockResult.Success) {
             accountWorkflow.handleTwoPassModeSuccess(userId)
             accountWorkflow.handleAccountReady(userId)
-            State.Success.UserUnLocked
+            State.Success.UserUnLocked(userId)
         } else {
-            accountWorkflow.handleTwoPassModeFailed(userId)
             State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
         }
     }

@@ -24,15 +24,13 @@ import android.os.Bundle
 import android.text.InputType
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.NextStep
-import me.proton.core.auth.presentation.entity.ScopeResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -85,10 +83,10 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
         viewModel.secondFactorState.observeData {
             when (it) {
                 is SecondFactorViewModel.State.Processing -> showLoading(true)
-                is SecondFactorViewModel.State.Success.UserUnLocked -> onSuccess(it.scopeInfo, NextStep.None)
-                is SecondFactorViewModel.State.Need.TwoPassMode -> onSuccess(it.scopeInfo, NextStep.TwoPassMode)
-                is SecondFactorViewModel.State.Need.ChooseUsername -> onSuccess(it.scopeInfo, NextStep.ChooseAddress)
-                is SecondFactorViewModel.State.Need.ChangePassword -> onChangePassword()
+                is SecondFactorViewModel.State.Success.UserUnLocked -> onSuccess(it.userId, NextStep.None)
+                is SecondFactorViewModel.State.Need.TwoPassMode -> onSuccess(it.userId, NextStep.TwoPassMode)
+                is SecondFactorViewModel.State.Need.ChooseUsername -> onSuccess(it.userId, NextStep.ChooseAddress)
+                is SecondFactorViewModel.State.Need.ChangePassword -> onSuccess(it.userId, NextStep.None)
                 is SecondFactorViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
                 is SecondFactorViewModel.State.Error.Message -> onError(false, it.message)
                 is SecondFactorViewModel.State.Error.Unrecoverable -> {
@@ -115,9 +113,10 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                 .onFailure { secondFactorInput.setInputError() }
                 .onSuccess { secondFactorCode ->
                     viewModel.startSecondFactorFlow(
+                        userId = UserId(input.userId),
                         password = input.password,
-                        requiredUserType = input.requiredUserType,
-                        session = input.session,
+                        requiredAccountType = input.requiredAccountType,
+                        isTwoPassModeNeeded = input.isTwoPassModeNeeded,
                         secondFactorCode = secondFactorCode
                     )
                 }
@@ -125,28 +124,16 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
     }
 
     override fun onBackPressed() {
-        viewModel.stopSecondFactorFlow(SessionId(input.session.sessionId))
+        viewModel.stopSecondFactorFlow(UserId(input.userId))
             .invokeOnCompletion { finish() }
     }
 
-    private fun onChangePassword() {
-        showLoading(false)
-        supportFragmentManager.showPasswordChangeDialog(this)
-    }
-
     private fun onSuccess(
-        scopeInfo: ScopeInfo,
+        userId: UserId,
         nextStep: NextStep
     ) {
-        val intent = Intent().putExtra(
-            ARG_RESULT,
-            SecondFactorResult(
-                session = input.session,
-                scope = ScopeResult(input.session.sessionId, scopeInfo.scopes),
-                requiredUserType = input.requiredUserType,
-                nextStep = nextStep
-            )
-        )
+        val intent = Intent()
+            .putExtra(ARG_RESULT, SecondFactorResult(userId = userId.id, nextStep = nextStep))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

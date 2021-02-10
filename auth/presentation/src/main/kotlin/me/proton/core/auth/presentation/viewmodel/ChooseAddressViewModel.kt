@@ -20,11 +20,15 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.firstOrDefault
@@ -32,6 +36,7 @@ import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
 class ChooseAddressViewModel @ViewModelInject constructor(
+    private val accountWorkflow: AccountWorkflowHandler,
     private val usernameDomainAvailability: UsernameDomainAvailability
 ) : ProtonViewModel(), ViewStateStoreScope {
 
@@ -76,6 +81,12 @@ class ChooseAddressViewModel @ViewModelInject constructor(
     }.onEach {
         domainsState.post(it)
     }.launchIn(viewModelScope)
+
+    fun stopChooseAddressWorkflow(
+        userId: UserId
+    ): Job = viewModelScope.launch {
+        accountWorkflow.handleCreateAddressFailed(userId)
+    }
 
     fun checkUsernameAvailability(username: String) = flow {
         emit(UsernameState.Processing)
