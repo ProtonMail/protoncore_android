@@ -24,5 +24,5 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ChooseAddressInput(
     val userId: String,
-    val externalEmail: String?
+    val recoveryEmail: String
 ) : Parcelable

@@ -24,6 +24,5 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ChooseAddressResult(
     val userId: String,
-    val username: String,
-    val domain: String
+    val success: Boolean
 ) : Parcelable

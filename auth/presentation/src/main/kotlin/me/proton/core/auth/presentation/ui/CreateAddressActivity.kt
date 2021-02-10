@@ -22,15 +22,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.view.View
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityCreateAddressBinding
 import me.proton.core.auth.presentation.entity.CreateAddressInput
+import me.proton.core.auth.presentation.entity.CreateAddressResult
 import me.proton.core.auth.presentation.viewmodel.CreateAddressViewModel
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.utils.onClick
 
 /**
@@ -59,7 +58,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
             createAddressButton.onClick {
                 viewModel.upgradeAccount(UserId(input.userId), input.username, input.domain)
             }
-            externalEmailText.visibility = View.GONE
+            externalEmailText.text = input.recoveryEmail
             titleText.text = String.format(
                 getString(
                     R.string.auth_create_address_result_title_username,
@@ -67,7 +66,6 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
                     input.domain
                 )
             )
-            //titleText.text = String.format(getString(R.string.auth_create_address_result_title), username)
             termsConditionsText.movementMethod = LinkMovementMethod.getInstance()
         }
 
@@ -91,7 +89,9 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
     }
 
     private fun onSuccess() {
-        setResult(Activity.RESULT_OK, Intent())
+        val intent = Intent()
+            .putExtra(ARG_RESULT, CreateAddressResult(success = true))
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 

@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityChooseAddressBinding
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
+import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.CreateAddressInput
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
 import me.proton.core.presentation.utils.hideKeyboard
@@ -57,8 +58,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
 
     private val startForResult = registerForActivityResult(StartCreateAddress()) { result ->
         if (result != null) {
-            setResult(Activity.RESULT_OK, Intent())
-            finish()
+            onSuccess(result.success)
         }
     }
 
@@ -72,6 +72,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
         binding.apply {
             closeButton.onClick { finish() }
             nextButton.onClick(::onNextClicked)
+            subtitleText.text = String.format(getString(R.string.auth_create_address_subtitle, input.recoveryEmail))
         }
 
         viewModel.domainsState.observeData {
@@ -132,13 +133,19 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
             isEnabled = true
         }
         startForResult.launch(
-            CreateAddressInput(input.userId, username, domain)
+            CreateAddressInput(input.userId, username, domain, input.recoveryEmail)
         )
     }
 
     private fun onUsernameUnavailable(message: String? = null, invalidInput: Boolean) {
         if (invalidInput) binding.usernameInput.setInputError()
         showError(message)
+    }
+
+    private fun onSuccess(success: Boolean) {
+        val intent = Intent().putExtra(ARG_RESULT, ChooseAddressResult(userId = input.userId, success = success))
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     companion object {

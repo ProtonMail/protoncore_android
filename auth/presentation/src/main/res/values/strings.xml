@@ -52,7 +52,7 @@
     <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
 
     <string name="auth_create_address_title">Create a ProtonMail address</string>
-    <string name="auth_create_address_subtitle">Your Proton Account is associated with email@example.com. To use ProtonMail, please create an address.</string>
+    <string name="auth_create_address_subtitle">Your Proton Account is associated with %1$s. To use ProtonMail, please create an address.</string>
     <string name="auth_username">Username</string>
     <string name="auth_username_next_action">Next</string>
 

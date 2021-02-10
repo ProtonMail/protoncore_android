@@ -197,9 +197,9 @@ class AuthOrchestrator @Inject constructor(
     /**
      * Start the Choose/Create Address workflow.
      */
-    fun startChooseAddressWorkflow(userId: UserId, externalEmail: String?) {
+    fun startChooseAddressWorkflow(userId: UserId, externalEmail: String) {
         chooseAddressLauncher?.launch(
-            ChooseAddressInput(userId.id, externalEmail)
+            ChooseAddressInput(userId.id, recoveryEmail = externalEmail)
         ) ?: throw IllegalStateException("You must call register before any start workflow function!")
     }
 

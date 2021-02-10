@@ -25,5 +25,6 @@ import kotlinx.android.parcel.Parcelize
 data class CreateAddressInput(
     val userId: String,
     val username: String,
-    val domain: String
+    val domain: String,
+    val recoveryEmail: String
 ) : Parcelable
