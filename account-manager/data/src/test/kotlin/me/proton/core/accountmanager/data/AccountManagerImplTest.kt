@@ -73,7 +73,7 @@ class AccountManagerImplTest {
     fun `on handleTwoPassModeSuccess`() = runBlockingTest {
         mocks.setupAccountRepository()
 
-        accountManager.handleTwoPassModeSuccess(account1.sessionId!!)
+        accountManager.handleTwoPassModeSuccess(account1.userId)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
         assertEquals(1, stateLists.size)
@@ -84,7 +84,7 @@ class AccountManagerImplTest {
     fun `on handleTwoPassModeFailed`() = runBlockingTest {
         mocks.setupAccountRepository()
 
-        accountManager.handleTwoPassModeFailed(account1.sessionId!!)
+        accountManager.handleTwoPassModeFailed(account1.userId)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
         assertEquals(1, stateLists.size)

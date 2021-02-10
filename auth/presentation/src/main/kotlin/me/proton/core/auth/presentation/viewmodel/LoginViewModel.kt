@@ -92,7 +92,7 @@ class LoginViewModel @ViewModelInject constructor(
         }
 
         // Check if setup keys is needed and if it can be done directly.
-        when (setupAccountCheck.invoke(sessionInfo.sessionId, sessionInfo.isTwoPassModeNeeded, requiredUserType)) {
+        when (setupAccountCheck.invoke(sessionInfo.userId, sessionInfo.isTwoPassModeNeeded, requiredUserType)) {
             is SetupAccountCheck.Result.TwoPassNeeded -> State.Need.TwoPassMode(sessionInfo)
             is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(sessionInfo)
             is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(sessionInfo, password)
@@ -111,7 +111,7 @@ class LoginViewModel @ViewModelInject constructor(
     private suspend fun changePassword(
         sessionInfo: SessionInfo
     ): State {
-        accountWorkflow.handleAccountChangePasswordNeeded(UserId(sessionInfo.userId))
+        accountWorkflow.handleAccountChangePasswordNeeded(sessionInfo.userId)
         return State.Need.ChangePassword
     }
 
@@ -119,12 +119,12 @@ class LoginViewModel @ViewModelInject constructor(
         session: SessionInfo,
         password: ByteArray
     ): State {
-        val result = unlockUserPrimaryKey.invoke(SessionId(session.sessionId), password)
+        val result = unlockUserPrimaryKey.invoke(session.userId, password)
         return if (result is UserManager.UnlockResult.Success) {
-            accountWorkflow.handleAccountReady(UserId(session.userId))
+            accountWorkflow.handleAccountReady(session.userId)
             State.Success.UserUnLocked(session)
         } else {
-            accountWorkflow.handleAccountUnlockFailed(UserId(session.userId))
+            accountWorkflow.handleAccountUnlockFailed(session.userId)
             State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
         }
     }
@@ -133,7 +133,7 @@ class LoginViewModel @ViewModelInject constructor(
         session: SessionInfo,
         password: ByteArray
     ): State {
-        setupPrimaryKeys.invoke(SessionId(session.sessionId), password)
+        setupPrimaryKeys.invoke(session.userId, password)
         return unlockUserPrimaryKey(session, password)
     }
 
@@ -142,7 +142,7 @@ class LoginViewModel @ViewModelInject constructor(
         password: ByteArray
     ): State {
         val state = unlockUserPrimaryKey(session, password)
-        setupOriginalAddress.invoke(SessionId(session.sessionId))
+        setupOriginalAddress.invoke(session.userId)
         return state
     }
 
@@ -152,7 +152,7 @@ class LoginViewModel @ViewModelInject constructor(
     ): State {
         val state = unlockUserPrimaryKey(session, password)
         return if (state is State.Success.UserUnLocked) {
-            accountWorkflow.handleAccountCreateAddressNeeded(UserId(session.userId))
+            accountWorkflow.handleAccountCreateAddressNeeded(session.userId)
             State.Need.ChooseUsername(session)
         } else {
             state
@@ -167,14 +167,14 @@ class LoginViewModel @ViewModelInject constructor(
 
         val account = Account(
             username = sessionInfo.username,
-            userId = UserId(sessionInfo.userId),
+            userId = sessionInfo.userId,
             email = null,
-            sessionId = SessionId(sessionInfo.sessionId),
+            sessionId = sessionInfo.sessionId,
             state = accountState,
             sessionState = sessionState
         )
         val session = Session(
-            sessionId = SessionId(sessionInfo.sessionId),
+            sessionId = sessionInfo.sessionId,
             accessToken = sessionInfo.accessToken,
             refreshToken = sessionInfo.refreshToken,
             scopes = sessionInfo.scopes

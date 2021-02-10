@@ -29,6 +29,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityCreateAddressBinding
 import me.proton.core.auth.presentation.entity.CreateAddressInput
 import me.proton.core.auth.presentation.viewmodel.CreateAddressViewModel
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.utils.onClick
 
@@ -56,7 +57,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
                 finish()
             }
             createAddressButton.onClick {
-                viewModel.upgradeAccount(SessionId(input.sessionId), input.username, input.domain)
+                viewModel.upgradeAccount(UserId(input.userId), input.username, input.domain)
             }
             externalEmailText.visibility = View.GONE
             titleText.text = String.format(

@@ -24,6 +24,6 @@ import me.proton.core.user.domain.entity.UserType
 
 @Parcelize
 data class TwoPassModeInput(
-    val sessionId: String,
+    val userId: String,
     val requiredUserType: UserType
 ) : Parcelable

@@ -38,14 +38,14 @@ interface AccountWorkflowHandler {
     /**
      * Handle TwoPassMode success.
      */
-    suspend fun handleTwoPassModeSuccess(sessionId: SessionId)
+    suspend fun handleTwoPassModeSuccess(userId: UserId)
 
     /**
      * Handle TwoPassMode failure.
      *
      * Note: The Workflow must succeed within maximum 10 min of authentication.
      */
-    suspend fun handleTwoPassModeFailed(sessionId: SessionId)
+    suspend fun handleTwoPassModeFailed(userId: UserId)
 
     /**
      * Handle SecondFactor success.

@@ -18,8 +18,7 @@
 
 package me.proton.core.auth.domain.usecase
 
-import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.user.domain.repository.UserSettingRepository
@@ -30,23 +29,16 @@ import javax.inject.Inject
  */
 class SetupUsername @Inject constructor(
     private val userRepository: UserRepository,
-    private val userSettingRepository: UserSettingRepository,
-    private val sessionProvider: SessionProvider,
+    private val userSettingRepository: UserSettingRepository
 ) {
     suspend operator fun invoke(
-        sessionId: SessionId,
+        userId: UserId,
         username: String
     ) {
-        val userId = sessionProvider.getUserId(sessionId)
-        checkNotNull(userId) { "Cannot get userId from sessionId = $sessionId" }
-
         val user = userRepository.getUser(userId)
-
         if (user.name == null) {
             userSettingRepository.setUsername(userId, username)
-
             val updatedUser = userRepository.getUser(userId, refresh = true)
-
             check(updatedUser.name == username) { "Username has not been correctly set remotely." }
         } else {
             check(user.name == username) { "Username already set, and cannot be changed." }

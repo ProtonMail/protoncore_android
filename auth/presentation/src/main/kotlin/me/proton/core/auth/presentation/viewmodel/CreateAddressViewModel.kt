@@ -27,8 +27,7 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.SetupOriginalAddress
 import me.proton.core.auth.domain.usecase.SetupUsername
-import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
@@ -36,8 +35,7 @@ import studio.forface.viewstatestore.ViewStateStoreScope
 class CreateAddressViewModel @ViewModelInject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val setupUsername: SetupUsername,
-    private val setupOriginalAddress: SetupOriginalAddress,
-    private val sessionProvider: SessionProvider
+    private val setupOriginalAddress: SetupOriginalAddress
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     val upgradeState = ViewStateStore<State>().lock
@@ -51,17 +49,14 @@ class CreateAddressViewModel @ViewModelInject constructor(
     }
 
     fun upgradeAccount(
-        sessionId: SessionId,
+        userId: UserId,
         username: String,
         domain: String
     ) = flow {
         emit(State.Processing)
 
-        val userId = sessionProvider.getUserId(sessionId)
-        checkNotNull(userId) { "Cannot get userId from sessionId = $sessionId" }
-
-        setupUsername.invoke(sessionId, username)
-        setupOriginalAddress.invoke(sessionId, domain)
+        setupUsername.invoke(userId, username)
+        setupOriginalAddress.invoke(userId, domain)
 
         accountWorkflow.handleAccountCreateAddressSuccess(userId)
         accountWorkflow.handleAccountReady(userId)

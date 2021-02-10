@@ -18,8 +18,7 @@
 
 package me.proton.core.auth.domain.usecase
 
-import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
@@ -36,16 +35,12 @@ import javax.inject.Inject
 class SetupOriginalAddress @Inject constructor(
     private val userAddressManager: UserAddressManager,
     private val userRepository: UserRepository,
-    private val domainRepository: DomainRepository,
-    private val sessionProvider: SessionProvider,
+    private val domainRepository: DomainRepository
 ) {
     suspend operator fun invoke(
-        sessionId: SessionId,
+        userId: UserId,
         domain: String? = null
     ) {
-        val userId = sessionProvider.getUserId(sessionId)
-        checkNotNull(userId) { "Cannot get userId from sessionId = $sessionId" }
-
         val user = userRepository.getUser(userId)
         val username = checkNotNull(user.name) { "Username is needed to setup primary address." }
 

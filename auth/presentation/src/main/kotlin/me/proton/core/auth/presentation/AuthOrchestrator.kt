@@ -35,6 +35,7 @@ import me.proton.core.auth.presentation.ui.StartChooseAddress
 import me.proton.core.auth.presentation.ui.StartLogin
 import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
+import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.StartHumanVerification
@@ -81,8 +82,8 @@ class AuthOrchestrator @Inject constructor(
             result?.let {
                 when (it.nextStep) {
                     NextStep.SecondFactor -> startSecondFactorWorkflow(it.password, it.requiredUserType, it.session)
-                    NextStep.TwoPassMode -> startTwoPassModeWorkflow(it.session.sessionId, it.requiredUserType)
-                    NextStep.ChooseAddress -> startChooseAddressWorkflow(it.session.sessionId, it.session.username)
+                    NextStep.TwoPassMode -> startTwoPassModeWorkflow(UserId(it.session.userId), it.requiredUserType)
+                    NextStep.ChooseAddress -> startChooseAddressWorkflow(UserId(it.session.userId), it.session.username)
                     NextStep.None -> Unit // Nothing.
                 }
             }
@@ -108,8 +109,8 @@ class AuthOrchestrator @Inject constructor(
         ) { result ->
             result?.let {
                 when (it.nextStep) {
-                    NextStep.TwoPassMode -> startTwoPassModeWorkflow(it.scope.sessionId, it.requiredUserType)
-                    NextStep.ChooseAddress -> startChooseAddressWorkflow(it.session.sessionId, it.session.username)
+                    NextStep.TwoPassMode -> startTwoPassModeWorkflow(UserId(it.session.userId), it.requiredUserType)
+                    NextStep.ChooseAddress -> startChooseAddressWorkflow(UserId(it.session.userId), it.session.username)
                     NextStep.SecondFactor,
                     NextStep.None -> Unit // Nothing.
                 }
@@ -187,21 +188,18 @@ class AuthOrchestrator @Inject constructor(
     /**
      * Start a TwoPassMode workflow.
      */
-    fun startTwoPassModeWorkflow(sessionId: String, requiredUserType: UserType) {
+    fun startTwoPassModeWorkflow(userId: UserId, requiredUserType: UserType) {
         twoPassModeWorkflowLauncher?.launch(
-            TwoPassModeInput(sessionId, requiredUserType)
+            TwoPassModeInput(userId.id, requiredUserType)
         ) ?: throw IllegalStateException("You must call register before any start workflow function!")
     }
 
     /**
      * Start the Choose/Create Address workflow.
      */
-    fun startChooseAddressWorkflow(
-        sessionId: String,
-        externalEmail: String?
-    ) {
+    fun startChooseAddressWorkflow(userId: UserId, externalEmail: String?) {
         chooseAddressLauncher?.launch(
-            ChooseAddressInput(sessionId, externalEmail)
+            ChooseAddressInput(userId.id, externalEmail)
         ) ?: throw IllegalStateException("You must call register before any start workflow function!")
     }
 

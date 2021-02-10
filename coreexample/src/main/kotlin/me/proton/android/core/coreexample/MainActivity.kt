@@ -57,7 +57,6 @@ import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.onHumanVerificationResult
 import me.proton.core.auth.presentation.onLoginResult
 import me.proton.core.auth.presentation.onScopeResult
-import me.proton.core.auth.presentation.ui.showPasswordChangeDialog
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.presentation.ui.ProtonActivity
@@ -164,14 +163,14 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                                                 accountManager.disableAccount(account.userId)
                                             SessionState.Authenticated ->
                                                 authOrchestrator.startTwoPassModeWorkflow(
-                                                    account.sessionId?.id!!,
+                                                    account.userId,
                                                     UserType.Username
                                                 )
                                             else -> Unit
                                         }
                                     AccountState.CreateAddressNeeded ->
                                         authOrchestrator.startChooseAddressWorkflow(
-                                            account.sessionId?.id!!,
+                                            account.userId,
                                             account.username
                                         )
                                     else -> Unit

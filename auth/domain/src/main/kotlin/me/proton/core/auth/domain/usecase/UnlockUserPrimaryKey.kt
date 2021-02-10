@@ -19,8 +19,7 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.crypto.common.keystore.PlainByteArray
-import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserKey
 import javax.inject.Inject
@@ -31,18 +30,13 @@ import javax.inject.Inject
  * On UnlockResult.Success, the passphrase, derived from password, is stored and the User keys ready to be used.
  */
 class UnlockUserPrimaryKey @Inject constructor(
-    private val userManager: UserManager,
-    private val sessionProvider: SessionProvider,
+    private val userManager: UserManager
 ) {
     /**
      * Try to unlock the user with the given password.
      */
     suspend operator fun invoke(
-        sessionId: SessionId,
+        userId: UserId,
         password: ByteArray
-    ): UserManager.UnlockResult {
-        val userId = sessionProvider.getUserId(sessionId)
-        checkNotNull(userId) { "Cannot get userId from sessionId = $sessionId" }
-        return userManager.unlockWithPassword(userId, PlainByteArray(password))
-    }
+    ): UserManager.UnlockResult = userManager.unlockWithPassword(userId, PlainByteArray(password))
 }

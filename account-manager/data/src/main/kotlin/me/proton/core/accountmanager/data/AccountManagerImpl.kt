@@ -108,12 +108,12 @@ class AccountManagerImpl constructor(
         accountRepository.createOrUpdateAccountSession(account.copy(state = state), session)
     }
 
-    override suspend fun handleTwoPassModeSuccess(sessionId: SessionId) {
-        accountRepository.updateAccountState(sessionId, AccountState.TwoPassModeSuccess)
+    override suspend fun handleTwoPassModeSuccess(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.TwoPassModeSuccess)
     }
 
-    override suspend fun handleTwoPassModeFailed(sessionId: SessionId) {
-        accountRepository.updateAccountState(sessionId, AccountState.TwoPassModeFailed)
+    override suspend fun handleTwoPassModeFailed(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.TwoPassModeFailed)
     }
 
     override suspend fun handleSecondFactorSuccess(sessionId: SessionId, updatedScopes: List<String>) {

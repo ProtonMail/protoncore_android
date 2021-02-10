@@ -132,7 +132,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
             isEnabled = true
         }
         startForResult.launch(
-            CreateAddressInput(input.sessionId, username, domain)
+            CreateAddressInput(input.userId, username, domain)
         )
     }
 

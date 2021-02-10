@@ -21,6 +21,8 @@ package me.proton.core.auth.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 
 @Serializable
 data class LoginResponse(
@@ -58,8 +60,8 @@ data class LoginResponse(
         tokenType = tokenType,
         scope = scope,
         scopes = scopes,
-        sessionId = sessionId,
-        userId = userId,
+        sessionId = SessionId(sessionId),
+        userId = UserId(userId),
         refreshToken = refreshToken,
         eventId = eventId,
         serverProof = serverProof,

@@ -18,8 +18,7 @@
 
 package me.proton.core.auth.domain.usecase
 
-import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.UserType
 import me.proton.core.user.domain.extension.originalOrNull
@@ -29,8 +28,7 @@ import javax.inject.Inject
 
 class SetupAccountCheck @Inject constructor(
     private val userRepository: UserRepository,
-    private val addressRepository: UserAddressRepository,
-    private val sessionProvider: SessionProvider
+    private val addressRepository: UserAddressRepository
 ) {
 
     sealed class Result {
@@ -54,13 +52,10 @@ class SetupAccountCheck @Inject constructor(
     }
 
     suspend operator fun invoke(
-        sessionId: String,
+        userId: UserId,
         isTwoPassModeNeeded: Boolean,
         requiredUserType: UserType
     ): Result {
-        val userId = sessionProvider.getUserId(SessionId(sessionId))
-        checkNotNull(userId) { "Cannot get userId from sessionId = $sessionId" }
-
         val user = userRepository.getUser(userId, refresh = true)
         val hasUsername = !user.name.isNullOrBlank()
         val hasKeys = user.keys.isNotEmpty()

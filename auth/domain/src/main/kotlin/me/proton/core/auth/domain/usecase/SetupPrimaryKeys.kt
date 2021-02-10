@@ -20,9 +20,8 @@ package me.proton.core.auth.domain.usecase
 
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
-import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
@@ -38,16 +37,12 @@ class SetupPrimaryKeys @Inject constructor(
     private val userManager: UserManager,
     private val authRepository: AuthRepository,
     private val domainRepository: DomainRepository,
-    private val sessionProvider: SessionProvider,
     private val srpCrypto: SrpCrypto
 ) {
     suspend operator fun invoke(
-        sessionId: SessionId,
+        userId: UserId,
         password: ByteArray
     ) {
-        val userId = sessionProvider.getUserId(sessionId)
-        checkNotNull(userId) { "Cannot get userId from sessionId = $sessionId" }
-
         val user = userManager.getUser(userId)
         val username = checkNotNull(user.name) { "Username is needed to setup primary keys." }
 

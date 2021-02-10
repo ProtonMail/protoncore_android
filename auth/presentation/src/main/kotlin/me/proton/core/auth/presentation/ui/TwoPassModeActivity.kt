@@ -27,7 +27,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityMailboxLoginBinding
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
 import me.proton.core.auth.presentation.viewmodel.TwoPassModeViewModel
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -48,7 +48,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
-    private val sessionId by lazy { SessionId(input.sessionId) }
+    private val userId by lazy { UserId(input.userId) }
 
     private val viewModel by viewModels<TwoPassModeViewModel>()
 
@@ -94,7 +94,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
     }
 
     override fun onBackPressed() {
-        viewModel.stopMailboxLoginFlow(sessionId)
+        viewModel.stopMailboxLoginFlow(userId)
             .invokeOnCompletion { finish() }
     }
 
@@ -116,7 +116,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
         with(binding) {
             mailboxPasswordInput.validatePassword()
                 .onFailure { mailboxPasswordInput.setInputError() }
-                .onSuccess { viewModel.tryUnlockUser(sessionId, it.toByteArray()) }
+                .onSuccess { viewModel.tryUnlockUser(userId, it.toByteArray()) }
         }
     }
 
