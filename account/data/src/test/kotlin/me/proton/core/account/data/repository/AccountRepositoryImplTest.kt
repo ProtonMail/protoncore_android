@@ -31,15 +31,17 @@ import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.db.AccountMetadataDao
 import me.proton.core.account.data.db.HumanVerificationDetailsDao
 import me.proton.core.account.data.db.SessionDao
+import me.proton.core.account.data.db.SessionDetailsDao
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.EncryptedString
-import me.proton.core.crypto.common.simple.PlainByteArray
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.domain.entity.Product
 import org.junit.Before
 import org.junit.Test
@@ -58,12 +60,15 @@ class AccountRepositoryImplTest {
     private lateinit var sessionDao: SessionDao
 
     @RelaxedMockK
+    private lateinit var sessionDetailsDao: SessionDetailsDao
+
+    @RelaxedMockK
     private lateinit var metadataDao: AccountMetadataDao
 
     @RelaxedMockK
     private lateinit var humanVerificationDao: HumanVerificationDetailsDao
 
-    private val simpleCrypto = object : SimpleCrypto {
+    private val simpleCrypto = object : KeyStoreCrypto {
         override fun encrypt(value: String): EncryptedString = value
         override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array)
         override fun decrypt(value: EncryptedString): String = value
@@ -101,6 +106,8 @@ class AccountRepositoryImplTest {
         product = Product.Calendar
     )
 
+    private val ad = AccountDetails(null, null)
+
     @Before
     fun beforeEveryTest() {
         MockKAnnotations.init(this)
@@ -113,6 +120,7 @@ class AccountRepositoryImplTest {
     private fun setupAccountDatabase() {
         every { db.accountDao() } returns accountDao
         every { db.sessionDao() } returns sessionDao
+        every { db.sessionDetailsDao() } returns sessionDetailsDao
         every { db.accountMetadataDao() } returns metadataDao
         every { db.humanVerificationDetailsDao() } returns humanVerificationDao
 
@@ -124,11 +132,13 @@ class AccountRepositoryImplTest {
 
         coEvery { accountDao.getByUserId(any()) } returns account1
         coEvery { accountDao.getBySessionId(any()) } returns account1
+        coEvery { sessionDetailsDao.getBySessionId(any()) } returns null
+        coEvery { humanVerificationDao.getBySessionId(any()) } returns null
     }
 
     @Test
     fun `add user with session`() = runBlockingTest {
-        accountRepository.createOrUpdateAccountSession(account1.toAccount(), session1.toSession(simpleCrypto))
+        accountRepository.createOrUpdateAccountSession(account1.toAccount(ad), session1.toSession(simpleCrypto))
 
         coVerify(exactly = 1) { accountDao.insertOrUpdate(*anyVararg()) }
         coVerify(exactly = 1) { sessionDao.insertOrUpdate(*anyVararg()) }
@@ -137,12 +147,12 @@ class AccountRepositoryImplTest {
 
     @Test(expected = IllegalArgumentException::class)
     fun `add user with invalid session`() = runBlockingTest {
-        accountRepository.createOrUpdateAccountSession(account1.toAccount(), sessionInvalid.toSession(simpleCrypto))
+        accountRepository.createOrUpdateAccountSession(account1.toAccount(ad), sessionInvalid.toSession(simpleCrypto))
     }
 
     @Test
     fun `update account state Ready`() = runBlockingTest {
-        accountRepository.updateAccountState(account1.toAccount().userId, AccountState.Ready)
+        accountRepository.updateAccountState(account1.toAccount(ad).userId, AccountState.Ready)
 
         coVerify(exactly = 1) { accountDao.updateAccountState(any(), any()) }
         coVerify(exactly = 1) { metadataDao.insertOrUpdate(*anyVararg()) }
@@ -153,7 +163,7 @@ class AccountRepositoryImplTest {
         // No user exist in DB.
         coEvery { accountDao.getByUserId(any()) } returns null
 
-        accountRepository.updateAccountState(account1.toAccount().userId, AccountState.Ready)
+        accountRepository.updateAccountState(account1.toAccount(ad).userId, AccountState.Ready)
 
         // AccountDao.updateAccountState call can be done.
         coVerify(exactly = 1) { accountDao.updateAccountState(any(), any()) }
@@ -163,7 +173,7 @@ class AccountRepositoryImplTest {
 
     @Test
     fun `update account state Removed`() = runBlockingTest {
-        accountRepository.updateAccountState(account1.toAccount().userId, AccountState.Removed)
+        accountRepository.updateAccountState(account1.toAccount(ad).userId, AccountState.Removed)
 
         coVerify(exactly = 1) { accountDao.updateAccountState(any(), any()) }
         coVerify(exactly = 1) { metadataDao.delete(account1.userId, any()) }
@@ -171,7 +181,7 @@ class AccountRepositoryImplTest {
 
     @Test
     fun `update account state Disabled`() = runBlockingTest {
-        accountRepository.updateAccountState(account1.toAccount().userId, AccountState.Disabled)
+        accountRepository.updateAccountState(account1.toAccount(ad).userId, AccountState.Disabled)
 
         coVerify(exactly = 1) { accountDao.updateAccountState(any(), any()) }
         coVerify(exactly = 1) { metadataDao.delete(account1.userId, any()) }

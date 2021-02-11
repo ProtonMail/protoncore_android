@@ -23,18 +23,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.auth.domain.entity.SessionInfo
-import me.proton.core.auth.domain.entity.User
-import me.proton.core.auth.domain.usecase.GetUser
-import me.proton.core.auth.domain.usecase.PerformLogin
-import me.proton.core.auth.domain.usecase.UpdateUsernameOnlyAccount
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
-import me.proton.core.auth.presentation.entity.SessionResult
-import me.proton.core.auth.presentation.entity.UserResult
+import me.proton.core.auth.presentation.entity.NextStep
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -51,11 +46,11 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
 
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun layoutId(): Int = R.layout.activity_login
-
     private val input: LoginInput by lazy {
-        requireNotNull(intent?.extras?.getParcelable(ARG_LOGIN_INPUT))
+        requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
+
+    override fun layoutId(): Int = R.layout.activity_login
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,58 +79,30 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
 
         viewModel.loginState.observeData {
             when (it) {
-                is PerformLogin.State.Processing -> showLoading(true)
-                is PerformLogin.State.Success.Login -> onSuccess(it.sessionInfo, null)
-                is PerformLogin.State.Success.UserSetup -> onSuccess(it.sessionInfo, it.user)
-                is PerformLogin.State.Error.UserSetup -> onUserSetupError(it.state)
-                is PerformLogin.State.Error.Message -> onError(it.validation, it.message)
-                is PerformLogin.State.Error.EmptyCredentials -> onError(
-                    true,
-                    getString(R.string.auth_login_empty_credentials)
-                )
-                is PerformLogin.State.Error.FetchUser -> onError(
-                    false,
-                    (it.state as GetUser.State.Error.Message).message // this succeeds because it is the only option.
-                )
-                is PerformLogin.State.Error.AccountUpgrade -> onUpdateAccountError(it.state)
-                is PerformLogin.State.Error.PasswordChange -> onPasswordChange()
+                is LoginViewModel.State.Processing -> showLoading(true)
+                is LoginViewModel.State.Success.UserUnLocked -> onSuccess(it.userId, NextStep.None)
+                is LoginViewModel.State.Need.SecondFactor -> onSuccess(it.userId, NextStep.SecondFactor)
+                is LoginViewModel.State.Need.TwoPassMode -> onSuccess(it.userId, NextStep.TwoPassMode)
+                is LoginViewModel.State.Need.ChooseUsername -> onSuccess(it.userId, NextStep.ChooseAddress)
+                is LoginViewModel.State.Need.ChangePassword -> onChangePassword()
+                is LoginViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
+                is LoginViewModel.State.Error.Message -> onError(true, it.message)
             }.exhaustive
         }
     }
 
-    private fun onPasswordChange() {
+    private fun onChangePassword() {
         showLoading(false)
+        binding.passwordInput.text = ""
         supportFragmentManager.showPasswordChangeDialog(this)
     }
 
-    private fun onUpdateAccountError(errorState: UpdateUsernameOnlyAccount.State.Error) {
-        when (errorState) {
-            is UpdateUsernameOnlyAccount.State.Error.Message -> showError(errorState.message)
-            is UpdateUsernameOnlyAccount.State.Error.EmptyCredentials -> showError(
-                getString(R.string.auth_create_address_error_credentials)
-            )
-            is UpdateUsernameOnlyAccount.State.Error.EmptyDomain -> showError(
-                getString(R.string.auth_create_address_error_no_available_domain)
-            )
-            is UpdateUsernameOnlyAccount.State.Error.GeneratingPrivateKeyFailed -> showError(
-                getString(R.string.auth_create_address_error_private_key)
-            )
-            is UpdateUsernameOnlyAccount.State.Error.GeneratingSignedKeyListFailed -> showError(
-                getString(R.string.auth_create_address_error_signed_key_list)
-            )
-        }
-    }
-
-    private fun onSuccess(sessionInfo: SessionInfo, user: User?) {
-        val intent = Intent().putExtra(
-            ARG_LOGIN_RESULT,
-            LoginResult(
-                password = binding.passwordInput.text.toString().toByteArray(),
-                session = SessionResult.from(sessionInfo),
-                user = user?.let { UserResult.from(it, input.requiredAccountType) },
-                requiredAccountType = input.requiredAccountType
-            )
-        )
+    private fun onSuccess(
+        userId: UserId,
+        nextStep: NextStep
+    ) {
+        val intent = Intent()
+            .putExtra(ARG_RESULT, LoginResult(userId = userId.id, nextStep = nextStep))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -175,13 +142,13 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                 .onFailure { passwordInput.setInputError() }
                 .onSuccess { password ->
                     signInButton.setLoading()
-                    viewModel.startLoginWorkflow(username, password.toByteArray(), input.requiredAccountType)
+                    viewModel.startLoginWorkflow(username, password, input.requiredAccountType)
                 }
         }
     }
 
     companion object {
-        const val ARG_LOGIN_INPUT = "arg.loginInput"
-        const val ARG_LOGIN_RESULT = "arg.loginResult"
+        const val ARG_INPUT = "arg.loginInput"
+        const val ARG_RESULT = "arg.loginResult"
     }
 }

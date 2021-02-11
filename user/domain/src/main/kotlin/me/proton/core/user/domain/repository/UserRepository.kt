@@ -29,12 +29,18 @@ interface UserRepository {
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
      */
-    fun getUser(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<User>>
+    fun getUserFlow(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): Flow<DataResult<User>>
 
     /**
      * Get [User], using [sessionUserId].
      *
      * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
      */
-    suspend fun getUserBlocking(sessionUserId: SessionUserId, refresh: Boolean = false): User
+    suspend fun getUser(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): User
 }

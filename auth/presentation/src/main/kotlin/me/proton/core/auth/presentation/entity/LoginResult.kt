@@ -20,15 +20,17 @@ package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import me.proton.core.auth.domain.entity.AccountType
 
-/**
- * @author Dino Kadrikj.
- */
 @Parcelize
 data class LoginResult(
-    val password: ByteArray,
-    val session: SessionResult,
-    val user: UserResult?,
-    val requiredAccountType: AccountType
+    val userId: String,
+    val nextStep: NextStep,
 ) : Parcelable
+
+@Parcelize
+enum class NextStep : Parcelable {
+    None,
+    TwoPassMode,
+    SecondFactor,
+    ChooseAddress
+}

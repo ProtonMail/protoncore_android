@@ -36,16 +36,21 @@ interface AccountWorkflowHandler {
     suspend fun handleSession(account: Account, session: Session)
 
     /**
+     * Directly sets the account into a [AccountState.TwoPassModeNeeded] state.
+     */
+    suspend fun handleTwoPassModeNeeded(userId: UserId)
+
+    /**
      * Handle TwoPassMode success.
      */
-    suspend fun handleTwoPassModeSuccess(sessionId: SessionId)
+    suspend fun handleTwoPassModeSuccess(userId: UserId)
 
     /**
      * Handle TwoPassMode failure.
      *
      * Note: The Workflow must succeed within maximum 10 min of authentication.
      */
-    suspend fun handleTwoPassModeFailed(sessionId: SessionId)
+    suspend fun handleTwoPassModeFailed(userId: UserId)
 
     /**
      * Handle SecondFactor success.
@@ -72,6 +77,31 @@ interface AccountWorkflowHandler {
      * Handle HumanVerification failure.
      */
     suspend fun handleHumanVerificationFailed(sessionId: SessionId)
+
+    /**
+     * Directly sets the account into a [AccountState.Disabled] state.
+     */
+    suspend fun handleChangePasswordNeeded(userId: UserId)
+
+    /**
+     * Directly sets the account into a [AccountState.CreateAddressNeeded] state.
+     */
+    suspend fun handleCreateAddressNeeded(userId: UserId)
+
+    /**
+     * Handle Create Address success.
+     */
+    suspend fun handleCreateAddressSuccess(userId: UserId)
+
+    /**
+     * Handle Create Address failure.
+     */
+    suspend fun handleCreateAddressFailed(userId: UserId)
+
+    /**
+     * Handle Unlock failure.
+     */
+    suspend fun handleUnlockFailed(userId: UserId)
 
     /**
      * Directly sets the account into a [AccountState.Ready] state.

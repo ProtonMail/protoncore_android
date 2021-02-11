@@ -75,3 +75,4 @@ inline fun <T> DataResult<T>.onSuccess(action: (value: T) -> Unit): DataResult<T
     if (this is DataResult.Success) action(value)
     return this
 }
+

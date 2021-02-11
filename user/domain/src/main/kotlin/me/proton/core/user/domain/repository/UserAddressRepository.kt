@@ -30,28 +30,38 @@ interface UserAddressRepository {
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
      */
-    fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<UserAddress>>>
+    fun getAddressesFlow(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): Flow<DataResult<List<UserAddress>>>
 
     /**
      * Get all [UserAddress], using [sessionUserId].
      *
      * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
      */
-    suspend fun getAddressesBlocking(sessionUserId: SessionUserId, refresh: Boolean = false): List<UserAddress>
+    suspend fun getAddresses(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): List<UserAddress>
 
     /**
      * Get [UserAddress], by [addressId], using [sessionUserId].
      *
      * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
      */
-    suspend fun getAddressBlocking(
+    suspend fun getAddress(
         sessionUserId: SessionUserId,
         addressId: AddressId,
         refresh: Boolean = false
     ): UserAddress?
 
     /**
-     * Setup new non-sub user [UserAddress] with [displayName] and [domain], remotely.
+     * Create new [UserAddress] with [displayName] and [domain], remotely.
      */
-    suspend fun setupAddress(sessionUserId: SessionUserId, displayName: String, domain: String): UserAddress
+    suspend fun createAddress(
+        sessionUserId: SessionUserId,
+        displayName: String,
+        domain: String
+    ): UserAddress
 }

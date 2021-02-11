@@ -27,19 +27,14 @@ import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.simple.encrypt
-import me.proton.core.crypto.common.simple.use
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.decryptDataOrNull
-import me.proton.core.key.domain.useKeys
-import me.proton.core.key.domain.verifyData
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.user.data.UserAddressKeySecretProvider
 import me.proton.core.user.data.api.AddressApi
-import me.proton.core.user.data.api.request.SetupAddressRequest
+import me.proton.core.user.data.api.request.CreateAddressRequest
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.AddressKeyEntity
@@ -50,17 +45,14 @@ import me.proton.core.user.data.extension.toUserAddressKey
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
-import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.util.kotlin.takeIfNotEmpty
 
 class UserAddressRepositoryImpl(
-    private val userRepository: UserRepository,
-    private val passphraseRepository: PassphraseRepository,
     private val db: AddressDatabase,
-    private val provider: ApiProvider,
-    private val cryptoContext: CryptoContext
+    private val apiProvider: ApiProvider,
+    private val userRepository: UserRepository,
+    private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
 ) : UserAddressRepository {
 
     private val addressDao = db.addressDao()
@@ -71,7 +63,7 @@ class UserAddressRepositoryImpl(
 
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey ->
-            val list = provider.get<AddressApi>(key.userId).invoke {
+            val list = apiProvider.get<AddressApi>(key.userId).invoke {
                 if (key.addressId != null)
                     listOf(getAddress(key.addressId.id).address)
                 else
@@ -80,7 +72,7 @@ class UserAddressRepositoryImpl(
             list.map { getAddressLocal(it.toEntity(key.userId), it.keys?.toEntityList(AddressId(it.id)).orEmpty()) }
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { key -> getAddressesLocal(key.userId).map { it.takeIfNotEmpty() } },
+            reader = { key -> getAddressesLocal(key.userId) },
             writer = { _, input -> insertOrUpdate(*input.toTypedArray()) },
             delete = { key -> delete(key.userId) },
             deleteAll = { deleteAll() }
@@ -88,7 +80,7 @@ class UserAddressRepositoryImpl(
     ).build()
 
     private fun getAddressesLocal(userId: UserId): Flow<List<UserAddress>> =
-        userRepository.getUser(userId)
+        userRepository.getUserFlow(userId)
             .flatMapLatest {
                 // Resubscribe every time User flow emit a value (e.g. on [User.keys] locked/unlocked).
                 addressWithKeysDao.findByUserId(userId.id)
@@ -100,21 +92,8 @@ class UserAddressRepositoryImpl(
         return entity.toUserAddress(keyList)
     }
 
-    private suspend fun getAddressKeyLocal(userId: UserId, key: AddressKeyEntity): UserAddressKey {
-        return if (key.token == null || key.signature == null) {
-            // Old address key format -> user passphrase.
-            key.toUserAddressKey(passphrase = passphraseRepository.getPassphrase(userId))
-        } else {
-            // New address key format -> token + signature -> address passphrase.
-            userRepository.getUserBlocking(userId).useKeys(cryptoContext) {
-                val decryptedAddressPassphrase = decryptDataOrNull(key.token)?.takeIf { verifyData(it, key.signature) }
-                val encryptedAddressPassphrase = decryptedAddressPassphrase?.use {
-                    it.encrypt(cryptoContext.simpleCrypto)
-                }
-                key.toUserAddressKey(passphrase = encryptedAddressPassphrase)
-            }
-        }
-    }
+    private suspend fun getAddressKeyLocal(userId: UserId, key: AddressKeyEntity): UserAddressKey =
+        key.toUserAddressKey(passphrase = userAddressKeySecretProvider.getPassphrase(userId, key))
 
     private suspend fun insertOrUpdate(vararg addresses: UserAddress) =
         db.inTransaction {
@@ -139,30 +118,30 @@ class UserAddressRepositoryImpl(
         refresh: Boolean
     ): List<UserAddress> = StoreKey(sessionUserId, addressId).let { if (refresh) store.fresh(it) else store.get(it) }
 
-    override fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
+    override fun getAddressesFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
         store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh)).map { it.toDataResult() }
 
-    override suspend fun getAddressesBlocking(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> =
-        getAddressListBlocking(sessionUserId, null, refresh)
+    override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> =
+        getAddressListBlocking(sessionUserId, null, refresh = refresh)
 
-    override suspend fun getAddressBlocking(
+    override suspend fun getAddress(
         sessionUserId: SessionUserId,
         addressId: AddressId,
         refresh: Boolean
     ): UserAddress? = getAddressListBlocking(sessionUserId, addressId, refresh).firstOrNull()
 
-    override suspend fun setupAddress(
+    override suspend fun createAddress(
         sessionUserId: SessionUserId,
         displayName: String,
         domain: String
     ): UserAddress {
-        return provider.get<AddressApi>(sessionUserId).invoke {
-            val response = setupAddress(SetupAddressRequest(displayName = displayName, domain = domain))
+        return apiProvider.get<AddressApi>(sessionUserId).invoke {
+            val response = createAddress(CreateAddressRequest(displayName = displayName, domain = domain))
             val address = response.address.toEntity(sessionUserId)
             val addressId = AddressId(address.addressId)
             val addressKeys = response.address.keys?.toEntityList(addressId).orEmpty()
             insertOrUpdate(address, addressKeys)
-            checkNotNull(getAddressBlocking(sessionUserId, addressId))
+            checkNotNull(getAddress(sessionUserId, addressId))
         }.valueOrThrow
     }
 }

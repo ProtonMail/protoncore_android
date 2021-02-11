@@ -21,10 +21,10 @@ package me.proton.core.key.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import androidx.room.PrimaryKey
 import me.proton.core.crypto.common.pgp.Armored
 
 @Entity(
+    primaryKeys = ["email", "publicKey"],
     indices = [
         Index("email")
     ],
@@ -38,8 +38,6 @@ import me.proton.core.crypto.common.pgp.Armored
     ]
 )
 data class PublicAddressKeyEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
     val email: String,
     val flags: Int,
     val publicKey: Armored,

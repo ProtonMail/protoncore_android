@@ -25,20 +25,18 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.auth.domain.crypto.SrpProofProvider
-import me.proton.core.auth.domain.crypto.SrpProofs
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.domain.usecase.PerformLogin.Companion.RESPONSE_CODE_INCORRECT_CREDENTIALS
-import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.arch.ResponseSource
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
+import me.proton.core.test.kotlin.assertIs
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertFailsWith
 
 /**
  * @author Dino Kadrikj.
@@ -47,7 +45,8 @@ class PerformLoginApiErrorTest {
 
     // region mocks
     private val authRepository = mockk<AuthRepository>(relaxed = true)
-    private val srpProofProvider = mockk<SrpProofProvider>(relaxed = true)
+    private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
+    private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
 
     // endregion
     // region test data
@@ -80,46 +79,43 @@ class PerformLoginApiErrorTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogin(authRepository, srpProofProvider, testClientSecret)
+        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret)
         every {
-            srpProofProvider.generateSrpProofs(any(), any(), any())
+            srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns SrpProofs(
             testClientEphemeral.toByteArray(),
             testClientProof.toByteArray(),
             testExpectedServerProof.toByteArray()
         )
-        coEvery {
-            authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Error.Remote(
-            message = "auth-info error",
-            protonCode = 1234,
-            httpCode = 401
-        )
-        coEvery {
-            authRepository.performLogin(
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } throws ApiException(
+            ApiResult.Error.Http(
+                httpCode = 401,
+                message = "auth-info error",
+                proton = ApiResult.Error.ProtonData(1234, "error")
             )
-        } returns DataResult.Error.Remote(
-            message = "auth error",
-            protonCode = 1234,
-            httpCode = 401
+        )
+        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } throws ApiException(
+            ApiResult.Error.Http(
+                httpCode = 401,
+                message = "auth-info error",
+                proton = ApiResult.Error.ProtonData(1234, "auth error"),
+            )
         )
     }
 
-    @Test
+    @Test(expected = ApiException::class)
     fun `login info error invocations work correctly`() = runBlockingTest {
         // WHEN
-        useCase.invoke(testUsername, testPassword.toByteArray()).toList()
+        useCase.invoke(testUsername, testPassword)
         // THEN
         verify {
-            srpProofProvider.generateSrpProofs(
+            srpCrypto.generateSrpProofs(
                 testUsername,
                 testPassword.toByteArray(),
-                loginInfoResult
+                loginInfoResult.version.toLong(),
+                loginInfoResult.salt,
+                loginInfoResult.modulus,
+                loginInfoResult.serverEphemeral
             ) wasNot called
         }
         coVerify {
@@ -136,24 +132,19 @@ class PerformLoginApiErrorTest {
     @Test
     fun `login info error events work correctly`() = runBlockingTest {
         // WHEN
-        val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
+        val throwable = assertFailsWith(ApiException::class) {
+            useCase.invoke(testUsername, testPassword)
+        }
         // THEN
-        assertEquals(2, listOfEvents.size)
-        val firstEvent = listOfEvents[0]
-        val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.State.Processing)
-        assertTrue(secondEvent is PerformLogin.State.Error.Message)
-        assertFalse(secondEvent.validation)
+        assertIs<ApiResult.Error.Http>(throwable.error)
     }
 
-    @Test
+    @Test(expected = ApiException::class)
     fun `login error invocations work correctly`() = runBlockingTest {
         // GIVEN
-        coEvery {
-            authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Success(ResponseSource.Remote, loginInfoResult)
+        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns loginInfoResult
         // WHEN
-        useCase.invoke(testUsername, testPassword.toByteArray()).toList()
+        useCase.invoke(testUsername, testPassword)
         // THEN
         coVerify { authRepository.getLoginInfo(testUsername, testClientSecret) }
         coVerify(exactly = 1) {
@@ -166,58 +157,14 @@ class PerformLoginApiErrorTest {
             )
         }
         verify(exactly = 1) {
-            srpProofProvider.generateSrpProofs(
+            srpCrypto.generateSrpProofs(
                 testUsername,
                 testPassword.toByteArray(),
-                loginInfoResult
+                loginInfoResult.version.toLong(),
+                loginInfoResult.salt,
+                loginInfoResult.modulus,
+                loginInfoResult.serverEphemeral
             )
         }
-    }
-
-    @Test
-    fun `login error events work correctly`() = runBlockingTest {
-        // GIVEN
-        coEvery {
-            authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Success(ResponseSource.Remote, loginInfoResult)
-        // WHEN
-        val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
-        // THEN
-        assertEquals(2, listOfEvents.size)
-        val firstEvent = listOfEvents[0]
-        val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.State.Processing)
-        assertTrue(secondEvent is PerformLogin.State.Error.Message)
-        assertFalse(secondEvent.validation)
-    }
-
-    @Test
-    fun `login incorrect credentials error events work correctly`() = runBlockingTest {
-        // GIVEN
-        coEvery {
-            authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Success(ResponseSource.Remote, loginInfoResult)
-
-        coEvery {
-            authRepository.performLogin(
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } returns DataResult.Error.Remote(
-            message = "auth error",
-            protonCode = RESPONSE_CODE_INCORRECT_CREDENTIALS,
-        )
-        // WHEN
-        val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
-        // THEN
-        assertEquals(2, listOfEvents.size)
-        val firstEvent = listOfEvents[0]
-        val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.State.Processing)
-        assertTrue(secondEvent is PerformLogin.State.Error.Message)
-        assertTrue(secondEvent.validation)
     }
 }

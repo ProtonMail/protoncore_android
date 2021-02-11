@@ -19,12 +19,12 @@
 package me.proton.core.key.domain.entity.key
 
 import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 
 data class PrivateKey(
     val key: Armored,
     val isPrimary: Boolean,
-    internal val passphrase: EncryptedByteArray?
+    val passphrase: EncryptedByteArray?
 ) {
     /**
      * True if no passphrase is associated, thereby only public crypto functions are available.

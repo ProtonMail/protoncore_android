@@ -18,7 +18,6 @@
 
 package me.proton.core.user.domain.extension
 
-import me.proton.core.user.domain.entity.UserType
 import me.proton.core.user.domain.entity.AddressType
 import me.proton.core.user.domain.entity.UserAddress
 
@@ -33,33 +32,11 @@ fun List<UserAddress>.primary() = minByOrNull { it.order }
 fun List<UserAddress>.sorted() = sortedBy { it.order }
 
 /**
- * Checks if all addresses are of type [AddressType.External].
+ * @return original [UserAddress], or `null` otherwise.
  */
-fun List<UserAddress>.allExternal() = all { it.type == AddressType.External }
+fun List<UserAddress>.originalOrNull() = firstOrNull { it.type == AddressType.Original }
 
 /**
- * Returns `true` if the account is of type [UserType.Username].
+ * @return true if at least one [UserAddress] is migrated into the new key format, false otherwise.
  */
-fun List<UserAddress>.usernameOnly() = isEmpty()
-
-/**
- * Client supplies the minimal [userType] it needs to operate. The result is if current account satisfies the
- * required account.
- */
-fun List<UserAddress>.satisfiesUserType(userType: UserType): Boolean = when (userType) {
-    // If client needs Username account, then it should be fine with any account type.
-    UserType.Username -> true
-    // If client needs External account, we return true only if current account is External or Internal.
-    UserType.External -> !usernameOnly()
-    // If client needs Internal only account to operate, we return true if current account is Internal only.
-    UserType.Internal -> !usernameOnly() && !allExternal()
-}
-
-/**
- * Determines and returns current [UserType].
- */
-fun List<UserAddress>.currentUserType(): UserType = when {
-    usernameOnly() -> UserType.Username
-    allExternal() -> UserType.External
-    else -> UserType.Internal
-}
+fun List<UserAddress>.hasMigratedKey() = any { it.keys.any { key -> key.token != null && key.signature != null } }

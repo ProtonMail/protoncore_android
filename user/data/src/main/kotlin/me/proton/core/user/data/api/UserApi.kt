@@ -18,9 +18,9 @@
 
 package me.proton.core.user.data.api
 
+import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
-import me.proton.core.key.data.api.response.UsersResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -28,10 +28,10 @@ import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationStatus
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.EncryptedString
-import me.proton.core.crypto.common.simple.PlainByteArray
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 
 class TestCryptoContext : CryptoContext {
 
@@ -39,7 +39,7 @@ class TestCryptoContext : CryptoContext {
     private val defaultKey = byteArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
 
     // Use the defaultKey to encrypt/decrypt.
-    override val simpleCrypto: SimpleCrypto = object : SimpleCrypto {
+    override val keyStoreCrypto: KeyStoreCrypto = object : KeyStoreCrypto {
         override fun encrypt(value: String): EncryptedString =
             value.toByteArray().encrypt(defaultKey).fromByteArray()
 
@@ -171,7 +171,19 @@ class TestCryptoContext : CryptoContext {
         override fun getPublicKey(privateKey: Armored): Armored = privateKey
 
         override fun getFingerprint(key: Armored): String = "fingerprint($key)"
+        override fun getJsonSHA256Fingerprints(key: Armored): String = "jsonSHA256Fingerprint($key)"
 
         override fun getPassphrase(password: ByteArray, encodedSalt: String): ByteArray = password.copyOf()
+        override fun generateNewKeySalt(): String = "keySalt"
+
+        override fun generateNewToken(size: Long): ByteArray = "token".toByteArray()
+
+        override fun generateNewPrivateKey(
+            username: String,
+            domain: String,
+            passphrase: ByteArray,
+            keyType: PGPCrypto.KeyType,
+            keySecurity: PGPCrypto.KeySecurity
+        ): Armored = "privateKey"
     }
 }

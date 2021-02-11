@@ -21,6 +21,7 @@ import io.mockk.coVerify
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.Product
@@ -50,7 +51,8 @@ class AccountManagerImplTest {
         email = "test@example.com",
         state = AccountState.Ready,
         sessionId = session1.sessionId,
-        sessionState = SessionState.Authenticated
+        sessionState = SessionState.Authenticated,
+        details = AccountDetails(null, null)
     )
 
     private val mocks = RepositoryMocks(session1, account1)
@@ -73,19 +75,18 @@ class AccountManagerImplTest {
     fun `on handleTwoPassModeSuccess`() = runBlockingTest {
         mocks.setupAccountRepository()
 
-        accountManager.handleTwoPassModeSuccess(account1.sessionId!!)
+        accountManager.handleTwoPassModeSuccess(account1.userId)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(2, stateLists.size)
+        assertEquals(1, stateLists.size)
         assertEquals(AccountState.TwoPassModeSuccess, stateLists[0].state)
-        assertEquals(AccountState.Ready, stateLists[1].state)
     }
 
     @Test
     fun `on handleTwoPassModeFailed`() = runBlockingTest {
         mocks.setupAccountRepository()
 
-        accountManager.handleTwoPassModeFailed(account1.sessionId!!)
+        accountManager.handleTwoPassModeFailed(account1.userId)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
         assertEquals(1, stateLists.size)
@@ -99,10 +100,6 @@ class AccountManagerImplTest {
         val newScopes = listOf("scope1", "scope2")
 
         accountManager.handleSecondFactorSuccess(session1.sessionId, newScopes)
-
-        val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(AccountState.Ready, stateLists[0].state)
 
         val sessionLists = accountManager.getSessions().toList()
         assertEquals(2, sessionLists.size)

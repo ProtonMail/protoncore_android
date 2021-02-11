@@ -21,14 +21,7 @@ package me.proton.core.auth.presentation.entity
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-/**
- * @author Dino Kadrikj.
- */
 @Parcelize
 data class CreateAddressResult(
-    val sessionId: String,
-    val username: String,
-    val externalEmail: String,
-    val domain: String,
-    val userResult: UserResult
+    val success: Boolean = true
 ) : Parcelable

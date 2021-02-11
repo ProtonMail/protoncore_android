@@ -23,7 +23,7 @@ import me.proton.core.domain.arch.ResponseSource
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.util.kotlin.exhaustive
 
-fun <T> ApiResult<T>.toDataResponse(): DataResult<T> = when (this) {
+fun <T> ApiResult<T>.toDataResult(): DataResult<T> = when (this) {
     is ApiResult.Success -> DataResult.Success(ResponseSource.Remote, value)
     is ApiResult.Error.Http -> {
         DataResult.Error.Remote(

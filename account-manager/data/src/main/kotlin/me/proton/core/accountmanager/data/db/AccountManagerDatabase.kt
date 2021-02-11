@@ -29,6 +29,7 @@ import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
+import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_1_2
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_2_3
@@ -53,6 +54,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
         AccountMetadataEntity::class,
         HumanVerificationDetailsEntity::class,
         SessionEntity::class,
+        SessionDetailsEntity::class,
         // user-data
         UserEntity::class,
         UserKeyEntity::class,

@@ -21,16 +21,11 @@ package me.proton.core.auth.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.arch.ResponseSource
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
@@ -46,61 +41,22 @@ class PerformLogoutTest {
     fun beforeEveryTest() {
         // GIVEN
         useCase = PerformLogout(authRepository)
-        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns DataResult.Success(
-            ResponseSource.Remote,
-            true
-        )
+        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns true
     }
 
     @Test
-    fun `logout happy path events list is correct`() = runBlockingTest {
+    fun `logout happy path`() = runBlockingTest {
         // WHEN
-        val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
+        val response = useCase.invoke(SessionId(testSessionId))
         // THEN
-        assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformLogout.State.Processing)
-        val successEvent = listOfEvents[1]
-        assertTrue(successEvent is PerformLogout.State.Success)
-        assertTrue(successEvent.sessionRevoked)
+        assertTrue(response)
     }
 
     @Test
     fun `logout happy path invocations are correct`() = runBlockingTest {
         // WHEN
-        useCase.invoke(SessionId(testSessionId)).toList()
+        useCase.invoke(SessionId(testSessionId))
         // THEN
         coVerify(exactly = 1) { authRepository.revokeSession(SessionId(testSessionId)) }
-    }
-
-    @Test
-    fun `logout api returns error events list is correct`() = runBlockingTest {
-        // GIVEN
-        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns DataResult.Error.Remote(
-            "Invalid input"
-        )
-        // WHEN
-        val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
-        // THEN
-        assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformLogout.State.Processing)
-        val successEvent = listOfEvents[1]
-        assertTrue(successEvent is PerformLogout.State.Error)
-    }
-
-    @Test
-    fun `logout api returns false events list is correct`() = runBlockingTest {
-        // GIVEN
-        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns DataResult.Success(
-            ResponseSource.Remote,
-            false
-        )
-        // WHEN
-        val listOfEvents = useCase.invoke(SessionId(testSessionId)).toList()
-        // THEN
-        assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformLogout.State.Processing)
-        val successEvent = listOfEvents[1]
-        assertTrue(successEvent is PerformLogout.State.Success)
-        assertFalse(successEvent.sessionRevoked)
     }
 }

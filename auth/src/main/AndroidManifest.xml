@@ -28,11 +28,11 @@
 
         <activity android:name=".presentation.ui.SecondFactorActivity" />
 
-        <activity android:name=".presentation.ui.MailboxLoginActivity" />
+        <activity android:name=".presentation.ui.TwoPassModeActivity" />
+
+        <activity android:name=".presentation.ui.ChooseAddressActivity" />
 
         <activity android:name=".presentation.ui.CreateAddressActivity" />
-
-        <activity android:name=".presentation.ui.CreateAddressResultActivity" />
 
     </application>
 </manifest>

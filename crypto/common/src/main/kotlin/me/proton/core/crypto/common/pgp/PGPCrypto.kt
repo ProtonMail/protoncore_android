@@ -19,7 +19,7 @@
 package me.proton.core.crypto.common.pgp
 
 import me.proton.core.crypto.common.pgp.exception.CryptoException
-import me.proton.core.crypto.common.simple.use
+import me.proton.core.crypto.common.keystore.use
 
 /**
  * PGP Cryptographic interface (e.g. [lock], [unlock], [encryptData], [decryptData], [signData], [verifyData], ...).
@@ -191,9 +191,59 @@ interface PGPCrypto {
     fun getFingerprint(key: Armored): String
 
     /**
+     * Get JSON SHA256 fingerprints from [key] and corresponding sub-keys.
+     *
+     * @throws [CryptoException] if fingerprints cannot be extracted from [key].
+     */
+    fun getJsonSHA256Fingerprints(key: Armored): String
+
+    /**
      * Get passphrase from [password] using [encodedSalt].
      *
      * Note: Consider using [use] on returned [ByteArray], to clear memory after usage.
      */
     fun getPassphrase(password: ByteArray, encodedSalt: String): ByteArray
+
+    /**
+     * Generate new random salt.
+     *
+     * @return 16-byte, base64-ed random salt as String, without newline character.
+     */
+    fun generateNewKeySalt(): String
+
+    /**
+     * Generate new random Token.
+     */
+    fun generateNewToken(size: Long): ByteArray
+
+    /**
+     * Generate new private key.
+     *
+     * @param username for which the key is generated.
+     * @param domain for which the key is generated.
+     * @param passphrase passphrase to lock the key.
+     * @param keyType [KeyType.RSA] or [KeyType.X25519].
+     * @param keySecurity key length in bits.
+     *
+     * @throws [CryptoException] if key cannot be generated.
+     */
+    fun generateNewPrivateKey(
+        username: String,
+        domain: String,
+        passphrase: ByteArray,
+        keyType: KeyType,
+        keySecurity: KeySecurity
+    ): Armored
+
+    enum class KeySecurity(val value: Int) {
+        HIGH(2048),
+        EXTREME(4096),
+    }
+
+    enum class KeyType(private val value: String) {
+        RSA("rsa"),
+        X25519("x25519");
+
+        override fun toString(): String = value
+    }
 }

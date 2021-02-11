@@ -21,9 +21,9 @@ package me.proton.core.account.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import me.proton.core.crypto.common.simple.EncryptedString
-import me.proton.core.crypto.common.simple.decrypt
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
@@ -55,15 +55,15 @@ data class SessionEntity(
     val scopes: String,
     val product: Product
 ) {
-    fun toSession(crypto: SimpleCrypto): Session = Session(
+    fun toSession(keyStoreCrypto: KeyStoreCrypto): Session = Session(
         sessionId = SessionId(sessionId),
-        accessToken = accessToken.decrypt(crypto),
-        refreshToken = refreshToken.decrypt(crypto),
+        accessToken = accessToken.decryptWith(keyStoreCrypto),
+        refreshToken = refreshToken.decryptWith(keyStoreCrypto),
         headers = humanHeaderTokenType?.let { tokenType ->
             humanHeaderTokenCode?.let { tokenCode ->
                 HumanVerificationHeaders(
-                    tokenType = tokenType.decrypt(crypto),
-                    tokenCode = tokenCode.decrypt(crypto)
+                    tokenType = tokenType.decryptWith(keyStoreCrypto),
+                    tokenCode = tokenCode.decryptWith(keyStoreCrypto)
                 )
             }
         },

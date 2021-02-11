@@ -18,7 +18,9 @@
 
 package me.proton.core.account.domain.entity
 
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.SessionId
 
 data class Account(
@@ -27,7 +29,21 @@ data class Account(
     val email: String?,
     val state: AccountState,
     val sessionId: SessionId?,
-    val sessionState: SessionState?
+    val sessionState: SessionState?,
+    val details: AccountDetails
+)
+
+data class AccountDetails(
+    val session: SessionDetails?,
+    val humanVerification: HumanVerificationDetails?
+)
+
+data class SessionDetails(
+    val initialEventId: String,
+    val requiredAccountType: AccountType,
+    val secondFactorEnabled: Boolean,
+    val twoPassModeEnabled: Boolean,
+    val password: EncryptedString?
 )
 
 fun Account.isReady() = state == AccountState.Ready

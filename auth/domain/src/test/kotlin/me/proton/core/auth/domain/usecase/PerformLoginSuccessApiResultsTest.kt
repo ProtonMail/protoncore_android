@@ -24,22 +24,19 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.auth.domain.crypto.SrpProofProvider
-import me.proton.core.auth.domain.crypto.SrpProofs
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.arch.ResponseSource
-import me.proton.core.test.kotlin.assertIs
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 /**
  * @author Dino Kadrikj.
@@ -48,7 +45,8 @@ class PerformLoginSuccessApiResultsTest {
 
     // region mocks
     private val authRepository = mockk<AuthRepository>(relaxed = true)
-    private val srpProofProvider = mockk<SrpProofProvider>(relaxed = true)
+    private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
+    private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
 
     // endregion
     // region test data
@@ -72,7 +70,7 @@ class PerformLoginSuccessApiResultsTest {
     )
     private val sessionInfoResult = SessionInfo(
         username = testUsername, accessToken = "", expiresIn = 1, tokenType = "", scope = "", scopes = emptyList(),
-        sessionId = "", userId = "", refreshToken = "", eventId = "", serverProof = "", localId = 1, passwordMode = 1,
+        sessionId = SessionId(""), userId = UserId(""), refreshToken = "", eventId = "", serverProof = "", localId = 1, passwordMode = 1,
         secondFactor = null
     )
 
@@ -82,31 +80,24 @@ class PerformLoginSuccessApiResultsTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogin(authRepository, srpProofProvider, testClientSecret)
+        useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret)
         every {
-            srpProofProvider.generateSrpProofs(any(), any(), any())
+            srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns SrpProofs(
             testClientEphemeral.toByteArray(),
             testClientProof.toByteArray(),
             testExpectedServerProof.toByteArray()
         )
-        coEvery {
-            authRepository.getLoginInfo(testUsername, testClientSecret)
-        } returns DataResult.Success(ResponseSource.Remote, loginInfoResult)
-        coEvery {
-            authRepository.performLogin(
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } returns DataResult.Success(ResponseSource.Remote, sessionInfoResult)
+        every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
+        every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
+        coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns loginInfoResult
+        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult
     }
 
     @Test
     fun `login happy path invocations works correctly`() = runBlockingTest {
-        useCase.invoke(testUsername, testPassword.toByteArray()).toList()
+        useCase.invoke(testUsername, testPassword)
+
         coVerify { authRepository.getLoginInfo(testUsername, testClientSecret) }
         coVerify(exactly = 1) {
             authRepository.performLogin(
@@ -118,82 +109,40 @@ class PerformLoginSuccessApiResultsTest {
             )
         }
         verify(exactly = 1) {
-            srpProofProvider.generateSrpProofs(
+            srpCrypto.generateSrpProofs(
                 testUsername,
-                testPassword.toByteArray(),
-                loginInfoResult
+                any(), // testPassword.toByteArray(),
+                loginInfoResult.version.toLong(),
+                loginInfoResult.salt,
+                loginInfoResult.modulus,
+                loginInfoResult.serverEphemeral
             )
         }
     }
 
     @Test
     fun `login happy path events work correctly`() = runBlockingTest {
-        val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
-        assertEquals(2, listOfEvents.size)
-        val firstEvent = listOfEvents[0]
-        val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.State.Processing)
-        assertTrue(secondEvent is PerformLogin.State.Success.Login)
-        assertNotNull(secondEvent.sessionInfo)
-    }
-
-    @Test
-    fun `login empty username emits error`() = runBlockingTest {
-        val listOfEvents = useCase.invoke("", testPassword.toByteArray()).toList()
-        assertEquals(1, listOfEvents.size)
-        assertIs<PerformLogin.State.Error.EmptyCredentials>(listOfEvents[0])
-    }
-
-    @Test
-    fun `login empty password emits error`() = runBlockingTest {
-        val listOfEvents = useCase.invoke(testUsername, "".toByteArray()).toList()
-        assertEquals(1, listOfEvents.size)
-        assertIs<PerformLogin.State.Error.EmptyCredentials>(listOfEvents[0])
+        val sessionInfo = useCase.invoke(testUsername, testPassword)
+        assertNotNull(sessionInfo)
     }
 
     @Test
     fun `correct handling single password account second factor returned`() = runBlockingTest {
-        coEvery {
-            authRepository.performLogin(
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } returns DataResult.Success(
-            ResponseSource.Remote,
-            sessionInfoResult.copy(secondFactor = SecondFactor(true, null))
+        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
+            secondFactor = SecondFactor(true, null)
         )
-        val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
-        assertEquals(2, listOfEvents.size)
-        val firstEvent = listOfEvents[0]
-        val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.State.Processing)
-        assertTrue(secondEvent is PerformLogin.State.Success.Login)
-        assertNotNull(secondEvent.sessionInfo)
+
+        val sessionInfo = useCase.invoke(testUsername, testPassword)
+        assertNotNull(sessionInfo)
     }
 
     @Test
     fun `correct handling two password account second factor returned`() = runBlockingTest {
-        coEvery {
-            authRepository.performLogin(
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
-        } returns DataResult.Success(
-            ResponseSource.Remote,
-            sessionInfoResult.copy(passwordMode = 2, secondFactor = SecondFactor(true, null))
+        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
+            passwordMode = 2,
+            secondFactor = SecondFactor(true, null)
         )
-        val listOfEvents = useCase.invoke(testUsername, testPassword.toByteArray()).toList()
-        assertEquals(2, listOfEvents.size)
-        val firstEvent = listOfEvents[0]
-        val secondEvent = listOfEvents[1]
-        assertTrue(firstEvent is PerformLogin.State.Processing)
-        assertTrue(secondEvent is PerformLogin.State.Success.Login)
-        assertNotNull(secondEvent.sessionInfo)
+        val sessionInfo = useCase.invoke(testUsername, testPassword)
+        assertNotNull(sessionInfo)
     }
 }

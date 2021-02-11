@@ -20,12 +20,9 @@ package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import me.proton.core.auth.domain.entity.AccountType
 
 @Parcelize
 data class SecondFactorResult(
-    val scope: ScopeResult,
-    val user: UserResult?,
-    val isTwoPassModeNeeded: Boolean,
-    val requiredAccountType: AccountType
+    val userId: String,
+    val nextStep: NextStep
 ) : Parcelable

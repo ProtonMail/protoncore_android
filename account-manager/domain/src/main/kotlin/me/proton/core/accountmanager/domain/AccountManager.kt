@@ -21,12 +21,9 @@ package me.proton.core.accountmanager.domain
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
-import me.proton.core.network.domain.session.SessionId
 
 abstract class AccountManager(
     /**
@@ -89,13 +86,6 @@ abstract class AccountManager(
      * @param initialState if true, initial state for all accounts will be raised on subscription.
      */
     abstract fun onSessionStateChanged(initialState: Boolean = false): Flow<Account>
-
-    /**
-     * Flow of [Account] where [Account.sessionState] changed to [SessionState.HumanVerificationNeeded].
-     *
-     * Note: Initial state for all accounts in this state will be raised on subscription.
-     */
-    abstract fun onHumanVerificationNeeded(initialState: Boolean = true): Flow<Pair<Account, HumanVerificationDetails?>>
 
     /**
      * Get the primary [UserId], if exist as flow.

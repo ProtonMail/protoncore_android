@@ -18,44 +18,16 @@
 
 package me.proton.core.auth.domain.usecase
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.domain.arch.onFailure
-import me.proton.core.domain.arch.onSuccess
 import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 /**
- * Performs the user logout procedure. It removes the current session on the API.
- *
- * @param authRepository mandatory authentication repository interface for contacting the api.
- * @author Dino Kadrikj.
+ * Performs the user logout procedure (revoke the session).
  */
 class PerformLogout @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-
-    /**
-     * State sealed class with various (success, error) outcome state subclasses.
-     */
-    sealed class State {
-        object Processing : State()
-        data class Success(val sessionRevoked: Boolean) : State()
-        sealed class Error : State() {
-            data class Message(val message: String?) : Error()
-        }
-    }
-
-    operator fun invoke(sessionId: SessionId): Flow<State> = flow {
-        emit(State.Processing)
-
+    suspend operator fun invoke(sessionId: SessionId): Boolean =
         authRepository.revokeSession(sessionId = sessionId)
-            .onFailure { errorMessage, _, _ ->
-                emit(State.Error.Message(errorMessage))
-            }
-            .onSuccess {
-                emit(State.Success(it))
-            }
-    }
 }

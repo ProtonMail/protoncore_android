@@ -21,19 +21,17 @@ package me.proton.core.auth.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.arch.ResponseSource
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.test.kotlin.assertIs
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.assertFailsWith
 
 /**
  * @author Dino Kadrikj.
@@ -53,31 +51,28 @@ class PerformSecondFactorTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        coEvery { authRepository.performSecondFactor(SessionId(testSessionId), any()) } returns DataResult.Success(
-            ResponseSource.Remote,
-            testScopeInfo.copy(scope = testScope)
-        )
+        coEvery {
+            authRepository.performSecondFactor(
+                SessionId(testSessionId),
+                any()
+            )
+        } returns testScopeInfo.copy(scope = testScope)
         useCase = PerformSecondFactor(authRepository)
     }
 
     @Test
-    fun `second factor happy path events list is correct`() = runBlockingTest {
+    fun `second factor happy path`() = runBlockingTest {
         // WHEN
-        val listOfEvents = useCase.invoke(SessionId(testSessionId), testSecondFactorCode).toList()
+        val scopeInfo = useCase.invoke(SessionId(testSessionId), testSecondFactorCode)
         // THEN
-        assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformSecondFactor.State.Processing)
-        val successEvent = listOfEvents[1]
-        assertTrue(successEvent is PerformSecondFactor.State.Success.SecondFactor)
-        assertEquals(testSessionId, successEvent.sessionId.id)
-        assertEquals(testScope, successEvent.scopeInfo.scope)
-        assertEquals(2, successEvent.scopeInfo.scopes.size)
+        assertEquals(testScope, scopeInfo.scope)
+        assertEquals(2, scopeInfo.scopes.size)
     }
 
     @Test
     fun `second factor happy path invocations are correct`() = runBlockingTest {
         // WHEN
-        useCase.invoke(SessionId(testSessionId), testSecondFactorCode).toList()
+        useCase.invoke(SessionId(testSessionId), testSecondFactorCode)
         // THEN
         coVerify(exactly = 1) {
             authRepository.performSecondFactor(
@@ -88,29 +83,27 @@ class PerformSecondFactorTest {
     }
 
     @Test
-    fun `second factor error response events list is correct`() = runBlockingTest {
+    fun `second factor error response`() = runBlockingTest {
         // GIVEN
         coEvery {
             authRepository.performSecondFactor(
                 SessionId(testSessionId),
                 any()
             )
-        } returns DataResult.Error.Remote("Invalid Second Factor code")
-        // WHEN
-        val listOfEvents = useCase.invoke(SessionId(testSessionId), testSecondFactorCode).toList()
-        // THEN
-        assertEquals(2, listOfEvents.size)
-        assertTrue(listOfEvents[0] is PerformSecondFactor.State.Processing)
-        val errorEvent = listOfEvents[1]
-        assertTrue(errorEvent is PerformSecondFactor.State.Error.Message)
-        assertEquals("Invalid Second Factor code", errorEvent.message)
-    }
+        } throws ApiException(
+            ApiResult.Error.Http(
+                httpCode = 1234,
+                message = "error",
+                proton = ApiResult.Error.ProtonData(1234, "Invalid Second Factor code")
+            )
+        )
 
-    @Test
-    fun `empty second factor error response events list is correct`() = runBlockingTest {
         // WHEN
-        val listOfEvents = useCase.invoke(SessionId(testSessionId), "").toList()
-        assertEquals(1, listOfEvents.size)
-        assertIs<PerformSecondFactor.State.Error.EmptyCredentials>(listOfEvents[0])
+        val throwable = assertFailsWith(ApiException::class) {
+            useCase.invoke(SessionId(testSessionId), testSecondFactorCode)
+        }
+
+        // THEN
+        assertEquals("Invalid Second Factor code", throwable.message)
     }
 }
