@@ -28,19 +28,19 @@ internal fun initVersions() {
     // endregion
 
     // region Android
-    `activity version` =                        "1.2.0-beta01"  // Released: Oct 01, 2020
+    `activity version` =                        "1.2.0"         // Released: Feb 10, 2021
     `android-annotation version` =              "1.1.0"         // Released: Jun 05, 2019
     `appcompat version` =                       "1.2.0"         // Released: Aug 19, 2020
     `android-arch version` =                    "2.1.0"         // Released: Sep 06, 2019
     `constraint-layout version` =               "2.0.4"         // Released: Oct 29, 2020
     `espresso version` =                        "3.3.0"         // Released: Aug 25, 2020
-    `fragment version` =                        "1.3.0-beta01"  // Released: Oct 01, 2020
+    `fragment version` =                        "1.3.0"         // Released: Feb 10, 2021
     `ktx version` =                             "1.3.2"         // Released: Oct 01, 2020
-    `lifecycle version` =                       "2.2.0"         // Released: Oct 11, 2019
-    `material version` =                        "1.2.1"         // Released: Sep 03, 2020
+    `lifecycle version` =                       "2.3.0"         // Released: Feb 10, 2021
+    `material version` =                        "1.3.0"         // Released: Feb 05, 2021
     `android-paging version` =                  "2.1.2"         // Released: Mar 18, 2020
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
-    `android-room version` =                    "2.2.5"         // Released: Mar 18, 2020
+    `android-room version` =                    "2.2.6"         // Released: Jan 27, 2021
 
     `android-test version` =                    "1.3.0"         // Released: Aug 25, 2020
     `robolectric version` =                     "4.4"           // Released: Aug 24, 2020
@@ -51,10 +51,10 @@ internal fun initVersions() {
     `dagger version` =                          "2.28"          // Released: May 04, 2018
     `hilt-android version` =                    "2.28-alpha"    // Released: Jun 10, 2020
     `hilt-androidx version` =                   "1.0.0-alpha01" // Released: Jun 12, 2020
-    `mockK version` =                           "1.10.4"        // Released: Dec 28, 2020
+    `mockK version` =                           "1.10.5"        // Released: Jan 13, 2021
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.8.0"         // Released: Oct 09, 2020
-    `timber version` =                          "4.7.1"         // Released:
+    `timber version` =                          "4.7.1"         // Released: Jun 28, 2018
     `viewStateStore version` =                  "1.4-beta-4"    // Released: Oct 03, 2019
     // endregion
 }
@@ -66,9 +66,9 @@ const val `androidUi version` =             "0.1.0-dev08"   // Released: Apr 03,
 
 // region Other
 const val `apacheCommon-codec version` =    "1.14"          // Released: Dec 31, 2019
-const val `bcrypt version` =                "0.9.0"         // Released: Oct, 2019
+const val `bcrypt version` =                "0.9.0"         // Released: Oct 29, 2019
 const val `gotev-cookieStore version` =     "1.3.1"         // Released: Oct 24, 2020
-const val `googleTink version` =            "1.4.0"         // Released:
+const val `googleTink version` =            "1.5.0"         // Released: Oct 15, 2020
 const val `miniDsn version` =               "1.0.0"         // Released: Jul 18, 2020
 const val `okHttp version` =                "4.8.0"         // Released: Jul 11, 2020
 const val `okHttp-url-connection version` = "4.9.0"         // Released: Sep, 2020

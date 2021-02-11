@@ -28,7 +28,7 @@ plugins {
 
 android(
     minSdk = 23,
-    version = Version(0, 3, 1),
+    version = Version(0, 3, 2),
     useDataBinding = true
 )
 
