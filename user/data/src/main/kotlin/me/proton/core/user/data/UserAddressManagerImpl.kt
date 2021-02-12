@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.signedKeyList
@@ -65,7 +66,7 @@ class UserAddressManagerImpl(
         // Check if original UserAddress already exist, and if needed create remotely.
         val userAddresses = userAddressRepository.getAddresses(sessionUserId)
         val userAddress = userAddresses.originalOrNull() ?: createAddress(sessionUserId, username, domain)
-        return createAddressKey(sessionUserId, userAddress.addressId, username, domain, isPrimary = true)
+        return createAddressKey(sessionUserId, userAddress.addressId, isPrimary = true)
     }
 
     private suspend fun createAddress(
@@ -77,8 +78,6 @@ class UserAddressManagerImpl(
     private suspend fun createAddressKey(
         sessionUserId: SessionUserId,
         addressId: AddressId,
-        username: String,
-        domain: String,
         isPrimary: Boolean
     ): UserAddress {
         // Get User to get Primary Private Key.
@@ -94,26 +93,25 @@ class UserAddressManagerImpl(
         if (userAddress.keys.isNotEmpty()) return userAddress
 
         // If User have at least one migrated UserAddressKey (new key format), let's continue like this.
-        val generateOldFormat = !userAddresses.hasMigratedKey()
+        val generateOldAddressKeyFormat = !userAddresses.hasMigratedKey()
 
         // Generate new UserAddressKey from user PrivateKey (according old vs new format).
         val userAddressKey = userAddressKeySecretProvider.generateUserAddressKey(
-            generateOldFormat = generateOldFormat,
+            generateOldFormat = generateOldAddressKeyFormat,
             userAddress = userAddress,
             userPrivateKey = userPrimaryKey.privateKey,
-            username = username,
-            domain = domain,
             isPrimary = isPrimary
         )
         // Create the new generated UserAddressKey, remotely.
         privateKeyRepository.createAddressKey(
             sessionUserId = sessionUserId,
-            addressId = addressId.id,
-            privateKey = userAddressKey.privateKey.key,
-            primary = userAddressKey.privateKey.isPrimary,
-            signedKeyList = userAddressKey.privateKey.signedKeyList(cryptoContext),
-            token = userAddressKey.token,
-            signature = userAddressKey.signature
+            key = PrivateAddressKey(
+                addressId = addressId.id,
+                privateKey = userAddressKey.privateKey,
+                signedKeyList = userAddressKey.privateKey.signedKeyList(cryptoContext),
+                token = userAddressKey.token,
+                signature = userAddressKey.signature
+            )
         )
         return checkNotNull(userAddressRepository.getAddress(sessionUserId, addressId, refresh = true))
     }

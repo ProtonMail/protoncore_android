@@ -21,14 +21,9 @@ package me.proton.core.key.domain.entity.key
 import me.proton.core.crypto.common.pgp.Armored
 
 data class PrivateAddressKey(
-    val keyId: KeyId,
-    val flags: Int,
+    val addressId: String,
     val privateKey: PrivateKey,
-    val version: Int,
-    val token: Armored? = null,
-    val signature: Armored? = null,
-    val fingerprint: String? = null,
-    val fingerprints: List<String>? = null,
-    val activation: Armored? = null,
-    val active: Boolean
+    val token: Armored?,
+    val signature: Armored?,
+    val signedKeyList: PublicSignedKeyList,
 )

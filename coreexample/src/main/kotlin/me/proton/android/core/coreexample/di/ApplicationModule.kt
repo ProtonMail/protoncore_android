@@ -83,7 +83,7 @@ object ApplicationModule {
     ): ApiFactory = ApiFactory(
         BASE_URL, apiClient, logger, networkManager, networkPrefs, sessionProvider, sessionListener,
         ProtonCookieStore(context), CoroutineScope(Job() + Dispatchers.Default),
-        // emptyArray(), emptyList()
+        emptyArray(), emptyList()
     )
 
     @Provides

@@ -20,9 +20,11 @@ package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import me.proton.core.crypto.common.keystore.EncryptedString
 
 @Parcelize
 data class ChooseAddressInput(
     val userId: String,
+    val password: EncryptedString,
     val recoveryEmail: String
 ) : Parcelable

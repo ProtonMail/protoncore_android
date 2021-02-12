@@ -34,8 +34,8 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
-import me.proton.core.presentation.utils.validate
 import me.proton.core.presentation.utils.validateUsername
+import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.firstOrDefault
 import me.proton.core.util.kotlin.exhaustive
 
@@ -76,27 +76,17 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
             subtitleText.text = String.format(getString(R.string.auth_create_address_subtitle, input.recoveryEmail))
         }
 
-        viewModel.domainsState.observeData {
+        viewModel.setUserId(UserId(input.userId))
+        viewModel.state.observeData {
             when (it) {
-                is ChooseAddressViewModel.DomainState.Processing -> Unit
-                is ChooseAddressViewModel.DomainState.Success -> onDomainAvailable(it)
-                is ChooseAddressViewModel.DomainState.Error.Message -> showError(it.message)
-                is ChooseAddressViewModel.DomainState.Error.NoAvailableDomains -> {
+                is ChooseAddressViewModel.State.Processing -> showLoading(true)
+                is ChooseAddressViewModel.State.Success -> onUsernameAvailable(it.username, it.domain)
+                is ChooseAddressViewModel.State.Data -> onData(it.username, it.domains)
+                is ChooseAddressViewModel.State.Error.Message -> showError(it.message)
+                is ChooseAddressViewModel.State.Error.DomainsNotAvailable ->
                     showError(getString(R.string.auth_create_address_error_no_available_domain))
-                }
-            }.exhaustive
-        }
-
-        viewModel.usernameState.observeData {
-            when (it) {
-                is ChooseAddressViewModel.UsernameState.Processing -> showLoading(true)
-                is ChooseAddressViewModel.UsernameState.Success -> {
-                    if (it.available)
-                        onUsernameAvailable(it.username, viewModel.domain)
-                    else
-                        onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable), true)
-                }
-                is ChooseAddressViewModel.UsernameState.Error.Message -> onUsernameUnavailable(it.message, false)
+                is ChooseAddressViewModel.State.Error.UsernameNotAvailable ->
+                    onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable))
             }.exhaustive
         }
     }
@@ -119,18 +109,18 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
             hideKeyboard()
             validateUsername()
                 .onFailure { setInputError() }
-                .onSuccess { viewModel.checkUsernameAvailability(it) }
+                .onSuccess { viewModel.checkUsername(it, suffixText.toString().replace("@", "")) }
         }
     }
 
-    private fun onDomainAvailable(it: ChooseAddressViewModel.DomainState.Success) {
+    private fun onData(username: String?, domains: List<Domain>) {
         with(binding.usernameInput) {
-            suffixText = "@${it.domains.firstOrDefault()}"
-            validate()
-                .onFailure { setInputError() }
-                .onSuccess { clearInputError() }
+            suffixText = "@${domains.firstOrDefault()}"
+            text = username
+            isEnabled = username == null
         }
         binding.nextButton.isEnabled = true
+        showLoading(false)
     }
 
     private fun onUsernameAvailable(username: String, domain: String) {
@@ -139,12 +129,12 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
             isEnabled = true
         }
         startForResult.launch(
-            CreateAddressInput(input.userId, username, domain, input.recoveryEmail)
+            CreateAddressInput(input.userId, input.password, username, domain, input.recoveryEmail)
         )
     }
 
-    private fun onUsernameUnavailable(message: String? = null, invalidInput: Boolean) {
-        if (invalidInput) binding.usernameInput.setInputError()
+    private fun onUsernameUnavailable(message: String? = null) {
+        binding.usernameInput.setInputError()
         showError(message)
     }
 

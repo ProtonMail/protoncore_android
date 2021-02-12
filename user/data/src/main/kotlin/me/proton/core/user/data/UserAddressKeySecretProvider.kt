@@ -97,12 +97,13 @@ class UserAddressKeySecretProvider(
         generateOldFormat: Boolean,
         userAddress: UserAddress,
         userPrivateKey: PrivateKey,
-        username: String,
-        domain: String,
         isPrimary: Boolean
     ): UserAddressKey {
         val secret = generateUserAddressKeySecret(userPrivateKey, generateOldFormat)
         secret.passphrase.decryptWith(keyStoreCrypto).use { decryptedPassphrase ->
+            val email = userAddress.email.split("@")
+            val username = email[0]
+            val domain = email[1]
             val privateKey = PrivateKey(
                 key = cryptoContext.pgpCrypto.generateNewPrivateKey(
                     username = username,

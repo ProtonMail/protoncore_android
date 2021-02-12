@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.domain.AccountWorkflowHandler
@@ -43,7 +44,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
-import me.proton.core.account.domain.entity.AccountType
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -106,7 +106,7 @@ class LoginViewModel @ViewModelInject constructor(
             is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, encryptedPassword)
             is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, encryptedPassword)
             is SetupAccountCheck.Result.SetupOriginalAddressNeeded -> setupOriginalAddress(userId, encryptedPassword)
-            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId, encryptedPassword)
+            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId)
         }.let {
             emit(it)
         }
@@ -168,17 +168,10 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     private suspend fun chooseUsername(
-        userId: UserId,
-        password: EncryptedString
+        userId: UserId
     ): State {
-        val result = unlockUserPrimaryKey.invoke(userId, password)
-        return if (result is UserManager.UnlockResult.Success) {
-            accountWorkflow.handleCreateAddressNeeded(userId)
-            State.Need.ChooseUsername(userId)
-        } else {
-            accountWorkflow.handleUnlockFailed(userId)
-            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
-        }
+        accountWorkflow.handleCreateAddressNeeded(userId)
+        return State.Need.ChooseUsername(userId)
     }
 
     private suspend fun handleSessionInfo(

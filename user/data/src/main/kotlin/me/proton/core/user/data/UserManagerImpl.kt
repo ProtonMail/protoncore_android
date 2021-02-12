@@ -20,16 +20,17 @@ package me.proton.core.user.data
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
+import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.repository.KeySaltRepository
@@ -141,16 +142,16 @@ class UserManagerImpl(
         auth: Auth,
         password: ByteArray
     ): User {
+        // First create a new original address, if needed.
+        if (userAddressRepository.getAddresses(sessionUserId).originalOrNull() == null) {
+            userAddressRepository.createAddress(
+                sessionUserId = sessionUserId,
+                displayName = username,
+                domain = domain
+            )
+        }
         val primaryKeySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
         cryptoContext.pgpCrypto.getPassphrase(password, primaryKeySalt).use { passphrase ->
-            // First create a new address, remotely, if needed.
-            val userAddresses = userAddressRepository.getAddresses(sessionUserId)
-            val userAddress = userAddresses.originalOrNull()
-                ?: userAddressRepository.createAddress(
-                    sessionUserId = sessionUserId,
-                    displayName = username,
-                    domain = domain
-                )
             // Generate a new PrivateKey for User.
             val privateKey = cryptoContext.pgpCrypto.generateNewPrivateKey(
                 username = username,
@@ -166,29 +167,38 @@ class UserManagerImpl(
                 passphrase = encryptedPassphrase
             )
 
-            // If User have at least one migrated UserAddressKey (new key format), let's continue like this.
-            val generateOldFormat = !userAddresses.hasMigratedKey()
+            // Find all missing UserAddress Keys.
+            val userAddresses = userAddressRepository.getAddresses(sessionUserId, refresh = true)
+            val userAddressesWithoutKeys = userAddresses.filter { it.keys.isEmpty() }
 
-            // Generate a new UserAddressKey for setupPrimaryKeys.
-            val userAddressKey = userAddressKeySecretProvider.generateUserAddressKey(
-                generateOldFormat = generateOldFormat,
-                userAddress = userAddress,
-                userPrivateKey = userPrivateKey,
-                username = username,
-                domain = domain,
-                isPrimary = true
-            )
+            // If User have at least one migrated UserAddressKey (new key format), let's continue like this.
+            val generateOldAddressKeyFormat = !userAddresses.hasMigratedKey()
+
+            // Generate new PrivateAddressKeys.
+            val privateAddressKeys = userAddressesWithoutKeys.map { address ->
+                userAddressKeySecretProvider.generateUserAddressKey(
+                    generateOldFormat = generateOldAddressKeyFormat,
+                    userAddress = address,
+                    userPrivateKey = userPrivateKey,
+                    isPrimary = true
+                ).let { key ->
+                    PrivateAddressKey(
+                        addressId = address.addressId.id,
+                        privateKey = key.privateKey,
+                        token = key.token,
+                        signature = key.signature,
+                        signedKeyList = key.privateKey.signedKeyList(cryptoContext)
+                    )
+                }
+            }
+
             // Setup initial primary UserKey and UserAddressKey, remotely.
             privateKeyRepository.setupInitialKeys(
                 sessionUserId = sessionUserId,
                 primaryKey = privateKey,
                 primaryKeySalt = primaryKeySalt,
-                auth = auth,
-                primaryAddressId = userAddress.addressId.id,
-                primaryAddressPrivateKey = userAddressKey.privateKey.key,
-                primaryAddressToken = userAddressKey.token,
-                primaryAddressSignature = userAddressKey.signature,
-                primaryAddressSignedKeyList = userAddressKey.privateKey.signedKeyList(cryptoContext)
+                addressKeys = privateAddressKeys,
+                auth = auth
             )
 
             // We know we can unlock the key with this passphrase as we just generated from it.

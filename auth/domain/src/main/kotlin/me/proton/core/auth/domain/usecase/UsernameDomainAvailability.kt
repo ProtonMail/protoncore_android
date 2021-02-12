@@ -18,8 +18,10 @@
 
 package me.proton.core.auth.domain.usecase
 
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.repository.DomainRepository
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.user.domain.repository.UserSettingRepository
 import javax.inject.Inject
 
@@ -27,13 +29,20 @@ import javax.inject.Inject
  * Availability of domains and username for the address creation purposes.
  */
 class UsernameDomainAvailability @Inject constructor(
+    private val userRepository: UserRepository,
     private val domainRepository: DomainRepository,
     private val userSettingRepository: UserSettingRepository
 ) {
     suspend fun getDomains(): List<Domain> = domainRepository.getAvailableDomains()
 
-    suspend fun isUsernameAvailable(username: String): Boolean {
+    suspend fun getUser(userId: UserId) = userRepository.getUser(userId)
+
+    suspend fun isUsernameAvailable(userId: UserId, username: String): Boolean {
         check(username.isNotBlank()) { "Username must not be blank." }
+
+        val user = userRepository.getUser(userId)
+        if (user.name == username) return true
+
         return userSettingRepository.isUsernameAvailable(username)
     }
 }

@@ -56,7 +56,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
                 finish()
             }
             createAddressButton.onClick {
-                viewModel.upgradeAccount(UserId(input.userId), input.username, input.domain)
+                viewModel.upgradeAccount(UserId(input.userId), input.password, input.username, input.domain)
             }
             externalEmailText.text = input.recoveryEmail
             titleText.text = String.format(

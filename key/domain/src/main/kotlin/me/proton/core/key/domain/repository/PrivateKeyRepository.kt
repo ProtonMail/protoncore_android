@@ -22,36 +22,25 @@ import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
-import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 
 interface PrivateKeyRepository {
 
     /**
      * Create new primary Keys using [sessionUserId], remotely.
      */
-    @Suppress("LongParameterList")
     suspend fun setupInitialKeys(
         sessionUserId: SessionUserId,
         primaryKey: Armored,
         primaryKeySalt: String,
-        primaryAddressId: String,
-        primaryAddressPrivateKey: Armored,
-        primaryAddressSignedKeyList: PublicSignedKeyList,
-        primaryAddressToken: Armored? = null,
-        primaryAddressSignature: Armored? = null,
+        addressKeys: List<PrivateAddressKey>,
         auth: Auth
     )
 
     /**
-     * Create a new [PrivateAddressKey] for an [addressId] using [sessionUserId], remotely.
+     * Create a new [PrivateAddressKey] using [sessionUserId], remotely.
      */
     suspend fun createAddressKey(
         sessionUserId: SessionUserId,
-        addressId: String,
-        privateKey: Armored,
-        primary: Boolean,
-        signedKeyList: PublicSignedKeyList,
-        token: Armored? = null,
-        signature: Armored? = null
+        key: PrivateAddressKey
     )
 }

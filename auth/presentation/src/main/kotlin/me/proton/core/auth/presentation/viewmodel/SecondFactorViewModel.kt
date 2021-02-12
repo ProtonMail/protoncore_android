@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
@@ -39,7 +40,6 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
-import me.proton.core.account.domain.entity.AccountType
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -104,7 +104,7 @@ class SecondFactorViewModel @ViewModelInject constructor(
             is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, password)
             is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, password)
             is SetupAccountCheck.Result.SetupOriginalAddressNeeded -> setupOriginalAddress(userId, password)
-            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId, password)
+            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId)
         }.let {
             emit(it)
         }
@@ -169,17 +169,10 @@ class SecondFactorViewModel @ViewModelInject constructor(
     }
 
     private suspend fun chooseUsername(
-        userId: UserId,
-        password: EncryptedString
+        userId: UserId
     ): State {
-        val result = unlockUserPrimaryKey.invoke(userId, password)
-        return if (result is UserManager.UnlockResult.Success) {
-            accountWorkflow.handleCreateAddressNeeded(userId)
-            State.Need.ChooseUsername(userId)
-        } else {
-            accountWorkflow.handleUnlockFailed(userId)
-            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
-        }
+        accountWorkflow.handleCreateAddressNeeded(userId)
+        return State.Need.ChooseUsername(userId)
     }
 
     private fun Throwable.isUnrecoverableError(): Boolean {

@@ -20,9 +20,11 @@ package me.proton.core.auth.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserAddressManager
+import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
+import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.entity.firstOrDefault
 import me.proton.core.user.domain.extension.originalOrNull
 import me.proton.core.user.domain.repository.DomainRepository
@@ -31,6 +33,10 @@ import javax.inject.Inject
 
 /**
  * Setup a new original [UserAddress] and [UserAddressKey], using [User.name].
+ *
+ * Prerequisite: Primary [UserKey.privateKey] must be unlocked (`isLocked == false`).
+ *
+ * @see [UserManager.unlockWithPassword]
  */
 class SetupOriginalAddress @Inject constructor(
     private val userAddressManager: UserAddressManager,

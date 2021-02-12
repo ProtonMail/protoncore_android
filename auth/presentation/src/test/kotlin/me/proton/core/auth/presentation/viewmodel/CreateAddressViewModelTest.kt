@@ -19,35 +19,50 @@
 package me.proton.core.auth.presentation.viewmodel
 
 import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.SetupOriginalAddress
+import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.SetupUsername
+import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.AddressType
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.entity.UserKey
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
 class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
     private val accountHandler = mockk<AccountWorkflowHandler>(relaxed = true)
+    private val userManager = mockk<UserManager>(relaxed = true)
     private val setupUsername = mockk<SetupUsername>(relaxed = true)
     private val setupOriginalAddress = mockk<SetupOriginalAddress>(relaxed = true)
-    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
+    private val setupPrimaryKeys = mockk<SetupPrimaryKeys>(relaxed = true)
+    private val unlockUserPrimaryKey = mockk<UnlockUserPrimaryKey>(relaxed = true)
     // endregion
 
     // region test data
     private val testUserId = UserId("test-user-id")
+    private val testPassword = "test-password"
     private val testUsername = "test-username"
     private val testDomain = "test-domain"
+    private val testUser = mockk<User>()
+    private val testUserKey = mockk<UserKey>()
+    private val testAddressOriginal = mockk<UserAddress>()
+    private val testAddressOriginalWithoutKeys = mockk<UserAddress>()
+    private val testAddressExternal = mockk<UserAddress>()
     // endregion
 
     private lateinit var viewModel: CreateAddressViewModel
@@ -56,27 +71,158 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     fun beforeEveryTest() {
         viewModel = CreateAddressViewModel(
             accountHandler,
+            userManager,
             setupUsername,
-            setupOriginalAddress
+            setupPrimaryKeys,
+            setupOriginalAddress,
+            unlockUserPrimaryKey
         )
-        coEvery { sessionProvider.getUserId(any()) } returns testUserId
+        coEvery { userManager.getUser(any(), any()) } returns testUser
+
+        coEvery { setupUsername.invoke(any(), any()) } returns Unit
+        coEvery { setupPrimaryKeys.invoke(any(), any()) } returns Unit
+        coEvery { setupOriginalAddress.invoke(any(), any()) } returns Unit
+        coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
+
+        every { testAddressOriginal.type } returns AddressType.Original
+        every { testAddressOriginal.keys } returns listOf(mockk())
+
+        every { testAddressOriginalWithoutKeys.type } returns AddressType.Original
+        every { testAddressOriginalWithoutKeys.keys } returns emptyList()
+
+        every { testAddressExternal.type } returns AddressType.External
     }
 
     @Test
-    fun `setup username and address`() = coroutinesTest {
+    fun `setup username and primary keys`() = coroutinesTest {
         // GIVEN
-        coEvery { setupUsername.invoke(testUserId, testUsername) } returns Unit
-        coEvery { setupOriginalAddress.invoke(testUserId, testUsername) } returns Unit
-
+        every { testUser.keys } returns emptyList()
+        coEvery { userManager.getAddresses(any(), any()) } returns emptyList()
+        // WHEN
         val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
         viewModel.upgradeState.observeDataForever(observer)
-        // WHEN
-        viewModel.upgradeAccount(testUserId, testUsername, testDomain)
+        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
         // THEN
+        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+
+        coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
+        coVerify(exactly = 0) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
+
+        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+        coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+
         val arguments = mutableListOf<CreateAddressViewModel.State>()
         verify(exactly = 2) { observer(capture(arguments)) }
         assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
-        val successState = arguments[1]
-        assertTrue(successState is CreateAddressViewModel.State.Success)
+        assertIs<CreateAddressViewModel.State.Success>(arguments[1])
     }
+
+    @Test
+    fun `setup username and original address`() = coroutinesTest {
+        // GIVEN
+        every { testUser.keys } returns listOf(testUserKey)
+        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressExternal)
+        // WHEN
+        val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
+        viewModel.upgradeState.observeDataForever(observer)
+        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
+        // THEN
+        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+
+        coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
+        coVerify(exactly = 1) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
+
+        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+        coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+
+        val arguments = mutableListOf<CreateAddressViewModel.State>()
+        verify(exactly = 2) { observer(capture(arguments)) }
+        assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
+        assertIs<CreateAddressViewModel.State.Success>(arguments[1])
+    }
+
+    @Test
+    fun `setup username and original address because no keys`() = coroutinesTest {
+        // GIVEN
+        every { testUser.keys } returns listOf(testUserKey)
+        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressOriginalWithoutKeys)
+        // WHEN
+        val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
+        viewModel.upgradeState.observeDataForever(observer)
+        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
+        // THEN
+        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+
+        coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
+        coVerify(exactly = 1) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
+
+        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+        coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+
+        val arguments = mutableListOf<CreateAddressViewModel.State>()
+        verify(exactly = 2) { observer(capture(arguments)) }
+        assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
+        assertIs<CreateAddressViewModel.State.Success>(arguments[1])
+    }
+
+    @Test
+    fun `setup username and unlock`() = coroutinesTest {
+        // GIVEN
+        every { testUser.keys } returns listOf(testUserKey)
+        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressOriginal)
+        // WHEN
+        val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
+        viewModel.upgradeState.observeDataForever(observer)
+        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
+        // THEN
+        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+
+        coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
+        coVerify(exactly = 0) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 0) { accountHandler.handleCreateAddressSuccess(any()) }
+
+        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+        coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+
+        val arguments = mutableListOf<CreateAddressViewModel.State>()
+        verify(exactly = 2) { observer(capture(arguments)) }
+        assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
+        assertIs<CreateAddressViewModel.State.Success>(arguments[1])
+    }
+
+    @Test
+    fun `setup cannot unlock`() = coroutinesTest {
+        // GIVEN
+        every { testUser.keys } returns emptyList()
+        coEvery { userManager.getAddresses(any(), any()) } returns emptyList()
+        coEvery {
+            unlockUserPrimaryKey.invoke(
+                any(),
+                any()
+            )
+        } returns UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase
+        // WHEN
+        val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
+        viewModel.upgradeState.observeDataForever(observer)
+        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
+        // THEN
+        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+
+        coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
+        coVerify(exactly = 0) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
+
+        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+        coVerify(exactly = 1) { accountHandler.handleUnlockFailed(any()) }
+        coVerify(exactly = 0) { accountHandler.handleAccountReady(any()) }
+
+        val arguments = mutableListOf<CreateAddressViewModel.State>()
+        verify(exactly = 2) { observer(capture(arguments)) }
+        assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
+        assertIs<CreateAddressViewModel.State.Error.CannotUnlockPrimaryKey>(arguments[1])
+    }
+
 }

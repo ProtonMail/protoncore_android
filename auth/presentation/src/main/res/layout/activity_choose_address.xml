@@ -67,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_top_margin"
                     android:inputType="text|textNoSuggestions"
+                    android:enabled="false"
                     app:label="@string/auth_username" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton

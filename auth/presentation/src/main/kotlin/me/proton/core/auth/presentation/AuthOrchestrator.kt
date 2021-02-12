@@ -163,10 +163,11 @@ class AuthOrchestrator @Inject constructor(
 
     private fun startChooseAddressWorkflow(
         userId: UserId,
+        password: EncryptedString,
         externalEmail: String
     ) {
         checkRegistered(chooseAddressLauncher).launch(
-            ChooseAddressInput(userId.id, recoveryEmail = externalEmail)
+            ChooseAddressInput(userId.id, password = password, recoveryEmail = externalEmail)
         )
     }
 
@@ -250,15 +251,22 @@ class AuthOrchestrator @Inject constructor(
      * @see [onChooseAddressResult]
      */
     fun startChooseAddressWorkflow(account: Account) {
-        val email = checkNotNull(account.email) { "Email is null for startChooseAddressWorkflow." }
-        startChooseAddressWorkflow(account.userId, email)
+        val email = checkNotNull(account.email) {
+            "Email is null for startChooseAddressWorkflow."
+        }
+        val password = checkNotNull(account.details.session?.password) {
+            "Password is null for startChooseAddressWorkflow."
+        }
+        startChooseAddressWorkflow(account.userId, password, email)
     }
 
     /**
      * Start a Human Verification workflow.
      */
     fun startHumanVerificationWorkflow(account: Account) {
-        val sessionId = checkNotNull(account.sessionId) { "SessionId is null for startHumanVerificationWorkflow." }
+        val sessionId = checkNotNull(account.sessionId) {
+            "SessionId is null for startHumanVerificationWorkflow."
+        }
         startHumanVerificationWorkflow(sessionId, account.details.humanVerification)
     }
     // endregion

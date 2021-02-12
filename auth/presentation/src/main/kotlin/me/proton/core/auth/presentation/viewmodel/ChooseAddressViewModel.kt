@@ -21,17 +21,20 @@ package me.proton.core.auth.presentation.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
-import me.proton.core.user.domain.entity.firstOrDefault
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -40,47 +43,37 @@ class ChooseAddressViewModel @ViewModelInject constructor(
     private val usernameDomainAvailability: UsernameDomainAvailability
 ) : ProtonViewModel(), ViewStateStoreScope {
 
-    val usernameState = ViewStateStore<UsernameState>().lock
-    val domainsState = ViewStateStore<DomainState>().lock
+    private val userIdFlow = MutableStateFlow<UserId?>(null)
 
-    lateinit var domain: String
+    val state = ViewStateStore<State>().lock
 
-    sealed class UsernameState {
-        object Processing : UsernameState()
-        data class Success(val available: Boolean, val username: String) : UsernameState()
-
-        sealed class Error : UsernameState() {
+    sealed class State {
+        object Processing : State()
+        data class Success(val username: String, val domain: Domain) : State()
+        data class Data(val username: String?, val domains: List<Domain>) : State()
+        sealed class Error : State() {
+            object DomainsNotAvailable : Error()
+            object UsernameNotAvailable : Error()
             data class Message(val message: String?) : Error()
-        }
-    }
-
-    sealed class DomainState {
-        object Processing : DomainState()
-        data class Success(val domains: List<Domain>) : DomainState()
-
-        sealed class Error : DomainState() {
-            data class Message(val message: String?) : Error()
-            object NoAvailableDomains : Error()
         }
     }
 
     init {
-        getAvailableDomains()
+        userIdFlow.asStateFlow().filterNotNull().transformLatest { userId ->
+            emit(State.Processing)
+            val domains = usernameDomainAvailability.getDomains()
+            if (domains.isEmpty()) {
+                emit(State.Error.DomainsNotAvailable)
+                return@transformLatest
+            }
+            val user = usernameDomainAvailability.getUser(userId)
+            emit(State.Data(user.name, domains))
+        }.catch { error ->
+            state.post(State.Error.Message(error.message))
+        }.onEach {
+            state.post(it)
+        }.launchIn(viewModelScope)
     }
-
-    private fun getAvailableDomains() = flow {
-        emit(DomainState.Processing)
-        val domains = usernameDomainAvailability.getDomains()
-        domain = domains.firstOrDefault()
-        if (domains.isEmpty())
-            emit(DomainState.Error.NoAvailableDomains)
-        else
-            emit(DomainState.Success(domains))
-    }.catch { error ->
-        domainsState.post(DomainState.Error.Message(error.message))
-    }.onEach {
-        domainsState.post(it)
-    }.launchIn(viewModelScope)
 
     fun stopChooseAddressWorkflow(
         userId: UserId
@@ -88,13 +81,19 @@ class ChooseAddressViewModel @ViewModelInject constructor(
         accountWorkflow.handleCreateAddressFailed(userId)
     }
 
-    fun checkUsernameAvailability(username: String) = flow {
-        emit(UsernameState.Processing)
-        val isAvailable = usernameDomainAvailability.isUsernameAvailable(username)
-        emit(UsernameState.Success(isAvailable, username))
+    fun setUserId(userId: UserId) = userIdFlow.tryEmit(userId)
+
+    fun checkUsername(username: String, domain: Domain) = flow {
+        emit(State.Processing)
+        val userId = checkNotNull(userIdFlow.value)
+        if (usernameDomainAvailability.isUsernameAvailable(userId, username)) {
+            emit(State.Success(username, domain))
+        } else {
+            emit(State.Error.UsernameNotAvailable)
+        }
     }.catch { error ->
-        usernameState.post(UsernameState.Error.Message(error.message))
+        state.post(State.Error.Message(error.message))
     }.onEach {
-        usernameState.post(it)
+        state.post(it)
     }.launchIn(viewModelScope)
 }

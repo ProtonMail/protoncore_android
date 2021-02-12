@@ -26,7 +26,7 @@ import me.proton.core.key.data.api.request.AuthRequest
 import me.proton.core.key.data.api.request.CreateAddressKeyRequest
 import me.proton.core.key.data.api.request.SetupInitialKeysRequest
 import me.proton.core.key.data.api.request.SignedKeyListRequest
-import me.proton.core.key.domain.entity.key.PublicSignedKeyList
+import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.toInt
@@ -39,11 +39,7 @@ class PrivateKeyRepositoryImpl(
         sessionUserId: SessionUserId,
         primaryKey: Armored,
         primaryKeySalt: String,
-        primaryAddressId: String,
-        primaryAddressPrivateKey: Armored,
-        primaryAddressSignedKeyList: PublicSignedKeyList,
-        primaryAddressToken: Armored?,
-        primaryAddressSignature: Armored?,
+        addressKeys: List<PrivateAddressKey>,
         auth: Auth
     ) {
         return provider.get<KeyApi>(sessionUserId).invoke {
@@ -52,19 +48,19 @@ class PrivateKeyRepositoryImpl(
                     primaryKey = primaryKey,
                     keySalt = primaryKeySalt,
                     auth = AuthRequest.from(auth),
-                    addressKeys = listOf(
+                    addressKeys = addressKeys.map { key ->
                         CreateAddressKeyRequest(
-                            addressId = primaryAddressId,
-                            privateKey = primaryAddressPrivateKey,
-                            primary = 1,
-                            token = primaryAddressToken,
-                            signature = primaryAddressSignature,
+                            addressId = key.addressId,
+                            privateKey = key.privateKey.key,
+                            primary = key.privateKey.isPrimary.toInt(),
+                            token = key.token,
+                            signature = key.signature,
                             signedKeyList = SignedKeyListRequest(
-                                primaryAddressSignedKeyList.data,
-                                primaryAddressSignedKeyList.signature
+                                key.signedKeyList.data,
+                                key.signedKeyList.signature
                             )
                         )
-                    )
+                    }
                 )
             )
         }.throwIfError()
@@ -72,25 +68,20 @@ class PrivateKeyRepositoryImpl(
 
     override suspend fun createAddressKey(
         sessionUserId: SessionUserId,
-        addressId: String,
-        privateKey: Armored,
-        primary: Boolean,
-        signedKeyList: PublicSignedKeyList,
-        token: Armored?,
-        signature: Armored?
+        key: PrivateAddressKey
     ) {
         return provider.get<KeyApi>(sessionUserId).invoke {
             // TODO: Key Migration: call createAddressKey.
             createAddressKeyOld(
                 CreateAddressKeyRequest(
-                    addressId = addressId,
-                    privateKey = privateKey,
-                    primary = primary.toInt(),
-                    token = token,
-                    signature = signature,
+                    addressId = key.addressId,
+                    privateKey = key.privateKey.key,
+                    primary = key.privateKey.isPrimary.toInt(),
+                    token = key.token,
+                    signature = key.signature,
                     signedKeyList = SignedKeyListRequest(
-                        signedKeyList.data,
-                        signedKeyList.signature
+                        key.signedKeyList.data,
+                        key.signedKeyList.signature
                     )
                 )
             )
