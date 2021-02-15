@@ -17,6 +17,7 @@
  */
 package me.proton.core.accountmanager.data
 
+import io.mockk.coEvery
 import io.mockk.coVerify
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
@@ -66,9 +67,23 @@ class AccountManagerImplTest {
 
     @Test
     fun `add user with session`() = runBlockingTest {
+        coEvery { mocks.accountRepository.getSessionIdOrNull(any()) } returns null
+
         accountManager.addAccount(account1, session1)
 
         coVerify(exactly = 1) { mocks.accountRepository.createOrUpdateAccountSession(any(), any()) }
+    }
+
+    @Test
+    fun `add user with existing session`() = runBlockingTest {
+        coEvery { mocks.accountRepository.getSessionIdOrNull(any()) } returns session1.sessionId
+        coEvery { mocks.accountRepository.getAccountOrNull(any<SessionId>()) } returns account1
+
+        accountManager.addAccount(account1, session1)
+
+        coVerify(exactly = 1) { mocks.accountRepository.createOrUpdateAccountSession(any(), any()) }
+        coVerify(exactly = 1) { mocks.accountRepository.deleteSession(any()) }
+        coVerify(exactly = 1) { mocks.authRepository.revokeSession(any()) }
     }
 
     @Test

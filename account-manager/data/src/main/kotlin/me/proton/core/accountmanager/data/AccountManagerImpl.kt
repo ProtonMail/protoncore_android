@@ -100,6 +100,8 @@ class AccountManagerImpl constructor(
     // region AccountWorkflowHandler
 
     override suspend fun handleSession(account: Account, session: Session) {
+        // Remove any existing Session.
+        accountRepository.getSessionIdOrNull(account.userId)?.let { removeSession(it) }
         // Account state must be != Ready if SecondFactorNeeded.
         val state = if (account.isReady() && account.isSecondFactorNeeded()) AccountState.NotReady else account.state
         accountRepository.createOrUpdateAccountSession(account.copy(state = state), session)
