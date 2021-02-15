@@ -33,43 +33,24 @@ import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
+import me.proton.android.core.coreexample.viewmodel.AccountViewModel
 import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
 import me.proton.android.core.coreexample.viewmodel.UserAddressKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
-import me.proton.core.accountmanager.presentation.observe
-import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
-import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
-import me.proton.core.accountmanager.presentation.onAccountDisabled
-import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
-import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
-import me.proton.core.accountmanager.presentation.onSessionHumanVerificationNeeded
-import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
-import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.presentation.AuthOrchestrator
+import me.proton.core.account.domain.entity.Account
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.showForceUpdate
-import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
     @Inject
-    lateinit var accountManager: AccountManager
-
-    @Inject
-    lateinit var authOrchestrator: AuthOrchestrator
-
-    @Inject
-    lateinit var authRepository: AuthRepository
-
-    @Inject
     lateinit var coreExampleRepository: CoreExampleRepository
 
+    private val accountViewModel: AccountViewModel by viewModels()
     private val userKeyViewModel: UserKeyViewModel by viewModels()
     private val userAddressKeyViewModel: UserAddressKeyViewModel by viewModels()
     private val publicAddressViewModel: PublicAddressViewModel by viewModels()
@@ -80,11 +61,12 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        authOrchestrator.register(this)
+        accountViewModel.register(this)
+        accountViewModel.handleAccountState()
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
-            login.onClick { authOrchestrator.startLoginWorkflow(AccountType.Internal) }
+            login.onClick { accountViewModel.startLoginWorkflow() }
             forceUpdate.onClick {
                 supportFragmentManager.showForceUpdate(
                     apiErrorMessage = "Error Message coming from the API."
@@ -93,53 +75,24 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
             triggerHumanVer.onClick {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    accountManager.getPrimaryUserId().first()?.let {
+                    accountViewModel.getPrimaryUserId().first()?.let {
                         coreExampleRepository.triggerHumanVerification(it)
                     }
                 }
             }
         }
 
-        accountManager.getPrimaryAccount().onEach { primary ->
+        accountViewModel.getPrimaryAccount().onEach { primary ->
             binding.primaryAccountText.text = "Primary: ${primary?.username}"
         }.launchIn(lifecycleScope)
 
-        accountManager.getAccounts().onEach { accounts ->
-            if (accounts.isEmpty()) authOrchestrator.startLoginWorkflow(AccountType.Internal)
-
-            binding.accountsLayout.removeAllViews()
-            accounts.forEach { account ->
-                binding.accountsLayout.addView(
-                    Button(this@MainActivity).apply {
-                        text = "${account.username} -> ${account.state}/${account.sessionState}"
-                        onClick {
-                            lifecycleScope.launch {
-                                when (account.state) {
-                                    AccountState.Ready,
-                                    AccountState.NotReady,
-                                    AccountState.Disabled,
-                                    AccountState.TwoPassModeFailed,
-                                    AccountState.CreateAddressFailed,
-                                    AccountState.UnlockFailed -> accountManager.disableAccount(account.userId)
-                                    else -> Unit
-                                }
-                            }
-                        }
-                    }
-                )
-            }
+        accountViewModel.state.onEach { state ->
+            when (state) {
+                is AccountViewModel.State.Processing -> Unit
+                is AccountViewModel.State.LoginNeeded -> accountViewModel.startLoginWorkflow()
+                is AccountViewModel.State.AccountList -> displayAccounts(state.accounts)
+            }.exhaustive
         }.launchIn(lifecycleScope)
-
-        with(authOrchestrator) {
-            accountManager.observe(lifecycleScope)
-                .onSessionSecondFactorNeeded { startSecondFactorWorkflow(it) }
-                .onAccountTwoPassModeNeeded { startTwoPassModeWorkflow(it) }
-                .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
-                .onSessionHumanVerificationNeeded { startHumanVerificationWorkflow(it) }
-                .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
-                .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
-                .onAccountDisabled { accountManager.removeAccount(it.userId) }
-        }
 
         userKeyViewModel.getUserKeyState().onEach { state ->
             binding.primaryAccountKeyState.text = "User Key State: ${state::class.java.simpleName}"
@@ -152,5 +105,18 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         publicAddressViewModel.getPublicAddressState().onEach { state ->
             binding.primaryAccountPublicAddressState.text = "Public Address State: ${state::class.java.simpleName}"
         }.launchIn(lifecycleScope)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun displayAccounts(accounts: List<Account>) {
+        binding.accountsLayout.removeAllViews()
+        accounts.forEach { account ->
+            binding.accountsLayout.addView(
+                Button(this@MainActivity).apply {
+                    text = "${account.username} -> ${account.state}/${account.sessionState}"
+                    onClick { accountViewModel.onAccountClicked(account.userId) }
+                }
+            )
+        }
     }
 }
