@@ -71,20 +71,21 @@ class PrivateKeyRepositoryImpl(
         key: PrivateAddressKey
     ) {
         return provider.get<KeyApi>(sessionUserId).invoke {
-            // TODO: Key Migration: call createAddressKey.
-            createAddressKeyOld(
-                CreateAddressKeyRequest(
-                    addressId = key.addressId,
-                    privateKey = key.privateKey.key,
-                    primary = key.privateKey.isPrimary.toInt(),
-                    token = key.token,
-                    signature = key.signature,
-                    signedKeyList = SignedKeyListRequest(
-                        key.signedKeyList.data,
-                        key.signedKeyList.signature
-                    )
+            val request = CreateAddressKeyRequest(
+                addressId = key.addressId,
+                privateKey = key.privateKey.key,
+                primary = key.privateKey.isPrimary.toInt(),
+                token = key.token,
+                signature = key.signature,
+                signedKeyList = SignedKeyListRequest(
+                    key.signedKeyList.data,
+                    key.signedKeyList.signature
                 )
             )
+            if (key.token == null || key.signature == null)
+                createAddressKeyOld(request)
+            else
+                createAddressKey(request)
         }.throwIfError()
     }
 }
