@@ -171,5 +171,9 @@ class AccountManagerImpl constructor(
         accountRepository.updateAccountState(userId, AccountState.NotReady)
     }
 
+    override suspend fun handleAccountDisabled(userId: UserId) {
+        disableAccount(userId)
+    }
+
     // endregion
 }

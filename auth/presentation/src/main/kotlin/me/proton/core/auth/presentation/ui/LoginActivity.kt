@@ -57,7 +57,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
 
         binding.apply {
             closeButton.onClick {
-                finish()
+                onBackPressed()
             }
 
             helpButton.onClick {
@@ -95,6 +95,11 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
         showLoading(false)
         binding.passwordInput.text = ""
         supportFragmentManager.showPasswordChangeDialog(this)
+    }
+
+    override fun onBackPressed() {
+        viewModel.stopLoginWorkflow()
+            .invokeOnCompletion { finish() }
     }
 
     private fun onSuccess(

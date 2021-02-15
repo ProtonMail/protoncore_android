@@ -20,10 +20,12 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
@@ -57,6 +59,8 @@ class LoginViewModel @ViewModelInject constructor(
     private val keyStoreCrypto: KeyStoreCrypto
 ) : ProtonViewModel(), ViewStateStoreScope {
 
+    private val _userId = ViewStateStore<UserId>().lock
+
     val loginState = ViewStateStore<State>().lock
 
     sealed class State {
@@ -78,6 +82,10 @@ class LoginViewModel @ViewModelInject constructor(
         }
     }
 
+    fun stopLoginWorkflow(): Job = viewModelScope.launch {
+        _userId.data()?.let { accountWorkflow.handleAccountDisabled(it) }
+    }
+
     fun startLoginWorkflow(
         username: String,
         password: String,
@@ -89,6 +97,7 @@ class LoginViewModel @ViewModelInject constructor(
 
         val sessionInfo = performLogin.invoke(username, encryptedPassword)
         val userId = sessionInfo.userId
+        _userId.set(userId)
 
         // Storing the session is mandatory for executing subsequent requests.
         handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)
