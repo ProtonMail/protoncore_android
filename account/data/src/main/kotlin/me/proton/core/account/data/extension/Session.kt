@@ -19,8 +19,8 @@
 package me.proton.core.account.data.extension
 
 import me.proton.core.account.data.entity.SessionEntity
-import me.proton.core.crypto.common.simple.encrypt
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -29,14 +29,14 @@ import me.proton.core.network.domain.session.Session
 fun Session.toSessionEntity(
     userId: UserId,
     product: Product,
-    crypto: SimpleCrypto
+    keyStoreCrypto: KeyStoreCrypto
 ): SessionEntity = SessionEntity(
     userId = userId.id,
     sessionId = sessionId.id,
-    accessToken = accessToken.encrypt(crypto),
-    refreshToken = refreshToken.encrypt(crypto),
-    humanHeaderTokenType = headers?.tokenType?.encrypt(crypto),
-    humanHeaderTokenCode = headers?.tokenCode?.encrypt(crypto),
+    accessToken = accessToken.encryptWith(keyStoreCrypto),
+    refreshToken = refreshToken.encryptWith(keyStoreCrypto),
+    humanHeaderTokenType = headers?.tokenType?.encryptWith(keyStoreCrypto),
+    humanHeaderTokenCode = headers?.tokenCode?.encryptWith(keyStoreCrypto),
     scopes = CommonConverters.fromListOfStringToString(scopes).orEmpty(),
     product = product
 )

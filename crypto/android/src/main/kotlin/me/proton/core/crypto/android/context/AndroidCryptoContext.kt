@@ -19,18 +19,18 @@
 package me.proton.core.crypto.android.context
 
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
-import me.proton.core.crypto.android.simple.KeyStoreSimpleCrypto
+import me.proton.core.crypto.android.simple.AndroidKeyStoreCrypto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.PGPCrypto
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 
 /**
  * [CryptoContext] for Android platform.
  *
- * @see KeyStoreSimpleCrypto
+ * @see AndroidKeyStoreCrypto
  * @see GOpenPGPCrypto
  */
 class AndroidCryptoContext(
-    override val simpleCrypto: SimpleCrypto = KeyStoreSimpleCrypto.default,
+    override val keyStoreCrypto: KeyStoreCrypto = AndroidKeyStoreCrypto.default,
     override val pgpCrypto: PGPCrypto = GOpenPGPCrypto()
 ) : CryptoContext

@@ -20,7 +20,7 @@ package me.proton.core.crypto.android.simple
 
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 
 /**
  * Crypto [TypeConverter] for [RoomDatabase].

@@ -1,17 +1,16 @@
 ## Overview
 Modules under Auth provide Login functionality for Proton services for all Proton account types.
-`Note: Currently not implemented is the private sub-account login which requires password choose.`
 
 ## Gradle
     implementation "me.proton.core:auth:{version}"
 
 ## Account Types
-- ###### Regular accounts with 1 or more address. These can further be 1 or 2 password and additionally every one of them could be with Second Factor (2FA) or not.
-- ###### Accounts without keys and addresses (typically VPN).
-- ###### Accounts with external addresses (no keys).
+- ##### Regular accounts with 1 or more address. These can further be 1 or 2 password and additionally every one of them could be with Second Factor (2FA) or not.
+- ##### Accounts without keys and addresses (typically VPN).
+- ##### Accounts with external addresses (no keys).
 
 ## Integration guide
-**Requirement**: `Network module` integration. It is **must before integrating Auth module**.
+**Requirement**: `Network module`. It **must be integrated before Auth modules**.
 
 The preferred way to integrate Auth into your application is by using the **Account** and **Account-Manager** modules. They provide support for orchestrating the process, storing the data, simplifying the integration and the client will get most value out of the module.
 
@@ -43,17 +42,6 @@ object AuthModule {
     fun provideRemoteRepository(apiProvider: ApiProvider): HumanVerificationRemoteRepository =
         HumanVerificationRemoteRepositoryImpl(apiProvider)
 }
-
-@Module
-@InstallIn(ApplicationComponent::class)
-abstract class AuthBindsModule {
-
-    @Binds
-    abstract fun provideSrpProofProvider(srpProofProviderImpl: SrpProofProviderImpl): SrpProofProvider
-
-    @Binds
-    abstract fun provideCryptoProvider(cryptoProviderImpl: CryptoProviderImpl): CryptoProvider
-}
 ```
 
 ***The most important class is***:
@@ -74,77 +62,76 @@ The public functions it exposes are:
 /**
  * Register all needed workflow for internal usage.
  *
- * Note: This function have to be called [ComponentActivity.onCreate] before [ComponentActivity.onResume].
-*/
+ * Note: This function have to be called [ComponentActivity.onCreate]] before [ComponentActivity.onResume].
+ */
 fun register(context: ComponentActivity)
 
 /**
  * Starts the Login workflow.
-*/
-fun startLoginWorkflow(requiredAccountType: AccountType)
+ *
+ * @see [onLoginResult]
+ */
+fun startLoginWorkflow(requiredUserType: UserType)
+
+/**
+ * Start a Second Factor workflow.
+ *
+ * @see [onSecondFactorResult]
+ */
+fun startSecondFactorWorkflow(account: Account, requiredUserType: UserType)
 
 /**
  * Start a TwoPassMode workflow.
-*/
-fun startTwoPassModeWorkflow(sessionId: SessionId, requiredAccountType: AccountType)
+ *
+ * @see [onTwoPassModeResult]
+ */
+fun startTwoPassModeWorkflow(account: Account, requiredUserType: UserType)
+
+/**
+ * Start the Choose/Create Address workflow.
+ *
+ * @see [onChooseAddressResult]
+ */
+fun startChooseAddressWorkflow(account: Account)
 
 /**
  * Start a Human Verification workflow.
-*/
-fun startHumanVerificationWorkflow(sessionId: SessionId, details: HumanVerificationDetails?)
+ */
+fun startHumanVerificationWorkflow(account: Account)
 ```
 
-##### **Register**
-This is needed in order to be able to listen to the activity results from the flow, and callig it is a must. It should be called in `onCreate` and before `onResume`. A context should be given.
+Register is needed in order to be able to listen to the activity results from the flow. It should be called before `onResume` - an Activity context is needed.
 As a result, it will provide useful information (updates) to the call site from the flow, such as:
 
 ```kotlin
-fun AuthOrchestrator.onUserResult(
-    block: (result: UserResult?) -> Unit
-)
-
-fun AuthOrchestrator.onScopeResult(
-    block: (result: ScopeResult?) -> Unit
-)
-
 fun AuthOrchestrator.onLoginResult(
     block: (result: LoginResult?) -> Unit
-)
+): AuthOrchestrator
 
-fun AuthOrchestrator.onHumanVerificationResult(
-    block: (result: HumanVerificationResult?) -> Unit
-)
+fun AuthOrchestrator.onTwoPassModeResult(
+    block: (result: TwoPassModeResult?) -> Unit
+): AuthOrchestrator
+
+fun AuthOrchestrator.onSecondFactorResult(
+    block: (result: SecondFactorResult?) -> Unit
+): AuthOrchestrator
+
+fun AuthOrchestrator.onChooseAddressResult(
+    block: (result: ChooseAddressResult?) -> Unit
+): AuthOrchestrator
 ```
 An example implementation from the call site would be something like code below.
 ```kotlin
 with(authOrchestrator) {
     register(context)
     onLoginResult { result ->
-        // TODO: do something on login result
+        // If result == null -> login has been cancelled.
     }
-    onUserResult { result ->
-        // TODO: do something with the user data result (from GET: /users)
-    }
-```
-
-##### **startLoginWorkflow**
-This is self-explanatory and it should be called whenever the Login UI should be launched (eg. after checking inside your app that there are no logged inn users).
-
-##### **startTwoPassModeWorkflow**
-This function is available to the client in very specific circumstances if there is a login process ongoing for 2 password account (which has stopped before entering the second password, for eg. user killed the app on that screen etc).
-
-##### **startHumanVerificationWorkflow**
-This is the entry point the HumanVerification flow is started. Network module will notify the client that a Human Verification is needed, and the client is responsible to act on this event and invoke the startHumanVerificationWorkflow function (check the HumanVerification module README.md file).
-
-```kotlin
-// Observe for human verification requirement from the API
-accountManager.onHumanVerificationNeeded().onEach { (account, details) ->
-    authOrchestrator.startHumanVerificationWorkflow(account.sessionId!!, details)
-}.launchIn(viewModelScope)
+}
 ```
 
 ***Another important class is***:
 ```kotlin
 private val accountManager: AccountManager
 ```
-but more about it check the Account-Manager README.md.
+For more info about it check the Account-Manager README.md.

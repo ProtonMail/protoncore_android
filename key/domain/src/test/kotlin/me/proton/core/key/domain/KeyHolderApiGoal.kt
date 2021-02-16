@@ -20,9 +20,9 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.encrypt
-import me.proton.core.crypto.common.simple.use
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.use
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
@@ -107,7 +107,7 @@ internal fun extendedKeyHolderApi(
 
         // Encrypt passphrase as it should be stored in PrivateKey.
         val passphrase = calendarPassphrase.use {
-            it.encrypt(context.simpleCrypto)
+            it.encryptWith(context.keyStoreCrypto)
         }
 
         // Build CalendarKeyHolder: specify privateKey + passphrase.
@@ -153,6 +153,10 @@ internal fun optionalOnPrivateApi(
     privateKey: PrivateKey,
     privateKeyRing: PrivateKeyRing
 ) {
+    // Encrypt or Sign.
+    privateKey.encryptText(context, "message")
+    privateKey.signText(context, "message")
+
     // PrivateKey can be unlocked (using embedded encrypted passphrase).
     val unlockedPrivateKey = privateKey.unlock(context)
 

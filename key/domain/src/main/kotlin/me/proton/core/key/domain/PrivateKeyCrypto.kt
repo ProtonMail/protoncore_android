@@ -23,11 +23,12 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.pgp.unlockOrNull
-import me.proton.core.crypto.common.simple.decrypt
+import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 
 /**
@@ -37,6 +38,28 @@ import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
  */
 fun PrivateKey.fingerprint(context: CryptoContext) =
     context.pgpCrypto.getFingerprint(key)
+
+/**
+ * Get JSON SHA256 fingerprints from this [PrivateKey].
+ *
+ * @throws [CryptoException] if fingerprint cannot be extracted.
+ */
+internal fun PrivateKey.jsonSHA256Fingerprints(context: CryptoContext) =
+    context.pgpCrypto.getJsonSHA256Fingerprints(key)
+
+/**
+ * Get [PublicSignedKeyList] from this [PrivateKey].
+ */
+@Suppress("MaxLineLength")
+fun PrivateKey.signedKeyList(context: CryptoContext): PublicSignedKeyList =
+    """
+    [{"Fingerprint": "${fingerprint(context)}","SHA256Fingerprints": ${jsonSHA256Fingerprints(context)},"Flags": 3,"Primary": 1}]
+    """.trimIndent().let { keyList ->
+        PublicSignedKeyList(
+            data = keyList,
+            signature = signText(context, keyList)
+        )
+    }
 
 /**
  * Get [PublicKey] from [PrivateKey].
@@ -67,6 +90,70 @@ fun PrivateKey.encryptData(context: CryptoContext, data: ByteArray): EncryptedMe
     publicKey(context).encryptData(context, data)
 
 /**
+ * Decrypt [message] as [String] using this [PrivateKey].
+ *
+ * Note: String canonicalization/standardization is applied.
+ *
+ * @throws [CryptoException] if [message] cannot be decrypted.
+ *
+ * @see [PrivateKey.decryptTextOrNull]
+ */
+fun PrivateKey.decryptText(context: CryptoContext, message: EncryptedMessage): String =
+    unlock(context).use { it.decryptText(context, message) }
+
+/**
+ * Decrypt [message] as [ByteArray] using this [PrivateKey].
+ *
+ * @throws [CryptoException] if [message] cannot be decrypted.
+ *
+ * @see [PrivateKey.decryptDataOrNull]
+ */
+fun PrivateKey.decryptData(context: CryptoContext, message: EncryptedMessage): ByteArray =
+    unlock(context).use { it.decryptData(context, message) }
+
+/**
+ * Decrypt [message] as [String] using this [PrivateKey].
+ *
+ * Note: String canonicalization/standardization is applied.
+ *
+ * @return [String], or `null` if [message] cannot be decrypted.
+ *
+ * @see [PrivateKey.decryptText]
+ */
+fun PrivateKey.decryptTextOrNull(context: CryptoContext, message: EncryptedMessage): String? =
+    unlock(context).use { it.decryptTextOrNull(context, message) }
+
+/**
+ * Decrypt [message] as [ByteArray] using this [PrivateKey].
+ *
+ * @return [ByteArray], or `null` if [message] cannot be decrypted.
+ *
+ * @see [PrivateKey.decryptData]
+ */
+fun PrivateKey.decryptDataOrNull(context: CryptoContext, message: EncryptedMessage): ByteArray? =
+    unlock(context).use { it.decryptDataOrNull(context, message) }
+
+/**
+ * Sign [text] using this [PrivateKey].
+ *
+ * @throws [CryptoException] if [text] cannot be signed.
+ *
+ * @see [PublicKey.verifyText]
+ */
+fun PrivateKey.signText(context: CryptoContext, text: String): Signature =
+    unlock(context).use { it.signText(context, text) }
+
+/**
+ * Sign [data] using this [PrivateKey].
+ *
+ * @throws [CryptoException] if [data] cannot be signed.
+ *
+ * @see [PublicKey.verifyData]
+ */
+fun PrivateKey.signData(context: CryptoContext, data: ByteArray): Signature =
+    unlock(context).use { it.signData(context, data) }
+
+/**
  * Unlock this [PrivateKey] using embedded passphrase.
  *
  * @return [UnlockedPrivateKey] implementing Closeable to clear memory after usage.
@@ -77,7 +164,7 @@ fun PrivateKey.encryptData(context: CryptoContext, data: ByteArray): EncryptedMe
  * @see [UnlockedPrivateKey.lock]
  */
 fun PrivateKey.unlock(context: CryptoContext): UnlockedPrivateKey =
-    requireNotNull(passphrase).decrypt(context.simpleCrypto).use { decrypted ->
+    requireNotNull(passphrase).decryptWith(context.keyStoreCrypto).use { decrypted ->
         context.pgpCrypto.unlock(key, decrypted.array).let {
             UnlockedPrivateKey(it, isPrimary)
         }
@@ -92,7 +179,7 @@ fun PrivateKey.unlock(context: CryptoContext): UnlockedPrivateKey =
  * @see [UnlockedPrivateKey.lock]
  */
 fun PrivateKey.unlockOrNull(context: CryptoContext): UnlockedPrivateKey? =
-    passphrase?.decrypt(context.simpleCrypto)?.use { decrypted ->
+    passphrase?.decryptWith(context.keyStoreCrypto)?.use { decrypted ->
         context.pgpCrypto.unlockOrNull(key, decrypted.array)?.let {
             UnlockedPrivateKey(it, isPrimary)
         }

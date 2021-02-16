@@ -23,7 +23,7 @@ plugins {
     kotlin("jvm")
 }
 
-libVersion = Version(0, 2, 2)
+libVersion = Version(1, 0, 0)
 
 dependencies {
 
@@ -31,6 +31,7 @@ dependencies {
 
         project(Module.kotlinUtil),
         project(Module.domain),
+        project(Module.cryptoCommon),
         project(Module.networkDomain),
 
         // Kotlin

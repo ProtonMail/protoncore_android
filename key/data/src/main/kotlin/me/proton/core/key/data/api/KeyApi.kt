@@ -18,12 +18,12 @@
 
 package me.proton.core.key.data.api
 
-import me.proton.core.key.data.api.request.SetupAddressKeyRequest
-import me.proton.core.key.data.api.request.SetupKeysRequest
+import me.proton.core.key.data.api.request.CreateAddressKeyRequest
+import me.proton.core.key.data.api.request.SetupInitialKeysRequest
 import me.proton.core.key.data.api.response.KeySaltsResponse
 import me.proton.core.key.data.api.response.PublicAddressKeysResponse
-import me.proton.core.key.data.api.response.SetupAddressKeyResponse
-import me.proton.core.key.data.api.response.SetupKeysResponse
+import me.proton.core.key.data.api.response.CreateAddressKeyResponse
+import me.proton.core.key.data.api.response.SetupInitialKeysResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -39,11 +39,11 @@ interface KeyApi : BaseRetrofitApi {
     suspend fun getPublicAddressKeys(@Query("Email") email: String): PublicAddressKeysResponse
 
     @POST("keys/address")
-    suspend fun createAddressKey(@Body request: SetupAddressKeyRequest): SetupAddressKeyResponse
+    suspend fun createAddressKey(@Body request: CreateAddressKeyRequest): CreateAddressKeyResponse
 
     @POST("keys")
-    suspend fun createAddressKeyOld(@Body request: SetupAddressKeyRequest): SetupAddressKeyResponse
+    suspend fun createAddressKeyOld(@Body request: CreateAddressKeyRequest): CreateAddressKeyResponse
 
     @POST("keys/setup")
-    suspend fun setupAddressKeys(@Body request: SetupKeysRequest): SetupKeysResponse
+    suspend fun setupInitialKeys(@Body request: SetupInitialKeysRequest): SetupInitialKeysResponse
 }

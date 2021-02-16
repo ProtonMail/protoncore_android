@@ -19,41 +19,63 @@
 package me.proton.core.user.domain
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.crypto.common.simple.EncryptedByteArray
-import me.proton.core.crypto.common.simple.PlainByteArray
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.areAllLocked
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.entity.UserAddressKey
+import me.proton.core.user.domain.entity.UserKey
 
 interface UserManager {
-
     /**
      * Get [User], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
      */
-    fun getUser(
+    fun getUserFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
     ): Flow<DataResult<User?>>
+
+    /**
+     * Get [User], using [sessionUserId].
+     *
+     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
+     */
+    suspend fun getUser(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): User
 
     /**
      * Get all [UserAddress], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
      */
-    fun getAddresses(
+    fun getAddressesFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
     ): Flow<DataResult<List<UserAddress>>>
 
     /**
-     * Try to unlock the user with the given [password].
+     * Get all [UserAddress], using [sessionUserId].
      *
-     * On [UnlockResult.Success], the passphrase, derived from password, is stored and the [User] keys ready to be used.
+     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
+     */
+    suspend fun getAddresses(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): List<UserAddress>
+
+    /**
+     * Try to unlock the primary [UserKey] with the given [password].
+     *
+     * On [UnlockResult.Success], the passphrase, derived from password, is stored and [UserKey] ready to be used.
      *
      * @param userId [UserId] to unlock.
      * @param password [PlainByteArray] to use to unlock.
@@ -69,9 +91,9 @@ interface UserManager {
     ): UnlockResult
 
     /**
-     * Try to unlock the user with the given [passphrase].
+     * Try to unlock the primary [UserKey] with the given [passphrase].
      *
-     * On [UnlockResult.Success], the passphrase is stored and the [User] keys ready to be used.
+     * On [UnlockResult.Success], the passphrase is stored and [UserKey] ready to be used.
      *
      * @param userId [UserId] to unlock.
      * @param passphrase [EncryptedByteArray] to use to unlock.
@@ -103,4 +125,27 @@ interface UserManager {
         oldPassword: String,
         newPassword: String
     )
+
+    /**
+     * Create a new primary [UserKey], [UserAddress], [UserAddressKey], and set the derived passphrase for the user.
+     */
+    suspend fun setupPrimaryKeys(
+        sessionUserId: SessionUserId,
+        username: String,
+        domain: String,
+        auth: Auth,
+        password: ByteArray
+    ): User
+
+    /**
+     * Result for [unlockWithPassphrase] and [unlockWithPassword].
+     */
+    sealed class UnlockResult {
+        object Success : UnlockResult()
+        sealed class Error : UnlockResult() {
+            object NoPrimaryKey : Error()
+            object NoKeySaltsForPrimaryKey : Error()
+            object PrimaryKeyInvalidPassphrase : Error()
+        }
+    }
 }

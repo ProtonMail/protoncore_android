@@ -18,6 +18,9 @@
 
 package me.proton.core.auth.domain.entity
 
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
+
 /**
  * Holds Login/Session data.
  */
@@ -28,8 +31,8 @@ data class SessionInfo(
     val tokenType: String,
     val scope: String,
     val scopes: List<String>,
-    val sessionId: String,
-    val userId: String,
+    val sessionId: SessionId,
+    val userId: UserId,
     val refreshToken: String,
     val eventId: String,
     val serverProof: String,

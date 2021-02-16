@@ -28,9 +28,12 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(0, 4, 0)
+libVersion = Version(1, 0, 0)
 
-android(useDataBinding = true)
+android(
+    minSdk = 23,
+    useDataBinding = true
+)
 
 dependencies {
 
@@ -40,12 +43,15 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.presentation),
+        project(Module.crypto),
 
         // Features
         project(Module.authDomain),
         project(Module.accountDomain),
         project(Module.humanVerificationDomain),
         project(Module.humanVerificationPresentation),
+        project(Module.userDomain),
+        project(Module.keyDomain),
 
         // Kotlin
         `kotlin-jdk7`,
@@ -60,10 +66,7 @@ dependencies {
         `hilt-androidx-viewModel`,
         `lifecycle-viewModel`,
         `material`,
-        `viewStateStore`,
-
-        // Other
-        `bcrypt`
+        `viewStateStore`
     )
 
     kapt(
@@ -71,10 +74,7 @@ dependencies {
         `hilt-android-compiler`,
         `hilt-androidx-compiler`
     )
-    compileOnly(
-        project(Module.gopenpgp),
-        `assistedInject-annotations-dagger`
-    )
+    compileOnly(`assistedInject-annotations-dagger`)
 
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))

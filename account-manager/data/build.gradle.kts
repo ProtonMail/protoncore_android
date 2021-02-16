@@ -25,7 +25,7 @@ plugins {
     kotlin("kapt")
 }
 
-libVersion = Version(0, 2, 3)
+libVersion = Version(1, 0, 0)
 
 android(minSdk = 23) {
     defaultConfig {
@@ -46,12 +46,17 @@ dependencies {
         project(Module.domain),
         project(Module.data),
         project(Module.accountManagerDomain),
+        project(Module.crypto),
 
         // Features
         project(Module.authData),
         project(Module.authDomain),
         project(Module.accountData),
         project(Module.accountDomain),
+        project(Module.userData),
+        project(Module.userDomain),
+        project(Module.keyData),
+        project(Module.keyDomain),
 
         // Kotlin
         `kotlin-jdk8`,

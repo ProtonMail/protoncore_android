@@ -80,5 +80,8 @@ class SessionManagerImpl(
     override suspend fun getSessionId(userId: UserId): SessionId? =
         accountRepository.getSessionIdOrNull(userId)
 
+    override suspend fun getUserId(sessionId: SessionId): UserId? =
+        accountRepository.getAccountOrNull(sessionId)?.userId
+
     // endregion
 }

@@ -20,9 +20,12 @@ package me.proton.core.network.data.protonApi
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.network.data.ResponseCodes
 
 @Serializable
 data class GenericResponse(
     @SerialName("Code")
     val code: Int
 )
+
+fun GenericResponse.isSuccess(): Boolean = code == ResponseCodes.OK

@@ -150,6 +150,22 @@ Account Manager Data: **0.2.3** - _released on: Feb 05, 2021_
 
 Account Manager Dagger: **0.2.3** - _released on: Feb 05, 2021_
 
+### Key
+
+Key: **0** - _released on: ND_
+
+Key Domain: **0** - _released on: ND_
+
+Key Data: **0** - _released on: ND_
+
+### User
+
+User: **0** - _released on: ND_
+
+User Domain: **0** - _released on: ND_
+
+User Data: **0** - _released on: ND_
+
 ### Contacts
 
 Contacts: **0** - _released on: ND_
@@ -159,7 +175,6 @@ Contacts Domain: **0** - _released on: ND_
 Contacts Presentation: **0** - _released on: ND_
 
 Contacts Data: **0** - _released on: ND_
-
 
 ### Settings
 

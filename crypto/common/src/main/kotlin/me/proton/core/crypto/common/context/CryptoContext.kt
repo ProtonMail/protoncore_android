@@ -19,15 +19,15 @@
 package me.proton.core.crypto.common.context
 
 import me.proton.core.crypto.common.pgp.PGPCrypto
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 
 /**
  * Context providing any needed dependencies for Crypto functions.
  *
- * @see [SimpleCrypto]
+ * @see [KeyStoreCrypto]
  * @see [PGPCrypto]
  */
 interface CryptoContext {
-    val simpleCrypto: SimpleCrypto
+    val keyStoreCrypto: KeyStoreCrypto
     val pgpCrypto: PGPCrypto
 }

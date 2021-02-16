@@ -50,9 +50,9 @@ data class UserResponse(
     @SerialName("Subscribed")
     val subscribed: Int,
     @SerialName("Services")
-    val services: Int, // boolean
+    val services: Int,
     @SerialName("Delinquent")
-    val delinquent: Int, // boolean
+    val delinquent: Int,
     @SerialName("Email")
     val email: String? = null,
     @SerialName("DisplayName")

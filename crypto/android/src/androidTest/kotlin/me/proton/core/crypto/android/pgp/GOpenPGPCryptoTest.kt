@@ -22,7 +22,7 @@ import android.util.Base64
 import com.proton.gopenpgp.crypto.Crypto
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
-import me.proton.core.crypto.common.simple.use
+import me.proton.core.crypto.common.keystore.use
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails

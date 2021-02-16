@@ -45,7 +45,6 @@ data class SessionResult(
     val isTwoPassModeNeeded = passwordMode == 2
 
     companion object {
-
         fun from(sessionInfo: SessionInfo): SessionResult = SessionResult(
             username = sessionInfo.username,
             accessToken = sessionInfo.accessToken,
@@ -53,8 +52,8 @@ data class SessionResult(
             tokenType = sessionInfo.tokenType,
             scope = sessionInfo.scope,
             scopes = sessionInfo.scopes,
-            sessionId = sessionInfo.sessionId,
-            userId = sessionInfo.userId,
+            sessionId = sessionInfo.sessionId.id,
+            userId = sessionInfo.userId.id,
             refreshToken = sessionInfo.refreshToken,
             eventId = sessionInfo.eventId,
             serverProof = sessionInfo.serverProof,

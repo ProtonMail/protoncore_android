@@ -17,10 +17,12 @@
  */
 package me.proton.core.accountmanager.data
 
+import io.mockk.coEvery
 import io.mockk.coVerify
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.Product
@@ -50,7 +52,8 @@ class AccountManagerImplTest {
         email = "test@example.com",
         state = AccountState.Ready,
         sessionId = session1.sessionId,
-        sessionState = SessionState.Authenticated
+        sessionState = SessionState.Authenticated,
+        details = AccountDetails(null, null)
     )
 
     private val mocks = RepositoryMocks(session1, account1)
@@ -64,28 +67,41 @@ class AccountManagerImplTest {
 
     @Test
     fun `add user with session`() = runBlockingTest {
+        coEvery { mocks.accountRepository.getSessionIdOrNull(any()) } returns null
+
         accountManager.addAccount(account1, session1)
 
         coVerify(exactly = 1) { mocks.accountRepository.createOrUpdateAccountSession(any(), any()) }
     }
 
     @Test
+    fun `add user with existing session`() = runBlockingTest {
+        coEvery { mocks.accountRepository.getSessionIdOrNull(any()) } returns session1.sessionId
+        coEvery { mocks.accountRepository.getAccountOrNull(any<SessionId>()) } returns account1
+
+        accountManager.addAccount(account1, session1)
+
+        coVerify(exactly = 1) { mocks.accountRepository.createOrUpdateAccountSession(any(), any()) }
+        coVerify(exactly = 1) { mocks.accountRepository.deleteSession(any()) }
+        coVerify(exactly = 1) { mocks.authRepository.revokeSession(any()) }
+    }
+
+    @Test
     fun `on handleTwoPassModeSuccess`() = runBlockingTest {
         mocks.setupAccountRepository()
 
-        accountManager.handleTwoPassModeSuccess(account1.sessionId!!)
+        accountManager.handleTwoPassModeSuccess(account1.userId)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(2, stateLists.size)
+        assertEquals(1, stateLists.size)
         assertEquals(AccountState.TwoPassModeSuccess, stateLists[0].state)
-        assertEquals(AccountState.Ready, stateLists[1].state)
     }
 
     @Test
     fun `on handleTwoPassModeFailed`() = runBlockingTest {
         mocks.setupAccountRepository()
 
-        accountManager.handleTwoPassModeFailed(account1.sessionId!!)
+        accountManager.handleTwoPassModeFailed(account1.userId)
 
         val stateLists = accountManager.onAccountStateChanged().toList()
         assertEquals(1, stateLists.size)
@@ -99,10 +115,6 @@ class AccountManagerImplTest {
         val newScopes = listOf("scope1", "scope2")
 
         accountManager.handleSecondFactorSuccess(session1.sessionId, newScopes)
-
-        val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(1, stateLists.size)
-        assertEquals(AccountState.Ready, stateLists[0].state)
 
         val sessionLists = accountManager.getSessions().toList()
         assertEquals(2, sessionLists.size)

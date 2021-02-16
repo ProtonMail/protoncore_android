@@ -26,16 +26,20 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onSubscription
 import me.proton.core.account.data.db.AccountDatabase
+import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
+import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.extension.toAccountEntity
 import me.proton.core.account.data.extension.toSessionEntity
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
-import me.proton.core.crypto.common.simple.encrypt
-import me.proton.core.crypto.common.simple.SimpleCrypto
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -48,13 +52,14 @@ import me.proton.core.util.kotlin.exhaustive
 class AccountRepositoryImpl(
     private val product: Product,
     private val db: AccountDatabase,
-    private val simpleCrypto: SimpleCrypto
+    private val keyStoreCrypto: KeyStoreCrypto
 ) : AccountRepository {
 
     private val accountDao = db.accountDao()
     private val sessionDao = db.sessionDao()
     private val accountMetadataDao = db.accountMetadataDao()
     private val humanVerificationDetailsDao = db.humanVerificationDetailsDao()
+    private val sessionDetailsDao = db.sessionDetailsDao()
 
     // Accept 10 nested/concurrent state changes -> extraBufferCapacity.
     private val accountStateChanged = MutableSharedFlow<Account>(extraBufferCapacity = 10)
@@ -87,39 +92,47 @@ class AccountRepositoryImpl(
     private suspend fun deleteAccountMetadata(userId: UserId) =
         accountMetadataDao.delete(userId.id, product)
 
+    private suspend fun getAccountInfo(entity: AccountEntity): AccountDetails {
+        val sessionId = entity.sessionId?.let { SessionId(it) }
+        return AccountDetails(
+            session = sessionId?.let { getSessionDetails(it) },
+            humanVerification = sessionId?.let { getHumanVerificationDetails(it) }
+        )
+    }
+
     override fun getAccount(userId: UserId): Flow<Account?> =
         accountDao.findByUserId(userId.id)
-            .map { account -> account?.toAccount() }
+            .map { account -> account?.toAccount(getAccountInfo(account)) }
             .distinctUntilChanged()
 
     override fun getAccount(sessionId: SessionId): Flow<Account?> =
         accountDao.findBySessionId(sessionId.id)
-            .map { account -> account?.toAccount() }
+            .map { account -> account?.toAccount(getAccountInfo(account)) }
             .distinctUntilChanged()
 
     override fun getAccounts(): Flow<List<Account>> =
         accountDao.findAll()
-            .map { it.map { account -> account.toAccount() } }
+            .map { it.map { account -> account.toAccount(getAccountInfo(account)) } }
             .distinctUntilChanged()
 
     override suspend fun getAccountOrNull(userId: UserId): Account? =
-        accountDao.getByUserId(userId.id)?.toAccount()
+        accountDao.getByUserId(userId.id)?.let { account -> account.toAccount(getAccountInfo(account)) }
 
     override suspend fun getAccountOrNull(sessionId: SessionId): Account? =
-        accountDao.getBySessionId(sessionId.id)?.toAccount()
+        accountDao.getBySessionId(sessionId.id)?.let { account -> account.toAccount(getAccountInfo(account)) }
 
     override fun getSessions(): Flow<List<Session>> =
         sessionDao.findAll(product).map { list ->
-            list.map { it.toSession(simpleCrypto) }
+            list.map { it.toSession(keyStoreCrypto) }
         }.distinctUntilChanged()
 
     override fun getSession(sessionId: SessionId): Flow<Session?> =
         sessionDao.findBySessionId(sessionId.id)
-            .map { it?.toSession(simpleCrypto) }
+            .map { it?.toSession(keyStoreCrypto) }
             .distinctUntilChanged()
 
     override suspend fun getSessionOrNull(sessionId: SessionId): Session? =
-        sessionDao.get(sessionId.id)?.toSession(simpleCrypto)
+        sessionDao.get(sessionId.id)?.toSession(keyStoreCrypto)
 
     override suspend fun getSessionIdOrNull(userId: UserId): SessionId? =
         sessionDao.getSessionId(userId.id)?.let { SessionId(it) }
@@ -141,8 +154,9 @@ class AccountRepositoryImpl(
         // Update/raise provided state with session.
         db.inTransaction {
             val sessionState = account.sessionState ?: SessionState.Authenticated
-            sessionDao.insertOrUpdate(session.toSessionEntity(account.userId, product, simpleCrypto))
+            sessionDao.insertOrUpdate(session.toSessionEntity(account.userId, product, keyStoreCrypto))
             accountDao.addSession(account.userId.id, session.sessionId.id)
+            account.details.session?.let { setSessionDetails(session.sessionId, it) }
             updateAccountState(account.userId, account.state)
             updateSessionState(session.sessionId, sessionState)
         }
@@ -177,7 +191,11 @@ class AccountRepositoryImpl(
                 AccountState.NotReady,
                 AccountState.TwoPassModeNeeded,
                 AccountState.TwoPassModeSuccess,
-                AccountState.TwoPassModeFailed -> deleteAccountMetadata(userId)
+                AccountState.TwoPassModeFailed,
+                AccountState.CreateAddressNeeded,
+                AccountState.CreateAddressSuccess,
+                AccountState.CreateAddressFailed,
+                AccountState.UnlockFailed -> deleteAccountMetadata(userId)
             }.exhaustive
             accountDao.updateAccountState(userId.id, state)
             getAccountOrNull(userId)?.let { tryEmitAccountStateChanged(it) }
@@ -199,10 +217,18 @@ class AccountRepositoryImpl(
         sessionDao.updateScopes(sessionId.id, CommonConverters.fromListOfStringToString(scopes).orEmpty())
 
     override suspend fun updateSessionHeaders(sessionId: SessionId, tokenType: String?, tokenCode: String?) =
-        sessionDao.updateHeaders(sessionId.id, tokenType?.encrypt(simpleCrypto), tokenCode?.encrypt(simpleCrypto))
+        sessionDao.updateHeaders(
+            sessionId.id,
+            tokenType?.encryptWith(keyStoreCrypto),
+            tokenCode?.encryptWith(keyStoreCrypto)
+        )
 
     override suspend fun updateSessionToken(sessionId: SessionId, accessToken: String, refreshToken: String) =
-        sessionDao.updateToken(sessionId.id, accessToken.encrypt(simpleCrypto), refreshToken.encrypt(simpleCrypto))
+        sessionDao.updateToken(
+            sessionId.id,
+            accessToken.encryptWith(keyStoreCrypto),
+            refreshToken.encryptWith(keyStoreCrypto)
+        )
 
     override fun getPrimaryUserId(): Flow<UserId?> =
         accountMetadataDao.observeLatestPrimary(product).map { it?.let { UserId(it.userId) } }
@@ -218,18 +244,36 @@ class AccountRepositoryImpl(
         }
     }
 
-    override suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails? =
-        humanVerificationDetailsDao.getBySessionId(id.id)?.toHumanVerificationDetails()
+    override suspend fun getHumanVerificationDetails(sessionId: SessionId): HumanVerificationDetails? =
+        humanVerificationDetailsDao.getBySessionId(sessionId.id)?.toHumanVerificationDetails()
 
-    override suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails) =
+    override suspend fun setHumanVerificationDetails(sessionId: SessionId, details: HumanVerificationDetails) =
         humanVerificationDetailsDao.insertOrUpdate(
             HumanVerificationDetailsEntity(
-                sessionId = id.id,
+                sessionId = sessionId.id,
                 verificationMethods = details.verificationMethods.map { method -> method.value },
                 captchaVerificationToken = details.captchaVerificationToken
             )
         )
 
-    override suspend fun updateHumanVerificationCompleted(id: SessionId) =
-        humanVerificationDetailsDao.delete(sessionId = id.id)
+    override suspend fun updateHumanVerificationCompleted(sessionId: SessionId) =
+        humanVerificationDetailsDao.delete(sessionId = sessionId.id)
+
+    override suspend fun getSessionDetails(sessionId: SessionId): SessionDetails? =
+        sessionDetailsDao.getBySessionId(sessionId.id)?.toSessionDetails()
+
+    override suspend fun setSessionDetails(sessionId: SessionId, details: SessionDetails) =
+        sessionDetailsDao.insertOrUpdate(
+            SessionDetailsEntity(
+                sessionId = sessionId.id,
+                initialEventId = details.initialEventId,
+                requiredAccountType = details.requiredAccountType,
+                secondFactorEnabled = details.secondFactorEnabled,
+                twoPassModeEnabled = details.twoPassModeEnabled,
+                password = details.password
+            )
+        )
+
+    override suspend fun clearSessionDetails(sessionId: SessionId) =
+        sessionDetailsDao.delete(sessionId = sessionId.id)
 }

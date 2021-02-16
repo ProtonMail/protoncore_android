@@ -19,9 +19,6 @@
 package me.proton.core.accountmanager.data
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
@@ -29,12 +26,10 @@ import me.proton.core.account.domain.entity.isReady
 import me.proton.core.account.domain.entity.isSecondFactorNeeded
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.onSessionState
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 
@@ -53,12 +48,16 @@ class AccountManagerImpl constructor(
     }
 
     private suspend fun disableAccount(account: Account) {
-        accountRepository.updateAccountState(account.userId, AccountState.Disabled)
         account.sessionId?.let { removeSession(it) }
+        accountRepository.updateAccountState(account.userId, AccountState.Disabled)
     }
 
     private suspend fun disableAccount(sessionId: SessionId) {
         accountRepository.getAccountOrNull(sessionId)?.let { disableAccount(it) }
+    }
+
+    private suspend fun clearSessionDetails(userId: UserId) {
+        accountRepository.getSessionIdOrNull(userId)?.let { accountRepository.clearSessionDetails(it) }
     }
 
     override suspend fun addAccount(account: Account, session: Session) {
@@ -92,10 +91,6 @@ class AccountManagerImpl constructor(
     override fun onSessionStateChanged(initialState: Boolean): Flow<Account> =
         accountRepository.onSessionStateChanged(initialState)
 
-    override fun onHumanVerificationNeeded(initialState: Boolean): Flow<Pair<Account, HumanVerificationDetails?>> =
-        onSessionState(SessionState.HumanVerificationNeeded, initialState = initialState)
-            .map { it to it.sessionId?.let { id -> accountRepository.getHumanVerificationDetails(id) } }
-
     override fun getPrimaryUserId(): Flow<UserId?> =
         accountRepository.getPrimaryUserId()
 
@@ -105,31 +100,29 @@ class AccountManagerImpl constructor(
     // region AccountWorkflowHandler
 
     override suspend fun handleSession(account: Account, session: Session) {
+        // Remove any existing Session.
+        accountRepository.getSessionIdOrNull(account.userId)?.let { removeSession(it) }
         // Account state must be != Ready if SecondFactorNeeded.
         val state = if (account.isReady() && account.isSecondFactorNeeded()) AccountState.NotReady else account.state
         accountRepository.createOrUpdateAccountSession(account.copy(state = state), session)
     }
 
-    override suspend fun handleTwoPassModeSuccess(sessionId: SessionId) {
-        accountRepository.updateAccountState(sessionId, AccountState.TwoPassModeSuccess)
-        accountRepository.getAccountOrNull(sessionId)?.let { account ->
-            if (account.sessionState == SessionState.Authenticated)
-                accountRepository.updateAccountState(sessionId, AccountState.Ready)
-        }
+    override suspend fun handleTwoPassModeNeeded(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.TwoPassModeNeeded)
     }
 
-    override suspend fun handleTwoPassModeFailed(sessionId: SessionId) {
-        accountRepository.updateAccountState(sessionId, AccountState.TwoPassModeFailed)
+    override suspend fun handleTwoPassModeSuccess(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.TwoPassModeSuccess)
+    }
+
+    override suspend fun handleTwoPassModeFailed(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.TwoPassModeFailed)
     }
 
     override suspend fun handleSecondFactorSuccess(sessionId: SessionId, updatedScopes: List<String>) {
         accountRepository.updateSessionScopes(sessionId, updatedScopes)
         accountRepository.updateSessionState(sessionId, SessionState.SecondFactorSuccess)
         accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
-        accountRepository.getAccountOrNull(sessionId)?.let { account ->
-            if (account.state != AccountState.TwoPassModeNeeded)
-                accountRepository.updateAccountState(sessionId, AccountState.Ready)
-        }
     }
 
     override suspend fun handleSecondFactorFailed(sessionId: SessionId) {
@@ -150,12 +143,38 @@ class AccountManagerImpl constructor(
         accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
     }
 
+    override suspend fun handleChangePasswordNeeded(userId: UserId) {
+        disableAccount(userId)
+    }
+
+    override suspend fun handleCreateAddressNeeded(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.CreateAddressNeeded)
+    }
+
+    override suspend fun handleCreateAddressSuccess(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.CreateAddressSuccess)
+    }
+
+    override suspend fun handleCreateAddressFailed(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.CreateAddressFailed)
+    }
+
+    override suspend fun handleUnlockFailed(userId: UserId) {
+        accountRepository.updateAccountState(userId, AccountState.UnlockFailed)
+        disableAccount(userId)
+    }
+
     override suspend fun handleAccountReady(userId: UserId) {
         accountRepository.updateAccountState(userId, AccountState.Ready)
+        clearSessionDetails(userId)
     }
 
     override suspend fun handleAccountNotReady(userId: UserId) {
         accountRepository.updateAccountState(userId, AccountState.NotReady)
+    }
+
+    override suspend fun handleAccountDisabled(userId: UserId) {
+        disableAccount(userId)
     }
 
     // endregion

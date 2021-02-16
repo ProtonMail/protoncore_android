@@ -109,17 +109,18 @@ sealed class ApiResult<out T> {
     }
 
     /**
-     * Value for successful calls or [null].
+     * Value for successful calls or `null`.
      */
     open val valueOrNull: T? get() = null
 
     /**
      * Value for successful calls or throw wrapped error if exist.
      */
-    val valueOrThrow: T get() {
-        throwIfError()
-        return checkNotNull(valueOrNull)
-    }
+    val valueOrThrow: T
+        get() {
+            throwIfError()
+            return checkNotNull(valueOrNull)
+        }
 
     /**
      * Returns the encapsulated [Throwable] exception if this instance is [Error] or `null` otherwise.
@@ -139,6 +140,7 @@ sealed class ApiResult<out T> {
     }
 
     companion object {
+        const val HTTP_TOO_MANY_REQUESTS = 429
 
         /**
          * Introduce timeout for given block returning [ApiResult].
@@ -150,14 +152,15 @@ sealed class ApiResult<out T> {
          */
         suspend fun <T> withTimeout(timeoutMs: Long, block: suspend CoroutineScope.() -> ApiResult<T>) =
             withTimeoutOrNull(timeoutMs, block) ?: Error.Timeout(true, null)
-
-        const val HTTP_TOO_MANY_REQUESTS = 429
     }
 }
 
-fun ApiResult.Error.doThrow(): Nothing {
-    if (cause == null)
-        throw RuntimeException(this::class.java.simpleName)
-    else
-        throw cause
+fun ApiResult.Error.doThrow() {
+    throw ApiException(this)
 }
+
+open class ApiException(val error: ApiResult.Error) : Exception(
+    if (error is ApiResult.Error.Http && error.proton?.error != null) error.proton.error
+    else error.cause?.message,
+    error.cause
+)

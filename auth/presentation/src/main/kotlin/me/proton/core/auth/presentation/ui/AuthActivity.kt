@@ -23,11 +23,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.databinding.ViewDataBinding
-import me.proton.core.auth.domain.usecase.PerformUserSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.isNightMode
+import me.proton.core.user.domain.UserManager
 
 abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
 
@@ -55,22 +55,20 @@ abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
         binding.root.errorSnack(message = message ?: getString(R.string.auth_login_general_error))
     }
 
-    protected fun onUserSetupError(state: PerformUserSetup.State.Error) {
-        when (state) {
-            is PerformUserSetup.State.Error.NoPrimaryKey -> onError(
+    protected fun onUnlockUserError(error: UserManager.UnlockResult.Error) {
+        when (error) {
+            is UserManager.UnlockResult.Error.NoPrimaryKey -> onError(
                 false,
                 getString(R.string.auth_mailbox_login_error_no_primary_key)
             )
-            is PerformUserSetup.State.Error.NoKeySaltsForPrimaryKey -> onError(
+            is UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey -> onError(
                 false,
                 getString(R.string.auth_mailbox_login_error_primary_key_error)
             )
-            is PerformUserSetup.State.Error.PrimaryKeyInvalidPassphrase -> onError(
+            is UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase -> onError(
                 false,
                 getString(R.string.auth_mailbox_login_error_invalid_passphrase)
             )
-            is PerformUserSetup.State.Error.Message -> onError(false, state.message)
-            else -> onError(false)
         }
     }
 }

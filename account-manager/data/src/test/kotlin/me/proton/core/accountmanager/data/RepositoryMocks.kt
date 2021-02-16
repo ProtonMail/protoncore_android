@@ -28,8 +28,6 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.arch.ResponseSource
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
 import me.proton.core.network.domain.session.Session
@@ -207,8 +205,6 @@ class RepositoryMocks(
         val sessionIdSlot = slot<SessionId>()
 
         // Assume revokeSession is done successfully.
-        coEvery { authRepository.revokeSession(capture(sessionIdSlot)) } answers {
-            DataResult.Success(ResponseSource.Remote, true)
-        }
+        coEvery { authRepository.revokeSession(capture(sessionIdSlot)) } returns true
     }
 }

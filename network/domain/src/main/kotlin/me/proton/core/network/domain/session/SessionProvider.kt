@@ -30,4 +30,9 @@ interface SessionProvider {
      * Get [SessionId], if exist, by userId.
      */
     suspend fun getSessionId(userId: UserId): SessionId?
+
+    /**
+     * Get [UserId], if exist, by sessionId.
+     */
+    suspend fun getUserId(sessionId: SessionId): UserId?
 }

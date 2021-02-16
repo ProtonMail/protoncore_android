@@ -21,51 +21,27 @@ package me.proton.core.auth.presentation.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.auth.domain.usecase.AvailableDomains
-import me.proton.core.auth.domain.usecase.UsernameAvailability
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityCreateAddressBinding
-import me.proton.core.auth.presentation.entity.UserResult
+import me.proton.core.auth.presentation.entity.CreateAddressInput
+import me.proton.core.auth.presentation.entity.CreateAddressResult
 import me.proton.core.auth.presentation.viewmodel.CreateAddressViewModel
-import me.proton.core.network.domain.session.SessionId
-import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.onClick
-import me.proton.core.presentation.utils.onFailure
-import me.proton.core.presentation.utils.onSuccess
-import me.proton.core.presentation.utils.validate
-import me.proton.core.presentation.utils.validateUsername
-import me.proton.core.util.kotlin.exhaustive
 
 /**
- * Creates a ProtonMail address when needed.
- * Usually a common use case would be a user with external email trying to
- * login into one of Proton services (apps) which require a Proton Mail address.
- * In this flow, the external email address would be set as an account recovery email address.
+ * Second step in the address creation flow.
  *
- * This is the first scree of the flow, which should help the user choose an available username (who's availability is
- * checks with the API.
- *
- * @author Dino Kadrikj.
+ * Displays the results from the username availability and triggers the business logic along with all API executions.
  */
 @AndroidEntryPoint
 class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
 
-    private val sessionId: SessionId by lazy {
-        SessionId(requireNotNull(intent?.extras?.getString(ARG_SESSION_ID)))
-    }
-
-    private val user: UserResult by lazy {
-        requireNotNull(intent?.extras?.getParcelable(ARG_USER))
-    }
-
-    private val startForResult = registerForActivityResult(StartAccountUpgrade()) { result ->
-        if (result != null) {
-            val intent = Intent().apply { putExtra(ARG_USER_RESULT, result) }
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-        }
+    private val input: CreateAddressInput by lazy {
+        requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
     private val viewModel by viewModels<CreateAddressViewModel>()
@@ -76,85 +52,51 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
         super.onCreate(savedInstanceState)
 
         binding.apply {
-            closeButton.onClick { finish() }
-            nextButton.onClick(::onNextClicked)
-        }
-
-        viewModel.domainsState.observeData {
-            when (it) {
-                is AvailableDomains.State.Success -> onDomainAvailable(it)
-                is AvailableDomains.State.Error.Message -> showError(it.message)
-                is AvailableDomains.State.Error.NoAvailableDomains -> {
-                    showError(getString(R.string.auth_create_address_error_no_available_domain))
-                }
-            }.exhaustive
-        }
-
-        viewModel.usernameState.observeData {
-            when (it) {
-                is UsernameAvailability.State.Processing -> showLoading(true)
-                is UsernameAvailability.State.Success -> onUsernameAvailable(it.username, viewModel.domain)
-                is UsernameAvailability.State.Error.Message -> onUsernameUnavailable(it.message, false)
-                is UsernameAvailability.State.Error.EmptyUsername -> onUsernameUnavailable(invalidInput = true)
-                is UsernameAvailability.State.Error.UsernameUnavailable -> {
-                    onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable), true)
-                }
-            }.exhaustive
-        }
-    }
-
-    override fun showLoading(loading: Boolean) = with(binding) {
-        if (loading) {
-            nextButton.setLoading()
-        } else {
-            nextButton.setIdle()
-        }
-    }
-
-    private fun onNextClicked() {
-        with(binding.usernameInput) {
-            hideKeyboard()
-            validateUsername()
-                .onFailure { setInputError() }
-                .onSuccess { viewModel.checkUsernameAvailability(it) }
-        }
-    }
-
-    private fun onDomainAvailable(it: AvailableDomains.State.Success) {
-        with(binding.usernameInput) {
-            suffixText = "@${it.firstOrDefault}"
-            validate()
-                .onFailure { setInputError() }
-                .onSuccess { clearInputError() }
-        }
-        binding.nextButton.isEnabled = true
-    }
-
-    private fun onUsernameAvailable(username: String, domain: String) {
-        with(binding.nextButton) {
-            setIdle()
-            isEnabled = true
-        }
-        startForResult.launch(
-            UpgradeInput(
-                sessionId = sessionId,
-                user = user,
-                username = username,
-                domain = domain
+            closeButton.onClick {
+                finish()
+            }
+            createAddressButton.onClick {
+                viewModel.upgradeAccount(UserId(input.userId), input.password, input.username, input.domain)
+            }
+            externalEmailText.text = input.recoveryEmail
+            titleText.text = String.format(
+                getString(
+                    R.string.auth_create_address_result_title_username,
+                    input.username,
+                    input.domain
+                )
             )
-        )
+            termsConditionsText.movementMethod = LinkMovementMethod.getInstance()
+        }
+
+        viewModel.upgradeState.observeData {
+            when (it) {
+                is CreateAddressViewModel.State.Processing -> showLoading(true)
+                is CreateAddressViewModel.State.Success -> onSuccess()
+                is CreateAddressViewModel.State.Error.Message -> showError(it.message)
+            }
+        }
     }
 
-    private fun onUsernameUnavailable(message: String? = null, invalidInput: Boolean) {
-        if (invalidInput) binding.usernameInput.setInputError()
-        showError(message)
+    override fun showLoading(loading: Boolean) = with(binding.createAddressButton) {
+        title = if (loading) {
+            setLoading()
+            getString(R.string.auth_create_address_creating)
+        } else {
+            setIdle()
+            getString(R.string.auth_create_address_create)
+        }
+    }
+
+    private fun onSuccess() {
+        val intent = Intent()
+            .putExtra(ARG_RESULT, CreateAddressResult(success = true))
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     companion object {
-        const val ARG_SESSION_ID = "arg.sessionId"
-        const val ARG_EXTERNAL_EMAIL = "arg.externalEmail"
-        const val ARG_USER = "arg.user"
-
-        const val ARG_USER_RESULT = "arg.userResult"
+        const val ARG_INPUT = "arg.input"
+        const val ARG_RESULT = "arg.result"
     }
 }

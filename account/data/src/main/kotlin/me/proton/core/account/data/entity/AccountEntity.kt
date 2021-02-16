@@ -22,6 +22,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.UserId
@@ -49,12 +50,13 @@ data class AccountEntity(
     val sessionId: String?,
     val sessionState: SessionState?
 ) {
-    fun toAccount(): Account = Account(
+    fun toAccount(details: AccountDetails): Account = Account(
         userId = UserId(userId),
         username = username,
         email = email,
         state = state,
         sessionId = sessionId?.let { SessionId(sessionId) },
-        sessionState = sessionState
+        sessionState = sessionState,
+        details = details
     )
 }

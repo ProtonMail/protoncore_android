@@ -21,6 +21,7 @@ package me.proton.core.account.domain.repository
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
@@ -145,15 +146,30 @@ interface AccountRepository {
     /**
      * Get [HumanVerificationDetails], if exist, by sessionId.
      */
-    suspend fun getHumanVerificationDetails(id: SessionId): HumanVerificationDetails?
+    suspend fun getHumanVerificationDetails(sessionId: SessionId): HumanVerificationDetails?
 
     /**
      * Set [HumanVerificationDetails], by sessionId.
      */
-    suspend fun setHumanVerificationDetails(id: SessionId, details: HumanVerificationDetails)
+    suspend fun setHumanVerificationDetails(sessionId: SessionId, details: HumanVerificationDetails)
 
     /**
      * Marks the human verification details as completed (successfully).
      */
-    suspend fun updateHumanVerificationCompleted(id: SessionId)
+    suspend fun updateHumanVerificationCompleted(sessionId: SessionId)
+
+    /**
+     * Get [SessionDetails], if exist, by sessionId.
+     */
+    suspend fun getSessionDetails(sessionId: SessionId): SessionDetails?
+
+    /**
+     * Set [SessionDetails], by sessionId.
+     */
+    suspend fun setSessionDetails(sessionId: SessionId, details: SessionDetails)
+
+    /**
+     * Clear [SessionDetails], by sessionId.
+     */
+    suspend fun clearSessionDetails(sessionId: SessionId)
 }

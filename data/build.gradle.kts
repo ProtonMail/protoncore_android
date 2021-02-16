@@ -23,7 +23,7 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(0, 2, 2)
+libVersion = Version(1, 0, 0)
 
 android()
 
@@ -39,7 +39,8 @@ dependencies {
         `coroutines-core`,
 
         // Android
-        `room-ktx`
+        `room-ktx`,
+        `store4`
     )
 
     testImplementation(project(Module.kotlinTest))

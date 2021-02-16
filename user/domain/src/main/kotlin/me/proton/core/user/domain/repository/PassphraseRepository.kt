@@ -18,7 +18,7 @@
 
 package me.proton.core.user.domain.repository
 
-import me.proton.core.crypto.common.simple.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 
 interface PassphraseRepository {
