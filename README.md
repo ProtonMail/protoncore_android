@@ -91,80 +91,80 @@ Test Android Instrumented: **0.3.2** - _released on: Jan 27, 2021_
 
 ## Shared
 
-Domain: **0.2.4** - _released on: Nov 18, 2020_
+Domain: **1.0** - _released on: Feb 17, 2021_
 
 Presentation: **0.5.4** - _released on: Feb 01, 2021_
 
-Data: **0.2.2** - _released on: Jan 20, 2021_
+Data: **1.0** - _released on: Feb 17, 2021_
 
 ## Support
 
 ### Network
 
-Network: **0.4.5** - _released on: Jan 04, 2021_
+Network: **1.0** - _released on: Feb 17, 2021_
 
-Network Domain: **0.4.5** - _released on: Jan 04, 2021_
+Network Domain: **1.0** - _released on: Feb 17, 2021_
 
-Network Data: **0.4.5** - _released on: Jan 04, 2021_
+Network Data: **1.0** - _released on: Feb 17, 2021_
 
 ### Crypto
 
-Crypto: **0.2.2** - _released on: Jan 20, 2021_
+Crypto: **1.0** - _released on: Feb 17, 2021_
 
-Crypto Common: **0.2.2** - _released on: Jan 20, 2021_
+Crypto Common: **1.0** - _released on: Feb 17, 2021_
 
-Crypto Android: **0.2.2** - _released on: Jan 20, 2021_
+Crypto Android: **1.0** - _released on: Feb 17, 2021_
 
 ## Features
 
 ### Auth
 
-Auth: **0.4** - _released on: Feb 05, 2021_
+Auth: **1.0** - _released on: Feb 17, 2021_
 
-Auth Domain: **0.4** - _released on: Feb 05, 2021_
+Auth Domain: **1.0** - _released on: Feb 17, 2021_
 
-Auth Presentation: **0.4** - _released on: Feb 05, 2021_
+Auth Presentation: **1.0** - _released on: Feb 17, 2021_
 
-Auth Data: **0.4** - _released on: Feb 05, 2021_
+Auth Data: **1.0** - _released on: Feb 17, 2021_
 
 ### Account
 
-Account: **0.2.2** - _released on: Jan 20, 2021_
+Account: **1.0.1** - _released on: Feb 17, 2021_
 
-Account Domain: **0.2.2** - _released on: Jan 20, 2021_
+Account Domain: **1.0.1** - _released on: Feb 17, 2021_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **0.2.2** - _released on: Jan 20, 2021_
+Account Data: **1.0.1** - _released on: Feb 17, 2021_
 
 
 ### Account Manager
 
-Account Manager: **0.2.3** - _released on: Feb 05, 2021_
+Account Manager: **1.0.1** - _released on: Feb 17, 2021_
 
-Account Manager Domain: **0.2.3** - _released on: Feb 05, 2021_
+Account Manager Domain: **1.0.1** - _released on: Feb 17, 2021_
 
-Account Manager Presentation: **0.2.3** - _released on: Feb 05, 2021_
+Account Manager Presentation: **1.0.1** - _released on: Feb 17, 2021_
 
-Account Manager Data: **0.2.3** - _released on: Feb 05, 2021_
+Account Manager Data: **1.0.1** - _released on: Feb 17, 2021_
 
-Account Manager Dagger: **0.2.3** - _released on: Feb 05, 2021_
+Account Manager Dagger: **1.0.1** - _released on: Feb 17, 2021_
 
 ### Key
 
-Key: **0** - _released on: ND_
+Key: **1.0** - _released on: Feb 17, 2021_
 
-Key Domain: **0** - _released on: ND_
+Key Domain: **1.0** - _released on: Feb 17, 2021_
 
-Key Data: **0** - _released on: ND_
+Key Data: **1.0** - _released on: Feb 17, 2021_
 
 ### User
 
-User: **0** - _released on: ND_
+User: **1.0** - _released on: Feb 17, 2021_
 
-User Domain: **0** - _released on: ND_
+User Domain: **1.0** - _released on: Feb 17, 2021_
 
-User Data: **0** - _released on: ND_
+User Data: **1.0** - _released on: Feb 17, 2021_
 
 ### Contacts
 
