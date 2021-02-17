@@ -275,5 +275,5 @@ class AccountRepositoryImpl(
         )
 
     override suspend fun clearSessionDetails(sessionId: SessionId) =
-        sessionDetailsDao.delete(sessionId = sessionId.id)
+        sessionDetailsDao.clearPassword(sessionId = sessionId.id)
 }
