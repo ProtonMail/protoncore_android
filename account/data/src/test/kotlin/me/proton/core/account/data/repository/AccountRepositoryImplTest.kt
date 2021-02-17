@@ -186,4 +186,11 @@ class AccountRepositoryImplTest {
         coVerify(exactly = 1) { accountDao.updateAccountState(any(), any()) }
         coVerify(exactly = 1) { metadataDao.delete(account1.userId, any()) }
     }
+
+    @Test
+    fun `clear account session details`() = runBlockingTest {
+        accountRepository.clearSessionDetails(account1.toAccount(ad).sessionId!!)
+
+        coVerify(exactly = 1) { sessionDetailsDao.clearPassword(any()) }
+    }
 }
