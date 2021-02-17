@@ -19,9 +19,9 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.named
-import org.jetbrains.dokka.gradle.DokkaPlugin
-import org.jetbrains.dokka.gradle.DokkaTask
+// import org.gradle.kotlin.dsl.named
+// import org.jetbrains.dokka.gradle.DokkaPlugin
+// import org.jetbrains.dokka.gradle.DokkaTask
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.publish.publish
 import studio.forface.easygradle.publish.version
@@ -53,7 +53,7 @@ private fun Project.setupPublishing() {
 
         val bintrayApiKey = System.getenv()["BINTRAY_PUBLISH_KEY"] ?: " "
         if (libVersion != null) {
-            apply<DokkaPlugin>()
+            // apply<DokkaPlugin>()
 
             archivesBaseName = archiveName
 
@@ -89,9 +89,9 @@ private fun Project.setupPublishing() {
                     }
                 } else {
                     // Force Dokka update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
-                    tasks.create("forceDokka") {
-                        doLast { generateKdocIfNeeded() }
-                    }
+                    // tasks.create("forceDokka") {
+                    //     doLast { generateKdocIfNeeded() }
+                    // }
                     // Force Readme update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
                     tasks.create("forceUpdateReadme") {
                         doLast { updateReadme() }
@@ -171,8 +171,8 @@ class ReleaseManager internal constructor(
     /** Generate KDoc if new library is available */
     fun generateKdocIfNeeded() {
         if (shouldRefresh) {
-            val task = tasks.named<DokkaTask>("dokkaHtml").orNull ?: return
-            task.taskActions.forEach { it.execute(task) }
+            // val task = tasks.named<DokkaTask>("dokkaHtml").orNull ?: return
+            // task.taskActions.forEach { it.execute(task) }
         }
     }
 
