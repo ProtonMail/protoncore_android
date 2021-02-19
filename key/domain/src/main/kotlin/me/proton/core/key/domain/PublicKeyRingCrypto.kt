@@ -19,7 +19,11 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.DecryptedFile
+import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
+import me.proton.core.crypto.common.pgp.KeyPacket
+import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
@@ -45,6 +49,26 @@ fun PublicKeyRing.encryptText(context: CryptoContext, text: String): EncryptedMe
  */
 fun PublicKeyRing.encryptData(context: CryptoContext, data: ByteArray): EncryptedMessage =
     primaryKey.encryptData(context, data)
+
+/**
+ * Encrypt [file] using this [PublicKeyRing.primaryKey].
+ *
+ * @throws [CryptoException] if [file] cannot be encrypted.
+ *
+ * @see [PrivateKeyRing.decryptFile]
+ */
+fun PublicKeyRing.encryptFile(context: CryptoContext, file: PlainFile): EncryptedFile =
+    primaryKey.encryptFile(context, file)
+
+/**
+ * Encrypt [keyPacket] using this [PublicKeyRing.primaryKey].
+ *
+ * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+ *
+ * @see [PrivateKeyRing.decryptSessionKey]
+ */
+fun PublicKeyRing.encryptSessionKey(context: CryptoContext, keyPacket: KeyPacket): ByteArray =
+    primaryKey.encryptSessionKey(context, keyPacket)
 
 /**
  * Verify [signature] of [text] is correctly signed using this [PublicKeyRing].
@@ -77,3 +101,19 @@ fun PublicKeyRing.verifyData(
     signature: Signature,
     validAtUtc: Long = 0
 ): Boolean = keys.any { it.verifyData(context, data, signature, validAtUtc) }
+
+/**
+ * Verify [signature] of [file] is correctly signed using this [PublicKeyRing].
+ *
+ * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ *
+ * @return true if at least one [PublicKey] verify [signature].
+ *
+ * @see [PrivateKeyRing.signFile]
+ */
+fun PublicKeyRing.verifyFile(
+    context: CryptoContext,
+    file: DecryptedFile,
+    signature: Signature,
+    validAtUtc: Long = 0
+): Boolean = keys.any { it.verifyFile(context, file, signature, validAtUtc) }

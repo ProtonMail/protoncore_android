@@ -19,10 +19,11 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
@@ -31,6 +32,7 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
+import java.io.ByteArrayInputStream
 
 internal fun keyHolderApi(
     context: CryptoContext,
@@ -53,6 +55,10 @@ internal fun keyHolderApi(
 
         val encryptedSignedData = encryptAndSignData(data)
         decryptAndVerifyData(encryptedSignedData)
+
+        val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
+        val encryptedFile = encryptFile(file)
+        decryptFile(encryptedFile)
     }
 }
 
@@ -77,6 +83,27 @@ internal fun keyHolderApiOrNull(
 
         val encryptedSignedData = encryptAndSignData(data)
         decryptAndVerifyDataOrNull(encryptedSignedData)
+    }
+}
+
+internal fun publicAddressApi(
+    context: CryptoContext,
+    keyHolder: KeyHolder,
+    publicAddresses: List<PublicAddress>
+) {
+    keyHolder.useKeys(context) {
+        val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
+        val encryptedFile = encryptFile(file)
+        val signedFile = signFile(file)
+
+        val fileSessionKey = decryptSessionKey(encryptedFile.keyPacket)
+        publicAddresses.map { publicAddress ->
+            publicAddress.encryptSessionKey(context, fileSessionKey)
+        }
+
+        decryptFileOrNull(encryptedFile)?.let {
+            verifyFile(it, signedFile)
+        }
     }
 }
 
@@ -137,11 +164,15 @@ internal fun optionalOnPublicApi(
     publicKeyRing: PublicKeyRing,
     publicAddress: PublicAddress
 ) {
+    val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
+
     // PublicKey/PublicKeyRing/PublicAddress can encrypt and verify.
     publicKey.encryptText(context, "message")
+    publicKey.encryptFile(context, file)
     publicKey.verifyText(context, "decryptedMessage", "signature")
 
     publicKeyRing.encryptText(context, "message")
+    publicKeyRing.encryptFile(context, file)
     publicKeyRing.verifyText(context, "decryptedMessage", "signature")
 
     publicAddress.encryptText(context, "message")
@@ -157,6 +188,10 @@ internal fun optionalOnPrivateApi(
     privateKey.encryptText(context, "message")
     privateKey.signText(context, "message")
 
+    // File.
+    val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
+    val encryptedFile = privateKey.encryptFile(context, file)
+
     // PrivateKey can be unlocked (using embedded encrypted passphrase).
     val unlockedPrivateKey = privateKey.unlock(context)
 
@@ -166,6 +201,7 @@ internal fun optionalOnPrivateApi(
             // Decrypt Text or Data -> throwing exceptions.
             decryptText(context, "encryptedMessage")
             decryptData(context, "encryptedMessage")
+            decryptFile(context, encryptedFile)
 
             // Decrypt Text or Data -> using orNull extensions.
             decryptTextOrNull(context, "encryptedMessage")
@@ -184,6 +220,7 @@ internal fun optionalOnPrivateApi(
     privateKeyRing.use { key ->
         with(key) {
             decryptText("encryptedMessage")
+            decryptFile(encryptedFile)
             signText("message")
         }
     }

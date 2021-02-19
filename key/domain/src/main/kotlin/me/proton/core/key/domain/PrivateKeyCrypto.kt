@@ -24,6 +24,10 @@ import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.pgp.unlockOrNull
 import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.pgp.DecryptedFile
+import me.proton.core.crypto.common.pgp.EncryptedFile
+import me.proton.core.crypto.common.pgp.KeyPacket
+import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -88,6 +92,16 @@ fun PrivateKey.encryptText(context: CryptoContext, text: String): EncryptedMessa
  */
 fun PrivateKey.encryptData(context: CryptoContext, data: ByteArray): EncryptedMessage =
     publicKey(context).encryptData(context, data)
+
+/**
+ * Encrypt [file] using this [PublicKey].
+ *
+ * @throws [CryptoException] if [file] cannot be encrypted.
+ *
+ * @see [PrivateKey.encryptFile]
+ */
+fun PrivateKey.encryptFile(context: CryptoContext, file: PlainFile): EncryptedFile =
+    publicKey(context).encryptFile(context, file)
 
 /**
  * Decrypt [message] as [String] using this [PrivateKey].
@@ -219,6 +233,28 @@ fun PrivateKeyRing.decryptData(message: EncryptedMessage): ByteArray =
     unlockedKeys.decryptData(context, message)
 
 /**
+ * Decrypt [file] as [DecryptedFile] using this [PrivateKeyRing.keys].
+ *
+ * @throws [CryptoException] if [file] cannot be decrypted.
+ *
+ * @see [PrivateKeyRing.decryptFileOrNull]
+ * @see [PublicKeyRing.encryptFile]
+ */
+fun PrivateKeyRing.decryptFile(file: EncryptedFile): DecryptedFile =
+    unlockedKeys.decryptFile(context, file)
+
+/**
+ * Decrypt [keyPacket] as [ByteArray] using this [PrivateKeyRing.keys].
+ *
+ * @throws [CryptoException] if [keyPacket] cannot be decrypted.
+ *
+ * @see [PrivateKeyRing.decryptSessionKeyOrNull]
+ * @see [PublicKeyRing.encryptSessionKey]
+ */
+fun PrivateKeyRing.decryptSessionKey(keyPacket: KeyPacket): ByteArray =
+    unlockedKeys.decryptSessionKey(context, keyPacket)
+
+/**
  * Decrypt [message] as [String] using this [PrivateKeyRing.keys].
  *
  * @return [String], or `null` if [message] cannot be decrypted.
@@ -239,6 +275,26 @@ fun PrivateKeyRing.decryptDataOrNull(message: EncryptedMessage): ByteArray? =
     unlockedKeys.decryptDataOrNull(context, message)
 
 /**
+ * Decrypt [file] as [EncryptedFile] using this [PrivateKeyRing.keys].
+ *
+ * @return [DecryptedFile], or `null` if [file] cannot be decrypted.
+ *
+ * @see [PrivateKeyRing.decryptFile]
+ */
+fun PrivateKeyRing.decryptFileOrNull(file: EncryptedFile): DecryptedFile? =
+    unlockedKeys.decryptFileOrNull(context, file)
+
+/**
+ * Decrypt [keyPacket] as [ByteArray] using this [PrivateKeyRing.keys].
+ *
+ * @return [ByteArray], or `null` if [keyPacket] cannot be decrypted.
+ *
+ * @see [PrivateKeyRing.decryptSessionKey]
+ */
+fun PrivateKeyRing.decryptSessionKeyOrNull(keyPacket: KeyPacket): ByteArray? =
+    unlockedKeys.decryptSessionKeyOrNull(context, keyPacket)
+
+/**
  * Sign [text] using primary [UnlockedPrivateKey].
  *
  * @throws [CryptoException] if [text] cannot be signed.
@@ -257,3 +313,13 @@ fun PrivateKeyRing.signText(text: String): Signature =
  */
 fun PrivateKeyRing.signData(data: ByteArray): Signature =
     unlockedPrimaryKey.signData(context, data)
+
+/**
+ * Sign [file] using primary [UnlockedPrivateKey].
+ *
+ * @throws [CryptoException] if [file] cannot be signed.
+ *
+ * @see [PublicKeyRing.verifyFile]
+ */
+fun PrivateKeyRing.signFile(file: PlainFile): Signature =
+    unlockedPrimaryKey.signFile(context, file)

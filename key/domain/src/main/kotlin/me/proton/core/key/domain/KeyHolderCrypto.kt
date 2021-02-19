@@ -19,10 +19,16 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DecryptedData
+import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.DecryptedText
+import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
+import me.proton.core.crypto.common.pgp.KeyPacket
+import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
 import me.proton.core.crypto.common.pgp.exception.CryptoException
@@ -31,6 +37,8 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 
 /**
  * Executes the given [block] function for a [KeyHolder] on a [KeyHolderContext] and then close any associated
@@ -91,6 +99,28 @@ fun KeyHolderContext.decryptData(message: EncryptedMessage): ByteArray =
     privateKeyRing.decryptData(message)
 
 /**
+ * Decrypt [file] as [DecryptedFile] using [PrivateKeyRing].
+ *
+ * @throws [CryptoException] if [file] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptFileOrNull]
+ * @see [KeyHolderContext.encryptFile]
+ */
+fun KeyHolderContext.decryptFile(file: EncryptedFile): DecryptedFile =
+    privateKeyRing.decryptFile(file)
+
+/**
+ * Decrypt [keyPacket] as [ByteArray] using [PrivateKeyRing].
+ *
+ * @throws [CryptoException] if [keyPacket] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptSessionKeyOrNull]
+ * @see [KeyHolderContext.encryptSessionKey]
+ */
+fun KeyHolderContext.decryptSessionKey(keyPacket: KeyPacket): ByteArray =
+    privateKeyRing.decryptSessionKey(keyPacket)
+
+/**
  * Decrypt [message] as [String] using [PrivateKeyRing].
  *
  * Note: String canonicalization/standardization is applied.
@@ -113,6 +143,26 @@ fun KeyHolderContext.decryptDataOrNull(message: EncryptedMessage): ByteArray? =
     privateKeyRing.decryptDataOrNull(message)
 
 /**
+ * Decrypt [file] as [EncryptedFile] using [PrivateKeyRing].
+ *
+ * @return [EncryptedFile], or `null` if [file] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptFile]
+ */
+fun KeyHolderContext.decryptFileOrNull(file: EncryptedFile): DecryptedFile? =
+    privateKeyRing.decryptFileOrNull(file)
+
+/**
+ * Decrypt [keyPacket] as [ByteArray] using [PrivateKeyRing].
+ *
+ * @return [ByteArray], or `null` if [keyPacket] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptSessionKey]
+ */
+fun KeyHolderContext.decryptSessionKeyOrNull(keyPacket: KeyPacket): ByteArray? =
+    privateKeyRing.decryptSessionKeyOrNull(keyPacket)
+
+/**
  * Sign [text] using [PrivateKeyRing].
  *
  * @throws [CryptoException] if [text] cannot be signed.
@@ -131,6 +181,16 @@ fun KeyHolderContext.signText(text: String): Signature =
  */
 fun KeyHolderContext.signData(data: ByteArray): Signature =
     privateKeyRing.signData(data)
+
+/**
+ * Sign [file] using [PrivateKeyRing].
+ *
+ * @throws [CryptoException] if [file] cannot be signed.
+ *
+ * @see [KeyHolderContext.verifyFile]
+ */
+fun KeyHolderContext.signFile(file: PlainFile): Signature =
+    privateKeyRing.signFile(file)
 
 /**
  * Verify [signature] of [text] is correctly signed using [PublicKeyRing].
@@ -157,6 +217,18 @@ fun KeyHolderContext.verifyData(data: ByteArray, signature: Signature, validAtUt
     publicKeyRing.verifyData(context, data, signature, validAtUtc)
 
 /**
+ * Verify [signature] of [file] is correctly signed using [PublicKeyRing].
+ *
+ * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ *
+ * @return true if at least one [PublicKey] verify [signature].
+ *
+ * @see [KeyHolderContext.signFile]
+ */
+fun KeyHolderContext.verifyFile(file: DecryptedFile, signature: Signature, validAtUtc: Long = 0): Boolean =
+    publicKeyRing.verifyFile(context, file, signature, validAtUtc)
+
+/**
  * Encrypt [text] using [PublicKeyRing].
  *
  * @throws [CryptoException] if [text] cannot be encrypted.
@@ -175,6 +247,36 @@ fun KeyHolderContext.encryptText(text: String): EncryptedMessage =
  */
 fun KeyHolderContext.encryptData(data: ByteArray): EncryptedMessage =
     publicKeyRing.encryptData(context, data)
+
+/**
+ * Encrypt [file] using [PublicKeyRing].
+ *
+ * @throws [CryptoException] if [file] cannot be encrypted.
+ *
+ * @see [KeyHolderContext.decryptFile]
+ */
+fun KeyHolderContext.encryptFile(file: PlainFile): EncryptedFile =
+    publicKeyRing.encryptFile(context, file)
+
+/**
+ * Encrypt [inputStream] using [PublicKeyRing].
+ *
+ * @throws [CryptoException] if [inputStream] cannot be encrypted.
+ *
+ * @see [KeyHolderContext.decryptFile]
+ */
+fun KeyHolderContext.encryptFile(fileName: String, inputStream: InputStream): EncryptedFile =
+    encryptFile(PlainFile(fileName, inputStream))
+
+/**
+ * Encrypt [data] using [PublicKeyRing].
+ *
+ * @throws [CryptoException] if [data] cannot be encrypted.
+ *
+ * @see [KeyHolderContext.decryptFile]
+ */
+fun KeyHolderContext.encryptFile(fileName: String, data: ByteArray): EncryptedFile =
+    encryptFile(PlainFile(fileName, ByteArrayInputStream(data)))
 
 /**
  * Encrypt [text] using [PublicKeyRing] and sign using [PrivateKeyRing] in an embedded [EncryptedMessage].
@@ -203,6 +305,16 @@ fun KeyHolderContext.encryptAndSignData(data: ByteArray): EncryptedMessage =
         publicKeyRing.primaryKey.key,
         privateKeyRing.unlockedPrimaryKey.unlockedKey.value
     )
+
+/**
+ * Encrypt [keyPacket] using [PublicKeyRing].
+ *
+ * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+ *
+ * @see [KeyHolderContext.decryptSessionKey]
+ */
+fun KeyHolderContext.encryptSessionKey(keyPacket: KeyPacket): ByteArray =
+    publicKeyRing.encryptSessionKey(context, keyPacket)
 
 /**
  * Decrypt [message] as [String] using [PrivateKeyRing] and verify using [PublicKeyRing].
@@ -275,3 +387,17 @@ fun KeyHolderContext.decryptAndVerifyDataOrNull(message: EncryptedMessage, valid
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
         validAtUtc
     )
+
+/**
+ * Get [Armored] from [Unarmored].
+ *
+ * @throws [CryptoException] if data cannot be extracted.
+ */
+fun KeyHolderContext.getArmored(data: Unarmored): Armored = context.pgpCrypto.getArmored(data)
+
+/**
+ * Get [Unarmored] from [Armored].
+ *
+ * @throws [CryptoException] if data cannot be extracted.
+ */
+fun KeyHolderContext.getUnarmored(data: Armored): Unarmored = context.pgpCrypto.getUnarmored(data)
