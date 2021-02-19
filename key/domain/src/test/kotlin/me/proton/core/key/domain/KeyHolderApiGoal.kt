@@ -20,18 +20,14 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.encryptWith
-import me.proton.core.crypto.common.keystore.use
-import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.PlainFile
-import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
-import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
+import me.proton.core.key.domain.extension.keyHolder
 import java.io.ByteArrayInputStream
 
 internal fun keyHolderApi(
@@ -107,54 +103,32 @@ internal fun publicAddressApi(
     }
 }
 
-internal fun extendedKeyHolderApi(
+internal fun nestedKeyCreation(
     context: CryptoContext,
-    userAddress: KeyHolder
+    keyHolder: KeyHolder
 ) {
-    data class CalendarPrivateKey(
-        override val keyId: KeyId,
-        override val privateKey: PrivateKey
-    ) : KeyHolderPrivateKey
+    // Generate a new Nested Private Key from keyHolder keys.
+    val decryptedNestedPrivateKey = keyHolder.useKeys(context) {
+        val encryptedKey = generateNestedPrivateKey("username", "domain")
+        // Save those below to nested KeyHolder.
+        checkNotNull(encryptedKey.passphraseSignature)
+        checkNotNull(encryptedKey.passphrase)
+        checkNotNull(encryptedKey.privateKey)
 
-    // Just extend KeyHolder to benefit from KeyHolder Api (KeyHolder.useKeys).
-    data class CalendarKeyHolder(
-        override val keys: List<CalendarPrivateKey>
-    ) : KeyHolder
-
-    fun from(
-        userAddress: KeyHolder,
-        encryptedCalendarPassphrase: Armored,
-        calendarKeyId: String,
-        calendarPrivateKey: Armored
-    ): CalendarKeyHolder {
-        // Get Calendar passphrase.
-        val calendarPassphrase = userAddress.useKeys(context) {
-            decryptData(encryptedCalendarPassphrase)
-        }
-
-        // Encrypt passphrase as it should be stored in PrivateKey.
-        val passphrase = calendarPassphrase.use {
-            it.encryptWith(context.keyStoreCrypto)
-        }
-
-        // Build CalendarKeyHolder: specify privateKey + passphrase.
-        return CalendarKeyHolder(
-            listOf(
-                CalendarPrivateKey(
-                    KeyId(calendarKeyId),
-                    PrivateKey(calendarPrivateKey, true, passphrase)
-                )
-            )
-        )
+        // Use this parent to decrypt the nested Private Key.
+        decryptAndVerifyNestedKey(encryptedKey)
     }
+    // Then directly use the Private Key (e.g. for single crypto function call).
+    decryptedNestedPrivateKey.privateKey.encryptText(context, "text")
 
-    val calendar = from(userAddress, "encryptedCalendarPassphrase", "calendarKeyId", "calendarPrivateKey")
+    // Or convert NestedPrivateKey to KeyHolder for full KeyHolder Api usage.
+    decryptedNestedPrivateKey.keyHolder().useKeys(context) {
+        val message = "message"
 
-    val message = "message"
+        val encryptedText = encryptText(message)
+        val signedText = signText(message)
 
-    // Use KeyHolder Api.
-    calendar.useKeys(context) {
-        verifyText(decryptText(encryptText(message)), signText(message))
+        verifyText(decryptText(encryptedText), signedText)
     }
 }
 

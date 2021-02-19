@@ -19,6 +19,9 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
@@ -32,9 +35,11 @@ import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
 import me.proton.core.crypto.common.pgp.exception.CryptoException
+import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
+import me.proton.core.key.domain.entity.key.NestedPrivateKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import java.io.ByteArrayInputStream
@@ -401,3 +406,66 @@ fun KeyHolderContext.getArmored(data: Unarmored): Armored = context.pgpCrypto.ge
  * @throws [CryptoException] if data cannot be extracted.
  */
 fun KeyHolderContext.getUnarmored(data: Armored): Unarmored = context.pgpCrypto.getUnarmored(data)
+
+/**
+ * Decrypt [nestedPrivateKey] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ *
+ * @return [NestedPrivateKey] with ready to use [PrivateKey].
+ *
+ * @throws [IllegalStateException] if there is no encrypted or signed data.
+ *
+ * @see [KeyHolderContext.encryptAndSignNestedKey]
+ */
+fun KeyHolderContext.decryptAndVerifyNestedKey(nestedPrivateKey: NestedPrivateKey): NestedPrivateKey {
+    checkNotNull(nestedPrivateKey.passphrase) { "Cannot decrypt key without encrypted passphrase." }
+    checkNotNull(nestedPrivateKey.passphraseSignature) { "Cannot verify without passphrase signature." }
+    return nestedPrivateKey.copy(
+        privateKey = nestedPrivateKey.privateKey.copy(
+            passphrase = decryptDataOrNull(nestedPrivateKey.passphrase)
+                ?.takeIf { verifyData(it, nestedPrivateKey.passphraseSignature) }
+                ?.let { plain -> plain.use { it.encryptWith(context.keyStoreCrypto) } }
+        )
+    )
+}
+
+/**
+ * Decrypt [passphrase] using [PrivateKeyRing] and verify [signature] using [PublicKeyRing].
+ *
+ * @return [NestedPrivateKey] with ready to use [PrivateKey].
+ *
+ * @throws [IllegalStateException] if there is no encrypted or signed data.
+ *
+ * @see [KeyHolderContext.encryptAndSignNestedKey]
+ */
+fun KeyHolderContext.decryptAndVerifyNestedKey(
+    key: Armored,
+    passphrase: EncryptedMessage,
+    signature: Signature
+): NestedPrivateKey =
+    decryptAndVerifyNestedKey(NestedPrivateKey.from(key = key, passphrase = passphrase, signature = signature))
+
+/**
+ * Encrypt [PrivateKey.passphrase] using [PublicKeyRing] and sign using [PrivateKeyRing].
+ *
+ * @throws [CryptoException] if [nestedPrivateKey] cannot be encrypted or signed.
+ *
+ * @see [KeyHolderContext.decryptAndVerifyData].
+ */
+fun KeyHolderContext.encryptAndSignNestedKey(nestedPrivateKey: NestedPrivateKey): NestedPrivateKey {
+    checkNotNull(nestedPrivateKey.privateKey.passphrase) { "Cannot encrypt without passphrase." }
+    return nestedPrivateKey.privateKey.passphrase.decryptWith(context.keyStoreCrypto).use { passphrase ->
+        nestedPrivateKey.copy(
+            privateKey = nestedPrivateKey.privateKey.copy(passphrase = null),
+            passphrase = encryptData(passphrase.array),
+            passphraseSignature = signData(passphrase.array)
+        )
+    }
+}
+
+/**
+ * Generate and encrypt a new [NestedPrivateKey] from [KeyHolder] keys.
+ *
+ * Note: Only this [KeyHolder] will be able to decrypt.
+ */
+fun KeyHolderContext.generateNestedPrivateKey(username: String, domain: String): NestedPrivateKey =
+    encryptAndSignNestedKey(NestedPrivateKey.generateNestedPrivateKey(context, username, domain))

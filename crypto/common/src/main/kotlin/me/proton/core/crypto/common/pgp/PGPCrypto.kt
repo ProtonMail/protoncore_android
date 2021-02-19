@@ -298,8 +298,10 @@ interface PGPCrypto {
 
     /**
      * Generate new random Token.
+     *
+     * Default token size is 32 bytes.
      */
-    fun generateNewToken(size: Long): ByteArray
+    fun generateNewToken(size: Long = 32): ByteArray
 
     /**
      * Generate new private key.

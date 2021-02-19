@@ -16,10 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.core.user.domain
 
-data class KeyId(val id: String) {
-    companion object {
-        val unused = KeyId("Unused keyId")
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.key.domain.entity.key.NestedPrivateKey
+import me.proton.core.key.domain.generateNestedPrivateKey
+import me.proton.core.key.domain.useKeys
+import me.proton.core.user.domain.entity.UserAddress
+
+/**
+ * Generate and encrypt a new [NestedPrivateKey] from [UserAddress] keys.
+ *
+ * Note: Only this [UserAddress] will be able to decrypt.
+ */
+fun UserAddress.generateNestedPrivateKey(cryptoContext: CryptoContext): NestedPrivateKey = useKeys(cryptoContext) {
+    email.split("@").let { parts ->
+        val username = parts[0]
+        val domain = parts[1]
+        generateNestedPrivateKey(username, domain)
     }
 }
