@@ -35,6 +35,7 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
+import me.proton.core.user.domain.entity.emailSplit
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
 
@@ -103,13 +104,11 @@ class UserAddressKeySecretProvider(
     ): UserAddressKey {
         val secret = generateUserAddressKeySecret(userPrivateKey, generateOldFormat)
         secret.passphrase.decryptWith(keyStoreCrypto).use { decryptedPassphrase ->
-            val email = userAddress.email.split("@")
-            val username = email[0]
-            val domain = email[1]
+            val email = userAddress.emailSplit
             val privateKey = PrivateKey(
                 key = cryptoContext.pgpCrypto.generateNewPrivateKey(
-                    username = username,
-                    domain = domain,
+                    username = email.username,
+                    domain = email.domain,
                     passphrase = decryptedPassphrase.array,
                     keyType = PGPCrypto.KeyType.RSA,
                     keySecurity = PGPCrypto.KeySecurity.HIGH
