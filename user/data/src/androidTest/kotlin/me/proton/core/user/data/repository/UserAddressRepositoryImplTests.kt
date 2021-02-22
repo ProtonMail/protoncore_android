@@ -21,6 +21,7 @@ package me.proton.core.user.data.repository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
@@ -31,11 +32,11 @@ import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.AddressesResponse
@@ -89,6 +90,7 @@ class UserAddressRepositoryImplTests {
     private lateinit var db: AccountManagerDatabase
     private lateinit var userRepository: UserRepositoryImpl
     private lateinit var userAddressRepository: UserAddressRepositoryImpl
+    private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
 
     @Before
     fun setup() {
@@ -102,15 +104,18 @@ class UserAddressRepositoryImplTests {
         apiProvider = ApiProvider(apiFactory, sessionProvider)
 
         userRepository = UserRepositoryImpl(db, apiProvider)
+
+        userAddressKeySecretProvider = UserAddressKeySecretProvider(
+            userRepository,
+            userRepository,
+            cryptoContext
+        )
+
         userAddressRepository = UserAddressRepositoryImpl(
             db,
             apiProvider,
             userRepository,
-            UserAddressKeySecretProvider(
-                userRepository,
-                userRepository,
-                cryptoContext
-            )
+            userAddressKeySecretProvider
         )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
@@ -143,9 +148,10 @@ class UserAddressRepositoryImplTests {
         }
 
         // WHEN
-        val addresses = userAddressRepository.getAddressesFlow(TestUsers.User1.id)
+        val addresses = userAddressRepository.getAddressesFlow(TestUsers.User1.id, refresh = true)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
+            .filter { it?.isNotEmpty() ?: false }
             .filterNotNull()
             .firstOrNull()
 
@@ -165,7 +171,8 @@ class UserAddressRepositoryImplTests {
         }
 
         // WHEN
-        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id)
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id, refresh = true)
 
         // THEN
         assertNotNull(addresses)
@@ -183,7 +190,8 @@ class UserAddressRepositoryImplTests {
         }
 
         // WHEN
-        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id)
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id, refresh = true)
 
         // THEN
         addresses.primary()!!.useKeys(cryptoContext) {
@@ -211,7 +219,8 @@ class UserAddressRepositoryImplTests {
         userRepository.setPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
 
         // WHEN
-        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id)
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id, refresh = true)
 
         // THEN
         addresses.primary()!!.useKeys(cryptoContext) {
@@ -259,7 +268,8 @@ class UserAddressRepositoryImplTests {
         userRepository.setPassphrase(TestUsers.User2.id, TestUsers.User2.Key1.passphrase)
 
         // WHEN
-        val addresses = userAddressRepository.getAddresses(TestUsers.User2.id)
+        val user = userRepository.getUser(TestUsers.User2.id, refresh = true)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User2.id, refresh = true)
 
         // THEN
         addresses.primary()!!.useKeys(cryptoContext) {
@@ -286,7 +296,8 @@ class UserAddressRepositoryImplTests {
         }
 
         // WHEN
-        val addresses = userAddressRepository.getAddresses(TestUsers.User2.id)
+        val user = userRepository.getUser(TestUsers.User2.id, refresh = true)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User2.id, refresh = true)
 
         // THEN
         addresses.primary()!!.useKeys(cryptoContext) {

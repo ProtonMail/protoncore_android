@@ -21,6 +21,7 @@ package me.proton.core.user.data
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
@@ -42,10 +43,12 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.AddressesResponse
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.data.repository.KeySaltRepositoryImpl
+import me.proton.core.key.data.repository.PrivateKeyRepositoryImpl
 import me.proton.core.key.domain.decryptText
 import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.extension.areAllLocked
+import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.useKeys
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.di.ApiFactory
@@ -56,7 +59,6 @@ import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.repository.UserAddressRepositoryImpl
 import me.proton.core.user.data.repository.UserRepositoryImpl
-import me.proton.core.user.domain.UnlockResult
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.PassphraseRepository
@@ -94,6 +96,8 @@ class UserManagerImplTests {
     private lateinit var userAddressRepository: UserAddressRepositoryImpl
     private lateinit var passphraseRepository: PassphraseRepository
     private lateinit var keySaltRepository: KeySaltRepositoryImpl
+    private lateinit var privateKeyRepository: PrivateKeyRepository
+    private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
 
     private lateinit var userManager: UserManagerImpl
 
@@ -109,21 +113,24 @@ class UserManagerImplTests {
         apiProvider = ApiProvider(apiFactory, sessionProvider)
 
         keySaltRepository = KeySaltRepositoryImpl(db, apiProvider)
+        privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider)
 
         // UserRepositoryImpl implements PassphraseRepository.
         userRepository = UserRepositoryImpl(db, apiProvider)
         passphraseRepository = userRepository
+
+        userAddressKeySecretProvider = UserAddressKeySecretProvider(
+            userRepository,
+            userRepository,
+            cryptoContext
+        )
 
         // UserManagerImpl need UserAddressRepository.
         userAddressRepository = UserAddressRepositoryImpl(
             db,
             apiProvider,
             userRepository,
-            UserAddressKeySecretProvider(
-                userRepository,
-                userRepository,
-                cryptoContext
-            )
+            userAddressKeySecretProvider
         )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
@@ -145,6 +152,8 @@ class UserManagerImplTests {
             userAddressRepository,
             passphraseRepository,
             keySaltRepository,
+            privateKeyRepository,
+            userAddressKeySecretProvider,
             cryptoContext
         )
     }
@@ -212,7 +221,7 @@ class UserManagerImplTests {
     }
 
     @Test
-    fun getUser_useKey_locked() = runBlockingWithTimeout {
+    fun getUser_useKeys_locked() = runBlockingWithTimeout {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -241,7 +250,7 @@ class UserManagerImplTests {
     }
 
     @Test
-    fun getAddresses_useKey_locked() = runBlockingWithTimeout {
+    fun getAddresses_useKeys_locked() = runBlockingWithTimeout {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -251,9 +260,11 @@ class UserManagerImplTests {
         }
 
         // WHEN
-        val addresses = userManager.getAddressesFlow(TestUsers.User1.id)
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userManager.getAddressesFlow(TestUsers.User1.id, refresh = true)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
+            .filter { it?.isNotEmpty() ?: false }
             .filterNotNull()
             .firstOrNull()
 
@@ -274,7 +285,7 @@ class UserManagerImplTests {
     }
 
     @Test
-    fun getAddresses_useKey_unlocked() = runBlockingWithTimeout {
+    fun getAddresses_useKeys_unlocked() = runBlockingWithTimeout {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -287,9 +298,11 @@ class UserManagerImplTests {
         userManager.unlockWithPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
 
         // WHEN
-        val addresses = userManager.getAddressesFlow(TestUsers.User1.id)
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userManager.getAddressesFlow(TestUsers.User1.id, refresh = true)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
+            .filter { it?.isNotEmpty() ?: false }
             .filterNotNull()
             .firstOrNull()
 
@@ -309,7 +322,7 @@ class UserManagerImplTests {
     }
 
     @Test
-    fun getAddresses_useKey_unlocked_token_signature() = runBlockingWithTimeout {
+    fun getAddresses_useKeys_unlocked_token_signature() = runBlockingWithTimeout {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User2.response)
@@ -321,9 +334,11 @@ class UserManagerImplTests {
         userManager.unlockWithPassphrase(TestUsers.User2.id, TestUsers.User2.Key1.passphrase)
 
         // WHEN
-        val addresses = userManager.getAddressesFlow(TestUsers.User2.id)
+        val user = userRepository.getUser(TestUsers.User2.id, refresh = true)
+        val addresses = userManager.getAddressesFlow(TestUsers.User2.id, refresh = true)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
+            .filter { it?.isNotEmpty() ?: false }
             .filterNotNull()
             .firstOrNull()
 

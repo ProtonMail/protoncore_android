@@ -19,6 +19,7 @@
 package me.proton.core.user.data
 
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.network.domain.session.Session
@@ -32,7 +33,8 @@ object TestAccounts {
             email = TestUsers.User1.response.email,
             state = AccountState.Ready,
             sessionId = sessionId,
-            sessionState = SessionState.Authenticated
+            sessionState = SessionState.Authenticated,
+            details = AccountDetails(null, null)
         )
     }
 
@@ -43,7 +45,8 @@ object TestAccounts {
             email = TestUsers.User2.response.email,
             state = AccountState.Ready,
             sessionId = sessionId,
-            sessionState = SessionState.Authenticated
+            sessionState = SessionState.Authenticated,
+            details = AccountDetails(null, null)
         )
     }
 
