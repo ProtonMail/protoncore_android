@@ -19,7 +19,7 @@
 package me.proton.core.crypto.android.context
 
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
-import me.proton.core.crypto.android.simple.AndroidKeyStoreCrypto
+import me.proton.core.crypto.android.keystore.AndroidKeyStoreCrypto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto

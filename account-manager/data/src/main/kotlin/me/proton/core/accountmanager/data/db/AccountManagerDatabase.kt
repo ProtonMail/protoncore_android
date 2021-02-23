@@ -33,7 +33,7 @@ import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_1_2
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_2_3
-import me.proton.core.crypto.android.simple.CryptoConverters
+import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
