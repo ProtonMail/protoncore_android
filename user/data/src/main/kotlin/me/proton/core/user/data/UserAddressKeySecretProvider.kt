@@ -19,23 +19,23 @@
 package me.proton.core.user.data
 
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.decryptDataOrNull
+import me.proton.core.key.domain.decryptAndVerifyNestedKey
 import me.proton.core.key.domain.encryptData
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
-import me.proton.core.key.domain.verifyData
 import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
+import me.proton.core.user.domain.entity.emailSplit
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
 
@@ -56,9 +56,12 @@ class UserAddressKeySecretProvider(
         } else {
             // New address key format -> user keys encrypt token + signature -> address passphrase.
             userRepository.getUser(userId).useKeys(cryptoContext) {
-                decryptDataOrNull(key.token)
-                    ?.takeIf { verifyData(it, key.signature) }
-                    ?.let { passphrase -> passphrase.use { it.encryptWith(keyStoreCrypto) } }
+                val decryptedKey = decryptAndVerifyNestedKey(
+                    key = key.privateKey,
+                    passphrase = key.token,
+                    signature = key.signature
+                )
+                decryptedKey.privateKey.passphrase
             }
         }
     }
@@ -82,7 +85,7 @@ class UserAddressKeySecretProvider(
             )
         } else {
             // New address key format -> user keys encrypt token + signature -> address passphrase.
-            cryptoContext.pgpCrypto.generateNewToken(size = 32).use { passphrase ->
+            cryptoContext.pgpCrypto.generateNewToken().use { passphrase ->
                 UserAddressKeySecret(
                     passphrase = passphrase.encryptWith(keyStoreCrypto),
                     token = userPrivateKey.encryptData(cryptoContext, passphrase.array),
@@ -101,13 +104,11 @@ class UserAddressKeySecretProvider(
     ): UserAddressKey {
         val secret = generateUserAddressKeySecret(userPrivateKey, generateOldFormat)
         secret.passphrase.decryptWith(keyStoreCrypto).use { decryptedPassphrase ->
-            val email = userAddress.email.split("@")
-            val username = email[0]
-            val domain = email[1]
+            val email = userAddress.emailSplit
             val privateKey = PrivateKey(
                 key = cryptoContext.pgpCrypto.generateNewPrivateKey(
-                    username = username,
-                    domain = domain,
+                    username = email.username,
+                    domain = email.domain,
                     passphrase = decryptedPassphrase.array,
                     keyType = PGPCrypto.KeyType.RSA,
                     keySecurity = PGPCrypto.KeySecurity.HIGH

@@ -16,29 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.crypto.common.pgp
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import java.io.InputStream
 
-libVersion = Version(1, 0, 1)
-
-dependencies {
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.cryptoCommon),
-        project(Module.domain),
-
-        // Feature
-        project(Module.keyDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`
-    )
-
-    testImplementation(project(Module.kotlinTest))
-}
+/**
+ * Plain file, ready to be encrypted using [PGPCrypto.encryptFile].
+ */
+data class PlainFile(
+    val fileName: String,
+    val inputStream: InputStream
+)

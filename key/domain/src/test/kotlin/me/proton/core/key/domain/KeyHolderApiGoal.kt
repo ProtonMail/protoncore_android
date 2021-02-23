@@ -19,18 +19,16 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.encryptWith
-import me.proton.core.crypto.common.keystore.use
-import me.proton.core.key.domain.entity.key.KeyId
+import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
-import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
+import me.proton.core.key.domain.extension.keyHolder
+import java.io.ByteArrayInputStream
 
 internal fun keyHolderApi(
     context: CryptoContext,
@@ -53,6 +51,10 @@ internal fun keyHolderApi(
 
         val encryptedSignedData = encryptAndSignData(data)
         decryptAndVerifyData(encryptedSignedData)
+
+        val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
+        val encryptedFile = encryptFile(file)
+        decryptFile(encryptedFile)
     }
 }
 
@@ -80,54 +82,53 @@ internal fun keyHolderApiOrNull(
     }
 }
 
-internal fun extendedKeyHolderApi(
+internal fun publicAddressApi(
     context: CryptoContext,
-    userAddress: KeyHolder
+    keyHolder: KeyHolder,
+    publicAddresses: List<PublicAddress>
 ) {
-    data class CalendarPrivateKey(
-        override val keyId: KeyId,
-        override val privateKey: PrivateKey
-    ) : KeyHolderPrivateKey
+    keyHolder.useKeys(context) {
+        val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
+        val encryptedFile = encryptFile(file)
+        val signedFile = signFile(file)
 
-    // Just extend KeyHolder to benefit from KeyHolder Api (KeyHolder.useKeys).
-    data class CalendarKeyHolder(
-        override val keys: List<CalendarPrivateKey>
-    ) : KeyHolder
-
-    fun from(
-        userAddress: KeyHolder,
-        encryptedCalendarPassphrase: Armored,
-        calendarKeyId: String,
-        calendarPrivateKey: Armored
-    ): CalendarKeyHolder {
-        // Get Calendar passphrase.
-        val calendarPassphrase = userAddress.useKeys(context) {
-            decryptData(encryptedCalendarPassphrase)
+        val fileSessionKey = decryptSessionKey(encryptedFile.keyPacket)
+        publicAddresses.map { publicAddress ->
+            publicAddress.encryptSessionKey(context, fileSessionKey)
         }
 
-        // Encrypt passphrase as it should be stored in PrivateKey.
-        val passphrase = calendarPassphrase.use {
-            it.encryptWith(context.keyStoreCrypto)
+        decryptFileOrNull(encryptedFile)?.let {
+            verifyFile(it, signedFile)
         }
-
-        // Build CalendarKeyHolder: specify privateKey + passphrase.
-        return CalendarKeyHolder(
-            listOf(
-                CalendarPrivateKey(
-                    KeyId(calendarKeyId),
-                    PrivateKey(calendarPrivateKey, true, passphrase)
-                )
-            )
-        )
     }
+}
 
-    val calendar = from(userAddress, "encryptedCalendarPassphrase", "calendarKeyId", "calendarPrivateKey")
+internal fun nestedKeyCreation(
+    context: CryptoContext,
+    keyHolder: KeyHolder
+) {
+    // Generate a new Nested Private Key from keyHolder keys.
+    val decryptedNestedPrivateKey = keyHolder.useKeys(context) {
+        val encryptedKey = generateNestedPrivateKey("username", "domain")
+        // Save those below to nested KeyHolder.
+        checkNotNull(encryptedKey.passphraseSignature)
+        checkNotNull(encryptedKey.passphrase)
+        checkNotNull(encryptedKey.privateKey)
 
-    val message = "message"
+        // Use this parent to decrypt the nested Private Key.
+        decryptAndVerifyNestedKey(encryptedKey)
+    }
+    // Then directly use the Private Key (e.g. for single crypto function call).
+    decryptedNestedPrivateKey.privateKey.encryptText(context, "text")
 
-    // Use KeyHolder Api.
-    calendar.useKeys(context) {
-        verifyText(decryptText(encryptText(message)), signText(message))
+    // Or convert NestedPrivateKey to KeyHolder for full KeyHolder Api usage.
+    decryptedNestedPrivateKey.keyHolder().useKeys(context) {
+        val message = "message"
+
+        val encryptedText = encryptText(message)
+        val signedText = signText(message)
+
+        verifyText(decryptText(encryptedText), signedText)
     }
 }
 
@@ -137,11 +138,15 @@ internal fun optionalOnPublicApi(
     publicKeyRing: PublicKeyRing,
     publicAddress: PublicAddress
 ) {
+    val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
+
     // PublicKey/PublicKeyRing/PublicAddress can encrypt and verify.
     publicKey.encryptText(context, "message")
+    publicKey.encryptFile(context, file)
     publicKey.verifyText(context, "decryptedMessage", "signature")
 
     publicKeyRing.encryptText(context, "message")
+    publicKeyRing.encryptFile(context, file)
     publicKeyRing.verifyText(context, "decryptedMessage", "signature")
 
     publicAddress.encryptText(context, "message")
@@ -157,6 +162,10 @@ internal fun optionalOnPrivateApi(
     privateKey.encryptText(context, "message")
     privateKey.signText(context, "message")
 
+    // File.
+    val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
+    val encryptedFile = privateKey.encryptFile(context, file)
+
     // PrivateKey can be unlocked (using embedded encrypted passphrase).
     val unlockedPrivateKey = privateKey.unlock(context)
 
@@ -166,6 +175,7 @@ internal fun optionalOnPrivateApi(
             // Decrypt Text or Data -> throwing exceptions.
             decryptText(context, "encryptedMessage")
             decryptData(context, "encryptedMessage")
+            decryptFile(context, encryptedFile)
 
             // Decrypt Text or Data -> using orNull extensions.
             decryptTextOrNull(context, "encryptedMessage")
@@ -184,6 +194,7 @@ internal fun optionalOnPrivateApi(
     privateKeyRing.use { key ->
         with(key) {
             decryptText("encryptedMessage")
+            decryptFile(encryptedFile)
             signText("message")
         }
     }

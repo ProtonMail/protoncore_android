@@ -16,22 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.crypto.android.simple
+package me.proton.core.crypto.android.pgp
 
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import com.proton.gopenpgp.crypto.AttachmentProcessor
+import com.proton.gopenpgp.crypto.PGPSplitMessage
+import java.io.InputStream
 
-/**
- * Crypto [TypeConverter] for [RoomDatabase].
- */
-class CryptoConverters {
-
-    @TypeConverter
-    fun fromEncryptedByteArrayToByteArray(value: EncryptedByteArray?): ByteArray? =
-        value?.array
-
-    @TypeConverter
-    fun fromByteArrayToEncryptedByteArray(value: ByteArray?): EncryptedByteArray? =
-        value?.let { EncryptedByteArray(it) }
-}
+fun AttachmentProcessor.use(inputStream: InputStream): PGPSplitMessage =
+    inputStream.buffered().use { input ->
+        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+        var bytes = input.read(buffer)
+        while (bytes >= 0) {
+            process(buffer.takeIf { bytes >= DEFAULT_BUFFER_SIZE } ?: buffer.copyOf(bytes))
+            bytes = inputStream.read(buffer)
+        }
+        finish()
+    }

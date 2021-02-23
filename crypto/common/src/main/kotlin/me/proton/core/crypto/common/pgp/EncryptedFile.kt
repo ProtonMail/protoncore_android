@@ -16,29 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.crypto.common.pgp
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+/**
+ * Symmetrically encrypted [dataPacket] with [keyPacket].
+ */
+data class EncryptedFile(
+    val keyPacket: KeyPacket,
+    val dataPacket: DataPacket
+) {
+    override fun equals(other: Any?): Boolean =
+        this === other || other is EncryptedFile &&
+            keyPacket.contentEquals(other.keyPacket) &&
+            dataPacket.contentEquals(other.dataPacket)
 
-libVersion = Version(1, 0, 1)
-
-dependencies {
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.cryptoCommon),
-        project(Module.domain),
-
-        // Feature
-        project(Module.keyDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+    override fun hashCode(): Int = 31 * keyPacket.contentHashCode() + dataPacket.contentHashCode()
 }

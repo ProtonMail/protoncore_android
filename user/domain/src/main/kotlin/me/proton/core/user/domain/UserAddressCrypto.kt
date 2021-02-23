@@ -16,29 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.user.domain
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.key.domain.entity.key.NestedPrivateKey
+import me.proton.core.key.domain.generateNestedPrivateKey
+import me.proton.core.key.domain.useKeys
+import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.entity.emailSplit
 
-libVersion = Version(1, 0, 1)
-
-dependencies {
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.cryptoCommon),
-        project(Module.domain),
-
-        // Feature
-        project(Module.keyDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+/**
+ * Generate and encrypt a new [NestedPrivateKey] from [UserAddress] keys.
+ *
+ * Note: Only this [UserAddress] will be able to decrypt.
+ */
+fun UserAddress.generateNestedPrivateKey(cryptoContext: CryptoContext): NestedPrivateKey = useKeys(cryptoContext) {
+    emailSplit.let { generateNestedPrivateKey(it.username, it.domain) }
 }

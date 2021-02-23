@@ -21,23 +21,34 @@ package me.proton.core.crypto.android.pgp
 import at.favre.lib.crypto.bcrypt.BCrypt
 import at.favre.lib.crypto.bcrypt.Radix64Encoder
 import com.google.crypto.tink.subtle.Base64
+import com.proton.gopenpgp.constants.Constants
 import com.proton.gopenpgp.crypto.Crypto
 import com.proton.gopenpgp.crypto.Key
 import com.proton.gopenpgp.crypto.KeyRing
+import com.proton.gopenpgp.crypto.PGPMessage
 import com.proton.gopenpgp.crypto.PGPSignature
+import com.proton.gopenpgp.crypto.PGPSplitMessage
 import com.proton.gopenpgp.crypto.PlainMessage
+import com.proton.gopenpgp.crypto.SessionKey
 import com.proton.gopenpgp.helper.ExplicitVerifyMessage
 import com.proton.gopenpgp.helper.Helper
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DecryptedData
+import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.DecryptedText
+import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
+import me.proton.core.crypto.common.pgp.EncryptedPacket
 import me.proton.core.crypto.common.pgp.PGPCrypto
+import me.proton.core.crypto.common.pgp.PacketType
+import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
+import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.pgp.helper.PrimeGenerator
+import java.io.ByteArrayInputStream
 import java.io.Closeable
 import java.math.BigInteger
 import java.security.SecureRandom
@@ -47,6 +58,8 @@ import java.security.SecureRandom
  */
 @Suppress("TooManyFunctions")
 class GOpenPGPCrypto : PGPCrypto {
+
+    // region Private
 
     private class CloseableUnlockedKey(val value: Key) : Closeable {
         override fun close() {
@@ -84,6 +97,111 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun newKeyRing(keys: List<Armored>) =
         Crypto.newKeyRing(null).apply { keys.map { Crypto.newKeyFromArmored(it) }.forEach { addKey(it) } }
 
+    private fun encrypt(
+        plainMessage: PlainMessage,
+        publicKey: Armored
+    ): EncryptedMessage {
+        val publicKeyRing = newKeyRing(publicKey)
+        return publicKeyRing.encrypt(plainMessage, null).armored
+    }
+
+    private fun encryptAndSign(
+        plainMessage: PlainMessage,
+        publicKey: Armored,
+        unlockedKey: Unarmored
+    ): EncryptedMessage {
+        val publicKeyRing = newKeyRing(publicKey)
+        return newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                publicKeyRing.encrypt(plainMessage, keyRing.value).armored
+            }
+        }
+    }
+
+    private inline fun <T> decrypt(
+        message: EncryptedMessage,
+        unlockedKey: Unarmored,
+        block: (PlainMessage) -> T
+    ): T {
+        val pgpMessage = Crypto.newPGPMessageFromArmored(message)
+        return decrypt(pgpMessage, unlockedKey, block)
+    }
+
+    private inline fun <T> decrypt(
+        file: EncryptedFile,
+        unlockedKey: Unarmored,
+        block: (PlainMessage) -> T
+    ): T {
+        val pgpSplitMessage = Crypto.newPGPSplitMessage(file.keyPacket, file.dataPacket)
+        return decrypt(pgpSplitMessage, unlockedKey, block)
+    }
+
+    private inline fun <T> decrypt(
+        pgpMessage: PGPMessage,
+        unlockedKey: Unarmored,
+        block: (PlainMessage) -> T
+    ): T {
+        return newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                block(keyRing.value.decrypt(pgpMessage, null, 0))
+            }
+        }
+    }
+
+    private inline fun <T> decrypt(
+        pgpSplitMessage: PGPSplitMessage,
+        unlockedKey: Unarmored,
+        block: (PlainMessage) -> T
+    ): T {
+        return newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                block(keyRing.value.decryptAttachment(pgpSplitMessage))
+            }
+        }
+    }
+
+    private inline fun <T> decryptAndVerify(
+        msg: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>,
+        validAtUtc: Long,
+        crossinline block: (ExplicitVerifyMessage) -> T
+    ): T {
+        val pgpMessage = Crypto.newPGPMessageFromArmored(msg)
+        val publicKeyRing = newKeyRing(publicKeys)
+        return newKeys(unlockedKeys).use { keys ->
+            newKeyRing(keys).use { keyRing ->
+                block(Helper.decryptExplicitVerify(pgpMessage, keyRing.value, publicKeyRing, validAtUtc))
+            }
+        }
+    }
+
+    private fun sign(
+        plainMessage: PlainMessage,
+        unlockedKey: Unarmored
+    ): Signature {
+        return newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                keyRing.value.signDetached(plainMessage).armored
+            }
+        }
+    }
+
+    private fun verify(
+        plainMessage: PlainMessage,
+        signature: Armored,
+        publicKey: Armored,
+        validAtUtc: Long
+    ): Boolean = runCatching {
+        val pgpSignature = PGPSignature(signature)
+        val publicKeyRing = newKeyRing(publicKey)
+        publicKeyRing.verifyDetached(plainMessage, pgpSignature, validAtUtc)
+    }.isSuccess
+
+    // endregion
+
+    // region Lock/Unlock
+
     override fun lock(
         unlockedKey: Unarmored,
         passphrase: ByteArray
@@ -102,65 +220,9 @@ class GOpenPGPCrypto : PGPCrypto {
         return GOpenPGPUnlockedKey(unlockedKey)
     }.getOrElse { throw CryptoException("PrivateKey cannot be unlocked using passphrase.", it) }
 
-    private inline fun <T> decrypt(
-        message: EncryptedMessage,
-        unlockedKey: Unarmored,
-        block: (PlainMessage) -> T
-    ): T {
-        val pgpMessage = Crypto.newPGPMessageFromArmored(message)
-        return newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                block(keyRing.value.decrypt(pgpMessage, null, 0))
-            }
-        }
-    }
+    // endregion
 
-    override fun decryptText(
-        message: EncryptedMessage,
-        unlockedKey: Unarmored
-    ): String = runCatching {
-        decrypt(message, unlockedKey) { it.string }
-    }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
-
-    override fun decryptData(
-        message: EncryptedMessage,
-        unlockedKey: Unarmored
-    ): ByteArray = runCatching {
-        decrypt(message, unlockedKey) { it.binary }
-    }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
-
-    private fun sign(
-        plainMessage: PlainMessage,
-        unlockedKey: Unarmored
-    ): Signature {
-        return newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                keyRing.value.signDetached(plainMessage).armored
-            }
-        }
-    }
-
-    override fun signText(
-        plainText: String,
-        unlockedKey: Unarmored
-    ): Signature = runCatching {
-        sign(PlainMessage(plainText), unlockedKey)
-    }.getOrElse { throw CryptoException("PlainText cannot be signed.", it) }
-
-    override fun signData(
-        data: ByteArray,
-        unlockedKey: Unarmored
-    ): Signature = runCatching {
-        sign(PlainMessage(data), unlockedKey)
-    }.getOrElse { throw CryptoException("Data cannot be signed.", it) }
-
-    private fun encrypt(
-        plainMessage: PlainMessage,
-        publicKey: Armored
-    ): EncryptedMessage {
-        val publicKeyRing = newKeyRing(publicKey)
-        return publicKeyRing.encrypt(plainMessage, null).armored
-    }
+    // region Encrypt
 
     override fun encryptText(
         plainText: String,
@@ -176,43 +238,14 @@ class GOpenPGPCrypto : PGPCrypto {
         encrypt(PlainMessage(data), publicKey)
     }.getOrElse { throw CryptoException("Data cannot be encrypted.", it) }
 
-    private fun verify(
-        plainMessage: PlainMessage,
-        signature: Armored,
-        publicKey: Armored,
-        validAtUtc: Long
-    ): Boolean = runCatching {
-        val pgpSignature = PGPSignature(signature)
-        val publicKeyRing = newKeyRing(publicKey)
-        publicKeyRing.verifyDetached(plainMessage, pgpSignature, validAtUtc)
-    }.isSuccess
-
-    override fun verifyText(
-        plainText: String,
-        signature: Armored,
-        publicKey: Armored,
-        validAtUtc: Long
-    ): Boolean = verify(PlainMessage(plainText), signature, publicKey, validAtUtc)
-
-    override fun verifyData(
-        data: ByteArray,
-        signature: Armored,
-        publicKey: Armored,
-        validAtUtc: Long
-    ): Boolean = verify(PlainMessage(data), signature, publicKey, validAtUtc)
-
-    private fun encryptAndSign(
-        plainMessage: PlainMessage,
-        publicKey: Armored,
-        unlockedKey: Unarmored
-    ): EncryptedMessage {
-        val publicKeyRing = newKeyRing(publicKey)
-        return newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                publicKeyRing.encrypt(plainMessage, keyRing.value).armored
-            }
-        }
-    }
+    override fun encryptFile(
+        file: PlainFile,
+        publicKey: Armored
+    ): EncryptedFile = runCatching {
+        newKeyRing(publicKey)
+            .newLowMemoryAttachmentProcessor(file.inputStream.available().toLong(), file.fileName)
+            .use(file.inputStream).let { EncryptedFile(it.keyPacket, it.dataPacket) }
+    }.getOrElse { throw CryptoException("File cannot be encrypted.", it) }
 
     override fun encryptAndSignText(
         plainText: String,
@@ -230,21 +263,50 @@ class GOpenPGPCrypto : PGPCrypto {
         encryptAndSign(PlainMessage(data), publicKey, unlockedKey)
     }.getOrElse { throw CryptoException("Data cannot be encrypted or signed.", it) }
 
-    private inline fun <T> decryptAndVerify(
-        msg: EncryptedMessage,
-        publicKeys: List<Armored>,
-        unlockedKeys: List<Unarmored>,
-        validAtUtc: Long,
-        crossinline block: (ExplicitVerifyMessage) -> T
-    ): T {
-        val pgpMessage = Crypto.newPGPMessageFromArmored(msg)
-        val publicKeyRing = newKeyRing(publicKeys)
-        return newKeys(unlockedKeys).use { keys ->
-            newKeyRing(keys).use { keyRing ->
-                block(Helper.decryptExplicitVerify(pgpMessage, keyRing.value, publicKeyRing, validAtUtc))
-            }
+    override fun encryptSessionKey(
+        keyPacket: ByteArray,
+        publicKey: Armored
+    ): ByteArray = runCatching {
+        val publicKeyRing = newKeyRing(publicKey)
+        val sessionKey = SessionKey(keyPacket, Constants.AES256)
+        return publicKeyRing.encryptSessionKey(sessionKey)
+    }.getOrElse { throw CryptoException("KeyPacket cannot be encrypted.", it) }
+
+    override fun encryptSessionKey(
+        keyPacket: ByteArray,
+        password: ByteArray
+    ): ByteArray = runCatching {
+        val sessionKey = SessionKey(keyPacket, Constants.AES256)
+        return Crypto.encryptSessionKeyWithPassword(sessionKey, password)
+    }.getOrElse { throw CryptoException("KeyPacket cannot be encrypted with password.", it) }
+
+    // endregion
+
+    // region Decrypt
+
+    override fun decryptText(
+        message: EncryptedMessage,
+        unlockedKey: Unarmored
+    ): String = runCatching {
+        decrypt(message, unlockedKey) { it.string }
+    }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
+
+    override fun decryptData(
+        message: EncryptedMessage,
+        unlockedKey: Unarmored
+    ): ByteArray = runCatching {
+        decrypt(message, unlockedKey) { it.binary }
+    }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
+
+    override fun decryptFile(
+        file: EncryptedFile,
+        unlockedKey: Unarmored
+    ): DecryptedFile = runCatching {
+        decrypt(file, unlockedKey) {
+            val inputStream = ByteArrayInputStream(it.binary)
+            DecryptedFile(it.filename, inputStream, VerificationStatus.NotSigned)
         }
-    }
+    }.getOrElse { throw CryptoException("File cannot be decrypted.", it) }
 
     override fun decryptAndVerifyText(
         message: EncryptedMessage,
@@ -273,6 +335,96 @@ class GOpenPGPCrypto : PGPCrypto {
             )
         }
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
+
+    override fun decryptSessionKey(
+        keyPacket: ByteArray,
+        unlockedKey: Unarmored
+    ): ByteArray = runCatching {
+        newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                keyRing.value.decryptSessionKey(keyPacket).key
+            }
+        }
+    }.getOrElse { throw CryptoException("KeyPacket cannot be decrypted.", it) }
+
+    // endregion
+
+    // region Sign
+
+    override fun signText(
+        plainText: String,
+        unlockedKey: Unarmored
+    ): Signature = runCatching {
+        sign(PlainMessage(plainText), unlockedKey)
+    }.getOrElse { throw CryptoException("PlainText cannot be signed.", it) }
+
+    override fun signData(
+        data: ByteArray,
+        unlockedKey: Unarmored
+    ): Signature = runCatching {
+        sign(PlainMessage(data), unlockedKey)
+    }.getOrElse { throw CryptoException("Data cannot be signed.", it) }
+
+    override fun signFile(
+        file: PlainFile,
+        unlockedKey: Unarmored
+    ): Signature = runCatching {
+        sign(PlainMessage(file.inputStream.buffered().use { it.readBytes() }), unlockedKey)
+    }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
+
+    // endregion
+
+    // region Verify
+
+    override fun verifyText(
+        plainText: String,
+        signature: Armored,
+        publicKey: Armored,
+        validAtUtc: Long
+    ): Boolean = verify(PlainMessage(plainText), signature, publicKey, validAtUtc)
+
+    override fun verifyData(
+        data: ByteArray,
+        signature: Armored,
+        publicKey: Armored,
+        validAtUtc: Long
+    ): Boolean = verify(PlainMessage(data), signature, publicKey, validAtUtc)
+
+    override fun verifyFile(
+        file: DecryptedFile,
+        signature: Armored,
+        publicKey: Armored,
+        validAtUtc: Long
+    ): Boolean {
+        val plainMessage = PlainMessage(file.inputStream.buffered().use { it.readBytes() })
+        return verify(plainMessage, signature, publicKey, validAtUtc)
+    }
+
+    // endregion
+
+    // region Get
+
+    override fun getArmored(
+        data: Unarmored
+    ): Armored = runCatching {
+        Crypto.newPGPMessage(data).armored
+    }.getOrElse { throw CryptoException("Armored cannot be extracted from Unarmored.", it) }
+
+    override fun getUnarmored(
+        data: Armored
+    ): Unarmored = runCatching {
+        Crypto.newPGPMessageFromArmored(data).binary
+    }.getOrElse { throw CryptoException("Unarmored cannot be extracted from Armored.", it) }
+
+    override fun getEncryptedPackets(
+        message: EncryptedMessage
+    ): List<EncryptedPacket> = runCatching {
+        val pgpSplitMessage = PGPSplitMessage(message)
+        return listOf(
+            EncryptedPacket(pgpSplitMessage.keyPacket, PacketType.Key),
+            EncryptedPacket(pgpSplitMessage.dataPacket, PacketType.Data)
+        )
+    }.getOrElse { throw CryptoException("EncryptedFile cannot be extracted from EncryptedMessage.", it) }
 
     override fun getPublicKey(
         privateKey: Armored
@@ -338,6 +490,7 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }.getOrElse { throw CryptoException("Key cannot be generated.", it) }
 
+    @Suppress("MagicNumber")
     private fun generateKeyFromRSA(
         name: String,
         email: String,
@@ -390,4 +543,6 @@ class GOpenPGPCrypto : PGPCrypto {
         keyType: PGPCrypto.KeyType,
         keySecurity: PGPCrypto.KeySecurity
     ): Armored = Helper.generateKey(name, email, passphrase, keyType.toString(), keySecurity.value.toLong())
+
+    // endregion
 }

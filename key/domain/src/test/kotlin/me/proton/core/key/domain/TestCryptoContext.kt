@@ -32,6 +32,12 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.pgp.DecryptedFile
+import me.proton.core.crypto.common.pgp.EncryptedFile
+import me.proton.core.crypto.common.pgp.EncryptedPacket
+import me.proton.core.crypto.common.pgp.PacketType
+import me.proton.core.crypto.common.pgp.PlainFile
+import java.io.ByteArrayInputStream
 
 class TestCryptoContext : CryptoContext {
 
@@ -90,6 +96,9 @@ class TestCryptoContext : CryptoContext {
             "sign([${data.fromByteArray()}], with=${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey)
 
+        override fun signFile(file: PlainFile, unlockedKey: Unarmored): Signature =
+            signData(file.inputStream.readBytes(), unlockedKey)
+
         override fun verifyText(
             plainText: String,
             signature: Signature,
@@ -110,6 +119,26 @@ class TestCryptoContext : CryptoContext {
             return data.fromByteArray() == decryptedSignature.extractMessage()
         }
 
+        override fun verifyFile(
+            file: DecryptedFile,
+            signature: Armored,
+            publicKey: Armored,
+            validAtUtc: Long
+        ): Boolean {
+            val decryptedSignature = signature.decryptMessage(publicKey)
+            val data = file.inputStream.readBytes()
+            return data.fromByteArray() == decryptedSignature.extractMessage()
+        }
+
+        override fun getArmored(data: Unarmored): Armored = data.fromByteArray()
+
+        override fun getUnarmored(data: Armored): Unarmored = data.toByteArray()
+
+        override fun getEncryptedPackets(message: EncryptedMessage): List<EncryptedPacket> = listOf(
+            EncryptedPacket("keyPacket".toByteArray(), PacketType.Key),
+            EncryptedPacket("dataPacket".toByteArray(), PacketType.Data),
+        )
+
         override fun decryptText(message: EncryptedMessage, unlockedKey: Unarmored): String =
             message.decryptMessage(unlockedKey).let { decrypted ->
                 check(decrypted.startsWith("TEXT"))
@@ -122,6 +151,13 @@ class TestCryptoContext : CryptoContext {
                 decrypted.extractMessage().toByteArray()
             }
 
+        override fun decryptFile(file: EncryptedFile, unlockedKey: Unarmored): DecryptedFile =
+            DecryptedFile(
+                fileName =  file.keyPacket.fromByteArray(),
+                inputStream = ByteArrayInputStream(decryptData(file.dataPacket.fromByteArray(), unlockedKey)),
+                status = VerificationStatus.NotSigned
+            )
+
         override fun encryptText(plainText: String, publicKey: Armored): EncryptedMessage =
             "TEXT([$plainText]+$publicKey)"
                 .encryptMessage(publicKey)
@@ -129,6 +165,14 @@ class TestCryptoContext : CryptoContext {
         override fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage =
             "BINARY([${data.fromByteArray()}]+$publicKey)"
                 .encryptMessage(publicKey)
+
+        override fun encryptFile(file: PlainFile, publicKey: Armored): EncryptedFile {
+            val data = file.inputStream.readBytes()
+            return EncryptedFile(
+                keyPacket = file.fileName.toByteArray(),
+                dataPacket = encryptData(data, publicKey).toByteArray()
+            )
+        }
 
         override fun encryptAndSignText(
             plainText: String,
@@ -141,6 +185,10 @@ class TestCryptoContext : CryptoContext {
         override fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage =
             "BINARY([${data.fromByteArray()}]+$publicKey+${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey)
+
+        override fun encryptSessionKey(keyPacket: ByteArray, publicKey: Armored): ByteArray = keyPacket
+
+        override fun encryptSessionKey(keyPacket: ByteArray, password: ByteArray): ByteArray = keyPacket
 
         override fun decryptAndVerifyText(
             message: EncryptedMessage,
@@ -168,12 +216,16 @@ class TestCryptoContext : CryptoContext {
             VerificationStatus.Success
         )
 
+        override fun decryptSessionKey(keyPacket: ByteArray, unlockedKey: Unarmored): ByteArray = keyPacket
+
         override fun getPublicKey(privateKey: Armored): Armored = privateKey
 
         override fun getFingerprint(key: Armored): String = "fingerprint($key)"
+
         override fun getJsonSHA256Fingerprints(key: Armored): String = "jsonSHA256Fingerprint($key)"
 
         override fun getPassphrase(password: ByteArray, encodedSalt: String): ByteArray = password.copyOf()
+
         override fun generateNewKeySalt(): String = "keySalt"
 
         override fun generateNewToken(size: Long): ByteArray = "token".toByteArray()

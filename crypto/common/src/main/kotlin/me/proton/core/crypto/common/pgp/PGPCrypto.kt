@@ -18,12 +18,13 @@
 
 package me.proton.core.crypto.common.pgp
 
-import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.crypto.common.pgp.exception.CryptoException
 
 /**
  * PGP Cryptographic interface (e.g. [lock], [unlock], [encryptData], [decryptData], [signData], [verifyData], ...).
  */
+@Suppress("TooManyFunctions", "ComplexInterface")
 interface PGPCrypto {
 
     /**
@@ -47,40 +48,67 @@ interface PGPCrypto {
     fun unlock(privateKey: Armored, passphrase: ByteArray): UnlockedKey
 
     /**
-     * Sign [plainText] using [unlockedKey].
+     * Encrypt [plainText] using [publicKey].
      *
-     * @throws [CryptoException] if [plainText] cannot be signed.
+     * @throws [CryptoException] if [plainText] cannot be encrypted.
      *
-     * @see [verifyText]
+     * @see [decryptText].
      */
-    fun signText(plainText: String, unlockedKey: Unarmored): Signature
+    fun encryptText(plainText: String, publicKey: Armored): EncryptedMessage
 
     /**
-     * Sign [data] using [unlockedKey].
+     * Encrypt [data] using [publicKey].
      *
-     * @throws [CryptoException] if [data] cannot be signed.
+     * @throws [CryptoException] if [data] cannot be encrypted.
      *
-     * @see [verifyData]
+     * @see [decryptData].
      */
-    fun signData(data: ByteArray, unlockedKey: Unarmored): Signature
+    fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage
 
     /**
-     * Verify [signature] of [plainText] is correctly signed using [publicKey].
+     * Encrypt [file] using [publicKey].
      *
-     * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+     * @throws [CryptoException] if [file] cannot be encrypted.
      *
-     * @see [signText]
+     * @see [decryptFile].
      */
-    fun verifyText(plainText: String, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
+    fun encryptFile(file: PlainFile, publicKey: Armored): EncryptedFile
 
     /**
-     * Verify [signature] of [data] is correctly signed using [publicKey].
+     * Encrypt [plainText] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
      *
-     * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+     * @throws [CryptoException] if [plainText] cannot be encrypted or signed.
      *
-     * @see [signData]
+     * @see [decryptAndVerifyText].
      */
-    fun verifyData(data: ByteArray, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
+    fun encryptAndSignText(plainText: String, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
+
+    /**
+     * Encrypt [data] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
+     *
+     * @throws [CryptoException] if [data] cannot be encrypted or signed.
+     *
+     * @see [decryptAndVerifyData].
+     */
+    fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
+
+    /**
+     * Encrypt [keyPacket] using [publicKey].
+     *
+     * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+     *
+     * @see [decryptSessionKey].
+     */
+    fun encryptSessionKey(keyPacket: ByteArray, publicKey: Armored): ByteArray
+
+    /**
+     * Encrypt [keyPacket] using [password].
+     *
+     * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+     *
+     * @see [decryptSessionKey].
+     */
+    fun encryptSessionKey(keyPacket: ByteArray, password: ByteArray): ByteArray
 
     /**
      * Decrypt [message] as [String] using [unlockedKey].
@@ -103,40 +131,13 @@ interface PGPCrypto {
     fun decryptData(message: EncryptedMessage, unlockedKey: Unarmored): ByteArray
 
     /**
-     * Encrypt [plainText] using [publicKey].
+     * Decrypt [file] as [ByteArray] using [unlockedKey].
      *
-     * @throws [CryptoException] if [plainText] cannot be encrypted.
+     * @throws [CryptoException] if [file] cannot be decrypted.
      *
-     * @see [decryptText].
+     * @see [encryptFile]
      */
-    fun encryptText(plainText: String, publicKey: Armored): EncryptedMessage
-
-    /**
-     * Encrypt [data] using [publicKey].
-     *
-     * @throws [CryptoException] if [data] cannot be encrypted.
-     *
-     * @see [decryptData].
-     */
-    fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage
-
-    /**
-     * Encrypt [plainText] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
-     *
-     * @throws [CryptoException] if [plainText] cannot be encrypted or signed.
-     *
-     * @see [decryptAndVerifyText].
-     */
-    fun encryptAndSignText(plainText: String, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
-
-    /**
-     * Encrypt [data] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
-     *
-     * @throws [CryptoException] if [data] cannot be encrypted or signed.
-     *
-     * @see [decryptAndVerifyData].
-     */
-    fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
+    fun decryptFile(file: EncryptedFile, unlockedKey: Unarmored): DecryptedFile
 
     /**
      * Decrypt [message] as [String] using [unlockedKeys] and verify using [publicKeys].
@@ -177,6 +178,90 @@ interface PGPCrypto {
     ): DecryptedData
 
     /**
+     * Decrypt [keyPacket] as [ByteArray] using [unlockedKey].
+     *
+     * @throws [CryptoException] if [keyPacket] cannot be decrypted.
+     *
+     * @see [encryptSessionKey]
+     */
+    fun decryptSessionKey(keyPacket: ByteArray, unlockedKey: Unarmored): ByteArray
+
+    /**
+     * Sign [plainText] using [unlockedKey].
+     *
+     * @throws [CryptoException] if [plainText] cannot be signed.
+     *
+     * @see [verifyText]
+     */
+    fun signText(plainText: String, unlockedKey: Unarmored): Signature
+
+    /**
+     * Sign [data] using [unlockedKey].
+     *
+     * @throws [CryptoException] if [data] cannot be signed.
+     *
+     * @see [verifyData]
+     */
+    fun signData(data: ByteArray, unlockedKey: Unarmored): Signature
+
+    /**
+     * Sign [file] using [unlockedKey].
+     *
+     * @throws [CryptoException] if [file] cannot be signed.
+     *
+     * @see [verifyFile]
+     */
+    fun signFile(file: PlainFile, unlockedKey: Unarmored): Signature
+
+    /**
+     * Verify [signature] of [plainText] is correctly signed using [publicKey].
+     *
+     * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+     *
+     * @see [signText]
+     */
+    fun verifyText(plainText: String, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
+
+    /**
+     * Verify [signature] of [data] is correctly signed using [publicKey].
+     *
+     * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+     *
+     * @see [signData]
+     */
+    fun verifyData(data: ByteArray, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
+
+    /**
+     * Verify [signature] of [file] is correctly signed using [publicKey].
+     *
+     * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+     *
+     * @see [signFile]
+     */
+    fun verifyFile(file: DecryptedFile, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
+
+    /**
+     * Get [Armored] from [data].
+     *
+     * @throws [CryptoException] if armored cannot be extracted from [data].
+     */
+    fun getArmored(data: Unarmored): Armored
+
+    /**
+     * Get [Unarmored] from [data].
+     *
+     * @throws [CryptoException] if unarmored cannot be extracted from [data].
+     */
+    fun getUnarmored(data: Armored): Unarmored
+
+    /**
+     * Get list of [EncryptedPacket] from [message].
+     *
+     * @throws [CryptoException] if key and data packets cannot be extracted from [message].
+     */
+    fun getEncryptedPackets(message: EncryptedMessage): List<EncryptedPacket>
+
+    /**
      * Get [Armored] public key from [privateKey].
      *
      * @throws [CryptoException] if public key cannot be extracted from [privateKey].
@@ -213,8 +298,10 @@ interface PGPCrypto {
 
     /**
      * Generate new random Token.
+     *
+     * Default token size is 32 bytes.
      */
-    fun generateNewToken(size: Long): ByteArray
+    fun generateNewToken(size: Long = 32): ByteArray
 
     /**
      * Generate new private key.

@@ -18,12 +18,14 @@
 
 package me.proton.core.key.domain
 
+import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.extension.primary
 import org.junit.Test
+import java.io.ByteArrayInputStream
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -91,6 +93,35 @@ class CryptoExtensionsTest {
 
             assertTrue(verifyData(decryptedData, signatureData))
             assertTrue(data.contentEquals(decryptedData))
+        }
+    }
+
+    @Test
+    fun useKeys_encrypt_sign_decrypt_verify_File() {
+        val data = message.toByteArray()
+        val file = PlainFile("fileName", ByteArrayInputStream(data))
+
+        keyHolder1.useKeys(context) {
+            val encryptedFile = encryptFile(file); file.inputStream.reset()
+            val signatureFile = signFile(file)
+
+            val decryptedFile = decryptFile(encryptedFile)
+            assertNotNull(decryptFileOrNull(encryptedFile))
+
+            assertTrue(verifyFile(decryptedFile, signatureFile))
+            assertTrue(file.inputStream.readBytes().contentEquals(decryptedFile.inputStream.readBytes()))
+        }
+    }
+
+    @Test
+    fun useKeys_encrypt_decrypt_SessionKey() {
+        val sessionKey = message.toByteArray()
+
+        keyHolder1.useKeys(context) {
+            val encryptedKey = encryptSessionKey(sessionKey)
+            val decryptedKey = decryptSessionKey(encryptedKey)
+
+            assertTrue(sessionKey.contentEquals(decryptedKey))
         }
     }
 

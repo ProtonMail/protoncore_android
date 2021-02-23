@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.crypto.android.simple
+package me.proton.core.crypto.android.keystore
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties

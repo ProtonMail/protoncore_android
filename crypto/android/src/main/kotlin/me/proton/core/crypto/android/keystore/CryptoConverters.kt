@@ -16,29 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.crypto.android.keystore
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 
-libVersion = Version(1, 0, 1)
+/**
+ * Crypto [TypeConverter] for [RoomDatabase].
+ */
+class CryptoConverters {
 
-dependencies {
-    implementation(
+    @TypeConverter
+    fun fromEncryptedByteArrayToByteArray(value: EncryptedByteArray?): ByteArray? =
+        value?.array
 
-        project(Module.kotlinUtil),
-        project(Module.cryptoCommon),
-        project(Module.domain),
-
-        // Feature
-        project(Module.keyDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+    @TypeConverter
+    fun fromByteArrayToEncryptedByteArray(value: ByteArray?): EncryptedByteArray? =
+        value?.let { EncryptedByteArray(it) }
 }

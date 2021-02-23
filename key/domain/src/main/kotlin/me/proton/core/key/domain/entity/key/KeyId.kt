@@ -18,4 +18,8 @@
 
 package me.proton.core.key.domain.entity.key
 
-data class KeyId(val id: String)
+data class KeyId(val id: String) {
+    companion object {
+        val unused = KeyId("Unused keyId")
+    }
+}

@@ -59,6 +59,26 @@ fun PGPCrypto.decryptDataOrNull(
 ): ByteArray? = runCatching { decryptData(message, unlockedKey) }.getOrNull()
 
 /**
+ * @return [DecryptedFile], or `null` if [file] cannot be decrypted.
+ *
+ * @see [PGPCrypto.decryptFile]
+ */
+fun PGPCrypto.decryptFileOrNull(
+    file: EncryptedFile,
+    unlockedKey: Unarmored
+): DecryptedFile? = runCatching { decryptFile(file, unlockedKey) }.getOrNull()
+
+/**
+ * @return [ByteArray], or `null` if [keyPacket] cannot be decrypted.
+ *
+ * @see [PGPCrypto.decryptData]
+ */
+fun PGPCrypto.decryptSessionKeyOrNull(
+    keyPacket: KeyPacket,
+    unlockedKey: Unarmored
+): ByteArray? = runCatching { decryptSessionKey(keyPacket, unlockedKey) }.getOrNull()
+
+/**
  * @return [Signature], or `null` if [plainText] cannot be signed.
  *
  * @see [PGPCrypto.signText]
@@ -79,6 +99,16 @@ fun PGPCrypto.signDataOrNull(
 ): Signature? = runCatching { signData(data, unlockedKey) }.getOrNull()
 
 /**
+ * @return [Signature], or `null` if [file] cannot be signed.
+ *
+ * @see [PGPCrypto.signFile]
+ */
+fun PGPCrypto.signFileOrNull(
+    file: PlainFile,
+    unlockedKey: Unarmored
+): Signature? = runCatching { signFile(file, unlockedKey) }.getOrNull()
+
+/**
  * @return [EncryptedMessage], or `null` if [plainText] cannot be encrypted.
  *
  * @see [PGPCrypto.encryptText]
@@ -97,6 +127,16 @@ fun PGPCrypto.encryptDataOrNull(
     data: ByteArray,
     publicKey: Armored
 ): EncryptedMessage? = runCatching { encryptData(data, publicKey) }.getOrNull()
+
+/**
+ * @return [EncryptedMessage], or `null` if [file] cannot be encrypted.
+ *
+ * @see [PGPCrypto.encryptData]
+ */
+fun PGPCrypto.encryptFileOrNull(
+    file: PlainFile,
+    publicKey: Armored
+): EncryptedFile? = runCatching { encryptFile(file, publicKey) }.getOrNull()
 
 /**
  * @return [EncryptedMessage], or `null` if [plainText] cannot be encrypted and signed.
