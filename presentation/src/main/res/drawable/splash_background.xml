@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The android:opacity=”opaque” line — this is critical in preventing a flash of black as your theme transitions. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+
+    <item android:drawable="@color/background_norm"/>
+
+    <item
+        android:drawable="?brand_splash_logo"
+        android:gravity="center"
+        android:bottom="@dimen/splash_bottom_padding"/>
+
+    <item
+        android:drawable="@drawable/ic_made_by_proton_logo"
+        android:gravity="bottom|center_horizontal"
+        android:bottom="@dimen/splash_bottom_padding"/>
+
+</layer-list>

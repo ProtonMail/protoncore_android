@@ -37,4 +37,7 @@
     <dimen name="default_title_text_size">18sp</dimen>
     <dimen name="default_subtitle_text_size">14sp</dimen>
 
+    <!-- splash background items spacing -->
+    <dimen name="splash_bottom_padding">50dp</dimen>
+
 </resources>

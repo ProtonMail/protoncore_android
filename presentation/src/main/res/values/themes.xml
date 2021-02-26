@@ -47,6 +47,10 @@
         <!-- Edge-to-edge app content -->
         <item name="android:navigationBarColor">@color/nav_bar</item>
 
+        <!-- Status bar -->
+        <item name="android:windowLightStatusBar">@bool/light_status_bar</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+
         <!-- Remap legacy AppCompat attributes to MaterialComponent attributes -->
         <item name="colorPrimaryDark">?colorPrimaryVariant</item>
         <item name="colorAccent">?colorSecondary</item>
@@ -61,6 +65,13 @@
         <item name="brand_darken_40">@color/chambray</item>
         <item name="brand_lighten_20">@color/portage</item>
         <item name="brand_lighten_40">@color/perano</item>
+    </style>
+
+    <!-- Splash theme is a theme that is applied to launcher activity in manifest and once activity
+         is created it should be replaced with proton theme.
+         brand_splash_logo attribute must be defined in order to use this theme -->
+    <style name="ProtonTheme.Splash">
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
     <style name="ProtonTheme.Vpn" parent="ProtonTheme">

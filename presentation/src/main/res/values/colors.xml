@@ -95,7 +95,8 @@
     <color name="notification_success">@color/apple</color>
     <color name="notification_warning">@color/sunglow</color>
 
-    <!-- navigation bar color -->
-    <color name="nav_bar">@color/transparent</color>
+    <!-- status & navigation bar color -->
+    <color name="status_bar">@color/transparent</color>
+    <color name="nav_bar">@color/scrim</color>
 
 </resources>
