@@ -166,15 +166,13 @@ User Domain: **1.0.1** - _released on: Feb 23, 2021_
 
 User Data: **1.0.1** - _released on: Feb 23, 2021_
 
-### Contacts
+### Contact
 
-Contacts: **0** - _released on: ND_
+Contact: **0.1.1** - _released on: ND_
 
-Contacts Domain: **0** - _released on: ND_
+Contact Domain: **0.1.1** - _released on: ND_
 
-Contacts Presentation: **0** - _released on: ND_
-
-Contacts Data: **0** - _released on: ND_
+Contact Data: **0.1.1** - _released on: ND_
 
 ### Mail Message
 

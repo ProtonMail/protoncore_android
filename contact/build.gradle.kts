@@ -16,27 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package ch.protonmail.libs.contacts
+import studio.forface.easygradle.dsl.*
 
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+plugins {
+    id("com.android.library")
+    kotlin("android")
+}
 
-import org.junit.Test
-import org.junit.runner.RunWith
+libVersion = Version(0, 1, 1)
 
-import org.junit.Assert.*
+android(minSdk = 23)
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("ch.protonmail.contacts.test", appContext.packageName)
-    }
+dependencies {
+    api(
+        project(Module.contactDomain),
+        project(Module.contactData)
+    )
 }

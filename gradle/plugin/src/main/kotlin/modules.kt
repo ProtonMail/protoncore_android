@@ -80,17 +80,16 @@ object Module {
     const val keyDomain = "$key:key-domain"
     const val keyData = "$key:key-data"
 
+    // Contact
+    const val contact = ":contact"
+    const val contactDomain = "$contact:contact-domain"
+    const val contactData = "$contact:contact-data"
+
     // User
     const val user = ":user"
     const val userDomain = "$user:user-domain"
     const val userPresentation = "$user:user-presentation"
     const val userData = "$user:user-data"
-
-    // Contacts
-    const val contacts = ":contacts"
-    const val contactsDomain = "$contacts:contacts-domain"
-    const val contactsPresentation = "$contacts:contacts-presentation"
-    const val contactsData = "$contacts:contacts-data"
 
     // Settings
     const val settings = ":settings"
