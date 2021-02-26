@@ -58,6 +58,7 @@
 
         <!-- Material styles override -->
         <item name="materialButtonStyle">@style/ProtonButton</item>
+        <item name="navigationViewStyle">@style/ProtonNavigationView.Dark</item>
 
         <!-- App specific attributes -->
         <item name="brand_norm">@color/cornflower_blue</item>

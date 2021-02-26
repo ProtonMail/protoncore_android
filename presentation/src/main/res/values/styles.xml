@@ -108,4 +108,14 @@
     <style name="ProtonImage.ImageButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:background">@null</item>
     </style>
+
+    <!-- This style is always dark regardless of day/night -->
+    <style name="ProtonNavigationView.Dark" parent="Widget.Design.NavigationView">
+        <item name="android:background">@color/woodsmoke</item>
+        <item name="android:listDivider">@color/tuna</item>
+        <item name="android:textColorSecondary">@color/santas_gray</item>
+        <item name="itemTextColor">@color/white</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemBackground">?attr/selectableItemBackground</item>
+    </style>
 </resources>
