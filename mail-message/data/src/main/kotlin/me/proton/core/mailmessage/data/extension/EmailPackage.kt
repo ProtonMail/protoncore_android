@@ -20,19 +20,20 @@ package me.proton.core.mailmessage.data.extension
 
 import me.proton.core.mailmessage.data.api.request.EmailPackage
 import me.proton.core.mailmessage.domain.entity.EncryptedPackage
+import me.proton.core.util.kotlin.toInt
 
 fun EncryptedPackage.toEmailPackage(): EmailPackage = EmailPackage(
     addresses = addresses.mapValues { entry ->
         when (val address = entry.value) {
             is EncryptedPackage.Address.Internal -> EmailPackage.Address(
-                type = address.type,
-                signature = address.signature,
+                type = address.packageType.type,
+                signature = address.signed.toInt(),
                 bodyKeyPacket = address.bodyKeyPacket,
                 attachmentKeyPackets = address.attachmentKeyPackets
             )
             is EncryptedPackage.Address.External -> EmailPackage.Address(
-                type = address.type,
-                signature = address.signature
+                type = address.packageType.type,
+                signature = address.signed.toInt()
             )
         }
     },

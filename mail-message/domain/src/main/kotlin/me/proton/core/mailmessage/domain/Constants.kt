@@ -16,32 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.mailmessage.domain.entity
-
-import PackageType
-
-data class EncryptedPackage(
-    val addresses: Map<String, Address>,
-    val mimeType: String,
-    val body: String,
-    val type: Int,
-    val attachmentKeys: List<Key>? = null,
-    val bodyKey: Key? = null,
-) {
-
-    sealed class Address(val packageType: PackageType, val signed: Boolean) {
-
-        data class Internal(
-            val bodyKeyPacket: String,
-            val attachmentKeyPackets: List<String>
-        ) : Address(PackageType.ProtonMail, true)
-
-        object External : Address(PackageType.Cleartext, false)
-    }
-
-    data class Key(
-        val key: String,
-        val algorithm: String,
-    )
-
+enum class PackageType(val type: Int) {
+    ProtonMail(1),
+    EncryptedOutside(2),
+    Cleartext(4),
+    PgpInline(8),
+    PgpMime(16),
+    ClearMime(32)
 }
