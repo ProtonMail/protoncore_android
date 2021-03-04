@@ -178,11 +178,11 @@ Contacts Data: **0** - _released on: ND_
 
 ### Mail Message
 
-Mail Message: **0** - _released on: ND_
+Mail Message: **0.1.1** - _released on: Mar 04, 2021_
 
-Mail Message Domain: **0** - _released on: ND_
+Mail Message Domain: **0.1.1** - _released on: Mar 04, 2021_
 
-Mail Message Data: **0** - _released on: ND_
+Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
 
 ### Settings
 
