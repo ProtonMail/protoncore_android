@@ -24,6 +24,43 @@ In the future support for the night mode will be out of the box.
 
 Provides base (ready to use) styles for the views. More details: [styles](src/main/res/values)
 
+***`NavigationView`***
+
+`ProtonTheme` overrides default `navigationViewStyle` with `ProtonNavigationView.Dark` style.
+```kotlin
+<com.google.android.material.navigation.NavigationView
+  android:id="@+id/nav_view"
+  android:layout_width="wrap_content"
+  android:layout_height="match_parent"
+  android:layout_gravity="start"
+  app:menu="@menu/items"/>
+```
+Section header should be added with custom layout `proton_nav_view_section_header` that contains divider.
+```kotlin
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <item
+    android:id="@+id/section_header"
+    android:title="@null"
+    android:enabled="false"
+    app:actionLayout="@layout/proton_nav_view_section_header"/>
+
+  ...
+
+</menu>
+```
+Setting section header title should be done programatically
+```kotlin
+private fun setupNavigationView(navView: NavigationView) {
+  val navMenu = navView.menu
+  navMenu.setSectionHeaderTitle(R.id.section_header, R.string.section_title)
+}
+
+fun Menu.setSectionHeaderTitle(@IdRes headerItemId: Int, @StringRes titleId: Int) {
+  findItem(headerItemId)?.actionView?.findViewById<TextView>(R.id.header_title)?.setText(titleId)
+}
+```
 
 ### **`Base classes`**
 ***(still under development, not finalized)***

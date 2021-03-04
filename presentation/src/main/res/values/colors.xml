@@ -96,7 +96,14 @@
     <color name="notification_warning">@color/sunglow</color>
 
     <!-- status & navigation bar color -->
-    <color name="status_bar">@color/transparent</color>
+    <color name="status_bar">@color/background_norm</color>
     <color name="nav_bar">@color/scrim</color>
+
+    <!-- Navigation view colors -->
+    <color name="nav_view_background">@color/woodsmoke</color>
+    <color name="nav_view_section_header_text">@color/santas_gray</color>
+    <color name="nav_view_item_text">@color/white</color>
+    <color name="nav_view_item_icon">@color/white</color>
+    <color name="nav_view_divider">@color/tuna</color>
 
 </resources>

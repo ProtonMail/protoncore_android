@@ -29,4 +29,9 @@
     <string name="presentation_alert_title">Alert</string>
     <string name="presentation_alert_ok">OK</string>
     <string name="presentation_alert_cancel">Cancel</string>
+
+    <!-- Common menu items -->
+    <string name="presentation_menu_item_title_report_a_bug">Report a bug</string>
+    <string name="presentation_menu_item_title_settings">Settings</string>
+    <string name="presentation_menu_item_title_sign_out">Sign out</string>
 </resources>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -16,19 +16,15 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<!-- The android:opacity=”opaque” line — this is critical in preventing a flash of black as your theme transitions. -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
-
-    <item android:drawable="@color/background_norm"/>
-
-    <item
-        android:drawable="?brand_splash_logo"
-        android:gravity="center"
-        android:bottom="@dimen/splash_bottom_padding"/>
-
-    <item
-        android:drawable="@drawable/ic_made_by_proton_logo"
-        android:gravity="bottom|center_horizontal"
-        android:bottom="@dimen/splash_bottom_padding"/>
-
-</layer-list>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <path
+      android:pathData="M22.5001,22.5H9.0001V18H10.5001V21H21.0001V3H10.5001V6H9.0001V1.5H22.5001V22.5Z"
+      android:fillColor="@color/icon_norm"/>
+  <path
+      android:pathData="M7.2804,15.9697L4.0608,12.7501H15.0001V11.2501H4.0608L7.2804,8.0304L6.2198,6.9697L1.1895,12.0001L6.2198,17.0304L7.2804,15.9697Z"
+      android:fillColor="@color/icon_norm"/>
+</vector>

@@ -111,11 +111,18 @@
 
     <!-- This style is always dark regardless of day/night -->
     <style name="ProtonNavigationView.Dark" parent="Widget.Design.NavigationView">
-        <item name="android:background">@color/woodsmoke</item>
-        <item name="android:listDivider">@color/tuna</item>
-        <item name="android:textColorSecondary">@color/santas_gray</item>
-        <item name="itemTextColor">@color/white</item>
-        <item name="itemIconTint">@color/white</item>
-        <item name="itemBackground">?attr/selectableItemBackground</item>
+        <item name="android:background">@color/nav_view_background</item>
+        <item name="android:listDivider">@color/nav_view_divider</item>
+        <item name="android:textColorSecondary">@color/nav_view_section_header_text</item>
+        <item name="itemTextAppearance">@style/ProtonNavigationViewItemTextAppearance</item>
+        <item name="itemTextColor">@color/nav_view_item_text</item>
+        <item name="itemIconTint">@color/nav_view_item_icon</item>
+        <item name="itemIconPadding">12dp</item>
+        <item name="itemBackground">@drawable/nav_view_item_background</item>
+        <item name="itemHorizontalPadding">@dimen/default_gap</item>
+    </style>
+
+    <style name="ProtonNavigationViewItemTextAppearance" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">@dimen/default_subtitle_text_size</item>
     </style>
 </resources>
