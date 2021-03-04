@@ -16,25 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.core.mailmessage.data.api
 
-data class PublicAddress(
-    val email: String,
-    val recipientType: Int,
-    val mimeType: String?,
-    val keys: List<PublicAddressKey>,
-    // TODO: val signedKeyList: PublicSignedKeyList
-) {
-    val primaryKey by lazy { keys.first { it.publicKey.isPrimary } }
+import me.proton.core.mailmessage.data.api.request.SendDirectRequest
+import me.proton.core.mailmessage.data.api.response.SendDirectResponse
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import retrofit2.http.Body
+import retrofit2.http.POST
 
-    val recipient by lazy { Recipient.map[recipientType] }
-}
+interface MailMessageApi : BaseRetrofitApi {
 
-enum class Recipient(val value: Int) {
-    Internal(1),
-    External(2);
+    @POST("mail/v4/messages/send/direct")
+    suspend fun sendDirect(@Body request: SendDirectRequest): SendDirectResponse
 
-    companion object {
-        val map = values().associateBy { it.value }
-    }
 }

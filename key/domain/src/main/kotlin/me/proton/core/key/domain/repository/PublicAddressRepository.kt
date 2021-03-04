@@ -26,11 +26,34 @@ interface PublicAddressRepository {
      * Get [PublicAddress], by [email], using [sessionUserId].
      *
      * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
+     *
+     * @see [getPublicAddressOrNull]
      */
-    suspend fun getPublicAddress(sessionUserId: SessionUserId, email: String, refresh: Boolean = true): PublicAddress?
+    suspend fun getPublicAddress(
+        sessionUserId: SessionUserId,
+        email: String,
+        refresh: Boolean = true
+    ): PublicAddress
 
     /**
      * Clear all persisted [PublicAddress].
      */
     suspend fun clearAll()
 }
+
+/**
+ * Get [PublicAddress], by [email], using [sessionUserId].
+ *
+ * @return [PublicAddress] or `null` if [PublicAddress.keys] are empty or cannot be returned for [email].
+ *
+ * @see [PublicAddressRepository.getPublicAddress]
+ */
+suspend fun PublicAddressRepository.getPublicAddressOrNull(
+    sessionUserId: SessionUserId,
+    email: String,
+    refresh: Boolean = true
+): PublicAddress? = runCatching {
+    getPublicAddress(sessionUserId, email, refresh).also {
+        check(it.keys.isNotEmpty())
+    }
+}.getOrNull()

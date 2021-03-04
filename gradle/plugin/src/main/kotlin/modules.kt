@@ -103,5 +103,11 @@ object Module {
     const val humanVerificationDomain = "$humanVerification:human-verification-domain"
     const val humanVerificationPresentation = "$humanVerification:human-verification-presentation"
     const val humanVerificationData = "$humanVerification:human-verification-data"
+
+    // Mail Message
+    const val mailMessage = ":mail-message"
+    const val mailMessageDomain = "$mailMessage:mail-message-domain"
+    const val mailMessagePresentation = "$mailMessage:mail-message-presentation"
+    const val mailMessageData = "$mailMessage:mail-message-data"
     // endregion
 }

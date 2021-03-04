@@ -34,6 +34,7 @@ import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
+import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
 import me.proton.android.core.coreexample.viewmodel.UserAddressKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
@@ -41,6 +42,7 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.showForceUpdate
+import me.proton.core.presentation.utils.showToast
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -54,6 +56,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
     private val userKeyViewModel: UserKeyViewModel by viewModels()
     private val userAddressKeyViewModel: UserAddressKeyViewModel by viewModels()
     private val publicAddressViewModel: PublicAddressViewModel by viewModels()
+    private val mailMessageViewModel: MailMessageViewModel by viewModels()
 
     override fun layoutId(): Int = R.layout.activity_main
 
@@ -72,7 +75,6 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                     apiErrorMessage = "Error Message coming from the API."
                 )
             }
-
             triggerHumanVer.onClick {
                 lifecycleScope.launch(Dispatchers.IO) {
                     accountViewModel.getPrimaryUserId().first()?.let {
@@ -80,6 +82,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                     }
                 }
             }
+            sendDirect.onClick { mailMessageViewModel.sendDirect() }
         }
 
         accountViewModel.getPrimaryAccount().onEach { primary ->
@@ -104,6 +107,10 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
         publicAddressViewModel.getPublicAddressState().onEach { state ->
             binding.primaryAccountPublicAddressState.text = "Public Address State: ${state::class.java.simpleName}"
+        }.launchIn(lifecycleScope)
+
+        mailMessageViewModel.getState().onEach {
+            showToast("MailMessage: $it")
         }.launchIn(lifecycleScope)
     }
 

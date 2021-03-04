@@ -28,9 +28,15 @@ typealias KeyPacket = Unarmored
  */
 typealias DataPacket = Unarmored
 
+/**
+ * Signature, unarmored.
+ */
+typealias SignaturePacket = Unarmored
+
 enum class PacketType {
     Key,
     Data,
+    Signature
 }
 
 /**

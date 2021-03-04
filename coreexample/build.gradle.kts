@@ -54,6 +54,7 @@ dependencies {
         project(Module.humanVerification),
         project(Module.key),
         project(Module.user),
+        project(Module.mailMessage),
 
         `kotlin-jdk7`,
         `coroutines-android`,

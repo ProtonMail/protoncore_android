@@ -16,25 +16,27 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.core.mailmessage.domain.entity
 
-data class PublicAddress(
-    val email: String,
-    val recipientType: Int,
-    val mimeType: String?,
-    val keys: List<PublicAddressKey>,
-    // TODO: val signedKeyList: PublicSignedKeyList
+data class EncryptedEmail(
+    val subject: String,
+    val sender: Address,
+    val to: List<Address>,
+    val cc: List<Address>,
+    val bcc: List<Address>,
+    val body: String,
+    val mimeType: String,
+    val attachments: List<Attachment>,
 ) {
-    val primaryKey by lazy { keys.first { it.publicKey.isPrimary } }
 
-    val recipient by lazy { Recipient.map[recipientType] }
-}
+    data class Address(
+        val address: String,
+        val name: String
+    )
 
-enum class Recipient(val value: Int) {
-    Internal(1),
-    External(2);
-
-    companion object {
-        val map = values().associateBy { it.value }
-    }
+    data class Attachment(
+        val fileName: Filename,
+        val mimeType: String,
+        val contents: String
+    )
 }
