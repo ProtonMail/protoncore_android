@@ -16,19 +16,18 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<!-- The android:opacity=”opaque” line — this is critical in preventing a flash of black as your theme transitions. -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- item padding is 16dp, icon size is 24dp and padding between icon and title is 12dp ==> 52dp -->
+    <item android:start="52dp" android:end="@dimen/default_gap">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/nav_view_divider"/>
+        </shape>
+    </item>
 
-    <item android:drawable="@color/background_norm"/>
-
-    <item
-        android:drawable="?brand_splash_logo"
-        android:gravity="center"
-        android:bottom="@dimen/splash_bottom_padding"/>
-
-    <item
-        android:drawable="@drawable/ic_made_by_proton_logo"
-        android:gravity="bottom|center_horizontal"
-        android:bottom="@dimen/splash_bottom_padding"/>
+    <item android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/nav_view_background"/>
+        </shape>
+    </item>
 
 </layer-list>
