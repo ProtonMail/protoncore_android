@@ -17,6 +17,7 @@
  */
 
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import net.rubygrapefruit.platform.file.FilePermissionException
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -170,9 +171,14 @@ internal open class MergeDetektReports : DefaultTask() {
 @OptIn(ExperimentalStdlibApi::class)
 @Suppress("TooGenericExceptionCaught", "SameParameterValue")
 private fun downloadDetektConfig(path: String, to: File) {
+
+    val dir = to.parentFile
+    if (dir.exists().not() && dir.mkdirs().not())
+        throw FilePermissionException("Cannot create directory ${dir.canonicalPath}")
+
+    val url = "https://raw.githubusercontent.com/ProtonMail/protoncore_android/master/$path"
+    println("Fetching Detekt rule-set from $url")
     try {
-        val url = "https://raw.githubusercontent.com/ProtonMail/protoncore_android/master/$path"
-        println("Fetching Detekt rule-set from $url")
         val content = URL(url).openStream().bufferedReader().readText()
         // Checking start of the file is enough, if some part is missing we would not be able to decode it
         require(content.startsWith("# Integrity check *")) { "Integrity check not passed" }

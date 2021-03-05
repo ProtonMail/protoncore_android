@@ -20,7 +20,7 @@ while the first one is suitable for multi-module projects, the latter is the sug
 ## Setup Detekt
 In order to use the all-in-one Detekt configuration, you have to:
 
-1. Setup Plugin
+1. Setup Plugin in your **root** gradle file
     Kotlin Gradle DSL:
     ```kotlin
     plugins {
