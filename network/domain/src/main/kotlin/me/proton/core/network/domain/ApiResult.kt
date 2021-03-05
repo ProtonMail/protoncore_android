@@ -164,3 +164,25 @@ open class ApiException(val error: ApiResult.Error) : Exception(
     else error.cause?.message,
     error.cause
 )
+
+/**
+ * Performs the given [action] if this instance represents an [ApiResult.Error].
+ * Returns the original `Result` unchanged.
+ */
+inline fun <T> ApiResult<T>.onError(
+    action: (value: ApiResult.Error) -> Unit
+): ApiResult<T> {
+    if (this is ApiResult.Error) action(this)
+    return this
+}
+
+/**
+ * Performs the given [action] if this instance represents an [ApiResult.Success].
+ * Returns the original `Result` unchanged.
+ */
+inline fun <T> ApiResult<T>.onSuccess(
+    action: (value: T) -> Unit
+): ApiResult<T> {
+    if (this is ApiResult.Success) action(value)
+    return this
+}

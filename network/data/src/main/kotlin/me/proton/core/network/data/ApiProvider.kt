@@ -44,7 +44,7 @@ class ApiProvider(
     ): ApiManager<out Api> = get(sessionProvider.getSessionId(userId))
 
     inline fun <reified Api : BaseRetrofitApi> get(
-        sessionId: SessionId? = null,
+        sessionId: SessionId? = null
     ): ApiManager<out Api> {
         // ConcurrentHashMap does not allow null to be used as a key or value.
         // If sessionId == null -> sessionName = "null".
