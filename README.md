@@ -109,11 +109,11 @@ Network Data: **1.0** - _released on: Feb 17, 2021_
 
 ### Crypto
 
-Crypto: **1.0.1** - _released on: Feb 23, 2021_
+Crypto: **1.0.2** - _released on: Mar 05, 2021_
 
-Crypto Common: **1.0.1** - _released on: Feb 23, 2021_
+Crypto Common: **1.0.2** - _released on: Mar 05, 2021_
 
-Crypto Android: **1.0.1** - _released on: Feb 23, 2021_
+Crypto Android: **1.0.2** - _released on: Mar 05, 2021_
 
 ## Features
 
@@ -152,11 +152,11 @@ Account Manager Dagger: **1.0.2** - _released on: Mar 05, 2021_
 
 ### Key
 
-Key: **1.0.1** - _released on: Feb 23, 2021_
+Key: **1.0.2** - _released on: Mar 05, 2021_
 
-Key Domain: **1.0.1** - _released on: Feb 23, 2021_
+Key Domain: **1.0.2** - _released on: Mar 05, 2021_
 
-Key Data: **1.0.1** - _released on: Feb 23, 2021_
+Key Data: **1.0.2** - _released on: Mar 05, 2021_
 
 ### User
 
