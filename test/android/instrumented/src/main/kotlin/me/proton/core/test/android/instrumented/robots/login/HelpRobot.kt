@@ -16,8 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample
+package me.proton.core.test.android.instrumented.robots.login
 
-object Constants {
-    const val BASE_URL = "https://${BuildConfig.ENVIRONMENT}/api/"
-}
+import me.proton.core.test.android.instrumented.robots.BaseRobot
+
+/**
+ * [HelpRobot] class contains actions and verifications for help functionality.
+ */
+open class HelpRobot : BaseRobot()

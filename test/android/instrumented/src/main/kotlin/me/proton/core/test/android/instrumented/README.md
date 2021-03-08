@@ -20,6 +20,8 @@ The code and data files in this distribution are licensed under the terms of the
 - [uiwaits](./uiwaits) package - contains wait functions that wait for ViewInteraction or DataInteraction conditions.
 - [utils](./utils) package - contains `ActivityProvider` and `StringUtils` classes.
 - [watchers](./watchers) package - contains ProtonWatcher and TestExecutionWatcher. `ProtonWatcher` - a mechanism that allows watching for a condition to be met within specified timeout and with specified interval. `TestExecutionWatcher` - monitors test run results and performs actions on Success or Failure.
+- [robots](./robots) package - contains Core robots. 
+- [data](./data) package - contains test data related classes.
 - [CoreRobot.kt](./CoreRobot.kt) class - holds builders reference. Should be a superclass for Robot classes.
 - [CoreTest.kt](./CoreTest.kt) class - holds shared `setUp()` and `tearDown()` functions.
 
@@ -113,3 +115,43 @@ class MultiuserManagementTests : CoreRobot {
     }
 }
 ```
+
+### Test data
+
+#### Test user data
+
+In order to use test user data helper a `users.json` file must be present in test-android-instrumented/assets/sensitive directory. `users.json` must have a list of json objects of type:
+
+```json
+{
+    "firstName": "String",
+    "lastName": "String",
+    "email": "String",
+    "type": "Int(1|2)",
+    "password": "String",
+    "name": "String",
+    "passphrase": "String",
+    "phone": "String",
+    "country": "String",
+    "twoFa": "String",
+    "paymentMethods": [
+      {
+        "paymentMethodType": "PaymentMethodType",
+        "details": "JsonObject"
+      }
+    ],
+    "plan": "String"
+}
+```
+
+If no values are provided, empty values are assigned to User object automatically. 
+
+Once ```users.json``` is correctly setup, you can load users from that file via ```getUser()``` function:
+
+```kotlin
+import me.proton.core.test.android.instrumented.data.User.Users.getUser
+
+private val twoPassUser = getUser { it.passphrase.isNotEmpty() }
+```
+
+```twoPassUser``` will contain a random test user with passphrase set

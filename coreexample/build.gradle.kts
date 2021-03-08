@@ -30,6 +30,12 @@ android(
     version = Version(0, 3, 3),
     useDataBinding = true
 )
+{
+    defaultConfig {
+        buildConfigField("String", "ENVIRONMENT", "\"proton.black\"")
+        buildConfigField("String", "JAIL_UNBAN_ENDPOINT", "\"\"")
+    }
+}
 
 dependencies {
 

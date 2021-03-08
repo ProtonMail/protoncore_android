@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,8 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample
+package me.proton.core.test.android.instrumented.data
 
-object Constants {
-    const val BASE_URL = "https://${BuildConfig.ENVIRONMENT}/api/"
-}
+import kotlinx.serialization.Serializable
+import me.proton.core.payment.domain.entity.PaymentMethodType
+
+@Serializable
+data class PaymentMethod(
+    val paymentMethodType: PaymentMethodType?,
+    val details: LinkedHashMap<String, String>?
+)

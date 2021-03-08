@@ -16,8 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample
+package me.proton.core.test.android.uitests
 
-object Constants {
-    const val BASE_URL = "https://${BuildConfig.ENVIRONMENT}/api/"
-}
+import me.proton.core.test.android.uitests.tests.humanverification.HumanVerificationTests
+import me.proton.core.test.android.uitests.tests.login.LoginTests
+import me.proton.core.test.android.uitests.tests.login.MailboxTests
+import me.proton.core.test.android.uitests.tests.login.TwoFaTests
+import org.junit.runner.RunWith
+import org.junit.runners.Suite
+
+@RunWith(Suite::class)
+@Suite.SuiteClasses(
+    LoginTests::class,
+    MailboxTests::class,
+    TwoFaTests::class,
+    HumanVerificationTests::class
+)
+class TestSuite

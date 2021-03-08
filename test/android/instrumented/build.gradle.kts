@@ -22,11 +22,18 @@ import studio.forface.easygradle.dsl.android.*
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 3, 3)
-
-android()
+android(
+    minSdk = 23,
+    version = Version(0, 3, 3)
+)
+{
+    defaultConfig {
+        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
+    }
+}
 
 dependencies {
     // Base dependencies
@@ -43,22 +50,30 @@ dependencies {
 
     // Test dependencies
     api(
-        project(Module.androidTest) exclude `mockk` exclude `robolectric`,
+        project(Module.androidTest)
+            exclude mockk
+            exclude robolectric,
+        project(Module.humanVerification),
+        project(Module.auth),
+        project(Module.presentation),
+        project(Module.payment),
 
         // MockK
         `mockk-android`,
 
         // Android
-        `espresso`,
+        espresso,
+        falcon,
+        uiautomator,
+        preference,
+        jsonsimple,
         `android-work-testing`,
         `android-test-runner`,
         `android-test-rules`,
-        `falcon`,
         `espresso-contrib`,
         `espresso-intents`,
-        `uiautomator`,
-        `preference`,
-        `jsonsimple`,
-        `android-ktx`
+        `android-ktx`,
+        `serialization-json`,
+        "com.fasterxml.jackson.module:jackson-module-kotlin:2.12.+"
     )
 }
