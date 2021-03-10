@@ -51,12 +51,12 @@ release-publish-github:
     RELEASE_SYNC_FROM_BRANCH: 'master'
   extends: .release-sync-commit-shared
 
-publishBintray:
+publishMaven:
   stage: publish
   tags:
     - large
   script:
-    - ./gradlew assemble && ./gradlew publishAll
+    - ./gradlew assemble && ./gradlew publishAll --no-daemon --no-parallel && ./gradlew closeAndReleaseRepository
   only:
     - master
   artifacts:
@@ -86,7 +86,7 @@ publishGradlePortal:
 commitRelease:
   stage: commit
   needs:
-      - job: publishBintray
+      - job: publishMaven
         artifacts: true
   script:
     - ./util/commitRelease
@@ -96,7 +96,7 @@ commitRelease:
 postReleaseToSlack:
   stage: slackRelease
   needs:
-      - job: publishBintray
+      - job: publishMaven
         artifacts: true
   script:
     - ./util/postReleaseToSlack

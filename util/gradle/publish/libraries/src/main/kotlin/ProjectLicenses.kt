@@ -16,39 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    `kotlin-dsl`
-    kotlin("jvm")
-    `java-gradle-plugin`
-}
+import studio.forface.easygradle.publish.EasyPublishExtension
 
-object Plugin {
-    const val group = "me.proton"
-    const val id = "publish-libraries"
-    const val version = "0.2"
-}
-
-group = Plugin.group
-version = Plugin.version
-
-gradlePlugin {
-    plugins {
-        create("${Plugin.id}Plugin") {
-            id = "${Plugin.group}.${Plugin.id}"
-            implementationClass = "ProtonPublishLibrariesPlugin"
-            version = Plugin.version
+internal val EasyPublishExtension.applyLicences: EasyPublishExtension.LicensesBuilder.() -> Unit
+    get() = {
+        licenses {
+            license {
+                name = "GNU GENERAL PUBLIC LICENSE, Version 3.0"
+                url = "https://www.gnu.org/licenses/gpl-3.0.en.html"
+            }
         }
     }
-}
-
-repositories {
-    google()
-    jcenter()
-    maven("https://plugins.gradle.org/m2/")
-}
-
-dependencies {
-    implementation(gradleApi())
-    implementation("studio.forface.easygradle:dsl:2.7")
-    implementation("gradle.plugin.EasyPublish:plugin:0.3.5-build-1")
-}
