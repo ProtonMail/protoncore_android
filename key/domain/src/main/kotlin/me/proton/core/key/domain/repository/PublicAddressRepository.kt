@@ -44,7 +44,7 @@ interface PublicAddressRepository {
 /**
  * Get [PublicAddress], by [email], using [sessionUserId].
  *
- * @return [PublicAddress] or `null` if [PublicAddress.keys] are empty or cannot be returned for [email].
+ * @return [PublicAddress] or `null` if it can't be returned for [email].
  *
  * @see [PublicAddressRepository.getPublicAddress]
  */
@@ -53,7 +53,5 @@ suspend fun PublicAddressRepository.getPublicAddressOrNull(
     email: String,
     refresh: Boolean = true
 ): PublicAddress? = runCatching {
-    getPublicAddress(sessionUserId, email, refresh).also {
-        check(it.keys.isNotEmpty())
-    }
+    getPublicAddress(sessionUserId, email, refresh)
 }.getOrNull()
