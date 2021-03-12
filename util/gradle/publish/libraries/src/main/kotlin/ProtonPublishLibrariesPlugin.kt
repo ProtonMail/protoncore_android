@@ -90,8 +90,11 @@ private fun Project.setupPublishing() {
                     // Setup publish
                     tasks.register("publishAll") {
                         dependsOn(prePublish)
-                        if (isNewVersion)
-                            dependsOn(tasks.getByName("uploadArchives"))
+                        if (isNewVersion) {
+                            val closeAndReleaseTask = tasks.getByName("closeAndReleaseRepository")
+                            closeAndReleaseTask.dependsOn(tasks.getByName("uploadArchives"))
+                            dependsOn(closeAndReleaseTask)
+                        }
                     }
                 } else {
                     // Force Readme update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED

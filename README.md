@@ -194,10 +194,10 @@ Settings Data: **0** - _released on: ND_
 
 ### Human Verification
 
-Human Verification: **0.2.5** - _released on: Jan 04, 2021_
+Human Verification: **0.2.6** - _released on: Mar 14, 2021_
 
-Human Verification Domain: **0.2.3** - _released on: Nov 12, 2020_
+Human Verification Domain: **0.2.6** - _released on: Mar 14, 2020_
 
 Human Verification Presentation: **0.2.6** - _released on: Feb 01, 2021_
 
-Human Verification Data: **0.2.3** - _released on: Nov 12, 2020_
+Human Verification Data: **0.2.6** - _released on: Mar 14, 2020_
