@@ -20,67 +20,39 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
+    kotlin("android.extensions")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
 }
 
-android(
-    minSdk = 23,
-    version = Version(0, 3, 2),
-    useDataBinding = true
-)
+//libVersion = Version(0, 0, 1)
+
+android(useDataBinding = true, minSdk = 23)
 
 dependencies {
 
     implementation(
-
-        project(Module.kotlinUtil),
+        // Core
         project(Module.presentation),
-        project(Module.network),
+        project(Module.kotlinUtil),
         project(Module.domain),
-        project(Module.data),
-
+        project(Module.networkDomain),
+        
         // Features
-        project(Module.account),
-        project(Module.accountManager),
-        project(Module.accountManagerDagger),
-        project(Module.auth),
-        project(Module.crypto),
-        project(Module.data),
-        project(Module.domain),
-        project(Module.gopenpgp),
-        project(Module.humanVerification),
-        project(Module.key),
-        project(Module.user),
-        project(Module.mailMessage),
-        project(Module.payment),
-
-        `kotlin-jdk7`,
-        `coroutines-android`,
+        project(Module.paymentDomain),
 
         // Android
-        `activity`,
+        `android-ktx`,
         `appcompat`,
         `constraint-layout`,
         `fragment`,
         `hilt-android`,
-        `lifecycle-viewModel`,
-        `hilt-androidx-annotations`,
         `hilt-androidx-viewModel`,
+        `lifecycle-viewModel`,
         `material`,
-        `viewStateStore`,
-        `android-work-runtime`,
-
-        // Other
-        `retrofit`,
-        `timber`
-    )
-
-    compileOnly(
-        `android-annotation`,
-        `assistedInject-annotations-dagger`
+        `viewStateStore`
     )
 
     kapt(
@@ -88,11 +60,10 @@ dependencies {
         `hilt-android-compiler`,
         `hilt-androidx-compiler`
     )
+    compileOnly(
+        `assistedInject-annotations-dagger`
+    )
 
-    // Test
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))
-
-    // Lint - off temporary
-//    lintChecks(project(Module.lint))
 }

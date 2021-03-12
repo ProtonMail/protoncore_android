@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:padding="@dimen/payment_option_horizontal_padding">
+
+    <RadioButton
+        android:id="@+id/paymentMethodRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:text="@null"
+        android:clickable="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/paymentMethodTitleText"
+        style="@style/ProtonTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/payment_option_horizontal_padding"
+        android:layout_marginEnd="@dimen/payment_option_horizontal_padding"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="@id/paymentMethodRadio"
+        app:layout_constraintEnd_toStartOf="@id/paymentMethodIcon"
+        app:layout_constraintStart_toEndOf="@id/paymentMethodRadio"
+        app:layout_constraintTop_toTopOf="@id/paymentMethodRadio"
+        tools:text="Visa - 3220 (Exp 05/25)" />
+
+    <TextView
+        android:id="@+id/paymentMethodSubtitleText"
+        style="@style/ProtonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/paymentMethodTitleText"
+        app:layout_constraintTop_toBottomOf="@id/paymentMethodTitleText"
+        tools:text="John Doe" />
+
+    <ImageView
+        android:id="@+id/paymentMethodIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/payments_method_icon"
+        android:src="@drawable/ic_credit_card"
+        app:layout_constraintBottom_toBottomOf="@id/paymentMethodTitleText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/paymentMethodTitleText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

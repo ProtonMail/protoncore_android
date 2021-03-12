@@ -18,6 +18,7 @@
 
 package me.proton.android.core.coreexample.viewmodel
 
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
@@ -43,10 +44,15 @@ import me.proton.core.accountmanager.presentation.onSessionHumanVerificationNeed
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.payment.presentation.entity.PlanDetails
+import me.proton.core.payment.presentation.onPaymentResult
 
 class AccountViewModel @ViewModelInject constructor(
     private val accountManager: AccountManager,
-    private var authOrchestrator: AuthOrchestrator
+    private var authOrchestrator: AuthOrchestrator,
+    private val paymentsOrchestrator: PaymentsOrchestrator
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State.Processing as State)
@@ -61,7 +67,7 @@ class AccountViewModel @ViewModelInject constructor(
 
     fun register(context: ComponentActivity) {
         authOrchestrator.register(context)
-
+        paymentsOrchestrator.register(context)
         accountManager.getAccounts().onEach { accounts ->
             if (accounts.isEmpty()) _state.tryEmit(State.LoginNeeded)
             _state.tryEmit(State.AccountList(accounts))
@@ -99,6 +105,45 @@ class AccountViewModel @ViewModelInject constructor(
                 .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
                 .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
                 .onAccountDisabled { accountManager.removeAccount(it.userId) }
+        }
+    }
+
+    fun onPaySignUpClicked() {
+        viewModelScope.launch {
+            paymentsOrchestrator.startBillingWorkFlow(
+                selectedPlan =
+                PlanDetails(
+                    "ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw==",
+                    "Proton Plus",
+                    SubscriptionCycle.YEARLY
+                )
+            )
+        }
+    }
+
+    fun onPayUpgradeClicked() {
+        viewModelScope.launch {
+            getPrimaryUserId().first()?.let {
+                val account = accountManager.getAccount(it).first() ?: return@launch
+                with (paymentsOrchestrator) {
+                    onPaymentResult { result ->
+                        // do something with the payment result if needed
+                    }
+                    setOnPaymentResult { result ->
+
+                    }
+
+                    startBillingWorkFlow(
+                        sessionId = account.sessionId,
+                        selectedPlan = PlanDetails(
+                            "ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw==",
+                            "Proton Plus",
+                            SubscriptionCycle.YEARLY
+                        ),
+                        codes = null
+                    )
+                }
+            }
         }
     }
 }

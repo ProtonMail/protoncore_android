@@ -1,0 +1,62 @@
+/*
+ * Copyright (c) 2020 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package me.proton.core.payment.presentation.view
+
+import android.content.Context
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.presentation.R
+import me.proton.core.payment.presentation.databinding.PlanShortDetailsBinding
+import me.proton.core.payment.presentation.entity.PlanDetails
+
+internal class PlanShortDetailsView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : ConstraintLayout(context, attrs, defStyleAttr) {
+
+    private val binding = PlanShortDetailsBinding.inflate(LayoutInflater.from(context), this)
+
+    init {
+        binding.amountProgress.visibility = View.VISIBLE
+    }
+
+    var plan: PlanDetails? = null
+        set(value) = with(binding) {
+            val notAvailable = context.getString(R.string.payments_info_not_available)
+            planNameText.text = value?.name ?: notAvailable
+            billingPeriodText.text = when (value?.subscriptionCycle) {
+                SubscriptionCycle.MONTHLY -> context.getString(R.string.payments_billing_monthly)
+                SubscriptionCycle.YEARLY -> context.getString(R.string.payments_billing_yearly)
+                null -> notAvailable
+            }
+            value?.amount?.let {
+                amountProgress.visibility = View.GONE
+                amountText.text = context.getString(R.string.payments_price_amount,
+                    value.currency,
+                    (it / 100).toFloat()
+                )
+            } ?: run {
+                amountProgress.visibility = View.VISIBLE
+            }
+        }
+}

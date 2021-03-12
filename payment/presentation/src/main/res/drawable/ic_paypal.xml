@@ -1,0 +1,11 @@
+<!--~ Copyright (c) 2020 Proton Technologies AG ~ This file is part of Proton Technologies AG and ProtonCore. ~ ~ ProtonCore is free software: you can redistribute it and/or modify ~ it under the terms of the GNU General Public License as published by ~ the Free Software Foundation, either version 3 of the License, or ~ (at your option) any later version. ~ ~ ProtonCore is distributed in the hope that it will be useful, ~ but WITHOUT ANY WARRANTY; without even the implied warranty of ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the ~ GNU General Public License for more details. ~ ~ You should have received a copy of the GNU General Public License ~ along with ProtonCore. If not, see <https://www.gnu.org/licenses/>.-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="19dp"
+    android:height="19dp"
+    android:viewportWidth="19"
+    android:viewportHeight="19">
+    <path
+        android:fillColor="@color/icon_norm"
+        android:fillType="evenOdd"
+        android:pathData="M15.49 3.21C14.917 1.297 13.152-0.01 11.155 0H4.21c-0.748-0.008-1.388 0.535-1.5 1.275l-1.995 13.5c-0.091 0.447 0.026 0.91 0.317 1.26 0.292 0.35 0.727 0.55 1.183 0.54h3c-0.007 0.368 0.12 0.726 0.36 1.005 0.3 0.29 0.708 0.443 1.125 0.42h4.395l0.75-4.5h0.825c3.314 0 6-2.686 6-6-0.005-1.972-1.294-3.711-3.18-4.29zM14.2 4.5c0 2.485-2.015 4.5-4.5 4.5H7.54l0.51-4.5h6.15zM6.565 4.335L5.365 15h-3.15L4.21 1.5h6.945c1.081-0.01 2.084 0.563 2.625 1.5H8.05C7.288 3.003 6.649 3.577 6.565 4.335zM12.67 12h-2.1l-0.75 4.5H6.7l0.675-6H9.64c3.162 0.007 5.787-2.44 6-5.595 0.95 0.52 1.547 1.512 1.56 2.595 0 1.199-0.478 2.348-1.329 3.193-0.85 0.845-2.002 1.315-3.201 1.307z" />
+</vector>

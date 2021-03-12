@@ -25,6 +25,8 @@
     <string name="current_accounts">Current Accounts:</string>
     <string name="force_update">Force Update</string>
     <string name="trigger_human_ver">Trigger human verification</string>
+    <string name="payments_upgrade">Payments (upgrade primary)</string>
+    <string name="payments_signup">Payments (signup)</string>
 
     <string name="example_hint">Hint</string>
     <string name="example_hint_disabled">Hint Disabled input</string>

@@ -83,6 +83,13 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 }
             }
             sendDirect.onClick { mailMessageViewModel.sendDirect() }
+
+            payment.onClick {
+                accountViewModel.onPayUpgradeClicked()
+            }
+            paymentSignUp.onClick {
+                accountViewModel.onPaySignUpClicked()
+            }
         }
 
         accountViewModel.getPrimaryAccount().onEach { primary ->

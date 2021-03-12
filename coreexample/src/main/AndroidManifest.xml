@@ -65,6 +65,18 @@
             android:name="me.proton.core.auth.presentation.ui.SecondFactorActivity"
             android:theme="@style/ProtonTheme"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.payment.presentation.ui.BillingActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.payment.presentation.ui.PaymentOptionsActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.payment.presentation.ui.PaymentTokenApprovalActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
