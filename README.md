@@ -191,3 +191,9 @@ Human Verification Domain: **0.2.6** - _released on: Mar 14, 2020_
 Human Verification Presentation: **0.2.6** - _released on: Feb 01, 2021_
 
 Human Verification Data: **0.2.6** - _released on: Mar 14, 2020_
+
+### Payment
+
+Payment: **0** - _released on: Mar 12, 2021_
+
+Payment Domain: **0** - _released on: Mar 12, 2021_
