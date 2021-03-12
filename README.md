@@ -197,3 +197,9 @@ Human Verification Data: **0.2.6** - _released on: Mar 14, 2020_
 Payment: **0** - _released on: Mar 12, 2021_
 
 Payment Domain: **0** - _released on: Mar 12, 2021_
+
+### Payment
+
+Payment: **0.1** - _released on: Mar 12, 2021_
+
+Payment Domain: **0.1** - _released on: Mar 12, 2021_
