@@ -21,9 +21,9 @@ package me.proton.core.humanverification.data.repository
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import me.proton.core.data.asset.readFromAssets
 import me.proton.core.humanverification.data.entity.CountriesDataModel
 import me.proton.core.humanverification.data.entity.CountryDataModel
-import me.proton.core.humanverification.data.readFromAssets
 import me.proton.core.humanverification.domain.entity.Country
 import me.proton.core.humanverification.domain.repository.HumanVerificationLocalRepository
 import me.proton.core.util.kotlin.deserialize

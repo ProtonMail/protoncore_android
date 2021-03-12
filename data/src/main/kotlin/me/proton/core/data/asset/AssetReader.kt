@@ -16,38 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.data.asset
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("plugin.serialization")
-}
+import android.content.Context
+import java.io.InputStreamReader
 
-libVersion = Version(0, 3, 0)
-
-android()
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.humanVerificationDomain),
-        project(Module.network),
-        project(Module.data),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `serialization-json`,
-        `coroutines-core`,
-
-        // Other
-        `okHttp-logging`,
-        `retrofit`,
-        `retrofit-kotlin-serialization`
-    )
-
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
-}
+/**
+ * Reads String content from an assets file, with provided name (extension included).
+ * It is expected that the file itself is found in the root of the assets folder.
+ */
+fun Context.readFromAssets(resource: String): String =
+    InputStreamReader(assets.open(resource)).use { it.readText() }

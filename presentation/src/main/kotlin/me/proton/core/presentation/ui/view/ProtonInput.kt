@@ -18,7 +18,9 @@
 package me.proton.core.presentation.ui.view
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.EditText
@@ -85,7 +87,8 @@ class ProtonInput : LinearLayout {
             suffixText = getString(R.styleable.ProtonInput_suffix)
             inputType = getInteger(R.styleable.ProtonInput_android_inputType, InputType.TYPE_CLASS_TEXT)
             isEnabled = getBoolean(R.styleable.ProtonInput_android_enabled, true)
-            setActionMode(getInt(R.styleable.ProtonInput_actionMode, 0))
+            endIconMode = EndIconMode.map[getInt(R.styleable.ProtonInput_actionMode, 0)] ?: EndIconMode.NONE
+            endIconDrawable = getDrawable(R.styleable.ProtonInput_endIconDrawable)
         }
 
         // Set internal input id.
@@ -168,6 +171,29 @@ class ProtonInput : LinearLayout {
         get() = inputType.isInputTypePassword()
 
     /**
+     * End icon drawable. It goes together with [EndIconMode.CUSTOM_ICON], otherwise it does not have effect.
+     * Call #endIconMode with [EndIconMode.CUSTOM_ICON] before setting the end drawable.
+     */
+    var endIconDrawable: Drawable?
+        get() = binding.inputLayout.endIconDrawable
+        set(value) {
+            binding.inputLayout.apply {
+                setEndIconTintList(null)
+                endIconDrawable = value
+            }
+        }
+
+    var endIconMode: EndIconMode
+        get() = EndIconMode.map[binding.inputLayout.endIconMode] ?: EndIconMode.NONE
+        set(value) {
+            setActionMode(value)
+        }
+
+    fun addTextChangedListener(watcher: TextWatcher) {
+        binding.input.addTextChangedListener(watcher)
+    }
+
+    /**
      * Set the enabled state of this view.
      *
      * The interpretation of the enabled state varies by subclass.
@@ -217,24 +243,40 @@ class ProtonInput : LinearLayout {
     /**
      * Set the action mode for the end icon.
      */
-    fun setActionMode(mode: Int) {
+    private fun setActionMode(mode: EndIconMode) {
         // See ProtonInput attributes (attrs.xml).
         when (mode) {
             // None
-            0 -> {
+            EndIconMode.NONE -> {
                 binding.inputLayout.endIconMode = TextInputLayout.END_ICON_NONE
                 binding.inputLayout.setEndIconActivated(false)
             }
             // Clear Text
-            1 -> {
+            EndIconMode.CLEAR_TEXT -> {
                 binding.inputLayout.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
                 binding.inputLayout.setEndIconActivated(true)
             }
             // PasswordToggle
-            2 -> {
+            EndIconMode.PASSWORD_TOGGLE -> {
                 binding.inputLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
                 binding.inputLayout.setEndIconActivated(true)
             }
+            // Custom Icon
+            EndIconMode.CUSTOM_ICON -> {
+                binding.inputLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM
+                binding.inputLayout.setEndIconActivated(true)
+            }
+        }
+    }
+
+    enum class EndIconMode(val action: Int) {
+        NONE(0),
+        CLEAR_TEXT(1),
+        PASSWORD_TOGGLE(2),
+        CUSTOM_ICON(3);
+
+        companion object {
+            val map = values().associateBy { it.action }
         }
     }
     // endregion

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * A common interface for Adapters that have clickable items [UiModel]
  */
-interface ClickableAdapter<UiModel> {
+interface ClickableAdapter<UiModel, ViewRef : Any> {
 
     /**
      * A callback that will be triggered when an item is clicked, has [UiModel] as lambda parameter
@@ -47,7 +47,7 @@ interface ClickableAdapter<UiModel> {
         protected val context: Context get() = itemView.context
 
         /** Populate the [View] with the given [item] [UiModel] */
-        open fun onBind(item: UiModel) {
+        open fun onBind(item: UiModel, position: Int) {
             itemView.setOnClickListener { clickListener(item) }
             itemView.setOnLongClickListener {
                 longClickListener(item)

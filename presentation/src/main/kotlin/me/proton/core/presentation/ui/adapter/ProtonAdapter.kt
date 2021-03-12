@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.proton.core.presentation.utils.inflate
+import kotlin.properties.Delegates.observable
 
 /**
  * A [ListAdapter] for [RecyclerView] that contains a [List] of [UiModel] items.
@@ -31,7 +32,7 @@ abstract class ProtonAdapter<UiModel, ViewRef : Any, ViewHolder : ClickableAdapt
     diffCallback: DiffUtil.ItemCallback<UiModel>
 ) : ListAdapter<UiModel, ViewHolder>(
     AsyncDifferConfig.Builder<UiModel>(diffCallback).build()
-), ClickableAdapter<UiModel>, FilterableAdapter<UiModel, List<UiModel>> {
+), ClickableAdapter<UiModel, ViewRef>, FilterableAdapter<UiModel, List<UiModel>> {
 
     final override var unfilteredList = emptyList<UiModel>()
 
@@ -40,7 +41,7 @@ abstract class ProtonAdapter<UiModel, ViewRef : Any, ViewHolder : ClickableAdapt
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.onBind(item)
+        holder.onBind(item, position)
     }
 
     /**
@@ -89,8 +90,8 @@ fun <UiModel, ViewRef : Any> ProtonAdapter(
             onItemClick,
             onItemLongClick
         ) {
-            override fun onBind(item: UiModel) {
-                super.onBind(item)
+            override fun onBind(item: UiModel, position: Int) {
+                super.onBind(item, position)
                 onBind(viewRef, item)
             }
         }
@@ -121,3 +122,57 @@ fun <UiModel, ViewRef : Any> ProtonAdapter(
     diffCallback,
     onFilter
 )
+
+/**
+ * Create a [ProtonAdapter] in functional way
+ * @param getView receives a [ViewGroup] and a [LayoutInflater].
+ *   It must return a [View] or a ViewBinding reference of type [ViewRef]
+ * @param onBind executes the binding on the [ViewRef], it has [ViewRef] as lambda receiver and [UiModel] as lambda
+ *   parameter
+ * @param onFilter ( OPTIONAL ) declares the logic for filter [UiModel] elements
+ *
+ * Other params inherit from [ProtonAdapter] class
+ *
+ * @return [ProtonAdapter]
+ */
+fun <UiModel, ViewRef : Any> selectableProtonAdapter(
+    getView: (parent: ViewGroup, inflater: LayoutInflater) -> ViewRef,
+    onBind: ViewRef.(uiModel: UiModel, selected: Boolean) -> Unit,
+    onItemClick: (UiModel) -> Unit = {},
+    onItemLongClick: (UiModel) -> Unit = {},
+    diffCallback: DiffUtil.ItemCallback<UiModel>,
+    onFilter: (element: UiModel, constraint: CharSequence) -> Boolean = { _, _ -> true }
+) = object : ProtonAdapter<UiModel, ViewRef, ClickableAdapter.ViewHolder<UiModel, ViewRef>>(
+    onItemClick,
+    onItemLongClick,
+    diffCallback
+) {
+
+    var selectedPosition by observable(-1) { _, oldPos, newPos ->
+        if (newPos in unfilteredList.indices) {
+            notifyItemChanged(oldPos)
+            notifyItemChanged(newPos)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        object : ClickableAdapter.ViewHolder<UiModel, ViewRef>(
+            getView(parent, LayoutInflater.from(parent.context)),
+            onItemClick,
+            onItemLongClick
+        ) {
+            override fun onBind(item: UiModel, position: Int) {
+                itemView.setOnClickListener {
+                    selectedPosition = position
+                    clickListener(item)
+                }
+                itemView.setOnLongClickListener {
+                    longClickListener(item)
+                    true
+                }
+                onBind(viewRef, item, position == selectedPosition)
+            }
+        }
+
+    override fun onFilter(element: UiModel, constraint: CharSequence) = onFilter(element, constraint)
+}

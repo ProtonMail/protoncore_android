@@ -23,7 +23,7 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(1, 0, 1)
+libVersion = Version(1, 1, 0)
 
 android()
 

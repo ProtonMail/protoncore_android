@@ -32,11 +32,23 @@ fun ProtonInput.validatePassword() =
 fun ProtonInput.validateEmail() =
     InputValidationResult(this, ValidationType.Email)
 
+fun ProtonInput.validateCreditCard() =
+    InputValidationResult(this, ValidationType.CreditCard)
+
 enum class ValidationType {
     NotBlank,
     Username,
     Password,
     Email,
+    CreditCard
+}
+
+enum class CardType(val regex: String) {
+    VISA("^4[0-9]{12}(?:[0-9]{3})?"),
+    MASTERCARD("^5[1-5][0-9]{14}|^(222[1-9]|22[3-9]\\\\d|2[3-6]\\\\d{2}|27[0-1]\\\\d|2720)[0-9]{12}"),
+    AMEX("^3[47][0-9]{13}"),
+    DISCOVER("^6(?:011|5[0-9]{2})[0-9]{12}"),
+    OTHER("\\b\\d{13,16}\\b")
 }
 
 data class InputValidationResult(
@@ -44,11 +56,17 @@ data class InputValidationResult(
     val validationType: ValidationType = ValidationType.NotBlank
 ) {
     val text = input.text.toString()
+    var cardType: CardType? = null
+
     val isValid = when (validationType) {
         ValidationType.NotBlank -> validateNotBlank()
         ValidationType.Username -> validateUsername()
         ValidationType.Password -> validatePassword()
         ValidationType.Email -> validateEmail()
+        ValidationType.CreditCard -> {
+            cardType = validateCreditCard()
+            cardType != null
+        }
     }
 
     private fun validateNotBlank() = text.isNotBlank()
@@ -60,6 +78,18 @@ data class InputValidationResult(
     private fun validateEmail(): Boolean {
         val regex = EMAIL_VALIDATION_PATTERN.toRegex(RegexOption.IGNORE_CASE)
         return validateNotBlank() && regex.matches(text)
+    }
+
+    private fun validateCreditCard(): CardType? {
+        val input = text.replace(" ", "")
+        val types = CardType.values().map {
+            it.ordinal to it.regex.toRegex(RegexOption.IGNORE_CASE).matches(input)
+        }.toMap()
+
+        val key = types.entries.firstOrNull { it.value }?.key
+        return key?.let {
+            CardType.values()[it]
+        } ?: run { null }
     }
 
     companion object {

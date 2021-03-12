@@ -41,4 +41,8 @@
     <!-- splash background items spacing -->
     <dimen name="splash_bottom_padding">50dp</dimen>
 
+    <!-- activity basic dimensions -->
+    <dimen name="default_no_toolbar_top_margin">160dp</dimen>
+    <dimen name="default_parent_default_padding">@dimen/default_gap</dimen>
+    <dimen name="default_content_separator_top_margin">@dimen/double_top_margin</dimen>
 </resources>

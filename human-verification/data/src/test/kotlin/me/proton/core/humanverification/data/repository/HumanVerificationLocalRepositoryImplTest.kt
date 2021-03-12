@@ -25,7 +25,7 @@ import io.mockk.unmockkStatic
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.humanverification.data.readFromAssets
+import me.proton.core.data.asset.readFromAssets
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -118,14 +118,14 @@ class HumanVerificationLocalRepositoryImplTest {
 
     @Before
     fun beforeEveryTest() {
-        mockkStatic("me.proton.core.humanverification.data.UtilsKt")
+        mockkStatic("me.proton.core.data.asset.AssetReaderKt")
         every { context.readFromAssets(FILE_NAME_ALL_COUNTRIES) } returns testDataCountries
         every { context.readFromAssets(FILE_NAME_MOST_USED_COUNTRIES) } returns testDataMostUsedCountries
     }
 
     @After
     fun afterEveryTest() {
-        unmockkStatic("me.proton.core.humanverification.data.UtilsKt")
+        unmockkStatic("me.proton.core.data.asset.AssetReaderKt")
     }
 
     @Test
