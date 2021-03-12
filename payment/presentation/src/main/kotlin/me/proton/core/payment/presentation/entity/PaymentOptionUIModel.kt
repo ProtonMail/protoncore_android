@@ -28,7 +28,7 @@ data class PaymentOptionUIModel(
     val type: Int, // enum, ordinal
     val title: String,
     val subtitle: String
-): Parcelable {
+) : Parcelable {
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<PaymentOptionUIModel>() {
             override fun areItemsTheSame(oldItem: PaymentOptionUIModel, newItem: PaymentOptionUIModel) =

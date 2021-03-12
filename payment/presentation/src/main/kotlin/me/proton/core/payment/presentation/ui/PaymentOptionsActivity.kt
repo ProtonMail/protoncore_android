@@ -136,7 +136,13 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
         viewModel.subscriptionResult.observeData {
             when (it) {
                 is BillingViewModel.State.Processing -> showLoading(true)
-                is BillingViewModel.State.Success.SubscriptionCreated -> onPaymentSuccess(BillingResult(true, it.paymentToken, true))
+                is BillingViewModel.State.Success.SubscriptionCreated -> onPaymentSuccess(
+                    BillingResult(
+                        true,
+                        it.paymentToken,
+                        true
+                    )
+                )
                 is BillingViewModel.State.Incomplete.TokenApprovalNeeded ->
                     onTokenApprovalNeeded(input.sessionId, it.paymentToken, it.amount)
                 is BillingViewModel.State.Error.Message -> showError(it.message)

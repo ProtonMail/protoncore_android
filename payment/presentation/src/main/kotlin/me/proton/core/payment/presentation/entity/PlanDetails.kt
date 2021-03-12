@@ -30,4 +30,4 @@ data class PlanDetails(
     val subscriptionCycle: SubscriptionCycle,
     val amount: Long? = null,
     val currency: Currency = Currency.EUR
-): Parcelable
+) : Parcelable

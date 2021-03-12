@@ -51,7 +51,8 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
             }
             value?.amount?.let {
                 amountProgress.visibility = View.GONE
-                amountText.text = context.getString(R.string.payments_price_amount,
+                amountText.text = context.getString(
+                    R.string.payments_price_amount,
                     value.currency,
                     (it / 100).toFloat()
                 )

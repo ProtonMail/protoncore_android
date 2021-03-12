@@ -50,6 +50,9 @@ class PaymentsOrchestrator @Inject constructor() {
 
     /**
      * Starts the billing workflow.
+     * @param sessionId set the session id of the user doing the payment (upgrade), or pass null for new user creation (sign up)
+     * @param selectedPlan the selected plan ID
+     * @param codes the coupon codes (if any)
      */
     fun startBillingWorkFlow(
         sessionId: SessionId? = null,

@@ -29,6 +29,8 @@ android()
 
 dependencies {
     api(
-        project(Module.paymentDomain)
+        project(Module.paymentDomain),
+        project(Module.paymentData),
+        project(Module.paymentPresentation)
     )
 }

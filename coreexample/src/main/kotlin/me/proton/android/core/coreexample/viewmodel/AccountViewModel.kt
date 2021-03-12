@@ -18,7 +18,6 @@
 
 package me.proton.android.core.coreexample.viewmodel
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
@@ -125,12 +124,9 @@ class AccountViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             getPrimaryUserId().first()?.let {
                 val account = accountManager.getAccount(it).first() ?: return@launch
-                with (paymentsOrchestrator) {
+                with(paymentsOrchestrator) {
                     onPaymentResult { result ->
-                        // do something with the payment result if needed
-                    }
-                    setOnPaymentResult { result ->
-
+                        // do something with the payment result
                     }
 
                     startBillingWorkFlow(

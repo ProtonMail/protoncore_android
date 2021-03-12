@@ -26,4 +26,4 @@ data class BillingResult(
     val paySuccess: Boolean,
     val token: String?,
     val subscriptionCreated: Boolean
-): Parcelable
+) : Parcelable
