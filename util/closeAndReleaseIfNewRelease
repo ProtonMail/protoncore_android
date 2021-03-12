@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+function main {
+
+  # Check if the release file exists
+  if [ -s 'new_releases.tmp' ]; then
+    echo "=> Close and Release new artefacts on Sonatype/Maven."
+    ./gradlew closeAndReleaseRepository
+  else
+   echo "=> No new releases to close and release."
+  fi
+
+  exit 0
+}
+
+main
