@@ -19,6 +19,7 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.extra
 // import org.gradle.kotlin.dsl.named
 // import org.jetbrains.dokka.gradle.DokkaPlugin
 // import org.jetbrains.dokka.gradle.DokkaTask
@@ -31,10 +32,8 @@ import java.time.format.DateTimeFormatter
 
 /**
  * Setup Publishing for whole Project.
- * It will setup publishing to sub-projects by generating KDoc, generating aar, updating readme and publish new versions
- * to Bintray
  *
- * @author Davide Farella
+ * Setup sub-projects by generating KDoc, generating aar, updating readme, sign and publish new versions to Maven.
  */
 abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
@@ -51,25 +50,32 @@ abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 private fun Project.setupPublishing() {
     afterEvaluate {
 
-        val bintrayApiKey = System.getenv()["BINTRAY_PUBLISH_KEY"] ?: " "
         if (libVersion != null) {
-            // apply<DokkaPlugin>()
-
             archivesBaseName = archiveName
 
-            // Setup maven publish config
+            // Setup maven publish/signing config
+            val mavenPassword = System.getenv()["MAVEN_PASSWORD"]
             publish {
                 version = libVersion!!
                 developers(applyDevelopers)
-
-                apiKey = bintrayApiKey
-
-                // Temporary solution since files are already published on Bintray.
-                override = true
+                licenses(applyLicences)
+                baseUrl = System.getenv()["MAVEN_BASE_URL"] ?: "none"
+                username = System.getenv()["MAVEN_USER"] ?: "none"
+                password = mavenPassword ?: "none"
+                signingEnabled = mavenPassword != null
+                signingAsciiKey = System.getenv()["MAVEN_SIGNING_KEY"] ?: "none"
+                signingPassword = System.getenv()["MAVEN_SIGNING_KEY_PASSWORD"] ?: "none"
+                // Workaround, waiting on EasyPublish & vanniktech plugin update.
+                stagingProfile = "me.proton"
+                extra["POM_URL"] = "https://github.com/ProtonMail/protoncore_android"
+                extra["SONATYPE_NEXUS_USERNAME"] = username
+                extra["SONATYPE_NEXUS_PASSWORD"] = password
+                extra["RELEASE_REPOSITORY_URL"] = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                extra["SNAPSHOT_REPOSITORY_URL"] = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
             }
 
             with(ReleaseManager(this)) {
-                if (bintrayApiKey.isNotBlank()) {
+                if (mavenPassword != null) {
 
                     // Setup pre publish
                     val prePublish = tasks.create("prePublish") {
@@ -88,10 +94,6 @@ private fun Project.setupPublishing() {
                             dependsOn(tasks.getByName("uploadArchives"))
                     }
                 } else {
-                    // Force Dokka update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
-                    // tasks.create("forceDokka") {
-                    //     doLast { generateKdocIfNeeded() }
-                    // }
                     // Force Readme update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
                     tasks.create("forceUpdateReadme") {
                         doLast { updateReadme() }
