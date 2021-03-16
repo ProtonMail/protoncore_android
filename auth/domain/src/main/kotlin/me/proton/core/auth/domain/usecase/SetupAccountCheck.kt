@@ -21,7 +21,7 @@ package me.proton.core.auth.domain.usecase
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.Role
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.user.domain.extension.originalOrNull
+import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -38,8 +38,8 @@ class SetupAccountCheck @Inject constructor(
         /** Setup primary keys, using existing username. */
         object SetupPrimaryKeysNeeded : Result()
 
-        /** Setup a new original address, using existing username. */
-        object SetupOriginalAddressNeeded : Result()
+        /** Setup a new internal address, using existing username. */
+        object SetupInternalAddressNeeded : Result()
 
         /** Choose a username - user interaction needed. */
         object ChooseUsernameNeeded : Result()
@@ -68,7 +68,7 @@ class SetupAccountCheck @Inject constructor(
         if (isTwoPassModeNeeded && hasKeys) return Result.TwoPassNeeded
 
         val addresses = addressRepository.getAddresses(userId, refresh = true)
-        val hasOriginalAddressKey = addresses.originalOrNull()?.keys?.isNotEmpty() ?: false
+        val hasInternalAddressKey = addresses.firstInternalOrNull()?.keys?.isNotEmpty() ?: false
 
         return when (requiredAccountType) {
             AccountType.Username -> Result.NoSetupNeeded
@@ -76,7 +76,7 @@ class SetupAccountCheck @Inject constructor(
             AccountType.Internal -> when {
                 !hasUsername -> Result.ChooseUsernameNeeded
                 !hasKeys -> Result.SetupPrimaryKeysNeeded
-                !hasOriginalAddressKey -> Result.SetupOriginalAddressNeeded
+                !hasInternalAddressKey -> Result.SetupInternalAddressNeeded
                 else -> Result.NoSetupNeeded
             }
         }

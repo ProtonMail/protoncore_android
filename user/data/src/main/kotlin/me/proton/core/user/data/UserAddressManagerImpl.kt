@@ -29,8 +29,8 @@ import me.proton.core.key.domain.signedKeyList
 import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.extension.hasMigratedKey
-import me.proton.core.user.domain.extension.originalOrNull
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 
@@ -58,14 +58,14 @@ class UserAddressManagerImpl(
         refresh: Boolean
     ): UserAddress? = userAddressRepository.getAddress(sessionUserId, addressId, refresh = refresh)
 
-    override suspend fun setupOriginalAddress(
+    override suspend fun setupInternalAddress(
         sessionUserId: SessionUserId,
         username: String,
         domain: String
     ): UserAddress {
-        // Check if original UserAddress already exist, and if needed create remotely.
+        // Check if internal UserAddress already exist, and if needed create remotely.
         val userAddresses = userAddressRepository.getAddresses(sessionUserId)
-        val userAddress = userAddresses.originalOrNull() ?: createAddress(sessionUserId, username, domain)
+        val userAddress = userAddresses.firstInternalOrNull() ?: createAddress(sessionUserId, username, domain)
         return createAddressKey(sessionUserId, userAddress.addressId, isPrimary = true)
     }
 

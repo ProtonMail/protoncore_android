@@ -25,7 +25,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.usecase.SetupOriginalAddress
+import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.SetupUsername
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
@@ -48,7 +48,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     private val accountHandler = mockk<AccountWorkflowHandler>(relaxed = true)
     private val userManager = mockk<UserManager>(relaxed = true)
     private val setupUsername = mockk<SetupUsername>(relaxed = true)
-    private val setupOriginalAddress = mockk<SetupOriginalAddress>(relaxed = true)
+    private val setupInternalAddress = mockk<SetupInternalAddress>(relaxed = true)
     private val setupPrimaryKeys = mockk<SetupPrimaryKeys>(relaxed = true)
     private val unlockUserPrimaryKey = mockk<UnlockUserPrimaryKey>(relaxed = true)
     // endregion
@@ -60,8 +60,8 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     private val testDomain = "test-domain"
     private val testUser = mockk<User>()
     private val testUserKey = mockk<UserKey>()
-    private val testAddressOriginal = mockk<UserAddress>()
-    private val testAddressOriginalWithoutKeys = mockk<UserAddress>()
+    private val testAddressInternal = mockk<UserAddress>()
+    private val testAddressInternalWithoutKeys = mockk<UserAddress>()
     private val testAddressExternal = mockk<UserAddress>()
     // endregion
 
@@ -74,21 +74,21 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             userManager,
             setupUsername,
             setupPrimaryKeys,
-            setupOriginalAddress,
+            setupInternalAddress,
             unlockUserPrimaryKey
         )
         coEvery { userManager.getUser(any(), any()) } returns testUser
 
         coEvery { setupUsername.invoke(any(), any()) } returns Unit
         coEvery { setupPrimaryKeys.invoke(any(), any()) } returns Unit
-        coEvery { setupOriginalAddress.invoke(any(), any()) } returns Unit
+        coEvery { setupInternalAddress.invoke(any(), any()) } returns Unit
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
-        every { testAddressOriginal.type } returns AddressType.Original
-        every { testAddressOriginal.keys } returns listOf(mockk())
+        every { testAddressInternal.type } returns AddressType.Original
+        every { testAddressInternal.keys } returns listOf(mockk())
 
-        every { testAddressOriginalWithoutKeys.type } returns AddressType.Original
-        every { testAddressOriginalWithoutKeys.keys } returns emptyList()
+        every { testAddressInternalWithoutKeys.type } returns AddressType.Original
+        every { testAddressInternalWithoutKeys.keys } returns emptyList()
 
         every { testAddressExternal.type } returns AddressType.External
     }
@@ -106,7 +106,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
         coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 0) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
         coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 
         coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
@@ -119,7 +119,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `setup username and original address`() = coroutinesTest {
+    fun `setup username and internal address`() = coroutinesTest {
         // GIVEN
         every { testUser.keys } returns listOf(testUserKey)
         coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressExternal)
@@ -131,7 +131,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
         coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 1) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
         coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 
         coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
@@ -144,10 +144,10 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `setup username and original address because no keys`() = coroutinesTest {
+    fun `setup username and internal address because no keys`() = coroutinesTest {
         // GIVEN
         every { testUser.keys } returns listOf(testUserKey)
-        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressOriginalWithoutKeys)
+        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressInternalWithoutKeys)
         // WHEN
         val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
         viewModel.upgradeState.observeDataForever(observer)
@@ -156,7 +156,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
         coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 1) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
         coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 
         coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
@@ -172,7 +172,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     fun `setup username and unlock`() = coroutinesTest {
         // GIVEN
         every { testUser.keys } returns listOf(testUserKey)
-        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressOriginal)
+        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressInternal)
         // WHEN
         val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
         viewModel.upgradeState.observeDataForever(observer)
@@ -181,7 +181,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
         coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 0) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
         coVerify(exactly = 0) { accountHandler.handleCreateAddressSuccess(any()) }
 
         coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
@@ -212,7 +212,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
         coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 0) { setupOriginalAddress.invoke(any(), any()) }
+        coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
         coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 
         coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }

@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.usecase.SetupOriginalAddress
+import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.SetupUsername
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
@@ -33,7 +33,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.extension.originalOrNull
+import me.proton.core.user.domain.extension.firstInternalOrNull
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -42,7 +42,7 @@ class CreateAddressViewModel @ViewModelInject constructor(
     private val userManager: UserManager,
     private val setupUsername: SetupUsername,
     private val setupPrimaryKeys: SetupPrimaryKeys,
-    private val setupOriginalAddress: SetupOriginalAddress,
+    private val setupInternalAddress: SetupInternalAddress,
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey
 ) : ProtonViewModel(), ViewStateStoreScope {
 
@@ -74,11 +74,11 @@ class CreateAddressViewModel @ViewModelInject constructor(
         val hasKeys = user.keys.isNotEmpty()
 
         val addresses = userManager.getAddresses(userId, refresh = true)
-        val hasOriginalAddressKey = addresses.originalOrNull()?.keys?.isNotEmpty() ?: false
+        val hasInternalAddressKey = addresses.firstInternalOrNull()?.keys?.isNotEmpty() ?: false
 
         when {
             !hasKeys -> setupPrimaryKeys(userId, password)
-            !hasOriginalAddressKey -> setupOriginalAddress(userId, password, domain)
+            !hasInternalAddressKey -> setupInternalAddress(userId, password, domain)
             else -> unlockUserPrimaryKey(userId, password)
         }.let {
             emit(it)
@@ -98,14 +98,14 @@ class CreateAddressViewModel @ViewModelInject constructor(
         return unlockUserPrimaryKey(userId, password)
     }
 
-    private suspend fun setupOriginalAddress(
+    private suspend fun setupInternalAddress(
         userId: UserId,
         password: EncryptedString,
         domain: String
     ): State {
         val result = unlockUserPrimaryKey.invoke(userId, password)
         return if (result is UserManager.UnlockResult.Success) {
-            setupOriginalAddress.invoke(userId, domain)
+            setupInternalAddress.invoke(userId, domain)
             accountWorkflow.handleCreateAddressSuccess(userId)
             accountWorkflow.handleAccountReady(userId)
             State.Success.UserUnLocked(userId)

@@ -28,7 +28,7 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
-import me.proton.core.auth.domain.usecase.SetupOriginalAddress
+import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.auth.presentation.entity.SessionResult
@@ -53,7 +53,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     private val unlockUserPrimaryKey = mockk<UnlockUserPrimaryKey>()
     private val setupAccountCheck = mockk<SetupAccountCheck>()
     private val setupPrimaryKeys = mockk<SetupPrimaryKeys>(relaxed = true)
-    private val setupOriginalAddress = mockk<SetupOriginalAddress>(relaxed = true)
+    private val setupInternalAddress = mockk<SetupInternalAddress>(relaxed = true)
 
     private val testSessionResult = mockk<SessionResult>(relaxed = true)
     private val testScopeInfo = mockk<ScopeInfo>(relaxed = true)
@@ -76,7 +76,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             unlockUserPrimaryKey,
             setupAccountCheck,
             setupPrimaryKeys,
-            setupOriginalAddress,
+            setupInternalAddress,
             sessionProvider
         )
         coEvery { sessionProvider.getSessionId(any()) } returns testSessionId
