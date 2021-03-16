@@ -56,7 +56,7 @@ publishMaven:
   tags:
     - large
   script:
-    - ./gradlew assemble && ./gradlew publishAll --no-daemon --no-parallel
+    - ./gradlew assemble && ./gradlew publishNewRelease --no-daemon --no-parallel
   only:
     - master
   artifacts:
