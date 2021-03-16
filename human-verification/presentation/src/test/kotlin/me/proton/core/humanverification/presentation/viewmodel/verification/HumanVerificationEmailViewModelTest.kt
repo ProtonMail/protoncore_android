@@ -19,26 +19,21 @@
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.test.kotlin.coroutinesTest
 import org.junit.Rule
 import org.junit.Test
-import studio.forface.viewstatestore.ViewState
-import kotlin.test.assertEquals
 
-/**
- * @author Dino Kadrikj.
- */
-class HumanVerificationEmailViewModelTest : CoroutinesTest by coroutinesTest {
+class HumanVerificationEmailViewModelTest : CoroutinesTest {
 
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
@@ -54,43 +49,41 @@ class HumanVerificationEmailViewModelTest : CoroutinesTest by coroutinesTest {
     }
 
     @Test
-    fun `send verification code to email address success`() = runBlockingTest {
+    fun `send verification code to email address success`() = coroutinesTest {
         coEvery {
             useCase.invoke(any(), any())
         } returns VerificationResult.Success
 
         viewModel.sendVerificationCode(sessionId, testEmail)
-        assertIs<ViewState.Success<Boolean>>(viewModel.verificationCodeStatus.awaitNext())
+        viewModel.verificationCodeStatus.test {
+            assertIs<ViewModelResult.Success<Boolean>>(expectItem())
+        }
     }
 
     @Test
-    fun `send verification code to email address error`() = runBlockingTest {
+    fun `send verification code to email address error`() = coroutinesTest {
         coEvery {
             useCase.invoke(any(), any())
         } returns VerificationResult.Error(errorResponse)
 
         viewModel.sendVerificationCode(sessionId, testEmail)
-        val result = viewModel.verificationCodeStatus.awaitNext()
-        assertIs<ViewState.Error>(result)
-        val throwable = (result as ViewState.Error).throwable
-        assertIs<VerificationCodeSendingException>(throwable)
+        viewModel.verificationCodeStatus.test {
+            val result = expectItem() as ViewModelResult.Error
+            assertIs<VerificationCodeSendingException>(result.throwable)
+        }
     }
 
 
     @Test
-    fun `send verification code to email address invalid`() = runBlockingTest {
+    fun `send verification code to email address invalid`() = coroutinesTest {
         coEvery {
             useCase.invoke(any(), any())
         } returns VerificationResult.Success
 
         viewModel.sendVerificationCode(sessionId, "")
-        val result = viewModel.validation.awaitNext()
-        assertIs<ViewState.Error>(result)
-        val throwable = (result as ViewState.Error).throwable
-        assertEquals(
-            "Destination email:  is invalid.",
-            (throwable as EmptyDestinationException).message
-        )
+        viewModel.validation.test {
+            val result = expectItem() as ViewModelResult.Error
+            assertIs<EmptyDestinationException>(result.throwable)
+        }
     }
-
 }

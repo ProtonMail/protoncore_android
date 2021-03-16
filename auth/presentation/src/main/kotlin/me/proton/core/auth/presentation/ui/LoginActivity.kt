@@ -22,7 +22,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
 import me.proton.core.auth.presentation.entity.LoginInput
@@ -77,8 +80,9 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
             }
         }
 
-        viewModel.loginState.observeData {
+        viewModel.state.onEach {
             when (it) {
+                is LoginViewModel.State.Idle -> showLoading(false)
                 is LoginViewModel.State.Processing -> showLoading(true)
                 is LoginViewModel.State.Success.UserUnLocked -> onSuccess(it.userId, NextStep.None)
                 is LoginViewModel.State.Need.SecondFactor -> onSuccess(it.userId, NextStep.SecondFactor)
@@ -88,7 +92,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                 is LoginViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
                 is LoginViewModel.State.Error.Message -> onError(true, it.message)
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun onChangePassword() {

@@ -24,8 +24,11 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.presentation.R
 import me.proton.core.country.presentation.databinding.FragmentCountryPickerBinding
 import me.proton.core.country.presentation.databinding.ItemCountryBinding
@@ -85,15 +88,16 @@ class CountryPickerFragment :
             }
 
         })
-        viewModel.countries.observeData(viewLifecycleOwner) {
+        viewModel.countries.onEach {
             when (it) {
+                is CountryPickerViewModel.State.Idle ->  hideProgress()
                 is CountryPickerViewModel.State.Success -> onCountriesSuccess(it.countries)
                 is CountryPickerViewModel.State.Error -> {
                     countriesAdapter.submitList(mutableListOf())
                     hideProgress()
                 }
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun hideProgress() = with(binding) {

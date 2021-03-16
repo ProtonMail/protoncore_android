@@ -18,6 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -27,6 +29,7 @@ import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -45,7 +48,6 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.user.domain.UserManager
-import me.proton.core.account.domain.entity.AccountType
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -63,6 +65,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     private val setupPrimaryKeys = mockk<SetupPrimaryKeys>(relaxed = true)
     private val setupInternalAddress = mockk<SetupInternalAddress>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
+    private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
     // endregion
 
     // region test data
@@ -77,6 +80,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         viewModel = LoginViewModel(
+            savedStateHandle,
             accountHandler,
             performLogin,
             unlockUserPrimaryKey,
@@ -99,24 +103,29 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { sessionInfo.isSecondFactorNeeded } returns true
         coEvery { performLogin.invoke(any(), any()) } returns sessionInfo
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.TwoPassNeeded
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val arguments = mutableListOf<LoginViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<LoginViewModel.State.Processing>(arguments[0])
-        val successState = arguments[1]
-        assertTrue(successState is LoginViewModel.State.Need.SecondFactor)
-        assertEquals(sessionInfo.userId, successState.userId)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
-        val accountArgument = slot<Account>()
-        val sessionArgument = slot<Session>()
-        coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        assertEquals(testUserName, accountArgument.captured.username)
-        assertEquals(AccountState.NotReady, accountArgument.captured.state)
-        assertEquals(SessionState.SecondFactorNeeded, accountArgument.captured.sessionState)
+            // THEN
+            assertIs<LoginViewModel.State.Idle>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(expectItem())
+
+            val successState = expectItem()
+            assertTrue(successState is LoginViewModel.State.Need.SecondFactor)
+            assertEquals(sessionInfo.userId, successState.userId)
+
+            verify { savedStateHandle.set(any(), any<String>()) }
+
+            val accountArgument = slot<Account>()
+            val sessionArgument = slot<Session>()
+            coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
+            assertEquals(testUserName, accountArgument.captured.username)
+            assertEquals(AccountState.NotReady, accountArgument.captured.state)
+            assertEquals(SessionState.SecondFactorNeeded, accountArgument.captured.sessionState)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -128,25 +137,30 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { sessionInfo.isTwoPassModeNeeded } returns true
         every { sessionInfo.isSecondFactorNeeded } returns true
         coEvery { performLogin.invoke(any(), any()) } returns sessionInfo
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val arguments = mutableListOf<LoginViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<LoginViewModel.State.Processing>(arguments[0])
-        val successState = arguments[1]
-        assertTrue(successState is LoginViewModel.State.Need.SecondFactor)
-        assertEquals(sessionInfo.userId, successState.userId)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
-        val accountArgument = slot<Account>()
-        val sessionArgument = slot<Session>()
-        coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        assertEquals(testUserName, accountArgument.captured.username)
-        assertEquals(AccountState.NotReady, accountArgument.captured.state)
-        assertEquals(SessionState.SecondFactorNeeded, accountArgument.captured.sessionState)
-        coVerify(exactly = 0) { setupAccountCheck.invoke(any(), any(), any()) }
+            // THEN
+            assertIs<LoginViewModel.State.Idle>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(expectItem())
+
+            val successState = expectItem()
+            assertTrue(successState is LoginViewModel.State.Need.SecondFactor)
+            assertEquals(sessionInfo.userId, successState.userId)
+
+            verify { savedStateHandle.set(any(), any<String>()) }
+
+            val accountArgument = slot<Account>()
+            val sessionArgument = slot<Session>()
+            coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
+            assertEquals(testUserName, accountArgument.captured.username)
+            assertEquals(AccountState.NotReady, accountArgument.captured.state)
+            assertEquals(SessionState.SecondFactorNeeded, accountArgument.captured.sessionState)
+            coVerify(exactly = 0) { setupAccountCheck.invoke(any(), any(), any()) }
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -160,24 +174,29 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         coEvery { performLogin.invoke(any(), any()) } returns sessionInfo
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val arguments = mutableListOf<LoginViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<LoginViewModel.State.Processing>(arguments[0])
-        val successState = arguments[1]
-        assertTrue(successState is LoginViewModel.State.Success.UserUnLocked)
-        assertEquals(sessionInfo.userId, successState.userId)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
-        val accountArgument = slot<Account>()
-        val sessionArgument = slot<Session>()
-        coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        assertEquals(testUserName, accountArgument.captured.username)
-        assertEquals(AccountState.NotReady, accountArgument.captured.state)
-        assertEquals(SessionState.Authenticated, accountArgument.captured.sessionState)
+            // THEN
+            assertIs<LoginViewModel.State.Idle>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(expectItem())
+
+            val successState = expectItem()
+            assertTrue(successState is LoginViewModel.State.Success.UserUnLocked)
+            assertEquals(sessionInfo.userId, successState.userId)
+
+            verify { savedStateHandle.set(any(), any<String>()) }
+
+            val accountArgument = slot<Account>()
+            val sessionArgument = slot<Session>()
+            coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
+            assertEquals(testUserName, accountArgument.captured.username)
+            assertEquals(AccountState.NotReady, accountArgument.captured.state)
+            assertEquals(SessionState.Authenticated, accountArgument.captured.sessionState)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -198,24 +217,29 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         } returns SetupAccountCheck.Result.SetupPrimaryKeysNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
         coEvery { setupPrimaryKeys.invoke(testUserId, testPassword) } returns Unit
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val arguments = mutableListOf<LoginViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<LoginViewModel.State.Processing>(arguments[0])
-        val successState = arguments[1]
-        assertTrue(successState is LoginViewModel.State.Success.UserUnLocked)
-        assertEquals(sessionInfo.userId, successState.userId)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
-        val accountArgument = slot<Account>()
-        val sessionArgument = slot<Session>()
-        coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        assertEquals(testUserName, accountArgument.captured.username)
-        assertEquals(AccountState.NotReady, accountArgument.captured.state)
-        assertEquals(SessionState.Authenticated, accountArgument.captured.sessionState)
+            // THEN
+            assertIs<LoginViewModel.State.Idle>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(expectItem())
+
+            val successState = expectItem()
+            assertTrue(successState is LoginViewModel.State.Success.UserUnLocked)
+            assertEquals(sessionInfo.userId, successState.userId)
+
+            verify { savedStateHandle.set(any(), any<String>()) }
+
+            val accountArgument = slot<Account>()
+            val sessionArgument = slot<Session>()
+            coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
+            assertEquals(testUserName, accountArgument.captured.username)
+            assertEquals(AccountState.NotReady, accountArgument.captured.state)
+            assertEquals(SessionState.Authenticated, accountArgument.captured.sessionState)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -230,22 +254,27 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } throws ApiException(
             ApiResult.Error.NoInternet
         )
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val arguments = mutableListOf<LoginViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<LoginViewModel.State.Processing>(arguments[0])
-        val state = arguments[1]
-        assertTrue(state is LoginViewModel.State.Error.Message)
-        val accountArgument = slot<Account>()
-        val sessionArgument = slot<Session>()
-        coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        assertEquals(testUserName, accountArgument.captured.username)
-        assertEquals(AccountState.NotReady, accountArgument.captured.state)
-        assertEquals(SessionState.Authenticated, accountArgument.captured.sessionState)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
+
+            // THEN
+            assertIs<LoginViewModel.State.Idle>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(expectItem())
+
+            assertTrue(expectItem() is LoginViewModel.State.Error.Message)
+
+            verify { savedStateHandle.set(any(), any<String>()) }
+
+            val accountArgument = slot<Account>()
+            val sessionArgument = slot<Session>()
+            coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
+            assertEquals(testUserName, accountArgument.captured.username)
+            assertEquals(AccountState.NotReady, accountArgument.captured.state)
+            assertEquals(SessionState.Authenticated, accountArgument.captured.sessionState)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -257,23 +286,27 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { sessionInfo.isSecondFactorNeeded } returns true
         every { sessionInfo.isTwoPassModeNeeded } returns true
         coEvery { performLogin.invoke(any(), any()) } returns sessionInfo
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val arguments = mutableListOf<LoginViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<LoginViewModel.State.Processing>(arguments[0])
-        val state = arguments[1]
-        assertTrue(state is LoginViewModel.State.Need.SecondFactor)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
-        val accountArgument = slot<Account>()
-        val sessionArgument = slot<Session>()
-        coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        assertEquals(testUserName, accountArgument.captured.username)
-        assertEquals(AccountState.NotReady, accountArgument.captured.state)
-        assertEquals(SessionState.SecondFactorNeeded, accountArgument.captured.sessionState)
+            // THEN
+            assertIs<LoginViewModel.State.Idle>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(expectItem())
+
+            assertTrue(expectItem() is LoginViewModel.State.Need.SecondFactor)
+
+            verify { savedStateHandle.set(any(), any<String>()) }
+
+            val accountArgument = slot<Account>()
+            val sessionArgument = slot<Session>()
+            coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
+            assertEquals(testUserName, accountArgument.captured.username)
+            assertEquals(AccountState.NotReady, accountArgument.captured.state)
+            assertEquals(SessionState.SecondFactorNeeded, accountArgument.captured.sessionState)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -292,17 +325,20 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
         )
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val arguments = mutableListOf<LoginViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<LoginViewModel.State.Processing>(arguments[0])
-        val errorState = arguments[1]
-        assertTrue(errorState is LoginViewModel.State.Error.Message)
-        assertEquals("proton error", errorState.message)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
+
+            // THEN
+            assertIs<LoginViewModel.State.Idle>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(expectItem())
+
+            val errorState = expectItem()
+            assertTrue(errorState is LoginViewModel.State.Error.Message)
+            assertEquals("proton error", errorState.message)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -318,25 +354,30 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         coEvery { performLogin.invoke(any(), any()) } returns sessionInfo
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val arguments = mutableListOf<LoginViewModel.State>()
-        val accountArgument = slot<Account>()
-        val sessionArgument = slot<Session>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        assertIs<LoginViewModel.State.Processing>(arguments[0])
-        val successState = arguments[1]
-        assertTrue(successState is LoginViewModel.State.Success.UserUnLocked)
-        assertEquals(sessionInfo.userId, successState.userId)
-        val account = accountArgument.captured
-        val session = sessionArgument.captured
-        assertNotNull(account)
-        assertEquals(testUserName, account.username)
-        assertEquals(testAccessToken, session.accessToken)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
+
+            // THEN
+            val accountArgument = slot<Account>()
+            val sessionArgument = slot<Session>()
+
+            coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
+
+            assertIs<LoginViewModel.State.Idle>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(expectItem())
+
+            val successState = expectItem()
+            assertTrue(successState is LoginViewModel.State.Success.UserUnLocked)
+            assertEquals(sessionInfo.userId, successState.userId)
+            val account = accountArgument.captured
+            val session = sessionArgument.captured
+            assertNotNull(account)
+            assertEquals(testUserName, account.username)
+            assertEquals(testAccessToken, session.accessToken)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -349,19 +390,24 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { sessionInfo.sessionId } returns testSessionId
         coEvery { performLogin.invoke(any(), any()) } returns sessionInfo
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val accountArgument = slot<Account>()
-        val sessionArgument = slot<Session>()
-        coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        val account = accountArgument.captured
-        val session = sessionArgument.captured
-        assertNotNull(account)
-        assertNotNull(session)
-        assertEquals(testSessionId.id, session.sessionId.id)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
+
+            // THEN
+            val accountArgument = slot<Account>()
+            val sessionArgument = slot<Session>()
+
+            coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
+
+            val account = accountArgument.captured
+            val session = sessionArgument.captured
+            assertNotNull(account)
+            assertNotNull(session)
+            assertEquals(testSessionId.id, session.sessionId.id)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -375,17 +421,20 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         coEvery { performLogin.invoke(any(), any()) } returns sessionInfo
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.TwoPassNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val accountArgument = slot<Account>()
-        val sessionArgument = slot<Session>()
-        coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
-        val account = accountArgument.captured
-        assertNotNull(account)
-        assertEquals(AccountState.NotReady, account.state)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
+
+            // THEN
+            val accountArgument = slot<Account>()
+            val sessionArgument = slot<Session>()
+            coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
+            val account = accountArgument.captured
+            assertNotNull(account)
+            assertEquals(AccountState.NotReady, account.state)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -398,15 +447,16 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { sessionInfo.isSecondFactorNeeded } returns false
         coEvery { performLogin.invoke(any(), any()) } returns sessionInfo
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.ChangePasswordNeeded
-        val observer = mockk<(LoginViewModel.State) -> Unit>(relaxed = true)
-        viewModel.loginState.observeDataForever(observer)
-        // WHEN
-        viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
-        // THEN
-        val arguments = mutableListOf<LoginViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertEquals(2, arguments.size)
-        assertTrue(arguments[0] is LoginViewModel.State.Processing)
-        assertTrue(arguments[1] is LoginViewModel.State.Need.ChangePassword)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
+
+            // THEN
+            assertIs<LoginViewModel.State.Idle>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(expectItem())
+            assertIs<LoginViewModel.State.Need.ChangePassword>(expectItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 }

@@ -17,7 +17,6 @@
  */
 
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.repositories
 
 internal fun Project.applyRepositories() {
@@ -25,7 +24,5 @@ internal fun Project.applyRepositories() {
         google()
         jcenter()
         mavenCentral()
-        maven("https://kotlin.bintray.com/kotlinx")
-        maven("https://dl.bintray.com/proton/Core-publishing")
     }
 }

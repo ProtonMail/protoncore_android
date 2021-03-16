@@ -19,22 +19,21 @@
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.country.domain.exception.NoCountriesException
 import me.proton.core.country.domain.usecase.MostUsedCountryCode
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.coroutinesTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import studio.forface.viewstatestore.ViewState
 
 /**
  * @author Dino Kadrikj.
@@ -57,49 +56,59 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     }
 
     @Test
-    fun `most used calling code returns success`() = runBlockingTest {
+    fun `most used calling code returns success`() = coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns 0
-        assertIs<ViewState.Success<Int>>(viewModel.mostUsedCallingCode.awaitNext())
-    }
-
-    @Test
-    fun `most used calling code returns correct data`() = runBlockingTest {
-        coEvery { mostUsedUseCase.invoke() } returns 1
-        viewModel.mostUsedCallingCode.awaitNext()
-        assertEquals(1, viewModel.mostUsedCallingCode.awaitData())
-    }
-
-    @Test
-    fun `use case throws no countries exception`() = runBlockingTest {
-        coEvery { mostUsedUseCase.invoke() } answers {
-            throw NoCountriesException()
+        viewModel.mostUsedCallingCode.test {
+            viewModel.getMostUsedCallingCode()
+            assertIs<ViewModelResult.None>(expectItem())
+            assertIs<ViewModelResult.Success<Int>>(expectItem())
         }
-
-        assertIs<ViewState.Error>(viewModel.mostUsedCallingCode.awaitNext())
     }
 
     @Test
-    fun `send verification code to phone number success`() = runBlockingTest {
+    fun `most used calling code returns correct data`() = coroutinesTest {
+        coEvery { mostUsedUseCase.invoke() } returns 1
+        viewModel.mostUsedCallingCode.test {
+            viewModel.getMostUsedCallingCode()
+            assertIs<ViewModelResult.None>(expectItem())
+            assertEquals(1, (expectItem() as ViewModelResult.Success).value)
+        }
+    }
+
+    @Test
+    fun `use case throws no countries exception`() = coroutinesTest {
+        coEvery { mostUsedUseCase.invoke() } returns null
+        viewModel.mostUsedCallingCode.test {
+            viewModel.getMostUsedCallingCode()
+            assertIs<ViewModelResult.None>(expectItem())
+            assertIs<ViewModelResult.Error>(expectItem())
+        }
+    }
+
+    @Test
+    fun `send verification code to phone number success`() = coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns 0
         coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns VerificationResult.Success
         viewModel.sendVerificationCodeToDestination(sessionId, "+0", "123456789")
-        assertIs<ViewState.Success<Boolean>>(viewModel.verificationCodeStatus.awaitNext())
+        viewModel.verificationCodeStatus.test {
+            assertIs<ViewModelResult.Success<Boolean>>(expectItem())
+        }
     }
 
+
     @Test
-    fun `send verification code to phone number invalid`() = runBlockingTest {
+    fun `send verification code to phone number invalid`() = coroutinesTest {
         // given
         coEvery { mostUsedUseCase.invoke() } returns 0
         coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns VerificationResult.Success
 
         // when
         viewModel.sendVerificationCodeToDestination(sessionId, "", "")
-        val result = viewModel.validation.awaitNext()
-
         // then
-        assertIs<ViewState.Error>(result)
-        val throwable = (result as ViewState.Error).throwable
-        assertIs<EmptyDestinationException>(throwable)
-        assertEquals("Destination phone number:  is invalid.", throwable.message)
+        viewModel.validation.test {
+            val result = expectItem() as ViewModelResult.Error
+            assertIs<EmptyDestinationException>(result.throwable)
+            assertEquals("Destination phone number:  is invalid.", result.throwable?.message)
+        }
     }
 }

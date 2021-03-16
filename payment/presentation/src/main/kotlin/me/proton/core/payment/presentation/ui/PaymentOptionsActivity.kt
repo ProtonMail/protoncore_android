@@ -22,8 +22,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
@@ -112,34 +115,33 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
     }
 
     private fun observe() {
-        viewModel.availablePaymentMethodsState.observeData {
+        viewModel.availablePaymentMethodsState.onEach {
             when (it) {
                 is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess -> onSuccess(it.availablePaymentMethods)
                 is PaymentOptionsViewModel.State.Error.Message -> showError(it.message)
                 else -> { }
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
 
-        viewModel.plansValidationState.observeData {
+        viewModel.plansValidationState.onEach {
             when (it) {
-                is BillingViewModel.PlansValidationState.Processing -> {
-                }
                 is BillingViewModel.PlansValidationState.Success -> {
                     amountDue = it.subscription.amountDue
                     binding.selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
                 }
                 is BillingViewModel.PlansValidationState.Error.Message -> showError(it.message)
+                else -> { }
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
 
-        viewModel.subscriptionResult.observeData {
+        viewModel.subscriptionResult.onEach {
             when (it) {
                 is BillingViewModel.State.Processing -> showLoading(true)
                 is BillingViewModel.State.Success.SubscriptionCreated -> onPaymentResult(
                     BillingResult(
-                        true,
-                        it.paymentToken,
-                        true
+                        paySuccess = true,
+                        token = it.paymentToken,
+                        subscriptionCreated = true
                     )
                 )
                 is BillingViewModel.State.Incomplete.TokenApprovalNeeded ->
@@ -150,7 +152,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                 else -> {
                 }
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun onPaymentMethodClicked(paymentMethod: PaymentOptionUIModel) {

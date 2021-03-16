@@ -23,8 +23,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationMainBinding
@@ -114,12 +117,14 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.enabledMethods.observe(viewLifecycleOwner) {
-            doOnData { setEnabledVerificationMethods(it) }
-        }
-        viewModel.activeMethod.observe(viewLifecycleOwner) {
-            doOnData { setActiveVerificationMethod(TokenType.fromString(it)) }
-        }
+        viewModel.enabledMethods
+            .onEach { setEnabledVerificationMethods(it) }
+            .launchIn(lifecycleScope)
+
+        viewModel.activeMethod
+            .onEach { setActiveVerificationMethod(TokenType.fromString(it)) }
+            .launchIn(lifecycleScope)
+
         binding.headerNavigation.closeButton.onClick {
             onClose(null, null)
         }

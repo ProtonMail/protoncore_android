@@ -21,6 +21,8 @@ package me.proton.core.payment.presentation.viewmodel
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -34,19 +36,21 @@ import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
 import me.proton.core.payment.presentation.entity.SecureEndpoint
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import studio.forface.viewstatestore.ViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
 
 class PaymentTokenApprovalViewModel @ViewModelInject constructor(
     private val getPaymentTokenStatus: GetPaymentTokenStatus,
     private val secureEndpoint: SecureEndpoint,
     private val networkManager: NetworkManager
-) : ProtonViewModel(), ViewStateStoreScope {
+) : ProtonViewModel() {
 
-    val approvalResult = ViewStateStore<State>().lock
-    val networkConnection = ViewStateStore<Boolean>().lock
+    private val _approvalState = MutableStateFlow<State>(State.Idle)
+    private val _networkConnectionState = MutableStateFlow<Boolean?>(null)
+
+    val approvalState = _approvalState.asStateFlow()
+    val networkConnectionState = _networkConnectionState.asStateFlow()
 
     sealed class State {
+        object Idle : State()
         object Processing : State()
         data class Success(val paymentTokenStatus: PaymentTokenStatus) : State()
         sealed class Error : State() {
@@ -81,12 +85,11 @@ class PaymentTokenApprovalViewModel @ViewModelInject constructor(
     fun watchNetwork() {
         viewModelScope.launch {
             networkManager.observe().collect { status ->
-                networkConnection.postData(
-                    data = when (status) {
+                _networkConnectionState.tryEmit(
+                    when (status) {
                         NetworkStatus.Metered, NetworkStatus.Unmetered -> true
                         else -> false
-                    },
-                    dropOnSame = true
+                    }
                 )
             }
         }
@@ -96,9 +99,9 @@ class PaymentTokenApprovalViewModel @ViewModelInject constructor(
         emit(State.Processing)
         emit(State.Success(getPaymentTokenStatus(userId, paymentToken).status))
     }.catch {
-        approvalResult.post(State.Error.Message(it.message))
+        _approvalState.tryEmit(State.Error.Message(it.message))
     }.onEach {
-        approvalResult.post(it)
+        _approvalState.tryEmit(it)
     }.launchIn(viewModelScope)
 
     companion object {

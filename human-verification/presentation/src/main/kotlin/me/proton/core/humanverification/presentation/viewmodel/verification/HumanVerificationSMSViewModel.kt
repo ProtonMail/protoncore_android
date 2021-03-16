@@ -21,10 +21,10 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import me.proton.core.country.domain.exception.NoCountriesException
 import me.proton.core.country.domain.usecase.MostUsedCountryCode
-import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
@@ -32,9 +32,7 @@ import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPho
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import studio.forface.viewstatestore.LockedViewStateStore
-import studio.forface.viewstatestore.ViewState
-import studio.forface.viewstatestore.ViewStateStore
+import me.proton.core.presentation.viewmodel.ViewModelResult
 
 /**
  * View model class that handles and supports [TokenType.SMS] verification method (type) fragment.
@@ -46,20 +44,13 @@ internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
     private val sendVerificationCodeToPhoneDestination: SendVerificationCodeToPhoneDestination
 ) : ProtonViewModel(), HumanVerificationCode {
 
-    val mostUsedCallingCode = ViewStateStore<Int>(ViewState.Loading).lock
+    private val _mostUsedCallingCode = MutableStateFlow<ViewModelResult<Int>>(ViewModelResult.None)
+    private val _validationSMS = getNewValidation()
+    private val _verificationCodeStatusSMS = getNewVerificationCodeStatus()
 
-    private val validationSMS = ViewStateStore<List<CountryUIModel>>(ViewState.Loading).lock
-    private val verificationCodeStatusSMS = ViewStateStore<Boolean>().lock
-
-    override val validation: LockedViewStateStore<List<CountryUIModel>>
-        get() = validationSMS
-
-    override val verificationCodeStatus: LockedViewStateStore<Boolean>
-        get() = verificationCodeStatusSMS
-
-    init {
-        getMostUsedCallingCode()
-    }
+    val mostUsedCallingCode = _mostUsedCallingCode.asStateFlow()
+    override val validation = _validationSMS.asStateFlow()
+    override val verificationCodeStatus = _verificationCodeStatusSMS.asStateFlow()
 
     /**
      * Tells the API to send the verification code (token) to the phone number destination.
@@ -68,26 +59,29 @@ internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
      * @param phoneNumber the phone number that the user entered (without the calling code part)
      */
     fun sendVerificationCodeToDestination(sessionId: SessionId, countryCallingCode: String, phoneNumber: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             if (phoneNumber.isEmpty()) {
-                validation.postError(EmptyDestinationException("Destination phone number: $phoneNumber is invalid."))
+                _validationSMS.tryEmit(
+                    ViewModelResult.Error(EmptyDestinationException("Destination phone number: $phoneNumber is invalid."))
+                )
             } else {
                 sendVerificationCodeToSMS(sessionId, countryCallingCode + phoneNumber)
             }
         }
+
     }
 
     /**
      * Tries to return the most used country calling code and later to display it as a suggestion
      * in the SMS verification UI.
      */
-    private fun getMostUsedCallingCode() {
+    fun getMostUsedCallingCode() {
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val code = mostUseCountryCode()
-                mostUsedCallingCode.post(code!!)
-            } catch (e: NoCountriesException) {
-                mostUsedCallingCode.postError(e)
+            val code = mostUseCountryCode()
+            code?.let {
+                _mostUsedCallingCode.tryEmit(ViewModelResult.Success(it))
+            } ?: run {
+                _mostUsedCallingCode.tryEmit(ViewModelResult.Error(null))
             }
         }
     }
@@ -99,9 +93,9 @@ internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
     private suspend fun sendVerificationCodeToSMS(sessionId: SessionId, phoneNumber: String) {
         val deferred = sendVerificationCodeToPhoneDestination.invoke(sessionId, phoneNumber)
         if (deferred is VerificationResult.Success) {
-            verificationCodeStatus.post(true)
+            _verificationCodeStatusSMS.tryEmit(ViewModelResult.Success(true))
         } else {
-            verificationCodeStatus.postError(VerificationCodeSendingException())
+            _verificationCodeStatusSMS.tryEmit(ViewModelResult.Error(VerificationCodeSendingException()))
         }
     }
 }

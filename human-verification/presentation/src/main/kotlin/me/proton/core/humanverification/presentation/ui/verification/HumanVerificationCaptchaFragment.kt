@@ -26,7 +26,9 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
@@ -36,32 +38,14 @@ import me.proton.core.humanverification.presentation.viewmodel.verification.Huma
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.viewmodel.onError
+import me.proton.core.presentation.viewmodel.onSuccess
 
 /**
  * Fragment that handles human verification with Captcha.
- *
- * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
 internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVerificationCaptchaBinding>() {
-
-    companion object {
-        private const val ARG_SESSION_ID = "arg.sessionId"
-        private const val ARG_HOST = "arg.host"
-        private const val MAX_PROGRESS = 100
-
-        operator fun invoke(
-            sessionId: String,
-            urlToken: String,
-            host: String
-        ) = HumanVerificationCaptchaFragment().apply {
-            arguments = bundleOf(
-                ARG_SESSION_ID to sessionId,
-                ARG_URL_TOKEN to urlToken,
-                ARG_HOST to host
-            )
-        }
-    }
 
     private val sessionId: SessionId by lazy {
         SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
@@ -89,26 +73,19 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
             binding.root.errorSnack(R.string.human_verification_sending_failed)
         }
 
-        viewModel.networkConnectionState.observe(viewLifecycleOwner) {
-            doOnData {
-                if (it) {
-                    loadWebView()
-                    binding.progress.visibility = View.GONE
-                } else {
-                    binding.root.errorSnack(R.string.human_verification_captcha_no_connectivity)
-                }
-            }
-        }
+        viewModel.networkConnectionState.onSuccess {
+            loadWebView()
+            binding.progress.visibility = View.GONE
+        }.onError {
+            binding.root.errorSnack(R.string.human_verification_captcha_no_connectivity)
+        }.launchIn(lifecycleScope)
 
-        viewModel.codeVerificationResult.observe(viewLifecycleOwner) {
-            doOnData {
-                verificationDone()
-            }
-            doOnError {
-                binding.progress.visibility = View.GONE
-                showErrorCode()
-            }
-        }
+        viewModel.codeVerificationResult.onSuccess {
+            verificationDone()
+        }.onError {
+            binding.progress.visibility = View.GONE
+            showErrorCode()
+        }.launchIn(lifecycleScope)
 
         binding.captchaWebView.apply {
             settings.javaScriptEnabled = true // this is fine, required to load captcha
@@ -155,6 +132,24 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
             humanVerificationBase.verificationToken = message
             binding.progress.visibility = View.VISIBLE
             viewModel.verifyTokenCode(sessionId, message)
+        }
+    }
+
+    companion object {
+        private const val ARG_SESSION_ID = "arg.sessionId"
+        private const val ARG_HOST = "arg.host"
+        private const val MAX_PROGRESS = 100
+
+        operator fun invoke(
+            sessionId: String,
+            urlToken: String,
+            host: String
+        ) = HumanVerificationCaptchaFragment().apply {
+            arguments = bundleOf(
+                ARG_SESSION_ID to sessionId,
+                ARG_URL_TOKEN to urlToken,
+                ARG_HOST to host
+            )
         }
     }
 }

@@ -22,6 +22,8 @@ import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -40,8 +42,6 @@ import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.PaymentOptionUIModel
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
-import studio.forface.viewstatestore.ViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
 
 /**
  * ViewModel that returns the available (existing) payment methods (options) that are saved by the user previously.
@@ -52,12 +52,14 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
     private val getCurrentSubscription: GetCurrentSubscription,
     @ApplicationContext private val context: Context,
     private val billingViewModel: BillingViewModel
-) : ProtonViewModel(), ViewStateStoreScope {
+) : ProtonViewModel() {
 
     // it should be private, but because of a bug in Mockk it was not able to mock a spy. and testing it is important!
     internal var currentPlans = mutableListOf<String>()
 
-    val availablePaymentMethodsState = ViewStateStore<State>().lock
+    private val _availablePaymentMethodsState = MutableStateFlow<State>(State.Idle)
+    val availablePaymentMethodsState = _availablePaymentMethodsState.asStateFlow()
+
     val subscriptionResult = billingViewModel.subscriptionResult
     val plansValidationState = billingViewModel.plansValidationState
 
@@ -66,6 +68,7 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
      * is going on in the process, as well as the outcome of it.
      */
     sealed class State {
+        object Idle : State()
         object Processing : State()
         sealed class Success : State() {
             data class PaymentMethodsSuccess(val availablePaymentMethods: List<PaymentOptionUIModel>) : Success()
@@ -123,9 +126,9 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
         }
         emit(State.Success.PaymentMethodsSuccess(paymentMethods))
     }.catch { error ->
-        availablePaymentMethodsState.post(State.Error.Message(error.message))
+        _availablePaymentMethodsState.tryEmit(State.Error.Message(error.message))
     }.onEach { methods ->
-        availablePaymentMethodsState.post(methods)
+        _availablePaymentMethodsState.tryEmit(methods)
     }.launchIn(viewModelScope)
 
     fun subscribe(

@@ -22,7 +22,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityMailboxLoginBinding
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
@@ -75,14 +78,15 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
             }
         }
 
-        viewModel.mailboxLoginState.observeData {
+        viewModel.state.onEach {
             when (it) {
+                is TwoPassModeViewModel.State.Idle -> showLoading(false)
                 is TwoPassModeViewModel.State.Processing -> showLoading(true)
                 is TwoPassModeViewModel.State.Success.UserUnLocked -> onSuccess(it.userId)
                 is TwoPassModeViewModel.State.Error.Message -> onError(false, it.message)
                 is TwoPassModeViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {

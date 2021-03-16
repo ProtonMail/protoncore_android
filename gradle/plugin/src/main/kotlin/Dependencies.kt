@@ -44,7 +44,7 @@ fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `andr
     android("tools.lint", "lint", moduleSuffix, version)
 // endregion
 
-// region Instrumentation tests
+// region tests
 val DependencyHandler.`espresso-contrib` get() = androidx("test.espresso", module = "espresso-contrib") version `espresso version`
 val DependencyHandler.`espresso-intents` get() = androidx("test.espresso", module = "espresso-intents") version `espresso version`
 val DependencyHandler.falcon get() = dependency("com.jraska", module = "falcon") version `falcon version`
@@ -52,4 +52,5 @@ val DependencyHandler.`orchestrator` get() = androidx("test", module = "orchestr
 val DependencyHandler.uiautomator get() = androidx("test.uiautomator", module = "uiautomator") version `uiautomator version`
 val DependencyHandler.preference get() = androidx("preference", module = "preference") version `preference version`
 val DependencyHandler.`jsonsimple` get() = dependency("com.googlecode.json-simple", module = "json-simple") version `json-simple version`
+val DependencyHandler.`turbine` get() = dependency("app.cash.turbine", module = "turbine") version `turbine version`
 // endregion

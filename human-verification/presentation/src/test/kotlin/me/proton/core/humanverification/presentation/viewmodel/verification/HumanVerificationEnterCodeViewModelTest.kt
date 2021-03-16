@@ -19,9 +19,9 @@
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
@@ -29,17 +29,13 @@ import me.proton.core.humanverification.domain.usecase.VerifyCode
 import me.proton.core.humanverification.presentation.exception.TokenCodeVerificationException
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.test.kotlin.coroutinesTest
 import org.junit.Rule
 import org.junit.Test
-import studio.forface.viewstatestore.ViewState
 
-/**
- * @author Dino Kadrikj.
- */
-class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest {
+class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
 
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
@@ -59,7 +55,7 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
     }
 
     @Test
-    fun `verify code success`() = runBlockingTest {
+    fun `verify code success`() = coroutinesTest {
         val tokenType = TokenType.EMAIL
         val token = "testToken"
         coEvery {
@@ -70,11 +66,13 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
             )
         } returns VerificationResult.Success
         viewModel.verifyTokenCode(sessionId, tokenType, token)
-        assertIs<ViewState.Success<Boolean>>(viewModel.codeVerificationResult.awaitNext())
+        viewModel.codeVerificationResult.test {
+            assertIs<ViewModelResult.Success<Boolean>>(expectItem())
+        }
     }
 
     @Test
-    fun `verify code fails correctly`() = runBlockingTest {
+    fun `verify code fails correctly`() = coroutinesTest {
         // given
         val tokenType = TokenType.EMAIL
         val token = "testToken"
@@ -87,14 +85,15 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
         } returns VerificationResult.Error(errorResponse)
         // when
         viewModel.verifyTokenCode(sessionId, tokenType, token)
-        val result = viewModel.codeVerificationResult.awaitNext()
         // then
-        assertIs<ViewState.Error>(result)
-        assertIs<TokenCodeVerificationException>((result as ViewState.Error).throwable)
+        viewModel.codeVerificationResult.test {
+            val result = expectItem() as ViewModelResult.Error
+            assertIs<TokenCodeVerificationException>(result.throwable)
+        }
     }
 
     @Test
-    fun `resend token success`() = runBlockingTest {
+    fun `resend token success`() = coroutinesTest {
         // given
         val tokenType = TokenType.EMAIL
         viewModel.tokenType = tokenType
@@ -109,11 +108,13 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
         // when
         viewModel.resendCode(sessionId)
         // then
-        assertIs<ViewState.Success<Boolean>>(viewModel.verificationCodeResendStatus.awaitNext())
+        viewModel.verificationCodeResendStatus.test {
+            assertIs<ViewModelResult.Success<Boolean>>(expectItem())
+        }
     }
 
     @Test
-    fun `resend token failure`() = runBlockingTest {
+    fun `resend token failure`() = coroutinesTest {
         // given
         val tokenType = TokenType.EMAIL
         viewModel.tokenType = tokenType
@@ -127,9 +128,10 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest by coroutinesTest
         } returns VerificationResult.Error(errorResponse)
         // when
         viewModel.resendCode(sessionId)
-        val result = viewModel.verificationCodeResendStatus.awaitNext()
         // then
-        assertIs<ViewState.Error>(result)
-        assertIs<VerificationCodeSendingException>((result as ViewState.Error).throwable)
+        viewModel.verificationCodeResendStatus.test {
+            val result = expectItem() as ViewModelResult.Error
+            assertIs<VerificationCodeSendingException>(result.throwable)
+        }
     }
 }

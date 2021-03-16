@@ -22,14 +22,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import studio.forface.viewstatestore.ViewStateActivity
 
 /**
  * Base Proton Activity from which all project activities should extend.
- *
- * @author Dino Kadrikj.
  */
-abstract class ProtonActivity<DB : ViewDataBinding> : AppCompatActivity(), ViewStateActivity {
+abstract class ProtonActivity<DB : ViewDataBinding> : AppCompatActivity() {
 
     lateinit var binding: DB
 

@@ -21,6 +21,8 @@ package me.proton.core.auth.presentation.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -34,18 +36,19 @@ import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
-import studio.forface.viewstatestore.ViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
 
 class TwoPassModeViewModel @ViewModelInject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
     private val keyStoreCrypto: KeyStoreCrypto
-) : ProtonViewModel(), ViewStateStoreScope {
+) : ProtonViewModel() {
 
-    val mailboxLoginState = ViewStateStore<State>().lock
+    private val _state = MutableStateFlow<State>(State.Idle)
+
+    val state = _state.asStateFlow()
 
     sealed class State {
+        object Idle : State()
         object Processing : State()
         sealed class Success : State() {
             data class UserUnLocked(val userId: UserId) : Success()
@@ -72,9 +75,9 @@ class TwoPassModeViewModel @ViewModelInject constructor(
 
         emit(state)
     }.catch { error ->
-        mailboxLoginState.post(State.Error.Message(error.message))
+        _state.tryEmit(State.Error.Message(error.message))
     }.onEach { state ->
-        mailboxLoginState.post(state)
+        _state.tryEmit(state)
     }.launchIn(viewModelScope)
 
     private suspend fun unlockUserPrimaryKey(

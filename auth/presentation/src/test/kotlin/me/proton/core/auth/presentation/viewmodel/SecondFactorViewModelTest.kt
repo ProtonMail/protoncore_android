@@ -18,12 +18,13 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.verify
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
@@ -37,12 +38,11 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.assertIs
 import me.proton.core.user.domain.UserManager
-import me.proton.core.account.domain.entity.AccountType
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
 
@@ -91,23 +91,23 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
-        val observer = mockk<(SecondFactorViewModel.State) -> Unit>(relaxed = true)
-        viewModel.secondFactorState.observeDataForever(observer)
-        // WHEN
-        viewModel.startSecondFactorFlow(
-            testUserId,
-            testLoginPassword,
-            requiredAccountType,
-            isTwoPassModeNeeded = false,
-            testSecondFactorCode
-        )
-        // THEN
-        val arguments = mutableListOf<SecondFactorViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        val processingState = arguments[0]
-        val successState = arguments[1]
-        assertTrue(processingState is SecondFactorViewModel.State.Processing)
-        assertTrue(successState is SecondFactorViewModel.State.Success.UserUnLocked)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startSecondFactorFlow(
+                testUserId,
+                testLoginPassword,
+                requiredAccountType,
+                isTwoPassModeNeeded = false,
+                testSecondFactorCode
+            )
+
+            // THEN
+            assertIs<SecondFactorViewModel.State.Idle>(expectItem())
+            assertIs<SecondFactorViewModel.State.Processing>(expectItem())
+            assertIs<SecondFactorViewModel.State.Success.UserUnLocked>(expectItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -117,27 +117,30 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         every { testSessionResult.isTwoPassModeNeeded } returns true
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.TwoPassNeeded
-        val observer = mockk<(SecondFactorViewModel.State) -> Unit>(relaxed = true)
-        viewModel.secondFactorState.observeDataForever(observer)
-        // WHEN
-        viewModel.startSecondFactorFlow(
-            testUserId,
-            testLoginPassword,
-            requiredAccountType,
-            isTwoPassModeNeeded = true,
-            testSecondFactorCode
-        )
-        // THEN
-        val arguments = mutableListOf<SecondFactorViewModel.State>()
-        val accountManagerArguments = slot<SessionId>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        coVerify(exactly = 1) { accountManager.handleSecondFactorSuccess(capture(accountManagerArguments), any()) }
-        coVerify(exactly = 0) { accountManager.handleSecondFactorFailed(any()) }
-        val processingState = arguments[0]
-        val successState = arguments[1]
-        assertTrue(processingState is SecondFactorViewModel.State.Processing)
-        assertTrue(successState is SecondFactorViewModel.State.Need.TwoPassMode)
-        assertEquals(testSessionId, accountManagerArguments.captured)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startSecondFactorFlow(
+                testUserId,
+                testLoginPassword,
+                requiredAccountType,
+                isTwoPassModeNeeded = true,
+                testSecondFactorCode
+            )
+
+            // THEN
+            val accountManagerArguments = slot<SessionId>()
+
+            coVerify(exactly = 1) { accountManager.handleSecondFactorSuccess(capture(accountManagerArguments), any()) }
+            coVerify(exactly = 0) { accountManager.handleSecondFactorFailed(any()) }
+
+            assertIs<SecondFactorViewModel.State.Idle>(expectItem())
+            assertIs<SecondFactorViewModel.State.Processing>(expectItem())
+            assertIs<SecondFactorViewModel.State.Need.TwoPassMode>(expectItem())
+
+            assertEquals(testSessionId, accountManagerArguments.captured)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test

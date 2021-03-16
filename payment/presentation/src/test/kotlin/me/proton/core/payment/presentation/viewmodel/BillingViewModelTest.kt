@@ -18,6 +18,7 @@
 
 package me.proton.core.payment.presentation.viewmodel
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -108,9 +109,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             gift = null
         )
 
-        val observer = mockk<(BillingViewModel.State) -> Unit>(relaxed = true)
-        viewModel.subscriptionResult.observeDataForever(observer)
-
         coEvery {
             validateSubscription.invoke(
                 testUserId,
@@ -132,20 +130,24 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
 
-        // WHEN
-        viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+        viewModel.subscriptionResult.test {
 
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.State>()
-        verify(exactly = 4) { observer(capture(arguments)) }
-        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
-        assertIs<BillingViewModel.State.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
-        assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
-        assertIs<BillingViewModel.State.Success.TokenCreated>(arguments[2])
-        assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(arguments[3])
+            // WHEN
+            viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+
+            // THEN
+            coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
+            coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
+
+            assertIs<BillingViewModel.State.Idle>(expectItem())
+            assertIs<BillingViewModel.State.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
+            assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
+            assertIs<BillingViewModel.State.Success.TokenCreated>(expectItem())
+            assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(expectItem())
+        }
+
     }
 
     @Test
@@ -163,8 +165,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             cycle = testSubscriptionCycle,
             gift = null
         )
-        val observer = mockk<(BillingViewModel.State) -> Unit>(relaxed = true)
-        viewModel.subscriptionResult.observeDataForever(observer)
         coEvery {
             validateSubscription.invoke(
                 null,
@@ -184,19 +184,22 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         } returns PaymentToken.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
-        // WHEN
-        viewModel.subscribe(null, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.State>()
-        verify(exactly = 4) { observer(capture(arguments)) }
-        coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, paymentType) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
-        assertIs<BillingViewModel.State.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
-        assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
-        assertIs<BillingViewModel.State.Success.TokenCreated>(arguments[2])
-        assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(arguments[3])
+
+        viewModel.subscriptionResult.test {
+            // WHEN
+            viewModel.subscribe(null, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+
+            // THEN
+            coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, paymentType) }
+            coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
+            assertIs<BillingViewModel.State.Idle>(expectItem())
+            assertIs<BillingViewModel.State.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
+            assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
+            assertIs<BillingViewModel.State.Success.TokenCreated>(expectItem())
+            assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(expectItem())
+        }
     }
 
     @Test
@@ -215,9 +218,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             cycle = testSubscriptionCycle,
             gift = null
         )
-        val observer = mockk<(BillingViewModel.State) -> Unit>(relaxed = true)
-        viewModel.subscriptionResult.observeDataForever(observer)
-
         coEvery {
             validateSubscription.invoke(
                 testUserId,
@@ -238,26 +238,27 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         } returns PaymentToken.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
-        // WHEN
-        viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.State>()
-        verify(exactly = 4) { observer(capture(arguments)) }
-        coVerify(exactly = 1) {
-            createPaymentTokenWithExistingPaymentMethod.invoke(
-                testUserId,
-                2,
-                testCurrency,
-                testPaymentMethodId
-            )
+        viewModel.subscriptionResult.test {
+            // WHEN
+            viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+            // THEN
+            coVerify(exactly = 1) {
+                createPaymentTokenWithExistingPaymentMethod.invoke(
+                    testUserId,
+                    2,
+                    testCurrency,
+                    testPaymentMethodId
+                )
+            }
+            coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
+            assertIs<BillingViewModel.State.Idle>(expectItem())
+            assertIs<BillingViewModel.State.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
+            assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
+            assertIs<BillingViewModel.State.Success.TokenCreated>(expectItem())
+            assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(expectItem())
         }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
-        assertIs<BillingViewModel.State.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
-        assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
-        assertIs<BillingViewModel.State.Success.TokenCreated>(arguments[2])
-        assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(arguments[3])
     }
 
     @Test
@@ -276,8 +277,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             cycle = testSubscriptionCycle,
             gift = null
         )
-        val observer = mockk<(BillingViewModel.State) -> Unit>(relaxed = true)
-        viewModel.subscriptionResult.observeDataForever(observer)
 
         coEvery {
             validateSubscription.invoke(
@@ -299,20 +298,22 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         } returns PaymentToken.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
-        // WHEN
-        viewModel.subscribe(null, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.State>()
-        verify(exactly = 3) { observer(capture(arguments)) }
-        coVerify(exactly = 0) {
-            createPaymentTokenWithExistingPaymentMethod.invoke(any(), any(), any(), any())
+
+        viewModel.subscriptionResult.test {
+            // WHEN
+            viewModel.subscribe(null, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+            // THEN
+            coVerify(exactly = 0) {
+                createPaymentTokenWithExistingPaymentMethod.invoke(any(), any(), any(), any())
+            }
+            coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
+            assertIs<BillingViewModel.State.Idle>(expectItem())
+            assertIs<BillingViewModel.State.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
+            assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
+            assertIs<BillingViewModel.State.Error.SignUpWithPaymentMethodUnsupported>(expectItem())
         }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
-        assertIs<BillingViewModel.State.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
-        assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
-        assertIs<BillingViewModel.State.Error.SignUpWithPaymentMethodUnsupported>(arguments[2])
     }
 
     @Test
@@ -331,8 +332,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             cycle = testSubscriptionCycle,
             gift = null
         )
-        val observer = mockk<(BillingViewModel.State) -> Unit>(relaxed = true)
-        viewModel.subscriptionResult.observeDataForever(observer)
 
         coEvery {
             validateSubscription.invoke(
@@ -349,30 +348,32 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testUserId, 0, testCurrency, testSubscriptionCycle, testPlanIds, null, null
             )
         } returns mockk()
-        // WHEN
-        viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.State>()
-        verify(exactly = 3) { observer(capture(arguments)) }
-        coVerify(exactly = 0) {
-            createPaymentTokenWithExistingPaymentMethod.invoke(any(), any(), any(), any())
+
+        viewModel.subscriptionResult.test {
+            // WHEN
+            viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+            // THEN
+            coVerify(exactly = 0) {
+                createPaymentTokenWithExistingPaymentMethod.invoke(any(), any(), any(), any())
+            }
+            coVerify(exactly = 1) {
+                performSubscribe.invoke(
+                    testUserId,
+                    0,
+                    testCurrency,
+                    testSubscriptionCycle,
+                    testPlanIds,
+                    null,
+                    null
+                )
+            }
+            assertIs<BillingViewModel.State.Idle>(expectItem())
+            assertIs<BillingViewModel.State.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
+            assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
+            assertIs<BillingViewModel.State.Success.SubscriptionCreated>(expectItem())
         }
-        coVerify(exactly = 1) {
-            performSubscribe.invoke(
-                testUserId,
-                0,
-                testCurrency,
-                testSubscriptionCycle,
-                testPlanIds,
-                null,
-                null
-            )
-        }
-        assertIs<BillingViewModel.State.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
-        assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
-        assertIs<BillingViewModel.State.Success.SubscriptionCreated>(arguments[2])
     }
 
     @Test
@@ -390,8 +391,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             cycle = testSubscriptionCycle,
             gift = null
         )
-        val observer = mockk<(BillingViewModel.State) -> Unit>(relaxed = true)
-        viewModel.subscriptionResult.observeDataForever(observer)
 
         coEvery {
             validateSubscription.invoke(
@@ -419,32 +418,31 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 testUserId, 2, testCurrency, testSubscriptionCycle, testPlanIds, null, "test-token"
             )
         } returns mockk()
-        // WHEN
-        viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.State>()
-        verify(exactly = 4) { observer(capture(arguments)) }
-        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
-        coVerify(exactly = 1) {
-            performSubscribe.invoke(
-                testUserId, 2, testCurrency, testSubscriptionCycle,
-                testPlanIds, null, "test-token"
-            )
+        viewModel.subscriptionResult.test {
+            // WHEN
+            viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+            // THEN
+            coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
+            coVerify(exactly = 1) {
+                performSubscribe.invoke(
+                    testUserId, 2, testCurrency, testSubscriptionCycle,
+                    testPlanIds, null, "test-token"
+                )
+            }
+            assertIs<BillingViewModel.State.Idle>(expectItem())
+            assertIs<BillingViewModel.State.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
+            assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
+            assertIs<BillingViewModel.State.Success.TokenCreated>(expectItem())
+            assertIs<BillingViewModel.State.Success.SubscriptionCreated>(expectItem())
         }
-        assertIs<BillingViewModel.State.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
-        assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
-        assertIs<BillingViewModel.State.Success.TokenCreated>(arguments[2])
-        assertIs<BillingViewModel.State.Success.SubscriptionCreated>(arguments[3])
     }
 
     @Test
     fun `upgrade subscription plan error handled properly`() = coroutinesTest {
         // GIVEN
         val paymentType = PaymentType.CreditCard(testCard)
-        val observer = mockk<(BillingViewModel.State) -> Unit>(relaxed = true)
-        viewModel.subscriptionResult.observeDataForever(observer)
 
         coEvery {
             validateSubscription.invoke(
@@ -464,18 +462,20 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
         )
-        // WHEN
-        viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
 
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        coVerify(exactly = 0) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
-        assertIs<BillingViewModel.State.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.State.Error.Message)
-        assertEquals("proton error", subscriptionPlanStatus.message)
+        viewModel.subscriptionResult.test {
+            // WHEN
+            viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+
+            // THEN
+            coVerify(exactly = 0) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
+            coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
+            assertIs<BillingViewModel.State.Idle>(expectItem())
+            assertIs<BillingViewModel.State.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.State.Error.Message)
+            assertEquals("proton error", subscriptionPlanStatus.message)
+        }
     }
 
     @Test
@@ -493,9 +493,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             cycle = testSubscriptionCycle,
             gift = null
         )
-
-        val subscriptionObserver = mockk<(BillingViewModel.State) -> Unit>(relaxed = true)
-        viewModel.subscriptionResult.observeDataForever(subscriptionObserver)
 
         coEvery {
             validateSubscription.invoke(
@@ -516,24 +513,26 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         } returns PaymentToken.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", "test-token", "test-return-host"
         )
-        // WHEN
-        viewModel.subscribe(null, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
-        viewModel.onThreeDSTokenApproved(
-            null, testPlanIds, null, 2, testCurrency, testSubscriptionCycle, "test-token"
-        )
 
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.State>()
-        verify(exactly = 5) { subscriptionObserver(capture(arguments)) }
-        coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, paymentType) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
-        assertIs<BillingViewModel.State.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
-        assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
-        assertIs<BillingViewModel.State.Success.TokenCreated>(arguments[2])
-        assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(arguments[3])
-        assertIs<BillingViewModel.State.Success.SignUpTokenReady>(arguments[4])
+        viewModel.subscriptionResult.test {
+            // WHEN
+            viewModel.subscribe(null, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+            viewModel.onThreeDSTokenApproved(
+                null, testPlanIds, null, 2, testCurrency, testSubscriptionCycle, "test-token"
+            )
+
+            // THEN
+            coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, paymentType) }
+            coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
+            assertIs<BillingViewModel.State.Idle>(expectItem())
+            assertIs<BillingViewModel.State.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
+            assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
+            assertIs<BillingViewModel.State.Success.TokenCreated>(expectItem())
+            assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(expectItem())
+            assertIs<BillingViewModel.State.Success.SignUpTokenReady>(expectItem())
+        }
     }
 
     @Test
@@ -552,9 +551,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             gift = null
         )
 
-        val observer = mockk<(BillingViewModel.State) -> Unit>(relaxed = true)
-        viewModel.subscriptionResult.observeDataForever(observer)
-
         coEvery {
             validateSubscription.invoke(testUserId, null, testPlanIds, testCurrency, testSubscriptionCycle)
         } returns testSubscriptionPlanStatus
@@ -571,29 +567,30 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             )
         } returns mockk()
 
-        // WHEN
-        viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
-        viewModel.onThreeDSTokenApproved(
-            testUserId,
-            testPlanIds,
-            null,
-            2,
-            testCurrency,
-            testSubscriptionCycle,
-            "test-token"
-        )
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.State>()
-        verify(exactly = 5) { observer(capture(arguments)) }
-        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
-        coVerify(exactly = 1) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
-        assertIs<BillingViewModel.State.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
-        assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
-        assertIs<BillingViewModel.State.Success.TokenCreated>(arguments[2])
-        assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(arguments[3])
-        assertIs<BillingViewModel.State.Success.SubscriptionCreated>(arguments[4])
+        viewModel.subscriptionResult.test {
+            // WHEN
+            viewModel.subscribe(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle, paymentType)
+            viewModel.onThreeDSTokenApproved(
+                testUserId,
+                testPlanIds,
+                null,
+                2,
+                testCurrency,
+                testSubscriptionCycle,
+                "test-token"
+            )
+            // THEN
+            coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
+            coVerify(exactly = 1) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
+            assertIs<BillingViewModel.State.Idle>(expectItem())
+            assertIs<BillingViewModel.State.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.State.Success.SubscriptionPlanValidated)
+            assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscriptionStatus)
+            assertIs<BillingViewModel.State.Success.TokenCreated>(expectItem())
+            assertIs<BillingViewModel.State.Incomplete.TokenApprovalNeeded>(expectItem())
+            assertIs<BillingViewModel.State.Success.SubscriptionCreated>(expectItem())
+        }
     }
 
     @Test
@@ -611,9 +608,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             gift = null
         )
 
-        val observer = mockk<(BillingViewModel.PlansValidationState) -> Unit>(relaxed = true)
-        viewModel.plansValidationState.observeDataForever(observer)
-
         coEvery {
             validateSubscription.invoke(
                 testUserId,
@@ -624,23 +618,21 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             )
         } returns testSubscriptionPlanStatus
 
-        // WHEN
-        viewModel.validatePlan(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle)
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.PlansValidationState>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<BillingViewModel.PlansValidationState.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.PlansValidationState.Success)
-        assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscription)
+        viewModel.plansValidationState.test {
+            // WHEN
+            viewModel.validatePlan(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle)
+            // THEN
+            assertIs<BillingViewModel.PlansValidationState.Idle>(expectItem())
+            assertIs<BillingViewModel.PlansValidationState.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.PlansValidationState.Success)
+            assertEquals(testSubscriptionPlanStatus, subscriptionPlanStatus.subscription)
+        }
     }
 
     @Test
     fun `validate plan error handled correctly`() = coroutinesTest {
         // GIVEN
-        val observer = mockk<(BillingViewModel.PlansValidationState) -> Unit>(relaxed = true)
-        viewModel.plansValidationState.observeDataForever(observer)
-
         coEvery {
             validateSubscription.invoke(
                 testUserId,
@@ -659,14 +651,15 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             )
         )
 
-        // WHEN
-        viewModel.validatePlan(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle)
-        // THEN
-        val arguments = mutableListOf<BillingViewModel.PlansValidationState>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<BillingViewModel.PlansValidationState.Processing>(arguments[0])
-        val subscriptionPlanStatus = arguments[1]
-        assertTrue(subscriptionPlanStatus is BillingViewModel.PlansValidationState.Error.Message)
-        assertEquals("proton error", subscriptionPlanStatus.message)
+        viewModel.plansValidationState.test {
+            // WHEN
+            viewModel.validatePlan(testUserId, testPlanIds, null, testCurrency, testSubscriptionCycle)
+            // THEN
+            assertIs<BillingViewModel.PlansValidationState.Idle>(expectItem())
+            assertIs<BillingViewModel.PlansValidationState.Processing>(expectItem())
+            val subscriptionPlanStatus = expectItem()
+            assertTrue(subscriptionPlanStatus is BillingViewModel.PlansValidationState.Error.Message)
+            assertEquals("proton error", subscriptionPlanStatus.message)
+        }
     }
 }

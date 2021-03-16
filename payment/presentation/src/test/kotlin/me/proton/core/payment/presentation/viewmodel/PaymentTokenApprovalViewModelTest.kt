@@ -19,10 +19,10 @@
 package me.proton.core.payment.presentation.viewmodel
 
 import android.net.Uri
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
@@ -40,6 +40,7 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
@@ -64,24 +65,22 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `network manager returns has connection`() = coroutinesTest {
-        val observer = mockk<(Boolean) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<Boolean>()
-        viewModel.networkConnection.observeDataForever(observer)
-        viewModel.watchNetwork()
-        verify(exactly = 1) { observer(capture(arguments)) }
-        assertTrue(arguments[0])
+        viewModel.networkConnectionState.test {
+            viewModel.watchNetwork()
+            assertNull(expectItem())
+            assertTrue(expectItem()!!)
+        }
     }
 
     @Test
     fun `network manager returns different flow of has and has not connection`() = coroutinesTest {
         every { networkManager.observe() } returns flowOf(NetworkStatus.Disconnected, NetworkStatus.Unmetered)
-        val observer = mockk<(Boolean) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<Boolean>()
-        viewModel.networkConnection.observeDataForever(observer)
-        viewModel.watchNetwork()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertFalse(arguments[0])
-        assertTrue(arguments[1])
+        viewModel.networkConnectionState.test {
+            viewModel.watchNetwork()
+            assertNull(expectItem())
+            assertFalse(expectItem()!!)
+            assertTrue(expectItem()!!)
+        }
     }
 
     @Test
@@ -90,13 +89,9 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val testUri = mockk<Uri>(relaxed = true)
         every { testUri.host } returns "test-host"
         val testReturnHost = "test-return-host"
-        val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
-        viewModel.approvalResult.observeDataForever(observer)
         // WHEN
         val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
-        verify(exactly = 0) { observer(capture(arguments)) }
         assertFalse(result)
     }
 
@@ -113,18 +108,17 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
             )
         } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
         val testReturnHost = "test-return-host"
-        val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
-        viewModel.approvalResult.observeDataForever(observer)
-        // WHEN
-        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-        // THEN
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertFalse(result)
-        assertIs<PaymentTokenApprovalViewModel.State.Processing>(arguments[0])
-        val approvalStatus = arguments[1]
-        assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
-        assertEquals(PaymentTokenStatus.CHARGEABLE, approvalStatus.paymentTokenStatus)
+        viewModel.approvalState.test {
+            // WHEN
+            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
+            // THEN
+            assertFalse(result)
+            assertIs<PaymentTokenApprovalViewModel.State.Idle>(expectItem())
+            assertIs<PaymentTokenApprovalViewModel.State.Processing>(expectItem())
+            val approvalStatus = expectItem()
+            assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
+            assertEquals(PaymentTokenStatus.CHARGEABLE, approvalStatus.paymentTokenStatus)
+        }
     }
 
     @Test
@@ -140,18 +134,17 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
             )
         } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.FAILED)
         val testReturnHost = "test-return-host"
-        val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
-        viewModel.approvalResult.observeDataForever(observer)
-        // WHEN
-        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-        // THEN
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertFalse(result)
-        assertIs<PaymentTokenApprovalViewModel.State.Processing>(arguments[0])
-        val approvalStatus = arguments[1]
-        assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
-        assertEquals(PaymentTokenStatus.FAILED, approvalStatus.paymentTokenStatus)
+        viewModel.approvalState.test {
+            // WHEN
+            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
+            // THEN
+            assertFalse(result)
+            assertIs<PaymentTokenApprovalViewModel.State.Idle>(expectItem())
+            assertIs<PaymentTokenApprovalViewModel.State.Processing>(expectItem())
+            val approvalStatus = expectItem()
+            assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
+            assertEquals(PaymentTokenStatus.FAILED, approvalStatus.paymentTokenStatus)
+        }
     }
 
     @Test
@@ -171,18 +164,17 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
             )
         )
         val testReturnHost = "test-return-host"
-        val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
-        viewModel.approvalResult.observeDataForever(observer)
-        // WHEN
-        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-        // THEN
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertFalse(result)
-        assertIs<PaymentTokenApprovalViewModel.State.Processing>(arguments[0])
-        val approvalStatus = arguments[1]
-        assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Error.Message)
-        assertEquals("proton error", approvalStatus.message)
+        viewModel.approvalState.test {
+            // WHEN
+            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
+            // THEN
+            assertFalse(result)
+            assertIs<PaymentTokenApprovalViewModel.State.Idle>(expectItem())
+            assertIs<PaymentTokenApprovalViewModel.State.Processing>(expectItem())
+            val approvalStatus = expectItem()
+            assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Error.Message)
+            assertEquals("proton error", approvalStatus.message)
+        }
     }
 
     @Test
@@ -191,57 +183,62 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val testUri = mockk<Uri>(relaxed = true)
         every { testUri.host } returns "test-host"
         every { testUri.getQueryParameter("cancel") } returns "0"
-        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentToken.PaymentTokenStatusResult(
+            PaymentTokenStatus.CHARGEABLE
+        )
         val testReturnHost = "test-host"
-        val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
-        viewModel.approvalResult.observeDataForever(observer)
-        // WHEN
-        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-        // THEN
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertFalse(result)
-        assertIs<PaymentTokenApprovalViewModel.State.Processing>(arguments[0])
-        val approvalStatus = arguments[1]
-        assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
-        assertEquals(PaymentTokenStatus.CHARGEABLE, approvalStatus.paymentTokenStatus)
+        viewModel.approvalState.test {
+            // WHEN
+            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
+            // THEN
+            assertFalse(result)
+            assertIs<PaymentTokenApprovalViewModel.State.Idle>(expectItem())
+            assertIs<PaymentTokenApprovalViewModel.State.Processing>(expectItem())
+            val approvalStatus = expectItem()
+            assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
+            assertEquals(PaymentTokenStatus.CHARGEABLE, approvalStatus.paymentTokenStatus)
+        }
     }
 
     @Test
-    fun `web request redirect returns true when URI same as return host cancelled success status check`() = coroutinesTest {
-        // GIVEN
-        val testUri = mockk<Uri>(relaxed = true)
-        every { testUri.host } returns "test-host"
-        every { testUri.getQueryParameter("cancel") } returns "1"
-        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
-        val testReturnHost = "test-host"
-        val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
-        viewModel.approvalResult.observeDataForever(observer)
-        // WHEN
-        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-        // THEN
-        verify(exactly = 0) { observer(capture(arguments)) }
-        assertTrue(result)
-    }
+    fun `web request redirect returns true when URI same as return host cancelled success status check`() =
+        coroutinesTest {
+            // GIVEN
+            val testUri = mockk<Uri>(relaxed = true)
+            every { testUri.host } returns "test-host"
+            every { testUri.getQueryParameter("cancel") } returns "1"
+            coEvery {
+                getPaymentTokenStatus.invoke(
+                    testUserId,
+                    testToken
+                )
+            } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+            val testReturnHost = "test-host"
+            // WHEN
+            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
+            // THEN
+            assertTrue(result)
+        }
 
     @Test
-    fun `web request redirect returns true when URI same as return secure endpoint success status check`() = coroutinesTest {
-        // GIVEN
-        val testUri = mockk<Uri>(relaxed = true)
-        every { testUri.host } returns "test-secure-endpoint"
-        every { testUri.getQueryParameter("cancel") } returns "1"
-        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
-        val testReturnHost = "test-return-host"
-        val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
-        viewModel.approvalResult.observeDataForever(observer)
-        // WHEN
-        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
-        // THEN
-        verify(exactly = 0) { observer(capture(arguments)) }
-        assertTrue(result)
-    }
+    fun `web request redirect returns true when URI same as return secure endpoint success status check`() =
+        coroutinesTest {
+            // GIVEN
+            val testUri = mockk<Uri>(relaxed = true)
+            every { testUri.host } returns "test-secure-endpoint"
+            every { testUri.getQueryParameter("cancel") } returns "1"
+            coEvery {
+                getPaymentTokenStatus.invoke(
+                    testUserId,
+                    testToken
+                )
+            } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+            val testReturnHost = "test-return-host"
+            // WHEN
+            val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
+            // THEN
+            assertTrue(result)
+        }
 
     @Test
     fun `web request redirect other host returns true when canceled`() = coroutinesTest {
@@ -250,13 +247,9 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         every { testUri.host } returns "test-host"
         every { testUri.getQueryParameter("cancel") } returns "0"
         val testReturnHost = "test-return-host"
-        val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
-        viewModel.approvalResult.observeDataForever(observer)
         // WHEN
         val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
-        verify(exactly = 0) { observer(capture(arguments)) }
         assertFalse(result)
     }
 }

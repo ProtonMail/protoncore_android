@@ -28,9 +28,11 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityPaymentTokenApprovalBinding
@@ -85,22 +87,25 @@ class PaymentTokenApprovalActivity : PaymentsActivity<ActivityPaymentTokenApprov
             onError()
         }
         viewModel.watchNetwork()
-        viewModel.networkConnection.observeData {
-            if (it) {
-                webView.loadUrl(input.approvalUrl)
-                binding.progress.visibility = View.GONE
-            } else {
-                binding.root.errorSnack(R.string.payments_no_connectivity)
+        viewModel.networkConnectionState.onEach {
+            it?.let { networkState ->
+                if (networkState) {
+                    webView.loadUrl(input.approvalUrl)
+                    binding.progress.visibility = View.GONE
+                } else {
+                    binding.root.errorSnack(R.string.payments_no_connectivity)
+                }
             }
-        }
+        }.launchIn(lifecycleScope)
 
-        viewModel.approvalResult.observeData {
+        viewModel.approvalState.onEach {
             when (it) {
+                is PaymentTokenApprovalViewModel.State.Idle -> showLoading(false)
                 is PaymentTokenApprovalViewModel.State.Processing -> showLoading(true)
                 is PaymentTokenApprovalViewModel.State.Success -> onSuccess(it.paymentTokenStatus)
                 is PaymentTokenApprovalViewModel.State.Error.Message -> showError(it.message)
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
     }
 
     override fun onError(message: String?) {

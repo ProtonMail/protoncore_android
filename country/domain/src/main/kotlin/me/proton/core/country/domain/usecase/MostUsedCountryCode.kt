@@ -18,7 +18,6 @@
 
 package me.proton.core.country.domain.usecase
 
-import me.proton.core.country.domain.exception.NoCountriesException
 import me.proton.core.country.domain.repository.CountriesRepository
 import javax.inject.Inject
 
@@ -35,8 +34,6 @@ class MostUsedCountryCode @Inject constructor(
     suspend operator fun invoke() = countriesRepository.getAllCountriesSorted().let {
         if (it.isNotEmpty()) {
             it[0].callingCode
-        } else {
-            throw NoCountriesException()
-        }
+        } else null
     }
 }

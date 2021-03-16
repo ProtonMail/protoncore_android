@@ -19,5 +19,5 @@
 package me.proton.android.core.coreexample
 
 object Constants {
-     const val BASE_URL = "https://api.protonmail.ch/"
+     const val BASE_URL = "https://proton.black/api/"
 }

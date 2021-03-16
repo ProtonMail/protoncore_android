@@ -26,10 +26,10 @@ import javax.inject.Inject
 /**
  * Use case for sending the verification code (token) to the API for verification.
  * Depends on [HumanVerificationRemoteRepository] which is responsible for contacting the API via network connection.
- *
- * @author Dino Kadrikj.
  */
-class VerifyCode @Inject constructor(private val humanVerificationRemoteRepository: HumanVerificationRemoteRepository) {
+class VerifyCode @Inject constructor(
+    private val humanVerificationRemoteRepository: HumanVerificationRemoteRepository
+) {
 
     /**
      * Sends the verification code (token) to the API.

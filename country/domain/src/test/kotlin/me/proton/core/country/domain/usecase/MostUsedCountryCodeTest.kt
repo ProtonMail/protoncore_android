@@ -21,12 +21,12 @@ package me.proton.core.country.domain.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.country.domain.exception.NoCountriesException
 import me.proton.core.country.domain.repository.CountriesRepository
 import me.proton.core.country.domain.utils.testCountriesExcludingMostUsed
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 
 class MostUsedCountryCodeTest {
 
@@ -45,9 +45,8 @@ class MostUsedCountryCodeTest {
     @Test
     fun `empty flow throws exception`() = runBlockingTest {
         coEvery { localRepository.getAllCountriesSorted() } returns emptyList()
-
-        assertFailsWith(NoCountriesException::class) {
-            MostUsedCountryCode(localRepository).invoke()
-        }
+        val useCase = MostUsedCountryCode(localRepository)
+        val result = useCase.invoke()
+        assertNull(result)
     }
 }

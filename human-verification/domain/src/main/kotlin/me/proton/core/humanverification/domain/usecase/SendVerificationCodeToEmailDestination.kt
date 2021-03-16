@@ -34,8 +34,9 @@ import javax.inject.Inject
  *
  * @author Dino Kadrikj.
  */
-class SendVerificationCodeToEmailDestination @Inject
-constructor(private val humanVerificationRemoteRepository: HumanVerificationRemoteRepository) {
+class SendVerificationCodeToEmailDestination @Inject constructor(
+    private val humanVerificationRemoteRepository: HumanVerificationRemoteRepository
+) {
 
     /**
      * Sends the verification code (token) to the API.

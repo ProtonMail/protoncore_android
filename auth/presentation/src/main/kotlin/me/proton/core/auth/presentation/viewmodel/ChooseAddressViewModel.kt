@@ -35,19 +35,20 @@ import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
-import studio.forface.viewstatestore.ViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
 
 class ChooseAddressViewModel @ViewModelInject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val usernameDomainAvailability: UsernameDomainAvailability
-) : ProtonViewModel(), ViewStateStoreScope {
+) : ProtonViewModel() {
 
     private val userIdFlow = MutableStateFlow<UserId?>(null)
 
-    val state = ViewStateStore<State>().lock
+    private val _state = MutableStateFlow<State>(State.Idle)
+
+    val state = _state.asStateFlow()
 
     sealed class State {
+        object Idle : State()
         object Processing : State()
         data class Success(val username: String, val domain: Domain) : State()
         data class Data(val username: String?, val domains: List<Domain>) : State()
@@ -69,9 +70,9 @@ class ChooseAddressViewModel @ViewModelInject constructor(
             val user = usernameDomainAvailability.getUser(userId)
             emit(State.Data(user.name, domains))
         }.catch { error ->
-            state.post(State.Error.Message(error.message))
+            _state.tryEmit(State.Error.Message(error.message))
         }.onEach {
-            state.post(it)
+            _state.tryEmit(it)
         }.launchIn(viewModelScope)
     }
 
@@ -92,8 +93,8 @@ class ChooseAddressViewModel @ViewModelInject constructor(
             emit(State.Error.UsernameNotAvailable)
         }
     }.catch { error ->
-        state.post(State.Error.Message(error.message))
+        _state.tryEmit(State.Error.Message(error.message))
     }.onEach {
-        state.post(it)
+        _state.tryEmit(it)
     }.launchIn(viewModelScope)
 }

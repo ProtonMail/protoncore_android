@@ -18,24 +18,23 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
-import io.mockk.verify
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.assertIs
 import me.proton.core.user.domain.UserManager
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /**
  * @author Dino Kadrikj.
@@ -67,17 +66,17 @@ class TwoPassModeViewModelTest : ArchTest, CoroutinesTest {
     fun `mailbox login happy path`() = coroutinesTest {
         // GIVEN
         coEvery { unlockUserPrimaryKey.invoke(testUserId, testPassword) } returns UserManager.UnlockResult.Success
-        val observer = mockk<(TwoPassModeViewModel.State) -> Unit>(relaxed = true)
-        viewModel.mailboxLoginState.observeDataForever(observer)
-        // WHEN
-        viewModel.tryUnlockUser(testUserId, testPassword)
-        // THEN
-        val arguments = mutableListOf<TwoPassModeViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        val processingState = arguments[0]
-        val successState = arguments[1]
-        assertTrue(processingState is TwoPassModeViewModel.State.Processing)
-        assertTrue(successState is TwoPassModeViewModel.State.Success.UserUnLocked)
+        viewModel.state.test {
+            // WHEN
+            viewModel.tryUnlockUser(testUserId, testPassword)
+
+            // THEN
+            assertIs<TwoPassModeViewModel.State.Idle>(expectItem())
+            assertIs<TwoPassModeViewModel.State.Processing>(expectItem())
+            assertIs<TwoPassModeViewModel.State.Success.UserUnLocked>(expectItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test

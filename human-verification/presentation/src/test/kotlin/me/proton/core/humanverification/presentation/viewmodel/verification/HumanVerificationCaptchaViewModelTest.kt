@@ -19,26 +19,22 @@
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.usecase.VerifyCode
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.test.kotlin.assertIs
 import org.junit.Rule
 import org.junit.Test
-import studio.forface.viewstatestore.ViewState
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-/**
- * @author Dino Kadrikj.
- */
 class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
 
     @get:Rule
@@ -56,50 +52,54 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
     }
 
     @Test
-    fun `connectivity arrived metered`() = runBlockingTest {
+    fun `connectivity arrived metered`() = coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Metered)
-        assertIs<ViewState.Success<Boolean>>(viewModel.networkConnectionState.await())
-        val result = viewModel.networkConnectionState.awaitData()
-        assertTrue(result)
+        viewModel.networkConnectionState.test {
+            val result = expectItem()
+            assertTrue(result is ViewModelResult.Success<Boolean>)
+            assertTrue(result.value)
+        }
     }
 
     @Test
-    fun `connectivity arrived unmetered`() = runBlockingTest {
+    fun `connectivity arrived unmetered`() = coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Unmetered)
-        assertIs<ViewState.Success<Boolean>>(viewModel.networkConnectionState.await())
-        val result = viewModel.networkConnectionState.awaitData()
-        assertTrue(result)
+        viewModel.networkConnectionState.test {
+            val result = expectItem()
+            assertTrue(result is ViewModelResult.Success<Boolean>)
+            assertTrue(result.value)
+        }
     }
 
     @Test
-    fun `connectivity arrived disconnected`() = runBlockingTest {
+    fun `connectivity arrived disconnected`() = coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Disconnected)
-        assertIs<ViewState.Success<Boolean>>(viewModel.networkConnectionState.await())
-        val result = viewModel.networkConnectionState.awaitData()
-        assertFalse(result)
+        viewModel.networkConnectionState.test {
+            val result = expectItem()
+            assertTrue(result is ViewModelResult.Success<Boolean>)
+            assertFalse(result.value)
+        }
     }
 
     @Test
-    fun `verify code null fails`() = runBlockingTest {
+    fun `verify code null fails`() = coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Unmetered)
-        viewModel.networkConnectionState.await()
         assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode(sessionId, null) }
     }
 
     @Test
-    fun `verify code empty fails`() = runBlockingTest {
+    fun `verify code empty fails`() = coroutinesTest {
         every {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Unmetered)
-        viewModel.networkConnectionState.await()
         assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode(sessionId, "") }
     }
 }

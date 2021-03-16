@@ -27,7 +27,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(0, 3, 0)
+libVersion = Version(0, 3, 2)
 
 android(
     minSdk = 23,
@@ -59,8 +59,7 @@ dependencies {
         `hilt-android`,
         `hilt-androidx-viewModel`,
         `lifecycle-viewModel`,
-        `material`,
-        `viewStateStore`
+        `material`
     )
 
     kapt(
