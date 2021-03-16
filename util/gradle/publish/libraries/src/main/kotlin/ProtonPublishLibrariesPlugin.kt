@@ -79,19 +79,23 @@ private fun Project.setupPublishing() {
                     val uploadNewRelease = tasks.register("uploadNewRelease") {
                         dependsOn(tasks.named("uploadArchives"))
                     }
-                    val publishNewRelease = tasks.register("publishNewRelease") {
-                        if (isNewVersion) dependsOn(uploadNewRelease)
+                    val closeAndRelease = project.rootProject.tasks.named("closeAndReleaseRepository") {
+                        mustRunAfter(uploadNewRelease)
                     }
-                    tasks.register("updateNewRelease") {
-                        mustRunAfter(publishNewRelease)
+                    val updateNewRelease = tasks.register("updateNewRelease") {
+                        mustRunAfter(closeAndRelease)
                         doFirst {
                             moveArchives("releases")
                             updateReadme()
                             printToNewReleasesFile()
                         }
                     }
-                    project.rootProject.tasks.named("closeAndReleaseRepository") {
-                        mustRunAfter(publishNewRelease)
+                    tasks.register("publishNewRelease") {
+                        if (isNewVersion) {
+                            dependsOn(uploadNewRelease)
+                            dependsOn(closeAndRelease)
+                            dependsOn(updateNewRelease)
+                        }
                     }
                 }
             }
