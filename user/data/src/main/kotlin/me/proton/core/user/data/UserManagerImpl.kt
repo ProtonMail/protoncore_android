@@ -40,8 +40,8 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.extension.hasMigratedKey
-import me.proton.core.user.domain.extension.originalOrNull
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -142,8 +142,8 @@ class UserManagerImpl(
         auth: Auth,
         password: ByteArray
     ): User {
-        // First create a new original address, if needed.
-        if (userAddressRepository.getAddresses(sessionUserId).originalOrNull() == null) {
+        // First create a new internal address, if needed.
+        if (userAddressRepository.getAddresses(sessionUserId).firstInternalOrNull() == null) {
             userAddressRepository.createAddress(
                 sessionUserId = sessionUserId,
                 displayName = username,

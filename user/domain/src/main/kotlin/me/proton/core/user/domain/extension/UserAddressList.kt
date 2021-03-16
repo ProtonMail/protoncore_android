@@ -32,9 +32,9 @@ fun List<UserAddress>.primary() = minByOrNull { it.order }
 fun List<UserAddress>.sorted() = sortedBy { it.order }
 
 /**
- * @return original [UserAddress], or `null` otherwise.
+ * @return first internal [UserAddress] from [List].
  */
-fun List<UserAddress>.originalOrNull() = firstOrNull { it.type == AddressType.Original }
+fun List<UserAddress>.firstInternalOrNull() = filter { it.type != AddressType.External }.sorted().firstOrNull()
 
 /**
  * @return true if at least one [UserAddress] is migrated into the new key format, false otherwise.

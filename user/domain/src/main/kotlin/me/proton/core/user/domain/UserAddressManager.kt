@@ -59,9 +59,9 @@ interface UserAddressManager {
     ): UserAddress?
 
     /**
-     * Create new primary [AddressType.Original] [UserAddress], with a new [UserAddressKey], remotely.
+     * Create new primary internal [UserAddress], with a new [UserAddressKey], remotely.
      */
-    suspend fun setupOriginalAddress(
+    suspend fun setupInternalAddress(
         sessionUserId: SessionUserId,
         username: String,
         domain: String

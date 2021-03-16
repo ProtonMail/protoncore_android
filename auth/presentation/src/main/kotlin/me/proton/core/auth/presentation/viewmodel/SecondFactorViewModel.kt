@@ -30,7 +30,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
-import me.proton.core.auth.domain.usecase.SetupOriginalAddress
+import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -49,7 +49,7 @@ class SecondFactorViewModel @ViewModelInject constructor(
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
     private val setupAccountCheck: SetupAccountCheck,
     private val setupPrimaryKeys: SetupPrimaryKeys,
-    private val setupOriginalAddress: SetupOriginalAddress,
+    private val setupInternalAddress: SetupInternalAddress,
     private val sessionProvider: SessionProvider
 ) : ProtonViewModel(), ViewStateStoreScope {
 
@@ -103,7 +103,7 @@ class SecondFactorViewModel @ViewModelInject constructor(
             is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(userId)
             is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, password)
             is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, password)
-            is SetupAccountCheck.Result.SetupOriginalAddressNeeded -> setupOriginalAddress(userId, password)
+            is SetupAccountCheck.Result.SetupInternalAddressNeeded -> setupInternalAddress(userId, password)
             is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId)
         }.let {
             emit(it)
@@ -153,13 +153,13 @@ class SecondFactorViewModel @ViewModelInject constructor(
         return unlockUserPrimaryKey(userId, password)
     }
 
-    private suspend fun setupOriginalAddress(
+    private suspend fun setupInternalAddress(
         userId: UserId,
         password: EncryptedString
     ): State {
         val result = unlockUserPrimaryKey.invoke(userId, password)
         return if (result is UserManager.UnlockResult.Success) {
-            setupOriginalAddress.invoke(userId)
+            setupInternalAddress.invoke(userId)
             accountWorkflow.handleAccountReady(userId)
             State.Success.UserUnLocked(userId)
         } else {
