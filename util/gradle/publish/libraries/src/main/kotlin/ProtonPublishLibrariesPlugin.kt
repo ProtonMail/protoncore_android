@@ -76,30 +76,22 @@ private fun Project.setupPublishing() {
 
             with(ReleaseManager(this)) {
                 if (mavenPassword != null) {
-
-                    // Setup pre publish
-                    val prePublish = tasks.create("prePublish") {
+                    val uploadNewRelease = tasks.register("uploadNewRelease") {
+                        dependsOn(tasks.named("uploadArchives"))
+                    }
+                    val publishNewRelease = tasks.register("publishNewRelease") {
+                        if (isNewVersion) dependsOn(uploadNewRelease)
+                    }
+                    tasks.register("updateNewRelease") {
+                        mustRunAfter(publishNewRelease)
                         doFirst {
                             moveArchives("releases")
-                            generateKdocIfNeeded()
                             updateReadme()
                             printToNewReleasesFile()
                         }
                     }
-
-                    // Setup publish
-                    tasks.register("publishAll") {
-                        dependsOn(prePublish)
-                        if (isNewVersion) {
-                            val closeAndReleaseTask = tasks.getByName("closeAndReleaseRepository")
-                            closeAndReleaseTask.dependsOn(tasks.getByName("uploadArchives"))
-                            dependsOn(closeAndReleaseTask)
-                        }
-                    }
-                } else {
-                    // Force Readme update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
-                    tasks.create("forceUpdateReadme") {
-                        doLast { updateReadme() }
+                    project.rootProject.tasks.named("closeAndReleaseRepository") {
+                        mustRunAfter(publishNewRelease)
                     }
                 }
             }
@@ -170,14 +162,6 @@ class ReleaseManager internal constructor(
                 }
             }
             file.delete()
-        }
-    }
-
-    /** Generate KDoc if new library is available */
-    fun generateKdocIfNeeded() {
-        if (shouldRefresh) {
-            // val task = tasks.named<DokkaTask>("dokkaHtml").orNull ?: return
-            // task.taskActions.forEach { it.execute(task) }
         }
     }
 
