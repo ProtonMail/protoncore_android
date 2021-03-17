@@ -23,11 +23,13 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import me.proton.core.countries.domain.entity.Country
+import me.proton.core.countries.domain.usecase.GetCountryCode
+import me.proton.core.countries.domain.usecase.LoadCountries
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.Card
-import me.proton.core.payment.domain.entity.Country
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
@@ -57,7 +59,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
     private val createPaymentTokenWithExistingPaymentMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>()
     private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>()
     private val performSubscribe = mockk<PerformSubscribe>()
-    private val getCountries = mockk<GetCountries>()
+    private val getCountries = mockk<LoadCountries>()
     private val getCountryCode = mockk<GetCountryCode>()
     // endregion
 

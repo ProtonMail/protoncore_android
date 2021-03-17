@@ -22,7 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class CardDetailsBody(
+data class CardDetailsBody(
     @SerialName("ExpMonth")
     val expirationMonth: String,
     @SerialName("ExpYear")

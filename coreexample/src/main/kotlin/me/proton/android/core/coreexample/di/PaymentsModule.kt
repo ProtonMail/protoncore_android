@@ -25,9 +25,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.payment.data.repository.CountriesRepositoryImpl
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
-import me.proton.core.payment.domain.repository.CountriesRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.presentation.entity.SecureEndpoint
 import javax.inject.Singleton
@@ -40,11 +38,6 @@ object PaymentsModule {
     @Singleton
     fun providePaymentsRepository(apiProvider: ApiProvider): PaymentsRepository =
         PaymentsRepositoryImpl(apiProvider)
-
-    @Provides
-    @Singleton
-    fun provideCountriesRepository(@ApplicationContext context: Context): CountriesRepository =
-        CountriesRepositoryImpl(context)
 
 
     @Provides

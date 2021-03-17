@@ -21,10 +21,12 @@ package me.proton.core.payment.presentation.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.countries.presentation.entity.CountryUIModel
+import me.proton.core.countries.presentation.ui.CountryPickerFragment
+import me.proton.core.countries.presentation.ui.showCountryPicker
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.presentation.R
@@ -35,6 +37,7 @@ import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.util.kotlin.exhaustive
 
@@ -73,21 +76,19 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
             expirationDateInput.apply {
                 onTextChange(afterTextChangeListener = ExpirationDateWatcher().watcher)
             }
+
+            countriesText.onClick {
+                supportFragmentManager.showCountryPicker(false)
+            }
+            supportFragmentManager.setFragmentResultListener(CountryPickerFragment.KEY_COUNTRY_SELECTED, this@BillingActivity) { _, bundle ->
+                val country = bundle.getParcelable<CountryUIModel>(CountryPickerFragment.BUNDLE_KEY_COUNTRY)
+                countriesText.text = country?.name
+            }
         }
         observe()
     }
 
     private fun observe() {
-        viewModel.countriesResult.observeData { countries ->
-            binding.countriesText.setAdapter(
-                ArrayAdapter(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    countries.map { it.name }
-                )
-            )
-        }
-
         viewModel.plansValidationState.observeData {
             when (it) {
                 is BillingViewModel.PlansValidationState.Processing -> {

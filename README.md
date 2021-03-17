@@ -208,6 +208,16 @@ Payment Data: **0.1** - _released on: Mar 12, 2021_
 
 Payment Presentation: **0.1** - _released on: Mar 12, 2021_
 
+### Countries
+
+Countries: **0.1** - _released on: Mar 20, 2021_
+
+Countries Domain: **0.1** - _released on: Mar 20, 2021_
+
+Countries Data: **0.1** - _released on: Mar 20, 2021_
+
+Countries Presentation: **0.1** - _released on: Mar 12, 2021_
+
 ### Payment
 
 Payment: **0.1** - _released on: Mar 12, 2021_

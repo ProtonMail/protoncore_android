@@ -18,7 +18,7 @@
 
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
-import me.proton.core.humanverification.presentation.entity.CountryUIModel
+import me.proton.core.countries.presentation.entity.CountryUIModel
 import studio.forface.viewstatestore.LockedViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 

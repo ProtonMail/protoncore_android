@@ -23,10 +23,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import me.proton.core.countries.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.usecase.VerifyCode
-import me.proton.core.humanverification.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.presentation.exception.TokenCodeVerificationException
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus

@@ -42,7 +42,12 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.presentation),
+
+        // Feature
         project(Module.humanVerificationDomain),
+        project(Module.countriesPresentation),
+        project(Module.countriesDomain),
+        project(Module.countriesData),
 
         // Kotlin
         `kotlin-jdk7`,

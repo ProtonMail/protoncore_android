@@ -35,7 +35,6 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.humanVerificationDomain),
         project(Module.network),
-        project(Module.data),
 
         // Kotlin
         `kotlin-jdk7`,

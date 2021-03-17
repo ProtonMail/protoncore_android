@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="32dp" android:height="32dp" android:viewportWidth="32" android:viewportHeight="32">
+    <path android:pathData="M32 5.33H0v21.33h32V5.33z" android:fillColor="#0052B4"/>
+    <path android:pathData="M20.75 12v4.89C20.75 19.27 24 20 24 20s3.25-0.73 3.25-3.11V12h-6.5z" android:fillColor="#FFDA44"/>
+    <path android:pathData="M23.54 13.78c0 0.49-0.42 1.78-0.93 1.78s-0.93-1.29-0.93-1.78 0.93-0.89 0.93-0.89 0.93 0.4 0.93 0.89z" android:fillColor="#FF9811"/>
+    <path android:pathData="M26 14.75a3.57 3.57 0 0 0 0.26-1.12c0-0.41-0.55-0.74-0.55-0.74s-0.56 0.33-0.56 0.74c0.03 0.385 0.12 0.763 0.27 1.12l-0.32 0.69c0.194 0.077 0.401 0.118 0.61 0.12a1.79 1.79 0 0 0 0.61-0.12L26 14.75z" android:fillColor="#A2001D"/>
+    <path android:pathData="M23.3 16.89a4.49 4.49 0 0 0-0.46 1.78h2.32a4.49 4.49 0 0 0-0.46-1.78L24 16.44l-0.7 0.45z" android:fillColor="#6DA544"/>
+    <path android:pathData="M24.7 16.89v-0.22A0.69 0.69 0 0 0 24 16a0.68 0.68 0 0 0-0.69 0.67v0.22h1.39z" android:fillColor="#D80027"/>
+    <path android:pathData="M16 5.33v1.91l-2.82 1.57H16v3.71h-3.69L16 14.57V16h-1.67l-4.59-2.55V16H6.26v-3.04L0.8 16H0v-1.91l2.82-1.57H0V8.81h3.69L0 6.76V5.33h1.67l4.59 2.55V5.33h3.48v3.04l5.46-3.04H16z" android:fillColor="#F0F0F0"/>
+    <path android:pathData="M9 5.33H7v4.34H0v2h7V16h2v-4.33h7v-2H9V5.33z" android:fillColor="#D80027"/>
+    <path android:pathData="M9.74 12.52L16 16v-0.98l-4.49-2.5H9.74z" android:fillColor="#0052B4"/>
+    <path android:pathData="M9.74 12.52L16 16v-0.98l-4.49-2.5H9.74z" android:fillColor="#F0F0F0"/>
+    <path android:pathData="M9.74 12.52L16 16v-0.98l-4.49-2.5H9.74zm-5.25 0L0 15.02V16l6.26-3.48H4.49z" android:fillColor="#D80027"/>
+    <path android:pathData="M6.26 8.81L0 5.33v0.99l4.49 2.49h1.77z" android:fillColor="#0052B4"/>
+    <path android:pathData="M6.26 8.81L0 5.33v0.99l4.49 2.49h1.77z" android:fillColor="#F0F0F0"/>
+    <path android:pathData="M6.26 8.81L0 5.33v0.99l4.49 2.49h1.77zm5.25 0L16 6.32V5.33L9.74 8.81h1.77z" android:fillColor="#D80027"/>
+</vector>

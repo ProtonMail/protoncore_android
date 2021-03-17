@@ -34,9 +34,7 @@ import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.Product
-import me.proton.core.humanverification.data.repository.HumanVerificationLocalRepositoryImpl
 import me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl
-import me.proton.core.humanverification.domain.repository.HumanVerificationLocalRepository
 import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.ProtonCookieStore
@@ -100,10 +98,6 @@ object ApplicationModule {
     @Singleton
     fun provideCoreExampleRepository(apiProvider: ApiProvider): CoreExampleRepository =
         CoreExampleRepository(apiProvider)
-
-    @Provides
-    fun provideLocalRepository(@ApplicationContext context: Context): HumanVerificationLocalRepository =
-        HumanVerificationLocalRepositoryImpl(context)
 
     @Provides
     @Singleton

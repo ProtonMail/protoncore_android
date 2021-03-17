@@ -30,8 +30,4 @@
 
     <dimen name="human_verification_header_title_margin">4dp</dimen>
     <dimen name="human_verification_header_horizontal_margin">12dp</dimen>
-
-    <dimen name="human_verification_calling_code_title_margin">8dp</dimen>
-    <dimen name="human_verification_country_picker_filter_margin">16dp</dimen>
-    <dimen name="human_verification_country_picker_item_padding">8dp</dimen>
 </resources>

@@ -20,7 +20,6 @@
 <resources>
 
     <!-- base common strings -->
-    <string name="human_verification_close">Close</string>
     <string name="human_verification_help">Help</string>
 
     <string name="human_verification_title">Human Verification</string>
@@ -38,12 +37,10 @@
     <string name="human_verification_verify">Verify</string> <!-- To verify the entered code - action -->
     <string name="human_verification_help_title">Do you need any help with human verification?</string>
     <string name="human_verification_code">Verification Code</string>
-    <string name="human_verification_search">Search country</string>
     <string name="email">Email</string>
     <string name="email_hint">example@protonmail.com</string>
     <string name="sms_hint">Phone number</string>
     <string name="verification_code_hint">XXXXXX</string>
-    <string name="filter_country_hint">Filter</string>
 
     <!-- TODO: update correct strings below -->
     <string name="human_verification_help_manual_title">Manual Verification</string>

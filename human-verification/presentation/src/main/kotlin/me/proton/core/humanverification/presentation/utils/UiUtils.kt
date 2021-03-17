@@ -20,10 +20,10 @@ package me.proton.core.humanverification.presentation.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import me.proton.core.countries.presentation.ui.CountryPickerFragment
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationHelpFragment
-import me.proton.core.humanverification.presentation.ui.verification.CountryPickerFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationCaptchaFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationEmailFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationEnterCodeFragment
@@ -35,7 +35,6 @@ import me.proton.core.presentation.utils.inTransaction
  * @author Dino Kadrikj.
  */
 private const val TAG_HUMAN_VERIFICATION_DIALOG = "human_verification_dialog"
-private const val TAG_HUMAN_VERIFICATION_COUNTRY_PICKER = "human_verification_country"
 private const val TAG_HUMAN_VERIFICATION_ENTER_CODE = "human_verification_code"
 const val TAG_HUMAN_VERIFICATION_HELP = "human_verification_help"
 
@@ -128,19 +127,5 @@ internal fun FragmentManager.showHelp() {
     inTransaction {
         setCustomAnimations(0, 0)
         add(helpFragment, TAG_HUMAN_VERIFICATION_HELP)
-    }
-}
-
-internal fun FragmentManager.showCountryPicker() {
-    val countryPickerFragment = CountryPickerFragment()
-    inTransaction {
-        setCustomAnimations(0, 0)
-        add(countryPickerFragment, TAG_HUMAN_VERIFICATION_COUNTRY_PICKER)
-    }
-}
-
-internal fun CountryPickerFragment.removeCountryPicker() {
-    parentFragmentManager.inTransaction {
-        remove(this@removeCountryPicker)
     }
 }

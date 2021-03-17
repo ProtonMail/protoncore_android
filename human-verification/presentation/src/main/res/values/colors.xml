@@ -19,5 +19,4 @@
 
 <resources>
     <color name="humanVerificationTabItemText">@color/text_weak</color>
-    <color name="humanVerificationCallingCode">@color/text_hint</color>
 </resources>

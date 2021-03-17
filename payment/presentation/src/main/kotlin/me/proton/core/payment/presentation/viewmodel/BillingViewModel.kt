@@ -24,9 +24,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.countries.domain.entity.Country
+import me.proton.core.countries.domain.usecase.GetCountryCode
+import me.proton.core.countries.domain.usecase.LoadCountries
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Card
-import me.proton.core.payment.domain.entity.Country
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
@@ -58,7 +61,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
     private val createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
     private val createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
     private val performSubscribe: PerformSubscribe,
-    private val getCountries: GetCountries,
+    private val getCountries: LoadCountries,
     private val getCountryCode: GetCountryCode
 ) : ProtonViewModel(), ViewStateStoreScope {
 
