@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.DataInteraction
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.IdlingResourceTimeoutException
+import androidx.test.espresso.NoMatchingRootException
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.ViewAction
@@ -214,6 +215,13 @@ object UIWaits {
             }
         } catch (e: NoMatchingViewException) {
             errorBlock("View Matcher: \"${e.viewMatcherDescription}\"")
+            if (ProtonWatcher.status == ProtonWatcher.TIMEOUT) {
+                throw e
+            } else {
+                false
+            }
+        } catch (e: NoMatchingRootException) {
+            errorBlock("Unable to match Root View: \"${e.message}\"")
             if (ProtonWatcher.status == ProtonWatcher.TIMEOUT) {
                 throw e
             } else {

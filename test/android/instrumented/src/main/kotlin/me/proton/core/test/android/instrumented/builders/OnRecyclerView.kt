@@ -22,10 +22,13 @@ package me.proton.core.test.android.instrumented.builders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.PerformException
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.test.android.instrumented.uiactions.UIActions.clickOnMatchedDescendant
 import me.proton.core.test.android.instrumented.uiwaits.UIWaits.waitForView
@@ -43,7 +46,6 @@ class OnRecyclerView {
     class Builder(private val id: Int) {
         private var viewHolderMatcher: Matcher<RecyclerView.ViewHolder>? = null
         private var position: Int? = null
-        private var recyclerViewAction: RecyclerViewActions.PositionableRecyclerViewAction? = null
         private var itemChildViewMatcher: Matcher<View>? = null
 
 
@@ -115,18 +117,32 @@ class OnRecyclerView {
         /** [ViewInteraction] for the [RecyclerView] instance. **/
         private fun viewInteraction(): ViewInteraction = Espresso.onView(viewMatcher())
 
-        /** Performs action on [RecyclerView] based on action defined by this [OnRecyclerView.Builder]. **/
+        /** Performs action on [RecyclerView] based on action defined by [OnRecyclerView.Builder]. **/
         private fun perform(): ViewInteraction {
-            if (viewHolderMatcher != null) {
-                recyclerViewAction = RecyclerViewActions.actionOnHolderItem(viewHolderMatcher, viewAction)
-            } else if (position != null) {
-                recyclerViewAction = RecyclerViewActions
-                    .actionOnItemAtPosition<RecyclerView.ViewHolder?>(
-                        position!!,
-                        viewAction
-                    ) as RecyclerViewActions.PositionableRecyclerViewAction?
+            when {
+                viewHolderMatcher != null -> {
+                    return waitForView(viewInteraction()).perform(actionOnHolderItem(viewHolderMatcher, viewAction))
+                }
+                position != null -> {
+                    return waitForView(viewInteraction())
+                        .perform(
+                            actionOnItemAtPosition<RecyclerView.ViewHolder?>(
+                                position!!,
+                                viewAction
+                            )
+                        )
+                }
+                else -> {
+                    throw PerformException
+                        .Builder()
+                        .withActionDescription(
+                            "Unable to perform RecyclerView action when " +
+                                "viewHolderMatcher and position values are null! viewHolderMatcher or position " +
+                                "must be provided."
+                        )
+                        .build()
+                }
             }
-            return waitForView(viewInteraction()).perform(recyclerViewAction)
         }
 
         /** [ViewMatchers] to locate [RecyclerView] element in hierarchy. **/
