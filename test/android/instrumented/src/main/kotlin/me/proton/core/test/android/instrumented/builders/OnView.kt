@@ -24,6 +24,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Root
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
@@ -54,6 +55,8 @@ class OnView {
     private var hasContentDescription: Boolean = false
     private var isClickable: Boolean = false
     private var isChecked: Boolean = false
+    private var isDisabled: Boolean = false
+    private var isEnabled: Boolean = false
     private var isFocusable: Boolean = false
     private var isFocused: Boolean = false
     private var isNotChecked: Boolean = false
@@ -102,6 +105,10 @@ class OnView {
     fun isDescendantOf(ancestorView: OnView) = apply { this.ancestorMatcher = ancestorView.matcher() }
 
     fun isDisplayingAtLeast(displayedPercentage: Int) = apply { this.displayedPercentage = displayedPercentage }
+
+    fun isDisabled() = apply { this.isDisabled = true }
+
+    fun isEnabled() = apply { this.isEnabled = true }
 
     fun isFocusable() = apply { this.isFocusable = true }
 
@@ -177,6 +184,8 @@ class OnView {
     fun closeDrawer() = apply { waitForView(viewInteraction()).perform(DrawerActions.close()) }
 
     fun closeKeyboard() = apply { waitForView(viewInteraction()).perform(ViewActions.closeSoftKeyboard()) }
+
+    fun customAction(action: ViewAction) = apply { waitForView(viewInteraction()).perform(action) }
 
     fun doubleClick() = apply { waitForView(viewInteraction()).perform(ViewActions.doubleClick()) }
 
@@ -342,6 +351,12 @@ class OnView {
         }
         if (isChecked) {
             matchers.add(ViewMatchers.isChecked())
+        }
+        if (isDisabled) {
+            matchers.add(CoreMatchers.not(ViewMatchers.isEnabled()))
+        }
+        if (isEnabled) {
+            matchers.add(ViewMatchers.isEnabled())
         }
         if (isFocusable) {
             matchers.add(ViewMatchers.isFocusable())
