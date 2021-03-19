@@ -114,11 +114,8 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
             when (it) {
                 is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess -> onSuccess(it.availablePaymentMethods)
                 is PaymentOptionsViewModel.State.Error.Message -> showError(it.message)
-                is PaymentOptionsViewModel.State.Error.InvalidSession ->
-                    showError(getString(R.string.payments_error_invalid_session))
-                else -> {
-                }
-            }
+                else -> { }
+            }.exhaustive
         }
 
         viewModel.plansValidationState.observeData {

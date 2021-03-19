@@ -36,12 +36,35 @@ interface PaymentsRepository {
      * Creates a new payment token which will be used later for a new subscription.
      * Before that there can be a token validation step.
      */
-    suspend fun createPaymentToken(
+    suspend fun createPaymentTokenWithPayPal(
         sessionId: SessionId? = null,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType? = null,
-        paymentMethodId: String? = null
+        paymentType: PaymentType.PayPal
+    ): PaymentToken.CreatePaymentTokenResult
+
+    /**
+     * Unauthenticated.
+     * Creates a new payment token which will be used later for a new subscription.
+     * Before that there can be a token validation step.
+     */
+    suspend fun createPaymentTokenWithCreditCard(
+        sessionId: SessionId? = null,
+        amount: Long,
+        currency: Currency,
+        paymentType: PaymentType.CreditCard
+    ): PaymentToken.CreatePaymentTokenResult
+
+    /**
+     * Unauthenticated.
+     * Creates a new payment token which will be used later for a new subscription.
+     * Before that there can be a token validation step.
+     */
+    suspend fun createPaymentTokenWithExistingPaymentMethod(
+        sessionId: SessionId? = null,
+        amount: Long,
+        currency: Currency,
+        paymentMethodId: String
     ): PaymentToken.CreatePaymentTokenResult
 
     /**

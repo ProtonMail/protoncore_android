@@ -16,15 +16,25 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.data.entity
+package me.proton.core.payment.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class CountryDataModel(
-    @SerialName("country_en")
+internal data class CardDetailsBody(
+    @SerialName("ExpMonth")
+    val expirationMonth: String,
+    @SerialName("ExpYear")
+    val expirationYear: String,
+    @SerialName("Name")
     val name: String,
-    @SerialName("country_code")
-    val code: String
+    @SerialName("Country")
+    val country: String,
+    @SerialName("ZIP")
+    val zip: String,
+    @SerialName("Number")
+    val number: String,
+    @SerialName("CVC")
+    val cvc: String
 )

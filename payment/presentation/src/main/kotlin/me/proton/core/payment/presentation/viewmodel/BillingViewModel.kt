@@ -34,8 +34,9 @@ import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
-import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.GetCountries
 import me.proton.core.payment.domain.usecase.GetCountryCode
 import me.proton.core.payment.domain.usecase.PerformSubscribe
@@ -53,7 +54,8 @@ import javax.inject.Inject
  */
 class BillingViewModel @ViewModelInject @Inject constructor(
     private val validatePlanSubscription: ValidateSubscriptionPlan,
-    private val createPaymentToken: CreatePaymentToken,
+    private val createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,
+    private val createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
     private val createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
     private val performSubscribe: PerformSubscribe,
     private val getCountries: GetCountries,
@@ -152,13 +154,18 @@ class BillingViewModel @ViewModelInject @Inject constructor(
                         paymentMethodId = paymentType.paymentMethodId
                     )
                 }
-                else -> {
-                    val paymentTypeRefined = if (paymentType is PaymentType.CreditCard) {
-                        val countryCode = getCountryCode(paymentType.card.country)
+                is PaymentType.CreditCard -> {
+                    val countryCode = getCountryCode(paymentType.card.country)
+                    val paymentTypeRefined =
                         paymentType.copy(card = (paymentType.card as Card.CardWithPaymentDetails).copy(country = countryCode))
-                    } else paymentType
-                    createPaymentToken(sessionId, subscription.amountDue, currency, paymentTypeRefined)
+                    createPaymentTokenWithNewCreditCard(sessionId, subscription.amountDue, currency, paymentTypeRefined)
                 }
+                is PaymentType.PayPal -> createPaymentTokenWithNewPayPal(
+                    sessionId,
+                    subscription.amountDue,
+                    currency,
+                    paymentType
+                )
             }.exhaustive
             emit(State.Success.TokenCreated(paymentTokenResult))
 

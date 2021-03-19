@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,31 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.data.entity
+package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class PaymentMethodDetails(
-    @SerialName("ExpMonth")
-    val expirationMonth: String? = null,
-    @SerialName("ExpYear")
-    val expirationYear: String? = null,
-    @SerialName("Name")
-    val name: String? = null,
-    @SerialName("Country")
-    val country: String? = null,
-    @SerialName("ZIP")
-    val zip: String? = null,
-    @SerialName("Brand")
-    val brand: String? = null,
-    @SerialName("Last4")
-    val last4: String? = null,
-    @SerialName("ThreeDSSupport")
-    val threeDS: Boolean? = null,
-    @SerialName("BillingAgreementID")
-    val billingAgreementID: String? = null,
-    @SerialName("Payer")
-    val payer: String? = null
+internal data class SubscriptionResponse(
+    @SerialName("Subscription")
+    val subscription: SubscriptionEntity
 )

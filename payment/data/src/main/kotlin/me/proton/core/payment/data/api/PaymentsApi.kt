@@ -19,16 +19,14 @@
 package me.proton.core.payment.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.payment.data.entity.CreatePaymentToken
-import me.proton.core.payment.data.entity.CheckSubscription
-import me.proton.core.payment.data.entity.CheckSubscriptionResponse
-import me.proton.core.payment.data.entity.CreateSubscription
-import me.proton.core.payment.data.entity.CreatePaymentTokenResponse
-import me.proton.core.payment.data.entity.PaymentMethodResponse
-import me.proton.core.payment.data.entity.PaymentMethodsResponse
-import me.proton.core.payment.data.entity.PaymentTokenStatusResponse
-import me.proton.core.payment.data.entity.SubscriptionResponse
-import me.proton.core.payment.data.entity.TokenTypePaymentBody
+import me.proton.core.payment.data.api.request.CheckSubscription
+import me.proton.core.payment.data.api.request.CreatePaymentToken
+import me.proton.core.payment.data.api.response.CheckSubscriptionResponse
+import me.proton.core.payment.data.api.request.CreateSubscription
+import me.proton.core.payment.data.api.response.CreatePaymentTokenResponse
+import me.proton.core.payment.data.api.response.PaymentMethodsResponse
+import me.proton.core.payment.data.api.response.PaymentTokenStatusResponse
+import me.proton.core.payment.data.api.response.SubscriptionResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

@@ -21,29 +21,32 @@ package me.proton.core.payment.domain.usecase
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import javax.inject.Inject
 
 /**
- * Creates new payment payment token.
- * Only for existing payments method.
- * For payment tokens with new payment methods @see [CreatePaymentTokenWithNewCreditCard].
+ * Creates new payment token.
+ * Only for new PayPal payments methods provided with [PaymentType.PayPal].
+ * For payment tokens with new Credit Card payment method @see [CreatePaymentTokenWithNewCreditCard].
+ * For payment tokens with existing payment method @see [CreatePaymentTokenWithExistingPaymentMethod].
  */
-class CreatePaymentTokenWithExistingPaymentMethod @Inject constructor(
+class CreatePaymentTokenWithNewPayPal @Inject constructor(
     private val paymentsRepository: PaymentsRepository
 ) {
     suspend operator fun invoke(
         sessionId: SessionId?,
         amount: Long,
         currency: Currency,
-        paymentMethodId: String
+        paymentType: PaymentType.PayPal,
     ): PaymentToken.CreatePaymentTokenResult {
         require(amount >= 0)
-        return paymentsRepository.createPaymentTokenWithExistingPaymentMethod(
+
+        return paymentsRepository.createPaymentTokenWithPayPal(
             sessionId,
             amount,
             currency,
-            paymentMethodId
+            paymentType
         )
     }
 }

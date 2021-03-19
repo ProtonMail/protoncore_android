@@ -34,7 +34,6 @@ import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.exception.InvalidSessionException
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.R
@@ -75,7 +74,6 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
         sealed class Error : State() {
             data class SubscriptionInRecoverableError(val message: String?) : Error()
             data class Message(val message: String?) : Error()
-            object InvalidSession : Error()
         }
     }
 
@@ -123,11 +121,7 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
         }
         emit(State.Success.PaymentMethodsSuccess(paymentMethods))
     }.catch { error ->
-        if (error is InvalidSessionException) {
-            availablePaymentMethodsState.post(State.Error.InvalidSession)
-        } else {
-            availablePaymentMethodsState.post(State.Error.Message(error.message))
-        }
+        availablePaymentMethodsState.post(State.Error.Message(error.message))
     }.onEach { methods ->
         availablePaymentMethodsState.post(methods)
     }.launchIn(viewModelScope)

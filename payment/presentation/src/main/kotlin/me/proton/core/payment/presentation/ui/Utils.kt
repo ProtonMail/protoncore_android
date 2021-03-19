@@ -27,7 +27,6 @@ import me.proton.core.payment.presentation.databinding.ActivityBillingBinding
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.CardType
 import me.proton.core.presentation.utils.InputValidationResult
-import me.proton.core.presentation.utils.ProtonInputEndButtonAction
 import me.proton.core.presentation.utils.validate
 import me.proton.core.presentation.utils.validateCreditCard
 import me.proton.core.util.kotlin.exhaustive
@@ -49,7 +48,9 @@ class CardNumberWatcher(
             }
             editable.replace(0, editable.length, cardNumber, 0, cardNumber.length)
             validateCreditCard().setCardIcon(context) {
-                it?.let { setActionMode(ProtonInputEndButtonAction.CUSTOM_ICON, it) }
+                it?.let {
+                    endIconMode = ProtonInput.EndIconMode.CUSTOM_ICON
+                }
             }
         }
     }

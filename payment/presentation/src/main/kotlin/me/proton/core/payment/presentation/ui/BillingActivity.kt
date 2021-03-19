@@ -32,9 +32,10 @@ import me.proton.core.payment.presentation.databinding.ActivityBillingBinding
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.viewmodel.BillingViewModel
-import me.proton.core.presentation.utils.ProtonInputEndButtonAction
+import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -64,15 +65,13 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
             payButton.onClick(::onPayClicked)
 
             cardNumberInput.apply {
-                setActionMode(
-                    ProtonInputEndButtonAction.CUSTOM_ICON,
-                    ContextCompat.getDrawable(context, R.drawable.ic_credit_card)
-                )
-                setTextWatcher(afterTextChangeListener = CardNumberWatcher().watcher)
+                endIconMode = ProtonInput.EndIconMode.CUSTOM_ICON
+                endIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_credit_card)
+                onTextChange(afterTextChangeListener = CardNumberWatcher().watcher)
             }
 
             expirationDateInput.apply {
-                setTextWatcher(afterTextChangeListener = ExpirationDateWatcher().watcher)
+                onTextChange(afterTextChangeListener = ExpirationDateWatcher().watcher)
             }
         }
         observe()

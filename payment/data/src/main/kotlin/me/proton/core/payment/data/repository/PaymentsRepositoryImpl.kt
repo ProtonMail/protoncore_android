@@ -21,13 +21,13 @@ package me.proton.core.payment.data.repository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.data.api.PaymentsApi
-import me.proton.core.payment.data.entity.CardDetailsBody
-import me.proton.core.payment.data.entity.CheckSubscription
-import me.proton.core.payment.data.entity.CreatePaymentToken
-import me.proton.core.payment.data.entity.CreateSubscription
-import me.proton.core.payment.data.entity.PaymentTypeEntity
-import me.proton.core.payment.data.entity.TokenDetails
-import me.proton.core.payment.data.entity.TokenTypePaymentBody
+import me.proton.core.payment.data.api.request.CardDetailsBody
+import me.proton.core.payment.data.api.request.CheckSubscription
+import me.proton.core.payment.data.api.request.CreatePaymentToken
+import me.proton.core.payment.data.api.request.CreateSubscription
+import me.proton.core.payment.data.api.request.PaymentTypeEntity
+import me.proton.core.payment.data.api.request.TokenDetails
+import me.proton.core.payment.data.api.request.TokenTypePaymentBody
 import me.proton.core.payment.data.exception.InsufficientPaymentDetails
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
@@ -46,37 +46,63 @@ class PaymentsRepositoryImpl(
     private val provider: ApiProvider
 ) : PaymentsRepository {
 
-    override suspend fun createPaymentToken(
+    /**
+     * Unauthenticated.
+     * Creates a new payment token which will be used later for a new subscription with PayPal.
+     */
+    override suspend fun createPaymentTokenWithPayPal(
         sessionId: SessionId?,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType?,
-        paymentMethodId: String?
+        paymentType: PaymentType.PayPal
     ): PaymentToken.CreatePaymentTokenResult =
         provider.get<PaymentsApi>(sessionId = sessionId).invoke {
-            val payment = when (paymentType) {
-                is PaymentType.PayPal -> PaymentTypeEntity.PayPal
-                is PaymentType.CreditCard -> {
-                    val paymentCard = paymentType.card
-                    if (paymentCard !is Card.CardWithPaymentDetails) {
-                        throw InsufficientPaymentDetails
-                    }
-                    PaymentTypeEntity.Card(
-                        CardDetailsBody(
-                            number = paymentCard.number,
-                            cvc = paymentCard.cvc,
-                            expirationMonth = paymentCard.expirationMonth,
-                            expirationYear = paymentCard.expirationYear,
-                            name = paymentCard.name,
-                            country = paymentCard.country,
-                            zip = paymentCard.zip
-                        )
-                    )
-                }
-                else -> null
-            }
+            val request = CreatePaymentToken(amount, currency.name, PaymentTypeEntity.PayPal, null)
+            createPaymentToken(request).toCreatePaymentTokenResult()
+        }.valueOrThrow
 
-            val request = CreatePaymentToken(amount, currency.name, payment, paymentMethodId)
+    /**
+     * Unauthenticated.
+     * Creates a new payment token which will be used later for a new subscription with new Credit Card.
+     */
+    override suspend fun createPaymentTokenWithCreditCard(
+        sessionId: SessionId?,
+        amount: Long,
+        currency: Currency,
+        paymentType: PaymentType.CreditCard
+    ): PaymentToken.CreatePaymentTokenResult =
+        provider.get<PaymentsApi>(sessionId = sessionId).invoke {
+            val paymentCard = paymentType.card
+            if (paymentCard !is Card.CardWithPaymentDetails) {
+                throw InsufficientPaymentDetails
+            }
+            val payment = PaymentTypeEntity.Card(
+                CardDetailsBody(
+                    number = paymentCard.number,
+                    cvc = paymentCard.cvc,
+                    expirationMonth = paymentCard.expirationMonth,
+                    expirationYear = paymentCard.expirationYear,
+                    name = paymentCard.name,
+                    country = paymentCard.country,
+                    zip = paymentCard.zip
+                )
+            )
+            val request = CreatePaymentToken(amount, currency.name, payment, null)
+            createPaymentToken(request).toCreatePaymentTokenResult()
+        }.valueOrThrow
+
+    /**
+     * Unauthenticated.
+     * Creates a new payment token which will be used later for a new subscription with existing saved payment method.
+     */
+    override suspend fun createPaymentTokenWithExistingPaymentMethod(
+        sessionId: SessionId?,
+        amount: Long,
+        currency: Currency,
+        paymentMethodId: String
+    ): PaymentToken.CreatePaymentTokenResult =
+        provider.get<PaymentsApi>(sessionId = sessionId).invoke {
+            val request = CreatePaymentToken(amount, currency.name, null, paymentMethodId)
             createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
 
@@ -91,7 +117,7 @@ class PaymentsRepositoryImpl(
     override suspend fun getAvailablePaymentMethods(sessionId: SessionId): List<PaymentMethod> =
         provider.get<PaymentsApi>(sessionId).invoke {
             getPaymentMethods().paymentMethods.map {
-                PaymentMethod(it.id, PaymentMethodType.getByValue(it.type), it.toDetails())
+                PaymentMethod(it.id, PaymentMethodType.map[it.type] ?: PaymentMethodType.CARD, it.toDetails())
             }
         }.valueOrThrow
 

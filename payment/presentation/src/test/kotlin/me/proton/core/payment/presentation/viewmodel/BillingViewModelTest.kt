@@ -34,7 +34,7 @@ import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
-import me.proton.core.payment.domain.usecase.CreatePaymentToken
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
 import me.proton.core.payment.domain.usecase.GetCountries
 import me.proton.core.payment.domain.usecase.GetCountryCode
@@ -52,7 +52,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
     private val validateSubscription = mockk<ValidateSubscriptionPlan>()
-    private val createPaymentToken = mockk<CreatePaymentToken>()
+    private val createPaymentToken = mockk<CreatePaymentTokenWithNewCreditCard>()
     private val createPaymentTokenWithExistingPaymentMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>()
     private val performSubscribe = mockk<PerformSubscribe>()
     private val getCountries = mockk<GetCountries>()

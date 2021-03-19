@@ -16,18 +16,28 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.data.entity
+package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.domain.entity.Coupon
+import me.proton.core.payment.domain.entity.PaymentToken
+import me.proton.core.payment.domain.entity.PaymentTokenStatus
 
 @Serializable
-internal data class CouponEntity(
-    @SerialName("Code")
-    val code: String,
-    @SerialName("Description")
-    val description: String
+internal data class CreatePaymentTokenResponse(
+    @SerialName("ApprovalURL")
+    var approvalUrl: String? = null,
+    @SerialName("Token")
+    var token: String,
+    @SerialName("Status")
+    var status: Int,
+    @SerialName("ReturnHost")
+    var returnHost: String? = null,
 ) {
-    fun toCoupon(): Coupon = Coupon(code, description)
+    fun toCreatePaymentTokenResult(): PaymentToken.CreatePaymentTokenResult =
+        PaymentToken.CreatePaymentTokenResult(
+            status = PaymentTokenStatus.map[status] ?: PaymentTokenStatus.NOT_SUPPORTED,
+            approvalUrl = approvalUrl,
+            token = token,
+            returnHost = returnHost)
 }

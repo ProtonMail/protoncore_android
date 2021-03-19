@@ -16,20 +16,27 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.data.entity
+package me.proton.core.payment.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.domain.entity.PaymentToken
-import me.proton.core.payment.domain.entity.PaymentTokenStatus
 
+/**
+ * Check Subscription Body.
+ * @param codes this is an array of any coupon or gift codes.
+ * @param planIds an array of PlanIds for which the user wants to make a new subscription. This is an array because
+ * at the same moment a subscription could be made for multiple plans (ex. Mail Plus & VPN Plus etc..).
+ * @param currency obviously a currency in which the payment will be made.
+ * @param cycle this one is a cycle (currently supported cycle 1 or 12 meaning monthly or yearly).
+ */
 @Serializable
-internal data class PaymentTokenStatusResponse(
-    @SerialName("Status")
-    var status: Int
-) {
-    fun toPaymentTokenStatusResult(): PaymentToken.PaymentTokenStatusResult =
-        PaymentToken.PaymentTokenStatusResult(
-            status = PaymentTokenStatus.getByValue(status)
-        )
-}
+internal data class CheckSubscription(
+    @SerialName("Codes")
+    val codes: List<String>? = null,
+    @SerialName("PlanIDs")
+    val planIds: List<String>? = null,
+    @SerialName("Currency")
+    val currency: String? = null,
+    @SerialName("Cycle")
+    val cycle: Int
+)

@@ -19,8 +19,8 @@
 package me.proton.core.payment.data.repository
 
 import android.content.Context
-import me.proton.core.data.assets.readFromAssets
-import me.proton.core.payment.data.entity.CountriesDataModel
+import me.proton.core.data.asset.readFromAssets
+import me.proton.core.payment.data.api.response.CountriesDataModel
 import me.proton.core.payment.domain.entity.Country
 import me.proton.core.payment.domain.repository.CountriesRepository
 import me.proton.core.util.kotlin.deserialize

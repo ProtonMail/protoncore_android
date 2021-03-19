@@ -36,7 +36,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-class CreatePaymentTokenTest {
+class CreatePaymentTokenWithNewCreditCardTest {
     // region mocks
     private val repository = mockk<PaymentsRepository>(relaxed = true)
     // endregion
@@ -58,13 +58,13 @@ class CreatePaymentTokenTest {
     )
     // endregion
 
-    private lateinit var useCase: CreatePaymentToken
+    private lateinit var useCase: CreatePaymentTokenWithNewCreditCard
 
     @Before
     fun beforeEveryTest() {
-        useCase = CreatePaymentToken(repository)
+        useCase = CreatePaymentTokenWithNewCreditCard(repository)
         coEvery {
-            repository.createPaymentToken(any(), any(), any(), any(), null)
+            repository.createPaymentTokenWithCreditCard(any(), any(), any(), any())
         } returns createTokenResult
     }
 
@@ -73,12 +73,11 @@ class CreatePaymentTokenTest {
         val result = useCase.invoke(testSessionId, testAmount, testCurrency, testPayment)
 
         coVerify(exactly = 1) {
-            repository.createPaymentToken(
+            repository.createPaymentTokenWithCreditCard(
                 sessionId = testSessionId,
                 amount = testAmount,
                 currency = testCurrency,
-                paymentType = testPayment,
-                paymentMethodId = null
+                paymentType = testPayment
             )
         }
 
@@ -94,12 +93,11 @@ class CreatePaymentTokenTest {
         val result = useCase.invoke(null, testAmount, testCurrency, testPayment)
 
         coVerify(exactly = 1) {
-            repository.createPaymentToken(
+            repository.createPaymentTokenWithCreditCard(
                 sessionId = null,
                 amount = testAmount,
                 currency = testCurrency,
-                paymentType = testPayment,
-                paymentMethodId = null
+                paymentType = testPayment
             )
         }
 
@@ -116,7 +114,7 @@ class CreatePaymentTokenTest {
             PaymentTokenStatus.CHARGEABLE, null, testToken, null
         )
         coEvery {
-            repository.createPaymentToken(testSessionId, testAmount, testCurrency, any(), null)
+            repository.createPaymentTokenWithCreditCard(testSessionId, testAmount, testCurrency, any())
         } returns createTokenChargeableResult
 
         val result = useCase.invoke(testSessionId, testAmount, testCurrency, testPayment)

@@ -16,34 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.data.entity
+package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.domain.entity.Subscription
+import me.proton.core.payment.domain.entity.Coupon
 
 @Serializable
-internal data class SubscriptionEntity(
-    @SerialName("ID")
-    private val id: String,
-    @SerialName("InvoiceID")
-    private val invoiceId: String,
-    @SerialName("Cycle")
-    private val cycle: Int,
-    @SerialName("PeriodStart")
-    private val periodStart: Long,
-    @SerialName("PeriodEnd")
-    private val periodEnd: Long,
-    @SerialName("CouponCode")
-    private val couponCode: String? = null,
-    @SerialName("Currency")
-    private val currency: String,
-    @SerialName("Amount")
-    private val amount: Long,
-    @SerialName("Plans")
-    private val plans: List<PlanEntity>
+internal data class CouponEntity(
+    @SerialName("Code")
+    val code: String,
+    @SerialName("Description")
+    val description: String
 ) {
-    fun toSubscription(): Subscription = Subscription(
-        id, invoiceId, cycle, periodStart, periodEnd, couponCode, currency, amount, plans.map { it.toPlan() }
-    )
+    fun toCoupon(): Coupon = Coupon(code, description)
 }

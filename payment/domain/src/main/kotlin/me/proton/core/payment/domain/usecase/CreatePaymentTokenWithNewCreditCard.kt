@@ -27,20 +27,26 @@ import javax.inject.Inject
 
 /**
  * Creates new payment token.
- * Only for new payments methods provided with [PaymentType].
- * Supported payment types: [PaymentType.CreditCard] and [PaymentType.PayPal].
+ * Only for new PayPal payments methods provided with [PaymentType.CreditCard].
+ * For payment tokens with new Credit Card payment method @see [CreatePaymentTokenWithNewPayPal].
  * For payment tokens with existing payment method @see [CreatePaymentTokenWithExistingPaymentMethod].
  */
-class CreatePaymentToken @Inject constructor(
+class CreatePaymentTokenWithNewCreditCard @Inject constructor(
     private val paymentsRepository: PaymentsRepository
 ) {
     suspend operator fun invoke(
         sessionId: SessionId?,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType,
+        paymentType: PaymentType.CreditCard,
     ): PaymentToken.CreatePaymentTokenResult {
         require(amount >= 0)
-        return paymentsRepository.createPaymentToken(sessionId, amount, currency, paymentType, null)
+
+        return paymentsRepository.createPaymentTokenWithCreditCard(
+            sessionId,
+            amount,
+            currency,
+            paymentType
+        )
     }
 }

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.data.entity
+package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -24,5 +24,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class PaymentToken(
     @SerialName("Type")
-    private val type: String = "token"
+    val type: String = "token"
 )
