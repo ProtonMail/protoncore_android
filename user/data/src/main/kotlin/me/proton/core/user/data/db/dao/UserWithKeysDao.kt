@@ -23,6 +23,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.db.BaseDao
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.entity.UserWithKeys
 
@@ -31,9 +32,9 @@ abstract class UserWithKeysDao : BaseDao<UserEntity>() {
 
     @Transaction
     @Query("SELECT * FROM UserEntity WHERE userId = :userId")
-    abstract fun findByUserId(userId: String): Flow<UserWithKeys?>
+    abstract fun findByUserId(userId: UserId): Flow<UserWithKeys?>
 
     @Transaction
     @Query("SELECT * FROM UserEntity WHERE userId = :userId")
-    abstract suspend fun getByUserId(userId: String): UserWithKeys?
+    abstract suspend fun getByUserId(userId: UserId): UserWithKeys?
 }

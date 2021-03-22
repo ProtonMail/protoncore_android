@@ -43,19 +43,19 @@ import me.proton.core.network.domain.session.SessionId
     ]
 )
 data class AccountEntity(
-    val userId: String,
+    val userId: UserId,
     val username: String,
     val email: String?,
     val state: AccountState,
-    val sessionId: String?,
+    val sessionId: SessionId?,
     val sessionState: SessionState?
 ) {
     fun toAccount(details: AccountDetails): Account = Account(
-        userId = UserId(userId),
+        userId = userId,
         username = username,
         email = email,
         state = state,
-        sessionId = sessionId?.let { SessionId(sessionId) },
+        sessionId = sessionId,
         sessionState = sessionState,
         details = details
     )

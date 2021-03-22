@@ -33,8 +33,8 @@ import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.util.kotlin.toBooleanOrFalse
 
 internal fun AddressResponse.toEntity(userId: UserId) = AddressEntity(
-    userId = userId.id,
-    addressId = id,
+    userId = userId,
+    addressId = AddressId(id),
     email = email,
     displayName = displayName,
     domainId = domainId,
@@ -46,8 +46,8 @@ internal fun AddressResponse.toEntity(userId: UserId) = AddressEntity(
 )
 
 internal fun AddressKeyResponse.toEntity(addressId: AddressId) = AddressKeyEntity(
-    addressId = addressId.id,
-    keyId = id,
+    addressId = addressId,
+    keyId = KeyId(id),
     version = version,
     privateKey = privateKey,
     isPrimary = primary.toBooleanOrFalse(),
@@ -61,8 +61,8 @@ internal fun AddressKeyResponse.toEntity(addressId: AddressId) = AddressKeyEntit
 )
 
 internal fun AddressEntity.toUserAddress(keys: List<UserAddressKey>) = UserAddress(
-    userId = UserId(userId),
-    addressId = AddressId(addressId),
+    userId = userId,
+    addressId = addressId,
     email = email,
     displayName = displayName,
     domainId = domainId,
@@ -77,20 +77,20 @@ internal fun AddressEntity.toUserAddress(keys: List<UserAddressKey>) = UserAddre
 fun List<AddressKeyResponse>.toEntityList(addressId: AddressId) = map { it.toEntity(addressId) }
 
 internal fun AddressKeyEntity.toUserAddressKey(passphrase: EncryptedByteArray?) = UserAddressKey(
-    addressId = AddressId(addressId),
+    addressId = addressId,
     version = version,
     flags = flags,
     token = token,
     signature = signature,
     activation = activation,
     active = active,
-    keyId = KeyId(keyId),
+    keyId = keyId,
     privateKey = PrivateKey(privateKey, isPrimary, passphrase)
 )
 
 internal fun UserAddress.toEntity() = AddressEntity(
-    userId = userId.id,
-    addressId = addressId.id,
+    userId = userId,
+    addressId = addressId,
     email = email,
     displayName = displayName,
     domainId = domainId,
@@ -102,8 +102,8 @@ internal fun UserAddress.toEntity() = AddressEntity(
 )
 
 internal fun UserAddressKey.toEntity() = AddressKeyEntity(
-    addressId = addressId.id,
-    keyId = keyId.id,
+    addressId = addressId,
+    keyId = keyId,
     version = version,
     privateKey = privateKey.key,
     isPrimary = privateKey.isPrimary,

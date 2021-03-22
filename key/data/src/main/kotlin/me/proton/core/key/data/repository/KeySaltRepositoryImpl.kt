@@ -48,9 +48,9 @@ class KeySaltRepositoryImpl(
             }.valueOrThrow
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { userId -> keySaltDao.findAllByUserId(userId.id).map { it.takeIfNotEmpty() } },
+            reader = { userId -> keySaltDao.findAllByUserId(userId).map { it.takeIfNotEmpty() } },
             writer = { _, input -> keySaltDao.insertOrUpdate(*input.toTypedArray()) },
-            delete = { userId -> keySaltDao.deleteByUserId(userId.id) },
+            delete = { userId -> keySaltDao.deleteByUserId(userId) },
             deleteAll = { keySaltDao.deleteAll() }
         )
     ).build()

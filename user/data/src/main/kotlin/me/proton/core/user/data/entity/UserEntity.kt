@@ -23,6 +23,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.domain.entity.UserId
 
 @Entity(
     primaryKeys = ["userId"],
@@ -39,7 +40,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
     ]
 )
 data class UserEntity(
-    val userId: String,
+    val userId: UserId,
     val email: String?,
     val name: String?,
     val displayName: String?,

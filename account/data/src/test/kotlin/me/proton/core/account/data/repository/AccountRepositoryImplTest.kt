@@ -43,6 +43,8 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import org.junit.Before
 import org.junit.Test
 
@@ -76,17 +78,17 @@ class AccountRepositoryImplTest {
     }
 
     private val account1 = AccountEntity(
-        userId = "user1",
+        userId = UserId("user1"),
         username = "username",
         email = "test@example.com",
         state = AccountState.Ready,
-        sessionId = "session1",
+        sessionId = SessionId("session1"),
         sessionState = SessionState.Authenticated
     )
 
     private val session1 = SessionEntity(
         userId = account1.userId,
-        sessionId = "session1",
+        sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",
         scopes = "full,calendar,mail",
@@ -96,8 +98,8 @@ class AccountRepositoryImplTest {
     )
 
     private val sessionInvalid = SessionEntity(
-        userId = "",
-        sessionId = "sessionInvalid",
+        userId = UserId(""),
+        sessionId = SessionId("sessionInvalid"),
         accessToken = "",
         refreshToken = "",
         scopes = "full,calendar,mail",

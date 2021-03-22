@@ -22,16 +22,17 @@ import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.db.BaseDao
+import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.entity.KeySaltEntity
 
 @Dao
 abstract class KeySaltDao : BaseDao<KeySaltEntity>() {
 
     @Query("SELECT * FROM KeySaltEntity WHERE userId = :userId")
-    abstract fun findAllByUserId(userId: String): Flow<List<KeySaltEntity>>
+    abstract fun findAllByUserId(userId: UserId): Flow<List<KeySaltEntity>>
 
     @Query("DELETE FROM KeySaltEntity WHERE userId = :userId")
-    abstract suspend fun deleteByUserId(userId: String)
+    abstract suspend fun deleteByUserId(userId: UserId)
 
     @Query("DELETE FROM KeySaltEntity")
     abstract suspend fun deleteAll()

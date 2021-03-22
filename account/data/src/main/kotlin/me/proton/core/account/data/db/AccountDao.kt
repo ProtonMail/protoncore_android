@@ -25,6 +25,8 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.data.db.BaseDao
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 
 @Dao
 abstract class AccountDao : BaseDao<AccountEntity>() {
@@ -33,31 +35,31 @@ abstract class AccountDao : BaseDao<AccountEntity>() {
     abstract fun findAll(): Flow<List<AccountEntity>>
 
     @Query("SELECT * FROM AccountEntity WHERE userId = :userId")
-    abstract fun findByUserId(userId: String): Flow<AccountEntity?>
+    abstract fun findByUserId(userId: UserId): Flow<AccountEntity?>
 
     @Query("SELECT * FROM AccountEntity WHERE sessionId = :sessionId")
-    abstract fun findBySessionId(sessionId: String): Flow<AccountEntity?>
+    abstract fun findBySessionId(sessionId: SessionId): Flow<AccountEntity?>
 
     @Query("SELECT * FROM AccountEntity WHERE userId = :userId")
-    abstract suspend fun getByUserId(userId: String): AccountEntity?
+    abstract suspend fun getByUserId(userId: UserId): AccountEntity?
 
     @Query("SELECT * FROM AccountEntity WHERE sessionId = :sessionId")
-    abstract suspend fun getBySessionId(sessionId: String): AccountEntity?
+    abstract suspend fun getBySessionId(sessionId: SessionId): AccountEntity?
 
     @Query("UPDATE AccountEntity SET state = :state WHERE userId = :userId")
-    abstract suspend fun updateAccountState(userId: String, state: AccountState)
+    abstract suspend fun updateAccountState(userId: UserId, state: AccountState)
 
     @Query("UPDATE AccountEntity SET sessionState = :state WHERE sessionId = :sessionId")
-    abstract suspend fun updateSessionState(sessionId: String, state: SessionState)
+    abstract suspend fun updateSessionState(sessionId: SessionId, state: SessionState)
 
     @Query("UPDATE AccountEntity SET sessionId = :sessionId WHERE userId = :userId")
-    abstract suspend fun addSession(userId: String, sessionId: String)
+    abstract suspend fun addSession(userId: UserId, sessionId: SessionId)
 
     @Query("UPDATE AccountEntity SET sessionId = null, sessionState = null WHERE sessionId = :sessionId")
-    abstract suspend fun removeSession(sessionId: String)
+    abstract suspend fun removeSession(sessionId: SessionId)
 
     @Query("DELETE FROM AccountEntity WHERE userId = :userId")
-    abstract suspend fun delete(userId: String)
+    abstract suspend fun delete(userId: UserId)
 
     @Query("DELETE FROM AccountEntity")
     abstract suspend fun deleteAll()

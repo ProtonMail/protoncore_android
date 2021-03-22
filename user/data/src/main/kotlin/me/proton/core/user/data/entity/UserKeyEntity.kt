@@ -22,6 +22,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.KeyId
 
 @Entity(
     primaryKeys = ["keyId"],
@@ -39,8 +41,8 @@ import me.proton.core.crypto.common.pgp.Armored
     ]
 )
 data class UserKeyEntity(
-    val userId: String,
-    val keyId: String,
+    val userId: UserId,
+    val keyId: KeyId,
     val version: Int,
     val privateKey: Armored,
     val isPrimary: Boolean,

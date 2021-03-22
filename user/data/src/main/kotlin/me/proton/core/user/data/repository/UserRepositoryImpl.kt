@@ -65,7 +65,7 @@ class UserRepositoryImpl(
         )
     ).build()
 
-    private fun getUserLocal(userId: UserId): Flow<User?> = userWithKeysDao.findByUserId(userId.id)
+    private fun getUserLocal(userId: UserId): Flow<User?> = userWithKeysDao.findByUserId(userId)
         .map { user ->
             val userKeyList = user?.keys?.toUserKeyList(getPassphrase(userId)).orEmpty()
             user?.entity?.toUser(userKeyList)
@@ -74,13 +74,13 @@ class UserRepositoryImpl(
     private suspend fun insertOrUpdate(user: User) =
         db.inTransaction {
             // Get current passphrase -> don't overwrite passphrase.
-            val passphrase = userDao.getPassphrase(user.userId.id)
+            val passphrase = userDao.getPassphrase(user.userId)
             userDao.insertOrUpdate(user.toEntity(passphrase))
             userKeyDao.insertOrUpdate(*user.keys.toEntityList().toTypedArray())
         }
 
     private suspend fun delete(userId: UserId) =
-        userDao.delete(userId.id)
+        userDao.delete(userId)
 
     private suspend fun deleteAll() =
         userDao.deleteAll()
@@ -95,15 +95,15 @@ class UserRepositoryImpl(
 
     override suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray) =
         db.inTransaction {
-            requireNotNull(userDao.getByUserId(userId.id)) { "Cannot set passphrase, User doesn't exist in DB." }
-            userDao.setPassphrase(userId.id, passphrase)
+            requireNotNull(userDao.getByUserId(userId)) { "Cannot set passphrase, User doesn't exist in DB." }
+            userDao.setPassphrase(userId, passphrase)
         }
 
     override suspend fun getPassphrase(userId: UserId): EncryptedByteArray? =
-        userDao.getPassphrase(userId.id)
+        userDao.getPassphrase(userId)
 
     override suspend fun clearPassphrase(userId: UserId) =
-        userDao.setPassphrase(userId.id, null)
+        userDao.setPassphrase(userId, null)
 
     //endregion
 }

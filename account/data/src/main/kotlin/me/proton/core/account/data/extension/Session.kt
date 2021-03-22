@@ -31,8 +31,8 @@ fun Session.toSessionEntity(
     product: Product,
     keyStoreCrypto: KeyStoreCrypto
 ): SessionEntity = SessionEntity(
-    userId = userId.id,
-    sessionId = sessionId.id,
+    userId = userId,
+    sessionId = sessionId,
     accessToken = accessToken.encryptWith(keyStoreCrypto),
     refreshToken = refreshToken.encryptWith(keyStoreCrypto),
     humanHeaderTokenType = headers?.tokenType?.encryptWith(keyStoreCrypto),

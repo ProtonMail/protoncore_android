@@ -20,6 +20,8 @@ package me.proton.core.data.db
 
 import androidx.room.TypeConverter
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 
 class CommonConverters {
 
@@ -35,6 +37,22 @@ class CommonConverters {
     @TypeConverter
     fun fromStringToProduct(value: String?): Product? = value?.let {
         Product.valueOf(value)
+    }
+
+    @TypeConverter
+    fun fromUserIdToString(value: UserId?): String? = value?.id
+
+    @TypeConverter
+    fun fromStringToUserId(value: String?): UserId? = value?.let {
+        UserId(value)
+    }
+
+    @TypeConverter
+    fun fromSessionIdToString(value: SessionId?): String? = value?.id
+
+    @TypeConverter
+    fun fromStringToSessionId(value: String?): SessionId? = value?.let {
+        SessionId(value)
     }
 
     companion object {

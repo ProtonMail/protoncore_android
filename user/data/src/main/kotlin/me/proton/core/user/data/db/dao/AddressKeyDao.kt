@@ -23,13 +23,14 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.db.BaseDao
 import me.proton.core.user.data.entity.AddressKeyEntity
+import me.proton.core.user.domain.entity.AddressId
 
 @Dao
 abstract class AddressKeyDao : BaseDao<AddressKeyEntity>() {
 
     @Query("SELECT * FROM AddressKeyEntity WHERE addressId = :addressId")
-    abstract fun findAllByAddressId(addressId: String): Flow<List<AddressKeyEntity>>
+    abstract fun findAllByAddressId(addressId: AddressId): Flow<List<AddressKeyEntity>>
 
     @Query("SELECT * FROM AddressKeyEntity WHERE addressId = :addressId")
-    abstract suspend fun getAllByAddressId(addressId: String): List<AddressKeyEntity>
+    abstract suspend fun getAllByAddressId(addressId: AddressId): List<AddressKeyEntity>
 }

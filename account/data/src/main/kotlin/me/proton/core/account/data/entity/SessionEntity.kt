@@ -26,6 +26,7 @@ import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
@@ -46,8 +47,8 @@ import me.proton.core.network.domain.session.SessionId
     ]
 )
 data class SessionEntity(
-    val userId: String,
-    val sessionId: String,
+    val userId: UserId,
+    val sessionId: SessionId,
     val accessToken: EncryptedString,
     val refreshToken: EncryptedString,
     val humanHeaderTokenType: EncryptedString?,
@@ -56,7 +57,7 @@ data class SessionEntity(
     val product: Product
 ) {
     fun toSession(keyStoreCrypto: KeyStoreCrypto): Session = Session(
-        sessionId = SessionId(sessionId),
+        sessionId = sessionId,
         accessToken = accessToken.decryptWith(keyStoreCrypto),
         refreshToken = refreshToken.decryptWith(keyStoreCrypto),
         headers = humanHeaderTokenType?.let { tokenType ->

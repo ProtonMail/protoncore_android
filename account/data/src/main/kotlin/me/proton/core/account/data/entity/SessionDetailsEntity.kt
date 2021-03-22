@@ -24,6 +24,7 @@ import androidx.room.Index
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.network.domain.session.SessionId
 
 @Entity(
     primaryKeys = ["sessionId"],
@@ -38,7 +39,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
     ]
 )
 data class SessionDetailsEntity(
-    val sessionId: String,
+    val sessionId: SessionId,
     val initialEventId: String,
     val requiredAccountType: AccountType,
     val secondFactorEnabled: Boolean,
