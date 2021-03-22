@@ -20,7 +20,7 @@ function main {
   echo "=> set new origin $APP_GIT_CI";
 
   # Force add hidden files from gitignore + updated README.md
-  git add -f releases docs README.md;
+  git add -f README.md;
 
   git status;
 

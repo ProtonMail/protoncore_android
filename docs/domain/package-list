@@ -1,5 +1,0 @@
-$dokka.format:html
-$dokka.linkExtension:html
-$dokka.location:me.proton.core.domain.arch$map(kotlin.collections.Iterable((me.proton.core.domain.arch.map.In)), me.proton.core.domain.arch.map.M, kotlin.Function2((me.proton.core.domain.arch.map.M, me.proton.core.domain.arch.map.In, me.proton.core.domain.arch.map.Out)))me.proton.core.domain.arch/kotlin.collections.-iterable/map.html
-$dokka.location:me.proton.core.domain.arch$map(kotlinx.coroutines.flow.Flow((me.proton.core.domain.arch.map.In)), me.proton.core.domain.arch.map.M, kotlin.Function2((me.proton.core.domain.arch.map.M, me.proton.core.domain.arch.map.In, me.proton.core.domain.arch.map.Out)))me.proton.core.domain.arch/kotlinx.coroutines.flow.-flow/map.html
-me.proton.core.domain.arch

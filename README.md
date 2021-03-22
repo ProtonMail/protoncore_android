@@ -85,9 +85,9 @@ Util Kotlin: **0.2.4** - _released on: Nov 19, 2020_
 
 Test Kotlin: **0.2** - _released on: Oct 21, 2020_
 
-Test Android: **0.4.2** - _released on: Jan 27, 2021_
+Test Android: **0.4.3** - _released on: Mar 22, 2021_
 
-Test Android Instrumented: **0.3.2** - _released on: Jan 27, 2021_
+Test Android Instrumented: **0.3.3** - _released on: Mar 22, 2021_
 
 ## Shared
 
@@ -129,7 +129,7 @@ Auth Data: **1.0.2** - _released on: Mar 16, 2021_
 
 ### Account
 
-Account: **1.0.1** - _released on: Feb 17, 2021_
+Account: **1.0.2** - _released on: Mar 22, 2021_
 
 Account Domain: **1.0.1** - _released on: Feb 17, 2021_
 
@@ -142,7 +142,7 @@ Account Data: **1.0.1** - _released on: Feb 17, 2021_
 
 Account Manager: **1.0.2** - _released on: Mar 05, 2021_
 
-Account Manager Domain: **1.0.2** - _released on: Mar 05, 2021_
+Account Manager Domain: **1.0.3** - _released on: Mar 22, 2021_
 
 Account Manager Presentation: **1.0.2** - _released on: Mar 05, 2021_
 
@@ -152,15 +152,15 @@ Account Manager Dagger: **1.0.2** - _released on: Mar 05, 2021_
 
 ### Key
 
-Key: **1.0.3** - _released on: Mar 11, 2021_
+Key: **1.0.4** - _released on: Mar 22, 2021_
 
-Key Domain: **1.0.3** - _released on: Mar 11, 2021_
+Key Domain: **1.0.4** - _released on: Mar 22, 2021_
 
-Key Data: **1.0.3** - _released on: Mar 11, 2021_
+Key Data: **1.0.4** - _released on: Mar 22, 2021_
 
 ### User
 
-User: **1.0.2** - _released on: Mar 16, 2021_
+User: **1.0.3** - _released on: Mar 22, 2021_
 
 User Domain: **1.0.2** - _released on: Mar 16, 2021_
 
