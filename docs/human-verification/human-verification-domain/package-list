@@ -1,8 +1,0 @@
-$dokka.format:html
-$dokka.linkExtension:html
-
-me.proton.core.humanverification.domain
-me.proton.core.humanverification.domain.entity
-me.proton.core.humanverification.domain.exception
-me.proton.core.humanverification.domain.repository
-me.proton.core.humanverification.domain.usecase
