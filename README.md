@@ -140,7 +140,7 @@ Account Data: **1.0.1** - _released on: Feb 17, 2021_
 
 ### Account Manager
 
-Account Manager: **1.0.2** - _released on: Mar 05, 2021_
+Account Manager: **1.0.3** - _released on: Mar 22, 2021_
 
 Account Manager Domain: **1.0.3** - _released on: Mar 22, 2021_
 
@@ -181,16 +181,6 @@ Mail Message: **0.1.1** - _released on: Mar 04, 2021_
 Mail Message Domain: **0.1.1** - _released on: Mar 04, 2021_
 
 Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
-
-### Settings
-
-Settings: **0** - _released on: ND_
-
-Settings Domain: **0** - _released on: ND_
-
-Settings Presentation: **0** - _released on: ND_
-
-Settings Data: **0** - _released on: ND_
 
 ### Human Verification
 
