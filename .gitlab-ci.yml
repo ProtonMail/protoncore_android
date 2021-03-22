@@ -64,9 +64,9 @@ release-publish-github:
 publishMaven:
   stage: publish
   tags:
-    - large
+    - medium
   script:
-    - ./gradlew assemble && ./gradlew publishNewRelease --no-daemon --no-parallel
+    - ./gradlew publishNewRelease --no-daemon --no-parallel
   only:
     - master
   artifacts:
