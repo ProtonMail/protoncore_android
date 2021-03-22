@@ -229,12 +229,11 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
-        val createPaymentTokenResult = repository.createPaymentToken(
+        val createPaymentTokenResult = repository.createPaymentTokenWithCreditCard(
             sessionId = SessionId(testSessionId),
             amount = 1L,
             currency = Currency.EUR,
-            paymentType = PaymentType.CreditCard(testCardWithPaymentDetails),
-            paymentMethodId = null
+            paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
         )
         // THEN
         assertNotNull(createPaymentTokenResult)
@@ -251,12 +250,11 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
-        val createPaymentTokenResult = repository.createPaymentToken(
+        val createPaymentTokenResult = repository.createPaymentTokenWithCreditCard(
             sessionId = null,
             amount = 1L,
             currency = Currency.EUR,
-            paymentType = PaymentType.CreditCard(testCardWithPaymentDetails),
-            paymentMethodId = null
+            paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
         )
         // THEN
         assertNotNull(createPaymentTokenResult)
@@ -273,12 +271,11 @@ class PaymentsRepositoryImplTest {
             )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            repository.createPaymentToken(
+            repository.createPaymentTokenWithCreditCard(
                 sessionId = SessionId(testSessionId),
                 amount = 1L,
                 currency = Currency.EUR,
-                paymentType = PaymentType.CreditCard(testCardWithPaymentDetails),
-                paymentMethodId = null
+                paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
             )
         }
         // THEN
@@ -297,12 +294,11 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
-        val createPaymentTokenResult = repository.createPaymentToken(
+        val createPaymentTokenResult = repository.createPaymentTokenWithCreditCard(
             sessionId = SessionId(testSessionId),
             amount = 1L,
             currency = Currency.EUR,
-            paymentType = PaymentType.CreditCard(testCardWithPaymentDetails),
-            paymentMethodId = null
+            paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
         )
         // THEN
         assertNotNull(createPaymentTokenResult)

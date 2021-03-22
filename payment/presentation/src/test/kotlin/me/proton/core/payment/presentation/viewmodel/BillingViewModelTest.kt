@@ -36,6 +36,7 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.GetCountries
 import me.proton.core.payment.domain.usecase.GetCountryCode
 import me.proton.core.payment.domain.usecase.PerformSubscribe
@@ -54,6 +55,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
     private val validateSubscription = mockk<ValidateSubscriptionPlan>()
     private val createPaymentToken = mockk<CreatePaymentTokenWithNewCreditCard>()
     private val createPaymentTokenWithExistingPaymentMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>()
+    private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>()
     private val performSubscribe = mockk<PerformSubscribe>()
     private val getCountries = mockk<GetCountries>()
     private val getCountryCode = mockk<GetCountryCode>()
@@ -87,6 +89,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         viewModel = BillingViewModel(
             validateSubscription,
             createPaymentToken,
+            createPaymentTokenWithNewPayPal,
             createPaymentTokenWithExistingPaymentMethod,
             performSubscribe,
             getCountries,
@@ -691,6 +694,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         viewModel = BillingViewModel(
             validateSubscription,
             createPaymentToken,
+            createPaymentTokenWithNewPayPal,
             createPaymentTokenWithExistingPaymentMethod,
             performSubscribe,
             getCountries,
@@ -714,6 +718,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         viewModel = BillingViewModel(
             validateSubscription,
             createPaymentToken,
+            createPaymentTokenWithNewPayPal,
             createPaymentTokenWithExistingPaymentMethod,
             performSubscribe,
             getCountries,

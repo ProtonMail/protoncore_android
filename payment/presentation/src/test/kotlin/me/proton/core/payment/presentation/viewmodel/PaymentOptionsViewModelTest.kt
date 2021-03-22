@@ -126,29 +126,6 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `available payment methods empty session id handled correctly`() = coroutinesTest {
-        // GIVEN
-        val repository = mockk<PaymentsRepository>()
-        viewModel =
-            PaymentOptionsViewModel(
-                GetAvailablePaymentMethods(repository),
-                GetCurrentSubscription(repository),
-                context,
-                billingViewModel
-            )
-        val observer = mockk<(PaymentOptionsViewModel.State) -> Unit>(relaxed = true)
-        viewModel.availablePaymentMethodsState.observeDataForever(observer)
-        // WHEN
-        viewModel.getAvailablePaymentMethods(SessionId(""))
-        // THEN
-        val arguments = mutableListOf<PaymentOptionsViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<PaymentOptionsViewModel.State.Processing>(arguments[0])
-        val paymentMethodsStatus = arguments[1]
-        assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Error.InvalidSession)
-    }
-
-    @Test
     fun `no available payment methods success handled correctly`() = coroutinesTest {
         // GIVEN
         coEvery { getAvailablePaymentMethods.invoke(testSessionId) } returns emptyList()

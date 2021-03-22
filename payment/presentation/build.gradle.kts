@@ -29,7 +29,9 @@ plugins {
 
 libVersion = Version(0, 1, 0)
 
-android(useDataBinding = true, minSdk = 23)
+android(
+    minSdk = 23,
+    useDataBinding = true)
 
 dependencies {
 

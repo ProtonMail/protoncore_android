@@ -24,7 +24,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import kotlinx.serialization.SerializationException
-import me.proton.core.data.assets.readFromAssets
+import me.proton.core.data.asset.readFromAssets
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -66,14 +66,14 @@ class CountriesRepositoryImplTest {
 
     @Before
     fun beforeEveryTest() {
-        mockkStatic("me.proton.core.data.assets.UtilsKt")
+        mockkStatic("me.proton.core.data.asset.AssetReaderKt")
         every { context.readFromAssets("country_codes.json") } returns testDataCountries
         repository = CountriesRepositoryImpl(context)
     }
 
     @After
     fun afterEveryTest() {
-        unmockkStatic("me.proton.core.data.assets.UtilsKt")
+        unmockkStatic("me.proton.core.data.asset.AssetReaderKt")
     }
 
     @Test
