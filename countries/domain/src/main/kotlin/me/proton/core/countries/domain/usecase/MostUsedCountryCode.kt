@@ -32,7 +32,7 @@ class MostUsedCountryCode @Inject constructor(
     /**
      * Returns the first country calling code..
      */
-    operator fun invoke() = countriesRepository.getAllCountriesSorted().let {
+    suspend operator fun invoke() = countriesRepository.getAllCountriesSorted().let {
         if (it.isNotEmpty()) {
             it[0].callingCode
         } else {

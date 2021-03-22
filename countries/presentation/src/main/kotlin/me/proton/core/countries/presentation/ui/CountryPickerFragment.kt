@@ -35,6 +35,7 @@ import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.ui.adapter.ProtonAdapter
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.containsNoCase
+import me.proton.core.util.kotlin.exhaustive
 import java.util.Locale
 
 /**
@@ -96,22 +97,32 @@ class CountryPickerFragment :
             }
 
         })
-        viewModel.countries.observe(viewLifecycleOwner) {
-            doOnData {
-                val context = requireContext()
-                countriesAdapter.submitList(it.map { country ->
-                    val id: Int = context.resources.getIdentifier(
-                        country.countryCode.toLowerCase(Locale.ROOT),
-                        "drawable",
-                        context.packageName
-                    )
-                    country.copy(flagId = id)
-                })
-            }
-            doOnError {
-                countriesAdapter.submitList(mutableListOf())
-            }
+        viewModel.countries.observeData(viewLifecycleOwner) {
+            when (it) {
+                is CountryPickerViewModel.State.Success -> onCountriesSuccess(it.countries)
+                is CountryPickerViewModel.State.Error -> {
+                    countriesAdapter.submitList(mutableListOf())
+                    hideProgress()
+                }
+            }.exhaustive
         }
+    }
+
+    private fun hideProgress() = with(binding) {
+        progress.visibility = View.GONE
+    }
+
+    private fun onCountriesSuccess(countries: List<CountryUIModel>) {
+        val context = requireContext()
+        countriesAdapter.submitList(countries.map { country ->
+            val id: Int = context.resources.getIdentifier(
+                country.countryCode.toLowerCase(Locale.ROOT),
+                "drawable",
+                context.packageName
+            )
+            country.copy(flagId = id)
+        })
+        hideProgress()
     }
 
     private fun selectCountry(country: CountryUIModel) {

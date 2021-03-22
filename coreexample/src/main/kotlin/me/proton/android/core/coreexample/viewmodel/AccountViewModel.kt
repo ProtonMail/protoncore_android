@@ -129,7 +129,7 @@ class AccountViewModel @ViewModelInject constructor(
                     }
 
                     startBillingWorkFlow(
-                        sessionId = account.sessionId,
+                        userId = account.userId,
                         selectedPlan = PlanDetails(
                             "ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw==",
                             "Proton Plus",

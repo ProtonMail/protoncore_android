@@ -23,21 +23,21 @@ import me.proton.core.countries.data.entity.CountriesDataModel
 import me.proton.core.countries.data.entity.CountryDataModel
 import me.proton.core.countries.domain.entity.Country
 import me.proton.core.countries.domain.repository.CountriesRepository
-import me.proton.core.data.assets.readFromAssets
+import me.proton.core.data.asset.readFromAssets
 import me.proton.core.util.kotlin.deserialize
 
 const val FILE_NAME_ALL_COUNTRIES = "country_codes.json"
 
 class CountriesRepositoryImpl(private val context: Context) : CountriesRepository {
 
-    override fun getAllCountriesSorted() = readCountriesFile()
+    override suspend fun getAllCountriesSorted() = readCountriesFile()
         .filter { it.name.isNotEmpty() }
         .sortedBy { it.name }
         .map {
             Country(code = it.code, name = it.name, callingCode = it.callingCode)
         }
 
-    override fun getCountryCodeByName(countryName: String): String =
+    override suspend fun getCountryCodeByName(countryName: String): String =
         getAllCountriesSorted().find {
             it.name == countryName
         }?.code ?: run {

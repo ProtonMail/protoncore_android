@@ -24,7 +24,7 @@ import javax.inject.Inject
 class GetCountryCode @Inject constructor(
     private val countriesRepository: CountriesRepository
 ) {
-    operator fun invoke(
+    suspend operator fun invoke(
         countryName: String
     ): String = countriesRepository.getCountryCodeByName(countryName)
 }

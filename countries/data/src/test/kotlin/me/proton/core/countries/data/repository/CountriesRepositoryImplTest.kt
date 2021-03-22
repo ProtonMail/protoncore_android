@@ -26,7 +26,7 @@ import io.mockk.unmockkStatic
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.serialization.SerializationException
-import me.proton.core.data.assets.readFromAssets
+import me.proton.core.data.asset.readFromAssets
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -127,7 +127,7 @@ class CountriesRepositoryImplTest {
     }
 
     @Test
-    fun `countries return success for empty file country list`() {
+    fun `countries return success for empty file country list`() = runBlockingTest {
         // GIVEN
         val emptyCountries = """
             {
@@ -142,7 +142,7 @@ class CountriesRepositoryImplTest {
     }
 
     @Test
-    fun `countries return error for invalid empty file`() {
+    fun `countries return error for invalid empty file`() = runBlockingTest {
         // GIVEN
         val errorCountries = """
             
@@ -155,13 +155,13 @@ class CountriesRepositoryImplTest {
     }
 
     @Test
-    fun `country code returns success`() {
+    fun `country code returns success`() = runBlockingTest {
         val result = repository.getCountryCodeByName("Second")
         assertEquals("SECOND", result)
     }
 
     @Test
-    fun `country code for nonexistent returns properly`() {
+    fun `country code for nonexistent returns properly`() = runBlockingTest {
         val result = repository.getCountryCodeByName("Fourth")
         assertEquals("FOURTH", result)
     }

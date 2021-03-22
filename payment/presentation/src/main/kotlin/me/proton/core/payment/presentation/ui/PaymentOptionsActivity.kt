@@ -49,7 +49,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
     }
 
     private val user by lazy {
-        UserId(input.sessionId)
+        UserId(input.userId)
     }
     private lateinit var selectedPaymentMethodId: String
 
@@ -90,7 +90,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
             }
             addCreditCardButton.onClick {
                 with(input) {
-                    startBilling(sessionId, viewModel.currentPlans, plan.copy(amount = amountDue), codes)
+                    startBilling(userId, viewModel.currentPlans, plan.copy(amount = amountDue), codes)
                 }
             }
             selectedPlanDetailsLayout.plan = input.plan
@@ -142,7 +142,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                     )
                 )
                 is BillingViewModel.State.Incomplete.TokenApprovalNeeded ->
-                    onTokenApprovalNeeded(input.sessionId, it.paymentToken, it.amount)
+                    onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
                 is BillingViewModel.State.Error.Message -> showError(it.message)
                 is BillingViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
                     showError(getString(R.string.payments_error_signup_paymentmethod))
@@ -167,7 +167,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
     private fun onSuccess(availablePaymentMethods: List<PaymentOptionUIModel>) {
         if (availablePaymentMethods.isEmpty()) {
             with(input) {
-                startBilling(sessionId, viewModel.currentPlans, plan.copy(amount = amountDue), codes)
+                startBilling(userId, viewModel.currentPlans, plan.copy(amount = amountDue), codes)
             }
             return
         }

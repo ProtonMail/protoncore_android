@@ -23,7 +23,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class PaymentOptionsInput(
-    val sessionId: String,
+    val userId: String,
     val plan: PlanDetails,
     val codes: List<String>? = null
 ) : Parcelable

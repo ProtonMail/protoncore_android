@@ -24,10 +24,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.countries.domain.entity.Country
 import me.proton.core.countries.domain.usecase.GetCountryCode
 import me.proton.core.countries.domain.usecase.LoadCountries
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
@@ -40,13 +38,10 @@ import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
-import me.proton.core.payment.domain.usecase.GetCountries
-import me.proton.core.payment.domain.usecase.GetCountryCode
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
-import studio.forface.viewstatestore.ViewState
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 import javax.inject.Inject
@@ -61,21 +56,16 @@ class BillingViewModel @ViewModelInject @Inject constructor(
     private val createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
     private val createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
     private val performSubscribe: PerformSubscribe,
-    private val getCountries: LoadCountries,
     private val getCountryCode: GetCountryCode
 ) : ProtonViewModel(), ViewStateStoreScope {
 
-    val countriesResult = ViewStateStore<List<Country>>(ViewState.Loading).lock
     val subscriptionResult = ViewStateStore<State>().lock
     val plansValidationState = ViewStateStore<PlansValidationState>().lock
 
-    init {
-        getBillingCountries()
-    }
-
     /**
      * Represents main subscription state sealed class with all possible outcomes as subclasses needed to inform the
-     * call site for what is going on in the process, as well as the outcome of it.
+     * call site for what is go
+     * ing on in the process, as well as the outcome of it.
      */
     sealed class State {
         object Processing : State()
@@ -105,13 +95,6 @@ class BillingViewModel @ViewModelInject @Inject constructor(
         sealed class Error : PlansValidationState() {
             data class Message(val message: String?) : Error()
         }
-    }
-
-    private fun getBillingCountries() {
-        val countries = runCatching {
-            getCountries()
-        }
-        countriesResult.postData(countries.getOrDefault(emptyList()), true)
     }
 
     /**

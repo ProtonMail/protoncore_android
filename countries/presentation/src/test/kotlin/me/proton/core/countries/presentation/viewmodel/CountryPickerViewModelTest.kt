@@ -19,6 +19,7 @@
 package me.proton.core.countries.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -26,11 +27,13 @@ import me.proton.core.countries.domain.usecase.LoadCountries
 import me.proton.core.countries.presentation.entity.CountryUIModel
 import me.proton.core.countries.presentation.utils.testCountriesExcludingMostUsed
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.assertTrue
 import me.proton.core.test.kotlin.coroutinesTest
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class CountryPickerViewModelTest : CoroutinesTest by coroutinesTest {
 
@@ -44,24 +47,26 @@ class CountryPickerViewModelTest : CoroutinesTest by coroutinesTest {
     }
 
     @Test
-    fun `load countries has data`() {
-        every { loadCountries.invoke() } returns testCountriesExcludingMostUsed
-        val observer = mockk<(List<CountryUIModel>) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<List<CountryUIModel>>()
-        val result = viewModel.countries.observeDataForever(observer)
+    fun `load countries has data`() = coroutinesTest {
+        coEvery { loadCountries.invoke() } returns testCountriesExcludingMostUsed
+        val observer = mockk<(CountryPickerViewModel.State) -> Unit>(relaxed = true)
+        val arguments = mutableListOf<CountryPickerViewModel.State>()
+        viewModel.countries.observeDataForever(observer)
         verify(exactly = 1) { observer(capture(arguments)) }
-        assertNotNull(result)
-        assertEquals(9, arguments[0].size)
+        val success = arguments[0]
+        assertTrue(success is CountryPickerViewModel.State.Success)
+        assertEquals(9, success.countries.size)
     }
 
     @Test
-    fun `load countries returns empty list`() {
-        every { loadCountries.invoke() } returns emptyList()
-        val observer = mockk<(List<CountryUIModel>) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<List<CountryUIModel>>()
-        val result = viewModel.countries.observeDataForever(observer)
+    fun `load countries returns empty list`() = coroutinesTest {
+        coEvery { loadCountries.invoke() } returns emptyList()
+        val observer = mockk<(CountryPickerViewModel.State) -> Unit>(relaxed = true)
+        val arguments = mutableListOf<CountryPickerViewModel.State>()
+        viewModel.countries.observeDataForever(observer)
         verify(exactly = 1) { observer(capture(arguments)) }
-        assertNotNull(result)
-        assertEquals(0, arguments[0].size)
+        val success = arguments[0]
+        assertTrue(success is CountryPickerViewModel.State.Success)
+        assertEquals(0, success.countries.size)
     }
 }

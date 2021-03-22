@@ -20,6 +20,7 @@ package me.proton.core.payment.presentation
 
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -50,16 +51,16 @@ class PaymentsOrchestrator @Inject constructor() {
 
     /**
      * Starts the billing workflow.
-     * @param sessionId set the session id of the user doing the payment (upgrade), or pass null for new user creation (sign up)
+     * @param userId set the session id of the user doing the payment (upgrade), or pass null for new user creation (sign up)
      * @param selectedPlan the selected plan ID
      * @param codes the coupon codes (if any)
      */
     fun startBillingWorkFlow(
-        sessionId: SessionId? = null,
+        userId: UserId? = null,
         selectedPlan: PlanDetails,
         codes: List<String>? = null
     ) {
-        sessionId?.let {
+        userId?.let {
             // start the payment options chooser screen
             paymentOptionsLauncher?.launch(
                 PaymentOptionsInput(it.id, selectedPlan, codes)

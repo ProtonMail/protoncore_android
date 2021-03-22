@@ -19,16 +19,15 @@
 package me.proton.core.countries.domain.repository
 
 import me.proton.core.countries.domain.entity.Country
-import me.proton.core.util.kotlin.Invokable
 
 /**
  * Local repository interface that defines all operations that later the data layer (module) should
  * implement. All of these operations are local and read from local resources. Anyway, run them on
  * an IO thread.
  */
-interface CountriesRepository : Invokable {
+interface CountriesRepository {
 
-    fun getAllCountriesSorted(): List<Country>
+    suspend fun getAllCountriesSorted(): List<Country>
 
-    fun getCountryCodeByName(countryName: String): String
+    suspend fun getCountryCodeByName(countryName: String): String
 }

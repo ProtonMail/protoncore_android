@@ -18,6 +18,7 @@
 
 package me.proton.core.countries.domain.usecase
 
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
@@ -33,18 +34,18 @@ class MostUsedCountryCodeTest {
     private val localRepository = mockk<CountriesRepository>()
 
     @Test
-    fun `returns the most used country code successfully`() {
+    fun `returns the most used country code successfully`() = runBlockingTest {
         val expectedResult = 1
         val useCase = MostUsedCountryCode(localRepository)
-        every { localRepository.getAllCountriesSorted() } returns testCountriesExcludingMostUsed
+        coEvery { localRepository.getAllCountriesSorted() } returns testCountriesExcludingMostUsed
 
         val result = useCase.invoke()
         assertEquals(expectedResult, result)
     }
 
     @Test
-    fun `empty flow throws exception`() {
-        every { localRepository.getAllCountriesSorted() } returns emptyList()
+    fun `empty flow throws exception`() = runBlockingTest {
+        coEvery { localRepository.getAllCountriesSorted() } returns emptyList()
 
         assertFailsWith(NoCountriesException::class) {
             MostUsedCountryCode(localRepository).invoke()

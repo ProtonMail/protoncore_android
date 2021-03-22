@@ -31,5 +31,5 @@ class LoadCountries @Inject constructor(private val countriesRepository: Countri
     /**
      * Returns the countries which include or exclude the top five most used countries.
      */
-    operator fun invoke() = countriesRepository.getAllCountriesSorted()
+    suspend operator fun invoke() = countriesRepository.getAllCountriesSorted()
 }

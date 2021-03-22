@@ -83,25 +83,25 @@ abstract class PaymentsActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
         }
 
     protected fun onTokenApprovalNeeded(
-        sessionId: String?,
+        userId: String?,
         paymentToken: PaymentToken.CreatePaymentTokenResult,
         amount: Long
     ) {
         tokenApprovalLauncher?.launch(
             PaymentTokenApprovalInput(
-                sessionId, paymentToken.token, paymentToken.returnHost!!, paymentToken.approvalUrl!!, amount
+                userId, paymentToken.token, paymentToken.returnHost!!, paymentToken.approvalUrl!!, amount
             )
         )
     }
 
     protected fun startBilling(
-        sessionId: String?,
+        userId: String?,
         currentPlans: List<String>,
         plan: PlanDetails,
         codes: List<String>?
     ) {
         newBillingLauncher?.launch(
-            BillingInput(sessionId, currentPlans, plan, codes, null)
+            BillingInput(userId, currentPlans, plan, codes, null)
         )
     }
 

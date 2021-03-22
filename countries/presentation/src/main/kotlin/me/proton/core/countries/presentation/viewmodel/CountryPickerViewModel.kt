@@ -19,10 +19,14 @@
 package me.proton.core.countries.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.countries.domain.usecase.LoadCountries
 import me.proton.core.countries.presentation.entity.CountryUIModel
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import studio.forface.viewstatestore.ViewState
 import studio.forface.viewstatestore.ViewStateStore
 import studio.forface.viewstatestore.ViewStateStoreScope
 
@@ -33,11 +37,24 @@ class CountryPickerViewModel @ViewModelInject constructor(
     loadCountries: LoadCountries
 ) : ProtonViewModel(), ViewStateStoreScope {
 
-    val countries = ViewStateStore<List<CountryUIModel>>(ViewState.Loading).lock
+    val countries = ViewStateStore<State>().lock
+
+    sealed class State {
+        data class Success(val countries: List<CountryUIModel>) : State()
+        data class Error(val message: String?) : State()
+    }
 
     init {
-        countries.postData(loadCountries().map {
-            CountryUIModel(it.code, it.callingCode, it.name)
-        }, true)
+        flow {
+            emit(
+                State.Success(loadCountries().map {
+                    CountryUIModel(it.code, it.callingCode, it.name)
+                })
+            )
+        }.catch {
+            countries.post(State.Error(it.message))
+        }.onEach {
+            countries.post(it)
+        }.launchIn(viewModelScope)
     }
 }

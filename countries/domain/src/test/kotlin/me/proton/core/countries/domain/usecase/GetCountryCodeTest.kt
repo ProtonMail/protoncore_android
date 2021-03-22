@@ -18,8 +18,10 @@
 
 package me.proton.core.countries.domain.usecase
 
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.countries.domain.repository.CountriesRepository
 import org.junit.Before
 import org.junit.Test
@@ -43,8 +45,8 @@ class GetCountryCodeTest {
     }
 
     @Test
-    fun `get country code returns success`() {
-        every { repository.getCountryCodeByName(testCountryName) } returns testCountryCode
+    fun `get country code returns success`() = runBlockingTest {
+        coEvery { repository.getCountryCodeByName(testCountryName) } returns testCountryCode
         val result = useCase.invoke(testCountryName)
         assertEquals(testCountryCode, result)
     }
