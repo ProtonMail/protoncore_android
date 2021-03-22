@@ -40,11 +40,16 @@ class ApiProvider(
         ConcurrentHashMap()
 
     suspend inline fun <reified Api : BaseRetrofitApi> get(
-        userId: UserId
-    ): ApiManager<out Api> = get(sessionProvider.getSessionId(userId))
+        userId: UserId?
+    ): ApiManager<out Api> {
+        val sessionId = userId?.let {
+            sessionProvider.getSessionId(userId)
+        }
+        return get(sessionId = sessionId)
+    }
 
     inline fun <reified Api : BaseRetrofitApi> get(
-        sessionId: SessionId? = null,
+        sessionId: SessionId? = null
     ): ApiManager<out Api> {
         // ConcurrentHashMap does not allow null to be used as a key or value.
         // If sessionId == null -> sessionName = "null".
