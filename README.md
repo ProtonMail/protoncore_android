@@ -162,9 +162,9 @@ Key Data: **1.0.4** - _released on: Mar 22, 2021_
 
 User: **1.0.3** - _released on: Mar 22, 2021_
 
-User Domain: **1.0.2** - _released on: Mar 16, 2021_
+User Domain: **1.0.3** - _released on: Mar 22, 2021_
 
-User Data: **1.0.2** - _released on: Mar 16, 2021_
+User Data: **1.0.3** - _released on: Mar 22, 2021_
 
 ### Contact
 
