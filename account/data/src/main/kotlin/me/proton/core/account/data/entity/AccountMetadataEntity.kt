@@ -22,6 +22,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
 
 @Entity(
     primaryKeys = ["userId", "product"],
@@ -40,7 +41,7 @@ import me.proton.core.domain.entity.Product
     ]
 )
 data class AccountMetadataEntity(
-    val userId: String,
+    val userId: UserId,
     val product: Product,
     val primaryAtUtc: Long
 )

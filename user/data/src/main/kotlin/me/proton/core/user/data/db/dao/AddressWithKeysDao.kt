@@ -23,6 +23,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.db.BaseDao
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.AddressWithKeys
 
@@ -31,9 +32,9 @@ abstract class AddressWithKeysDao : BaseDao<AddressEntity>() {
 
     @Transaction
     @Query("SELECT * FROM AddressEntity WHERE userId = :userId")
-    abstract fun findByUserId(userId: String): Flow<List<AddressWithKeys>>
+    abstract fun findByUserId(userId: UserId): Flow<List<AddressWithKeys>>
 
     @Transaction
     @Query("SELECT * FROM AddressEntity WHERE userId = :userId")
-    abstract suspend fun getByUserId(userId: String): List<AddressWithKeys>
+    abstract suspend fun getByUserId(userId: UserId): List<AddressWithKeys>
 }

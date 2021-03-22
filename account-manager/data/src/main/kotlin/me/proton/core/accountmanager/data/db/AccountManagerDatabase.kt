@@ -41,6 +41,7 @@ import me.proton.core.key.data.entity.KeySaltEntity
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
 import me.proton.core.user.data.db.AddressDatabase
+import me.proton.core.user.data.db.UserConverters
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.AddressKeyEntity
@@ -70,6 +71,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
 @TypeConverters(
     CommonConverters::class,
     AccountConverters::class,
+    UserConverters::class,
     CryptoConverters::class
 )
 abstract class AccountManagerDatabase :

@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.data.db.BaseDao
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
 
 @Dao
 abstract class AccountMetadataDao : BaseDao<AccountMetadataEntity>() {
@@ -32,5 +33,5 @@ abstract class AccountMetadataDao : BaseDao<AccountMetadataEntity>() {
     abstract fun observeLatestPrimary(product: Product): Flow<AccountMetadataEntity?>
 
     @Query("DELETE FROM AccountMetadataEntity WHERE userId = :userId AND product = :product")
-    abstract suspend fun delete(userId: String, product: Product)
+    abstract suspend fun delete(userId: UserId, product: Product)
 }

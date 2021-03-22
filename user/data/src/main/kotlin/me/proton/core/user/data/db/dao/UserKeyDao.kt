@@ -22,14 +22,15 @@ import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.db.BaseDao
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserKeyEntity
 
 @Dao
 abstract class UserKeyDao : BaseDao<UserKeyEntity>() {
 
     @Query("SELECT * FROM UserKeyEntity WHERE userId = :userId")
-    abstract fun findAllByUserId(userId: String): Flow<List<UserKeyEntity>>
+    abstract fun findAllByUserId(userId: UserId): Flow<List<UserKeyEntity>>
 
     @Query("SELECT * FROM UserKeyEntity WHERE userId = :userId")
-    abstract suspend fun getAllByUserId(userId: String): List<UserKeyEntity>
+    abstract suspend fun getAllByUserId(userId: UserId): List<UserKeyEntity>
 }

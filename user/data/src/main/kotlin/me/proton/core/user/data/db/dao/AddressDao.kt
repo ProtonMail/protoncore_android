@@ -22,25 +22,30 @@ import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.db.BaseDao
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.AddressEntity
+import me.proton.core.user.domain.entity.AddressId
 
 @Dao
 abstract class AddressDao : BaseDao<AddressEntity>() {
 
     @Query("SELECT * FROM AddressEntity WHERE addressId = :addressId")
-    abstract fun findByAddressId(addressId: String): Flow<AddressEntity?>
+    abstract fun findByAddressId(addressId: AddressId): Flow<AddressEntity?>
 
     @Query("SELECT * FROM AddressEntity WHERE userId = :userId")
-    abstract fun findAllByUserId(userId: String): Flow<List<AddressEntity>>
+    abstract fun findAllByUserId(userId: UserId): Flow<List<AddressEntity>>
 
     @Query("SELECT * FROM AddressEntity WHERE addressId = :addressId")
-    abstract suspend fun getByAddressId(addressId: String): AddressEntity?
+    abstract suspend fun getByAddressId(addressId: AddressId): AddressEntity?
 
     @Query("SELECT * FROM AddressEntity WHERE userId = :userId")
-    abstract suspend fun getAllUserId(userId: String): List<AddressEntity>
+    abstract suspend fun getAllUserId(userId: UserId): List<AddressEntity>
 
     @Query("DELETE FROM AddressEntity WHERE addressId = :addressId")
-    abstract suspend fun delete(addressId: String)
+    abstract suspend fun delete(addressId: AddressId)
+
+    @Query("DELETE FROM AddressEntity WHERE userId = :userId")
+    abstract suspend fun deleteAll(userId: UserId)
 
     @Query("DELETE FROM AddressEntity")
     abstract suspend fun deleteAll()

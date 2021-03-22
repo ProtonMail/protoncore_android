@@ -62,7 +62,7 @@ internal fun UserKeyResponse.toUserKey(userId: UserId, passphrase: EncryptedByte
 )
 
 internal fun User.toEntity(passphrase: EncryptedByteArray?) = UserEntity(
-    userId = userId.id,
+    userId = userId,
     email = email,
     name = name,
     displayName = displayName,
@@ -80,8 +80,8 @@ internal fun User.toEntity(passphrase: EncryptedByteArray?) = UserEntity(
 )
 
 internal fun UserKey.toEntity() = UserKeyEntity(
-    userId = userId.id,
-    keyId = keyId.id,
+    userId = userId,
+    keyId = keyId,
     version = version,
     privateKey = privateKey.key,
     isPrimary = privateKey.isPrimary,
@@ -91,7 +91,7 @@ internal fun UserKey.toEntity() = UserKeyEntity(
 internal fun List<UserKey>.toEntityList() = map { it.toEntity() }
 
 internal fun UserEntity.toUser(keys: List<UserKey>) = User(
-    userId = UserId(userId),
+    userId = userId,
     email = email,
     name = name,
     displayName = displayName,
@@ -109,8 +109,8 @@ internal fun UserEntity.toUser(keys: List<UserKey>) = User(
 )
 
 internal fun UserKeyEntity.toUserKey(passphrase: EncryptedByteArray?) = UserKey(
-    userId = UserId(userId),
-    keyId = KeyId(keyId),
+    userId = userId,
+    keyId = keyId,
     version = version,
     activation = activation,
     privateKey = PrivateKey(privateKey, isPrimary, passphrase)

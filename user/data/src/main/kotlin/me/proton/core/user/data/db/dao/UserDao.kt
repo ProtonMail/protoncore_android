@@ -24,28 +24,29 @@ import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.data.db.BaseDao
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
 
 @Dao
 abstract class UserDao : BaseDao<UserEntity>() {
 
     @Query("SELECT * FROM UserEntity WHERE userId = :userId")
-    abstract fun findByUserId(userId: String): Flow<UserEntity?>
+    abstract fun findByUserId(userId: UserId): Flow<UserEntity?>
 
     @Query("SELECT * FROM UserEntity WHERE userId = :userId")
-    abstract suspend fun getByUserId(userId: String): UserEntity?
+    abstract suspend fun getByUserId(userId: UserId): UserEntity?
 
     @Query("DELETE FROM UserEntity WHERE userId = :userId")
-    abstract suspend fun delete(userId: String)
+    abstract suspend fun delete(userId: UserId)
 
     @Query("DELETE FROM UserEntity")
     abstract suspend fun deleteAll()
 
     @Transaction
     @Query("SELECT passphrase FROM UserEntity WHERE userId = :userId")
-    abstract suspend fun getPassphrase(userId: String): EncryptedByteArray?
+    abstract suspend fun getPassphrase(userId: UserId): EncryptedByteArray?
 
     @Transaction
     @Query("UPDATE UserEntity SET passphrase = :passphrase WHERE userId = :userId")
-    abstract suspend fun setPassphrase(userId: String, passphrase: EncryptedByteArray?)
+    abstract suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray?)
 }

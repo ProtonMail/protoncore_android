@@ -22,10 +22,10 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.domain.entity.Account
 
 fun Account.toAccountEntity(): AccountEntity = AccountEntity(
-    userId = userId.id,
+    userId = userId,
     username = username,
     email = email,
     state = state,
-    sessionId = sessionId?.id,
+    sessionId = sessionId,
     sessionState = sessionState
 )

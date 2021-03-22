@@ -22,6 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.entity.KeySaltEntity
+import me.proton.core.key.domain.entity.key.KeyId
 
 @Serializable
 data class KeySaltsResponse(
@@ -39,8 +40,8 @@ data class KeySaltResponse(
     val keySalt: String? = null
 ) {
     fun toKeySalt(userId: UserId) = KeySaltEntity(
-        userId = userId.id,
-        keyId = keyId,
+        userId = userId,
+        keyId = KeyId(keyId),
         keySalt = keySalt
     )
 }

@@ -23,19 +23,20 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.data.db.BaseDao
+import me.proton.core.network.domain.session.SessionId
 
 @Dao
 abstract class SessionDetailsDao : BaseDao<SessionDetailsEntity>() {
 
     @Query("SELECT * FROM SessionDetailsEntity WHERE sessionId = :sessionId")
-    abstract fun findBySessionId(sessionId: String): Flow<SessionDetailsEntity?>
+    abstract fun findBySessionId(sessionId: SessionId): Flow<SessionDetailsEntity?>
 
     @Query("SELECT * FROM SessionDetailsEntity WHERE sessionId = :sessionId")
-    abstract suspend fun getBySessionId(sessionId: String): SessionDetailsEntity?
+    abstract suspend fun getBySessionId(sessionId: SessionId): SessionDetailsEntity?
 
     @Query("DELETE FROM SessionDetailsEntity WHERE sessionId = :sessionId")
-    abstract suspend fun delete(sessionId: String)
+    abstract suspend fun delete(sessionId: SessionId)
 
     @Query("UPDATE SessionDetailsEntity SET password = null WHERE sessionId = :sessionId")
-    abstract suspend fun clearPassword(sessionId: String)
+    abstract suspend fun clearPassword(sessionId: SessionId)
 }

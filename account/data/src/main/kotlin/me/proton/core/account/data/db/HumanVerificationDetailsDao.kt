@@ -23,16 +23,17 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
 import me.proton.core.data.db.BaseDao
+import me.proton.core.network.domain.session.SessionId
 
 @Dao
 abstract class HumanVerificationDetailsDao : BaseDao<HumanVerificationDetailsEntity>() {
 
     @Query("SELECT * FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId")
-    abstract fun findBySessionId(sessionId: String): Flow<HumanVerificationDetailsEntity?>
+    abstract fun findBySessionId(sessionId: SessionId): Flow<HumanVerificationDetailsEntity?>
 
     @Query("SELECT * FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId")
-    abstract suspend fun getBySessionId(sessionId: String): HumanVerificationDetailsEntity?
+    abstract suspend fun getBySessionId(sessionId: SessionId): HumanVerificationDetailsEntity?
 
     @Query("DELETE FROM HumanVerificationDetailsEntity WHERE sessionId = :sessionId")
-    abstract suspend fun delete(sessionId: String)
+    abstract suspend fun delete(sessionId: SessionId)
 }

@@ -20,6 +20,8 @@ package me.proton.core.key.data.entity
 
 import androidx.room.Entity
 import androidx.room.Index
+import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.KeyId
 
 @Entity(
     primaryKeys = ["userId", "keyId"],
@@ -29,7 +31,7 @@ import androidx.room.Index
     ]
 )
 data class KeySaltEntity(
-    val userId: String,
-    val keyId: String,
+    val userId: UserId,
+    val keyId: KeyId,
     val keySalt: String? = null
 )

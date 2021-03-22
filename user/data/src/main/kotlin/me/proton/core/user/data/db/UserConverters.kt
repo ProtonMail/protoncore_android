@@ -16,14 +16,27 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.data.extension
+package me.proton.core.user.data.db
 
-import me.proton.core.key.data.entity.KeySaltEntity
-import me.proton.core.key.domain.entity.key.PrivateKeySalt
+import androidx.room.TypeConverter
+import me.proton.core.key.domain.entity.key.KeyId
+import me.proton.core.user.domain.entity.AddressId
 
-internal fun KeySaltEntity.toPrivateKeySalt() = PrivateKeySalt(
-    keyId = keyId,
-    keySalt = keySalt
-)
+class UserConverters {
 
-internal fun List<KeySaltEntity>.toPrivateKeySaltList() = map { it.toPrivateKeySalt() }
+    @TypeConverter
+    fun fromAddressIdToString(value: AddressId?): String? = value?.id
+
+    @TypeConverter
+    fun fromStringToAddressId(value: String?): AddressId? = value?.let {
+        AddressId(value)
+    }
+
+    @TypeConverter
+    fun fromKeyIdToString(value: KeyId?): String? = value?.id
+
+    @TypeConverter
+    fun fromStringToKeyId(value: String?): KeyId? = value?.let {
+        KeyId(value)
+    }
+}

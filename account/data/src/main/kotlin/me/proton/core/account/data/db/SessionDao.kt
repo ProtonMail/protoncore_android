@@ -25,6 +25,8 @@ import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.data.db.BaseDao
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 
 @Dao
 abstract class SessionDao : BaseDao<SessionEntity>() {
@@ -33,23 +35,23 @@ abstract class SessionDao : BaseDao<SessionEntity>() {
     abstract fun findAll(product: Product): Flow<List<SessionEntity>>
 
     @Query("SELECT * FROM SessionEntity WHERE sessionId = :sessionId")
-    abstract fun findBySessionId(sessionId: String): Flow<SessionEntity?>
+    abstract fun findBySessionId(sessionId: SessionId): Flow<SessionEntity?>
 
     @Query("SELECT * FROM SessionEntity WHERE sessionId = :sessionId")
-    abstract suspend fun get(sessionId: String): SessionEntity?
+    abstract suspend fun get(sessionId: SessionId): SessionEntity?
 
     @Query("SELECT sessionId FROM SessionEntity WHERE userId = :userId")
-    abstract suspend fun getSessionId(userId: String): String?
+    abstract suspend fun getSessionId(userId: UserId): SessionId?
 
     @Query("DELETE FROM SessionEntity WHERE sessionId = :sessionId")
-    abstract suspend fun delete(sessionId: String)
+    abstract suspend fun delete(sessionId: SessionId)
 
     @Query("UPDATE SessionEntity SET scopes = :scopes WHERE sessionId = :sessionId")
-    abstract suspend fun updateScopes(sessionId: String, scopes: String)
+    abstract suspend fun updateScopes(sessionId: SessionId, scopes: String)
 
     @Query("UPDATE SessionEntity SET humanHeaderTokenType = :tokenType, humanHeaderTokenCode = :tokenCode WHERE sessionId = :sessionId")
-    abstract suspend fun updateHeaders(sessionId: String, tokenType: EncryptedString?, tokenCode: EncryptedString?)
+    abstract suspend fun updateHeaders(sessionId: SessionId, tokenType: EncryptedString?, tokenCode: EncryptedString?)
 
     @Query("UPDATE SessionEntity SET accessToken = :accessToken, refreshToken = :refreshToken WHERE sessionId = :sessionId")
-    abstract suspend fun updateToken(sessionId: String, accessToken: EncryptedString, refreshToken: EncryptedString)
+    abstract suspend fun updateToken(sessionId: SessionId, accessToken: EncryptedString, refreshToken: EncryptedString)
 }

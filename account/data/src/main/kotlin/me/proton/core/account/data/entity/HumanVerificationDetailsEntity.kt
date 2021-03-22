@@ -23,6 +23,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * @author Dino Kadrikj.
@@ -42,7 +43,7 @@ import me.proton.core.network.domain.humanverification.VerificationMethod
     ]
 )
 data class HumanVerificationDetailsEntity(
-    val sessionId: String,
+    val sessionId: SessionId,
     val verificationMethods: List<String>,
     val captchaVerificationToken: String? = null
 ) {

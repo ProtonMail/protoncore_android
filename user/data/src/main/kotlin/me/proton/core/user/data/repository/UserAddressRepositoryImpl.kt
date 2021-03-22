@@ -83,12 +83,12 @@ class UserAddressRepositoryImpl(
         userRepository.getUserFlow(userId)
             .flatMapLatest {
                 // Resubscribe every time User flow emit a value (e.g. on [User.keys] locked/unlocked).
-                addressWithKeysDao.findByUserId(userId.id)
+                addressWithKeysDao.findByUserId(userId)
                     .map { list -> list.map { getAddressLocal(it.entity, it.keys) } }
             }
 
     private suspend fun getAddressLocal(entity: AddressEntity, keys: List<AddressKeyEntity>): UserAddress {
-        val keyList = keys.map { key -> getAddressKeyLocal(UserId(entity.userId), key) }
+        val keyList = keys.map { key -> getAddressKeyLocal(entity.userId, key) }
         return entity.toUserAddress(keyList)
     }
 
@@ -107,7 +107,7 @@ class UserAddressRepositoryImpl(
         }
 
     private suspend fun delete(userId: UserId) =
-        addressDao.delete(userId.id)
+        addressDao.deleteAll(userId)
 
     private suspend fun deleteAll() =
         addressDao.deleteAll()
@@ -138,7 +138,7 @@ class UserAddressRepositoryImpl(
         return apiProvider.get<AddressApi>(sessionUserId).invoke {
             val response = createAddress(CreateAddressRequest(displayName = displayName, domain = domain))
             val address = response.address.toEntity(sessionUserId)
-            val addressId = AddressId(address.addressId)
+            val addressId = address.addressId
             val addressKeys = response.address.keys?.toEntityList(addressId).orEmpty()
             insertOrUpdate(address, addressKeys)
             checkNotNull(getAddress(sessionUserId, addressId))

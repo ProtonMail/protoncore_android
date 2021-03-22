@@ -21,6 +21,8 @@ package me.proton.core.user.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 
 @Entity(
     primaryKeys = ["addressId"],
@@ -38,8 +40,8 @@ import androidx.room.Index
     ]
 )
 data class AddressEntity(
-    val userId: String,
-    val addressId: String,
+    val userId: UserId,
+    val addressId: AddressId,
     val email: String,
     val displayName: String? = null,
     val domainId: String? = null,
