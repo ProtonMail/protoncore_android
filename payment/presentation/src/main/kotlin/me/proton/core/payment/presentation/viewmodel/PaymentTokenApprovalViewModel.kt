@@ -27,9 +27,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
 import me.proton.core.payment.presentation.entity.SecureEndpoint
@@ -58,7 +58,7 @@ class PaymentTokenApprovalViewModel @ViewModelInject constructor(
      * Handles the Webview redirect result. It also checks if the payment token has been approved.
      */
     fun handleRedirection(
-        sessionId: SessionId?,
+        userId: UserId?,
         paymentToken: String,
         uri: Uri,
         paymentReturnHost: String
@@ -67,7 +67,7 @@ class PaymentTokenApprovalViewModel @ViewModelInject constructor(
             if (uri.getQueryParameter("cancel") == CANCEL_QUERY_PARAM_VALUE) {
                 true
             } else {
-                checkPaymentTokenApproved(sessionId, paymentToken)
+                checkPaymentTokenApproved(userId, paymentToken)
                 false
             }
         } else {
@@ -92,9 +92,9 @@ class PaymentTokenApprovalViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun checkPaymentTokenApproved(sessionId: SessionId?, paymentToken: String) = flow {
+    private fun checkPaymentTokenApproved(userId: UserId?, paymentToken: String) = flow {
         emit(State.Processing)
-        emit(State.Success(getPaymentTokenStatus(sessionId, paymentToken).status))
+        emit(State.Success(getPaymentTokenStatus(userId, paymentToken).status))
     }.catch {
         approvalResult.post(State.Error.Message(it.message))
     }.onEach {

@@ -18,6 +18,7 @@
 
 package me.proton.core.payment.domain.repository
 
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
@@ -36,8 +37,8 @@ interface PaymentsRepository {
      * Creates a new payment token which will be used later for a new subscription.
      * Before that there can be a token validation step.
      */
-    suspend fun createPaymentTokenWithPayPal(
-        sessionId: SessionId? = null,
+    suspend fun createPaymentTokenNewPayPal(
+        sessionUserId: SessionUserId? = null,
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.PayPal
@@ -48,8 +49,8 @@ interface PaymentsRepository {
      * Creates a new payment token which will be used later for a new subscription.
      * Before that there can be a token validation step.
      */
-    suspend fun createPaymentTokenWithCreditCard(
-        sessionId: SessionId? = null,
+    suspend fun createPaymentTokenNewCreditCard(
+        sessionUserId: SessionUserId? = null,
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.CreditCard
@@ -60,8 +61,8 @@ interface PaymentsRepository {
      * Creates a new payment token which will be used later for a new subscription.
      * Before that there can be a token validation step.
      */
-    suspend fun createPaymentTokenWithExistingPaymentMethod(
-        sessionId: SessionId? = null,
+    suspend fun createPaymentTokenExistingPaymentMethod(
+        sessionUserId: SessionUserId? = null,
         amount: Long,
         currency: Currency,
         paymentMethodId: String
@@ -73,7 +74,7 @@ interface PaymentsRepository {
      * why knowing the status is important.
      */
     suspend fun getPaymentTokenStatus(
-        sessionId: SessionId?,
+        sessionUserId: SessionUserId?,
         paymentToken: String
     ): PaymentToken.PaymentTokenStatusResult
     // endregion
@@ -84,7 +85,7 @@ interface PaymentsRepository {
      * Returns the already saved payment methods for a user.
      * Can only be used for already logged in users and not during signup.
      */
-    suspend fun getAvailablePaymentMethods(sessionId: SessionId): List<PaymentMethod>
+    suspend fun getAvailablePaymentMethods(sessionUserId: SessionUserId): List<PaymentMethod>
     // endregion
 
     // region subscription
@@ -95,7 +96,7 @@ interface PaymentsRepository {
      * Should be called upon a user selected any plan, duration and entered a code.
      */
     suspend fun validateSubscription(
-        sessionId: SessionId?,
+        sessionUserId: SessionUserId?,
         codes: List<String>? = null,
         planIds: List<String>,
         currency: Currency,
@@ -106,7 +107,7 @@ interface PaymentsRepository {
      * Authenticated.
      * Returns current active subscription.
      */
-    suspend fun getSubscription(sessionId: SessionId): Subscription
+    suspend fun getSubscription(sessionUserId: SessionUserId): Subscription
 
     /**
      * Authenticated.
@@ -114,7 +115,7 @@ interface PaymentsRepository {
      * Used only for upgrade after sign up.
      */
     suspend fun createOrUpdateSubscription(
-        sessionId: SessionId,
+        sessionUserId: SessionUserId,
         amount: Long,
         currency: Currency,
         payment: PaymentBody?,

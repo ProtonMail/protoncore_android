@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
@@ -40,7 +40,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     // endregion
 
     // region test data
-    private val testSessionId = SessionId("test-session-id")
+    private val testUserId = UserId("test-user-id")
     private val testAmount = 5L
     private val testCurrency = Currency.CHF
     private val testPaymentMethodId = "test-paymentMethodID"
@@ -58,17 +58,17 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     fun beforeEveryTest() {
         useCase = CreatePaymentTokenWithExistingPaymentMethod(repository)
         coEvery {
-            repository.createPaymentTokenWithExistingPaymentMethod(any(), any(), any(), any())
+            repository.createPaymentTokenExistingPaymentMethod(any(), any(), any(), any())
         } returns createTokenResult
     }
 
     @Test
     fun `create payment token upgrade success response`() = runBlockingTest {
-        val result = useCase.invoke(testSessionId, testAmount, testCurrency, testPaymentMethodId)
+        val result = useCase.invoke(testUserId, testAmount, testCurrency, testPaymentMethodId)
 
         coVerify(exactly = 1) {
-            repository.createPaymentTokenWithExistingPaymentMethod(
-                sessionId = testSessionId,
+            repository.createPaymentTokenExistingPaymentMethod(
+                sessionUserId = testUserId,
                 amount = testAmount,
                 currency = testCurrency,
                 paymentMethodId = testPaymentMethodId
@@ -87,8 +87,8 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
         val result = useCase.invoke(null, testAmount, testCurrency, testPaymentMethodId)
 
         coVerify(exactly = 1) {
-            repository.createPaymentTokenWithExistingPaymentMethod(
-                sessionId = null,
+            repository.createPaymentTokenExistingPaymentMethod(
+                sessionUserId = null,
                 amount = testAmount,
                 currency = testCurrency,
                 paymentMethodId = testPaymentMethodId
@@ -108,15 +108,15 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
             PaymentTokenStatus.CHARGEABLE, null, testToken, null
         )
         coEvery {
-            repository.createPaymentTokenWithExistingPaymentMethod(
-                testSessionId,
+            repository.createPaymentTokenExistingPaymentMethod(
+                testUserId,
                 testAmount,
                 testCurrency,
                 testPaymentMethodId
             )
         } returns createTokenChargeableResult
 
-        val result = useCase.invoke(testSessionId, testAmount, testCurrency, testPaymentMethodId)
+        val result = useCase.invoke(testUserId, testAmount, testCurrency, testPaymentMethodId)
         assertNotNull(result)
         assertEquals(testToken, result.token)
         assertEquals(PaymentTokenStatus.CHARGEABLE, result.status)
@@ -127,7 +127,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     @Test
     fun `create payment token negative amount response`() = runBlockingTest {
         assertFailsWith(IllegalArgumentException::class) {
-            useCase.invoke(testSessionId, -1, testCurrency, testPaymentMethodId)
+            useCase.invoke(testUserId, -1, testCurrency, testPaymentMethodId)
         }
     }
 }

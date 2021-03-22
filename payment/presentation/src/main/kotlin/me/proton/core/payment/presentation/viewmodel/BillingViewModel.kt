@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Country
 import me.proton.core.payment.domain.entity.Currency
@@ -121,7 +121,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
      *  - [PaymentType.CreditCard] or [PaymentType.PayPal]
      */
     fun subscribe(
-        sessionId: SessionId?,
+        userId: UserId?,
         planIds: List<String>,
         codes: List<String>? = null,
         currency: Currency,
@@ -129,15 +129,15 @@ class BillingViewModel @ViewModelInject @Inject constructor(
         paymentType: PaymentType
     ) = flow {
         emit(State.Processing)
-        val signUp = sessionId == null
+        val signUp = userId == null
 
-        val subscription = validatePlanSubscription(sessionId, codes, planIds, currency, cycle)
+        val subscription = validatePlanSubscription(userId, codes, planIds, currency, cycle)
         emit(State.Success.SubscriptionPlanValidated(subscription))
 
         if (!signUp && subscription.amountDue == 0L) {
             // directly create the subscription
             val subscriptionResult =
-                performSubscribe(sessionId!!, 0, currency, cycle, planIds, codes, paymentToken = null)
+                performSubscribe(userId!!, 0, currency, cycle, planIds, codes, paymentToken = null)
             emit(State.Success.SubscriptionCreated(subscriptionResult, null))
         } else {
             if (signUp && paymentType is PaymentType.PaymentMethod) {
@@ -148,7 +148,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
             val paymentTokenResult = when (paymentType) {
                 is PaymentType.PaymentMethod -> {
                     createPaymentTokenWithExistingPaymentMethod(
-                        sessionId = sessionId,
+                        userId = userId,
                         amount = subscription.amountDue,
                         currency = currency,
                         paymentMethodId = paymentType.paymentMethodId
@@ -157,11 +157,13 @@ class BillingViewModel @ViewModelInject @Inject constructor(
                 is PaymentType.CreditCard -> {
                     val countryCode = getCountryCode(paymentType.card.country)
                     val paymentTypeRefined =
-                        paymentType.copy(card = (paymentType.card as Card.CardWithPaymentDetails).copy(country = countryCode))
-                    createPaymentTokenWithNewCreditCard(sessionId, subscription.amountDue, currency, paymentTypeRefined)
+                        paymentType.copy(
+                            card = (paymentType.card as Card.CardWithPaymentDetails).copy(country = countryCode)
+                        )
+                    createPaymentTokenWithNewCreditCard(userId, subscription.amountDue, currency, paymentTypeRefined)
                 }
                 is PaymentType.PayPal -> createPaymentTokenWithNewPayPal(
-                    sessionId,
+                    userId,
                     subscription.amountDue,
                     currency,
                     paymentType
@@ -172,7 +174,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
             if (paymentTokenResult.status == PaymentTokenStatus.CHARGEABLE) {
                 val amount = subscription.amountDue
                 val token = paymentTokenResult.token
-                emit(onTokenApproved(sessionId, planIds, codes, amount, currency, cycle, token))
+                emit(onTokenApproved(userId, planIds, codes, amount, currency, cycle, token))
             } else {
                 // should show 3DS approval URL WebView
                 emit(State.Incomplete.TokenApprovalNeeded(paymentTokenResult, subscription.amountDue))
@@ -190,7 +192,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
      * Should be called only for 3DS credit cards and only after the token has been approved.
      */
     fun onThreeDSTokenApproved(
-        sessionId: SessionId?,
+        userId: UserId?,
         planIds: List<String>,
         codes: List<String>? = null,
         amount: Long,
@@ -198,7 +200,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
         cycle: SubscriptionCycle,
         token: String
     ) = flow {
-        emit(onTokenApproved(sessionId, planIds, codes, amount, currency, cycle, token))
+        emit(onTokenApproved(userId, planIds, codes, amount, currency, cycle, token))
     }.catch {
         subscriptionResult.post(State.Error.Message(it.message))
     }.onEach {
@@ -210,14 +212,14 @@ class BillingViewModel @ViewModelInject @Inject constructor(
      * the real amount (amountDue) which is the plan amount minus any coupons or credits (already on the account).
      */
     fun validatePlan(
-        sessionId: SessionId?,
+        userId: UserId?,
         planIds: List<String>,
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle
     ) = flow {
         emit(PlansValidationState.Processing)
-        emit(PlansValidationState.Success(validatePlanSubscription(sessionId, codes, planIds, currency, cycle)))
+        emit(PlansValidationState.Success(validatePlanSubscription(userId, codes, planIds, currency, cycle)))
     }.catch { error ->
         plansValidationState.post(PlansValidationState.Error.Message(error.message))
     }.onEach { subscriptionState ->
@@ -225,7 +227,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
     }.launchIn(viewModelScope)
 
     private suspend fun onTokenApproved(
-        sessionId: SessionId?,
+        userId: UserId?,
         planIds: List<String>,
         codes: List<String>? = null,
         amount: Long,
@@ -233,12 +235,12 @@ class BillingViewModel @ViewModelInject @Inject constructor(
         cycle: SubscriptionCycle,
         token: String
     ): State =
-        if (sessionId == null) {
+        if (userId == null) {
             // subscription should be created by the sign up module. return payment info (needed for Human Ver headers).
             State.Success.SignUpTokenReady(token)
         } else {
             State.Success.SubscriptionCreated(
-                performSubscribe(sessionId, amount, currency, cycle, planIds, codes, token),
+                performSubscribe(userId, amount, currency, cycle, planIds, codes, token),
                 token
             )
         }

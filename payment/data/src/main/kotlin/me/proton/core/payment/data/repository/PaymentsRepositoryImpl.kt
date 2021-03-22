@@ -18,6 +18,7 @@
 
 package me.proton.core.payment.data.repository
 
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.data.api.PaymentsApi
@@ -40,7 +41,6 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
-import me.proton.core.util.kotlin.exhaustive
 
 class PaymentsRepositoryImpl(
     private val provider: ApiProvider
@@ -50,13 +50,13 @@ class PaymentsRepositoryImpl(
      * Unauthenticated.
      * Creates a new payment token which will be used later for a new subscription with PayPal.
      */
-    override suspend fun createPaymentTokenWithPayPal(
-        sessionId: SessionId?,
+    override suspend fun createPaymentTokenNewPayPal(
+        sessionUserId: SessionUserId?,
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.PayPal
     ): PaymentToken.CreatePaymentTokenResult =
-        provider.get<PaymentsApi>(sessionId = sessionId).invoke {
+        provider.get<PaymentsApi>(sessionUserId).invoke {
             val request = CreatePaymentToken(amount, currency.name, PaymentTypeEntity.PayPal, null)
             createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
@@ -65,13 +65,13 @@ class PaymentsRepositoryImpl(
      * Unauthenticated.
      * Creates a new payment token which will be used later for a new subscription with new Credit Card.
      */
-    override suspend fun createPaymentTokenWithCreditCard(
-        sessionId: SessionId?,
+    override suspend fun createPaymentTokenNewCreditCard(
+        sessionUserId: SessionUserId?,
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.CreditCard
     ): PaymentToken.CreatePaymentTokenResult =
-        provider.get<PaymentsApi>(sessionId = sessionId).invoke {
+        provider.get<PaymentsApi>(sessionUserId).invoke {
             val paymentCard = paymentType.card
             if (paymentCard !is Card.CardWithPaymentDetails) {
                 throw InsufficientPaymentDetails
@@ -95,50 +95,50 @@ class PaymentsRepositoryImpl(
      * Unauthenticated.
      * Creates a new payment token which will be used later for a new subscription with existing saved payment method.
      */
-    override suspend fun createPaymentTokenWithExistingPaymentMethod(
-        sessionId: SessionId?,
+    override suspend fun createPaymentTokenExistingPaymentMethod(
+        sessionUserId: SessionUserId?,
         amount: Long,
         currency: Currency,
         paymentMethodId: String
     ): PaymentToken.CreatePaymentTokenResult =
-        provider.get<PaymentsApi>(sessionId = sessionId).invoke {
+        provider.get<PaymentsApi>(sessionUserId).invoke {
             val request = CreatePaymentToken(amount, currency.name, null, paymentMethodId)
             createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
 
     override suspend fun getPaymentTokenStatus(
-        sessionId: SessionId?,
+        sessionUserId: SessionUserId?,
         paymentToken: String
     ): PaymentToken.PaymentTokenStatusResult =
-        provider.get<PaymentsApi>(sessionId = sessionId).invoke {
+        provider.get<PaymentsApi>(sessionUserId).invoke {
             getPaymentTokenStatus(paymentToken).toPaymentTokenStatusResult()
         }.valueOrThrow
 
-    override suspend fun getAvailablePaymentMethods(sessionId: SessionId): List<PaymentMethod> =
-        provider.get<PaymentsApi>(sessionId).invoke {
+    override suspend fun getAvailablePaymentMethods(sessionUserId: SessionUserId): List<PaymentMethod> =
+        provider.get<PaymentsApi>(sessionUserId).invoke {
             getPaymentMethods().paymentMethods.map {
                 PaymentMethod(it.id, PaymentMethodType.map[it.type] ?: PaymentMethodType.CARD, it.toDetails())
             }
         }.valueOrThrow
 
     override suspend fun validateSubscription(
-        sessionId: SessionId?,
+        sessionUserId: SessionUserId?,
         codes: List<String>?,
         planIds: List<String>,
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus =
-        provider.get<PaymentsApi>(sessionId = sessionId).invoke {
+        provider.get<PaymentsApi>(sessionUserId).invoke {
             validateSubscription(CheckSubscription(codes, planIds, currency.name, cycle.value)).toSubscriptionStatus()
         }.valueOrThrow
 
-    override suspend fun getSubscription(sessionId: SessionId): Subscription =
-        provider.get<PaymentsApi>(sessionId).invoke {
+    override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription =
+        provider.get<PaymentsApi>(sessionUserId).invoke {
             getCurrentSubscription().subscription.toSubscription()
         }.valueOrThrow
 
     override suspend fun createOrUpdateSubscription(
-        sessionId: SessionId,
+        sessionUserId: SessionUserId,
         amount: Long,
         currency: Currency,
         payment: PaymentBody?,
@@ -146,11 +146,10 @@ class PaymentsRepositoryImpl(
         planIds: Map<String, Int>,
         cycle: SubscriptionCycle
     ): Subscription =
-        provider.get<PaymentsApi>(sessionId = sessionId).invoke {
-            val paymentBodyEntity = when (payment) {
-                is PaymentBody.TokenPaymentBody -> TokenTypePaymentBody(tokenDetails = TokenDetails(payment.token))
-                else -> null
-            }.exhaustive
+        provider.get<PaymentsApi>(sessionUserId).invoke {
+            val paymentBodyEntity = if (payment is PaymentBody.TokenPaymentBody) {
+                TokenTypePaymentBody(tokenDetails = TokenDetails(payment.token))
+            } else null
             createUpdateSubscription(
                 CreateSubscription(
                     amount,

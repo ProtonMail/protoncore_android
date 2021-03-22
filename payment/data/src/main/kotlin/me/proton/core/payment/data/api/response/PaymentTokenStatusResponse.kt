@@ -26,7 +26,7 @@ import me.proton.core.payment.domain.entity.PaymentTokenStatus
 @Serializable
 internal data class PaymentTokenStatusResponse(
     @SerialName("Status")
-    var status: Int
+    val status: Int
 ) {
     fun toPaymentTokenStatusResult(): PaymentToken.PaymentTokenStatusResult =
         PaymentToken.PaymentTokenStatusResult(

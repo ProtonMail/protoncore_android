@@ -24,7 +24,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.presentation.R
@@ -44,16 +44,15 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
 
     private val viewModel by viewModels<PaymentOptionsViewModel>()
 
-    override fun layoutId(): Int = R.layout.activity_payment_options
-
     private val input: PaymentOptionsInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
-    private val session by lazy {
-        SessionId(input.sessionId)
-    }
 
+    private val user by lazy {
+        UserId(input.sessionId)
+    }
     private lateinit var selectedPaymentMethodId: String
+
     private var amountDue: Long? = null
 
     private val paymentOptionsAdapter = selectableProtonAdapter(
@@ -76,6 +75,8 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
         diffCallback = PaymentOptionUIModel.DiffCallback
     )
 
+    override fun layoutId(): Int = R.layout.activity_payment_options
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -95,7 +96,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
             selectedPlanDetailsLayout.plan = input.plan
             payButton.onClick {
                 viewModel.subscribe(
-                    session,
+                    user,
                     input.plan.id,
                     input.codes,
                     input.plan.currency,
@@ -106,7 +107,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
         }
         observe()
 
-        viewModel.getAvailablePaymentMethods(session)
+        viewModel.getAvailablePaymentMethods(user)
     }
 
     private fun observe() {
@@ -158,7 +159,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
     override fun onThreeDSApproved(amount: Long, token: String) {
         with(input) {
             viewModel.onThreeDSTokenApproved(
-                session, plan.id, codes, amount, plan.currency, plan.subscriptionCycle, token
+                user, plan.id, codes, amount, plan.currency, plan.subscriptionCycle, token
             )
         }
     }
@@ -171,7 +172,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
             return
         }
         with(input) {
-            viewModel.validatePlan(session, plan.id, codes, plan.currency, plan.subscriptionCycle)
+            viewModel.validatePlan(user, plan.id, codes, plan.currency, plan.subscriptionCycle)
         }
         binding.progressLayout.visibility = View.GONE
         paymentOptionsAdapter.submitList(availablePaymentMethods)

@@ -23,7 +23,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class PaymentTokenApprovalInput(
-    val sessionId: String?,
+    val userId: String?,
     val paymentToken: String,
     val returnHost: String,
     val approvalUrl: String,

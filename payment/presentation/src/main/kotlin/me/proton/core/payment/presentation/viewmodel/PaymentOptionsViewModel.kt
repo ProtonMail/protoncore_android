@@ -26,9 +26,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethodType
@@ -80,10 +80,10 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
     /**
      * Returns the existing available (saved) payment methods for a user.
      */
-    fun getAvailablePaymentMethods(sessionId: SessionId) = flow {
+    fun getAvailablePaymentMethods(userId: UserId) = flow {
         emit(State.Processing)
         try {
-            val currentSubscription = getCurrentSubscription(sessionId)
+            val currentSubscription = getCurrentSubscription(userId)
             currentSubscription.plans.forEach { plan ->
                 currentPlans.add(plan.id)
             }
@@ -94,22 +94,25 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
             }
         }
 
-        val paymentMethods = availablePaymentMethods(sessionId).map {
+        val paymentMethods = availablePaymentMethods(userId).map {
             when (it.type) {
                 PaymentMethodType.CARD -> {
                     val card = (it.details as Details.CardDetails).cardDetails
                     PaymentOptionUIModel(
-                        it.id, it.type.ordinal, context.getString(
+                        it.id,
+                        it.type.ordinal,
+                        context.getString(
                             R.string.payment_cc_list_item,
                             card.brand,
                             card.last4,
                             card.expirationMonth,
                             card.expirationYear
-                        ), card.name
+                        ),
+                        card.name
                     )
                 }
                 PaymentMethodType.PAYPAL -> {
-                    val payPalDetails = (it.details as Details.PayPalDetails)
+                    val payPalDetails = it.details as Details.PayPalDetails
                     PaymentOptionUIModel(
                         it.id,
                         it.type.ordinal,
@@ -127,18 +130,18 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
     }.launchIn(viewModelScope)
 
     fun subscribe(
-        sessionId: SessionId?,
+        userId: UserId?,
         planId: String,
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle,
         paymentType: PaymentType
     ) = billingViewModel.subscribe(
-        sessionId, currentPlans.plus(planId), codes, currency, cycle, paymentType
+        userId, currentPlans.plus(planId), codes, currency, cycle, paymentType
     )
 
     fun onThreeDSTokenApproved(
-        sessionId: SessionId?,
+        userId: UserId?,
         planId: String,
         codes: List<String>? = null,
         amount: Long,
@@ -146,16 +149,16 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
         cycle: SubscriptionCycle,
         token: String
     ) = billingViewModel.onThreeDSTokenApproved(
-        sessionId, currentPlans.plus(planId), codes, amount, currency, cycle, token
+        userId, currentPlans.plus(planId), codes, amount, currency, cycle, token
     )
 
     fun validatePlan(
-        sessionId: SessionId?,
+        userId: UserId?,
         planId: String,
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle
-    ) = billingViewModel.validatePlan(sessionId, currentPlans.plus(planId).distinct(), codes, currency, cycle)
+    ) = billingViewModel.validatePlan(userId, currentPlans.plus(planId).distinct(), codes, currency, cycle)
 
     companion object {
         const val NO_ACTIVE_SUBSCRIPTION = 22110

@@ -21,6 +21,7 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Details
@@ -38,7 +39,7 @@ class GetAvailablePaymentMethodsTest {
     // endregion
 
     // region test data
-    private val testSessionId = SessionId("test-session-id")
+    private val testUserId = UserId("test-user-id")
     private val testReadOnlyCard = Card.CardReadOnly(
         brand = "visa", last4 = "1234", expirationMonth = "01",
         expirationYear = "2021", name = "Test", country = "Test Country", zip = "123"
@@ -66,13 +67,13 @@ class GetAvailablePaymentMethodsTest {
     fun beforeEveryTest() {
         useCase = GetAvailablePaymentMethods(repository)
         coEvery {
-            repository.getAvailablePaymentMethods(testSessionId)
+            repository.getAvailablePaymentMethods(testUserId)
         } returns testDefaultPaymentMethods
     }
 
     @Test
     fun `get payment methods returns non empty list success`() = runBlockingTest {
-        val result = useCase.invoke(testSessionId)
+        val result = useCase.invoke(testUserId)
         assertNotNull(result)
         assertEquals(2, result.size)
         assertEquals(PaymentMethodType.CARD, result[0].type)
@@ -82,9 +83,9 @@ class GetAvailablePaymentMethodsTest {
     @Test
     fun `get payment methods returns empty list success`() = runBlockingTest {
         coEvery {
-            repository.getAvailablePaymentMethods(testSessionId)
+            repository.getAvailablePaymentMethods(testUserId)
         } returns emptyList()
-        val result = useCase.invoke(testSessionId)
+        val result = useCase.invoke(testUserId)
         assertNotNull(result)
         assertEquals(0, result.size)
     }

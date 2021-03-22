@@ -18,6 +18,7 @@
 
 package me.proton.core.payment.domain.usecase
 
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.repository.PaymentsRepository
@@ -31,8 +32,8 @@ import javax.inject.Inject
 class GetPaymentTokenStatus @Inject constructor(
     private val paymentsRepository: PaymentsRepository
 ) {
-    suspend operator fun invoke(sessionId: SessionId?, paymentToken: String): PaymentToken.PaymentTokenStatusResult {
+    suspend operator fun invoke(userId: UserId?, paymentToken: String): PaymentToken.PaymentTokenStatusResult {
         require(paymentToken.isNotBlank())
-        return paymentsRepository.getPaymentTokenStatus(sessionId, paymentToken)
+        return paymentsRepository.getPaymentTokenStatus(userId, paymentToken)
     }
 }

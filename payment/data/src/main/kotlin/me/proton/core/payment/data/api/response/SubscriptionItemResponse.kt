@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -20,45 +20,30 @@ package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.domain.entity.Plan
+import me.proton.core.payment.domain.entity.Subscription
 
 @Serializable
-internal data class PlanEntity(
+internal data class SubscriptionItemResponse(
     @SerialName("ID")
     val id: String,
-    @SerialName("Type")
-    val type: Int,
+    @SerialName("InvoiceID")
+    val invoiceId: String,
     @SerialName("Cycle")
     val cycle: Int,
-    @SerialName("Name")
-    val name: String,
-    @SerialName("Title")
-    val title: String,
+    @SerialName("PeriodStart")
+    val periodStart: Long,
+    @SerialName("PeriodEnd")
+    val periodEnd: Long,
+    @SerialName("CouponCode")
+    val couponCode: String? = null,
     @SerialName("Currency")
     val currency: String,
     @SerialName("Amount")
-    val amount: Int,
-    @SerialName("MaxDomains")
-    val maxDomains: Int,
-    @SerialName("MaxAddresses")
-    val maxAddresses: Int,
-    @SerialName("MaxSpace")
-    val maxSpace: Long,
-    @SerialName("MaxMembers")
-    val maxMembers: Int,
-    @SerialName("MaxVPN")
-    val maxVPN: Int,
-    @SerialName("Services")
-    val services: Int,
-    @SerialName("Features")
-    val features: Int,
-    @SerialName("Quantity")
-    val quantity: Int,
-    @SerialName("MaxTier")
-    val maxTier: Int
+    val amount: Long,
+    @SerialName("Plans")
+    val plans: List<PlanResponse>
 ) {
-    fun toPlan(): Plan = Plan(
-        id, type, cycle, name, title, currency, amount, maxDomains, maxAddresses, maxSpace, maxMembers, maxVPN,
-        services, features, quantity, maxTier
+    fun toSubscription(): Subscription = Subscription(
+        id, invoiceId, cycle, periodStart, periodEnd, couponCode, currency, amount, plans.map { it.toPlan() }
     )
 }

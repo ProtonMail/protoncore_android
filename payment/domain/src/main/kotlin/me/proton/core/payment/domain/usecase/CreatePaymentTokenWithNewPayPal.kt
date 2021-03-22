@@ -18,7 +18,7 @@
 
 package me.proton.core.payment.domain.usecase
 
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentType
@@ -35,15 +35,15 @@ class CreatePaymentTokenWithNewPayPal @Inject constructor(
     private val paymentsRepository: PaymentsRepository
 ) {
     suspend operator fun invoke(
-        sessionId: SessionId?,
+        userId: UserId?,
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.PayPal,
     ): PaymentToken.CreatePaymentTokenResult {
         require(amount >= 0)
 
-        return paymentsRepository.createPaymentTokenWithPayPal(
-            sessionId,
+        return paymentsRepository.createPaymentTokenNewPayPal(
+            userId,
             amount,
             currency,
             paymentType

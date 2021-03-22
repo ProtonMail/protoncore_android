@@ -21,6 +21,7 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
@@ -41,7 +42,7 @@ class GetPaymentTokenStatusTest {
     // endregion
 
     // region test data
-    private val testSessionId = SessionId("test-session-id")
+    private val testUserId = UserId("test-user-id")
     private val testPaymentToken = "test-payment-token"
     private val testDefaultPaymentTokenStatusResult = PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
     // endregion
@@ -51,13 +52,13 @@ class GetPaymentTokenStatusTest {
     fun beforeEveryTest() {
         useCase = GetPaymentTokenStatus(repository)
         coEvery {
-            repository.getPaymentTokenStatus(testSessionId, testPaymentToken)
+            repository.getPaymentTokenStatus(testUserId, testPaymentToken)
         } returns testDefaultPaymentTokenStatusResult
     }
 
     @Test
     fun `payment token status for upgrade returns success chargeable`() = runBlockingTest {
-        val result = useCase.invoke(testSessionId, testPaymentToken)
+        val result = useCase.invoke(testUserId, testPaymentToken)
         assertNotNull(result)
         assertEquals(PaymentTokenStatus.PENDING, result.status)
     }

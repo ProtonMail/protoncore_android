@@ -29,6 +29,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.presentation.R
@@ -47,7 +48,7 @@ import me.proton.core.util.kotlin.exhaustive
 @SuppressLint("SetJavaScriptEnabled")
 @AndroidEntryPoint
 class PaymentTokenApprovalActivity : PaymentsActivity<ActivityPaymentTokenApprovalBinding>() {
-    override fun layoutId(): Int = R.layout.activity_payment_token_approval
+
     private val viewModel by viewModels<PaymentTokenApprovalViewModel>()
 
     private val input: PaymentTokenApprovalInput by lazy {
@@ -63,7 +64,7 @@ class PaymentTokenApprovalActivity : PaymentsActivity<ActivityPaymentTokenApprov
                 override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                     return request?.let { webRequest ->
                         viewModel.handleRedirection(
-                            input.sessionId?.let { SessionId(it) },
+                            input.userId?.let { UserId(it) },
                             input.paymentToken,
                             webRequest.url,
                             input.returnHost
@@ -75,6 +76,8 @@ class PaymentTokenApprovalActivity : PaymentsActivity<ActivityPaymentTokenApprov
             }
         }
     }
+
+    override fun layoutId(): Int = R.layout.activity_payment_token_approval
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

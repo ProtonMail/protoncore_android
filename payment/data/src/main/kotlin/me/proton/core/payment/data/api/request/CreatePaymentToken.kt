@@ -20,24 +20,24 @@ package me.proton.core.payment.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.data.api.request.CardDetailsBody
 
 @Serializable
 internal data class CreatePaymentToken(
     @SerialName("Amount")
-    var amount: Long,
+    val amount: Long,
     @SerialName("Currency")
-    var currency: String,
+    val currency: String,
     @SerialName("Payment")
-    var paymentEntity: PaymentTypeEntity?,
+    val paymentEntity: PaymentTypeEntity?,
     @SerialName("PaymentMethodID")
-    var paymentMethodId: String?
+    val paymentMethodId: String?
 )
 
 @Serializable
 internal sealed class PaymentTypeEntity(@SerialName("Type") val type: String) {
     @Serializable
     object PayPal : PaymentTypeEntity("paypal")
+
     @Serializable
     data class Card(@SerialName("Details") val details: CardDetailsBody) : PaymentTypeEntity("card")
 }

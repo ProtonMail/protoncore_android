@@ -207,3 +207,9 @@ Payment Domain: **0.1** - _released on: Mar 12, 2021_
 Payment Data: **0.1** - _released on: Mar 12, 2021_
 
 Payment Presentation: **0.1** - _released on: Mar 12, 2021_
+
+### Payment
+
+Payment: **0.1** - _released on: Mar 12, 2021_
+
+Payment Domain: **0.1** - _released on: Mar 12, 2021_

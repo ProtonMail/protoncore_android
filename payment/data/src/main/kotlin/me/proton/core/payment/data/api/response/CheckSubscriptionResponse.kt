@@ -27,7 +27,7 @@ import me.proton.core.payment.domain.entity.SubscriptionStatus
 @Serializable
 internal data class CheckSubscriptionResponse(
     @SerialName("Amount")
-    var amount: Long,
+    val amount: Long,
     @SerialName("AmountDue")
     val amountDue: Long,
     @SerialName("Proration")

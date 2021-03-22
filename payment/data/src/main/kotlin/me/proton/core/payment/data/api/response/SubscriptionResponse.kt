@@ -24,5 +24,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class SubscriptionResponse(
     @SerialName("Subscription")
-    val subscription: SubscriptionEntity
+    val subscription: SubscriptionItemResponse
 )

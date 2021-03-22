@@ -48,11 +48,11 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
 
     private val viewModel by viewModels<BillingViewModel>()
 
-    override fun layoutId(): Int = R.layout.activity_billing
-
     private val input: BillingInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_BILLING_INPUT))
     }
+
+    override fun layoutId(): Int = R.layout.activity_billing
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +83,8 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
                 ArrayAdapter(
                     this,
                     android.R.layout.simple_list_item_1,
-                    countries.map { it.name })
+                    countries.map { it.name }
+                )
             )
         }
 
@@ -104,7 +105,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
                 is BillingViewModel.State.Success.SignUpTokenReady -> onBillingSuccess(it.paymentToken)
                 is BillingViewModel.State.Success.SubscriptionCreated -> onBillingSuccess()
                 is BillingViewModel.State.Incomplete.TokenApprovalNeeded ->
-                    onTokenApprovalNeeded(input.sessionId, it.paymentToken, it.amount)
+                    onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
                 is BillingViewModel.State.Error.Message -> showError(it.message)
                 is BillingViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
                     showError(getString(R.string.payments_error_signup_paymentmethod))

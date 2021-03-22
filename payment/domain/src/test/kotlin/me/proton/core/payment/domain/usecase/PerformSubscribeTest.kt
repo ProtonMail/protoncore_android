@@ -22,9 +22,9 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.Subscription
@@ -42,7 +42,7 @@ class PerformSubscribeTest {
     // endregion
 
     // region test data
-    private val testSessionId = SessionId("test-session-id")
+    private val testUserId = UserId("test-user-id")
     private val testPlanId = "test-plan-id"
     private val testPaymentToken = "test-payment-token"
     private val testSubscriptionId = "test-subscription-id"
@@ -66,7 +66,7 @@ class PerformSubscribeTest {
         useCase = PerformSubscribe(repository)
         coEvery {
             repository.createOrUpdateSubscription(
-                testSessionId,
+                testUserId,
                 any(),
                 any(),
                 any(),
@@ -81,7 +81,7 @@ class PerformSubscribeTest {
     fun `payment token not provided with amount bigger than zero is handled correctly`() = runBlockingTest {
         val throwable = assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
-                sessionId = testSessionId,
+                userId = testUserId,
                 amount = 1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
@@ -101,7 +101,7 @@ class PerformSubscribeTest {
     fun `negative amount is handled correctly`() = runBlockingTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
-                sessionId = testSessionId,
+                userId = testUserId,
                 amount = -1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
@@ -116,7 +116,7 @@ class PerformSubscribeTest {
     fun `no plans is handled correctly`() = runBlockingTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
-                sessionId = testSessionId,
+                userId = testUserId,
                 amount = 1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
@@ -130,7 +130,7 @@ class PerformSubscribeTest {
     @Test
     fun `happy path is handled correctly`() = runBlockingTest {
         val result = useCase.invoke(
-            sessionId = testSessionId,
+            userId = testUserId,
             amount = 1,
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
@@ -140,7 +140,7 @@ class PerformSubscribeTest {
         )
         coVerify(exactly = 1) {
             repository.createOrUpdateSubscription(
-                sessionId = testSessionId,
+                sessionUserId = testUserId,
                 amount = 1,
                 currency = Currency.CHF,
                 payment = PaymentBody.TokenPaymentBody(testPaymentToken),
@@ -155,7 +155,7 @@ class PerformSubscribeTest {
     @Test
     fun `happy path 0 amount is handled correctly`() = runBlockingTest {
         val result = useCase.invoke(
-            sessionId = testSessionId,
+            userId = testUserId,
             amount = 0,
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
@@ -165,7 +165,7 @@ class PerformSubscribeTest {
         )
         coVerify(exactly = 1) {
             repository.createOrUpdateSubscription(
-                sessionId = testSessionId,
+                sessionUserId = testUserId,
                 amount = 0,
                 currency = Currency.CHF,
                 payment = null,
@@ -181,7 +181,7 @@ class PerformSubscribeTest {
     fun `repository returns error handled correctly`() = runBlockingTest {
         coEvery {
             repository.createOrUpdateSubscription(
-                sessionId = testSessionId,
+                sessionUserId = testUserId,
                 any(),
                 any(),
                 any(),
@@ -193,7 +193,7 @@ class PerformSubscribeTest {
 
         val throwable = assertFailsWith(ApiException::class) {
             useCase.invoke(
-                sessionId = testSessionId,
+                userId = testUserId,
                 amount = 1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,

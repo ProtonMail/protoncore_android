@@ -20,6 +20,7 @@ package me.proton.core.payment.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 
 /**
@@ -28,20 +29,20 @@ import me.proton.core.network.domain.session.SessionId
  * user's sessionId.
  * It could also be used for SignUp and in this case sessionId should be null (there is currently no user).
  *
- * @param sessionId optional user sessionId (as String) depending if it is Upgrade of already logged in user or new
+ * @param userId optional user sessionId (as String) depending if it is Upgrade of already logged in user or new
  * user Sign Up.
  * @param plan one or more plans that the user wants to subscribe to.
  * @param codes use this field for eventual coupon or gift codes.
  */
 @Parcelize
 data class BillingInput(
-    val sessionId: String?,
+    val userId: String?,
     val existingPlanIds: List<String> = emptyList(),
     val plan: PlanDetails,
     val codes: List<String>? = null,
     val paymentMethodId: String?,
 ) : Parcelable {
-    val session = if (sessionId.isNullOrBlank()) null else SessionId(sessionId)
+    val session = if (userId.isNullOrBlank()) null else UserId(userId)
 }
 
 

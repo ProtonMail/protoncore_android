@@ -22,15 +22,13 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.di.ApiFactory
-import me.proton.core.network.domain.ApiBackend
-import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiManager
-import me.proton.core.network.domain.ApiManagerImpl
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.payment.data.api.PaymentsApi
@@ -47,7 +45,6 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.util.kotlin.any
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -66,6 +63,7 @@ class PaymentsRepositoryImplTest {
 
     // region test data
     private val testSessionId = "test-session-id"
+    private val testUserId = "test-user-id"
     private val testReadOnlyCard = Card.CardReadOnly(
         brand = "visa", last4 = "1234", expirationMonth = "01",
         expirationYear = "2021", name = "Test", country = "Test Country", zip = "123"
@@ -79,7 +77,7 @@ class PaymentsRepositoryImplTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
+        coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
         apiProvider = ApiProvider(apiFactory, sessionProvider)
         every {
             apiFactory.create(
@@ -113,7 +111,7 @@ class PaymentsRepositoryImplTest {
         )
         coEvery { apiManager.invoke<List<PaymentMethod>>(any(), any()) } returns ApiResult.Success(paymentMethods)
         // WHEN
-        val paymentMethodsResponse = repository.getAvailablePaymentMethods(SessionId(testSessionId))
+        val paymentMethodsResponse = repository.getAvailablePaymentMethods(sessionUserId = SessionUserId(testUserId))
         // THEN
         assertNotNull(paymentMethodsResponse)
         assertEquals(1, paymentMethodsResponse.size)
@@ -143,7 +141,7 @@ class PaymentsRepositoryImplTest {
         )
         coEvery { apiManager.invoke<List<PaymentMethod>>(any(), any()) } returns ApiResult.Success(paymentMethods)
         // WHEN
-        val paymentMethodsResponse = repository.getAvailablePaymentMethods(SessionId(testSessionId))
+        val paymentMethodsResponse = repository.getAvailablePaymentMethods(sessionUserId = SessionUserId(testUserId))
         // THEN
         assertNotNull(paymentMethodsResponse)
         assertEquals(2, paymentMethodsResponse.size)
@@ -165,7 +163,7 @@ class PaymentsRepositoryImplTest {
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            repository.getAvailablePaymentMethods(SessionId(testSessionId))
+            repository.getAvailablePaymentMethods(sessionUserId = SessionUserId(testUserId))
         }
         // THEN
         assertEquals("test error", throwable.message)
@@ -182,7 +180,9 @@ class PaymentsRepositoryImplTest {
             PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.PENDING)
         )
         // WHEN
-        val paymentStatusResponse = repository.getPaymentTokenStatus(SessionId(testSessionId), testPaymentToken)
+        val paymentStatusResponse = repository.getPaymentTokenStatus(
+            sessionUserId = SessionUserId(testUserId), testPaymentToken
+        )
         // THEN
         assertNotNull(paymentStatusResponse)
         assertEquals(PaymentTokenStatus.PENDING, paymentStatusResponse.status)
@@ -196,7 +196,9 @@ class PaymentsRepositoryImplTest {
             PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
         )
         // WHEN
-        val paymentStatusResponse = repository.getPaymentTokenStatus(SessionId(testSessionId), testPaymentToken)
+        val paymentStatusResponse = repository.getPaymentTokenStatus(
+            sessionUserId = SessionUserId(testUserId), testPaymentToken
+        )
         // THEN
         assertNotNull(paymentStatusResponse)
         assertEquals(PaymentTokenStatus.CHARGEABLE, paymentStatusResponse.status)
@@ -211,7 +213,9 @@ class PaymentsRepositoryImplTest {
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            repository.getPaymentTokenStatus(SessionId(testSessionId), testPaymentToken)
+            repository.getPaymentTokenStatus(
+                sessionUserId = SessionUserId(testUserId), testPaymentToken
+            )
         }
         // THEN
         assertEquals("test error", throwable.message)
@@ -229,8 +233,8 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
-        val createPaymentTokenResult = repository.createPaymentTokenWithCreditCard(
-            sessionId = SessionId(testSessionId),
+        val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
+            sessionUserId = SessionUserId(testUserId),
             amount = 1L,
             currency = Currency.EUR,
             paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
@@ -250,8 +254,8 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
-        val createPaymentTokenResult = repository.createPaymentTokenWithCreditCard(
-            sessionId = null,
+        val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
+            sessionUserId = null,
             amount = 1L,
             currency = Currency.EUR,
             paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
@@ -271,8 +275,8 @@ class PaymentsRepositoryImplTest {
             )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            repository.createPaymentTokenWithCreditCard(
-                sessionId = SessionId(testSessionId),
+            repository.createPaymentTokenNewCreditCard(
+                sessionUserId = SessionUserId(testUserId),
                 amount = 1L,
                 currency = Currency.EUR,
                 paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
@@ -294,8 +298,8 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<PaymentToken.CreatePaymentTokenResult>(any(), any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
-        val createPaymentTokenResult = repository.createPaymentTokenWithCreditCard(
-            sessionId = SessionId(testSessionId),
+        val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
+            sessionUserId = SessionUserId(testUserId),
             amount = 1L,
             currency = Currency.EUR,
             paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
@@ -323,10 +327,11 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<SubscriptionStatus>(any(), any()) } returns ApiResult.Success(subscriptionStatus)
         // WHEN
         val validationResult = repository.validateSubscription(
-            sessionId = SessionId(testSessionId),
+            sessionUserId = SessionUserId(testUserId),
             planIds = listOf("test-plan-id"),
             currency = Currency.CHF,
-            cycle = SubscriptionCycle.YEARLY)
+            cycle = SubscriptionCycle.YEARLY
+        )
         // THEN
         assertNotNull(validationResult)
     }
@@ -340,10 +345,11 @@ class PaymentsRepositoryImplTest {
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
             repository.validateSubscription(
-                sessionId = SessionId(testSessionId),
+                sessionUserId = SessionUserId(testUserId),
                 planIds = listOf("test-plan-id"),
                 currency = Currency.CHF,
-                cycle = SubscriptionCycle.YEARLY)
+                cycle = SubscriptionCycle.YEARLY
+            )
         }
         // THEN
         assertEquals("test error", throwable.message)
@@ -369,7 +375,7 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<Subscription>(any(), any()) } returns ApiResult.Success(subscription)
         // WHEN
         val createSubscriptionResult = repository.createOrUpdateSubscription(
-            sessionId = SessionId(testSessionId),
+            sessionUserId = SessionUserId(testUserId),
             amount = 1,
             currency = Currency.CHF,
             codes = null,
@@ -390,7 +396,7 @@ class PaymentsRepositoryImplTest {
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
             repository.createOrUpdateSubscription(
-                sessionId = SessionId(testSessionId),
+                sessionUserId = SessionUserId(testUserId),
                 amount = 1,
                 currency = Currency.CHF,
                 codes = null,

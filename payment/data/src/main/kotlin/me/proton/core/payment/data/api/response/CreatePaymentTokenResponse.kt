@@ -26,18 +26,19 @@ import me.proton.core.payment.domain.entity.PaymentTokenStatus
 @Serializable
 internal data class CreatePaymentTokenResponse(
     @SerialName("ApprovalURL")
-    var approvalUrl: String? = null,
+    val approvalUrl: String? = null,
     @SerialName("Token")
-    var token: String,
+    val token: String,
     @SerialName("Status")
-    var status: Int,
+    val status: Int,
     @SerialName("ReturnHost")
-    var returnHost: String? = null,
+    val returnHost: String? = null,
 ) {
     fun toCreatePaymentTokenResult(): PaymentToken.CreatePaymentTokenResult =
         PaymentToken.CreatePaymentTokenResult(
             status = PaymentTokenStatus.map[status] ?: PaymentTokenStatus.NOT_SUPPORTED,
             approvalUrl = approvalUrl,
             token = token,
-            returnHost = returnHost)
+            returnHost = returnHost
+        )
 }

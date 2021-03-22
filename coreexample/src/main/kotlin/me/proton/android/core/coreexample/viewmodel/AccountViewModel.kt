@@ -110,8 +110,7 @@ class AccountViewModel @ViewModelInject constructor(
     fun onPaySignUpClicked() {
         viewModelScope.launch {
             paymentsOrchestrator.startBillingWorkFlow(
-                selectedPlan =
-                PlanDetails(
+                selectedPlan = PlanDetails(
                     "ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw==",
                     "Proton Plus",
                     SubscriptionCycle.YEARLY
@@ -125,7 +124,7 @@ class AccountViewModel @ViewModelInject constructor(
             getPrimaryUserId().first()?.let {
                 val account = accountManager.getAccount(it).first() ?: return@launch
                 with(paymentsOrchestrator) {
-                    onPaymentResult { result ->
+                    onPaymentResult {
                         // do something with the payment result
                     }
 

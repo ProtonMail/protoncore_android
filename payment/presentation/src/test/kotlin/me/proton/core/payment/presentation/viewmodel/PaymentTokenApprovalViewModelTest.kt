@@ -24,11 +24,11 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
@@ -49,7 +49,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
     // endregion
 
     // region test data
-    private val testSessionId = SessionId("test-session-id")
+    private val testUserId = UserId("test-user-id")
     private val testToken = "test-token"
     private val secureEndpoint = SecureEndpoint("test-secure-endpoint")
     // endregion
@@ -94,7 +94,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
         viewModel.approvalResult.observeDataForever(observer)
         // WHEN
-        val result = viewModel.handleRedirection(testSessionId, testToken, testUri, testReturnHost)
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
         verify(exactly = 0) { observer(capture(arguments)) }
         assertFalse(result)
@@ -108,7 +108,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         every { testUri.getQueryParameter("cancel") } returns "0"
         coEvery {
             getPaymentTokenStatus.invoke(
-                testSessionId,
+                testUserId,
                 testToken
             )
         } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
@@ -117,7 +117,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
         viewModel.approvalResult.observeDataForever(observer)
         // WHEN
-        val result = viewModel.handleRedirection(testSessionId, testToken, testUri, testReturnHost)
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
         verify(exactly = 2) { observer(capture(arguments)) }
         assertFalse(result)
@@ -135,7 +135,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         every { testUri.getQueryParameter("cancel") } returns "0"
         coEvery {
             getPaymentTokenStatus.invoke(
-                testSessionId,
+                testUserId,
                 testToken
             )
         } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.FAILED)
@@ -144,7 +144,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
         viewModel.approvalResult.observeDataForever(observer)
         // WHEN
-        val result = viewModel.handleRedirection(testSessionId, testToken, testUri, testReturnHost)
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
         verify(exactly = 2) { observer(capture(arguments)) }
         assertFalse(result)
@@ -160,7 +160,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val testUri = mockk<Uri>(relaxed = true)
         every { testUri.host } returns "test-secure-endpoint"
         every { testUri.getQueryParameter("cancel") } returns "0"
-        coEvery { getPaymentTokenStatus.invoke(testSessionId, testToken) } throws ApiException(
+        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
@@ -175,7 +175,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
         viewModel.approvalResult.observeDataForever(observer)
         // WHEN
-        val result = viewModel.handleRedirection(testSessionId, testToken, testUri, testReturnHost)
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
         verify(exactly = 2) { observer(capture(arguments)) }
         assertFalse(result)
@@ -191,13 +191,13 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val testUri = mockk<Uri>(relaxed = true)
         every { testUri.host } returns "test-host"
         every { testUri.getQueryParameter("cancel") } returns "0"
-        coEvery { getPaymentTokenStatus.invoke(testSessionId, testToken) } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
         val testReturnHost = "test-host"
         val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
         val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
         viewModel.approvalResult.observeDataForever(observer)
         // WHEN
-        val result = viewModel.handleRedirection(testSessionId, testToken, testUri, testReturnHost)
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
         verify(exactly = 2) { observer(capture(arguments)) }
         assertFalse(result)
@@ -213,13 +213,13 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val testUri = mockk<Uri>(relaxed = true)
         every { testUri.host } returns "test-host"
         every { testUri.getQueryParameter("cancel") } returns "1"
-        coEvery { getPaymentTokenStatus.invoke(testSessionId, testToken) } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
         val testReturnHost = "test-host"
         val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
         val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
         viewModel.approvalResult.observeDataForever(observer)
         // WHEN
-        val result = viewModel.handleRedirection(testSessionId, testToken, testUri, testReturnHost)
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
         verify(exactly = 0) { observer(capture(arguments)) }
         assertTrue(result)
@@ -231,13 +231,13 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val testUri = mockk<Uri>(relaxed = true)
         every { testUri.host } returns "test-secure-endpoint"
         every { testUri.getQueryParameter("cancel") } returns "1"
-        coEvery { getPaymentTokenStatus.invoke(testSessionId, testToken) } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
+        coEvery { getPaymentTokenStatus.invoke(testUserId, testToken) } returns PaymentToken.PaymentTokenStatusResult(PaymentTokenStatus.CHARGEABLE)
         val testReturnHost = "test-return-host"
         val observer = mockk<(PaymentTokenApprovalViewModel.State) -> Unit>(relaxed = true)
         val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
         viewModel.approvalResult.observeDataForever(observer)
         // WHEN
-        val result = viewModel.handleRedirection(testSessionId, testToken, testUri, testReturnHost)
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
         verify(exactly = 0) { observer(capture(arguments)) }
         assertTrue(result)
@@ -254,7 +254,7 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         val arguments = mutableListOf<PaymentTokenApprovalViewModel.State>()
         viewModel.approvalResult.observeDataForever(observer)
         // WHEN
-        val result = viewModel.handleRedirection(testSessionId, testToken, testUri, testReturnHost)
+        val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
         // THEN
         verify(exactly = 0) { observer(capture(arguments)) }
         assertFalse(result)

@@ -22,7 +22,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
@@ -41,7 +41,7 @@ class ValidateSubscriptionPlanTest {
     // endregion
 
     // region test data
-    private val testSessionId = SessionId("test-session-id")
+    private val testUserId = UserId("test-user-id")
     private val testAmount = 5L
     private val testAmountDue = 3L
     private val testCredit = 2L
@@ -71,7 +71,7 @@ class ValidateSubscriptionPlanTest {
     @Test
     fun `upgrade plan success test`() = runBlockingTest {
         val result = useCase.invoke(
-            sessionId = testSessionId,
+            userId = testUserId,
             codes = null,
             planIds = listOf(testPlanId),
             currency = Currency.CHF,
@@ -79,7 +79,7 @@ class ValidateSubscriptionPlanTest {
         )
         coVerify(exactly = 1) {
             repository.validateSubscription(
-                testSessionId,
+                testUserId,
                 null,
                 listOf(testPlanId),
                 Currency.CHF,
@@ -92,9 +92,9 @@ class ValidateSubscriptionPlanTest {
 
     @Test
     fun `sign up payment success test`() = runBlockingTest {
-        val session = null
+        val user = null
         val result = useCase.invoke(
-            sessionId = session,
+            userId = user,
             codes = null,
             planIds = listOf(testPlanId),
             currency = Currency.CHF,
@@ -102,7 +102,7 @@ class ValidateSubscriptionPlanTest {
         )
         coVerify(exactly = 1) {
             repository.validateSubscription(
-                session,
+                user,
                 null,
                 listOf(testPlanId),
                 Currency.CHF,
@@ -115,10 +115,10 @@ class ValidateSubscriptionPlanTest {
 
     @Test
     fun `sign up payment no plans error handled correctly`() = runBlockingTest {
-        val session = null
+        val user = null
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
-                sessionId = session,
+                userId = user,
                 codes = null,
                 planIds = listOf(),
                 currency = Currency.CHF,

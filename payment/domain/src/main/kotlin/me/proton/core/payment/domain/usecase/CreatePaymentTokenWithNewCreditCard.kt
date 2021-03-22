@@ -18,7 +18,7 @@
 
 package me.proton.core.payment.domain.usecase
 
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentType
@@ -35,15 +35,15 @@ class CreatePaymentTokenWithNewCreditCard @Inject constructor(
     private val paymentsRepository: PaymentsRepository
 ) {
     suspend operator fun invoke(
-        sessionId: SessionId?,
+        userId: UserId?,
         amount: Long,
         currency: Currency,
         paymentType: PaymentType.CreditCard,
     ): PaymentToken.CreatePaymentTokenResult {
         require(amount >= 0)
 
-        return paymentsRepository.createPaymentTokenWithCreditCard(
-            sessionId,
+        return paymentsRepository.createPaymentTokenNewCreditCard(
+            userId,
             amount,
             currency,
             paymentType

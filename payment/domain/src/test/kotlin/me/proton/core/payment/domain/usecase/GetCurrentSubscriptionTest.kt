@@ -21,6 +21,7 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
@@ -38,7 +39,7 @@ class GetCurrentSubscriptionTest {
     // endregion
 
     // region test data
-    private val testSessionId = SessionId("test-session-id")
+    private val testUserId = UserId("test-user-id")
     private val testSubscription = Subscription(
         id = "test-subscription-id",
         invoiceId = "test-invoice-id",
@@ -62,9 +63,9 @@ class GetCurrentSubscriptionTest {
     @Test
     fun `get subscription returns success`() = runBlockingTest {
         // GIVEN
-        coEvery { repository.getSubscription(testSessionId) } returns testSubscription
+        coEvery { repository.getSubscription(testUserId) } returns testSubscription
         // WHEN
-        val result = useCase.invoke(testSessionId)
+        val result = useCase.invoke(testUserId)
         // THEN
         assertEquals(testSubscription, result)
         assertEquals(5, result.amount)
@@ -73,7 +74,7 @@ class GetCurrentSubscriptionTest {
     @Test
     fun `get subscription returns error`() = runBlockingTest {
         // GIVEN
-        coEvery { repository.getSubscription(testSessionId) } throws ApiException(
+        coEvery { repository.getSubscription(testUserId) } throws ApiException(
             ApiResult.Error.Connection(
                 false,
                 RuntimeException("Test error")
@@ -81,7 +82,7 @@ class GetCurrentSubscriptionTest {
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            useCase.invoke(testSessionId)
+            useCase.invoke(testUserId)
         }
         // THEN
         assertNotNull(throwable)

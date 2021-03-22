@@ -25,9 +25,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
@@ -37,7 +37,6 @@ import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Plan
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.test.android.ArchTest
@@ -58,7 +57,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     // endregion
 
     // region test data
-    private val testSessionId = SessionId("test-session-id")
+    private val testUserId = UserId("test-user-id")
     private val testCurrency = Currency.CHF
     private val testSubscriptionCycle = SubscriptionCycle.YEARLY
     private val testReadOnlyCard = Card.CardReadOnly(
@@ -89,7 +88,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         every { context.getString(any()) } returns "test-string"
-        coEvery { getCurrentSubscription.invoke(testSessionId) } returns testSubscription
+        coEvery { getCurrentSubscription.invoke(testUserId) } returns testSubscription
         viewModel =
             PaymentOptionsViewModel(getAvailablePaymentMethods, getCurrentSubscription, context, billingViewModel)
     }
@@ -97,7 +96,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `available payment methods success handled correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { getAvailablePaymentMethods.invoke(testSessionId) } returns listOf(
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns listOf(
             PaymentMethod(
                 "1",
                 PaymentMethodType.CARD,
@@ -115,7 +114,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         val observer = mockk<(PaymentOptionsViewModel.State) -> Unit>(relaxed = true)
         viewModel.availablePaymentMethodsState.observeDataForever(observer)
         // WHEN
-        viewModel.getAvailablePaymentMethods(testSessionId)
+        viewModel.getAvailablePaymentMethods(testUserId)
         // THEN
         val arguments = mutableListOf<PaymentOptionsViewModel.State>()
         verify(exactly = 2) { observer(capture(arguments)) }
@@ -128,11 +127,11 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `no available payment methods success handled correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { getAvailablePaymentMethods.invoke(testSessionId) } returns emptyList()
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
         val observer = mockk<(PaymentOptionsViewModel.State) -> Unit>(relaxed = true)
         viewModel.availablePaymentMethodsState.observeDataForever(observer)
         // WHEN
-        viewModel.getAvailablePaymentMethods(testSessionId)
+        viewModel.getAvailablePaymentMethods(testUserId)
         // THEN
         val arguments = mutableListOf<PaymentOptionsViewModel.State>()
         verify(exactly = 2) { observer(capture(arguments)) }
@@ -146,7 +145,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `available payment methods error handled correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { getAvailablePaymentMethods.invoke(testSessionId) } throws ApiException(
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
@@ -159,7 +158,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         val observer = mockk<(PaymentOptionsViewModel.State) -> Unit>(relaxed = true)
         viewModel.availablePaymentMethodsState.observeDataForever(observer)
         // WHEN
-        viewModel.getAvailablePaymentMethods(testSessionId)
+        viewModel.getAvailablePaymentMethods(testUserId)
         // THEN
         val arguments = mutableListOf<PaymentOptionsViewModel.State>()
         verify(exactly = 2) { observer(capture(arguments)) }
@@ -177,11 +176,11 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         val viewModelSpy = spyk(viewModel, recordPrivateCalls = true)
         viewModelSpy.currentPlans = mutableListOf("current-plan-1")
         // WHEN
-        viewModelSpy.subscribe(testSessionId, testPlanId, null, testCurrency, testSubscriptionCycle, paymentType)
+        viewModelSpy.subscribe(testUserId, testPlanId, null, testCurrency, testSubscriptionCycle, paymentType)
         // THEN
         verify(exactly = 1) {
             billingViewModel.subscribe(
-                testSessionId,
+                testUserId,
                 listOf("current-plan-1", testPlanId),
                 any(),
                 testCurrency,
@@ -197,11 +196,11 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         val testPlanId = "test-plan-id"
         val paymentType = PaymentType.PaymentMethod("test-payment-method-id")
         // WHEN
-        viewModel.subscribe(testSessionId, testPlanId, null, testCurrency, testSubscriptionCycle, paymentType)
+        viewModel.subscribe(testUserId, testPlanId, null, testCurrency, testSubscriptionCycle, paymentType)
         // THEN
         verify(exactly = 1) {
             billingViewModel.subscribe(
-                testSessionId,
+                testUserId,
                 listOf("test-plan-id"),
                 null,
                 testCurrency,
@@ -216,11 +215,11 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val testPlanId = "test-plan-id"
         // WHEN
-        viewModel.validatePlan(testSessionId, testPlanId, null, testCurrency, testSubscriptionCycle)
+        viewModel.validatePlan(testUserId, testPlanId, null, testCurrency, testSubscriptionCycle)
         // THEN
         verify(exactly = 1) {
             billingViewModel.validatePlan(
-                testSessionId,
+                testUserId,
                 listOf("test-plan-id"),
                 null,
                 testCurrency,
@@ -237,7 +236,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         val testToken = "test-token"
         // WHEN
         viewModel.onThreeDSTokenApproved(
-            testSessionId,
+            testUserId,
             testPlanId,
             null,
             testAmount,
@@ -248,7 +247,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         // THEN
         verify(exactly = 1) {
             billingViewModel.onThreeDSTokenApproved(
-                testSessionId,
+                testUserId,
                 listOf("test-plan-id"),
                 null,
                 testAmount,

@@ -18,7 +18,7 @@
 
 package me.proton.core.payment.domain.usecase
 
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
@@ -34,13 +34,13 @@ class ValidateSubscriptionPlan @Inject constructor(
     private val paymentsRepository: PaymentsRepository
 ) {
     suspend operator fun invoke(
-        sessionId: SessionId?,
+        userId: UserId?,
         codes: List<String>? = null,
         planIds: List<String>,
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus {
         require(planIds.isNotEmpty())
-        return paymentsRepository.validateSubscription(sessionId, codes, planIds, currency, cycle)
+        return paymentsRepository.validateSubscription(userId, codes, planIds, currency, cycle)
     }
 }
