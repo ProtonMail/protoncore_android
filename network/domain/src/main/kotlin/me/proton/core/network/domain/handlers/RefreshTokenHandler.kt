@@ -17,7 +17,8 @@
  */
 package me.proton.core.network.domain.handlers
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
@@ -26,6 +27,7 @@ import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
+import org.jetbrains.annotations.TestOnly
 import java.util.concurrent.TimeUnit
 
 /**
@@ -37,18 +39,13 @@ import java.util.concurrent.TimeUnit
  * @param sessionProvider a [SessionProvider] to get the tokens from.
  * @param sessionListener a [SessionListener] to inform session changed.
  * @param monoClockMs Monotonic clock with millisecond resolution.
- * @param networkMainScope [CoroutineScope] with default single thread dispatcher.
  */
 class RefreshTokenHandler<Api>(
     private val sessionId: SessionId?,
     private val sessionProvider: SessionProvider,
     private val sessionListener: SessionListener,
-    private val monoClockMs: () -> Long,
-    networkMainScope: CoroutineScope
-) : OneOffJobHandler<ApiBackend<Api>, ApiResult<Session>>(networkMainScope),
-    ApiErrorHandler<Api> {
-
-    private var lastRefreshTimeMs: Long = Long.MIN_VALUE
+    private val monoClockMs: () -> Long
+) : ApiErrorHandler<Api> {
 
     override suspend fun <T> invoke(
         backend: ApiBackend<Api>,
@@ -59,35 +56,50 @@ class RefreshTokenHandler<Api>(
         if (error !is ApiResult.Error.Http || error.httpCode != HTTP_UNAUTHORIZED) return error
 
         // Do we have a refreshToken ?
-        val session: Session? = sessionId?.let { sessionProvider.getSession(it) }
+        val session = sessionId?.let { sessionProvider.getSession(it) }
         if (session == null || session.refreshToken.isBlank()) return error
 
-        // Don't attempt to refresh if successful refresh completed recently.
-        val refreshedRecently = call.timestampMs <= lastRefreshTimeMs + REFRESH_COOL_DOWN_MS
-        if (refreshedRecently || startOneOffJob(backend) { refreshTokens(session, backend) } is ApiResult.Success)
-            return backend(call)
-
-        return error
+        // Only 1 coroutine at a time per session.
+        val shouldRetry = sessionMutex(sessionId).withLock {
+            // Don't attempt to refresh if successful refresh completed recently.
+            val lastRefreshTimeMs = sessionLastRefreshMap[sessionId] ?: Long.MIN_VALUE
+            val refreshedRecently = monoClockMs() <= lastRefreshTimeMs + refreshDebounceMs
+            refreshedRecently || refreshToken(session, backend)
+        }
+        return if (shouldRetry) backend(call) else error
     }
 
-    // If refresh is active for another call just wait for it's result instead of starting another.
-    private suspend fun refreshTokens(session: Session, backend: ApiBackend<Api>): ApiResult<Session> {
+    // Must be called within sessionMutex.
+    private suspend fun refreshToken(session: Session, backend: ApiBackend<Api>): Boolean {
         val apiResult = backend.refreshSession(session)
-        when {
+        return when {
             apiResult is ApiResult.Success -> {
+                sessionLastRefreshMap[session.sessionId] = monoClockMs()
                 sessionListener.onSessionTokenRefreshed(apiResult.value)
-                lastRefreshTimeMs = monoClockMs()
+                true
             }
             apiResult is ApiResult.Error.Http && apiResult.httpCode in FORCE_LOGOUT_HTTP_CODES -> {
                 sessionListener.onSessionForceLogout(session)
+                false
             }
+            else -> false
         }
-        return apiResult
     }
 
     companion object {
         const val HTTP_UNAUTHORIZED = 401
         val FORCE_LOGOUT_HTTP_CODES = listOf(400, 422)
-        val REFRESH_COOL_DOWN_MS = TimeUnit.MINUTES.toMillis(1)
+
+        private val refreshDebounceMs = TimeUnit.MINUTES.toMillis(1)
+        private val staticMutex: Mutex = Mutex()
+        private val sessionMutexMap: MutableMap<SessionId?, Mutex> = HashMap()
+        private var sessionLastRefreshMap: MutableMap<SessionId, Long> = HashMap()
+
+        suspend fun sessionMutex(sessionId: SessionId?) =
+            staticMutex.withLock { sessionMutexMap.getOrPut(sessionId) { Mutex() } }
+
+        @TestOnly
+        suspend fun reset(sessionId: SessionId) =
+            sessionMutex(sessionId).withLock { sessionLastRefreshMap[sessionId] = Long.MIN_VALUE }
     }
 }

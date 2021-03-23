@@ -26,6 +26,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.data.di.ApiFactory
@@ -46,6 +47,7 @@ import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
+import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -134,6 +136,9 @@ internal class ApiManagerTests {
 
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Success(TestResult(5, "foo"))
         every { altBackend1.baseUrl } returns proxy1url
+
+        // Assume no token has been refreshed between each tests.
+        runBlocking { RefreshTokenHandler.reset(session.sessionId) }
     }
 
     @Test
