@@ -89,9 +89,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                 adapter = paymentOptionsAdapter
             }
             addCreditCardButton.onClick {
-                with(input) {
-                    startBilling(userId, viewModel.currentPlans, plan.copy(amount = amountDue), codes)
-                }
+                startBilling(input.userId, viewModel.currentPlans, input.plan.copy(amount = amountDue), input.codes)
             }
             selectedPlanDetailsLayout.plan = input.plan
             payButton.onClick {
@@ -134,7 +132,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
         viewModel.subscriptionResult.observeData {
             when (it) {
                 is BillingViewModel.State.Processing -> showLoading(true)
-                is BillingViewModel.State.Success.SubscriptionCreated -> onPaymentSuccess(
+                is BillingViewModel.State.Success.SubscriptionCreated -> onPaymentResult(
                     BillingResult(
                         true,
                         it.paymentToken,
@@ -157,23 +155,17 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
     }
 
     override fun onThreeDSApproved(amount: Long, token: String) {
-        with(input) {
-            viewModel.onThreeDSTokenApproved(
-                user, plan.id, codes, amount, plan.currency, plan.subscriptionCycle, token
-            )
-        }
+        viewModel.onThreeDSTokenApproved(
+            user, input.plan.id, input.codes, amount, input.plan.currency, input.plan.subscriptionCycle, token
+        )
     }
 
     private fun onSuccess(availablePaymentMethods: List<PaymentOptionUIModel>) {
         if (availablePaymentMethods.isEmpty()) {
-            with(input) {
-                startBilling(userId, viewModel.currentPlans, plan.copy(amount = amountDue), codes)
-            }
+            startBilling(input.userId, viewModel.currentPlans, input.plan.copy(amount = amountDue), input.codes)
             return
         }
-        with(input) {
-            viewModel.validatePlan(user, plan.id, codes, plan.currency, plan.subscriptionCycle)
-        }
+        viewModel.validatePlan(user, input.plan.id, input.codes, input.plan.currency, input.plan.subscriptionCycle)
         binding.progressLayout.visibility = View.GONE
         paymentOptionsAdapter.submitList(availablePaymentMethods)
     }

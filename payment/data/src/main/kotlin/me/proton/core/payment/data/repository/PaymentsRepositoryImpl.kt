@@ -20,7 +20,6 @@ package me.proton.core.payment.data.repository
 
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.data.api.PaymentsApi
 import me.proton.core.payment.data.api.request.CardDetailsBody
 import me.proton.core.payment.data.api.request.CheckSubscription
@@ -29,7 +28,6 @@ import me.proton.core.payment.data.api.request.CreateSubscription
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
 import me.proton.core.payment.data.api.request.TokenDetails
 import me.proton.core.payment.data.api.request.TokenTypePaymentBody
-import me.proton.core.payment.data.exception.InsufficientPaymentDetails
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
@@ -73,9 +71,7 @@ class PaymentsRepositoryImpl(
     ): PaymentToken.CreatePaymentTokenResult =
         provider.get<PaymentsApi>(sessionUserId).invoke {
             val paymentCard = paymentType.card
-            if (paymentCard !is Card.CardWithPaymentDetails) {
-                throw InsufficientPaymentDetails
-            }
+            require(paymentCard is Card.CardWithPaymentDetails) { "Insufficient Payment Details provided." }
             val payment = PaymentTypeEntity.Card(
                 CardDetailsBody(
                     number = paymentCard.number,

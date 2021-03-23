@@ -45,4 +45,5 @@
     <dimen name="default_no_toolbar_top_margin">160dp</dimen>
     <dimen name="default_parent_default_padding">@dimen/default_gap</dimen>
     <dimen name="default_content_separator_top_margin">@dimen/double_top_margin</dimen>
+    <dimen name="default_extended_margin">32dp</dimen>
 </resources>

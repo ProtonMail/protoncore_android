@@ -22,9 +22,9 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import me.proton.core.countries.domain.exception.NoCountriesException
-import me.proton.core.countries.domain.usecase.MostUsedCountryCode
-import me.proton.core.countries.presentation.entity.CountryUIModel
+import me.proton.core.country.domain.exception.NoCountriesException
+import me.proton.core.country.domain.usecase.MostUsedCountryCode
+import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException

@@ -26,7 +26,7 @@
             <!-- Bottom indicator color for the UNSELECTED tab state -->
             <item android:top="-10dp" android:left="-1000dp" android:right="-1000dp">
                 <shape android:shape="rectangle">
-                    <stroke android:width="1px" android:color="@color/humanVerificationTabItemText" />
+                    <stroke android:width="1px" android:color="@color/text_weak" />
                 </shape>
             </item>
         </layer-list>

@@ -19,7 +19,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <me.proton.core.presentation.ui.view.ZeroInsetLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:windowBackground">
@@ -28,14 +28,16 @@
             android:id="@+id/closeButton"
             style="@style/ProtonButton.Navigation"
             android:layout_marginStart="@dimen/button_nav_margin_start"
-            android:layout_marginTop="@dimen/button_nav_margin_top"
-            app:icon="@drawable/ic_close" />
+            app:icon="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
             android:id="@+id/scrollContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@id/payButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -44,11 +46,8 @@
                 style="@style/BillingContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/payment_content_top_padding"
                 android:paddingBottom="@dimen/default_margin">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_no_toolbar_top_margin" />
 
                 <me.proton.core.payment.presentation.view.PlanShortDetailsView
                     android:id="@+id/selectedPlanDetailsLayout"
@@ -57,8 +56,7 @@
                     android:background="@drawable/background_plan"
                     android:padding="@dimen/default_margin"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/gap" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
                     android:id="@+id/titleText"
@@ -140,15 +138,19 @@
                         android:layout_marginStart="@dimen/default_margin"
                         android:layout_weight="1" />
                 </LinearLayout>
-
-                <me.proton.core.presentation.ui.view.ProtonProgressButton
-                    android:id="@+id/payButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_margin"
-                    android:text="@string/payments_pay" />
             </LinearLayout>
-
         </ScrollView>
-    </me.proton.core.presentation.ui.view.ZeroInsetLayout>
+
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
+            android:id="@+id/payButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_gap"
+            android:layout_marginEnd="@dimen/default_gap"
+            android:layout_marginBottom="@dimen/default_extended_margin"
+            android:text="@string/payments_pay"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -192,38 +192,22 @@ Human Verification Presentation: **0.2.6** - _released on: Feb 01, 2021_
 
 Human Verification Data: **0.2.6** - _released on: Mar 14, 2020_
 
-### Payment
-
-Payment: **0** - _released on: Mar 12, 2021_
-
-Payment Domain: **0** - _released on: Mar 12, 2021_
-
-### Payment
-
-Payment: **0.1** - _released on: Mar 12, 2021_
-
-Payment Domain: **0.1** - _released on: Mar 12, 2021_
-
-Payment Data: **0.1** - _released on: Mar 12, 2021_
-
-Payment Presentation: **0.1** - _released on: Mar 12, 2021_
-
 ### Countries
 
-Countries: **0** - _released on: Mar 20, 2021_
+Country: **0** - _released on: Mar 20, 2021_
 
-Countries Domain: **0** - _released on: Mar 20, 2021_
+Country Domain: **0** - _released on: Mar 20, 2021_
 
-Countries Data: **0** - _released on: Mar 20, 2021_
+Country Data: **0** - _released on: Mar 20, 2021_
 
-Countries Presentation: **0** - _released on: Mar 12, 2021_
+Country Presentation: **0** - _released on: Mar 12, 2021_
 
 ### Payment
 
 Payment: **0** - _released on: Mar 12, 2021_
-
-Payment Domain: **0** - _released on: Mar 12, 2021_
 
 Payment Data: **0** - _released on: Mar 12, 2021_
 
 Payment Domain: **0** - _released on: Mar 12, 2021_
+
+Payment Presentation: **0** - _released on: Mar 12, 2021_

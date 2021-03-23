@@ -24,8 +24,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.countries.domain.usecase.GetCountryCode
-import me.proton.core.countries.domain.usecase.LoadCountries
+import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
@@ -56,7 +55,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
     private val createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
     private val createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
     private val performSubscribe: PerformSubscribe,
-    private val getCountryCode: GetCountryCode
+    private val getCountry: GetCountry
 ) : ProtonViewModel(), ViewStateStoreScope {
 
     val subscriptionResult = ViewStateStore<State>().lock
@@ -141,10 +140,13 @@ class BillingViewModel @ViewModelInject @Inject constructor(
                     )
                 }
                 is PaymentType.CreditCard -> {
-                    val countryCode = getCountryCode(paymentType.card.country)
+                    val countryName = paymentType.card.country
+                    val country = getCountry(countryName)
                     val paymentTypeRefined =
                         paymentType.copy(
-                            card = (paymentType.card as Card.CardWithPaymentDetails).copy(country = countryCode)
+                            card = (paymentType.card as Card.CardWithPaymentDetails).copy(
+                                country = country?.code ?: countryName
+                            )
                         )
                     createPaymentTokenWithNewCreditCard(userId, subscription.amountDue, currency, paymentTypeRefined)
                 }

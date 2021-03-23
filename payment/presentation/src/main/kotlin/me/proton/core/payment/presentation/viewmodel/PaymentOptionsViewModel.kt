@@ -90,7 +90,6 @@ internal class PaymentOptionsViewModel @ViewModelInject constructor(
         } catch (apiException: ApiException) {
             if (NO_ACTIVE_SUBSCRIPTION != (apiException.error as ApiResult.Error.Http).proton?.code) {
                 emit(State.Error.SubscriptionInRecoverableError(apiException.message))
-                throw apiException
             }
         }
 

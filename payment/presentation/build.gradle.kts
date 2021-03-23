@@ -44,7 +44,7 @@ dependencies {
         
         // Features
         project(Module.paymentDomain),
-        project(Module.countries),
+        project(Module.country),
 
         // Android
         `android-ktx`,

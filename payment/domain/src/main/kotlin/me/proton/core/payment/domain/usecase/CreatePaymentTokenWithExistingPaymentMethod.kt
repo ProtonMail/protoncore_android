@@ -40,10 +40,10 @@ class CreatePaymentTokenWithExistingPaymentMethod @Inject constructor(
     ): PaymentToken.CreatePaymentTokenResult {
         require(amount >= 0)
         return paymentsRepository.createPaymentTokenExistingPaymentMethod(
-            userId,
-            amount,
-            currency,
-            paymentMethodId
+            sessionUserId = userId,
+            amount = amount,
+            currency = currency,
+            paymentMethodId = paymentMethodId
         )
     }
 }

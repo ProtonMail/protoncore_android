@@ -24,10 +24,10 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.countries.presentation.entity.CountryUIModel
-import me.proton.core.countries.presentation.ui.CountryPickerFragment.Companion.BUNDLE_KEY_COUNTRY
-import me.proton.core.countries.presentation.ui.CountryPickerFragment.Companion.KEY_COUNTRY_SELECTED
-import me.proton.core.countries.presentation.ui.showCountryPicker
+import me.proton.core.country.presentation.entity.CountryUIModel
+import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.BUNDLE_KEY_COUNTRY
+import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.KEY_COUNTRY_SELECTED
+import me.proton.core.country.presentation.ui.showCountryPicker
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationSmsBinding

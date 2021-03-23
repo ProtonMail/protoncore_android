@@ -24,9 +24,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.countries.presentation.entity.CountryUIModel
-import me.proton.core.countries.presentation.ui.CountryPickerFragment
-import me.proton.core.countries.presentation.ui.showCountryPicker
+import me.proton.core.country.presentation.entity.CountryUIModel
+import me.proton.core.country.presentation.ui.CountryPickerFragment
+import me.proton.core.country.presentation.ui.showCountryPicker
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.presentation.R
@@ -37,7 +37,6 @@ import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
-import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.util.kotlin.exhaustive
 
@@ -62,8 +61,13 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
 
         binding.apply {
             findOutPlan()
-            closeButton.onClick {
-                onBackPressed()
+            closeButton.apply {
+                if (input.userId != null) {
+                    setIconResource(R.drawable.ic_arrow_back)
+                }
+                onClick {
+                    onBackPressed()
+                }
             }
             payButton.onClick(::onPayClicked)
 
@@ -80,15 +84,17 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
             countriesText.onClick {
                 supportFragmentManager.showCountryPicker(false)
             }
-            supportFragmentManager.setFragmentResultListener(CountryPickerFragment.KEY_COUNTRY_SELECTED, this@BillingActivity) { _, bundle ->
+            supportFragmentManager.setFragmentResultListener(
+                CountryPickerFragment.KEY_COUNTRY_SELECTED, this@BillingActivity
+            ) { _, bundle ->
                 val country = bundle.getParcelable<CountryUIModel>(CountryPickerFragment.BUNDLE_KEY_COUNTRY)
                 countriesText.text = country?.name
             }
         }
-        observe()
+        observeViewModel()
     }
 
-    private fun observe() {
+    private fun observeViewModel() {
         viewModel.plansValidationState.observeData {
             when (it) {
                 is BillingViewModel.PlansValidationState.Processing -> {
@@ -126,7 +132,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
 
     private fun findOutPlan() = with(input) {
         if (plan.amount == null) {
-            viewModel.validatePlan(session, listOf(plan.id), codes, plan.currency, plan.subscriptionCycle)
+            viewModel.validatePlan(user, listOf(plan.id), codes, plan.currency, plan.subscriptionCycle)
         }
         binding.selectedPlanDetailsLayout.plan = plan
     }
@@ -135,21 +141,25 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
         with(input) {
             val plans = listOf(plan.id)
             viewModel.onThreeDSTokenApproved(
-                session, plans, codes, amount, plan.currency, plan.subscriptionCycle, token
+                user, plans, codes, amount, plan.currency, plan.subscriptionCycle, token
             )
         }
     }
 
     private fun onPayClicked() = with(binding) {
         hideKeyboard()
-        if (invalidInputItems(this@BillingActivity) > 0) {
+        val numberOfInvalidFields = billingInputFieldsValidationList(this@BillingActivity).filter {
+            !it.isValid
+        }.size
+
+        if (numberOfInvalidFields > 0) {
             return@with
         }
 
         val expirationDate = expirationDateInput.text.toString().split(EXP_DATE_SEPARATOR)
 
         viewModel.subscribe(
-            input.session,
+            input.user,
             input.existingPlanIds.plus(input.plan.id),
             input.codes,
             input.plan.currency,

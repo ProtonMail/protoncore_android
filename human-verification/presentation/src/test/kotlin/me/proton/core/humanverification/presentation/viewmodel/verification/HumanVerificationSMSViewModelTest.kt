@@ -22,8 +22,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.countries.domain.exception.NoCountriesException
-import me.proton.core.countries.domain.usecase.MostUsedCountryCode
+import me.proton.core.country.domain.exception.NoCountriesException
+import me.proton.core.country.domain.usecase.MostUsedCountryCode
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination

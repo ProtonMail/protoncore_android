@@ -85,16 +85,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sendDirect" />
 
-        <me.proton.core.presentation.ui.view.ProtonProgressButton
-            android:id="@+id/paymentSignUp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_top_margin"
-            android:text="@string/payments_signup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/payment" />
-
         <LinearLayout
             android:id="@+id/titleLayout"
             android:layout_width="match_parent"
@@ -103,7 +93,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/paymentSignUp">
+            app:layout_constraintTop_toBottomOf="@id/payment">
 
             <TextView
                 android:id="@+id/accountsText"

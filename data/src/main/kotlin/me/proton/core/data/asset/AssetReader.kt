@@ -26,4 +26,4 @@ import java.io.InputStreamReader
  * It is expected that the file itself is found in the root of the assets folder.
  */
 fun Context.readFromAssets(resource: String): String =
-    InputStreamReader(assets.open(resource)).use { it.readText() }
+    assets.open(resource).reader().use { it.readText() }

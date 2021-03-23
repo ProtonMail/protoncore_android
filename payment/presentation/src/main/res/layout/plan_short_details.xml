@@ -28,11 +28,11 @@
 
     <TextView
         android:id="@+id/planNameText"
+        style="@style/ProtonTextView.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
         android:maxLines="1"
-        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@id/amountText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -49,11 +49,10 @@
 
     <TextView
         android:id="@+id/amountText"
+        style="@style/ProtonTextView.Body1.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/text_norm"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="EUR 48" />

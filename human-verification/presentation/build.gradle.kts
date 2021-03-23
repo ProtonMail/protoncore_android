@@ -45,9 +45,7 @@ dependencies {
 
         // Feature
         project(Module.humanVerificationDomain),
-        project(Module.countriesPresentation),
-        project(Module.countriesDomain),
-        project(Module.countriesData),
+        project(Module.country),
 
         // Kotlin
         `kotlin-jdk7`,

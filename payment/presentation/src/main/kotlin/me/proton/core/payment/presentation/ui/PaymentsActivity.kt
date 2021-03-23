@@ -47,13 +47,6 @@ abstract class PaymentsActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
         super.onCreate(savedInstanceState)
         tokenApprovalLauncher = registerForPaymentTokenApproval()
         newBillingLauncher = registerForNewBilling()
-
-        val flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-            if (!isNightMode()) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
-
-        window.decorView.systemUiVisibility = flags
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = Color.TRANSPARENT
     }
 
     private fun registerForPaymentTokenApproval(): ActivityResultLauncher<PaymentTokenApprovalInput> =
@@ -73,13 +66,7 @@ abstract class PaymentsActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
         registerForActivityResult(
             StartBilling()
         ) {
-            it?.apply {
-                if (paySuccess) {
-                    onPaymentSuccess(this)
-                } else {
-                    showToast("Billing Error happened!")
-                }
-            }
+            onPaymentResult(it)
         }
 
     protected fun onTokenApprovalNeeded(
@@ -105,11 +92,13 @@ abstract class PaymentsActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
         )
     }
 
-    protected fun onPaymentSuccess(billingResult: BillingResult?) {
-        val intent = Intent()
-            .putExtra(ARG_RESULT, PaymentOptionsResult(true, billingResult))
-        setResult(Activity.RESULT_OK, intent)
-        finish()
+    protected fun onPaymentResult(billingResult: BillingResult?) {
+        if (billingResult != null) {
+            val intent = Intent()
+                .putExtra(ARG_RESULT, PaymentOptionsResult(billingResult?.paySuccess ?: false, billingResult))
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
     }
 
     open fun onThreeDSApproved(amount: Long, token: String) {

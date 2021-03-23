@@ -37,6 +37,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ProtonTextView.Body1">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ProtonTextView.Body1.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="ProtonTextView.InputFooter">
         <item name="android:textSize">12sp</item>
     </style>

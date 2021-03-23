@@ -85,13 +85,17 @@ fun InputValidationResult.setCardIcon(context: Context, block: (Drawable?) -> Un
     block(ContextCompat.getDrawable(context, drawable))
 }
 
-fun ActivityBillingBinding.invalidInputItems(context: Context): Int {
-    return listOf(
+/**
+ * Returns the list of billing input fields (views) validation result.
+ * Every validation also marks the appropriate field as invalid.
+ */
+fun ActivityBillingBinding.billingInputFieldsValidationList(context: Context): List<InputValidationResult> =
+    listOf(
         cardNameInput.validate().also {
             if (!it.isValid) cardNameInput.setInputError(context.getString(R.string.payments_error_card_name))
         },
         cardNumberInput.validateCreditCard().also {
-            if (!it.isValid) cardNameInput.setInputError(context.getString(R.string.payments_error_card_number))
+            if (!it.isValid) cardNumberInput.setInputError(context.getString(R.string.payments_error_card_number))
         },
         cvcInput.validate().also {
             if (!it.isValid) cvcInput.setInputError(context.getString(R.string.payments_error_cvc))
@@ -102,7 +106,4 @@ fun ActivityBillingBinding.invalidInputItems(context: Context): Int {
         postalCodeInput.validate().also {
             if (!it.isValid) postalCodeInput.setInputError()
         }
-    ).filter {
-        !it.isValid
-    }.size
-}
+    )

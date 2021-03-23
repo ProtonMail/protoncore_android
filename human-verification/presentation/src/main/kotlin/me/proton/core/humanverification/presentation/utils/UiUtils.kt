@@ -20,7 +20,6 @@ package me.proton.core.humanverification.presentation.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import me.proton.core.countries.presentation.ui.CountryPickerFragment
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationHelpFragment

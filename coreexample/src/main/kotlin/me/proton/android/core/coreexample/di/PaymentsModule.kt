@@ -18,12 +18,10 @@
 
 package me.proton.android.core.coreexample.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
 import me.proton.core.payment.domain.repository.PaymentsRepository

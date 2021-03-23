@@ -20,12 +20,11 @@ package me.proton.core.payment.presentation.viewmodel
 
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import me.proton.core.countries.domain.entity.Country
-import me.proton.core.countries.domain.usecase.GetCountryCode
-import me.proton.core.countries.domain.usecase.LoadCountries
+import me.proton.core.country.domain.entity.Country
+import me.proton.core.country.domain.usecase.GetCountry
+import me.proton.core.country.domain.usecase.LoadCountries
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -39,8 +38,6 @@ import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
-import me.proton.core.payment.domain.usecase.GetCountries
-import me.proton.core.payment.domain.usecase.GetCountryCode
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.test.android.ArchTest
@@ -59,8 +56,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
     private val createPaymentTokenWithExistingPaymentMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>()
     private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>()
     private val performSubscribe = mockk<PerformSubscribe>()
-    private val getCountries = mockk<LoadCountries>()
-    private val getCountryCode = mockk<GetCountryCode>()
+    private val getCountryCode = mockk<GetCountry>()
     // endregion
 
     // region test data
@@ -84,9 +80,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
-        coEvery { getCountries.invoke() } returns
-            listOf(Country("test-country-1", "test-code-1"), Country("test-country-2", "test-code-2"))
-        every { getCountryCode.invoke(any()) } returns testCCCountry
+        coEvery { getCountryCode.invoke(any()) } returns Country(testCCCountry, "test-code-1")
 
         viewModel = BillingViewModel(
             validateSubscription,
@@ -94,7 +88,6 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             createPaymentTokenWithNewPayPal,
             createPaymentTokenWithExistingPaymentMethod,
             performSubscribe,
-            getCountries,
             getCountryCode
         )
     }
@@ -675,53 +668,5 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
         val subscriptionPlanStatus = arguments[1]
         assertTrue(subscriptionPlanStatus is BillingViewModel.PlansValidationState.Error.Message)
         assertEquals("proton error", subscriptionPlanStatus.message)
-    }
-
-    @Test
-    fun `countries success`() = coroutinesTest {
-        val testCountries = listOf(Country("test-country-1", "test-code-1"))
-
-        coEvery { getCountries.invoke() } returns testCountries
-
-        viewModel = BillingViewModel(
-            validateSubscription,
-            createPaymentToken,
-            createPaymentTokenWithNewPayPal,
-            createPaymentTokenWithExistingPaymentMethod,
-            performSubscribe,
-            getCountries,
-            getCountryCode
-        )
-
-        val observer = mockk<(List<Country>) -> Unit>(relaxed = true)
-        viewModel.countriesResult.observeDataForever(observer)
-
-        val arguments = mutableListOf<List<Country>>()
-        verify(exactly = 1) { observer(capture(arguments)) }
-        val countriesResult = arguments[0]
-        assertEquals(testCountries, countriesResult)
-        assertEquals(1, countriesResult.size)
-    }
-
-    @Test
-    fun `countries error`() = coroutinesTest {
-        coEvery { getCountries.invoke() } throws RuntimeException("test-exception")
-
-        viewModel = BillingViewModel(
-            validateSubscription,
-            createPaymentToken,
-            createPaymentTokenWithNewPayPal,
-            createPaymentTokenWithExistingPaymentMethod,
-            performSubscribe,
-            getCountries,
-            getCountryCode
-        )
-
-        val observer = mockk<(List<Country>) -> Unit>(relaxed = true)
-        viewModel.countriesResult.observeDataForever(observer)
-
-        val arguments = mutableListOf<List<Country>>()
-        verify(exactly = 1) { observer(capture(arguments)) }
-
     }
 }

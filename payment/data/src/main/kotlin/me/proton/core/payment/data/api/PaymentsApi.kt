@@ -35,47 +35,47 @@ import retrofit2.http.Path
 internal interface PaymentsApi : BaseRetrofitApi {
 
     /**
-     * Unauthorized.
      * Create a new payment token from user's payment information. Unauthenticated route and could be used during
      * account creation as well as a regular Authenticated for plan upgrade for logged in users.
+     * Unauthorized.
      */
     @POST("payments/tokens")
     suspend fun createPaymentToken(@Body body: CreatePaymentToken): CreatePaymentTokenResponse
 
     /**
-     * Unauthorized.
      * Could be used during account creation as well as a regular Authenticated for plan upgrade for logged in users.
      * Check payment token status (usually with polling).
+     * Unauthorized.
      */
     @GET("payments/tokens/{token}")
     suspend fun getPaymentTokenStatus(@Path("token") token: String): PaymentTokenStatusResponse
 
     /**
-     * Authorized.
      * Returns existing already saved payment methods.
+     * Authorized.
      */
     @GET("payments/methods")
     suspend fun getPaymentMethods(): PaymentMethodsResponse
 
     /**
-     * Authorized.
      * Returns current active subscription.
+     * Authorized.
      */
     @GET("payments/subscription")
     suspend fun getCurrentSubscription(): SubscriptionResponse
 
     /**
-     * Authorized.
      * Creates new or updates the current active subscription.
+     * Authorized.
      */
     @POST("payments/subscription")
     suspend fun createUpdateSubscription(@Body body: CreateSubscription): SubscriptionResponse
 
     /**
-     * Unauthorized.
      * It checks given a particular plans and cycles how much a user should pay.
      * It also takes into an account any special coupon or gift codes.
      * Should be called upon a user selected any plan, duration and entered a code.
+     * Unauthorized.
      */
     @POST("payments/subscription/check")
     suspend fun validateSubscription(@Body body: CheckSubscription): CheckSubscriptionResponse

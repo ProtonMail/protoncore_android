@@ -28,7 +28,7 @@ plugins {
 
 android(
     minSdk = 23,
-    version = Version(0, 3, 2),
+    version = Version(0, 3, 3),
     useDataBinding = true
 )
 
@@ -56,7 +56,7 @@ dependencies {
         project(Module.user),
         project(Module.mailMessage),
         project(Module.payment),
-        project(Module.countries),
+        project(Module.country),
 
         `kotlin-jdk7`,
         `coroutines-android`,

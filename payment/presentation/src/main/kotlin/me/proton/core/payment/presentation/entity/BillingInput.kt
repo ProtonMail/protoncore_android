@@ -42,7 +42,7 @@ data class BillingInput(
     val codes: List<String>? = null,
     val paymentMethodId: String?,
 ) : Parcelable {
-    val session = if (userId.isNullOrBlank()) null else UserId(userId)
+    val user = if (userId.isNullOrBlank()) null else UserId(userId)
 }
 
 
