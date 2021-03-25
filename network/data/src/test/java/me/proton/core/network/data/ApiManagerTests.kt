@@ -131,7 +131,7 @@ internal class ApiManagerTests {
         ApiManagerImpl.failRequestBeforeTimeMs = Long.MIN_VALUE
         apiManager = ApiManagerImpl(
             apiClient, backend, dohApiHandler, networkManager,
-            apiFactory.createBaseErrorHandlers(session.sessionId, ::time, scope), ::time
+            apiFactory.createBaseErrorHandlers(session.sessionId, ::time), ::time
         )
 
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Success(TestResult(5, "foo"))

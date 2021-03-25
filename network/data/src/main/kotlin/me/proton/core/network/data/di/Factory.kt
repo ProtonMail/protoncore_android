@@ -119,8 +119,7 @@ class ApiFactory(
 
     internal fun <Api> createBaseErrorHandlers(
         sessionId: SessionId?,
-        monoClockMs: () -> Long,
-        networkMainScope: CoroutineScope
+        monoClockMs: () -> Long
     ) = listOf(
         RefreshTokenHandler<Api>(
             sessionId,
@@ -133,7 +132,7 @@ class ApiFactory(
             sessionId,
             sessionProvider,
             sessionListener,
-            networkMainScope,
+            monoClockMs
         )
     )
 
@@ -171,7 +170,7 @@ class ApiFactory(
             pinningStrategy
         )
 
-        val errorHandlers = createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs, mainScope) + clientErrorHandlers
+        val errorHandlers = createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs) + clientErrorHandlers
 
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
             initSPKIleafPinning(builder, alternativeApiPins)
