@@ -18,15 +18,20 @@
 
 package me.proton.core.network.domain.handlers
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
+import org.jetbrains.annotations.TestOnly
+import java.time.LocalTime
+import java.util.concurrent.TimeUnit
 
 /**
  * Handles the 9001 error response code and passes the details that come together with it to the
@@ -36,35 +41,56 @@ class HumanVerificationHandler<Api>(
     private val sessionId: SessionId?,
     private val sessionProvider: SessionProvider,
     private val sessionListener: SessionListener,
-    networkMainScope: CoroutineScope
-) : OneOffJobHandler<HumanVerificationDetails, Boolean>(networkMainScope),
-    ApiErrorHandler<Api> {
+    private val monoClockMs: () -> Long
+) : ApiErrorHandler<Api> {
 
     override suspend fun <T> invoke(
         backend: ApiBackend<Api>,
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
-    ): ApiResult<T> =
-        if (error is ApiResult.Error.Http && error.proton?.code == ERROR_CODE_HUMAN_VERIFICATION) {
-            // here we always expect the human verification details, this is why it is safe to use !!
-            // since the API guarantees there will be details ALWAYS with the 9001 code
-            val isHumanVerified = startOneOffJob(error.proton.humanVerification!!) {
-                val session = sessionId?.let { sessionProvider.getSession(sessionId) } ?: return@startOneOffJob false
-                // Suspending call to let the client handle HumanVerification needed.
-                when (sessionListener.onHumanVerificationNeeded(session, it)) {
-                    SessionListener.HumanVerificationResult.Failure -> false
-                    SessionListener.HumanVerificationResult.Success -> true
-                }
-            }
-            if (isHumanVerified)
-                backend(call) // retry the same call that returned the error
-            else
-                error
-        } else {
-            error
+    ): ApiResult<T> {
+        // Recoverable with human verification ?
+        if (error !is ApiResult.Error.Http || error.proton?.code != ERROR_CODE_HUMAN_VERIFICATION) return error
+
+        // Do we have details ?
+        val details = error.proton.humanVerification ?: return error
+
+        // Do we have a session ?
+        val session = sessionId?.let { sessionProvider.getSession(sessionId) } ?: return error
+
+        // Only 1 coroutine at a time per session.
+        val shouldRetry = sessionMutex(sessionId).withLock {
+            // Don't attempt to verify if we did recently.
+            val lastVerificationTimeMs = sessionLastVerificationMap[sessionId] ?: Long.MIN_VALUE
+            val verifiedRecently = monoClockMs() <= lastVerificationTimeMs + verificationDebounceMs
+            verifiedRecently || verifyHuman(session, details)
         }
+        return if (shouldRetry) backend(call) else error
+    }
+
+    // Must be called within sessionMutex.
+    private suspend fun verifyHuman(session: Session, details: HumanVerificationDetails): Boolean {
+        val result = when (sessionListener.onHumanVerificationNeeded(session, details)) {
+            SessionListener.HumanVerificationResult.Success -> true
+            SessionListener.HumanVerificationResult.Failure -> false
+        }
+        sessionLastVerificationMap[session.sessionId] = monoClockMs()
+        return result
+    }
 
     companion object {
         const val ERROR_CODE_HUMAN_VERIFICATION = 9001
+
+        private val verificationDebounceMs = TimeUnit.MINUTES.toMillis(1)
+        private val staticMutex: Mutex = Mutex()
+        private val sessionMutexMap: MutableMap<SessionId?, Mutex> = HashMap()
+        private var sessionLastVerificationMap: MutableMap<SessionId, Long> = HashMap()
+
+        suspend fun sessionMutex(sessionId: SessionId?) =
+            staticMutex.withLock { sessionMutexMap.getOrPut(sessionId) { Mutex() } }
+
+        @TestOnly
+        suspend fun reset(sessionId: SessionId) =
+            sessionMutex(sessionId).withLock { sessionLastVerificationMap[sessionId] = Long.MIN_VALUE }
     }
 }

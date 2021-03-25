@@ -85,6 +85,57 @@ class ApiFactory(
         requireNotNull(URI(baseUrl).host)
     }
 
+    internal val jsonConverter = ProtonCoreConfig
+        .defaultJsonStringFormat
+        .asConverterFactory("application/json".toMediaType())
+
+    @VisibleForTesting
+    val baseOkHttpClient by lazy {
+        val builder = OkHttpClient.Builder()
+            .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
+            .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
+            .readTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
+
+        if (cookieStore != null) {
+            val cookieManager = CookieManager(
+                cookieStore,
+                CookiePolicy.ACCEPT_ALL
+            )
+            CookieManager.setDefault(cookieManager)
+            builder.cookieJar(JavaNetCookieJar(cookieManager))
+        }
+        builder.build()
+    }
+
+    private val dohProvider by lazy {
+        val dohServices = Constants.DOH_PROVIDERS_URLS.map { serviceUrl ->
+            DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, apiClient, networkManager, logger)
+        }
+        DohProvider(baseUrl, apiClient, dohServices, mainScope, prefs, ::javaMonoClockMs)
+    }
+
+    private fun javaMonoClockMs(): Long = TimeUnit.NANOSECONDS.toMillis(System.nanoTime())
+    private fun javaWallClockMs(): Long = System.currentTimeMillis()
+
+    internal fun <Api> createBaseErrorHandlers(
+        sessionId: SessionId?,
+        monoClockMs: () -> Long
+    ) = listOf(
+        RefreshTokenHandler<Api>(
+            sessionId,
+            sessionProvider,
+            sessionListener,
+            monoClockMs
+        ),
+        ProtonForceUpdateHandler(apiClient),
+        HumanVerificationHandler(
+            sessionId,
+            sessionProvider,
+            sessionListener,
+            monoClockMs
+        )
+    )
+
     /**
      * Instantiates ApiManager for given [Api] interface and user.
      *
@@ -119,8 +170,7 @@ class ApiFactory(
             pinningStrategy
         )
 
-        val errorHandlers =
-            createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs, mainScope) + clientErrorHandlers
+        val errorHandlers = createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs) + clientErrorHandlers
 
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
             initSPKIleafPinning(builder, alternativeApiPins)
@@ -151,61 +201,6 @@ class ApiFactory(
             apiClient, primaryBackend, dohApiHandler, networkManager, errorHandlers, ::javaMonoClockMs
         )
     }
-
-    internal val jsonConverter =
-        ProtonCoreConfig.defaultJsonStringFormat.asConverterFactory("application/json".toMediaType())
-
-    @VisibleForTesting
-    val baseOkHttpClient by lazy {
-        val builder = OkHttpClient.Builder()
-            .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
-            .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
-            .readTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
-
-        if (cookieStore != null) {
-            val cookieManager = CookieManager(
-                cookieStore,
-                CookiePolicy.ACCEPT_ALL
-            )
-            CookieManager.setDefault(cookieManager)
-            builder.cookieJar(JavaNetCookieJar(cookieManager))
-        }
-        builder.build()
-    }
-
-    internal fun <Api> createBaseErrorHandlers(
-        sessionId: SessionId?,
-        monoClockMs: () -> Long,
-        networkMainScope: CoroutineScope
-    ) = listOf(
-        RefreshTokenHandler<Api>(
-            sessionId,
-            sessionProvider,
-            sessionListener,
-            monoClockMs,
-            networkMainScope
-        ),
-        ProtonForceUpdateHandler(apiClient),
-        HumanVerificationHandler(
-            sessionId,
-            sessionProvider,
-            sessionListener,
-            networkMainScope
-        )
-    )
-
-    private val dohProvider by lazy {
-        val dohServices = Constants.DOH_PROVIDERS_URLS.map { serviceUrl ->
-            DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, apiClient, networkManager, logger)
-        }
-        DohProvider(baseUrl, apiClient, dohServices, mainScope, prefs, ::javaMonoClockMs)
-    }
-
-    private fun javaMonoClockMs(): Long =
-        TimeUnit.NANOSECONDS.toMillis(System.nanoTime())
-
-    private fun javaWallClockMs(): Long =
-        System.currentTimeMillis()
 }
 
 /**
