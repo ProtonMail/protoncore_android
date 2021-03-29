@@ -27,7 +27,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(0, 2, 6)
+libVersion = Version(0, 3, 0)
 
 android(
     minSdk = 23,
@@ -42,7 +42,10 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.presentation),
+
+        // Feature
         project(Module.humanVerificationDomain),
+        project(Module.country),
 
         // Kotlin
         `kotlin-jdk7`,

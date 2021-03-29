@@ -191,3 +191,23 @@ Human Verification Domain: **0.2.6** - _released on: Mar 14, 2020_
 Human Verification Presentation: **0.2.6** - _released on: Feb 01, 2021_
 
 Human Verification Data: **0.2.6** - _released on: Mar 14, 2020_
+
+### Countries
+
+Country: **0** - _released on: Mar 20, 2021_
+
+Country Domain: **0** - _released on: Mar 20, 2021_
+
+Country Data: **0** - _released on: Mar 20, 2021_
+
+Country Presentation: **0** - _released on: Mar 12, 2021_
+
+### Payment
+
+Payment: **0** - _released on: Mar 12, 2021_
+
+Payment Data: **0** - _released on: Mar 12, 2021_
+
+Payment Domain: **0** - _released on: Mar 12, 2021_
+
+Payment Presentation: **0** - _released on: Mar 12, 2021_

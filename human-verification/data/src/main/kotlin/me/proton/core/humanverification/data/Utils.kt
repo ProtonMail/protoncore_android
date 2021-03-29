@@ -18,20 +18,8 @@
 
 package me.proton.core.humanverification.data
 
-import android.content.Context
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.network.domain.ApiResult
-import java.io.InputStreamReader
-
-/**
- * @author Dino Kadrikj.
- */
-/**
- * Reads String content from an assets file, with provided name (extension included).
- * It is expected that the file itself is found in the root of the assets folder.
- */
-fun Context.readFromAssets(resource: String): String =
-    InputStreamReader(assets.open(resource)).use { it.readText() }
 
 /**
  * Maps the [ApiResult] to a Human Verification domain [VerificationResult] object.

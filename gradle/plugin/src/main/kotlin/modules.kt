@@ -91,6 +91,18 @@ object Module {
     const val userPresentation = "$user:user-presentation"
     const val userData = "$user:user-data"
 
+    // Payment
+    const val payment = ":payment"
+    const val paymentDomain = "$payment:payment-domain"
+    const val paymentData = "$payment:payment-data"
+    const val paymentPresentation = "$payment:payment-presentation"
+
+    // Countries
+    const val country = ":country"
+    const val countryDomain = "$country:country-domain"
+    const val countryData = "$country:country-data"
+    const val countryPresentation = "$country:country-presentation"
+
     // Settings
     const val settings = ":settings"
     const val settingsDomain = "$settings:settings-domain"

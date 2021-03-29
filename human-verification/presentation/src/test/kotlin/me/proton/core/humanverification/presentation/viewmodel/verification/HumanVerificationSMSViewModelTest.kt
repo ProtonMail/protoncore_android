@@ -21,12 +21,11 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.country.domain.exception.NoCountriesException
+import me.proton.core.country.domain.usecase.MostUsedCountryCode
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
-import me.proton.core.humanverification.domain.exception.NoCountriesException
-import me.proton.core.humanverification.domain.usecase.MostUsedCountryCode
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -59,13 +58,13 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
 
     @Test
     fun `most used calling code returns success`() = runBlockingTest {
-        coEvery { mostUsedUseCase.invoke() } returns flowOf(0)
+        coEvery { mostUsedUseCase.invoke() } returns 0
         assertIs<ViewState.Success<Int>>(viewModel.mostUsedCallingCode.awaitNext())
     }
 
     @Test
     fun `most used calling code returns correct data`() = runBlockingTest {
-        coEvery { mostUsedUseCase.invoke() } returns flowOf(1)
+        coEvery { mostUsedUseCase.invoke() } returns 1
         viewModel.mostUsedCallingCode.awaitNext()
         assertEquals(1, viewModel.mostUsedCallingCode.awaitData())
     }
@@ -81,7 +80,7 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
 
     @Test
     fun `send verification code to phone number success`() = runBlockingTest {
-        coEvery { mostUsedUseCase.invoke() } returns flowOf(0)
+        coEvery { mostUsedUseCase.invoke() } returns 0
         coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns VerificationResult.Success
         viewModel.sendVerificationCodeToDestination(sessionId, "+0", "123456789")
         assertIs<ViewState.Success<Boolean>>(viewModel.verificationCodeStatus.awaitNext())
@@ -90,7 +89,7 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     @Test
     fun `send verification code to phone number invalid`() = runBlockingTest {
         // given
-        coEvery { mostUsedUseCase.invoke() } returns flowOf(0)
+        coEvery { mostUsedUseCase.invoke() } returns 0
         coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns VerificationResult.Success
 
         // when

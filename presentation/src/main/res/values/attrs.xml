@@ -52,7 +52,9 @@
             <enum name="none" value="0" />
             <enum name="clear_text" value="1" />
             <enum name="password_toggle" value="2" />
+            <enum name="custom_icon" value="3" />
         </attr>
+        <attr name="endIconDrawable" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="ProtonAutoCompleteInput">

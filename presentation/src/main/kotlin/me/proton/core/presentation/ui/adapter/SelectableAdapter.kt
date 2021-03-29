@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
  * A common interface for Adapters that have clickable and selectable items [UiModel]
  * Inherit from [ClickableAdapter]
  */
-interface SelectableAdapter<UiModel> : ClickableAdapter<UiModel> {
+interface SelectableAdapter<UiModel, ViewRef : Any> : ClickableAdapter<UiModel, ViewRef> {
 
     /**
      * A callback that will be triggered when an item selection is changed, has [UiModel] and [Boolean] 'isSelected' as

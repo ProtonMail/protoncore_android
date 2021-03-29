@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="32dp" android:height="32dp" android:viewportWidth="32" android:viewportHeight="32">
+    <path android:pathData="M32 5.33H0v21.33h32V5.33z" android:fillColor="#FFDA44"/>
+    <path android:pathData="M16 5.33H0V16h16V5.33z" android:fillColor="#F0F0F0"/>
+    <path android:pathData="M9 5.33H7v4.34H0v2h7V16h2v-4.33h7v-2H9V5.33z" android:fillColor="#D80027"/>
+    <path android:pathData="M0 5.33v0.95l3.59 2.39H5L0 5.33z" android:fillColor="#D80027"/>
+    <path android:pathData="M0 6.75v1.92h2.88L0 6.75zm6-1.42v3.06L1.41 5.33H6z" android:fillColor="#2E52B2"/>
+    <path android:pathData="M16 5.33v0.95l-3.59 2.39H11l5-3.34z" android:fillColor="#D80027"/>
+    <path android:pathData="M16 6.75v1.92h-2.88L16 6.75zm-6-1.42v3.06l4.59-3.06H10z" android:fillColor="#2E52B2"/>
+    <path android:pathData="M0 5.33v0.95l3.59 2.39H5L0 5.33z" android:fillColor="#D80027"/>
+    <path android:pathData="M0 6.75v1.92h2.88L0 6.75zm6-1.42v3.06L1.41 5.33H6z" android:fillColor="#2E52B2"/>
+    <path android:pathData="M16 5.33v0.95l-3.59 2.39H11l5-3.34z" android:fillColor="#D80027"/>
+    <path android:pathData="M16 6.75v1.92h-2.88L16 6.75zm-6-1.42v3.06l4.59-3.06H10z" android:fillColor="#2E52B2"/>
+    <path android:pathData="M0 16v-0.94l3.59-2.39H5L0 16z" android:fillColor="#D80027"/>
+    <path android:pathData="M0 14.59v-1.92h2.88L0 14.59zM6 16v-3.06L1.41 16H6z" android:fillColor="#2E52B2"/>
+    <path android:pathData="M16 16v-0.94l-3.59-2.39H11L16 16z" android:fillColor="#D80027"/>
+    <path android:pathData="M16 14.59v-1.92h-2.88L16 14.59zM10 16v-3.06L14.59 16H10zm-0.6-5.35a1.41 1.41 0 1 0-2.82 0 1.41 1.41 0 0 0 2.82 0z" android:fillColor="#2E52B2"/>
+    <path android:pathData="M8 9.67l0.25 0.76h0.8L8.4 10.9l0.25 0.77L8 11.2l-0.65 0.47 0.25-0.77-0.65-0.47h0.8L8 9.67zm0 4.07l0.15 0.45h0.48l-0.39 0.28 0.15 0.46L8 14.65l-0.39 0.28 0.15-0.46-0.38-0.28h0.47L8 13.74zm0-7.33l0.15 0.45h0.48L8.24 7.14 8.39 7.6 8 7.32 7.61 7.6l0.15-0.46-0.38-0.28h0.47L8 6.41zm4.37 3.66l0.15 0.46H13l-0.39 0.28 0.15 0.45-0.39-0.28-0.39 0.28 0.15-0.45-0.39-0.28h0.48l0.15-0.46zm-8.74 0l0.15 0.46h0.48l-0.39 0.28 0.15 0.45-0.39-0.28-0.39 0.28 0.15-0.45L3 10.53h0.48l0.15-0.46z" android:fillColor="#FFDA44"/>
+</vector>

@@ -21,15 +21,14 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import me.proton.core.country.domain.exception.NoCountriesException
+import me.proton.core.country.domain.usecase.MostUsedCountryCode
+import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
 import me.proton.core.humanverification.domain.exception.EmptyDestinationException
-import me.proton.core.humanverification.domain.exception.NoCountriesException
-import me.proton.core.humanverification.domain.usecase.MostUsedCountryCode
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
-import me.proton.core.humanverification.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -85,9 +84,8 @@ internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
     private fun getMostUsedCallingCode() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                mostUseCountryCode().collect {
-                    mostUsedCallingCode.post(it)
-                }
+                val code = mostUseCountryCode()
+                mostUsedCallingCode.post(code!!)
             } catch (e: NoCountriesException) {
                 mostUsedCallingCode.postError(e)
             }

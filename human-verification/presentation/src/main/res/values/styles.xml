@@ -31,7 +31,7 @@
 
     <!-- for text -->
     <style name="HumanVerificationTabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/humanVerificationTabItemText</item>
+        <item name="android:textColor">@color/text_weak</item>
         <item name="textAllCaps">true</item>
         <item name="android:textAllCaps">true</item>
     </style>

@@ -24,12 +24,14 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.country.presentation.entity.CountryUIModel
+import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.BUNDLE_KEY_COUNTRY
+import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.KEY_COUNTRY_SELECTED
+import me.proton.core.country.presentation.ui.showCountryPicker
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationSmsBinding
-import me.proton.core.humanverification.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
-import me.proton.core.humanverification.presentation.utils.showCountryPicker
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationSMSViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonFragment
@@ -50,8 +52,6 @@ internal class HumanVerificationSMSFragment :
 
     companion object {
         private const val ARG_SESSION_ID = "arg.sessionId"
-        internal const val KEY_COUNTRY_SELECTED = "key.country_selected"
-        internal const val BUNDLE_KEY_COUNTRY = "bundle.country"
 
         operator fun invoke(
             sessionId: String,

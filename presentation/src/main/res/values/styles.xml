@@ -37,6 +37,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ProtonTextView.Body1">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ProtonTextView.Body1.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="ProtonTextView.InputFooter">
         <item name="android:textSize">12sp</item>
     </style>
@@ -72,6 +80,10 @@
         <item name="android:insetBottom">0dp</item>
         <item name="textAllCaps">false</item>
         <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
+    </style>
+
+    <style name="ProtonButton.Borderless.Text.NoProgress">
+        <item name="progressDrawable">@null</item>
     </style>
 
     <style name="ProtonButton.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">

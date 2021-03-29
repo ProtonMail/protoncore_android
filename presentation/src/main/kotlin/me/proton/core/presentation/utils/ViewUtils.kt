@@ -32,6 +32,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.marginBottom
@@ -40,6 +41,7 @@ import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import com.google.android.material.snackbar.Snackbar
 import me.proton.core.presentation.R
+import me.proton.core.presentation.ui.view.ProtonInput
 
 /**
  * Shortcut for [AdapterView.setOnItemSelectedListener]
@@ -87,11 +89,14 @@ inline fun <T : Adapter> AdapterView<T>.onItemSelected(crossinline block: (posit
  */
 fun EditText.clearText() = setText("")
 
-/** Execute the [listener] on [TextWatcher.onTextChanged] */
-inline fun EditText.onTextChange(crossinline listener: (CharSequence) -> Unit): TextWatcher {
+/** Execute the [textChangeListener] on [TextWatcher.onTextChanged] */
+inline fun ProtonInput.onTextChange(
+    crossinline textChangeListener: (CharSequence) -> Unit = {},
+    crossinline afterTextChangeListener: ProtonInput.(Editable) -> Unit = {}
+): TextWatcher {
     val watcher = object : TextWatcher {
         override fun afterTextChanged(editable: Editable) {
-            /* Do nothing */
+            afterTextChangeListener(editable)
         }
 
         override fun beforeTextChanged(text: CharSequence, start: Int, count: Int, after: Int) {
@@ -99,7 +104,7 @@ inline fun EditText.onTextChange(crossinline listener: (CharSequence) -> Unit): 
         }
 
         override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-            listener(text)
+            textChangeListener(text)
         }
     }
     addTextChangedListener(watcher)
@@ -171,7 +176,7 @@ fun View.snack(
     @DrawableRes color: Int
 ) {
     Snackbar.make(this, message, length).apply {
-        view.background = context.resources.getDrawable(color, null)
+        view.background = ResourcesCompat.getDrawable(context.resources, color, null)
         setTextColor(ContextCompat.getColor(context, R.color.white))
     }.show()
 }
@@ -202,11 +207,13 @@ fun View.doOnApplyWindowInsets(block: (View, WindowInsetsCompat, InitialMargin, 
 }
 
 data class InitialMargin(val start: Int, val top: Int, val end: Int, val bottom: Int)
+
 private fun recordInitialMarginForView(view: View) = InitialMargin(
     view.marginStart, view.marginTop, view.marginEnd, view.marginBottom
 )
 
 data class InitialPadding(val start: Int, val top: Int, val end: Int, val bottom: Int)
+
 private fun recordInitialPaddingForView(view: View) = InitialPadding(
     view.paddingStart, view.paddingTop, view.paddingEnd, view.paddingBottom
 )

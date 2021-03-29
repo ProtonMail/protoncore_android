@@ -1,0 +1,37 @@
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+  <path
+      android:pathData="M0,7C0,5.8954 0.8954,5 2,5H30C31.1046,5 32,5.8954 32,7V25C32,26.1046 31.1046,27 30,27H2C0.8954,27 0,26.1046 0,25V7Z"
+      android:fillColor="#ffffff"/>
+  <path
+      android:pathData="M30,6H2C1.4477,6 1,6.4477 1,7V25C1,25.5523 1.4477,26 2,26H30C30.5523,26 31,25.5523 31,25V7C31,6.4477 30.5523,6 30,6ZM2,5C0.8954,5 0,5.8954 0,7V25C0,26.1046 0.8954,27 2,27H30C31.1046,27 32,26.1046 32,25V7C32,5.8954 31.1046,5 30,5H2Z"
+      android:fillColor="#EEEFF3"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M24,22.6667C24,23.403 23.403,24 22.6667,24H16.0479H8V15.9205V8H15.9408H22.6667C23.403,8 24,8.5969 24,9.3333V15.9992V22.6667Z"
+      android:fillColor="#ffffff"/>
+  <path
+      android:pathData="M24,24V21.4647H22.0697L21.0759,20.3659L20.0771,21.4647H13.7129V16.3433H11.6588L14.2067,10.5771H16.6639L17.541,12.5525V10.5771H20.5826L21.1107,12.0657L21.6422,10.5771H24V8H8V24H24ZM22.3949,20.8235H24L21.8767,18.5719L24,16.3458H22.4204L21.1092,17.7787L19.8105,16.3458H18.205L20.3159,18.5847L18.205,20.8235H19.7658L21.0835,19.3779L22.3949,20.8235ZM22.7704,18.5738L24,19.8819V17.2765L22.7704,18.5738ZM15.6143,19.7873V19.09H18.141V18.0793H15.6143V17.3821H18.2049L18.205,16.3458H14.3925V20.8235H18.205L18.2049,19.7873H15.6143ZM22.791,15.696H24V11.2183H22.1193L21.115,14.0072L20.1172,11.2183H18.2046V15.696H19.4135V12.5617L20.565,15.696H21.6396L22.791,12.5552V15.696ZM16.8293,15.696H18.2046L16.2281,11.2183H14.6545L12.6778,15.696H14.0211L14.3922,14.8005H16.4519L16.8293,15.696ZM16.0298,13.7962H14.8143L15.422,12.3314L16.0298,13.7962Z"
+      android:fillColor="#0690FF"/>
+</vector>
