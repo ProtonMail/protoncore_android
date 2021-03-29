@@ -186,11 +186,11 @@ Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
 
 Human Verification: **0.3** - _released on: Mar 29, 2021_
 
-Human Verification Domain: **0.2.6** - _released on: Mar 14, 2020_
+Human Verification Domain: **0.3** - _released on: Mar 29, 2021_
 
-Human Verification Presentation: **0.2.6** - _released on: Feb 01, 2021_
+Human Verification Presentation: **0.3** - _released on: Mar 29, 2021_
 
-Human Verification Data: **0.2.6** - _released on: Mar 14, 2020_
+Human Verification Data: **0.3** - _released on: Mar 29, 2021_
 
 ### Countries
 
@@ -206,8 +206,8 @@ Country Presentation: **0.1** - _released on: Mar 29, 2021_
 
 Payment: **0.1** - _released on: Mar 29, 2021_
 
-Payment Data: **0** - _released on: Mar 12, 2021_
+Payment Data: **0.1** - _released on: Mar 29, 2021_
 
-Payment Domain: **0** - _released on: Mar 12, 2021_
+Payment Domain: **0.1** - _released on: Mar 29, 2021_
 
 Payment Presentation: **0** - _released on: Mar 12, 2021_
