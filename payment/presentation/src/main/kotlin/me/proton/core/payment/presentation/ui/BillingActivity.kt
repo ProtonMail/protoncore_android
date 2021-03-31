@@ -137,7 +137,11 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
         binding.selectedPlanDetailsLayout.plan = plan
     }
 
-    override fun onThreeDSApproved(amount: Long, token: String) {
+    override fun onThreeDSApprovalResult(amount: Long, token: String, success: Boolean) {
+        if (!success) {
+            binding.payButton.setIdle()
+            return
+        }
         with(input) {
             val plans = listOf(plan.id)
             viewModel.onThreeDSTokenApproved(

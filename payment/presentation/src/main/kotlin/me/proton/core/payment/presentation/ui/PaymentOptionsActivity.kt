@@ -57,7 +57,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
 
     private val paymentOptionsAdapter = selectableProtonAdapter(
         getView = { parent, inflater -> ItemPaymentMethodBinding.inflate(inflater, parent, false) },
-        onBind = { paymentMethod, selected ->
+        onBind = { paymentMethod, selected, position ->
             paymentMethodTitleText.text = paymentMethod.title
             paymentMethodSubtitleText.text = paymentMethod.subtitle
             val paymentOptionType = PaymentMethodType.values()[paymentMethod.type]
@@ -69,7 +69,10 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                 PaymentMethodType.PAYPAL -> ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_paypal)
             }.exhaustive
             paymentMethodIcon.setImageDrawable(drawable)
-            paymentMethodRadio.isChecked = selected
+            paymentMethodRadio.isChecked = selected || position == 0
+            if (position == 0) {
+                selectedPaymentMethodId = paymentMethod.id
+            }
         },
         onItemClick = ::onPaymentMethodClicked,
         diffCallback = PaymentOptionUIModel.DiffCallback
@@ -154,7 +157,11 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
         selectedPaymentMethodId = paymentMethod.id
     }
 
-    override fun onThreeDSApproved(amount: Long, token: String) {
+    override fun onThreeDSApprovalResult(amount: Long, token: String, success: Boolean) {
+        if (!success) {
+            binding.payButton.setIdle()
+            return
+        }
         viewModel.onThreeDSTokenApproved(
             user, input.plan.id, input.codes, amount, input.plan.currency, input.plan.subscriptionCycle, token
         )

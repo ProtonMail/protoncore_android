@@ -20,10 +20,7 @@ package me.proton.core.payment.presentation.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.databinding.ViewDataBinding
 import me.proton.core.payment.domain.entity.PaymentToken
@@ -35,7 +32,6 @@ import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
 import me.proton.core.payment.presentation.entity.PlanDetails
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorSnack
-import me.proton.core.presentation.utils.isNightMode
 import me.proton.core.presentation.utils.showToast
 
 abstract class PaymentsActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
@@ -54,11 +50,10 @@ abstract class PaymentsActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
             StartPaymentTokenApproval()
         ) {
             it?.apply {
-                if (approved) {
-                    onThreeDSApproved(amount, token)
-                } else {
+                if (!approved) {
                     showToast(R.string.payments_3ds_not_approved)
                 }
+                onThreeDSApprovalResult(amount, token, approved)
             }
         }
 
@@ -95,13 +90,13 @@ abstract class PaymentsActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
     protected fun onPaymentResult(billingResult: BillingResult?) {
         if (billingResult != null) {
             val intent = Intent()
-                .putExtra(ARG_RESULT, PaymentOptionsResult(billingResult?.paySuccess ?: false, billingResult))
+                .putExtra(ARG_RESULT, PaymentOptionsResult(billingResult.paySuccess, billingResult))
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }
 
-    open fun onThreeDSApproved(amount: Long, token: String) {
+    open fun onThreeDSApprovalResult(amount: Long, token: String, success: Boolean) {
         // no default operation
     }
 
