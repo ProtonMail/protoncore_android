@@ -137,7 +137,7 @@ fun <UiModel, ViewRef : Any> ProtonAdapter(
  */
 fun <UiModel, ViewRef : Any> selectableProtonAdapter(
     getView: (parent: ViewGroup, inflater: LayoutInflater) -> ViewRef,
-    onBind: ViewRef.(uiModel: UiModel, selected: Boolean) -> Unit,
+    onBind: ViewRef.(uiModel: UiModel, selected: Boolean, position: Int) -> Unit,
     onItemClick: (UiModel) -> Unit = {},
     onItemLongClick: (UiModel) -> Unit = {},
     diffCallback: DiffUtil.ItemCallback<UiModel>,
@@ -170,7 +170,7 @@ fun <UiModel, ViewRef : Any> selectableProtonAdapter(
                     longClickListener(item)
                     true
                 }
-                onBind(viewRef, item, position == selectedPosition)
+                onBind(viewRef, item, position == selectedPosition, position)
             }
         }
 
