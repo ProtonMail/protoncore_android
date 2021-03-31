@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 6, 0)
+libVersion = Version(0, 6, 1)
 
 android(
     minSdk = 23,
