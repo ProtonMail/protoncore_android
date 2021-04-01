@@ -23,7 +23,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.NextStep
@@ -80,8 +83,9 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
             }
         }
 
-        viewModel.secondFactorState.observeData {
+        viewModel.state.onEach {
             when (it) {
+                is SecondFactorViewModel.State.Idle -> showLoading(false)
                 is SecondFactorViewModel.State.Processing -> showLoading(true)
                 is SecondFactorViewModel.State.Success.UserUnLocked -> onSuccess(it.userId, NextStep.None)
                 is SecondFactorViewModel.State.Need.TwoPassMode -> onSuccess(it.userId, NextStep.TwoPassMode)
@@ -94,7 +98,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                     onBackPressed()
                 }
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {

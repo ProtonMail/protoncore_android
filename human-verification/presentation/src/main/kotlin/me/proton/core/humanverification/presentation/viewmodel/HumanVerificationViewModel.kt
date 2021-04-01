@@ -21,29 +21,30 @@ package me.proton.core.humanverification.presentation.viewmodel
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import studio.forface.viewstatestore.ViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
 
 /**
  * View model class to serve the main Human Verification screen.
- *
- * @author Dino Kadrikj.
  */
 class HumanVerificationViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
-) :
-    ProtonViewModel(), ViewStateStoreScope {
+) : ProtonViewModel() {
 
     private lateinit var currentActiveVerificationMethod: TokenType
 
-    val activeMethod = ViewStateStore<String>().lock
-    val enabledMethods = ViewStateStore<List<String>>().lock
     private var availableVerificationMethods: List<String> =
         savedStateHandle.get<List<String>>(HumanVerificationDialogFragment.ARG_VERIFICATION_OPTIONS)!!
+
+    private val _activeMethod = MutableStateFlow<String?>(null)
+    private val _enabledMethods = MutableStateFlow<List<String>>(emptyList())
+
+    val activeMethod = _activeMethod.asStateFlow()
+    val enabledMethods = _enabledMethods.asStateFlow()
 
     init {
         // A list of all available methods that the API is currently supporting for this particular user and device.
@@ -53,7 +54,7 @@ class HumanVerificationViewModel @ViewModelInject constructor(
             throw NotEnoughVerificationOptions("Please provide at least 1 verification method")
         }
 
-        enabledMethods.setData(data = availableVerificationMethods, dropOnSame = true)
+        _enabledMethods.tryEmit(availableVerificationMethods)
         defineActiveVerificationMethod()
     }
 
@@ -67,9 +68,6 @@ class HumanVerificationViewModel @ViewModelInject constructor(
             currentActiveVerificationMethod =
                 TokenType.fromString(availableVerificationMethods.sorted()[0])
         }
-        activeMethod.setData(
-            data = currentActiveVerificationMethod.tokenTypeValue,
-            dropOnSame = false
-        )
+        _activeMethod.tryEmit(currentActiveVerificationMethod.tokenTypeValue)
     }
 }

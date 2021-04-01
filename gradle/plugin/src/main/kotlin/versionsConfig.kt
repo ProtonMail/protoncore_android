@@ -22,7 +22,7 @@ import studio.forface.easygradle.dsl.android.*
 internal fun initVersions() {
 
     // region Kotlin
-    `kotlin version` =                          "1.4.10"        // Released: Sep 09, 2020
+    `kotlin version` =                          "1.4.31"        // Released: Feb 25, 2021
     `coroutines version` =                      "1.4.2"         // Released: Nov 26, 2020
     `serialization version` =                   "1.0.1"         // Released: Oct 28, 2020
     // endregion
@@ -77,9 +77,10 @@ const val `store4 version` =                "4.0.0"         // Released: Nov 30,
 
 // endregion
 
-// region Instrumentation Tests
+// region Tests
 const val `falcon version` =                    "2.1.1"         // Released: Sep 24, 2018
 const val `uiautomator version` =               "2.2.0"         // Released: Oct 25, 2018
 const val `preference version` =                "1.1.1"         // Released: Apr 15, 2020
 const val `json-simple version` =               "1.1.1"         // Released: Mar 21, 2012
+const val `turbine version` =                   "0.4.1"         // Released: Mar 15, 2021
 // endregion

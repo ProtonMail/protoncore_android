@@ -49,8 +49,7 @@ dependencies {
         `appcompat`,
         `constraint-layout`,
         `fragment`,
-        `material`,
-        `viewStateStore`
+        `material`
     )
 
     // Android

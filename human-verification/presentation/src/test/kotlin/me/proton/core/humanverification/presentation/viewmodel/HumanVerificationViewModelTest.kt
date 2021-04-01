@@ -20,28 +20,24 @@ package me.proton.core.humanverification.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
+import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
-import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Rule
 import org.junit.Test
-import studio.forface.viewstatestore.ViewState
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
-/**
- * @author Dino Kadrikj.
- */
-class HumanVerificationViewModelTest {
+class HumanVerificationViewModelTest : CoroutinesTest {
 
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
     private val savedStateHandle = mockk<SavedStateHandle>()
 
     @Test
-    fun `correct initialization`() {
+    fun `correct initialization`() = coroutinesTest {
         val availableMethods = listOf(
             TokenType.EMAIL.tokenTypeValue,
             TokenType.CAPTCHA.tokenTypeValue
@@ -49,11 +45,10 @@ class HumanVerificationViewModelTest {
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
         val viewModel = HumanVerificationViewModel(savedStateHandle)
-        val result = viewModel.enabledMethods.state()
-        assertNotNull(result)
-        assertIs<ViewState.Success<List<String>>>(result)
-        val resultData = result.data
-        assertEquals(availableMethods, resultData)
+        viewModel.enabledMethods.test {
+            assertEquals(availableMethods, expectItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test(expected = NotEnoughVerificationOptions::class)
@@ -65,7 +60,7 @@ class HumanVerificationViewModelTest {
     }
 
     @Test
-    fun `active method correctly set`() {
+    fun `active method correctly set`() = coroutinesTest {
         val availableMethods = listOf(
             TokenType.EMAIL.tokenTypeValue,
             TokenType.CAPTCHA.tokenTypeValue,
@@ -74,15 +69,15 @@ class HumanVerificationViewModelTest {
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
         val viewModel = HumanVerificationViewModel(savedStateHandle)
-        val result = viewModel.activeMethod.state()
-        assertNotNull(result)
-        assertIs<ViewState.Success<String>>(result)
-        val resultData = result.data
-        assertEquals(TokenType.CAPTCHA.tokenTypeValue, resultData)
+
+        viewModel.activeMethod.test {
+            assertEquals(TokenType.CAPTCHA.tokenTypeValue, expectItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
-    fun `active method correctly set option 2`() {
+    fun `active method correctly set option 2`() = coroutinesTest {
         val availableMethods = listOf(
             TokenType.EMAIL.tokenTypeValue,
             TokenType.SMS.tokenTypeValue
@@ -90,10 +85,9 @@ class HumanVerificationViewModelTest {
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
         val viewModel = HumanVerificationViewModel(savedStateHandle)
-        val result = viewModel.activeMethod.state()
-        assertNotNull(result)
-        assertIs<ViewState.Success<String>>(result)
-        val resultData = result.data
-        assertEquals(TokenType.EMAIL.tokenTypeValue, resultData)
+        viewModel.activeMethod.test {
+            assertEquals(TokenType.EMAIL.tokenTypeValue, expectItem())
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 }

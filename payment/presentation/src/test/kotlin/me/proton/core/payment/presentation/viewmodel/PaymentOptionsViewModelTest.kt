@@ -19,6 +19,7 @@
 package me.proton.core.payment.presentation.viewmodel
 
 import android.content.Context
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -111,35 +112,33 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
         )
-        val observer = mockk<(PaymentOptionsViewModel.State) -> Unit>(relaxed = true)
-        viewModel.availablePaymentMethodsState.observeDataForever(observer)
-        // WHEN
-        viewModel.getAvailablePaymentMethods(testUserId)
-        // THEN
-        val arguments = mutableListOf<PaymentOptionsViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<PaymentOptionsViewModel.State.Processing>(arguments[0])
-        val paymentMethodsStatus = arguments[1]
-        assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
-        assertEquals(2, paymentMethodsStatus.availablePaymentMethods.size)
+        viewModel.availablePaymentMethodsState.test {
+            // WHEN
+            viewModel.getAvailablePaymentMethods(testUserId)
+            // THEN
+            assertIs<PaymentOptionsViewModel.State.Idle>(expectItem())
+            assertIs<PaymentOptionsViewModel.State.Processing>(expectItem())
+            val paymentMethodsStatus = expectItem()
+            assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
+            assertEquals(2, paymentMethodsStatus.availablePaymentMethods.size)
+        }
     }
 
     @Test
     fun `no available payment methods success handled correctly`() = coroutinesTest {
         // GIVEN
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
-        val observer = mockk<(PaymentOptionsViewModel.State) -> Unit>(relaxed = true)
-        viewModel.availablePaymentMethodsState.observeDataForever(observer)
-        // WHEN
-        viewModel.getAvailablePaymentMethods(testUserId)
-        // THEN
-        val arguments = mutableListOf<PaymentOptionsViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
-        assertIs<PaymentOptionsViewModel.State.Processing>(arguments[0])
-        val paymentMethodsStatus = arguments[1]
-        assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
-        assertTrue(paymentMethodsStatus.availablePaymentMethods.isEmpty())
+        viewModel.availablePaymentMethodsState.test {
+            // WHEN
+            viewModel.getAvailablePaymentMethods(testUserId)
+            // THEN
+            coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
+            assertIs<PaymentOptionsViewModel.State.Idle>(expectItem())
+            assertIs<PaymentOptionsViewModel.State.Processing>(expectItem())
+            val paymentMethodsStatus = expectItem()
+            assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
+            assertTrue(paymentMethodsStatus.availablePaymentMethods.isEmpty())
+        }
     }
 
     @Test
@@ -155,17 +154,16 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
         )
-        val observer = mockk<(PaymentOptionsViewModel.State) -> Unit>(relaxed = true)
-        viewModel.availablePaymentMethodsState.observeDataForever(observer)
-        // WHEN
-        viewModel.getAvailablePaymentMethods(testUserId)
-        // THEN
-        val arguments = mutableListOf<PaymentOptionsViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<PaymentOptionsViewModel.State.Processing>(arguments[0])
-        val paymentMethodsStatus = arguments[1]
-        assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Error.Message)
-        assertEquals("proton error", paymentMethodsStatus.message)
+        viewModel.availablePaymentMethodsState.test {
+            // WHEN
+            viewModel.getAvailablePaymentMethods(testUserId)
+            // THEN
+            assertIs<PaymentOptionsViewModel.State.Idle>(expectItem())
+            assertIs<PaymentOptionsViewModel.State.Processing>(expectItem())
+            val paymentMethodsStatus = expectItem()
+            assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Error.Message)
+            assertEquals("proton error", paymentMethodsStatus.message)
+        }
     }
 
     @Test

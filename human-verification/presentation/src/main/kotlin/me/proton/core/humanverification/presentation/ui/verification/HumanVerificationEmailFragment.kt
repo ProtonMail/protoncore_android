@@ -22,7 +22,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEmailBinding
@@ -35,6 +37,7 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateEmail
+import me.proton.core.presentation.viewmodel.onError
 
 /**
  * Fragment that handles human verification with email address.
@@ -43,23 +46,6 @@ import me.proton.core.presentation.utils.validateEmail
  */
 @AndroidEntryPoint
 internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVerificationEmailBinding>() {
-
-    companion object {
-        private const val ARG_SESSION_ID = "arg.sessionId"
-        private const val ARG_RECOVERY_EMAIL = "arg.recoveryemail"
-
-        operator fun invoke(
-            sessionId: String,
-            token: String,
-            recoveryEmailAddress: String? = null
-        ) = HumanVerificationEmailFragment().apply {
-            arguments = bundleOf(
-                ARG_SESSION_ID to sessionId,
-                ARG_URL_TOKEN to token,
-                ARG_RECOVERY_EMAIL to recoveryEmailAddress
-            )
-        }
-    }
 
     private val viewModel by viewModels<HumanVerificationEmailViewModel>()
 
@@ -104,16 +90,31 @@ internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVeri
                 humanVerificationBase.onGetCodeClicked(parentFragmentManager)
             }
         }
-        viewModel.validation.observe(viewLifecycleOwner) {
-            doOnError {
-                binding.emailEditText.setInputError()
-            }
-        }
+        viewModel.validation.onError {
+            binding.emailEditText.setInputError()
+        }.launchIn(lifecycleScope)
     }
 
     override fun layoutId(): Int = R.layout.fragment_human_verification_email
 
     private fun onError() = with(binding) {
         root.errorSnack(R.string.human_verification_sending_failed)
+    }
+
+    companion object {
+        private const val ARG_SESSION_ID = "arg.sessionId"
+        private const val ARG_RECOVERY_EMAIL = "arg.recoveryemail"
+
+        operator fun invoke(
+            sessionId: String,
+            token: String,
+            recoveryEmailAddress: String? = null
+        ) = HumanVerificationEmailFragment().apply {
+            arguments = bundleOf(
+                ARG_SESSION_ID to sessionId,
+                ARG_URL_TOKEN to token,
+                ARG_RECOVERY_EMAIL to recoveryEmailAddress
+            )
+        }
     }
 }

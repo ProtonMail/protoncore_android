@@ -23,7 +23,7 @@ plugins {
     kotlin("jvm")
 }
 
-libVersion = Version(0, 2, 0)
+libVersion = Version(0, 2, 1)
 
 dependencies {
 
@@ -40,6 +40,7 @@ dependencies {
         `kotlin-test`,
         `kotlin-test-junit`,
         `coroutines-test`,
+        `turbine`,
 
         `mockk`
     )

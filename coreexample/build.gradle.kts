@@ -71,7 +71,6 @@ dependencies {
         `hilt-androidx-annotations`,
         `hilt-androidx-viewModel`,
         `material`,
-        `viewStateStore`,
         `android-work-runtime`,
 
         // Other

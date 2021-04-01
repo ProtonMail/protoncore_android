@@ -23,7 +23,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.BUNDLE_KEY_COUNTRY
 import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.KEY_COUNTRY_SELECTED
@@ -40,6 +42,8 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validate
+import me.proton.core.presentation.viewmodel.onError
+import me.proton.core.presentation.viewmodel.onSuccess
 
 /**
  * Fragment that handles human verification with phone number.
@@ -81,6 +85,7 @@ internal class HumanVerificationSMSFragment :
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getMostUsedCallingCode()
         humanVerificationBase.onViewCreated(
             owner = viewLifecycleOwner,
             parentFragmentManager = parentFragmentManager,
@@ -116,15 +121,14 @@ internal class HumanVerificationSMSFragment :
             }
         }
 
-        viewModel.validation.observe(viewLifecycleOwner) {
-            doOnError { onValidationError() }
-        }
-        viewModel.mostUsedCallingCode.observe(viewLifecycleOwner) {
-            doOnData {
-                binding.callingCodeText.text =
-                    String.format(getString(R.string.human_verification_calling_code_template), it)
-            }
-        }
+        viewModel.validation.onError {
+            onValidationError()
+        }.launchIn(lifecycleScope)
+
+        viewModel.mostUsedCallingCode.onSuccess {
+            binding.callingCodeText.text =
+                String.format(getString(R.string.human_verification_calling_code_template), it)
+        }.launchIn(lifecycleScope)
     }
 
     override fun layoutId(): Int = R.layout.fragment_human_verification_sms

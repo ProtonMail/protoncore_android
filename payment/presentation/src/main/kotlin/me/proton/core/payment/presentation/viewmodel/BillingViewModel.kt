@@ -20,6 +20,8 @@ package me.proton.core.payment.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -41,8 +43,6 @@ import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
-import studio.forface.viewstatestore.ViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
 import javax.inject.Inject
 
 /**
@@ -56,10 +56,13 @@ class BillingViewModel @ViewModelInject @Inject constructor(
     private val createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
     private val performSubscribe: PerformSubscribe,
     private val getCountry: GetCountry
-) : ProtonViewModel(), ViewStateStoreScope {
+) : ProtonViewModel() {
 
-    val subscriptionResult = ViewStateStore<State>().lock
-    val plansValidationState = ViewStateStore<PlansValidationState>().lock
+    private val _subscriptionState = MutableStateFlow<State>(State.Idle)
+    private val _plansValidationState = MutableStateFlow<PlansValidationState>(PlansValidationState.Idle)
+
+    val subscriptionResult = _subscriptionState.asStateFlow()
+    val plansValidationState = _plansValidationState.asStateFlow()
 
     /**
      * Represents main subscription state sealed class with all possible outcomes as subclasses needed to inform the
@@ -67,6 +70,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
      * ing on in the process, as well as the outcome of it.
      */
     sealed class State {
+        object Idle : State()
         object Processing : State()
 
         sealed class Success : State() {
@@ -88,6 +92,7 @@ class BillingViewModel @ViewModelInject @Inject constructor(
     }
 
     sealed class PlansValidationState {
+        object Idle : PlansValidationState()
         object Processing : PlansValidationState()
         data class Success(val subscription: SubscriptionStatus) : PlansValidationState()
 
@@ -170,9 +175,9 @@ class BillingViewModel @ViewModelInject @Inject constructor(
             // endregion
         }
     }.catch {
-        subscriptionResult.post(State.Error.Message(it.message))
+        _subscriptionState.tryEmit(State.Error.Message(it.message))
     }.onEach {
-        subscriptionResult.post(it)
+        _subscriptionState.tryEmit(it)
     }.launchIn(viewModelScope)
 
     /**
@@ -190,9 +195,9 @@ class BillingViewModel @ViewModelInject @Inject constructor(
     ) = flow {
         emit(onTokenApproved(userId, planIds, codes, amount, currency, cycle, token))
     }.catch {
-        subscriptionResult.post(State.Error.Message(it.message))
+        _subscriptionState.tryEmit(State.Error.Message(it.message))
     }.onEach {
-        subscriptionResult.post(it)
+        _subscriptionState.tryEmit(it)
     }.launchIn(viewModelScope)
 
     /**
@@ -209,9 +214,9 @@ class BillingViewModel @ViewModelInject @Inject constructor(
         emit(PlansValidationState.Processing)
         emit(PlansValidationState.Success(validatePlanSubscription(userId, codes, planIds, currency, cycle)))
     }.catch { error ->
-        plansValidationState.post(PlansValidationState.Error.Message(error.message))
+        _plansValidationState.tryEmit(PlansValidationState.Error.Message(error.message))
     }.onEach { subscriptionState ->
-        this.plansValidationState.post(subscriptionState)
+        this._plansValidationState.tryEmit(subscriptionState)
     }.launchIn(viewModelScope)
 
     private suspend fun onTokenApproved(

@@ -19,6 +19,7 @@
 package me.proton.core.country.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
@@ -26,6 +27,7 @@ import me.proton.core.country.domain.usecase.LoadCountries
 import me.proton.core.country.presentation.utils.testCountriesExcludingMostUsed
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.assertIs
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -45,24 +47,20 @@ class CountryPickerViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `load countries has data`() = coroutinesTest {
         coEvery { loadCountries.invoke() } returns testCountriesExcludingMostUsed
-        val observer = mockk<(CountryPickerViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<CountryPickerViewModel.State>()
-        viewModel.countries.observeDataForever(observer)
-        verify(exactly = 1) { observer(capture(arguments)) }
-        val success = arguments[0]
-        assertTrue(success is CountryPickerViewModel.State.Success)
-        assertEquals(9, success.countries.size)
+        viewModel.countries.test {
+            val success = expectItem()
+            assertTrue(success is CountryPickerViewModel.State.Success)
+            assertEquals(9, success.countries.size)
+        }
     }
 
     @Test
     fun `load countries returns empty list`() = coroutinesTest {
         coEvery { loadCountries.invoke() } returns emptyList()
-        val observer = mockk<(CountryPickerViewModel.State) -> Unit>(relaxed = true)
-        val arguments = mutableListOf<CountryPickerViewModel.State>()
-        viewModel.countries.observeDataForever(observer)
-        verify(exactly = 1) { observer(capture(arguments)) }
-        val success = arguments[0]
-        assertTrue(success is CountryPickerViewModel.State.Success)
-        assertEquals(0, success.countries.size)
+        viewModel.countries.test {
+            val success = expectItem()
+            assertTrue(success is CountryPickerViewModel.State.Success)
+            assertEquals(0, success.countries.size)
+        }
     }
 }

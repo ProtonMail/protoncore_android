@@ -22,7 +22,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEnterCodeBinding
@@ -39,31 +41,14 @@ import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.validate
+import me.proton.core.presentation.viewmodel.onError
+import me.proton.core.presentation.viewmodel.onSuccess
 
 /**
  * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
-class HumanVerificationEnterCodeFragment :
-    ProtonDialogFragment<FragmentHumanVerificationEnterCodeBinding>() {
-
-    companion object {
-        private const val ARG_SESSION_ID = "arg.sessionId"
-        private const val ARG_DESTINATION = "arg.destination"
-        private const val ARG_TOKEN_TYPE = "arg.enter-code-token-type"
-
-        operator fun invoke(
-            sessionId: String,
-            tokenType: TokenType,
-            destination: String?
-        ) = HumanVerificationEnterCodeFragment().apply {
-            arguments = bundleOf(
-                ARG_SESSION_ID to sessionId,
-                ARG_DESTINATION to destination,
-                ARG_TOKEN_TYPE to tokenType.tokenTypeValue
-            )
-        }
-    }
+class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVerificationEnterCodeBinding>() {
 
     private val viewModel by viewModels<HumanVerificationEnterCodeViewModel>()
 
@@ -118,22 +103,21 @@ class HumanVerificationEnterCodeFragment :
             requestReplacementButton.onClick { viewModel.resendCode(sessionId) }
         }
 
-        viewModel.codeVerificationResult.observe(viewLifecycleOwner) {
-            doOnData {
-                parentFragmentManager.setFragmentResult(
-                    KEY_VERIFICATION_DONE,
-                    bundleOf(
-                        ARG_TOKEN_CODE to binding.verificationCodeEditText.text,
-                        HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
-                    )
+        viewModel.codeVerificationResult.onSuccess {
+            parentFragmentManager.setFragmentResult(
+                KEY_VERIFICATION_DONE,
+                bundleOf(
+                    ARG_TOKEN_CODE to binding.verificationCodeEditText.text,
+                    HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
                 )
-            }
-            doOnError { showErrorCode() }
-        }
+            )
+        }.onError {
+            showErrorCode()
+        }.launchIn(lifecycleScope)
 
-        viewModel.verificationCodeResendStatus.observe(viewLifecycleOwner) {
-            doOnData { showCodeResent() }
-        }
+        viewModel.verificationCodeResendStatus.onSuccess {
+            showCodeResent()
+        }.launchIn(lifecycleScope)
     }
 
     override fun layoutId(): Int = R.layout.fragment_human_verification_enter_code
@@ -152,5 +136,23 @@ class HumanVerificationEnterCodeFragment :
 
     override fun onBackPressed() {
         dismissAllowingStateLoss()
+    }
+
+    companion object {
+        private const val ARG_SESSION_ID = "arg.sessionId"
+        private const val ARG_DESTINATION = "arg.destination"
+        private const val ARG_TOKEN_TYPE = "arg.enter-code-token-type"
+
+        operator fun invoke(
+            sessionId: String,
+            tokenType: TokenType,
+            destination: String?
+        ) = HumanVerificationEnterCodeFragment().apply {
+            arguments = bundleOf(
+                ARG_SESSION_ID to sessionId,
+                ARG_DESTINATION to destination,
+                ARG_TOKEN_TYPE to tokenType.tokenTypeValue
+            )
+        }
     }
 }

@@ -22,7 +22,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityChooseAddressBinding
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
@@ -77,8 +80,9 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
         }
 
         viewModel.setUserId(UserId(input.userId))
-        viewModel.state.observeData {
+        viewModel.state.onEach {
             when (it) {
+                is ChooseAddressViewModel.State.Idle -> showLoading(false)
                 is ChooseAddressViewModel.State.Processing -> showLoading(true)
                 is ChooseAddressViewModel.State.Success -> onUsernameAvailable(it.username, it.domain)
                 is ChooseAddressViewModel.State.Data -> onData(it.username, it.domains)
@@ -88,7 +92,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
                 is ChooseAddressViewModel.State.Error.UsernameNotAvailable ->
                     onUsernameUnavailable(getString(R.string.auth_create_address_error_username_unavailable))
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {

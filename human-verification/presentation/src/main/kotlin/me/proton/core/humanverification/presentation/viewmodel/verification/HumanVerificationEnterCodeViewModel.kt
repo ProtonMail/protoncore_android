@@ -20,7 +20,8 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.VerificationResult
@@ -30,8 +31,7 @@ import me.proton.core.humanverification.presentation.exception.TokenCodeVerifica
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import studio.forface.viewstatestore.ViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
+import me.proton.core.presentation.viewmodel.ViewModelResult
 
 /**
  * View model class that handles the input of the verification code (token) previously sent to any
@@ -43,7 +43,10 @@ import studio.forface.viewstatestore.ViewStateStoreScope
 class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
     private val resendVerificationCodeToDestination: ResendVerificationCodeToDestination,
     private val verifyCode: VerifyCode
-) : ProtonViewModel(), ViewStateStoreScope {
+) : ProtonViewModel() {
+
+    private val _verificationCodeResendStatus = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
+    private val _codeVerificationResult = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
 
     lateinit var tokenType: TokenType
 
@@ -51,12 +54,12 @@ class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
     // somewhere else (ex. from customer support)
     var destination: String? = null
 
-    val verificationCodeResendStatus = ViewStateStore<Boolean>().lock
+    val verificationCodeResendStatus = _verificationCodeResendStatus.asStateFlow()
 
     /**
      * Code is sometimes referred as a token, so token on BE and code on UI, it is same thing.
      */
-    val codeVerificationResult = ViewStateStore<Boolean>().lock
+    val codeVerificationResult = _codeVerificationResult.asStateFlow()
 
     /**
      * Verifies the entered token on the API.
@@ -66,12 +69,12 @@ class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
      * depending of the [TokenType]
      */
     fun verifyTokenCode(sessionId: SessionId, tokenType: TokenType, token: String) =
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val result = verifyCode(sessionId, tokenType.name, token)
             if (result is VerificationResult.Success) {
-                codeVerificationResult.post(true)
+                _codeVerificationResult.tryEmit(ViewModelResult.Success(true))
             } else {
-                codeVerificationResult.postError(TokenCodeVerificationException())
+                _codeVerificationResult.tryEmit(ViewModelResult.Error(TokenCodeVerificationException()))
             }
         }
 
@@ -80,12 +83,12 @@ class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
      */
     fun resendCode(sessionId: SessionId) {
         destination?.let {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch {
                 val result = resendVerificationCodeToDestination(sessionId, tokenType, it)
                 if (result is VerificationResult.Success) {
-                    verificationCodeResendStatus.post(true)
+                    _verificationCodeResendStatus.tryEmit(ViewModelResult.Success(true))
                 } else {
-                    verificationCodeResendStatus.postError(VerificationCodeSendingException())
+                    _verificationCodeResendStatus.tryEmit(ViewModelResult.Error(VerificationCodeSendingException()))
                 }
             }
         }

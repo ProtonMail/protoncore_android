@@ -18,9 +18,13 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -46,10 +50,9 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
-import studio.forface.viewstatestore.ViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
 
 class LoginViewModel @ViewModelInject constructor(
+    @Assisted private val savedStateHandle: SavedStateHandle,
     private val accountWorkflow: AccountWorkflowHandler,
     private val performLogin: PerformLogin,
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
@@ -57,13 +60,14 @@ class LoginViewModel @ViewModelInject constructor(
     private val setupPrimaryKeys: SetupPrimaryKeys,
     private val setupInternalAddress: SetupInternalAddress,
     private val keyStoreCrypto: KeyStoreCrypto
-) : ProtonViewModel(), ViewStateStoreScope {
+) : ProtonViewModel() {
 
-    private val _userId = ViewStateStore<UserId>().lock
+    private val _state = MutableStateFlow<State>(State.Idle)
 
-    val loginState = ViewStateStore<State>().lock
+    val state = _state.asStateFlow()
 
     sealed class State {
+        object Idle : State()
         object Processing : State()
         sealed class Success : State() {
             data class UserUnLocked(val userId: UserId) : Success()
@@ -83,7 +87,7 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun stopLoginWorkflow(): Job = viewModelScope.launch {
-        _userId.data()?.let { accountWorkflow.handleAccountDisabled(it) }
+        savedStateHandle.get<String>(STATE_USER_ID)?.let { accountWorkflow.handleAccountDisabled(UserId(it)) }
     }
 
     fun startLoginWorkflow(
@@ -97,7 +101,7 @@ class LoginViewModel @ViewModelInject constructor(
 
         val sessionInfo = performLogin.invoke(username, encryptedPassword)
         val userId = sessionInfo.userId
-        _userId.set(userId)
+        savedStateHandle.set(STATE_USER_ID, userId.id)
 
         // Storing the session is mandatory for executing subsequent requests.
         handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)
@@ -120,9 +124,9 @@ class LoginViewModel @ViewModelInject constructor(
             emit(it)
         }
     }.catch { error ->
-        loginState.post(State.Error.Message(error.message))
+        _state.tryEmit(State.Error.Message(error.message))
     }.onEach { state ->
-        loginState.post(state)
+        _state.tryEmit(state)
     }.launchIn(viewModelScope)
 
     private suspend fun twoPassMode(
@@ -218,5 +222,9 @@ class LoginViewModel @ViewModelInject constructor(
             scopes = sessionInfo.scopes
         )
         accountWorkflow.handleSession(account, session)
+    }
+
+    companion object {
+        const val STATE_USER_ID = "userId"
     }
 }

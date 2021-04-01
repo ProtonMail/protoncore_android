@@ -23,7 +23,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.country.presentation.ui.CountryPickerFragment
 import me.proton.core.country.presentation.ui.showCountryPicker
@@ -95,18 +98,17 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
     }
 
     private fun observeViewModel() {
-        viewModel.plansValidationState.observeData {
+        viewModel.plansValidationState.onEach {
             when (it) {
-                is BillingViewModel.PlansValidationState.Processing -> {
-                }
                 is BillingViewModel.PlansValidationState.Success -> {
                     binding.selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
                 }
                 is BillingViewModel.PlansValidationState.Error.Message -> showError(it.message)
+                else -> { }
             }.exhaustive
-        }
+        }.launchIn(lifecycleScope)
 
-        viewModel.subscriptionResult.observeData {
+        viewModel.subscriptionResult.onEach {
             when (it) {
                 is BillingViewModel.State.Processing -> showLoading(true)
                 is BillingViewModel.State.Success.SignUpTokenReady -> onBillingSuccess(it.paymentToken)
@@ -120,7 +122,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
                     // no operation, not interested in other events
                 }
             }
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun onBillingSuccess(token: String? = null) {

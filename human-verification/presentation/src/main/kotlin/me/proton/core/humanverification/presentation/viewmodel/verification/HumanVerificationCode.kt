@@ -18,9 +18,11 @@
 
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import me.proton.core.country.presentation.entity.CountryUIModel
-import studio.forface.viewstatestore.LockedViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
+import me.proton.core.presentation.viewmodel.ViewModelResult
 
 /**
  * Interface that exposes 2 LiveData properties which are needed to avoid code duplication in the
@@ -28,15 +30,21 @@ import studio.forface.viewstatestore.ViewStateStoreScope
  *
  * @author Dino Kadrikj.
  */
-internal interface HumanVerificationCode : ViewStateStoreScope {
+internal interface HumanVerificationCode {
 
     /**
      * Validation LiveData.
      */
-    val validation: LockedViewStateStore<List<CountryUIModel>>
+    val validation: StateFlow<ViewModelResult<List<CountryUIModel>>>
+        get() = getNewValidation().asStateFlow()
 
     /**
      * Verification code sending result LiveData.
      */
-    val verificationCodeStatus: LockedViewStateStore<Boolean>
+    val verificationCodeStatus: StateFlow<ViewModelResult<Boolean>>
+        get() = getNewVerificationCodeStatus().asStateFlow()
+
+    fun getNewValidation(): MutableStateFlow<ViewModelResult<List<CountryUIModel>>> = MutableStateFlow(ViewModelResult.None)
+    fun getNewVerificationCodeStatus(): MutableStateFlow<ViewModelResult<Boolean>> = MutableStateFlow(ViewModelResult.None)
+
 }

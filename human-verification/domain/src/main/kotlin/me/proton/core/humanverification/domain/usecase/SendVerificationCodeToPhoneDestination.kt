@@ -31,11 +31,10 @@ import javax.inject.Inject
  * Depends on the [HumanVerificationRemoteRepository] for contacting the API.
  *
  * @param humanVerificationRemoteRepository the remote repository interface implementation.
- *
- * @author Dino Kadrikj.
  */
-class SendVerificationCodeToPhoneDestination @Inject
-constructor(private val humanVerificationRemoteRepository: HumanVerificationRemoteRepository) {
+class SendVerificationCodeToPhoneDestination @Inject constructor(
+    private val humanVerificationRemoteRepository: HumanVerificationRemoteRepository
+) {
 
     /**
      * Sends the verification code (token) to the API.

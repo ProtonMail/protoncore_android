@@ -18,11 +18,11 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
@@ -98,24 +98,24 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         every { testUser.keys } returns emptyList()
         coEvery { userManager.getAddresses(any(), any()) } returns emptyList()
-        // WHEN
-        val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
-        viewModel.upgradeState.observeDataForever(observer)
-        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
-        // THEN
-        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+        viewModel.state.test {
+            // WHEN
+            viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
 
-        coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
-        coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
+            // THEN
+            coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+            coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
+            coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
+            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+            coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
 
-        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-        coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
+            assertIs<CreateAddressViewModel.State.Processing>(expectItem())
+            assertIs<CreateAddressViewModel.State.Success>(expectItem())
 
-        val arguments = mutableListOf<CreateAddressViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
-        assertIs<CreateAddressViewModel.State.Success>(arguments[1])
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -123,24 +123,26 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         every { testUser.keys } returns listOf(testUserKey)
         coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressExternal)
-        // WHEN
-        val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
-        viewModel.upgradeState.observeDataForever(observer)
-        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
-        // THEN
-        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+        viewModel.state.test {
+            // WHEN
+            viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
 
-        coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
-        coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
+            // THEN
+            coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-        coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
+            coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 
-        val arguments = mutableListOf<CreateAddressViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
-        assertIs<CreateAddressViewModel.State.Success>(arguments[1])
+            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+            coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+
+            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
+            assertIs<CreateAddressViewModel.State.Processing>(expectItem())
+            assertIs<CreateAddressViewModel.State.Success>(expectItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -148,24 +150,26 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         every { testUser.keys } returns listOf(testUserKey)
         coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressInternalWithoutKeys)
-        // WHEN
-        val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
-        viewModel.upgradeState.observeDataForever(observer)
-        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
-        // THEN
-        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+        viewModel.state.test {
+            // WHEN
+            viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
 
-        coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
-        coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
+            // THEN
+            coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-        coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
+            coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 
-        val arguments = mutableListOf<CreateAddressViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
-        assertIs<CreateAddressViewModel.State.Success>(arguments[1])
+            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+            coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+
+            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
+            assertIs<CreateAddressViewModel.State.Processing>(expectItem())
+            assertIs<CreateAddressViewModel.State.Success>(expectItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -173,24 +177,26 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         every { testUser.keys } returns listOf(testUserKey)
         coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressInternal)
-        // WHEN
-        val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
-        viewModel.upgradeState.observeDataForever(observer)
-        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
-        // THEN
-        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+        viewModel.state.test {
+            // WHEN
+            viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
 
-        coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
-        coVerify(exactly = 0) { accountHandler.handleCreateAddressSuccess(any()) }
+            // THEN
+            coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-        coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
+            coVerify(exactly = 0) { accountHandler.handleCreateAddressSuccess(any()) }
 
-        val arguments = mutableListOf<CreateAddressViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
-        assertIs<CreateAddressViewModel.State.Success>(arguments[1])
+            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+            coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+
+            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
+            assertIs<CreateAddressViewModel.State.Processing>(expectItem())
+            assertIs<CreateAddressViewModel.State.Success>(expectItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -204,25 +210,26 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
                 any()
             )
         } returns UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase
-        // WHEN
-        val observer = mockk<(CreateAddressViewModel.State) -> Unit>(relaxed = true)
-        viewModel.upgradeState.observeDataForever(observer)
-        viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
-        // THEN
-        coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+        viewModel.state.test {
+            // WHEN
+            viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
 
-        coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
-        coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
-        coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
+            // THEN
+            coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-        coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-        coVerify(exactly = 1) { accountHandler.handleUnlockFailed(any()) }
-        coVerify(exactly = 0) { accountHandler.handleAccountReady(any()) }
+            coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
+            coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 
-        val arguments = mutableListOf<CreateAddressViewModel.State>()
-        verify(exactly = 2) { observer(capture(arguments)) }
-        assertIs<CreateAddressViewModel.State.Processing>(arguments[0])
-        assertIs<CreateAddressViewModel.State.Error.CannotUnlockPrimaryKey>(arguments[1])
+            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
+            coVerify(exactly = 1) { accountHandler.handleUnlockFailed(any()) }
+            coVerify(exactly = 0) { accountHandler.handleAccountReady(any()) }
+
+            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
+            assertIs<CreateAddressViewModel.State.Processing>(expectItem())
+            assertIs<CreateAddressViewModel.State.Error.CannotUnlockPrimaryKey>(expectItem())
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
-
 }

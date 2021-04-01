@@ -36,7 +36,7 @@ buildscript {
     repositories.google()
 
     dependencies {
-        val kotlinVersion = "1.4.10" // Sep 09, 2020
+        val kotlinVersion = "1.4.31" // Feb 25, 2021
         val dokkaVersion = "1.4.10.2" // Oct 20, 2020
         val agpVersion = "4.1.2" // Jan 14, 2021
         val hiltVersion = "2.29.1-alpha" // Sep 10, 2020
@@ -56,7 +56,8 @@ kotlinCompilerArgs(
     "-XXLanguage:+InlineClasses",
     // Enables experimental Coroutines from coroutines-test artifact, like `runBlockingTest`
     "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-    "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi"
+    "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
+    "-Xopt-in=kotlin.time.ExperimentalTime"
 )
 
 tasks.register("clean", Delete::class.java) {

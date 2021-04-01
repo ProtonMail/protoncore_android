@@ -21,10 +21,14 @@ package me.proton.core.humanverification.presentation.ui.verification
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.launchIn
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCode
 import me.proton.core.presentation.ui.view.Loadable
+import me.proton.core.presentation.viewmodel.onError
+import me.proton.core.presentation.viewmodel.onSuccess
 
 /**
  * Base class for all verification methods.
@@ -37,12 +41,9 @@ internal class HumanVerificationMethodCommon(
     val tokenType: TokenType
 ) {
 
-    companion object {
-        const val ARG_URL_TOKEN = "arg.urltoken"
-    }
+    private var destination: String? = null
 
     var verificationToken: String? = null
-    private var destination: String? = null
 
     /**
      * Observes the verification code result.
@@ -58,15 +59,12 @@ internal class HumanVerificationMethodCommon(
         loadable: Loadable? = null,
         onVerificationCodeError: () -> Unit
     ) {
-        viewModel.verificationCodeStatus.observe(owner) {
-            doOnData {
-                onGetCodeClicked(parentFragmentManager)
-            }
-            doOnError {
-                loadable?.loadingComplete()
-                onVerificationCodeError()
-            }
-        }
+        viewModel.verificationCodeStatus.onSuccess {
+            onGetCodeClicked(parentFragmentManager)
+        }.onError {
+            loadable?.loadingComplete()
+            onVerificationCodeError()
+        }.launchIn(owner.lifecycleScope)
     }
 
     /**
@@ -83,5 +81,9 @@ internal class HumanVerificationMethodCommon(
                 HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
             )
         )
+    }
+
+    companion object {
+        const val ARG_URL_TOKEN = "arg.urltoken"
     }
 }

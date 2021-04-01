@@ -20,8 +20,10 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.humanverification.domain.entity.TokenType
@@ -32,35 +34,24 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import studio.forface.viewstatestore.LockedViewStateStore
-import studio.forface.viewstatestore.ViewState
-import studio.forface.viewstatestore.ViewStateStore
+import me.proton.core.presentation.viewmodel.ViewModelResult
 
 /**
  * View model class that handles and supports [TokenType.CAPTCHA] verification method (type) fragment.
- *
- * @author Dino Kadrikj.
  */
-internal class HumanVerificationCaptchaViewModel @ViewModelInject
-constructor(
+internal class HumanVerificationCaptchaViewModel @ViewModelInject constructor(
     private val verifyCode: VerifyCode,
     private val networkManager: NetworkManager
 ) : ProtonViewModel(), HumanVerificationCode {
 
+    private val _codeVerificationResult = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
+    private val _networkConnectionState = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
+
     /**
      * Code is sometimes referred as a token, so token on BE and code on UI, it is same thing.
      */
-    val codeVerificationResult = ViewStateStore<Boolean>().lock
-    val networkConnectionState = ViewStateStore<Boolean>().lock
-
-    private val validationCaptcha = ViewStateStore<List<CountryUIModel>>(ViewState.Loading).lock
-    private val verificationCodeStatusCaptcha = ViewStateStore<Boolean>().lock
-
-    override val validation: LockedViewStateStore<List<CountryUIModel>>
-        get() = validationCaptcha
-
-    override val verificationCodeStatus: LockedViewStateStore<Boolean>
-        get() = verificationCodeStatusCaptcha
+    val codeVerificationResult = _codeVerificationResult.asStateFlow()
+    val networkConnectionState = _networkConnectionState.asStateFlow()
 
     init {
         networkWatcher()
@@ -71,15 +62,13 @@ constructor(
      */
     fun verifyTokenCode(sessionId: SessionId, token: String?) {
         requireNotNull(token)
-        if (token.isEmpty()) {
-            throw IllegalArgumentException("Verification token is empty.")
-        }
-        viewModelScope.launch(Dispatchers.IO) {
+        require(token.isNotEmpty()) { "Verification token is empty." }
+        viewModelScope.launch {
             val result = verifyCode(sessionId, TokenType.CAPTCHA.name, token)
             if (result is VerificationResult.Success) {
-                codeVerificationResult.post(true)
+                _codeVerificationResult.tryEmit(ViewModelResult.Success(true))
             } else {
-                codeVerificationResult.postError(TokenCodeVerificationException())
+                _codeVerificationResult.tryEmit(ViewModelResult.Error(TokenCodeVerificationException()))
             }
         }
     }
@@ -89,16 +78,15 @@ constructor(
      * accordingly for any network dependent tasks.
      */
     private fun networkWatcher() {
-        viewModelScope.launch {
-            networkManager.observe().collect { status ->
-                networkConnectionState.postData(
-                    data =
+        networkManager.observe().onEach { status ->
+            _networkConnectionState.tryEmit(
+                ViewModelResult.Success(
                     when (status) {
                         NetworkStatus.Metered, NetworkStatus.Unmetered -> true
                         else -> false
-                    }, dropOnSame = true
+                    }
                 )
-            }
-        }
+            )
+        }.launchIn(viewModelScope)
     }
 }

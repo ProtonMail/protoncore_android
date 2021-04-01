@@ -23,7 +23,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityCreateAddressBinding
 import me.proton.core.auth.presentation.entity.CreateAddressInput
@@ -31,6 +34,7 @@ import me.proton.core.auth.presentation.entity.CreateAddressResult
 import me.proton.core.auth.presentation.viewmodel.CreateAddressViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.util.kotlin.exhaustive
 
 /**
  * Second step in the address creation flow.
@@ -69,13 +73,15 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
             termsConditionsText.movementMethod = LinkMovementMethod.getInstance()
         }
 
-        viewModel.upgradeState.observeData {
+        viewModel.state.onEach {
             when (it) {
+                is CreateAddressViewModel.State.Idle -> showLoading(false)
                 is CreateAddressViewModel.State.Processing -> showLoading(true)
                 is CreateAddressViewModel.State.Success -> onSuccess()
                 is CreateAddressViewModel.State.Error.Message -> showError(it.message)
-            }
-        }
+                is CreateAddressViewModel.State.Error.CannotUnlockPrimaryKey -> showError(null)
+            }.exhaustive
+        }.launchIn(lifecycleScope)
     }
 
     override fun showLoading(loading: Boolean) = with(binding.createAddressButton) {

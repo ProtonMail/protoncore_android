@@ -21,6 +21,8 @@ package me.proton.core.auth.presentation.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -40,8 +42,6 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
-import studio.forface.viewstatestore.ViewStateStore
-import studio.forface.viewstatestore.ViewStateStoreScope
 
 class SecondFactorViewModel @ViewModelInject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
@@ -51,11 +51,14 @@ class SecondFactorViewModel @ViewModelInject constructor(
     private val setupPrimaryKeys: SetupPrimaryKeys,
     private val setupInternalAddress: SetupInternalAddress,
     private val sessionProvider: SessionProvider
-) : ProtonViewModel(), ViewStateStoreScope {
+) : ProtonViewModel() {
 
-    val secondFactorState = ViewStateStore<State>().lock
+    private val _state = MutableStateFlow<State>(State.Idle)
+
+    val state = _state.asStateFlow()
 
     sealed class State {
+        object Idle : State()
         object Processing : State()
         sealed class Success : State() {
             data class UserUnLocked(val userId: UserId) : Success()
@@ -110,11 +113,11 @@ class SecondFactorViewModel @ViewModelInject constructor(
         }
     }.catch { error ->
         if (error.isUnrecoverableError())
-            secondFactorState.post(State.Error.Unrecoverable)
+            _state.tryEmit(State.Error.Unrecoverable)
         else
-            secondFactorState.post(State.Error.Message(error.message))
+            _state.tryEmit(State.Error.Message(error.message))
     }.onEach { state ->
-        secondFactorState.post(state)
+        _state.tryEmit(state)
     }.launchIn(viewModelScope)
 
     private suspend fun twoPassMode(

@@ -17,7 +17,7 @@
  */
 
 plugins {
-    val kotlinVersion = "1.4.10"
+    val kotlinVersion = "1.4.31"
     val publishVersion = "0.7"
 
     kotlin("jvm") version kotlinVersion
