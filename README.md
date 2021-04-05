@@ -83,7 +83,7 @@ Util Kotlin: **0.2.4** - _released on: Nov 19, 2020_
 
 ### Test
 
-Test Kotlin: **0.2** - _released on: Oct 21, 2020_
+Test Kotlin: **0.2.1** - _released on: Apr 05, 2021_
 
 Test Android: **0.4.3** - _released on: Mar 22, 2021_
 
@@ -121,11 +121,11 @@ Crypto Android: **1.0.2** - _released on: Mar 05, 2021_
 
 Auth: **1.0.3** - _released on: Apr 05, 2021_
 
-Auth Domain: **1.0.2** - _released on: Mar 16, 2021_
+Auth Domain: **1.0.3** - _released on: Apr 05, 2021_
 
-Auth Presentation: **1.0.2** - _released on: Mar 16, 2021_
+Auth Presentation: **1.0.3** - _released on: Apr 05, 2021_
 
-Auth Data: **1.0.2** - _released on: Mar 16, 2021_
+Auth Data: **1.0.3** - _released on: Apr 05, 2021_
 
 ### Account
 
@@ -184,30 +184,30 @@ Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
 
 ### Human Verification
 
-Human Verification: **0.3** - _released on: Mar 29, 2021_
+Human Verification: **0.3.2** - _released on: Apr 05, 2021_
 
-Human Verification Domain: **0.3** - _released on: Mar 29, 2021_
+Human Verification Domain: **0.3.2** - _released on: Apr 05, 2021_
 
-Human Verification Presentation: **0.3** - _released on: Mar 29, 2021_
+Human Verification Presentation: **0.3.2** - _released on: Apr 05, 2021_
 
-Human Verification Data: **0.3** - _released on: Mar 29, 2021_
+Human Verification Data: **0.3.2** - _released on: Apr 05, 2021_
 
 ### Countries
 
-Country: **0.1** - _released on: Mar 29, 2021_
+Country: **0.1.2** - _released on: Apr 05, 2021_
 
-Country Domain: **0.1** - _released on: Mar 29, 2021_
+Country Domain: **0.1.2** - _released on: Apr 05, 2021_
 
-Country Data: **0.1** - _released on: Mar 29, 2021_
+Country Data: **0.1.2** - _released on: Apr 05, 2021_
 
-Country Presentation: **0.1** - _released on: Mar 29, 2021_
+Country Presentation: **0.1.2** - _released on: Apr 05, 2021_
 
 ### Payment
 
-Payment: **0.1.1** - _released on: Mar 31, 2021_
+Payment: **0.1.3** - _released on: Apr 05, 2021_
 
-Payment Data: **0.1.1** - _released on: Mar 31, 2021_
+Payment Data: **0.1.3** - _released on: Apr 05, 2021_
 
-Payment Domain: **0.1.1** - _released on: Mar 31, 2021_
+Payment Domain: **0.1.3** - _released on: Apr 05, 2021_
 
-Payment Presentation: **0.1.1** - _released on: Mar 31, 2021_
+Payment Presentation: **0.1.3** - _released on: Apr 05, 2021_
