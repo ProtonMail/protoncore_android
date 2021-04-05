@@ -119,7 +119,7 @@ Crypto Android: **1.0.2** - _released on: Mar 05, 2021_
 
 ### Auth
 
-Auth: **1.0.2** - _released on: Mar 16, 2021_
+Auth: **1.0.3** - _released on: Apr 05, 2021_
 
 Auth Domain: **1.0.2** - _released on: Mar 16, 2021_
 
