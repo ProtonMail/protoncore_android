@@ -66,8 +66,16 @@ class SessionManagerImplTest {
     fun beforeEveryTest() {
         mocks.init()
 
-        accountManager = AccountManagerImpl(Product.Calendar, mocks.accountRepository, mocks.authRepository)
-        sessionManager = SessionManagerImpl(mocks.accountRepository)
+        accountManager = AccountManagerImpl(
+            Product.Calendar,
+            mocks.accountRepository,
+            mocks.authRepository
+        )
+        sessionManager = SessionManagerImpl(
+            mocks.sessionProvider,
+            mocks.sessionListener,
+            mocks.authRepository
+        )
     }
 
     @Test
@@ -116,7 +124,7 @@ class SessionManagerImplTest {
             captchaVerificationToken = null
         )
 
-        coEvery {  mocks.accountRepository.onSessionStateChanged(any()) } returns flowOf(
+        coEvery { mocks.accountRepository.onSessionStateChanged(any()) } returns flowOf(
             account1,
             account1.copy(sessionState = SessionState.HumanVerificationNeeded),
             account1.copy(sessionState = SessionState.HumanVerificationSuccess)
@@ -140,7 +148,7 @@ class SessionManagerImplTest {
             captchaVerificationToken = null
         )
 
-        coEvery {  mocks.accountRepository.onSessionStateChanged(any()) } returns flowOf(
+        coEvery { mocks.accountRepository.onSessionStateChanged(any()) } returns flowOf(
             account1,
             account1.copy(sessionState = SessionState.HumanVerificationNeeded),
             account1.copy(sessionState = SessionState.HumanVerificationFailed)

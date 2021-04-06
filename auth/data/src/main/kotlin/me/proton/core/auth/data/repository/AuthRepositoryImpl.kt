@@ -69,6 +69,14 @@ class AuthRepositoryImpl(
         }.valueOrThrow
 
     /**
+     * Returns session scopes.
+     */
+    override suspend fun getScopes(sessionId: SessionId): List<String> =
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            getScopes().scopes
+        }.valueOrThrow
+
+    /**
      * Performs the login request to the API to try to get a valid Access Token and Session for the Account/username.
      *
      * @param username the account's username trying to make a login request.

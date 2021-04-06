@@ -24,6 +24,11 @@ import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
 interface SessionListener {
 
     /**
+     * Called when [Session] scopes have been successfully refreshed.
+     */
+    suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>)
+
+    /**
      * Called when a [Session] token has been successfully refreshed.
      */
     suspend fun onSessionTokenRefreshed(session: Session)
