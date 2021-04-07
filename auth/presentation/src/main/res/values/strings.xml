@@ -20,7 +20,7 @@
 <resources>
     <string name="auth_password_label">Password</string>
     <string name="auth_email_username">Email or username</string>
-    <string name="auth_account_details">Enter your Proton Account details below</string>
+    <string name="auth_account_details">Enter your Proton Account details.</string>
     <string name="auth_sign_in">Sign in</string>
     <string name="auth_sign_in_action">Sign in</string>
     <string name="auth_need_help">Need help?</string>

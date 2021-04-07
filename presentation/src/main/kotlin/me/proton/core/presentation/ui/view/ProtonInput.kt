@@ -88,7 +88,9 @@ class ProtonInput : LinearLayout {
             inputType = getInteger(R.styleable.ProtonInput_android_inputType, InputType.TYPE_CLASS_TEXT)
             isEnabled = getBoolean(R.styleable.ProtonInput_android_enabled, true)
             endIconMode = EndIconMode.map[getInt(R.styleable.ProtonInput_actionMode, 0)] ?: EndIconMode.NONE
-            endIconDrawable = getDrawable(R.styleable.ProtonInput_endIconDrawable)
+            getDrawable(R.styleable.ProtonInput_endIconDrawable)?.let {
+                endIconDrawable = it
+            }
         }
 
         // Set internal input id.
