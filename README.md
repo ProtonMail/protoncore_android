@@ -101,11 +101,11 @@ Data: **1.0.2** - _released on: Mar 29, 2021_
 
 ### Network
 
-Network: **1.0.2** - _released on: Mar 25, 2021_
+Network: **1.0.4** - _released on: Apr 07, 2021_
 
-Network Domain: **1.0.2** - _released on: Mar 25, 2021_
+Network Domain: **1.0.4** - _released on: Apr 07, 2021_
 
-Network Data: **1.0.2** - _released on: Mar 25, 2021_
+Network Data: **1.0.4** - _released on: Apr 07, 2021_
 
 ### Crypto
 
@@ -119,13 +119,13 @@ Crypto Android: **1.0.2** - _released on: Mar 05, 2021_
 
 ### Auth
 
-Auth: **1.0.3** - _released on: Apr 05, 2021_
+Auth: **1.0.4** - _released on: Apr 07, 2021_
 
-Auth Domain: **1.0.3** - _released on: Apr 05, 2021_
+Auth Domain: **1.0.4** - _released on: Apr 07, 2021_
 
-Auth Presentation: **1.0.3** - _released on: Apr 05, 2021_
+Auth Presentation: **1.0.4** - _released on: Apr 07, 2021_
 
-Auth Data: **1.0.3** - _released on: Apr 05, 2021_
+Auth Data: **1.0.4** - _released on: Apr 07, 2021_
 
 ### Account
 
@@ -140,15 +140,15 @@ Account Data: **1.0.2** - _released on: Mar 22, 2021_
 
 ### Account Manager
 
-Account Manager: **1.0.3** - _released on: Mar 22, 2021_
+Account Manager: **1.0.4** - _released on: Apr 07, 2021_
 
-Account Manager Domain: **1.0.3** - _released on: Mar 22, 2021_
+Account Manager Domain: **1.0.4** - _released on: Apr 07, 2021_
 
-Account Manager Presentation: **1.0.3** - _released on: Mar 22, 2021_
+Account Manager Presentation: **1.0.4** - _released on: Apr 07, 2021_
 
-Account Manager Data: **1.0.3** - _released on: Mar 22, 2021_
+Account Manager Data: **1.0.4** - _released on: Apr 07, 2021_
 
-Account Manager Dagger: **1.0.3** - _released on: Mar 22, 2021_
+Account Manager Dagger: **1.0.4** - _released on: Apr 07, 2021_
 
 ### Key
 
