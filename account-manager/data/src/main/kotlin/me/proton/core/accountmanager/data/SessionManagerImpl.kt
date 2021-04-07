@@ -18,70 +18,22 @@
 
 package me.proton.core.accountmanager.data
 
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.account.domain.entity.SessionState
-import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.domain.SessionManager
-import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.session.Session
+import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 
 class SessionManagerImpl(
-    private val accountRepository: AccountRepository
-) : SessionManager {
+    private val sessionProvider: SessionProvider,
+    private val sessionListener: SessionListener,
+    private val authRepository: AuthRepository
+) : SessionManager,
+    SessionProvider by sessionProvider,
+    SessionListener by sessionListener {
 
-    // region SessionListener
-
-    override suspend fun onSessionTokenRefreshed(session: Session) {
-        accountRepository.updateSessionToken(session.sessionId, session.accessToken, session.refreshToken)
-        accountRepository.updateSessionState(session.sessionId, SessionState.Authenticated)
-    }
-
-    override suspend fun onSessionForceLogout(session: Session) {
-        accountRepository.updateSessionState(session.sessionId, SessionState.ForceLogout)
-        accountRepository.getAccountOrNull(session.sessionId)?.let { account ->
-            accountRepository.updateAccountState(account.userId, AccountState.Disabled)
+    override suspend fun refreshScopes(sessionId: SessionId): List<String> =
+        authRepository.getScopes(sessionId).also { scopes ->
+            sessionListener.onSessionScopesRefreshed(sessionId, scopes)
         }
-    }
-
-    override suspend fun onHumanVerificationNeeded(
-        session: Session,
-        details: HumanVerificationDetails
-    ): SessionListener.HumanVerificationResult {
-        accountRepository.setHumanVerificationDetails(session.sessionId, details)
-        accountRepository.updateSessionState(session.sessionId, SessionState.HumanVerificationNeeded)
-
-        // Wait for HumanVerification Success or Failure.
-        val state = accountRepository.onSessionStateChanged(true)
-            .filter { it.sessionId == session.sessionId }
-            .map { it.sessionState }
-            .filter { it == SessionState.HumanVerificationSuccess || it == SessionState.HumanVerificationFailed }
-            .first()
-
-        return when (state) {
-            null -> SessionListener.HumanVerificationResult.Failure
-            SessionState.HumanVerificationSuccess -> SessionListener.HumanVerificationResult.Success
-            else -> SessionListener.HumanVerificationResult.Failure
-        }
-    }
-
-    // endregion
-
-    // region SessionProvider
-
-    override suspend fun getSession(sessionId: SessionId): Session? =
-        accountRepository.getSessionOrNull(sessionId)
-
-    override suspend fun getSessionId(userId: UserId): SessionId? =
-        accountRepository.getSessionIdOrNull(userId)
-
-    override suspend fun getUserId(sessionId: SessionId): UserId? =
-        accountRepository.getAccountOrNull(sessionId)?.userId
-
-    // endregion
 }

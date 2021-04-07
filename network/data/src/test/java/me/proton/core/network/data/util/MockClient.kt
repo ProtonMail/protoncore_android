@@ -47,12 +47,16 @@ object MockSession {
 }
 
 class MockSessionListener(
+    private val onScopesRefreshed: (sessionId: SessionId, scopes: List<String>) -> Unit = { _, _ -> },
     private val onTokenRefreshed: (Session) -> Unit = { },
     private val onForceLogout: (Session) -> Unit = { },
     private val onVerificationNeeded: (Session, HumanVerificationDetails?) -> SessionListener.HumanVerificationResult = { _, _ ->
         SessionListener.HumanVerificationResult.Success
     }
 ) : SessionListener {
+    override suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>) =
+        onScopesRefreshed(sessionId, scopes)
+
     override suspend fun onSessionTokenRefreshed(session: Session) = onTokenRefreshed(session)
     override suspend fun onSessionForceLogout(session: Session) = onForceLogout(session)
     override suspend fun onHumanVerificationNeeded(

@@ -32,6 +32,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.domain.session.SessionProvider
 
 class RepositoryMocks(
     private val session: Session,
@@ -44,6 +46,9 @@ class RepositoryMocks(
     @RelaxedMockK
     lateinit var authRepository: AuthRepository
 
+    lateinit var sessionListener: SessionListener
+    lateinit var sessionProvider: SessionProvider
+
     private val flowOfAccountLists = mutableListOf<List<Account>>()
     private val flowOfSessionLists = mutableListOf<List<Session>>()
 
@@ -52,6 +57,9 @@ class RepositoryMocks(
 
     fun init() {
         MockKAnnotations.init(this)
+
+        sessionProvider = SessionProviderImpl(accountRepository)
+        sessionListener = SessionListenerImpl(accountRepository)
     }
 
     @Suppress("LongMethod")

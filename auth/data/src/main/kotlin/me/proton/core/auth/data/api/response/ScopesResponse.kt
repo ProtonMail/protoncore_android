@@ -16,40 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.auth.data.api.response
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
-
-libVersion = Version(1, 0, 4)
-
-dependencies {
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
-
-        // Features
-        project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`,
-
-        // Android
-        `dagger`,
-
-        // Other
-        `googleTink`
-    )
-
-    testImplementation(project(Module.kotlinTest))
-}
+@Serializable
+data class ScopesResponse(
+    @SerialName("Scopes")
+    val scopes: List<String>
+)

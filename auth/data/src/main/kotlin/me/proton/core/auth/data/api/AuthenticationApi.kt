@@ -25,6 +25,7 @@ import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.response.SecondFactorResponse
 import me.proton.core.auth.data.api.response.ModulusResponse
+import me.proton.core.auth.data.api.response.ScopesResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.TimeoutOverride
@@ -41,6 +42,9 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @GET("auth/modulus")
     suspend fun getRandomModulus(): ModulusResponse
+
+    @GET("auth/scopes")
+    suspend fun getScopes(): ScopesResponse
 
     @POST("auth")
     suspend fun performLogin(@Body request: LoginRequest): LoginResponse
