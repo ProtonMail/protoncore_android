@@ -140,15 +140,15 @@ Account Data: **1.0.2** - _released on: Mar 22, 2021_
 
 ### Account Manager
 
-Account Manager: **1.0.4** - _released on: Apr 07, 2021_
+Account Manager: **1.0.5** - _released on: Apr 08, 2021_
 
-Account Manager Domain: **1.0.4** - _released on: Apr 07, 2021_
+Account Manager Domain: **1.0.5** - _released on: Apr 08, 2021_
 
-Account Manager Presentation: **1.0.4** - _released on: Apr 07, 2021_
+Account Manager Presentation: **1.0.5** - _released on: Apr 08, 2021_
 
-Account Manager Data: **1.0.4** - _released on: Apr 07, 2021_
+Account Manager Data: **1.0.5** - _released on: Apr 08, 2021_
 
-Account Manager Dagger: **1.0.4** - _released on: Apr 07, 2021_
+Account Manager Dagger: **1.0.5** - _released on: Apr 08, 2021_
 
 ### Key
 
