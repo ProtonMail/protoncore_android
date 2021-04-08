@@ -178,6 +178,7 @@ with(authOrchestrator) {
         .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
         .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
         .onAccountDisabled { accountManager.removeAccount(it.userId) }
+        .disableInitialNotReadyAccounts()
 }
 ```
 
