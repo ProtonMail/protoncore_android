@@ -33,6 +33,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
+import me.proton.core.accountmanager.presentation.disableInitialNotReadyAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
@@ -104,6 +105,7 @@ class AccountViewModel @ViewModelInject constructor(
                 .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
                 .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
                 .onAccountDisabled { accountManager.removeAccount(it.userId) }
+                .disableInitialNotReadyAccounts()
         }
     }
 
