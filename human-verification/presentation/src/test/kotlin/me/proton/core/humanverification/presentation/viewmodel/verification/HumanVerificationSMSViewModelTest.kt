@@ -34,6 +34,7 @@ import me.proton.core.test.kotlin.coroutinesTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
+import kotlin.time.seconds
 
 /**
  * @author Dino Kadrikj.
@@ -58,30 +59,33 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     @Test
     fun `most used calling code returns success`() = coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns 0
-        viewModel.mostUsedCallingCode.test {
+        viewModel.mostUsedCallingCode.test(timeout = 2.seconds) {
             viewModel.getMostUsedCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
             assertIs<ViewModelResult.Success<Int>>(expectItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
     fun `most used calling code returns correct data`() = coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns 1
-        viewModel.mostUsedCallingCode.test {
+        viewModel.mostUsedCallingCode.test(timeout = 2.seconds) {
             viewModel.getMostUsedCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
             assertEquals(1, (expectItem() as ViewModelResult.Success).value)
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
     fun `use case throws no countries exception`() = coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns null
-        viewModel.mostUsedCallingCode.test {
+        viewModel.mostUsedCallingCode.test(timeout = 2.seconds) {
             viewModel.getMostUsedCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
             assertIs<ViewModelResult.Error>(expectItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
@@ -90,8 +94,9 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns 0
         coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns VerificationResult.Success
         viewModel.sendVerificationCodeToDestination(sessionId, "+0", "123456789")
-        viewModel.verificationCodeStatus.test {
+        viewModel.verificationCodeStatus.test(timeout = 2.seconds) {
             assertIs<ViewModelResult.Success<Boolean>>(expectItem())
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
@@ -105,10 +110,11 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
         // when
         viewModel.sendVerificationCodeToDestination(sessionId, "", "")
         // then
-        viewModel.validation.test {
+        viewModel.validation.test(timeout = 2.seconds) {
             val result = expectItem() as ViewModelResult.Error
             assertIs<EmptyDestinationException>(result.throwable)
             assertEquals("Destination phone number:  is invalid.", result.throwable?.message)
+            cancelAndIgnoreRemainingEvents()
         }
     }
 }
