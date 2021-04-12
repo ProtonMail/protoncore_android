@@ -234,6 +234,9 @@ class AccountRepositoryImpl(
         accountMetadataDao.observeLatestPrimary(product).map { it?.userId }
             .distinctUntilChanged()
 
+    override suspend fun getPreviousPrimaryUserId(): UserId? =
+        accountMetadataDao.getAllDescending(product).drop(1).firstOrNull()?.userId
+
     override suspend fun setAsPrimary(userId: UserId) {
         db.inTransaction {
             val state = accountDao.getByUserId(userId)?.state

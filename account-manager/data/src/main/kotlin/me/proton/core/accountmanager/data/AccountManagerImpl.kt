@@ -94,6 +94,9 @@ class AccountManagerImpl constructor(
     override fun getPrimaryUserId(): Flow<UserId?> =
         accountRepository.getPrimaryUserId()
 
+    override suspend fun getPreviousPrimaryUserId(): UserId? =
+        accountRepository.getPreviousPrimaryUserId()
+
     override suspend fun setAsPrimary(userId: UserId) =
         accountRepository.setAsPrimary(userId)
 
