@@ -93,7 +93,7 @@ Test Android Instrumented: **0.3.3** - _released on: Mar 22, 2021_
 
 Domain: **1.0** - _released on: Feb 17, 2021_
 
-Presentation: **0.6.1** - _released on: Mar 31, 2021_
+Presentation: **0.6.2** - _released on: Apr 12, 2021_
 
 Data: **1.0.2** - _released on: Mar 29, 2021_
 
@@ -119,13 +119,13 @@ Crypto Android: **1.0.2** - _released on: Mar 05, 2021_
 
 ### Auth
 
-Auth: **1.0.4** - _released on: Apr 07, 2021_
+Auth: **1.0.5** - _released on: Apr 12, 2021_
 
-Auth Domain: **1.0.4** - _released on: Apr 07, 2021_
+Auth Domain: **1.0.5** - _released on: Apr 12, 2021_
 
-Auth Presentation: **1.0.4** - _released on: Apr 07, 2021_
+Auth Presentation: **1.0.5** - _released on: Apr 12, 2021_
 
-Auth Data: **1.0.4** - _released on: Apr 07, 2021_
+Auth Data: **1.0.5** - _released on: Apr 12, 2021_
 
 ### Account
 
@@ -204,10 +204,10 @@ Country Presentation: **0.1.2** - _released on: Apr 05, 2021_
 
 ### Payment
 
-Payment: **0.1.3** - _released on: Apr 05, 2021_
+Payment: **0.1.4** - _released on: Apr 12, 2021_
 
-Payment Data: **0.1.3** - _released on: Apr 05, 2021_
+Payment Data: **0.1.4** - _released on: Apr 12, 2021_
 
-Payment Domain: **0.1.3** - _released on: Apr 05, 2021_
+Payment Domain: **0.1.4** - _released on: Apr 12, 2021_
 
-Payment Presentation: **0.1.3** - _released on: Apr 05, 2021_
+Payment Presentation: **0.1.4** - _released on: Apr 12, 2021_
