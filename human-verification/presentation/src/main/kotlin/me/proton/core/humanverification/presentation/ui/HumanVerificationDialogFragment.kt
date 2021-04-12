@@ -147,8 +147,6 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         })
     }
 
-    override fun getStyleResource(): Int = R.style.ProtonDialog_Picker
-
     override fun layoutId(): Int = R.layout.dialog_human_verification_main
 
     private fun setEnabledVerificationMethods(enabledMethods: List<String>) {
