@@ -25,7 +25,7 @@ plugins {
     kotlin("kapt")
 }
 
-libVersion = Version(1, 0, 5)
+libVersion = Version(1, 0, 6)
 
 android(minSdk = 23) {
     defaultConfig {

@@ -139,6 +139,11 @@ interface AccountRepository {
     fun getPrimaryUserId(): Flow<UserId?>
 
     /**
+     * Get the previous primary [UserId], if exist, null otherwise.
+     */
+    suspend fun getPreviousPrimaryUserId(): UserId?
+
+    /**
      * Set the primary [UserId].
      */
     suspend fun setAsPrimary(userId: UserId)

@@ -100,6 +100,11 @@ abstract class AccountManager(
     abstract fun getPrimaryUserId(): Flow<UserId?>
 
     /**
+     * Get the previous primary [UserId], if exist, null otherwise.
+     */
+    abstract suspend fun getPreviousPrimaryUserId(): UserId?
+
+    /**
      * Set the given [UserId] as primary, if exist.
      *
      * @throws IllegalArgumentException if userId doesn't exist or [AccountState] is not [AccountState.Ready].

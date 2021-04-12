@@ -32,6 +32,9 @@ abstract class AccountMetadataDao : BaseDao<AccountMetadataEntity>() {
     @Query("SELECT * FROM AccountMetadataEntity WHERE product = :product AND primaryAtUtc = (SELECT MAX(primaryAtUtc) FROM AccountMetadataEntity) LIMIT 1")
     abstract fun observeLatestPrimary(product: Product): Flow<AccountMetadataEntity?>
 
+    @Query("SELECT * FROM AccountMetadataEntity WHERE product = :product ORDER BY primaryAtUtc DESC")
+    abstract suspend fun getAllDescending(product: Product): List<AccountMetadataEntity>
+
     @Query("DELETE FROM AccountMetadataEntity WHERE userId = :userId AND product = :product")
     abstract suspend fun delete(userId: UserId, product: Product)
 }
