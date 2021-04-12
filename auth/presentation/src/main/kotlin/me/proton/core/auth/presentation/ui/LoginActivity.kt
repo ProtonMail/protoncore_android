@@ -70,7 +70,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
             signInButton.onClick(::onSignInClicked)
             usernameInput.setOnFocusLostListener { _, _ ->
                 usernameInput.validateUsername()
-                    .onFailure { usernameInput.setInputError() }
+                    .onFailure { usernameInput.setInputError(getString(R.string.auth_login_assistive_text)) }
                     .onSuccess { usernameInput.clearInputError() }
             }
             passwordInput.setOnFocusLostListener { _, _ ->
@@ -140,7 +140,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
         with(binding) {
             hideKeyboard()
             usernameInput.validateUsername()
-                .onFailure { usernameInput.setInputError() }
+                .onFailure { usernameInput.setInputError(getString(R.string.auth_login_assistive_text)) }
                 .onSuccess(::onUsernameValidationSuccess)
         }
     }
