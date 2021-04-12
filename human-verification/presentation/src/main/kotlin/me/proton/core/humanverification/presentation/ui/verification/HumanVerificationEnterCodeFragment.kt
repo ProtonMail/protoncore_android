@@ -132,8 +132,6 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
         view?.successSnack(R.string.human_verification_resent_code)
     }
 
-    override fun getStyleResource(): Int = R.style.ProtonDialog_Picker
-
     override fun onBackPressed() {
         dismissAllowingStateLoss()
     }

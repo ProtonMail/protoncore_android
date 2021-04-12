@@ -27,6 +27,7 @@ import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import me.proton.core.presentation.R
 
 /**
  * Base Proton Fragment from which all project fragments should extend.
@@ -41,12 +42,20 @@ abstract class ProtonDialogFragment<DB : ViewDataBinding> : DialogFragment() {
             ?: throw IllegalStateException("Accessing binding outside of lifecycle")
 
     protected abstract fun layoutId(): Int
-    protected abstract fun getStyleResource(): Int
+
+    /**
+     * Provide fragment theme.
+     * Default is null, in which case the paretn activity theme will be used.
+     */
+    protected open fun getStyleResource(): Int? = null
     protected abstract fun onBackPressed()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_FRAME, getStyleResource())
+        val theme = activity?.componentName?.let {
+            activity?.packageManager?.getActivityInfo(it, 0)?.themeResource
+        }
+        setStyle(STYLE_NO_FRAME, getStyleResource() ?: theme ?: 0)
     }
 
     override fun onCreateView(

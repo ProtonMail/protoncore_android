@@ -130,8 +130,6 @@ class CountryPickerFragment :
         removeCountryPicker()
     }
 
-    override fun getStyleResource(): Int = R.style.ProtonDialog_Picker
-
     override fun onBackPressed() {
         dismissAllowingStateLoss()
     }
