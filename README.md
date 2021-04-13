@@ -93,7 +93,7 @@ Test Android Instrumented: **0.3.3** - _released on: Mar 22, 2021_
 
 Domain: **1.0** - _released on: Feb 17, 2021_
 
-Presentation: **0.6.2** - _released on: Apr 12, 2021_
+Presentation: **0.6.3** - _released on: Apr 13, 2021_
 
 Data: **1.0.2** - _released on: Mar 29, 2021_
 
@@ -184,23 +184,23 @@ Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
 
 ### Human Verification
 
-Human Verification: **0.3.2** - _released on: Apr 05, 2021_
+Human Verification: **0.3.3** - _released on: Apr 13, 2021_
 
-Human Verification Domain: **0.3.2** - _released on: Apr 05, 2021_
+Human Verification Domain: **0.3.3** - _released on: Apr 13, 2021_
 
-Human Verification Presentation: **0.3.2** - _released on: Apr 05, 2021_
+Human Verification Presentation: **0.3.3** - _released on: Apr 13, 2021_
 
-Human Verification Data: **0.3.2** - _released on: Apr 05, 2021_
+Human Verification Data: **0.3.3** - _released on: Apr 13, 2021_
 
 ### Countries
 
-Country: **0.1.2** - _released on: Apr 05, 2021_
+Country: **0.1.3** - _released on: Apr 13, 2021_
 
-Country Domain: **0.1.2** - _released on: Apr 05, 2021_
+Country Domain: **0.1.3** - _released on: Apr 13, 2021_
 
-Country Data: **0.1.2** - _released on: Apr 05, 2021_
+Country Data: **0.1.3** - _released on: Apr 13, 2021_
 
-Country Presentation: **0.1.2** - _released on: Apr 05, 2021_
+Country Presentation: **0.1.3** - _released on: Apr 13, 2021_
 
 ### Payment
 
