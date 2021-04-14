@@ -18,7 +18,6 @@
 
 package me.proton.core.crypto.android.pgp
 
-import at.favre.lib.crypto.bcrypt.BCrypt
 import at.favre.lib.crypto.bcrypt.Radix64Encoder
 import com.google.crypto.tink.subtle.Base64
 import com.proton.gopenpgp.constants.Constants
@@ -32,6 +31,7 @@ import com.proton.gopenpgp.crypto.PlainMessage
 import com.proton.gopenpgp.crypto.SessionKey
 import com.proton.gopenpgp.helper.ExplicitVerifyMessage
 import com.proton.gopenpgp.helper.Helper
+import com.proton.gopenpgp.srp.Srp
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
@@ -449,8 +449,11 @@ class GOpenPGPCrypto : PGPCrypto {
         encodedSalt: String
     ): ByteArray {
         val decodedKeySalt: ByteArray = Base64.decode(encodedSalt, Base64.DEFAULT)
-        val rawHash = BCrypt.with(BCrypt.Version.VERSION_2Y).hashRaw(10, decodedKeySalt, password).rawHash
-        return Radix64Encoder.Default().encode(rawHash)
+        val generatedPassphrase: String = Srp.mailboxPassword(String(password), decodedKeySalt)
+        return generatedPassphrase
+            .replace("$2y$10$", "")
+            .replace(String(Radix64Encoder.Default().encode(decodedKeySalt)), "")
+            .toByteArray()
     }
 
     override fun generateNewKeySalt(): String {
