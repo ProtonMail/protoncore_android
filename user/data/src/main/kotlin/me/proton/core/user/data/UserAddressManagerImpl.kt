@@ -115,4 +115,16 @@ class UserAddressManagerImpl(
         )
         return checkNotNull(userAddressRepository.getAddress(sessionUserId, addressId, refresh = true))
     }
+
+    override suspend fun updateAddress(
+        sessionUserId: SessionUserId,
+        addressId: AddressId,
+        displayName: String?,
+        signature: String?
+    ): UserAddress = userAddressRepository.updateAddress(sessionUserId, addressId, displayName, signature)
+
+    override suspend fun updateOrder(
+        sessionUserId: SessionUserId,
+        addressIds: List<AddressId>,
+    ): List<UserAddress> = userAddressRepository.updateOrder(sessionUserId, addressIds)
 }

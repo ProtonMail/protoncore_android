@@ -35,6 +35,8 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.UserAddressKeySecretProvider
 import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.request.CreateAddressRequest
+import me.proton.core.user.data.api.request.UpdateAddressRequest
+import me.proton.core.user.data.api.request.UpdateOrderRequest
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.AddressKeyEntity
@@ -142,6 +144,28 @@ class UserAddressRepositoryImpl(
             val addressKeys = response.address.keys?.toEntityList(addressId).orEmpty()
             insertOrUpdate(address, addressKeys)
             checkNotNull(getAddress(sessionUserId, addressId))
+        }.valueOrThrow
+    }
+
+    override suspend fun updateAddress(
+        sessionUserId: SessionUserId,
+        addressId: AddressId,
+        displayName: String?,
+        signature: String?
+    ): UserAddress {
+        return apiProvider.get<AddressApi>(sessionUserId).invoke {
+            updateAddress(addressId.id, UpdateAddressRequest(displayName = displayName, signature = signature))
+            checkNotNull(getAddress(sessionUserId, addressId, refresh = true))
+        }.valueOrThrow
+    }
+
+    override suspend fun updateOrder(
+        sessionUserId: SessionUserId,
+        addressIds: List<AddressId>
+    ): List<UserAddress> {
+        return apiProvider.get<AddressApi>(sessionUserId).invoke {
+            updateOrder(UpdateOrderRequest(ids = addressIds.map { it.id }))
+            getAddresses(sessionUserId, refresh = true)
         }.valueOrThrow
     }
 }

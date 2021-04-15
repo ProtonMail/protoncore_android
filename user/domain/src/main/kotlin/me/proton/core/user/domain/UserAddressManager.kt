@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.user.domain.entity.AddressId
-import me.proton.core.user.domain.entity.AddressType
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 
@@ -66,4 +65,24 @@ interface UserAddressManager {
         username: String,
         domain: String
     ): UserAddress
+
+    /**
+     * Update an [UserAddress] with optional [displayName] and optional [signature], remotely.
+     */
+    suspend fun updateAddress(
+        sessionUserId: SessionUserId,
+        addressId: AddressId,
+        displayName: String? = null,
+        signature: String? = null
+    ): UserAddress
+
+    /**
+     * Update addresses order providing [List] of [AddressId], remotely.
+     *
+     * Usage example: change the default address.
+     */
+    suspend fun updateOrder(
+        sessionUserId: SessionUserId,
+        addressIds: List<AddressId>
+    ): List<UserAddress>
 }

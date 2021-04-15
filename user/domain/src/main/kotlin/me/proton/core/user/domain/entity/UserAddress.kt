@@ -31,6 +31,7 @@ data class UserAddress(
     val addressId: AddressId,
     val email: String,
     val displayName: String? = null,
+    val signature: String? = null,
     val domainId: String? = null,
     val canSend: Boolean,
     val canReceive: Boolean,
