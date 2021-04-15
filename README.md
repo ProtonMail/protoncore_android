@@ -109,11 +109,11 @@ Network Data: **1.0.4** - _released on: Apr 07, 2021_
 
 ### Crypto
 
-Crypto: **1.0.2** - _released on: Mar 05, 2021_
+Crypto: **1.0.3** - _released on: Apr 15, 2021_
 
-Crypto Common: **1.0.2** - _released on: Mar 05, 2021_
+Crypto Common: **1.0.3** - _released on: Apr 15, 2021_
 
-Crypto Android: **1.0.2** - _released on: Mar 05, 2021_
+Crypto Android: **1.0.3** - _released on: Apr 15, 2021_
 
 ## Features
 
