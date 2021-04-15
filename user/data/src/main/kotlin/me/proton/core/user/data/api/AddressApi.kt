@@ -22,10 +22,13 @@ import me.proton.core.key.data.api.response.AddressesResponse
 import me.proton.core.key.data.api.response.SingleAddressResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.user.data.api.request.CreateAddressRequest
+import me.proton.core.user.data.api.request.UpdateAddressRequest
+import me.proton.core.user.data.api.request.UpdateOrderRequest
 import me.proton.core.user.data.api.response.CreateAddressResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface AddressApi : BaseRetrofitApi {
@@ -38,4 +41,10 @@ interface AddressApi : BaseRetrofitApi {
 
     @POST("addresses/setup")
     suspend fun createAddress(@Body request: CreateAddressRequest): CreateAddressResponse
+
+    @PUT("addresses/{id}")
+    suspend fun updateAddress(@Path("id") id: String, @Body request: UpdateAddressRequest)
+
+    @PUT("addresses/order")
+    suspend fun updateOrder(@Body request: UpdateOrderRequest)
 }

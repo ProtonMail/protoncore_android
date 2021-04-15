@@ -64,4 +64,24 @@ interface UserAddressRepository {
         displayName: String,
         domain: String
     ): UserAddress
+
+    /**
+     * Update an [UserAddress] with optional [displayName] and optional [signature], remotely.
+     */
+    suspend fun updateAddress(
+        sessionUserId: SessionUserId,
+        addressId: AddressId,
+        displayName: String? = null,
+        signature: String? = null
+    ): UserAddress
+
+    /**
+     * Update addresses order providing [List] of [AddressId], remotely.
+     *
+     * Usage example: change the default address.
+     */
+    suspend fun updateOrder(
+        sessionUserId: SessionUserId,
+        addressIds: List<AddressId>
+    ): List<UserAddress>
 }

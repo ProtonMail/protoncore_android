@@ -33,6 +33,7 @@ import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_1_2
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_2_3
+import me.proton.core.accountmanager.data.db.migration.MIGRATION_3_4
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.key.data.db.KeySaltDatabase
@@ -66,7 +67,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
         PublicAddressEntity::class,
         PublicAddressKeyEntity::class
     ],
-    version = 3
+    version = 4
 )
 @TypeConverters(
     CommonConverters::class,
@@ -90,6 +91,7 @@ abstract class AccountManagerDatabase :
                 .databaseBuilder(context, AccountManagerDatabase::class.java, "db-account-manager")
                 .addMigrations(MIGRATION_1_2)
                 .addMigrations(MIGRATION_2_3)
+                .addMigrations(MIGRATION_3_4)
                 .build()
         }
     }

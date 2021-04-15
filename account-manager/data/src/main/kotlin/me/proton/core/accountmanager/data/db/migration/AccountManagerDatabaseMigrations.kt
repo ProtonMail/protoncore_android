@@ -26,7 +26,6 @@ internal val MIGRATION_1_2 = object : Migration(1, 2) {
         // Added Table HumanVerificationDetailsEntity
         database.execSQL("CREATE TABLE IF NOT EXISTS `HumanVerificationDetailsEntity` (`sessionId` TEXT NOT NULL, `verificationMethods` TEXT NOT NULL, `captchaVerificationToken` TEXT, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
         database.execSQL("CREATE INDEX IF NOT EXISTS `index_HumanVerificationDetailsEntity_sessionId` ON `HumanVerificationDetailsEntity` (`sessionId`)")
-
     }
 }
 
@@ -61,5 +60,11 @@ internal val MIGRATION_2_3 = object : Migration(2, 3) {
 
         database.execSQL("CREATE TABLE IF NOT EXISTS `PublicAddressKeyEntity` (`email` TEXT NOT NULL, `flags` INTEGER NOT NULL, `publicKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, PRIMARY KEY(`email`, `publicKey`), FOREIGN KEY(`email`) REFERENCES `PublicAddressEntity`(`email`) ON UPDATE NO ACTION ON DELETE CASCADE )")
         database.execSQL("CREATE INDEX IF NOT EXISTS `index_PublicAddressKeyEntity_email` ON `PublicAddressKeyEntity` (`email`)")
+    }
+}
+
+internal val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.addTableColumn(table = "AddressEntity", column = "signature", type = "TEXT")
     }
 }
