@@ -85,6 +85,22 @@ internal class GOpenPGPCryptoTest {
     }
 
     @Test
+    fun getPassphraseMoreThan71CharsUsingLatin1() {
+        // GIVEN
+        // 80 Latin-1 chars.
+        val password = "ÀÁÂÃÄÅÆ¼½¾ÀÁÂÃÄÅÆ¼½¾ÀÁÂÃÄÅÆ¼½¾ÀÁÂÃÄÅÆ¼½¾ÀÁÂÃÄÅÆ¼½¾ÀÁÂÃÄÅÆ¼½¾ÀÁÂÃÄÅÆ¼½¾ÀÁÂÃÄÅÆ¼½¾".toByteArray()
+        val encodedSalt = Base64.encodeToString(ByteArray(16), Base64.DEFAULT)
+
+        val expectedPassphrase = "x1sDsGevQtmBwSzBVqCEoXSD9M8fquO".toByteArray()
+
+        // WHEN
+        crypto.getPassphrase(password, encodedSalt).use { generatedPassphrase ->
+            // THEN
+            assertTrue(generatedPassphrase.array.contentEquals(expectedPassphrase))
+        }
+    }
+
+    @Test
     fun unlockPrivateKeyWithPassphrase() {
         // GIVEN
         val privateKey = TestKey.privateKey
