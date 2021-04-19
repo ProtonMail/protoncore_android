@@ -36,7 +36,7 @@ internal fun initVersions() {
     `espresso version` =                        "3.3.0"         // Released: Aug 25, 2020
     `fragment version` =                        "1.3.0"         // Released: Feb 10, 2021
     `ktx version` =                             "1.3.2"         // Released: Oct 01, 2020
-    `lifecycle version` =                       "2.3.0"         // Released: Feb 10, 2021
+    `lifecycle version` =                       "2.4.0-alpha01" // Released: Mar 24, 2021
     `material version` =                        "1.3.0"         // Released: Feb 05, 2021
     `android-paging version` =                  "2.1.2"         // Released: Mar 18, 2020
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
@@ -74,6 +74,7 @@ const val `okHttp version` =                "4.8.0"         // Released: Jul 11,
 const val `okHttp-url-connection version` = "4.9.0"         // Released: Sep, 2020
 const val `trustKit version` =              "1.1.3"         // Released: Apr 30, 2020
 const val `store4 version` =                "4.0.0"         // Released: Nov 30, 2020
+const val `lifecycle-extensions version` =  "2.2.0"         // Released: Jan 00, 2020
 
 // endregion
 

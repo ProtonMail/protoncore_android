@@ -65,7 +65,6 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
 
         accountViewModel.register(this)
-        accountViewModel.handleAccountState()
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }

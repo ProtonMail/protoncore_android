@@ -20,7 +20,10 @@ package me.proton.android.core.coreexample.viewmodel
 
 import androidx.activity.ComponentActivity
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -68,10 +71,27 @@ class AccountViewModel @ViewModelInject constructor(
     fun register(context: ComponentActivity) {
         authOrchestrator.register(context)
         paymentsOrchestrator.register(context)
-        accountManager.getAccounts().onEach { accounts ->
-            if (accounts.isEmpty()) _state.tryEmit(State.LoginNeeded)
-            _state.tryEmit(State.AccountList(accounts))
-        }.launchIn(viewModelScope)
+
+        accountManager.getAccounts()
+            .flowWithLifecycle(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
+            .onEach { accounts ->
+                if (accounts.isEmpty())
+                    _state.tryEmit(State.LoginNeeded)
+                else
+                    _state.tryEmit(State.AccountList(accounts))
+            }.launchIn(context.lifecycleScope)
+
+        with(authOrchestrator) {
+            accountManager.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
+                .onSessionSecondFactorNeeded { startSecondFactorWorkflow(it) }
+                .onAccountTwoPassModeNeeded { startTwoPassModeWorkflow(it) }
+                .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
+                .onSessionHumanVerificationNeeded { startHumanVerificationWorkflow(it) }
+                .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
+                .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
+                .onAccountDisabled { accountManager.removeAccount(it.userId) }
+                .disableInitialNotReadyAccounts()
+        }
     }
 
     fun getPrimaryUserId() = accountManager.getPrimaryUserId()
@@ -92,20 +112,6 @@ class AccountViewModel @ViewModelInject constructor(
                 AccountState.UnlockFailed -> accountManager.disableAccount(account.userId)
                 else -> Unit
             }
-        }
-    }
-
-    fun handleAccountState() {
-        with(authOrchestrator) {
-            accountManager.observe(viewModelScope)
-                .onSessionSecondFactorNeeded { startSecondFactorWorkflow(it) }
-                .onAccountTwoPassModeNeeded { startTwoPassModeWorkflow(it) }
-                .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
-                .onSessionHumanVerificationNeeded { startHumanVerificationWorkflow(it) }
-                .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
-                .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
-                .onAccountDisabled { accountManager.removeAccount(it.userId) }
-                .disableInitialNotReadyAccounts()
         }
     }
 
