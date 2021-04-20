@@ -26,8 +26,8 @@
 
         <item name="colorPrimary">?attr/brand_norm</item>
         <item name="colorPrimaryVariant">?brand_darken_20</item>
-        <item name="colorSecondary">?brand_lighten_40</item>
-        <item name="colorSecondaryVariant">?brand_lighten_20</item>
+        <item name="colorSecondary">?colorPrimary</item>
+        <item name="colorSecondaryVariant">?colorPrimaryVariant</item>
         <item name="colorError">@color/notification_error</item>
 
         <item name="colorOnPrimary">@color/white</item>
@@ -60,12 +60,38 @@
         <item name="materialButtonStyle">@style/ProtonButton</item>
         <item name="navigationViewStyle">@style/ProtonNavigationView.Dark</item>
 
-        <!-- App specific attributes -->
+        <!-- Brand specific attributes -->
         <item name="brand_norm">@color/cornflower_blue</item>
         <item name="brand_darken_20">@color/san_marino</item>
         <item name="brand_darken_40">@color/chambray</item>
         <item name="brand_lighten_20">@color/portage</item>
         <item name="brand_lighten_40">@color/perano</item>
+
+        <!-- App specific attributes (referencable in app) -->
+        <item name="proton_text_norm">@color/text_norm</item>
+        <item name="proton_text_weak">@color/text_weak</item>
+        <item name="proton_text_hint">@color/text_hint</item>
+        <item name="proton_text_disabled">@color/text_disabled</item>
+        <item name="proton_text_inverted">@color/text_inverted</item>
+        <item name="proton_icon_norm">@color/icon_norm</item>
+        <item name="proton_icon_weak">@color/icon_weak</item>
+        <item name="proton_icon_hint">@color/icon_hint</item>
+        <item name="proton_icon_disabled">@color/icon_disabled</item>
+        <item name="proton_icon_inverted">@color/icon_inverted</item>
+        <item name="proton_interaction_weak">@color/interaction_weak</item>
+        <item name="proton_interaction_weak_pressed">@color/interaction_weak_pressed</item>
+        <item name="proton_interaction_weak_disabled">@color/interaction_weak_disabled</item>
+        <item name="proton_interaction_strong">@color/interaction_strong</item>
+        <item name="proton_interaction_strong_pressed">@color/interaction_strong_pressed</item>
+        <item name="proton_interaction_norm">@color/interaction_norm</item>
+        <item name="proton_interaction_norm_pressed">@color/interaction_norm_pressed</item>
+        <item name="proton_interaction_norm_disabled">@color/interaction_norm_disabled</item>
+        <item name="proton_background_norm">@color/background_norm</item>
+        <item name="proton_background_secondary">@color/background_secondary</item>
+        <item name="proton_separator_norm">@color/separator_norm</item>
+        <item name="proton_notification_error">@color/notification_error</item>
+        <item name="proton_notification_success">@color/notification_success</item>
+        <item name="proton_notification_warning">@color/notification_warning</item>
     </style>
 
     <!-- Splash theme is a theme that is applied to launcher activity in manifest and once activity
