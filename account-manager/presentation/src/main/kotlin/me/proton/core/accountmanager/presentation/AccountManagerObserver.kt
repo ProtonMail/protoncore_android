@@ -18,7 +18,9 @@
 
 package me.proton.core.accountmanager.presentation
 
-import kotlinx.coroutines.CoroutineScope
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -32,27 +34,32 @@ import me.proton.core.accountmanager.domain.onAccountState
 import me.proton.core.accountmanager.domain.onSessionState
 
 class AccountManagerObserver(
-    internal val scope: CoroutineScope,
-    internal val accountManager: AccountManager
+    internal val accountManager: AccountManager,
+    private val lifecycle: Lifecycle,
+    private val minActiveState: Lifecycle.State = Lifecycle.State.CREATED
 ) {
 
+    internal val scope = lifecycle.coroutineScope
+
     internal fun addAccountStateListener(state: AccountState, initialState: Boolean, block: suspend (Account) -> Unit) {
-        accountManager.onAccountState(state, initialState = initialState).onEach {
-            // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
-            scope.launch { block(it) }
-        }.launchIn(scope)
+        accountManager.onAccountState(state, initialState = initialState)
+            .flowWithLifecycle(lifecycle, minActiveState)
+            .onEach { block(it) }
+            .launchIn(scope)
     }
 
     internal fun addSessionStateListener(state: SessionState, initialState: Boolean, block: suspend (Account) -> Unit) {
-        accountManager.onSessionState(state, initialState = initialState).onEach {
-            // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
-            scope.launch { block(it) }
-        }.launchIn(scope)
+        accountManager.onSessionState(state, initialState = initialState)
+            .flowWithLifecycle(lifecycle, minActiveState)
+            .onEach { block(it) }
+            .launchIn(scope)
     }
 }
 
-fun AccountManager.observe(scope: CoroutineScope) =
-    AccountManagerObserver(scope, this)
+fun AccountManager.observe(
+    lifecycle: Lifecycle,
+    minActiveState: Lifecycle.State = Lifecycle.State.CREATED
+) = AccountManagerObserver(this, lifecycle, minActiveState)
 
 fun AccountManagerObserver.disableInitialNotReadyAccounts() {
     scope.launch {

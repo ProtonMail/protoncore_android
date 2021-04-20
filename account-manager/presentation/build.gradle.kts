@@ -25,7 +25,7 @@ plugins {
     kotlin("android.extensions")
 }
 
-libVersion = Version(1, 0, 7)
+libVersion = Version(1, 0, 8)
 
 android()
 
@@ -40,7 +40,10 @@ dependencies {
 
         // Kotlin
         `kotlin-jdk8`,
-        `coroutines-android`
+        `coroutines-android`,
+
+        // Android
+        `lifecycle-runtime`
     )
 
     testImplementation(project(Module.androidTest))

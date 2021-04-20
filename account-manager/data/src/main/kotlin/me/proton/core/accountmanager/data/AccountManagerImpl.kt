@@ -19,6 +19,8 @@
 package me.proton.core.accountmanager.data
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
@@ -39,17 +41,21 @@ class AccountManagerImpl constructor(
     private val authRepository: AuthRepository
 ) : AccountManager(product), AccountWorkflowHandler {
 
+    private val removeSessionLock = Mutex()
+
     private suspend fun removeSession(sessionId: SessionId) {
-        accountRepository.getAccountOrNull(sessionId)?.let { account ->
-            if (account.sessionState != SessionState.ForceLogout)
-                authRepository.revokeSession(sessionId)
+        removeSessionLock.withLock {
+            accountRepository.getAccountOrNull(sessionId)?.let { account ->
+                if (account.sessionState != SessionState.ForceLogout)
+                    authRepository.revokeSession(sessionId)
+            }
+            accountRepository.deleteSession(sessionId)
         }
-        accountRepository.deleteSession(sessionId)
     }
 
     private suspend fun disableAccount(account: Account) {
-        account.sessionId?.let { removeSession(it) }
         accountRepository.updateAccountState(account.userId, AccountState.Disabled)
+        account.sessionId?.let { removeSession(it) }
     }
 
     private suspend fun disableAccount(sessionId: SessionId) {
@@ -66,8 +72,8 @@ class AccountManagerImpl constructor(
 
     override suspend fun removeAccount(userId: UserId) {
         accountRepository.getAccountOrNull(userId)?.let { account ->
-            account.sessionId?.let { removeSession(it) }
             accountRepository.updateAccountState(account.userId, AccountState.Removed)
+            account.sessionId?.let { removeSession(it) }
             accountRepository.deleteAccount(account.userId)
         }
     }
