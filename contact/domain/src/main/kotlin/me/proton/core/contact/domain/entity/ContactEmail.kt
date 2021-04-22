@@ -20,7 +20,11 @@ data class ContactEmail(
     val id: String,
     val name: String,
     val email: String,
-    val defaults: Int, // 0 if contact contains custom sending preferences or keys, 1 otherwise
+    /**
+     * 0 if contact contains custom sending preferences or keys, 1 otherwise
+     */
+    val defaults: Int,
     val order: Int,
     val contactId: String,
+    val canonicalEmail: String
 )

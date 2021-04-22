@@ -43,7 +43,9 @@ data class ContactEmailResponse(
     @SerialName("Order")
     val order: Int,
     @SerialName("ContactID")
-    val contactId: String
+    val contactId: String,
+    @SerialName("CanonicalEmail")
+    val canonicalEmail: String
 ) {
     fun toContactEmail(): ContactEmail = ContactEmail(
         id,
@@ -51,7 +53,8 @@ data class ContactEmailResponse(
         email,
         defaults,
         order,
-        contactId
+        contactId,
+        canonicalEmail
     )
 }
 
