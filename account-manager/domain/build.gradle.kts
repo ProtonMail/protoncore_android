@@ -23,7 +23,7 @@ plugins {
     kotlin("jvm")
 }
 
-libVersion = Version(1, 1, 7)
+libVersion = Version(1, 1, 8)
 
 dependencies {
 

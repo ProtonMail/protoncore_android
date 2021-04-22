@@ -22,7 +22,7 @@ import me.proton.core.mailmessage.data.api.request.EmailPackage
 import me.proton.core.mailmessage.domain.entity.EncryptedPackage
 import me.proton.core.util.kotlin.toInt
 
-fun EncryptedPackage.toEmailPackage(): EmailPackage = EmailPackage(
+internal fun EncryptedPackage.toEmailPackage(): EmailPackage = EmailPackage(
     addresses = addresses.mapValues { entry ->
         when (val address = entry.value) {
             is EncryptedPackage.Address.Internal -> EmailPackage.Address(

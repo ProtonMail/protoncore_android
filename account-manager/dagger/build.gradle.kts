@@ -27,7 +27,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(1, 1, 7)
+libVersion = Version(1, 1, 8)
 
 android()
 
@@ -49,8 +49,8 @@ dependencies {
         project(Module.authDomain),
         project(Module.user),
         project(Module.key),
-        project(Module.humanVerificationData),
-        project(Module.humanVerificationDomain),
+        project(Module.humanVerification),
+        project(Module.mailSettings),
 
         // Android
         `android-ktx`,

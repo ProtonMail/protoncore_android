@@ -36,6 +36,7 @@ import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
+import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
 import me.proton.android.core.coreexample.viewmodel.PlansViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
@@ -57,6 +58,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
     private val plansViewModel: PlansViewModel by viewModels()
     private val accountSwitcherViewModel: AccountSwitcherViewModel by viewModels()
     private val mailMessageViewModel: MailMessageViewModel by viewModels()
+    private val mailSettingsViewModel: MailSettingsViewModel by viewModels()
 
     override fun layoutId(): Int = R.layout.activity_main
 
@@ -116,6 +118,14 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
         mailMessageViewModel.getState().onEach {
             showToast("MailMessage: $it")
+        }.launchIn(lifecycleScope)
+
+        mailSettingsViewModel.getMailSettingsState().onEach {
+            when (it) {
+                is MailSettingsViewModel.MailSettingsState.Error.Message -> showToast("MailSettings: $it")
+                is MailSettingsViewModel.MailSettingsState.Error.NoPrimaryAccount,
+                is MailSettingsViewModel.MailSettingsState.Success -> Unit
+            }.exhaustive
         }.launchIn(lifecycleScope)
     }
 

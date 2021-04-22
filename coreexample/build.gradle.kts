@@ -59,6 +59,7 @@ dependencies {
         project(Module.key),
         project(Module.user),
         project(Module.mailMessage),
+        project(Module.mailSettings),
         project(Module.payment),
         project(Module.country),
         project(Module.plan),

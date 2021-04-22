@@ -182,6 +182,14 @@ Mail Message Domain: **0.1.5** - _released on: Jun 14, 2021_
 
 Mail Message Data: **0.1.5** - _released on: Jun 14, 2021_
 
+### Mail Settings
+
+Mail Settings: **0** - _released on: Jun 14, 2021_
+
+Mail Settings Domain: **0** - _released on: Jun 14, 2021_
+
+Mail Settings Data: **0** - _released on: Jun 14, 2021_
+
 ### Human Verification
 
 Human Verification: **1.2.7** - _released on: Jul 07, 2021_

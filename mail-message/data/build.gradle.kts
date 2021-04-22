@@ -24,7 +24,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 1, 5)
+libVersion = Version(0, 2, 1)
 
 android()
 
@@ -37,6 +37,7 @@ dependencies {
         project(Module.crypto),
         project(Module.network),
         project(Module.mailMessageDomain),
+        project(Module.mailSettingsDomain),
 
         // Kotlin
         `kotlin-jdk7`,

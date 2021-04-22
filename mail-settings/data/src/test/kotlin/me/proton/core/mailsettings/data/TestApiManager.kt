@@ -16,11 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-enum class PackageType(val type: Int) {
-    ProtonMail(1),
-    EncryptedOutside(2),
-    Cleartext(4),
-    PgpInline(8),
-    PgpMime(16),
-    ClearMime(32)
+package me.proton.core.mailsettings.data
+
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.domain.ApiManager
+import me.proton.core.network.domain.ApiResult
+
+class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<Api> {
+    override suspend fun <T> invoke(
+        forceNoRetryOnConnectionErrors: Boolean,
+        block: suspend Api.() -> T
+    ): ApiResult<T> = ApiResult.Success(block.invoke(api))
 }
