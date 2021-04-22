@@ -26,6 +26,17 @@ import me.proton.core.user.domain.entity.UserAddress
 
 interface UserAddressRepository {
     /**
+     * Add [UserAddress], locally.
+     *
+     * Note: This function is usually used for importing address/key from a different storage or during migration.
+     *
+     * @throws IllegalStateException if corresponding user(s) doesn't exist.
+     */
+    suspend fun addAddresses(
+        addresses: List<UserAddress>
+    )
+
+    /**
      * Get all [UserAddress], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
