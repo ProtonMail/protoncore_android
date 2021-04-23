@@ -21,5 +21,5 @@ package me.proton.core.contact.domain.entity
 data class ContactCard(
     val type: Int,
     val data: String,
-    val signature: String
+    val signature: String?
 )

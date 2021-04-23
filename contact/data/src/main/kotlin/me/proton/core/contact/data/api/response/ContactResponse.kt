@@ -56,7 +56,7 @@ data class ContactCardResponse(
     @SerialName("Data")
     val data: String,
     @SerialName("Signature")
-    val signature: String
+    val signature: String? = null
 ) {
     fun toContactCard() = ContactCard(
         type,
