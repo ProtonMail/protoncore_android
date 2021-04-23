@@ -168,11 +168,11 @@ User Data: **1.0.5** - _released on: Apr 23, 2021_
 
 ### Contact
 
-Contact: **0.1.2** - _released on: Apr 21, 2021_
+Contact: **0.1.3** - _released on: Apr 23, 2021_
 
-Contact Domain: **0.1.2** - _released on: Apr 21, 2021_
+Contact Domain: **0.1.3** - _released on: Apr 23, 2021_
 
-Contact Data: **0.1.2** - _released on: Apr 21, 2021_
+Contact Data: **0.1.3** - _released on: Apr 23, 2021_
 
 ### Mail Message
 
