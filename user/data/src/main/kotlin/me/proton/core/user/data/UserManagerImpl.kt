@@ -56,6 +56,11 @@ class UserManagerImpl(
     private val cryptoContext: CryptoContext
 ) : UserManager {
 
+    override suspend fun addUser(user: User, addresses: List<UserAddress>) {
+        userRepository.addUser(user)
+        userAddressRepository.addAddresses(addresses)
+    }
+
     override fun getUserFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean

@@ -25,6 +25,17 @@ import me.proton.core.user.domain.entity.User
 
 interface UserRepository {
     /**
+     * Add a [User], locally.
+     *
+     * Note: This function is usually used for importing user/key from a different storage or during migration.
+     *
+     * @throws IllegalStateException if corresponding account doesn't exist.
+     */
+    suspend fun addUser(
+        user: User
+    )
+
+    /**
      * Get [User], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.

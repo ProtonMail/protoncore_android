@@ -23,7 +23,7 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(1, 0, 4)
+libVersion = Version(1, 0, 5)
 
 android(minSdk = 23)
 

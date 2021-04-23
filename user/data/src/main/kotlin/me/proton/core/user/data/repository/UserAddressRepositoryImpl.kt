@@ -120,6 +120,9 @@ class UserAddressRepositoryImpl(
         refresh: Boolean
     ): List<UserAddress> = StoreKey(sessionUserId, addressId).let { if (refresh) store.fresh(it) else store.get(it) }
 
+    override suspend fun addAddresses(addresses: List<UserAddress>) =
+        insertOrUpdate(*addresses.toTypedArray())
+
     override fun getAddressesFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
         store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh)).map { it.toDataResult() }
 

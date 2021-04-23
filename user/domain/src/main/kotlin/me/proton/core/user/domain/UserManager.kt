@@ -33,6 +33,19 @@ import me.proton.core.user.domain.entity.UserKey
 
 interface UserManager {
     /**
+     * Add a [User] and a list of [UserAddress], locally.
+     *
+     * Note: This function is usually used for importing user/address/key from a different storage or during migration.
+     *
+     * @throws IllegalStateException if corresponding account doesn't exist.
+     * @throws IllegalStateException if corresponding addresses user(s) doesn't exist.
+     */
+    suspend fun addUser(
+        user: User,
+        addresses: List<UserAddress>
+    )
+
+    /**
      * Get [User], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
