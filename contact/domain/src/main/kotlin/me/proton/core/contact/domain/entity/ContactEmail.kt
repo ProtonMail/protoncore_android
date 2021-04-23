@@ -28,5 +28,5 @@ data class ContactEmail(
     val defaults: Int,
     val order: Int,
     val contactId: String,
-    val canonicalEmail: String
+    val canonicalEmail: String?
 )
