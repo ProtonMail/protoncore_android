@@ -16,18 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.data.repository
+package me.proton.core.contact.data.repository
 
-import Contact
-import ContactEmail
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import me.proton.core.contact.data.api.ContactApi
+import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.repository.ContactRepository
+import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.network.data.ApiProvider
 
 class ContactRepositoryImpl(
