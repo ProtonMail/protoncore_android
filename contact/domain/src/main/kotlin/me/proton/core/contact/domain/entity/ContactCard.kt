@@ -16,6 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+package me.proton.core.contact.domain.entity
+
 data class ContactCard(
     val type: Int,
     val data: String,

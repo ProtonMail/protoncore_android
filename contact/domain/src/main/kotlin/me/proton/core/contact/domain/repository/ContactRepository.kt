@@ -16,10 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.repository
+package me.proton.core.contact.domain.repository
 
-import Contact
-import ContactEmail
+import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 

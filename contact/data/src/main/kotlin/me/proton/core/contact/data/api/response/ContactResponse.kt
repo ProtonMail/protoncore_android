@@ -18,10 +18,10 @@
 
 package me.proton.core.contact.data.api.response
 
-import Contact
-import ContactCard
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactCard
 
 @Serializable
 data class GetContactResponse(

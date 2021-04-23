@@ -18,9 +18,9 @@
 
 package me.proton.core.contact.data.api.response
 
-import ContactEmail
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.contact.domain.entity.ContactEmail
 
 @Serializable
 data class ContactEmailsResponse(

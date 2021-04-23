@@ -16,6 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+package me.proton.core.contact.domain.entity
+
 data class ContactEmail(
     val id: String,
     val name: String,
