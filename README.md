@@ -160,11 +160,11 @@ Key Data: **1.0.4** - _released on: Mar 22, 2021_
 
 ### User
 
-User: **1.0.4** - _released on: Apr 15, 2021_
+User: **1.0.5** - _released on: Apr 23, 2021_
 
-User Domain: **1.0.4** - _released on: Apr 15, 2021_
+User Domain: **1.0.5** - _released on: Apr 23, 2021_
 
-User Data: **1.0.4** - _released on: Apr 15, 2021_
+User Data: **1.0.5** - _released on: Apr 23, 2021_
 
 ### Contact
 
