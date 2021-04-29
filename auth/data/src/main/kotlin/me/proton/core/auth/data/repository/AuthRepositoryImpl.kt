@@ -19,8 +19,10 @@
 package me.proton.core.auth.data.repository
 
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.LoginInfoRequest
 import me.proton.core.auth.data.api.request.LoginRequest
+import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.request.UniversalTwoFactorRequest
 import me.proton.core.auth.domain.entity.LoginInfo
@@ -31,15 +33,12 @@ import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.session.SessionId
 
 /**
  * Implementation of the [AuthRepository].
  * Provides implementation of the all auth related API routes.
- *
- * @author Dino Kadrikj.
  */
 class AuthRepositoryImpl(
     private val provider: ApiProvider

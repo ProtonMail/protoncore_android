@@ -19,6 +19,7 @@
 package me.proton.core.user.data
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -145,15 +146,18 @@ class UserManagerImpl(
         username: String,
         domain: String,
         auth: Auth,
-        password: ByteArray
+        password: ByteArray,
+        accountType: AccountType
     ): User {
         // First create a new internal address, if needed.
-        if (userAddressRepository.getAddresses(sessionUserId).firstInternalOrNull() == null) {
-            userAddressRepository.createAddress(
-                sessionUserId = sessionUserId,
-                displayName = username,
-                domain = domain
-            )
+        if (accountType == AccountType.Internal) {
+            if (userAddressRepository.getAddresses(sessionUserId).firstInternalOrNull() == null) {
+                userAddressRepository.createAddress(
+                    sessionUserId = sessionUserId,
+                    displayName = username,
+                    domain = domain
+                )
+            }
         }
         val primaryKeySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
         cryptoContext.pgpCrypto.getPassphrase(password, primaryKeySalt).use { passphrase ->

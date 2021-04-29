@@ -33,11 +33,15 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.api.UserApi
+import me.proton.core.user.data.api.request.CreateExternalUserRequest
+import me.proton.core.user.data.api.request.CreateUserRequest
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.data.extension.toUserKeyList
+import me.proton.core.user.domain.entity.NewExternalEmailUser
+import me.proton.core.user.domain.entity.NewUser
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -94,6 +98,26 @@ class UserRepositoryImpl(
     override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User =
         if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)
 
+    /**
+     * Create new [User]. Used during signup.
+     */
+    override suspend fun createUser(newUser: NewUser): User =
+        provider.get<UserApi>().invoke {
+            val request = CreateUserRequest.from(newUser)
+            val userResponse = createUser(request).user
+            userResponse.toUser(getPassphrase(UserId(userResponse.id)))
+        }.valueOrThrow
+
+    /**
+     * Create new [User]. Used during signup.
+     */
+    override suspend fun createExternalEmailUser(newUser: NewExternalEmailUser): User =
+        provider.get<UserApi>().invoke {
+            val request = CreateExternalUserRequest.from(newUser)
+            val userResponse = createExternalUser(request).user
+            userResponse.toUser(getPassphrase(UserId(userResponse.id)))
+        }.valueOrThrow
+
     // region PassphraseRepository
 
     override suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray) =
@@ -109,4 +133,6 @@ class UserRepositoryImpl(
         userDao.setPassphrase(userId, null)
 
     //endregion
+
+
 }

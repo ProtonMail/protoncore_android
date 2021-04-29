@@ -19,6 +19,7 @@
 package me.proton.core.user.domain
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.srp.Auth
@@ -147,7 +148,8 @@ interface UserManager {
         username: String,
         domain: String,
         auth: Auth,
-        password: ByteArray
+        password: ByteArray,
+        accountType: AccountType
     ): User
 
     /**

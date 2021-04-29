@@ -21,7 +21,15 @@ package me.proton.core.user.data.api
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
+import me.proton.core.user.data.api.request.CreateExternalUserRequest
+import me.proton.core.user.data.api.request.CreateUserRequest
+import me.proton.core.user.data.api.request.CreationTokenValidityRequest
+import me.proton.core.user.data.api.request.VerificationRequest
+import me.proton.core.user.data.api.response.DirectSignupEnabledResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface UserApi : BaseRetrofitApi {
@@ -31,4 +39,19 @@ interface UserApi : BaseRetrofitApi {
 
     @GET("users/available")
     suspend fun usernameAvailable(@Query("Name") username: String): GenericResponse
+
+    @GET("users/direct")
+    suspend fun directSignupEnabled(): DirectSignupEnabledResponse
+
+    @POST("v4/users")
+    suspend fun createUser(@Body userRequest: CreateUserRequest): UsersResponse
+
+    @POST("v4/users/external")
+    suspend fun createExternalUser(@Body userRequest: CreateExternalUserRequest): UsersResponse
+
+    @POST("v4/users/code")
+    suspend fun sendVerificationCode(@Body verificationCodeRequest: VerificationRequest)
+
+    @PUT("v4/users/check")
+    suspend fun checkCreationTokenValidity(@Body creationTokenValidityRequest: CreationTokenValidityRequest)
 }

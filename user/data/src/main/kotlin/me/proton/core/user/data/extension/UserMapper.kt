@@ -24,12 +24,14 @@ import me.proton.core.key.data.api.response.UserKeyResponse
 import me.proton.core.key.data.api.response.UserResponse
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.entity.UserKeyEntity
 import me.proton.core.user.domain.entity.Delinquent
 import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
+import me.proton.core.user.domain.entity.VerificationResult
 import me.proton.core.util.kotlin.toBooleanOrFalse
 
 internal fun UserResponse.toUser(passphrase: EncryptedByteArray?): User {
@@ -117,3 +119,14 @@ internal fun UserKeyEntity.toUserKey(passphrase: EncryptedByteArray?) = UserKey(
 )
 
 internal fun List<UserKeyEntity>.toUserKeyList(passphrase: EncryptedByteArray?) = map { it.toUserKey(passphrase) }
+
+/**
+ * Maps the [ApiResult] to a Human Verification domain [VerificationResult] object.
+ */
+internal fun ApiResult<Any>.mapToVerificationResult(): VerificationResult {
+    return if (this is ApiResult.Success) {
+        VerificationResult.Success
+    } else {
+        VerificationResult.Error(if (this is ApiResult.Error.Http) proton?.error else null)
+    }
+}
