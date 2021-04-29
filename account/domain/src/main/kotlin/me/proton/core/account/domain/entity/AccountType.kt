@@ -18,6 +18,8 @@
 
 package me.proton.core.account.domain.entity
 
+import me.proton.core.util.kotlin.exhaustive
+
 enum class AccountType {
     /**
      * User with no email address associated with it, but a username.
@@ -34,3 +36,9 @@ enum class AccountType {
      */
     External
 }
+
+fun AccountType.toCreateUserType(): Int = when (this) {
+    AccountType.Username -> 2
+    AccountType.Internal -> 1
+    AccountType.External -> 1 // external accounts go slightly different path than the usual Internal or Username (VPN)
+}.exhaustive

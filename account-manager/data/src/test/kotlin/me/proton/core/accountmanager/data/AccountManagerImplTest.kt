@@ -27,7 +27,6 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Before
@@ -42,8 +41,7 @@ class AccountManagerImplTest {
         sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",
-        scopes = listOf("full", "calendar", "mail"),
-        headers = HumanVerificationHeaders("tokenType", "tokenCode")
+        scopes = listOf("full", "calendar", "mail")
     )
 
     private val account1 = Account(
@@ -53,7 +51,7 @@ class AccountManagerImplTest {
         state = AccountState.Ready,
         sessionId = session1.sessionId,
         sessionState = SessionState.Authenticated,
-        details = AccountDetails(null, null)
+        details = AccountDetails(null)
     )
 
     private val mocks = RepositoryMocks(session1, account1)
@@ -141,41 +139,5 @@ class AccountManagerImplTest {
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
         assertEquals(1, sessionStateLists.size)
         assertEquals(SessionState.SecondFactorFailed, sessionStateLists[0].sessionState)
-    }
-
-    @Test
-    fun `on handleHumanVerificationSuccess`() = runBlockingTest {
-        mocks.setupAccountRepository()
-
-        val tokenType = "newTokenType"
-        val tokenCode = "newTokenCode"
-        val headers = HumanVerificationHeaders(tokenType, tokenCode)
-
-        accountManager.handleHumanVerificationSuccess(session1.sessionId, tokenType, tokenCode)
-
-        val sessionLists = accountManager.getSessions().toList()
-        assertEquals(2, sessionLists.size)
-        assertEquals(session1.headers, sessionLists[0][0].headers)
-        assertEquals(headers, sessionLists[1][0].headers)
-
-        val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(SessionState.HumanVerificationSuccess, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.Authenticated, sessionStateLists[1].sessionState)
-    }
-
-    @Test
-    fun `on handleHumanVerificationFailed`() = runBlockingTest {
-        mocks.setupAccountRepository()
-
-        accountManager.handleHumanVerificationFailed(session1.sessionId)
-
-        val stateLists = accountManager.onAccountStateChanged().toList()
-        assertEquals(0, stateLists.size)
-
-        val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(2, sessionStateLists.size)
-        assertEquals(SessionState.HumanVerificationFailed, sessionStateLists[0].sessionState)
-        assertEquals(SessionState.Authenticated, sessionStateLists[1].sessionState)
     }
 }

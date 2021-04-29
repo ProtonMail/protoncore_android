@@ -30,7 +30,6 @@ import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.BUNDLE_KEY_COUNTRY
 import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.KEY_COUNTRY_SELECTED
 import me.proton.core.country.presentation.ui.showCountryPicker
-import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationSmsBinding
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
@@ -38,12 +37,14 @@ import me.proton.core.humanverification.presentation.viewmodel.verification.Huma
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validate
 import me.proton.core.presentation.viewmodel.onError
 import me.proton.core.presentation.viewmodel.onSuccess
+import me.proton.core.user.domain.entity.UserVerificationTokenType
 
 /**
  * Fragment that handles human verification with phone number.
@@ -58,7 +59,7 @@ internal class HumanVerificationSMSFragment :
         private const val ARG_SESSION_ID = "arg.sessionId"
 
         operator fun invoke(
-            sessionId: String,
+            sessionId: String?,
             token: String
         ) = HumanVerificationSMSFragment().apply {
             arguments = bundleOf(
@@ -70,15 +71,19 @@ internal class HumanVerificationSMSFragment :
 
     private val viewModel by viewModels<HumanVerificationSMSViewModel>()
 
-    private val sessionId: SessionId by lazy {
-        SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
+    private val sessionId: SessionId? by lazy {
+        requireArguments().getString(ARG_SESSION_ID)?.let {
+            SessionId(it)
+        } ?: run {
+            null
+        }
     }
 
     private val humanVerificationBase by lazy {
         HumanVerificationMethodCommon(
             viewModel = viewModel,
             urlToken = requireArguments().get(ARG_URL_TOKEN) as String,
-            tokenType = TokenType.SMS
+            tokenType = UserVerificationTokenType.SMS
         )
     }
 
@@ -103,11 +108,15 @@ internal class HumanVerificationSMSFragment :
                 childFragmentManager.showCountryPicker()
             }
 
-            getVerificationCodeButton.setOnClickListener {
+            getVerificationCodeButton.onClick {
+                hideKeyboard()
+                getVerificationCodeButton.setLoading()
                 smsEditText.validate()
-                    .onFailure { binding.smsEditText.setInputError() }
+                    .onFailure {
+                        binding.smsEditText.setInputError()
+                        getVerificationCodeButton.setIdle()
+                    }
                     .onSuccess {
-                        getVerificationCodeButton.setLoading()
                         viewModel.sendVerificationCodeToDestination(
                             sessionId = sessionId,
                             countryCallingCode = callingCodeText.text.toString(), // this is not expected to be empty
@@ -117,7 +126,8 @@ internal class HumanVerificationSMSFragment :
             }
 
             proceedButton.onClick {
-                humanVerificationBase.onGetCodeClicked(parentFragmentManager)
+                hideKeyboard()
+                humanVerificationBase.onGetCodeClicked(parentFragmentManager = parentFragmentManager)
             }
         }
 

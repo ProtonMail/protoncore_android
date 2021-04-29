@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,12 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.exception
+package me.proton.core.humanverification.data.db
 
-/**
- * @author Dino Kadrikj.
- */
-class TokenCodeVerificationException : RuntimeException {
-    constructor() : super()
-    constructor(message: String) : super(message)
+import androidx.room.TypeConverter
+import me.proton.core.network.domain.humanverification.HumanVerificationState
+
+class HumanVerificationConverters {
+    @TypeConverter
+    fun fromSHumanVerificationStateToString(value: HumanVerificationState?): String? = value?.name
+
+    @TypeConverter
+    fun fromStringToSessionState(value: String?): HumanVerificationState? = value?.let {
+        HumanVerificationState.valueOf(value)
+    }
 }

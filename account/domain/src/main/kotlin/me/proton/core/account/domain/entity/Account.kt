@@ -20,7 +20,6 @@ package me.proton.core.account.domain.entity
 
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.SessionId
 
 data class Account(
@@ -34,8 +33,7 @@ data class Account(
 )
 
 data class AccountDetails(
-    val session: SessionDetails?,
-    val humanVerification: HumanVerificationDetails?
+    val session: SessionDetails?
 )
 
 data class SessionDetails(
@@ -52,4 +50,3 @@ fun Account.isTwoPassModeNeeded() = state == AccountState.TwoPassModeNeeded
 
 fun Account.isAuthenticated() = sessionState == SessionState.Authenticated
 fun Account.isSecondFactorNeeded() = sessionState == SessionState.SecondFactorNeeded
-fun Account.isHumanVerificationNeeded() = sessionState == SessionState.HumanVerificationNeeded

@@ -23,11 +23,12 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("plugin.serialization")
+    kotlin("kapt")
 }
 
-libVersion = Version(0, 3, 3)
+libVersion = Version(1, 0, 0)
 
-android()
+android(minSdk = 23)
 
 dependencies {
 
@@ -35,6 +36,11 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.humanVerificationDomain),
         project(Module.network),
+        project(Module.data),
+        project(Module.crypto),
+        project(Module.authData),
+        project(Module.authDomain),
+        project(Module.userDomain),
 
         // Kotlin
         `kotlin-jdk7`,
@@ -44,7 +50,8 @@ dependencies {
         // Other
         `okHttp-logging`,
         `retrofit`,
-        `retrofit-kotlin-serialization`
+        `retrofit-kotlin-serialization`,
+        `room-ktx`
     )
 
     testImplementation(project(Module.androidTest))

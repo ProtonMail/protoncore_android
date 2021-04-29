@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -15,22 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-package me.proton.core.humanverification.data.api
 
-import me.proton.core.humanverification.data.entity.HumanVerificationBody
-import me.proton.core.humanverification.data.entity.VerificationBody
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import retrofit2.http.Body
-import retrofit2.http.POST
+package me.proton.core.humanverification.data.db
 
-/**
- * @author Dino Kadrikj.
- */
-interface HumanVerificationApi : BaseRetrofitApi {
+import me.proton.core.data.db.Database
 
-    @POST("users/code")
-    suspend fun sendVerificationCode(@Body verificationCodeBody: VerificationBody)
-
-    @POST("users/human")
-    suspend fun postHumanVerification(@Body body: HumanVerificationBody)
+interface HumanVerificationDatabase : Database {
+    fun humanVerificationDetailsDao(): HumanVerificationDetailsDao
 }

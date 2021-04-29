@@ -23,12 +23,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.launchIn
-import me.proton.core.humanverification.domain.entity.TokenType
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCode
 import me.proton.core.presentation.ui.view.Loadable
-import me.proton.core.presentation.viewmodel.onError
-import me.proton.core.presentation.viewmodel.onSuccess
+import me.proton.core.presentation.viewmodel.ViewModelResult
+import me.proton.core.user.domain.entity.UserVerificationTokenType
+import me.proton.core.util.kotlin.exhaustive
 
 /**
  * Base class for all verification methods.
@@ -38,12 +39,8 @@ import me.proton.core.presentation.viewmodel.onSuccess
 internal class HumanVerificationMethodCommon(
     val viewModel: HumanVerificationCode,
     val urlToken: String,
-    val tokenType: TokenType
+    val tokenType: UserVerificationTokenType
 ) {
-
-    private var destination: String? = null
-
-    var verificationToken: String? = null
 
     /**
      * Observes the verification code result.
@@ -59,11 +56,16 @@ internal class HumanVerificationMethodCommon(
         loadable: Loadable? = null,
         onVerificationCodeError: () -> Unit
     ) {
-        viewModel.verificationCodeStatus.onSuccess {
-            onGetCodeClicked(parentFragmentManager)
-        }.onError {
-            loadable?.loadingComplete()
-            onVerificationCodeError()
+        viewModel.verificationCodeStatus.onEach {
+            when (it) {
+                is ViewModelResult.None,
+                is ViewModelResult.Processing -> { }
+                is ViewModelResult.Error -> {
+                    loadable?.loadingComplete()
+                    onVerificationCodeError()
+                }
+                is ViewModelResult.Success -> onGetCodeClicked(it.value, parentFragmentManager)
+            }.exhaustive
         }.launchIn(owner.lifecycleScope)
     }
 
@@ -73,7 +75,7 @@ internal class HumanVerificationMethodCommon(
      * (email, phone) or if the user has already the code from other source
      * (ex. customer support for manual verification).
      */
-    fun onGetCodeClicked(parentFragmentManager: FragmentManager) {
+    fun onGetCodeClicked(destination: String? = null, parentFragmentManager: FragmentManager) {
         parentFragmentManager.setFragmentResult(
             HumanVerificationDialogFragment.KEY_PHASE_TWO,
             bundleOf(

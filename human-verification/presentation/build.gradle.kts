@@ -27,7 +27,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(0, 3, 3)
+libVersion = Version(1, 0, 0)
 
 android(useDataBinding = true)
 
@@ -38,6 +38,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
         project(Module.networkDomain),
+        project(Module.userDomain),
         project(Module.presentation),
 
         // Feature
@@ -56,7 +57,8 @@ dependencies {
         `hilt-android`,
         `hilt-androidx-viewModel`,
         `lifecycle-viewModel`,
-        `material`
+        `material`,
+        `lifecycle-runtime`
     )
 
     kapt(

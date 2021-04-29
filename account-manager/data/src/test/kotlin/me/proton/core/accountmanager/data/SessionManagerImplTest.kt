@@ -17,8 +17,6 @@
  */
 package me.proton.core.accountmanager.data
 
-import io.mockk.coEvery
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.account.domain.entity.Account
@@ -27,12 +25,8 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionListener
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -46,8 +40,7 @@ class SessionManagerImplTest {
         sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",
-        scopes = listOf("full", "calendar", "mail"),
-        headers = HumanVerificationHeaders("tokenType", "tokenCode")
+        scopes = listOf("full", "calendar", "mail")
     )
 
     private val account1 = Account(
@@ -57,7 +50,7 @@ class SessionManagerImplTest {
         state = AccountState.Ready,
         sessionId = session1.sessionId,
         sessionState = SessionState.Authenticated,
-        details = AccountDetails(null, null)
+        details = AccountDetails(null)
     )
 
     private val mocks = RepositoryMocks(session1, account1)
@@ -113,53 +106,5 @@ class SessionManagerImplTest {
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
         assertEquals(1, sessionStateLists.size)
         assertEquals(SessionState.ForceLogout, sessionStateLists[0].sessionState)
-    }
-
-    @Test
-    fun `on onHumanVerificationNeeded success`() = runBlockingTest {
-        mocks.setupAccountRepository()
-
-        val humanVerificationDetails = HumanVerificationDetails(
-            verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null
-        )
-
-        coEvery { mocks.accountRepository.onSessionStateChanged(any()) } returns flowOf(
-            account1,
-            account1.copy(sessionState = SessionState.HumanVerificationNeeded),
-            account1.copy(sessionState = SessionState.HumanVerificationSuccess)
-        )
-
-        val result = sessionManager.onHumanVerificationNeeded(session1, humanVerificationDetails)
-
-        val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(3, sessionStateLists.size)
-        assertEquals(SessionState.Authenticated, sessionStateLists[0].sessionState)
-
-        assertEquals(SessionListener.HumanVerificationResult.Success, result)
-    }
-
-    @Test
-    fun `on onHumanVerificationNeeded failed`() = runBlockingTest {
-        mocks.setupAccountRepository()
-
-        val humanVerificationDetails = HumanVerificationDetails(
-            verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null
-        )
-
-        coEvery { mocks.accountRepository.onSessionStateChanged(any()) } returns flowOf(
-            account1,
-            account1.copy(sessionState = SessionState.HumanVerificationNeeded),
-            account1.copy(sessionState = SessionState.HumanVerificationFailed)
-        )
-
-        val result = sessionManager.onHumanVerificationNeeded(session1, humanVerificationDetails)
-
-        val sessionStateLists = accountManager.onSessionStateChanged().toList()
-        assertEquals(3, sessionStateLists.size)
-        assertEquals(SessionState.Authenticated, sessionStateLists[0].sessionState)
-
-        assertEquals(SessionListener.HumanVerificationResult.Failure, result)
     }
 }

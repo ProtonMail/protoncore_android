@@ -24,53 +24,28 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import me.proton.core.country.presentation.entity.CountryUIModel
-import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.domain.entity.VerificationResult
-import me.proton.core.humanverification.domain.usecase.VerifyCode
-import me.proton.core.humanverification.presentation.exception.TokenCodeVerificationException
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
+import me.proton.core.user.domain.entity.UserVerificationTokenType
 
 /**
- * View model class that handles and supports [TokenType.CAPTCHA] verification method (type) fragment.
+ * View model class that handles and supports [UserVerificationTokenType.CAPTCHA] verification method (type) fragment.
  */
 internal class HumanVerificationCaptchaViewModel @ViewModelInject constructor(
-    private val verifyCode: VerifyCode,
     private val networkManager: NetworkManager
 ) : ProtonViewModel(), HumanVerificationCode {
 
-    private val _codeVerificationResult = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
     private val _networkConnectionState = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
 
     /**
      * Code is sometimes referred as a token, so token on BE and code on UI, it is same thing.
      */
-    val codeVerificationResult = _codeVerificationResult.asStateFlow()
     val networkConnectionState = _networkConnectionState.asStateFlow()
 
     init {
         networkWatcher()
-    }
-
-    /**
-     * Contacts the API and sends the human verification token code.
-     */
-    fun verifyTokenCode(sessionId: SessionId, token: String?) {
-        requireNotNull(token)
-        require(token.isNotEmpty()) { "Verification token is empty." }
-        viewModelScope.launch {
-            val result = verifyCode(sessionId, TokenType.CAPTCHA.name, token)
-            if (result is VerificationResult.Success) {
-                _codeVerificationResult.tryEmit(ViewModelResult.Success(true))
-            } else {
-                _codeVerificationResult.tryEmit(ViewModelResult.Error(TokenCodeVerificationException()))
-            }
-        }
     }
 
     /**

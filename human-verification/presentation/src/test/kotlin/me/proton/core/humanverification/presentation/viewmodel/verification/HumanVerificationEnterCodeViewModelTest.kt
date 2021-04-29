@@ -22,16 +22,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.domain.entity.VerificationResult
-import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
-import me.proton.core.humanverification.domain.usecase.VerifyCode
-import me.proton.core.humanverification.presentation.exception.TokenCodeVerificationException
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.user.domain.entity.UserVerificationTokenType
+import me.proton.core.user.domain.entity.VerificationResult
+import me.proton.core.user.domain.usecase.ResendVerificationCodeToDestination
 import org.junit.Rule
 import org.junit.Test
 
@@ -41,7 +39,6 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
     val instantTaskRule = InstantTaskExecutorRule()
 
     private val resendVerificationCodeToDestination = mockk<ResendVerificationCodeToDestination>()
-    private val verifyCode = mockk<VerifyCode>()
 
     private val sessionId: SessionId = SessionId("id")
     private val testEmail = "test@protonmail.com"
@@ -49,53 +46,14 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
 
     private val viewModel by lazy {
         HumanVerificationEnterCodeViewModel(
-            resendVerificationCodeToDestination,
-            verifyCode
+            resendVerificationCodeToDestination
         )
-    }
-
-    @Test
-    fun `verify code success`() = coroutinesTest {
-        val tokenType = TokenType.EMAIL
-        val token = "testToken"
-        coEvery {
-            verifyCode.invoke(
-                sessionId = any(),
-                tokenType = any(),
-                verificationCode = any()
-            )
-        } returns VerificationResult.Success
-        viewModel.verifyTokenCode(sessionId, tokenType, token)
-        viewModel.codeVerificationResult.test {
-            assertIs<ViewModelResult.Success<Boolean>>(expectItem())
-        }
-    }
-
-    @Test
-    fun `verify code fails correctly`() = coroutinesTest {
-        // given
-        val tokenType = TokenType.EMAIL
-        val token = "testToken"
-        coEvery {
-            verifyCode.invoke(
-                sessionId = any(),
-                tokenType = any(),
-                verificationCode = any()
-            )
-        } returns VerificationResult.Error(errorResponse)
-        // when
-        viewModel.verifyTokenCode(sessionId, tokenType, token)
-        // then
-        viewModel.codeVerificationResult.test {
-            val result = expectItem() as ViewModelResult.Error
-            assertIs<TokenCodeVerificationException>(result.throwable)
-        }
     }
 
     @Test
     fun `resend token success`() = coroutinesTest {
         // given
-        val tokenType = TokenType.EMAIL
+        val tokenType = UserVerificationTokenType.EMAIL
         viewModel.tokenType = tokenType
         viewModel.destination = testEmail
         coEvery {
@@ -116,7 +74,7 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
     @Test
     fun `resend token failure`() = coroutinesTest {
         // given
-        val tokenType = TokenType.EMAIL
+        val tokenType = UserVerificationTokenType.EMAIL
         viewModel.tokenType = tokenType
         viewModel.destination = testEmail
         coEvery {

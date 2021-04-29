@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,12 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.entity
+package me.proton.core.humanverification.domain
 
-/**
- * @author Dino Kadrikj.
- */
-data class HumanVerificationModel(
-    val verifyMethods: List<String>, // Only provided if Direct = 1
-    val token: String
-)
+import me.proton.core.network.domain.session.ClientId
+
+interface HumanVerificationWorkflowHandler {
+
+    /**
+     * Handle HumanVerification success.
+     *
+     * Note: TokenType and tokenCode must be part of the next API calls.
+     */
+    suspend fun handleHumanVerificationSuccess(clientId: ClientId, tokenType: String, tokenCode: String)
+
+    /**
+     * Handle HumanVerification failure.
+     */
+    suspend fun handleHumanVerificationFailed(clientId: ClientId)
+
+    /**
+     * Handle HumanVerification canceled by the user.
+     */
+    suspend fun handleHumanVerificationCanceled(clientId: ClientId)
+}

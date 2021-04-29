@@ -23,7 +23,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class HumanVerificationInput(
-    val sessionId: String,
+    val clientId: String, // this is the value from the ClientId
+    val clientIdType: String,
     val verificationMethods: List<String>?,
-    val captchaToken: String?
+    val captchaToken: String?,
+    val recoveryEmailAddress: String? = null
 ) : Parcelable

@@ -139,19 +139,6 @@ class AccountManagerImpl constructor(
         disableAccount(sessionId)
     }
 
-    override suspend fun handleHumanVerificationSuccess(sessionId: SessionId, tokenType: String, tokenCode: String) {
-        accountRepository.updateSessionHeaders(sessionId, tokenType, tokenCode)
-        accountRepository.updateSessionState(sessionId, SessionState.HumanVerificationSuccess)
-        accountRepository.updateHumanVerificationCompleted(sessionId)
-        accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
-    }
-
-    override suspend fun handleHumanVerificationFailed(sessionId: SessionId) {
-        accountRepository.updateSessionHeaders(sessionId, null, null)
-        accountRepository.updateSessionState(sessionId, SessionState.HumanVerificationFailed)
-        accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
-    }
-
     override suspend fun handleCreateAddressNeeded(userId: UserId) {
         accountRepository.updateAccountState(userId, AccountState.CreateAddressNeeded)
     }

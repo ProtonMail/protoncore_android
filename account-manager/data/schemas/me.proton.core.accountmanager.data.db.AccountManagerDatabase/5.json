@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "b65db3ee254e5b1cc3757d0c4e0a5a19",
+    "version": 5,
+    "identityHash": "85442139ccecab91d7b330ca02e9c55e",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -515,7 +515,7 @@
       },
       {
         "tableName": "AddressEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `addressId` TEXT NOT NULL, `email` TEXT NOT NULL, `displayName` TEXT, `domainId` TEXT, `canSend` INTEGER NOT NULL, `canReceive` INTEGER NOT NULL, `enabled` INTEGER NOT NULL, `type` INTEGER, `order` INTEGER NOT NULL, PRIMARY KEY(`addressId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `addressId` TEXT NOT NULL, `email` TEXT NOT NULL, `displayName` TEXT, `signature` TEXT, `domainId` TEXT, `canSend` INTEGER NOT NULL, `canReceive` INTEGER NOT NULL, `enabled` INTEGER NOT NULL, `type` INTEGER, `order` INTEGER NOT NULL, PRIMARY KEY(`addressId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -538,6 +538,12 @@
           {
             "fieldPath": "displayName",
             "columnName": "displayName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "signature",
+            "columnName": "signature",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -883,49 +889,8 @@
         ]
       },
       {
-        "tableName": "HumanVerificationDetailsEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` TEXT NOT NULL, `verificationMethods` TEXT NOT NULL, `captchaVerificationToken` TEXT, PRIMARY KEY(`clientId`))",
-        "fields": [
-          {
-            "fieldPath": "clientId",
-            "columnName": "clientId",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "verificationMethods",
-            "columnName": "verificationMethods",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "captchaVerificationToken",
-            "columnName": "captchaVerificationToken",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "clientId"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [
-          {
-            "name": "index_HumanVerificationDetailsEntity_clientId",
-            "unique": false,
-            "columnNames": [
-              "clientId"
-            ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_HumanVerificationDetailsEntity_clientId` ON `${TABLE_NAME}` (`clientId`)"
-          }
-        ],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "HumanVerificationHeadersEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `state` TEXT NOT NULL, `humanHeaderTokenType` TEXT NOT NULL, `humanHeaderTokenCode` TEXT NOT NULL, PRIMARY KEY(`clientId`))",
+        "tableName": "HumanVerificationEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clientId` TEXT NOT NULL, `clientIdType` TEXT NOT NULL, `verificationMethods` TEXT NOT NULL, `captchaVerificationToken` TEXT, `state` TEXT NOT NULL, `humanHeaderTokenType` TEXT, `humanHeaderTokenCode` TEXT, PRIMARY KEY(`clientId`))",
         "fields": [
           {
             "fieldPath": "clientId",
@@ -940,6 +905,18 @@
             "notNull": true
           },
           {
+            "fieldPath": "verificationMethods",
+            "columnName": "verificationMethods",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "captchaVerificationToken",
+            "columnName": "captchaVerificationToken",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "state",
             "columnName": "state",
             "affinity": "TEXT",
@@ -949,13 +926,13 @@
             "fieldPath": "humanHeaderTokenType",
             "columnName": "humanHeaderTokenType",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "humanHeaderTokenCode",
             "columnName": "humanHeaderTokenCode",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -964,23 +941,14 @@
           ],
           "autoGenerate": false
         },
-        "indices": [
-          {
-            "name": "index_HumanVerificationHeadersEntity_clientId",
-            "unique": false,
-            "columnNames": [
-              "clientId"
-            ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_HumanVerificationHeadersEntity_clientId` ON `${TABLE_NAME}` (`clientId`)"
-          }
-        ],
+        "indices": [],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b65db3ee254e5b1cc3757d0c4e0a5a19')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '85442139ccecab91d7b330ca02e9c55e')"
     ]
   }
 }

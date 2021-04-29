@@ -18,10 +18,7 @@
 
 package me.proton.core.humanverification.presentation.exception
 
-/**
- * @author Dino Kadrikj.
- */
 class VerificationCodeSendingException : RuntimeException {
     constructor() : super()
-    constructor(message: String) : super(message)
+    constructor(message: String?) : super(message)
 }

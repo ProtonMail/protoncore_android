@@ -49,9 +49,6 @@ abstract class SessionDao : BaseDao<SessionEntity>() {
     @Query("UPDATE SessionEntity SET scopes = :scopes WHERE sessionId = :sessionId")
     abstract suspend fun updateScopes(sessionId: SessionId, scopes: String)
 
-    @Query("UPDATE SessionEntity SET humanHeaderTokenType = :tokenType, humanHeaderTokenCode = :tokenCode WHERE sessionId = :sessionId")
-    abstract suspend fun updateHeaders(sessionId: SessionId, tokenType: EncryptedString?, tokenCode: EncryptedString?)
-
     @Query("UPDATE SessionEntity SET accessToken = :accessToken, refreshToken = :refreshToken WHERE sessionId = :sessionId")
     abstract suspend fun updateToken(sessionId: SessionId, accessToken: EncryptedString, refreshToken: EncryptedString)
 }

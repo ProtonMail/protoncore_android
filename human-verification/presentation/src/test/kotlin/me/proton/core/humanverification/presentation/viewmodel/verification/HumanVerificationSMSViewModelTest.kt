@@ -23,22 +23,19 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.country.domain.usecase.MostUsedCountryCode
-import me.proton.core.humanverification.domain.entity.VerificationResult
-import me.proton.core.humanverification.domain.exception.EmptyDestinationException
-import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.coroutinesTest
+import me.proton.core.user.domain.entity.VerificationResult
+import me.proton.core.user.domain.exception.EmptyDestinationException
+import me.proton.core.user.domain.usecase.SendVerificationCodeToPhoneDestination
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import kotlin.time.seconds
 
-/**
- * @author Dino Kadrikj.
- */
 class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
 
     @get:Rule
@@ -59,9 +56,10 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     @Test
     fun `most used calling code returns success`() = coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns 0
-        viewModel.mostUsedCallingCode.test(timeout = 2.seconds) {
+        viewModel.mostUsedCallingCode.test() {
             viewModel.getMostUsedCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
+            assertIs<ViewModelResult.Processing>(expectItem())
             assertIs<ViewModelResult.Success<Int>>(expectItem())
             cancelAndIgnoreRemainingEvents()
         }
@@ -70,9 +68,10 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     @Test
     fun `most used calling code returns correct data`() = coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns 1
-        viewModel.mostUsedCallingCode.test(timeout = 2.seconds) {
+        viewModel.mostUsedCallingCode.test() {
             viewModel.getMostUsedCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
+            assertIs<ViewModelResult.Processing>(expectItem())
             assertEquals(1, (expectItem() as ViewModelResult.Success).value)
             cancelAndIgnoreRemainingEvents()
         }
@@ -81,9 +80,10 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     @Test
     fun `use case throws no countries exception`() = coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns null
-        viewModel.mostUsedCallingCode.test(timeout = 2.seconds) {
+        viewModel.mostUsedCallingCode.test() {
             viewModel.getMostUsedCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
+            assertIs<ViewModelResult.Processing>(expectItem())
             assertIs<ViewModelResult.Error>(expectItem())
             cancelAndIgnoreRemainingEvents()
         }
