@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,13 +18,22 @@
 
 package me.proton.core.network.domain.humanverification
 
-/**
- * Holds the currently available verification methods and if among them is captcha, then the
- * captcha token also.
- *
- * @author Dino Kadrikj.
- */
+import me.proton.core.network.domain.session.ClientId
+
 data class HumanVerificationDetails(
+    val clientId: ClientId,
     val verificationMethods: List<VerificationMethod>,
-    val captchaVerificationToken: String? = null
-)
+    val captchaVerificationToken: String? = null,
+    val state: HumanVerificationState,
+    val tokenType: String? = null,
+    val tokenCode: String? = null
+) {
+    companion object {
+        fun fromApiDetails(clientId: ClientId, details: HumanVerificationApiDetails, state: HumanVerificationState? = null) = HumanVerificationDetails(
+            clientId = clientId,
+            verificationMethods = details.verificationMethods,
+            captchaVerificationToken = details.captchaVerificationToken,
+            state = state ?: HumanVerificationState.HumanVerificationNeeded
+        )
+    }
+}

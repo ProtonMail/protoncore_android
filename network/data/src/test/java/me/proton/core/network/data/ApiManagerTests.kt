@@ -31,6 +31,7 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
+import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkManager
 import me.proton.core.network.data.util.MockNetworkPrefs
@@ -48,6 +49,9 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
+import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.session.HumanVerificationListener
+import me.proton.core.network.domain.session.HumanVerificationProvider
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -68,12 +72,15 @@ internal class ApiManagerTests {
     private lateinit var networkManager: MockNetworkManager
 
     private lateinit var session: Session
+    private lateinit var clientId: ClientId
 
     @MockK
     private lateinit var sessionProvider: SessionProvider
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
     )
+    private val humanVerificationProvider = mockk<HumanVerificationProvider>()
+    private val humanVerificationListener = mockk<HumanVerificationListener>()
 
     private lateinit var apiFactory: ApiFactory
     private lateinit var apiManager: ApiManager<TestRetrofitApi>
@@ -103,6 +110,7 @@ internal class ApiManagerTests {
         apiClient = MockApiClient()
 
         session = MockSession.getDefault()
+        clientId = MockClientId.getForSession(session.sessionId)
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
 
@@ -118,7 +126,9 @@ internal class ApiManagerTests {
                 networkManager,
                 prefs,
                 sessionProvider,
+                humanVerificationProvider,
                 sessionListener,
+                humanVerificationListener,
                 mockk(),
                 scope
             )
@@ -131,7 +141,7 @@ internal class ApiManagerTests {
         ApiManagerImpl.failRequestBeforeTimeMs = Long.MIN_VALUE
         apiManager = ApiManagerImpl(
             apiClient, backend, dohApiHandler, networkManager,
-            apiFactory.createBaseErrorHandlers(session.sessionId, ::time), ::time
+            apiFactory.createBaseErrorHandlers(clientId, ::time), ::time
         )
 
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Success(TestResult(5, "foo"))

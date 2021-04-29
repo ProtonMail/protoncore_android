@@ -23,11 +23,13 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.spyk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
+import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkPrefs
 import me.proton.core.network.data.util.MockSession
@@ -39,6 +41,11 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.session.HumanVerificationListener
+import me.proton.core.network.domain.session.HumanVerificationProvider
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -72,9 +79,12 @@ internal class ProtonApiBackendTests {
     private lateinit var backend: ProtonApiBackend<TestRetrofitApi>
 
     private lateinit var session: Session
+    private lateinit var clientId: ClientId
 
-    @MockK
-    private lateinit var sessionProvider: SessionProvider
+    private val sessionProvider = mockk<SessionProvider>()
+    private val humanVerificationProvider = mockk<HumanVerificationProvider>()
+    private val humanVerificationListener = mockk<HumanVerificationListener>()
+
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
     )
@@ -85,8 +95,7 @@ internal class ProtonApiBackendTests {
 
     private var isNetworkAvailable = true
 
-    @MockK
-    lateinit var networkManager: NetworkManager
+    private val networkManager = mockk<NetworkManager>()
 
     private lateinit var prefs: NetworkPrefs
 
@@ -98,6 +107,8 @@ internal class ProtonApiBackendTests {
         prefs = MockNetworkPrefs()
 
         session = MockSession.getDefault()
+        clientId = MockClientId.getForSession(session.sessionId)
+
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
         every { cookieStore.get(any()) } returns emptyList()
@@ -109,7 +120,9 @@ internal class ProtonApiBackendTests {
             networkManager,
             prefs,
             sessionProvider,
+            humanVerificationProvider,
             sessionListener,
+            humanVerificationListener,
             cookieStore,
             scope
         )
@@ -122,6 +135,19 @@ internal class ProtonApiBackendTests {
         backend = createBackend {
             testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
         }
+
+        val humanVerificationDetails = spyk(
+            HumanVerificationDetails(
+                clientId = clientId,
+                verificationMethods = mockk(),
+                captchaVerificationToken = null,
+                state = HumanVerificationState.HumanVerificationSuccess,
+                tokenType ="captcha",
+                tokenCode = "captcha token"
+            )
+        )
+
+        coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
     }
 
     private fun createBackend(pinningInit: (OkHttpClient.Builder) -> Unit) =
@@ -131,6 +157,8 @@ internal class ProtonApiBackendTests {
             logger,
             session.sessionId,
             sessionProvider,
+            humanVerificationProvider,
+            cookieStore,
             apiFactory.baseOkHttpClient,
             listOf(
                 ScalarsConverterFactory.create(),

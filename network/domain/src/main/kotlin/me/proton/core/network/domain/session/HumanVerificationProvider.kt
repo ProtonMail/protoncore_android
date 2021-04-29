@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,19 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.humanverification
+package me.proton.core.network.domain.session
 
-/**
- * Holds the values for Human Verification headers (verification type/method and the value).
- *
- * @param tokenType the verification method used to verify (ex. email, captcha..). Represents the
- * `x-pm-human-verification-token-type` header in the API requests.
- * @param tokenCode the verification code as a result from the verification process. Represents the
- * `x-pm-human-verification-token` header in the API requests.
- *
- * @author Dino Kadrikj.
- */
-data class HumanVerificationHeaders(
-    val tokenType: String,
-    val tokenCode: String
-)
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+
+interface HumanVerificationProvider {
+    /**
+     * Get [HumanVerificationDetails] by clientId.
+     * Returns null if no human verification details has been saved for [ClientId].
+     */
+    suspend fun getHumanVerificationDetails(clientId: ClientId): HumanVerificationDetails?
+}

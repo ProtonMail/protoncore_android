@@ -24,13 +24,11 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
+import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.session.HumanVerificationListener
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionListener
-import me.proton.core.network.domain.session.SessionProvider
 import org.jetbrains.annotations.TestOnly
-import java.time.LocalTime
 import java.util.concurrent.TimeUnit
 
 /**
@@ -38,9 +36,8 @@ import java.util.concurrent.TimeUnit
  * client to process it further.
  */
 class HumanVerificationHandler<Api>(
-    private val sessionId: SessionId?,
-    private val sessionProvider: SessionProvider,
-    private val sessionListener: SessionListener,
+    private val clientId: ClientId?,
+    private val humanVerificationListener: HumanVerificationListener,
     private val monoClockMs: () -> Long
 ) : ApiErrorHandler<Api> {
 
@@ -49,6 +46,8 @@ class HumanVerificationHandler<Api>(
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
+        if (clientId == null) return error
+
         // Recoverable with human verification ?
         if (error !is ApiResult.Error.Http || error.proton?.code != ERROR_CODE_HUMAN_VERIFICATION) return error
 
@@ -56,25 +55,34 @@ class HumanVerificationHandler<Api>(
         val details = error.proton.humanVerification ?: return error
 
         // Do we have a session ?
-        val session = sessionId?.let { sessionProvider.getSession(sessionId) } ?: return error
+        val sessionId = if (clientId is ClientId.AccountSessionId) clientId.sessionId else null
 
         // Only 1 coroutine at a time per session.
         val shouldRetry = sessionMutex(sessionId).withLock {
             // Don't attempt to verify if we did recently.
             val lastVerificationTimeMs = sessionLastVerificationMap[sessionId] ?: Long.MIN_VALUE
             val verifiedRecently = monoClockMs() <= lastVerificationTimeMs + verificationDebounceMs
-            verifiedRecently || verifyHuman(session, details)
+            verifiedRecently || verifyHuman(clientId, details)
         }
-        return if (shouldRetry) backend(call) else error
+        return if (shouldRetry) {
+            val retryResult = backend(call)
+            if (retryResult is ApiResult.Error.Http) {
+                humanVerificationListener.onHumanVerificationFailed(clientId)
+            } else if (retryResult is ApiResult.Success) {
+                humanVerificationListener.onHumanVerificationPassed(clientId)
+            }
+            retryResult
+        } else error
     }
 
     // Must be called within sessionMutex.
-    private suspend fun verifyHuman(session: Session, details: HumanVerificationDetails): Boolean {
-        val result = when (sessionListener.onHumanVerificationNeeded(session, details)) {
-            SessionListener.HumanVerificationResult.Success -> true
-            SessionListener.HumanVerificationResult.Failure -> false
+    private suspend fun verifyHuman(clientId: ClientId, details: HumanVerificationApiDetails): Boolean {
+        val result = when (humanVerificationListener.onHumanVerificationNeeded(clientId, details)) {
+            HumanVerificationListener.HumanVerificationResult.Success -> true
+            HumanVerificationListener.HumanVerificationResult.Failure -> false
         }
-        sessionLastVerificationMap[session.sessionId] = monoClockMs()
+        // what is this map for?
+        sessionLastVerificationMap[clientId.id()] = monoClockMs()
         return result
     }
 
@@ -84,13 +92,20 @@ class HumanVerificationHandler<Api>(
         private val verificationDebounceMs = TimeUnit.MINUTES.toMillis(1)
         private val staticMutex: Mutex = Mutex()
         private val sessionMutexMap: MutableMap<SessionId?, Mutex> = HashMap()
-        private var sessionLastVerificationMap: MutableMap<SessionId, Long> = HashMap()
+        private var sessionLastVerificationMap: MutableMap<String, Long> = HashMap()
 
         suspend fun sessionMutex(sessionId: SessionId?) =
             staticMutex.withLock { sessionMutexMap.getOrPut(sessionId) { Mutex() } }
 
         @TestOnly
-        suspend fun reset(sessionId: SessionId) =
-            sessionMutex(sessionId).withLock { sessionLastVerificationMap[sessionId] = Long.MIN_VALUE }
+        suspend fun reset(clientId: ClientId) {
+            when (clientId) {
+                is ClientId.AccountSessionId -> sessionMutex(clientId.sessionId).withLock {
+                    sessionLastVerificationMap[clientId.id()] = Long.MIN_VALUE
+                }
+                is ClientId.NetworkCookieSessionId -> {
+                }
+            }
+        }
     }
 }

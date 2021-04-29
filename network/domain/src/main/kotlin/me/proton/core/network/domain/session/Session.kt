@@ -18,13 +18,10 @@
 
 package me.proton.core.network.domain.session
 
-import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
-
 data class Session(
     val sessionId: SessionId,
     val accessToken: String,
     val refreshToken: String,
-    val headers: HumanVerificationHeaders? = null,
     val scopes: List<String>
 ) {
     fun isValid() = listOf(
