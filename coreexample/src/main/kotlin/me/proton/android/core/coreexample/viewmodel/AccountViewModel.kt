@@ -18,6 +18,7 @@
 
 package me.proton.android.core.coreexample.viewmodel
 
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.Lifecycle
@@ -43,10 +44,15 @@ import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
 import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
-import me.proton.core.accountmanager.presentation.onSessionHumanVerificationNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.presentation.AuthOrchestrator
+import me.proton.core.auth.presentation.SignupOrchestrator
 import me.proton.core.domain.entity.UserId
+import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
+import me.proton.core.humanverification.presentation.observe
+import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
+import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.PlanDetails
@@ -54,8 +60,11 @@ import me.proton.core.payment.presentation.onPaymentResult
 
 class AccountViewModel @ViewModelInject constructor(
     private val accountManager: AccountManager,
+    private val humanVerificationManager: HumanVerificationManager,
     private var authOrchestrator: AuthOrchestrator,
-    private val paymentsOrchestrator: PaymentsOrchestrator
+    private var humanVerificationOrchestrator: HumanVerificationOrchestrator,
+    private val paymentsOrchestrator: PaymentsOrchestrator,
+    private val signupOrchestrator: SignupOrchestrator
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State.Processing as State)
@@ -70,7 +79,9 @@ class AccountViewModel @ViewModelInject constructor(
 
     fun register(context: ComponentActivity) {
         authOrchestrator.register(context)
+        humanVerificationOrchestrator.register(context)
         paymentsOrchestrator.register(context)
+        signupOrchestrator.register(context)
 
         accountManager.getAccounts()
             .flowWithLifecycle(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
@@ -86,11 +97,21 @@ class AccountViewModel @ViewModelInject constructor(
                 .onSessionSecondFactorNeeded { startSecondFactorWorkflow(it) }
                 .onAccountTwoPassModeNeeded { startTwoPassModeWorkflow(it) }
                 .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
-                .onSessionHumanVerificationNeeded { startHumanVerificationWorkflow(it) }
                 .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
                 .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
                 .onAccountDisabled { accountManager.removeAccount(it.userId) }
                 .disableInitialNotReadyAccounts()
+        }
+
+        with(humanVerificationOrchestrator) {
+            humanVerificationManager.observe(context.lifecycle, minActiveState = Lifecycle.State.RESUMED)
+                .onHumanVerificationNeeded {
+                    startHumanVerificationSignUpWorkflow(
+                        it.clientId, HumanVerificationApiDetails(
+                            it.verificationMethods, it.captchaVerificationToken
+                        )
+                    )
+                }
         }
     }
 
@@ -124,6 +145,24 @@ class AccountViewModel @ViewModelInject constructor(
                     SubscriptionCycle.YEARLY
                 )
             )
+        }
+    }
+
+    /**
+     * Starts account creation for Mail account type (Internal)
+     */
+    fun onSignUpClicked() {
+        viewModelScope.launch {
+            signupOrchestrator.startSignupWorkflow()
+        }
+    }
+
+    /**
+     * Starts account creation for VPN account type (Username only).
+     */
+    fun onExternalSignUpClicked() {
+        viewModelScope.launch {
+            signupOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.External)
         }
     }
 

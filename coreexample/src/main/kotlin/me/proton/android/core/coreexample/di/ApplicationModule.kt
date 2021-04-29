@@ -34,8 +34,6 @@ import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.Product
-import me.proton.core.humanverification.data.repository.HumanVerificationRemoteRepositoryImpl
-import me.proton.core.humanverification.domain.repository.HumanVerificationRemoteRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.di.ApiFactory
@@ -44,6 +42,8 @@ import me.proton.core.network.data.di.NetworkPrefs
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.session.HumanVerificationListener
+import me.proton.core.network.domain.session.HumanVerificationProvider
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger
@@ -77,11 +77,13 @@ object ApplicationModule {
         networkManager: NetworkManager,
         networkPrefs: NetworkPrefs,
         sessionProvider: SessionProvider,
-        sessionListener: SessionListener
+        humanVerificationProvider: HumanVerificationProvider,
+        sessionListener: SessionListener,
+        humanVerificationListener: HumanVerificationListener
     ): ApiFactory = ApiFactory(
-        BASE_URL, apiClient, logger, networkManager, networkPrefs, sessionProvider, sessionListener,
-        ProtonCookieStore(context), CoroutineScope(Job() + Dispatchers.Default),
-        emptyArray(), emptyList()
+        BASE_URL, apiClient, logger, networkManager, networkPrefs, sessionProvider, humanVerificationProvider,
+        sessionListener, humanVerificationListener, ProtonCookieStore(context),
+        CoroutineScope(Job() + Dispatchers.Default), emptyArray(), emptyList()
     )
 
     @Provides
@@ -98,11 +100,6 @@ object ApplicationModule {
     @Singleton
     fun provideCoreExampleRepository(apiProvider: ApiProvider): CoreExampleRepository =
         CoreExampleRepository(apiProvider)
-
-    @Provides
-    @Singleton
-    fun provideRemoteRepository(apiProvider: ApiProvider): HumanVerificationRemoteRepository =
-        HumanVerificationRemoteRepositoryImpl(apiProvider)
 
     @Provides
     @ClientSecret

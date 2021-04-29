@@ -80,6 +80,11 @@
             android:name="me.proton.core.payment.presentation.ui.PaymentTokenApprovalActivity"
             android:theme="@style/ProtonTheme"
             android:windowSoftInputMode="adjustResize" />
+        <!-- signup -->
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
