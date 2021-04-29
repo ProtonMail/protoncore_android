@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import androidx.activity.ComponentActivity
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
@@ -47,11 +48,12 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
+import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.session.Session
-import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
 
-class LoginViewModel @ViewModelInject constructor(
+internal class LoginViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
     private val accountWorkflow: AccountWorkflowHandler,
     private val performLogin: PerformLogin,
@@ -59,8 +61,10 @@ class LoginViewModel @ViewModelInject constructor(
     private val setupAccountCheck: SetupAccountCheck,
     private val setupPrimaryKeys: SetupPrimaryKeys,
     private val setupInternalAddress: SetupInternalAddress,
-    private val keyStoreCrypto: KeyStoreCrypto
-) : ProtonViewModel() {
+    private val keyStoreCrypto: KeyStoreCrypto,
+    humanVerificationManager: HumanVerificationManager,
+    humanVerificationOrchestrator: HumanVerificationOrchestrator
+) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
 
     private val _state = MutableStateFlow<State>(State.Idle)
 
@@ -87,9 +91,14 @@ class LoginViewModel @ViewModelInject constructor(
         }
     }
 
+    override val recoveryEmailAddress: String?
+        get() = null
+
     fun stopLoginWorkflow(): Job = viewModelScope.launch {
         savedStateHandle.get<String>(STATE_USER_ID)?.let { accountWorkflow.handleAccountDisabled(UserId(it)) }
     }
+
+    fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context)
 
     fun startLoginWorkflow(
         username: String,
@@ -119,7 +128,11 @@ class LoginViewModel @ViewModelInject constructor(
             is SetupAccountCheck.Result.TwoPassNeeded -> twoPassMode(userId)
             is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(userId)
             is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, encryptedPassword)
-            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, encryptedPassword)
+            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(
+                userId,
+                encryptedPassword,
+                requiredAccountType
+            )
             is SetupAccountCheck.Result.SetupInternalAddressNeeded -> setupInternalAddress(userId, encryptedPassword)
             is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId)
         }.let {
@@ -169,9 +182,10 @@ class LoginViewModel @ViewModelInject constructor(
 
     private suspend fun setupPrimaryKeys(
         userId: UserId,
-        password: EncryptedString
+        password: EncryptedString,
+        requiredAccountType: AccountType
     ): State {
-        setupPrimaryKeys.invoke(userId, password)
+        setupPrimaryKeys.invoke(userId, password, requiredAccountType)
         return unlockUserPrimaryKey(userId, password)
     }
 
@@ -221,8 +235,7 @@ class LoginViewModel @ViewModelInject constructor(
                     secondFactorEnabled = sessionInfo.isSecondFactorNeeded,
                     twoPassModeEnabled = sessionInfo.isTwoPassModeNeeded,
                     password = password
-                ),
-                humanVerification = null
+                )
             )
         )
         val session = Session(

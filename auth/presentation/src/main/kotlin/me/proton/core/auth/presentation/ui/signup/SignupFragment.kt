@@ -16,22 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.auth.presentation.ui.signup
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
+import androidx.databinding.ViewDataBinding
+import me.proton.core.auth.presentation.R
+import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.errorSnack
+
+/**
+ * Base fragment for all signup steps in the flow.
+ */
+abstract class SignupFragment<DB : ViewDataBinding> : ProtonFragment<DB>() {
+
+    open fun showLoading(loading: Boolean = true) {
+        // no-op
+    }
+
+    open fun showError(message: String?) {
+        showLoading(false)
+        binding.root.errorSnack(message = message ?: getString(R.string.auth_login_general_error))
+    }
 }
-
-libVersion = Version(1, 1, 0)
-
-android()
-
-dependencies {
-    api(
-        project(Module.authPresentation),
-        project(Module.authDomain),
-        project(Module.authData)
-    )
-}
-

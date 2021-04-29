@@ -20,11 +20,8 @@ package me.proton.core.auth.presentation
 
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.LoginInput
@@ -39,21 +36,15 @@ import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
-import me.proton.core.humanverification.presentation.ui.StartHumanVerification
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import javax.inject.Inject
 
-class AuthOrchestrator @Inject constructor(
-    private val accountWorkflowHandler: AccountWorkflowHandler
-) {
+class AuthOrchestrator @Inject constructor() {
 
     // region result launchers
     private var loginWorkflowLauncher: ActivityResultLauncher<LoginInput>? = null
     private var secondFactorWorkflowLauncher: ActivityResultLauncher<SecondFactorInput>? = null
     private var twoPassModeWorkflowLauncher: ActivityResultLauncher<TwoPassModeInput>? = null
-    private var humanWorkflowLauncher: ActivityResultLauncher<HumanVerificationInput>? = null
     private var chooseAddressLauncher: ActivityResultLauncher<ChooseAddressInput>? = null
     // endregion
 
@@ -115,29 +106,6 @@ class AuthOrchestrator @Inject constructor(
             onChooseAddressResultListener?.invoke(it)
         }
 
-    private fun registerHumanVerificationResult(
-        context: ComponentActivity
-    ): ActivityResultLauncher<HumanVerificationInput> =
-        context.registerForActivityResult(
-            StartHumanVerification()
-        ) { result ->
-            result?.let {
-                context.lifecycleScope.launch {
-                    if (!it.tokenType.isNullOrBlank() && !it.tokenCode.isNullOrBlank()) {
-                        accountWorkflowHandler.handleHumanVerificationSuccess(
-                            sessionId = SessionId(it.sessionId),
-                            tokenType = it.tokenType!!,
-                            tokenCode = it.tokenCode!!
-                        )
-                    } else {
-                        accountWorkflowHandler.handleHumanVerificationFailed(
-                            sessionId = SessionId(it.sessionId)
-                        )
-                    }
-                }
-            }
-        }
-
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
         checkNotNull(launcher) { "You must call authOrchestrator.register(context) before starting workflow!" }
 
@@ -171,18 +139,7 @@ class AuthOrchestrator @Inject constructor(
         )
     }
 
-    private fun startHumanVerificationWorkflow(
-        sessionId: SessionId,
-        details: HumanVerificationDetails?
-    ) {
-        checkRegistered(humanWorkflowLauncher).launch(
-            HumanVerificationInput(
-                sessionId.id,
-                details?.verificationMethods?.map { it.value },
-                details?.captchaVerificationToken
-            )
-        )
-    }
+
     // endregion
 
     // region public API
@@ -193,7 +150,6 @@ class AuthOrchestrator @Inject constructor(
      */
     fun register(context: ComponentActivity) {
         loginWorkflowLauncher = registerLoginResult(context)
-        humanWorkflowLauncher = registerHumanVerificationResult(context)
         secondFactorWorkflowLauncher = registerSecondFactorResult(context)
         twoPassModeWorkflowLauncher = registerTwoPassModeResult(context)
         chooseAddressLauncher = registerChooseAddressResult(context)
@@ -280,16 +236,6 @@ class AuthOrchestrator @Inject constructor(
             "Password is null for startChooseAddressWorkflow."
         }
         startChooseAddressWorkflow(account.userId, password, email)
-    }
-
-    /**
-     * Start a Human Verification workflow.
-     */
-    fun startHumanVerificationWorkflow(account: Account) {
-        val sessionId = checkNotNull(account.sessionId) {
-            "SessionId is null for startHumanVerificationWorkflow."
-        }
-        startHumanVerificationWorkflow(sessionId, account.details.humanVerification)
     }
     // endregion
 }
