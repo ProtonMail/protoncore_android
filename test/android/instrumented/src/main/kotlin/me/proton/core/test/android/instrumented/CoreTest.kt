@@ -70,7 +70,7 @@ open class CoreTest {
         val automation = InstrumentationRegistry.getInstrumentation().uiAutomation!!
         val device: UiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
-        const val testTag = "PROTON_UI_TEST"
+        const val testTag = "ESPRESSO_TEST"
         const val testApp = "testApp"
         const val testRailRunId = "testRailRunId"
         const val downloadArtifactsPath = "/sdcard/Download/artifacts"

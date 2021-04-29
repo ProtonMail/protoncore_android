@@ -31,9 +31,9 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.test.android.instrumented.uiactions.UIActions.clickOnMatchedDescendant
-import me.proton.core.test.android.instrumented.uiwaits.UIWaits.waitForView
-import me.proton.core.test.android.instrumented.uiwaits.UIWaits.waitUntilRecyclerViewPopulated
-import me.proton.core.test.android.instrumented.uiwaits.UIWaits.waitUntilViewIsGone
+import me.proton.core.test.android.instrumented.waits.UIWaits.waitForView
+import me.proton.core.test.android.instrumented.waits.UIWaits.waitUntilRecyclerViewPopulated
+import me.proton.core.test.android.instrumented.waits.UIWaits.waitUntilViewIsGone
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf
 

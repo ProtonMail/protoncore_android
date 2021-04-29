@@ -19,19 +19,30 @@
 
 package me.proton.core.test.android.instrumented
 
-import me.proton.core.test.android.instrumented.builders.InRootView
+import me.proton.core.test.android.instrumented.builders.OnDevice
+import me.proton.core.test.android.instrumented.builders.OnIntent
 import me.proton.core.test.android.instrumented.builders.OnListView
 import me.proton.core.test.android.instrumented.builders.OnRecyclerView
+import me.proton.core.test.android.instrumented.builders.OnRootView
 import me.proton.core.test.android.instrumented.builders.OnView
 
 interface CoreRobot {
 
-    val view: OnView
-        get() = OnView()
-    val recyclerView: OnRecyclerView
-        get() = OnRecyclerView()
+    val device: OnDevice
+        get() = OnDevice()
+
+    val intent: OnIntent
+        get() = OnIntent()
+
     val listView: OnListView
         get() = OnListView()
-    val rootView: InRootView
-        get() = InRootView()
+
+    val recyclerView: OnRecyclerView
+        get() = OnRecyclerView()
+
+    val rootView: OnRootView
+        get() = OnRootView()
+
+    val view: OnView
+        get() = OnView()
 }

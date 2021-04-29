@@ -20,9 +20,9 @@ The code and data files in this distribution are licensed under the terms of the
 - [uiwaits](./uiwaits) package - contains wait functions that wait for ViewInteraction or DataInteraction conditions.
 - [utils](./utils) package - contains `ActivityProvider` and `StringUtils` classes.
 - [watchers](./watchers) package - contains ProtonWatcher and TestExecutionWatcher. `ProtonWatcher` - a mechanism that allows watching for a condition to be met within specified timeout and with specified interval. `TestExecutionWatcher` - monitors test run results and performs actions on Success or Failure.
-- [robots](./robots) package - contains Core robots. 
+- [robots](./robots) package - contains Core robots.
 - [data](./data) package - contains test data related classes.
-- [CoreRobot.kt](./CoreRobot.kt) class - holds builders reference. Should be a superclass for Robot classes.
+- [CoreRobot.kt](CoreRobot.kt) class - holds builders reference. Should be a superclass for Robot classes.
 - [CoreTest.kt](./CoreTest.kt) class - holds shared `setUp()` and `tearDown()` functions.
 
 ### Operating on Views

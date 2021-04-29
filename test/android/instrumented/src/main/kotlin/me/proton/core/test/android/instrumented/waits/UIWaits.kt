@@ -17,7 +17,7 @@
  * along with ProtonMail. If not, see https://www.gnu.org/licenses/.
  */
 
-package me.proton.core.test.android.instrumented.uiwaits
+package me.proton.core.test.android.instrumented.waits
 
 import android.view.View
 import androidx.annotation.IdRes
@@ -43,6 +43,7 @@ import org.hamcrest.Matcher
 /**
  * Contains different wait functions and retry actions.
  */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 object UIWaits {
 
     const val TIMEOUT_10S = 10_000L

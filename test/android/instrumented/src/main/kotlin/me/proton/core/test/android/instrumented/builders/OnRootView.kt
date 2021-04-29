@@ -21,6 +21,8 @@ package me.proton.core.test.android.instrumented.builders
 
 import androidx.test.espresso.Root
 import androidx.test.espresso.matcher.RootMatchers
+import me.proton.core.test.android.instrumented.utils.ActivityProvider
+import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf
 import java.util.ArrayList
@@ -28,19 +30,28 @@ import java.util.ArrayList
 /**
  * Simplifies syntax to apply multiple [RootMatchers] on root view.
  */
-class InRootView {
+class OnRootView {
     private val matchers = ArrayList<Matcher<Root>>()
+    private val notCurrentActivityWindow = CoreMatchers.not(ActivityProvider.currentActivity!!.window.decorView)
 
-    fun isPlatformPopUp(): InRootView = apply { matchers.add(RootMatchers.isPlatformPopup()) }
+    fun isPlatformPopUp(): OnRootView = apply { matchers.add(RootMatchers.isPlatformPopup()) }
 
-    fun isDialog(): InRootView = apply { matchers.add(RootMatchers.isDialog()) }
+    fun isDialog(): OnRootView = apply { matchers.add(RootMatchers.isDialog()) }
 
-    fun isFocusable(): InRootView = apply { matchers.add(RootMatchers.isFocusable()) }
+    fun isFocusable(): OnRootView = apply { matchers.add(RootMatchers.isFocusable()) }
 
-    fun isSystemAlertWindow(): InRootView = apply { matchers.add(RootMatchers.isSystemAlertWindow()) }
+    fun isSystemAlertWindow(): OnRootView = apply { matchers.add(RootMatchers.isSystemAlertWindow()) }
 
-    fun isTouchable(): InRootView = apply { matchers.add(RootMatchers.isTouchable()) }
+    fun isTouchable(): OnRootView = apply { matchers.add(RootMatchers.isTouchable()) }
+
+    fun withDecorView(view: OnView): OnRootView = apply {
+        matchers.add(RootMatchers.withDecorView(view.matcher()))
+    }
+
+    // Can be used to locate toast view.
+    fun withNotCurrentActivityDecorView(): OnRootView =
+        apply { matchers.add(RootMatchers.withDecorView(notCurrentActivityWindow)) }
 
     /** Matcher function should be used when we would like to point which [Root] we wanna operate on. **/
-    fun matcher(): Matcher<Root> = AllOf.allOf(matchers)
+    internal fun matcher(): Matcher<Root> = AllOf.allOf(matchers)
 }
