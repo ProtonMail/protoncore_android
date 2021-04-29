@@ -35,6 +35,9 @@ fun ProtonInput.validateUsername() =
 fun ProtonInput.validatePassword() =
     InputValidationResult(this.text.toString(), ValidationType.Password)
 
+fun ProtonInput.validatePasswordMinLength() =
+    InputValidationResult(this, ValidationType.PasswordMinLength)
+
 fun ProtonInput.validateEmail() =
     InputValidationResult(this.text.toString(), ValidationType.Email)
 
@@ -51,6 +54,7 @@ enum class ValidationType(val minLong: Int = Int.MIN_VALUE, val maxLong: Int = I
     NotBlank,
     Username,
     Password,
+    PasswordMinLength(8),
     Email,
     CreditCard,
     CreditCardCVC(minLong = 3, maxLong = 4),
@@ -80,6 +84,7 @@ data class InputValidationResult(
             cardType = validateCreditCard()
             cardType != null
         }
+        ValidationType.PasswordMinLength -> validatePasswordMinLength(validationType.minLength)
         ValidationType.CreditCardCVC ->
             validateNotBlankMinLong(minLong = validationType.minLong) &&
                 validateNotBlankMaxLong(maxLong = validationType.maxLong)
@@ -92,9 +97,13 @@ data class InputValidationResult(
 
     private fun validateNotBlankMaxLong(maxLong: Int) = text.isNotBlank() && text.length <= maxLong
 
+    private fun validateNotBlankAndAtLeastLong(chars: Int) = text.isNotBlank() && text.length >= chars
+
     private fun validateUsername() = validateNotBlank()
 
     private fun validatePassword() = validateNotBlank()
+
+    private fun validatePasswordMinLength(length: Int) = validateNotBlankAndAtLeastLong(length)
 
     private fun validateEmail(): Boolean {
         val regex = EMAIL_VALIDATION_PATTERN.toRegex(RegexOption.IGNORE_CASE)

@@ -25,7 +25,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import me.proton.core.presentation.R
 import me.proton.core.presentation.utils.onClick
-import me.proton.core.presentation.utils.openBrowserLink
 
 /**
  * A base cancellable alert dialog.
@@ -41,17 +40,20 @@ class ProtonCancellableAlertDialog(
         private const val ARG_TITLE = "arg.title"
         private const val ARG_DESCRIPTION = "arg.description"
         private const val ARG_POSITIVE_BTN = "arg.positiveButton"
+        private const val ARG_NEGATIVE_BTN = "arg.negativeButton"
 
         operator fun invoke(
             title: String,
             description: String,
             positiveButton: String?,
+            negativeButton: String? = null,
             action: () -> Unit
         ) = ProtonCancellableAlertDialog(action).apply {
             arguments = bundleOf(
                 ARG_TITLE to title,
                 ARG_DESCRIPTION to description,
-                ARG_POSITIVE_BTN to positiveButton
+                ARG_POSITIVE_BTN to positiveButton,
+                ARG_NEGATIVE_BTN to negativeButton
             )
         }
     }
@@ -68,6 +70,10 @@ class ProtonCancellableAlertDialog(
         requireArguments().getString(ARG_POSITIVE_BTN) ?: getString(R.string.presentation_alert_ok)
     }
 
+    private val negativeButton: String by lazy {
+        requireArguments().getString(ARG_NEGATIVE_BTN) ?: getString(R.string.presentation_alert_cancel)
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -75,7 +81,7 @@ class ProtonCancellableAlertDialog(
                 .setTitle(title)
                 // passing null to the listeners is a workaround to prevent the dialog to auto-dismiss on button click
                 .setPositiveButton(positiveButton, null)
-                .setNegativeButton(getString(R.string.presentation_alert_cancel), null)
+                .setNegativeButton(negativeButton, null)
                 .setCancelable(true)
             val alertDialog = builder.create()
             alertDialog.apply {
@@ -85,6 +91,7 @@ class ProtonCancellableAlertDialog(
                         isAllCaps = false
                         onClick {
                             action.invoke()
+                            dismissAllowingStateLoss()
                         }
                     }
                     getButton(AlertDialog.BUTTON_NEGATIVE).apply {

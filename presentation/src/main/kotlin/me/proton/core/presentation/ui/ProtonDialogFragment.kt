@@ -66,12 +66,6 @@ abstract class ProtonDialogFragment<DB : ViewDataBinding> : DialogFragment() {
         internalBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         binding.setLifecycleOwner { lifecycle }
         super.onCreateView(inflater, container, savedInstanceState)
-
-        dialog?.window?.apply {
-            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            //    decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            //statusBarColor = ContextCompat.getColor(requireContext(), R.color.background_norm)
-        }
         return binding.root
     }
 
