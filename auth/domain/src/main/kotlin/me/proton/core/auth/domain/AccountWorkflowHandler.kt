@@ -67,18 +67,6 @@ interface AccountWorkflowHandler {
     suspend fun handleSecondFactorFailed(sessionId: SessionId)
 
     /**
-     * Handle HumanVerification success.
-     *
-     * Note: TokenType and tokenCode must be part of the next API calls.
-     */
-    suspend fun handleHumanVerificationSuccess(sessionId: SessionId, tokenType: String, tokenCode: String)
-
-    /**
-     * Handle HumanVerification failure.
-     */
-    suspend fun handleHumanVerificationFailed(sessionId: SessionId)
-
-    /**
      * Directly sets the account into a [AccountState.CreateAddressNeeded] state.
      */
     suspend fun handleCreateAddressNeeded(userId: UserId)

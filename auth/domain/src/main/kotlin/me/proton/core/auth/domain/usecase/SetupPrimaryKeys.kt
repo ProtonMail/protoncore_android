@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.domain.usecase
 
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -32,6 +33,7 @@ import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.entity.firstOrDefault
 import me.proton.core.user.domain.repository.DomainRepository
+import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 /**
@@ -46,25 +48,47 @@ class SetupPrimaryKeys @Inject constructor(
 ) {
     suspend operator fun invoke(
         userId: UserId,
-        password: EncryptedString
+        password: EncryptedString,
+        accountType: AccountType
     ) {
         val user = userManager.getUser(userId)
-        val username = checkNotNull(user.name) { "Username is needed to setup primary keys." }
 
-        val availableDomains = domainRepository.getAvailableDomains()
-        val domain = availableDomains.firstOrDefault()
+        val userInfo = when (accountType) {
+            AccountType.Username,
+            AccountType.Internal -> {
+                val username = checkNotNull(user.name) { "Username is needed to setup primary keys." }
+                val availableDomains = domainRepository.getAvailableDomains()
+                val domain = availableDomains.firstOrDefault()
+
+                Triple(username, domain, "$username@$domain")
+            }
+            AccountType.External -> {
+                val email = checkNotNull(user.email) { "Email is needed to setup primary keys." }
+                val username = email.split("@")[0]
+                val domain = email.split("@")[1]
+                Triple(username, domain, email)
+            }
+        }.exhaustive
+
 
         if (user.keys.primary() == null) {
             val modulus = authRepository.randomModulus()
 
             password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedPassword ->
                 val auth = srpCrypto.calculatePasswordVerifier(
-                    username = username,
+                    username = userInfo.third,
                     password = decryptedPassword.array,
                     modulusId = modulus.modulusId,
                     modulus = modulus.modulus
                 )
-                userManager.setupPrimaryKeys(userId, username, domain, auth, decryptedPassword.array)
+                userManager.setupPrimaryKeys(
+                    userId,
+                    userInfo.first,
+                    userInfo.second,
+                    auth,
+                    decryptedPassword.array,
+                    accountType
+                )
             }
         }
     }

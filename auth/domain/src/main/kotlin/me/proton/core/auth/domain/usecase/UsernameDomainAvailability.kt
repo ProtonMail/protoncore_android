@@ -45,4 +45,10 @@ class UsernameDomainAvailability @Inject constructor(
 
         return userSettingRepository.isUsernameAvailable(username)
     }
+
+    suspend fun isUsernameAvailable(username: String): Boolean {
+        check(username.isNotBlank()) { "Username must not be blank." }
+
+        return userSettingRepository.isUsernameAvailable(username)
+    }
 }

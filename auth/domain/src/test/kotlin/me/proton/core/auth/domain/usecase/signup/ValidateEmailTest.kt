@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,44 +16,53 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.usecase
+package me.proton.core.auth.domain.usecase.signup
 
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.auth.domain.repository.AuthSignupRepository
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class PerformLogoutTest {
-    private val authRepository = mockk<AuthRepository>(relaxed = true)
+class ValidateEmailTest {
+    private val authSignupRepository = mockk<AuthSignupRepository>(relaxed = true)
 
-    private lateinit var useCase: PerformLogout
-    private val testSessionId = "test-session-id"
+    private lateinit var useCase: ValidateEmail
+    private val testEmail = "test-email"
 
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformLogout(authRepository)
-        coEvery { authRepository.revokeSession(SessionId(testSessionId)) } returns true
+        useCase = ValidateEmail(authSignupRepository)
+        coEvery { authSignupRepository.validateEmail("") } returns false
+        coEvery { authSignupRepository.validateEmail(testEmail) } returns true
     }
 
     @Test
-    fun `logout happy path`() = runBlockingTest {
+    fun `validate email happy path`() = runBlockingTest {
         // WHEN
-        val response = useCase.invoke(SessionId(testSessionId))
+        val response = useCase.invoke(testEmail)
         // THEN
         assertTrue(response)
     }
 
     @Test
-    fun `logout happy path invocations are correct`() = runBlockingTest {
+    fun `validate empty email returns error`() = runBlockingTest {
         // WHEN
-        useCase.invoke(SessionId(testSessionId))
+        val response = useCase.invoke("")
         // THEN
-        coVerify(exactly = 1) { authRepository.revokeSession(SessionId(testSessionId)) }
+        assertFalse(response)
+    }
+
+    @Test
+    fun `validate email happy path invocations are correct`() = runBlockingTest {
+        // WHEN
+        useCase.invoke(testEmail)
+        // THEN
+        coVerify(exactly = 1) { authSignupRepository.validateEmail(testEmail) }
     }
 }
