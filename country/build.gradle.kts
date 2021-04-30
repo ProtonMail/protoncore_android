@@ -25,7 +25,7 @@ plugins {
 
 libVersion = Version(0, 1, 3)
 
-android(minSdk = 23)
+android()
 
 dependencies {
     api(
