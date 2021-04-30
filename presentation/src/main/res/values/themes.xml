@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ Copyright (c) 2021 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
     <style name="ProtonTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Material color attributes -->
-        <item name="android:colorBackground">@color/background_norm</item>
-        <item name="colorSurface">@color/background_secondary</item>
+        <item name="android:colorBackground">@color/background_secondary</item>
+        <item name="colorSurface">@color/background_norm</item>
 
         <item name="colorPrimary">?attr/brand_norm</item>
         <item name="colorPrimaryVariant">?brand_darken_20</item>
