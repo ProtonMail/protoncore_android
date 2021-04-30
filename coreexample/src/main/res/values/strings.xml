@@ -20,6 +20,7 @@
     <string name="app_name">CoreExample</string>
     <string name="human_verification">Human Verification</string>
     <string name="custom_views">Custom Views</string>
+    <string name="text_styles">Text styles</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="current_accounts">Current Accounts:</string>
@@ -52,4 +53,22 @@
     <string name="example_username_hint">Username</string>
     <string name="example_username_assistive_text">Username (to logout if already logged in)</string>
     <string name="example_username_label">Username</string>
+
+    <string name="proton_text_headline">Proton.Text.Headline</string>
+    <string name="proton_text_headline_hint">Proton.Text.Headline.Hint</string>
+    <string name="proton_text_headline_small">Proton.Text.Headline.Small</string>
+    <string name="proton_text_default">Proton.Text.Default</string>
+    <string name="proton_text_default_bold">Proton.Text.Default.Bold</string>
+    <string name="proton_text_default_medium">Proton.Text.Default.Medium</string>
+    <string name="proton_text_default_weak">Proton.Text.Default.Weak</string>
+    <string name="proton_text_default_hint">Proton.Text.Default.Hint</string>
+    <string name="proton_text_default_inverted">Proton.Text.Default.Inverted</string>
+    <string name="proton_text_default_small">Proton.Text.DefaultSmall</string>
+    <string name="proton_text_default_small_medium">Proton.Text.DefaultSmall.Medium</string>
+    <string name="proton_text_default_small_weak">Proton.Text.DefaultSmall.Weak</string>
+    <string name="proton_text_default_small_inverted">Proton.Text.DefaultSmall.Inverted</string>
+    <string name="proton_text_caption">Proton.Text.Caption</string>
+    <string name="proton_text_caption_strong">Proton.Text.Caption.Strong</string>
+    <string name="proton_text_caption_weak">Proton.Text.Caption.Weak</string>
+    <string name="proton_text_caption_hint">Proton.Text.Caption.Hint</string>
 </resources>

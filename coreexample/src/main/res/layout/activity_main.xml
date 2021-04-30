@@ -36,6 +36,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
+            android:id="@+id/textStyles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_top_margin"
+            android:text="@string/text_styles"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/customViews" />
+
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,7 +53,7 @@
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/customViews" />
+            app:layout_constraintTop_toBottomOf="@id/textStyles" />
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/force_update"
