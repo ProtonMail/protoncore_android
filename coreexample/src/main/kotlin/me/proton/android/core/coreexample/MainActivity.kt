@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
+import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
@@ -68,6 +69,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
+            textStyles.onClick { startActivity(Intent(this@MainActivity, TextStylesActivity::class.java)) }
             login.onClick { accountViewModel.startLoginWorkflow() }
             forceUpdate.onClick {
                 supportFragmentManager.showForceUpdate(
