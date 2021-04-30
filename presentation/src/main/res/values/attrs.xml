@@ -26,6 +26,32 @@
         <attr name="brand_lighten_40" format="reference" />
         <attr name="brand_lighten_20" format="reference" />
         <attr name="brand_splash_logo" format="reference" />
+
+        <!-- App specific attributes -->
+        <attr name="proton_text_norm" format="reference" />
+        <attr name="proton_text_weak" format="reference" />
+        <attr name="proton_text_hint" format="reference" />
+        <attr name="proton_text_disabled" format="reference" />
+        <attr name="proton_text_inverted" format="reference" />
+        <attr name="proton_icon_norm" format="reference" />
+        <attr name="proton_icon_weak" format="reference" />
+        <attr name="proton_icon_hint" format="reference" />
+        <attr name="proton_icon_disabled" format="reference" />
+        <attr name="proton_icon_inverted" format="reference" />
+        <attr name="proton_interaction_weak" format="reference" />
+        <attr name="proton_interaction_weak_pressed" format="reference" />
+        <attr name="proton_interaction_weak_disabled" format="reference" />
+        <attr name="proton_interaction_strong" format="reference" />
+        <attr name="proton_interaction_strong_pressed" format="reference" />
+        <attr name="proton_interaction_norm" format="reference" />
+        <attr name="proton_interaction_norm_pressed" format="reference" />
+        <attr name="proton_interaction_norm_disabled" format="reference" />
+        <attr name="proton_background_norm" format="reference" />
+        <attr name="proton_background_secondary" format="reference" />
+        <attr name="proton_separator_norm" format="reference" />
+        <attr name="proton_notification_error" format="reference" />
+        <attr name="proton_notification_success" format="reference" />
+        <attr name="proton_notification_warning" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="ProtonProgressButton">
