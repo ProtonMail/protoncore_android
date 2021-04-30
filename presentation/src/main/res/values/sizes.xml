@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ Copyright (c) 2021 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
@@ -23,6 +23,8 @@
     <dimen name="input_height">48dp</dimen>
     <dimen name="list_item_height">48dp</dimen>
     <dimen name="button_nav_size">40dp</dimen>
+    <dimen name="no_elevation">0dp</dimen>
+    <dimen name="default_elevation">8dp</dimen>
 
     <!-- general dimensions gaps -->
     <dimen name="default_gap">16dp</dimen>
