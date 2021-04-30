@@ -92,6 +92,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
                 is SecondFactorViewModel.State.Need.ChooseUsername -> onSuccess(it.userId, NextStep.ChooseAddress)
                 is SecondFactorViewModel.State.Need.ChangePassword -> onSuccess(it.userId, NextStep.None)
                 is SecondFactorViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
+                is SecondFactorViewModel.State.Error.UserCheckError -> onUserCheckFailed(it.error)
                 is SecondFactorViewModel.State.Error.Message -> onError(false, it.message)
                 is SecondFactorViewModel.State.Error.Unrecoverable -> {
                     showError(getString(R.string.auth_login_general_error))

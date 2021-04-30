@@ -18,9 +18,10 @@
 
 package me.proton.core.auth.domain.usecase
 
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.Role
-import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -28,10 +29,14 @@ import javax.inject.Inject
 
 class SetupAccountCheck @Inject constructor(
     private val userRepository: UserRepository,
-    private val addressRepository: UserAddressRepository
+    private val addressRepository: UserAddressRepository,
+    private val userCheck: UserCheck
 ) {
 
     sealed class Result {
+        /** User check failed, cannot proceed. */
+        data class UserCheckError(val error: UserCheckResult.Error) : Result()
+
         /** No setup needed. User can now be unlocked. */
         object NoSetupNeeded : Result()
 
@@ -57,6 +62,9 @@ class SetupAccountCheck @Inject constructor(
         requiredAccountType: AccountType
     ): Result {
         val user = userRepository.getUser(userId, refresh = true)
+        val userCheckResult = userCheck.invoke(user)
+        if (userCheckResult is UserCheckResult.Error) return Result.UserCheckError(userCheckResult)
+
         val hasUsername = !user.name.isNullOrBlank()
         val hasKeys = user.keys.isNotEmpty()
 
@@ -80,5 +88,22 @@ class SetupAccountCheck @Inject constructor(
                 else -> Result.NoSetupNeeded
             }
         }
+    }
+
+    sealed class Action(open val name: String) {
+        data class OpenUrl(override val name: String, val url: String) : Action(name)
+    }
+
+    sealed class UserCheckResult {
+        object Success : UserCheckResult()
+        data class Error(val localizedMessage: String, val action: Action? = null) : UserCheckResult()
+    }
+
+    interface UserCheck {
+
+        /**
+         * Check if [User] match criteria to continue the setup account process.
+         */
+        suspend operator fun invoke(user: User): UserCheckResult
     }
 }

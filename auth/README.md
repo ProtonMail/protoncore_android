@@ -41,6 +41,17 @@ object AuthModule {
     @Singleton
     fun provideRemoteRepository(apiProvider: ApiProvider): HumanVerificationRemoteRepository =
         HumanVerificationRemoteRepositoryImpl(apiProvider)
+
+    ...
+
+    @Provides
+    @Singleton
+    fun provideUserCheck(
+        @ApplicationContext context: Context,
+        accountManager: AccountManager,
+        userManager: UserManager
+    ): SetupAccountCheck.UserCheck = DefaultUserCheck(context, accountManager, userManager)
+
 }
 ```
 

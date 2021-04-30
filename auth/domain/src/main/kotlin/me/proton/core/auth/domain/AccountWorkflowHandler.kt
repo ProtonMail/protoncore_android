@@ -79,11 +79,6 @@ interface AccountWorkflowHandler {
     suspend fun handleHumanVerificationFailed(sessionId: SessionId)
 
     /**
-     * Directly sets the account into a [AccountState.Disabled] state.
-     */
-    suspend fun handleChangePasswordNeeded(userId: UserId)
-
-    /**
      * Directly sets the account into a [AccountState.CreateAddressNeeded] state.
      */
     suspend fun handleCreateAddressNeeded(userId: UserId)

@@ -90,6 +90,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
                 is LoginViewModel.State.Need.ChooseUsername -> onSuccess(it.userId, NextStep.ChooseAddress)
                 is LoginViewModel.State.Need.ChangePassword -> onChangePassword()
                 is LoginViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
+                is LoginViewModel.State.Error.UserCheckError -> onUserCheckFailed(it.error)
                 is LoginViewModel.State.Error.Message -> onError(true, it.message)
             }.exhaustive
         }.launchIn(lifecycleScope)
