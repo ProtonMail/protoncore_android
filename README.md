@@ -119,7 +119,7 @@ Crypto Android: **1.0.3** - _released on: Apr 15, 2021_
 
 ### Auth
 
-Auth: **1.0.5** - _released on: Apr 12, 2021_
+Auth: **1.0.6** - _released on: May 03, 2021_
 
 Auth Domain: **1.0.5** - _released on: Apr 12, 2021_
 
@@ -140,7 +140,7 @@ Account Data: **1.0.3** - _released on: Apr 12, 2021_
 
 ### Account Manager
 
-Account Manager: **1.0.8** - _released on: Apr 20, 2021_
+Account Manager: **1.0.9** - _released on: May 03, 2021_
 
 Account Manager Domain: **1.0.8** - _released on: Apr 20, 2021_
 
