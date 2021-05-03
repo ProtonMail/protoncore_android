@@ -21,7 +21,7 @@
     <style name="ProtonTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Material color attributes -->
-        <item name="android:colorBackground">@color/background_secondary</item>
+        <item name="android:colorBackground">@color/background_norm</item>
         <item name="colorSurface">@color/background_norm</item>
 
         <item name="colorPrimary">?attr/brand_norm</item>
