@@ -47,9 +47,12 @@
         <!-- Edge-to-edge app content -->
         <item name="android:navigationBarColor">@color/nav_bar</item>
 
-        <!-- Status bar -->
-        <item name="android:windowLightStatusBar">@bool/light_status_bar</item>
+        <!-- Status bar and App bars -->
         <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:windowLightStatusBar">@bool/light_status_bar</item>
+        <item name="appBarLayoutStyle">@style/ProtonAppBar</item>
+        <item name="toolbarStyle">@style/ProtonToolbar</item>
+        <item name="searchViewStyle">@style/ProtonSearchView</item>
 
         <!-- Remap legacy AppCompat attributes to MaterialComponent attributes -->
         <item name="colorPrimaryDark">?colorPrimaryVariant</item>

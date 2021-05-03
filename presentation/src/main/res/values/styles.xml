@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ Copyright (c) 2021 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
@@ -18,127 +18,26 @@
 <!-- TODO update to Android 6 min supported version to support new styles -->
 <resources>
 
-    <style name="ProtonTextView" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textSize">@dimen/default_text_size</item>
+    <!-- region AppBar's -->
+    <style name="ProtonAppBar" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+        <item name="elevation">@dimen/no_elevation</item>
+        <item name="navigationIcon">@drawable/ic_arrow_left</item>
+        <item name="closeIcon">@drawable/ic_close</item>
     </style>
 
-    <style name="ProtonTextView.Title" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textSize">@dimen/default_title_text_size</item>
-        <item name="android:textStyle">bold</item>
+    <style name="ProtonToolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="titleTextAppearance">@style/Proton.Text.Default.Bold</item>
+        <item name="titleTextColor">@color/text_norm</item>
+        <item name="navigationIcon">@drawable/ic_arrow_left</item>
+        <item name="closeIcon">@drawable/ic_close</item>
     </style>
 
-    <style name="ProtonTextView.Subtitle" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textSize">@dimen/default_subtitle_text_size</item>
-        <item name="android:textColor">@color/text_weak</item>
+    <style name="ProtonSearchView" parent="Widget.AppCompat.SearchView.ActionBar">
+        <item name="closeIcon">@drawable/ic_close</item>
     </style>
+    <!-- endregion -->
 
-    <style name="ProtonTextView.InputHeader">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="ProtonTextView.Body1">
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="ProtonTextView.Body1.Bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="ProtonTextView.InputFooter">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="ProtonEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textSize">@dimen/input_text_size</item>
-        <item name="android:paddingLeft">8dp</item>
-    </style>
-
-    <style name="ProtonEditText.Border">
-        <item name="android:background">@drawable/default_edit_text</item>
-    </style>
-
-    <style name="ProtonInput.TextInputLayout.Border" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="android:textSize">@dimen/input_text_size</item>
-        <item name="boxBackgroundColor">@color/background_secondary</item>
-        <item name="helperTextTextColor">?attr/brand_norm</item>
-    </style>
-
-    <style name="ProtonInput.TextInputLayout.Border.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
-        <item name="android:textSize">@dimen/input_text_size</item>
-        <item name="boxBackgroundColor">@color/background_secondary</item>
-        <item name="helperTextTextColor">?attr/brand_norm</item>
-    </style>
-
-    <style name="ProtonButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="ProtonButton.Borderless.Text" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="textAllCaps">false</item>
-        <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
-    </style>
-
-    <style name="ProtonButton.Borderless.Text.NoProgress">
-        <item name="progressDrawable">@null</item>
-    </style>
-
-    <style name="ProtonButton.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="textAllCaps">false</item>
-        <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
-        <item name="strokeColor">@color/btn_stroke_color_selector</item>
-    </style>
-
-    <style name="ProtonButton.Navigation" parent="ProtonButton">
-        <item name="android:layout_width">@dimen/button_nav_size</item>
-        <item name="android:layout_height">@dimen/button_nav_size</item>
-        <item name="backgroundTint">@color/interaction_weak</item>
-        <item name="cornerRadius">24dp</item>
-        <item name="iconTint">@color/icon_norm</item>
-        <item name="iconPadding">0dp</item>
-        <item name="iconSize">40dp</item>
-        <item name="iconGravity">textEnd</item>
-        <item name="rippleColor">?attr/brand_norm</item>
-    </style>
-
-    <style name="ProtonButton.Navigation.Borderless" parent="ProtonButton.Navigation">
-        <item name="backgroundTint">@android:color/transparent</item>
-        <item name="elevation">0dp</item>
-        <item name="android:stateListAnimator">@null</item>
-    </style>
-
-    <style name="ProtonDialog.Picker" parent="ProtonTheme">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/background_norm</item>
-    </style>
-
-    <style name="ProtonImage.ImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:background">@null</item>
-    </style>
-
-    <!-- This style is always dark regardless of day/night -->
-    <style name="ProtonNavigationView.Dark" parent="Widget.Design.NavigationView">
-        <item name="android:background">@color/nav_view_background</item>
-        <item name="android:listDivider">@color/nav_view_divider</item>
-        <item name="android:textColorSecondary">@color/nav_view_section_header_text</item>
-        <item name="itemTextAppearance">@style/ProtonNavigationViewItemTextAppearance</item>
-        <item name="itemTextColor">@color/nav_view_item_text</item>
-        <item name="itemIconTint">@color/nav_view_item_icon</item>
-        <item name="itemIconPadding">12dp</item>
-        <item name="itemBackground">@drawable/nav_view_item_background</item>
-        <item name="itemHorizontalPadding">@dimen/default_gap</item>
-    </style>
-
-    <style name="ProtonNavigationViewItemTextAppearance" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textSize">@dimen/default_subtitle_text_size</item>
-    </style>
-
+    <!-- region TextAppearance's -->
     <style name="Proton.Text" parent="TextAppearance.AppCompat" />
 
     <style name="Proton.Text.Headline">
@@ -232,5 +131,137 @@
     <style name="Proton.Text.Caption.Hint">
         <item name="android:textColor">@color/text_hint</item>
     </style>
+    <!-- endregion -->
+
+    <!-- region TextView's -->
+    <style name="ProtonTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">@dimen/default_text_size</item>
+    </style>
+
+    <style name="ProtonTextView.Title" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">@dimen/default_title_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ProtonTextView.Subtitle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">@dimen/default_subtitle_text_size</item>
+        <item name="android:textColor">@color/text_weak</item>
+    </style>
+
+    <style name="ProtonTextView.InputHeader">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ProtonTextView.Body1">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ProtonTextView.Body1.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ProtonTextView.InputFooter">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <!-- endregion -->
+
+    <!-- region Text inputs -->
+    <style name="ProtonEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">@dimen/input_text_size</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+
+    <style name="ProtonEditText.Border">
+        <item name="android:background">@drawable/default_edit_text</item>
+    </style>
+
+    <style name="ProtonInput.TextInputLayout.Border" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:textSize">@dimen/input_text_size</item>
+        <item name="boxBackgroundColor">@color/background_secondary</item>
+        <item name="helperTextTextColor">?attr/brand_norm</item>
+    </style>
+
+    <style name="ProtonInput.TextInputLayout.Border.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="android:textSize">@dimen/input_text_size</item>
+        <item name="boxBackgroundColor">@color/background_secondary</item>
+        <item name="helperTextTextColor">?attr/brand_norm</item>
+    </style>
+    <!-- endregion -->
+
+    <!--  region Buttons -->
+    <style name="ProtonButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="ProtonButton.Borderless.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
+    </style>
+
+    <style name="ProtonButton.Borderless.Text.NoProgress">
+        <item name="progressDrawable">@null</item>
+    </style>
+
+    <style name="ProtonButton.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="progressDrawable">@drawable/ic_animated_loading_inverted</item>
+        <item name="strokeColor">@color/btn_stroke_color_selector</item>
+    </style>
+
+    <style name="ProtonButton.Navigation" parent="ProtonButton">
+        <item name="android:layout_width">@dimen/button_nav_size</item>
+        <item name="android:layout_height">@dimen/button_nav_size</item>
+        <item name="backgroundTint">@color/interaction_weak</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="iconTint">@color/icon_norm</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconSize">40dp</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="rippleColor">?attr/brand_norm</item>
+    </style>
+
+    <style name="ProtonButton.Navigation.Borderless" parent="ProtonButton.Navigation">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+    <!-- endregion -->
+
+    <!-- region Dialog -->
+    <style name="ProtonDialog.Picker" parent="ProtonTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/background_norm</item>
+    </style>
+
+    <style name="ProtonImage.ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@null</item>
+    </style>
+    <!-- endregion -->
+
+    <!-- region NavigationView's -->
+    <!-- This style is always dark regardless of day/night -->
+    <style name="ProtonNavigationView.Dark" parent="Widget.Design.NavigationView">
+        <item name="android:background">@color/nav_view_background</item>
+        <item name="android:listDivider">@color/nav_view_divider</item>
+        <item name="android:textColorSecondary">@color/nav_view_section_header_text</item>
+        <item name="itemTextAppearance">@style/ProtonNavigationViewItemTextAppearance</item>
+        <item name="itemTextColor">@color/nav_view_item_text</item>
+        <item name="itemIconTint">@color/nav_view_item_icon</item>
+        <item name="itemIconPadding">12dp</item>
+        <item name="itemBackground">@drawable/nav_view_item_background</item>
+        <item name="itemHorizontalPadding">@dimen/default_gap</item>
+    </style>
+
+    <style name="ProtonNavigationViewItemTextAppearance" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">@dimen/default_subtitle_text_size</item>
+    </style>
+    <!-- endregion -->
 
 </resources>
