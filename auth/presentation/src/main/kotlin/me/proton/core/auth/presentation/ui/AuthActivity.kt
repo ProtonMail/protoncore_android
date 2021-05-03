@@ -23,10 +23,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.databinding.ViewDataBinding
+import me.proton.core.auth.domain.usecase.SetupAccountCheck
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.isNightMode
+import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.user.domain.UserManager
 
 abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
@@ -50,9 +52,13 @@ abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
         // default no op
     }
 
-    open fun showError(message: String?) {
+    open fun showError(message: String?, action: String? = null, actionOnClick: (() -> Unit)? = null) {
         showLoading(false)
-        binding.root.errorSnack(message = message ?: getString(R.string.auth_login_general_error))
+        binding.root.errorSnack(
+            message = message ?: getString(R.string.auth_login_general_error),
+            action = action,
+            actionOnClick = actionOnClick
+        )
     }
 
     protected fun onUnlockUserError(error: UserManager.UnlockResult.Error) {
@@ -68,6 +74,19 @@ abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
             is UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase -> onError(
                 false,
                 getString(R.string.auth_mailbox_login_error_invalid_passphrase)
+            )
+        }
+    }
+
+    protected fun onUserCheckFailed(error: SetupAccountCheck.UserCheckResult.Error) {
+        when (val action = error.action) {
+            null -> showError(
+                message = error.localizedMessage
+            )
+            is SetupAccountCheck.Action.OpenUrl -> showError(
+                message = error.localizedMessage,
+                action = action.name,
+                actionOnClick = { openBrowserLink(action.url) }
             )
         }
     }

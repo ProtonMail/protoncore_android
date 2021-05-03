@@ -26,6 +26,9 @@ private const val MASK_VPN = 4 // 0100
 private fun User.hasServiceFor(mask: Int): Boolean = mask.and(services) == mask
 private fun User.hasSubscriptionFor(mask: Int): Boolean = mask.and(subscribed) == mask
 
+fun User.hasService(): Boolean = services > 0
+fun User.hasSubscription(): Boolean = subscribed > 0
+
 fun User.hasServiceForMail(): Boolean = hasServiceFor(MASK_MAIL)
 fun User.hasServiceForVpn(): Boolean = hasServiceFor(MASK_VPN)
 

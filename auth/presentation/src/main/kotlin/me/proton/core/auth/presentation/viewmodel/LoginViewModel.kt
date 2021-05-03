@@ -81,6 +81,7 @@ class LoginViewModel @ViewModelInject constructor(
         }
 
         sealed class Error : State() {
+            data class UserCheckError(val error: SetupAccountCheck.UserCheckResult.Error) : Error()
             data class CannotUnlockPrimaryKey(val error: UserManager.UnlockResult.Error) : Error()
             data class Message(val message: String?) : Error()
         }
@@ -113,7 +114,8 @@ class LoginViewModel @ViewModelInject constructor(
         }
 
         // Check if setup keys is needed and if it can be done directly.
-        when (setupAccountCheck.invoke(userId, sessionInfo.isTwoPassModeNeeded, requiredAccountType)) {
+        when (val result = setupAccountCheck.invoke(userId, sessionInfo.isTwoPassModeNeeded, requiredAccountType)) {
+            is SetupAccountCheck.Result.UserCheckError -> checkFailed(userId, result.error)
             is SetupAccountCheck.Result.TwoPassNeeded -> twoPassMode(userId)
             is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(userId)
             is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, encryptedPassword)
@@ -129,6 +131,14 @@ class LoginViewModel @ViewModelInject constructor(
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
 
+    private suspend fun checkFailed(
+        userId: UserId,
+        error: SetupAccountCheck.UserCheckResult.Error
+    ): State {
+        accountWorkflow.handleAccountDisabled(userId)
+        return State.Error.UserCheckError(error)
+    }
+
     private suspend fun twoPassMode(
         userId: UserId,
     ): State {
@@ -139,7 +149,7 @@ class LoginViewModel @ViewModelInject constructor(
     private suspend fun changePassword(
         userId: UserId,
     ): State {
-        accountWorkflow.handleChangePasswordNeeded(userId)
+        accountWorkflow.handleAccountDisabled(userId)
         return State.Need.ChangePassword(userId)
     }
 

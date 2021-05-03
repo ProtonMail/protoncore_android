@@ -145,6 +145,13 @@ fun View.errorSnack(message: String) {
 }
 
 /**
+ * Shows red error snack bar. Usually as a general way to display various errors to the user.
+ */
+fun View.errorSnack(message: String, action: String?, actionOnClick: (() -> Unit)?) {
+    snack(message = message, color = R.drawable.background_error, action = action, actionOnClick = actionOnClick)
+}
+
+/**
  * Shows green success snack bar. Usually as a general way to display success result of an operation to the user.
  */
 fun View.successSnack(@StringRes messageRes: Int) {
@@ -167,17 +174,18 @@ fun View.snack(
 /**
  * General snack bar util function which takes message, color and length as config.
  * The default showing length is [Snackbar.LENGTH_LONG].
- *
- * @param message the message as String
  */
 fun View.snack(
     message: String,
-    length: Int = Snackbar.LENGTH_LONG,
-    @DrawableRes color: Int
+    @DrawableRes color: Int,
+    action: String? = null,
+    actionOnClick: (() -> Unit)? = null,
+    length: Int = Snackbar.LENGTH_LONG
 ) {
     Snackbar.make(this, message, length).apply {
         view.background = ResourcesCompat.getDrawable(context.resources, color, null)
         setTextColor(ContextCompat.getColor(context, R.color.white))
+        if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
     }.show()
 }
 

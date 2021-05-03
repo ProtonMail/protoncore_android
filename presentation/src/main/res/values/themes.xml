@@ -62,6 +62,8 @@
         <!-- Material styles override -->
         <item name="materialButtonStyle">@style/ProtonButton</item>
         <item name="navigationViewStyle">@style/ProtonNavigationView.Dark</item>
+        <item name="snackbarStyle">@style/ProtonSnackbar</item>
+        <item name="snackbarButtonStyle">@style/ProtonSnackbarButton</item>
 
         <!-- Brand specific attributes -->
         <item name="brand_norm">@color/cornflower_blue</item>

@@ -234,6 +234,16 @@
     </style>
     <!-- endregion -->
 
+    <!-- region Snackbar -->
+    <style name="ProtonSnackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="actionTextColorAlpha">1</item>
+    </style>
+
+    <style name="ProtonSnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <!-- endregion -->
+
     <!-- region Dialog -->
     <style name="ProtonDialog.Picker" parent="ProtonTheme">
         <item name="android:windowNoTitle">true</item>

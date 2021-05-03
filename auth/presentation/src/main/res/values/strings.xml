@@ -78,4 +78,9 @@
     <string name="auth_password_chooser_title">Change your password</string>
     <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
     <string name="auth_password_chooser_change">Change Password</string>
+
+    <string name="auth_user_check_one_free_error">Only one free Proton account is allowed.</string>
+    <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
+    <string name="auth_user_check_delinquent_action">Pay invoice</string>
+
 </resources>

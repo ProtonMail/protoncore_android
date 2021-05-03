@@ -152,10 +152,6 @@ class AccountManagerImpl constructor(
         accountRepository.updateSessionState(sessionId, SessionState.Authenticated)
     }
 
-    override suspend fun handleChangePasswordNeeded(userId: UserId) {
-        disableAccount(userId)
-    }
-
     override suspend fun handleCreateAddressNeeded(userId: UserId) {
         accountRepository.updateAccountState(userId, AccountState.CreateAddressNeeded)
     }

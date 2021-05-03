@@ -28,7 +28,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(1, 0, 5)
+libVersion = Version(1, 0, 6)
 
 android(useDataBinding = true)
 
@@ -45,6 +45,7 @@ dependencies {
         // Features
         project(Module.authDomain),
         project(Module.accountDomain),
+        project(Module.accountManagerDomain),
         project(Module.humanVerificationDomain),
         project(Module.humanVerificationPresentation),
         project(Module.userDomain),
