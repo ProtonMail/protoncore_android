@@ -121,11 +121,11 @@ Crypto Android: **1.0.3** - _released on: Apr 15, 2021_
 
 Auth: **1.0.6** - _released on: May 03, 2021_
 
-Auth Domain: **1.0.5** - _released on: Apr 12, 2021_
+Auth Domain: **1.0.6** - _released on: May 03, 2021_
 
-Auth Presentation: **1.0.5** - _released on: Apr 12, 2021_
+Auth Presentation: **1.0.6** - _released on: May 03, 2021_
 
-Auth Data: **1.0.5** - _released on: Apr 12, 2021_
+Auth Data: **1.0.6** - _released on: May 03, 2021_
 
 ### Account
 
@@ -162,9 +162,9 @@ Key Data: **1.0.4** - _released on: Mar 22, 2021_
 
 User: **1.0.6** - _released on: May 03, 2021_
 
-User Domain: **1.0.5** - _released on: Apr 23, 2021_
+User Domain: **1.0.6** - _released on: May 03, 2021_
 
-User Data: **1.0.5** - _released on: Apr 23, 2021_
+User Data: **1.0.6** - _released on: May 03, 2021_
 
 ### Contact
 
