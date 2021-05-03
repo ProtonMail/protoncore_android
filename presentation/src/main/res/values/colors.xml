@@ -96,6 +96,7 @@
     <color name="notification_warning">@color/sunglow</color>
 
     <!-- status & navigation bar color -->
+    <color name="status_bar">@color/background_norm</color>
     <color name="nav_bar">@color/scrim</color>
 
     <!-- Navigation view colors -->
