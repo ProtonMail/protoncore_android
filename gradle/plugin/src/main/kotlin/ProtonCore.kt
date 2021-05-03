@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ object ProtonCore {
     /** The Android API level as target of the App */
     const val targetSdk = 30
     /** The Android API level required for run the App */
-    const val minSdk = 21
+    const val minSdk = 23
     /** The version of the JDK  */
     val jdkVersion = JavaVersion.VERSION_1_8
 }

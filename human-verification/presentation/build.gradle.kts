@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -29,10 +29,7 @@ plugins {
 
 libVersion = Version(0, 3, 3)
 
-android(
-    minSdk = 23,
-    useDataBinding = true
-)
+android(useDataBinding = true)
 
 dependencies {
 
