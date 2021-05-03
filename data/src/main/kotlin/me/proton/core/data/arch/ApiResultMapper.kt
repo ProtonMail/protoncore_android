@@ -28,10 +28,11 @@ fun <T> ApiResult<T>.toDataResult(): DataResult<T> = when (this) {
     is ApiResult.Error.Http -> {
         DataResult.Error.Remote(
             message = proton?.error ?: message,
+            cause = cause,
             protonCode = proton?.code ?: 0,
             httpCode = httpCode
         )
     }
-    is ApiResult.Error.Parse -> DataResult.Error.Remote(cause?.message)
-    is ApiResult.Error.Connection -> DataResult.Error.Remote(cause?.message)
+    is ApiResult.Error.Parse -> DataResult.Error.Remote(cause?.message, cause)
+    is ApiResult.Error.Connection -> DataResult.Error.Remote(cause?.message, cause)
 }.exhaustive

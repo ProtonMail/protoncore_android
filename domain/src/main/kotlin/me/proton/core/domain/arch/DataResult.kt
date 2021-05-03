@@ -32,24 +32,27 @@ enum class ResponseSource {
  */
 sealed class DataResult<out T>(open val source: ResponseSource) {
 
-    data class Processing<T>(override val source: ResponseSource) : DataResult<T>(source)
+    data class Processing(override val source: ResponseSource) : DataResult<Nothing>(source)
 
     data class Success<T>(override val source: ResponseSource, val value: T) : DataResult<T>(source)
 
-    sealed class Error<T>(
+    sealed class Error(
         override val source: ResponseSource,
-        open val message: String?
-    ) : DataResult<T>(source) {
+        open val message: String?,
+        open val cause: Throwable?
+    ) : DataResult<Nothing>(source) {
 
-        data class Local<T>(
-            override val message: String?
-        ) : Error<T>(ResponseSource.Local, message)
-
-        data class Remote<T>(
+        data class Local(
             override val message: String?,
+            override val cause: Throwable?
+        ) : Error(ResponseSource.Local, message, cause)
+
+        data class Remote(
+            override val message: String?,
+            override val cause: Throwable?,
             val protonCode: Int = 0,
             val httpCode: Int = 0
-        ) : Error<T>(ResponseSource.Remote, message)
+        ) : Error(ResponseSource.Remote, message, cause)
     }
 }
 
@@ -75,4 +78,3 @@ inline fun <T> DataResult<T>.onSuccess(action: (value: T) -> Unit): DataResult<T
     if (this is DataResult.Success) action(value)
     return this
 }
-
