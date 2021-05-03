@@ -32,10 +32,11 @@ fun <T> StoreResponse<T>.toDataResult(): DataResult<T> = when (this) {
             ResponseOrigin.SourceOfTruth -> DataResult.Success(ResponseSource.Local, value)
         }
     is StoreResponse.Error -> {
+        val cause = (this as? StoreResponse.Error.Exception)?.error
         when (origin) {
-            ResponseOrigin.Fetcher -> DataResult.Error.Remote(errorMessageOrNull())
-            ResponseOrigin.Cache -> DataResult.Error.Local(errorMessageOrNull())
-            ResponseOrigin.SourceOfTruth -> DataResult.Error.Local(errorMessageOrNull())
+            ResponseOrigin.Fetcher -> DataResult.Error.Remote(errorMessageOrNull(), cause)
+            ResponseOrigin.Cache -> DataResult.Error.Local(errorMessageOrNull(), cause)
+            ResponseOrigin.SourceOfTruth -> DataResult.Error.Local(errorMessageOrNull(), cause)
         }
     }
     is StoreResponse.Loading -> when (origin) {
