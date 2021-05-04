@@ -29,6 +29,8 @@ import me.proton.core.presentation.utils.CardType
 import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.validate
 import me.proton.core.presentation.utils.validateCreditCard
+import me.proton.core.presentation.utils.validateCreditCardCVC
+import me.proton.core.presentation.utils.validateExpirationDate
 import me.proton.core.util.kotlin.exhaustive
 
 const val MAX_CARD_LENGTH = 16
@@ -50,6 +52,7 @@ class CardNumberWatcher(
             validateCreditCard().setCardIcon(context) {
                 it?.let {
                     endIconMode = ProtonInput.EndIconMode.CUSTOM_ICON
+                    endIconDrawable = it
                 }
             }
         }
@@ -97,13 +100,17 @@ fun ActivityBillingBinding.billingInputFieldsValidationList(context: Context): L
         cardNumberInput.validateCreditCard().also {
             if (!it.isValid) cardNumberInput.setInputError(context.getString(R.string.payments_error_card_number))
         },
-        cvcInput.validate().also {
+        cvcInput.validateCreditCardCVC().also {
             if (!it.isValid) cvcInput.setInputError(context.getString(R.string.payments_error_cvc))
         },
-        expirationDateInput.validate().also {
+        expirationDateInput.validateExpirationDate().also {
             if (!it.isValid) expirationDateInput.setInputError()
         },
         postalCodeInput.validate().also {
             if (!it.isValid) postalCodeInput.setInputError()
+        },
+        countriesText.validate().also {
+            if (!it.isValid) countriesText.setInputError()
+            else countriesText.clearInputError()
         }
     )

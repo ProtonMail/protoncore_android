@@ -18,29 +18,43 @@
 
 package me.proton.core.presentation.utils
 
+import me.proton.core.presentation.ui.view.ProtonAutoCompleteInput
 import me.proton.core.presentation.ui.view.ProtonInput
+import me.proton.core.util.kotlin.exhaustive
+import java.util.Calendar
 
 fun ProtonInput.validate(validationType: ValidationType = ValidationType.NotBlank) =
-    InputValidationResult(this, validationType)
+    InputValidationResult(this.text.toString(), validationType)
+
+fun ProtonAutoCompleteInput.validate(validationType: ValidationType = ValidationType.NotBlank) =
+    InputValidationResult(this.text.toString(), validationType)
 
 fun ProtonInput.validateUsername() =
-    InputValidationResult(this, ValidationType.Username)
+    InputValidationResult(this.text.toString(), ValidationType.Username)
 
 fun ProtonInput.validatePassword() =
-    InputValidationResult(this, ValidationType.Password)
+    InputValidationResult(this.text.toString(), ValidationType.Password)
 
 fun ProtonInput.validateEmail() =
-    InputValidationResult(this, ValidationType.Email)
+    InputValidationResult(this.text.toString(), ValidationType.Email)
 
 fun ProtonInput.validateCreditCard() =
-    InputValidationResult(this, ValidationType.CreditCard)
+    InputValidationResult(this.text.toString(), ValidationType.CreditCard)
 
-enum class ValidationType {
+fun ProtonInput.validateCreditCardCVC() =
+    InputValidationResult(this.text.toString(), ValidationType.CreditCardCVC)
+
+fun ProtonInput.validateExpirationDate() =
+    InputValidationResult(this.text.toString(), ValidationType.CreditCardExpirationDate)
+
+enum class ValidationType(val minLong: Int = Int.MIN_VALUE, val maxLong: Int = Int.MAX_VALUE) {
     NotBlank,
     Username,
     Password,
     Email,
-    CreditCard
+    CreditCard,
+    CreditCardCVC(minLong = 3, maxLong = 4),
+    CreditCardExpirationDate
 }
 
 enum class CardType(val regex: String) {
@@ -52,10 +66,9 @@ enum class CardType(val regex: String) {
 }
 
 data class InputValidationResult(
-    val input: ProtonInput,
+    val text: String,
     val validationType: ValidationType = ValidationType.NotBlank
 ) {
-    val text = input.text.toString()
     var cardType: CardType? = null
 
     val isValid = when (validationType) {
@@ -67,9 +80,16 @@ data class InputValidationResult(
             cardType = validateCreditCard()
             cardType != null
         }
-    }
+        ValidationType.CreditCardCVC ->
+            validateNotBlankMinLong(minLong = validationType.minLong) && validateNotBlankMaxLong(maxLong = validationType.maxLong)
+        ValidationType.CreditCardExpirationDate -> validateCreditCardExpirationDate(Calendar.getInstance())
+    }.exhaustive
 
     private fun validateNotBlank() = text.isNotBlank()
+
+    private fun validateNotBlankMinLong(minLong: Int) = text.isNotBlank() && text.length >= minLong
+
+    private fun validateNotBlankMaxLong(maxLong: Int) = text.isNotBlank() && text.length <= maxLong
 
     private fun validateUsername() = validateNotBlank()
 
@@ -92,8 +112,32 @@ data class InputValidationResult(
         } ?: run { null }
     }
 
+    private fun validateCreditCardExpirationDate(calendar: Calendar): Boolean {
+        val monthAndYear = text.split("/")
+        if (monthAndYear.size != 2) {
+            return false
+        }
+        try {
+            val month = monthAndYear[0].toInt()
+            val year = monthAndYear[1].toInt()
+            val currentYear = calendar.get(Calendar.YEAR) - YEAR_2000
+            val currentMonth = calendar.get(Calendar.MONTH) + 1 // it is 0-based
+            val minMonth = if (year == currentYear) currentMonth else MIN_MONTH
+
+            return month in minMonth..MAX_MONTH && year in currentYear..MAX_YEAR
+        } catch (numberFormat: NumberFormatException) {
+            // we are not interested into this
+        }
+        return false
+    }
+
     companion object {
-        const val EMAIL_VALIDATION_PATTERN = """(?:[a-z0-9!#${'$'}%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#${'$'}%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"""
+        const val EMAIL_VALIDATION_PATTERN =
+            """(?:[a-z0-9!#${'$'}%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#${'$'}%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"""
+        const val YEAR_2000 = 2000
+        const val MAX_YEAR = 99
+        const val MIN_MONTH = 1
+        const val MAX_MONTH = 12
     }
 }
 

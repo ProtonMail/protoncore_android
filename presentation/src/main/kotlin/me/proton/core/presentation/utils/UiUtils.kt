@@ -33,10 +33,6 @@ import androidx.fragment.app.FragmentTransaction
 import me.proton.core.presentation.R
 import me.proton.core.presentation.ui.alert.ForceUpdateDialog
 
-
-/**
- * @author Dino Kadrikj.
- */
 private const val TAG_FORCE_UPDATE_DIALOG = "force_update_dialog"
 
 inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> FragmentTransaction) {
@@ -95,6 +91,7 @@ fun AppCompatActivity.isNightMode() =
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    view.clearFocus()
 }
 
 /**

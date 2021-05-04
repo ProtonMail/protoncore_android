@@ -190,6 +190,16 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
         } else {
             payButton.setIdle()
         }
+        inputState(enabled = !loading)
+    }
+
+    private fun inputState(enabled: Boolean) = with(binding) {
+        cardNameInput.isEnabled = enabled
+        cardNumberInput.isEnabled = enabled
+        expirationDateInput.isEnabled = enabled
+        cvcInput.isEnabled = enabled
+        postalCodeInput.isEnabled = enabled
+        countriesText.isEnabled = enabled
     }
 
     companion object {
