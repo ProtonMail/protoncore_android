@@ -87,6 +87,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
                 is LoginViewModel.State.Processing -> showLoading(true)
                 is LoginViewModel.State.Success.UserUnLocked -> onLoginSuccess(it.userId)
                 is LoginViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
+                is LoginViewModel.State.Error.UserCheckError -> onError(true, it.error.localizedMessage)
                 is LoginViewModel.State.Error.Message -> onError(true, it.message)
                 is LoginViewModel.State.Need.ChangePassword,
                 is LoginViewModel.State.Need.ChooseUsername,
