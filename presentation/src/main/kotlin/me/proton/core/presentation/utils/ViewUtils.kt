@@ -28,10 +28,10 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.EditText
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -184,7 +184,7 @@ fun View.snack(
 ) {
     Snackbar.make(this, message, length).apply {
         view.background = ResourcesCompat.getDrawable(context.resources, color, null)
-        setTextColor(ContextCompat.getColor(context, R.color.white))
+        view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).apply { maxLines = 5 }
         if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
     }.show()
 }

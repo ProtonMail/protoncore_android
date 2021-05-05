@@ -68,16 +68,20 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
             }
 
             signInButton.onClick(::onSignInClicked)
+            usernameInput.text = input.username
             usernameInput.setOnFocusLostListener { _, _ ->
                 usernameInput.validateUsername()
                     .onFailure { usernameInput.setInputError(getString(R.string.auth_login_assistive_text)) }
                     .onSuccess { usernameInput.clearInputError() }
             }
+            passwordInput.text = input.password
             passwordInput.setOnFocusLostListener { _, _ ->
                 passwordInput.validatePassword()
                     .onFailure { passwordInput.setInputError() }
                     .onSuccess { passwordInput.clearInputError() }
             }
+
+            if (input.password != null) onSignInClicked()
         }
 
         viewModel.state.onEach {

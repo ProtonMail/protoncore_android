@@ -37,7 +37,7 @@ import javax.inject.Inject
  * - [User.delinquent] is not [Delinquent.InvoiceDelinquent] or [Delinquent.InvoiceMailDisabled].
  * - [User.hasSubscription] is true or all existing [Account] in [AccountState.Ready] have a subscription.
  */
-class DefaultUserCheck @Inject constructor(
+open class DefaultUserCheck @Inject constructor(
     private val context: Context,
     private val accountManager: AccountManager,
     private val userManager: UserManager
