@@ -204,9 +204,9 @@ class AuthOrchestrator @Inject constructor(
      *
      * @see [onLoginResult]
      */
-    fun startLoginWorkflow(requiredAccountType: AccountType) {
+    fun startLoginWorkflow(requiredAccountType: AccountType, username: String? = null, password: String? = null) {
         checkRegistered(loginWorkflowLauncher).launch(
-            LoginInput(requiredAccountType)
+            LoginInput(requiredAccountType, username, password)
         )
     }
 
