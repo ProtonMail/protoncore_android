@@ -34,7 +34,8 @@ proguard/
 # Log Files
 *.log
 
-
+# Sensitive test data
+test/android/instrumented/src/main/assets/sensitive/*
 
 # # # # # # # # #
 # IDEA SETTINGS #

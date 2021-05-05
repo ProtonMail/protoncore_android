@@ -16,8 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample
+package me.proton.core.test.android.instrumented.robots.login
 
-object Constants {
-    const val BASE_URL = "https://${BuildConfig.ENVIRONMENT}/api/"
+import me.proton.core.auth.R
+import me.proton.core.test.android.instrumented.robots.BaseRobot
+
+/**
+ * [TwoFaRobot] class contains actions and verifications for Two factor authentication functionality.
+ */
+open class TwoFaRobot : BaseRobot() {
+    fun setSecondFactorInput(input: String): TwoFaRobot = setText(R.id.secondFactorInput, input)
+    fun switchTwoFactorMode(): TwoFaRobot = clickElement(R.id.recoveryCodeButton)
+    inline fun <reified T> authenticate(): T = clickElement(R.id.authenticateButton)
 }
