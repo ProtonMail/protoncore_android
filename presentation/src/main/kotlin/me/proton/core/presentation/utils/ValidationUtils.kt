@@ -81,7 +81,8 @@ data class InputValidationResult(
             cardType != null
         }
         ValidationType.CreditCardCVC ->
-            validateNotBlankMinLong(minLong = validationType.minLong) && validateNotBlankMaxLong(maxLong = validationType.maxLong)
+            validateNotBlankMinLong(minLong = validationType.minLong) &&
+                validateNotBlankMaxLong(maxLong = validationType.maxLong)
         ValidationType.CreditCardExpirationDate -> validateCreditCardExpirationDate(Calendar.getInstance())
     }.exhaustive
 

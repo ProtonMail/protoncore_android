@@ -35,7 +35,7 @@ import me.proton.core.presentation.ui.setTextOrGoneIfNull
 /**
  * Custom Proton AutoComplete Input (base on a [TextInputLayout] containing a [AutoCompleteTextView]).
  */
-// TODO: noticed code cuplication here, should be refactored properly as single with [ProtonInput]
+// Noticed code duplication here, should be refactored properly as single with [ProtonInput]
 // See https://material.io/develop/android/components/text-fields ("Implementing an exposed dropdown menu").
 open class ProtonAutoCompleteInput : LinearLayout {
 
