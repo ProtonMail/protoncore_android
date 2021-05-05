@@ -117,18 +117,17 @@ data class InputValidationResult(
         if (monthAndYear.size != 2) {
             return false
         }
-        try {
+        return try {
             val month = monthAndYear[0].toInt()
             val year = monthAndYear[1].toInt()
             val currentYear = calendar.get(Calendar.YEAR) - YEAR_2000
             val currentMonth = calendar.get(Calendar.MONTH) + 1 // it is 0-based
             val minMonth = if (year == currentYear) currentMonth else MIN_MONTH
 
-            return month in minMonth..MAX_MONTH && year in currentYear..MAX_YEAR
+            month in minMonth..MAX_MONTH && year in currentYear..MAX_YEAR
         } catch (numberFormat: NumberFormatException) {
-            // we are not interested into this
+            false
         }
-        return false
     }
 
     companion object {

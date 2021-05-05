@@ -39,6 +39,11 @@ class InputValidationResultTest {
         mockkStatic(Calendar::class)
     }
 
+    @After
+    fun afterEveryTest() {
+        unmockkStatic(Calendar::class)
+    }
+
     @Test
     fun `validate CreditCard exp date in future`() {
         // GIVEN
@@ -148,10 +153,5 @@ class InputValidationResultTest {
         val result = inputValidationResult.isValid
         // THEN
         assertFalse(result)
-    }
-
-    @After
-    fun afterEveryTest() {
-        unmockkStatic(Calendar::class)
     }
 }

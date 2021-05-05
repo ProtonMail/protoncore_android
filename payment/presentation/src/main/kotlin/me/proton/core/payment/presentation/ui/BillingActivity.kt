@@ -104,7 +104,8 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
                     binding.selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
                 }
                 is BillingViewModel.PlansValidationState.Error.Message -> showError(it.message)
-                else -> { }
+                else -> {
+                }
             }.exhaustive
         }.launchIn(lifecycleScope)
 
@@ -193,13 +194,15 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
         inputState(enabled = !loading)
     }
 
-    private fun inputState(enabled: Boolean) = with(binding) {
-        cardNameInput.isEnabled = enabled
-        cardNumberInput.isEnabled = enabled
-        expirationDateInput.isEnabled = enabled
-        cvcInput.isEnabled = enabled
-        postalCodeInput.isEnabled = enabled
-        countriesText.isEnabled = enabled
+    private fun inputState(enabled: Boolean) {
+        with(binding) {
+            cardNameInput.isEnabled = enabled
+            cardNumberInput.isEnabled = enabled
+            expirationDateInput.isEnabled = enabled
+            cvcInput.isEnabled = enabled
+            postalCodeInput.isEnabled = enabled
+            countriesText.isEnabled = enabled
+        }
     }
 
     companion object {
