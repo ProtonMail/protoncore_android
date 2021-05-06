@@ -19,6 +19,8 @@
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
+libVersion = Version(0, 4, 4)
+
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -26,10 +28,8 @@ plugins {
 }
 
 android(
-    minSdk = 23,
-    version = Version(0, 4, 4)
-)
-{
+    minSdk = 23
+) {
     defaultConfig {
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
