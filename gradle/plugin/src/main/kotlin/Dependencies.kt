@@ -54,4 +54,5 @@ val DependencyHandler.uiautomator get() = androidx("test.uiautomator", module = 
 val DependencyHandler.preference get() = androidx("preference", module = "preference") version `preference version`
 val DependencyHandler.`jsonsimple` get() = dependency("com.googlecode.json-simple", module = "json-simple") version `json-simple version`
 val DependencyHandler.`turbine` get() = dependency("app.cash.turbine", module = "turbine") version `turbine version`
+val DependencyHandler.`junit-ktx` get() = dependency("androidx.test.ext", module = "junit-ktx") version `junit-ktx version`
 // endregion
