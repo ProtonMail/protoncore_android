@@ -18,13 +18,9 @@
 
 package me.proton.core.test.android.uitests.tests
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WAKE_LOCK
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.util.Log
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
-import androidx.test.rule.GrantPermissionRule
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.accountmanager.dagger.AccountManagerModule
@@ -39,20 +35,14 @@ import java.net.URL
 
 open class BaseTest : CoreTest() {
 
-    private val activityRule = ActivityTestRule(MainActivity::class.java)
+    private val activityRule = ActivityScenarioRule(MainActivity::class.java)
     private val testExecutionWatcher = TestExecutionWatcher()
-    private val grantPermissionRule = GrantPermissionRule.grant(
-        READ_EXTERNAL_STORAGE,
-        WRITE_EXTERNAL_STORAGE,
-        WAKE_LOCK
-    )
 
     @Rule
     @JvmField
     val ruleChain = RuleChain
         .outerRule(testName)
         .around(testExecutionWatcher)
-        .around(grantPermissionRule)
         .around(activityRule)!!
 
     @After

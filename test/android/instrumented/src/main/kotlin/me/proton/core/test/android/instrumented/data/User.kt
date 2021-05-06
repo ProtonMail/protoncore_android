@@ -19,11 +19,10 @@
 package me.proton.core.test.android.instrumented.data
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.serialization.Serializable
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.test.android.instrumented.utils.StringUtils.getEmailString
+import me.proton.core.util.kotlin.deserializeList
 import kotlin.random.Random
 import me.proton.core.test.android.instrumented.utils.StringUtils.getAlphaNumericStringWithSpecialCharacters as randomString
 
@@ -48,14 +47,17 @@ data class  User(
         paymentMethods.any { it.paymentMethodType == paymentMethodType }
 
     companion object Users {
-        private val usersJson = InstrumentationRegistry
+
+        private const val testUserJsonPath: String = "sensitive/users.json"
+
+        private val users: List<User> = InstrumentationRegistry
             .getInstrumentation()
             .context
             .assets
-            .open("sensitive/users.json")
+            .open(testUserJsonPath)
             .bufferedReader()
             .use { it.readText() }
-        private val users: List<User> = jacksonObjectMapper().readValue(usersJson)
+            .deserializeList()
 
         fun getUser(predicate: (User) -> Boolean = { it.isDefault }): User =
             users.filterTo(ArrayList(), predicate).random()

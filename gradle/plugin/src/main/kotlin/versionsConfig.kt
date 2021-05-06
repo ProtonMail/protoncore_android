@@ -84,4 +84,5 @@ const val `uiautomator version` =               "2.2.0"         // Released: Oct
 const val `preference version` =                "1.1.1"         // Released: Apr 15, 2020
 const val `json-simple version` =               "1.1.1"         // Released: Mar 21, 2012
 const val `turbine version` =                   "0.4.1"         // Released: Mar 15, 2021
+const val `junit-ktx version` =                 "1.1.2"         // Released: Aug 26, 2020
 // endregion

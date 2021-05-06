@@ -57,6 +57,7 @@ dependencies {
         project(Module.auth),
         project(Module.presentation),
         project(Module.payment),
+        project(Module.kotlinUtil),
 
         // MockK
         `mockk-android`,
@@ -73,7 +74,7 @@ dependencies {
         `espresso-contrib`,
         `espresso-intents`,
         `android-ktx`,
-        `serialization-json`,
-        "com.fasterxml.jackson.module:jackson-module-kotlin:2.12.+"
+        `junit-ktx`,
+        `serialization-json`
     )
 }
