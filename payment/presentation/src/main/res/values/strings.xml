@@ -22,9 +22,9 @@
     <string name="payments_general_error">An error occurred.</string>
     <string name="payments_no_connectivity">No connectivity to display 3DS confirmation page.</string>
     <string name="payments_3ds_not_approved">3DS approval has been rejected.</string>
-    <string name="payments_error_card_name">Please enter card name</string>
-    <string name="payments_error_card_number">Please enter card number</string>
-    <string name="payments_error_cvc">Please enter code</string>
+    <string name="payments_error_card_name">Name on card required.</string>
+    <string name="payments_error_card_number">Invalid card number.</string>
+    <string name="payments_error_cvc">Please enter valid security code.</string>
     <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
     <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
     <string name="payments_error_invalid_session">Invalid session.</string>

@@ -115,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="@string/payments_choose_country"
+                    android:hint="@string/payments_choose_country"
                     app:label="@string/payments_country" />
 
                 <LinearLayout

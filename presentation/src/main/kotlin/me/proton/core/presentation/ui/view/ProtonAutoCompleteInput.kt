@@ -25,6 +25,7 @@ import android.widget.EditText
 import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.ListAdapter
+import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import me.proton.core.presentation.R
 import me.proton.core.presentation.databinding.ProtonAutocompleteInputBinding
@@ -34,6 +35,7 @@ import me.proton.core.presentation.ui.setTextOrGoneIfNull
 /**
  * Custom Proton AutoComplete Input (base on a [TextInputLayout] containing a [AutoCompleteTextView]).
  */
+// Noticed code duplication here, should be refactored properly as single with [ProtonInput]
 // See https://material.io/develop/android/components/text-fields ("Implementing an exposed dropdown menu").
 open class ProtonAutoCompleteInput : LinearLayout {
 
@@ -177,6 +179,27 @@ open class ProtonAutoCompleteInput : LinearLayout {
      */
     fun <T> setAdapter(adapter: T) where T : ListAdapter, T : Filterable {
         binding.input.setAdapter(adapter)
+    }
+
+    /**
+     * Set the error UI layout to the ProtonInput view.
+     *
+     * Not only the [EditText] but also if visible the label and the help text.
+     *
+     * @param error error message to show. If [String.isNullOrEmpty], helpText is taken instead.
+     */
+    fun setInputError(error: String? = null) {
+        binding.inputLayout.error = error ?: helpText ?: " "
+        binding.inputLayout.errorIconDrawable = null
+        binding.label.setTextColor(ContextCompat.getColor(context, R.color.notification_error))
+    }
+
+    /**
+     * Clear the error UI layout of the ProtonInput view.
+     */
+    fun clearInputError() {
+        binding.inputLayout.error = null
+        binding.label.setTextColor(ContextCompat.getColor(context, R.color.text_norm))
     }
 
     override fun setOnClickListener(listener: OnClickListener?) {
