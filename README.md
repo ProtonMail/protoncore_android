@@ -93,7 +93,7 @@ Test Android Instrumented: **0.3.3** - _released on: Mar 22, 2021_
 
 Domain: **1.0.1** - _released on: May 03, 2021_
 
-Presentation: **0.7.4** - _released on: May 05, 2021_
+Presentation: **0.7.5** - _released on: May 06, 2021_
 
 Data: **1.0.3** - _released on: May 03, 2021_
 
@@ -204,10 +204,10 @@ Country Presentation: **0.1.3** - _released on: Apr 13, 2021_
 
 ### Payment
 
-Payment: **0.1.4** - _released on: Apr 12, 2021_
+Payment: **0.1.5** - _released on: May 06, 2021_
 
-Payment Data: **0.1.4** - _released on: Apr 12, 2021_
+Payment Data: **0.1.5** - _released on: May 06, 2021_
 
-Payment Domain: **0.1.4** - _released on: Apr 12, 2021_
+Payment Domain: **0.1.5** - _released on: May 06, 2021_
 
-Payment Presentation: **0.1.4** - _released on: Apr 12, 2021_
+Payment Presentation: **0.1.5** - _released on: May 06, 2021_
