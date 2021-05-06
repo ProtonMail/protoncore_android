@@ -27,7 +27,7 @@ plugins {
 
 android(
     minSdk = 23,
-    version = Version(0, 3, 4)
+    version = Version(0, 4, 4)
 )
 {
     defaultConfig {
