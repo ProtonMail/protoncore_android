@@ -57,10 +57,10 @@ class AuthOrchestrator @Inject constructor(
     private var chooseAddressLauncher: ActivityResultLauncher<ChooseAddressInput>? = null
     // endregion
 
-    private var onLoginResultListener: (result: LoginResult?) -> Unit = {}
-    private var onTwoPassModeResultListener: (result: TwoPassModeResult?) -> Unit = {}
-    private var onSecondFactorResultListener: (result: SecondFactorResult?) -> Unit = {}
-    private var onChooseAddressResultListener: (result: ChooseAddressResult?) -> Unit = {}
+    private var onLoginResultListener: ((result: LoginResult?) -> Unit)? = {}
+    private var onTwoPassModeResultListener: ((result: TwoPassModeResult?) -> Unit)? = {}
+    private var onSecondFactorResultListener: ((result: SecondFactorResult?) -> Unit)? = {}
+    private var onChooseAddressResultListener: ((result: ChooseAddressResult?) -> Unit)? = {}
 
     fun setOnLoginResult(block: (result: LoginResult?) -> Unit) {
         onLoginResultListener = block
@@ -85,7 +85,7 @@ class AuthOrchestrator @Inject constructor(
         context.registerForActivityResult(
             StartLogin()
         ) {
-            onLoginResultListener(it)
+            onLoginResultListener?.invoke(it)
         }
 
     private fun registerTwoPassModeResult(
@@ -94,7 +94,7 @@ class AuthOrchestrator @Inject constructor(
         context.registerForActivityResult(
             StartTwoPassMode()
         ) {
-            onTwoPassModeResultListener(it)
+            onTwoPassModeResultListener?.invoke(it)
         }
 
     private fun registerSecondFactorResult(
@@ -103,7 +103,7 @@ class AuthOrchestrator @Inject constructor(
         context.registerForActivityResult(
             StartSecondFactor()
         ) {
-            onSecondFactorResultListener(it)
+            onSecondFactorResultListener?.invoke(it)
         }
 
     private fun registerChooseAddressResult(
@@ -112,7 +112,7 @@ class AuthOrchestrator @Inject constructor(
         context.registerForActivityResult(
             StartChooseAddress()
         ) {
-            onChooseAddressResultListener(it)
+            onChooseAddressResultListener?.invoke(it)
         }
 
     private fun registerHumanVerificationResult(
@@ -197,6 +197,28 @@ class AuthOrchestrator @Inject constructor(
         secondFactorWorkflowLauncher = registerSecondFactorResult(context)
         twoPassModeWorkflowLauncher = registerTwoPassModeResult(context)
         chooseAddressLauncher = registerChooseAddressResult(context)
+    }
+
+    /**
+     * Unregister all workflow activity launcher and listener.
+     */
+    fun unregister() {
+        loginWorkflowLauncher?.unregister()
+        humanWorkflowLauncher?.unregister()
+        secondFactorWorkflowLauncher?.unregister()
+        twoPassModeWorkflowLauncher?.unregister()
+        chooseAddressLauncher?.unregister()
+
+        loginWorkflowLauncher = null
+        humanWorkflowLauncher = null
+        secondFactorWorkflowLauncher = null
+        twoPassModeWorkflowLauncher = null
+        chooseAddressLauncher = null
+
+        onLoginResultListener = null
+        onTwoPassModeResultListener = null
+        onSecondFactorResultListener = null
+        onChooseAddressResultListener = null
     }
 
     /**
