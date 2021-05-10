@@ -18,8 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -33,8 +33,10 @@ import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
-internal class RecoveryMethodViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class RecoveryMethodViewModel @Inject constructor(
     private val validateEmail: ValidateEmail,
     private val validatePhone: ValidatePhone
 ) : ProtonViewModel() {

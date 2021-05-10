@@ -19,10 +19,9 @@
 package me.proton.core.auth.presentation.viewmodel
 
 import androidx.activity.ComponentActivity
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -52,9 +51,11 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.session.Session
 import me.proton.core.user.domain.UserManager
+import javax.inject.Inject
 
-internal class LoginViewModel @ViewModelInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle,
+@HiltViewModel
+internal class LoginViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val accountWorkflow: AccountWorkflowHandler,
     private val performLogin: PerformLogin,
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey,

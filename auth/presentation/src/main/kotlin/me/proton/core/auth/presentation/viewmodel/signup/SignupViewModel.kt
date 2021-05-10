@@ -19,8 +19,8 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import androidx.activity.ComponentActivity
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -46,8 +46,10 @@ import me.proton.core.humanverification.presentation.onHumanVerificationFailed
 import me.proton.core.network.domain.session.HumanVerificationListener
 import me.proton.core.user.domain.entity.User
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
-internal class SignupViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class SignupViewModel @Inject constructor(
     private val performCreateUser: PerformCreateUser,
     private val performCreateExternalEmailUser: PerformCreateExternalEmailUser,
     private val keyStoreCrypto: KeyStoreCrypto,

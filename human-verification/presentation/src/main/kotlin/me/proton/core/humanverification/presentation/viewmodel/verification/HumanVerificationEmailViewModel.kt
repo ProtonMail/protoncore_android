@@ -18,8 +18,8 @@
 
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -31,13 +31,15 @@ import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.user.domain.entity.UserVerificationTokenType
 import me.proton.core.user.domain.entity.VerificationResult
 import me.proton.core.user.domain.usecase.SendVerificationCodeToEmailDestination
+import javax.inject.Inject
 
 /**
  * View model class that handles and supports [UserVerificationTokenType.EMAIL] verification method (type) fragment.
  *
  * @author Dino Kadrikj.
  */
-internal class HumanVerificationEmailViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class HumanVerificationEmailViewModel @Inject constructor(
     private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination
 ) : ProtonViewModel(), HumanVerificationCode {
 

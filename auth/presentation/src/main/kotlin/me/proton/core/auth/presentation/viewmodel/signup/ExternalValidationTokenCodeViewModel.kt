@@ -18,8 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -36,8 +36,10 @@ import me.proton.core.user.domain.entity.VerificationResult
 import me.proton.core.user.domain.usecase.CheckCreationTokenValidity
 import me.proton.core.user.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
-class ExternalValidationTokenCodeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ExternalValidationTokenCodeViewModel @Inject constructor(
     private val resendVerificationCodeToDestination: ResendVerificationCodeToDestination,
     private val checkCreationTokenValidity: CheckCreationTokenValidity
 ) : ProtonViewModel() {

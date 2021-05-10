@@ -18,9 +18,8 @@
 
 package me.proton.core.humanverification.presentation.viewmodel
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
+import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,13 +31,15 @@ import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogF
 import me.proton.core.network.domain.session.ClientId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.UserVerificationTokenType
+import javax.inject.Inject
 
 /**
  * View model class to serve the main Human Verification screen.
  */
-class HumanVerificationViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HumanVerificationViewModel @Inject constructor(
     private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ProtonViewModel() {
 
     private lateinit var currentActiveVerificationMethod: UserVerificationTokenType

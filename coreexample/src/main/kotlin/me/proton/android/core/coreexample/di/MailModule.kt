@@ -21,14 +21,14 @@ package me.proton.android.core.coreexample.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import me.proton.core.mailmessage.data.repository.EmailMessageRepositoryImpl
 import me.proton.core.mailmessage.domain.repository.EmailMessageRepository
 import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object MailModule {
 
     @Provides

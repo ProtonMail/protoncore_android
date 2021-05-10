@@ -18,8 +18,8 @@
 
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -30,6 +30,7 @@ import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.user.domain.entity.UserVerificationTokenType
 import me.proton.core.user.domain.entity.VerificationResult
 import me.proton.core.user.domain.usecase.ResendVerificationCodeToDestination
+import javax.inject.Inject
 
 /**
  * View model class that handles the input of the verification code (token) previously sent to any
@@ -38,7 +39,8 @@ import me.proton.core.user.domain.usecase.ResendVerificationCodeToDestination
  *
  * @author Dino Kadrikj.
  */
-class HumanVerificationEnterCodeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HumanVerificationEnterCodeViewModel @Inject constructor(
     private val resendVerificationCodeToDestination: ResendVerificationCodeToDestination
 ) : ProtonViewModel() {
 

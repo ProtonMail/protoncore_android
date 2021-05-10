@@ -59,9 +59,7 @@ dependencies {
     )
 
     kapt(
-        `assistedInject-processor-dagger`,
         `hilt-android-compiler`,
         `hilt-androidx-compiler`
     )
-    compileOnly(`assistedInject-annotations-dagger`)
 }

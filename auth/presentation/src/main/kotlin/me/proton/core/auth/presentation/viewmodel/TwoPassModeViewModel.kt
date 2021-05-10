@@ -18,8 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,8 +36,10 @@ import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
+import javax.inject.Inject
 
-class TwoPassModeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class TwoPassModeViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
     private val keyStoreCrypto: KeyStoreCrypto

@@ -19,12 +19,12 @@
 package me.proton.android.core.coreexample.viewmodel
 
 import androidx.activity.ComponentActivity
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
@@ -55,8 +55,10 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.PlanDetails
 import me.proton.core.payment.presentation.onPaymentResult
+import javax.inject.Inject
 
-class AccountViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AccountViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val humanVerificationManager: HumanVerificationManager,
     private var authOrchestrator: AuthOrchestrator,

@@ -19,8 +19,8 @@
 package me.proton.core.payment.presentation.viewmodel
 
 import android.net.Uri
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -36,8 +36,10 @@ import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
 import me.proton.core.payment.presentation.entity.SecureEndpoint
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import javax.inject.Inject
 
-class PaymentTokenApprovalViewModel @ViewModelInject constructor(
+@HiltViewModel
+class PaymentTokenApprovalViewModel @Inject constructor(
     private val getPaymentTokenStatus: GetPaymentTokenStatus,
     private val secureEndpoint: SecureEndpoint,
     private val networkManager: NetworkManager

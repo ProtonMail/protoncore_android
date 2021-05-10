@@ -18,8 +18,8 @@
 
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -36,11 +36,13 @@ import me.proton.core.user.domain.entity.UserVerificationTokenType
 import me.proton.core.user.domain.entity.VerificationResult
 import me.proton.core.user.domain.exception.EmptyDestinationException
 import me.proton.core.user.domain.usecase.SendVerificationCodeToPhoneDestination
+import javax.inject.Inject
 
 /**
  * View model class that handles and supports [UserVerificationTokenType.SMS] verification method (type) fragment.
  */
-internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class HumanVerificationSMSViewModel @Inject constructor(
     private val mostUseCountryCode: MostUsedCountryCode,
     private val sendVerificationCodeToPhoneDestination: SendVerificationCodeToPhoneDestination
 ) : ProtonViewModel(), HumanVerificationCode {

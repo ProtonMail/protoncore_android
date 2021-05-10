@@ -18,8 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -37,8 +37,10 @@ import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.VerificationResult
 import me.proton.core.user.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
-internal class ChooseUsernameViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class ChooseUsernameViewModel @Inject constructor(
     private val usernameDomainAvailability: UsernameDomainAvailability,
     private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination
 ) : ProtonViewModel() {

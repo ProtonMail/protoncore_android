@@ -18,8 +18,8 @@
 
 package me.proton.core.payment.presentation.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -49,7 +49,8 @@ import javax.inject.Inject
  * ViewModel to serve the billing activity or fragment.
  * It's responsibility is to provide payments functionality.
  */
-class BillingViewModel @ViewModelInject @Inject constructor(
+@HiltViewModel
+open class BillingViewModel @Inject constructor(
     private val validatePlanSubscription: ValidateSubscriptionPlan,
     private val createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,
     private val createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,

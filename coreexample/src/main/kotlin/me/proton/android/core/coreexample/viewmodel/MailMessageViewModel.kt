@@ -18,9 +18,9 @@
 
 package me.proton.android.core.coreexample.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -33,8 +33,10 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.exhaustive
 import timber.log.Timber
 import java.io.ByteArrayInputStream
+import javax.inject.Inject
 
-class MailMessageViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MailMessageViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
     private val sendEmailDirect: SendEmailDirect

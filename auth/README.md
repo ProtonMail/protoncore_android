@@ -21,7 +21,7 @@ First the dependencies should be supplied. As standard Auth is using **Hilt as D
 
 ```kotlin
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object AuthModule {
 
     @Provides

@@ -64,17 +64,14 @@ dependencies {
         `constraint-layout`,
         `fragment`,
         `hilt-android`,
-        `hilt-androidx-viewModel`,
         `lifecycle-viewModel`,
         `material`
     )
 
     kapt(
-        `assistedInject-processor-dagger`,
         `hilt-android-compiler`,
         `hilt-androidx-compiler`
     )
-    compileOnly(`assistedInject-annotations-dagger`)
 
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))

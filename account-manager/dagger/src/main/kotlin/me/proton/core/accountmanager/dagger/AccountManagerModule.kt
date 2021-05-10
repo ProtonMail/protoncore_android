@@ -23,8 +23,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.data.AccountManagerImpl
@@ -46,7 +46,7 @@ import me.proton.core.network.domain.session.SessionProvider
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object AccountManagerModule {
 
     @Provides
@@ -109,7 +109,7 @@ object AccountManagerModule {
 }
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 interface AccountManagerBindModule {
 
     @Binds

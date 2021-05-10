@@ -22,7 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.key.data.repository.KeySaltRepositoryImpl
@@ -52,7 +52,7 @@ import me.proton.core.user.domain.repository.UserValidationRepository
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object UserManagerModule {
 
     @Provides
@@ -158,7 +158,7 @@ object UserManagerModule {
 }
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class UserManagerBindsModule {
 
     @Binds
