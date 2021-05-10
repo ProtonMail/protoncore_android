@@ -49,7 +49,7 @@ class HumanVerificationManagerImplTest {
         refreshToken = "refreshToken",
         scopes = listOf("full", "calendar", "mail")
     )
-    private val clientId = ClientId.AccountSessionId(session.sessionId)
+    private val clientId = ClientId.AccountSession(session.sessionId)
 
     @Before
     fun beforeEveryTest() {

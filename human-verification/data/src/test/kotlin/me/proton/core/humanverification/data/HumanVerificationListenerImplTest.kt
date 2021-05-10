@@ -51,7 +51,7 @@ class HumanVerificationListenerImplTest {
         scopes = listOf("full", "calendar", "mail")
     )
 
-    private val clientId = ClientId.AccountSessionId(session1.sessionId)
+    private val clientId = ClientId.AccountSession(session1.sessionId)
     private val humanVerificationDetails = HumanVerificationDetails(
         clientId = clientId,
         verificationMethods = listOf(VerificationMethod.EMAIL),

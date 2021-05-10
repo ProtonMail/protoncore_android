@@ -57,7 +57,7 @@ class HumanVerificationRepositoryImplTest {
         scopes = listOf("full", "calendar", "mail")
     )
 
-    private val clientId = ClientId.AccountSessionId(session1.sessionId)
+    private val clientId = ClientId.AccountSession(session1.sessionId)
 
     private val simpleCrypto = object : KeyStoreCrypto {
         override fun encrypt(value: String): EncryptedString = "encrypted-$value"
@@ -91,7 +91,7 @@ class HumanVerificationRepositoryImplTest {
         )
 
         val humanVerificationEntity = HumanVerificationEntity(
-            clientId = clientId.id(),
+            clientId = clientId.id,
             clientIdType = ClientIdType.SESSION.value,
             verificationMethods = listOf(VerificationMethod.EMAIL.value),
             captchaVerificationToken = null,
@@ -100,13 +100,13 @@ class HumanVerificationRepositoryImplTest {
             humanHeaderTokenCode = null
         )
 
-        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id()) } returns humanVerificationEntity
+        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id) } returns humanVerificationEntity
 
         humanVerificationRepository.insertHumanVerificationDetails(details = humanVerificationDetails)
 
         coVerify(exactly = 1) { humanVerificationDetailsDao.insertOrUpdate(humanVerificationEntity) }
         coVerify(exactly = 1) { humanVerificationDetailsDao.insertOrUpdate(humanVerificationEntity) }
-        coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id()) }
+        coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id) }
     }
 
     @Test
@@ -121,7 +121,7 @@ class HumanVerificationRepositoryImplTest {
             tokenCode = null
         )
         val humanVerificationEntity = HumanVerificationEntity(
-            clientId = clientId.id(),
+            clientId = clientId.id,
             clientIdType = ClientIdType.SESSION.value,
             verificationMethods = listOf(VerificationMethod.EMAIL.value),
             captchaVerificationToken = null,
@@ -129,12 +129,12 @@ class HumanVerificationRepositoryImplTest {
             humanHeaderTokenType = null,
             humanHeaderTokenCode = null
         )
-        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id()) } returns humanVerificationEntity
+        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id) } returns humanVerificationEntity
 
         humanVerificationRepository.insertHumanVerificationDetails(details = humanVerificationDetails)
 
         coVerify(exactly = 1) { humanVerificationDetailsDao.insertOrUpdate(humanVerificationEntity) }
-        coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id()) }
+        coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id) }
     }
 
     @Test
@@ -151,7 +151,7 @@ class HumanVerificationRepositoryImplTest {
             tokenCode = tokenCode
         )
         val humanVerificationEntity = HumanVerificationEntity(
-            clientId = clientId.id(),
+            clientId = clientId.id,
             clientIdType = ClientIdType.SESSION.value,
             verificationMethods = listOf(VerificationMethod.EMAIL.value),
             captchaVerificationToken = null,
@@ -159,19 +159,19 @@ class HumanVerificationRepositoryImplTest {
             humanHeaderTokenType = "encrypted-$tokenType",
             humanHeaderTokenCode = "encrypted-$tokenCode"
         )
-        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id()) } returns humanVerificationEntity
+        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id) } returns humanVerificationEntity
 
         humanVerificationRepository.insertHumanVerificationDetails(details = humanVerificationDetails)
 
         coVerify(exactly = 1) { humanVerificationDetailsDao.insertOrUpdate(humanVerificationEntity) }
-        coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id()) }
+        coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id) }
     }
 
     @Test
     fun `update completed`() = runBlockingTest {
         humanVerificationRepository.updateHumanVerificationCompleted(clientId = clientId)
 
-        coVerify(exactly = 1) { humanVerificationDetailsDao.deleteByClientId(clientId.id()) }
+        coVerify(exactly = 1) { humanVerificationDetailsDao.deleteByClientId(clientId.id) }
     }
 
     @Test
@@ -181,7 +181,7 @@ class HumanVerificationRepositoryImplTest {
         val tokenCode = "token-code"
 
         val humanVerificationEntity = HumanVerificationEntity(
-            clientId = clientId.id(),
+            clientId = clientId.id,
             clientIdType = ClientIdType.SESSION.value,
             verificationMethods = listOf(VerificationMethod.EMAIL.value),
             captchaVerificationToken = null,
@@ -189,12 +189,12 @@ class HumanVerificationRepositoryImplTest {
             humanHeaderTokenType = null,
             humanHeaderTokenCode = null
         )
-        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id()) } returns humanVerificationEntity
-        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id()) } returns humanVerificationEntity
+        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id) } returns humanVerificationEntity
+        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id) } returns humanVerificationEntity
 
         humanVerificationRepository.updateHumanVerificationState(clientId = clientId, state = state, tokenType = tokenType, tokenCode = tokenCode)
 
-        coVerify(exactly = 1) { humanVerificationDetailsDao.updateStateAndToken(clientId.id(), state, "encrypted-$tokenType", "encrypted-$tokenCode") }
-        coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id()) }
+        coVerify(exactly = 1) { humanVerificationDetailsDao.updateStateAndToken(clientId.id, state, "encrypted-$tokenType", "encrypted-$tokenCode") }
+        coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id) }
     }
 }

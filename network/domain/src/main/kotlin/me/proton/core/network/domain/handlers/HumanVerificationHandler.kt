@@ -55,7 +55,7 @@ class HumanVerificationHandler<Api>(
         val details = error.proton.humanVerification ?: return error
 
         // Do we have a session ?
-        val sessionId = if (clientId is ClientId.AccountSessionId) clientId.sessionId else null
+        val sessionId = if (clientId is ClientId.AccountSession) clientId.sessionId else null
 
         // Only 1 coroutine at a time per session.
         val shouldRetry = sessionMutex(sessionId).withLock {
@@ -82,7 +82,7 @@ class HumanVerificationHandler<Api>(
             HumanVerificationListener.HumanVerificationResult.Failure -> false
         }
         // what is this map for?
-        sessionLastVerificationMap[clientId.id()] = monoClockMs()
+        sessionLastVerificationMap[clientId.id] = monoClockMs()
         return result
     }
 
@@ -100,10 +100,10 @@ class HumanVerificationHandler<Api>(
         @TestOnly
         suspend fun reset(clientId: ClientId) {
             when (clientId) {
-                is ClientId.AccountSessionId -> sessionMutex(clientId.sessionId).withLock {
-                    sessionLastVerificationMap[clientId.id()] = Long.MIN_VALUE
+                is ClientId.AccountSession -> sessionMutex(clientId.sessionId).withLock {
+                    sessionLastVerificationMap[clientId.id] = Long.MIN_VALUE
                 }
-                is ClientId.NetworkCookieSessionId -> {
+                is ClientId.CookieSession -> {
                 }
             }
         }

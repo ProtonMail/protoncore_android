@@ -19,7 +19,6 @@
 package me.proton.core.user.data
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -41,7 +40,6 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.extension.hasMigratedKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
@@ -146,19 +144,8 @@ class UserManagerImpl(
         username: String,
         domain: String,
         auth: Auth,
-        password: ByteArray,
-        accountType: AccountType
+        password: ByteArray
     ): User {
-        // First create a new internal address, if needed.
-        if (accountType == AccountType.Internal) {
-            if (userAddressRepository.getAddresses(sessionUserId).firstInternalOrNull() == null) {
-                userAddressRepository.createAddress(
-                    sessionUserId = sessionUserId,
-                    displayName = username,
-                    domain = domain
-                )
-            }
-        }
         val primaryKeySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
         cryptoContext.pgpCrypto.getPassphrase(password, primaryKeySalt).use { passphrase ->
             // Generate a new PrivateKey for User.

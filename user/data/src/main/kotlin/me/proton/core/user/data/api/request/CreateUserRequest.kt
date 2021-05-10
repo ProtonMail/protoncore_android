@@ -21,7 +21,6 @@ package me.proton.core.user.data.api.request
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.key.data.api.request.AuthRequest
-import me.proton.core.user.domain.entity.NewUser
 
 @Serializable
 data class CreateUserRequest(
@@ -36,27 +35,5 @@ data class CreateUserRequest(
     @SerialName("Type")
     val type: Int,
     @SerialName("Auth")
-    val auth: AuthRequest,
-    @SerialName("Payload")
-    val payload: PayloadRequest? // payload is from fingerprinting library. Android attestation + other stuff
-) {
-    companion object {
-        fun from(newUser: NewUser): CreateUserRequest =
-            CreateUserRequest(
-                username = newUser.username,
-                email = newUser.recoveryEmail,
-                phone = newUser.recoveryPhone,
-                referrer = newUser.referrer,
-                type = newUser.type,
-                auth = AuthRequest.from(newUser.auth),
-                payload = newUser.payload?.let {
-                    PayloadRequest(it.fingerprint)
-                }  // todo: in future add more fingerprint ids when fingerprinting module is done
-            )
-    }
-}
-
-@Serializable
-data class PayloadRequest(
-    val jwsResult: String
+    val auth: AuthRequest
 )

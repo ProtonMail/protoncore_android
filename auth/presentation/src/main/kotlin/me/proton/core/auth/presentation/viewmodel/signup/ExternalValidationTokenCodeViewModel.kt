@@ -26,6 +26,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.account.domain.entity.createUserType
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -55,13 +57,13 @@ class ExternalValidationTokenCodeViewModel @ViewModelInject constructor(
         }
     }
 
-    fun validateToken(destination: String, token: String, type: Int) = flow {
+    fun validateToken(destination: String, token: String, type: AccountType) = flow {
         emit(ValidationState.Processing)
         val destinationToken = "$destination:$token"
         val result = checkCreationTokenValidity(
             token = destinationToken,
             tokenType = UserVerificationTokenType.EMAIL.tokenTypeValue,
-            type = type
+            type = type.createUserType()
         )
         if (result is VerificationResult.Error) {
             emit(ValidationState.Error.Message(result.message))

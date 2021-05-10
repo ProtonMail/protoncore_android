@@ -175,11 +175,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="ProtonTextView.Title.Hero">
-        <item name="android:textSize">30sp</item>
-        <item name="android:textColor">@color/text_norm</item>
-    </style>
-
     <style name="ProtonTextView.InputFooter">
         <item name="android:textSize">12sp</item>
     </style>

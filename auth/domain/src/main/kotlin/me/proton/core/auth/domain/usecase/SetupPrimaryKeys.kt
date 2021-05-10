@@ -31,9 +31,11 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
+import me.proton.core.user.domain.entity.emailSplit
 import me.proton.core.user.domain.entity.firstOrDefault
+import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.repository.DomainRepository
-import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.user.domain.repository.UserAddressRepository
 import javax.inject.Inject
 
 /**
@@ -41,6 +43,7 @@ import javax.inject.Inject
  */
 class SetupPrimaryKeys @Inject constructor(
     private val userManager: UserManager,
+    private val userAddressRepository: UserAddressRepository,
     private val authRepository: AuthRepository,
     private val domainRepository: DomainRepository,
     private val srpCrypto: SrpCrypto,
@@ -50,44 +53,50 @@ class SetupPrimaryKeys @Inject constructor(
         userId: UserId,
         password: EncryptedString,
         accountType: AccountType
-    ) {
-        val user = userManager.getUser(userId)
-
-        val userInfo = when (accountType) {
-            AccountType.Username,
-            AccountType.Internal -> {
-                val username = checkNotNull(user.name) { "Username is needed to setup primary keys." }
-                val availableDomains = domainRepository.getAvailableDomains()
-                val domain = availableDomains.firstOrDefault()
-
-                Triple(username, domain, "$username@$domain")
+    ) = with(userManager.getUser(userId)) {
+        if (keys.primary() == null) {
+            val username = when (accountType) {
+                AccountType.External -> {
+                    checkNotNull(emailSplit?.username) { "Email username is needed to setup primary keys." }
+                }
+                else -> checkNotNull(name) { "Username is needed." }
             }
-            AccountType.External -> {
-                val email = checkNotNull(user.email) { "Email is needed to setup primary keys." }
-                val username = email.split("@")[0]
-                val domain = email.split("@")[1]
-                Triple(username, domain, email)
+
+            val domain = when (accountType) {
+                AccountType.External -> {
+                    checkNotNull(emailSplit?.domain) { "Email domain is needed to setup primary keys." }
+                }
+                else -> domainRepository.getAvailableDomains().firstOrDefault()
             }
-        }.exhaustive
 
-
-        if (user.keys.primary() == null) {
+            val email = when (accountType) {
+                AccountType.External -> checkNotNull(email) { "Email is needed." }
+                else -> "$username@$domain"
+            }
             val modulus = authRepository.randomModulus()
 
             password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedPassword ->
                 val auth = srpCrypto.calculatePasswordVerifier(
-                    username = userInfo.third,
+                    username = email,
                     password = decryptedPassword.array,
                     modulusId = modulus.modulusId,
                     modulus = modulus.modulus
                 )
+                if (accountType == AccountType.Internal) {
+                    if (userAddressRepository.getAddresses(userId).firstInternalOrNull() == null) {
+                        userAddressRepository.createAddress(
+                            sessionUserId = userId,
+                            displayName = username,
+                            domain = domain
+                        )
+                    }
+                }
                 userManager.setupPrimaryKeys(
-                    userId,
-                    userInfo.first,
-                    userInfo.second,
-                    auth,
-                    decryptedPassword.array,
-                    accountType
+                    sessionUserId = userId,
+                    username = username,
+                    domain = domain,
+                    auth = auth,
+                    password = decryptedPassword.array
                 )
             }
         }

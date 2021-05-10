@@ -27,7 +27,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.account.domain.entity.toCreateUserType
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupValidationTokenCodeBinding
 import me.proton.core.auth.presentation.viewmodel.signup.ExternalValidationTokenCodeViewModel
@@ -61,7 +60,7 @@ class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidat
             }
 
             title.text = String.format(
-                getString(me.proton.core.humanverification.presentation.R.string.human_verification_enter_code_subtitle),
+                getString(R.string.human_verification_enter_code_subtitle),
                 destination
             )
 
@@ -73,7 +72,7 @@ class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidat
                         viewModel.validateToken(
                             destination,
                             token = it,
-                            signupViewModel.currentAccountType.toCreateUserType()
+                            signupViewModel.currentAccountType
                         )
                     }
             }

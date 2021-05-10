@@ -21,12 +21,9 @@ package me.proton.core.accountmanager.data.db
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
-import androidx.room.DeleteColumn
-import androidx.room.DeleteTable
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.AutoMigrationSpec
 import androidx.room.withTransaction
 import me.proton.core.account.data.db.AccountConverters
 import me.proton.core.account.data.db.AccountDatabase
@@ -37,6 +34,7 @@ import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_1_2
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_2_3
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_3_4
+import me.proton.core.accountmanager.data.db.migration.MIGRATION_4_5
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.humanverification.data.db.HumanVerificationConverters
@@ -75,7 +73,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
         HumanVerificationEntity::class
     ],
     autoMigrations = [
-        AutoMigration(from = 4, to = 5, spec = AccountManagerDatabase.HumanVerificationHeadersAutoMigration::class)
+        AutoMigration(from = 4, to = 5, spec = MIGRATION_4_5::class)
     ],
     version = 5,
     exportSchema = true
@@ -97,15 +95,6 @@ abstract class AccountManagerDatabase :
     PublicAddressDatabase {
 
     override suspend fun <R> inTransaction(block: suspend () -> R): R = withTransaction(block)
-
-    @DeleteColumn.Entries(
-        value = [
-            DeleteColumn(tableName = "SessionEntity", columnName = "humanHeaderTokenCode"),
-            DeleteColumn(tableName = "SessionEntity", columnName = "humanHeaderTokenType"),
-        ]
-    )
-    @DeleteTable(tableName = "HumanVerificationDetailsEntity")
-    class HumanVerificationHeadersAutoMigration : AutoMigrationSpec
 
     companion object {
         fun buildDatabase(context: Context): AccountManagerDatabase {

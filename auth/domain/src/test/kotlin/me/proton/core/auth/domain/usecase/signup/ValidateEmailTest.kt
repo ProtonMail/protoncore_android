@@ -22,14 +22,14 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.auth.domain.repository.AuthSignupRepository
+import me.proton.core.auth.domain.repository.AuthRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ValidateEmailTest {
-    private val authSignupRepository = mockk<AuthSignupRepository>(relaxed = true)
+    private val authSignupRepository = mockk<AuthRepository>(relaxed = true)
 
     private lateinit var useCase: ValidateEmail
     private val testEmail = "test-email"

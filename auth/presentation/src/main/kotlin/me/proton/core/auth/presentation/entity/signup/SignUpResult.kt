@@ -29,4 +29,4 @@ data class SignUpResult(
     val email: String?,
     val userId: String,
     val accountType: AccountType
-): Parcelable
+) : Parcelable

@@ -49,7 +49,8 @@ class ResendVerificationCodeToDestination @Inject constructor(
      * verification type (method) from the [tokenType]
      *
      * @throws InvalidValidationOptionException if the verification type (method) does not support
-     * sending the verification code (currently supported [UserVerificationTokenType.EMAIL] and [UserVerificationTokenType.SMS]
+     * sending the verification code (currently supported [UserVerificationTokenType.EMAIL]
+     * and [UserVerificationTokenType.SMS]
      */
     suspend operator fun invoke(
         sessionId: SessionId? = null,

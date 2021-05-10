@@ -29,7 +29,11 @@ data class HumanVerificationDetails(
     val tokenCode: String? = null
 ) {
     companion object {
-        fun fromApiDetails(clientId: ClientId, details: HumanVerificationApiDetails, state: HumanVerificationState? = null) = HumanVerificationDetails(
+        fun fromApiDetails(
+            clientId: ClientId,
+            details: HumanVerificationApiDetails,
+            state: HumanVerificationState? = null
+        ) = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = details.verificationMethods,
             captchaVerificationToken = details.captchaVerificationToken,

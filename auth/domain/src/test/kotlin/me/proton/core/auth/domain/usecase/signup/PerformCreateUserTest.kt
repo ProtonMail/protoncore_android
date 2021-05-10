@@ -25,20 +25,20 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.toCreateUserType
+import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
-import me.proton.core.user.domain.entity.NewUser
 import me.proton.core.user.domain.repository.UserRepository
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import java.lang.IllegalArgumentException
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
 
 class PerformCreateUserTest {
     // region mocks
@@ -87,7 +87,7 @@ class PerformCreateUserTest {
             recoveryEmail = null,
             recoveryPhone = null,
             referrer = null,
-            type = AccountType.Internal.toCreateUserType()
+            type = CreateUserType.Normal
         )
 
         coVerify(exactly = 1) { authRepository.randomModulus() }
@@ -99,16 +99,24 @@ class PerformCreateUserTest {
                 modulus = testModulus.modulus
             )
         }
-        val newUserSlot = slot<NewUser>()
+        val usernameSlot = slot<String>()
+        val passwordSlot = slot<EncryptedString>()
+        val typeSlot = slot<CreateUserType>()
+
         coVerify(exactly = 1) {
-            userRepository.createUser(newUser = capture(newUserSlot))
+            userRepository.createUser(
+                capture(usernameSlot),
+                capture(passwordSlot),
+                null,
+                null,
+                null,
+                capture(typeSlot),
+                any()
+            )
         }
-        val expectedNewUserArgument = NewUser(
-            username = testUsername, password = "encrypted-$testPassword", recoveryEmail = null, recoveryPhone = null,
-            referrer = null, 1, testAuth
-        )
-        val actualNewUserArgument = newUserSlot.captured
-        assertEquals(expectedNewUserArgument, actualNewUserArgument)
+        assertEquals(testUsername, usernameSlot.captured)
+        assertEquals("encrypted-$testPassword", passwordSlot.captured)
+        assertEquals(CreateUserType.Normal, typeSlot.captured)
     }
 
     @Test
@@ -119,7 +127,7 @@ class PerformCreateUserTest {
             recoveryEmail = testEmail,
             recoveryPhone = null,
             referrer = null,
-            type = AccountType.Internal.toCreateUserType()
+            type = CreateUserType.Normal
         )
 
         coVerify(exactly = 1) { authRepository.randomModulus() }
@@ -131,16 +139,25 @@ class PerformCreateUserTest {
                 modulus = testModulus.modulus
             )
         }
-        val newUserSlot = slot<NewUser>()
+        val usernameSlot = slot<String>()
+        val passwordSlot = slot<EncryptedString>()
+        val typeSlot = slot<CreateUserType>()
+        val emailSlot = slot<String>()
         coVerify(exactly = 1) {
-            userRepository.createUser(newUser = capture(newUserSlot))
+            userRepository.createUser(
+                capture(usernameSlot),
+                capture(passwordSlot),
+                capture(emailSlot),
+                null,
+                null,
+                capture(typeSlot),
+                any()
+            )
         }
-        val expectedNewUserArgument = NewUser(
-            username = testUsername, password = "encrypted-$testPassword", recoveryEmail = testEmail,
-            recoveryPhone = null, referrer = null, 1, testAuth
-        )
-        val actualNewUserArgument = newUserSlot.captured
-        assertEquals(expectedNewUserArgument, actualNewUserArgument)
+        assertEquals(testUsername, usernameSlot.captured)
+        assertEquals("encrypted-$testPassword", passwordSlot.captured)
+        assertEquals(CreateUserType.Normal, typeSlot.captured)
+        assertEquals(testEmail, emailSlot.captured)
     }
 
     @Test
@@ -151,7 +168,7 @@ class PerformCreateUserTest {
             recoveryEmail = null,
             recoveryPhone = testPhone,
             referrer = null,
-            type = AccountType.Internal.toCreateUserType()
+            type = CreateUserType.Normal
         )
 
         coVerify(exactly = 1) { authRepository.randomModulus() }
@@ -163,16 +180,25 @@ class PerformCreateUserTest {
                 modulus = testModulus.modulus
             )
         }
-        val newUserSlot = slot<NewUser>()
+        val usernameSlot = slot<String>()
+        val passwordSlot = slot<EncryptedString>()
+        val typeSlot = slot<CreateUserType>()
+        val phoneSlot = slot<String>()
         coVerify(exactly = 1) {
-            userRepository.createUser(newUser = capture(newUserSlot))
+            userRepository.createUser(
+                capture(usernameSlot),
+                capture(passwordSlot),
+                null,
+                capture(phoneSlot),
+                null,
+                capture(typeSlot),
+                any()
+            )
         }
-        val expectedNewUserArgument = NewUser(
-            username = testUsername, password = "encrypted-$testPassword", recoveryEmail = null,
-            recoveryPhone = testPhone, referrer = null, 1, testAuth
-        )
-        val actualNewUserArgument = newUserSlot.captured
-        assertEquals(expectedNewUserArgument, actualNewUserArgument)
+        assertEquals(testUsername, usernameSlot.captured)
+        assertEquals("encrypted-$testPassword", passwordSlot.captured)
+        assertEquals(CreateUserType.Normal, typeSlot.captured)
+        assertEquals(testPhone, phoneSlot.captured)
     }
 
     @Test
@@ -184,7 +210,7 @@ class PerformCreateUserTest {
                 recoveryEmail = testEmail,
                 recoveryPhone = testPhone,
                 referrer = null,
-                type = AccountType.Internal.toCreateUserType()
+                type = CreateUserType.Normal
             )
         }
         assertNotNull(throwable)

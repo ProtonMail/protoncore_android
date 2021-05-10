@@ -30,13 +30,15 @@ import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
 import me.proton.core.auth.presentation.entity.TwoPassModeResult
+import me.proton.core.auth.presentation.entity.signup.SignUpResult
+import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.StartChooseAddress
 import me.proton.core.auth.presentation.ui.StartLogin
 import me.proton.core.auth.presentation.ui.StartSecondFactor
+import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import javax.inject.Inject
 
 class AuthOrchestrator @Inject constructor() {
@@ -46,12 +48,14 @@ class AuthOrchestrator @Inject constructor() {
     private var secondFactorWorkflowLauncher: ActivityResultLauncher<SecondFactorInput>? = null
     private var twoPassModeWorkflowLauncher: ActivityResultLauncher<TwoPassModeInput>? = null
     private var chooseAddressLauncher: ActivityResultLauncher<ChooseAddressInput>? = null
+    private var signUpWorkflowLauncher: ActivityResultLauncher<SignUpInput>? = null
     // endregion
 
     private var onLoginResultListener: ((result: LoginResult?) -> Unit)? = {}
     private var onTwoPassModeResultListener: ((result: TwoPassModeResult?) -> Unit)? = {}
     private var onSecondFactorResultListener: ((result: SecondFactorResult?) -> Unit)? = {}
     private var onChooseAddressResultListener: ((result: ChooseAddressResult?) -> Unit)? = {}
+    private var onSignUpResultListener: ((result: SignUpResult?) -> Unit)? = {}
 
     fun setOnLoginResult(block: (result: LoginResult?) -> Unit) {
         onLoginResultListener = block
@@ -67,6 +71,10 @@ class AuthOrchestrator @Inject constructor() {
 
     fun setOnChooseAddressResult(block: (result: ChooseAddressResult?) -> Unit) {
         onChooseAddressResultListener = block
+    }
+
+    fun setOnSignUpResult(block: (result: SignUpResult?) -> Unit) {
+        onSignUpResultListener = block
     }
 
     // region private module functions
@@ -104,6 +112,15 @@ class AuthOrchestrator @Inject constructor() {
             StartChooseAddress()
         ) {
             onChooseAddressResultListener?.invoke(it)
+        }
+
+    private fun registerSignUpResult(
+        context: ComponentActivity
+    ): ActivityResultLauncher<SignUpInput> =
+        context.registerForActivityResult(
+            StartSignup()
+        ) {
+            onSignUpResultListener?.invoke(it)
         }
 
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
@@ -153,6 +170,7 @@ class AuthOrchestrator @Inject constructor() {
         secondFactorWorkflowLauncher = registerSecondFactorResult(context)
         twoPassModeWorkflowLauncher = registerTwoPassModeResult(context)
         chooseAddressLauncher = registerChooseAddressResult(context)
+        signUpWorkflowLauncher = registerSignUpResult(context)
     }
 
     /**
@@ -160,21 +178,22 @@ class AuthOrchestrator @Inject constructor() {
      */
     fun unregister() {
         loginWorkflowLauncher?.unregister()
-        humanWorkflowLauncher?.unregister()
         secondFactorWorkflowLauncher?.unregister()
         twoPassModeWorkflowLauncher?.unregister()
         chooseAddressLauncher?.unregister()
+        signUpWorkflowLauncher?.unregister()
 
         loginWorkflowLauncher = null
-        humanWorkflowLauncher = null
         secondFactorWorkflowLauncher = null
         twoPassModeWorkflowLauncher = null
         chooseAddressLauncher = null
+        signUpWorkflowLauncher = null
 
         onLoginResultListener = null
         onTwoPassModeResultListener = null
         onSecondFactorResultListener = null
         onChooseAddressResultListener = null
+        onSignUpResultListener = null
     }
 
     /**
@@ -236,6 +255,15 @@ class AuthOrchestrator @Inject constructor() {
             "Password is null for startChooseAddressWorkflow."
         }
         startChooseAddressWorkflow(account.userId, password, email)
+    }
+
+    /**
+     * Starts the SignUp workflow.
+     */
+    fun startSignupWorkflow(requiredAccountType: AccountType = AccountType.Internal) {
+        checkRegistered(signUpWorkflowLauncher).launch(
+            SignUpInput(requiredAccountType)
+        )
     }
     // endregion
 }

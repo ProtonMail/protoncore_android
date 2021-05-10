@@ -20,9 +20,9 @@ package me.proton.core.test.android.instrumented.robots.humanverification
 
 import android.widget.TextView
 import me.proton.core.humanverification.R
-import me.proton.core.humanverification.domain.entity.VERIFICATION_OPTION_CAPTCHA
-import me.proton.core.humanverification.domain.entity.VERIFICATION_OPTION_EMAIL
-import me.proton.core.humanverification.domain.entity.VERIFICATION_OPTION_SMS
+import me.proton.core.user.domain.entity.UserVerificationTokenType.EMAIL
+import me.proton.core.user.domain.entity.UserVerificationTokenType.SMS
+import me.proton.core.user.domain.entity.UserVerificationTokenType.CAPTCHA
 import me.proton.core.test.android.instrumented.robots.BaseRobot
 import me.proton.core.test.android.instrumented.robots.BaseVerify
 
@@ -32,18 +32,18 @@ import me.proton.core.test.android.instrumented.robots.BaseVerify
 open class HumanVerificationRobot : BaseRobot() {
 
     fun help(): HumanVerificationRobot = clickElement(R.id.helpButton)
-    fun email(): CodeVerificationRobot = hvOption(VERIFICATION_OPTION_EMAIL)
-    fun sms(): CodeVerificationRobot = hvOption(VERIFICATION_OPTION_SMS)
-    fun captcha(): HumanVerificationRobot = hvOption(VERIFICATION_OPTION_CAPTCHA)
+    fun email(): CodeVerificationRobot = hvOption(EMAIL.tokenTypeValue)
+    fun sms(): CodeVerificationRobot = hvOption(SMS.tokenTypeValue)
+    fun captcha(): HumanVerificationRobot = hvOption(CAPTCHA.tokenTypeValue)
     private fun hvOption(option: String): CodeVerificationRobot =
         clickElement(option.toUpperCase(), TextView::class.java)
 
     class Verify : BaseVerify() {
 
         fun hvElementsDisplayed() {
-            view.withText(VERIFICATION_OPTION_EMAIL.toUpperCase()).wait().checkDisplayed()
-            view.withText(VERIFICATION_OPTION_SMS.toUpperCase()).wait().checkDisplayed()
-            view.withText(VERIFICATION_OPTION_CAPTCHA.toUpperCase()).wait().checkDisplayed()
+            view.withText(EMAIL.tokenTypeValue.toUpperCase()).wait().checkDisplayed()
+            view.withText(SMS.tokenTypeValue.toUpperCase()).wait().checkDisplayed()
+            view.withText(CAPTCHA.tokenTypeValue.toUpperCase()).wait().checkDisplayed()
         }
 
         fun captchaDisplayed() {

@@ -38,5 +38,5 @@
     <!-- Other -->
     <string name="presentation_close">Close</string>
     <string name="presentation_skip">Skip</string>
-    <string name="calling_code_template">+%s</string>
+    <string name="presentation_phone_calling_code_template">+%s</string>
 </resources>

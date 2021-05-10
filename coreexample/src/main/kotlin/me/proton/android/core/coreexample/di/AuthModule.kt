@@ -26,9 +26,7 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
-import me.proton.core.auth.data.repository.AuthSignupRepositoryImpl
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.domain.repository.AuthSignupRepository
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
 import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.crypto.android.srp.GOpenPGPSrpCrypto
@@ -44,11 +42,6 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideAuthRepository(apiProvider: ApiProvider): AuthRepository = AuthRepositoryImpl(apiProvider)
-
-    @Provides
-    @Singleton
-    fun provideAuthSignUpRepository(apiProvider: ApiProvider): AuthSignupRepository =
-        AuthSignupRepositoryImpl(apiProvider)
 
     @Provides
     @Singleton

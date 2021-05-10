@@ -119,19 +119,23 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
     }
 
     private fun onLoginSuccess(userId: UserId) {
-        setResult(Activity.RESULT_OK, Intent().apply {
-            putExtra(
-                ARG_RESULT, with(signUpViewModel) {
-                    SignUpResult(
-                        accountType = currentAccountType,
-                        username = username,
-                        domain = domain,
-                        email = externalEmail,
-                        userId = userId.id
-                    )
-                }
-            )
-        })
+        setResult(
+            Activity.RESULT_OK,
+            Intent().apply {
+                putExtra(
+                    ARG_RESULT,
+                    with(signUpViewModel) {
+                        SignUpResult(
+                            accountType = currentAccountType,
+                            username = username,
+                            domain = domain,
+                            email = externalEmail,
+                            userId = userId.id
+                        )
+                    }
+                )
+            }
+        )
         finish()
     }
 

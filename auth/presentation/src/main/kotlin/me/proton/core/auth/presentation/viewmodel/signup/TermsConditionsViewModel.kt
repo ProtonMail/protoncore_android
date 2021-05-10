@@ -30,7 +30,7 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 
 internal class TermsConditionsViewModel @ViewModelInject constructor(
     private val networkManager: NetworkManager
-): ProtonViewModel() {
+) : ProtonViewModel() {
 
     private val _networkConnectionState = MutableStateFlow<Boolean?>(null)
 

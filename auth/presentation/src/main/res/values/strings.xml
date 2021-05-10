@@ -115,7 +115,7 @@
     <string name="auth_signup_verification_code">Verification Code</string>
     <string name="auth_signup_enter_code_subtitle">Enter the verification code that was sent to %s:</string>
     <string name="auth_signup_error_human_verification_failed">Human Verification failed.</string>
-    <string name="auth_signup_calling_code_template">@string/calling_code_template</string>
+    <string name="auth_signup_calling_code_template">@string/presentation_phone_calling_code_template</string>
     <string name="auth_signup_token_code_resent">Token code resent.</string>
     <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
 </resources>

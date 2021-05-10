@@ -16,22 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.domain.entity
+package me.proton.core.account.domain.entity
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.srp.Auth
+enum class CreateUserType(val value: Int) {
+    Username(2),
+    Normal(1)
+}
 
-data class NewUser(
-    val username: String,
-    val password: EncryptedString,
-    val recoveryEmail: String?,
-    val recoveryPhone: String?,
-    val referrer: String?,
-    val type: Int,
-    val auth: Auth,
-    val payload: Payload? = null // this is temp optional until the fingerprinting is correctly done
-)
-
-data class Payload(
-    val fingerprint: String
-)
+fun AccountType.createUserType() = when (this) {
+    AccountType.Username -> CreateUserType.Username
+    AccountType.Internal -> CreateUserType.Normal
+    AccountType.External -> CreateUserType.Normal
+}

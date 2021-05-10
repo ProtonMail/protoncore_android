@@ -24,7 +24,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.toCreateUserType
+import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
@@ -215,7 +215,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = null,
                     recoveryPhone = null,
                     referrer = null,
-                    type = AccountType.Internal.toCreateUserType()
+                    type = CreateUserType.Normal
                 )
             }
         }
@@ -246,7 +246,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = testEmail,
                     recoveryPhone = null,
                     referrer = null,
-                    type = AccountType.Internal.toCreateUserType()
+                    type = CreateUserType.Normal
                 )
             }
         }
@@ -276,7 +276,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = null,
                     recoveryPhone = testPhone,
                     referrer = null,
-                    type = AccountType.Internal.toCreateUserType()
+                    type = CreateUserType.Normal
                 )
             }
         }
@@ -303,7 +303,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     error = "create user error"
                 )
             )
-            )
+        )
         viewModel.username = testUsername
         viewModel.password = testPassword
         viewModel.userCreationState.test {
@@ -323,7 +323,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     recoveryEmail = null,
                     recoveryPhone = null,
                     referrer = null,
-                    type = AccountType.Internal.toCreateUserType()
+                    type = CreateUserType.Normal
                 )
             }
         }

@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.toCreateUserType
+import me.proton.core.account.domain.entity.createUserType
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
@@ -155,7 +155,7 @@ internal class SignupViewModel @ViewModelInject constructor(
 
         val result = performCreateUser(
             username = username, password = _password, recoveryEmail = verification.first,
-            recoveryPhone = verification.second, referrer = null, type = currentAccountType.toCreateUserType()
+            recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
         )
         emit(State.Success(result))
     }.catch { error ->

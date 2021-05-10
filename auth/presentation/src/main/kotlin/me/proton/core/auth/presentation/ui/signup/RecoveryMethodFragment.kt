@@ -152,8 +152,10 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
     private fun setActiveVerificationMethod(methodType: RecoveryMethodType) {
         when (methodType) {
-            RecoveryMethodType.EMAIL -> childFragmentManager.showEmailRecoveryMethodFragment(containerId = binding.fragmentOptionsContainer.id)
-            RecoveryMethodType.SMS -> childFragmentManager.showSMSRecoveryMethodFragment(containerId = binding.fragmentOptionsContainer.id)
+            RecoveryMethodType.EMAIL ->
+                childFragmentManager.showEmailRecoveryMethodFragment(containerId = binding.fragmentOptionsContainer.id)
+            RecoveryMethodType.SMS ->
+                childFragmentManager.showSMSRecoveryMethodFragment(containerId = binding.fragmentOptionsContainer.id)
         }.exhaustive
     }
 

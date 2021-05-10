@@ -21,7 +21,6 @@ import android.os.Build
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.CoroutineScope
@@ -142,7 +141,7 @@ internal class ProtonApiBackendTests {
                 verificationMethods = mockk(),
                 captchaVerificationToken = null,
                 state = HumanVerificationState.HumanVerificationSuccess,
-                tokenType ="captcha",
+                tokenType = "captcha",
                 tokenCode = "captcha token"
             )
         )
@@ -325,9 +324,12 @@ internal class ProtonApiBackendTests {
     @Test
     fun `test spki leaf pinning ok`() = runBlocking {
         val altBackend = createBackend { builder ->
-            testTlsHelper.setupSPKIleafPinning(builder, TestTLSHelper.TEST_PINS.toList().map {
-                it.removePrefix("sha256/")
-            })
+            testTlsHelper.setupSPKIleafPinning(
+                builder,
+                TestTLSHelper.TEST_PINS.toList().map {
+                    it.removePrefix("sha256/")
+                }
+            )
         }
 
         webServer.prepareResponse(

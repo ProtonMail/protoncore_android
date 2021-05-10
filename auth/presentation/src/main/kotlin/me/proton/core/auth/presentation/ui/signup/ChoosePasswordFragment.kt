@@ -51,13 +51,17 @@ class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBindin
 
             passwordInput.setOnFocusLostListener { _, _ ->
                 passwordInput.validatePasswordMinLength()
-                    .onFailure { passwordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
+                    .onFailure {
+                        passwordInput.setInputError(getString(R.string.auth_signup_validation_password_length))
+                    }
                     .onSuccess { passwordInput.clearInputError() }
             }
 
             confirmPasswordInput.setOnFocusLostListener { _, _ ->
                 confirmPasswordInput.validatePasswordMinLength()
-                    .onFailure { confirmPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
+                    .onFailure {
+                        confirmPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length))
+                    }
                     .onSuccess { confirmPasswordInput.clearInputError() }
             }
         }

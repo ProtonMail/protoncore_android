@@ -18,14 +18,18 @@
 
 package me.proton.core.user.domain.usecase
 
+import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.user.domain.repository.UserValidationRepository
 import javax.inject.Inject
 
 class CheckCreationTokenValidity @Inject constructor(
     private val userValidationRepository: UserValidationRepository
 ) {
-    suspend operator fun invoke(token: String, tokenType: String, type: Int): VerificationResult =
-        userValidationRepository.checkCreationTokenValidity(token = token, tokenType = tokenType, type = type)
+    suspend operator fun invoke(token: String, tokenType: String, type: CreateUserType): VerificationResult =
+        userValidationRepository.checkCreationTokenValidity(
+            token = token,
+            tokenType = tokenType,
+            type = type.value
+        )
 }

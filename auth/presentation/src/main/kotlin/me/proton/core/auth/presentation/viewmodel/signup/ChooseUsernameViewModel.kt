@@ -113,7 +113,7 @@ internal class ChooseUsernameViewModel @ViewModelInject constructor(
      * to create [AccountType.External].
      */
     fun onUserSwitchAccountType() {
-        currentAccountType = when(clientAppRequiredAccountType) {
+        currentAccountType = when (clientAppRequiredAccountType) {
             AccountType.Username -> {
                 when {
                     currentAccountType == AccountType.External -> AccountType.Username

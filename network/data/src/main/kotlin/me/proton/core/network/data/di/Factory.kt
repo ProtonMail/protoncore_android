@@ -127,7 +127,7 @@ class ApiFactory(
         clientId: ClientId?,
         monoClockMs: () -> Long
     ): List<ApiErrorHandler<Api>> {
-        val sessionId = if (clientId is ClientId.AccountSessionId) clientId.sessionId else null
+        val sessionId = if (clientId is ClientId.AccountSession) clientId.sessionId else null
         val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
         val humanVerificationHandler = HumanVerificationHandler<Api>(clientId, humanVerificationListener, monoClockMs)
@@ -138,9 +138,9 @@ class ApiFactory(
         )
     }
 
-    fun getClientId(): ClientId? {
+    fun getClientId(sessionId: SessionId? = null): ClientId? {
         val cookieValue = cookieStore?.get(URI.create(baseUrl))
-        return ClientId.newClientId(null, cookieValue?.cookieSessionId())
+        return ClientId.newClientId(sessionId, cookieValue?.cookieSessionId())
     }
 
     /**
@@ -179,8 +179,7 @@ class ApiFactory(
             pinningStrategy
         )
 
-        val cookieValue = cookieStore?.get(URI.create(baseUrl))
-        val cookieId = ClientId.newClientId(sessionId, cookieValue?.cookieSessionId())
+        val cookieId = getClientId(sessionId)
         val errorHandlers = createBaseErrorHandlers<Api>(cookieId, ::javaMonoClockMs) + clientErrorHandlers
 
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->

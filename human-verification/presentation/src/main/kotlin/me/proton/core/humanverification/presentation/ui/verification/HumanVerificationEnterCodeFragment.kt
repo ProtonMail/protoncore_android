@@ -95,7 +95,7 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
                         parentFragmentManager.setFragmentResult(
                             KEY_VERIFICATION_DONE,
                             bundleOf(
-                                ARG_TOKEN_CODE to "$destination:${it}",
+                                ARG_TOKEN_CODE to "$destination:$it",
                                 HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
                             )
                         )

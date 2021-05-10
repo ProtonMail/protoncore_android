@@ -18,11 +18,11 @@
 
 package me.proton.core.auth.domain.usecase.signup
 
-import me.proton.core.auth.domain.repository.AuthSignupRepository
+import me.proton.core.auth.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class ValidatePhone @Inject constructor(
-    private val authRepository: AuthSignupRepository
+    private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(phone: String) = authRepository.validatePhone(phone)
 }

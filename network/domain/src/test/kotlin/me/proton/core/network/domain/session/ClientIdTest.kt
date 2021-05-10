@@ -19,8 +19,9 @@
 package me.proton.core.network.domain.session
 
 import me.proton.core.test.kotlin.assertIs
-import org.junit.Assert.*
 import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class ClientIdTest {
 
@@ -32,8 +33,8 @@ class ClientIdTest {
         val clientId = ClientId.newClientId(sessionId, cookieId)
 
         assertNotNull(clientId)
-        assertIs<ClientId.AccountSessionId>(clientId)
-        assertIs<SessionId>((clientId as ClientId.AccountSessionId).sessionId)
+        assertIs<ClientId.AccountSession>(clientId)
+        assertIs<SessionId>((clientId as ClientId.AccountSession).sessionId)
         assertEquals("test-session-id", clientId.sessionId.id)
     }
 
@@ -44,8 +45,8 @@ class ClientIdTest {
         val clientId = ClientId.newClientId(sessionId, null)
 
         assertNotNull(clientId)
-        assertIs<ClientId.AccountSessionId>(clientId)
-        assertIs<SessionId>((clientId as ClientId.AccountSessionId).sessionId)
+        assertIs<ClientId.AccountSession>(clientId)
+        assertIs<SessionId>((clientId as ClientId.AccountSession).sessionId)
         assertEquals("test-session-id", clientId.sessionId.id)
     }
 
@@ -56,8 +57,8 @@ class ClientIdTest {
         val clientId = ClientId.newClientId(null, cookieId)
 
         assertNotNull(clientId)
-        assertIs<ClientId.NetworkCookieSessionId>(clientId)
-        assertIs<CookieSessionId>((clientId as ClientId.NetworkCookieSessionId).sessionId)
+        assertIs<ClientId.CookieSession>(clientId)
+        assertIs<CookieSessionId>((clientId as ClientId.CookieSession).sessionId)
         assertEquals("test-cookie-id", clientId.sessionId.id)
     }
 }

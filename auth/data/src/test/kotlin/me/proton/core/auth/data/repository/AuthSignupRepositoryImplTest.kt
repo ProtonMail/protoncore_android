@@ -23,20 +23,16 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.data.api.AuthenticationApi
-import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.test.kotlin.assertTrue
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -47,7 +43,7 @@ class AuthSignupRepositoryImplTest {
     private val apiFactory = mockk<ApiFactory>(relaxed = true)
     private val apiManager = mockk<ApiManager<AuthenticationApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
-    private lateinit var repository: AuthSignupRepositoryImpl
+    private lateinit var repository: AuthRepositoryImpl
     // endregion
 
     @Before
@@ -59,7 +55,7 @@ class AuthSignupRepositoryImplTest {
                 interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
-        repository = AuthSignupRepositoryImpl(apiProvider)
+        repository = AuthRepositoryImpl(apiProvider)
     }
 
     @Test
@@ -76,7 +72,9 @@ class AuthSignupRepositoryImplTest {
     fun `validate email returns error result`() = runBlockingTest {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
-            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test email validation error")
+            httpCode = 401,
+            message = "test http error",
+            proton = ApiResult.Error.ProtonData(1, "test email validation error")
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
@@ -103,7 +101,9 @@ class AuthSignupRepositoryImplTest {
     fun `validate phone returns error result`() = runBlockingTest {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Error.Http(
-            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test phone validation error")
+            httpCode = 401,
+            message = "test http error",
+            proton = ApiResult.Error.ProtonData(1, "test phone validation error")
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {

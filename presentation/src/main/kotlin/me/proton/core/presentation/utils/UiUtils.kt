@@ -29,6 +29,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import me.proton.core.presentation.R
@@ -75,16 +76,13 @@ fun Context.openMarketLink() {
     }
 }
 
-fun AppCompatActivity.hideKeyboard() {
+fun FragmentActivity.hideKeyboard() {
+    val focus = currentFocus
+    focus?.clearFocus()
     hideKeyboard(currentFocus ?: window.decorView.rootView)
 }
 
-fun Fragment.hideKeyboard() {
-    val activity = requireActivity()
-    val focus = activity.currentFocus
-    focus?.clearFocus()
-    activity.hideKeyboard(focus ?: activity.window.decorView.rootView)
-}
+fun Fragment.hideKeyboard() = requireActivity().hideKeyboard()
 
 /**
  * @return true if current [Configuration] UiMode is in Night Mode.

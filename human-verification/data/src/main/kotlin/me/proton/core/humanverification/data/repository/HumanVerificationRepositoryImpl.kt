@@ -49,7 +49,7 @@ class HumanVerificationRepositoryImpl(
     }
 
     override suspend fun getHumanVerificationDetails(clientId: ClientId): HumanVerificationDetails? =
-        humanVerificationDetailsDao.getByClientId(clientId.id())?.toHumanVerificationDetails(keyStoreCrypto)
+        humanVerificationDetailsDao.getByClientId(clientId.id)?.toHumanVerificationDetails(keyStoreCrypto)
 
     override suspend fun getAllHumanVerificationDetails(): Flow<List<HumanVerificationDetails>> =
         humanVerificationDetailsDao.getAll()
@@ -61,10 +61,10 @@ class HumanVerificationRepositoryImpl(
             val clientId = details.clientId
             humanVerificationDetailsDao.insertOrUpdate(
                 HumanVerificationEntity(
-                    clientId = clientId.id(),
+                    clientId = clientId.id,
                     clientIdType = when (clientId) {
-                        is ClientId.AccountSessionId -> ClientIdType.SESSION.value
-                        is ClientId.NetworkCookieSessionId -> ClientIdType.COOKIE.value
+                        is ClientId.AccountSession -> ClientIdType.SESSION.value
+                        is ClientId.CookieSession -> ClientIdType.COOKIE.value
                     },
                     verificationMethods = details.verificationMethods.map { method -> method.value },
                     captchaVerificationToken = details.captchaVerificationToken,
@@ -78,7 +78,7 @@ class HumanVerificationRepositoryImpl(
     }
 
     override suspend fun updateHumanVerificationCompleted(clientId: ClientId) =
-        humanVerificationDetailsDao.deleteByClientId(clientId.id())
+        humanVerificationDetailsDao.deleteByClientId(clientId.id)
 
     override suspend fun clear() = humanVerificationDetailsDao.deleteAll()
 
@@ -90,7 +90,7 @@ class HumanVerificationRepositoryImpl(
     ) {
         db.inTransaction {
             humanVerificationDetailsDao.updateStateAndToken(
-                clientId.id(),
+                clientId.id,
                 state,
                 tokenType?.encryptWith(keyStoreCrypto),
                 tokenCode?.encryptWith(keyStoreCrypto)

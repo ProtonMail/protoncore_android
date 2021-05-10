@@ -24,7 +24,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.toCreateUserType
+import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -63,12 +63,12 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             checkCreationTokenValidity.invoke(
                 any(),
                 UserVerificationTokenType.EMAIL.tokenTypeValue,
-                AccountType.Internal.toCreateUserType()
+                CreateUserType.Normal
             )
         } returns VerificationResult.Success
         viewModel.validationState.test {
             // WHEN
-            viewModel.validateToken(testDestination, testToken, AccountType.Internal.toCreateUserType())
+            viewModel.validateToken(testDestination, testToken, AccountType.Internal)
             // THEN
             assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Idle)
             assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Processing)
@@ -81,7 +81,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
                 checkCreationTokenValidity.invoke(
                     capture(destinationTokenSlot),
                     UserVerificationTokenType.EMAIL.tokenTypeValue,
-                    AccountType.Internal.toCreateUserType()
+                    CreateUserType.Normal
                 )
             }
             assertEquals("test-destination:test-token", destinationTokenSlot.captured)
@@ -97,13 +97,13 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             checkCreationTokenValidity.invoke(
                 any(),
                 UserVerificationTokenType.EMAIL.tokenTypeValue,
-                AccountType.Internal.toCreateUserType()
+                CreateUserType.Normal
             )
         } returns VerificationResult.Error("Sending to destination error.")
 
         viewModel.validationState.test {
             // WHEN
-            viewModel.validateToken(testDestination, testToken, AccountType.Internal.toCreateUserType())
+            viewModel.validateToken(testDestination, testToken, AccountType.Internal)
             // THEN
             assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Idle)
             assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Processing)
@@ -116,7 +116,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
                 checkCreationTokenValidity.invoke(
                     capture(destinationTokenSlot),
                     UserVerificationTokenType.EMAIL.tokenTypeValue,
-                    AccountType.Internal.toCreateUserType()
+                    CreateUserType.Normal
                 )
             }
             assertEquals("test-destination:test-token", destinationTokenSlot.captured)
@@ -132,7 +132,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             checkCreationTokenValidity.invoke(
                 any(),
                 UserVerificationTokenType.EMAIL.tokenTypeValue,
-                AccountType.Internal.toCreateUserType()
+                CreateUserType.Normal
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -147,7 +147,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
 
         viewModel.validationState.test {
             // WHEN
-            viewModel.validateToken(testDestination, testToken, AccountType.Internal.toCreateUserType())
+            viewModel.validateToken(testDestination, testToken, AccountType.Internal)
             // THEN
             assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Idle)
             assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Processing)
@@ -160,7 +160,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
                 checkCreationTokenValidity.invoke(
                     capture(destinationTokenSlot),
                     UserVerificationTokenType.EMAIL.tokenTypeValue,
-                    AccountType.Internal.toCreateUserType()
+                    CreateUserType.Normal
                 )
             }
             assertEquals("test-destination:test-token", destinationTokenSlot.captured)

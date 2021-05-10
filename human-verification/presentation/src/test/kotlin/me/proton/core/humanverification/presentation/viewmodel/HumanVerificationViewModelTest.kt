@@ -23,6 +23,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
+import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.entity.UserVerificationTokenType
@@ -35,6 +36,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
     private val savedStateHandle = mockk<SavedStateHandle>()
+    private val humanVerificationWorkflowHandler = mockk<HumanVerificationWorkflowHandler>(relaxed = true)
 
     @Test
     fun `correct initialization`() = coroutinesTest {
@@ -44,7 +46,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
         )
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
-        val viewModel = HumanVerificationViewModel(savedStateHandle)
+        val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
         viewModel.enabledMethods.test {
             assertEquals(availableMethods, expectItem())
             cancelAndIgnoreRemainingEvents()
@@ -56,7 +58,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
         val availableMethods = emptyList<String>()
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
-        HumanVerificationViewModel(savedStateHandle)
+        HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
     }
 
     @Test
@@ -68,7 +70,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
         )
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
-        val viewModel = HumanVerificationViewModel(savedStateHandle)
+        val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
 
         viewModel.activeMethod.test {
             assertEquals(UserVerificationTokenType.CAPTCHA.tokenTypeValue, expectItem())
@@ -84,7 +86,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
         )
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
-        val viewModel = HumanVerificationViewModel(savedStateHandle)
+        val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
         viewModel.activeMethod.test {
             assertEquals(UserVerificationTokenType.EMAIL.tokenTypeValue, expectItem())
             cancelAndIgnoreRemainingEvents()

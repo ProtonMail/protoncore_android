@@ -98,14 +98,14 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
     private val clientId: ClientId by lazy {
         val clientId = requireArguments().getString(ARG_CLIENT_ID)!!
         when (clientIdType) {
-            ClientIdType.SESSION -> ClientId.AccountSessionId(SessionId(clientId))
-            ClientIdType.COOKIE -> ClientId.NetworkCookieSessionId(CookieSessionId(clientId))
+            ClientIdType.SESSION -> ClientId.AccountSession(SessionId(clientId))
+            ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
         }.exhaustive
     }
 
     private val sessionId: SessionId? by lazy {
         when (clientIdType) {
-            ClientIdType.SESSION -> SessionId(clientId.id())
+            ClientIdType.SESSION -> SessionId(clientId.id)
             ClientIdType.COOKIE -> null
         }.exhaustive
     }
@@ -133,7 +133,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         childFragmentManager.setFragmentResultListener(KEY_VERIFICATION_DONE, this) { _, bundle ->
             val tokenCode = bundle.getString(ARG_TOKEN_CODE)
             val tokenType = bundle.getString(ARG_TOKEN_TYPE)
-            onClose(tokenType, tokenCode)
+            setResult(tokenType, tokenCode)
         }
     }
 
@@ -153,7 +153,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             .launchIn(lifecycleScope)
 
         binding.headerNavigation.closeButton.onClick {
-            onClose(tokenType = null, tokenCode = null, canceled = true)
+            setResult(tokenType = null, tokenCode = null, canceled = true)
         }
         binding.headerNavigation.helpButton.onClick {
             childFragmentManager.showHelp()
@@ -215,13 +215,16 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         }
     }
 
-    private fun onClose(tokenType: String? = null, tokenCode: String? = null, canceled: Boolean = false) {
-        resultListener.setResult(HumanVerificationResult(
-            clientId = clientId.id(),
-            clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: run { ClientIdType.COOKIE.value },
-            tokenType = tokenType, tokenCode = tokenCode, canceled = canceled
-        )
-        )
+    private fun setResult(tokenType: String? = null, tokenCode: String? = null, canceled: Boolean = false) {
+        viewModel.onHumanVerificationSuccess(clientId, tokenType, tokenCode).invokeOnCompletion {
+            resultListener.setResult(
+                HumanVerificationResult(
+                    clientId = clientId.id,
+                    clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: run { ClientIdType.COOKIE.value },
+                    tokenType = tokenType, tokenCode = tokenCode, canceled = canceled
+                )
+            )
+        }
     }
 
     override fun onBackPressed() {
@@ -229,17 +232,19 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             if (backStackEntryCount >= 1) {
                 popBackStack()
             } else {
-                resultListener.setResult(
-                    HumanVerificationResult(
-                        clientId = clientId.id(),
-                        clientIdType = sessionId?.let { ClientIdType.SESSION.value }
-                            ?: run { ClientIdType.COOKIE.value },
-                        tokenType = null,
-                        tokenCode = null,
-                        canceled = true
+                viewModel.onHumanVerificationCanceled(clientId).invokeOnCompletion {
+                    resultListener.setResult(
+                        HumanVerificationResult(
+                            clientId = clientId.id,
+                            clientIdType = sessionId?.let { ClientIdType.SESSION.value }
+                                ?: run { ClientIdType.COOKIE.value },
+                            tokenType = null,
+                            tokenCode = null,
+                            canceled = true
+                        )
                     )
-                )
-                dismissAllowingStateLoss()
+                    dismissAllowingStateLoss()
+                }
             }
         }
     }

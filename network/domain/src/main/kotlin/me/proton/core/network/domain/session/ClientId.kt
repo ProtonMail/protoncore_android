@@ -21,12 +21,14 @@ package me.proton.core.network.domain.session
 import java.util.Locale
 
 sealed class ClientId {
-    data class AccountSessionId(val sessionId: SessionId) : ClientId()
-    data class NetworkCookieSessionId(val sessionId: CookieSessionId) : ClientId()
+    data class AccountSession(val sessionId: SessionId) : ClientId()
+    data class CookieSession(val sessionId: CookieSessionId) : ClientId()
 
-    fun id(): String = when (this) {
-        is AccountSessionId -> sessionId.id
-        is NetworkCookieSessionId -> sessionId.id
+    val id: String by lazy {
+        when (this) {
+            is AccountSession -> sessionId.id
+            is CookieSession -> sessionId.id
+        }
     }
 
     companion object {
@@ -36,10 +38,10 @@ sealed class ClientId {
          */
         fun newClientId(sessionId: SessionId?, cookieSessionId: String?): ClientId? {
             if (sessionId != null) {
-                return AccountSessionId(sessionId)
+                return AccountSession(sessionId)
             }
             if (cookieSessionId != null) {
-                return NetworkCookieSessionId(CookieSessionId(cookieSessionId))
+                return CookieSession(CookieSessionId(cookieSessionId))
             }
             return null
         }
@@ -47,9 +49,9 @@ sealed class ClientId {
 }
 
 fun ClientId.getType(): ClientIdType =
-    when(this) {
-        is ClientId.AccountSessionId -> ClientIdType.SESSION
-        is ClientId.NetworkCookieSessionId -> ClientIdType.COOKIE
+    when (this) {
+        is ClientId.AccountSession -> ClientIdType.SESSION
+        is ClientId.CookieSession -> ClientIdType.COOKIE
     }
 
 enum class ClientIdType(val value: String) {

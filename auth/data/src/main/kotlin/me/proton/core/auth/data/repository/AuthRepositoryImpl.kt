@@ -139,4 +139,16 @@ class AuthRepositoryImpl(
                 )
             ).isSuccess()
         }.valueOrNull ?: true // Ignore any error.
+
+    override suspend fun validateEmail(email: String): Boolean =
+        provider.get<AuthenticationApi>().invoke {
+            val request = EmailValidationRequest(email)
+            validateEmail(request).isSuccess()
+        }.valueOrThrow
+
+    override suspend fun validatePhone(phone: String): Boolean =
+        provider.get<AuthenticationApi>().invoke {
+            val request = PhoneValidationRequest(phone)
+            validatePhone(request).isSuccess()
+        }.valueOrThrow
 }

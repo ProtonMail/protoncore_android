@@ -65,11 +65,17 @@ object HumanVerificationModule {
 interface HumanVerificationBindModule {
 
     @Binds
-    fun bindHumanVerificationManager(humanVerificationManagerImpl: HumanVerificationManagerImpl): HumanVerificationManager
+    fun bindHumanVerificationManager(
+        humanVerificationManagerImpl: HumanVerificationManagerImpl
+    ): HumanVerificationManager
 
     @Binds
-    fun bindHumanVerificationWorkflowHandler(humanVerificationManagerImpl: HumanVerificationManagerImpl): HumanVerificationWorkflowHandler
+    fun bindHumanVerificationWorkflowHandler(
+        humanVerificationManagerImpl: HumanVerificationManagerImpl
+    ): HumanVerificationWorkflowHandler
 
     @Binds
-    fun bindHumanVerificationProvider(humanVerificationManagerImpl: HumanVerificationManagerImpl): HumanVerificationProvider
+    fun bindHumanVerificationProvider(
+        humanVerificationManagerImpl: HumanVerificationManagerImpl
+    ): HumanVerificationProvider
 }

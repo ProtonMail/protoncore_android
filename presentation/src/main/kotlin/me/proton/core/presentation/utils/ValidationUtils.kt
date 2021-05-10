@@ -36,7 +36,7 @@ fun ProtonInput.validatePassword() =
     InputValidationResult(this.text.toString(), ValidationType.Password)
 
 fun ProtonInput.validatePasswordMinLength() =
-    InputValidationResult(this, ValidationType.PasswordMinLength)
+    InputValidationResult(this.text.toString(), ValidationType.PasswordMinLength)
 
 fun ProtonInput.validateEmail() =
     InputValidationResult(this.text.toString(), ValidationType.Email)
@@ -79,12 +79,12 @@ data class InputValidationResult(
         ValidationType.NotBlank -> validateNotBlank()
         ValidationType.Username -> validateUsername()
         ValidationType.Password -> validatePassword()
+        ValidationType.PasswordMinLength -> validatePasswordMinLength(validationType.minLong)
         ValidationType.Email -> validateEmail()
         ValidationType.CreditCard -> {
             cardType = validateCreditCard()
             cardType != null
         }
-        ValidationType.PasswordMinLength -> validatePasswordMinLength(validationType.minLength)
         ValidationType.CreditCardCVC ->
             validateNotBlankMinLong(minLong = validationType.minLong) &&
                 validateNotBlankMaxLong(maxLong = validationType.maxLong)

@@ -20,26 +20,20 @@ package me.proton.core.humanverification.presentation
 
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
-import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
+import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.StartHumanVerification
 import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
 import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.ClientIdType
-import me.proton.core.network.domain.session.CookieSessionId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.getType
-import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
-class HumanVerificationOrchestrator @Inject constructor(
-    private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler
-) {
+class HumanVerificationOrchestrator @Inject constructor() {
     // region result launchers
     private var humanWorkflowLauncher: ActivityResultLauncher<HumanVerificationInput>? = null
+
     // endregion
+    private var onHumanVerificationResultListener: (result: HumanVerificationResult?) -> Unit = {}
 
     // region private functions
 
@@ -49,30 +43,7 @@ class HumanVerificationOrchestrator @Inject constructor(
         context.registerForActivityResult(
             StartHumanVerification()
         ) { result ->
-            result?.let {
-                context.lifecycleScope.launch {
-                    val clientId = when (ClientIdType.getByValue(it.clientIdType)) {
-                        ClientIdType.SESSION -> ClientId.AccountSessionId(SessionId(it.clientId))
-                        ClientIdType.COOKIE -> ClientId.NetworkCookieSessionId(CookieSessionId(it.clientId))
-                    }.exhaustive
-                    clientId.let { id ->
-                        if (!it.tokenType.isNullOrBlank() && !it.tokenCode.isNullOrBlank()) {
-                            humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
-                                clientId = id,
-                                tokenType = it.tokenType,
-                                tokenCode = it.tokenCode
-                            )
-                        } else {
-                            if (it.canceled) {
-                                humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = id)
-                                humanVerificationWorkflowHandler.handleHumanVerificationCanceled(clientId = id)
-                            } else {
-                                humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = id)
-                            }
-                        }
-                    }
-                }
-            }
+            onHumanVerificationResultListener(result)
         }
 
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
@@ -91,39 +62,26 @@ class HumanVerificationOrchestrator @Inject constructor(
     }
 
     /**
-     * Start a Human Verification workflow.
-     */
-    private fun startHumanVerificationWorkflow(
-        sessionId: SessionId,
-        details: HumanVerificationApiDetails?
-    ) {
-        checkRegistered(humanWorkflowLauncher).launch(
-            HumanVerificationInput(
-                clientId = sessionId.id,
-                clientIdType = ClientIdType.SESSION.value,
-                details?.verificationMethods?.map { it.value },
-                details?.captchaVerificationToken
-            )
-        )
-    }
-
-    /**
      * Start a Human Verification workflow for signup.
      */
-    fun startHumanVerificationSignUpWorkflow(
+    fun startHumanVerificationWorkflow(
         clientId: ClientId,
         details: HumanVerificationApiDetails?,
         recoveryEmailAddress: String? = null
     ) {
         checkRegistered(humanWorkflowLauncher).launch(
             HumanVerificationInput(
-                clientId = clientId.id(),
+                clientId = clientId.id,
                 clientIdType = clientId.getType().value,
                 details?.verificationMethods?.map { it.value },
                 details?.captchaVerificationToken,
                 recoveryEmailAddress = recoveryEmailAddress
             )
         )
+    }
+
+    fun setOnHumanVerificationResult(block: (result: HumanVerificationResult?) -> Unit) {
+        onHumanVerificationResultListener = block
     }
     // endregion
 }

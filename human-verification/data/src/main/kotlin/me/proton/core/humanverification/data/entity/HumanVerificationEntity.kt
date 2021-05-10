@@ -19,7 +19,6 @@
 package me.proton.core.humanverification.data.entity
 
 import androidx.room.Entity
-import androidx.room.Index
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
@@ -45,9 +44,9 @@ data class HumanVerificationEntity(
 ) {
     fun toHumanVerificationDetails(keyStoreCrypto: KeyStoreCrypto) = HumanVerificationDetails(
         clientId = if (clientIdType == ClientIdType.SESSION.value)
-            ClientId.AccountSessionId(SessionId(clientId))
+            ClientId.AccountSession(SessionId(clientId))
         else
-            ClientId.NetworkCookieSessionId(CookieSessionId(clientId)),
+            ClientId.CookieSession(CookieSessionId(clientId)),
         verificationMethods = verificationMethods.map { VerificationMethod.getByValue(it) },
         captchaVerificationToken = captchaVerificationToken,
         state = state,

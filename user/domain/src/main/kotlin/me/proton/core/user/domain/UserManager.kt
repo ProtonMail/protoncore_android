@@ -19,7 +19,6 @@
 package me.proton.core.user.domain
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.srp.Auth
@@ -141,15 +140,14 @@ interface UserManager {
     )
 
     /**
-     * Create a new primary [UserKey], [UserAddress], [UserAddressKey], and set the derived passphrase for the user.
+     * Create a new primary [UserKey], [UserAddressKey], and set the derived passphrase for the user.
      */
     suspend fun setupPrimaryKeys(
         sessionUserId: SessionUserId,
         username: String,
         domain: String,
         auth: Auth,
-        password: ByteArray,
-        accountType: AccountType
+        password: ByteArray
     ): User
 
     /**

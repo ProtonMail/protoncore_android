@@ -21,7 +21,7 @@ package me.proton.core.user.domain.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.UserVerificationTokenType
 import me.proton.core.user.domain.entity.VerificationResult
 import me.proton.core.user.domain.repository.UserValidationRepository
@@ -34,12 +34,18 @@ class CheckCreationTokenValidityTest {
     private val remoteRepository = mockk<UserValidationRepository>()
 
     private val testToken = "test-token"
-    private val testTokenType = 1
+    private val testTokenType = CreateUserType.Normal
 
     @Test
     fun `code verification with email success`() = runBlockingTest {
         val useCase = CheckCreationTokenValidity(remoteRepository)
-        coEvery { remoteRepository.checkCreationTokenValidity(testToken, "email", 1) } returns VerificationResult.Success
+        coEvery {
+            remoteRepository.checkCreationTokenValidity(
+                testToken,
+                "email",
+                1
+            )
+        } returns VerificationResult.Success
         val result = useCase.invoke(testToken, UserVerificationTokenType.EMAIL.tokenTypeValue, testTokenType)
 
         assertEquals(VerificationResult.Success, result)
@@ -48,7 +54,9 @@ class CheckCreationTokenValidityTest {
     @Test
     fun `code verification with email error`() = runBlockingTest {
         val useCase = CheckCreationTokenValidity(remoteRepository)
-        coEvery { remoteRepository.checkCreationTokenValidity(testToken, "email", 1) } returns VerificationResult.Error("test error")
+        coEvery { remoteRepository.checkCreationTokenValidity(testToken, "email", 1) } returns VerificationResult.Error(
+            "test error"
+        )
         val result = useCase.invoke(testToken, UserVerificationTokenType.EMAIL.tokenTypeValue, testTokenType)
 
         assertTrue(result is VerificationResult.Error)
@@ -66,7 +74,13 @@ class CheckCreationTokenValidityTest {
     @Test
     fun `code verification with sms error`() = runBlockingTest {
         val useCase = CheckCreationTokenValidity(remoteRepository)
-        coEvery { remoteRepository.checkCreationTokenValidity(testToken, "sms", 1) } returns VerificationResult.Error("test error")
+        coEvery {
+            remoteRepository.checkCreationTokenValidity(
+                testToken,
+                "sms",
+                1
+            )
+        } returns VerificationResult.Error("test error")
         val result = useCase.invoke(testToken, UserVerificationTokenType.SMS.tokenTypeValue, testTokenType)
 
         assertTrue(result is VerificationResult.Error)

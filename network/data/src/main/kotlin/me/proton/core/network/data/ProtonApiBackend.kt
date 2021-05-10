@@ -121,7 +121,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             request.header("Accept", "application/vnd.protonmail.v1+json")
         }
 
-        val cookieValue = cookieStore?.get(original.url.toUri())
         sessionId?.let { runBlocking { sessionProvider.getSession(it) } }?.let { session ->
             session.sessionId.id.takeIfNotBlank()?.let { uid ->
                 request.header("x-pm-uid", uid)
@@ -130,6 +129,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 request.header("Authorization", "Bearer $accessToken")
             }
         }
+        val cookieValue = cookieStore?.get(original.url.toUri())
         val clientId = ClientId.newClientId(sessionId, cookieValue?.cookieSessionId())
         clientId?.let {
             runBlocking { humanVerificationProvider.getHumanVerificationDetails(clientId) }?.let {

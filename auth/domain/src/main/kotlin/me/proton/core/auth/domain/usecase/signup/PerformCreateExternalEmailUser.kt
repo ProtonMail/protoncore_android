@@ -18,15 +18,13 @@
 
 package me.proton.core.auth.domain.usecase.signup
 
-import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.toCreateUserType
+import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
-import me.proton.core.user.domain.entity.NewExternalEmailUser
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -53,8 +51,13 @@ class PerformCreateExternalEmailUser @Inject constructor(
                 modulusId = modulus.modulusId,
                 modulus = modulus.modulus
             )
-            val newUser = NewExternalEmailUser(email, password, referrer, AccountType.External.toCreateUserType(), auth)
-            return userRepository.createExternalEmailUser(newUser)
+            return userRepository.createExternalEmailUser(
+                email = email,
+                password = password,
+                referrer = referrer,
+                type = CreateUserType.Normal,
+                auth = auth
+            )
         }
     }
 }

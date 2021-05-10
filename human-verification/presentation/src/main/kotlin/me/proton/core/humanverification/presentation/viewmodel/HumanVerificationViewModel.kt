@@ -21,10 +21,15 @@ package me.proton.core.humanverification.presentation.viewmodel
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
+import me.proton.core.network.domain.session.ClientId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.UserVerificationTokenType
 
@@ -32,6 +37,7 @@ import me.proton.core.user.domain.entity.UserVerificationTokenType
  * View model class to serve the main Human Verification screen.
  */
 class HumanVerificationViewModel @ViewModelInject constructor(
+    private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ProtonViewModel() {
 
@@ -70,4 +76,26 @@ class HumanVerificationViewModel @ViewModelInject constructor(
         }
         _activeMethod.tryEmit(currentActiveVerificationMethod.tokenTypeValue)
     }
+
+    fun onHumanVerificationSuccess(clientId: ClientId, tokenType: String?, tokenCode: String?): Job {
+        return if (!tokenType.isNullOrBlank() && !tokenCode.isNullOrBlank()) {
+            viewModelScope.launch {
+                humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
+                    clientId = clientId,
+                    tokenType = tokenType,
+                    tokenCode = tokenCode
+                )
+            }
+        } else {
+            viewModelScope.launch {
+                humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
+            }
+        }
+    }
+
+    fun onHumanVerificationCanceled(clientId: ClientId) =
+        viewModelScope.launch {
+            humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
+            humanVerificationWorkflowHandler.handleHumanVerificationCanceled(clientId = clientId)
+        }
 }

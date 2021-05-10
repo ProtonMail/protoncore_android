@@ -44,7 +44,7 @@
             style="@style/ProtonTextView.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/gap_24"
+            android:layout_marginTop="@dimen/gap_medium"
             android:gravity="center"
             android:text="@string/auth_signup_your_account_is_being_setup"
             app:layout_constraintEnd_toEndOf="parent"

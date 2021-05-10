@@ -43,7 +43,6 @@ class HumanVerificationManagerObserver(
         humanVerificationManager.onHumanVerificationState(state, initialState = initialState)
             .flowWithLifecycle(lifecycle, minActiveState)
             .onEach {
-                // Launch a new Job to prevent listeners from creating a deadlock if they change state within the callback.
                 block(it)
             }.launchIn(scope)
     }

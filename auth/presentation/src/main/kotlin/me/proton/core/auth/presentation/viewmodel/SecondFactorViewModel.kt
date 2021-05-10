@@ -107,7 +107,9 @@ class SecondFactorViewModel @ViewModelInject constructor(
             is SetupAccountCheck.Result.TwoPassNeeded -> twoPassMode(userId)
             is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(userId)
             is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, password)
-            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, password, requiredAccountType)
+            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> {
+                setupPrimaryKeys(userId, password, requiredAccountType)
+            }
             is SetupAccountCheck.Result.SetupInternalAddressNeeded -> setupInternalAddress(userId, password)
             is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId)
         }.let {

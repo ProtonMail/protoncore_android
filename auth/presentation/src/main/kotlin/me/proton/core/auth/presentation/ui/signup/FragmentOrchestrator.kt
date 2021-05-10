@@ -22,7 +22,6 @@ import android.content.Context
 import androidx.fragment.app.FragmentManager
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
-import me.proton.core.domain.entity.Product
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
 
@@ -57,8 +56,7 @@ internal fun FragmentManager.showSMSRecoveryMethodFragment(
     smsRecoveryFragment
 }
 
-internal fun FragmentManager.showTermsConditions(
-) {
+internal fun FragmentManager.showTermsConditions() {
     val termsConditionsDialogFragment = TermsConditionsDialogFragment()
     inTransaction {
         setCustomAnimations(0, 0)

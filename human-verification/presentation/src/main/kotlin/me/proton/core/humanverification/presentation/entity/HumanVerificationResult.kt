@@ -20,7 +20,6 @@ package me.proton.core.humanverification.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import me.proton.core.network.domain.session.ClientId
 
 /**
  * Human Verification result entity.

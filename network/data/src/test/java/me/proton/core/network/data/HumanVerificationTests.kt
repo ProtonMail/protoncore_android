@@ -248,7 +248,7 @@ internal class HumanVerificationTests {
 
         coEvery {
             humanVerificationProvider.getHumanVerificationDetails(
-                ClientId.NetworkCookieSessionId(
+                ClientId.CookieSession(
                     CookieSessionId(
                         "test-cookie-id"
                     )
@@ -348,7 +348,7 @@ internal class HumanVerificationTests {
 
         coEvery {
             humanVerificationProvider.getHumanVerificationDetails(
-                ClientId.NetworkCookieSessionId(
+                ClientId.CookieSession(
                     CookieSessionId(
                         "test-cookie-id"
                     )

@@ -22,9 +22,7 @@ import me.proton.core.network.data.protonApi.Details
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.handlers.HumanVerificationHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
-import me.proton.core.network.domain.session.ClientId
 
 /**
  * Convenient extensions for handling the optional and dynamic Details part of the [ApiResult.Error.ProtonData].

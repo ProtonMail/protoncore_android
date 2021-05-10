@@ -72,4 +72,14 @@ interface AuthRepository {
     suspend fun getScopes(
         sessionId: SessionId
     ): List<String>
+
+    /**
+     * Validate recovery email.
+     */
+    suspend fun validateEmail(email: String): Boolean
+
+    /**
+     * Validate recovery phone.
+     */
+    suspend fun validatePhone(phone: String): Boolean
 }

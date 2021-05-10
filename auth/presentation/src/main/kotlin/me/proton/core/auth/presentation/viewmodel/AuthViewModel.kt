@@ -18,10 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.viewModelScope
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.observe
@@ -34,16 +32,12 @@ internal abstract class AuthViewModel(
     private val humanVerificationOrchestrator: HumanVerificationOrchestrator
 ) : ProtonViewModel() {
 
-    fun register(context: ComponentActivity) {
-        humanVerificationOrchestrator.register(context)
-    }
-
     abstract val recoveryEmailAddress: String?
 
     protected fun handleHumanVerificationState(context: ComponentActivity) =
         humanVerificationManager.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
             .onHumanVerificationNeeded {
-                humanVerificationOrchestrator.startHumanVerificationSignUpWorkflow(
+                humanVerificationOrchestrator.startHumanVerificationWorkflow(
                     clientId = it.clientId,
                     details = HumanVerificationApiDetails(
                         it.verificationMethods, it.captchaVerificationToken
@@ -51,4 +45,8 @@ internal abstract class AuthViewModel(
                     recoveryEmailAddress = recoveryEmailAddress
                 )
             }
+
+    fun register(context: ComponentActivity) {
+        humanVerificationOrchestrator.register(context)
+    }
 }

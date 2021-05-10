@@ -25,7 +25,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Rule
@@ -38,7 +37,6 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
 
-    private val sessionId: SessionId = SessionId("id")
     private val networkManager = mockk<NetworkManager>()
 
     private val viewModel by lazy {

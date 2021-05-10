@@ -38,8 +38,8 @@ object MockSession {
 }
 
 object MockClientId {
-    fun getForSession(sessionId: SessionId) = ClientId.AccountSessionId(sessionId)
-    fun getForCookie(cookieSessionId: CookieSessionId) = ClientId.NetworkCookieSessionId(cookieSessionId)
+    fun getForSession(sessionId: SessionId) = ClientId.AccountSession(sessionId)
+    fun getForCookie(cookieSessionId: CookieSessionId) = ClientId.CookieSession(cookieSessionId)
 }
 
 class MockSessionListener(
