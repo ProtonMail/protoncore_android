@@ -131,6 +131,20 @@
     <style name="Proton.Text.Caption.Hint">
         <item name="android:textColor">@color/text_hint</item>
     </style>
+
+    <style name="Proton.Text.Overline">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/text_norm</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+
+    <style name="Proton.Text.Overline.Strong">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
     <!-- endregion -->
 
     <!-- region TextView's -->
