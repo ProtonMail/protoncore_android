@@ -40,7 +40,6 @@ import me.proton.core.accountmanager.presentation.disableInitialNotReadyAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
-import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
@@ -97,7 +96,6 @@ class AccountViewModel @Inject constructor(
                 .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
                 .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
                 .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
-                .onAccountDisabled { accountManager.removeAccount(it.userId) }
                 .disableInitialNotReadyAccounts()
         }
 
@@ -126,10 +124,10 @@ class AccountViewModel @Inject constructor(
             when (account.state) {
                 AccountState.Ready,
                 AccountState.NotReady,
-                AccountState.Disabled,
                 AccountState.TwoPassModeFailed,
                 AccountState.CreateAddressFailed,
                 AccountState.UnlockFailed -> accountManager.disableAccount(account.userId)
+                AccountState.Disabled -> accountManager.removeAccount(account.userId)
                 else -> Unit
             }
         }

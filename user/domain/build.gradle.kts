@@ -23,7 +23,7 @@ plugins {
     kotlin("jvm")
 }
 
-libVersion = Version(1, 1, 0)
+libVersion = Version(1, 1, 1)
 
 dependencies {
     implementation(
@@ -40,6 +40,7 @@ dependencies {
         // Kotlin
         `kotlin-jdk8`,
         `coroutines-core`,
+
         // Android
         `dagger`
     )

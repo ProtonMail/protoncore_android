@@ -23,11 +23,15 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(1, 1, 0)
+libVersion = Version(1, 1, 1)
 
-android()
+android(
+    useDataBinding = true
+)
 
 dependencies {
 
@@ -35,15 +39,30 @@ dependencies {
 
         project(Module.kotlinUtil),
         project(Module.domain),
+        project(Module.presentation),
+        project(Module.authPresentation),
         project(Module.accountManagerDomain),
         project(Module.accountDomain),
+        project(Module.userDomain),
+        project(Module.keyDomain),
 
         // Kotlin
         `kotlin-jdk8`,
         `coroutines-android`,
 
         // Android
-        `lifecycle-runtime`
+        `android-ktx`,
+        `constraint-layout`,
+        `hilt-android`,
+        `hilt-androidx-annotations`,
+        `lifecycle-viewModel`,
+        `lifecycle-runtime`,
+        `material`
+    )
+
+    kapt(
+        `hilt-android-compiler`,
+        `hilt-androidx-compiler`
     )
 
     testImplementation(project(Module.androidTest))

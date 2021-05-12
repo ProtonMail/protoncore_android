@@ -16,22 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.accountmanager.presentation.entity
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.domain.entity.UserId
 
-libVersion = Version(1, 1, 1)
-
-android()
-
-dependencies {
-    api(
-        project(Module.authPresentation),
-        project(Module.authDomain),
-        project(Module.authData)
-    )
-}
-
+data class AccountItem(
+    val userId: UserId,
+    val initials: String,
+    val name: String,
+    val email: String? = null,
+    val state: AccountState
+)

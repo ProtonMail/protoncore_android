@@ -32,6 +32,7 @@ import me.proton.android.core.coreexample.Constants.BASE_URL
 import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.api.CoreExampleRepository
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
@@ -95,6 +96,11 @@ object ApplicationModule {
     @Singleton
     fun provideProduct(): Product =
         Product.Calendar
+
+    @Provides
+    @Singleton
+    fun provideRequiredAccountType(): AccountType =
+        AccountType.Internal
 
     @Provides
     @Singleton

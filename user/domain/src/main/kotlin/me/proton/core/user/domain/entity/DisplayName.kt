@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,22 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.user.domain.entity
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
+/**
+ * Pair of [first] and [last].
+ */
+data class DisplayName(
+    val firstName: String?,
+    val lastName: String?
+)
+
+/**
+ * Split a String around ` ` to extract firstname and lastname.
+ */
+private fun String.split(): DisplayName = split(" ").let { pair ->
+    DisplayName(firstName = pair.getOrNull(0), lastName = pair.getOrNull(1))
 }
 
-libVersion = Version(1, 1, 1)
-
-android()
-
-dependencies {
-    api(
-        project(Module.authPresentation),
-        project(Module.authDomain),
-        project(Module.authData)
-    )
-}
-
+/**
+ * Split [User.displayName] into [DisplayName] extracting firstname and lastname.
+ */
+val User.displayNameSplit: DisplayName? get() = displayName?.split()

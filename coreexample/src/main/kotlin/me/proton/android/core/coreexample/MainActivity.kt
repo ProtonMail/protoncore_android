@@ -36,9 +36,6 @@ import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
-import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
-import me.proton.android.core.coreexample.viewmodel.UserAddressKeyViewModel
-import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.onClick
@@ -54,9 +51,6 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
     lateinit var coreExampleRepository: CoreExampleRepository
 
     private val accountViewModel: AccountViewModel by viewModels()
-    private val userKeyViewModel: UserKeyViewModel by viewModels()
-    private val userAddressKeyViewModel: UserAddressKeyViewModel by viewModels()
-    private val publicAddressViewModel: PublicAddressViewModel by viewModels()
     private val mailMessageViewModel: MailMessageViewModel by viewModels()
 
     override fun layoutId(): Int = R.layout.activity_main
@@ -98,28 +92,12 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
         }
 
-        accountViewModel.getPrimaryAccount().onEach { primary ->
-            binding.primaryAccountText.text = "Primary: ${primary?.username}"
-        }.launchIn(lifecycleScope)
-
         accountViewModel.state.onEach { state ->
             when (state) {
                 is AccountViewModel.State.Processing -> Unit
                 is AccountViewModel.State.LoginNeeded -> accountViewModel.startLoginWorkflow()
                 is AccountViewModel.State.AccountList -> displayAccounts(state.accounts)
             }.exhaustive
-        }.launchIn(lifecycleScope)
-
-        userKeyViewModel.getUserKeyState().onEach { state ->
-            binding.primaryAccountKeyState.text = "User Key State: ${state::class.java.simpleName}"
-        }.launchIn(lifecycleScope)
-
-        userAddressKeyViewModel.getUserAddressKeyState().onEach { state ->
-            binding.primaryAccountAddressKeyState.text = "Address Key State: ${state::class.java.simpleName}"
-        }.launchIn(lifecycleScope)
-
-        publicAddressViewModel.getPublicAddressState().onEach { state ->
-            binding.primaryAccountPublicAddressState.text = "Public Address State: ${state::class.java.simpleName}"
         }.launchIn(lifecycleScope)
 
         mailMessageViewModel.getState().onEach {
