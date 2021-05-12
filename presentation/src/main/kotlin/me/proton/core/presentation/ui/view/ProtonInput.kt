@@ -146,6 +146,7 @@ class ProtonInput : LinearLayout {
         get() = binding.inputLayout.suffixText
         set(value) {
             binding.inputLayout.suffixText = value
+            binding.inputLayout.isExpandedHintEnabled = false
         }
 
     /**

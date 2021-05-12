@@ -88,6 +88,14 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             payment.onClick {
                 accountViewModel.onPayUpgradeClicked()
             }
+
+            signup.onClick {
+                accountViewModel.onSignUpClicked()
+            }
+
+            signupExternal.onClick {
+                accountViewModel.onExternalSignUpClicked()
+            }
         }
 
         accountViewModel.getPrimaryAccount().onEach { primary ->

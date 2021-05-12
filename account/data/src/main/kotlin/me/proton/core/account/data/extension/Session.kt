@@ -35,8 +35,6 @@ fun Session.toSessionEntity(
     sessionId = sessionId,
     accessToken = accessToken.encryptWith(keyStoreCrypto),
     refreshToken = refreshToken.encryptWith(keyStoreCrypto),
-    humanHeaderTokenType = headers?.tokenType?.encryptWith(keyStoreCrypto),
-    humanHeaderTokenCode = headers?.tokenCode?.encryptWith(keyStoreCrypto),
     scopes = CommonConverters.fromListOfStringToString(scopes).orEmpty(),
     product = product
 )

@@ -18,6 +18,7 @@
 package me.proton.core.network.data
 
 import kotlinx.coroutines.runBlocking
+import me.proton.core.network.data.di.cookieSessionId
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.ProtonErrorData
 import me.proton.core.network.data.protonApi.RefreshTokenRequest
@@ -27,6 +28,8 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.TimeoutOverride
+import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.session.HumanVerificationProvider
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
@@ -63,6 +66,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private val logger: Logger,
     private val sessionId: SessionId?,
     private val sessionProvider: SessionProvider,
+    private val humanVerificationProvider: HumanVerificationProvider,
+    private val cookieStore: ProtonCookieStore?,
     baseOkHttpClient: OkHttpClient,
     converters: List<Converter.Factory>,
     interfaceClass: KClass<Api>,
@@ -117,15 +122,23 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         }
 
         sessionId?.let { runBlocking { sessionProvider.getSession(it) } }?.let { session ->
-            session.headers?.let {
-                request.header("x-pm-human-verification-token-type", it.tokenType)
-                request.header("x-pm-human-verification-token", it.tokenCode)
-            }
             session.sessionId.id.takeIfNotBlank()?.let { uid ->
                 request.header("x-pm-uid", uid)
             }
             session.accessToken.takeIfNotBlank()?.let { accessToken ->
                 request.header("Authorization", "Bearer $accessToken")
+            }
+        }
+        val cookieValue = cookieStore?.get(original.url.toUri())
+        val clientId = ClientId.newClientId(sessionId, cookieValue?.cookieSessionId())
+        clientId?.let {
+            runBlocking { humanVerificationProvider.getHumanVerificationDetails(clientId) }?.let {
+                it.tokenType?.let { tokenType ->
+                    request.header("x-pm-human-verification-token-type", tokenType)
+                }
+                it.tokenCode?.let { tokenCode ->
+                    request.header("x-pm-human-verification-token", tokenCode)
+                }
             }
         }
         return request

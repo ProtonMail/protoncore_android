@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.domain.usecase
 
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -30,8 +31,11 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
+import me.proton.core.user.domain.entity.emailSplit
 import me.proton.core.user.domain.entity.firstOrDefault
+import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.repository.DomainRepository
+import me.proton.core.user.domain.repository.UserAddressRepository
 import javax.inject.Inject
 
 /**
@@ -39,6 +43,7 @@ import javax.inject.Inject
  */
 class SetupPrimaryKeys @Inject constructor(
     private val userManager: UserManager,
+    private val userAddressRepository: UserAddressRepository,
     private val authRepository: AuthRepository,
     private val domainRepository: DomainRepository,
     private val srpCrypto: SrpCrypto,
@@ -46,25 +51,53 @@ class SetupPrimaryKeys @Inject constructor(
 ) {
     suspend operator fun invoke(
         userId: UserId,
-        password: EncryptedString
-    ) {
-        val user = userManager.getUser(userId)
-        val username = checkNotNull(user.name) { "Username is needed to setup primary keys." }
+        password: EncryptedString,
+        accountType: AccountType
+    ) = with(userManager.getUser(userId)) {
+        if (keys.primary() == null) {
+            val username = when (accountType) {
+                AccountType.External -> {
+                    checkNotNull(emailSplit?.username) { "Email username is needed to setup primary keys." }
+                }
+                else -> checkNotNull(name) { "Username is needed." }
+            }
 
-        val availableDomains = domainRepository.getAvailableDomains()
-        val domain = availableDomains.firstOrDefault()
+            val domain = when (accountType) {
+                AccountType.External -> {
+                    checkNotNull(emailSplit?.domain) { "Email domain is needed to setup primary keys." }
+                }
+                else -> domainRepository.getAvailableDomains().firstOrDefault()
+            }
 
-        if (user.keys.primary() == null) {
+            val email = when (accountType) {
+                AccountType.External -> checkNotNull(email) { "Email is needed." }
+                else -> "$username@$domain"
+            }
             val modulus = authRepository.randomModulus()
 
             password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedPassword ->
                 val auth = srpCrypto.calculatePasswordVerifier(
-                    username = username,
+                    username = email,
                     password = decryptedPassword.array,
                     modulusId = modulus.modulusId,
                     modulus = modulus.modulus
                 )
-                userManager.setupPrimaryKeys(userId, username, domain, auth, decryptedPassword.array)
+                if (accountType == AccountType.Internal) {
+                    if (userAddressRepository.getAddresses(userId).firstInternalOrNull() == null) {
+                        userAddressRepository.createAddress(
+                            sessionUserId = userId,
+                            displayName = username,
+                            domain = domain
+                        )
+                    }
+                }
+                userManager.setupPrimaryKeys(
+                    sessionUserId = userId,
+                    username = username,
+                    domain = domain,
+                    auth = auth,
+                    password = decryptedPassword.array
+                )
             }
         }
     }

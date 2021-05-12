@@ -18,6 +18,9 @@
 
 package me.proton.core.accountmanager.data.db.migration
 
+import androidx.room.DeleteColumn
+import androidx.room.DeleteTable
+import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
@@ -68,3 +71,13 @@ internal val MIGRATION_3_4 = object : Migration(3, 4) {
         database.addTableColumn(table = "AddressEntity", column = "signature", type = "TEXT")
     }
 }
+
+@Suppress("ClassName")
+@DeleteColumn.Entries(
+    value = [
+        DeleteColumn(tableName = "SessionEntity", columnName = "humanHeaderTokenCode"),
+        DeleteColumn(tableName = "SessionEntity", columnName = "humanHeaderTokenType"),
+    ]
+)
+@DeleteTable(tableName = "HumanVerificationDetailsEntity")
+internal class MIGRATION_4_5 : AutoMigrationSpec

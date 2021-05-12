@@ -83,4 +83,39 @@
     <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
     <string name="auth_user_check_delinquent_action">Pay invoice</string>
 
+
+    <!-- signup related strings -->
+    <string name="auth_signup_create_account">Create your Proton Account</string>
+    <string name="auth_signup_subtitle">One account for all Proton services</string>
+    <string name="auth_signup_current_email">User your current email instead</string>
+    <string name="auth_signup_create_secure_proton_address">Create a secure ProtonMail address instead</string>
+    <string name="auth_signup_username">Username</string>
+    <string name="auth_signup_email">Email</string>
+    <string name="auth_signup_next">Next</string>
+    <string name="auth_signup_choose_password">Choose your password</string>
+    <string name="auth_signup_repeat_password">Repeat password</string>
+    <string name="auth_signup_recovery_method_title">Set recovery method (Optional)</string>
+    <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
+    <string name="auth_signup_recovery_method_email">Email</string>
+    <string name="auth_signup_recovery_method_phone">Phone</string>
+    <string name="auth_signup_recovery_method_email_hint">Recovery Email</string>
+    <string name="auth_signup_recovery_method_phone_hint">Recovery Phone number</string>
+    <string name="auth_signup_terms_conditions">Terms and Conditions</string>
+    <string name="auth_signup_terms_conditions_full">By clicking Next, you agree with Proton\'s Terms and Conditions.</string>
+    <string name="auth_signup_skip_recovery_title">Skip recovery method?</string>
+    <string name="auth_signup_skip_recovery_description">A recovery method will help you access your account in case you forget your password or get locked out of your account.</string>
+    <string name="auth_signup_skip_recovery">Skip</string>
+    <string name="auth_signup_set_recovery">Set recovery method</string>
+    <string name="auth_signup_no_connectivity">No connectivity to display Terms and Conditions.</string>
+    <string name="auth_signup_error_passwords_match">Password and Confirm Password do not match.</string>
+    <string name="auth_signup_validation_password_length">Password should be at least 8 characters long.</string>
+    <string name="auth_signup_your_account_is_being_setup">Your account is being setup.\nPlease wait.</string>
+    <string name="auth_signup_replacement_code">Did not receive the code?</string>
+    <string name="auth_signup_verify">Verify</string>
+    <string name="auth_signup_verification_code">Verification Code</string>
+    <string name="auth_signup_enter_code_subtitle">Enter the verification code that was sent to %s:</string>
+    <string name="auth_signup_error_human_verification_failed">Human Verification failed.</string>
+    <string name="auth_signup_calling_code_template">@string/presentation_phone_calling_code_template</string>
+    <string name="auth_signup_token_code_resent">Token code resent.</string>
+    <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
 </resources>

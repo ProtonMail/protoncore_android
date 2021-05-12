@@ -32,6 +32,9 @@ import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
 import me.proton.core.auth.presentation.entity.TwoPassModeResult
+import me.proton.core.auth.presentation.entity.signup.SignUpInput
+import me.proton.core.auth.presentation.entity.signup.SignUpResult
+import me.proton.core.auth.presentation.ui.signup.SignupActivity
 
 class StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
 
@@ -99,4 +102,18 @@ class StartCreateAddress : ActivityResultContract<CreateAddressInput, CreateAddr
     }
 }
 
+// region signup
+class StartSignup : ActivityResultContract<SignUpInput, SignUpResult?>() {
 
+    override fun createIntent(context: Context, input: SignUpInput?) =
+        Intent(context, SignupActivity::class.java).apply {
+            putExtra(SignupActivity.ARG_INPUT, input)
+        }
+
+    override fun parseResult(resultCode: Int, result: Intent?): SignUpResult? {
+        if (resultCode != Activity.RESULT_OK) return null
+        return result?.getParcelableExtra(SignupActivity.ARG_RESULT)
+    }
+}
+
+// endregion

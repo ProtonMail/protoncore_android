@@ -44,30 +44,6 @@ enum class SessionState {
     SecondFactorFailed,
 
     /**
-     * A human verification is needed.
-     *
-     * Note: Usually followed by either [HumanVerificationSuccess] or [HumanVerificationFailed].
-     *
-     * @see [HumanVerificationSuccess]
-     * @see [HumanVerificationFailed].
-     */
-    HumanVerificationNeeded,
-
-    /**
-     * The human verification has been successful.
-     *
-     * Note: Usually followed by [Authenticated].
-     */
-    HumanVerificationSuccess,
-
-    /**
-     * The human verification has failed.
-     *
-     * Note: Client should consider calling [startHumanVerificationWorkflow].
-     */
-    HumanVerificationFailed,
-
-    /**
      * This [Session] is fully authenticated, no additional step needed.
      */
     Authenticated,

@@ -40,6 +40,8 @@ import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
+import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.Session
@@ -66,6 +68,8 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     private val setupInternalAddress = mockk<SetupInternalAddress>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
     private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
+    private val humanVerificationManager = mockk<HumanVerificationManager>(relaxed = true)
+    private val humanVerificationOrchestrator = mockk<HumanVerificationOrchestrator>(relaxed = true)
     // endregion
 
     // region test data
@@ -87,7 +91,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             setupAccountCheck,
             setupPrimaryKeys,
             setupInternalAddress,
-            keyStoreCrypto
+            keyStoreCrypto,
+            humanVerificationManager,
+            humanVerificationOrchestrator
         )
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
@@ -216,7 +222,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             )
         } returns SetupAccountCheck.Result.SetupPrimaryKeysNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
-        coEvery { setupPrimaryKeys.invoke(testUserId, testPassword) } returns Unit
+        coEvery { setupPrimaryKeys.invoke(testUserId, testPassword, any()) } returns Unit
         viewModel.state.test {
             // WHEN
             viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)

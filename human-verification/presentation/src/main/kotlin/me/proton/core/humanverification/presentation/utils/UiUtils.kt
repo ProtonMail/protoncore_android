@@ -20,7 +20,6 @@ package me.proton.core.humanverification.presentation.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationHelpFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationCaptchaFragment
@@ -29,6 +28,7 @@ import me.proton.core.humanverification.presentation.ui.verification.HumanVerifi
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.utils.inTransaction
+import me.proton.core.user.domain.entity.UserVerificationTokenType
 
 /**
  * @author Dino Kadrikj.
@@ -41,20 +41,27 @@ const val TOKEN_DEFAULT = "signup"
 const val HOST_DEFAULT = "api.protonmail.ch"
 
 val defaultVerificationMethods = listOf(
-    TokenType.CAPTCHA.tokenTypeValue,
-    TokenType.EMAIL.tokenTypeValue,
-    TokenType.SMS.tokenTypeValue
+    UserVerificationTokenType.CAPTCHA.tokenTypeValue,
+    UserVerificationTokenType.EMAIL.tokenTypeValue,
+    UserVerificationTokenType.SMS.tokenTypeValue
 )
 
 /** Shows the human verification dialog. */
 fun FragmentManager.showHumanVerification(
-    sessionId: SessionId,
+    clientId: String,
+    clientIdType: String,
     availableVerificationMethods: List<String> = defaultVerificationMethods,
     captchaToken: String? = null,
+    recoveryEmailAddress: String? = null,
     largeLayout: Boolean
 ) {
-
-    val newFragment = HumanVerificationDialogFragment(sessionId.id, availableVerificationMethods, captchaToken)
+    val newFragment = HumanVerificationDialogFragment(
+        clientId = clientId,
+        clientIdType = clientIdType,
+        availableVerificationMethods = availableVerificationMethods,
+        captchaToken = captchaToken,
+        recoveryEmailAddress = recoveryEmailAddress
+    )
     if (largeLayout) {
         // For large screens (tablets), we show the fragment as a dialog
         newFragment.show(this, TAG_HUMAN_VERIFICATION_DIALOG)
@@ -73,11 +80,10 @@ fun FragmentManager.showHumanVerification(
  */
 internal fun FragmentManager.showHumanVerificationCaptchaContent(
     containerId: Int = android.R.id.content,
-    sessionId: SessionId,
     token: String?,
     host: String = HOST_DEFAULT
 ): Fragment {
-    val captchaFragment = HumanVerificationCaptchaFragment(sessionId.id, token ?: TOKEN_DEFAULT, host)
+    val captchaFragment = HumanVerificationCaptchaFragment(token ?: TOKEN_DEFAULT, host)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, captchaFragment)
@@ -87,10 +93,11 @@ internal fun FragmentManager.showHumanVerificationCaptchaContent(
 
 internal fun FragmentManager.showHumanVerificationEmailContent(
     containerId: Int = android.R.id.content,
-    sessionId: SessionId,
-    token: String = TOKEN_DEFAULT
+    sessionId: SessionId?,
+    token: String = TOKEN_DEFAULT,
+    recoveryEmailAddress: String? = null
 ) {
-    val emailFragment = HumanVerificationEmailFragment(sessionId.id, token)
+    val emailFragment = HumanVerificationEmailFragment(sessionId?.id, token, recoveryEmailAddress)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, emailFragment)
@@ -98,11 +105,11 @@ internal fun FragmentManager.showHumanVerificationEmailContent(
 }
 
 internal fun FragmentManager.showHumanVerificationSMSContent(
-    sessionId: SessionId,
+    sessionId: SessionId?,
     containerId: Int = android.R.id.content,
     token: String = TOKEN_DEFAULT
 ) {
-    val smsFragment = HumanVerificationSMSFragment(sessionId.id, token)
+    val smsFragment = HumanVerificationSMSFragment(sessionId?.id, token)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, smsFragment)
@@ -110,11 +117,11 @@ internal fun FragmentManager.showHumanVerificationSMSContent(
 }
 
 internal fun FragmentManager.showEnterCode(
-    sessionId: SessionId,
-    tokenType: TokenType,
+    sessionId: SessionId?,
+    tokenType: UserVerificationTokenType,
     destination: String?
 ) {
-    val enterCodeFragment = HumanVerificationEnterCodeFragment(sessionId.id, tokenType, destination)
+    val enterCodeFragment = HumanVerificationEnterCodeFragment(sessionId?.id, tokenType, destination)
     inTransaction {
         setCustomAnimations(0, 0)
         add(enterCodeFragment, TAG_HUMAN_VERIFICATION_ENTER_CODE)

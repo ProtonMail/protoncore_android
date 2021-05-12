@@ -22,14 +22,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import me.proton.core.humanverification.domain.entity.VerificationResult
-import me.proton.core.humanverification.domain.exception.EmptyDestinationException
-import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.user.domain.entity.VerificationResult
+import me.proton.core.user.domain.exception.EmptyDestinationException
+import me.proton.core.user.domain.usecase.SendVerificationCodeToEmailDestination
 import org.junit.Rule
 import org.junit.Test
 
@@ -73,15 +73,13 @@ class HumanVerificationEmailViewModelTest : CoroutinesTest {
         }
     }
 
-
     @Test
     fun `send verification code to email address invalid`() = coroutinesTest {
-        coEvery {
-            useCase.invoke(any(), any())
-        } returns VerificationResult.Success
+        val useCase = SendVerificationCodeToEmailDestination(mockk())
+        val viewModel = HumanVerificationEmailViewModel(useCase)
 
         viewModel.sendVerificationCode(sessionId, "")
-        viewModel.validation.test {
+        viewModel.verificationCodeStatus.test {
             val result = expectItem() as ViewModelResult.Error
             assertIs<EmptyDestinationException>(result.throwable)
         }

@@ -43,6 +43,9 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.handlers.HumanVerificationHandler
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
+import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.session.HumanVerificationListener
+import me.proton.core.network.domain.session.HumanVerificationProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -53,6 +56,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import java.net.CookieManager
 import java.net.CookiePolicy
+import java.net.HttpCookie
 import java.net.URI
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
@@ -71,7 +75,9 @@ class ApiFactory(
     private val networkManager: NetworkManager,
     private val prefs: NetworkPrefs,
     private val sessionProvider: SessionProvider,
+    private val humanVerificationProvider: HumanVerificationProvider,
     private val sessionListener: SessionListener,
+    private val humanVerificationListener: HumanVerificationListener,
     private val cookieStore: ProtonCookieStore?,
     scope: CoroutineScope,
     private val certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
@@ -118,23 +124,24 @@ class ApiFactory(
     private fun javaWallClockMs(): Long = System.currentTimeMillis()
 
     internal fun <Api> createBaseErrorHandlers(
-        sessionId: SessionId?,
+        clientId: ClientId?,
         monoClockMs: () -> Long
-    ) = listOf(
-        RefreshTokenHandler<Api>(
-            sessionId,
-            sessionProvider,
-            sessionListener,
-            monoClockMs
-        ),
-        ProtonForceUpdateHandler(apiClient),
-        HumanVerificationHandler(
-            sessionId,
-            sessionProvider,
-            sessionListener,
-            monoClockMs
+    ): List<ApiErrorHandler<Api>> {
+        val sessionId = if (clientId is ClientId.AccountSession) clientId.sessionId else null
+        val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
+        val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
+        val humanVerificationHandler = HumanVerificationHandler<Api>(clientId, humanVerificationListener, monoClockMs)
+        return listOf(
+            refreshTokenHandler,
+            forceUpdateHandler,
+            humanVerificationHandler
         )
-    )
+    }
+
+    fun getClientId(sessionId: SessionId? = null): ClientId? {
+        val cookieValue = cookieStore?.get(URI.create(baseUrl))
+        return ClientId.newClientId(sessionId, cookieValue?.cookieSessionId())
+    }
 
     /**
      * Instantiates ApiManager for given [Api] interface and user.
@@ -163,6 +170,8 @@ class ApiFactory(
             logger,
             sessionId,
             sessionProvider,
+            humanVerificationProvider,
+            cookieStore,
             baseOkHttpClient,
             listOf(jsonConverter),
             interfaceClass,
@@ -170,7 +179,8 @@ class ApiFactory(
             pinningStrategy
         )
 
-        val errorHandlers = createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs) + clientErrorHandlers
+        val cookieId = getClientId(sessionId)
+        val errorHandlers = createBaseErrorHandlers<Api>(cookieId, ::javaMonoClockMs) + clientErrorHandlers
 
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
             initSPKIleafPinning(builder, alternativeApiPins)
@@ -189,6 +199,8 @@ class ApiFactory(
                 logger,
                 sessionId,
                 sessionProvider,
+                humanVerificationProvider,
+                cookieStore,
                 baseOkHttpClient,
                 listOf(jsonConverter),
                 interfaceClass,
@@ -214,3 +226,7 @@ fun NetworkManager(context: Context): NetworkManager =
  */
 fun NetworkPrefs(context: Context): NetworkPrefs =
     NetworkPrefsImpl(context.applicationContext)
+
+fun List<HttpCookie>.cookieSessionId(): String? = find {
+    it.name == "Session-Id"
+}?.value

@@ -20,21 +20,20 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import me.proton.core.country.presentation.entity.CountryUIModel
-import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.domain.entity.VerificationResult
-import me.proton.core.humanverification.domain.exception.EmptyDestinationException
-import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
+import me.proton.core.user.domain.entity.UserVerificationTokenType
+import me.proton.core.user.domain.entity.VerificationResult
+import me.proton.core.user.domain.usecase.SendVerificationCodeToEmailDestination
 
 /**
- * View model class that handles and supports [TokenType.EMAIL] verification method (type) fragment.
+ * View model class that handles and supports [UserVerificationTokenType.EMAIL] verification method (type) fragment.
  *
  * @author Dino Kadrikj.
  */
@@ -42,39 +41,25 @@ internal class HumanVerificationEmailViewModel @ViewModelInject constructor(
     private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination
 ) : ProtonViewModel(), HumanVerificationCode {
 
-    private val _validationEmail = getNewValidation()
     private val _verificationCodeStatusEmail = getNewVerificationCodeStatus()
 
-    override val validation: StateFlow<ViewModelResult<List<CountryUIModel>>> = _validationEmail.asStateFlow()
-    override val verificationCodeStatus: StateFlow<ViewModelResult<Boolean>> = _verificationCodeStatusEmail.asStateFlow()
+    override val verificationCodeStatus = _verificationCodeStatusEmail
 
     /**
      * Tells the API to send the verification code (token) to the email destination.
      *
      * @param email the email address that the user entered as a destination.
      */
-    fun sendVerificationCode(sessionId: SessionId, email: String) {
-        viewModelScope.launch {
-            if (email.isEmpty()) {
-                _validationEmail.tryEmit(
-                    ViewModelResult.Error(EmptyDestinationException("Destination email: $email is invalid."))
-                )
-                return@launch
-            }
-            sendVerificationCodeToEmail(sessionId, email)
-        }
-    }
-
-    /**
-     * Contacts the API and sends the verification code to the destination email address the user
-     * has entered in the UI.
-     */
-    private suspend fun sendVerificationCodeToEmail(sessionId: SessionId, email: String) {
+    fun sendVerificationCode(sessionId: SessionId?, email: String) = flow {
         val deferred = sendVerificationCodeToEmailDestination.invoke(sessionId, email)
         if (deferred is VerificationResult.Success) {
-            _verificationCodeStatusEmail.tryEmit(ViewModelResult.Success(true))
+            emit(ViewModelResult.Success(email))
         } else {
-            _verificationCodeStatusEmail.tryEmit(ViewModelResult.Error(VerificationCodeSendingException()))
+            emit(ViewModelResult.Error(VerificationCodeSendingException()))
         }
-    }
+    }.catch { error ->
+        _verificationCodeStatusEmail.tryEmit(ViewModelResult.Error(error))
+    }.onEach {
+        _verificationCodeStatusEmail.tryEmit(it)
+    }.launchIn(viewModelScope)
 }

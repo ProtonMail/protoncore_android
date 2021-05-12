@@ -20,11 +20,8 @@ package me.proton.core.auth.presentation
 
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.LoginInput
@@ -33,34 +30,32 @@ import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
 import me.proton.core.auth.presentation.entity.TwoPassModeResult
+import me.proton.core.auth.presentation.entity.signup.SignUpResult
+import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.StartChooseAddress
 import me.proton.core.auth.presentation.ui.StartLogin
 import me.proton.core.auth.presentation.ui.StartSecondFactor
+import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
-import me.proton.core.humanverification.presentation.ui.StartHumanVerification
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
-class AuthOrchestrator @Inject constructor(
-    private val accountWorkflowHandler: AccountWorkflowHandler
-) {
+class AuthOrchestrator @Inject constructor() {
 
     // region result launchers
     private var loginWorkflowLauncher: ActivityResultLauncher<LoginInput>? = null
     private var secondFactorWorkflowLauncher: ActivityResultLauncher<SecondFactorInput>? = null
     private var twoPassModeWorkflowLauncher: ActivityResultLauncher<TwoPassModeInput>? = null
-    private var humanWorkflowLauncher: ActivityResultLauncher<HumanVerificationInput>? = null
     private var chooseAddressLauncher: ActivityResultLauncher<ChooseAddressInput>? = null
+    private var signUpWorkflowLauncher: ActivityResultLauncher<SignUpInput>? = null
     // endregion
 
     private var onLoginResultListener: ((result: LoginResult?) -> Unit)? = {}
     private var onTwoPassModeResultListener: ((result: TwoPassModeResult?) -> Unit)? = {}
     private var onSecondFactorResultListener: ((result: SecondFactorResult?) -> Unit)? = {}
     private var onChooseAddressResultListener: ((result: ChooseAddressResult?) -> Unit)? = {}
+    private var onSignUpResultListener: ((result: SignUpResult?) -> Unit)? = {}
 
     fun setOnLoginResult(block: (result: LoginResult?) -> Unit) {
         onLoginResultListener = block
@@ -76,6 +71,10 @@ class AuthOrchestrator @Inject constructor(
 
     fun setOnChooseAddressResult(block: (result: ChooseAddressResult?) -> Unit) {
         onChooseAddressResultListener = block
+    }
+
+    fun setOnSignUpResult(block: (result: SignUpResult?) -> Unit) {
+        onSignUpResultListener = block
     }
 
     // region private module functions
@@ -115,27 +114,13 @@ class AuthOrchestrator @Inject constructor(
             onChooseAddressResultListener?.invoke(it)
         }
 
-    private fun registerHumanVerificationResult(
+    private fun registerSignUpResult(
         context: ComponentActivity
-    ): ActivityResultLauncher<HumanVerificationInput> =
+    ): ActivityResultLauncher<SignUpInput> =
         context.registerForActivityResult(
-            StartHumanVerification()
-        ) { result ->
-            result?.let {
-                context.lifecycleScope.launch {
-                    if (!it.tokenType.isNullOrBlank() && !it.tokenCode.isNullOrBlank()) {
-                        accountWorkflowHandler.handleHumanVerificationSuccess(
-                            sessionId = SessionId(it.sessionId),
-                            tokenType = it.tokenType!!,
-                            tokenCode = it.tokenCode!!
-                        )
-                    } else {
-                        accountWorkflowHandler.handleHumanVerificationFailed(
-                            sessionId = SessionId(it.sessionId)
-                        )
-                    }
-                }
-            }
+            StartSignup()
+        ) {
+            onSignUpResultListener?.invoke(it)
         }
 
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
@@ -171,18 +156,7 @@ class AuthOrchestrator @Inject constructor(
         )
     }
 
-    private fun startHumanVerificationWorkflow(
-        sessionId: SessionId,
-        details: HumanVerificationDetails?
-    ) {
-        checkRegistered(humanWorkflowLauncher).launch(
-            HumanVerificationInput(
-                sessionId.id,
-                details?.verificationMethods?.map { it.value },
-                details?.captchaVerificationToken
-            )
-        )
-    }
+
     // endregion
 
     // region public API
@@ -193,10 +167,10 @@ class AuthOrchestrator @Inject constructor(
      */
     fun register(context: ComponentActivity) {
         loginWorkflowLauncher = registerLoginResult(context)
-        humanWorkflowLauncher = registerHumanVerificationResult(context)
         secondFactorWorkflowLauncher = registerSecondFactorResult(context)
         twoPassModeWorkflowLauncher = registerTwoPassModeResult(context)
         chooseAddressLauncher = registerChooseAddressResult(context)
+        signUpWorkflowLauncher = registerSignUpResult(context)
     }
 
     /**
@@ -204,21 +178,22 @@ class AuthOrchestrator @Inject constructor(
      */
     fun unregister() {
         loginWorkflowLauncher?.unregister()
-        humanWorkflowLauncher?.unregister()
         secondFactorWorkflowLauncher?.unregister()
         twoPassModeWorkflowLauncher?.unregister()
         chooseAddressLauncher?.unregister()
+        signUpWorkflowLauncher?.unregister()
 
         loginWorkflowLauncher = null
-        humanWorkflowLauncher = null
         secondFactorWorkflowLauncher = null
         twoPassModeWorkflowLauncher = null
         chooseAddressLauncher = null
+        signUpWorkflowLauncher = null
 
         onLoginResultListener = null
         onTwoPassModeResultListener = null
         onSecondFactorResultListener = null
         onChooseAddressResultListener = null
+        onSignUpResultListener = null
     }
 
     /**
@@ -283,13 +258,12 @@ class AuthOrchestrator @Inject constructor(
     }
 
     /**
-     * Start a Human Verification workflow.
+     * Starts the SignUp workflow.
      */
-    fun startHumanVerificationWorkflow(account: Account) {
-        val sessionId = checkNotNull(account.sessionId) {
-            "SessionId is null for startHumanVerificationWorkflow."
-        }
-        startHumanVerificationWorkflow(sessionId, account.details.humanVerification)
+    fun startSignupWorkflow(requiredAccountType: AccountType = AccountType.Internal) {
+        checkRegistered(signUpWorkflowLauncher).launch(
+            SignUpInput(requiredAccountType)
+        )
     }
     // endregion
 }

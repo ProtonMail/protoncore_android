@@ -28,9 +28,6 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertTrue
 
-/**
- * @author Dino Kadrikj.
- */
 class PerformLogoutTest {
     private val authRepository = mockk<AuthRepository>(relaxed = true)
 

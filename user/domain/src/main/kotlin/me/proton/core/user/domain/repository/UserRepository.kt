@@ -19,11 +19,15 @@
 package me.proton.core.user.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.account.domain.entity.CreateUserType
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.user.domain.entity.User
 
 interface UserRepository {
+
     /**
      * Add a [User], locally.
      *
@@ -53,5 +57,29 @@ interface UserRepository {
     suspend fun getUser(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
+    ): User
+
+    /**
+     * Create new [User]. Used during signup.
+     */
+    suspend fun createUser(
+        username: String,
+        password: EncryptedString,
+        recoveryEmail: String?,
+        recoveryPhone: String?,
+        referrer: String?,
+        type: CreateUserType,
+        auth: Auth
+    ): User
+
+    /**
+     * Create new [User]. Used during signup.
+     */
+    suspend fun createExternalEmailUser(
+        email: String,
+        password: EncryptedString,
+        referrer: String?,
+        type: CreateUserType,
+        auth: Auth
     ): User
 }

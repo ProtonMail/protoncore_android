@@ -42,9 +42,6 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-/**
- * @author Dino Kadrikj.
- */
 class AuthRepositoryImplTest {
 
     // region mocks

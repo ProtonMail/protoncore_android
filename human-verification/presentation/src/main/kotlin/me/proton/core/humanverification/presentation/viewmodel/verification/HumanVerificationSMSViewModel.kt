@@ -20,24 +20,25 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.country.domain.usecase.MostUsedCountryCode
-import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.domain.entity.VerificationResult
-import me.proton.core.humanverification.domain.exception.EmptyDestinationException
-import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
+import me.proton.core.user.domain.entity.UserVerificationTokenType
+import me.proton.core.user.domain.entity.VerificationResult
+import me.proton.core.user.domain.exception.EmptyDestinationException
+import me.proton.core.user.domain.usecase.SendVerificationCodeToPhoneDestination
 
 /**
- * View model class that handles and supports [TokenType.SMS] verification method (type) fragment.
- *
- * @author Dino Kadrikj.
+ * View model class that handles and supports [UserVerificationTokenType.SMS] verification method (type) fragment.
  */
 internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
     private val mostUseCountryCode: MostUsedCountryCode,
@@ -58,7 +59,7 @@ internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
      * @param countryCallingCode the calling code part of the phone number
      * @param phoneNumber the phone number that the user entered (without the calling code part)
      */
-    fun sendVerificationCodeToDestination(sessionId: SessionId, countryCallingCode: String, phoneNumber: String) {
+    fun sendVerificationCodeToDestination(sessionId: SessionId?, countryCallingCode: String, phoneNumber: String) {
         viewModelScope.launch {
             if (phoneNumber.isEmpty()) {
                 _validationSMS.tryEmit(
@@ -75,25 +76,28 @@ internal class HumanVerificationSMSViewModel @ViewModelInject constructor(
      * Tries to return the most used country calling code and later to display it as a suggestion
      * in the SMS verification UI.
      */
-    fun getMostUsedCallingCode() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val code = mostUseCountryCode()
-            code?.let {
-                _mostUsedCallingCode.tryEmit(ViewModelResult.Success(it))
-            } ?: run {
-                _mostUsedCallingCode.tryEmit(ViewModelResult.Error(null))
-            }
+    fun getMostUsedCallingCode() = flow {
+        emit(ViewModelResult.Processing)
+        val code = mostUseCountryCode()
+        code?.let {
+            emit(ViewModelResult.Success(it))
+        } ?: run {
+            emit(ViewModelResult.Error(null))
         }
-    }
+    }.catch { error ->
+        _mostUsedCallingCode.tryEmit(ViewModelResult.Error(error))
+    }.onEach {
+        _mostUsedCallingCode.tryEmit(it)
+    }.launchIn(viewModelScope)
 
     /**
      * Contacts the API and sends the verification code to the destination phone number the user
      * has entered in the UI.
      */
-    private suspend fun sendVerificationCodeToSMS(sessionId: SessionId, phoneNumber: String) {
+    private suspend fun sendVerificationCodeToSMS(sessionId: SessionId?, phoneNumber: String) {
         val deferred = sendVerificationCodeToPhoneDestination.invoke(sessionId, phoneNumber)
         if (deferred is VerificationResult.Success) {
-            _verificationCodeStatusSMS.tryEmit(ViewModelResult.Success(true))
+            _verificationCodeStatusSMS.tryEmit(ViewModelResult.Success(phoneNumber))
         } else {
             _verificationCodeStatusSMS.tryEmit(ViewModelResult.Error(VerificationCodeSendingException()))
         }

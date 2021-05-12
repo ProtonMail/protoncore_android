@@ -140,7 +140,7 @@ interface UserManager {
     )
 
     /**
-     * Create a new primary [UserKey], [UserAddress], [UserAddressKey], and set the derived passphrase for the user.
+     * Create a new primary [UserKey], [UserAddressKey], and set the derived passphrase for the user.
      */
     suspend fun setupPrimaryKeys(
         sessionUserId: SessionUserId,

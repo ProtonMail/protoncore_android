@@ -23,15 +23,12 @@ import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.humanverification.domain.usecase.VerifyCode
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Rule
 import org.junit.Test
-import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -40,13 +37,10 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
 
-    private val sessionId: SessionId = SessionId("id")
-    private val verifyCode = mockk<VerifyCode>()
     private val networkManager = mockk<NetworkManager>()
 
     private val viewModel by lazy {
         HumanVerificationCaptchaViewModel(
-            verifyCode = verifyCode,
             networkManager = networkManager
         )
     }
@@ -85,21 +79,5 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
             assertTrue(result is ViewModelResult.Success<Boolean>)
             assertFalse(result.value)
         }
-    }
-
-    @Test
-    fun `verify code null fails`() = coroutinesTest {
-        every {
-            networkManager.observe()
-        } returns flowOf(NetworkStatus.Unmetered)
-        assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode(sessionId, null) }
-    }
-
-    @Test
-    fun `verify code empty fails`() = coroutinesTest {
-        every {
-            networkManager.observe()
-        } returns flowOf(NetworkStatus.Unmetered)
-        assertFailsWith<IllegalArgumentException> { viewModel.verifyTokenCode(sessionId, "") }
     }
 }

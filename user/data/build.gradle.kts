@@ -25,14 +25,15 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 0, 6)
+libVersion = Version(1, 1, 0)
 
 android()
 
 dependencies {
     implementation(
         project(Module.kotlinUtil),
-        project(Module.network),
+        project(Module.networkDomain),
+        project(Module.networkData),
         project(Module.data),
         project(Module.domain),
         project(Module.userDomain),
@@ -55,6 +56,7 @@ dependencies {
         `store4`
     )
 
+    testImplementation(project(Module.androidTest))
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
         project(Module.domain),

@@ -57,7 +57,8 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel.register(this)
+        viewModel.observeHumanVerification(this)
         binding.apply {
             closeButton.onClick {
                 onBackPressed()

@@ -26,13 +26,19 @@ import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.data.api.request.AuthRequest
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.api.UserApi
+import me.proton.core.user.data.api.request.CreateExternalUserRequest
+import me.proton.core.user.data.api.request.CreateUserRequest
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
@@ -94,6 +100,47 @@ class UserRepositoryImpl(
     override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User =
         if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)
 
+    /**
+     * Create new [User]. Used during signup.
+     */
+    override suspend fun createUser(
+        username: String,
+        password: EncryptedString,
+        recoveryEmail: String?,
+        recoveryPhone: String?,
+        referrer: String?,
+        type: CreateUserType,
+        auth: Auth
+    ): User =
+        provider.get<UserApi>().invoke {
+            val request = CreateUserRequest(
+                username,
+                recoveryEmail,
+                recoveryPhone,
+                referrer,
+                type.value,
+                AuthRequest.from(auth)
+            )
+            val userResponse = createUser(request).user
+            userResponse.toUser(getPassphrase(UserId(userResponse.id)))
+        }.valueOrThrow
+
+    /**
+     * Create new [User]. Used during signup.
+     */
+    override suspend fun createExternalEmailUser(
+        email: String,
+        password: EncryptedString,
+        referrer: String?,
+        type: CreateUserType,
+        auth: Auth
+    ): User =
+        provider.get<UserApi>().invoke {
+            val request = CreateExternalUserRequest(email, referrer, type.value, AuthRequest.from(auth))
+            val userResponse = createExternalUser(request).user
+            userResponse.toUser(getPassphrase(UserId(userResponse.id)))
+        }.valueOrThrow
+
     // region PassphraseRepository
 
     override suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray) =
@@ -109,4 +156,6 @@ class UserRepositoryImpl(
         userDao.setPassphrase(userId, null)
 
     //endregion
+
+
 }

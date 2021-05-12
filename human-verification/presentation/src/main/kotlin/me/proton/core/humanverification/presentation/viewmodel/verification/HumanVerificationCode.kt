@@ -41,10 +41,13 @@ internal interface HumanVerificationCode {
     /**
      * Verification code sending result LiveData.
      */
-    val verificationCodeStatus: StateFlow<ViewModelResult<Boolean>>
+    val verificationCodeStatus: StateFlow<ViewModelResult<String>>
         get() = getNewVerificationCodeStatus().asStateFlow()
 
-    fun getNewValidation(): MutableStateFlow<ViewModelResult<List<CountryUIModel>>> = MutableStateFlow(ViewModelResult.None)
-    fun getNewVerificationCodeStatus(): MutableStateFlow<ViewModelResult<Boolean>> = MutableStateFlow(ViewModelResult.None)
+    fun getNewValidation(): MutableStateFlow<ViewModelResult<List<CountryUIModel>>> =
+        MutableStateFlow(ViewModelResult.None)
+
+    fun getNewVerificationCodeStatus(): MutableStateFlow<ViewModelResult<String>> =
+        MutableStateFlow(ViewModelResult.None)
 
 }

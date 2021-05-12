@@ -18,22 +18,20 @@
 
 package me.proton.core.humanverification.presentation.ui
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 
-class StartHumanVerification : ActivityResultContract<HumanVerificationInput, HumanVerificationResult?>() {
+internal class StartHumanVerification : ActivityResultContract<HumanVerificationInput, HumanVerificationResult?>() {
 
     override fun createIntent(context: Context, input: HumanVerificationInput) =
         Intent(context, HumanVerificationActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra(HumanVerificationActivity.ARG_HUMAN_VERIFICATION_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, result: Intent?): HumanVerificationResult? {
-        if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(HumanVerificationActivity.ARG_HUMAN_VERIFICATION_RESULT)
-    }
+    override fun parseResult(resultCode: Int, result: Intent?): HumanVerificationResult? =
+        result?.getParcelableExtra(HumanVerificationActivity.ARG_HUMAN_VERIFICATION_RESULT)
 }

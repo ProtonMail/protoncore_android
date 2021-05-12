@@ -24,7 +24,6 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 
@@ -124,11 +123,6 @@ interface AccountRepository {
     suspend fun updateSessionScopes(sessionId: SessionId, scopes: List<String>)
 
     /**
-     * Update session human verification headers, locally.
-     */
-    suspend fun updateSessionHeaders(sessionId: SessionId, tokenType: String?, tokenCode: String?)
-
-    /**
      * Update session token, locally.
      */
     suspend fun updateSessionToken(sessionId: SessionId, accessToken: String, refreshToken: String)
@@ -147,21 +141,6 @@ interface AccountRepository {
      * Set the primary [UserId].
      */
     suspend fun setAsPrimary(userId: UserId)
-
-    /**
-     * Get [HumanVerificationDetails], if exist, by sessionId.
-     */
-    suspend fun getHumanVerificationDetails(sessionId: SessionId): HumanVerificationDetails?
-
-    /**
-     * Set [HumanVerificationDetails], by sessionId.
-     */
-    suspend fun setHumanVerificationDetails(sessionId: SessionId, details: HumanVerificationDetails)
-
-    /**
-     * Marks the human verification details as completed (successfully).
-     */
-    suspend fun updateHumanVerificationCompleted(sessionId: SessionId)
 
     /**
      * Get [SessionDetails], if exist, by sessionId.

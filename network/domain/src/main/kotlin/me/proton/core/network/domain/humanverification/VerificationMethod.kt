@@ -18,7 +18,6 @@
 
 package me.proton.core.network.domain.humanverification
 
-import me.proton.core.util.kotlin.equalsNoCase
 import java.util.Locale
 
 /**

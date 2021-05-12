@@ -22,10 +22,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
-import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEmailBinding
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
@@ -33,16 +30,15 @@ import me.proton.core.humanverification.presentation.viewmodel.verification.Huma
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateEmail
-import me.proton.core.presentation.viewmodel.onError
+import me.proton.core.user.domain.entity.UserVerificationTokenType
 
 /**
  * Fragment that handles human verification with email address.
- *
- * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
 internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVerificationEmailBinding>() {
@@ -53,12 +49,16 @@ internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVeri
         HumanVerificationMethodCommon(
             viewModel = viewModel,
             urlToken = requireArguments().get(ARG_URL_TOKEN) as String,
-            tokenType = TokenType.EMAIL
+            tokenType = UserVerificationTokenType.EMAIL
         )
     }
 
-    private val sessionId: SessionId by lazy {
-        SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
+    private val sessionId: SessionId? by lazy {
+        requireArguments().getString(ARG_SESSION_ID)?.let {
+            SessionId(it)
+        } ?: run {
+            null
+        }
     }
 
     private val recoveryEmailAddress: String? by lazy {
@@ -79,20 +79,22 @@ internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVeri
         }
         binding.apply {
             getVerificationCodeButton.onClick {
+                hideKeyboard()
+                getVerificationCodeButton.setLoading()
                 emailEditText.validateEmail()
-                    .onFailure { emailEditText.setInputError() }
+                    .onFailure {
+                        emailEditText.setInputError()
+                        getVerificationCodeButton.setIdle()
+                    }
                     .onSuccess {
-                        getVerificationCodeButton.setLoading()
                         viewModel.sendVerificationCode(sessionId, it)
                     }
             }
             proceedButton.onClick {
-                humanVerificationBase.onGetCodeClicked(parentFragmentManager)
+                hideKeyboard()
+                humanVerificationBase.onGetCodeClicked(parentFragmentManager = parentFragmentManager)
             }
         }
-        viewModel.validation.onError {
-            binding.emailEditText.setInputError()
-        }.launchIn(lifecycleScope)
     }
 
     override fun layoutId(): Int = R.layout.fragment_human_verification_email
@@ -106,7 +108,7 @@ internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVeri
         private const val ARG_RECOVERY_EMAIL = "arg.recoveryemail"
 
         operator fun invoke(
-            sessionId: String,
+            sessionId: String?,
             token: String,
             recoveryEmailAddress: String? = null
         ) = HumanVerificationEmailFragment().apply {

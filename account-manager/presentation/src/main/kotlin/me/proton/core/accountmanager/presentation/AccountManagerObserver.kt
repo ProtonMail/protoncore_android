@@ -129,22 +129,6 @@ fun AccountManagerObserver.onAccountRemoved(
     return this
 }
 
-fun AccountManagerObserver.onSessionHumanVerificationNeeded(
-    initialState: Boolean = true,
-    block: suspend (Account) -> Unit
-): AccountManagerObserver {
-    addSessionStateListener(SessionState.HumanVerificationNeeded, initialState, block)
-    return this
-}
-
-fun AccountManagerObserver.onSessionHumanVerificationFailed(
-    initialState: Boolean = true,
-    block: suspend (Account) -> Unit
-): AccountManagerObserver {
-    addSessionStateListener(SessionState.HumanVerificationFailed, initialState, block)
-    return this
-}
-
 fun AccountManagerObserver.onSessionSecondFactorNeeded(
     initialState: Boolean = true,
     block: suspend (Account) -> Unit

@@ -26,7 +26,9 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class HumanVerificationResult(
-    val sessionId: String,
+    val clientId: String,
+    val clientIdType: String,
     val tokenType: String?,
-    val tokenCode: String?
+    val tokenCode: String?,
+    val canceled: Boolean = false
 ) : Parcelable

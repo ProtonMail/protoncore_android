@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.onEach
 
 sealed class ViewModelResult<out T> {
     object None : ViewModelResult<Nothing>()
+    object Processing : ViewModelResult<Nothing>()
     data class Success<T>(val value: T) : ViewModelResult<T>()
     data class Error(val throwable: Throwable?) : ViewModelResult<Nothing>()
 }

@@ -28,7 +28,6 @@ import me.proton.core.humanverification.presentation.entity.HumanVerificationInp
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.utils.defaultVerificationMethods
 import me.proton.core.humanverification.presentation.utils.showHumanVerification
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonActivity
 
 /**
@@ -39,11 +38,6 @@ class HumanVerificationActivity :
     ProtonActivity<ActivityHumanVerificationBinding>(),
     HumanVerificationDialogFragment.OnResultListener {
 
-    companion object {
-        const val ARG_HUMAN_VERIFICATION_INPUT = "arg.humanVerificationInput"
-        const val ARG_HUMAN_VERIFICATION_RESULT = "arg.humanVerificationResult"
-    }
-
     override fun layoutId(): Int = R.layout.activity_human_verification
 
     private val input: HumanVerificationInput by lazy {
@@ -53,18 +47,29 @@ class HumanVerificationActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager.showHumanVerification(
-            sessionId = SessionId(input.sessionId),
+            clientId = input.clientId,
+            clientIdType = input.clientIdType,
             // filter only the app supported verification methods. (the API can send more of them).
             availableVerificationMethods = input.verificationMethods?.filter { defaultVerificationMethods.contains(it) }
                 ?: defaultVerificationMethods,
             captchaToken = input.captchaToken,
-            largeLayout = false
+            largeLayout = false,
+            recoveryEmailAddress = input.recoveryEmailAddress
         )
     }
 
     override fun setResult(result: HumanVerificationResult?) {
-        val intent = Intent().apply { putExtra(ARG_HUMAN_VERIFICATION_RESULT, result) }
-        setResult(Activity.RESULT_OK, intent)
+        result?.let {
+            val intent = Intent().apply { putExtra(ARG_HUMAN_VERIFICATION_RESULT, it) }
+            setResult(Activity.RESULT_OK, intent)
+        } ?: run {
+            setResult(Activity.RESULT_CANCELED)
+        }
         finish()
+    }
+
+    companion object {
+        const val ARG_HUMAN_VERIFICATION_INPUT = "arg.humanVerificationInput"
+        const val ARG_HUMAN_VERIFICATION_RESULT = "arg.humanVerificationResult"
     }
 }

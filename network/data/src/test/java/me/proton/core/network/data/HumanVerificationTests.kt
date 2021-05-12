@@ -22,7 +22,6 @@ import android.os.Build
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
@@ -31,6 +30,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
+import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkPrefs
 import me.proton.core.network.data.util.MockSession
@@ -42,8 +42,14 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.session.CookieSessionId
+import me.proton.core.network.domain.session.HumanVerificationListener
+import me.proton.core.network.domain.session.HumanVerificationProvider
 import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.equalsNoCase
@@ -55,6 +61,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.net.HttpCookie
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -63,8 +70,6 @@ import kotlin.test.assertTrue
 
 /**
  * Human verification related tests.
- *
- * @author Dino Kadrikj.
  */
 @Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
@@ -110,9 +115,12 @@ internal class HumanVerificationTests {
     private lateinit var client: MockApiClient
 
     private lateinit var session: Session
+    private lateinit var clientId: ClientId
 
-    @MockK
-    private lateinit var sessionProvider: SessionProvider
+    private var sessionProvider = mockk<SessionProvider>()
+    private val humanVerificationProvider = mockk<HumanVerificationProvider>()
+    private val humanVerificationListener = mockk<HumanVerificationListener>()
+
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
     )
@@ -132,6 +140,7 @@ internal class HumanVerificationTests {
         prefs = MockNetworkPrefs()
 
         session = MockSession.getDefault()
+        clientId = MockClientId.getForSession(session.sessionId)
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
         every { cookieStore.get(any()) } returns emptyList()
@@ -144,7 +153,9 @@ internal class HumanVerificationTests {
                 networkManager,
                 prefs,
                 sessionProvider,
+                humanVerificationProvider,
                 sessionListener,
+                humanVerificationListener,
                 cookieStore,
                 scope
             )
@@ -153,18 +164,20 @@ internal class HumanVerificationTests {
         isNetworkAvailable = true
         webServer = testTlsHelper.createMockServer()
 
-        backend = createBackend {
+        backend = createBackend(session.sessionId) {
             testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
         }
     }
 
-    private fun createBackend(pinningInit: (OkHttpClient.Builder) -> Unit) =
+    private fun createBackend(sessionId: SessionId?, pinningInit: (OkHttpClient.Builder) -> Unit) =
         ProtonApiBackend(
             webServer.url("/").toString(),
             client,
             logger,
-            session.sessionId,
+            sessionId,
             sessionProvider,
+            humanVerificationProvider,
+            cookieStore,
             apiFactory.baseOkHttpClient,
             listOf(
                 ScalarsConverterFactory.create(),
@@ -186,6 +199,62 @@ internal class HumanVerificationTests {
             422,
             humanVerificationResponse
         )
+        val humanVerificationDetails = spyk(
+            HumanVerificationDetails(
+                clientId = clientId,
+                verificationMethods = mockk(),
+                captchaVerificationToken = null,
+                state = HumanVerificationState.HumanVerificationSuccess,
+                tokenType = "captcha",
+                tokenCode = "captcha token"
+            )
+        )
+
+        coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
+
+        val result = backend(ApiManager.Call(0) { test() })
+        assertTrue(result is ApiResult.Error.Http)
+        val data = result.proton
+        assertNotNull(data)
+        val humanVerification = data.humanVerification
+        assertNotNull(humanVerification)
+        assertNotNull(humanVerification.captchaVerificationToken)
+        assertEquals(3, humanVerification.verificationMethods.size)
+        assertTrue("captcha".equalsNoCase(humanVerification.verificationMethods[0].name))
+    }
+
+    @Test
+    fun `test human verification for cookie returned`() = runBlocking {
+        every { cookieStore.get(any()) } returns listOf(HttpCookie("Session-Id", "test-cookie-id"))
+
+        val backend = createBackend(null) {
+            testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
+        }
+
+        webServer.prepareResponse(
+            422,
+            humanVerificationResponse
+        )
+        val humanVerificationDetails = spyk(
+            HumanVerificationDetails(
+                clientId = clientId,
+                verificationMethods = mockk(),
+                captchaVerificationToken = null,
+                state = HumanVerificationState.HumanVerificationSuccess,
+                tokenType = "captcha",
+                tokenCode = "captcha token"
+            )
+        )
+
+        coEvery {
+            humanVerificationProvider.getHumanVerificationDetails(
+                ClientId.CookieSession(
+                    CookieSessionId(
+                        "test-cookie-id"
+                    )
+                )
+            )
+        } returns humanVerificationDetails
 
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Http)
@@ -204,7 +273,18 @@ internal class HumanVerificationTests {
             422,
             otherDetailsResponse
         )
+        val humanVerificationDetails = spyk(
+            HumanVerificationDetails(
+                clientId = clientId,
+                verificationMethods = mockk(),
+                captchaVerificationToken = null,
+                state = HumanVerificationState.HumanVerificationSuccess,
+                tokenType = "captcha",
+                tokenCode = "captcha token"
+            )
+        )
 
+        coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Http)
         val data = result.proton
@@ -213,29 +293,76 @@ internal class HumanVerificationTests {
     }
 
     @Test
-    fun `test human verification headers`() = runBlocking {
+    fun `test human verification headers for sessionId`() = runBlocking {
         webServer.prepareResponse(
             422,
             humanVerificationResponse
         )
-        val humanVerificationHeaders = spyk(
-            HumanVerificationHeaders(
-                "captcha",
-                "captcha token"
+        val humanVerificationDetails = spyk(
+            HumanVerificationDetails(
+                clientId = clientId,
+                verificationMethods = mockk(),
+                captchaVerificationToken = null,
+                state = HumanVerificationState.HumanVerificationSuccess,
+                tokenType = "captcha",
+                tokenCode = "captcha token"
             )
         )
 
-        coEvery { sessionProvider.getSession(any()) } returns MockSession.getWithHeader(
-            humanVerificationHeaders
-        )
+        coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
 
         backend(ApiManager.Call(0) { test() })
         val headers = webServer.takeRequest().headers
         verify(exactly = 1) {
-            humanVerificationHeaders.tokenCode
+            humanVerificationDetails.tokenCode
         }
         verify(exactly = 1) {
-            humanVerificationHeaders.tokenType
+            humanVerificationDetails.tokenType
+        }
+        assertTrue(headers.contains(Pair("x-pm-human-verification-token-type", "captcha")))
+        assertTrue(headers.contains(Pair("x-pm-human-verification-token", "captcha token")))
+    }
+
+    @Test
+    fun `test human verification headers for cookieId`() = runBlocking {
+        every { cookieStore.get(any()) } returns listOf(HttpCookie("Session-Id", "test-cookie-id"))
+
+        val backend = createBackend(null) {
+            testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
+        }
+
+        webServer.prepareResponse(
+            422,
+            humanVerificationResponse
+        )
+        val humanVerificationDetails = spyk(
+            HumanVerificationDetails(
+                clientId = clientId,
+                verificationMethods = mockk(),
+                captchaVerificationToken = null,
+                state = HumanVerificationState.HumanVerificationSuccess,
+                tokenType = "captcha",
+                tokenCode = "captcha token"
+            )
+        )
+
+        coEvery {
+            humanVerificationProvider.getHumanVerificationDetails(
+                ClientId.CookieSession(
+                    CookieSessionId(
+                        "test-cookie-id"
+                    )
+                )
+            )
+        } returns humanVerificationDetails
+
+        backend(ApiManager.Call(0) { test() })
+        val headers = webServer.takeRequest().headers
+        verify(exactly = 1) {
+            humanVerificationDetails.tokenCode
+        }
+        verify(exactly = 1) {
+            humanVerificationDetails.tokenType
         }
         assertTrue(headers.contains(Pair("x-pm-human-verification-token-type", "captcha")))
         assertTrue(headers.contains(Pair("x-pm-human-verification-token", "captcha token")))

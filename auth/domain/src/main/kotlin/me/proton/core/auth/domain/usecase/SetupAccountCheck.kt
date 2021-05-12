@@ -80,7 +80,10 @@ class SetupAccountCheck @Inject constructor(
 
         return when (requiredAccountType) {
             AccountType.Username -> Result.NoSetupNeeded
-            AccountType.External -> Result.NoSetupNeeded
+            AccountType.External -> when {
+                !hasKeys -> Result.SetupPrimaryKeysNeeded
+                else -> Result.NoSetupNeeded
+            }
             AccountType.Internal -> when {
                 !hasUsername -> Result.ChooseUsernameNeeded
                 !hasKeys -> Result.SetupPrimaryKeysNeeded

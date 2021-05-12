@@ -29,7 +29,6 @@ import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
@@ -69,8 +68,6 @@ class RepositoryMocks(
         val accountStateSlot = slot<AccountState>()
         val sessionStateSlot = slot<SessionState>()
         val updatedScopesSlot = slot<List<String>>()
-        val tokenTypeSlot = slot<String>()
-        val tokenCodeSlot = slot<String>()
         val accessTokenSlot = slot<String>()
         val refreshTokenSlot = slot<String>()
 
@@ -134,26 +131,6 @@ class RepositoryMocks(
                 listOf(
                     flowOfSessionLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
                         scopes = updatedScopesSlot.captured
-                    )
-                )
-            )
-        }
-
-        // For each updateSessionHeaders -> emit a new updated List<Session> from getSessions().
-        coEvery {
-            accountRepository.updateSessionHeaders(
-                capture(sessionIdSlot),
-                capture(tokenTypeSlot),
-                capture(tokenCodeSlot)
-            )
-        } answers {
-            flowOfSessionLists.add(
-                listOf(
-                    flowOfSessionLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
-                        headers = HumanVerificationHeaders(
-                            tokenTypeSlot.captured,
-                            tokenCodeSlot.captured
-                        )
                     )
                 )
             )

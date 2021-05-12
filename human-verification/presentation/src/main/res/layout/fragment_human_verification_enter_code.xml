@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_top_margin"
                 android:hint="@string/verification_code_hint"
+                android:inputType="number"
                 app:label="@string/human_verification_code"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

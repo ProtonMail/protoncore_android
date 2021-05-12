@@ -29,7 +29,6 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.account.data.db.AccountDao
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.db.AccountMetadataDao
-import me.proton.core.account.data.db.HumanVerificationDetailsDao
 import me.proton.core.account.data.db.SessionDao
 import me.proton.core.account.data.db.SessionDetailsDao
 import me.proton.core.account.data.entity.AccountEntity
@@ -67,9 +66,6 @@ class AccountRepositoryImplTest {
     @RelaxedMockK
     private lateinit var metadataDao: AccountMetadataDao
 
-    @RelaxedMockK
-    private lateinit var humanVerificationDao: HumanVerificationDetailsDao
-
     private val simpleCrypto = object : KeyStoreCrypto {
         override fun encrypt(value: String): EncryptedString = value
         override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array)
@@ -92,8 +88,6 @@ class AccountRepositoryImplTest {
         accessToken = "accessToken",
         refreshToken = "refreshToken",
         scopes = "full,calendar,mail",
-        humanHeaderTokenType = null,
-        humanHeaderTokenCode = null,
         product = Product.Calendar
     )
 
@@ -103,12 +97,10 @@ class AccountRepositoryImplTest {
         accessToken = "",
         refreshToken = "",
         scopes = "full,calendar,mail",
-        humanHeaderTokenType = null,
-        humanHeaderTokenCode = null,
         product = Product.Calendar
     )
 
-    private val ad = AccountDetails(null, null)
+    private val ad = AccountDetails(null)
 
     @Before
     fun beforeEveryTest() {
@@ -124,7 +116,6 @@ class AccountRepositoryImplTest {
         every { db.sessionDao() } returns sessionDao
         every { db.sessionDetailsDao() } returns sessionDetailsDao
         every { db.accountMetadataDao() } returns metadataDao
-        every { db.humanVerificationDetailsDao() } returns humanVerificationDao
 
         mockkStatic("androidx.room.RoomDatabaseKt")
         val transactionLambda = slot<suspend () -> Unit>()
@@ -135,7 +126,6 @@ class AccountRepositoryImplTest {
         coEvery { accountDao.getByUserId(any()) } returns account1
         coEvery { accountDao.getBySessionId(any()) } returns account1
         coEvery { sessionDetailsDao.getBySessionId(any()) } returns null
-        coEvery { humanVerificationDao.getBySessionId(any()) } returns null
     }
 
     @Test

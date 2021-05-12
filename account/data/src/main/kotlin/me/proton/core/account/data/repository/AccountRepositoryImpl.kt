@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.onSubscription
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
-import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.extension.toAccountEntity
 import me.proton.core.account.data.extension.toSessionEntity
@@ -43,7 +42,6 @@ import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.data.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.exhaustive
@@ -58,7 +56,6 @@ class AccountRepositoryImpl(
     private val accountDao = db.accountDao()
     private val sessionDao = db.sessionDao()
     private val accountMetadataDao = db.accountMetadataDao()
-    private val humanVerificationDetailsDao = db.humanVerificationDetailsDao()
     private val sessionDetailsDao = db.sessionDetailsDao()
 
     // Accept 10 nested/concurrent state changes -> extraBufferCapacity.
@@ -95,8 +92,7 @@ class AccountRepositoryImpl(
     private suspend fun getAccountInfo(entity: AccountEntity): AccountDetails {
         val sessionId = entity.sessionId
         return AccountDetails(
-            session = sessionId?.let { getSessionDetails(it) },
-            humanVerification = sessionId?.let { getHumanVerificationDetails(it) }
+            session = sessionId?.let { getSessionDetails(it) }
         )
     }
 
@@ -216,13 +212,6 @@ class AccountRepositoryImpl(
     override suspend fun updateSessionScopes(sessionId: SessionId, scopes: List<String>) =
         sessionDao.updateScopes(sessionId, CommonConverters.fromListOfStringToString(scopes).orEmpty())
 
-    override suspend fun updateSessionHeaders(sessionId: SessionId, tokenType: String?, tokenCode: String?) =
-        sessionDao.updateHeaders(
-            sessionId,
-            tokenType?.encryptWith(keyStoreCrypto),
-            tokenCode?.encryptWith(keyStoreCrypto)
-        )
-
     override suspend fun updateSessionToken(sessionId: SessionId, accessToken: String, refreshToken: String) =
         sessionDao.updateToken(
             sessionId,
@@ -246,21 +235,6 @@ class AccountRepositoryImpl(
             tryInsertOrUpdateAccountMetadata(userId)
         }
     }
-
-    override suspend fun getHumanVerificationDetails(sessionId: SessionId): HumanVerificationDetails? =
-        humanVerificationDetailsDao.getBySessionId(sessionId)?.toHumanVerificationDetails()
-
-    override suspend fun setHumanVerificationDetails(sessionId: SessionId, details: HumanVerificationDetails) =
-        humanVerificationDetailsDao.insertOrUpdate(
-            HumanVerificationDetailsEntity(
-                sessionId = sessionId,
-                verificationMethods = details.verificationMethods.map { method -> method.value },
-                captchaVerificationToken = details.captchaVerificationToken
-            )
-        )
-
-    override suspend fun updateHumanVerificationCompleted(sessionId: SessionId) =
-        humanVerificationDetailsDao.delete(sessionId = sessionId)
 
     override suspend fun getSessionDetails(sessionId: SessionId): SessionDetails? =
         sessionDetailsDao.getBySessionId(sessionId)?.toSessionDetails()

@@ -32,5 +32,5 @@ enum class AccountType {
     /**
      * User with at least one external email address associated with it, but no username.
      */
-    External
+    External;
 }

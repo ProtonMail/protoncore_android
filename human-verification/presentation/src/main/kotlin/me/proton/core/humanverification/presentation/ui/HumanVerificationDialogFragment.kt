@@ -28,7 +28,6 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationMainBinding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
@@ -38,21 +37,26 @@ import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationEmailContent
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationSMSContent
 import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel
+import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.session.ClientIdType
+import me.proton.core.network.domain.session.CookieSessionId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.user.domain.entity.UserVerificationTokenType
+import me.proton.core.util.kotlin.exhaustive
 
 /**
  * Shows the dialog for the Human Verification options and option procedures.
- *
- * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
 class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerificationMainBinding>() {
 
     companion object {
-        private const val ARG_SESSION_ID = "arg.sessionId"
+        private const val ARG_CLIENT_ID = "arg.clientId"
+        private const val ARG_CLIENT_ID_TYPE = "arg.clientIdType"
         private const val ARG_CAPTCHA_TOKEN = "arg.captcha-token"
+        private const val ARG_RECOVERY_EMAIL_ADDRESS = "arg.recoveryEmailAddress"
         const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
         const val ARG_DESTINATION = "arg.destination"
         const val ARG_TOKEN_CODE = "arg.token-code"
@@ -68,14 +72,18 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
          * @param captchaToken if the API returns it, otherwise null
          */
         operator fun invoke(
-            sessionId: String,
+            clientId: String,
+            clientIdType: String,
             availableVerificationMethods: List<String>,
-            captchaToken: String?
+            captchaToken: String?,
+            recoveryEmailAddress: String?
         ) = HumanVerificationDialogFragment().apply {
             arguments = bundleOf(
-                ARG_SESSION_ID to sessionId,
+                ARG_CLIENT_ID to clientId,
+                ARG_CLIENT_ID_TYPE to clientIdType,
                 ARG_VERIFICATION_OPTIONS to availableVerificationMethods,
-                ARG_CAPTCHA_TOKEN to captchaToken
+                ARG_CAPTCHA_TOKEN to captchaToken,
+                ARG_RECOVERY_EMAIL_ADDRESS to recoveryEmailAddress
             )
         }
     }
@@ -83,12 +91,31 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
     private val viewModel by viewModels<HumanVerificationViewModel>()
     private lateinit var resultListener: OnResultListener
 
-    private val sessionId: SessionId by lazy {
-        SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
+    private val clientIdType: ClientIdType by lazy {
+        ClientIdType.getByValue(requireArguments().getString(ARG_CLIENT_ID_TYPE, null))
+    }
+
+    private val clientId: ClientId by lazy {
+        val clientId = requireArguments().getString(ARG_CLIENT_ID)!!
+        when (clientIdType) {
+            ClientIdType.SESSION -> ClientId.AccountSession(SessionId(clientId))
+            ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
+        }.exhaustive
+    }
+
+    private val sessionId: SessionId? by lazy {
+        when (clientIdType) {
+            ClientIdType.SESSION -> SessionId(clientId.id)
+            ClientIdType.COOKIE -> null
+        }.exhaustive
     }
 
     private val captchaToken: String? by lazy {
         requireArguments().get(ARG_CAPTCHA_TOKEN) as String?
+    }
+
+    private val recoveryEmailAddress: String? by lazy {
+        requireArguments().get(ARG_RECOVERY_EMAIL_ADDRESS) as String?
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +123,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
         childFragmentManager.setFragmentResultListener(KEY_PHASE_TWO, this) { _, bundle ->
             val destination = bundle.getString(ARG_DESTINATION)
-            val tokenType = TokenType.fromString(bundle.getString(ARG_TOKEN_TYPE)!!)
+            val tokenType = UserVerificationTokenType.fromString(bundle.getString(ARG_TOKEN_TYPE)!!)
             childFragmentManager.showEnterCode(
                 sessionId = sessionId,
                 tokenType = tokenType,
@@ -106,7 +133,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         childFragmentManager.setFragmentResultListener(KEY_VERIFICATION_DONE, this) { _, bundle ->
             val tokenCode = bundle.getString(ARG_TOKEN_CODE)
             val tokenType = bundle.getString(ARG_TOKEN_TYPE)
-            onClose(tokenType, tokenCode)
+            setResult(tokenType, tokenCode)
         }
     }
 
@@ -122,11 +149,11 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             .launchIn(lifecycleScope)
 
         viewModel.activeMethod
-            .onEach { setActiveVerificationMethod(TokenType.fromString(it)) }
+            .onEach { setActiveVerificationMethod(UserVerificationTokenType.fromString(it)) }
             .launchIn(lifecycleScope)
 
         binding.headerNavigation.closeButton.onClick {
-            onClose(null, null)
+            setResult(tokenType = null, tokenCode = null, canceled = true)
         }
         binding.headerNavigation.helpButton.onClick {
             childFragmentManager.showHelp()
@@ -140,7 +167,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.let {
-                    val type = tab.tag as TokenType
+                    val type = tab.tag as UserVerificationTokenType
                     viewModel.defineActiveVerificationMethod(type)
                 }
             }
@@ -154,29 +181,29 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             for (method in enabledMethods) {
                 val tab = newTab().apply {
                     text = method
-                    tag = TokenType.fromString(method)
+                    tag = UserVerificationTokenType.fromString(method)
                 }
                 addTab(tab)
             }
         }
     }
 
-    private fun setActiveVerificationMethod(verificationMethod: TokenType) {
+    private fun setActiveVerificationMethod(verificationMethod: UserVerificationTokenType) {
         when (verificationMethod) {
-            TokenType.CAPTCHA -> {
+            UserVerificationTokenType.CAPTCHA -> {
                 childFragmentManager.showHumanVerificationCaptchaContent(
-                    sessionId = sessionId,
                     token = captchaToken,
                     containerId = binding.fragmentOptionsContainer.id
                 )
             }
-            TokenType.EMAIL -> {
+            UserVerificationTokenType.EMAIL -> {
                 childFragmentManager.showHumanVerificationEmailContent(
                     sessionId = sessionId,
-                    containerId = binding.fragmentOptionsContainer.id
+                    containerId = binding.fragmentOptionsContainer.id,
+                    recoveryEmailAddress = recoveryEmailAddress
                 )
             }
-            TokenType.SMS -> {
+            UserVerificationTokenType.SMS -> {
                 childFragmentManager.showHumanVerificationSMSContent(
                     sessionId = sessionId,
                     containerId = binding.fragmentOptionsContainer.id
@@ -188,13 +215,16 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         }
     }
 
-    private fun onClose(tokenType: String? = null, tokenCode: String? = null) {
-        if (!tokenType.isNullOrEmpty() && !tokenCode.isNullOrEmpty()) {
-            resultListener.setResult(HumanVerificationResult(sessionId.id, tokenType, tokenCode))
-            dismissAllowingStateLoss()
-            return
+    private fun setResult(tokenType: String? = null, tokenCode: String? = null, canceled: Boolean = false) {
+        viewModel.onHumanVerificationSuccess(clientId, tokenType, tokenCode).invokeOnCompletion {
+            resultListener.setResult(
+                HumanVerificationResult(
+                    clientId = clientId.id,
+                    clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: run { ClientIdType.COOKIE.value },
+                    tokenType = tokenType, tokenCode = tokenCode, canceled = canceled
+                )
+            )
         }
-        onBackPressed()
     }
 
     override fun onBackPressed() {
@@ -202,8 +232,19 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             if (backStackEntryCount >= 1) {
                 popBackStack()
             } else {
-                resultListener.setResult(HumanVerificationResult(sessionId.id, null, null))
-                dismissAllowingStateLoss()
+                viewModel.onHumanVerificationCanceled(clientId).invokeOnCompletion {
+                    resultListener.setResult(
+                        HumanVerificationResult(
+                            clientId = clientId.id,
+                            clientIdType = sessionId?.let { ClientIdType.SESSION.value }
+                                ?: run { ClientIdType.COOKIE.value },
+                            tokenType = null,
+                            tokenCode = null,
+                            canceled = true
+                        )
+                    )
+                    dismissAllowingStateLoss()
+                }
             }
         }
     }

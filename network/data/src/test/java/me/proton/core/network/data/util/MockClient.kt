@@ -20,8 +20,8 @@ package me.proton.core.network.data.util
 import android.util.Log
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
+import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.session.CookieSessionId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
@@ -33,36 +33,32 @@ object MockSession {
         sessionId = SessionId("uid"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",
-        headers = null,
         scopes = listOf("mail", "vpn", "calendar")
     )
+}
 
-    fun getWithHeader(header: HumanVerificationHeaders) = Session(
-        sessionId = SessionId("uid"),
-        accessToken = "accessToken",
-        refreshToken = "refreshToken",
-        headers = header,
-        scopes = listOf("mail", "vpn", "calendar")
-    )
+object MockClientId {
+    fun getForSession(sessionId: SessionId) = ClientId.AccountSession(sessionId)
+    fun getForCookie(cookieSessionId: CookieSessionId) = ClientId.CookieSession(cookieSessionId)
 }
 
 class MockSessionListener(
     private val onScopesRefreshed: (sessionId: SessionId, scopes: List<String>) -> Unit = { _, _ -> },
     private val onTokenRefreshed: (Session) -> Unit = { },
     private val onForceLogout: (Session) -> Unit = { },
-    private val onVerificationNeeded: (Session, HumanVerificationDetails?) -> SessionListener.HumanVerificationResult = { _, _ ->
-        SessionListener.HumanVerificationResult.Success
-    }
+//    private val onVerificationNeeded: (Session, HumanVerificationApiDetails?) -> SessionListener.HumanVerificationResult = { _, _ ->
+//        SessionListener.HumanVerificationResult.Success
+//    }
 ) : SessionListener {
     override suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>) =
         onScopesRefreshed(sessionId, scopes)
 
     override suspend fun onSessionTokenRefreshed(session: Session) = onTokenRefreshed(session)
     override suspend fun onSessionForceLogout(session: Session) = onForceLogout(session)
-    override suspend fun onHumanVerificationNeeded(
-        session: Session,
-        details: HumanVerificationDetails
-    ): SessionListener.HumanVerificationResult = onVerificationNeeded(session, details)
+//    override suspend fun onHumanVerificationNeeded(
+//        session: Session,
+//        details: HumanVerificationApiDetails
+//    ): SessionListener.HumanVerificationResult = onVerificationNeeded(session, details)
 }
 
 class MockApiClient : ApiClient {

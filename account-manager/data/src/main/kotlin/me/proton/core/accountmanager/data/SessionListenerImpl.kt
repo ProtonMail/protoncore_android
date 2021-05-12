@@ -18,19 +18,15 @@
 
 package me.proton.core.accountmanager.data
 
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 
 class SessionListenerImpl(
-    private val accountRepository: AccountRepository,
+    private val accountRepository: AccountRepository
 ) : SessionListener {
 
     override suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>) {
@@ -46,27 +42,6 @@ class SessionListenerImpl(
         accountRepository.updateSessionState(session.sessionId, SessionState.ForceLogout)
         accountRepository.getAccountOrNull(session.sessionId)?.let { account ->
             accountRepository.updateAccountState(account.userId, AccountState.Disabled)
-        }
-    }
-
-    override suspend fun onHumanVerificationNeeded(
-        session: Session,
-        details: HumanVerificationDetails
-    ): SessionListener.HumanVerificationResult {
-        accountRepository.setHumanVerificationDetails(session.sessionId, details)
-        accountRepository.updateSessionState(session.sessionId, SessionState.HumanVerificationNeeded)
-
-        // Wait for HumanVerification Success or Failure.
-        val state = accountRepository.onSessionStateChanged(true)
-            .filter { it.sessionId == session.sessionId }
-            .map { it.sessionState }
-            .filter { it == SessionState.HumanVerificationSuccess || it == SessionState.HumanVerificationFailed }
-            .first()
-
-        return when (state) {
-            null -> SessionListener.HumanVerificationResult.Failure
-            SessionState.HumanVerificationSuccess -> SessionListener.HumanVerificationResult.Success
-            else -> SessionListener.HumanVerificationResult.Failure
         }
     }
 }

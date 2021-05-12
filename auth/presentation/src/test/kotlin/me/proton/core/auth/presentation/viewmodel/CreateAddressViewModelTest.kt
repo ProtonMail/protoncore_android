@@ -80,7 +80,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
         coEvery { userManager.getUser(any(), any()) } returns testUser
 
         coEvery { setupUsername.invoke(any(), any()) } returns Unit
-        coEvery { setupPrimaryKeys.invoke(any(), any()) } returns Unit
+        coEvery { setupPrimaryKeys.invoke(any(), any(), any()) } returns Unit
         coEvery { setupInternalAddress.invoke(any(), any()) } returns Unit
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
@@ -104,7 +104,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
 
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
-            coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any(), any()) }
             coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
             coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
             coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
@@ -130,7 +130,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any(), any()) }
             coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
             coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 
@@ -157,7 +157,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any(), any()) }
             coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
             coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 
@@ -184,7 +184,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any(), any()) }
             coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
             coVerify(exactly = 0) { accountHandler.handleCreateAddressSuccess(any()) }
 
@@ -217,7 +217,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-            coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any()) }
+            coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any(), any()) }
             coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
             coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
 

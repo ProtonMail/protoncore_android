@@ -25,7 +25,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
-import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEnterCodeBinding
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
@@ -35,25 +34,26 @@ import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
-import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.validate
-import me.proton.core.presentation.viewmodel.onError
 import me.proton.core.presentation.viewmodel.onSuccess
+import me.proton.core.user.domain.entity.UserVerificationTokenType
 
-/**
- * @author Dino Kadrikj.
- */
 @AndroidEntryPoint
 class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVerificationEnterCodeBinding>() {
 
     private val viewModel by viewModels<HumanVerificationEnterCodeViewModel>()
 
-    private val sessionId: SessionId by lazy {
-        SessionId(requireArguments().getString(ARG_SESSION_ID)!!)
+    private val sessionId: SessionId? by lazy {
+        requireArguments().getString(ARG_SESSION_ID)?.let {
+            SessionId(it)
+        } ?: run {
+            null
+        }
     }
 
     private val destination: String? by lazy {
@@ -62,9 +62,9 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
         value
     }
 
-    private val tokenType: TokenType by lazy {
+    private val tokenType: UserVerificationTokenType by lazy {
         val type = requireArguments().getString(ARG_TOKEN_TYPE)
-        val value = TokenType.fromString(type)
+        val value = UserVerificationTokenType.fromString(type)
         viewModel.tokenType = value
         value
     }
@@ -88,13 +88,14 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
             }
             headerNavigation.helpButton.onClick { childFragmentManager.showHelp() }
             verifyButton.onClick {
+                hideKeyboard()
                 verificationCodeEditText.validate()
                     .onFailure { verificationCodeEditText.setInputError() }
                     .onSuccess {
                         parentFragmentManager.setFragmentResult(
                             KEY_VERIFICATION_DONE,
                             bundleOf(
-                                ARG_TOKEN_CODE to it,
+                                ARG_TOKEN_CODE to "$destination:$it",
                                 HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
                             )
                         )
@@ -103,29 +104,12 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
             requestReplacementButton.onClick { viewModel.resendCode(sessionId) }
         }
 
-        viewModel.codeVerificationResult.onSuccess {
-            parentFragmentManager.setFragmentResult(
-                KEY_VERIFICATION_DONE,
-                bundleOf(
-                    ARG_TOKEN_CODE to binding.verificationCodeEditText.text,
-                    HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
-                )
-            )
-        }.onError {
-            showErrorCode()
-        }.launchIn(lifecycleScope)
-
         viewModel.verificationCodeResendStatus.onSuccess {
             showCodeResent()
         }.launchIn(lifecycleScope)
     }
 
     override fun layoutId(): Int = R.layout.fragment_human_verification_enter_code
-
-    private fun showErrorCode() {
-        binding.verifyButton.setIdle()
-        view?.errorSnack(R.string.human_verification_incorrect_code)
-    }
 
     private fun showCodeResent() {
         binding.verifyButton.setIdle()
@@ -142,8 +126,8 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
         private const val ARG_TOKEN_TYPE = "arg.enter-code-token-type"
 
         operator fun invoke(
-            sessionId: String,
-            tokenType: TokenType,
+            sessionId: String?,
+            tokenType: UserVerificationTokenType,
             destination: String?
         ) = HumanVerificationEnterCodeFragment().apply {
             arguments = bundleOf(

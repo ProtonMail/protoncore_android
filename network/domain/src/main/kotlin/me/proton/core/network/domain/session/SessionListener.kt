@@ -18,9 +18,6 @@
 
 package me.proton.core.network.domain.session
 
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationHeaders
-
 interface SessionListener {
 
     /**
@@ -37,22 +34,4 @@ interface SessionListener {
      * Called when a [Session] has been forced to logout.
      */
     suspend fun onSessionForceLogout(session: Session)
-
-    /**
-     * Called when a Human Verification Workflow is needed for a [Session].
-     *
-     * Implementation of this function should suspend until a [HumanVerificationResult] is returned.
-     *
-     * Any consecutive API call made without an updated and valid [HumanVerificationHeaders] will return the same error
-     * and then will be queued until this function return. After, queued calls will be retried.
-     */
-    suspend fun onHumanVerificationNeeded(
-        session: Session,
-        details: HumanVerificationDetails
-    ): HumanVerificationResult
-
-    sealed class HumanVerificationResult {
-        object Success : HumanVerificationResult()
-        object Failure : HumanVerificationResult()
-    }
 }

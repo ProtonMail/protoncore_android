@@ -19,6 +19,7 @@
 package me.proton.core.accountmanager.data.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -28,14 +29,17 @@ import me.proton.core.account.data.db.AccountConverters
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
-import me.proton.core.account.data.entity.HumanVerificationDetailsEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_1_2
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_2_3
 import me.proton.core.accountmanager.data.db.migration.MIGRATION_3_4
+import me.proton.core.accountmanager.data.db.migration.MIGRATION_4_5
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.db.CommonConverters
+import me.proton.core.humanverification.data.db.HumanVerificationConverters
+import me.proton.core.humanverification.data.db.HumanVerificationDatabase
+import me.proton.core.humanverification.data.entity.HumanVerificationEntity
 import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.entity.KeySaltEntity
@@ -54,7 +58,6 @@ import me.proton.core.user.data.entity.UserKeyEntity
         // account-data
         AccountEntity::class,
         AccountMetadataEntity::class,
-        HumanVerificationDetailsEntity::class,
         SessionEntity::class,
         SessionDetailsEntity::class,
         // user-data
@@ -65,15 +68,22 @@ import me.proton.core.user.data.entity.UserKeyEntity
         // key-data
         KeySaltEntity::class,
         PublicAddressEntity::class,
-        PublicAddressKeyEntity::class
+        PublicAddressKeyEntity::class,
+        // human-verification
+        HumanVerificationEntity::class
     ],
-    version = 4
+    autoMigrations = [
+        AutoMigration(from = 4, to = 5, spec = MIGRATION_4_5::class)
+    ],
+    version = 5,
+    exportSchema = true
 )
 @TypeConverters(
     CommonConverters::class,
     AccountConverters::class,
     UserConverters::class,
-    CryptoConverters::class
+    CryptoConverters::class,
+    HumanVerificationConverters::class
 )
 abstract class AccountManagerDatabase :
     RoomDatabase(),
@@ -81,6 +91,7 @@ abstract class AccountManagerDatabase :
     UserDatabase,
     AddressDatabase,
     KeySaltDatabase,
+    HumanVerificationDatabase,
     PublicAddressDatabase {
 
     override suspend fun <R> inTransaction(block: suspend () -> R): R = withTransaction(block)

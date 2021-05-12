@@ -22,7 +22,7 @@ import studio.forface.easygradle.dsl.android.*
 internal fun initVersions() {
 
     // region Kotlin
-    `kotlin version` =                          "1.4.31"        // Released: Feb 25, 2021
+    `kotlin version` =                          "1.4.32"        // Released: Feb 25, 2021
     `coroutines version` =                      "1.4.2"         // Released: Nov 26, 2020
     `serialization version` =                   "1.0.1"         // Released: Oct 28, 2020
     // endregion
@@ -40,7 +40,7 @@ internal fun initVersions() {
     `material version` =                        "1.3.0"         // Released: Feb 05, 2021
     `android-paging version` =                  "2.1.2"         // Released: Mar 18, 2020
     `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
-    `android-room version` =                    "2.2.6"         // Released: Jan 27, 2021
+    `android-room version` =                    "2.4.0-alpha01" // Released: Apr 21, 2021
 
     `android-test version` =                    "1.3.0"         // Released: Aug 25, 2020
     `robolectric version` =                     "4.4"           // Released: Aug 24, 2020

@@ -18,9 +18,11 @@
 
 package me.proton.core.auth.data.api
 
+import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.LoginInfoRequest
 import me.proton.core.auth.data.api.response.LoginInfoResponse
 import me.proton.core.auth.data.api.request.LoginRequest
+import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.response.SecondFactorResponse
@@ -54,4 +56,10 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @DELETE("auth")
     suspend fun revokeSession(@Tag timeout: TimeoutOverride): GenericResponse
+
+    @POST("core/v4/validate/email")
+    suspend fun validateEmail(@Body request: EmailValidationRequest): GenericResponse
+
+    @POST("core/v4/validate/phone")
+    suspend fun validatePhone(@Body request: PhoneValidationRequest): GenericResponse
 }

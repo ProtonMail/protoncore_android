@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
@@ -80,7 +81,8 @@ class CreateAddressViewModel @ViewModelInject constructor(
         val hasInternalAddressKey = addresses.firstInternalOrNull()?.keys?.isNotEmpty() ?: false
 
         when {
-            !hasKeys -> setupPrimaryKeys(userId, password)
+            // directly set Internal (only those Accounts support addresses). upgradeAccount is only valid for Internal
+            !hasKeys -> setupPrimaryKeys(userId, password, AccountType.Internal)
             !hasInternalAddressKey -> setupInternalAddress(userId, password, domain)
             else -> unlockUserPrimaryKey(userId, password)
         }.let {
@@ -94,9 +96,10 @@ class CreateAddressViewModel @ViewModelInject constructor(
 
     private suspend fun setupPrimaryKeys(
         userId: UserId,
-        password: EncryptedString
+        password: EncryptedString,
+        requiredAccountType: AccountType
     ): State {
-        setupPrimaryKeys.invoke(userId, password)
+        setupPrimaryKeys.invoke(userId, password, requiredAccountType)
         accountWorkflow.handleCreateAddressSuccess(userId)
         return unlockUserPrimaryKey(userId, password)
     }
