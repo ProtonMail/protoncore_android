@@ -93,7 +93,7 @@ Test Android Instrumented: **0.4.5** - _released on: May 12, 2021_
 
 Domain: **1.0.1** - _released on: May 03, 2021_
 
-Presentation: **0.7.7** - _released on: May 12, 2021_
+Presentation: **0.7.8** - _released on: May 12, 2021_
 
 Data: **1.0.3** - _released on: May 03, 2021_
 
@@ -119,13 +119,13 @@ Crypto Android: **1.0.3** - _released on: Apr 15, 2021_
 
 ### Auth
 
-Auth: **1.1** - _released on: May 12, 2021_
+Auth: **1.1.1** - _released on: May 12, 2021_
 
-Auth Domain: **1.1** - _released on: May 12, 2021_
+Auth Domain: **1.1.1** - _released on: May 12, 2021_
 
-Auth Presentation: **1.1** - _released on: May 12, 2021_
+Auth Presentation: **1.1.1** - _released on: May 12, 2021_
 
-Auth Data: **1.1** - _released on: May 12, 2021_
+Auth Data: **1.1.1** - _released on: May 12, 2021_
 
 ### Account
 
@@ -140,15 +140,15 @@ Account Data: **1.1** - _released on: May 12, 2021_
 
 ### Account Manager
 
-Account Manager: **1.1** - _released on: May 12, 2021_
+Account Manager: **1.1.1** - _released on: May 12, 2021_
 
-Account Manager Domain: **1.1** - _released on: May 12, 2021_
+Account Manager Domain: **1.1.1** - _released on: May 12, 2021_
 
-Account Manager Presentation: **1.1** - _released on: May 12, 2021_
+Account Manager Presentation: **1.1.1** - _released on: May 12, 2021_
 
-Account Manager Data: **1.1** - _released on: May 12, 2021_
+Account Manager Data: **1.1.1** - _released on: May 12, 2021_
 
-Account Manager Dagger: **1.1** - _released on: May 12, 2021_
+Account Manager Dagger: **1.1.1** - _released on: May 12, 2021_
 
 ### Key
 
@@ -160,11 +160,11 @@ Key Data: **1.0.4** - _released on: Mar 22, 2021_
 
 ### User
 
-User: **1.1** - _released on: May 12, 2021_
+User: **1.1.1** - _released on: May 12, 2021_
 
-User Domain: **1.1** - _released on: May 12, 2021_
+User Domain: **1.1.1** - _released on: May 12, 2021_
 
-User Data: **1.1** - _released on: May 12, 2021_
+User Data: **1.1.1** - _released on: May 12, 2021_
 
 ### Contact
 
@@ -184,30 +184,30 @@ Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
 
 ### Human Verification
 
-Human Verification: **1.0** - _released on: May 12, 2021_
+Human Verification: **1.1.1** - _released on: May 12, 2021_
 
-Human Verification Domain: **1.0** - _released on: May 12, 2021_
+Human Verification Domain: **1.1.1** - _released on: May 12, 2021_
 
-Human Verification Presentation: **1.0** - _released on: May 12, 2021_
+Human Verification Presentation: **1.1.1** - _released on: May 12, 2021_
 
-Human Verification Data: **1.0** - _released on: May 12, 2021_
+Human Verification Data: **1.1.1** - _released on: May 12, 2021_
 
 ### Countries
 
-Country: **0.1.3** - _released on: Apr 13, 2021_
+Country: **0.1.4** - _released on: May 12, 2021_
 
-Country Domain: **0.1.3** - _released on: Apr 13, 2021_
+Country Domain: **0.1.4** - _released on: May 12, 2021_
 
-Country Data: **0.1.3** - _released on: Apr 13, 2021_
+Country Data: **0.1.4** - _released on: May 12, 2021_
 
-Country Presentation: **0.1.3** - _released on: Apr 13, 2021_
+Country Presentation: **0.1.4** - _released on: May 12, 2021_
 
 ### Payment
 
-Payment: **0.1.5** - _released on: May 06, 2021_
+Payment: **0.1.6** - _released on: May 12, 2021_
 
-Payment Data: **0.1.5** - _released on: May 06, 2021_
+Payment Data: **0.1.6** - _released on: May 12, 2021_
 
-Payment Domain: **0.1.5** - _released on: May 06, 2021_
+Payment Domain: **0.1.6** - _released on: May 12, 2021_
 
-Payment Presentation: **0.1.5** - _released on: May 06, 2021_
+Payment Presentation: **0.1.6** - _released on: May 12, 2021_
