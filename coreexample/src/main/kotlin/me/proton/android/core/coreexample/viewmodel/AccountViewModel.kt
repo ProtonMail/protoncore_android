@@ -19,12 +19,12 @@
 package me.proton.android.core.coreexample.viewmodel
 
 import androidx.activity.ComponentActivity
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
@@ -40,7 +40,6 @@ import me.proton.core.accountmanager.presentation.disableInitialNotReadyAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
-import me.proton.core.accountmanager.presentation.onAccountDisabled
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
@@ -55,8 +54,10 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.PlanDetails
 import me.proton.core.payment.presentation.onPaymentResult
+import javax.inject.Inject
 
-class AccountViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AccountViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val humanVerificationManager: HumanVerificationManager,
     private var authOrchestrator: AuthOrchestrator,
@@ -95,7 +96,6 @@ class AccountViewModel @ViewModelInject constructor(
                 .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
                 .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
                 .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
-                .onAccountDisabled { accountManager.removeAccount(it.userId) }
                 .disableInitialNotReadyAccounts()
         }
 
@@ -124,10 +124,10 @@ class AccountViewModel @ViewModelInject constructor(
             when (account.state) {
                 AccountState.Ready,
                 AccountState.NotReady,
-                AccountState.Disabled,
                 AccountState.TwoPassModeFailed,
                 AccountState.CreateAddressFailed,
                 AccountState.UnlockFailed -> accountManager.disableAccount(account.userId)
+                AccountState.Disabled -> accountManager.removeAccount(account.userId)
                 else -> Unit
             }
         }

@@ -18,8 +18,8 @@
 
 package me.proton.android.core.coreexample.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -36,8 +36,10 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
 import me.proton.core.user.domain.UserManager
 import timber.log.Timber
+import javax.inject.Inject
 
-class UserKeyViewModel @ViewModelInject constructor(
+@HiltViewModel
+class UserKeyViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
     private val cryptoContext: CryptoContext

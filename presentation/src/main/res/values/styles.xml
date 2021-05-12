@@ -27,7 +27,7 @@
 
     <style name="ProtonToolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="titleTextAppearance">@style/Proton.Text.Default.Bold</item>
-        <item name="titleTextColor">@color/text_norm</item>
+        <item name="titleTextColor">@color/text_norm_selector</item>
         <item name="navigationIcon">@drawable/ic_arrow_left</item>
         <item name="closeIcon">@drawable/ic_close</item>
     </style>
@@ -44,7 +44,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/text_norm</item>
+        <item name="android:textColor">@color/text_norm_selector</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:lineSpacingExtra">1sp</item>
     </style>
@@ -65,7 +65,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/text_norm</item>
+        <item name="android:textColor">@color/text_norm_selector</item>
         <item name="android:letterSpacing">0.03</item>
         <item name="android:lineSpacingExtra">5sp</item>
     </style>
@@ -79,7 +79,7 @@
     </style>
 
     <style name="Proton.Text.Default.Weak">
-        <item name="android:textColor">@color/text_weak</item>
+        <item name="android:textColor">@color/text_weak_selector</item>
     </style>
 
     <style name="Proton.Text.Default.Hint">
@@ -94,7 +94,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/text_norm</item>
+        <item name="android:textColor">@color/text_norm_selector</item>
         <item name="android:letterSpacing">0.02</item>
         <item name="android:lineSpacingExtra">4sp</item>
     </style>
@@ -104,7 +104,7 @@
     </style>
 
     <style name="Proton.Text.DefaultSmall.Weak">
-        <item name="android:textColor">@color/text_weak</item>
+        <item name="android:textColor">@color/text_weak_selector</item>
     </style>
 
     <style name="Proton.Text.DefaultSmall.Inverted">
@@ -115,7 +115,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/text_norm</item>
+        <item name="android:textColor">@color/text_norm_selector</item>
         <item name="android:letterSpacing">0.03</item>
         <item name="android:lineSpacingExtra">2sp</item>
     </style>
@@ -125,7 +125,7 @@
     </style>
 
     <style name="Proton.Text.Caption.Weak">
-        <item name="android:textColor">@color/text_weak</item>
+        <item name="android:textColor">@color/text_weak_selector</item>
     </style>
 
     <style name="Proton.Text.Caption.Hint">
@@ -159,7 +159,7 @@
 
     <style name="ProtonTextView.Subtitle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">@dimen/default_subtitle_text_size</item>
-        <item name="android:textColor">@color/text_weak</item>
+        <item name="android:textColor">@color/text_weak_selector</item>
     </style>
 
     <style name="ProtonTextView.InputHeader">

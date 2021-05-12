@@ -18,8 +18,8 @@
 
 package me.proton.core.humanverification.presentation.viewmodel.verification
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -29,11 +29,13 @@ import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.user.domain.entity.UserVerificationTokenType
+import javax.inject.Inject
 
 /**
  * View model class that handles and supports [UserVerificationTokenType.CAPTCHA] verification method (type) fragment.
  */
-internal class HumanVerificationCaptchaViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class HumanVerificationCaptchaViewModel @Inject constructor(
     private val networkManager: NetworkManager
 ) : ProtonViewModel(), HumanVerificationCode {
 

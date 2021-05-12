@@ -22,7 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.humanverification.data.HumanVerificationListenerImpl
@@ -36,7 +36,7 @@ import me.proton.core.network.domain.session.HumanVerificationProvider
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object HumanVerificationModule {
     @Provides
     @Singleton
@@ -61,7 +61,7 @@ object HumanVerificationModule {
 }
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 interface HumanVerificationBindModule {
 
     @Binds

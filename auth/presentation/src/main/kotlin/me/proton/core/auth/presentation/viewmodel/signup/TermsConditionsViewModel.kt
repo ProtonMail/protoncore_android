@@ -18,8 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
@@ -27,8 +27,10 @@ import kotlinx.coroutines.launch
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import javax.inject.Inject
 
-internal class TermsConditionsViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class TermsConditionsViewModel @Inject constructor(
     private val networkManager: NetworkManager
 ) : ProtonViewModel() {
 

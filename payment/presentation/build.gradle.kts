@@ -27,7 +27,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(0, 1, 5)
+libVersion = Version(0, 1, 6)
 
 android(useDataBinding = true)
 
@@ -39,7 +39,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
         project(Module.networkDomain),
-        
+
         // Features
         project(Module.paymentDomain),
         project(Module.country),
@@ -50,18 +50,13 @@ dependencies {
         `constraint-layout`,
         `fragment`,
         `hilt-android`,
-        `hilt-androidx-viewModel`,
         `lifecycle-viewModel`,
         `material`
     )
 
     kapt(
-        `assistedInject-processor-dagger`,
         `hilt-android-compiler`,
         `hilt-androidx-compiler`
-    )
-    compileOnly(
-        `assistedInject-annotations-dagger`
     )
 
     testImplementation(project(Module.androidTest))

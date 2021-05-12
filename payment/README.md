@@ -15,7 +15,7 @@ for upgrade of the current logged in account or paying for paid account during s
 
 ```kotlin
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object PaymentsModule {
 
     @Provides

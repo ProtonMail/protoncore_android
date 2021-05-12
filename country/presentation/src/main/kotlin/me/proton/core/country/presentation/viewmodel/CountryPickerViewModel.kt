@@ -18,8 +18,8 @@
 
 package me.proton.core.country.presentation.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -29,11 +29,13 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.domain.usecase.LoadCountries
 import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import javax.inject.Inject
 
 /**
  * View model class used to support the country picker UI.
  */
-class CountryPickerViewModel @ViewModelInject constructor(
+@HiltViewModel
+class CountryPickerViewModel @Inject constructor(
     loadCountries: LoadCountries
 ) : ProtonViewModel() {
 

@@ -18,8 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -29,8 +29,10 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.domain.usecase.MostUsedCountryCode
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
+import javax.inject.Inject
 
-internal class RecoverySMSViewModel @ViewModelInject constructor(
+@HiltViewModel
+internal class RecoverySMSViewModel @Inject constructor(
     private val mostUseCountryCode: MostUsedCountryCode
 ) : ProtonViewModel() {
 

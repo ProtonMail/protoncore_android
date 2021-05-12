@@ -47,10 +47,9 @@ internal fun initVersions() {
     // endregion
 
     // region Others
-    `assistedInject version` =                  "0.5.2"         // Released: Nov 22, 2019
-    `dagger version` =                          "2.28"          // Released: May 04, 2018
-    `hilt-android version` =                    "2.28-alpha"    // Released: Jun 10, 2020
-    `hilt-androidx version` =                   "1.0.0-alpha01" // Released: Jun 12, 2020
+    `dagger version` =                          "2.35.1"        // Released: Apr 28, 2021
+    `hilt-android version` =                    "2.35.1"        // Released: Apr 28, 2021
+    `hilt-androidx version` =                   "1.0.0"         // Released: May 05, 2021
     `mockK version` =                           "1.10.5"        // Released: Jan 13, 2021
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.8.0"         // Released: Oct 09, 2020

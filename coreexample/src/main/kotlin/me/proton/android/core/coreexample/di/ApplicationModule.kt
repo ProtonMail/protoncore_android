@@ -23,8 +23,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -32,6 +32,7 @@ import me.proton.android.core.coreexample.Constants.BASE_URL
 import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.api.CoreExampleRepository
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
@@ -50,7 +51,7 @@ import me.proton.core.util.kotlin.Logger
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object ApplicationModule {
 
     @Provides
@@ -98,6 +99,11 @@ object ApplicationModule {
 
     @Provides
     @Singleton
+    fun provideRequiredAccountType(): AccountType =
+        AccountType.Internal
+
+    @Provides
+    @Singleton
     fun provideCoreExampleRepository(apiProvider: ApiProvider): CoreExampleRepository =
         CoreExampleRepository(apiProvider)
 
@@ -107,7 +113,7 @@ object ApplicationModule {
 }
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class ApplicationBindsModule {
     @Binds
     abstract fun provideApiClient(coreExampleApiClient: CoreExampleApiClient): ApiClient

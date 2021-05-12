@@ -40,7 +40,9 @@ import me.proton.core.auth.presentation.ui.StartTwoPassMode
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AuthOrchestrator @Inject constructor() {
 
     // region result launchers
@@ -155,7 +157,6 @@ class AuthOrchestrator @Inject constructor() {
             ChooseAddressInput(userId.id, password = password, recoveryEmail = externalEmail)
         )
     }
-
 
     // endregion
 

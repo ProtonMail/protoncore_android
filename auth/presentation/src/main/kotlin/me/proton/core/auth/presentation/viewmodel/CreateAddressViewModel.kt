@@ -18,8 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -37,8 +37,10 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.firstInternalOrNull
+import javax.inject.Inject
 
-class CreateAddressViewModel @ViewModelInject constructor(
+@HiltViewModel
+class CreateAddressViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val userManager: UserManager,
     private val setupUsername: SetupUsername,

@@ -74,7 +74,6 @@ dependencies {
         `hilt-android`,
         `lifecycle-viewModel`,
         `hilt-androidx-annotations`,
-        `hilt-androidx-viewModel`,
         `material`,
         `android-work-runtime`,
 
@@ -83,13 +82,7 @@ dependencies {
         `timber`
     )
 
-    compileOnly(
-        `android-annotation`,
-        `assistedInject-annotations-dagger`
-    )
-
     kapt(
-        `assistedInject-processor-dagger`,
         `hilt-android-compiler`,
         `hilt-androidx-compiler`
     )

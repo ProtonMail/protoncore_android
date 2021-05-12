@@ -25,25 +25,32 @@
         android:layout_height="match_parent"
         android:padding="@dimen/parent_padding">
 
-        <me.proton.core.presentation.ui.view.ProtonProgressButton
-            android:id="@+id/customViews"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/view_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_top_margin"
-            android:text="@string/custom_views"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <me.proton.core.presentation.ui.view.ProtonProgressButton
-            android:id="@+id/textStyles"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_top_margin"
-            android:text="@string/text_styles"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/customViews" />
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/customViews"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/custom_views" />
+
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/textStyles"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_top_margin"
+                android:layout_weight="1"
+                android:text="@string/text_styles" />
+
+        </LinearLayout>
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/login"
@@ -53,7 +60,7 @@
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textStyles" />
+            app:layout_constraintTop_toBottomOf="@id/view_layout" />
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/force_update"
@@ -95,84 +102,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sendDirect" />
 
-        <me.proton.core.presentation.ui.view.ProtonProgressButton
-            android:id="@+id/signup"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_top_margin"
-            android:text="@string/signup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/payment" />
-
-        <me.proton.core.presentation.ui.view.ProtonProgressButton
-            android:id="@+id/signupExternal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_top_margin"
-            android:text="@string/signup_external"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signup" />
-
         <LinearLayout
-            android:id="@+id/titleLayout"
+            android:id="@+id/signup_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_top_margin"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signupExternal">
+            app:layout_constraintTop_toBottomOf="@id/payment">
 
-            <TextView
-                android:id="@+id/accountsText"
-                android:layout_width="wrap_content"
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/signup"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Accounts:" />
+                android:text="@string/signup" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/signupExternal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_top_margin"
                 android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/primaryAccountText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="-"
-                    tools:text="Primary: -" />
-
-                <TextView
-                    android:id="@+id/primaryAccountKeyState"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="-"
-                    tools:text="User Key State: -" />
-
-                <TextView
-                    android:id="@+id/primaryAccountAddressKeyState"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="-"
-                    tools:text="Address Key State: -" />
-
-                <TextView
-                    android:id="@+id/primaryAccountPublicAddressState"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="-"
-                    tools:text="Public Address State: -" />
-
-            </LinearLayout>
+                android:text="@string/signup_external" />
 
         </LinearLayout>
+
+        <me.proton.core.accountmanager.presentation.view.AccountPrimaryView
+            android:id="@+id/accountPrimaryView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_top_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/signup_layout"
+            tools:email="superuser@protonmail.com"
+            tools:initials="SU"
+            tools:isExpandable="true"
+            tools:name="Super User" />
 
         <LinearLayout
             android:id="@+id/accountsLayout"
@@ -182,7 +150,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleLayout" />
+            app:layout_constraintTop_toBottomOf="@id/accountPrimaryView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

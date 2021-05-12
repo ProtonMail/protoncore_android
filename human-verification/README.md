@@ -133,7 +133,7 @@ Note: The same channel should be set to the `HumanVerificationBinder` and to the
 details and only set the Hilt dependencies as:
 
 ```kotlin
-@Provides
+    @Provides
     @Singleton
     fun provideHumanVerificationBinder(
         @ApplicationContext context: Context,
