@@ -19,8 +19,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
-    android:padding="@dimen/gap_medium">
+    android:layout_height="@dimen/account_list_item_height"
+    android:background="@drawable/background_account"
+    android:padding="@dimen/gap_large">
 
     <TextView
         android:id="@+id/account_section_textview"

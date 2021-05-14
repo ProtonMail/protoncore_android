@@ -19,12 +19,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
+    android:layout_height="@dimen/account_list_item_height"
     android:background="@drawable/background_account"
     android:clickable="true"
     android:descendantFocusability="afterDescendants"
     android:focusable="true"
-    android:padding="@dimen/gap_medium">
+    android:padding="@dimen/gap_large">
 
     <TextView
         android:id="@+id/account_initials_textview"
@@ -46,7 +46,7 @@
         style="@style/Proton.Text.DefaultSmall"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/gap_medium"
+        android:layout_marginStart="@dimen/gap_large"
         android:ellipsize="end"
         android:gravity="bottom"
         android:maxLines="1"
@@ -61,7 +61,7 @@
         style="@style/Proton.Text.Caption.Weak"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/gap_medium"
+        android:layout_marginStart="@dimen/gap_large"
         android:ellipsize="end"
         android:gravity="top"
         android:maxLines="2"
@@ -74,7 +74,7 @@
     <ImageButton
         android:id="@+id/account_more_button"
         style="@style/ProtonImage.ImageButton"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/icon_button_size"
         android:layout_height="match_parent"
         android:src="@drawable/ic_baseline_more_vert"
         app:layout_constraintBottom_toBottomOf="parent"
