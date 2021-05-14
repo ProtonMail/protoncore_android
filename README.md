@@ -93,7 +93,7 @@ Test Android Instrumented: **0.4.5** - _released on: May 12, 2021_
 
 Domain: **1.0.1** - _released on: May 03, 2021_
 
-Presentation: **0.7.8** - _released on: May 12, 2021_
+Presentation: **0.7.9** - _released on: May 14, 2021_
 
 Data: **1.0.3** - _released on: May 03, 2021_
 
@@ -140,15 +140,15 @@ Account Data: **1.1** - _released on: May 12, 2021_
 
 ### Account Manager
 
-Account Manager: **1.1.1** - _released on: May 12, 2021_
+Account Manager: **1.1.2** - _released on: May 14, 2021_
 
-Account Manager Domain: **1.1.1** - _released on: May 12, 2021_
+Account Manager Domain: **1.1.2** - _released on: May 14, 2021_
 
-Account Manager Presentation: **1.1.1** - _released on: May 12, 2021_
+Account Manager Presentation: **1.1.2** - _released on: May 14, 2021_
 
-Account Manager Data: **1.1.1** - _released on: May 12, 2021_
+Account Manager Data: **1.1.2** - _released on: May 14, 2021_
 
-Account Manager Dagger: **1.1.1** - _released on: May 12, 2021_
+Account Manager Dagger: **1.1.2** - _released on: May 14, 2021_
 
 ### Key
 
