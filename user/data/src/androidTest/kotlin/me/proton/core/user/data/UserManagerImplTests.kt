@@ -133,19 +133,6 @@ class UserManagerImplTests {
             userAddressKeySecretProvider
         )
 
-        // Needed to addAccount (User.userId foreign key -> Account.userId).
-        accountManager = AccountManagerImpl(
-            Product.Mail,
-            AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
-            mockk(relaxed = true)
-        )
-
-        // Before fetching any User, account need to be added to AccountManager (if not -> foreign key exception).
-        runBlocking {
-            accountManager.addAccount(TestAccounts.User1.account, TestAccounts.session)
-            accountManager.addAccount(TestAccounts.User2.account, TestAccounts.session)
-        }
-
         // Implementation we want to test.
         userManager = UserManagerImpl(
             userRepository,
@@ -156,6 +143,20 @@ class UserManagerImplTests {
             userAddressKeySecretProvider,
             cryptoContext
         )
+
+        // Needed to addAccount (User.userId foreign key -> Account.userId).
+        accountManager = AccountManagerImpl(
+            Product.Mail,
+            AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
+            mockk(relaxed = true),
+            userManager
+        )
+
+        // Before fetching any User, account need to be added to AccountManager (if not -> foreign key exception).
+        runBlocking {
+            accountManager.addAccount(TestAccounts.User1.account, TestAccounts.session)
+            accountManager.addAccount(TestAccounts.User2.account, TestAccounts.session)
+        }
     }
 
     @After

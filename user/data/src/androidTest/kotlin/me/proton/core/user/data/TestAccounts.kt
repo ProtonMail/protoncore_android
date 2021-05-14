@@ -34,7 +34,7 @@ object TestAccounts {
             state = AccountState.Ready,
             sessionId = sessionId,
             sessionState = SessionState.Authenticated,
-            details = AccountDetails(null, null)
+            details = AccountDetails(null)
         )
     }
 
@@ -46,7 +46,7 @@ object TestAccounts {
             state = AccountState.Ready,
             sessionId = sessionId,
             sessionState = SessionState.Authenticated,
-            details = AccountDetails(null, null)
+            details = AccountDetails(null)
         )
     }
 
@@ -55,7 +55,6 @@ object TestAccounts {
         sessionId = sessionId,
         accessToken = "accessToken",
         refreshToken = "refreshToken",
-        headers = null,
         scopes = emptyList()
     )
 }

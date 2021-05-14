@@ -60,7 +60,12 @@ class AccountManagerImplTest {
     fun beforeEveryTest() {
         mocks.init()
 
-        accountManager = AccountManagerImpl(Product.Calendar, mocks.accountRepository, mocks.authRepository)
+        accountManager = AccountManagerImpl(
+            Product.Calendar,
+            mocks.accountRepository,
+            mocks.authRepository,
+            mocks.userManager
+        )
     }
 
     @Test

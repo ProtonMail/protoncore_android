@@ -90,7 +90,6 @@ class AccountSwitcherViewModel @Inject constructor(
     }
 
     fun logout(userId: UserId) = viewModelScope.launch {
-        userManager.lock(userId)
         accountManager.disableAccount(userId)
     }
 

@@ -122,6 +122,7 @@ class UserAddressRepositoryImplTests {
         accountManager = AccountManagerImpl(
             Product.Mail,
             AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
+            mockk(relaxed = true),
             mockk(relaxed = true)
         )
 
