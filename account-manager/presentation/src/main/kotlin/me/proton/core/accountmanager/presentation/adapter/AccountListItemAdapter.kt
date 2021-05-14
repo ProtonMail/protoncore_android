@@ -27,6 +27,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ListAdapter
@@ -100,6 +101,7 @@ class AccountListItemAdapter : ListAdapter<AccountListItem, AccountListItemAdapt
             binding.accountNameTextview.text = item.accountItem.name
             binding.accountEmailTextview.isEnabled = isReady
             binding.accountNameTextview.isEnabled = isReady
+            binding.accountEmailTextview.isVisible = !item.accountItem.email.isNullOrBlank()
             binding.accountMoreButton.onClick {
                 PopupMenu(binding.root.context, binding.accountMoreButton).apply {
                     inflate(AccountListItem.Account.menuResId)

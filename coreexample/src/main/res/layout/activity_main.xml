@@ -139,7 +139,7 @@
             app:layout_constraintTop_toBottomOf="@id/signup_layout"
             tools:email="superuser@protonmail.com"
             tools:initials="SU"
-            tools:isExpandable="true"
+            tools:isDialogEnabled="true"
             tools:name="Super User" />
 
         <LinearLayout

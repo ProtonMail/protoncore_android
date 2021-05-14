@@ -20,14 +20,15 @@ package me.proton.core.accountmanager.presentation.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.annotation.StyleRes
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.cancel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountState
@@ -36,9 +37,7 @@ import me.proton.core.accountmanager.presentation.adapter.AccountListItemAdapter
 import me.proton.core.accountmanager.presentation.databinding.AccountListViewBinding
 import me.proton.core.accountmanager.presentation.entity.AccountListItem
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class AccountListView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -50,8 +49,7 @@ class AccountListView @JvmOverloads constructor(
 
     private val accountListItemAdapter: AccountListItemAdapter = AccountListItemAdapter()
 
-    @Inject
-    lateinit var viewModel: AccountSwitcherViewModel
+    private var viewModel: AccountSwitcherViewModel? = null
 
     init {
         binding.accountListRecyclerview.apply {
@@ -63,8 +61,8 @@ class AccountListView @JvmOverloads constructor(
         accountListItemAdapter.setOnListItemClicked {
             when (it) {
                 is AccountListItem.Section.SwitchTo -> Unit
-                is AccountListItem.Account -> viewModel.switch(it.accountItem.userId)
-                is AccountListItem.Action.AddAccount -> viewModel.login()
+                is AccountListItem.Account -> viewModel?.switch(it.accountItem.userId)
+                is AccountListItem.Action.AddAccount -> viewModel?.add()
             }
         }
 
@@ -89,20 +87,19 @@ class AccountListView @JvmOverloads constructor(
 
         accountListItemAdapter.setOnAccountMenuItemClicked { account, menuItem ->
             when (menuItem.itemId) {
-                R.id.account_menu_login -> viewModel.switch(account.accountItem.userId)
-                R.id.account_menu_logout -> viewModel.logout(account.accountItem.userId)
-                R.id.account_menu_remove -> viewModel.remove(account.accountItem.userId)
+                R.id.account_menu_login -> viewModel?.switch(account.accountItem.userId)
+                R.id.account_menu_logout -> viewModel?.logout(account.accountItem.userId)
+                R.id.account_menu_remove -> viewModel?.remove(account.accountItem.userId)
             }
             true
         }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        if (isInEditMode) return
+    fun setViewModel(viewModel: AccountSwitcherViewModel?) {
+        this.viewModel = viewModel
 
-        viewModel.accounts
-            .onEach { accounts ->
+        viewModel?.apply {
+            accounts.onEach { accounts ->
                 val primary = accounts.firstOrNull { it is AccountListItem.Account.Primary }
                 val ready = accounts.filterIsInstance<AccountListItem.Account.Ready>()
                 val disabled = accounts.filterIsInstance<AccountListItem.Account.Disabled>()
@@ -116,13 +113,14 @@ class AccountListView @JvmOverloads constructor(
                 }
                 list.add(AccountListItem.Action.AddAccount)
                 accountListItemAdapter.submitList(list)
-            }.launchIn(viewModel.viewModelScope)
+            }.launchIn(viewModelScope)
+        }
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        if (isInEditMode) return
-
-        viewModel.viewModelScope.cancel()
+    companion object {
+        fun createDialog(context: Context, viewModel: AccountSwitcherViewModel?): AlertDialog =
+            MaterialAlertDialogBuilder(context)
+                .setView(AccountListView(context).apply { setViewModel(viewModel) })
+                .create().apply { window?.setGravity(Gravity.TOP) }
     }
 }
