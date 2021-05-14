@@ -20,26 +20,20 @@ package me.proton.core.accountmanager.presentation.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.annotation.StyleRes
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isVisible
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.presentation.R
 import me.proton.core.accountmanager.presentation.databinding.AccountPrimaryViewBinding
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.presentation.utils.onClick
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class AccountPrimaryView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -49,8 +43,9 @@ class AccountPrimaryView @JvmOverloads constructor(
 
     private val binding = AccountPrimaryViewBinding.inflate(LayoutInflater.from(context), this, true)
 
-    @Inject
-    lateinit var viewModel: AccountSwitcherViewModel
+    private var viewModel: AccountSwitcherViewModel? = null
+
+    private var dialog: AlertDialog? = null
 
     var initials: String?
         get() = binding.accountInitialsTextview.text.toString()
@@ -70,50 +65,45 @@ class AccountPrimaryView @JvmOverloads constructor(
             binding.accountEmailTextview.text = value
         }
 
-    var isExpandable: Boolean
+    var isDialogEnabled: Boolean
         get() = binding.accountExpandImageview.isVisible
         set(value) {
             binding.accountExpandImageview.isVisible = value
         }
-
-    var isAutoUpdated: Boolean = true
 
     init {
         context.withStyledAttributes(attrs, R.styleable.AccountPrimaryView) {
             initials = getString(R.styleable.AccountPrimaryView_initials)
             name = getString(R.styleable.AccountPrimaryView_name)
             email = getString(R.styleable.AccountPrimaryView_email)
-            isExpandable = getBoolean(R.styleable.AccountPrimaryView_isExpandable, true)
-            isAutoUpdated = getBoolean(R.styleable.AccountPrimaryView_isAutoUpdated, true)
+            isDialogEnabled = getBoolean(R.styleable.AccountPrimaryView_isDialogEnabled, true)
         }
 
         binding.root.onClick {
-            if (isExpandable) {
-                MaterialAlertDialogBuilder(context)
-                    .setView(AccountListView(context))
-                    .show()
-                    .window?.setGravity(Gravity.TOP)
+            if (isDialogEnabled) {
+                showDialog()
             }
         }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        if (isInEditMode) return
+    fun setViewModel(viewModel: AccountSwitcherViewModel?) {
+        this.viewModel = viewModel
 
-        viewModel.primaryAccount
-            .filter { isAutoUpdated }
-            .onEach { account ->
+        viewModel?.apply {
+            primaryAccount.onEach { account ->
                 initials = account?.initials
                 name = account?.name
                 email = account?.email
-            }.launchIn(viewModel.viewModelScope)
+            }.launchIn(viewModelScope)
+        }
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        if (isInEditMode) return
+    fun showDialog() {
+        if (dialog == null) dialog = AccountListView.createDialog(context, viewModel)
+        dialog?.show()
+    }
 
-        viewModel.viewModelScope.cancel()
+    fun dismissDialog() {
+        dialog?.dismiss()
     }
 }

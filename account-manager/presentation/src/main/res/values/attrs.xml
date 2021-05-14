@@ -21,7 +21,6 @@
         <attr name="initials" format="string" />
         <attr name="name" format="string" />
         <attr name="email" format="string" />
-        <attr name="isExpandable" format="boolean" />
-        <attr name="isAutoUpdated" format="boolean" />
+        <attr name="isDialogEnabled" format="boolean" />
     </declare-styleable>
 </resources>

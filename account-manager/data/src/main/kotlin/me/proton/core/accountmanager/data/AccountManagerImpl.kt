@@ -34,11 +34,13 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.user.domain.UserManager
 
 class AccountManagerImpl constructor(
     product: Product,
     private val accountRepository: AccountRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val userManager: UserManager
 ) : AccountManager(product), AccountWorkflowHandler {
 
     private val removeSessionLock = Mutex()
@@ -56,6 +58,7 @@ class AccountManagerImpl constructor(
     private suspend fun disableAccount(account: Account) {
         accountRepository.updateAccountState(account.userId, AccountState.Disabled)
         account.sessionId?.let { removeSession(it) }
+        userManager.lock(account.userId)
     }
 
     private suspend fun disableAccount(sessionId: SessionId) {

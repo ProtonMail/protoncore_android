@@ -62,7 +62,8 @@ class SessionManagerImplTest {
         accountManager = AccountManagerImpl(
             Product.Calendar,
             mocks.accountRepository,
-            mocks.authRepository
+            mocks.authRepository,
+            mocks.userManager
         )
         sessionManager = SessionManagerImpl(
             mocks.sessionProvider,

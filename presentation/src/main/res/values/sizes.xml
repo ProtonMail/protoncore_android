@@ -25,6 +25,8 @@
     <dimen name="button_nav_size">40dp</dimen>
     <dimen name="no_elevation">0dp</dimen>
     <dimen name="default_elevation">8dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="icon_button_size">@dimen/button_height</dimen>
 
     <!-- general dimensions gaps -->
     <dimen name="gap_single">1dp</dimen>

@@ -33,11 +33,15 @@ import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.user.domain.UserManager
 
 class RepositoryMocks(
     private val session: Session,
     private val account: Account
 ) {
+
+    @RelaxedMockK
+    lateinit var userManager: UserManager
 
     @RelaxedMockK
     lateinit var accountRepository: AccountRepository

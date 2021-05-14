@@ -20,7 +20,10 @@ package me.proton.core.accountmanager.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
@@ -39,9 +42,11 @@ import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.displayNameSplit
+import me.proton.core.util.kotlin.takeIfNotBlank
 import java.util.Locale
 import javax.inject.Inject
 
+@HiltViewModel
 class AccountSwitcherViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
@@ -49,9 +54,13 @@ class AccountSwitcherViewModel @Inject constructor(
     private val requiredAccountType: AccountType = AccountType.Internal
 ) : ViewModel() {
 
+    enum class Action { Add, Switch, Logout, Remove }
+
+    private val onActionMutable = MutableSharedFlow<Action>(extraBufferCapacity = 1)
+
     val primaryAccount = accountManager.getPrimaryAccount()
         .mapLatest { account -> account?.getAccountItem() }
-        .shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
+        .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
     val accounts = primaryAccount.combine(accountManager.getAccounts()) { primary, accounts -> primary to accounts }
         .mapLatest { (primary, accounts) ->
@@ -64,6 +73,7 @@ class AccountSwitcherViewModel @Inject constructor(
                 }
             }
         }
+        .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
     private suspend fun Account.getAccountItem(): AccountItem {
         val user = runCatching { userManager.getUser(userId) }.getOrNull()
@@ -77,21 +87,20 @@ class AccountSwitcherViewModel @Inject constructor(
         return AccountItem(
             userId = userId,
             initials = letters.toUpperCase(Locale.getDefault()),
-            name = user?.displayName ?: username,
-            email = user?.email ?: email,
+            name = user?.displayName?.takeIfNotBlank() ?: username,
+            email = user?.email?.takeIfNotBlank() ?: email,
             state = state
         )
     }
 
-    fun login() = viewModelScope.launch {
-        authOrchestrator.startLoginWorkflow(
-            requiredAccountType = requiredAccountType,
-        )
+    fun add() = viewModelScope.launch {
+        authOrchestrator.startLoginWorkflow(requiredAccountType)
+        onActionMutable.emit(Action.Add)
     }
 
     fun logout(userId: UserId) = viewModelScope.launch {
-        userManager.lock(userId)
         accountManager.disableAccount(userId)
+        onActionMutable.emit(Action.Logout)
     }
 
     fun switch(userId: UserId) = viewModelScope.launch {
@@ -103,9 +112,13 @@ class AccountSwitcherViewModel @Inject constructor(
             )
             account.isReady() -> accountManager.setAsPrimary(userId)
         }
+        onActionMutable.emit(Action.Switch)
     }
 
     fun remove(userId: UserId) = viewModelScope.launch {
         accountManager.removeAccount(userId)
+        onActionMutable.emit(Action.Remove)
     }
+
+    fun onActionPerformed() = onActionMutable.asSharedFlow()
 }
