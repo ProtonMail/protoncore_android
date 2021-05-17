@@ -36,6 +36,7 @@ proguard/
 
 # Sensitive test data
 test/android/instrumented/src/main/assets/sensitive/*
+coreexample/src/androidTest/assets/sensitive/*
 
 # # # # # # # # #
 # IDEA SETTINGS #

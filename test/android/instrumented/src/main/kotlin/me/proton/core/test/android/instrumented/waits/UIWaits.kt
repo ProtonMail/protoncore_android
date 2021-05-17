@@ -1,20 +1,19 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
  *
- * This file is part of ProtonMail.
- *
- * ProtonMail is free software: you can redistribute it and/or modify
+ * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * ProtonMail is distributed in the hope that it will be useful,
+ * ProtonCore is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProtonMail. If not, see https://www.gnu.org/licenses/.
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package me.proton.core.test.android.instrumented.waits
@@ -25,9 +24,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.DataInteraction
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.IdlingResourceTimeoutException
-import androidx.test.espresso.NoMatchingRootException
-import androidx.test.espresso.NoMatchingViewException
-import androidx.test.espresso.PerformException
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.ViewInteraction
@@ -35,18 +31,15 @@ import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.platform.app.InstrumentationRegistry
-import me.proton.core.test.android.instrumented.CoreTest.Companion.targetContext
 import me.proton.core.test.android.instrumented.utils.ActivityProvider.currentActivity
-import me.proton.core.test.android.instrumented.watchers.ProtonWatcher
+import me.proton.core.test.android.instrumented.waits.ConditionWatcher.Companion.TIMEOUT_10S
 import org.hamcrest.Matcher
 
 /**
  * Contains different wait functions and retry actions.
  */
 @Suppress("MemberVisibilityCanBePrivate", "unused")
-object UIWaits {
-
-    const val TIMEOUT_10S = 10_000L
+object UIWaits : ConditionWatcher {
 
     fun waitForView(interaction: ViewInteraction, timeout: Long = TIMEOUT_10S): ViewInteraction =
         waitUntilMatcherFulfilled(
@@ -87,19 +80,7 @@ object UIWaits {
         assertion: ViewAssertion,
         timeout: Long = TIMEOUT_10S
     ): ViewInteraction {
-        ProtonWatcher.setTimeout(timeout)
-        ProtonWatcher.waitForCondition(object : ProtonWatcher.Condition {
-            val errorMessage = "UIWaits.waitUntilMatcherFulfilled "
-
-            override fun getDescription() = errorMessage
-
-            override fun checkCondition(): Boolean {
-                return checkViewInteraction(
-                    { interaction.check(assertion) },
-                    { errorMessage.plus(it) }
-                )
-            }
-        })
+        waitForCondition({ interaction.check(assertion) }, timeout)
         return interaction
     }
 
@@ -114,19 +95,7 @@ object UIWaits {
         assertion: ViewAssertion,
         timeout: Long = TIMEOUT_10S
     ): DataInteraction {
-        ProtonWatcher.setTimeout(timeout)
-        ProtonWatcher.waitForCondition(object : ProtonWatcher.Condition {
-            val errorMessage = "UIWaits.waitUntilMatcherFulfilled "
-
-            override fun getDescription() = errorMessage
-
-            override fun checkCondition(): Boolean {
-                return checkViewInteraction(
-                    { interaction.check(assertion) },
-                    { errorMessage.plus(it) }
-                )
-            }
-        })
+        waitForCondition({ interaction.check(assertion) }, timeout)
         return interaction
     }
 
@@ -141,19 +110,7 @@ object UIWaits {
         action: ViewAction,
         timeout: Long = TIMEOUT_10S
     ): ViewInteraction {
-        ProtonWatcher.setTimeout(timeout)
-        ProtonWatcher.waitForCondition(object : ProtonWatcher.Condition {
-            val errorMessage = "UIWaits.waitUntilMatcherFulfilled "
-
-            override fun getDescription() = errorMessage
-
-            override fun checkCondition(): Boolean {
-                return checkViewInteraction(
-                    { interaction.perform(action) },
-                    { errorMessage.plus(it) }
-                )
-            }
-        })
+        waitForCondition({ interaction.perform(action) }, timeout)
         return interaction
     }
 
@@ -170,53 +127,36 @@ object UIWaits {
         assertion: ViewAssertion,
         matcher: Matcher<View>,
         action: ViewAction,
-        timeout: Long = 10_000
+        timeout: Long = TIMEOUT_10S
     ): ViewInteraction {
-        ProtonWatcher.setTimeout(timeout)
-        ProtonWatcher.waitForCondition(object : ProtonWatcher.Condition {
-            val errorMessage = "UIWaits.waitUntilMatcherFulfilled "
-
-            override fun getDescription() = errorMessage
-
-            override fun checkCondition(): Boolean {
+        waitForCondition(
+            {
                 interaction.perform(action)
-                return checkViewInteraction(
-                    { Espresso.onView(matcher).check(assertion) },
-                    { errorMessage.plus(it) }
-                )
-            }
-        })
+                Espresso.onView(matcher).check(assertion)
+            },
+            timeout
+        )
         return interaction
     }
 
     fun waitUntilRecyclerViewPopulated(@IdRes id: Int, timeout: Long = TIMEOUT_10S) {
-        ProtonWatcher.setTimeout(timeout)
-        ProtonWatcher.waitForCondition(object : ProtonWatcher.Condition {
+        val timedOutResources = ArrayList<String>()
 
-            val timedOutResources = ArrayList<String>()
-
-            override fun getDescription() =
-                "RecyclerView: ${targetContext.resources.getResourceName(id)} was not populated with items"
-
-            override fun checkCondition() = try {
-                val rv = currentActivity!!.findViewById<RecyclerView>(id)
-                if (rv != null) {
-                    waitUntilLoaded { rv }
-                    rv.adapter!!.itemCount > 0
-                } else {
-                    if (ProtonWatcher.status == ProtonWatcher.TIMEOUT) {
-                        timedOutResources.add(getDescription())
-                        throw IdlingResourceTimeoutException(timedOutResources)
-                    } else {
-                        false
+        waitForCondition(
+            {
+                try {
+                    val rv = currentActivity!!.findViewById<RecyclerView>(id)
+                    if (rv != null) {
+                        waitUntilLoaded { rv }
+                        rv.adapter!!.itemCount > 0
                     }
+                } catch (e: Throwable) {
+                    timedOutResources.add(e.stackTrace.toString())
+                    throw IdlingResourceTimeoutException(timedOutResources)
                 }
-            } catch (e: Throwable) {
-                timedOutResources.add(getDescription())
-                timedOutResources.add(e.stackTrace.toString())
-                throw IdlingResourceTimeoutException(timedOutResources)
-            }
-        })
+            },
+            timeout
+        )
     }
 
     /**
@@ -234,40 +174,6 @@ object UIWaits {
 
         while (recycler.hasPendingAdapterUpdates()) {
             Thread.sleep(10)
-        }
-    }
-
-    private fun checkViewInteraction(conditionBlock: () -> Unit, errorBlock: (errorMessage: String) -> Unit): Boolean {
-        return try {
-            conditionBlock()
-            true
-        } catch (e: PerformException) {
-            errorBlock("View: \"${e.viewDescription}\", Action: \"${e.actionDescription}\"")
-            if (ProtonWatcher.status == ProtonWatcher.TIMEOUT) {
-                throw e
-            } else {
-                false
-            }
-        } catch (e: NoMatchingViewException) {
-            errorBlock("View Matcher: \"${e.viewMatcherDescription}\"")
-            if (ProtonWatcher.status == ProtonWatcher.TIMEOUT) {
-                throw e
-            } else {
-                false
-            }
-        } catch (e: NoMatchingRootException) {
-            errorBlock("Unable to match Root View: \"${e.message}\"")
-            if (ProtonWatcher.status == ProtonWatcher.TIMEOUT) {
-                throw e
-            } else {
-                false
-            }
-        } catch (t: Throwable) {
-            if (ProtonWatcher.status == ProtonWatcher.TIMEOUT) {
-                throw t
-            } else {
-                false
-            }
         }
     }
 }

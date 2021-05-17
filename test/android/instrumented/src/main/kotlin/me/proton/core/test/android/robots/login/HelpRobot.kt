@@ -16,38 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.test.android.robots.login
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.test.android.robots.CoreRobot
 
-libVersion = Version(0, 5, 0)
-
-android()
-
-dependencies {
-    // Base dependencies
-    implementation(
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-android`,
-
-        // Android
-        `lifecycle-runtime`,
-        `lifecycle-liveData`,
-        `lifecycle-viewModel`
-    )
-
-    // Test dependencies
-    api(
-        project(Module.kotlinTest),
-
-        // Android
-        `android-arch-testing`,
-        `android-test-core`,
-        robolectric
-    )
-}
+/**
+ * [HelpRobot] class contains login help actions and verifications implementation.
+ */
+class HelpRobot : CoreRobot()

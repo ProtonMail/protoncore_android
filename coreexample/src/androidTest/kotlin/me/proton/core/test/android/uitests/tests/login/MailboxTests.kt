@@ -21,9 +21,9 @@ package me.proton.core.test.android.uitests.tests.login
 import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.instrumented.data.User.Users.getUser
-import me.proton.core.test.android.instrumented.robots.login.LoginRobot
-import me.proton.core.test.android.instrumented.robots.login.MailboxPasswordRobot
+import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.robots.login.WelcomeRobot
+import me.proton.core.test.android.robots.login.MailboxPasswordRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -31,14 +31,14 @@ import org.junit.Test
 
 class MailboxTests : BaseTest() {
 
-    private val loginRobot = LoginRobot()
+    private val twoPassUser = users.getUser { it.passphrase.isNotEmpty() }
     private val mailboxPasswordRobot = MailboxPasswordRobot()
-    private val twoPassUser = getUser { it.passphrase.isNotEmpty() }
 
     @Before
     fun goToMailbox() {
         jailUnban()
-        loginRobot
+        WelcomeRobot()
+            .signIn()
             .username(twoPassUser.name)
             .password(twoPassUser.password)
             .signIn<MailboxPasswordRobot>()
@@ -48,7 +48,8 @@ class MailboxTests : BaseTest() {
     @Test
     fun incorrectMailboxPassword() {
         mailboxPasswordRobot
-            .unlockMailbox<MailboxPasswordRobot>("Incorrect")
+            .mailboxPassword("Incorrect")
+            .unlock<MailboxPasswordRobot>()
             .verify { errorSnackbarDisplayed(R.string.auth_mailbox_login_error_invalid_passphrase) }
 
         mailboxPasswordRobot
@@ -66,7 +67,8 @@ class MailboxTests : BaseTest() {
     @Test
     fun loginWithTwoPass() {
         mailboxPasswordRobot
-            .unlockMailbox<CoreexampleRobot>(twoPassUser.passphrase)
+            .mailboxPassword(twoPassUser.passphrase)
+            .unlock<CoreexampleRobot>()
             .verify { userStateIs(twoPassUser, Ready, Authenticated) }
     }
 }

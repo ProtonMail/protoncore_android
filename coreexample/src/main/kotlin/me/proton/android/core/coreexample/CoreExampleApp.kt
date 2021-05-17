@@ -33,7 +33,7 @@ class CoreExampleApp : Application() {
             if (priority == Log.VERBOSE || priority == Log.DEBUG) return
             /*when (priority) {
                 Log.VERBOSE,
-                Log.DEBUG -> Unit
+                Log.DEBUG -> Unit0
                 Log.ERROR -> CrashLibrary.logError()
                 Log.WARN -> CrashLibrary.logWarning()
                 else -> CrashLibrary.log()

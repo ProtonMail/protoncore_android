@@ -18,24 +18,25 @@
 
 package me.proton.core.test.android.uitests.tests.login
 
-import me.proton.core.test.android.instrumented.data.User
-import me.proton.core.test.android.instrumented.robots.login.LoginRobot
-import me.proton.core.test.android.instrumented.robots.login.TwoFaRobot
+import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.robots.login.WelcomeRobot
+import me.proton.core.test.android.robots.login.LoginRobot
+import me.proton.core.test.android.robots.login.TwoFaRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
 class TwoFaTests : BaseTest() {
 
-    private val loginRobot = LoginRobot()
-    private val twoFaRobot = TwoFaRobot()
+    private val user = users.getUser { it.twoFa.isNotEmpty() }
     private val invalidCode = "123456"
+    private val twoFaRobot = TwoFaRobot()
 
     @Before
     fun goToTwoFa() {
         jailUnban()
-        val user = User.getUser { it.twoFa.isNotEmpty() }
-        loginRobot
+        WelcomeRobot()
+            .signIn()
             .loginUser<TwoFaRobot>(user)
     }
 

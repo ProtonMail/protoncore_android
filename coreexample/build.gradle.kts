@@ -33,7 +33,6 @@ android(
 {
     defaultConfig {
         buildConfigField("String", "ENVIRONMENT", "\"proton.black\"")
-        buildConfigField("String", "JAIL_UNBAN_ENDPOINT", "\"\"")
     }
 }
 

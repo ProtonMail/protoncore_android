@@ -18,7 +18,6 @@
 
 package me.proton.android.core.coreexample.api
 
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import retrofit2.http.GET
@@ -30,7 +29,4 @@ interface CoreExampleApi : BaseRetrofitApi {
 
     @GET("internal/tests/humanverification")
     suspend fun triggerHumanVerification(): GenericResponse
-
-    @GET(BuildConfig.JAIL_UNBAN_ENDPOINT)
-    suspend fun unbanAll()
 }
