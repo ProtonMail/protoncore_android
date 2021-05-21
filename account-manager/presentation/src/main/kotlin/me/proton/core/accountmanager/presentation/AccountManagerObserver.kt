@@ -61,7 +61,7 @@ fun AccountManager.observe(
     minActiveState: Lifecycle.State = Lifecycle.State.CREATED
 ) = AccountManagerObserver(this, lifecycle, minActiveState)
 
-fun AccountManagerObserver.disableInitialNotReadyAccounts() {
+fun AccountManagerObserver.disableInitialNotReadyAccounts(): AccountManagerObserver {
     scope.launch {
         // For all NotReady Accounts in the first/initial list.
         accountManager.getAccounts(AccountState.NotReady).first().forEach {
@@ -71,6 +71,7 @@ fun AccountManagerObserver.disableInitialNotReadyAccounts() {
             }
         }
     }
+    return this
 }
 
 fun AccountManagerObserver.onAccountTwoPassModeNeeded(

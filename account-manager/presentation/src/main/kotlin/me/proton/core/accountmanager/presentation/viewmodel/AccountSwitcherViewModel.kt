@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
@@ -50,11 +51,16 @@ import javax.inject.Inject
 class AccountSwitcherViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
-    private val authOrchestrator: AuthOrchestrator,
     private val requiredAccountType: AccountType = AccountType.Internal
 ) : ViewModel() {
 
-    enum class Action { Add, Switch, Logout, Remove }
+    sealed class Action {
+        object Add : Action()
+        data class SignIn(val account: Account) : Action()
+        data class SignOut(val account: Account) : Action()
+        data class SetPrimary(val account: Account) : Action()
+        data class Remove(val account: Account) : Action()
+    }
 
     private val onActionMutable = MutableSharedFlow<Action>(extraBufferCapacity = 1)
 
@@ -93,32 +99,43 @@ class AccountSwitcherViewModel @Inject constructor(
         )
     }
 
+    private suspend fun getAccountOrNull(userId: UserId): Account? =
+        accountManager.getAccount(userId).firstOrNull()
+
     fun add() = viewModelScope.launch {
-        authOrchestrator.startLoginWorkflow(requiredAccountType)
         onActionMutable.emit(Action.Add)
     }
 
-    fun logout(userId: UserId) = viewModelScope.launch {
-        accountManager.disableAccount(userId)
-        onActionMutable.emit(Action.Logout)
+    fun signOut(userId: UserId) = viewModelScope.launch {
+        getAccountOrNull(userId)?.let {
+            onActionMutable.emit(Action.SignOut(it))
+        }
     }
 
     fun switch(userId: UserId) = viewModelScope.launch {
-        val account = accountManager.getAccount(userId).firstOrNull() ?: return@launch
-        when {
-            account.isDisabled() -> authOrchestrator.startLoginWorkflow(
-                requiredAccountType = requiredAccountType,
-                username = account.username
-            )
-            account.isReady() -> accountManager.setAsPrimary(userId)
+        getAccountOrNull(userId)?.let {
+            when {
+                it.isDisabled() -> onActionMutable.emit(Action.SignIn(it))
+                it.isReady() -> onActionMutable.emit(Action.SetPrimary(it))
+            }
         }
-        onActionMutable.emit(Action.Switch)
     }
 
     fun remove(userId: UserId) = viewModelScope.launch {
-        accountManager.removeAccount(userId)
-        onActionMutable.emit(Action.Remove)
+        getAccountOrNull(userId)?.let {
+            onActionMutable.emit(Action.Remove(it))
+        }
     }
 
-    fun onActionPerformed() = onActionMutable.asSharedFlow()
+    fun onAction() = onActionMutable.asSharedFlow()
+
+    fun onDefaultAction(authOrchestrator: AuthOrchestrator) = onAction().onEach {
+        when (it) {
+            is Action.Add -> authOrchestrator.startLoginWorkflow(requiredAccountType)
+            is Action.SignIn -> authOrchestrator.startLoginWorkflow(requiredAccountType, username = it.account.username)
+            is Action.SignOut -> accountManager.disableAccount(it.account.userId)
+            is Action.Remove -> accountManager.removeAccount(it.account.userId)
+            is Action.SetPrimary -> accountManager.setAsPrimary(it.account.userId)
+        }
+    }
 }

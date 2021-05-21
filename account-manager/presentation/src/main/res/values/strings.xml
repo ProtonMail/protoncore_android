@@ -19,7 +19,7 @@
 <resources>
     <string name="account_switcher_section_switch_to">Switch to</string>
     <string name="account_switcher_action_add_account">Add account</string>
-    <string name="account_switcher_action_login">Login</string>
-    <string name="account_switcher_action_logout">Logout</string>
+    <string name="account_switcher_action_sign_in">Sign in</string>
+    <string name="account_switcher_action_sign_out">Sign out</string>
     <string name="account_switcher_action_remove">Remove</string>
 </resources>

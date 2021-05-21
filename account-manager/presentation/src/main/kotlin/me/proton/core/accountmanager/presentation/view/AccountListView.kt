@@ -67,18 +67,18 @@ class AccountListView @JvmOverloads constructor(
         }
 
         accountListItemAdapter.setOnAccountMenuInflated { account, menu ->
-            val menuLogin = menu.findItem(R.id.account_menu_login)
-            val menuLogout = menu.findItem(R.id.account_menu_logout)
+            val menuSignIn = menu.findItem(R.id.account_menu_sign_in)
+            val menuSignOut = menu.findItem(R.id.account_menu_sign_out)
             val menuRemove = menu.findItem(R.id.account_menu_remove)
             when (account.accountItem.state) {
                 AccountState.Ready -> {
-                    menuLogin.isVisible = false
-                    menuLogout.isVisible = true
+                    menuSignIn.isVisible = false
+                    menuSignOut.isVisible = true
                     menuRemove.isVisible = true
                 }
                 AccountState.Disabled -> {
-                    menuLogin.isVisible = true
-                    menuLogout.isVisible = false
+                    menuSignIn.isVisible = true
+                    menuSignOut.isVisible = false
                     menuRemove.isVisible = true
                 }
                 else -> Unit
@@ -87,8 +87,8 @@ class AccountListView @JvmOverloads constructor(
 
         accountListItemAdapter.setOnAccountMenuItemClicked { account, menuItem ->
             when (menuItem.itemId) {
-                R.id.account_menu_login -> viewModel?.switch(account.accountItem.userId)
-                R.id.account_menu_logout -> viewModel?.logout(account.accountItem.userId)
+                R.id.account_menu_sign_in -> viewModel?.switch(account.accountItem.userId)
+                R.id.account_menu_sign_out -> viewModel?.signOut(account.accountItem.userId)
                 R.id.account_menu_remove -> viewModel?.remove(account.accountItem.userId)
             }
             true

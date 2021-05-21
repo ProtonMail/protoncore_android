@@ -18,11 +18,11 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/account_menu_login"
-        android:title="@string/account_switcher_action_login" />
+        android:id="@+id/account_menu_sign_in"
+        android:title="@string/account_switcher_action_sign_in" />
     <item
-        android:id="@+id/account_menu_logout"
-        android:title="@string/account_switcher_action_logout" />
+        android:id="@+id/account_menu_sign_out"
+        android:title="@string/account_switcher_action_sign_out" />
     <item
         android:id="@+id/account_menu_remove"
         android:title="@string/account_switcher_action_remove" />
