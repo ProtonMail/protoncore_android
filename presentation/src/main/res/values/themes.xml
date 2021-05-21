@@ -106,6 +106,12 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <style name="ProtonTheme.Splash.Light">
+        <item name="android:windowBackground">@drawable/splash_background_light</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
     <style name="ProtonTheme.Vpn" parent="ProtonTheme">
         <item name="brand_norm">@color/fruit_salad</item>
         <item name="brand_darken_20">@color/goblin</item>
