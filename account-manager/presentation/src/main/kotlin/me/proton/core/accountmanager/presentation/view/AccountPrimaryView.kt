@@ -105,5 +105,11 @@ class AccountPrimaryView @JvmOverloads constructor(
 
     fun dismissDialog() {
         dialog?.dismiss()
+        dialog = null
+    }
+
+    override fun onDetachedFromWindow() {
+        dismissDialog()
+        super.onDetachedFromWindow()
     }
 }

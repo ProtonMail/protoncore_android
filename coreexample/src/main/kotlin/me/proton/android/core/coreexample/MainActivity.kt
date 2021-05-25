@@ -66,7 +66,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
             textStyles.onClick { startActivity(Intent(this@MainActivity, TextStylesActivity::class.java)) }
-            login.onClick { accountViewModel.startLoginWorkflow() }
+            login.onClick { accountViewModel.login() }
             forceUpdate.onClick {
                 supportFragmentManager.showForceUpdate(
                     apiErrorMessage = "Error Message coming from the API."
@@ -85,15 +85,21 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             signupExternal.onClick { accountViewModel.onExternalSignUpClicked() }
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
-            accountSwitcherViewModel.onActionPerformed().onEach {
-                if (it == AccountSwitcherViewModel.Action.Add) accountPrimaryView.dismissDialog()
+            accountSwitcherViewModel.onAction().onEach {
+                when (it) {
+                    is AccountSwitcherViewModel.Action.Add -> accountViewModel.login()
+                    is AccountSwitcherViewModel.Action.SignIn -> accountViewModel.login(it.account.username)
+                    is AccountSwitcherViewModel.Action.SignOut -> accountViewModel.logout(it.account.userId)
+                    is AccountSwitcherViewModel.Action.Remove -> accountViewModel.remove(it.account.userId)
+                    is AccountSwitcherViewModel.Action.SetPrimary -> accountViewModel.setAsPrimary(it.account.userId)
+                }
             }.launchIn(lifecycleScope)
         }
 
         accountViewModel.state.onEach { state ->
             when (state) {
                 is AccountViewModel.State.Processing -> Unit
-                is AccountViewModel.State.LoginNeeded -> accountViewModel.startLoginWorkflow()
+                is AccountViewModel.State.LoginNeeded -> accountViewModel.login()
                 is AccountViewModel.State.AccountList -> displayAccounts(state.accounts)
             }.exhaustive
         }.launchIn(lifecycleScope)

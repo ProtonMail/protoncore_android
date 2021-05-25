@@ -112,11 +112,18 @@ class AccountViewModel @Inject constructor(
         }
     }
 
+    suspend fun logout(userId: UserId) = accountManager.disableAccount(userId)
+
+    suspend fun remove(userId: UserId) = accountManager.removeAccount(userId)
+
+    suspend fun setAsPrimary(userId: UserId) = accountManager.setAsPrimary(userId)
+
     fun getPrimaryUserId() = accountManager.getPrimaryUserId()
 
     fun getPrimaryAccount() = accountManager.getPrimaryAccount()
 
-    fun startLoginWorkflow() = authOrchestrator.startLoginWorkflow(AccountType.Internal)
+    fun login(username: String? = null) =
+        authOrchestrator.startLoginWorkflow(AccountType.Internal, username = username)
 
     fun onAccountClicked(userId: UserId) {
         viewModelScope.launch {
