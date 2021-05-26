@@ -35,7 +35,6 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.disableInitialNotReadyAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
@@ -44,6 +43,7 @@ import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.presentation.AuthOrchestrator
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
@@ -112,7 +112,7 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    suspend fun logout(userId: UserId) = accountManager.disableAccount(userId)
+    suspend fun signOut(userId: UserId) = accountManager.disableAccount(userId)
 
     suspend fun remove(userId: UserId) = accountManager.removeAccount(userId)
 
@@ -120,10 +120,9 @@ class AccountViewModel @Inject constructor(
 
     fun getPrimaryUserId() = accountManager.getPrimaryUserId()
 
-    fun getPrimaryAccount() = accountManager.getPrimaryAccount()
+    fun signIn(username: String? = null) = authOrchestrator.startLoginWorkflow(AccountType.Internal, username)
 
-    fun login(username: String? = null) =
-        authOrchestrator.startLoginWorkflow(AccountType.Internal, username = username)
+    fun add() = authOrchestrator.startAddAccountWorkflow(AccountType.Internal, Product.Mail)
 
     fun onAccountClicked(userId: UserId) {
         viewModelScope.launch {
@@ -137,18 +136,6 @@ class AccountViewModel @Inject constructor(
                 AccountState.Disabled -> accountManager.removeAccount(account.userId)
                 else -> Unit
             }
-        }
-    }
-
-    fun onPaySignUpClicked() {
-        viewModelScope.launch {
-            paymentsOrchestrator.startBillingWorkFlow(
-                selectedPlan = PlanDetails(
-                    "ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw==",
-                    "Proton Plus",
-                    SubscriptionCycle.YEARLY
-                )
-            )
         }
     }
 
@@ -167,6 +154,18 @@ class AccountViewModel @Inject constructor(
     fun onExternalSignUpClicked() {
         viewModelScope.launch {
             authOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.External)
+        }
+    }
+
+    fun onPaySignUpClicked() {
+        viewModelScope.launch {
+            paymentsOrchestrator.startBillingWorkFlow(
+                selectedPlan = PlanDetails(
+                    "ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw==",
+                    "Proton Plus",
+                    SubscriptionCycle.YEARLY
+                )
+            )
         }
     }
 

@@ -1,0 +1,27 @@
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="21.913044dp"
+    android:height="24dp"
+    android:viewportWidth="21"
+    android:viewportHeight="23">
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M20.9905,2.5677C20.9905,2.2305 20.924,1.8966 20.795,1.585C20.6659,1.2735 20.4768,0.9904 20.2383,0.752C19.9998,0.5135 19.7167,0.3244 19.4051,0.1954C19.0936,0.0663 18.7596,-0 18.4224,0C17.7414,0 17.0883,0.2705 16.6067,0.7521C16.1252,1.2336 15.8547,1.8867 15.8547,2.5677V2.649L4.686,6.2142C4.2996,5.6557 3.7085,5.2721 3.041,5.147C2.3735,5.0218 1.6835,5.1652 1.1211,5.5458C0.8455,5.7302 0.6088,5.9672 0.4247,6.2431C0.2406,6.5189 0.1127,6.8284 0.0482,7.1537C-0.0163,7.4791 -0.0161,7.8139 0.0489,8.1392C0.1138,8.4644 0.2421,8.7737 0.4266,9.0494C0.4324,9.0584 0.4385,9.0674 0.4447,9.0761C0.6866,9.4268 1.0122,9.7117 1.3919,9.9049C1.7717,10.0981 2.1936,10.1935 2.6195,10.1826C2.8851,10.1813 3.1486,10.1357 3.3992,10.0477L10.7398,19.2255C10.4759,19.8427 10.4679,20.5394 10.7176,21.1625C10.9673,21.7856 11.4543,22.284 12.0714,22.5481L12.0934,22.5574C12.7168,22.8219 13.4193,22.8298 14.0485,22.5795C14.6777,22.3293 15.1829,21.841 15.4543,21.2206C15.6666,20.7234 15.7136,20.1711 15.5885,19.6451C15.4633,19.1191 15.1726,18.6471 14.7592,18.2987L18.6585,5.0936C19.2914,5.0394 19.8808,4.7494 20.31,4.2812C20.7392,3.813 20.9769,3.2007 20.976,2.5655L20.9905,2.5677ZM13.0572,17.6323C12.662,17.6378 12.2732,17.7338 11.9208,17.9129L4.7518,8.9258C4.9504,8.6055 5.0741,8.2445 5.1137,7.8697L16.5263,4.2623C16.648,4.3918 16.7796,4.5117 16.9198,4.621L13.0672,17.6268H13.055L13.0572,17.6323Z" />
+</vector>

@@ -45,7 +45,6 @@ object AuthModule {
     fun provideAuthRepository(apiProvider: ApiProvider): AuthRepository = AuthRepositoryImpl(apiProvider)
 
     @Provides
-    @Singleton
     fun provideAuthOrchestrator(): AuthOrchestrator = AuthOrchestrator()
 
     @Provides

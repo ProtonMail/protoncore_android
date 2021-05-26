@@ -31,7 +31,9 @@
         android:supportsRtl="true"
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
-        <activity android:name="me.proton.android.core.coreexample.MainActivity">
+        <activity
+            android:name="me.proton.android.core.coreexample.MainActivity"
+            android:theme="@style/ProtonTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,7 +56,13 @@
             android:name="me.proton.core.auth.presentation.ui.CreateAddressActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name="me.proton.core.auth.presentation.ui.AddAccountActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name="me.proton.core.auth.presentation.ui.LoginActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="me.proton.core.auth.presentation.ui.TwoPassModeActivity"
@@ -70,11 +78,6 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="me.proton.core.payment.presentation.ui.PaymentTokenApprovalActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <!-- signup -->
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
-            android:theme="@style/ProtonTheme"
             android:windowSoftInputMode="adjustResize" />
     </application>
 

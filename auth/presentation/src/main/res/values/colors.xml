@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c) 2020 Proton Technologies AG
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2021 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
@@ -18,17 +17,7 @@
   -->
 
 <resources>
-
-    <style name="ProtonTheme.AddAccount">
-        <item name="android:statusBarColor">@color/cloud_burst</item>
-        <item name="android:navigationBarColor">@color/vulcan</item>
-        <item name="android:windowLightStatusBar">false</item>
-    </style>
-
-    <style name="AuthContent">
-        <item name="android:orientation">vertical</item>
-        <item name="android:paddingStart">@dimen/auth_parent_default_padding</item>
-        <item name="android:paddingEnd">@dimen/auth_parent_default_padding</item>
-    </style>
-
+    <color name="add_account_gradient_start">@color/cloud_burst</color>
+    <color name="add_account_gradient_end">@color/black_pearl</color>
+    <color name="add_account_background">@color/vulcan</color>
 </resources>

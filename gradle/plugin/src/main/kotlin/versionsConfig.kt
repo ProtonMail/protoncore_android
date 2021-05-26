@@ -35,7 +35,7 @@ internal fun initVersions() {
     `constraint-layout version` =               "2.0.4"         // Released: Oct 29, 2020
     `espresso version` =                        "3.3.0"         // Released: Aug 25, 2020
     `fragment version` =                        "1.3.0"         // Released: Feb 10, 2021
-    `ktx version` =                             "1.3.2"         // Released: Oct 01, 2020
+    `ktx version` =                             "1.5.0"         // Released: May 18, 2021
     `lifecycle version` =                       "2.4.0-alpha01" // Released: Mar 24, 2021
     `material version` =                        "1.3.0"         // Released: Feb 05, 2021
     `android-paging version` =                  "2.1.2"         // Released: Mar 18, 2020

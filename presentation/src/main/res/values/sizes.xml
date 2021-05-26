@@ -50,6 +50,7 @@
     <dimen name="default_subtitle_text_size">14sp</dimen>
 
     <!-- splash background items spacing -->
+    <dimen name="splash_text_padding">150dp</dimen>
     <dimen name="splash_bottom_padding">50dp</dimen>
 
     <!-- activity basic dimensions -->

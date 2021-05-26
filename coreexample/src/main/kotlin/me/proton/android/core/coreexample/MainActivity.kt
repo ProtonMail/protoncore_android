@@ -38,6 +38,7 @@ import me.proton.android.core.coreexample.viewmodel.AccountViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
+import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.showForceUpdate
@@ -59,6 +60,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.ProtonTheme)
         super.onCreate(savedInstanceState)
 
         accountViewModel.register(this)
@@ -66,12 +68,11 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
             textStyles.onClick { startActivity(Intent(this@MainActivity, TextStylesActivity::class.java)) }
-            login.onClick { accountViewModel.login() }
-            forceUpdate.onClick {
-                supportFragmentManager.showForceUpdate(
-                    apiErrorMessage = "Error Message coming from the API."
-                )
-            }
+            addAccount.onClick { startActivity(Intent(this@MainActivity, AddAccountActivity::class.java)) }
+            signIn.onClick { accountViewModel.signIn() }
+            signup.onClick { accountViewModel.onSignUpClicked() }
+            signupExternal.onClick { accountViewModel.onExternalSignUpClicked() }
+            forceUpdate.onClick { supportFragmentManager.showForceUpdate("Error Message coming from the API.") }
             triggerHumanVer.onClick {
                 lifecycleScope.launch(Dispatchers.IO) {
                     accountViewModel.getPrimaryUserId().first()?.let {
@@ -81,15 +82,13 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
             sendDirect.onClick { mailMessageViewModel.sendDirect() }
             payment.onClick { accountViewModel.onPayUpgradeClicked() }
-            signup.onClick { accountViewModel.onSignUpClicked() }
-            signupExternal.onClick { accountViewModel.onExternalSignUpClicked() }
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {
                 when (it) {
-                    is AccountSwitcherViewModel.Action.Add -> accountViewModel.login()
-                    is AccountSwitcherViewModel.Action.SignIn -> accountViewModel.login(it.account.username)
-                    is AccountSwitcherViewModel.Action.SignOut -> accountViewModel.logout(it.account.userId)
+                    is AccountSwitcherViewModel.Action.Add -> accountViewModel.signIn()
+                    is AccountSwitcherViewModel.Action.SignIn -> accountViewModel.signIn(it.account.username)
+                    is AccountSwitcherViewModel.Action.SignOut -> accountViewModel.signOut(it.account.userId)
                     is AccountSwitcherViewModel.Action.Remove -> accountViewModel.remove(it.account.userId)
                     is AccountSwitcherViewModel.Action.SetPrimary -> accountViewModel.setAsPrimary(it.account.userId)
                 }
@@ -99,7 +98,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         accountViewModel.state.onEach { state ->
             when (state) {
                 is AccountViewModel.State.Processing -> Unit
-                is AccountViewModel.State.LoginNeeded -> accountViewModel.login()
+                is AccountViewModel.State.LoginNeeded -> accountViewModel.add()
                 is AccountViewModel.State.AccountList -> displayAccounts(state.accounts)
             }.exhaustive
         }.launchIn(lifecycleScope)
