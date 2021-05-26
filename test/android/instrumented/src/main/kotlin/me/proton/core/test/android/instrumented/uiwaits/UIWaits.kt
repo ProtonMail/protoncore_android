@@ -19,6 +19,7 @@
 
 package me.proton.core.test.android.instrumented.uiwaits
 
+import android.view.View
 import androidx.annotation.IdRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.DataInteraction
@@ -37,6 +38,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import me.proton.core.test.android.instrumented.CoreTest.Companion.targetContext
 import me.proton.core.test.android.instrumented.utils.ActivityProvider.currentActivity
 import me.proton.core.test.android.instrumented.watchers.ProtonWatcher
+import org.hamcrest.Matcher
 
 /**
  * Contains different wait functions and retry actions.
@@ -147,6 +149,38 @@ object UIWaits {
             override fun checkCondition(): Boolean {
                 return checkViewInteraction(
                     { interaction.perform(action) },
+                    { errorMessage.plus(it) }
+                )
+            }
+        })
+        return interaction
+    }
+
+    /**
+     * Tries to perform an action until [ViewAssertion] fulfilled.
+     * @param interaction - [ViewInteraction] parameter.
+     * @param assertion - [ViewAssertion] that should be fulfilled.
+     * @param matcher - [Matcher] object that should be matched.
+     * @param action - [ViewAction] that should be performed.
+     * @param timeout - optional timeout parameter to wait for the assertion fulfillment.
+     */
+    fun performActionUntilMatcherFulfilled(
+        interaction: ViewInteraction,
+        assertion: ViewAssertion,
+        matcher: Matcher<View>,
+        action: ViewAction,
+        timeout: Long = 10_000
+    ): ViewInteraction {
+        ProtonWatcher.setTimeout(timeout)
+        ProtonWatcher.waitForCondition(object : ProtonWatcher.Condition {
+            val errorMessage = "UIWaits.waitUntilMatcherFulfilled "
+
+            override fun getDescription() = errorMessage
+
+            override fun checkCondition(): Boolean {
+                interaction.perform(action)
+                return checkViewInteraction(
+                    { Espresso.onView(matcher).check(assertion) },
                     { errorMessage.plus(it) }
                 )
             }
