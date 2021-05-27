@@ -18,6 +18,13 @@
 
 package me.proton.core.domain.arch
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transformLatest
+import me.proton.core.util.kotlin.exhaustive
+
 enum class ResponseSource {
     Local,
     Remote
@@ -77,4 +84,37 @@ inline fun <T> DataResult<T>.onFailure(
 inline fun <T> DataResult<T>.onSuccess(action: (value: T) -> Unit): DataResult<T> {
     if (this is DataResult.Success) action(value)
     return this
+}
+
+/**
+ * Applies transform function to successful [DataResult] and it does not modify unsuccessful ones.
+ */
+suspend inline fun <T : Any, R : Any> DataResult<T>.mapSuccess(
+    crossinline transform: suspend (value: DataResult.Success<T>) -> DataResult<R>
+): DataResult<R> = when (this) {
+    is DataResult.Processing -> this
+    is DataResult.Error -> this
+    is DataResult.Success -> transform(this)
+}.exhaustive
+
+/**
+ * Returns a flow containing the result of applying transform function to each successful value while unsuccessful ones
+ * are not transformed.
+ */
+inline fun <T : Any, R : Any> Flow<DataResult<T>>.mapSuccess(
+    crossinline transform: suspend (value: DataResult.Success<T>) -> DataResult<R>
+): Flow<DataResult<R>> = map { it.mapSuccess { value -> transform(value) } }
+
+/**
+ * Applies transform function to each successful value of the given flow and re-emits unsuccessful ones.
+ */
+@ExperimentalCoroutinesApi
+inline fun <T : Any, R : Any> Flow<DataResult<T>>.transformSuccess(
+    crossinline transform: suspend FlowCollector<DataResult<R>>.(value: DataResult.Success<T>) -> Unit
+): Flow<DataResult<R>> = transformLatest {
+    when (it) {
+        is DataResult.Processing -> emit(it)
+        is DataResult.Error -> emit(it)
+        is DataResult.Success -> transform(it)
+    }.exhaustive
 }
