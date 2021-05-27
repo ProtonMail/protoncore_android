@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 8, 0)
+libVersion = Version(0, 8, 1)
 
 android(useDataBinding = true)
 
@@ -42,6 +42,7 @@ dependencies {
         `coroutines-android`,
 
         // Android
+        `android-ktx`,
         `activity`,
         `appcompat`,
         `constraint-layout`,

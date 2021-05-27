@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/add_account_background">
+
+        <FrameLayout
+            android:id="@+id/mountains"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/add_account_gradient"
+            android:minHeight="@dimen/add_account_mountain_min_height"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:scaleType="fitXY"
+                android:src="@drawable/add_account_mountain" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gap_huge"
+            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginEnd="@dimen/gap_huge"
+            android:layout_marginBottom="@dimen/gap_huge"
+            app:layout_constraintBottom_toTopOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@color/white"
+            tools:src="@drawable/logo_mail" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/Proton.Text.Headline.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginTop="@dimen/gap_huge"
+            android:layout_marginEnd="@dimen/gap_huge"
+            android:layout_marginBottom="@dimen/gap_medium"
+            android:gravity="center"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Protect your privacy with ProtonMail" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            style="@style/Proton.Text.DefaultSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginTop="@dimen/gap_medium"
+            android:layout_marginEnd="@dimen/gap_huge"
+            android:layout_marginBottom="@dimen/gap_large"
+            android:gravity="center"
+            android:textColor="@color/santas_gray"
+            app:layout_constraintBottom_toTopOf="@id/guide_center"
+            tools:text="Encrypted email that keeps your conversations private. Your inbox truly belongs to you." />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <me.proton.core.presentation.ui.view.ProtonButton
+            android:id="@+id/sign_in"
+            style="@style/ProtonButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginTop="@dimen/gap_large"
+            android:layout_marginEnd="@dimen/gap_huge"
+            android:text="@string/auth_sign_in"
+            app:layout_constraintBottom_toTopOf="@id/sign_up"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guide_center" />
+
+        <me.proton.core.presentation.ui.view.ProtonButton
+            android:id="@+id/sign_up"
+            style="@style/ProtonButton.Borderless.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginTop="@dimen/gap_medium"
+            android:layout_marginEnd="@dimen/gap_huge"
+            android:text="Create account"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sign_in" />
+
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginTop="@dimen/gap_huge"
+            android:layout_marginEnd="@dimen/gap_huge"
+            android:layout_marginBottom="@dimen/gap_huge"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gap_large"
+                android:layout_marginBottom="@dimen/gap_medium"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/gap_large"
+                    android:src="@drawable/ic_logo_calendar"
+                    app:tint="@color/santas_gray" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gap_large"
+                    android:layout_marginEnd="@dimen/gap_large"
+                    android:src="@drawable/ic_logo_vpn"
+                    app:tint="@color/santas_gray" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gap_large"
+                    android:layout_marginEnd="@dimen/gap_large"
+                    android:src="@drawable/ic_logo_drive"
+                    app:tint="@color/santas_gray" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gap_large"
+                    android:src="@drawable/ic_logo_mail"
+                    app:tint="@color/santas_gray" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/Proton.Text.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="One account for all Proton services."
+                android:textColor="@color/santas_gray" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

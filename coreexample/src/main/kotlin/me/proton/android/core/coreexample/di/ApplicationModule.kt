@@ -95,7 +95,7 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideProduct(): Product =
-        Product.Calendar
+        Product.Mail
 
     @Provides
     @Singleton

@@ -28,6 +28,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -93,6 +94,20 @@ fun Fragment.hideKeyboard() = requireActivity().hideKeyboard()
  */
 fun AppCompatActivity.isNightMode() =
     resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+/**
+ * Changes the foreground color of the status bars to dark so that the items on the bar can be read clearly.
+ */
+fun AppCompatActivity.setDarkStatusBar() {
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
+}
+
+/**
+ * Changes the foreground color of the status bars to light so that the items on the bar can be read clearly.
+ */
+fun AppCompatActivity.setLightStatusBar() {
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
+}
 
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

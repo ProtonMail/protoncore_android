@@ -17,18 +17,26 @@
   -->
 
 <!-- The android:opacity=”opaque” line — this is critical in preventing a flash of black as your theme transitions. -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/background_norm"/>
+    <item android:drawable="?proton_background_norm" />
 
     <item
+        android:width="96dp"
+        android:height="96dp"
         android:drawable="?brand_splash_logo"
-        android:gravity="center"
-        android:bottom="@dimen/splash_bottom_padding"/>
+        android:gravity="center" />
 
     <item
-        android:drawable="@drawable/ic_made_by_proton_logo"
-        android:gravity="bottom|center_horizontal"
-        android:bottom="@dimen/splash_bottom_padding"/>
+        android:drawable="?brand_splash_text"
+        android:gravity="center"
+        android:top="@dimen/splash_text_padding" />
+
+    <item
+        android:width="106dp"
+        android:height="16dp"
+        android:bottom="@dimen/splash_bottom_padding"
+        android:drawable="@drawable/ic_made_by_proton"
+        android:gravity="bottom|center_horizontal" />
 
 </layer-list>

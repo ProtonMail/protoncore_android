@@ -22,6 +22,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
+import me.proton.core.auth.presentation.entity.AddAccountInput
+import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.CreateAddressInput
@@ -35,6 +37,19 @@ import me.proton.core.auth.presentation.entity.TwoPassModeResult
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.ui.signup.SignupActivity
+
+class StartAddAccount : ActivityResultContract<AddAccountInput, AddAccountResult?>() {
+
+    override fun createIntent(context: Context, input: AddAccountInput) =
+        Intent(context, AddAccountActivity::class.java).apply {
+            putExtra(AddAccountActivity.ARG_INPUT, input)
+        }
+
+    override fun parseResult(resultCode: Int, result: Intent?): AddAccountResult? {
+        if (resultCode != Activity.RESULT_OK) return null
+        return result?.getParcelableExtra(AddAccountActivity.ARG_RESULT)
+    }
+}
 
 class StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
 

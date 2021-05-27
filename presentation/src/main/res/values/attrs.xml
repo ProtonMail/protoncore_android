@@ -26,6 +26,7 @@
         <attr name="brand_lighten_40" format="reference" />
         <attr name="brand_lighten_20" format="reference" />
         <attr name="brand_splash_logo" format="reference" />
+        <attr name="brand_splash_text" format="reference" />
 
         <!-- App specific attributes -->
         <attr name="proton_text_norm" format="reference" />
