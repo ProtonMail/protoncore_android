@@ -93,7 +93,7 @@ Test Android Instrumented: **0.4.6** - _released on: May 26, 2021_
 
 Domain: **1.0.1** - _released on: May 03, 2021_
 
-Presentation: **0.8** - _released on: May 25, 2021_
+Presentation: **0.8.1** - _released on: May 27, 2021_
 
 Data: **1.0.3** - _released on: May 03, 2021_
 
@@ -119,13 +119,13 @@ Crypto Android: **1.0.3** - _released on: Apr 15, 2021_
 
 ### Auth
 
-Auth: **1.1.2** - _released on: May 25, 2021_
+Auth: **1.1.3** - _released on: May 27, 2021_
 
-Auth Domain: **1.1.2** - _released on: May 25, 2021_
+Auth Domain: **1.1.3** - _released on: May 27, 2021_
 
-Auth Presentation: **1.1.2** - _released on: May 25, 2021_
+Auth Presentation: **1.1.3** - _released on: May 27, 2021_
 
-Auth Data: **1.1.2** - _released on: May 25, 2021_
+Auth Data: **1.1.3** - _released on: May 27, 2021_
 
 ### Account
 
