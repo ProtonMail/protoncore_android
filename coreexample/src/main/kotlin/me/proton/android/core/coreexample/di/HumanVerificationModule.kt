@@ -31,6 +31,7 @@ import me.proton.core.humanverification.data.repository.HumanVerificationReposit
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
+import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.session.HumanVerificationListener
 import me.proton.core.network.domain.session.HumanVerificationProvider
 import javax.inject.Singleton
@@ -38,6 +39,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object HumanVerificationModule {
+
+    @Provides
+    fun provideHumanVerificationOrchestrator(): HumanVerificationOrchestrator =
+        HumanVerificationOrchestrator()
+
     @Provides
     @Singleton
     fun provideHumanVerificationListener(
