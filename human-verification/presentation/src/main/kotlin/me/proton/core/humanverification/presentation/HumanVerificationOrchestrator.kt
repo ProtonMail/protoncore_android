@@ -26,24 +26,23 @@ import me.proton.core.humanverification.presentation.ui.StartHumanVerification
 import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
 import me.proton.core.network.domain.session.ClientId
 import me.proton.core.network.domain.session.getType
-import javax.inject.Inject
 
-class HumanVerificationOrchestrator @Inject constructor() {
+class HumanVerificationOrchestrator {
+
     // region result launchers
     private var humanWorkflowLauncher: ActivityResultLauncher<HumanVerificationInput>? = null
-
     // endregion
-    private var onHumanVerificationResultListener: (result: HumanVerificationResult?) -> Unit = {}
+
+    private var onHumanVerificationResultListener: ((result: HumanVerificationResult?) -> Unit)? = {}
 
     // region private functions
-
     private fun registerHumanVerificationResult(
         context: ComponentActivity
-    ) =
+    ): ActivityResultLauncher<HumanVerificationInput> =
         context.registerForActivityResult(
             StartHumanVerification()
         ) { result ->
-            onHumanVerificationResultListener(result)
+            onHumanVerificationResultListener?.invoke(result)
         }
 
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
@@ -62,7 +61,16 @@ class HumanVerificationOrchestrator @Inject constructor() {
     }
 
     /**
-     * Start a Human Verification workflow for signup.
+     * Unregister all workflow activity launcher and listener.
+     */
+    fun unregister() {
+        humanWorkflowLauncher?.unregister()
+        humanWorkflowLauncher = null
+        onHumanVerificationResultListener = null
+    }
+
+    /**
+     * Start a Human Verification workflow.
      */
     fun startHumanVerificationWorkflow(
         clientId: ClientId,
