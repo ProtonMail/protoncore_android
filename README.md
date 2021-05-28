@@ -85,9 +85,9 @@ Util Kotlin: **0.2.5** - _released on: Apr 07, 2021_
 
 Test Kotlin: **0.2.1** - _released on: Apr 05, 2021_
 
-Test Android: **0.4.6** - _released on: May 26, 2021_
+Test Android: **0.4.7** - _released on: May 28, 2021_
 
-Test Android Instrumented: **0.4.6** - _released on: May 26, 2021_
+Test Android Instrumented: **0.4.7** - _released on: May 28, 2021_
 
 ## Shared
 
