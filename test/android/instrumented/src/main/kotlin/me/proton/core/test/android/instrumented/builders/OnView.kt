@@ -32,13 +32,12 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import me.proton.core.test.android.instrumented.uiwaits.UIWaits.TIMEOUT_10S
-import me.proton.core.test.android.instrumented.uiwaits.UIWaits.waitForView
-import me.proton.core.test.android.instrumented.uiwaits.UIWaits.waitUntilViewIsGone
+import me.proton.core.test.android.instrumented.uimatchers.SystemUIMatchers
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
+import me.proton.core.test.android.instrumented.waits.UIWaits.TIMEOUT_10S
+import me.proton.core.test.android.instrumented.waits.UIWaits.waitForView
+import me.proton.core.test.android.instrumented.waits.UIWaits.waitUntilViewIsGone
 import org.hamcrest.CoreMatchers
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf
 import java.util.ArrayList
@@ -46,6 +45,7 @@ import java.util.ArrayList
 /**
  * Builder like class that allows to write [ViewActions] and [ViewAssertion] for single [View].
  */
+@Suppress("HasPlatformType")
 class OnView {
     private var tag: Any? = null
 
@@ -73,13 +73,6 @@ class OnView {
     private var id: Int? = null
     private var tagKey: Int? = null
 
-    private var ancestorMatcher: Matcher<View>? = null
-    private var childMatcher: Matcher<View>? = null
-    private var contentDescMatcher: Matcher<out CharSequence?>? = null
-    private var descendantMatcher: Matcher<View>? = null
-    private var parentMatcher: Matcher<View>? = null
-    private var siblingMatcher: Matcher<View>? = null
-
     private var className: String? = null
     private var contentDescText: String? = null
     private var contentDescTextId: Int? = null
@@ -90,8 +83,20 @@ class OnView {
     private var substring: String? = null
     private var text: String? = null
 
+    private var ancestorMatcher: Matcher<View>? = null
+    private var childMatcher: Matcher<View>? = null
+    private var descendantMatcher: Matcher<View>? = null
+    private var parentMatcher: Matcher<View>? = null
+    private var siblingMatcher: Matcher<View>? = null
+
+    private var contentDescMatcher: Matcher<out CharSequence?>? = null
+
     private var visibility: ViewMatchers.Visibility? = null
 
+    val positiveDialogButton = SystemUIMatchers.positiveDialogBtn
+    val neutralDialogBtn = SystemUIMatchers.neutralDialogBtn
+    val negativeDialogBtn = SystemUIMatchers.negativeDialogBtn
+    val moreOptionsBtn = SystemUIMatchers.moreOptionsBtn
 
     /** [View] properties. **/
     fun instanceOf(clazz: Class<*>?) = apply { this.clazz = clazz }
@@ -173,7 +178,6 @@ class OnView {
 
     fun withVisibility(visibility: ViewMatchers.Visibility) = apply { this.visibility = visibility }
 
-
     /** [ViewInteraction] action wrappers. **/
     fun click() = apply { waitForView(viewInteraction()).perform(ViewActions.click()) }
 
@@ -215,7 +219,6 @@ class OnView {
         waitForView(viewInteraction()).perform(ViewActions.typeText(text), ViewActions.closeSoftKeyboard())
     }
 
-
     /** [ViewInteraction] assertion wrappers. **/
     fun checkContains(text: String) = apply {
         waitForView(viewInteraction())
@@ -250,19 +253,28 @@ class OnView {
         waitForView(viewInteraction()).check(ViewAssertions.matches(ViewMatchers.isSelected()))
     }
 
-
     /** [ViewInteraction] wait functions. **/
     fun wait(timeout: Long = TIMEOUT_10S) = apply { waitForView(viewInteraction(), timeout) }
 
-    fun waitUntilGone() = apply { waitUntilViewIsGone(viewInteraction()) }
+    fun waitUntilGone(timeout: Long = TIMEOUT_10S) = apply { waitUntilViewIsGone(viewInteraction(), timeout) }
 
+    fun waitForEnabled(timeout: Long = TIMEOUT_10S) = apply {
+        isEnabled = true
+        isDisabled = false
+        waitForView(viewInteraction(), timeout)
+    }
 
-    /** Indicates that [View] is part of specific root view. **/
-    fun inRoot(rootView: InRootView) = apply { rootMatcher = rootView.matcher() }
+    fun waitForDisabled(timeout: Long = TIMEOUT_10S) = apply {
+        isDisabled = true
+        isEnabled = false
+        waitForView(viewInteraction(), timeout)
+    }
 
+    /** Indicates that [View] is part of a root view described by [OnRootView]. **/
+    fun inRoot(rootView: OnRootView) = apply { rootMatcher = rootView.matcher() }
 
     /** Builds final [Matcher] for the view. **/
-    fun matcher(): Matcher<View> = viewMatcher()
+    internal fun matcher(): Matcher<View> = viewMatcher()
 
     private fun viewInteraction(): ViewInteraction {
         return onView(viewMatcher())
@@ -290,7 +302,7 @@ class OnView {
             matchers.add(ViewMatchers.isDescendantOfA(ancestorMatcher))
         }
         if (tag != null) {
-            matchers.add(ViewMatchers.withTagValue(`is`(tag)))
+            matchers.add(ViewMatchers.withTagValue(CoreMatchers.`is`(tag)))
         }
         if (tagKey != null) {
             matchers.add(ViewMatchers.withTagKey(tagKey!!))
@@ -308,7 +320,7 @@ class OnView {
             matchers.add(ViewMatchers.withParent(parentMatcher))
         }
         if (className != null) {
-            matchers.add(ViewMatchers.withClassName(equalTo(className)))
+            matchers.add(ViewMatchers.withClassName(CoreMatchers.equalTo(className)))
         }
         if (resourceName != null) {
             matchers.add(ViewMatchers.withResourceName(resourceName))
@@ -377,7 +389,7 @@ class OnView {
     }
 
     companion object {
-        /** Default rootMatcher value for[OnListView] instance. **/
+        /** Default rootMatcher value for [OnListView] instance. **/
         private var rootMatcher: Matcher<Root> = RootMatchers.DEFAULT
     }
 }

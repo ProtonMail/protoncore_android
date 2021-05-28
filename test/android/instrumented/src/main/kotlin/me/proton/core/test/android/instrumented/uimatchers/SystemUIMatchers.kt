@@ -23,7 +23,7 @@ import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.AppCompatImageView
 import me.proton.core.test.android.instrumented.CoreRobot
 
-object SystemUIMatchers : CoreRobot {
+internal object SystemUIMatchers : CoreRobot {
 
     val positiveDialogBtn = view.withId(android.R.id.button1)
     val negativeDialogBtn = view.withId(android.R.id.button2)

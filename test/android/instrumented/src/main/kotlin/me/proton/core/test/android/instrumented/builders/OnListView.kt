@@ -27,8 +27,8 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import me.proton.core.test.android.instrumented.uiwaits.UIWaits.waitForView
-import me.proton.core.test.android.instrumented.uiwaits.UIWaits.waitUntilViewIsGone
+import me.proton.core.test.android.instrumented.waits.UIWaits.waitForView
+import me.proton.core.test.android.instrumented.waits.UIWaits.waitUntilViewIsGone
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 
@@ -94,7 +94,7 @@ class OnListView {
 
         fun inAdapter(adapterView: OnView): Builder = apply { this.adapterMatcher = adapterView.matcher() }
 
-        fun inRoot(rootView: InRootView): Builder = apply { rootMatcher = rootView.matcher() }
+        fun inRoot(rootView: OnRootView): Builder = apply { rootMatcher = rootView.matcher() }
 
         fun onChild(childView: OnView): Builder = apply { this.itemChildViewMatcher = childView.matcher() }
 
