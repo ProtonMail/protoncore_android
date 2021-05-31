@@ -59,14 +59,27 @@ internal class NetworkManagerTests {
         flow2.cancel()
 
         assertEquals(
-            listOf(NetworkStatus.Unmetered, NetworkStatus.Metered, NetworkStatus.Disconnected),
+            listOf(NetworkStatus.Disconnected, NetworkStatus.Unmetered, NetworkStatus.Metered, NetworkStatus.Disconnected),
             collectedStates1.toList()
         )
         assertEquals(
-            listOf(NetworkStatus.Metered, NetworkStatus.Disconnected, NetworkStatus.Unmetered),
+            listOf(NetworkStatus.Unmetered, NetworkStatus.Metered, NetworkStatus.Disconnected, NetworkStatus.Unmetered),
             collectedStates2.toList()
         )
 
         assertFalse(networkManager.registered)
+    }
+
+    @Test
+    fun `test notify current state`() = runBlockingTest {
+        networkManager.networkStatus = NetworkStatus.Unmetered
+        val stateFlow = networkManager.observe()
+        val collectedStates = mutableListOf<NetworkStatus>()
+
+        val flow = launch { stateFlow.toList(collectedStates) }
+        networkManager.networkStatus = NetworkStatus.Disconnected
+        flow.cancel()
+
+        assertEquals(listOf(NetworkStatus.Unmetered, NetworkStatus.Disconnected), collectedStates.toList())
     }
 }
