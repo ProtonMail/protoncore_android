@@ -103,8 +103,8 @@ class AccountViewModel @Inject constructor(
             humanVerificationManager.observe(context.lifecycle, minActiveState = Lifecycle.State.RESUMED)
                 .onHumanVerificationNeeded {
                     startHumanVerificationWorkflow(
-                        it.clientId,
-                        HumanVerificationApiDetails(
+                        clientId = it.clientId,
+                        details = HumanVerificationApiDetails(
                             it.verificationMethods, it.captchaVerificationToken
                         )
                     )

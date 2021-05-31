@@ -30,6 +30,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.humanverification.presentation.CaptchaBaseUrl
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
@@ -40,6 +41,7 @@ import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.user.domain.entity.UserVerificationTokenType
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 /**
  * Fragment that handles human verification with Captcha.
@@ -47,9 +49,14 @@ import me.proton.core.util.kotlin.exhaustive
 @AndroidEntryPoint
 internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVerificationCaptchaBinding>() {
 
-    private val host: String by lazy {
-        requireArguments().get(ARG_HOST) as String
+    @Inject
+    @CaptchaBaseUrl
+    lateinit var captchaBaseUrl: String
+
+    private val baseUrl: String by lazy {
+        requireArguments().get(ARG_BASE_URL) as String? ?: "https://$captchaBaseUrl/api/core/v4/captcha"
     }
+
     private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
 
     private val humanVerificationBase by lazy {
@@ -90,10 +97,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
 
     private fun loadWebView() {
         binding.run {
-            captchaWebView.loadUrl(
-                "https://secure.protonmail.com/captcha/captcha.html?token=${humanVerificationBase.urlToken}" +
-                    "&client=android&host=$host"
-            )
+            captchaWebView.loadUrl("$baseUrl?Token=${humanVerificationBase.urlToken}")
         }
     }
 
@@ -127,16 +131,16 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
     }
 
     companion object {
-        private const val ARG_HOST = "arg.host"
+        private const val ARG_BASE_URL = "arg.baseUrl"
         private const val MAX_PROGRESS = 100
 
         operator fun invoke(
-            urlToken: String,
-            host: String
+            captchaBaseUrl: String? = null,
+            urlToken: String
         ) = HumanVerificationCaptchaFragment().apply {
             arguments = bundleOf(
-                ARG_URL_TOKEN to urlToken,
-                ARG_HOST to host
+                ARG_BASE_URL to captchaBaseUrl,
+                ARG_URL_TOKEN to urlToken
             )
         }
     }

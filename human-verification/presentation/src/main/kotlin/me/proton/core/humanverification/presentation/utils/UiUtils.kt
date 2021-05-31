@@ -38,7 +38,6 @@ private const val TAG_HUMAN_VERIFICATION_ENTER_CODE = "human_verification_code"
 const val TAG_HUMAN_VERIFICATION_HELP = "human_verification_help"
 
 const val TOKEN_DEFAULT = "signup"
-const val HOST_DEFAULT = "api.protonmail.ch"
 
 val defaultVerificationMethods = listOf(
     UserVerificationTokenType.CAPTCHA.tokenTypeValue,
@@ -49,6 +48,7 @@ val defaultVerificationMethods = listOf(
 /** Shows the human verification dialog. */
 fun FragmentManager.showHumanVerification(
     clientId: String,
+    captchaBaseUrl: String? = null,
     clientIdType: String,
     availableVerificationMethods: List<String> = defaultVerificationMethods,
     captchaToken: String? = null,
@@ -57,6 +57,7 @@ fun FragmentManager.showHumanVerification(
 ) {
     val newFragment = HumanVerificationDialogFragment(
         clientId = clientId,
+        captchaBaseUrl = captchaBaseUrl,
         clientIdType = clientIdType,
         availableVerificationMethods = availableVerificationMethods,
         captchaToken = captchaToken,
@@ -80,10 +81,12 @@ fun FragmentManager.showHumanVerification(
  */
 internal fun FragmentManager.showHumanVerificationCaptchaContent(
     containerId: Int = android.R.id.content,
-    token: String?,
-    host: String = HOST_DEFAULT
+    captchaBaseUrl: String? = null,
+    token: String? = null
 ): Fragment {
-    val captchaFragment = HumanVerificationCaptchaFragment(token ?: TOKEN_DEFAULT, host)
+    val captchaFragment = HumanVerificationCaptchaFragment(
+        captchaBaseUrl = captchaBaseUrl, urlToken = token ?: TOKEN_DEFAULT
+    )
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, captchaFragment)
