@@ -101,11 +101,11 @@ Data: **1.0.3** - _released on: May 03, 2021_
 
 ### Network
 
-Network: **1.1** - _released on: May 12, 2021_
+Network: **1.1.1** - _released on: May 31, 2021_
 
-Network Domain: **1.1** - _released on: May 12, 2021_
+Network Domain: **1.1.1** - _released on: May 31, 2021_
 
-Network Data: **1.1** - _released on: May 12, 2021_
+Network Data: **1.1.1** - _released on: May 31, 2021_
 
 ### Crypto
 
@@ -184,13 +184,13 @@ Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
 
 ### Human Verification
 
-Human Verification: **1.1.2** - _released on: May 28, 2021_
+Human Verification: **1.1.3** - _released on: May 31, 2021_
 
-Human Verification Domain: **1.1.2** - _released on: May 28, 2021_
+Human Verification Domain: **1.1.3** - _released on: May 31, 2021_
 
-Human Verification Presentation: **1.1.2** - _released on: May 28, 2021_
+Human Verification Presentation: **1.1.3** - _released on: May 31, 2021_
 
-Human Verification Data: **1.1.2** - _released on: May 28, 2021_
+Human Verification Data: **1.1.3** - _released on: May 31, 2021_
 
 ### Countries
 
