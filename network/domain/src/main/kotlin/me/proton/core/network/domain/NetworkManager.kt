@@ -39,10 +39,11 @@ abstract class NetworkManager {
     fun isConnectedToNetwork() = networkStatus != NetworkStatus.Disconnected
 
     /**
-     * @return [Flow] of [NetworkStatus] changes
+     * @return [Flow] of [NetworkStatus] - current state and changes
      */
     fun observe() = callbackFlow {
         val observer: NetworkCallback = { offer(it) }
+        offer(networkStatus)
         addObserver(observer)
         awaitClose { removeObserver(observer) }
     }
