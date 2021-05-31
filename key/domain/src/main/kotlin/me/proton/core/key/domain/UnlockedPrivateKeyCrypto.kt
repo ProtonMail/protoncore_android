@@ -240,7 +240,23 @@ fun UnlockedPrivateKey.signFile(context: CryptoContext, file: PlainFile): Signat
  *
  * @see [PrivateKey.unlock]
  */
-fun UnlockedPrivateKey.lock(context: CryptoContext, passphrase: EncryptedByteArray, isPrimary: Boolean): PrivateKey =
+fun UnlockedPrivateKey.lock(
+    context: CryptoContext,
+    passphrase: EncryptedByteArray,
+    isPrimary: Boolean = true,
+    isActive: Boolean = true,
+    canEncrypt: Boolean = true,
+    canVerify: Boolean = true,
+): PrivateKey =
     passphrase.decryptWith(context.keyStoreCrypto).use { decrypted ->
-        context.pgpCrypto.lock(unlockedKey.value, decrypted.array).let { PrivateKey(it, isPrimary, passphrase) }
+        context.pgpCrypto.lock(unlockedKey.value, decrypted.array).let {
+            PrivateKey(
+                key = it,
+                isPrimary = isPrimary,
+                isActive = isActive,
+                canEncrypt = canEncrypt,
+                canVerify = canVerify,
+                passphrase = passphrase
+            )
+        }
     }

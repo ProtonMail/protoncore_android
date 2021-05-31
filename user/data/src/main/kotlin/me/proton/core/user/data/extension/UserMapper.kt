@@ -18,10 +18,12 @@
 
 package me.proton.core.user.data.extension
 
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.UserKeyResponse
 import me.proton.core.key.data.api.response.UserResponse
+import me.proton.core.key.domain.canUnlock
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.user.data.entity.UserEntity
@@ -58,7 +60,11 @@ internal fun UserKeyResponse.toUserKey(userId: UserId, passphrase: EncryptedByte
     version = version,
     activation = activation,
     keyId = KeyId(id),
-    privateKey = PrivateKey(privateKey, primary.toBooleanOrFalse(), passphrase)
+    privateKey = PrivateKey(
+        key = privateKey,
+        isPrimary = primary.toBooleanOrFalse(),
+        passphrase = passphrase
+    )
 )
 
 internal fun User.toEntity(passphrase: EncryptedByteArray?) = UserEntity(
@@ -108,12 +114,19 @@ internal fun UserEntity.toUser(keys: List<UserKey>) = User(
     keys = keys
 )
 
-internal fun UserKeyEntity.toUserKey(passphrase: EncryptedByteArray?) = UserKey(
+internal fun UserKeyEntity.toUserKey(context: CryptoContext, passphrase: EncryptedByteArray?) = UserKey(
     userId = userId,
     keyId = keyId,
     version = version,
     activation = activation,
-    privateKey = PrivateKey(privateKey, isPrimary, passphrase)
+    privateKey = PrivateKey(
+        key = privateKey,
+        isPrimary = isPrimary,
+        passphrase = passphrase
+    ).let {
+        it.copy(isActive = it.canUnlock(context))
+    }
 )
 
-internal fun List<UserKeyEntity>.toUserKeyList(passphrase: EncryptedByteArray?) = map { it.toUserKey(passphrase) }
+internal fun List<UserKeyEntity>.toUserKeyList(context: CryptoContext, passphrase: EncryptedByteArray?) =
+    map { it.toUserKey(context, passphrase) }

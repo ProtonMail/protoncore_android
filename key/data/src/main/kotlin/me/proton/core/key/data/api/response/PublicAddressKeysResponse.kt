@@ -22,7 +22,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressKey
+import me.proton.core.key.domain.entity.key.PublicAddressKeyFlags
 import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.key.domain.entity.key.isCompromised
+import me.proton.core.key.domain.entity.key.isObsolete
 
 @Serializable
 data class PublicAddressKeysResponse(
@@ -44,13 +47,19 @@ data class PublicAddressKeysResponse(
 @Serializable
 data class PublicAddressKeyResponse(
     @SerialName("Flags")
-    val flags: Int,
+    val flags: PublicAddressKeyFlags,
     @SerialName("PublicKey")
     val publicKey: String
 ) {
     fun toPublicAddressKey(email: String, isPrimary: Boolean) = PublicAddressKey(
         email = email,
         flags = flags,
-        publicKey = PublicKey(publicKey, isPrimary)
+        publicKey = PublicKey(
+            key = publicKey,
+            isPrimary = isPrimary,
+            isActive = true,
+            canEncrypt = flags.isObsolete().not(),
+            canVerify = flags.isCompromised().not()
+        )
     )
 }

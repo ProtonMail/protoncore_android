@@ -71,7 +71,21 @@ fun PrivateKey.signedKeyList(context: CryptoContext): PublicSignedKeyList =
  * @throws [CryptoException] if public key cannot be extracted.
  */
 fun PrivateKey.publicKey(context: CryptoContext): PublicKey =
-    context.pgpCrypto.getPublicKey(key).let { PublicKey(it, isPrimary) }
+    context.pgpCrypto.getPublicKey(key).let {
+        fun canUnlockOrThrow(): Boolean {
+            runCatching { unlock(context) }.getOrElse { error ->
+                throw CryptoException("PrivateKey cannot be unlocked but is active (suspicious).", error)
+            }
+            return true
+        }
+        PublicKey(
+            key = it,
+            isPrimary = isPrimary,
+            isActive = isActive && isUnlockable && canUnlockOrThrow(),
+            canEncrypt = canEncrypt,
+            canVerify = canVerify
+        )
+    }
 
 /**
  * Encrypt [text] using this [PublicKey].

@@ -24,6 +24,7 @@ import androidx.room.Index
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.user.domain.entity.AddressId
+import me.proton.core.user.domain.entity.UserAddressKeyFlags
 
 @Entity(
     primaryKeys = ["keyId"],
@@ -46,7 +47,7 @@ data class AddressKeyEntity(
     val version: Int,
     val privateKey: Armored,
     val isPrimary: Boolean,
-    val flags: Int,
+    val flags: UserAddressKeyFlags,
     val token: Armored? = null,
     val signature: Armored? = null,
     val fingerprint: String? = null,

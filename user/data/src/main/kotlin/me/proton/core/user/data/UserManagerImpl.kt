@@ -108,14 +108,10 @@ class UserManagerImpl(
         val userPrimaryKey = user.keys.primary()
             ?: return UnlockResult.Error.NoPrimaryKey
 
-        val key = PrivateKey(
-            userPrimaryKey.privateKey.key,
-            userPrimaryKey.privateKey.isPrimary,
-            passphrase
-        )
-
-        if (!key.canUnlock(cryptoContext))
+        val key = userPrimaryKey.privateKey.copy(passphrase = passphrase)
+        if (!key.canUnlock(cryptoContext)) {
             return UnlockResult.Error.PrimaryKeyInvalidPassphrase
+        }
 
         passphraseRepository.setPassphrase(userId, passphrase)
         return UnlockResult.Success

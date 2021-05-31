@@ -42,9 +42,10 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.AddressesResponse
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.domain.decryptText
-import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
+import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
+import me.proton.core.key.domain.verifyText
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
@@ -57,14 +58,18 @@ import me.proton.core.user.data.TestUsers
 import me.proton.core.user.data.UserAddressKeySecretProvider
 import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
+import me.proton.core.user.domain.extension.canEncrypt
+import me.proton.core.user.domain.extension.canVerify
 import me.proton.core.user.domain.extension.primary
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class UserAddressRepositoryImplTests {
 
@@ -103,7 +108,7 @@ class UserAddressRepositoryImplTests {
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider)
+        userRepository = UserRepositoryImpl(db, apiProvider, cryptoContext)
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
             userRepository,
@@ -198,11 +203,10 @@ class UserAddressRepositoryImplTests {
         addresses.primary()!!.useKeys(cryptoContext) {
             val message = "message"
 
-            val encryptedText = encryptText(message)
-
-            assertFailsWith(CryptoException::class) { decryptText(encryptedText) }
-            assertNull(decryptTextOrNull(encryptedText))
+            // Cannot encrypt/decrypt as UserAddressKey are inactive (cannot be unlocked).
+            assertFailsWith(CryptoException::class) { encryptText(message) }
         }
+        Unit
     }
 
     @Test
@@ -304,10 +308,142 @@ class UserAddressRepositoryImplTests {
         addresses.primary()!!.useKeys(cryptoContext) {
             val message = "message"
 
-            val encryptedText = encryptText(message)
+            // Cannot encrypt/decrypt as UserAddressKey are inactive (cannot be unlocked).
+            assertFailsWith(CryptoException::class) { encryptText(message) }
+        }
+        Unit
+    }
 
-            assertFailsWith(CryptoException::class) { decryptText(encryptedText) }
-            assertNull(decryptTextOrNull(encryptedText))
+    @Test
+    fun assert_flags_canVerify_canEncrypt_isActive_primary_address() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+        coEvery { addressApi.getAddresses() } answers {
+            AddressesResponse(
+                listOf(
+                    TestAddresses.User1.Address1.response,
+                    TestAddresses.User1.Address2.response
+                )
+            )
+        }
+
+        // Fetch User (add to cache/DB) and set passphrase -> unlock User.
+        userRepository.getUser(TestUsers.User1.id)
+        userRepository.setPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
+
+        // WHEN
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id, refresh = true)
+        val primary = assertNotNull(addresses.primary())
+
+        // THEN
+        val key1 = primary.keys.first { it.keyId.id == TestAddresses.User1.Address1.Key1.response.id }
+        val key2 = primary.keys.first { it.keyId.id == TestAddresses.User1.Address1.Key2Inactive.response.id }
+
+        assertTrue(key1.active)
+        assertTrue(key1.privateKey.isActive)
+        assertTrue(key1.privateKey.canVerify)
+        assertTrue(key1.privateKey.canEncrypt)
+        assertTrue(key1.canVerify())
+        assertTrue(key1.canEncrypt())
+
+        assertFalse(key2.active)
+        assertFalse(key2.privateKey.isActive)
+        assertTrue(key2.privateKey.canVerify)
+        assertFalse(key2.privateKey.canEncrypt)
+        assertTrue(key2.canVerify())
+        assertFalse(key2.canEncrypt())
+
+        primary.useKeys(cryptoContext) {
+            val message = "message"
+
+            val encryptedText = encryptText(message)
+            val signature = signText(message)
+            val decryptedText = decryptText(encryptedText)
+
+            assertEquals(message, decryptedText)
+            assertTrue(verifyText(decryptedText, signature))
+        }
+    }
+
+    @Test
+    fun assert_flags_canVerify_canEncrypt_isActive_secondary_address() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+        coEvery { addressApi.getAddresses() } answers {
+            AddressesResponse(
+                listOf(
+                    TestAddresses.User1.Address1.response,
+                    TestAddresses.User1.Address2.response
+                )
+            )
+        }
+
+        // Fetch User (add to cache/DB) and set passphrase -> unlock User.
+        userRepository.getUser(TestUsers.User1.id)
+        userRepository.setPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
+
+        // WHEN
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id, refresh = true)
+        val secondary = assertNotNull(addresses[1])
+
+        // THEN
+        val key3 = secondary.keys.first { it.keyId.id == TestAddresses.User1.Address2.Key3.response.id }
+        val key4 = secondary.keys.first { it.keyId.id == TestAddresses.User1.Address2.Key4.response.id }
+
+        assertTrue(key3.active)
+        assertTrue(key3.privateKey.isActive)
+        assertFalse(key3.privateKey.canVerify)
+        assertTrue(key3.privateKey.canEncrypt)
+        assertFalse(key3.canVerify())
+        assertTrue(key3.canEncrypt())
+
+        assertFalse(key4.active)
+        assertFalse(key4.privateKey.isActive)
+        assertTrue(key4.privateKey.canVerify)
+        assertTrue(key4.privateKey.canEncrypt)
+        assertTrue(key4.canVerify())
+        assertTrue(key4.canEncrypt())
+
+        secondary.useKeys(cryptoContext) {
+            val message = "message"
+
+            val encryptedText = encryptText(message)
+            val signature = signText(message)
+            val decryptedText = decryptText(encryptedText)
+
+            assertEquals(message, decryptedText)
+            assertFalse(verifyText(decryptedText, signature))
+        }
+    }
+
+    @Test(expected = CryptoException::class)
+    fun assert_exception_on_suspicious_state() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+        coEvery { addressApi.getAddresses() } answers {
+            AddressesResponse(listOf(TestAddresses.User1.Address3.response))
+        }
+
+        // Fetch User (add to cache/DB) and set passphrase -> unlock User.
+        userRepository.getUser(TestUsers.User1.id)
+        userRepository.setPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
+
+        // WHEN
+        val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
+        val addresses = userAddressRepository.getAddresses(TestUsers.User1.id, refresh = true)
+        val address = addresses.first()
+
+        // THEN
+        address.useKeys(cryptoContext) {
+            // Throw CryptoException.
         }
     }
 }

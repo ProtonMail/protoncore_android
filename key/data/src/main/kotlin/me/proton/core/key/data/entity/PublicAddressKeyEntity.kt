@@ -22,6 +22,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.key.domain.entity.key.PublicAddressKeyFlags
 
 @Entity(
     primaryKeys = ["email", "publicKey"],
@@ -39,7 +40,7 @@ import me.proton.core.crypto.common.pgp.Armored
 )
 data class PublicAddressKeyEntity(
     val email: String,
-    val flags: Int,
+    val flags: PublicAddressKeyFlags,
     val publicKey: Armored,
     val isPrimary: Boolean
 )

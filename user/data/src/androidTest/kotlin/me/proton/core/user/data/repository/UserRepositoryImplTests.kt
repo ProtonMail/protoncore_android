@@ -91,7 +91,7 @@ class UserRepositoryImplTests {
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
 
-        userRepository = UserRepositoryImpl(db, apiProvider)
+        userRepository = UserRepositoryImpl(db, apiProvider, cryptoContext)
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
@@ -135,6 +135,26 @@ class UserRepositoryImplTests {
     }
 
     @Test
+    fun getUser_locked_keys_assert_isActive_only_if_canUnlock() = runBlockingWithTimeout {
+        // GIVEN
+        val userId = TestUsers.User1.id
+
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+
+        // WHEN
+        val user = userRepository.getUser(userId, refresh = true)
+
+        // THEN
+        val key1 = user.keys.first { it.keyId.id == TestUsers.User1.Key1.response.id }
+        val key2 = user.keys.first { it.keyId.id == TestUsers.User1.Key2Inactive.response.id }
+
+        assertFalse(key1.privateKey.isActive)
+        assertFalse(key2.privateKey.isActive)
+    }
+
+    @Test
     fun getUser_unlocked() = runBlockingWithTimeout {
         // GIVEN
         val userId = TestUsers.User1.id
@@ -161,6 +181,31 @@ class UserRepositoryImplTests {
         assertEquals(TestUsers.User1.response.keys.size, user.keys.size)
         assertFalse(user.keys.areAllLocked())
         assertEquals(passphrase, userRepository.getPassphrase(userId))
+    }
+
+    @Test
+    fun getUser_unlocked_keys_assert_isActive_only_if_canUnlock() = runBlockingWithTimeout {
+        // GIVEN
+        val userId = TestUsers.User1.id
+        val passphrase = TestUsers.User1.Key1.passphrase
+
+        coEvery { userApi.getUsers() } answers {
+            UsersResponse(TestUsers.User1.response)
+        }
+
+        // Fetch User (add to cache/DB) and set passphrase -> unlock User.
+        userRepository.getUser(userId)
+        userRepository.setPassphrase(userId, passphrase)
+
+        // WHEN
+        val user = userRepository.getUser(userId, refresh = true)
+
+        // THEN
+        val key1 = user.keys.first { it.keyId.id == TestUsers.User1.Key1.response.id }
+        val key2 = user.keys.first { it.keyId.id == TestUsers.User1.Key2Inactive.response.id }
+
+        assertTrue(key1.privateKey.isActive)
+        assertFalse(key2.privateKey.isActive)
     }
 
     @Test(expected = IllegalArgumentException::class)

@@ -68,7 +68,6 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
 class UserManagerImplTests {
 
@@ -116,7 +115,7 @@ class UserManagerImplTests {
         privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider)
 
         // UserRepositoryImpl implements PassphraseRepository.
-        userRepository = UserRepositoryImpl(db, apiProvider)
+        userRepository = UserRepositoryImpl(db, apiProvider, cryptoContext)
         passphraseRepository = userRepository
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
@@ -241,13 +240,10 @@ class UserManagerImplTests {
         user.useKeys(cryptoContext) {
             val message = "message"
 
-            // Can encrypt (only need publicKey).
-            val encryptedText = encryptText(message)
-
-            // Cannot decrypt (need unlocked PrivateKey).
-            assertFailsWith(CryptoException::class) { decryptText(encryptedText) }
-            assertNull(decryptTextOrNull(encryptedText))
+            // Cannot encrypt/decrypt as UserKey are inactive (cannot be unlocked).
+            assertFailsWith(CryptoException::class) { encryptText(message) }
         }
+        Unit
     }
 
     @Test
@@ -276,13 +272,10 @@ class UserManagerImplTests {
         addresses.primary()!!.useKeys(cryptoContext) {
             val message = "message"
 
-            // Can encrypt (only need publicKey).
-            val encryptedText = encryptText(message)
-
-            // Cannot decrypt (need unlocked PrivateKey).
-            assertFailsWith(CryptoException::class) { decryptText(encryptedText) }
-            assertNull(decryptTextOrNull(encryptedText))
+            // Cannot encrypt/decrypt as UserAddressKey are inactive (cannot be unlocked).
+            assertFailsWith(CryptoException::class) { encryptText(message) }
         }
+        Unit
     }
 
     @Test

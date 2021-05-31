@@ -229,7 +229,13 @@ class KeyHolderTest {
         assertNotNull(encrypted1)
         assertNotNull(signature1)
 
-        val encrypted2 = PublicKey(TestKeys.privateKey1_PublicKey, true).encryptText(context, message)
+        val encrypted2 = PublicKey(
+            key = TestKeys.privateKey1_PublicKey,
+            isPrimary = true,
+            isActive = true,
+            canEncrypt = true,
+            canVerify = true
+        ).encryptText(context, message)
 
         keyHolder1.useKeys(context) {
             val decrypted1 = decryptText(encrypted1)

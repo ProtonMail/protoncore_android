@@ -23,6 +23,8 @@ import me.proton.core.key.data.entity.PublicAddressKeyEntity
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.key.domain.entity.key.isCompromised
+import me.proton.core.key.domain.entity.key.isObsolete
 
 internal fun PublicAddress.toEntity() = PublicAddressEntity(
     email = email,
@@ -49,5 +51,11 @@ internal fun PublicAddressEntity.toPublicAddress(keys: List<PublicAddressKeyEnti
 internal fun PublicAddressKeyEntity.toPublicAddressKey() = PublicAddressKey(
     email = email,
     flags = flags,
-    publicKey = PublicKey(publicKey, isPrimary)
+    publicKey = PublicKey(
+        key = publicKey,
+        isPrimary = isPrimary,
+        isActive = true,
+        canEncrypt = flags.isObsolete().not(),
+        canVerify = flags.isCompromised().not()
+    )
 )
