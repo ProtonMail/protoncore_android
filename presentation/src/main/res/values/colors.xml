@@ -82,10 +82,11 @@
     <color name="interaction_strong">@color/shade_100</color>
     <color name="interaction_strong_pressed">@color/shade_80</color>
 
+    <!-- Defined in theme (e.g. proton_interaction_norm)
     <color name="interaction_norm">?attr/brand_norm</color>
     <color name="interaction_norm_pressed">?attr/brand_darken_20</color>
     <color name="interaction_norm_disabled">?attr/brand_lighten_40</color>
-
+    -->
     <color name="background_norm">@color/shade_0</color>
     <color name="background_secondary">@color/shade_10</color>
 

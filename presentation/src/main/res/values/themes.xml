@@ -64,6 +64,7 @@
 
         <!-- Material styles override -->
         <item name="materialButtonStyle">@style/ProtonButton</item>
+        <item name="materialButtonOutlinedStyle">@style/ProtonButton.OutlinedButton</item>
         <item name="navigationViewStyle">@style/ProtonNavigationView.Dark</item>
         <item name="snackbarStyle">@style/ProtonSnackbar</item>
         <item name="snackbarButtonStyle">@style/ProtonSnackbarButton</item>
@@ -92,9 +93,9 @@
         <item name="proton_interaction_weak_disabled">@color/interaction_weak_disabled</item>
         <item name="proton_interaction_strong">@color/interaction_strong</item>
         <item name="proton_interaction_strong_pressed">@color/interaction_strong_pressed</item>
-        <item name="proton_interaction_norm">@color/interaction_norm</item>
-        <item name="proton_interaction_norm_pressed">@color/interaction_norm_pressed</item>
-        <item name="proton_interaction_norm_disabled">@color/interaction_norm_disabled</item>
+        <item name="proton_interaction_norm">?attr/brand_norm</item>
+        <item name="proton_interaction_norm_pressed">?attr/brand_darken_20</item>
+        <item name="proton_interaction_norm_disabled">?attr/brand_lighten_40</item>
         <item name="proton_background_norm">@color/background_norm</item>
         <item name="proton_background_secondary">@color/background_secondary</item>
         <item name="proton_separator_norm">@color/separator_norm</item>
