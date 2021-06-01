@@ -204,10 +204,10 @@ Country Presentation: **0.1.4** - _released on: May 12, 2021_
 
 ### Payment
 
-Payment: **0.1.6** - _released on: May 12, 2021_
+Payment: **0.1.7** - _released on: Jun 01, 2021_
 
-Payment Data: **0.1.6** - _released on: May 12, 2021_
+Payment Data: **0.1.7** - _released on: Jun 01, 2021_
 
-Payment Domain: **0.1.6** - _released on: May 12, 2021_
+Payment Domain: **0.1.7** - _released on: Jun 01, 2021_
 
-Payment Presentation: **0.1.6** - _released on: May 12, 2021_
+Payment Presentation: **0.1.7** - _released on: Jun 01, 2021_
