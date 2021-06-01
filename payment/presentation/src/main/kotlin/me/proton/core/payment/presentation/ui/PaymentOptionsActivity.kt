@@ -98,15 +98,18 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                 startBilling(input.userId, viewModel.currentPlans, input.plan.copy(amount = amountDue), input.codes)
             }
             selectedPlanDetailsLayout.plan = input.plan
-            payButton.onClick {
-                viewModel.subscribe(
-                    user,
-                    input.plan.id,
-                    input.codes,
-                    input.plan.currency,
-                    input.plan.subscriptionCycle,
-                    PaymentType.PaymentMethod(selectedPaymentMethodId)
-                )
+            payButton.apply {
+                isEnabled = false
+                onClick {
+                    viewModel.subscribe(
+                        user,
+                        input.plan.id,
+                        input.codes,
+                        input.plan.currency,
+                        input.plan.subscriptionCycle,
+                        PaymentType.PaymentMethod(selectedPaymentMethodId)
+                    )
+                }
             }
         }
         observe()
@@ -176,8 +179,11 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
             return
         }
         viewModel.validatePlan(user, input.plan.id, input.codes, input.plan.currency, input.plan.subscriptionCycle)
-        binding.progressLayout.visibility = View.GONE
         paymentOptionsAdapter.submitList(availablePaymentMethods)
+        binding.apply {
+            payButton.isEnabled = true
+            progressLayout.visibility = View.GONE
+        }
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {
