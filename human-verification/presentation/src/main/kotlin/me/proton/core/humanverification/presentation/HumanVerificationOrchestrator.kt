@@ -71,18 +71,27 @@ class HumanVerificationOrchestrator {
 
     /**
      * Start a Human Verification workflow.
+     *
+     * @param captchaBaseUrl use this one if you want to provide per instance different captcha URL.
+     * Otherwise the one from the DI annotated with [CaptchaBaseUrl] will be used.
+     * [CaptchaBaseUrl] is only a base Url, Core is responsible to create the full URL.
+     * [captchaBaseUrl] should not be only a base Url, but you are responsible to create it full, up to the
+     * query params section.
+     * If both provided, this parameter takes the precedence.
      */
     fun startHumanVerificationWorkflow(
         clientId: ClientId,
+        captchaBaseUrl: String? = null,
         details: HumanVerificationApiDetails?,
         recoveryEmailAddress: String? = null
     ) {
         checkRegistered(humanWorkflowLauncher).launch(
             HumanVerificationInput(
                 clientId = clientId.id,
+                captchaBaseUrl = captchaBaseUrl,
                 clientIdType = clientId.getType().value,
-                details?.verificationMethods?.map { it.value },
-                details?.captchaVerificationToken,
+                verificationMethods = details?.verificationMethods?.map { it.value },
+                captchaToken = details?.captchaVerificationToken,
                 recoveryEmailAddress = recoveryEmailAddress
             )
         )

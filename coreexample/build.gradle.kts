@@ -27,7 +27,7 @@ plugins {
 }
 
 android(
-    version = Version(0, 4, 0),
+    version = Version(0, 4, 1),
     useDataBinding = true
 )
 {

@@ -16,22 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.humanverification.presentation
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import javax.inject.Qualifier
 
-libVersion = Version(1, 2, 0)
-
-android()
-
-dependencies {
-
-    api(
-        project(Module.humanVerificationDomain),
-        project(Module.humanVerificationData),
-        project(Module.humanVerificationPresentation)
-    )
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CaptchaBaseUrl

@@ -23,7 +23,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
+import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.humanverification.data.HumanVerificationListenerImpl
 import me.proton.core.humanverification.data.HumanVerificationManagerImpl
@@ -31,6 +33,7 @@ import me.proton.core.humanverification.data.repository.HumanVerificationReposit
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
+import me.proton.core.humanverification.presentation.CaptchaBaseUrl
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.session.HumanVerificationListener
 import me.proton.core.network.domain.session.HumanVerificationProvider
@@ -64,6 +67,10 @@ object HumanVerificationModule {
     fun provideHumanVerificationManager(
         humanVerificationRepository: HumanVerificationRepository
     ): HumanVerificationManagerImpl = HumanVerificationManagerImpl(humanVerificationRepository)
+
+    @Provides
+    @CaptchaBaseUrl
+    fun provideCaptchaBaseUrl(): String = BuildConfig.ENVIRONMENT
 }
 
 @Module
