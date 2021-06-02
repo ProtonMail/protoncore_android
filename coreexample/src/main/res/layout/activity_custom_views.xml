@@ -30,14 +30,37 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/parent_padding">
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayoutExample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_tab1" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_tab2" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_tab3" />
+            </com.google.android.material.tabs.TabLayout>
+
             <me.proton.core.presentation.ui.view.ProtonButton
                 android:id="@+id/defaultButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/example_default_button"
+                android:layout_marginTop="@dimen/default_top_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tabLayoutExample" />
 
             <me.proton.core.presentation.ui.view.ProtonButton
                 android:id="@+id/defaultDisabledButton"

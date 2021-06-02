@@ -52,6 +52,10 @@
     <string name="example_loading">Loading</string>
     <string name="example_loading_text_only">Loading</string>
 
+    <string name="example_tab1">Tab 1</string>
+    <string name="example_tab2">Tab 2</string>
+    <string name="example_tab3">Tab 3</string>
+
     <string name="example_username_hint">Username</string>
     <string name="example_username_assistive_text">Username (to logout if already logged in)</string>
     <string name="example_username_label">Username</string>
