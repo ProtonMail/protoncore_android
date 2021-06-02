@@ -35,7 +35,6 @@ import me.proton.core.auth.presentation.ui.AuthActivity
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.domain.entity.UserId
-import me.proton.core.presentation.utils.showToast
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -68,16 +67,11 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
 
         signUpViewModel.userCreationState.onEach {
             when (it) {
-                is SignupViewModel.State.Idle -> {
-                }
-                is SignupViewModel.State.Error.Message -> showError(it.message)
+                is SignupViewModel.State.Idle -> Unit
                 is SignupViewModel.State.Processing -> showLoading(true)
-                is SignupViewModel.State.Success -> {
-                    onSignUpSuccess()
-                }
-                is SignupViewModel.State.Error.HumanVerification -> {
-                    showToast(getString(R.string.auth_signup_error_human_verification_failed))
-                }
+                is SignupViewModel.State.Error.HumanVerification -> Unit
+                is SignupViewModel.State.Error.Message -> showError(it.message)
+                is SignupViewModel.State.Success -> onSignUpSuccess()
             }.exhaustive
         }.launchIn(lifecycleScope)
 

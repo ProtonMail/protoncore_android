@@ -51,7 +51,8 @@ class HumanVerificationActivity :
             captchaBaseUrl = input.captchaBaseUrl,
             clientIdType = input.clientIdType,
             // filter only the app supported verification methods. (the API can send more of them).
-            availableVerificationMethods = input.verificationMethods?.filter { defaultVerificationMethods.contains(it) }
+            availableVerificationMethods = input.verificationMethods
+                ?.filter { defaultVerificationMethods.contains(it) }
                 ?: defaultVerificationMethods,
             captchaToken = input.captchaToken,
             largeLayout = false,
@@ -60,10 +61,10 @@ class HumanVerificationActivity :
     }
 
     override fun setResult(result: HumanVerificationResult?) {
-        result?.let {
-            val intent = Intent().apply { putExtra(ARG_HUMAN_VERIFICATION_RESULT, it) }
+        if (result != null) {
+            val intent = Intent().apply { putExtra(ARG_HUMAN_VERIFICATION_RESULT, result) }
             setResult(Activity.RESULT_OK, intent)
-        } ?: run {
+        } else {
             setResult(Activity.RESULT_CANCELED)
         }
         finish()

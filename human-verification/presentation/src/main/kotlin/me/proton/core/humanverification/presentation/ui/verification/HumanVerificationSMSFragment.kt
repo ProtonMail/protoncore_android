@@ -30,6 +30,7 @@ import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.BUNDLE_KEY_COUNTRY
 import me.proton.core.country.presentation.ui.CountryPickerFragment.Companion.KEY_COUNTRY_SELECTED
 import me.proton.core.country.presentation.ui.showCountryPicker
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationSmsBinding
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
@@ -44,7 +45,6 @@ import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validate
 import me.proton.core.presentation.viewmodel.onError
 import me.proton.core.presentation.viewmodel.onSuccess
-import me.proton.core.user.domain.entity.UserVerificationTokenType
 
 /**
  * Fragment that handles human verification with phone number.
@@ -52,40 +52,23 @@ import me.proton.core.user.domain.entity.UserVerificationTokenType
  * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
-internal class HumanVerificationSMSFragment :
-    ProtonFragment<FragmentHumanVerificationSmsBinding>() {
-
-    companion object {
-        private const val ARG_SESSION_ID = "arg.sessionId"
-
-        operator fun invoke(
-            sessionId: String?,
-            token: String
-        ) = HumanVerificationSMSFragment().apply {
-            arguments = bundleOf(
-                ARG_SESSION_ID to sessionId,
-                ARG_URL_TOKEN to token
-            )
-        }
-    }
+internal class HumanVerificationSMSFragment : ProtonFragment<FragmentHumanVerificationSmsBinding>() {
 
     private val viewModel by viewModels<HumanVerificationSMSViewModel>()
 
     private val sessionId: SessionId? by lazy {
-        requireArguments().getString(ARG_SESSION_ID)?.let {
-            SessionId(it)
-        } ?: run {
-            null
-        }
+        requireArguments().getString(ARG_SESSION_ID)?.let { SessionId(it) }
     }
 
     private val humanVerificationBase by lazy {
         HumanVerificationMethodCommon(
             viewModel = viewModel,
             urlToken = requireArguments().get(ARG_URL_TOKEN) as String,
-            tokenType = UserVerificationTokenType.SMS
+            tokenType = TokenType.SMS
         )
     }
+
+    override fun layoutId(): Int = R.layout.fragment_human_verification_sms
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,11 +99,11 @@ internal class HumanVerificationSMSFragment :
                         binding.smsEditText.setInputError()
                         getVerificationCodeButton.setIdle()
                     }
-                    .onSuccess {
+                    .onSuccess { phoneNumber ->
                         viewModel.sendVerificationCodeToDestination(
                             sessionId = sessionId,
                             countryCallingCode = callingCodeText.text.toString(), // this is not expected to be empty
-                            phoneNumber = it
+                            phoneNumber = phoneNumber
                         )
                     }
             }
@@ -132,7 +115,7 @@ internal class HumanVerificationSMSFragment :
         }
 
         viewModel.validation.onError {
-            onValidationError()
+            onValidationError(it)
         }.launchIn(lifecycleScope)
 
         viewModel.mostUsedCallingCode.onSuccess {
@@ -141,14 +124,31 @@ internal class HumanVerificationSMSFragment :
         }.launchIn(lifecycleScope)
     }
 
-    override fun layoutId(): Int = R.layout.fragment_human_verification_sms
-
-    private fun onValidationError() {
-        onError()
+    private fun onValidationError(error: Throwable?) {
+        onError(error)
         binding.smsEditText.setInputError()
     }
 
-    private fun onError() = with(binding) {
-        root.errorSnack(R.string.human_verification_sending_failed)
+    private fun onError(error: Throwable?) = with(binding) {
+        val message = error?.message
+        if (message.isNullOrBlank()) {
+            root.errorSnack(R.string.human_verification_sending_failed)
+        } else {
+            root.errorSnack(message)
+        }
+    }
+
+    companion object {
+        private const val ARG_SESSION_ID = "arg.sessionId"
+
+        operator fun invoke(
+            sessionId: String?,
+            token: String
+        ) = HumanVerificationSMSFragment().apply {
+            arguments = bundleOf(
+                ARG_SESSION_ID to sessionId,
+                ARG_URL_TOKEN to token
+            )
+        }
     }
 }

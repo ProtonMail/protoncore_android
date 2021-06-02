@@ -43,8 +43,8 @@ import me.proton.core.network.data.di.NetworkPrefs
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.session.HumanVerificationListener
-import me.proton.core.network.domain.session.HumanVerificationProvider
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger

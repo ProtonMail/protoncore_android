@@ -18,7 +18,7 @@
 
 package me.proton.core.humanverification.domain
 
-import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.humanverification.ClientId
 
 interface HumanVerificationWorkflowHandler {
 
@@ -33,9 +33,4 @@ interface HumanVerificationWorkflowHandler {
      * Handle HumanVerification failure.
      */
     suspend fun handleHumanVerificationFailed(clientId: ClientId)
-
-    /**
-     * Handle HumanVerification canceled by the user.
-     */
-    suspend fun handleHumanVerificationCanceled(clientId: ClientId)
 }

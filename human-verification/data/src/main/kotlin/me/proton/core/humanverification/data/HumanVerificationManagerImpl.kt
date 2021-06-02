@@ -24,50 +24,34 @@ import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.HumanVerificationProvider
+import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 
 class HumanVerificationManagerImpl(
-    private val repository: HumanVerificationRepository
-) : HumanVerificationManager, HumanVerificationProvider, HumanVerificationWorkflowHandler {
-    /**
-     * @param initialState if true, initial state for all accounts will be raised on subscription.
-     */
-    override fun onHumanVerificationStateChanged(initialState: Boolean): Flow<HumanVerificationDetails> =
-        repository.onHumanVerificationStateChanged(initialState = initialState)
+    private val humanVerificationProvider: HumanVerificationProvider,
+    private val humanVerificationListener: HumanVerificationListener,
+    private val humanVerificationRepository: HumanVerificationRepository
+) : HumanVerificationManager, HumanVerificationWorkflowHandler,
+    HumanVerificationProvider by humanVerificationProvider,
+    HumanVerificationListener by humanVerificationListener {
 
-    /**
-     * Handle HumanVerification success.
-     *
-     * Note: TokenType and tokenCode must be part of the next API call (as a request headers).
-     */
+    override fun onHumanVerificationStateChanged(initialState: Boolean): Flow<HumanVerificationDetails> =
+        humanVerificationRepository.onHumanVerificationStateChanged(initialState = initialState)
+
     override suspend fun handleHumanVerificationSuccess(clientId: ClientId, tokenType: String, tokenCode: String) {
-        repository.updateHumanVerificationState(
-            clientId,
-            HumanVerificationState.HumanVerificationSuccess,
-            tokenType,
-            tokenCode
+        humanVerificationRepository.updateHumanVerificationState(
+            clientId = clientId,
+            state = HumanVerificationState.HumanVerificationSuccess,
+            tokenType = tokenType,
+            tokenCode = tokenCode
         )
     }
 
-    /**
-     * Handle HumanVerification failure.
-     */
     override suspend fun handleHumanVerificationFailed(clientId: ClientId) {
-        repository.updateHumanVerificationState(clientId, HumanVerificationState.HumanVerificationFailed)
+        humanVerificationRepository.updateHumanVerificationState(
+            clientId = clientId,
+            state = HumanVerificationState.HumanVerificationFailed,
+        )
     }
-
-    /**
-     * Handle HumanVerification canceled by the user.
-     * Basically this will remove the database entry.
-     */
-    override suspend fun handleHumanVerificationCanceled(clientId: ClientId) {
-        repository.updateHumanVerificationCompleted(clientId)
-    }
-
-    /**
-     * Get [HumanVerificationDetails], by clientId.
-     */
-    override suspend fun getHumanVerificationDetails(clientId: ClientId): HumanVerificationDetails? =
-        repository.getHumanVerificationDetails(clientId)
 }

@@ -23,12 +23,11 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
+import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.usecase.SendVerificationCodeToEmailDestination
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -251,7 +250,10 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
             val errorItem = expectItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.Error.Message)
-            assertEquals("currentAccountType is not set. Call setClientAppRequiredAccountType first.", errorItem.message)
+            assertEquals(
+                "currentAccountType is not set. Call setClientAppRequiredAccountType first.",
+                errorItem.message
+            )
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -316,7 +318,7 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Error.UsernameNotAvailable)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.Error.Message)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -325,7 +327,7 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
     fun `check username for External token sent`() = coroutinesTest {
         // GIVEN
         val testUsername = "test-username"
-        coEvery { sendVerificationCodeToEmailDestination.invoke(emailAddress = testUsername) } returns VerificationResult.Success
+        coEvery { sendVerificationCodeToEmailDestination.invoke(emailAddress = testUsername) } returns Unit
         viewModel.state.test {
             // WHEN
             viewModel.setClientAppRequiredAccountType(AccountType.External)
@@ -342,7 +344,7 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
     fun `check username for External token NOT sent`() = coroutinesTest {
         // GIVEN
         val testUsername = "test-username"
-        coEvery { sendVerificationCodeToEmailDestination.invoke(emailAddress = testUsername) } returns VerificationResult.Error("Error with the email")
+        coEvery { sendVerificationCodeToEmailDestination.invoke(emailAddress = testUsername) } throws Exception("Error with the email")
         viewModel.state.test {
             // WHEN
             viewModel.setClientAppRequiredAccountType(AccountType.External)

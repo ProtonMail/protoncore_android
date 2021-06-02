@@ -23,6 +23,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationEmailBinding
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
@@ -35,7 +36,6 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateEmail
-import me.proton.core.user.domain.entity.UserVerificationTokenType
 
 /**
  * Fragment that handles human verification with email address.
@@ -49,21 +49,19 @@ internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVeri
         HumanVerificationMethodCommon(
             viewModel = viewModel,
             urlToken = requireArguments().get(ARG_URL_TOKEN) as String,
-            tokenType = UserVerificationTokenType.EMAIL
+            tokenType = TokenType.EMAIL
         )
     }
 
     private val sessionId: SessionId? by lazy {
-        requireArguments().getString(ARG_SESSION_ID)?.let {
-            SessionId(it)
-        } ?: run {
-            null
-        }
+        requireArguments().getString(ARG_SESSION_ID)?.let { SessionId(it) }
     }
 
     private val recoveryEmailAddress: String? by lazy {
         requireArguments().get(ARG_RECOVERY_EMAIL) as String?
     }
+
+    override fun layoutId(): Int = R.layout.fragment_human_verification_email
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -97,10 +95,13 @@ internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVeri
         }
     }
 
-    override fun layoutId(): Int = R.layout.fragment_human_verification_email
-
-    private fun onError() = with(binding) {
-        root.errorSnack(R.string.human_verification_sending_failed)
+    private fun onError(error: Throwable?) = with(binding) {
+        val message = error?.message
+        if (message.isNullOrBlank()) {
+            root.errorSnack(R.string.human_verification_sending_failed)
+        } else {
+            root.errorSnack(message)
+        }
     }
 
     companion object {

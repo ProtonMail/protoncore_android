@@ -20,6 +20,7 @@ package me.proton.core.humanverification.presentation.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationHelpFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationCaptchaFragment
@@ -28,7 +29,6 @@ import me.proton.core.humanverification.presentation.ui.verification.HumanVerifi
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.utils.inTransaction
-import me.proton.core.user.domain.entity.UserVerificationTokenType
 
 /**
  * @author Dino Kadrikj.
@@ -40,9 +40,9 @@ const val TAG_HUMAN_VERIFICATION_HELP = "human_verification_help"
 const val TOKEN_DEFAULT = "signup"
 
 val defaultVerificationMethods = listOf(
-    UserVerificationTokenType.CAPTCHA.tokenTypeValue,
-    UserVerificationTokenType.EMAIL.tokenTypeValue,
-    UserVerificationTokenType.SMS.tokenTypeValue
+    TokenType.CAPTCHA.value,
+    TokenType.EMAIL.value,
+    TokenType.SMS.value
 )
 
 /** Shows the human verification dialog. */
@@ -121,7 +121,7 @@ internal fun FragmentManager.showHumanVerificationSMSContent(
 
 internal fun FragmentManager.showEnterCode(
     sessionId: SessionId?,
-    tokenType: UserVerificationTokenType,
+    tokenType: TokenType,
     destination: String?
 ) {
     val enterCodeFragment = HumanVerificationEnterCodeFragment(sessionId?.id, tokenType, destination)

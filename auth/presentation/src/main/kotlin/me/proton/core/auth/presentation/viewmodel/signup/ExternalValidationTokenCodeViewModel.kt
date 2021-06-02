@@ -27,15 +27,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.createUserType
-import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
+import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.usecase.CheckCreationTokenValidity
+import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
-import me.proton.core.user.domain.entity.UserVerificationTokenType
-import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.usecase.CheckCreationTokenValidity
-import me.proton.core.user.domain.usecase.ResendVerificationCodeToDestination
-import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.user.domain.entity.createUserType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -62,18 +59,14 @@ class ExternalValidationTokenCodeViewModel @Inject constructor(
     fun validateToken(destination: String, token: String, type: AccountType) = flow {
         emit(ValidationState.Processing)
         val destinationToken = "$destination:$token"
-        val result = checkCreationTokenValidity(
+        checkCreationTokenValidity(
             token = destinationToken,
-            tokenType = UserVerificationTokenType.EMAIL.tokenTypeValue,
+            tokenType = TokenType.EMAIL.value,
             type = type.createUserType()
         )
-        if (result is VerificationResult.Error) {
-            emit(ValidationState.Error.Message(result.message))
-        } else {
-            emit(ValidationState.Success(destinationToken))
-        }
+        emit(ValidationState.Success(destinationToken))
     }.catch { error ->
-        _validationState.tryEmit(ValidationState.Error.Message(error.message))
+        emit(ValidationState.Error.Message(error.message))
     }.onEach {
         _validationState.tryEmit(it)
     }.launchIn(viewModelScope)
@@ -83,19 +76,13 @@ class ExternalValidationTokenCodeViewModel @Inject constructor(
      */
     fun resendCode(destination: String) = flow {
         emit(ViewModelResult.Processing)
-        val result =
-            resendVerificationCodeToDestination(
-                tokenType = UserVerificationTokenType.EMAIL,
-                destination = destination
-            )
-        when (result) {
-            is VerificationResult.Error -> _verificationCodeResendState.tryEmit(
-                ViewModelResult.Error(VerificationCodeSendingException(result.message))
-            )
-            is VerificationResult.Success -> _verificationCodeResendState.tryEmit(ViewModelResult.Success(true))
-        }.exhaustive
+        resendVerificationCodeToDestination(
+            tokenType = TokenType.EMAIL,
+            destination = destination
+        )
+        emit(ViewModelResult.Success(true))
     }.catch { error ->
-        _verificationCodeResendState.tryEmit(ViewModelResult.Error(error))
+        emit(ViewModelResult.Error(error))
     }.onEach {
         _verificationCodeResendState.tryEmit(it)
     }.launchIn(viewModelScope)

@@ -49,5 +49,4 @@ internal interface HumanVerificationCode {
 
     fun getNewVerificationCodeStatus(): MutableStateFlow<ViewModelResult<String>> =
         MutableStateFlow(ViewModelResult.None)
-
 }

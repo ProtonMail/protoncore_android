@@ -26,7 +26,6 @@ import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
@@ -44,6 +43,7 @@ import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.data.extension.toUserKeyList
+import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -111,19 +111,18 @@ class UserRepositoryImpl(
         referrer: String?,
         type: CreateUserType,
         auth: Auth
-    ): User =
-        provider.get<UserApi>().invoke {
-            val request = CreateUserRequest(
-                username,
-                recoveryEmail,
-                recoveryPhone,
-                referrer,
-                type.value,
-                AuthRequest.from(auth)
-            )
-            val userResponse = createUser(request).user
-            userResponse.toUser(getPassphrase(UserId(userResponse.id)))
-        }.valueOrThrow
+    ): User = provider.get<UserApi>().invoke {
+        val request = CreateUserRequest(
+            username,
+            recoveryEmail,
+            recoveryPhone,
+            referrer,
+            type.value,
+            AuthRequest.from(auth)
+        )
+        val userResponse = createUser(request).user
+        userResponse.toUser(getPassphrase(UserId(userResponse.id)))
+    }.valueOrThrow
 
     /**
      * Create new [User]. Used during signup.
@@ -134,12 +133,11 @@ class UserRepositoryImpl(
         referrer: String?,
         type: CreateUserType,
         auth: Auth
-    ): User =
-        provider.get<UserApi>().invoke {
-            val request = CreateExternalUserRequest(email, referrer, type.value, AuthRequest.from(auth))
-            val userResponse = createExternalUser(request).user
-            userResponse.toUser(getPassphrase(UserId(userResponse.id)))
-        }.valueOrThrow
+    ): User = provider.get<UserApi>().invoke {
+        val request = CreateExternalUserRequest(email, referrer, type.value, AuthRequest.from(auth))
+        val userResponse = createExternalUser(request).user
+        userResponse.toUser(getPassphrase(UserId(userResponse.id)))
+    }.valueOrThrow
 
     // region PassphraseRepository
 
@@ -156,6 +154,4 @@ class UserRepositoryImpl(
         userDao.setPassphrase(userId, null)
 
     //endregion
-
-
 }

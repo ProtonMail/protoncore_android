@@ -25,9 +25,9 @@ import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.ClientIdType
-import me.proton.core.network.domain.session.CookieSessionId
+import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.humanverification.ClientIdType
+import me.proton.core.network.domain.humanverification.CookieSessionId
 import me.proton.core.network.domain.session.SessionId
 
 @Entity(
@@ -35,7 +35,7 @@ import me.proton.core.network.domain.session.SessionId
 )
 data class HumanVerificationEntity(
     val clientId: String,
-    val clientIdType: String, // session or cookie
+    val clientIdType: ClientIdType,
     val verificationMethods: List<String>,
     val captchaVerificationToken: String? = null,
     val state: HumanVerificationState,
@@ -43,10 +43,10 @@ data class HumanVerificationEntity(
     val humanHeaderTokenCode: EncryptedString? = null
 ) {
     fun toHumanVerificationDetails(keyStoreCrypto: KeyStoreCrypto) = HumanVerificationDetails(
-        clientId = if (clientIdType == ClientIdType.SESSION.value)
-            ClientId.AccountSession(SessionId(clientId))
-        else
-            ClientId.CookieSession(CookieSessionId(clientId)),
+        clientId = when (clientIdType) {
+            ClientIdType.SESSION -> ClientId.AccountSession(SessionId(clientId))
+            ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
+        },
         verificationMethods = verificationMethods.map { VerificationMethod.getByValue(it) },
         captchaVerificationToken = captchaVerificationToken,
         state = state,

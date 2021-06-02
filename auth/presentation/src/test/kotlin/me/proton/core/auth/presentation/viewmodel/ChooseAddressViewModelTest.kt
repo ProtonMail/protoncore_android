@@ -125,7 +125,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
     fun `unavailable username`() = coroutinesTest {
         // GIVEN
         coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
-        coEvery { usernameDomainAvailability.isUsernameAvailable(any(), any()) } returns false
+        coEvery { usernameDomainAvailability.isUsernameAvailable(any(), any()) } throws Exception("not available")
         viewModel.state.test {
             // WHEN
             viewModel.setUserId(userId)
@@ -138,7 +138,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
 
             val state = expectItem()
-            assertTrue(state is ChooseAddressViewModel.State.Error.UsernameNotAvailable)
+            assertTrue(state is ChooseAddressViewModel.State.Error.Message)
 
             cancelAndIgnoreRemainingEvents()
         }

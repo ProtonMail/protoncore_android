@@ -25,13 +25,13 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
 import org.junit.Test

@@ -18,6 +18,8 @@
 
 package me.proton.core.network.domain.session
 
+import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.humanverification.CookieSessionId
 import me.proton.core.test.kotlin.assertIs
 import org.junit.Test
 import kotlin.test.assertEquals

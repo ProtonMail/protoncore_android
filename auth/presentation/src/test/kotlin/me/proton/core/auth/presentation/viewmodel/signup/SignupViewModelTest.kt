@@ -24,7 +24,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.CreateUserType
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
@@ -35,9 +34,9 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.session.HumanVerificationListener
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.User
 import org.junit.Before
 import org.junit.Test
@@ -50,7 +49,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     private val performCreateUser = mockk<PerformCreateUser>(relaxed = true)
     private val performCreateExternalUser = mockk<PerformCreateExternalEmailUser>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
-    private val humanVerificationListener = mockk<HumanVerificationListener>()
     private val humanVerificationManager = mockk<HumanVerificationManager>()
     private val humanVerificationOrchestrator = mockk<HumanVerificationOrchestrator>()
     // endregion
@@ -89,7 +87,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             performCreateUser,
             performCreateExternalUser,
             keyStoreCrypto,
-            humanVerificationListener,
             humanVerificationManager,
             humanVerificationOrchestrator
         )
@@ -406,7 +403,6 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         viewModel.currentAccountType = AccountType.External
         viewModel.externalEmail = testEmail
         viewModel.password = testPassword
-        coEvery { humanVerificationListener.onExternalAccountHumanVerificationDone() } returns Unit
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -470,4 +466,3 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         }
     }
 }
-

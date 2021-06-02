@@ -24,17 +24,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
+import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
-import me.proton.core.user.domain.entity.UserVerificationTokenType
-import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.usecase.SendVerificationCodeToEmailDestination
 import javax.inject.Inject
 
 /**
- * View model class that handles and supports [UserVerificationTokenType.EMAIL] verification method (type) fragment.
+ * View model class that handles and supports [TokenType.EMAIL] verification method (type) fragment.
  *
  * @author Dino Kadrikj.
  */
@@ -53,12 +50,8 @@ internal class HumanVerificationEmailViewModel @Inject constructor(
      * @param email the email address that the user entered as a destination.
      */
     fun sendVerificationCode(sessionId: SessionId?, email: String) = flow {
-        val deferred = sendVerificationCodeToEmailDestination.invoke(sessionId, email)
-        if (deferred is VerificationResult.Success) {
-            emit(ViewModelResult.Success(email))
-        } else {
-            emit(ViewModelResult.Error(VerificationCodeSendingException()))
-        }
+        sendVerificationCodeToEmailDestination.invoke(sessionId, email)
+        emit(ViewModelResult.Success(email))
     }.catch { error ->
         _verificationCodeStatusEmail.tryEmit(ViewModelResult.Error(error))
     }.onEach {

@@ -22,14 +22,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
+import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.user.domain.entity.UserVerificationTokenType
-import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.usecase.ResendVerificationCodeToDestination
 import org.junit.Rule
 import org.junit.Test
 
@@ -53,7 +51,7 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
     @Test
     fun `resend token success`() = coroutinesTest {
         // given
-        val tokenType = UserVerificationTokenType.EMAIL
+        val tokenType = TokenType.EMAIL
         viewModel.tokenType = tokenType
         viewModel.destination = testEmail
         coEvery {
@@ -62,7 +60,7 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
                 tokenType = any(),
                 destination = any()
             )
-        } returns VerificationResult.Success
+        } returns Unit
         // when
         viewModel.resendCode(sessionId)
         // then
@@ -74,7 +72,7 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
     @Test
     fun `resend token failure`() = coroutinesTest {
         // given
-        val tokenType = UserVerificationTokenType.EMAIL
+        val tokenType = TokenType.EMAIL
         viewModel.tokenType = tokenType
         viewModel.destination = testEmail
         coEvery {
@@ -83,13 +81,14 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
                 tokenType = any(),
                 destination = any()
             )
-        } returns VerificationResult.Error(errorResponse)
+        } throws IllegalArgumentException(errorResponse)
         // when
         viewModel.resendCode(sessionId)
         // then
         viewModel.verificationCodeResendStatus.test {
             val result = expectItem() as ViewModelResult.Error
-            assertIs<VerificationCodeSendingException>(result.throwable)
+            assertIs<IllegalArgumentException>(result.throwable)
+            cancelAndIgnoreRemainingEvents()
         }
     }
 }

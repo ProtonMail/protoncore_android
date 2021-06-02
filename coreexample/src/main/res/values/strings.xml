@@ -25,7 +25,8 @@
     <string name="logout">Logout</string>
     <string name="current_accounts">Current Accounts:</string>
     <string name="force_update">Force Update</string>
-    <string name="trigger_human_ver">Trigger human verification</string>
+    <string name="trigger_human_ver">Trigger HV</string>
+    <string name="username_available">Username available</string>
     <string name="payments_upgrade">Payments (upgrade primary)</string>
     <string name="signup">Signup</string>
     <string name="signup_external">Signup (External)</string>

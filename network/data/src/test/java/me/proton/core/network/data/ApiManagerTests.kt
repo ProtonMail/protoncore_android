@@ -49,9 +49,9 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.HumanVerificationListener
-import me.proton.core.network.domain.session.HumanVerificationProvider
+import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -375,7 +375,6 @@ internal class ApiManagerTests {
         assertTrue(result is ApiResult.Error.Connection)
         coVerify(exactly = 0) { altBackend1.invoke<TestResult>(any()) }
     }
-
 
     @Test
     fun `test no DoH on client error`() = runBlockingTest {

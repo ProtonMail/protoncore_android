@@ -28,6 +28,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationMainBinding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
@@ -37,13 +38,12 @@ import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationEmailContent
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationSMSContent
 import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.ClientIdType
-import me.proton.core.network.domain.session.CookieSessionId
+import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.humanverification.ClientIdType
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.humanverification.getId
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.onClick
-import me.proton.core.user.domain.entity.UserVerificationTokenType
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -100,10 +100,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
     private val clientId: ClientId by lazy {
         val clientId = requireArguments().getString(ARG_CLIENT_ID)!!
-        when (clientIdType) {
-            ClientIdType.SESSION -> ClientId.AccountSession(SessionId(clientId))
-            ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
-        }.exhaustive
+        clientIdType.getId(clientId)
     }
 
     private val sessionId: SessionId? by lazy {
@@ -130,7 +127,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
         childFragmentManager.setFragmentResultListener(KEY_PHASE_TWO, this) { _, bundle ->
             val destination = bundle.getString(ARG_DESTINATION)
-            val tokenType = UserVerificationTokenType.fromString(bundle.getString(ARG_TOKEN_TYPE)!!)
+            val tokenType = TokenType.fromString(bundle.getString(ARG_TOKEN_TYPE)!!)
             childFragmentManager.showEnterCode(
                 sessionId = sessionId,
                 tokenType = tokenType,
@@ -156,7 +153,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             .launchIn(lifecycleScope)
 
         viewModel.activeMethod
-            .onEach { setActiveVerificationMethod(UserVerificationTokenType.fromString(it)) }
+            .onEach { setActiveVerificationMethod(TokenType.fromString(it)) }
             .launchIn(lifecycleScope)
 
         binding.headerNavigation.closeButton.onClick {
@@ -174,7 +171,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.let {
-                    val type = tab.tag as UserVerificationTokenType
+                    val type = tab.tag as TokenType
                     viewModel.defineActiveVerificationMethod(type)
                 }
             }
@@ -188,30 +185,30 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             for (method in enabledMethods) {
                 val tab = newTab().apply {
                     text = method
-                    tag = UserVerificationTokenType.fromString(method)
+                    tag = TokenType.fromString(method)
                 }
                 addTab(tab)
             }
         }
     }
 
-    private fun setActiveVerificationMethod(verificationMethod: UserVerificationTokenType) {
+    private fun setActiveVerificationMethod(verificationMethod: TokenType) {
         when (verificationMethod) {
-            UserVerificationTokenType.CAPTCHA -> {
+            TokenType.CAPTCHA -> {
                 childFragmentManager.showHumanVerificationCaptchaContent(
                     captchaBaseUrl = captchaBaseUrl,
                     token = captchaToken,
                     containerId = binding.fragmentOptionsContainer.id
                 )
             }
-            UserVerificationTokenType.EMAIL -> {
+            TokenType.EMAIL -> {
                 childFragmentManager.showHumanVerificationEmailContent(
                     sessionId = sessionId,
                     containerId = binding.fragmentOptionsContainer.id,
                     recoveryEmailAddress = recoveryEmailAddress
                 )
             }
-            UserVerificationTokenType.SMS -> {
+            TokenType.SMS -> {
                 childFragmentManager.showHumanVerificationSMSContent(
                     sessionId = sessionId,
                     containerId = binding.fragmentOptionsContainer.id
@@ -228,7 +225,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             resultListener.setResult(
                 HumanVerificationResult(
                     clientId = clientId.id,
-                    clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: run { ClientIdType.COOKIE.value },
+                    clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
                     tokenType = tokenType, tokenCode = tokenCode, canceled = canceled
                 )
             )
@@ -240,12 +237,11 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             if (backStackEntryCount >= 1) {
                 popBackStack()
             } else {
-                viewModel.onHumanVerificationCanceled(clientId).invokeOnCompletion {
+                viewModel.onHumanVerificationFailed(clientId).invokeOnCompletion {
                     resultListener.setResult(
                         HumanVerificationResult(
                             clientId = clientId.id,
-                            clientIdType = sessionId?.let { ClientIdType.SESSION.value }
-                                ?: run { ClientIdType.COOKIE.value },
+                            clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
                             tokenType = null,
                             tokenCode = null,
                             canceled = true

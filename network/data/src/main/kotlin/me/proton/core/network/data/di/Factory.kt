@@ -40,12 +40,13 @@ import me.proton.core.network.domain.DohApiHandler
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.handlers.HumanVerificationHandler
+import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
+import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.HumanVerificationListener
-import me.proton.core.network.domain.session.HumanVerificationProvider
+import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -130,11 +131,13 @@ class ApiFactory(
         val sessionId = if (clientId is ClientId.AccountSession) clientId.sessionId else null
         val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
-        val humanVerificationHandler = HumanVerificationHandler<Api>(clientId, humanVerificationListener, monoClockMs)
+        val humanVerificationNeededHandler = HumanVerificationNeededHandler<Api>(clientId, humanVerificationListener, monoClockMs)
+        val humanVerificationInvalidHandler = HumanVerificationInvalidHandler<Api>(clientId, humanVerificationListener)
         return listOf(
             refreshTokenHandler,
             forceUpdateHandler,
-            humanVerificationHandler
+            humanVerificationInvalidHandler,
+            humanVerificationNeededHandler
         )
     }
 

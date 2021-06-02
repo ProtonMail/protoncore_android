@@ -80,6 +80,11 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                     }
                 }
             }
+            usernameAvailable.onClick {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    coreExampleRepository.usernameAvailable()
+                }
+            }
             sendDirect.onClick { mailMessageViewModel.sendDirect() }
             payment.onClick { accountViewModel.onPayUpgradeClicked() }
 
