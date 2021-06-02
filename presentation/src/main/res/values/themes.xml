@@ -54,6 +54,9 @@
         <item name="toolbarStyle">@style/ProtonToolbar</item>
         <item name="searchViewStyle">@style/ProtonSearchView</item>
 
+        <!-- Tabs -->
+        <item name="tabStyle">@style/ProtonTabStyle</item>
+
         <!-- Remap legacy AppCompat attributes to MaterialComponent attributes -->
         <item name="colorPrimaryDark">?colorPrimaryVariant</item>
         <item name="colorAccent">?colorSecondary</item>
@@ -64,6 +67,7 @@
         <item name="navigationViewStyle">@style/ProtonNavigationView.Dark</item>
         <item name="snackbarStyle">@style/ProtonSnackbar</item>
         <item name="snackbarButtonStyle">@style/ProtonSnackbarButton</item>
+        <item name="textAppearanceButton">@style/ProtonButtonTextAppearance</item>
 
         <!-- Brand specific attributes -->
         <item name="brand_norm">@color/cornflower_blue</item>
