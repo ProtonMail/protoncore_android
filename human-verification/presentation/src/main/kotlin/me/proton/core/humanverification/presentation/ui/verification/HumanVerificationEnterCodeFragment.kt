@@ -35,12 +35,14 @@ import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.validate
+import me.proton.core.presentation.viewmodel.onError
 import me.proton.core.presentation.viewmodel.onSuccess
 
 @AndroidEntryPoint
@@ -53,27 +55,24 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
     }
 
     private val destination: String? by lazy {
-        val value = requireArguments().get(ARG_DESTINATION) as String?
-        viewModel.destination = value
-        value
+        requireArguments().get(ARG_DESTINATION) as String?
     }
 
     private val tokenType: TokenType by lazy {
         val type = requireArguments().getString(ARG_TOKEN_TYPE)
-        val value = TokenType.fromString(type)
-        viewModel.tokenType = value
-        value
+        TokenType.fromString(type)
     }
 
     override fun layoutId(): Int = R.layout.fragment_human_verification_enter_code
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.destination = destination
+        viewModel.tokenType = tokenType
+
         destination?.let {
-            binding.title.text = String.format(
-                getString(R.string.human_verification_enter_code_subtitle),
-                destination
-            )
+            binding.title.text = String.format(getString(R.string.human_verification_enter_code_subtitle), destination)
         } ?: run {
             binding.title.text = getString(R.string.human_verification_enter_code_subtitle_already_have_code)
         }
@@ -102,9 +101,15 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
             requestReplacementButton.onClick { viewModel.resendCode(sessionId) }
         }
 
-        viewModel.verificationCodeResendStatus.onSuccess {
-            showCodeResent()
-        }.launchIn(lifecycleScope)
+        viewModel.verificationCodeResendStatus
+            .onSuccess { showCodeResent() }
+            .onError { showError(it) }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun showError(error: Throwable?) {
+        binding.verifyButton.setIdle()
+        error?.message?.let { view?.errorSnack(it) }
     }
 
     private fun showCodeResent() {

@@ -50,6 +50,7 @@ internal class HumanVerificationEmailViewModel @Inject constructor(
      * @param email the email address that the user entered as a destination.
      */
     fun sendVerificationCode(sessionId: SessionId?, email: String) = flow {
+        emit(ViewModelResult.Processing)
         sendVerificationCodeToEmailDestination.invoke(sessionId, email)
         emit(ViewModelResult.Success(email))
     }.catch { error ->

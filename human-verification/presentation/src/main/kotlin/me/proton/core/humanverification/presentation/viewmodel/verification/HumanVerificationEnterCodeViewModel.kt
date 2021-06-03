@@ -58,6 +58,7 @@ class HumanVerificationEnterCodeViewModel @Inject constructor(
     fun resendCode(sessionId: SessionId?) = viewModelScope.launch {
         destination?.let {
             runCatching {
+                _verificationCodeResendStatus.tryEmit(ViewModelResult.Processing)
                 resendVerificationCodeToDestination(sessionId, tokenType, it)
             }.onSuccess {
                 _verificationCodeResendStatus.tryEmit(ViewModelResult.Success(true))

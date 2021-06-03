@@ -114,14 +114,17 @@ internal class HumanVerificationSMSFragment : ProtonFragment<FragmentHumanVerifi
             }
         }
 
-        viewModel.validation.onError {
-            onValidationError(it)
-        }.launchIn(lifecycleScope)
+        viewModel.validation
+            .onError { onValidationError(it) }
+            .launchIn(lifecycleScope)
 
-        viewModel.mostUsedCallingCode.onSuccess {
-            binding.callingCodeText.text =
-                String.format(getString(R.string.human_verification_calling_code_template), it)
-        }.launchIn(lifecycleScope)
+        viewModel.mostUsedCallingCode
+            .onSuccess {
+                binding.callingCodeText.text =
+                    String.format(getString(R.string.human_verification_calling_code_template), it)
+            }
+            .onError { onError(it) }
+            .launchIn(lifecycleScope)
     }
 
     private fun onValidationError(error: Throwable?) {

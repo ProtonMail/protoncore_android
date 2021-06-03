@@ -62,6 +62,7 @@ internal class HumanVerificationSMSViewModel @Inject constructor(
             runCatching {
                 require(phoneNumber.isNotEmpty()) { "Destination phone number: $phoneNumber is invalid." }
             }.onSuccess {
+                _validationSMS.tryEmit(ViewModelResult.Processing)
                 sendVerificationCodeToSMS(sessionId, countryCallingCode + phoneNumber)
             }.onFailure {
                 _validationSMS.tryEmit(ViewModelResult.Error(it))
@@ -92,6 +93,7 @@ internal class HumanVerificationSMSViewModel @Inject constructor(
      */
     private suspend fun sendVerificationCodeToSMS(sessionId: SessionId?, phoneNumber: String) {
         runCatching {
+            _verificationCodeStatusSMS.tryEmit(ViewModelResult.Processing)
             sendVerificationCodeToPhoneDestination.invoke(sessionId, phoneNumber)
         }.onSuccess {
             _verificationCodeStatusSMS.tryEmit(ViewModelResult.Success(phoneNumber))
