@@ -18,7 +18,7 @@
 
 package me.proton.core.presentation.viewmodel
 
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 
 sealed class ViewModelResult<out T> {
@@ -42,12 +42,10 @@ fun <T> ViewModelResult<T>.onError(action: (Throwable?) -> Unit): ViewModelResul
     return this
 }
 
-fun <T> StateFlow<ViewModelResult<T>>.onSuccess(action: (T) -> Unit): StateFlow<ViewModelResult<T>> {
-    onEach { it.onSuccess { value -> action(value) } }
-    return this
+fun <T> Flow<ViewModelResult<T>>.onSuccess(action: (T) -> Unit): Flow<ViewModelResult<T>> {
+    return onEach { it.onSuccess { value -> action(value) } }
 }
 
-fun <T> StateFlow<ViewModelResult<T>>.onError(action: (Throwable?) -> Unit): StateFlow<ViewModelResult<T>> {
-    onEach { it.onError { error -> action(error) } }
-    return this
+fun <T> Flow<ViewModelResult<T>>.onError(action: (Throwable?) -> Unit): Flow<ViewModelResult<T>> {
+    return onEach { it.onError { error -> action(error) } }
 }
