@@ -38,6 +38,7 @@ import me.proton.core.humanverification.domain.repository.UserVerificationReposi
 import me.proton.core.humanverification.presentation.CaptchaBaseUrl
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import javax.inject.Singleton
@@ -45,6 +46,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object HumanVerificationModule {
+
+    @Provides
+    @CaptchaBaseUrl
+    fun provideCaptchaBaseUrl(): String = BuildConfig.ENVIRONMENT
 
     @Provides
     fun provideHumanVerificationOrchestrator(): HumanVerificationOrchestrator =
@@ -76,9 +81,10 @@ object HumanVerificationModule {
     @Singleton
     fun provideUserVerificationRepository(
         apiProvider: ApiProvider,
+        clientIdProvider: ClientIdProvider,
         humanVerificationRepository: HumanVerificationRepository
     ): UserVerificationRepository =
-        UserVerificationRepositoryImpl(apiProvider, humanVerificationRepository)
+        UserVerificationRepositoryImpl(apiProvider, clientIdProvider, humanVerificationRepository)
 
     @Provides
     @Singleton
@@ -88,10 +94,6 @@ object HumanVerificationModule {
         humanVerificationRepository: HumanVerificationRepository
     ): HumanVerificationManagerImpl =
         HumanVerificationManagerImpl(humanVerificationProvider, humanVerificationListener, humanVerificationRepository)
-
-    @Provides
-    @CaptchaBaseUrl
-    fun provideCaptchaBaseUrl(): String = BuildConfig.ENVIRONMENT
 }
 
 @Module

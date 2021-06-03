@@ -18,6 +18,8 @@
 
 package me.proton.core.network.domain.humanverification
 
+import me.proton.core.network.domain.client.ClientId
+
 interface HumanVerificationListener {
 
     sealed class HumanVerificationResult {

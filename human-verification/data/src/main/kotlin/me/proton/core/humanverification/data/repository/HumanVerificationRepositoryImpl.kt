@@ -32,8 +32,8 @@ import me.proton.core.humanverification.data.entity.HumanVerificationEntity
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.ClientId
-import me.proton.core.network.domain.humanverification.getType
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.getType
 
 class HumanVerificationRepositoryImpl(
     private val db: HumanVerificationDatabase,

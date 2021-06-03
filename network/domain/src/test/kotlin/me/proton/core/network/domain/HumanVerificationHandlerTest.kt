@@ -20,14 +20,17 @@ package me.proton.core.network.domain
 
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
-import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.network.domain.session.SessionId
 import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertNotNull
@@ -37,7 +40,10 @@ import kotlin.test.assertNotNull
  */
 class HumanVerificationHandlerTest {
 
+    private val sessionId = mockk<SessionId>(relaxed = true)
     private val clientId = mockk<ClientId>(relaxed = true)
+
+    private val clientIdProvider = mockk<ClientIdProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
 
     private val apiBackend = mockk<ApiBackend<Any>>()
@@ -46,6 +52,7 @@ class HumanVerificationHandlerTest {
 
     @BeforeTest
     fun beforeTest() {
+        every { clientIdProvider.getClientId(any()) } returns clientId
         // Assume no token has been refreshed between each tests.
         runBlocking { HumanVerificationNeededHandler.reset(clientId) }
     }
@@ -74,7 +81,7 @@ class HumanVerificationHandlerTest {
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
         val humanVerificationHandler =
-            HumanVerificationNeededHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = apiBackend,
@@ -112,7 +119,7 @@ class HumanVerificationHandlerTest {
         coEvery { apiBackend.invoke<Any>(any()) } returns apiResult
 
         val humanVerificationHandler =
-            HumanVerificationNeededHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = apiBackend,
@@ -138,7 +145,7 @@ class HumanVerificationHandlerTest {
         )
 
         val humanVerificationHandler =
-            HumanVerificationNeededHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = mockk(),
@@ -161,7 +168,7 @@ class HumanVerificationHandlerTest {
         )
 
         val humanVerificationHandler =
-            HumanVerificationNeededHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = mockk(),
@@ -182,7 +189,7 @@ class HumanVerificationHandlerTest {
         )
 
         val humanVerificationHandler =
-            HumanVerificationNeededHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = mockk(),

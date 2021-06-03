@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-package me.proton.core.network.data.di
+package me.proton.core.network.data
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting
@@ -24,13 +24,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.plus
-import me.proton.core.network.data.NetworkManagerImpl
-import me.proton.core.network.data.NetworkPrefsImpl
-import me.proton.core.network.data.ProtonApiBackend
-import me.proton.core.network.data.ProtonCookieStore
+import me.proton.core.network.data.di.Constants
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
-import me.proton.core.network.data.initPinning
-import me.proton.core.network.data.initSPKIleafPinning
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiErrorHandler
@@ -40,11 +35,11 @@ import me.proton.core.network.domain.DohApiHandler
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
+import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
-import me.proton.core.network.domain.humanverification.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.session.SessionId
@@ -57,7 +52,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import java.net.CookieManager
 import java.net.CookiePolicy
-import java.net.HttpCookie
 import java.net.URI
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
@@ -69,15 +63,16 @@ import kotlin.reflect.KClass
  * @param cookieStore The cookie store. If set to null, a default InMemory cookie store will be used. Otherwise, for
  * permanent Cookie Store please use instance of [ProtonCookieStore].
  */
-class ApiFactory(
+class ApiManagerFactory(
     private val baseUrl: String,
     private val apiClient: ApiClient,
+    private val clientIdProvider: ClientIdProvider,
     private val logger: Logger,
     private val networkManager: NetworkManager,
     private val prefs: NetworkPrefs,
     private val sessionProvider: SessionProvider,
-    private val humanVerificationProvider: HumanVerificationProvider,
     private val sessionListener: SessionListener,
+    private val humanVerificationProvider: HumanVerificationProvider,
     private val humanVerificationListener: HumanVerificationListener,
     private val cookieStore: ProtonCookieStore?,
     scope: CoroutineScope,
@@ -125,25 +120,21 @@ class ApiFactory(
     private fun javaWallClockMs(): Long = System.currentTimeMillis()
 
     internal fun <Api> createBaseErrorHandlers(
-        clientId: ClientId?,
+        sessionId: SessionId?,
         monoClockMs: () -> Long
     ): List<ApiErrorHandler<Api>> {
-        val sessionId = if (clientId is ClientId.AccountSession) clientId.sessionId else null
         val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
-        val humanVerificationNeededHandler = HumanVerificationNeededHandler<Api>(clientId, humanVerificationListener, monoClockMs)
-        val humanVerificationInvalidHandler = HumanVerificationInvalidHandler<Api>(clientId, humanVerificationListener)
+        val humanVerificationNeededHandler =
+            HumanVerificationNeededHandler<Api>(sessionId, clientIdProvider, humanVerificationListener, monoClockMs)
+        val humanVerificationInvalidHandler =
+            HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
         return listOf(
             refreshTokenHandler,
             forceUpdateHandler,
             humanVerificationInvalidHandler,
             humanVerificationNeededHandler
         )
-    }
-
-    fun getClientId(sessionId: SessionId? = null): ClientId? {
-        val cookieValue = cookieStore?.get(URI.create(baseUrl))
-        return ClientId.newClientId(sessionId, cookieValue?.cookieSessionId())
     }
 
     /**
@@ -161,8 +152,8 @@ class ApiFactory(
         sessionId: SessionId? = null,
         interfaceClass: KClass<Api>,
         clientErrorHandlers: List<ApiErrorHandler<Api>> = emptyList(),
-        certificatePins: Array<String> = this@ApiFactory.certificatePins,
-        alternativeApiPins: List<String> = this@ApiFactory.alternativeApiPins
+        certificatePins: Array<String> = this@ApiManagerFactory.certificatePins,
+        alternativeApiPins: List<String> = this@ApiManagerFactory.alternativeApiPins
     ): ApiManager<Api> {
         val pinningStrategy = { builder: OkHttpClient.Builder ->
             initPinning(builder, URI(baseUrl).host, certificatePins)
@@ -170,11 +161,11 @@ class ApiFactory(
         val primaryBackend = ProtonApiBackend(
             baseUrl,
             apiClient,
+            clientIdProvider,
             logger,
             sessionId,
             sessionProvider,
             humanVerificationProvider,
-            cookieStore,
             baseOkHttpClient,
             listOf(jsonConverter),
             interfaceClass,
@@ -182,8 +173,7 @@ class ApiFactory(
             pinningStrategy
         )
 
-        val cookieId = getClientId(sessionId)
-        val errorHandlers = createBaseErrorHandlers<Api>(cookieId, ::javaMonoClockMs) + clientErrorHandlers
+        val errorHandlers = createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs) + clientErrorHandlers
 
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
             initSPKIleafPinning(builder, alternativeApiPins)
@@ -199,11 +189,11 @@ class ApiFactory(
             ProtonApiBackend(
                 baseUrl,
                 apiClient,
+                clientIdProvider,
                 logger,
                 sessionId,
                 sessionProvider,
                 humanVerificationProvider,
-                cookieStore,
                 baseOkHttpClient,
                 listOf(jsonConverter),
                 interfaceClass,
@@ -229,7 +219,3 @@ fun NetworkManager(context: Context): NetworkManager =
  */
 fun NetworkPrefs(context: Context): NetworkPrefs =
     NetworkPrefsImpl(context.applicationContext)
-
-fun List<HttpCookie>.cookieSessionId(): String? = find {
-    it.name == "Session-Id"
-}?.value

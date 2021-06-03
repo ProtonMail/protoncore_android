@@ -27,12 +27,14 @@ import me.proton.core.humanverification.data.api.UserVerificationApi
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
+import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import org.junit.Before
@@ -41,6 +43,8 @@ import org.junit.Test
 class UserVerificationRepositoryImplTest {
 
     private val sessionId: SessionId = SessionId("id")
+    private val clientId = ClientId.AccountSession(sessionId)
+
     private val testPhoneNumber = "+123456789"
     private val testEmailAddress = "test@email.com"
 
@@ -49,13 +53,16 @@ class UserVerificationRepositoryImplTest {
     private val errorResponseCode = 422
 
     @RelaxedMockK
+    private lateinit var clientIdProvider: ClientIdProvider
+
+    @RelaxedMockK
     private lateinit var sessionProvider: SessionProvider
 
     @RelaxedMockK
     private lateinit var humanVerificationRepository: HumanVerificationRepository
 
     @RelaxedMockK
-    private lateinit var apiFactory: ApiFactory
+    private lateinit var apiManagerFactory: ApiManagerFactory
     private lateinit var apiProvider: ApiProvider
 
     @RelaxedMockK
@@ -69,12 +76,12 @@ class UserVerificationRepositoryImplTest {
     @Before
     fun before() {
         MockKAnnotations.init(this)
-        apiProvider = ApiProvider(apiFactory, sessionProvider)
-        every {
-            apiFactory.create(sessionId, UserVerificationApi::class)
-        } returns apiManager
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
 
-        remoteRepository = UserVerificationRepositoryImpl(apiProvider, humanVerificationRepository)
+        every { clientIdProvider.getClientId(any()) } returns clientId
+        every { apiManagerFactory.create(sessionId, UserVerificationApi::class) } returns apiManager
+
+        remoteRepository = UserVerificationRepositoryImpl(apiProvider, clientIdProvider, humanVerificationRepository)
     }
 
     @Test(expected = IllegalArgumentException::class)

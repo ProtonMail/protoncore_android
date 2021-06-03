@@ -28,7 +28,6 @@ import io.mockk.verify
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockLogger
@@ -42,9 +41,10 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.ClientId
-import me.proton.core.network.domain.humanverification.CookieSessionId
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
@@ -107,7 +107,7 @@ internal class HumanVerificationTests {
     private val scope = CoroutineScope(TestCoroutineDispatcher())
 
     private val testTlsHelper = TestTLSHelper()
-    private lateinit var apiFactory: ApiFactory
+    private lateinit var apiManagerFactory: ApiManagerFactory
     private lateinit var webServer: MockWebServer
 
     private lateinit var backend: ProtonApiBackend<TestRetrofitApi>
@@ -117,6 +117,7 @@ internal class HumanVerificationTests {
     private lateinit var session: Session
     private lateinit var clientId: ClientId
 
+    private var clientIdProvider = mockk<ClientIdProvider>()
     private var sessionProvider = mockk<SessionProvider>()
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
@@ -141,20 +142,23 @@ internal class HumanVerificationTests {
 
         session = MockSession.getDefault()
         clientId = MockClientId.getForSession(session.sessionId)
+        every { clientIdProvider.getClientId(any()) } returns clientId
+
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
         every { cookieStore.get(any()) } returns emptyList()
 
-        apiFactory =
-            ApiFactory(
+        apiManagerFactory =
+            ApiManagerFactory(
                 "https://example.com/",
                 client,
+                clientIdProvider,
                 logger,
                 networkManager,
                 prefs,
                 sessionProvider,
-                humanVerificationProvider,
                 sessionListener,
+                humanVerificationProvider,
                 humanVerificationListener,
                 cookieStore,
                 scope
@@ -173,15 +177,15 @@ internal class HumanVerificationTests {
         ProtonApiBackend(
             webServer.url("/").toString(),
             client,
+            clientIdProvider,
             logger,
             sessionId,
             sessionProvider,
             humanVerificationProvider,
-            cookieStore,
-            apiFactory.baseOkHttpClient,
+            apiManagerFactory.baseOkHttpClient,
             listOf(
                 ScalarsConverterFactory.create(),
-                apiFactory.jsonConverter
+                apiManagerFactory.jsonConverter
             ),
             TestRetrofitApi::class,
             networkManager,
@@ -225,7 +229,9 @@ internal class HumanVerificationTests {
 
     @Test
     fun `test human verification for cookie returned`() = runBlocking {
+        val clientId = MockClientId.getForCookie(CookieSessionId("test-cookie-id"))
         every { cookieStore.get(any()) } returns listOf(HttpCookie("Session-Id", "test-cookie-id"))
+        every { clientIdProvider.getClientId(any()) } returns clientId
 
         val backend = createBackend(null) {
             testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
@@ -246,15 +252,7 @@ internal class HumanVerificationTests {
             )
         )
 
-        coEvery {
-            humanVerificationProvider.getHumanVerificationDetails(
-                ClientId.CookieSession(
-                    CookieSessionId(
-                        "test-cookie-id"
-                    )
-                )
-            )
-        } returns humanVerificationDetails
+        coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
 
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Http)
@@ -325,7 +323,9 @@ internal class HumanVerificationTests {
 
     @Test
     fun `test human verification headers for cookieId`() = runBlocking {
+        val clientId = MockClientId.getForCookie(CookieSessionId("test-cookie-id"))
         every { cookieStore.get(any()) } returns listOf(HttpCookie("Session-Id", "test-cookie-id"))
+        every { clientIdProvider.getClientId(any()) } returns clientId
 
         val backend = createBackend(null) {
             testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
@@ -346,15 +346,7 @@ internal class HumanVerificationTests {
             )
         )
 
-        coEvery {
-            humanVerificationProvider.getHumanVerificationDetails(
-                ClientId.CookieSession(
-                    CookieSessionId(
-                        "test-cookie-id"
-                    )
-                )
-            )
-        } returns humanVerificationDetails
+        coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
 
         backend(ApiManager.Call(0) { test() })
         val headers = webServer.takeRequest().headers

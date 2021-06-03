@@ -26,7 +26,6 @@ import io.mockk.spyk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockLogger
@@ -41,7 +40,8 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
@@ -72,13 +72,14 @@ internal class ProtonApiBackendTests {
     val scope = CoroutineScope(TestCoroutineDispatcher())
 
     private val testTlsHelper = TestTLSHelper()
-    private lateinit var apiFactory: ApiFactory
+    private lateinit var apiManagerFactory: ApiManagerFactory
     private lateinit var webServer: MockWebServer
 
     private lateinit var backend: ProtonApiBackend<TestRetrofitApi>
 
     private lateinit var session: Session
     private lateinit var clientId: ClientId
+    private var clientIdProvider = mockk<ClientIdProvider>()
 
     private val sessionProvider = mockk<SessionProvider>()
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
@@ -107,20 +108,21 @@ internal class ProtonApiBackendTests {
 
         session = MockSession.getDefault()
         clientId = MockClientId.getForSession(session.sessionId)
-
+        every { clientIdProvider.getClientId(any()) } returns clientId
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
         every { cookieStore.get(any()) } returns emptyList()
 
-        apiFactory = ApiFactory(
+        apiManagerFactory = ApiManagerFactory(
             "https://example.com/",
             client,
+            clientIdProvider,
             logger,
             networkManager,
             prefs,
             sessionProvider,
-            humanVerificationProvider,
             sessionListener,
+            humanVerificationProvider,
             humanVerificationListener,
             cookieStore,
             scope
@@ -153,15 +155,15 @@ internal class ProtonApiBackendTests {
         ProtonApiBackend(
             webServer.url("/").toString(),
             client,
+            clientIdProvider,
             logger,
             session.sessionId,
             sessionProvider,
             humanVerificationProvider,
-            cookieStore,
-            apiFactory.baseOkHttpClient,
+            apiManagerFactory.baseOkHttpClient,
             listOf(
                 ScalarsConverterFactory.create(),
-                apiFactory.jsonConverter
+                apiManagerFactory.jsonConverter
             ),
             TestRetrofitApi::class,
             networkManager,

@@ -27,8 +27,8 @@ import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
@@ -46,7 +46,7 @@ class AuthRepositoryImplTest {
 
     // region mocks
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val apiFactory = mockk<ApiFactory>(relaxed = true)
+    private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
     private val apiManager = mockk<ApiManager<AuthenticationApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: AuthRepositoryImpl
@@ -78,14 +78,14 @@ class AuthRepositoryImplTest {
     fun beforeEveryTest() {
         // GIVEN
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiFactory, sessionProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
         every {
-            apiFactory.create(
+            apiManagerFactory.create(
                 interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
         every {
-            apiFactory.create(
+            apiManagerFactory.create(
                 SessionId(testSessionId),
                 interfaceClass = AuthenticationApi::class
             )

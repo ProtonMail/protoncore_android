@@ -24,9 +24,11 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
-import me.proton.core.network.domain.humanverification.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.session.SessionId
 import org.jetbrains.annotations.TestOnly
 import java.util.concurrent.TimeUnit
 
@@ -35,7 +37,8 @@ import java.util.concurrent.TimeUnit
  * client to process it further.
  */
 class HumanVerificationNeededHandler<Api>(
-    private val clientId: ClientId?,
+    private val sessionId: SessionId?,
+    private val clientIdProvider: ClientIdProvider,
     private val humanVerificationListener: HumanVerificationListener,
     private val monoClockMs: () -> Long
 ) : ApiErrorHandler<Api> {
@@ -45,17 +48,17 @@ class HumanVerificationNeededHandler<Api>(
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
+        // Do we have a clientId ?
+        val clientId = clientIdProvider.getClientId(sessionId) ?: return error
+
         // Recoverable with human verification ?
         if (error !is ApiResult.Error.Http || error.proton?.code != ERROR_CODE_HUMAN_VERIFICATION) return error
 
         // Do we have details ?
         val details = error.proton.humanVerification ?: return error
 
-        // Do we have a clientId ?
-        if (clientId == null) return error
-
         // Only 1 coroutine at a time per clientId.
-        val shouldRetry = sessionMutex(clientId).withLock {
+        val shouldRetry = clientMutex(clientId).withLock {
             // Don't attempt to verify if we did recently.
             val lastVerificationTimeMs = clientLastVerificationMap[clientId] ?: Long.MIN_VALUE
             val verifiedRecently = monoClockMs() <= lastVerificationTimeMs + verificationDebounceMs
@@ -79,14 +82,14 @@ class HumanVerificationNeededHandler<Api>(
 
         private val verificationDebounceMs = TimeUnit.SECONDS.toMillis(5)
         private val staticMutex: Mutex = Mutex()
-        private val clientMutexMap: MutableMap<ClientId?, Mutex> = HashMap()
+        private val clientMutexMap: MutableMap<ClientId, Mutex> = HashMap()
         private var clientLastVerificationMap: MutableMap<ClientId, Long> = HashMap()
 
-        suspend fun sessionMutex(clientId: ClientId?) =
+        suspend fun clientMutex(clientId: ClientId) =
             staticMutex.withLock { clientMutexMap.getOrPut(clientId) { Mutex() } }
 
         @TestOnly
         suspend fun reset(clientId: ClientId) =
-            sessionMutex(clientId).withLock { clientLastVerificationMap[clientId] = Long.MIN_VALUE }
+            clientMutex(clientId).withLock { clientLastVerificationMap[clientId] = Long.MIN_VALUE }
     }
 }

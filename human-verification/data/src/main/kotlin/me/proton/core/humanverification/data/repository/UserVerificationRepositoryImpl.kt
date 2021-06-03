@@ -26,13 +26,15 @@ import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.SessionId
 
 class UserVerificationRepositoryImpl(
-    private val provider: ApiProvider,
+    private val apiProvider: ApiProvider,
+    private val clientIdProvider: ClientIdProvider,
     private val humanVerificationRepository: HumanVerificationRepository
 ) : UserVerificationRepository {
 
@@ -46,7 +48,7 @@ class UserVerificationRepositoryImpl(
         val destination = Destination(phoneNumber = phoneNumber)
         val verificationBody = VerificationRequest(type.value, destination)
 
-        provider.get<UserVerificationApi>(sessionId).invoke {
+        apiProvider.get<UserVerificationApi>(sessionId).invoke {
             sendVerificationCode(verificationBody)
         }.valueOrThrow
     }
@@ -61,15 +63,15 @@ class UserVerificationRepositoryImpl(
         val destination = Destination(emailAddress = emailAddress)
         val verificationBody = VerificationRequest(type.value, destination)
 
-        provider.get<UserVerificationApi>(sessionId).invoke {
+        apiProvider.get<UserVerificationApi>(sessionId).invoke {
             sendVerificationCode(verificationBody)
         }.valueOrThrow
     }
 
     override suspend fun checkCreationTokenValidity(token: String, tokenType: String, type: Int) {
-        val clientId = requireNotNull(provider.apiFactory.getClientId())
+        val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
 
-        provider.get<UserVerificationApi>().invoke {
+        apiProvider.get<UserVerificationApi>().invoke {
             checkCreationTokenValidity(CreationTokenValidityRequest(token, tokenType, type))
         }.valueOrThrow
 

@@ -35,14 +35,16 @@ import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.Product
+import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.NetworkManager
+import me.proton.core.network.data.NetworkPrefs
 import me.proton.core.network.data.ProtonCookieStore
-import me.proton.core.network.data.di.ApiFactory
-import me.proton.core.network.data.di.NetworkManager
-import me.proton.core.network.data.di.NetworkPrefs
+import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.session.SessionListener
@@ -56,6 +58,25 @@ object ApplicationModule {
 
     @Provides
     @Singleton
+    fun provideProduct(): Product =
+        Product.Mail
+
+    @Provides
+    @Singleton
+    fun provideRequiredAccountType(): AccountType =
+        AccountType.Internal
+
+    @Provides
+    @ClientSecret
+    fun provideClientSecret(): String = ""
+
+    @Provides
+    @Singleton
+    fun provideLogger(): Logger =
+        CoreExampleLogger()
+
+    @Provides
+    @Singleton
     fun provideNetworkManager(@ApplicationContext context: Context): NetworkManager =
         NetworkManager(context)
 
@@ -66,50 +87,52 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideLogger(): Logger =
-        CoreExampleLogger()
+    fun provideProtonCookieStore(@ApplicationContext context: Context): ProtonCookieStore =
+        ProtonCookieStore(context)
+
+    @Provides
+    @Singleton
+    fun provideClientIdProvider(protonCookieStore: ProtonCookieStore): ClientIdProvider =
+        ClientIdProviderImpl(BASE_URL, protonCookieStore)
 
     @Provides
     @Singleton
     fun provideApiFactory(
-        @ApplicationContext context: Context,
         logger: Logger,
         apiClient: ApiClient,
+        clientIdProvider: ClientIdProvider,
         networkManager: NetworkManager,
         networkPrefs: NetworkPrefs,
+        protonCookieStore: ProtonCookieStore,
         sessionProvider: SessionProvider,
-        humanVerificationProvider: HumanVerificationProvider,
         sessionListener: SessionListener,
+        humanVerificationProvider: HumanVerificationProvider,
         humanVerificationListener: HumanVerificationListener
-    ): ApiFactory = ApiFactory(
-        BASE_URL, apiClient, logger, networkManager, networkPrefs, sessionProvider, humanVerificationProvider,
-        sessionListener, humanVerificationListener, ProtonCookieStore(context),
-        CoroutineScope(Job() + Dispatchers.Default), emptyArray(), emptyList()
+    ): ApiManagerFactory = ApiManagerFactory(
+        BASE_URL,
+        apiClient,
+        clientIdProvider,
+        logger,
+        networkManager,
+        networkPrefs,
+        sessionProvider,
+        sessionListener,
+        humanVerificationProvider,
+        humanVerificationListener,
+        protonCookieStore,
+        CoroutineScope(Job() + Dispatchers.Default),
+        emptyArray(), emptyList()
     )
 
     @Provides
     @Singleton
-    fun provideApiProvider(apiFactory: ApiFactory, sessionProvider: SessionProvider): ApiProvider =
-        ApiProvider(apiFactory, sessionProvider)
-
-    @Provides
-    @Singleton
-    fun provideProduct(): Product =
-        Product.Mail
-
-    @Provides
-    @Singleton
-    fun provideRequiredAccountType(): AccountType =
-        AccountType.Internal
+    fun provideApiProvider(apiManagerFactory: ApiManagerFactory, sessionProvider: SessionProvider): ApiProvider =
+        ApiProvider(apiManagerFactory, sessionProvider)
 
     @Provides
     @Singleton
     fun provideCoreExampleRepository(apiProvider: ApiProvider): CoreExampleRepository =
         CoreExampleRepository(apiProvider)
-
-    @Provides
-    @ClientSecret
-    fun provideClientSecret(): String = ""
 }
 
 @Module
@@ -118,4 +141,3 @@ abstract class ApplicationBindsModule {
     @Binds
     abstract fun provideApiClient(coreExampleApiClient: CoreExampleApiClient): ApiClient
 }
-

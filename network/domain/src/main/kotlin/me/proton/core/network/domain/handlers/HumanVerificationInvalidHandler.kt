@@ -22,14 +22,16 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.session.SessionId
 
 /**
  * Handles the Human Verification Code Invalid 12087 error response code.
  */
 class HumanVerificationInvalidHandler<Api>(
-    private val clientId: ClientId?,
+    private val sessionId: SessionId?,
+    private val clientIdProvider: ClientIdProvider,
     private val humanVerificationListener: HumanVerificationListener
 ) : ApiErrorHandler<Api> {
 
@@ -38,9 +40,12 @@ class HumanVerificationInvalidHandler<Api>(
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
+        // Do we have a clientId ?
+        val clientId = clientIdProvider.getClientId(sessionId) ?: return error
+
         // Invalid verification code ?
         if (error is ApiResult.Error.Http && error.proton?.code == ERROR_CODE_HUMAN_VERIFICATION_INVALID_CODE) {
-            clientId?.let { humanVerificationListener.onHumanVerificationInvalid(it) }
+            humanVerificationListener.onHumanVerificationInvalid(clientId)
             // Directly retry (could raise 9001, and then be handled by HumanVerificationNeededHandler).
             return backend(call)
         }

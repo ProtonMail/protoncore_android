@@ -16,15 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.humanverification
+package me.proton.core.network.domain.client
 
-import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.session.SessionId
 
-interface HumanVerificationProvider {
-    /**
-     * Get [HumanVerificationDetails] by clientId.
-     *
-     * @return null if no human verification details has been saved for [ClientId].
-     */
-    suspend fun getHumanVerificationDetails(clientId: ClientId): HumanVerificationDetails?
+interface ClientIdProvider {
+    fun getClientId(sessionId: SessionId?): ClientId?
 }

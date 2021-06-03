@@ -18,6 +18,8 @@
 
 package me.proton.core.network.domain.humanverification
 
+import me.proton.core.network.domain.client.ClientId
+
 data class HumanVerificationDetails(
     val clientId: ClientId,
     val verificationMethods: List<VerificationMethod>,

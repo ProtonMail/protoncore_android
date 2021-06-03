@@ -25,9 +25,9 @@ import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
-import me.proton.core.network.domain.humanverification.ClientId
-import me.proton.core.network.domain.humanverification.ClientIdType
-import me.proton.core.network.domain.humanverification.CookieSessionId
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdType
+import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.network.domain.session.SessionId
 
 @Entity(

@@ -23,8 +23,8 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
@@ -40,7 +40,7 @@ class AuthSignupRepositoryImplTest {
 
     // region mocks
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val apiFactory = mockk<ApiFactory>(relaxed = true)
+    private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
     private val apiManager = mockk<ApiManager<AuthenticationApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: AuthRepositoryImpl
@@ -49,9 +49,9 @@ class AuthSignupRepositoryImplTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        apiProvider = ApiProvider(apiFactory, sessionProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
         every {
-            apiFactory.create(
+            apiManagerFactory.create(
                 interfaceClass = AuthenticationApi::class
             )
         } returns apiManager
@@ -108,7 +108,6 @@ class AuthSignupRepositoryImplTest {
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
             repository.validateEmail("test-phone")
-
         }
         // THEN
         assertEquals("test phone validation error", throwable.message)

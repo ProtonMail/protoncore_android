@@ -20,7 +20,7 @@ package me.proton.core.humanverification.data.db
 
 import androidx.room.TypeConverter
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.ClientIdType
+import me.proton.core.network.domain.client.ClientIdType
 
 class HumanVerificationConverters {
 

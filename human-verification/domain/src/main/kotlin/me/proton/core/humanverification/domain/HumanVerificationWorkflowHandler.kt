@@ -18,7 +18,7 @@
 
 package me.proton.core.humanverification.domain
 
-import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.client.ClientId
 
 interface HumanVerificationWorkflowHandler {
 

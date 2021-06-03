@@ -24,8 +24,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
@@ -55,7 +55,7 @@ class PaymentsRepositoryImplTest {
 
     // region mocks
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val apiFactory = mockk<ApiFactory>(relaxed = true)
+    private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
     private val apiManager = mockk<ApiManager<PaymentsApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: PaymentsRepositoryImpl
@@ -78,14 +78,14 @@ class PaymentsRepositoryImplTest {
     fun beforeEveryTest() {
         // GIVEN
         coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
-        apiProvider = ApiProvider(apiFactory, sessionProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
         every {
-            apiFactory.create(
+            apiManagerFactory.create(
                 interfaceClass = PaymentsApi::class
             )
         } returns apiManager
         every {
-            apiFactory.create(
+            apiManagerFactory.create(
                 SessionId(testSessionId),
                 interfaceClass = PaymentsApi::class
             )

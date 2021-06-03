@@ -19,7 +19,7 @@
 package me.proton.core.humanverification.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 

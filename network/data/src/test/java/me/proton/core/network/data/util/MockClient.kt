@@ -20,8 +20,8 @@ package me.proton.core.network.data.util
 import android.util.Log
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.network.domain.humanverification.ClientId
-import me.proton.core.network.domain.humanverification.CookieSessionId
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener

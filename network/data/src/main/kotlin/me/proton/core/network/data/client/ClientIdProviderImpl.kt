@@ -16,15 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.humanverification
+package me.proton.core.network.data.client
 
+import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.session.SessionId
+import java.net.HttpCookie
+import java.net.URI
 
-interface HumanVerificationProvider {
-    /**
-     * Get [HumanVerificationDetails] by clientId.
-     *
-     * @return null if no human verification details has been saved for [ClientId].
-     */
-    suspend fun getHumanVerificationDetails(clientId: ClientId): HumanVerificationDetails?
+class ClientIdProviderImpl(
+    private val baseUrl: String,
+    private val cookieStore: ProtonCookieStore
+) : ClientIdProvider {
+
+    override fun getClientId(sessionId: SessionId?): ClientId? {
+        val cookieValue = cookieStore.get(URI.create(baseUrl))
+        return ClientId.newClientId(sessionId, cookieValue.cookieSessionId())
+    }
+
+    fun List<HttpCookie>.cookieSessionId(): String? = find { it.name == "Session-Id" }?.value
 }

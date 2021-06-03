@@ -24,8 +24,8 @@ import me.proton.core.humanverification.presentation.entity.HumanVerificationInp
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.StartHumanVerification
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
-import me.proton.core.network.domain.humanverification.ClientId
-import me.proton.core.network.domain.humanverification.getType
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.getType
 
 class HumanVerificationOrchestrator {
 

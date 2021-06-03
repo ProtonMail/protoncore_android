@@ -28,7 +28,7 @@ import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
-import me.proton.core.network.domain.humanverification.ClientId
+import me.proton.core.network.domain.client.ClientId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
