@@ -66,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_top_margin"
             android:text="@string/human_verification_already_have_code"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/getVerificationCodeButton" />
