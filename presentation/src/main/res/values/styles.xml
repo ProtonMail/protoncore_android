@@ -232,6 +232,19 @@
         <item name="strokeColor">@color/btn_stroke_color_selector</item>
     </style>
 
+    <style name="ProtonButton.OutlinedButton.Toggle">
+        <item name="progressDrawable">@null</item>
+        <item name="backgroundTint">@color/btn_background_checkable_selector</item>
+        <item name="android:textColor">@color/text_norm_selector</item>
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
     <style name="ProtonButton.Navigation" parent="ProtonButton">
         <item name="android:layout_width">@dimen/button_nav_size</item>
         <item name="android:layout_height">@dimen/button_nav_size</item>

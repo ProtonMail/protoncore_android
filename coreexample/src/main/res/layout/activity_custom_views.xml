@@ -52,6 +52,66 @@
                     android:text="@string/example_tab3" />
             </com.google.android.material.tabs.TabLayout>
 
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/buttonToggleGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tabLayoutExample"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ProtonButton.OutlinedButton.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Mo" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ProtonButton.OutlinedButton.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tu" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ProtonButton.OutlinedButton.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="We" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ProtonButton.OutlinedButton.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Th" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ProtonButton.OutlinedButton.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fr" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ProtonButton.OutlinedButton.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sa" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ProtonButton.OutlinedButton.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Su" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
             <me.proton.core.presentation.ui.view.ProtonButton
                 android:id="@+id/defaultButton"
                 android:layout_width="match_parent"
@@ -60,7 +120,7 @@
                 android:layout_marginTop="@dimen/default_top_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabLayoutExample" />
+                app:layout_constraintTop_toBottomOf="@id/buttonToggleGroup" />
 
             <me.proton.core.presentation.ui.view.ProtonButton
                 android:id="@+id/defaultDisabledButton"
@@ -136,9 +196,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_top_margin"
                 android:hint="@string/example_hint"
+                app:actionMode="clear_text"
                 app:help="@string/example_assistive_text"
                 app:label="@string/example_label"
-                app:actionMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/loadingTextOnlyButton" />
@@ -148,10 +208,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_top_margin"
+                android:enabled="false"
                 android:hint="@string/example_hint_disabled"
                 app:help="@string/example_assistive_text_disabled"
                 app:label="@string/example_label"
-                android:enabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/inputExample" />
@@ -163,9 +223,9 @@
                 android:layout_marginTop="@dimen/double_top_margin"
                 android:hint="@string/example_password_hint"
                 android:inputType="textPassword"
+                app:actionMode="password_toggle"
                 app:help="@string/example_password_assistive_text"
                 app:label="@string/example_password_label"
-                app:actionMode="password_toggle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/inputDisabledExample" />
@@ -191,10 +251,10 @@
                 android:hint="@string/example_hint"
                 app:help="@string/example_assistive_text"
                 app:label="@string/example_suffix_label"
-                app:suffix="\@protonmail.com"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/errorExample" />
+                app:layout_constraintTop_toBottomOf="@id/errorExample"
+                app:suffix="\@protonmail.com" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
