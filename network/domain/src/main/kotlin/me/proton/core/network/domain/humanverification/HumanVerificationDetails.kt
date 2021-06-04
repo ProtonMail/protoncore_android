@@ -18,7 +18,7 @@
 
 package me.proton.core.network.domain.humanverification
 
-import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.client.ClientId
 
 data class HumanVerificationDetails(
     val clientId: ClientId,
@@ -27,17 +27,4 @@ data class HumanVerificationDetails(
     val state: HumanVerificationState,
     val tokenType: String? = null,
     val tokenCode: String? = null
-) {
-    companion object {
-        fun fromApiDetails(
-            clientId: ClientId,
-            details: HumanVerificationApiDetails,
-            state: HumanVerificationState? = null
-        ) = HumanVerificationDetails(
-            clientId = clientId,
-            verificationMethods = details.verificationMethods,
-            captchaVerificationToken = details.captchaVerificationToken,
-            state = state ?: HumanVerificationState.HumanVerificationNeeded
-        )
-    }
-}
+)

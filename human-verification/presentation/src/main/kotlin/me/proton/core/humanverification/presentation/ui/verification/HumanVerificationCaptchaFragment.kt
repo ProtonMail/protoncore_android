@@ -30,6 +30,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.CaptchaBaseUrl
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
@@ -39,7 +40,6 @@ import me.proton.core.humanverification.presentation.viewmodel.verification.Huma
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.viewmodel.ViewModelResult
-import me.proton.core.user.domain.entity.UserVerificationTokenType
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -53,17 +53,17 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
     @CaptchaBaseUrl
     lateinit var captchaBaseUrl: String
 
+    private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
+
     private val baseUrl: String by lazy {
         requireArguments().get(ARG_BASE_URL) as String? ?: "https://$captchaBaseUrl/api/core/v4/captcha"
     }
-
-    private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
 
     private val humanVerificationBase by lazy {
         HumanVerificationMethodCommon(
             viewModel = viewModel,
             urlToken = requireArguments().get(ARG_URL_TOKEN) as String,
-            tokenType = UserVerificationTokenType.CAPTCHA
+            tokenType = TokenType.CAPTCHA
         )
     }
 
@@ -85,8 +85,10 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
         viewModel.networkConnectionState.onEach {
             when (it) {
                 is ViewModelResult.None,
-                is ViewModelResult.Processing -> { }
-                is ViewModelResult.Error -> binding.root.errorSnack(R.string.human_verification_captcha_no_connectivity)
+                is ViewModelResult.Processing -> Unit
+                is ViewModelResult.Error -> {
+                    binding.root.errorSnack(R.string.human_verification_captcha_no_connectivity)
+                }
                 is ViewModelResult.Success -> {
                     loadWebView()
                     binding.progress.visibility = View.GONE
@@ -106,7 +108,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
             HumanVerificationDialogFragment.KEY_VERIFICATION_DONE,
             bundleOf(
                 HumanVerificationDialogFragment.ARG_TOKEN_CODE to token,
-                HumanVerificationDialogFragment.ARG_TOKEN_TYPE to UserVerificationTokenType.CAPTCHA.tokenTypeValue
+                HumanVerificationDialogFragment.ARG_TOKEN_TYPE to TokenType.CAPTCHA.value
             )
         )
     }

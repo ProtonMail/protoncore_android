@@ -28,11 +28,10 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
-import me.proton.core.user.domain.entity.UserVerificationTokenType
 import javax.inject.Inject
 
 /**
- * View model class that handles and supports [UserVerificationTokenType.CAPTCHA] verification method (type) fragment.
+ * View model class that handles and supports [TokenType.CAPTCHA] verification method (type) fragment.
  */
 @HiltViewModel
 internal class HumanVerificationCaptchaViewModel @Inject constructor(

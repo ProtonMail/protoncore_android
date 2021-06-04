@@ -32,7 +32,6 @@ import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.session.HumanVerificationListener
 import me.proton.core.user.data.UserAddressKeySecretProvider
 import me.proton.core.user.data.UserAddressManagerImpl
 import me.proton.core.user.data.UserManagerImpl
@@ -40,7 +39,6 @@ import me.proton.core.user.data.repository.DomainRepositoryImpl
 import me.proton.core.user.data.repository.UserAddressRepositoryImpl
 import me.proton.core.user.data.repository.UserRepositoryImpl
 import me.proton.core.user.data.repository.UserSettingRepositoryImpl
-import me.proton.core.user.data.repository.UserValidationRepositoryImpl
 import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.DomainRepository
@@ -48,7 +46,6 @@ import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.user.domain.repository.UserSettingRepository
-import me.proton.core.user.domain.repository.UserValidationRepository
 import javax.inject.Singleton
 
 @Module
@@ -61,13 +58,6 @@ object UserManagerModule {
         db: AccountManagerDatabase,
         provider: ApiProvider
     ): UserRepositoryImpl = UserRepositoryImpl(db, provider)
-
-    @Provides
-    @Singleton
-    fun provideUserValidationRepositoryImpl(
-        provider: ApiProvider,
-        humanVerificationListener: HumanVerificationListener
-    ): UserValidationRepository = UserValidationRepositoryImpl(provider, humanVerificationListener)
 
     @Provides
     @Singleton

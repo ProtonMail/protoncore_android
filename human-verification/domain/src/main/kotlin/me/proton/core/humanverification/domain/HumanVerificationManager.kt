@@ -22,23 +22,25 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 
-interface HumanVerificationManager {
+interface HumanVerificationManager : HumanVerificationProvider, HumanVerificationListener {
 
     /**
-     * Observes the human verification state.
-     * @param initialState if true, initial state for all accounts will be raised on subscription.
+     *  Flow of [HumanVerificationDetails] where [HumanVerificationDetails.state] changed.
+     *
+     * @param initialState if true, initial state for all details will be raised on subscription.
      */
     fun onHumanVerificationStateChanged(initialState: Boolean = false): Flow<HumanVerificationDetails>
 }
 
 /**
- * Flow of HumanVerificationHeaders where [HumanVerificationDetails.state] equals [state].
+ * Flow of [HumanVerificationDetails] where [HumanVerificationDetails.state] equals [state].
  *
- * @param initialState if true (default), initial state for all accounts in this [state] will be raised on subscription.
+ * @param initialState if true , initial state for all details in this [state] will be raised on subscription.
  */
 fun HumanVerificationManager.onHumanVerificationState(
     vararg state: HumanVerificationState,
     initialState: Boolean = true
-): Flow<HumanVerificationDetails> =
-    onHumanVerificationStateChanged(initialState).filter { state.contains(it.state) }
+): Flow<HumanVerificationDetails> = onHumanVerificationStateChanged(initialState).filter { state.contains(it.state) }

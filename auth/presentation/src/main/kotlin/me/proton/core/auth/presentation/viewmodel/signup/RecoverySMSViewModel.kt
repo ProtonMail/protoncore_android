@@ -52,7 +52,7 @@ internal class RecoverySMSViewModel @Inject constructor(
             emit(ViewModelResult.Error(null))
         }
     }.catch { error ->
-        _mostUsedCallingCode.tryEmit(ViewModelResult.Error(error))
+        emit(ViewModelResult.Error(error))
     }.onEach {
         _mostUsedCallingCode.tryEmit(it)
     }.launchIn(viewModelScope)

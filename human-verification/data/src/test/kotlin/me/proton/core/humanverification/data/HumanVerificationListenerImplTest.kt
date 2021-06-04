@@ -25,24 +25,26 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
-import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.HumanVerificationListener
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 class HumanVerificationListenerImplTest {
 
+    private lateinit var humanVerificationProvider: HumanVerificationProvider
     private lateinit var humanVerificationListener: HumanVerificationListener
     private lateinit var humanVerificationManager: HumanVerificationManager
 
-    private val humanRepository = mockk<HumanVerificationRepository>()
+    private val humanVerificationRepository = mockk<HumanVerificationRepository>()
 
     private val session1 = Session(
         sessionId = SessionId("session1"),
@@ -63,20 +65,25 @@ class HumanVerificationListenerImplTest {
 
     @Before
     fun beforeEveryTest() {
-        humanVerificationListener = HumanVerificationListenerImpl(humanRepository)
-        humanVerificationManager = HumanVerificationManagerImpl(humanRepository)
+        humanVerificationProvider = HumanVerificationProviderImpl(humanVerificationRepository)
+        humanVerificationListener = HumanVerificationListenerImpl(humanVerificationRepository)
+        humanVerificationManager = HumanVerificationManagerImpl(
+            humanVerificationProvider,
+            humanVerificationListener,
+            humanVerificationRepository
+        )
 
-        coEvery { humanRepository.insertHumanVerificationDetails(any()) } returns Unit
+        coEvery { humanVerificationRepository.insertHumanVerificationDetails(any()) } returns Unit
     }
 
     @Test
     fun `on onHumanVerificationNeeded success`() = runBlockingTest {
-        val humanVerificationApiDetails = HumanVerificationApiDetails(
+        val humanVerificationApiDetails = HumanVerificationAvailableMethods(
             verificationMethods = listOf(VerificationMethod.EMAIL),
             captchaVerificationToken = null
         )
 
-        coEvery { humanRepository.onHumanVerificationStateChanged(any()) } returns flowOf(
+        coEvery { humanVerificationRepository.onHumanVerificationStateChanged(any()) } returns flowOf(
             humanVerificationDetails,
             humanVerificationDetails.copy(state = HumanVerificationState.HumanVerificationSuccess)
         )
@@ -90,12 +97,12 @@ class HumanVerificationListenerImplTest {
 
     @Test
     fun `on onHumanVerificationNeeded failed`() = runBlockingTest {
-        val humanVerificationApiDetails = HumanVerificationApiDetails(
+        val humanVerificationApiDetails = HumanVerificationAvailableMethods(
             verificationMethods = listOf(VerificationMethod.EMAIL),
             captchaVerificationToken = null
         )
 
-        coEvery { humanRepository.onHumanVerificationStateChanged(any()) } returns flowOf(
+        coEvery { humanVerificationRepository.onHumanVerificationStateChanged(any()) } returns flowOf(
             humanVerificationDetails,
             humanVerificationDetails.copy(state = HumanVerificationState.HumanVerificationFailed)
         )

@@ -20,13 +20,23 @@ package me.proton.core.humanverification.data.db
 
 import androidx.room.TypeConverter
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.client.ClientIdType
 
 class HumanVerificationConverters {
-    @TypeConverter
-    fun fromSHumanVerificationStateToString(value: HumanVerificationState?): String? = value?.name
 
     @TypeConverter
-    fun fromStringToSessionState(value: String?): HumanVerificationState? = value?.let {
+    fun fromHumanVerificationStateToString(value: HumanVerificationState?): String? = value?.name
+
+    @TypeConverter
+    fun fromStringToHumanVerificationState(value: String?): HumanVerificationState? = value?.let {
         HumanVerificationState.valueOf(value)
+    }
+
+    @TypeConverter
+    fun fromClientIdTypeToString(value: ClientIdType?): String? = value?.value
+
+    @TypeConverter
+    fun fromStringToClientIdType(value: String?): ClientIdType? = value?.let {
+        ClientIdType.map[value]
     }
 }

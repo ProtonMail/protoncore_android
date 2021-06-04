@@ -22,55 +22,49 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
-import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.HumanVerificationListener
-import me.proton.core.network.domain.session.HumanVerificationListener.HumanVerificationResult
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationListener.HumanVerificationResult
 
 class HumanVerificationListenerImpl(
     private val humanVerificationRepository: HumanVerificationRepository
 ) : HumanVerificationListener {
 
-    /**
-     * Called when a Human Verification Workflow is needed for a User.
-     *
-     * Implementation of this function should suspend until a [HumanVerificationResult] is returned.
-     *
-     * Any consecutive API call made without an updated and valid [HumanVerificationDetails] with headers will return
-     * the same error and then will be queued until this function return. After, queued calls will be retried.
-     */
     override suspend fun onHumanVerificationNeeded(
         clientId: ClientId,
-        details: HumanVerificationApiDetails
+        methods: HumanVerificationAvailableMethods
     ): HumanVerificationResult {
         humanVerificationRepository.insertHumanVerificationDetails(
-            details = HumanVerificationDetails.fromApiDetails(clientId, details)
+            HumanVerificationDetails(
+                clientId = clientId,
+                verificationMethods = methods.verificationMethods,
+                captchaVerificationToken = methods.captchaVerificationToken,
+                state = HumanVerificationState.HumanVerificationNeeded
+            )
         )
         val state = humanVerificationRepository.onHumanVerificationStateChanged(initialState = true)
             .filter { it.clientId == clientId }
             .map { it.state }
-            .filter { it == HumanVerificationState.HumanVerificationSuccess || it == HumanVerificationState.HumanVerificationFailed }
+            .filter {
+                it in listOf(
+                    HumanVerificationState.HumanVerificationSuccess,
+                    HumanVerificationState.HumanVerificationFailed
+                )
+            }
             .first()
         return when (state) {
-            null -> HumanVerificationResult.Failure
             HumanVerificationState.HumanVerificationSuccess -> HumanVerificationResult.Success
             else -> HumanVerificationResult.Failure
         }
     }
 
-    override suspend fun onHumanVerificationFailed(clientId: ClientId) =
-        humanVerificationRepository.updateHumanVerificationCompleted(clientId)
-
-    override suspend fun onHumanVerificationPassed(clientId: ClientId) {
-        humanVerificationRepository.updateHumanVerificationCompleted(clientId)
+    override suspend fun onHumanVerificationInvalid(clientId: ClientId) {
+        humanVerificationRepository.updateHumanVerificationState(
+            clientId = clientId,
+            state = HumanVerificationState.HumanVerificationInvalid
+        )
     }
-
-    override suspend fun onExternalAccountHumanVerificationNeeded(
-        clientId: ClientId,
-        details: HumanVerificationDetails
-    ) = humanVerificationRepository.insertHumanVerificationDetails(details = details)
-
-    override suspend fun onExternalAccountHumanVerificationDone() = humanVerificationRepository.clear()
 }

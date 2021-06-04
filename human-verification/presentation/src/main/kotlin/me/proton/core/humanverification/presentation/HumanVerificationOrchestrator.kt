@@ -23,9 +23,9 @@ import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.StartHumanVerification
-import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.getType
+import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.getType
 
 class HumanVerificationOrchestrator {
 
@@ -82,7 +82,7 @@ class HumanVerificationOrchestrator {
     fun startHumanVerificationWorkflow(
         clientId: ClientId,
         captchaBaseUrl: String? = null,
-        details: HumanVerificationApiDetails?,
+        methods: HumanVerificationAvailableMethods?,
         recoveryEmailAddress: String? = null
     ) {
         checkRegistered(humanWorkflowLauncher).launch(
@@ -90,8 +90,8 @@ class HumanVerificationOrchestrator {
                 clientId = clientId.id,
                 captchaBaseUrl = captchaBaseUrl,
                 clientIdType = clientId.getType().value,
-                verificationMethods = details?.verificationMethods?.map { it.value },
-                captchaToken = details?.captchaVerificationToken,
+                verificationMethods = methods?.verificationMethods?.map { it.value },
+                captchaToken = methods?.captchaVerificationToken,
                 recoveryEmailAddress = recoveryEmailAddress
             )
         )

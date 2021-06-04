@@ -29,7 +29,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockLogger
@@ -49,9 +48,10 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.HumanVerificationListener
-import me.proton.core.network.domain.session.HumanVerificationProvider
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -75,14 +75,18 @@ internal class ApiManagerTests {
     private lateinit var clientId: ClientId
 
     @MockK
+    private lateinit var clientIdProvider: ClientIdProvider
+
+    @MockK
     private lateinit var sessionProvider: SessionProvider
+
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
     )
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
 
-    private lateinit var apiFactory: ApiFactory
+    private lateinit var apiManagerFactory: ApiManagerFactory
     private lateinit var apiManager: ApiManager<TestRetrofitApi>
 
     private lateinit var dohApiHandler: DohApiHandler<TestRetrofitApi>
@@ -111,6 +115,7 @@ internal class ApiManagerTests {
 
         session = MockSession.getDefault()
         clientId = MockClientId.getForSession(session.sessionId)
+        every { clientIdProvider.getClientId(any()) } returns clientId
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
 
@@ -118,16 +123,17 @@ internal class ApiManagerTests {
         networkManager.networkStatus = NetworkStatus.Unmetered
 
         val scope = CoroutineScope(TestCoroutineDispatcher())
-        apiFactory =
-            ApiFactory(
+        apiManagerFactory =
+            ApiManagerFactory(
                 baseUrl,
                 apiClient,
+                clientIdProvider,
                 MockLogger(),
                 networkManager,
                 prefs,
                 sessionProvider,
-                humanVerificationProvider,
                 sessionListener,
+                humanVerificationProvider,
                 humanVerificationListener,
                 mockk(),
                 scope
@@ -141,7 +147,7 @@ internal class ApiManagerTests {
         ApiManagerImpl.failRequestBeforeTimeMs = Long.MIN_VALUE
         apiManager = ApiManagerImpl(
             apiClient, backend, dohApiHandler, networkManager,
-            apiFactory.createBaseErrorHandlers(clientId, ::time), ::time
+            apiManagerFactory.createBaseErrorHandlers(session.sessionId, ::time), ::time
         )
 
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Success(TestResult(5, "foo"))
@@ -375,7 +381,6 @@ internal class ApiManagerTests {
         assertTrue(result is ApiResult.Error.Connection)
         coVerify(exactly = 0) { altBackend1.invoke<TestResult>(any()) }
     }
-
 
     @Test
     fun `test no DoH on client error`() = runBlockingTest {

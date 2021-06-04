@@ -28,18 +28,14 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.country.domain.usecase.MostUsedCountryCode
-import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
+import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
-import me.proton.core.user.domain.entity.UserVerificationTokenType
-import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.exception.EmptyDestinationException
-import me.proton.core.user.domain.usecase.SendVerificationCodeToPhoneDestination
 import javax.inject.Inject
 
 /**
- * View model class that handles and supports [UserVerificationTokenType.SMS] verification method (type) fragment.
+ * View model class that handles and supports [TokenType.SMS] verification method (type) fragment.
  */
 @HiltViewModel
 internal class HumanVerificationSMSViewModel @Inject constructor(
@@ -61,18 +57,17 @@ internal class HumanVerificationSMSViewModel @Inject constructor(
      * @param countryCallingCode the calling code part of the phone number
      * @param phoneNumber the phone number that the user entered (without the calling code part)
      */
-    fun sendVerificationCodeToDestination(sessionId: SessionId?, countryCallingCode: String, phoneNumber: String) {
+    fun sendVerificationCodeToDestination(sessionId: SessionId?, countryCallingCode: String, phoneNumber: String) =
         viewModelScope.launch {
-            if (phoneNumber.isEmpty()) {
-                _validationSMS.tryEmit(
-                    ViewModelResult.Error(EmptyDestinationException("Destination phone number: $phoneNumber is invalid."))
-                )
-            } else {
+            runCatching {
+                require(phoneNumber.isNotEmpty()) { "Destination phone number: $phoneNumber is invalid." }
+            }.onSuccess {
+                _validationSMS.tryEmit(ViewModelResult.Processing)
                 sendVerificationCodeToSMS(sessionId, countryCallingCode + phoneNumber)
+            }.onFailure {
+                _validationSMS.tryEmit(ViewModelResult.Error(it))
             }
         }
-
-    }
 
     /**
      * Tries to return the most used country calling code and later to display it as a suggestion
@@ -87,7 +82,7 @@ internal class HumanVerificationSMSViewModel @Inject constructor(
             emit(ViewModelResult.Error(null))
         }
     }.catch { error ->
-        _mostUsedCallingCode.tryEmit(ViewModelResult.Error(error))
+        emit(ViewModelResult.Error(error))
     }.onEach {
         _mostUsedCallingCode.tryEmit(it)
     }.launchIn(viewModelScope)
@@ -97,11 +92,13 @@ internal class HumanVerificationSMSViewModel @Inject constructor(
      * has entered in the UI.
      */
     private suspend fun sendVerificationCodeToSMS(sessionId: SessionId?, phoneNumber: String) {
-        val deferred = sendVerificationCodeToPhoneDestination.invoke(sessionId, phoneNumber)
-        if (deferred is VerificationResult.Success) {
+        runCatching {
+            _verificationCodeStatusSMS.tryEmit(ViewModelResult.Processing)
+            sendVerificationCodeToPhoneDestination.invoke(sessionId, phoneNumber)
+        }.onSuccess {
             _verificationCodeStatusSMS.tryEmit(ViewModelResult.Success(phoneNumber))
-        } else {
-            _verificationCodeStatusSMS.tryEmit(ViewModelResult.Error(VerificationCodeSendingException()))
+        }.onFailure {
+            _verificationCodeStatusSMS.tryEmit(ViewModelResult.Error(it))
         }
     }
 }

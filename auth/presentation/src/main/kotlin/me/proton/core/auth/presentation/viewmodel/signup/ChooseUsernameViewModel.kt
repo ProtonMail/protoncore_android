@@ -30,12 +30,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
+import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
-import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -93,7 +90,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
         this@ChooseUsernameViewModel.domains = domains
         emit(State.AvailableDomains(domains, currentAccountType))
     }.catch { error ->
-        _state.tryEmit(State.Error.Message(error.message))
+        emit(State.Error.Message(error.message))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
@@ -142,23 +139,16 @@ internal class ChooseUsernameViewModel @Inject constructor(
         emit(State.Processing)
         emit(checkUsernameForAccountType(username, domain))
     }.catch { error ->
-        if (error is ApiException) {
-            val apiError = error.error
-            if (apiError is ApiResult.Error.Http && USERNAME_UNAVAILABLE == apiError.proton?.code) {
-                emit(State.Error.UsernameNotAvailable)
-            } else {
-                _state.tryEmit(State.Error.Message(error.message))
-            }
-        } else {
-            _state.tryEmit(State.Error.Message(error.message))
-        }
+        emit(State.Error.Message(error.message))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
     // endregion
 
     private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
-        require(this::currentAccountType.isInitialized) { "currentAccountType is not set. Call setClientAppRequiredAccountType first." }
+        require(this::currentAccountType.isInitialized) {
+            "currentAccountType is not set. Call setClientAppRequiredAccountType first."
+        }
 
         return when (currentAccountType) {
             AccountType.Username,
@@ -173,26 +163,18 @@ internal class ChooseUsernameViewModel @Inject constructor(
             }
             AccountType.External -> {
                 // for External accounts, the email is the username
-                val result = sendVerificationCodeToEmailDestination(emailAddress = username)
-                when (result) {
-                    is VerificationResult.Error -> State.Error.Message(result.message)
-                    is VerificationResult.Success -> State.ExternalAccountTokenSent(username)
-                }.exhaustive
+                sendVerificationCodeToEmailDestination(emailAddress = username)
+                State.ExternalAccountTokenSent(username)
             }
         }.exhaustive
-    }
-
-    companion object {
-        const val USERNAME_UNAVAILABLE = 12106
     }
 }
 
 /**
  * Returns if the user can switch to [AccountType.External] from the client required [AccountType].
  */
-fun AccountType.canSwitchToExternal(): Boolean =
-    when (this) {
-        AccountType.Username -> true
-        AccountType.Internal -> false
-        AccountType.External -> true
-    }.exhaustive
+internal fun AccountType.canSwitchToExternal(): Boolean = when (this) {
+    AccountType.Username -> true
+    AccountType.External -> true
+    AccountType.Internal -> false
+}.exhaustive

@@ -19,7 +19,6 @@
 package me.proton.core.network.data
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.session.SessionId
@@ -33,7 +32,7 @@ import java.util.concurrent.ConcurrentMap
  * Provide [ApiManager] instance bound to a specific [SessionId].
  */
 class ApiProvider(
-    val apiFactory: ApiFactory,
+    val apiManagerFactory: ApiManagerFactory,
     val sessionProvider: SessionProvider
 ) {
     val instances: ConcurrentHashMap<String, ConcurrentHashMap<String, Reference<ApiManager<*>>>> =
@@ -59,7 +58,7 @@ class ApiProvider(
         return instances
             .getOrPut(sessionName) { ConcurrentHashMap() }
             .getOrPutWeakRef(className) {
-                apiFactory.create(sessionId = sessionId, interfaceClass = Api::class)
+                apiManagerFactory.create(sessionId = sessionId, interfaceClass = Api::class)
             } as ApiManager<out Api>
     }
 

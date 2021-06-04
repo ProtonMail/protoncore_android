@@ -45,8 +45,8 @@ import me.proton.core.key.domain.decryptText
 import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.useKeys
+import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.di.ApiFactory
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.runBlockingWithTimeout
 import me.proton.core.user.data.TestAccountManagerDatabase
@@ -69,7 +69,7 @@ import kotlin.test.assertNull
 class UserAddressRepositoryImplTests {
 
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val apiFactory = mockk<ApiFactory>(relaxed = true)
+    private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
 
     private val userApi = mockk<UserApi>(relaxed = true)
     private val addressApi = mockk<AddressApi>(relaxed = true)
@@ -98,10 +98,10 @@ class UserAddressRepositoryImplTests {
         db = TestAccountManagerDatabase.buildMultiThreaded()
 
         coEvery { sessionProvider.getSessionId(any()) } returns TestAccounts.sessionId
-        every { apiFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
-        every { apiFactory.create(any(), interfaceClass = AddressApi::class) } returns TestApiManager(addressApi)
+        every { apiManagerFactory.create(any(), interfaceClass = UserApi::class) } returns TestApiManager(userApi)
+        every { apiManagerFactory.create(any(), interfaceClass = AddressApi::class) } returns TestApiManager(addressApi)
 
-        apiProvider = ApiProvider(apiFactory, sessionProvider)
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider)
 
         userRepository = UserRepositoryImpl(db, apiProvider)
 

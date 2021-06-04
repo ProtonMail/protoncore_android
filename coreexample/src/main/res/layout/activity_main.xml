@@ -129,15 +129,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signup_layout" />
 
-        <me.proton.core.presentation.ui.view.ProtonProgressButton
-            android:id="@+id/trigger_human_ver"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/human_ver_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_top_margin"
-            android:text="@string/trigger_human_ver"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/force_update" />
+            app:layout_constraintTop_toBottomOf="@id/force_update">
+
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/trigger_human_ver"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/trigger_human_ver" />
+
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/usernameAvailable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/default_top_margin"
+                android:text="@string/username_available" />
+
+        </LinearLayout>
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/sendDirect"
@@ -147,7 +164,7 @@
             android:text="Send Direct"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/trigger_human_ver" />
+            app:layout_constraintTop_toBottomOf="@id/human_ver_layout" />
 
         <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/payment"

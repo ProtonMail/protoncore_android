@@ -25,23 +25,31 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
-import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.humanverification.data.HumanVerificationListenerImpl
 import me.proton.core.humanverification.data.HumanVerificationManagerImpl
+import me.proton.core.humanverification.data.HumanVerificationProviderImpl
 import me.proton.core.humanverification.data.repository.HumanVerificationRepositoryImpl
+import me.proton.core.humanverification.data.repository.UserVerificationRepositoryImpl
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
+import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.humanverification.presentation.CaptchaBaseUrl
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
-import me.proton.core.network.domain.session.HumanVerificationListener
-import me.proton.core.network.domain.session.HumanVerificationProvider
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object HumanVerificationModule {
+
+    @Provides
+    @CaptchaBaseUrl
+    fun provideCaptchaBaseUrl(): String = BuildConfig.ENVIRONMENT
 
     @Provides
     fun provideHumanVerificationOrchestrator(): HumanVerificationOrchestrator =
@@ -56,6 +64,13 @@ object HumanVerificationModule {
 
     @Provides
     @Singleton
+    fun provideHumanVerificationProvider(
+        humanVerificationRepository: HumanVerificationRepository
+    ): HumanVerificationProvider =
+        HumanVerificationProviderImpl(humanVerificationRepository)
+
+    @Provides
+    @Singleton
     fun provideHumanVerificationRepository(
         db: AccountManagerDatabase,
         keyStoreCrypto: KeyStoreCrypto
@@ -64,13 +79,21 @@ object HumanVerificationModule {
 
     @Provides
     @Singleton
-    fun provideHumanVerificationManager(
+    fun provideUserVerificationRepository(
+        apiProvider: ApiProvider,
+        clientIdProvider: ClientIdProvider,
         humanVerificationRepository: HumanVerificationRepository
-    ): HumanVerificationManagerImpl = HumanVerificationManagerImpl(humanVerificationRepository)
+    ): UserVerificationRepository =
+        UserVerificationRepositoryImpl(apiProvider, clientIdProvider, humanVerificationRepository)
 
     @Provides
-    @CaptchaBaseUrl
-    fun provideCaptchaBaseUrl(): String = BuildConfig.ENVIRONMENT
+    @Singleton
+    fun provideHumanVerificationManagerImpl(
+        humanVerificationProvider: HumanVerificationProvider,
+        humanVerificationListener: HumanVerificationListener,
+        humanVerificationRepository: HumanVerificationRepository
+    ): HumanVerificationManagerImpl =
+        HumanVerificationManagerImpl(humanVerificationProvider, humanVerificationListener, humanVerificationRepository)
 }
 
 @Module
@@ -86,9 +109,4 @@ interface HumanVerificationBindModule {
     fun bindHumanVerificationWorkflowHandler(
         humanVerificationManagerImpl: HumanVerificationManagerImpl
     ): HumanVerificationWorkflowHandler
-
-    @Binds
-    fun bindHumanVerificationProvider(
-        humanVerificationManagerImpl: HumanVerificationManagerImpl
-    ): HumanVerificationProvider
 }

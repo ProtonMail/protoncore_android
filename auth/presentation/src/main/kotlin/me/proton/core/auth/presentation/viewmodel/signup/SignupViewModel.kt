@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.createUserType
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
@@ -43,8 +42,8 @@ import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
-import me.proton.core.network.domain.session.HumanVerificationListener
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.entity.createUserType
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -53,7 +52,6 @@ internal class SignupViewModel @Inject constructor(
     private val performCreateUser: PerformCreateUser,
     private val performCreateExternalEmailUser: PerformCreateExternalEmailUser,
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val humanVerificationListener: HumanVerificationListener,
     humanVerificationManager: HumanVerificationManager,
     humanVerificationOrchestrator: HumanVerificationOrchestrator
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
@@ -161,7 +159,7 @@ internal class SignupViewModel @Inject constructor(
         )
         emit(State.Success(result))
     }.catch { error ->
-        _userCreationState.tryEmit(State.Error.Message(error.message))
+        emit(State.Error.Message(error.message))
     }.onEach {
         _userCreationState.tryEmit(it)
     }.launchIn(viewModelScope)
@@ -170,25 +168,17 @@ internal class SignupViewModel @Inject constructor(
         val externalEmail = requireNotNull(externalEmail) { "External email is not set." }
         require(this@SignupViewModel::_password.isInitialized) { "Password is not set (initialized)." }
         emit(State.Processing)
-        emit(
-            State.Success(
-                performCreateExternalEmailUser(
-                    email = externalEmail,
-                    password = _password,
-                    referrer = null
-                )
-            )
+        val user = performCreateExternalEmailUser(
+            email = externalEmail,
+            password = _password,
+            referrer = null
         )
-        externalAccountCreationDone()
+        emit(State.Success(user))
     }.catch { error ->
-        _userCreationState.tryEmit(State.Error.Message(error.message))
-        externalAccountCreationDone()
+        emit(State.Error.Message(error.message))
     }.onEach {
         _userCreationState.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    private suspend fun externalAccountCreationDone() {
-        humanVerificationListener.onExternalAccountHumanVerificationDone()
-    }
     // endregion
 }

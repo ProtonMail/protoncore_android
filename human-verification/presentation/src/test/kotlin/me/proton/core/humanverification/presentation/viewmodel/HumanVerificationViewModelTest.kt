@@ -24,9 +24,9 @@ import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.user.domain.entity.UserVerificationTokenType
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -41,8 +41,8 @@ class HumanVerificationViewModelTest : CoroutinesTest {
     @Test
     fun `correct initialization`() = coroutinesTest {
         val availableMethods = listOf(
-            UserVerificationTokenType.EMAIL.tokenTypeValue,
-            UserVerificationTokenType.CAPTCHA.tokenTypeValue
+            TokenType.EMAIL.value,
+            TokenType.CAPTCHA.value
         )
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
@@ -64,16 +64,16 @@ class HumanVerificationViewModelTest : CoroutinesTest {
     @Test
     fun `active method correctly set`() = coroutinesTest {
         val availableMethods = listOf(
-            UserVerificationTokenType.EMAIL.tokenTypeValue,
-            UserVerificationTokenType.CAPTCHA.tokenTypeValue,
-            UserVerificationTokenType.SMS.tokenTypeValue
+            TokenType.EMAIL.value,
+            TokenType.CAPTCHA.value,
+            TokenType.SMS.value
         )
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
         val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
 
         viewModel.activeMethod.test {
-            assertEquals(UserVerificationTokenType.CAPTCHA.tokenTypeValue, expectItem())
+            assertEquals(TokenType.CAPTCHA.value, expectItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -81,14 +81,14 @@ class HumanVerificationViewModelTest : CoroutinesTest {
     @Test
     fun `active method correctly set option 2`() = coroutinesTest {
         val availableMethods = listOf(
-            UserVerificationTokenType.EMAIL.tokenTypeValue,
-            UserVerificationTokenType.SMS.tokenTypeValue
+            TokenType.EMAIL.value,
+            TokenType.SMS.value
         )
         every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
 
         val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
         viewModel.activeMethod.test {
-            assertEquals(UserVerificationTokenType.EMAIL.tokenTypeValue, expectItem())
+            assertEquals(TokenType.EMAIL.value, expectItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

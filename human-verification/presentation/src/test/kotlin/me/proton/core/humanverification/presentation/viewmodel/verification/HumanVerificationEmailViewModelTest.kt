@@ -22,14 +22,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
+import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.humanverification.presentation.exception.VerificationCodeSendingException
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.exception.EmptyDestinationException
-import me.proton.core.user.domain.usecase.SendVerificationCodeToEmailDestination
 import org.junit.Rule
 import org.junit.Test
 
@@ -52,7 +50,7 @@ class HumanVerificationEmailViewModelTest : CoroutinesTest {
     fun `send verification code to email address success`() = coroutinesTest {
         coEvery {
             useCase.invoke(any(), any())
-        } returns VerificationResult.Success
+        } returns Unit
 
         viewModel.sendVerificationCode(sessionId, testEmail)
         viewModel.verificationCodeStatus.test {
@@ -64,12 +62,12 @@ class HumanVerificationEmailViewModelTest : CoroutinesTest {
     fun `send verification code to email address error`() = coroutinesTest {
         coEvery {
             useCase.invoke(any(), any())
-        } returns VerificationResult.Error(errorResponse)
+        } throws Exception(errorResponse)
 
         viewModel.sendVerificationCode(sessionId, testEmail)
         viewModel.verificationCodeStatus.test {
             val result = expectItem() as ViewModelResult.Error
-            assertIs<VerificationCodeSendingException>(result.throwable)
+            assertIs<Exception>(result.throwable)
         }
     }
 
@@ -81,7 +79,7 @@ class HumanVerificationEmailViewModelTest : CoroutinesTest {
         viewModel.sendVerificationCode(sessionId, "")
         viewModel.verificationCodeStatus.test {
             val result = expectItem() as ViewModelResult.Error
-            assertIs<EmptyDestinationException>(result.throwable)
+            assertIs<IllegalArgumentException>(result.throwable)
         }
     }
 }

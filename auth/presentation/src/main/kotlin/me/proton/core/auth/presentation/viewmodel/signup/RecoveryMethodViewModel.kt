@@ -73,7 +73,7 @@ internal class RecoveryMethodViewModel @Inject constructor(
             }.exhaustive
         )
     }.catch { error ->
-        _validationResult.tryEmit(ViewModelResult.Error(error))
+        emit(ViewModelResult.Error(error))
     }.onEach {
         _validationResult.tryEmit(it)
     }.launchIn(viewModelScope)

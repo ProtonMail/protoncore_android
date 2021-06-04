@@ -24,11 +24,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCode
 import me.proton.core.presentation.ui.view.Loadable
 import me.proton.core.presentation.viewmodel.ViewModelResult
-import me.proton.core.user.domain.entity.UserVerificationTokenType
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -39,7 +39,7 @@ import me.proton.core.util.kotlin.exhaustive
 internal class HumanVerificationMethodCommon(
     val viewModel: HumanVerificationCode,
     val urlToken: String,
-    val tokenType: UserVerificationTokenType
+    val tokenType: TokenType
 ) {
 
     /**
@@ -54,17 +54,19 @@ internal class HumanVerificationMethodCommon(
         owner: LifecycleOwner,
         parentFragmentManager: FragmentManager,
         loadable: Loadable? = null,
-        onVerificationCodeError: () -> Unit
+        onVerificationCodeError: (Throwable?) -> Unit
     ) {
         viewModel.verificationCodeStatus.onEach {
             when (it) {
                 is ViewModelResult.None,
-                is ViewModelResult.Processing -> { }
+                is ViewModelResult.Processing -> Unit
                 is ViewModelResult.Error -> {
                     loadable?.loadingComplete()
-                    onVerificationCodeError()
+                    onVerificationCodeError(it.throwable)
                 }
-                is ViewModelResult.Success -> onGetCodeClicked(it.value, parentFragmentManager)
+                is ViewModelResult.Success -> {
+                    onGetCodeClicked(it.value, parentFragmentManager)
+                }
             }.exhaustive
         }.launchIn(owner.lifecycleScope)
     }
@@ -80,7 +82,7 @@ internal class HumanVerificationMethodCommon(
             HumanVerificationDialogFragment.KEY_PHASE_TWO,
             bundleOf(
                 HumanVerificationDialogFragment.ARG_DESTINATION to destination,
-                HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.tokenTypeValue
+                HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.value
             )
         )
     }

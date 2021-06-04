@@ -18,7 +18,6 @@
 package me.proton.core.network.data
 
 import kotlinx.coroutines.runBlocking
-import me.proton.core.network.data.di.cookieSessionId
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.ProtonErrorData
 import me.proton.core.network.data.protonApi.RefreshTokenRequest
@@ -28,8 +27,8 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.TimeoutOverride
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.HumanVerificationProvider
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
@@ -63,11 +62,11 @@ import kotlin.reflect.KClass
 internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     override val baseUrl: String,
     private val client: ApiClient,
+    private val clientIdProvider: ClientIdProvider,
     private val logger: Logger,
     private val sessionId: SessionId?,
     private val sessionProvider: SessionProvider,
     private val humanVerificationProvider: HumanVerificationProvider,
-    private val cookieStore: ProtonCookieStore?,
     baseOkHttpClient: OkHttpClient,
     converters: List<Converter.Factory>,
     interfaceClass: KClass<Api>,
@@ -89,8 +88,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             }
         securityStrategy(builder)
 
-        val baseUrlFixed = if (!baseUrl.endsWith('/'))
-            "$baseUrl/" else baseUrl
+        val baseUrlFixed = if (!baseUrl.endsWith('/')) "$baseUrl/" else baseUrl
         val okClient = builder.build()
         val retrofitBuilder = Retrofit.Builder()
             .baseUrl(baseUrlFixed)
@@ -129,14 +127,12 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 request.header("Authorization", "Bearer $accessToken")
             }
         }
-        val cookieValue = cookieStore?.get(original.url.toUri())
-        val clientId = ClientId.newClientId(sessionId, cookieValue?.cookieSessionId())
-        clientId?.let {
-            runBlocking { humanVerificationProvider.getHumanVerificationDetails(clientId) }?.let {
-                it.tokenType?.let { tokenType ->
+        clientIdProvider.getClientId(sessionId)?.let { clientId ->
+            runBlocking { humanVerificationProvider.getHumanVerificationDetails(clientId) }?.let { details ->
+                details.tokenType?.let { tokenType ->
                     request.header("x-pm-human-verification-token-type", tokenType)
                 }
-                it.tokenCode?.let { tokenCode ->
+                details.tokenCode?.let { tokenCode ->
                     request.header("x-pm-human-verification-token", tokenCode)
                 }
             }

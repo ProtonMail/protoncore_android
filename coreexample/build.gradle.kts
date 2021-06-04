@@ -71,6 +71,7 @@ dependencies {
         `appcompat`,
         `constraint-layout`,
         `fragment`,
+        `gotev-cookieStore`,
         `hilt-android`,
         `lifecycle-viewModel`,
         `hilt-androidx-annotations`,

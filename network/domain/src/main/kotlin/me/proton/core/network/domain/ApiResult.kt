@@ -20,7 +20,7 @@ package me.proton.core.network.domain
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withTimeoutOrNull
-import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 
 /**
  * Result of the safe API call.
@@ -65,7 +65,11 @@ sealed class ApiResult<out T> {
 
         // detekt warning here is fine, the human verification details is optional, and if present in the response it is
         // set later, thus var.
-        data class ProtonData(val code: Int, val error: String, var humanVerification: HumanVerificationApiDetails? = null)
+        data class ProtonData(
+            val code: Int,
+            val error: String,
+            var humanVerification: HumanVerificationAvailableMethods? = null
+        )
 
         /**
          * Parsing error. Should not normally happen.

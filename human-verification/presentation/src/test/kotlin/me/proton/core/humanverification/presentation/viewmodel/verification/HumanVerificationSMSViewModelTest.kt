@@ -23,14 +23,12 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.country.domain.usecase.MostUsedCountryCode
+import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.coroutinesTest
-import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.exception.EmptyDestinationException
-import me.proton.core.user.domain.usecase.SendVerificationCodeToPhoneDestination
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -92,7 +90,7 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     @Test
     fun `send verification code to phone number success`() = coroutinesTest {
         coEvery { mostUsedUseCase.invoke() } returns 0
-        coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns VerificationResult.Success
+        coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns Unit
         viewModel.sendVerificationCodeToDestination(sessionId, "+0", "123456789")
         viewModel.verificationCodeStatus.test(timeout = 2.seconds) {
             assertIs<ViewModelResult.Success<Boolean>>(expectItem())
@@ -100,20 +98,18 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
         }
     }
 
-
     @Test
     fun `send verification code to phone number invalid`() = coroutinesTest {
         // given
         coEvery { mostUsedUseCase.invoke() } returns 0
-        coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns VerificationResult.Success
+        coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns Unit
 
         // when
         viewModel.sendVerificationCodeToDestination(sessionId, "", "")
         // then
         viewModel.validation.test(timeout = 2.seconds) {
             val result = expectItem() as ViewModelResult.Error
-            assertIs<EmptyDestinationException>(result.throwable)
-            assertEquals("Destination phone number:  is invalid.", result.throwable?.message)
+            assertIs<IllegalArgumentException>(result.throwable)
             cancelAndIgnoreRemainingEvents()
         }
     }

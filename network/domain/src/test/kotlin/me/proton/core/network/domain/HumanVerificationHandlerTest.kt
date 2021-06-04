@@ -20,14 +20,17 @@ package me.proton.core.network.domain
 
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.network.domain.handlers.HumanVerificationHandler
-import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
+import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.VerificationMethod
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.HumanVerificationListener
+import me.proton.core.network.domain.session.SessionId
 import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertNotNull
@@ -37,7 +40,10 @@ import kotlin.test.assertNotNull
  */
 class HumanVerificationHandlerTest {
 
+    private val sessionId = mockk<SessionId>(relaxed = true)
     private val clientId = mockk<ClientId>(relaxed = true)
+
+    private val clientIdProvider = mockk<ClientIdProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
 
     private val apiBackend = mockk<ApiBackend<Any>>()
@@ -46,14 +52,15 @@ class HumanVerificationHandlerTest {
 
     @BeforeTest
     fun beforeTest() {
+        every { clientIdProvider.getClientId(any()) } returns clientId
         // Assume no token has been refreshed between each tests.
-        runBlocking { HumanVerificationHandler.reset(clientId) }
+        runBlocking { HumanVerificationNeededHandler.reset(clientId) }
     }
 
     @Test
     fun `test human verification called`() = runBlockingTest {
         val humanVerificationDetails =
-            HumanVerificationApiDetails(listOf(VerificationMethod.CAPTCHA, VerificationMethod.EMAIL), "test")
+            HumanVerificationAvailableMethods(listOf(VerificationMethod.CAPTCHA, VerificationMethod.EMAIL), "test")
         val apiResult = ApiResult.Error.Http(
             422,
             "Human Verification required",
@@ -71,12 +78,10 @@ class HumanVerificationHandlerTest {
             )
         } returns HumanVerificationListener.HumanVerificationResult.Success
 
-        coEvery { humanVerificationListener.onHumanVerificationPassed(clientId) } returns Unit
-
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
         val humanVerificationHandler =
-            HumanVerificationHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = apiBackend,
@@ -88,13 +93,12 @@ class HumanVerificationHandlerTest {
         coVerify(exactly = 1) {
             humanVerificationListener.onHumanVerificationNeeded(clientId, humanVerificationDetails)
         }
-        coVerify(exactly = 1) { humanVerificationListener.onHumanVerificationPassed(clientId) }
     }
 
     @Test
     fun `test human verification called but retry api failed`() = runBlockingTest {
         val humanVerificationDetails =
-            HumanVerificationApiDetails(listOf(VerificationMethod.CAPTCHA, VerificationMethod.EMAIL), "test")
+            HumanVerificationAvailableMethods(listOf(VerificationMethod.CAPTCHA, VerificationMethod.EMAIL), "test")
         val apiResult = ApiResult.Error.Http(
             422,
             "Human Verification required",
@@ -112,12 +116,10 @@ class HumanVerificationHandlerTest {
             )
         } returns HumanVerificationListener.HumanVerificationResult.Success
 
-        coEvery { humanVerificationListener.onHumanVerificationFailed(clientId) } returns Unit
-
         coEvery { apiBackend.invoke<Any>(any()) } returns apiResult
 
         val humanVerificationHandler =
-            HumanVerificationHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = apiBackend,
@@ -129,7 +131,6 @@ class HumanVerificationHandlerTest {
         coVerify(exactly = 1) {
             humanVerificationListener.onHumanVerificationNeeded(clientId, humanVerificationDetails)
         }
-        coVerify(exactly = 1) { humanVerificationListener.onHumanVerificationFailed(clientId) }
     }
 
     @Test
@@ -144,7 +145,7 @@ class HumanVerificationHandlerTest {
         )
 
         val humanVerificationHandler =
-            HumanVerificationHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = mockk(),
@@ -167,7 +168,7 @@ class HumanVerificationHandlerTest {
         )
 
         val humanVerificationHandler =
-            HumanVerificationHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = mockk(),
@@ -188,7 +189,7 @@ class HumanVerificationHandlerTest {
         )
 
         val humanVerificationHandler =
-            HumanVerificationHandler<Any>(clientId, humanVerificationListener, ::time)
+            HumanVerificationNeededHandler<Any>(sessionId, clientIdProvider, humanVerificationListener, ::time)
 
         val result = humanVerificationHandler.invoke(
             backend = mockk(),
@@ -201,5 +202,4 @@ class HumanVerificationHandlerTest {
             humanVerificationListener.onHumanVerificationNeeded(clientId, any())
         }
     }
-
 }

@@ -19,9 +19,9 @@
 package me.proton.core.humanverification.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.session.ClientId
 
 interface HumanVerificationRepository {
 
@@ -41,16 +41,6 @@ interface HumanVerificationRepository {
     suspend fun insertHumanVerificationDetails(details: HumanVerificationDetails)
 
     /**
-     * Marks the human verification details as completed (successfully).
-     */
-    suspend fun updateHumanVerificationCompleted(clientId: ClientId)
-
-    /**
-     * Clears the table.
-     */
-    suspend fun clear()
-
-    /**
      * Sets new state for a human verification flow, along with the token type and token code if needed.
      */
     suspend fun updateHumanVerificationState(
@@ -60,5 +50,10 @@ interface HumanVerificationRepository {
         tokenCode: String? = null
     )
 
+    /**
+     * Flow of [HumanVerificationDetails] where [HumanVerificationDetails.state] changed.
+     *
+     * @param initialState if true, initial state for all details will be raised on subscription.
+     */
     fun onHumanVerificationStateChanged(initialState: Boolean): Flow<HumanVerificationDetails>
 }

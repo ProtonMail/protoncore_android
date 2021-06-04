@@ -24,16 +24,15 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.CreateUserType
+import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.usecase.CheckCreationTokenValidity
+import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.user.domain.entity.UserVerificationTokenType
-import me.proton.core.user.domain.entity.VerificationResult
-import me.proton.core.user.domain.usecase.CheckCreationTokenValidity
-import me.proton.core.user.domain.usecase.ResendVerificationCodeToDestination
+import me.proton.core.user.domain.entity.CreateUserType
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -62,10 +61,10 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
         coEvery {
             checkCreationTokenValidity.invoke(
                 any(),
-                UserVerificationTokenType.EMAIL.tokenTypeValue,
+                TokenType.EMAIL.value,
                 CreateUserType.Normal
             )
-        } returns VerificationResult.Success
+        } returns Unit
         viewModel.validationState.test {
             // WHEN
             viewModel.validateToken(testDestination, testToken, AccountType.Internal)
@@ -80,7 +79,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) {
                 checkCreationTokenValidity.invoke(
                     capture(destinationTokenSlot),
-                    UserVerificationTokenType.EMAIL.tokenTypeValue,
+                    TokenType.EMAIL.value,
                     CreateUserType.Normal
                 )
             }
@@ -96,10 +95,10 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
         coEvery {
             checkCreationTokenValidity.invoke(
                 any(),
-                UserVerificationTokenType.EMAIL.tokenTypeValue,
+                TokenType.EMAIL.value,
                 CreateUserType.Normal
             )
-        } returns VerificationResult.Error("Sending to destination error.")
+        } throws Exception("Sending to destination error.")
 
         viewModel.validationState.test {
             // WHEN
@@ -115,7 +114,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) {
                 checkCreationTokenValidity.invoke(
                     capture(destinationTokenSlot),
-                    UserVerificationTokenType.EMAIL.tokenTypeValue,
+                    TokenType.EMAIL.value,
                     CreateUserType.Normal
                 )
             }
@@ -131,7 +130,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
         coEvery {
             checkCreationTokenValidity.invoke(
                 any(),
-                UserVerificationTokenType.EMAIL.tokenTypeValue,
+                TokenType.EMAIL.value,
                 CreateUserType.Normal
             )
         } throws ApiException(
@@ -159,7 +158,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) {
                 checkCreationTokenValidity.invoke(
                     capture(destinationTokenSlot),
-                    UserVerificationTokenType.EMAIL.tokenTypeValue,
+                    TokenType.EMAIL.value,
                     CreateUserType.Normal
                 )
             }
@@ -171,13 +170,13 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
     fun `resend code success`() = coroutinesTest {
         // GIVEN
         val testDestination = "test-destination"
-        val testTokenType = UserVerificationTokenType.EMAIL
+        val testTokenType = TokenType.EMAIL
         coEvery {
             resendVerificationCodeToDestination.invoke(
                 tokenType = testTokenType,
                 destination = testDestination
             )
-        } returns VerificationResult.Success
+        } returns Unit
         viewModel.verificationCodeResendState.test {
             // WHEN
             viewModel.resendCode(testDestination)
@@ -188,14 +187,14 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(successItem is ViewModelResult.Success)
             assertTrue(successItem.value)
 
-            val destinationTokenSlot = slot<UserVerificationTokenType>()
+            val destinationTokenSlot = slot<TokenType>()
             coVerify(exactly = 1) {
                 resendVerificationCodeToDestination.invoke(
                     destination = testDestination,
                     tokenType = capture(destinationTokenSlot)
                 )
             }
-            assertEquals(UserVerificationTokenType.EMAIL, destinationTokenSlot.captured)
+            assertEquals(TokenType.EMAIL, destinationTokenSlot.captured)
         }
     }
 
@@ -203,13 +202,13 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
     fun `resend code error`() = coroutinesTest {
         // GIVEN
         val testDestination = "test-destination"
-        val testTokenType = UserVerificationTokenType.EMAIL
+        val testTokenType = TokenType.EMAIL
         coEvery {
             resendVerificationCodeToDestination.invoke(
                 tokenType = testTokenType,
                 destination = testDestination
             )
-        } returns VerificationResult.Error("Error resending code.")
+        } throws Exception("Error resending code.")
         viewModel.verificationCodeResendState.test {
             // WHEN
             viewModel.resendCode(testDestination)
@@ -222,14 +221,14 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             assertNotNull(throwable)
             assertEquals("Error resending code.", throwable.message)
 
-            val destinationTokenSlot = slot<UserVerificationTokenType>()
+            val destinationTokenSlot = slot<TokenType>()
             coVerify(exactly = 1) {
                 resendVerificationCodeToDestination.invoke(
                     destination = testDestination,
                     tokenType = capture(destinationTokenSlot)
                 )
             }
-            assertEquals(UserVerificationTokenType.EMAIL, destinationTokenSlot.captured)
+            assertEquals(TokenType.EMAIL, destinationTokenSlot.captured)
         }
     }
 
@@ -237,7 +236,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
     fun `resend code API error`() = coroutinesTest {
         // GIVEN
         val testDestination = "test-destination"
-        val testTokenType = UserVerificationTokenType.EMAIL
+        val testTokenType = TokenType.EMAIL
         coEvery {
             resendVerificationCodeToDestination.invoke(
                 tokenType = testTokenType,
@@ -265,14 +264,14 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             assertNotNull(throwable)
             assertEquals("API error resend code.", throwable.message)
 
-            val destinationTokenSlot = slot<UserVerificationTokenType>()
+            val destinationTokenSlot = slot<TokenType>()
             coVerify(exactly = 1) {
                 resendVerificationCodeToDestination.invoke(
                     destination = testDestination,
                     tokenType = capture(destinationTokenSlot)
                 )
             }
-            assertEquals(UserVerificationTokenType.EMAIL, destinationTokenSlot.captured)
+            assertEquals(TokenType.EMAIL, destinationTokenSlot.captured)
         }
     }
 }

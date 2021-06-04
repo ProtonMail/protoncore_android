@@ -24,7 +24,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
-import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 
 internal abstract class AuthViewModel(
@@ -39,7 +39,7 @@ internal abstract class AuthViewModel(
             .onHumanVerificationNeeded {
                 humanVerificationOrchestrator.startHumanVerificationWorkflow(
                     clientId = it.clientId,
-                    details = HumanVerificationApiDetails(
+                    methods = HumanVerificationAvailableMethods(
                         it.verificationMethods, it.captchaVerificationToken
                     ),
                     recoveryEmailAddress = recoveryEmailAddress

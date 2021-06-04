@@ -49,7 +49,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
-import me.proton.core.network.domain.humanverification.HumanVerificationApiDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.PlanDetails
@@ -104,7 +104,7 @@ class AccountViewModel @Inject constructor(
                 .onHumanVerificationNeeded {
                     startHumanVerificationWorkflow(
                         clientId = it.clientId,
-                        details = HumanVerificationApiDetails(
+                        methods = HumanVerificationAvailableMethods(
                             it.verificationMethods, it.captchaVerificationToken
                         )
                     )

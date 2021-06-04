@@ -32,8 +32,8 @@ import me.proton.core.humanverification.data.entity.HumanVerificationEntity
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.ClientIdType
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.getType
 
 class HumanVerificationRepositoryImpl(
     private val db: HumanVerificationDatabase,
@@ -44,8 +44,9 @@ class HumanVerificationRepositoryImpl(
     private val humanVerificationStateChanged = MutableSharedFlow<HumanVerificationDetails>(extraBufferCapacity = 10)
 
     private fun tryEmitStateChanged(humanVerificationDetails: HumanVerificationDetails) {
-        if (!humanVerificationStateChanged.tryEmit(humanVerificationDetails))
+        if (!humanVerificationStateChanged.tryEmit(humanVerificationDetails)) {
             throw IllegalStateException("Too many nested state changes, extra buffer capacity exceeded.")
+        }
     }
 
     override suspend fun getHumanVerificationDetails(clientId: ClientId): HumanVerificationDetails? =
@@ -62,10 +63,7 @@ class HumanVerificationRepositoryImpl(
             humanVerificationDetailsDao.insertOrUpdate(
                 HumanVerificationEntity(
                     clientId = clientId.id,
-                    clientIdType = when (clientId) {
-                        is ClientId.AccountSession -> ClientIdType.SESSION.value
-                        is ClientId.CookieSession -> ClientIdType.COOKIE.value
-                    },
+                    clientIdType = clientId.getType(),
                     verificationMethods = details.verificationMethods.map { method -> method.value },
                     captchaVerificationToken = details.captchaVerificationToken,
                     state = details.state,
@@ -76,11 +74,6 @@ class HumanVerificationRepositoryImpl(
             getHumanVerificationDetails(clientId)?.let { tryEmitStateChanged(it) }
         }
     }
-
-    override suspend fun updateHumanVerificationCompleted(clientId: ClientId) =
-        humanVerificationDetailsDao.deleteByClientId(clientId.id)
-
-    override suspend fun clear() = humanVerificationDetailsDao.deleteAll()
 
     override suspend fun updateHumanVerificationState(
         clientId: ClientId,

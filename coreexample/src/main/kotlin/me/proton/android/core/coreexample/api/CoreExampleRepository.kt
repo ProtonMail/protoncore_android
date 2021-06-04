@@ -20,6 +20,7 @@ package me.proton.android.core.coreexample.api
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.user.data.api.UserApi
 
 /**
  * Proton Core
@@ -30,7 +31,12 @@ class CoreExampleRepository(
 ) {
 
     suspend fun triggerHumanVerification(userId: UserId) =
-        provider.get<CoreExampleApi>(userId).invoke() {
+        provider.get<CoreExampleApi>(userId).invoke {
             triggerHumanVerification()
         }
+
+    suspend fun usernameAvailable() =
+        provider.get<UserApi>().invoke {
+            usernameAvailable("username")
+        }.valueOrNull
 }

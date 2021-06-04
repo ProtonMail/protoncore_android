@@ -20,9 +20,9 @@ package me.proton.core.test.android.instrumented.robots.humanverification
 
 import android.widget.TextView
 import me.proton.core.humanverification.R
-import me.proton.core.user.domain.entity.UserVerificationTokenType.EMAIL
-import me.proton.core.user.domain.entity.UserVerificationTokenType.SMS
-import me.proton.core.user.domain.entity.UserVerificationTokenType.CAPTCHA
+import me.proton.core.humanverification.domain.entity.TokenType.CAPTCHA
+import me.proton.core.humanverification.domain.entity.TokenType.EMAIL
+import me.proton.core.humanverification.domain.entity.TokenType.SMS
 import me.proton.core.test.android.instrumented.robots.BaseRobot
 import me.proton.core.test.android.instrumented.robots.BaseVerify
 
@@ -32,18 +32,18 @@ import me.proton.core.test.android.instrumented.robots.BaseVerify
 open class HumanVerificationRobot : BaseRobot() {
 
     fun help(): HumanVerificationRobot = clickElement(R.id.helpButton)
-    fun email(): CodeVerificationRobot = hvOption(EMAIL.tokenTypeValue)
-    fun sms(): CodeVerificationRobot = hvOption(SMS.tokenTypeValue)
-    fun captcha(): HumanVerificationRobot = hvOption(CAPTCHA.tokenTypeValue)
+    fun email(): CodeVerificationRobot = hvOption(EMAIL.value)
+    fun sms(): CodeVerificationRobot = hvOption(SMS.value)
+    fun captcha(): HumanVerificationRobot = hvOption(CAPTCHA.value)
     private fun hvOption(option: String): CodeVerificationRobot =
         clickElement(option.toUpperCase(), TextView::class.java)
 
     class Verify : BaseVerify() {
 
         fun hvElementsDisplayed() {
-            view.withText(EMAIL.tokenTypeValue.toUpperCase()).wait().checkDisplayed()
-            view.withText(SMS.tokenTypeValue.toUpperCase()).wait().checkDisplayed()
-            view.withText(CAPTCHA.tokenTypeValue.toUpperCase()).wait().checkDisplayed()
+            view.withText(EMAIL.value.toUpperCase()).wait().checkDisplayed()
+            view.withText(SMS.value.toUpperCase()).wait().checkDisplayed()
+            view.withText(CAPTCHA.value.toUpperCase()).wait().checkDisplayed()
         }
 
         fun captchaDisplayed() {

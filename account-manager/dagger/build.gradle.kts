@@ -27,7 +27,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(1, 1, 3)
+libVersion = Version(1, 1, 4)
 
 android()
 

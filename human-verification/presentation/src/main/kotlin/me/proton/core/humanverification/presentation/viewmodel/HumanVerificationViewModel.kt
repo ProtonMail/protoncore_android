@@ -19,18 +19,17 @@
 package me.proton.core.humanverification.presentation.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
-import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
-import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.client.ClientId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.user.domain.entity.UserVerificationTokenType
 import javax.inject.Inject
 
 /**
@@ -42,7 +41,7 @@ class HumanVerificationViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ProtonViewModel() {
 
-    private lateinit var currentActiveVerificationMethod: UserVerificationTokenType
+    private lateinit var currentActiveVerificationMethod: TokenType
 
     private var availableVerificationMethods: List<String> =
         savedStateHandle.get<List<String>>(HumanVerificationDialogFragment.ARG_VERIFICATION_OPTIONS)!!
@@ -68,35 +67,28 @@ class HumanVerificationViewModel @Inject constructor(
     /**
      * Sets the currently active verification method that the user chose.
      */
-    fun defineActiveVerificationMethod(userSelectedMethod: UserVerificationTokenType? = null) {
+    fun defineActiveVerificationMethod(userSelectedMethod: TokenType? = null) {
         userSelectedMethod?.let {
             currentActiveVerificationMethod = it
         } ?: run {
-            currentActiveVerificationMethod =
-                UserVerificationTokenType.fromString(availableVerificationMethods.sorted()[0])
+            currentActiveVerificationMethod = TokenType.fromString(availableVerificationMethods.sorted()[0])
         }
-        _activeMethod.tryEmit(currentActiveVerificationMethod.tokenTypeValue)
+        _activeMethod.tryEmit(currentActiveVerificationMethod.value)
     }
 
-    fun onHumanVerificationSuccess(clientId: ClientId, tokenType: String?, tokenCode: String?): Job {
-        return if (!tokenType.isNullOrBlank() && !tokenCode.isNullOrBlank()) {
-            viewModelScope.launch {
-                humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
-                    clientId = clientId,
-                    tokenType = tokenType,
-                    tokenCode = tokenCode
-                )
-            }
+    fun onHumanVerificationSuccess(clientId: ClientId, tokenType: String?, tokenCode: String?) = viewModelScope.launch {
+        if (!tokenType.isNullOrBlank() && !tokenCode.isNullOrBlank()) {
+            humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
+                clientId = clientId,
+                tokenType = tokenType,
+                tokenCode = tokenCode
+            )
         } else {
-            viewModelScope.launch {
-                humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
-            }
+            humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
         }
     }
 
-    fun onHumanVerificationCanceled(clientId: ClientId) =
-        viewModelScope.launch {
-            humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
-            humanVerificationWorkflowHandler.handleHumanVerificationCanceled(clientId = clientId)
-        }
+    fun onHumanVerificationFailed(clientId: ClientId) = viewModelScope.launch {
+        humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
+    }
 }

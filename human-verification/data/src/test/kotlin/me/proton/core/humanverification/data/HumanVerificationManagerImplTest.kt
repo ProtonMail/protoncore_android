@@ -30,7 +30,9 @@ import me.proton.core.humanverification.domain.repository.HumanVerificationRepos
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
-import me.proton.core.network.domain.session.ClientId
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Assert.assertEquals
@@ -39,7 +41,10 @@ import org.junit.Test
 
 class HumanVerificationManagerImplTest {
 
-    private val humanRepository = mockk<HumanVerificationRepository>()
+    private val humanVerificationRepository = mockk<HumanVerificationRepository>()
+
+    private lateinit var humanVerificationProvider: HumanVerificationProvider
+    private lateinit var humanVerificationListener: HumanVerificationListener
     private lateinit var humanVerificationManager: HumanVerificationManagerImpl
 
     private val flowOfHumanVerificationStateChangedLists = mutableListOf<HumanVerificationDetails>()
@@ -53,7 +58,13 @@ class HumanVerificationManagerImplTest {
 
     @Before
     fun beforeEveryTest() {
-        humanVerificationManager = HumanVerificationManagerImpl(humanRepository)
+        humanVerificationProvider = HumanVerificationProviderImpl(humanVerificationRepository)
+        humanVerificationListener = HumanVerificationListenerImpl(humanVerificationRepository)
+        humanVerificationManager = HumanVerificationManagerImpl(
+            humanVerificationProvider,
+            humanVerificationListener,
+            humanVerificationRepository
+        )
     }
 
     @Test
@@ -74,7 +85,7 @@ class HumanVerificationManagerImplTest {
 
         val humanVerificationStateSlot = slot<HumanVerificationState>()
         coEvery {
-            humanRepository.updateHumanVerificationState(
+            humanVerificationRepository.updateHumanVerificationState(
                 clientId,
                 capture(humanVerificationStateSlot),
                 tokenType,
@@ -88,14 +99,14 @@ class HumanVerificationManagerImplTest {
             )
         }
 
-        every { humanRepository.onHumanVerificationStateChanged(any()) } answers {
+        every { humanVerificationRepository.onHumanVerificationStateChanged(any()) } answers {
             flowOf(*flowOfHumanVerificationStateChangedLists.toTypedArray())
         }
 
         humanVerificationManager.handleHumanVerificationSuccess(clientId, tokenType, tokenCode)
 
         coVerify(exactly = 1) {
-            humanRepository.updateHumanVerificationState(
+            humanVerificationRepository.updateHumanVerificationState(
                 clientId,
                 HumanVerificationState.HumanVerificationSuccess,
                 tokenType,
@@ -122,7 +133,7 @@ class HumanVerificationManagerImplTest {
 
         val humanVerificationStateSlot = slot<HumanVerificationState>()
         coEvery {
-            humanRepository.updateHumanVerificationState(
+            humanVerificationRepository.updateHumanVerificationState(
                 clientId,
                 capture(humanVerificationStateSlot),
                 null,
@@ -136,14 +147,14 @@ class HumanVerificationManagerImplTest {
             )
         }
 
-        every { humanRepository.onHumanVerificationStateChanged(any()) } answers {
+        every { humanVerificationRepository.onHumanVerificationStateChanged(any()) } answers {
             flowOf(*flowOfHumanVerificationStateChangedLists.toTypedArray())
         }
 
         humanVerificationManager.handleHumanVerificationFailed(clientId)
 
         coVerify(exactly = 1) {
-            humanRepository.updateHumanVerificationState(
+            humanVerificationRepository.updateHumanVerificationState(
                 clientId,
                 HumanVerificationState.HumanVerificationFailed,
                 null,

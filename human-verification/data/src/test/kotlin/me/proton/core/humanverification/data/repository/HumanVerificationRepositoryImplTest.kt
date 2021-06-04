@@ -36,8 +36,8 @@ import me.proton.core.humanverification.domain.repository.HumanVerificationRepos
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
-import me.proton.core.network.domain.session.ClientId
-import me.proton.core.network.domain.session.ClientIdType
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Before
@@ -92,7 +92,7 @@ class HumanVerificationRepositoryImplTest {
 
         val humanVerificationEntity = HumanVerificationEntity(
             clientId = clientId.id,
-            clientIdType = ClientIdType.SESSION.value,
+            clientIdType = ClientIdType.SESSION,
             verificationMethods = listOf(VerificationMethod.EMAIL.value),
             captchaVerificationToken = null,
             state = HumanVerificationState.HumanVerificationNeeded,
@@ -122,7 +122,7 @@ class HumanVerificationRepositoryImplTest {
         )
         val humanVerificationEntity = HumanVerificationEntity(
             clientId = clientId.id,
-            clientIdType = ClientIdType.SESSION.value,
+            clientIdType = ClientIdType.SESSION,
             verificationMethods = listOf(VerificationMethod.EMAIL.value),
             captchaVerificationToken = null,
             state = state,
@@ -152,7 +152,7 @@ class HumanVerificationRepositoryImplTest {
         )
         val humanVerificationEntity = HumanVerificationEntity(
             clientId = clientId.id,
-            clientIdType = ClientIdType.SESSION.value,
+            clientIdType = ClientIdType.SESSION,
             verificationMethods = listOf(VerificationMethod.EMAIL.value),
             captchaVerificationToken = null,
             state = state,
@@ -168,13 +168,6 @@ class HumanVerificationRepositoryImplTest {
     }
 
     @Test
-    fun `update completed`() = runBlockingTest {
-        humanVerificationRepository.updateHumanVerificationCompleted(clientId = clientId)
-
-        coVerify(exactly = 1) { humanVerificationDetailsDao.deleteByClientId(clientId.id) }
-    }
-
-    @Test
     fun `update state`() = runBlockingTest {
         val state = HumanVerificationState.HumanVerificationSuccess
         val tokenType = "token-type"
@@ -182,7 +175,7 @@ class HumanVerificationRepositoryImplTest {
 
         val humanVerificationEntity = HumanVerificationEntity(
             clientId = clientId.id,
-            clientIdType = ClientIdType.SESSION.value,
+            clientIdType = ClientIdType.SESSION,
             verificationMethods = listOf(VerificationMethod.EMAIL.value),
             captchaVerificationToken = null,
             state = state,
