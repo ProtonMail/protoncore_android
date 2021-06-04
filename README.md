@@ -152,11 +152,11 @@ Account Manager Dagger: **1.1.4** - _released on: Jun 04, 2021_
 
 ### Key
 
-Key: **1.0.4** - _released on: Mar 22, 2021_
+Key: **1.1.2** - _released on: Jun 04, 2021_
 
-Key Domain: **1.0.4** - _released on: Mar 22, 2021_
+Key Domain: **1.1.2** - _released on: Jun 04, 2021_
 
-Key Data: **1.0.4** - _released on: Mar 22, 2021_
+Key Data: **1.1.2** - _released on: Jun 04, 2021_
 
 ### User
 
