@@ -52,6 +52,7 @@
     <string name="example_outlined">Outlined</string>
     <string name="example_loading">Loading</string>
     <string name="example_loading_text_only">Loading</string>
+    <string name="example_secondary_button">Secondary</string>
 
     <string name="example_tab1">Tab 1</string>
     <string name="example_tab2">Tab 2</string>
