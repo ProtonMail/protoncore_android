@@ -85,15 +85,15 @@ Util Kotlin: **0.2.5** - _released on: Apr 07, 2021_
 
 Test Kotlin: **0.2.1** - _released on: Apr 05, 2021_
 
-Test Android: **0.4.7** - _released on: May 28, 2021_
+Test Android: **0.4.8** - _released on: Jun 04, 2021_
 
-Test Android Instrumented: **0.4.7** - _released on: May 28, 2021_
+Test Android Instrumented: **0.4.8** - _released on: Jun 04, 2021_
 
 ## Shared
 
 Domain: **1.0.2** - _released on: May 27, 2021_
 
-Presentation: **0.8.2** - _released on: Jun 02, 2021_
+Presentation: **0.8.3** - _released on: Jun 04, 2021_
 
 Data: **1.0.3** - _released on: May 03, 2021_
 
@@ -101,11 +101,11 @@ Data: **1.0.3** - _released on: May 03, 2021_
 
 ### Network
 
-Network: **1.1.1** - _released on: May 31, 2021_
+Network: **1.1.2** - _released on: Jun 04, 2021_
 
-Network Domain: **1.1.1** - _released on: May 31, 2021_
+Network Domain: **1.1.2** - _released on: Jun 04, 2021_
 
-Network Data: **1.1.1** - _released on: May 31, 2021_
+Network Data: **1.1.2** - _released on: Jun 04, 2021_
 
 ### Crypto
 
@@ -119,13 +119,13 @@ Crypto Android: **1.0.3** - _released on: Apr 15, 2021_
 
 ### Auth
 
-Auth: **1.1.3** - _released on: May 27, 2021_
+Auth: **1.1.4** - _released on: Jun 04, 2021_
 
-Auth Domain: **1.1.3** - _released on: May 27, 2021_
+Auth Domain: **1.1.4** - _released on: Jun 04, 2021_
 
-Auth Presentation: **1.1.3** - _released on: May 27, 2021_
+Auth Presentation: **1.1.4** - _released on: Jun 04, 2021_
 
-Auth Data: **1.1.3** - _released on: May 27, 2021_
+Auth Data: **1.1.4** - _released on: Jun 04, 2021_
 
 ### Account
 
@@ -140,15 +140,15 @@ Account Data: **1.1** - _released on: May 12, 2021_
 
 ### Account Manager
 
-Account Manager: **1.1.3** - _released on: May 25, 2021_
+Account Manager: **1.1.4** - _released on: Jun 04, 2021_
 
-Account Manager Domain: **1.1.3** - _released on: May 25, 2021_
+Account Manager Domain: **1.1.4** - _released on: Jun 04, 2021_
 
-Account Manager Presentation: **1.1.3** - _released on: May 25, 2021_
+Account Manager Presentation: **1.1.4** - _released on: Jun 04, 2021_
 
-Account Manager Data: **1.1.3** - _released on: May 25, 2021_
+Account Manager Data: **1.1.4** - _released on: Jun 04, 2021_
 
-Account Manager Dagger: **1.1.3** - _released on: May 25, 2021_
+Account Manager Dagger: **1.1.4** - _released on: Jun 04, 2021_
 
 ### Key
 
@@ -160,11 +160,11 @@ Key Data: **1.0.4** - _released on: Mar 22, 2021_
 
 ### User
 
-User: **1.1.1** - _released on: May 12, 2021_
+User: **1.1.2** - _released on: Jun 04, 2021_
 
-User Domain: **1.1.1** - _released on: May 12, 2021_
+User Domain: **1.1.2** - _released on: Jun 04, 2021_
 
-User Data: **1.1.1** - _released on: May 12, 2021_
+User Data: **1.1.2** - _released on: Jun 04, 2021_
 
 ### Contact
 
@@ -184,13 +184,13 @@ Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
 
 ### Human Verification
 
-Human Verification: **1.2** - _released on: Jun 01, 2021_
+Human Verification: **1.2.1** - _released on: Jun 04, 2021_
 
-Human Verification Domain: **1.2** - _released on: Jun 01, 2021_
+Human Verification Domain: **1.2.1** - _released on: Jun 04, 2021_
 
-Human Verification Presentation: **1.2** - _released on: Jun 01, 2021_
+Human Verification Presentation: **1.2.1** - _released on: Jun 04, 2021_
 
-Human Verification Data: **1.2** - _released on: Jun 01, 2021_
+Human Verification Data: **1.2.1** - _released on: Jun 04, 2021_
 
 ### Countries
 
