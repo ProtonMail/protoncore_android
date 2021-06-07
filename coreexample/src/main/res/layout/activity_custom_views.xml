@@ -190,6 +190,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/loadingButton" />
 
+            <me.proton.core.presentation.ui.view.ProtonButton
+                android:id="@+id/secondaryButton"
+                style="@style/ProtonButton.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:text="@string/example_secondary_button"
+                app:layout_constraintTop_toBottomOf="@id/loadingTextOnlyButton"/>
+
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/secondaryButtonLoading"
+                style="@style/ProtonButton.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:text="@string/example_secondary_button"
+                app:initialState="loading"
+                app:layout_constraintTop_toBottomOf="@id/secondaryButton"/>
+
             <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/inputExample"
                 android:layout_width="match_parent"
@@ -201,7 +220,7 @@
                 app:label="@string/example_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/loadingTextOnlyButton" />
+                app:layout_constraintTop_toBottomOf="@id/secondaryButtonLoading" />
 
             <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/inputDisabledExample"
