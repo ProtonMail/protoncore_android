@@ -22,14 +22,11 @@ import me.proton.core.country.domain.repository.CountriesRepository
 import javax.inject.Inject
 
 /**
- * Use case for fetching all [me.proton.core.countries.domain.entity.Country] needed for any country chooser purpose
- * like phone or country name itself.
+ * Use case for fetching all [Country] needed for any country chooser purpose like phone or country name itself.
+ *
  * The countries are preloaded in the module and it uses [CountriesRepository] to load them.
  */
 class LoadCountries @Inject constructor(private val countriesRepository: CountriesRepository) {
 
-    /**
-     * Returns the countries which include or exclude the top five most used countries.
-     */
     suspend operator fun invoke() = countriesRepository.getAllCountriesSorted()
 }

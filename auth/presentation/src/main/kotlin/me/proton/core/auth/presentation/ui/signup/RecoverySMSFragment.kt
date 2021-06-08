@@ -46,7 +46,7 @@ class RecoverySMSFragment : ProtonFragment<FragmentRecoverySmsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getMostUsedCallingCode()
+        viewModel.getCountryCallingCode()
 
         childFragmentManager.setFragmentResultListener(CountryPickerFragment.KEY_COUNTRY_SELECTED, this) { _, bundle ->
             val country = bundle.getParcelable<CountryUIModel>(CountryPickerFragment.BUNDLE_KEY_COUNTRY)
@@ -68,7 +68,7 @@ class RecoverySMSFragment : ProtonFragment<FragmentRecoverySmsBinding>() {
             )
         }
 
-        viewModel.mostUsedCallingCode.onSuccess {
+        viewModel.countryCallingCode.onSuccess {
             binding.callingCodeText.text =
                 String.format(getString(R.string.auth_signup_calling_code_template), it)
         }.launchIn(lifecycleScope)

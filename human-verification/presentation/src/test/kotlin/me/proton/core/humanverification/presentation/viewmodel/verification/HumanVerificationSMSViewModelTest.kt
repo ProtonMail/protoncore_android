@@ -22,7 +22,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import me.proton.core.country.domain.usecase.MostUsedCountryCode
+import me.proton.core.country.domain.entity.Country
+import me.proton.core.country.domain.usecase.DefaultCountry
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -39,23 +40,29 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
 
-    private val mostUsedUseCase = mockk<MostUsedCountryCode>()
+    private val defaultCountry = mockk<DefaultCountry>()
     private val sendToPhoneDestinationUseCase = mockk<SendVerificationCodeToPhoneDestination>()
+
+    private val country: Country = Country(
+        code = "code",
+        name = "name",
+        callingCode = 0
+    )
 
     private val sessionId: SessionId = SessionId("id")
 
     private val viewModel by lazy {
         HumanVerificationSMSViewModel(
-            mostUsedUseCase,
+            defaultCountry,
             sendToPhoneDestinationUseCase
         )
     }
 
     @Test
-    fun `most used calling code returns success`() = coroutinesTest {
-        coEvery { mostUsedUseCase.invoke() } returns 0
-        viewModel.mostUsedCallingCode.test() {
-            viewModel.getMostUsedCallingCode()
+    fun `calling code returns success`() = coroutinesTest {
+        coEvery { defaultCountry.invoke() } returns country
+        viewModel.countryCallingCode.test() {
+            viewModel.getCountryCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
             assertIs<ViewModelResult.Processing>(expectItem())
             assertIs<ViewModelResult.Success<Int>>(expectItem())
@@ -64,22 +71,22 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     }
 
     @Test
-    fun `most used calling code returns correct data`() = coroutinesTest {
-        coEvery { mostUsedUseCase.invoke() } returns 1
-        viewModel.mostUsedCallingCode.test() {
-            viewModel.getMostUsedCallingCode()
+    fun `calling code returns correct data`() = coroutinesTest {
+        coEvery { defaultCountry.invoke() } returns country
+        viewModel.countryCallingCode.test() {
+            viewModel.getCountryCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
             assertIs<ViewModelResult.Processing>(expectItem())
-            assertEquals(1, (expectItem() as ViewModelResult.Success).value)
+            assertEquals(0, (expectItem() as ViewModelResult.Success).value)
             cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
     fun `use case throws no countries exception`() = coroutinesTest {
-        coEvery { mostUsedUseCase.invoke() } returns null
-        viewModel.mostUsedCallingCode.test() {
-            viewModel.getMostUsedCallingCode()
+        coEvery { defaultCountry.invoke() } returns null
+        viewModel.countryCallingCode.test() {
+            viewModel.getCountryCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
             assertIs<ViewModelResult.Processing>(expectItem())
             assertIs<ViewModelResult.Error>(expectItem())
@@ -89,7 +96,7 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
 
     @Test
     fun `send verification code to phone number success`() = coroutinesTest {
-        coEvery { mostUsedUseCase.invoke() } returns 0
+        coEvery { defaultCountry.invoke() } returns country
         coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns Unit
         viewModel.sendVerificationCodeToDestination(sessionId, "+0", "123456789")
         viewModel.verificationCodeStatus.test(timeout = 2.seconds) {
@@ -101,7 +108,7 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
     @Test
     fun `send verification code to phone number invalid`() = coroutinesTest {
         // given
-        coEvery { mostUsedUseCase.invoke() } returns 0
+        coEvery { defaultCountry.invoke() } returns country
         coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns Unit
 
         // when

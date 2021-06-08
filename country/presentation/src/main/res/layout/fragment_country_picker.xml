@@ -17,16 +17,16 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:windowBackground"
-        android:paddingStart="@dimen/countries_header_horizontal_margin"
-        android:paddingTop="@dimen/default_gap"
-        android:paddingEnd="@dimen/countries_header_horizontal_margin">
+        android:paddingStart="@dimen/countries_list_margin"
+        android:paddingTop="@dimen/countries_list_margin"
+        android:paddingEnd="@dimen/countries_list_margin"
+        android:paddingBottom="@dimen/countries_list_margin">
 
         <me.proton.core.presentation.ui.view.ProtonNavigationButton
             android:id="@+id/closeButton"
@@ -41,7 +41,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/country_picker_filter_margin"
-            android:layout_marginEnd="@dimen/default_margin"
             android:background="@drawable/default_search_edit_text"
             android:textCursorDrawable="@null"
             app:iconifiedByDefault="false"
@@ -57,9 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/default_top_margin"
-            android:paddingHorizontal="@dimen/default_margin"
-            android:paddingBottom="@dimen/default_margin"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filterEditText" />
@@ -78,4 +75,5 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
