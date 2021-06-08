@@ -286,11 +286,20 @@
     </style>
     <!-- endregion -->
 
-    <!-- region Switch -->
+    <!-- region Switches and radio buttons -->
     <style name="ProtonSwitch" parent="Widget.AppCompat.CompoundButton.Switch">
         <item name="android:textAppearance">@style/Proton.Text.Default</item>
         <item name="thumbTint">@color/switch_thumb_selector</item>
         <item name="trackTint">@color/switch_track_selector</item>
+    </style>
+
+    <style name="ProtonRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textAppearance">@style/Proton.Text.Default</item>
+        <item name="tint">@color/radio_button_selector</item>
+        <item name="useMaterialThemeColors">false</item>
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
     </style>
     <!-- endregion -->
 

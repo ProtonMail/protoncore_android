@@ -56,6 +56,9 @@
 
     <string name="example_switch_label">Switch</string>
 
+    <string name="example_radio1_label">Radio button 1</string>
+    <string name="example_radio2_label">Radio button 2</string>
+
     <string name="example_tab1">Tab 1</string>
     <string name="example_tab2">Tab 2</string>
     <string name="example_tab3">Tab 3</string>
