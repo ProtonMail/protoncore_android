@@ -286,6 +286,23 @@
     </style>
     <!-- endregion -->
 
+    <!-- region Switches and radio buttons -->
+    <style name="ProtonSwitch" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:textAppearance">@style/Proton.Text.Default</item>
+        <item name="thumbTint">@color/switch_thumb_selector</item>
+        <item name="trackTint">@color/switch_track_selector</item>
+    </style>
+
+    <style name="ProtonRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textAppearance">@style/Proton.Text.Default</item>
+        <item name="tint">@color/radio_button_selector</item>
+        <item name="useMaterialThemeColors">false</item>
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+    <!-- endregion -->
+
     <!-- region Dialog -->
     <style name="ProtonDialog.Picker" parent="ProtonTheme">
         <item name="android:windowNoTitle">true</item>
@@ -318,6 +335,7 @@
 
     <!-- region TabLayout -->
     <style name="ProtonTabStyle" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextAppearance">@style/Proton.Text.DefaultSmall.Medium</item>
         <item name="tabIconTint">@color/text_selectable_selector</item>
         <item name="tabIndicatorColor">?attr/proton_interaction_strong</item>
         <item name="tabTextColor">@color/text_selectable_selector</item>

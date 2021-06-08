@@ -66,8 +66,10 @@
         <item name="materialButtonStyle">@style/ProtonButton</item>
         <item name="materialButtonOutlinedStyle">@style/ProtonButton.OutlinedButton</item>
         <item name="navigationViewStyle">@style/ProtonNavigationView.Dark</item>
+        <item name="radioButtonStyle">@style/ProtonRadioButton</item>
         <item name="snackbarStyle">@style/ProtonSnackbar</item>
         <item name="snackbarButtonStyle">@style/ProtonSnackbarButton</item>
+        <item name="switchStyle">@style/ProtonSwitch</item>
         <item name="textAppearanceButton">@style/ProtonButtonTextAppearance</item>
 
         <!-- Brand specific attributes -->
