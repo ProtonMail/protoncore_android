@@ -286,6 +286,14 @@
     </style>
     <!-- endregion -->
 
+    <!-- region Switch -->
+    <style name="ProtonSwitch" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:textAppearance">@style/Proton.Text.Default</item>
+        <item name="thumbTint">@color/switch_thumb_selector</item>
+        <item name="trackTint">@color/switch_track_selector</item>
+    </style>
+    <!-- endregion -->
+
     <!-- region Dialog -->
     <style name="ProtonDialog.Picker" parent="ProtonTheme">
         <item name="android:windowNoTitle">true</item>

@@ -274,6 +274,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/errorExample"
                 app:suffix="\@protonmail.com" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchExample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_top_margin"
+                android:text="@string/example_switch_label"
+                app:layout_constraintTop_toBottomOf="@id/inputSuffixExample" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
