@@ -26,26 +26,26 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.country.domain.usecase.MostUsedCountryCode
+import me.proton.core.country.domain.usecase.DefaultCountry
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import javax.inject.Inject
 
 @HiltViewModel
 internal class RecoverySMSViewModel @Inject constructor(
-    private val mostUseCountryCode: MostUsedCountryCode
+    private val defaultCountry: DefaultCountry
 ) : ProtonViewModel() {
 
-    private val _mostUsedCallingCode = MutableStateFlow<ViewModelResult<Int>>(ViewModelResult.None)
+    private val _countryCallingCode = MutableStateFlow<ViewModelResult<Int>>(ViewModelResult.None)
 
-    val mostUsedCallingCode = _mostUsedCallingCode.asStateFlow()
+    val countryCallingCode = _countryCallingCode.asStateFlow()
 
     /**
-     * Returns the most used country calling code and later to display it as a suggestion in the SMS verification UI.
+     * Returns country calling code and later to display it as a suggestion in the SMS verification UI.
      */
-    fun getMostUsedCallingCode() = flow {
+    fun getCountryCallingCode() = flow {
         emit(ViewModelResult.Processing)
-        val code = mostUseCountryCode()
+        val code = defaultCountry()?.callingCode
         code?.let {
             emit(ViewModelResult.Success(it))
         } ?: run {
@@ -54,6 +54,6 @@ internal class RecoverySMSViewModel @Inject constructor(
     }.catch { error ->
         emit(ViewModelResult.Error(error))
     }.onEach {
-        _mostUsedCallingCode.tryEmit(it)
+        _countryCallingCode.tryEmit(it)
     }.launchIn(viewModelScope)
 }

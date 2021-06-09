@@ -21,7 +21,8 @@ package me.proton.core.auth.presentation.viewmodel.signup
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import me.proton.core.country.domain.usecase.MostUsedCountryCode
+import me.proton.core.country.domain.entity.Country
+import me.proton.core.country.domain.usecase.DefaultCountry
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -29,25 +30,30 @@ import me.proton.core.test.kotlin.assertIs
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import kotlin.time.seconds
 
 class RecoverySMSViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
-    private val mostUsedCountryCode = mockk<MostUsedCountryCode>(relaxed = true)
+    private val defaultCountryCode = mockk<DefaultCountry>(relaxed = true)
     // endregion
 
     private lateinit var viewModel: RecoverySMSViewModel
 
+    private val country: Country = Country(
+        code = "code",
+        name = "name",
+        callingCode = 0
+    )
+
     @Before
     fun beforeEveryTest() {
-        viewModel = RecoverySMSViewModel(mostUsedCountryCode)
+        viewModel = RecoverySMSViewModel(defaultCountryCode)
     }
 
     @Test
-    fun `most used calling code returns success`() = coroutinesTest {
-        coEvery { mostUsedCountryCode.invoke() } returns 0
-        viewModel.mostUsedCallingCode.test() {
-            viewModel.getMostUsedCallingCode()
+    fun `calling code returns success`() = coroutinesTest {
+        coEvery { defaultCountryCode.invoke() } returns country
+        viewModel.countryCallingCode.test() {
+            viewModel.getCountryCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
             assertIs<ViewModelResult.Processing>(expectItem())
             assertIs<ViewModelResult.Success<Int>>(expectItem())
@@ -56,22 +62,22 @@ class RecoverySMSViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `most used calling code returns correct data`() = coroutinesTest {
-        coEvery { mostUsedCountryCode.invoke() } returns 1
-        viewModel.mostUsedCallingCode.test() {
-            viewModel.getMostUsedCallingCode()
+    fun `calling code returns correct data`() = coroutinesTest {
+        coEvery { defaultCountryCode.invoke() } returns country
+        viewModel.countryCallingCode.test() {
+            viewModel.getCountryCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
             assertIs<ViewModelResult.Processing>(expectItem())
-            Assert.assertEquals(1, (expectItem() as ViewModelResult.Success).value)
+            Assert.assertEquals(0, (expectItem() as ViewModelResult.Success).value)
             cancelAndIgnoreRemainingEvents()
         }
     }
 
     @Test
     fun `use case throws no countries exception`() = coroutinesTest {
-        coEvery { mostUsedCountryCode.invoke() } returns null
-        viewModel.mostUsedCallingCode.test() {
-            viewModel.getMostUsedCallingCode()
+        coEvery { defaultCountryCode.invoke() } returns null
+        viewModel.countryCallingCode.test() {
+            viewModel.getCountryCallingCode()
             assertIs<ViewModelResult.None>(expectItem())
             assertIs<ViewModelResult.Processing>(expectItem())
             assertIs<ViewModelResult.Error>(expectItem())

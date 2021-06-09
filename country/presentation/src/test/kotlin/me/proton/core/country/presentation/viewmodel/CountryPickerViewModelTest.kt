@@ -22,12 +22,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
-import io.mockk.verify
 import me.proton.core.country.domain.usecase.LoadCountries
-import me.proton.core.country.presentation.utils.testCountriesExcludingMostUsed
+import me.proton.core.country.presentation.utils.testCountries
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.test.kotlin.assertIs
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -46,7 +44,7 @@ class CountryPickerViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `load countries has data`() = coroutinesTest {
-        coEvery { loadCountries.invoke() } returns testCountriesExcludingMostUsed
+        coEvery { loadCountries.invoke() } returns testCountries
         viewModel.countries.test {
             val success = expectItem()
             assertTrue(success is CountryPickerViewModel.State.Success)

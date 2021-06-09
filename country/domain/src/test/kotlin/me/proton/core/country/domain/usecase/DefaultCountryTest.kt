@@ -22,21 +22,20 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.country.domain.repository.CountriesRepository
-import me.proton.core.country.domain.utils.testCountriesExcludingMostUsed
+import me.proton.core.country.domain.utils.testCountries
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
-class MostUsedCountryCodeTest {
+class DefaultCountryTest {
 
     private val localRepository = mockk<CountriesRepository>()
 
     @Test
-    fun `returns the most used country code successfully`() = runBlockingTest {
-        val expectedResult = 1
-        val useCase = MostUsedCountryCode(localRepository)
-        coEvery { localRepository.getAllCountriesSorted() } returns testCountriesExcludingMostUsed
+    fun `returns the default country code successfully`() = runBlockingTest {
+        val expectedResult = null
+        val useCase = DefaultCountry(localRepository)
+        coEvery { localRepository.getAllCountriesSorted() } returns testCountries
 
         val result = useCase.invoke()
         assertEquals(expectedResult, result)
@@ -45,7 +44,7 @@ class MostUsedCountryCodeTest {
     @Test
     fun `empty flow throws exception`() = runBlockingTest {
         coEvery { localRepository.getAllCountriesSorted() } returns emptyList()
-        val useCase = MostUsedCountryCode(localRepository)
+        val useCase = DefaultCountry(localRepository)
         val result = useCase.invoke()
         assertNull(result)
     }

@@ -19,21 +19,16 @@
 package me.proton.core.country.domain.usecase
 
 import me.proton.core.country.domain.repository.CountriesRepository
+import java.util.Locale
 import javax.inject.Inject
 
 /**
- * Use case for a default country calling code that should be presented as a suggested calling code later in the UI.
- * From the first country in the list.
+ * Use case for a default country that should be presented as a suggested calling code later in the UI.
  */
-class MostUsedCountryCode @Inject constructor(
+class DefaultCountry @Inject constructor(
     private val countriesRepository: CountriesRepository
 ) {
-    /**
-     * Returns the first country calling code..
-     */
-    suspend operator fun invoke() = countriesRepository.getAllCountriesSorted().let {
-        if (it.isNotEmpty()) {
-            it[0].callingCode
-        } else null
+    suspend operator fun invoke() = countriesRepository.getAllCountriesSorted().firstOrNull {
+        Locale.getDefault().country.equals(it.code, ignoreCase = true)
     }
 }

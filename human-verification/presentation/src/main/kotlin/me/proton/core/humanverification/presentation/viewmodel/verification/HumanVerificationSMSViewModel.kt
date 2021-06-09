@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import me.proton.core.country.domain.usecase.MostUsedCountryCode
+import me.proton.core.country.domain.usecase.DefaultCountry
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToPhoneDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -39,15 +39,15 @@ import javax.inject.Inject
  */
 @HiltViewModel
 internal class HumanVerificationSMSViewModel @Inject constructor(
-    private val mostUseCountryCode: MostUsedCountryCode,
+    private val defaultCountry: DefaultCountry,
     private val sendVerificationCodeToPhoneDestination: SendVerificationCodeToPhoneDestination
 ) : ProtonViewModel(), HumanVerificationCode {
 
-    private val _mostUsedCallingCode = MutableStateFlow<ViewModelResult<Int>>(ViewModelResult.None)
+    private val _countryCallingCode = MutableStateFlow<ViewModelResult<Int>>(ViewModelResult.None)
     private val _validationSMS = getNewValidation()
     private val _verificationCodeStatusSMS = getNewVerificationCodeStatus()
 
-    val mostUsedCallingCode = _mostUsedCallingCode.asStateFlow()
+    val countryCallingCode = _countryCallingCode.asStateFlow()
     override val validation = _validationSMS.asStateFlow()
     override val verificationCodeStatus = _verificationCodeStatusSMS.asStateFlow()
 
@@ -70,12 +70,11 @@ internal class HumanVerificationSMSViewModel @Inject constructor(
         }
 
     /**
-     * Tries to return the most used country calling code and later to display it as a suggestion
-     * in the SMS verification UI.
+     * Return the country calling code and later to display it as a suggestion in the SMS verification UI.
      */
-    fun getMostUsedCallingCode() = flow {
+    fun getCountryCallingCode() = flow {
         emit(ViewModelResult.Processing)
-        val code = mostUseCountryCode()
+        val code = defaultCountry()?.callingCode
         code?.let {
             emit(ViewModelResult.Success(it))
         } ?: run {
@@ -84,7 +83,7 @@ internal class HumanVerificationSMSViewModel @Inject constructor(
     }.catch { error ->
         emit(ViewModelResult.Error(error))
     }.onEach {
-        _mostUsedCallingCode.tryEmit(it)
+        _countryCallingCode.tryEmit(it)
     }.launchIn(viewModelScope)
 
     /**

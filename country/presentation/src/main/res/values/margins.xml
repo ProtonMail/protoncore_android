@@ -18,7 +18,7 @@
   -->
 
 <resources>
-    <dimen name="countries_header_horizontal_margin">12dp</dimen>
+    <dimen name="countries_list_margin">12dp</dimen>
     <dimen name="country_picker_filter_margin">16dp</dimen>
     <dimen name="human_verification_country_picker_item_padding">8dp</dimen>
     <dimen name="human_verification_calling_code_title_margin">8dp</dimen>

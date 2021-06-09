@@ -73,7 +73,7 @@ internal class HumanVerificationSMSFragment : ProtonFragment<FragmentHumanVerifi
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getMostUsedCallingCode()
+        viewModel.getCountryCallingCode()
         humanVerificationBase.onViewCreated(
             owner = viewLifecycleOwner,
             parentFragmentManager = parentFragmentManager,
@@ -118,7 +118,7 @@ internal class HumanVerificationSMSFragment : ProtonFragment<FragmentHumanVerifi
             .onError { onValidationError(it) }
             .launchIn(lifecycleScope)
 
-        viewModel.mostUsedCallingCode
+        viewModel.countryCallingCode
             .onSuccess {
                 binding.callingCodeText.text =
                     String.format(getString(R.string.human_verification_calling_code_template), it)

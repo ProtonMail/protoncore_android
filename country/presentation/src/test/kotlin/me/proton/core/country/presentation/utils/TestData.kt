@@ -30,5 +30,5 @@ val country7 = Country("7", "seventh", 7)
 val country8 = Country("8", "eight", 8)
 val country9 = Country("9", "ninth", 9)
 
-val testCountriesExcludingMostUsed =
+val testCountries =
     listOf(country1, country2, country3, country4, country5, country6, country7, country8, country9)
