@@ -18,12 +18,14 @@
 
 package me.proton.core.accountmanager.presentation.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +40,7 @@ import me.proton.core.accountmanager.presentation.databinding.AccountListViewBin
 import me.proton.core.accountmanager.presentation.entity.AccountListItem
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 
+@SuppressLint("RestrictedApi")
 class AccountListView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -67,6 +70,9 @@ class AccountListView @JvmOverloads constructor(
         }
 
         accountListItemAdapter.setOnAccountMenuInflated { account, menu ->
+            if (menu is MenuBuilder) {
+                menu.setOptionalIconsVisible(true)
+            }
             val menuSignIn = menu.findItem(R.id.account_menu_sign_in)
             val menuSignOut = menu.findItem(R.id.account_menu_sign_out)
             val menuRemove = menu.findItem(R.id.account_menu_remove)
