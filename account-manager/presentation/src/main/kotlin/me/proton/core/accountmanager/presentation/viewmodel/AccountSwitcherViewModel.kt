@@ -21,11 +21,14 @@ package me.proton.core.accountmanager.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
@@ -40,8 +43,10 @@ import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.entity.AccountItem
 import me.proton.core.accountmanager.presentation.entity.AccountListItem
 import me.proton.core.auth.presentation.AuthOrchestrator
+import me.proton.core.domain.arch.mapSuccessValueOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.displayNameSplit
 import me.proton.core.util.kotlin.takeIfNotBlank
 import java.util.Locale
@@ -64,32 +69,39 @@ class AccountSwitcherViewModel @Inject constructor(
 
     private val onActionMutable = MutableSharedFlow<Action>(extraBufferCapacity = 1)
 
-    val primaryAccount = accountManager.getPrimaryAccount()
-        .mapLatest { account -> account?.getAccountItem() }
+    private val accountItems = accountManager.getAccounts()
+        .flatMapLatest { accounts -> combine(accounts.map { it.getAccountItem() }) { it.toList() } }
         .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
-    val accounts = primaryAccount.combine(accountManager.getAccounts()) { primary, accounts -> primary to accounts }
+    val primaryAccount = accountManager.getPrimaryAccount()
+        .flatMapLatest { account -> account?.getAccountItem() ?: flowOf(null) }
+        .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
+
+    val accounts = primaryAccount.combine(accountItems) { primary, accounts -> primary to accounts }
         .mapLatest { (primary, accounts) ->
             accounts.mapNotNull {
                 when {
                     primary?.userId == it.userId -> AccountListItem.Account.Primary(primary)
-                    it.state == AccountState.Ready -> AccountListItem.Account.Ready(it.getAccountItem())
-                    it.state == AccountState.Disabled -> AccountListItem.Account.Disabled(it.getAccountItem())
+                    it.state == AccountState.Ready -> AccountListItem.Account.Ready(it)
+                    it.state == AccountState.Disabled -> AccountListItem.Account.Disabled(it)
                     else -> null
                 }
             }
         }
         .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
-    private suspend fun Account.getAccountItem(): AccountItem {
-        val user = runCatching { userManager.getUser(userId) }.getOrNull()
+    private fun Account.getAccountItem(): Flow<AccountItem> =
+        userManager.getUserFlow(userId)
+            .mapSuccessValueOrNull()
+            .mapLatest { user -> getAccountItem(user) }
 
+    private fun Account.getAccountItem(user: User?): AccountItem {
         val split = user?.displayNameSplit
-        val letters = if (split?.firstName.isNullOrBlank() || split?.lastName.isNullOrBlank())
+        val letters = if (split?.firstName.isNullOrBlank() || split?.lastName.isNullOrBlank()) {
             username.take(2)
-        else
+        } else {
             split?.firstName?.take(1) + split?.lastName?.take(1)
-
+        }
         return AccountItem(
             userId = userId,
             initials = letters.toUpperCase(Locale.getDefault()),

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<!--
   ~ Copyright (c) 2021 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -16,17 +16,16 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/account_menu_sign_in"
-        android:icon="@drawable/ic_sign_in"
-        android:title="@string/account_switcher_action_sign_in" />
-    <item
-        android:id="@+id/account_menu_sign_out"
-        android:icon="@drawable/ic_sign_out"
-        android:title="@string/account_switcher_action_sign_out" />
-    <item
-        android:id="@+id/account_menu_remove"
-        android:icon="@drawable/ic_remove_account"
-        android:title="@string/account_switcher_action_remove" />
-</menu>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@color/pomegranate"
+        android:pathData="M17.25,12.75V11.25H6.75V12.75H17.25Z" />
+    <path
+        android:fillColor="@color/pomegranate"
+        android:fillType="evenOdd"
+        android:pathData="M12,3C16.9706,3 21,7.0294 21,12C21,16.9706 16.9706,21 12,21C7.0294,21 3,16.9706 3,12C3,7.0294 7.0294,3 12,3ZM12,4.5C7.8579,4.5 4.5,7.8579 4.5,12C4.5,16.1421 7.8579,19.5 12,19.5C16.1421,19.5 19.5,16.1421 19.5,12C19.5,7.8579 16.1421,4.5 12,4.5Z" />
+</vector>
