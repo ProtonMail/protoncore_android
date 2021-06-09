@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformLatest
+import me.proton.core.domain.arch.DataResult.Error
+import me.proton.core.domain.arch.DataResult.Success
 import me.proton.core.util.kotlin.exhaustive
 
 enum class ResponseSource {
@@ -117,4 +119,14 @@ inline fun <T : Any, R : Any> Flow<DataResult<T>>.transformSuccess(
         is DataResult.Error -> emit(it)
         is DataResult.Success -> transform(it)
     }.exhaustive
+}
+
+/**
+ * Returns a flow containing the [DataResult.Success.value], or null otherwise.
+ */
+fun <T : Any?> Flow<DataResult<T>>.mapSuccessValueOrNull(): Flow<T?> = map {
+    when (it) {
+        is DataResult.Success -> it.value
+        else -> null
+    }
 }
