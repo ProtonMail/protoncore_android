@@ -119,13 +119,13 @@ Crypto Android: **1.0.3** - _released on: Apr 15, 2021_
 
 ### Auth
 
-Auth: **1.1.4** - _released on: Jun 04, 2021_
+Auth: **1.1.5** - _released on: Jun 09, 2021_
 
-Auth Domain: **1.1.4** - _released on: Jun 04, 2021_
+Auth Domain: **1.1.5** - _released on: Jun 09, 2021_
 
-Auth Presentation: **1.1.4** - _released on: Jun 04, 2021_
+Auth Presentation: **1.1.5** - _released on: Jun 09, 2021_
 
-Auth Data: **1.1.4** - _released on: Jun 04, 2021_
+Auth Data: **1.1.5** - _released on: Jun 09, 2021_
 
 ### Account
 
@@ -184,23 +184,23 @@ Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
 
 ### Human Verification
 
-Human Verification: **1.2.1** - _released on: Jun 04, 2021_
+Human Verification: **1.2.2** - _released on: Jun 09, 2021_
 
-Human Verification Domain: **1.2.1** - _released on: Jun 04, 2021_
+Human Verification Domain: **1.2.2** - _released on: Jun 09, 2021_
 
-Human Verification Presentation: **1.2.1** - _released on: Jun 04, 2021_
+Human Verification Presentation: **1.2.2** - _released on: Jun 09, 2021_
 
-Human Verification Data: **1.2.1** - _released on: Jun 04, 2021_
+Human Verification Data: **1.2.2** - _released on: Jun 09, 2021_
 
 ### Countries
 
-Country: **0.1.4** - _released on: May 12, 2021_
+Country: **0.1.5** - _released on: Jun 09, 2021_
 
-Country Domain: **0.1.4** - _released on: May 12, 2021_
+Country Domain: **0.1.5** - _released on: Jun 09, 2021_
 
-Country Data: **0.1.4** - _released on: May 12, 2021_
+Country Data: **0.1.5** - _released on: Jun 09, 2021_
 
-Country Presentation: **0.1.4** - _released on: May 12, 2021_
+Country Presentation: **0.1.5** - _released on: Jun 09, 2021_
 
 ### Payment
 
