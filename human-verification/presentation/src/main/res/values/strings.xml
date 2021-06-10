@@ -38,7 +38,7 @@
     <string name="human_verification_help_title">Do you need any help with human verification?</string>
     <string name="human_verification_code">Verification Code</string>
     <string name="email">Email</string>
-    <string name="email_hint">example@protonmail.com</string>
+    <string name="email_hint">email@example.com</string>
     <string name="sms_hint">Phone number</string>
     <string name="verification_code_hint">XXXXXX</string>
 
