@@ -47,7 +47,7 @@ class GOpenPGPSrpCrypto : SrpCrypto {
         val auth = Auth(
             version,
             username,
-            String(password),
+            password,
             salt,
             modulus,
             serverEphemeral
@@ -66,7 +66,7 @@ class GOpenPGPSrpCrypto : SrpCrypto {
         val base64Modulus = Base64.decode(ClearTextMessage(modulus).data, Base64.DEFAULT)
         val hashedPassword: ByteArray = Srp.hashPassword(
             CURRENT_AUTH_VERSION.toLong(),
-            String(password),
+            password,
             username,
             salt,
             base64Modulus
