@@ -28,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_top_margin"
-            android:hint="@string/email_hint"
             android:inputType="textEmailAddress"
             app:label="@string/auth_signup_recovery_method_email_hint"
             app:layout_constraintEnd_toEndOf="parent"
