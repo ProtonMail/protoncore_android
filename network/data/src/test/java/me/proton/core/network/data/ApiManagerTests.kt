@@ -297,11 +297,23 @@ internal class ApiManagerTests {
     }
 
     @Test
-    fun `test force update`() = runBlockingTest {
+    fun `test force update app too old`() = runBlockingTest {
         coEvery { backend.invoke<TestResult>(any()) } returns
             ApiResult.Error.Http(
                 400, "",
-                ApiResult.Error.ProtonData(ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE, "")
+                ApiResult.Error.ProtonData(ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE_APP_TOO_OLD, "")
+            )
+        val result = apiManager.invoke { test() }
+        assertTrue(result is ApiResult.Error)
+        assertEquals(true, apiClient.forceUpdated)
+    }
+
+    @Test
+    fun `test force update api too old`() = runBlockingTest {
+        coEvery { backend.invoke<TestResult>(any()) } returns
+            ApiResult.Error.Http(
+                400, "",
+                ApiResult.Error.ProtonData(ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE_API_TOO_OLD, "")
             )
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Error)
