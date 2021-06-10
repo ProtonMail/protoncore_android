@@ -184,13 +184,13 @@ Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
 
 ### Human Verification
 
-Human Verification: **1.2.2** - _released on: Jun 09, 2021_
+Human Verification: **1.2.3** - _released on: Jun 10, 2021_
 
-Human Verification Domain: **1.2.2** - _released on: Jun 09, 2021_
+Human Verification Domain: **1.2.3** - _released on: Jun 10, 2021_
 
-Human Verification Presentation: **1.2.2** - _released on: Jun 09, 2021_
+Human Verification Presentation: **1.2.3** - _released on: Jun 10, 2021_
 
-Human Verification Data: **1.2.2** - _released on: Jun 09, 2021_
+Human Verification Data: **1.2.3** - _released on: Jun 10, 2021_
 
 ### Countries
 
