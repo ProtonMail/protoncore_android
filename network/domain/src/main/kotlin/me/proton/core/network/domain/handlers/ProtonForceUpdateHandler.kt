@@ -37,12 +37,18 @@ class ProtonForceUpdateHandler<Api>(private val apiClient: ApiClient) :
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
-        if (error is ApiResult.Error.Http && error.proton?.code == ERROR_CODE_FORCE_UPDATE)
+        if (error is ApiResult.Error.Http && error.proton != null && error.proton.code in ERROR_CODE_FORCE_UPDATE) {
             apiClient.forceUpdate(error.proton.error)
+        }
         return error
     }
 
     companion object {
-        const val ERROR_CODE_FORCE_UPDATE = 5003
+        const val ERROR_CODE_FORCE_UPDATE_APP_TOO_OLD = 5003
+        const val ERROR_CODE_FORCE_UPDATE_API_TOO_OLD = 5005
+        private val ERROR_CODE_FORCE_UPDATE = listOf(
+            ERROR_CODE_FORCE_UPDATE_APP_TOO_OLD,
+            ERROR_CODE_FORCE_UPDATE_API_TOO_OLD
+        )
     }
 }
