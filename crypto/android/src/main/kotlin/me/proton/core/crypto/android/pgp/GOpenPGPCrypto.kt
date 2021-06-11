@@ -32,6 +32,7 @@ import com.proton.gopenpgp.crypto.SessionKey
 import com.proton.gopenpgp.helper.ExplicitVerifyMessage
 import com.proton.gopenpgp.helper.Helper
 import com.proton.gopenpgp.srp.Srp
+import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
@@ -448,12 +449,11 @@ class GOpenPGPCrypto : PGPCrypto {
         password: ByteArray,
         encodedSalt: String
     ): ByteArray {
+        val passphraseHashSize = 31
         val decodedKeySalt: ByteArray = Base64.decode(encodedSalt, Base64.DEFAULT)
-        val generatedPassphrase: String = Srp.mailboxPassword(String(password), decodedKeySalt)
-        return generatedPassphrase
-            .replace("$2y$10$", "")
-            .replace(String(Radix64Encoder.Default().encode(decodedKeySalt)), "")
-            .toByteArray()
+        return Srp.mailboxPassword(password, decodedKeySalt).use {
+            it.array.copyOfRange(it.array.size - passphraseHashSize, it.array.size)
+        }
     }
 
     override fun generateNewKeySalt(): String {
