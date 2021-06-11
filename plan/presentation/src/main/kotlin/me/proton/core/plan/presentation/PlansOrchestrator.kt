@@ -30,10 +30,10 @@ class PlansOrchestrator @Inject constructor() {
 
     private var plansLauncher: ActivityResultLauncher<PlanInput>? = null
 
-    private var onPlanResultListener: ((result: UpgradeResult?) -> Unit)? = {}
+    private var onUpgradeResultListener: ((result: UpgradeResult?) -> Unit)? = {}
 
-    fun setOnPlanResult(block: (result: UpgradeResult?) -> Unit) {
-        onPlanResultListener = block
+    fun setOnUpgradeResult(block: (result: UpgradeResult?) -> Unit) {
+        onUpgradeResultListener = block
     }
 
     private fun registerPlanResult(
@@ -42,7 +42,7 @@ class PlansOrchestrator @Inject constructor() {
         context.registerForActivityResult(
             StartPlanChooser()
         ) {
-            onPlanResultListener?.invoke(it)
+            onUpgradeResultListener?.invoke(it)
         }
 
     /**
@@ -102,6 +102,6 @@ class PlansOrchestrator @Inject constructor() {
 fun PlansOrchestrator.onUpgradeResult(
     block: (result: UpgradeResult?) -> Unit
 ): PlansOrchestrator {
-    setOnPlanResult { block(it) }
+    setOnUpgradeResult { block(it) }
     return this
 }

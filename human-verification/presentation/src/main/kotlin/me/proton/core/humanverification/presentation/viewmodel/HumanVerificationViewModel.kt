@@ -38,7 +38,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HumanVerificationViewModel @Inject constructor(
     private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ProtonViewModel() {
 
     private lateinit var currentActiveVerificationMethod: TokenType

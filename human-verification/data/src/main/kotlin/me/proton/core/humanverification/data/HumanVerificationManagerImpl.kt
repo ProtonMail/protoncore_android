@@ -21,12 +21,14 @@ package me.proton.core.humanverification.data
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.humanverification.VerificationMethod
 
 class HumanVerificationManagerImpl(
     private val humanVerificationProvider: HumanVerificationProvider,
@@ -38,6 +40,10 @@ class HumanVerificationManagerImpl(
 
     override fun onHumanVerificationStateChanged(initialState: Boolean): Flow<HumanVerificationDetails> =
         humanVerificationRepository.onHumanVerificationStateChanged(initialState = initialState)
+
+    override suspend fun addDetails(details: HumanVerificationDetails) {
+        humanVerificationRepository.insertHumanVerificationDetails(details = details)
+    }
 
     override suspend fun handleHumanVerificationSuccess(clientId: ClientId, tokenType: String, tokenCode: String) {
         humanVerificationRepository.updateHumanVerificationState(

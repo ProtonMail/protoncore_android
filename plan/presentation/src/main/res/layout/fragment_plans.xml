@@ -30,7 +30,7 @@
             style="@style/ProtonButton.Navigation"
             android:layout_marginStart="@dimen/button_nav_margin_start"
             android:layout_marginTop="@dimen/button_nav_margin_top"
-            app:icon="@drawable/ic_close" />
+            app:icon="@drawable/ic_arrow_back" />
 
         <ScrollView
             android:id="@+id/scrollContent"
@@ -49,17 +49,16 @@
                 <View
                     android:id="@+id/gap"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="@dimen/default_no_toolbar_top_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/plansTitle"
-                    style="@style/Proton.Text.Headline"
+                    style="@style/ProtonTextView.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/double_top_margin"
                     android:maxLines="1"
                     android:text="@string/plans_select_a_plan"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -73,32 +72,49 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/gap_large"
                     android:layout_marginBottom="@dimen/gap_large"
-                    app:layout_constraintBottom_toTopOf="@id/customizableFeaturesText"
+                    app:layout_constraintBottom_toTopOf="@id/customizableFeaturesLayout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/plansTitle" />
 
-                <TextView
-                    android:id="@+id/customizableFeaturesText"
-                    style="@style/Proton.Text.Default.Weak"
+                <LinearLayout
+                    android:id="@+id/customizableFeaturesLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/gap_large"
-                    android:maxLines="4"
-                    android:autoLink="web"
-                    android:text="@string/plans_customizable_features"
+                    android:orientation="horizontal"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        style="@style/Proton.Text.Default.Weak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        android:autoLink="web"
+                        android:maxLines="4"
+                        android:text="*"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/customizableFeaturesText"
+                        style="@style/Proton.Text.Default.Weak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        android:maxLines="4"
+                        android:text="@string/plans_customizable_features" />
+
+                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:elevation="3dp"
             android:indeterminate="true"
             android:indeterminateTint="?attr/brand_norm"
             android:visibility="visible"

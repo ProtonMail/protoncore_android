@@ -32,6 +32,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class GetCurrentSubscriptionTest {
     // region mocks
@@ -68,6 +69,7 @@ class GetCurrentSubscriptionTest {
         val result = useCase.invoke(testUserId)
         // THEN
         assertEquals(testSubscription, result)
+        assertNotNull(result)
         assertEquals(5, result.amount)
     }
 
@@ -87,5 +89,24 @@ class GetCurrentSubscriptionTest {
         // THEN
         assertNotNull(throwable)
         assertEquals("Test error", throwable.message)
+    }
+
+    @Test
+    fun `get subscription returns no active subscription`() = runBlockingTest {
+        // GIVEN
+        coEvery { repository.getSubscription(testUserId) } throws ApiException(
+            ApiResult.Error.Http(
+                httpCode = 123,
+                "http error",
+                ApiResult.Error.ProtonData(
+                    code = GetCurrentSubscription.NO_ACTIVE_SUBSCRIPTION,
+                    error = "no active subscription"
+                )
+            )
+        )
+        // WHEN
+        val result = useCase.invoke(testUserId)
+        // THEN
+        assertNull(result)
     }
 }

@@ -49,13 +49,6 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
-import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.presentation.entity.PlanShortDetails
-import me.proton.core.payment.presentation.onPaymentResult
-import me.proton.core.plan.presentation.PlansOrchestrator
-import me.proton.core.plan.presentation.onUpgradeResult
-import me.proton.core.presentation.utils.showToast
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,9 +56,7 @@ class AccountViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val humanVerificationManager: HumanVerificationManager,
     private var authOrchestrator: AuthOrchestrator,
-    private var humanVerificationOrchestrator: HumanVerificationOrchestrator,
-    private val paymentsOrchestrator: PaymentsOrchestrator,
-    private val plansOrchestrator: PlansOrchestrator
+    private var humanVerificationOrchestrator: HumanVerificationOrchestrator
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State.Processing as State)
@@ -81,8 +72,6 @@ class AccountViewModel @Inject constructor(
     fun register(context: ComponentActivity) {
         authOrchestrator.register(context)
         humanVerificationOrchestrator.register(context)
-        paymentsOrchestrator.register(context)
-        plansOrchestrator.register(context)
 
         accountManager.getAccounts()
             .flowWithLifecycle(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
@@ -152,95 +141,5 @@ class AccountViewModel @Inject constructor(
         viewModelScope.launch {
             authOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.External)
         }
-    }
-
-    fun onPaySignUpClicked() {
-        viewModelScope.launch {
-            paymentsOrchestrator.startBillingWorkFlow(
-                selectedPlan = PlanShortDetails(
-                    PLAN_PLUS_ID,
-                    "Proton Plus",
-                    SubscriptionCycle.YEARLY
-                )
-            )
-        }
-    }
-
-    fun onPayUpgradeClicked() {
-        viewModelScope.launch {
-            getPrimaryUserId().first()?.let {
-                val account = accountManager.getAccount(it).first() ?: return@launch
-                with(paymentsOrchestrator) {
-                    onPaymentResult {
-                        // do something with the payment result
-                    }
-
-                    startBillingWorkFlow(
-                        userId = account.userId,
-                        selectedPlan = PlanShortDetails(
-                            PLAN_VISIONARY_ID,
-                            "Proton Visionary",
-                            SubscriptionCycle.YEARLY
-                        ),
-                        codes = null
-                    )
-                }
-            }
-        }
-    }
-
-    fun onPlansClicked() {
-        viewModelScope.launch {
-            plansOrchestrator.startSignUpPlanChooserWorkflow()
-        }
-    }
-
-    fun onPlansUpgradeClicked(context: ComponentActivity) {
-        viewModelScope.launch {
-            getPrimaryUserId().first()?.let {
-                val account = accountManager.getAccount(it).first() ?: return@launch
-                with(plansOrchestrator) {
-                    onUpgradeResult { upgradeResult ->
-                        // do something with the upgrade result
-                        if (upgradeResult != null) {
-                            context.showToast(
-                                "Upgrade result: ${upgradeResult.billingResult.token} " +
-                                    "for plan id: ${upgradeResult.planId}"
-                            )
-                        }
-                    }
-
-                    plansOrchestrator.startUpgradeWorkflow(account.userId)
-                }
-            }
-        }
-    }
-
-    fun onCurrentPlanClicked(context: ComponentActivity) {
-        viewModelScope.launch {
-            getPrimaryUserId().first()?.let {
-                val account = accountManager.getAccount(it).first() ?: return@launch
-                with(plansOrchestrator) {
-                    onUpgradeResult { upgradeResult ->
-                        // do something with the upgrade result
-                        if (upgradeResult != null) {
-                            context.showToast(
-                                "Upgrade result: ${upgradeResult.billingResult.token} " +
-                                    "for planId: ${upgradeResult.planId}"
-                            )
-                        }
-                    }
-
-                    plansOrchestrator.showCurrentPlanWorkflow(account.userId)
-                }
-            }
-        }
-    }
-
-    companion object {
-        const val PLAN_PLUS_ID =
-            "ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw=="
-        const val PLAN_VISIONARY_ID =
-            "cjGMPrkCYMsx5VTzPkfOLwbrShoj9NnLt3518AH-DQLYcvsJwwjGOkS8u3AcnX4mVSP6DX2c6Uco99USShaigQ=="
     }
 }

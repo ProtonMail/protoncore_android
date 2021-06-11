@@ -27,8 +27,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.plan.domain.SupportedPaidPlanIds
 import me.proton.core.plan.domain.entity.Plan
@@ -71,14 +69,7 @@ class PlansViewModel @Inject constructor(
         emit(State.Processing)
         val upgrade: Boolean = userId != null
         val currentSubscription = if (userId != null) {
-            try {
-                getCurrentSubscription(userId)
-            } catch (apiException: ApiException) {
-                if (NO_ACTIVE_SUBSCRIPTION != (apiException.error as ApiResult.Error.Http).proton?.code) {
-                    emit(State.Error.Message(apiException.message))
-                }
-                null
-            }
+            getCurrentSubscription(userId)
         } else null
 
         val subscribedPlans: MutableList<PlanDetailsListItem> = currentSubscription?.plans?.filter {
@@ -130,7 +121,6 @@ class PlansViewModel @Inject constructor(
     }
 
     companion object {
-        const val NO_ACTIVE_SUBSCRIPTION = 22110
         const val FREE_PLAN_ID = "free"
     }
 }

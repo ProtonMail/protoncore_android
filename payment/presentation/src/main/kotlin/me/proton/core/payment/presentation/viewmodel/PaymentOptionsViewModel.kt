@@ -30,8 +30,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethodType
@@ -91,7 +89,7 @@ class PaymentOptionsViewModel @Inject constructor(
         }
 
         sealed class Error : State() {
-            data class SubscriptionInRecoverableError(val message: String?) : Error()
+            object SubscriptionInRecoverableError : Error()
             data class Message(val message: String?) : Error()
         }
     }
@@ -101,15 +99,13 @@ class PaymentOptionsViewModel @Inject constructor(
      */
     fun getAvailablePaymentMethods(userId: UserId) = flow {
         emit(State.Processing)
-        try {
-            val currentSubscription = getCurrentSubscription(userId)
-            currentSubscription.plans.forEach { plan ->
+        val currentSubscription = getCurrentSubscription(userId)
+        currentSubscription?.let {
+            it.plans.forEach { plan ->
                 currentPlans.add(plan.id)
             }
-        } catch (apiException: ApiException) {
-            if (NO_ACTIVE_SUBSCRIPTION != (apiException.error as ApiResult.Error.Http).proton?.code) {
-                emit(State.Error.SubscriptionInRecoverableError(apiException.message))
-            }
+        } ?: run {
+            emit(State.Error.SubscriptionInRecoverableError)
         }
 
         val paymentMethods = availablePaymentMethods(userId).map {

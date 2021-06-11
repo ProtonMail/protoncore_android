@@ -19,7 +19,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.proton.core.plan">
 
-    <application android:supportsRtl="true">
-
+    <application>
+        <activity android:name=".presentation.ui.UpgradeActivity" />
     </application>
 </manifest>

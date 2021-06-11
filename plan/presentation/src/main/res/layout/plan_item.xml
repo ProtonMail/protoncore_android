@@ -121,7 +121,7 @@
 
     <Spinner
         android:id="@+id/billingCycleSpinner"
-        style="@style/PlanSpinnerStyle"
+        style="@style/ProtonSpinnerStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/gap_large"
@@ -133,7 +133,7 @@
 
     <Spinner
         android:id="@+id/currencySpinner"
-        style="@style/PlanSpinnerStyle"
+        style="@style/ProtonSpinnerStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/gap_large"

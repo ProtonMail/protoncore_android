@@ -22,10 +22,12 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_upgrade.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.plan.presentation.R
@@ -71,11 +73,22 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
             closeButton.onClick {
                 finish()
             }
+            val toolbar = activity?.toolbar
+            toolbar?.setNavigationOnClickListener {
+                finish()
+            }
             input.user?.let {
-                if (input.showCurrent)
+                if (input.showCurrent) {
                     plansTitle.visibility = View.GONE
-                else
+                    toolbar?.title = "Subscription"
+                } else {
+                    toolbar?.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
                     plansTitle.text = getString(R.string.plans_upgrade_plan)
+                }
+                closeButton.visibility = View.GONE
+                gap.visibility = View.GONE
+            } ?: run {
+                toolbar?.visibility = View.GONE
             }
         }
         viewModel.availablePlansState.onEach {
@@ -103,8 +116,8 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
                                 text = getString(R.string.plans_customizable_features_web)
                             }
                             movementMethod = LinkMovementMethod.getInstance()
-                            visibility = View.VISIBLE
                         }
+                        customizableFeaturesLayout.visibility = View.VISIBLE
                     }
                 }
             }.exhaustive

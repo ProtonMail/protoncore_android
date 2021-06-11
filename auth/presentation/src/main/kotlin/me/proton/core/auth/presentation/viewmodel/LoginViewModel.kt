@@ -49,11 +49,10 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
+import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.session.Session
 import me.proton.core.payment.domain.usecase.PerformSubscribe
-import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
@@ -70,12 +69,7 @@ internal class LoginViewModel @Inject constructor(
     private val performSubscribe: PerformSubscribe,
     humanVerificationManager: HumanVerificationManager,
     humanVerificationOrchestrator: HumanVerificationOrchestrator,
-    humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
-    paymentsOrchestrator: PaymentsOrchestrator
-) : AuthViewModel(
-    humanVerificationManager, humanVerificationOrchestrator,
-    paymentsOrchestrator, humanVerificationWorkflowHandler
-) {
+) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
 
     private val _state = MutableStateFlow<State>(State.Idle)
 
@@ -132,10 +126,12 @@ internal class LoginViewModel @Inject constructor(
         // perform subscribe
         subscriptionDetails?.let {
             it.billingResult?.also { billing ->
-                performSubscribe(
-                    userId = userId, amount = billing.amount, currency = billing.currency,
-                    cycle = billing.cycle, planIds = listOf(it.planId), paymentToken = billing.token
-                )
+                runCatching {
+                    performSubscribe(
+                        userId = userId, amount = billing.amount, currency = billing.currency,
+                        cycle = billing.cycle, planIds = listOf(it.planId), paymentToken = billing.token
+                    )
+                }
             }
         }
 

@@ -28,7 +28,7 @@ import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.plan.presentation.R
-import me.proton.core.plan.presentation.databinding.ActivityPlansBinding
+import me.proton.core.plan.presentation.databinding.ActivityUpgradeBinding
 import me.proton.core.plan.presentation.entity.Cycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
@@ -38,7 +38,7 @@ import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class UpgradeActivity : ProtonActivity<ActivityPlansBinding>() {
+class UpgradeActivity : ProtonActivity<ActivityUpgradeBinding>() {
 
     @Inject
     lateinit var paymentsOrchestrator: PaymentsOrchestrator
@@ -47,13 +47,13 @@ class UpgradeActivity : ProtonActivity<ActivityPlansBinding>() {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
-    override fun layoutId() = R.layout.activity_plans
+    override fun layoutId() = R.layout.activity_upgrade
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         paymentsOrchestrator.register(this)
 
-        supportFragmentManager.showPlans(planInput = input)
+        supportFragmentManager.showPlans(containerId = R.id.layoutContent, planInput = input)
 
         supportFragmentManager.setFragmentResultListener(
             PlansFragment.KEY_PLAN_SELECTED, this@UpgradeActivity

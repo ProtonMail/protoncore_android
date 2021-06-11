@@ -21,3 +21,8 @@ package me.proton.android.core.coreexample
 object Constants {
     const val BASE_URL = "https://${BuildConfig.ENVIRONMENT}/api/"
 }
+
+const val PLAN_PLUS_ID =
+    "ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw=="
+const val PLAN_VISIONARY_ID =
+    "cjGMPrkCYMsx5VTzPkfOLwbrShoj9NnLt3518AH-DQLYcvsJwwjGOkS8u3AcnX4mVSP6DX2c6Uco99USShaigQ=="

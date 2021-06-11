@@ -36,6 +36,7 @@ import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
+import me.proton.android.core.coreexample.viewmodel.PlansViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.auth.presentation.ui.AddAccountActivity
@@ -53,6 +54,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
     lateinit var coreExampleRepository: CoreExampleRepository
 
     private val accountViewModel: AccountViewModel by viewModels()
+    private val plansViewModel: PlansViewModel by viewModels()
     private val accountSwitcherViewModel: AccountSwitcherViewModel by viewModels()
     private val mailMessageViewModel: MailMessageViewModel by viewModels()
 
@@ -64,6 +66,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
 
         accountViewModel.register(this)
+        plansViewModel.register(this)
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
@@ -86,10 +89,10 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 }
             }
             sendDirect.onClick { mailMessageViewModel.sendDirect() }
-            payment.onClick { accountViewModel.onPayUpgradeClicked() }
-            plans.onClick { accountViewModel.onPlansClicked() }
-            plansUpgrade.onClick { accountViewModel.onPlansUpgradeClicked(this@MainActivity) }
-            plansCurrent.onClick { accountViewModel.onCurrentPlanClicked(this@MainActivity) }
+            payment.onClick { plansViewModel.onPayUpgradeClicked() }
+            plans.onClick { plansViewModel.onPlansClicked() }
+            plansUpgrade.onClick { plansViewModel.onPlansUpgradeClicked(this@MainActivity) }
+            plansCurrent.onClick { plansViewModel.onCurrentPlanClicked(this@MainActivity) }
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {

@@ -31,10 +31,10 @@ import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.test.android.ArchTest
@@ -55,8 +55,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     private val humanVerificationManager = mockk<HumanVerificationManager>()
     private val humanVerificationOrchestrator = mockk<HumanVerificationOrchestrator>()
     private val plansOrchestrator = mockk<PlansOrchestrator>(relaxed = true)
-    private val humanVerificationWorkflowHandler = mockk<HumanVerificationWorkflowHandler>(relaxed = true)
     private val paymentsOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
+    private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     // endregion
 
     // region test data
@@ -94,10 +94,10 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             performCreateExternalUser,
             keyStoreCrypto,
             plansOrchestrator,
+            paymentsOrchestrator,
+            clientIdProvider,
             humanVerificationManager,
-            humanVerificationOrchestrator,
-            humanVerificationWorkflowHandler,
-            paymentsOrchestrator
+            humanVerificationOrchestrator
         )
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns "encrypted-$testPassword"

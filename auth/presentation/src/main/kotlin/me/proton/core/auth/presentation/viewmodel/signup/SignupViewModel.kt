@@ -35,16 +35,24 @@ import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
+import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.viewmodel.AuthViewModel
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
+import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.payment.presentation.entity.PlanShortDetails
+import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.createUserType
@@ -57,14 +65,11 @@ internal class SignupViewModel @Inject constructor(
     private val performCreateExternalEmailUser: PerformCreateExternalEmailUser,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val plansOrchestrator: PlansOrchestrator,
-    humanVerificationManager: HumanVerificationManager,
-    humanVerificationOrchestrator: HumanVerificationOrchestrator,
-    humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
-    paymentsOrchestrator: PaymentsOrchestrator
-) : AuthViewModel(
-    humanVerificationManager, humanVerificationOrchestrator,
-    paymentsOrchestrator, humanVerificationWorkflowHandler
-) {
+    private val paymentsOrchestrator: PaymentsOrchestrator,
+    private val clientIdProvider: ClientIdProvider,
+    private val humanVerificationManager: HumanVerificationManager,
+    humanVerificationOrchestrator: HumanVerificationOrchestrator
+) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
 
     // region private properties
     private val _inputState = MutableSharedFlow<InputState>(extraBufferCapacity = 10)
@@ -74,6 +79,7 @@ internal class SignupViewModel @Inject constructor(
 
     // endregion
     // region public properties
+    var subscriptionDetails: SubscriptionDetails? = null
     val userCreationState = _userCreationState.asStateFlow()
     val inputState = _inputState.asSharedFlow()
 
@@ -103,6 +109,7 @@ internal class SignupViewModel @Inject constructor(
         data class Success(val user: User) : State()
         sealed class Error : State() {
             object HumanVerification : Error()
+            object PlanChooserCancel : Error()
             data class Message(val message: String?) : Error()
         }
     }
@@ -131,8 +138,9 @@ internal class SignupViewModel @Inject constructor(
         _inputState.tryEmit(InputState.Ready)
     }
 
-    fun startPlanChooserWorkFlow() {
-        plansOrchestrator.startSignUpPlanChooserWorkflow()
+    fun onPlanChooserCancel() {
+        _userCreationState.tryEmit(State.Idle)
+        _userCreationState.tryEmit(State.Error.PlanChooserCancel)
     }
 
     /**
@@ -148,9 +156,52 @@ internal class SignupViewModel @Inject constructor(
         }.exhaustive
     }
 
+    fun startBillingForPaidPlan(planId: String, planName: String, cycle: SubscriptionCycle) {
+        val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
+        subscriptionDetails = SubscriptionDetails(
+            billingResult = null,
+            planId = planId,
+            planName = planName,
+            cycle = cycle
+        )
+        with(paymentsOrchestrator) {
+            onPaymentResult { result ->
+                result.let { billingResult ->
+                    if (billingResult?.paySuccess == true) {
+                        viewModelScope.launch {
+                            // update subscription details
+                            subscriptionDetails = subscriptionDetails?.copy(billingResult = billingResult)
+                            humanVerificationManager.addDetails(
+                                details = HumanVerificationDetails(
+                                    clientId = clientId,
+                                    verificationMethods = listOf(VerificationMethod.PAYMENT),
+                                    captchaVerificationToken = null,
+                                    state = HumanVerificationState.HumanVerificationSuccess,
+                                    tokenType = TokenType.PAYMENT.value,
+                                    tokenCode = billingResult.token!!
+                                )
+                            )
+                        }
+                        startCreateUserWorkflow()
+                    }
+                }
+            }
+
+            startBillingWorkFlow(
+                selectedPlan = PlanShortDetails(
+                    id = planId,
+                    name = planName,
+                    subscriptionCycle = cycle
+                ),
+                codes = null
+            )
+        }
+    }
+
     override fun register(context: ComponentActivity) {
         super.register(context)
         plansOrchestrator.register(context)
+        paymentsOrchestrator.register(context)
     }
 
     // endregion

@@ -26,6 +26,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
+import me.proton.core.payment.domain.usecase.GetCurrentSubscription.Companion.NO_ACTIVE_SUBSCRIPTION
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.plan.domain.usecase.GetPlans
@@ -139,16 +140,8 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getPlansUseCase.invoke(testDefaultSupportedPlanIds, testUserId) } returns listOf(
             testPlan
         )
-        coEvery { getCurrentSubscription.invoke(testUserId) } throws ApiException(
-            ApiResult.Error.Http(
-                httpCode = 123,
-                "http error",
-                ApiResult.Error.ProtonData(
-                    code = PlansViewModel.NO_ACTIVE_SUBSCRIPTION,
-                    error = "no active subscription"
-                )
-            )
-        )
+
+        coEvery { getCurrentSubscription.invoke(testUserId) } returns null
         viewModel.availablePlansState.test {
             // WHEN
             viewModel.getCurrentPlanWithUpgradeOption(testUserId)
