@@ -52,6 +52,9 @@ dependencies {
         project(Module.keyDomain),
         project(Module.countryPresentation),
         project(Module.countryDomain),
+        project(Module.planPresentation),
+        project(Module.paymentDomain),
+        project(Module.paymentPresentation),
 
         // Kotlin
         `kotlin-jdk7`,

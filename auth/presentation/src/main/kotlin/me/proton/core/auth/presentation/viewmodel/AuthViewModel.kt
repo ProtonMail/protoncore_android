@@ -42,7 +42,7 @@ internal abstract class AuthViewModel(
                 )
             }
 
-    fun register(context: ComponentActivity) {
+    open fun register(context: ComponentActivity) {
         humanVerificationOrchestrator.register(context)
     }
 }

@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
@@ -40,8 +41,11 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
+import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.createUserType
 import me.proton.core.util.kotlin.exhaustive
@@ -52,9 +56,15 @@ internal class SignupViewModel @Inject constructor(
     private val performCreateUser: PerformCreateUser,
     private val performCreateExternalEmailUser: PerformCreateExternalEmailUser,
     private val keyStoreCrypto: KeyStoreCrypto,
+    private val plansOrchestrator: PlansOrchestrator,
     humanVerificationManager: HumanVerificationManager,
-    humanVerificationOrchestrator: HumanVerificationOrchestrator
-) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
+    humanVerificationOrchestrator: HumanVerificationOrchestrator,
+    humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
+    paymentsOrchestrator: PaymentsOrchestrator
+) : AuthViewModel(
+    humanVerificationManager, humanVerificationOrchestrator,
+    paymentsOrchestrator, humanVerificationWorkflowHandler
+) {
 
     // region private properties
     private val _inputState = MutableSharedFlow<InputState>(extraBufferCapacity = 10)
@@ -121,18 +131,28 @@ internal class SignupViewModel @Inject constructor(
         _inputState.tryEmit(InputState.Ready)
     }
 
+    fun startPlanChooserWorkFlow() {
+        plansOrchestrator.startSignUpPlanChooserWorkflow()
+    }
+
     /**
      * Starts the user creation flow. This function automatically decides what kind of user to create based on the
      * previously set [AccountType].
      * @see currentAccountType public property
      */
-    suspend fun startCreateUserWorkflow() {
+    fun startCreateUserWorkflow() = viewModelScope.launch {
         when (currentAccountType) {
             AccountType.Username,
             AccountType.Internal -> createUser()
             AccountType.External -> createExternalUser()
         }.exhaustive
     }
+
+    override fun register(context: ComponentActivity) {
+        super.register(context)
+        plansOrchestrator.register(context)
+    }
+
     // endregion
 
     // region private functions

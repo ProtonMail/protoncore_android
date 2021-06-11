@@ -31,10 +31,18 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivitySignupBinding
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
+import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.ui.AuthActivity
+import me.proton.core.auth.presentation.viewmodel.AuthViewModel
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.plan.presentation.entity.Cycle
+import me.proton.core.plan.presentation.entity.PlanInput
+import me.proton.core.plan.presentation.entity.SelectedPlan
+import me.proton.core.plan.presentation.ui.PlansFragment
+import me.proton.core.plan.presentation.ui.showPlans
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -60,7 +68,15 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         signUpViewModel.inputState.onEach {
             when (it) {
                 is SignupViewModel.InputState.Ready -> {
-                    signUpViewModel.startCreateUserWorkflow()
+                    supportFragmentManager.showPlans(planInput = PlanInput())
+                    supportFragmentManager.setFragmentResultListener(
+                        PlansFragment.KEY_PLAN_SELECTED, this
+                    ) { _, bundle ->
+                        val plan = bundle.getParcelable<SelectedPlan>(PlansFragment.BUNDLE_KEY_PLAN)
+                        if (plan != null) {
+                            onPlanSelected(plan)
+                        }
+                    }
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -93,6 +109,24 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         }.launchIn(lifecycleScope)
     }
 
+    private fun onPlanSelected(plan: SelectedPlan) {
+        if (plan.free) {
+            signUpViewModel.startCreateUserWorkflow()
+        } else {
+            signUpViewModel.flow = AuthViewModel.Flow.PAID
+            signUpViewModel.subscriptionDetails = SubscriptionDetails(
+                billingResult = null,
+                planId = plan.planId,
+                planName = plan.planName,
+                cycle = when (plan.cycle) {
+                    Cycle.MONTHLY -> SubscriptionCycle.MONTHLY
+                    Cycle.YEARLY -> SubscriptionCycle.YEARLY
+                }.exhaustive
+            )
+            signUpViewModel.startCreateUserWorkflow()
+        }
+    }
+
     private fun onSignUpSuccess() {
         with(supportFragmentManager) {
             for (i in 0..backStackEntryCount) {
@@ -103,7 +137,8 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         loginViewModel.startLoginWorkflow(
             signUpViewModel.getLoginUsername()!!,
             signUpViewModel.password,
-            signUpViewModel.currentAccountType
+            signUpViewModel.currentAccountType,
+            signUpViewModel.subscriptionDetails
         )
     }
 

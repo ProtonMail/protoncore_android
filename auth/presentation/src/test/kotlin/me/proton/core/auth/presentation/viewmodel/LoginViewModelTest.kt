@@ -41,11 +41,14 @@ import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.payment.domain.usecase.PerformSubscribe
+import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -70,6 +73,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
     private val humanVerificationManager = mockk<HumanVerificationManager>(relaxed = true)
     private val humanVerificationOrchestrator = mockk<HumanVerificationOrchestrator>(relaxed = true)
+    private val humanVerificationWorkflowHandler = mockk<HumanVerificationWorkflowHandler>(relaxed = true)
+    private val paymentsOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
+    private val performSubscribe = mockk<PerformSubscribe>(relaxed = true)
     // endregion
 
     // region test data
@@ -92,8 +98,11 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             setupPrimaryKeys,
             setupInternalAddress,
             keyStoreCrypto,
+            performSubscribe,
             humanVerificationManager,
-            humanVerificationOrchestrator
+            humanVerificationOrchestrator,
+            humanVerificationWorkflowHandler,
+            paymentsOrchestrator
         )
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
