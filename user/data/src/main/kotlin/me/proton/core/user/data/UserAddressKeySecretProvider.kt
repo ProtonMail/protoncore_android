@@ -122,7 +122,7 @@ class UserAddressKeySecretProvider(
                 flags = 0,
                 token = secret.token,
                 signature = secret.signature,
-                active = false,
+                active = true,
                 keyId = KeyId("temp"),
                 privateKey = privateKey
             )

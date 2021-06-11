@@ -19,9 +19,13 @@
 package me.proton.core.user.domain.extension
 
 import me.proton.core.user.domain.entity.UserAddressKey
+import me.proton.core.user.domain.entity.UserAddressKeyFlags
 
-private const val MASK_CAN_VERIFY_SIGNATURE = 1 // 01
+private const val MASK_CAN_VERIFY = 1 // 01
 private const val MASK_CAN_ENCRYPT_VALUE = 2 // 10
 
-fun UserAddressKey.canEncrypt(): Boolean = flags.and(MASK_CAN_ENCRYPT_VALUE) == MASK_CAN_ENCRYPT_VALUE
-fun UserAddressKey.canVerifySignature(): Boolean = flags.and(MASK_CAN_VERIFY_SIGNATURE) == MASK_CAN_VERIFY_SIGNATURE
+fun UserAddressKeyFlags.canVerify() = this.and(MASK_CAN_VERIFY) == MASK_CAN_VERIFY
+fun UserAddressKeyFlags.canEncrypt() = this.and(MASK_CAN_ENCRYPT_VALUE) == MASK_CAN_ENCRYPT_VALUE
+
+fun UserAddressKey.canEncrypt(): Boolean = flags.canEncrypt()
+fun UserAddressKey.canVerify(): Boolean = flags.canVerify()

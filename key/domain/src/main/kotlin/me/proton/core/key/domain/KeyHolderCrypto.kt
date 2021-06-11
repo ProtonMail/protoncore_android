@@ -67,10 +67,7 @@ import java.io.InputStream
  */
 fun <R> KeyHolder.useKeys(context: CryptoContext, block: KeyHolderContext.() -> R): R {
     val privateKeys = keys.map { key -> key.privateKey }
-    val publicKeys = keys.map { key ->
-        val publicKey = context.pgpCrypto.getPublicKey(key.privateKey.key)
-        PublicKey(publicKey, key.privateKey.isPrimary)
-    }
+    val publicKeys = privateKeys.map { key -> key.publicKey(context) }
     val keyHolderContext = KeyHolderContext(
         context = context,
         privateKeyRing = PrivateKeyRing(context, privateKeys),

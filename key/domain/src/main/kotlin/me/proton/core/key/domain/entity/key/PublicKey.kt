@@ -22,5 +22,8 @@ import me.proton.core.crypto.common.pgp.Armored
 
 data class PublicKey(
     val key: Armored,
-    val isPrimary: Boolean
+    val isPrimary: Boolean,
+    val isActive: Boolean,
+    val canEncrypt: Boolean,
+    val canVerify: Boolean
 )

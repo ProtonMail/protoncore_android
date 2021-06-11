@@ -186,7 +186,7 @@ internal fun optionalOnPrivateApi(
             signData(context, "message".toByteArray())
 
             // Finally lock - currently not used.
-            lock(context, EncryptedByteArray("passphrase".toByteArray()), false)
+            lock(context, EncryptedByteArray("passphrase".toByteArray()))
         }
     }
 

@@ -34,7 +34,7 @@ object TestAddresses {
                 val response = AddressKeyResponse(
                     id = id.id,
                     version = 1,
-                    flags = 1,
+                    flags = 3, // canVerify = true, canEncrypt = true
                     privateKey = TestKeys.Key1.privateKey,
                     token = null,
                     signature = null,
@@ -43,6 +43,23 @@ object TestAddresses {
                     activation = null,
                     primary = 1,
                     active = 1
+                )
+            }
+
+            object Key2Inactive {
+                val id = KeyId("user1AddressKey2")
+                val response = AddressKeyResponse(
+                    id = id.id,
+                    version = 1,
+                    flags = 1, // canVerify = true, canEncrypt = false
+                    privateKey = TestKeys.Key1.privateKey,
+                    token = null,
+                    signature = null,
+                    fingerprint = null,
+                    fingerprints = null,
+                    activation = null,
+                    primary = 1,
+                    active = 0
                 )
             }
 
@@ -58,7 +75,113 @@ object TestAddresses {
                 displayName = "User1 Address1",
                 signature = null,
                 hasKeys = 1,
-                keys = listOf(Key1.response)
+                keys = listOf(Key1.response, Key2Inactive.response)
+            )
+        }
+
+        object Address2 {
+            val id = AddressId("user1Address2")
+
+            object Key3 {
+                val id = KeyId("user1AddressKey3")
+                val response = AddressKeyResponse(
+                    id = id.id,
+                    version = 1,
+                    flags = 2, // canVerify = false, canEncrypt = true
+                    privateKey = TestKeys.Key1.privateKey,
+                    token = null,
+                    signature = null,
+                    fingerprint = null,
+                    fingerprints = null,
+                    activation = null,
+                    primary = 1,
+                    active = 1
+                )
+            }
+
+            object Key4 {
+                val id = KeyId("user1AddressKey4")
+                val response = AddressKeyResponse(
+                    id = id.id,
+                    version = 1,
+                    flags = 3, // canVerify = true, canEncrypt = true
+                    privateKey = TestKeys.Key2.privateKey,
+                    token = null,
+                    signature = null,
+                    fingerprint = null,
+                    fingerprints = null,
+                    activation = null,
+                    primary = 1,
+                    active = 0
+                )
+            }
+
+            val response = AddressResponse(
+                id = id.id,
+                domainId = null,
+                email = "user1address2@example.com",
+                send = 1,
+                receive = 1,
+                status = 1,
+                type = AddressType.Alias.value,
+                order = 1,
+                displayName = "User1 Address2",
+                signature = null,
+                hasKeys = 1,
+                keys = listOf(Key3.response, Key4.response)
+            )
+        }
+
+        object Address3 {
+            val id = AddressId("user1Address3")
+
+            object Key5Normal {
+                val id = KeyId("user1AddressKey5")
+                val response = AddressKeyResponse(
+                    id = id.id,
+                    version = 1,
+                    flags = 3, // canVerify = true, canEncrypt = true
+                    privateKey = TestKeys.Key1.privateKey,
+                    token = null,
+                    signature = null,
+                    fingerprint = null,
+                    fingerprints = null,
+                    activation = null,
+                    primary = 1,
+                    active = 1
+                )
+            }
+
+            object Key6Suspicious {
+                val id = KeyId("user1AddressKey6")
+                val response = AddressKeyResponse(
+                    id = id.id,
+                    version = 1,
+                    flags = 3, // canVerify = true, canEncrypt = true
+                    privateKey = TestKeys.Key2.privateKey, // Cannot unlock with Key1.passphrase
+                    token = null,
+                    signature = null,
+                    fingerprint = null,
+                    fingerprints = null,
+                    activation = null,
+                    primary = 1,
+                    active = 1 // Active is suspicious
+                )
+            }
+
+            val response = AddressResponse(
+                id = id.id,
+                domainId = null,
+                email = "user1address3@example.com",
+                send = 1,
+                receive = 1,
+                status = 1,
+                type = AddressType.Alias.value,
+                order = 1,
+                displayName = "User1 Address3",
+                signature = null,
+                hasKeys = 1,
+                keys = listOf(Key5Normal.response, Key6Suspicious.response)
             )
         }
     }
@@ -72,7 +195,7 @@ object TestAddresses {
                 val response = AddressKeyResponse(
                     id = id.id,
                     version = 1,
-                    flags = 1,
+                    flags = 3,
                     privateKey = TestKeys.Key1.privateKey,
                     token = TestKeys.Key1.passphraseEncryptedWithKey2,
                     signature = TestKeys.Key1.passphraseSignedWithKey2,

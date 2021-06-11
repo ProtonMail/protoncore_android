@@ -32,13 +32,19 @@ class TestKeyHolder(
     private val passphraseCount: Int = 4
 ) : KeyHolder {
 
-    inner class TestKeyHolderPrivateKey(id: String, isPrimary: Boolean, passphrase: ByteArray?) : KeyHolderPrivateKey {
+    inner class TestKeyHolderPrivateKey(
+        id: String,
+        isPrimary: Boolean,
+        isActive: Boolean,
+        passphrase: ByteArray?
+    ) : KeyHolderPrivateKey {
         override val keyId: KeyId = KeyId(id)
         private val unlockedKey = "$name#key$id".toByteArray()
         override val privateKey: PrivateKey = PrivateKey(
             // Encrypt the key with passphrase.
             key = unlockedKey.encrypt(passphrase ?: unlockedKey).fromByteArray(),
             isPrimary = isPrimary,
+            isActive = isActive,
             // Encrypt passphrase as it should be stored in PrivateKey.
             passphrase = passphrase?.let { PlainByteArray(passphrase).encryptWith(context.keyStoreCrypto) }
         ).also { key ->
@@ -54,6 +60,7 @@ class TestKeyHolder(
                 TestKeyHolderPrivateKey(
                     id = "$index",
                     isPrimary = index == 1,
+                    isActive = index <= passphraseCount,
                     passphrase = "$name#passphrase$index".toByteArray().takeIf { index <= passphraseCount }
                 )
             }

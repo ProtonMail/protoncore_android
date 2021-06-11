@@ -20,8 +20,17 @@ package me.proton.core.key.domain.entity.key
 
 data class PublicAddressKey(
     val email: String,
-    val flags: Int,
+    val flags: PublicAddressKeyFlags,
     val publicKey: PublicKey
-) {
-    val isCompromised = flags.and(1) == 0
-}
+)
+
+/**
+ * Bitmap with the following values.
+ *
+ * - Key is not compromised = 1 (2^0) (if the bit is set to one the key is not compromised)
+ * - Key is not obsolete = 2 (2^1)
+ */
+typealias PublicAddressKeyFlags = Int
+
+fun PublicAddressKeyFlags.isCompromised() = this.and(1) == 0
+fun PublicAddressKeyFlags.isObsolete() = this.and(2) == 0

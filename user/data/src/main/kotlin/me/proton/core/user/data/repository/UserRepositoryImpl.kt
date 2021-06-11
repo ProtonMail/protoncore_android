@@ -26,6 +26,7 @@ import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
@@ -50,7 +51,8 @@ import me.proton.core.user.domain.repository.UserRepository
 
 class UserRepositoryImpl(
     private val db: UserDatabase,
-    private val provider: ApiProvider
+    private val provider: ApiProvider,
+    private val context: CryptoContext
 ) : UserRepository, PassphraseRepository {
 
     private val userDao = db.userDao()
@@ -73,7 +75,7 @@ class UserRepositoryImpl(
 
     private fun getUserLocal(userId: UserId): Flow<User?> = userWithKeysDao.findByUserId(userId)
         .map { user ->
-            val userKeyList = user?.keys?.toUserKeyList(getPassphrase(userId)).orEmpty()
+            val userKeyList = user?.keys?.toUserKeyList(context, getPassphrase(userId)).orEmpty()
             user?.entity?.toUser(userKeyList)
         }
 

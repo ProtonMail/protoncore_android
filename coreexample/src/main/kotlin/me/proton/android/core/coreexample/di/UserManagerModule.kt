@@ -56,8 +56,9 @@ object UserManagerModule {
     @Singleton
     fun provideUserRepositoryImpl(
         db: AccountManagerDatabase,
-        provider: ApiProvider
-    ): UserRepositoryImpl = UserRepositoryImpl(db, provider)
+        provider: ApiProvider,
+        context: CryptoContext
+    ): UserRepositoryImpl = UserRepositoryImpl(db, provider, context)
 
     @Provides
     @Singleton

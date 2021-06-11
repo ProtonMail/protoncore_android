@@ -30,6 +30,8 @@ import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.AddressType
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
+import me.proton.core.user.domain.extension.canEncrypt
+import me.proton.core.user.domain.extension.canVerify
 import me.proton.core.util.kotlin.toBooleanOrFalse
 
 internal fun AddressResponse.toEntity(userId: UserId) = AddressEntity(
@@ -87,7 +89,14 @@ internal fun AddressKeyEntity.toUserAddressKey(passphrase: EncryptedByteArray?) 
     activation = activation,
     active = active,
     keyId = keyId,
-    privateKey = PrivateKey(privateKey, isPrimary, passphrase)
+    privateKey = PrivateKey(
+        key = privateKey,
+        isPrimary = isPrimary,
+        isActive = active,
+        canEncrypt = flags.canEncrypt(),
+        canVerify = flags.canVerify(),
+        passphrase = passphrase
+    )
 )
 
 internal fun UserAddress.toEntity() = AddressEntity(

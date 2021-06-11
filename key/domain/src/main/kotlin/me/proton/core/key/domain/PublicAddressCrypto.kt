@@ -94,7 +94,7 @@ fun PublicAddress.encryptSessionKey(context: CryptoContext, keyPacket: KeyPacket
 /**
  * Get [PublicKeyRing] from this [PublicAddress].
  *
- * @return [PublicKeyRing] without any compromised keys.
+ * @return [PublicKeyRing] without any non-active keys.
  */
 fun PublicAddress.publicKeyRing(): PublicKeyRing =
-    PublicKeyRing(keys.mapNotNull { it.takeIf { !it.isCompromised }?.publicKey })
+    PublicKeyRing(keys.mapNotNull { it.takeIf { it.publicKey.isActive }?.publicKey })

@@ -24,6 +24,9 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 data class PrivateKey(
     val key: Armored,
     val isPrimary: Boolean,
+    val isActive: Boolean = true,
+    val canEncrypt: Boolean = true,
+    val canVerify: Boolean = true,
     val passphrase: EncryptedByteArray?
 ) {
     /**
@@ -31,5 +34,13 @@ data class PrivateKey(
      *
      * False if a passphrase is associated, thereby public and private crypto functions are available.
      */
+    @Deprecated("Please use isUnlockable instead.", ReplaceWith("isUnlockable.not()"))
     val isLocked = passphrase == null
+
+    /**
+     * False if no passphrase is associated, thereby only public crypto functions are available.
+     *
+     * True if a passphrase is associated, thereby public and private crypto functions are available.
+     */
+    val isUnlockable = passphrase != null
 }

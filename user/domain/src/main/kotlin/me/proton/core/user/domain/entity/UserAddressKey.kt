@@ -26,7 +26,7 @@ import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
 data class UserAddressKey(
     val addressId: AddressId,
     val version: Int,
-    val flags: Int,
+    val flags: UserAddressKeyFlags,
     val token: Armored? = null,
     val signature: Armored? = null,
     val activation: Armored? = null,
@@ -34,3 +34,8 @@ data class UserAddressKey(
     override val keyId: KeyId,
     override val privateKey: PrivateKey
 ) : KeyHolderPrivateKey
+
+/**
+ * Flags (bitmap): 1: Can use key to verify signatures, 2: Can use key to encrypt new data.
+ */
+typealias UserAddressKeyFlags = Int

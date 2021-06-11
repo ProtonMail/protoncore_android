@@ -42,7 +42,7 @@ object TestUsers {
             delinquent = 0,
             email = "user1@example.com",
             displayName = "user 1 name",
-            keys = listOf(Key1.response)
+            keys = listOf(Key1.response, Key2Inactive.response)
         )
 
         object Key1 {
@@ -54,6 +54,17 @@ object TestUsers {
                 fingerprint = null,
                 activation = null,
                 primary = 1
+            )
+        }
+
+        object Key2Inactive {
+            val response = UserKeyResponse(
+                id = "userKey2",
+                version = 1,
+                privateKey = TestKeys.Key2.privateKey,
+                fingerprint = null,
+                activation = null,
+                primary = 0
             )
         }
     }

@@ -42,7 +42,7 @@ fun PublicKey.verifyText(
     text: String,
     signature: Signature,
     validAtUtc: Long = 0
-): Boolean = context.pgpCrypto.verifyText(text, signature, key, validAtUtc)
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyText(text, signature, key, validAtUtc)
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicKey].
@@ -56,7 +56,7 @@ fun PublicKey.verifyData(
     data: ByteArray,
     signature: Signature,
     validAtUtc: Long = 0
-): Boolean = context.pgpCrypto.verifyData(data, signature, key, validAtUtc)
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyData(data, signature, key, validAtUtc)
 
 /**
  * Verify [signature] of [file] is correctly signed using this [PublicKey].
@@ -70,7 +70,7 @@ fun PublicKey.verifyFile(
     file: DecryptedFile,
     signature: Signature,
     validAtUtc: Long = 0
-): Boolean = context.pgpCrypto.verifyFile(file, signature, key, validAtUtc)
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyFile(file, signature, key, validAtUtc)
 
 /**
  * Encrypt [text] using this [PublicKey].
@@ -79,8 +79,11 @@ fun PublicKey.verifyFile(
  *
  * @see [UnlockedPrivateKey.decryptText]
  */
-fun PublicKey.encryptText(context: CryptoContext, text: String): EncryptedMessage =
-    context.pgpCrypto.encryptText(text, key)
+fun PublicKey.encryptText(context: CryptoContext, text: String): EncryptedMessage {
+    if (!isActive) throw CryptoException("Key cannot be used while inactive.")
+    if (!canEncrypt) throw CryptoException("Key cannot be used to encrypt.")
+    return context.pgpCrypto.encryptText(text, key)
+}
 
 /**
  * Encrypt [data] using this [PublicKey].
@@ -89,8 +92,11 @@ fun PublicKey.encryptText(context: CryptoContext, text: String): EncryptedMessag
  *
  * @see [UnlockedPrivateKey.decryptText]
  */
-fun PublicKey.encryptData(context: CryptoContext, data: ByteArray): EncryptedMessage =
-    context.pgpCrypto.encryptData(data, key)
+fun PublicKey.encryptData(context: CryptoContext, data: ByteArray): EncryptedMessage {
+    if (!isActive) throw CryptoException("Key cannot be used while inactive.")
+    if (!canEncrypt) throw CryptoException("Key cannot be used to encrypt.")
+    return context.pgpCrypto.encryptData(data, key)
+}
 
 /**
  * Encrypt [file] using this [PublicKey].
@@ -99,8 +105,11 @@ fun PublicKey.encryptData(context: CryptoContext, data: ByteArray): EncryptedMes
  *
  * @see [UnlockedPrivateKey.decryptText]
  */
-fun PublicKey.encryptFile(context: CryptoContext, file: PlainFile): EncryptedFile =
-    context.pgpCrypto.encryptFile(file, key)
+fun PublicKey.encryptFile(context: CryptoContext, file: PlainFile): EncryptedFile {
+    if (!isActive) throw CryptoException("Key cannot be used while inactive.")
+    if (!canEncrypt) throw CryptoException("Key cannot be used to encrypt.")
+    return context.pgpCrypto.encryptFile(file, key)
+}
 
 /**
  * Encrypt [keyPacket] using this [PublicKey].
@@ -109,8 +118,11 @@ fun PublicKey.encryptFile(context: CryptoContext, file: PlainFile): EncryptedFil
  *
  * @see [UnlockedPrivateKey.decryptSessionKey]
  */
-fun PublicKey.encryptSessionKey(context: CryptoContext, keyPacket: KeyPacket): ByteArray =
-    context.pgpCrypto.encryptSessionKey(keyPacket, key)
+fun PublicKey.encryptSessionKey(context: CryptoContext, keyPacket: KeyPacket): ByteArray {
+    if (!isActive) throw CryptoException("Key cannot be used while inactive.")
+    if (!canEncrypt) throw CryptoException("Key cannot be used to encrypt.")
+    return context.pgpCrypto.encryptSessionKey(keyPacket, key)
+}
 
 /**
  * Get fingerprint from this [PublicKey].
