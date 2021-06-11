@@ -152,19 +152,19 @@ Account Manager Dagger: **1.1.5** - _released on: Jun 09, 2021_
 
 ### Key
 
-Key: **1.1.2** - _released on: Jun 04, 2021_
+Key: **1.1.4** - _released on: Jun 11, 2021_
 
-Key Domain: **1.1.2** - _released on: Jun 04, 2021_
+Key Domain: **1.1.4** - _released on: Jun 11, 2021_
 
-Key Data: **1.1.2** - _released on: Jun 04, 2021_
+Key Data: **1.1.4** - _released on: Jun 11, 2021_
 
 ### User
 
-User: **1.1.2** - _released on: Jun 04, 2021_
+User: **1.1.4** - _released on: Jun 11, 2021_
 
-User Domain: **1.1.2** - _released on: Jun 04, 2021_
+User Domain: **1.1.4** - _released on: Jun 11, 2021_
 
-User Data: **1.1.2** - _released on: Jun 04, 2021_
+User Data: **1.1.4** - _released on: Jun 11, 2021_
 
 ### Contact
 
