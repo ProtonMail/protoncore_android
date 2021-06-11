@@ -24,7 +24,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentOptionsInput
-import me.proton.core.payment.presentation.entity.PlanDetails
+import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.ui.StartBilling
 import me.proton.core.payment.presentation.ui.StartPaymentOptions
 import javax.inject.Inject
@@ -57,7 +57,7 @@ class PaymentsOrchestrator @Inject constructor() {
      */
     fun startBillingWorkFlow(
         userId: UserId? = null,
-        selectedPlan: PlanDetails,
+        selectedPlan: PlanShortDetails,
         codes: List<String>? = null
     ) {
         userId?.let {

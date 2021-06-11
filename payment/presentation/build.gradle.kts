@@ -41,6 +41,7 @@ dependencies {
         project(Module.networkDomain),
 
         // Features
+        project(Module.planDomain),
         project(Module.paymentDomain),
         project(Module.country),
 

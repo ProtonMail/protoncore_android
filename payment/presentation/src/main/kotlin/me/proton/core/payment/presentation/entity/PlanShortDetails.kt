@@ -24,7 +24,7 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 
 @Parcelize
-data class PlanDetails(
+data class PlanShortDetails(
     val id: String,
     val name: String,
     val subscriptionCycle: SubscriptionCycle,

@@ -29,7 +29,7 @@ import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentOptionsResult
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
-import me.proton.core.payment.presentation.entity.PlanDetails
+import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.showToast
@@ -79,7 +79,7 @@ abstract class PaymentsActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
     protected fun startBilling(
         userId: String?,
         currentPlans: List<String>,
-        plan: PlanDetails,
+        plan: PlanShortDetails,
         codes: List<String>?
     ) {
         newBillingLauncher?.launch(

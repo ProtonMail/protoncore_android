@@ -36,6 +36,7 @@ dependencies {
         project(Module.network),
         project(Module.data),
         project(Module.domain),
+        project(Module.planDomain),
 
         // Other
         `retrofit`,

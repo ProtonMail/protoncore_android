@@ -30,6 +30,7 @@ dependencies {
     implementation(
         project(Module.kotlinUtil),
         project(Module.domain),
+        project(Module.planDomain),
         project(Module.networkDomain),
 
         // Features
