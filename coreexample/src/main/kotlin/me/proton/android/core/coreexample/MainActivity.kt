@@ -87,6 +87,9 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }
             sendDirect.onClick { mailMessageViewModel.sendDirect() }
             payment.onClick { accountViewModel.onPayUpgradeClicked() }
+            plans.onClick { accountViewModel.onPlansClicked() }
+            plansUpgrade.onClick { accountViewModel.onPlansUpgradeClicked(this@MainActivity) }
+            plansCurrent.onClick { accountViewModel.onCurrentPlanClicked(this@MainActivity) }
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {

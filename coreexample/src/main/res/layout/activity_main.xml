@@ -177,6 +177,40 @@
             app:layout_constraintTop_toBottomOf="@id/sendDirect" />
 
         <LinearLayout
+            android:id="@+id/plans_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_top_margin"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payment">
+
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/plans"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/plans_signup" />
+
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/plansUpgrade"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_top_margin"
+                android:layout_weight="1"
+                android:text="@string/plans_upgrade" />
+
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/plansCurrent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_top_margin"
+                android:layout_weight="1"
+                android:text="@string/plans_current" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/accountsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -184,7 +218,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/payment" />
+            app:layout_constraintTop_toBottomOf="@id/plans_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -61,6 +61,7 @@ dependencies {
         project(Module.mailMessage),
         project(Module.payment),
         project(Module.country),
+        project(Module.plan),
 
         `kotlin-jdk7`,
         `coroutines-android`,
