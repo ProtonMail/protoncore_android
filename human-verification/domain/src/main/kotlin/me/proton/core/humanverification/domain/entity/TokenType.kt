@@ -24,7 +24,8 @@ package me.proton.core.humanverification.domain.entity
 enum class TokenType(val value: String) {
     SMS("sms"),
     EMAIL("email"),
-    CAPTCHA("captcha");
+    CAPTCHA("captcha"),
+    PAYMENT("payment");
 
     companion object {
         val map = values().associateBy { it.value }
