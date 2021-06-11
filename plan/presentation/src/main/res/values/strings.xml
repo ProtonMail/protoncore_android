@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="plans_select_plan">Select Plan</string>
+    <string name="plans_select_a_plan">Select a Plan</string>
+    <string name="plans_customizable_features">* Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to upgrade to Professional and Visionary plans, or to customize your plan.</string>
+    <string name="plans_customizable_features_web">* Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to customize your plan.</string>
+    <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
+    <string name="plans_free_name">Free</string>
+    <string name="plan_price_monthly">/monthly</string>
+    <string name="plans_current_plan">Current Plan</string>
+    <string name="plans_upgrade_plan">Upgrade</string>
+    <string name="plans_renewal_date">Your plan will automatically renew on</string>
+    <string name="plans_billed_yearly_eur">Billed as %d %s per year.</string>
+    <string name="plans_billed_yearly_usd">Billed as %s %d per year.</string>
+    <string name="plans_billed_yearly_chf">Billed as %d %s per year.</string>
+</resources>
