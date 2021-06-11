@@ -27,7 +27,7 @@ import androidx.test.espresso.intent.ActivityResultFunction
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import me.proton.core.test.android.instrumented.waits.IntentWaits.TIMEOUT_5S
+import me.proton.core.test.android.instrumented.waits.ConditionWatcher.Companion.TIMEOUT_5S
 import me.proton.core.test.android.instrumented.waits.IntentWaits.waitUntilIntentMatcherFulfilled
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf

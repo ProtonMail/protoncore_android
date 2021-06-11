@@ -18,32 +18,17 @@
 
 package me.proton.core.test.android.uitests.tests
 
-import android.util.Log
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.platform.app.InstrumentationRegistry
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.MainActivity
-import me.proton.core.accountmanager.dagger.AccountManagerModule
-import me.proton.core.test.android.instrumented.CoreTest
-import me.proton.core.test.android.instrumented.watchers.TestExecutionWatcher
+import me.proton.core.test.android.instrumented.ProtonTest
+import me.proton.core.test.android.plugins.Database.clearAccountManagerDb
+import me.proton.core.test.android.plugins.data.User.Users
 import org.junit.After
 import org.junit.BeforeClass
-import org.junit.Rule
-import org.junit.rules.RuleChain
-import java.net.HttpURLConnection
-import java.net.URL
 
-open class BaseTest : CoreTest() {
-
-    private val activityRule = ActivityScenarioRule(MainActivity::class.java)
-    private val testExecutionWatcher = TestExecutionWatcher()
-
-    @Rule
-    @JvmField
-    val ruleChain = RuleChain
-        .outerRule(testName)
-        .around(testExecutionWatcher)
-        .around(activityRule)!!
+open class BaseTest(
+    activityRule: ActivityScenarioRule<*> = ActivityScenarioRule(MainActivity::class.java)
+) : ProtonTest(activityRule) {
 
     @After
     override fun tearDown() {
@@ -51,20 +36,12 @@ open class BaseTest : CoreTest() {
         clearAccountManagerDb()
     }
 
-    fun jailUnban() {
-        val url = URL("https://${BuildConfig.ENVIRONMENT}${BuildConfig.JAIL_UNBAN_ENDPOINT}")
-        with(url.openConnection() as HttpURLConnection) { requestMethod = "GET" }
-    }
-
     companion object {
-        @JvmStatic
-        @BeforeClass
-        fun clearAccountManagerDb() {
-            val db = AccountManagerModule.provideAccountManagerDatabase(
-                InstrumentationRegistry.getInstrumentation().targetContext
-            )
-            Log.d(testTag, "Clearing AccountManager database tables")
-            db.clearAllTables()
+        val users = Users("sensitive/mailUsers.json")
+
+        @JvmStatic @BeforeClass
+        fun prepare()  {
+            clearAccountManagerDb()
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,38 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.test.android.robots.login
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.auth.R
+import me.proton.core.test.android.robots.CoreRobot
+import me.proton.core.test.android.robots.signup.SignupRobot
 
-libVersion = Version(0, 5, 0)
+/**
+ * [WelcomeRobot] class contains welcome screen actions and verifications implementation.
+ */
+class WelcomeRobot : CoreRobot() {
 
-android()
+    /**
+     * Clicks 'sign in' button
+     * @return [LoginRobot]
+     */
+    fun signIn(): LoginRobot = clickElement(R.id.sign_in)
 
-dependencies {
-    // Base dependencies
-    implementation(
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-android`,
-
-        // Android
-        `lifecycle-runtime`,
-        `lifecycle-liveData`,
-        `lifecycle-viewModel`
-    )
-
-    // Test dependencies
-    api(
-        project(Module.kotlinTest),
-
-        // Android
-        `android-arch-testing`,
-        `android-test-core`,
-        robolectric
-    )
+    /**
+     * Clicks 'create account' button
+     * @return [SignupRobot]
+     */
+    fun createAccount(): SignupRobot = clickElement(R.id.sign_up)
 }

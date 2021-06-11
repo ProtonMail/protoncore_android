@@ -19,9 +19,8 @@
 package me.proton.core.test.android.uitests.tests.payments
 
 import me.proton.core.payment.presentation.R
-import me.proton.core.test.android.instrumented.data.User.Users.getUser
-import me.proton.core.test.android.instrumented.robots.login.LoginRobot
-import me.proton.core.test.android.instrumented.robots.payments.NewCreditCardRobot
+import me.proton.core.test.android.robots.login.WelcomeRobot
+import me.proton.core.test.android.robots.payments.NewCreditCardRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -29,13 +28,13 @@ import org.junit.Test
 
 class NewCreditCardTests : BaseTest() {
 
-    private val loginRobot = LoginRobot()
+    private val user = users.getUser { it.plan == "free" && it.paymentMethods.isEmpty() }
     private val newCreditCardRobot = NewCreditCardRobot()
-    private val user = getUser { it.plan == "free" }
 
     @Before
     fun login() {
-        loginRobot
+        WelcomeRobot()
+            .signIn()
             .loginUser<CoreexampleRobot>(user)
             .upgradePrimary<NewCreditCardRobot>()
             .verify { billingDetailsDisplayed("Plus", "yearly", "EUR", "48.00") }
@@ -56,7 +55,8 @@ class NewCreditCardTests : BaseTest() {
     fun invalidCreditCardNumber() {
         newCreditCardRobot
             .ccname(user.firstName)
-            .country("Angola")
+            .country()
+            .selectCountry<NewCreditCardRobot>("Angola")
             .postalCode("1234")
             .expirationDate("1234")
             .cvc("123")

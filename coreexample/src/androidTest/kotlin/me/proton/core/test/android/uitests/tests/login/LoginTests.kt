@@ -21,10 +21,11 @@ package me.proton.core.test.android.uitests.tests.login
 import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.instrumented.data.User
-import me.proton.core.test.android.instrumented.data.User.Users.getUser
-import me.proton.core.test.android.instrumented.robots.login.LoginRobot
-import me.proton.core.test.android.instrumented.robots.login.UsernameSetupRobot
+import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.android.robots.login.WelcomeRobot
+import me.proton.core.test.android.robots.login.LoginRobot
+import me.proton.core.test.android.robots.login.UsernameSetupRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -34,11 +35,12 @@ import org.junit.Test
 class LoginTests : BaseTest() {
 
     private val loginRobot = LoginRobot()
-    private val user: User = getUser()
+    private var user: User = users.getUser()
 
     @Before
     fun unban() {
         jailUnban()
+        WelcomeRobot().signIn()
     }
 
     @Test
@@ -50,11 +52,16 @@ class LoginTests : BaseTest() {
     }
 
     @Test
-    fun passwordValidation() {
+    fun missingPasswordAndUsername() {
         loginRobot
+            .username("")
+            .password("")
             .signIn<LoginRobot>()
             .verify { inputErrorDisplayed(R.string.auth_login_assistive_text) }
+    }
 
+    @Test
+    fun incorrectPassword() {
         loginRobot
             .username(user.name)
             .password("Incorrect")
@@ -79,13 +86,15 @@ class LoginTests : BaseTest() {
     @Test
     @Ignore
     fun createAddressForExternalUser() {
-        val external = getUser { it.name.isNotEmpty() }
+        val external = users.getUser { it.name.isNotEmpty() }
         loginRobot
             .loginUser<UsernameSetupRobot>(external)
             .verify { usernameSetupElementsDisplayed() }
 
         UsernameSetupRobot()
-            .createProtonMailAddress<CoreexampleRobot>(external.firstName)
+            .username(external.firstName)
+            .next()
+            .createAddress<CoreexampleRobot>()
             .verify { userStateIs(external, Ready, Authenticated) }
     }
 }

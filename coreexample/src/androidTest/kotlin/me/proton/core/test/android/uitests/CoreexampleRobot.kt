@@ -24,30 +24,30 @@ import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.entity.SessionState.Authenticated
 import me.proton.core.test.android.instrumented.builders.OnView
-import me.proton.core.test.android.instrumented.data.User
-import me.proton.core.test.android.instrumented.robots.BaseRobot
-import me.proton.core.test.android.instrumented.robots.BaseVerify
-import me.proton.core.test.android.instrumented.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.android.robots.CoreRobot
+import me.proton.core.test.android.robots.CoreVerify
+import me.proton.core.test.android.robots.signup.SignupRobot
 
 /**
  * [CoreexampleRobot] class contains actions and verifications for Main screen functionality.
  */
-open class CoreexampleRobot : BaseRobot() {
+open class CoreexampleRobot : CoreRobot() {
 
     fun humanVerification(): HumanVerificationRobot = clickElement(R.id.trigger_human_ver)
     inline fun <reified T> upgradePrimary(): T = clickElement(R.id.payment)
+    fun signup(): SignupRobot = clickElement(R.id.signup)
+    fun signupExternal(): SignupRobot = clickElement(R.id.signupExternal)
     inline fun <reified T> logoutUser(user: User): T = clickUserButton(user)
     inline fun <reified T> clickUserButton(
         user: User,
         accountState: AccountState = Ready,
         sessionState: SessionState = Authenticated
-    ): T {
-        val userState = getUserState(user, accountState, sessionState)
-        view.withText(userState).click()
-        return T::class.java.newInstance()
-    }
+    ): T = clickElement(getUserState(user, accountState, sessionState))
 
-    class Verify : BaseVerify() {
+
+    class Verify : CoreVerify() {
 
         fun userIsLoggedOut(user: User): OnView =
             view
@@ -56,7 +56,7 @@ open class CoreexampleRobot : BaseRobot() {
 
         fun primaryUserIs(user: User?): OnView =
             view
-                .withId(R.id.primaryAccountText)
+//                .withId(R.id.primaryAccountText)
                 .withText("Primary: ${user?.name}")
                 .wait()
 

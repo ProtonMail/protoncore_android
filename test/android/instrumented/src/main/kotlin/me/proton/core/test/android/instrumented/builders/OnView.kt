@@ -32,9 +32,9 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import me.proton.core.test.android.instrumented.uimatchers.SystemUIMatchers
+import me.proton.core.test.android.instrumented.matchers.SystemUI
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
-import me.proton.core.test.android.instrumented.waits.UIWaits.TIMEOUT_10S
+import me.proton.core.test.android.instrumented.waits.ConditionWatcher.Companion.TIMEOUT_10S
 import me.proton.core.test.android.instrumented.waits.UIWaits.waitForView
 import me.proton.core.test.android.instrumented.waits.UIWaits.waitUntilViewIsGone
 import org.hamcrest.CoreMatchers
@@ -93,10 +93,10 @@ class OnView {
 
     private var visibility: ViewMatchers.Visibility? = null
 
-    val positiveDialogButton = SystemUIMatchers.positiveDialogBtn
-    val neutralDialogBtn = SystemUIMatchers.neutralDialogBtn
-    val negativeDialogBtn = SystemUIMatchers.negativeDialogBtn
-    val moreOptionsBtn = SystemUIMatchers.moreOptionsBtn
+    val positiveDialogButton = SystemUI.positiveDialogBtn
+    val neutralDialogBtn = SystemUI.neutralDialogBtn
+    val negativeDialogBtn = SystemUI.negativeDialogBtn
+    val moreOptionsBtn = SystemUI.moreOptionsBtn
 
     /** [View] properties. **/
     fun instanceOf(clazz: Class<*>?) = apply { this.clazz = clazz }

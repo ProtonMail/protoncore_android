@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,38 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.test.android.plugins
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import android.util.Log
+import me.proton.core.accountmanager.dagger.AccountManagerModule.provideAccountManagerDatabase
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.getContext
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 
-libVersion = Version(0, 5, 0)
-
-android()
-
-dependencies {
-    // Base dependencies
-    implementation(
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-android`,
-
-        // Android
-        `lifecycle-runtime`,
-        `lifecycle-liveData`,
-        `lifecycle-viewModel`
-    )
-
-    // Test dependencies
-    api(
-        project(Module.kotlinTest),
-
-        // Android
-        `android-arch-testing`,
-        `android-test-core`,
-        robolectric
-    )
+object Database {
+    fun clearAccountManagerDb() {
+        val db = provideAccountManagerDatabase(getContext())
+        Log.d(testTag, "Clearing AccountManager database tables")
+        db.clearAllTables()
+    }
 }

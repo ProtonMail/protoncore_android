@@ -16,19 +16,27 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.instrumented.waits
+package me.proton.core.test.android.robots.other
 
-import android.content.Intent
-import androidx.test.espresso.intent.Intents
-import me.proton.core.test.android.instrumented.waits.ConditionWatcher.Companion.TIMEOUT_5S
-import org.hamcrest.Matcher
+import android.widget.TextView
+import me.proton.core.humanverification.R
+import me.proton.core.test.android.robots.CoreRobot
 
-object IntentWaits : ConditionWatcher {
+/**
+ * [CountryRobot] class contains country picker actions and verifications implementation
+ */
+class CountryRobot : CoreRobot() {
 
-    fun waitUntilIntentMatcherFulfilled(
-        matcher: Matcher<Intent>,
-        timeout: Long = TIMEOUT_5S
-    ) {
-        waitForCondition({ Intents.intended(matcher) }, timeout)
-    }
+    /**
+     * Sets the text of a country search field
+     * @return [CountryRobot]
+     */
+    fun search(text: String): CountryRobot = setText(R.id.search_src_text, text)
+
+    /**
+     * Clicks a text view element with text [country]
+     * @param T next Robot in flow
+     * @return an instance of [T]
+     */
+    inline fun <reified T> selectCountry(country: String?): T = clickElement(country!!, TextView::class.java)
 }

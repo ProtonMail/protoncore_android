@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,38 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.test.android.instrumented.matchers
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import androidx.appcompat.widget.ActionMenuView
+import androidx.appcompat.widget.AppCompatImageView
+import me.proton.core.test.android.instrumented.builders.OnView
 
-libVersion = Version(0, 5, 0)
-
-android()
-
-dependencies {
-    // Base dependencies
-    implementation(
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-android`,
-
-        // Android
-        `lifecycle-runtime`,
-        `lifecycle-liveData`,
-        `lifecycle-viewModel`
-    )
-
-    // Test dependencies
-    api(
-        project(Module.kotlinTest),
-
-        // Android
-        `android-arch-testing`,
-        `android-test-core`,
-        robolectric
-    )
+internal object SystemUI {
+    val positiveDialogBtn = OnView().withId(android.R.id.button1)
+    val negativeDialogBtn = OnView().withId(android.R.id.button2)
+    val neutralDialogBtn = OnView().withId(android.R.id.button3)
+    val moreOptionsBtn = OnView()
+        .instanceOf(AppCompatImageView::class.java)
+        .withParent(OnView().instanceOf(ActionMenuView::class.java))
 }

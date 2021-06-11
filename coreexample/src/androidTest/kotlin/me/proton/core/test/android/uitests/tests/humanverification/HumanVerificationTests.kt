@@ -19,9 +19,10 @@
 package me.proton.core.test.android.uitests.tests.humanverification
 
 import me.proton.android.core.coreexample.R
-import me.proton.core.test.android.instrumented.data.User.Users.getUser
-import me.proton.core.test.android.instrumented.robots.humanverification.HumanVerificationRobot
-import me.proton.core.test.android.instrumented.robots.login.LoginRobot
+import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.robots.login.WelcomeRobot
+import me.proton.core.test.android.robots.humanverification.CodeVerificationRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -32,12 +33,13 @@ import org.junit.Test
 class HumanVerificationTests : BaseTest() {
 
     private val humanVerificationRobot = HumanVerificationRobot()
-    private val user = getUser { it.country == "Lithuania" && it.isDefault }
+    private val user = users.getUser { it.country == "Lithuania" && it.isDefault }
 
     @Before
     fun triggerHumanVerification() {
         jailUnban()
-        LoginRobot()
+        WelcomeRobot()
+            .signIn()
             .loginUser<CoreexampleRobot>(user)
             .humanVerification()
     }
@@ -47,7 +49,7 @@ class HumanVerificationTests : BaseTest() {
         humanVerificationRobot
             .sms()
             .countryCodeList()
-            .closeList()
+            .close<HumanVerificationRobot>()
             .help()
             .close<HumanVerificationRobot>()
             .close<CoreexampleRobot>()
@@ -70,7 +72,7 @@ class HumanVerificationTests : BaseTest() {
             .sms()
             .countryCodeList()
             .search(countryWithoutLastChar)
-            .selectCountry(user.country)
+            .selectCountry<CodeVerificationRobot>(user.country)
             .setPhone(user.phone)
             .getVerificationCode()
             .verify { errorSnackbarDisplayed(R.string.human_verification_sending_failed) }

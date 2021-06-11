@@ -22,6 +22,8 @@ import me.proton.core.test.android.uitests.tests.humanverification.HumanVerifica
 import me.proton.core.test.android.uitests.tests.login.LoginTests
 import me.proton.core.test.android.uitests.tests.login.MailboxTests
 import me.proton.core.test.android.uitests.tests.login.TwoFaTests
+import me.proton.core.test.android.uitests.tests.payments.ExistingPaymentMethodTests
+import me.proton.core.test.android.uitests.tests.payments.NewCreditCardTests
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
@@ -30,6 +32,8 @@ import org.junit.runners.Suite
     LoginTests::class,
     MailboxTests::class,
     TwoFaTests::class,
-    HumanVerificationTests::class
+    HumanVerificationTests::class,
+    ExistingPaymentMethodTests::class,
+    NewCreditCardTests::class
 )
 class TestSuite
