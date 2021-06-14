@@ -46,7 +46,7 @@ import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
@@ -112,7 +112,7 @@ internal class LoginViewModel @Inject constructor(
     ) = flow<State> {
         emit(State.Processing)
 
-        val encryptedPassword = password.encryptWith(keyStoreCrypto)
+        val encryptedPassword = password.encrypt(keyStoreCrypto)
 
         val sessionInfo = performLogin.invoke(username, encryptedPassword)
         val userId = sessionInfo.userId

@@ -19,8 +19,8 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decryptWith
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DecryptedData
@@ -668,7 +668,7 @@ fun KeyHolderContext.decryptAndVerifyNestedKey(
         privateKey = nestedPrivateKey.privateKey.copy(
             passphrase = decryptDataOrNull(nestedPrivateKey.passphrase)
                 ?.takeIf { verifyKeyRing.verifyData(context, it, nestedPrivateKey.passphraseSignature) }
-                ?.let { plain -> plain.use { it.encryptWith(context.keyStoreCrypto) } }
+                ?.let { plain -> plain.use { it.encrypt(context.keyStoreCrypto) } }
         )
     )
 }
@@ -705,7 +705,7 @@ fun KeyHolderContext.encryptAndSignNestedKey(
     encryptKeyRing: PublicKeyRing = publicKeyRing
 ): NestedPrivateKey {
     checkNotNull(nestedPrivateKey.privateKey.passphrase) { "Cannot encrypt without passphrase." }
-    return nestedPrivateKey.privateKey.passphrase.decryptWith(context.keyStoreCrypto).use { passphrase ->
+    return nestedPrivateKey.privateKey.passphrase.decrypt(context.keyStoreCrypto).use { passphrase ->
         nestedPrivateKey.copy(
             privateKey = nestedPrivateKey.privateKey.copy(passphrase = null),
             passphrase = encryptKeyRing.encryptData(context, passphrase.array),

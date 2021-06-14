@@ -23,7 +23,7 @@ import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
@@ -57,8 +57,8 @@ class PerformUpdateLoginPassword @Inject constructor(
         )
         val modulus = authRepository.randomModulus()
 
-        password.decryptWith(keyStore).toByteArray().use { decryptedPassword ->
-            newPassword.decryptWith(keyStore).toByteArray().use { decryptedNewPassword ->
+        password.decrypt(keyStore).toByteArray().use { decryptedPassword ->
+            newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
                 val clientProofs: SrpProofs = srp.generateSrpProofs(
                     username = username,
                     password = decryptedPassword.array,

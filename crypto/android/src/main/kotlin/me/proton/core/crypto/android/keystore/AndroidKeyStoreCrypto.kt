@@ -23,9 +23,12 @@ import android.security.keystore.KeyProperties
 import android.util.Base64
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.LogTag
+import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.util.kotlin.CoreLogger
+import java.security.Key
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -67,35 +70,65 @@ class AndroidKeyStoreCrypto private constructor(
                 )
                 it.generateKey()
             }
+        }.let { keyStoreKey ->
+            // Check if encrypt/decrypt is properly working (CP-1500).
+            runCatching {
+                val message = "message"
+                val encrypted = encrypt(message, keyStoreKey)
+                val decrypted = decrypt(encrypted, keyStoreKey)
+                check(message == decrypted)
+                keyStoreKey
+            }.getOrElse {
+                CoreLogger.e(LogTag.KEYSTORE_INIT, it)
+                null
+            }
         }
     }
 
-    override fun encrypt(value: PlainByteArray): EncryptedByteArray {
+    private fun encrypt(value: PlainByteArray, key: Key): EncryptedByteArray {
         val cipher = Cipher.getInstance(cipherTransformation)
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+        cipher.init(Cipher.ENCRYPT_MODE, key)
         val cipherByteArray = cipher.doFinal(value.array)
         return EncryptedByteArray(cipher.iv + cipherByteArray)
     }
 
-    override fun decrypt(value: EncryptedByteArray): PlainByteArray {
+    private fun decrypt(value: EncryptedByteArray, key: Key): PlainByteArray {
         val cipher = Cipher.getInstance(cipherTransformation)
         val iv = value.array.copyOf(cipherIvBytes)
         val cipherByteArray = value.array.copyOfRange(cipherIvBytes, value.array.size)
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, GCMParameterSpec(cipherGCMTagBits, iv))
+        cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(cipherGCMTagBits, iv))
         return PlainByteArray(cipher.doFinal(cipherByteArray))
     }
 
-    override fun encrypt(value: String): EncryptedString {
+    private fun encrypt(value: String, key: Key): EncryptedString {
         return value.encodeToByteArray().use {
-            Base64.encodeToString(encrypt(it).array, Base64.NO_WRAP)
+            Base64.encodeToString(encrypt(it, key).array, Base64.NO_WRAP)
         }
     }
 
-    override fun decrypt(value: EncryptedString): String {
+    private fun decrypt(value: EncryptedString, key: Key): String {
         val encryptedByteArray = Base64.decode(value, Base64.NO_WRAP)
-        return decrypt(EncryptedByteArray(encryptedByteArray)).use {
+        return decrypt(EncryptedByteArray(encryptedByteArray), key).use {
             it.array.decodeToString()
         }
+    }
+
+    override fun isUsingKeyStore(): Boolean = secretKey != null
+
+    override fun encrypt(value: PlainByteArray): EncryptedByteArray {
+        return secretKey?.let { encrypt(value, it) } ?: EncryptedByteArray(value.array.copyOf())
+    }
+
+    override fun decrypt(value: EncryptedByteArray): PlainByteArray {
+        return secretKey?.let { decrypt(value, it) } ?: PlainByteArray(value.array.copyOf())
+    }
+
+    override fun encrypt(value: String): EncryptedString {
+        return secretKey?.let { encrypt(value, it) } ?: value
+    }
+
+    override fun decrypt(value: EncryptedString): String {
+        return secretKey?.let { decrypt(value, it) } ?: value
     }
 
     companion object {

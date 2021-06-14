@@ -21,13 +21,13 @@ package me.proton.core.humanverification.data.entity
 import androidx.room.Entity
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.decryptWith
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.crypto.common.keystore.decryptOrElse
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.CookieSessionId
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.SessionId
 
 @Entity(
@@ -50,7 +50,9 @@ data class HumanVerificationEntity(
         verificationMethods = verificationMethods.map { VerificationMethod.getByValue(it) },
         captchaVerificationToken = captchaVerificationToken,
         state = state,
-        tokenType = humanHeaderTokenType?.decryptWith(keyStoreCrypto),
-        tokenCode = humanHeaderTokenCode?.decryptWith(keyStoreCrypto)
+        // Fall back to an invalid captcha to force delete token on decryption failure.
+        // See HumanVerificationInvalidHandler and HumanVerificationListener.onHumanVerificationInvalid.
+        tokenType = humanHeaderTokenType?.decryptOrElse(keyStoreCrypto) { "captcha" },
+        tokenCode = humanHeaderTokenCode?.decryptOrElse(keyStoreCrypto) { "invalid" }
     )
 }

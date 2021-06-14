@@ -24,7 +24,6 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkManager
-import me.proton.core.util.kotlin.Logger
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import org.apache.commons.codec.binary.Base32
@@ -43,8 +42,7 @@ class DnsOverHttpsProviderRFC8484(
     baseOkHttpClient: OkHttpClient,
     private val baseUrl: String,
     client: ApiClient,
-    private val networkManager: NetworkManager,
-    private val logger: Logger
+    private val networkManager: NetworkManager
 ) : DohService {
 
     private val api: DnsOverHttpsRetrofitApi
@@ -68,7 +66,7 @@ class DnsOverHttpsProviderRFC8484(
             .connectTimeout(TIMEOUT_S, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT_S, TimeUnit.SECONDS)
             .readTimeout(TIMEOUT_S, TimeUnit.SECONDS)
-            .initLogging(client, logger)
+            .initLogging(client)
 
         val okClient = httpClientBuilder.build()
         api = Retrofit.Builder()
@@ -87,10 +85,12 @@ class DnsOverHttpsProviderRFC8484(
             .setRecursionDesired(true)
             .setQuestion(question)
             .build()
-        val queryMessageBase64 = Base64.encodeToString(queryMessage.toArray(),
-            Base64.URL_SAFE or Base64.NO_PADDING or Base64.NO_WRAP)
+        val queryMessageBase64 = Base64.encodeToString(
+            queryMessage.toArray(),
+            Base64.URL_SAFE or Base64.NO_PADDING or Base64.NO_WRAP
+        )
 
-        val response = safeApiCall(networkManager, logger, api) {
+        val response = safeApiCall(networkManager, api) {
             api.getServers(baseUrl.removeSuffix("/"), queryMessageBase64)
         }
         if (response is ApiResult.Success) {

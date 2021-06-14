@@ -38,7 +38,7 @@ import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.data.room.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -215,8 +215,8 @@ class AccountRepositoryImpl(
     override suspend fun updateSessionToken(sessionId: SessionId, accessToken: String, refreshToken: String) =
         sessionDao.updateToken(
             sessionId,
-            accessToken.encryptWith(keyStoreCrypto),
-            refreshToken.encryptWith(keyStoreCrypto)
+            accessToken.encrypt(keyStoreCrypto),
+            refreshToken.encrypt(keyStoreCrypto)
         )
 
     override fun getPrimaryUserId(): Flow<UserId?> =

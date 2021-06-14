@@ -22,6 +22,7 @@ import android.app.Application
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled
 import dagger.hilt.android.HiltAndroidApp
+import me.proton.core.util.kotlin.CoreLogger
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -43,6 +44,8 @@ class CoreExampleApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        CoreLogger.set(CoreExampleLogger())
 
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())

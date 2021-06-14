@@ -20,7 +20,7 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
@@ -211,16 +211,15 @@ fun UnlockedPrivateKey.lock(
     isActive: Boolean = true,
     canEncrypt: Boolean = true,
     canVerify: Boolean = true,
-): PrivateKey =
-    passphrase.decryptWith(context.keyStoreCrypto).use { decrypted ->
-        context.pgpCrypto.lock(unlockedKey.value, decrypted.array).let {
-            PrivateKey(
-                key = it,
-                isPrimary = isPrimary,
-                isActive = isActive,
-                canEncrypt = canEncrypt,
-                canVerify = canVerify,
-                passphrase = passphrase
-            )
-        }
+): PrivateKey = passphrase.decrypt(context.keyStoreCrypto).use { decrypted ->
+    context.pgpCrypto.lock(unlockedKey.value, decrypted.array).let {
+        PrivateKey(
+            key = it,
+            isPrimary = isPrimary,
+            isActive = isActive,
+            canEncrypt = canEncrypt,
+            canVerify = canVerify,
+            passphrase = passphrase
+        )
     }
+}

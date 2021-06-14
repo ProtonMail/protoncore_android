@@ -41,6 +41,7 @@ import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
+import me.proton.core.accountmanager.presentation.onSessionForceLogout
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.domain.entity.Product
@@ -49,11 +50,13 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
+import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     private val accountManager: AccountManager,
+    private val userManager: UserManager,
     private val humanVerificationManager: HumanVerificationManager,
     private var authOrchestrator: AuthOrchestrator,
     private var humanVerificationOrchestrator: HumanVerificationOrchestrator
@@ -84,6 +87,7 @@ class AccountViewModel @Inject constructor(
 
         with(authOrchestrator) {
             accountManager.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
+                .onSessionForceLogout { userManager.lock(it.userId) }
                 .onSessionSecondFactorNeeded { startSecondFactorWorkflow(it) }
                 .onAccountTwoPassModeNeeded { startTwoPassModeWorkflow(it) }
                 .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }

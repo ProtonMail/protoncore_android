@@ -46,7 +46,6 @@ import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.util.kotlin.Logger
 import okhttp3.Cache
 import java.io.File
 import javax.inject.Singleton
@@ -86,7 +85,6 @@ class NetworkModule {
     @Singleton
     fun provideApiFactory(
         @ApplicationContext context: Context,
-        logger: Logger,
         apiClient: ApiClient,
         clientIdProvider: ClientIdProvider,
         serverTimeListener: ServerTimeListener,
@@ -102,7 +100,6 @@ class NetworkModule {
         apiClient,
         clientIdProvider,
         serverTimeListener,
-        logger,
         networkManager,
         networkPrefs,
         sessionProvider,

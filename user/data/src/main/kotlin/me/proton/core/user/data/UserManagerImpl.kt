@@ -24,8 +24,8 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.PlainByteArray
-import me.proton.core.crypto.common.keystore.decryptWith
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
@@ -103,7 +103,7 @@ class UserManagerImpl(
             ?: return UnlockResult.Error.NoKeySaltsForPrimaryKey
 
         val passphrase = pgp.getPassphrase(password.array, primaryKeySalt).use {
-            it.encryptWith(keyStore)
+            it.encrypt(keyStore)
         }
         return unlockWithPassphrase(userId, passphrase, refresh = false)
     }
@@ -139,7 +139,7 @@ class UserManagerImpl(
         auth: Auth?,
         orgPrivateKey: Armored?
     ): Boolean {
-        newPassword.decryptWith(keyStore).toByteArray().use { decryptedNewPassword ->
+        newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
             val keySalt = pgp.generateNewKeySalt()
             pgp.getPassphrase(decryptedNewPassword.array, keySalt).use { newPassphrase ->
                 val addresses = userAddressRepository.getAddresses(userId, refresh = true)
@@ -157,7 +157,7 @@ class UserManagerImpl(
                 // Update organization key if provided.
                 val updatedOrgPrivateKey = orgPrivateKey?.let { key ->
                     val encryptedPassphrase = requireNotNull(passphraseRepository.getPassphrase(userId))
-                    encryptedPassphrase.decryptWith(keyStore).use {
+                    encryptedPassphrase.decrypt(keyStore).use {
                         key.updatePrivateKeyPassphrase(cryptoContext, it.array, newPassphrase.array)
                     }
                 }
@@ -177,7 +177,7 @@ class UserManagerImpl(
                 )
 
                 // We know we can unlock the key with this passphrase as we just generated from it.
-                passphraseRepository.setPassphrase(userId, newPassphrase.encryptWith(keyStore))
+                passphraseRepository.setPassphrase(userId, newPassphrase.encrypt(keyStore))
 
                 // Refresh User and Addresses.
                 userAddressRepository.getAddresses(userId, refresh = true)
@@ -202,7 +202,7 @@ class UserManagerImpl(
                 domain = domain,
                 passphrase = passphrase.array
             )
-            val encryptedPassphrase = passphrase.encryptWith(keyStore)
+            val encryptedPassphrase = passphrase.encrypt(keyStore)
             val userPrivateKey = PrivateKey(
                 key = privateKey,
                 isPrimary = true,

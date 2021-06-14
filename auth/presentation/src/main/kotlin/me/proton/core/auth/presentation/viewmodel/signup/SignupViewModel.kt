@@ -37,8 +37,8 @@ import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.viewmodel.AuthViewModel
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.decryptWith
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
@@ -82,9 +82,9 @@ internal class SignupViewModel @Inject constructor(
     var externalEmail: String? = null
 
     var password: String
-        get() = _password.decryptWith(keyStoreCrypto)
+        get() = _password.decrypt(keyStoreCrypto)
         set(value) {
-            _password = value.encryptWith(keyStoreCrypto)
+            _password = value.encrypt(keyStoreCrypto)
         }
 
     override val recoveryEmailAddress: String?

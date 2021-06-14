@@ -1,3 +1,45 @@
+## Crypto Version [1.15.2]
+
+Sep 20, 2021
+
+### Dependencies
+
+- Auth 1.15.2.
+- Account 1.15.2.
+- Crypto 1.15.2.
+- Human-Verification 1.15.2.
+- Key 1.15.2.
+- Network 1.15.2.
+- Util Kotlin 1.15.2.
+- User 1.15.2.
+- User-Settings 1.15.2.
+
+### Api Changes
+
+- Logger is no more injected. Instead Core use a static ```CoreLogger```. You now have to set the Logger instance, on Application create:
+```
+override fun onCreate() {
+    super.onCreate()
+    CoreLogger.set(CoreExampleLogger())
+```
+- There is also a new KeyStoreCrypto LogTag object you must be aware:
+```
+object LogTag {
+    /** Tag for KeyStore initialization check failure. */
+    const val KEYSTORE_INIT = "core.crypto.common.keystore.init"
+
+    /** Tag for KeyStore encrypt failure. */
+    const val KEYSTORE_ENCRYPT = "core.crypto.common.keystore.encrypt"
+
+    /** Tag for KeyStore decrypt failure. */
+    const val KEYSTORE_DECRYPT = "core.crypto.common.keystore.decrypt"
+}
+```
+
+### New Features
+
+- KeyStoreCrypto fallback if Android KeyStore is not properly working.
+
 ## Presentation [1.15.1]
 
 Sep 21, 2021

@@ -17,6 +17,7 @@
  */
 package me.proton.core.util.kotlin
 
+import me.proton.core.util.kotlin.CoreLogger.set
 import org.jetbrains.annotations.NonNls
 
 /**
@@ -58,4 +59,55 @@ interface Logger {
 }
 
 /** Type for all tags used in conjunction with [Logger.log]. */
-inline class LoggerLogTag(val name: String)
+@JvmInline
+value class LoggerLogTag(val name: String)
+
+/**
+ * Main object/singleton any Core module is using to log.
+ *
+ * Call [set] to set your own [Logger].
+ */
+object CoreLogger : Logger {
+
+    private var logger: Logger? = null
+
+    fun set(logger: Logger) {
+        this.logger = logger
+    }
+
+    override fun e(tag: String, e: Throwable) {
+        logger?.e(tag, e)
+    }
+
+    override fun e(tag: String, e: Throwable, message: String) {
+        logger?.e(tag, e, message)
+    }
+
+    override fun i(tag: String, message: String) {
+        logger?.i(tag, message)
+    }
+
+    override fun i(tag: String, e: Throwable, message: String) {
+        logger?.i(tag, e, message)
+    }
+
+    override fun d(tag: String, message: String) {
+        logger?.d(tag, message)
+    }
+
+    override fun d(tag: String, e: Throwable, message: String) {
+        logger?.d(tag, e, message)
+    }
+
+    override fun v(tag: String, message: String) {
+        logger?.v(tag, message)
+    }
+
+    override fun v(tag: String, e: Throwable, message: String) {
+        logger?.v(tag, e, message)
+    }
+
+    override fun log(tag: LoggerLogTag, message: String) {
+        logger?.log(tag, message)
+    }
+}

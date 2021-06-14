@@ -22,13 +22,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.util.kotlin.Logger
 import javax.inject.Singleton
 
 @Module
@@ -48,11 +46,6 @@ object ApplicationModule {
     @Provides
     @ClientSecret
     fun provideClientSecret(): String = ""
-
-    @Provides
-    @Singleton
-    fun provideLogger(): Logger =
-        CoreExampleLogger()
 
     @Provides
     @Singleton

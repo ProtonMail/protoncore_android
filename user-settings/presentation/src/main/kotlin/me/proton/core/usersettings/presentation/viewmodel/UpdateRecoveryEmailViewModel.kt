@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.repository.UserRepository
@@ -84,7 +84,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         secondFactorCode: String
     ) = flow {
         emit(State.UpdatingCurrent)
-        val encryptedPassword = password.encryptWith(keyStoreCrypto)
+        val encryptedPassword = password.encrypt(keyStoreCrypto)
         val user = userRepository.getUser(userId)
         val username = requireNotNull(user.name ?: user.email)
 

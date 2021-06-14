@@ -19,7 +19,7 @@
 package me.proton.core.key.domain.entity.key
 
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.EncryptedMessage
@@ -65,7 +65,7 @@ data class NestedPrivateKey(
                     domain = domain,
                     passphrase = passphrase.array
                 )
-                val encryptedPassphrase = passphrase.encryptWith(context.keyStoreCrypto)
+                val encryptedPassphrase = passphrase.encrypt(context.keyStoreCrypto)
                 val keyHolderPrivateKey = PrivateKey(
                     key = privateKey,
                     isPrimary = true,

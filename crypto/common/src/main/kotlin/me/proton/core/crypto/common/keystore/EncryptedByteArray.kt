@@ -32,9 +32,29 @@ data class EncryptedByteArray(val array: ByteArray) {
 /**
  * Decrypt an [EncryptedByteArray] using a [KeyStoreCrypto].
  */
-fun EncryptedByteArray.decryptWith(keyStoreCrypto: KeyStoreCrypto) = keyStoreCrypto.decrypt(this)
+fun EncryptedByteArray.decrypt(crypto: KeyStoreCrypto) = crypto.decrypt(this)
 
 /**
  * Encrypt a [PlainByteArray] using a [KeyStoreCrypto].
  */
-fun PlainByteArray.encryptWith(keyStoreCrypto: KeyStoreCrypto) = keyStoreCrypto.encrypt(this)
+fun PlainByteArray.encrypt(crypto: KeyStoreCrypto) = crypto.encrypt(this)
+
+/**
+ * Returns decrypted value, or the result of [onFailure] function on decryption failure.
+ *
+ * @see [EncryptedByteArray.decrypt]
+ */
+fun EncryptedByteArray.decryptOrElse(
+    crypto: KeyStoreCrypto,
+    onFailure: (Throwable) -> PlainByteArray?
+) = crypto.decryptOrElse(this, onFailure)
+
+/**
+ * Returns encrypted value, or the result of [onFailure] function on encryption failure.
+ *
+ * @see [PlainByteArray.encrypt]
+ */
+fun PlainByteArray.encryptOrElse(
+    crypto: KeyStoreCrypto,
+    onFailure: (Throwable) -> EncryptedByteArray?
+) = crypto.encryptOrElse(this, onFailure)

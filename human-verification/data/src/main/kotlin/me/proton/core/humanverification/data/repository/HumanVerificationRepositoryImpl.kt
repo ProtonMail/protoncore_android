@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onSubscription
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.entity.HumanVerificationEntity
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
@@ -67,8 +67,8 @@ class HumanVerificationRepositoryImpl(
                     verificationMethods = details.verificationMethods.map { method -> method.value },
                     captchaVerificationToken = details.captchaVerificationToken,
                     state = details.state,
-                    humanHeaderTokenType = details.tokenType?.encryptWith(keyStoreCrypto),
-                    humanHeaderTokenCode = details.tokenCode?.encryptWith(keyStoreCrypto)
+                    humanHeaderTokenType = details.tokenType?.encrypt(keyStoreCrypto),
+                    humanHeaderTokenCode = details.tokenCode?.encrypt(keyStoreCrypto)
                 )
             )
         }
@@ -85,8 +85,8 @@ class HumanVerificationRepositoryImpl(
             humanVerificationDetailsDao.updateStateAndToken(
                 clientId.id,
                 state,
-                tokenType?.encryptWith(keyStoreCrypto),
-                tokenCode?.encryptWith(keyStoreCrypto)
+                tokenType?.encrypt(keyStoreCrypto),
+                tokenCode?.encrypt(keyStoreCrypto)
             )
         }
         getHumanVerificationDetails(clientId)?.let { tryEmitStateChanged(it) }

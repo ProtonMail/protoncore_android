@@ -19,7 +19,7 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
@@ -181,7 +181,7 @@ fun PrivateKey.signData(context: CryptoContext, data: ByteArray): Signature =
  * @see [UnlockedPrivateKey.lock]
  */
 fun PrivateKey.unlock(context: CryptoContext): UnlockedPrivateKey =
-    requireNotNull(passphrase).decryptWith(context.keyStoreCrypto).use { decrypted ->
+    requireNotNull(passphrase).decrypt(context.keyStoreCrypto).use { decrypted ->
         context.pgpCrypto.unlock(key, decrypted.array).let {
             UnlockedPrivateKey(it, isPrimary)
         }
@@ -196,7 +196,7 @@ fun PrivateKey.unlock(context: CryptoContext): UnlockedPrivateKey =
  * @see [UnlockedPrivateKey.lock]
  */
 fun PrivateKey.unlockOrNull(context: CryptoContext): UnlockedPrivateKey? =
-    passphrase?.decryptWith(context.keyStoreCrypto)?.use { decrypted ->
+    passphrase?.decrypt(context.keyStoreCrypto)?.use { decrypted ->
         context.pgpCrypto.unlockOrNull(key, decrypted.array)?.let {
             UnlockedPrivateKey(it, isPrimary)
         }

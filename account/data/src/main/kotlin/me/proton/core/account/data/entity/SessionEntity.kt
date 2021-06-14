@@ -23,7 +23,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.decryptOrElse
 import me.proton.core.data.room.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -55,8 +55,10 @@ data class SessionEntity(
 ) {
     fun toSession(keyStoreCrypto: KeyStoreCrypto): Session = Session(
         sessionId = sessionId,
-        accessToken = accessToken.decryptWith(keyStoreCrypto),
-        refreshToken = refreshToken.decryptWith(keyStoreCrypto),
+        // Fall back to invalid tokens to force delete session on decryption failure.
+        // See RefreshTokenHandler and sessionListener.onSessionForceLogout.
+        accessToken = requireNotNull(accessToken.decryptOrElse(keyStoreCrypto) { "invalid" }),
+        refreshToken = requireNotNull(refreshToken.decryptOrElse(keyStoreCrypto) { "invalid" }),
         scopes = CommonConverters.fromStringToListOfString(scopes).orEmpty()
     )
 }
