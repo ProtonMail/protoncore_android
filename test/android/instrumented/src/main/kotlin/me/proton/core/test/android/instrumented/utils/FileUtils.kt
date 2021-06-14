@@ -93,8 +93,8 @@ object FileUtils {
             val file = File(screenshotPath, "${testName.methodName}-screenshot.png")
             Falcon.takeScreenshot(ActivityProvider.currentActivity, file)
             Log.v(testTag, "Saved screenshot to ${file.absolutePath}")
-        } catch (e: Falcon.UnableToTakeScreenshotException) {
-            Log.w(testTag, e.message!!)
+        } catch (e: Throwable) {
+            Log.e(testTag, "Could not take screenshot.\n ${e.message}")
         }
     }
 
@@ -138,8 +138,7 @@ object FileUtils {
 
         // Declare variables for test and application context.
         val testContext = InstrumentationRegistry.getInstrumentation().context
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val file = File("${appContext.cacheDir}/$fileName")
+        val file = File("${getContext().cacheDir}/$fileName")
 
         if (!file.exists()) {
             try {

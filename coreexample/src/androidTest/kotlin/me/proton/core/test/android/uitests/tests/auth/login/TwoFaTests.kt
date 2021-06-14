@@ -16,12 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.login
+package me.proton.core.test.android.uitests.tests.auth.login
 
 import me.proton.core.test.android.plugins.Requests.jailUnban
-import me.proton.core.test.android.robots.login.WelcomeRobot
-import me.proton.core.test.android.robots.login.LoginRobot
-import me.proton.core.test.android.robots.login.TwoFaRobot
+import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.auth.login.LoginRobot
+import me.proton.core.test.android.robots.auth.login.TwoFaRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
@@ -31,13 +31,14 @@ class TwoFaTests : BaseTest() {
     private val user = users.getUser { it.twoFa.isNotEmpty() }
     private val invalidCode = "123456"
     private val twoFaRobot = TwoFaRobot()
+    private val incorrectCredMessage = "Incorrect login credentials. Please try again"
 
     @Before
     fun goToTwoFa() {
-        jailUnban()
-        WelcomeRobot()
+        AddAccountRobot()
             .signIn()
             .loginUser<TwoFaRobot>(user)
+        jailUnban()
     }
 
     @Test
@@ -45,7 +46,7 @@ class TwoFaTests : BaseTest() {
         twoFaRobot
             .setSecondFactorInput(invalidCode)
             .authenticate<LoginRobot>()
-            .verify { errorSnackbarDisplayed("Incorrect login credentials. Please try again") }
+            .verify { errorSnackbarDisplayed(incorrectCredMessage) }
     }
 
     @Test
@@ -53,7 +54,7 @@ class TwoFaTests : BaseTest() {
         twoFaRobot
             .switchTwoFactorMode()
             .setSecondFactorInput(invalidCode)
-            .authenticate<LoginRobot>()
-            .verify { errorSnackbarDisplayed("Incorrect login credentials. Please try again") }
+            .authenticate<TwoFaRobot>()
+            .verify { errorSnackbarDisplayed(incorrectCredMessage) }
     }
 }

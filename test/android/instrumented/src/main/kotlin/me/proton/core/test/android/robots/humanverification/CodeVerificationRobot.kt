@@ -19,13 +19,14 @@ package me.proton.core.test.android.robots.humanverification
 
 import android.widget.EditText
 import me.proton.core.humanverification.R
-import me.proton.core.test.android.robots.other.CountryRobot
+import me.proton.core.test.android.robots.CoreRobot
+import me.proton.core.test.android.robots.CoreVerify
 
 /**
  * [CodeVerificationRobot] class is an extension of [HumanVerificationRobot] contains human verification
  * code processing actions and verifications functionality.
  */
-class CodeVerificationRobot : HumanVerificationRobot() {
+class CodeVerificationRobot : CoreRobot() {
 
     /**
      * Sets the value of verification code input to [code]
@@ -34,40 +35,24 @@ class CodeVerificationRobot : HumanVerificationRobot() {
     fun setCode(code: String): CodeVerificationRobot = setText(R.id.verificationCodeEditText, code)
 
     /**
-     * Sets the value of phone number input to [number]
-     * @return [CodeVerificationRobot]
-     */
-    fun setPhone(number: String?): CodeVerificationRobot = setText(R.id.smsEditText, number!!)
-
-    /**
-     * Sets the value of email input to [email]
-     * @return [CodeVerificationRobot]
-     */
-    fun setEmail(email: String): CodeVerificationRobot = setText(R.id.emailEditText, email)
-
-    /**
-     * Clicks 'get verification code' button
-     * @return [CodeVerificationRobot]
-     */
-    fun getVerificationCode(): CodeVerificationRobot = clickElement(R.id.getVerificationCodeButton)
-
-    /**
      * Clicks 'i already have a code' button
      * @return [CodeVerificationRobot]
      */
     fun alreadyHaveCode(): CodeVerificationRobot = clickElement(R.id.proceedButton)
 
     /**
-     * Clicks country code list button
-     * @return [CountryRobot]
-     */
-    fun countryCodeList(): CountryRobot = clickElement(R.id.callingCodeText, EditText::class.java)
-
-
-    /**
-     * Clicks 'verify' button
+     * Clicks 'Verify' button
      * @param T next Robot in flow
      * @return an instance of [T]
      */
     inline fun <reified T> verifyCode(): T = clickElement(R.id.verifyButton)
+
+    class Verify : CoreVerify() {
+        fun codeVerificationElementsDisplayed() {
+            view.withId(R.id.verifyButton).wait()
+            view.withId(R.id.verificationCodeEditText).instanceOf(EditText::class.java).wait()
+        }
+    }
+
+    inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
 }

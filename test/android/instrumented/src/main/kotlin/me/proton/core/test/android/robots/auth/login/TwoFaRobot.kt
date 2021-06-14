@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,10 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.robots.login
+package me.proton.core.test.android.robots.auth.login
 
 import me.proton.core.auth.R
 import me.proton.core.test.android.robots.CoreRobot
+import me.proton.core.test.android.robots.CoreVerify
 
 /**
  * [TwoFaRobot] class contains second factor authentication actions and verifications implementation.
@@ -44,4 +45,8 @@ class TwoFaRobot : CoreRobot() {
      * @return an instance of [T]
      */
     inline fun <reified T> authenticate(): T = clickElement(R.id.authenticateButton)
+
+    class Verify : CoreVerify()
+
+    inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
 }

@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.robots.payments
 
+import android.widget.EditText
 import me.proton.core.payment.presentation.R
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
@@ -32,11 +33,7 @@ open class PaymentRobot : CoreRobot() {
      * @param T next Robot in flow
      * @return an instance of [T]
      */
-    inline fun <reified T> pay(): T {
-        Thread.sleep(500) // https://jira.protontech.ch/browse/CP-1931
-        clickElement<PaymentRobot>(R.id.payButton)
-        return T::class.java.newInstance()
-    }
+    inline fun <reified T> pay(): T = clickElement(R.id.payButton)
 
     class Verify : CoreVerify() {
         fun billingDetailsDisplayed(planName: String, billingCycle: String, currency: String, amount: String) {
@@ -48,6 +45,18 @@ open class PaymentRobot : CoreRobot() {
         fun paymentMethodForUserDisplayed(methodTitle: String, details: String) {
             view.withText(methodTitle).withId(R.id.paymentMethodTitleText).wait()
             view.withText(details).withId(R.id.paymentMethodSubtitleText).wait()
+        }
+
+        fun addCreditCardElementsDisplayed() {
+            view.withId(R.id.scrollContent).closeKeyboard()
+            arrayOf(
+                R.id.cardNameInput,
+                R.id.cardNumberInput,
+                R.id.expirationDateInput,
+                R.id.cvcInput
+            ).forEach {
+                view.withId(it).instanceOf(EditText::class.java).wait()
+            }
         }
     }
 

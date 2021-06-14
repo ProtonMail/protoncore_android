@@ -16,13 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.robots.login
+package me.proton.core.test.android.robots.auth
 
+import android.widget.TextView
+import androidx.annotation.StringRes
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.matcher.RootMatchers
+import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.accountmanager.presentation.R
 import me.proton.core.test.android.instrumented.builders.OnView
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
+import me.proton.core.test.android.robots.auth.login.LoginRobot
 
 /**
  * [AccountSwitcherRobot] class contains account switcher actions and verifications implementation
@@ -35,60 +42,65 @@ class AccountSwitcherRobot : CoreRobot() {
      * Login - logs in disabled user
      * Remove - completely removes any user
      */
-    enum class UserAction {
-        Login, Remove, Logout
-    }
-
-    /**
-     * [UserElement] data class describes a user view group inside the account switcher
-     */
-    data class UserElement(
-        val user: User
-    ) {
-        private val emailView = OnView().withText(user.name + "@proton.black")
-        val moreButton = OnView().withId(R.id.account_more_button).hasSibling(emailView)
-        val userViewGroup = OnView().withChild(moreButton)
+    enum class UserAction(@StringRes val resId: Int) {
+        SignIn(R.string.account_switcher_action_sign_in),
+        Remove(R.string.account_switcher_action_remove),
+        SignOut(R.string.account_switcher_action_sign_out)
     }
 
     /**
      * Clicks a view group of a given user
      * @return [AccountSwitcherRobot]
      */
-    fun selectUser(user: User): AccountSwitcherRobot {
-        UserElement(user).userViewGroup.click()
-        return this
-    }
+    fun selectUser(user: User): AccountSwitcherRobot = clickElement(userEmail(user))
 
     /**
      * Clicks 'more button' in user view group. Clicks a given [UserAction]
      * @return [AccountSwitcherRobot] or [LoginRobot]
      */
-    fun userAction(user: User, action: UserAction): CoreRobot {
-        UserElement(user).moreButton.click()
-        view.withText(action.toString()).click()
-        return if (action == UserAction.Login) LoginRobot() else this
+    inline fun <reified T> userAction(user: User, action: UserAction): T {
+        userMore(user).click()
+        Espresso
+            .onView(ViewMatchers.withText(action.resId))
+            .inRoot(RootMatchers.isPlatformPopup())
+            .perform(ViewActions.click())
+        return T::class.java.newInstance()
     }
 
     /**
      * Clicks 'add account' button
      * @return [LoginRobot]
      */
-    fun addAccount(): LoginRobot = clickElement(R.id.account_action_textview)
+    fun addAccount(): LoginRobot = clickElement(R.id.account_action_textview, TextView::class.java)
+
+    companion object UserElement : CoreRobot() {
+        fun userEmail(user: User): OnView =
+            view
+                .withId(R.id.account_email_textview)
+                .withText(user.email)
+                .wait()
+
+        fun userMore(user: User): OnView =
+            view
+                .withId(R.id.account_more_button)
+                .hasSibling(userEmail(user))
+                .wait()
+    }
 
     class Verify : CoreVerify() {
-
         fun hasUser(user: User) {
-            val userElement = UserElement(user)
-            userElement.moreButton.wait()
-            userElement.userViewGroup.wait()
+            userEmail(user).checkDisplayed()
+            userMore(user).checkDisplayed()
         }
 
         fun userDisabled(user: User) {
-            UserElement(user).userViewGroup.checkDisabled()
+            userEmail(user).checkDisabled()
+            userMore(user).checkEnabled()
         }
 
         fun userEnabled(user: User) {
-            UserElement(user).userViewGroup.checkEnabled()
+            userEmail(user).checkEnabled()
+            userMore(user).checkEnabled()
         }
     }
 

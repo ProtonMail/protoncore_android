@@ -18,6 +18,8 @@
 
 package me.proton.core.test.android.robots.humanverification
 
+import android.webkit.WebView
+import android.widget.EditText
 import android.widget.TextView
 import me.proton.core.humanverification.R
 import me.proton.core.humanverification.domain.entity.TokenType
@@ -26,6 +28,8 @@ import me.proton.core.humanverification.domain.entity.TokenType.EMAIL
 import me.proton.core.humanverification.domain.entity.TokenType.SMS
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
+import me.proton.core.test.android.robots.other.CountryRobot
+import java.util.Locale
 
 /**
  * [HumanVerificationRobot] base class contains human verification actions and verifications implementation.
@@ -42,13 +46,37 @@ open class HumanVerificationRobot : CoreRobot() {
      * Selects 'email' human verification option
      * @return [CodeVerificationRobot]
      */
-    fun email(): CodeVerificationRobot = hvOption(EMAIL)
+    fun email(): HumanVerificationRobot = hvOption(EMAIL)
 
     /**
      * Selects 'sms' human verification option
      * @return [CodeVerificationRobot]
      */
-    fun sms(): CodeVerificationRobot = hvOption(SMS)
+    fun sms(): HumanVerificationRobot = hvOption(SMS)
+
+    /**
+     * Sets the value of phone number input to [number]
+     * @return [CodeVerificationRobot]
+     */
+    fun setPhone(number: String?): HumanVerificationRobot = setText(R.id.smsEditText, number!!)
+
+    /**
+     * Clicks country code list button
+     * @return [CountryRobot]
+     */
+    fun countryCodeList(): CountryRobot = clickElement(R.id.callingCodeText, EditText::class.java)
+
+    /**
+     * Sets the value of email input to [email]
+     * @return [CodeVerificationRobot]
+     */
+    fun setEmail(email: String): HumanVerificationRobot = setText(R.id.emailEditText, email)
+
+    /**
+     * Clicks 'get verification code' button
+     * @return [CodeVerificationRobot]
+     */
+    fun getVerificationCode(): CodeVerificationRobot = clickElement(R.id.getVerificationCodeButton)
 
     /**
      * Selects 'captcha' human verification option
@@ -57,20 +85,44 @@ open class HumanVerificationRobot : CoreRobot() {
     fun captcha(): HumanVerificationRobot = hvOption(CAPTCHA)
 
     /**
+     * Checks "I'm not a robot" checkbox. Only works with development reCAPTCHA enabled
+     * @param T next Robot to be returned
+     * @return an instance of [T]
+     */
+    inline fun <reified T> imNotARobot(): T = clickElement(R.id.captchaWebView, WebView::class.java)
+
+    /**
+     * Checks "I am human" checkbox. Only works with development hCAPTCHA enabled
+     * @param T next Robot to be returned
+     * @return an instance of [T]
+     */
+    inline fun <reified T> iAmHuman(): T {
+        Thread.sleep(2000) // Special case
+        view.instanceOf(WebView::class.java).wait().click()
+        return T::class.java.newInstance()
+    }
+
+    /**
+     * Clicks close button
+     * @param T next Robot to be returned
+     */
+    inline fun <reified T> close(): T = clickElement(R.id.closeButton)
+
+    /**
      * Clicks text view with [option] text
      * @return [CodeVerificationRobot]
      */
-    private fun hvOption(option: TokenType): CodeVerificationRobot =
-        clickElement(option.value.toUpperCase(), TextView::class.java)
+    private fun hvOption(option: TokenType): HumanVerificationRobot =
+        clickElement(option.value.toUpperCase(Locale.ROOT), TextView::class.java)
 
     class Verify : CoreVerify() {
         fun hvElementsDisplayed() {
-            view.withText(EMAIL.value.toUpperCase()).wait().checkDisplayed()
-            view.withText(SMS.value.toUpperCase()).wait().checkDisplayed()
-            view.withText(CAPTCHA.value.toUpperCase()).wait().checkDisplayed()
+            view.withText(EMAIL.value.toUpperCase(Locale.ROOT)).wait()
+            view.withText(SMS.value.toUpperCase(Locale.ROOT)).wait()
+            view.withText(CAPTCHA.value.toUpperCase(Locale.ROOT)).wait()
         }
 
-        fun captchaDisplayed() = view.withId(R.id.captchaWebView).wait().checkDisplayed()
+        fun captchaDisplayed() = view.withId(R.id.captchaWebView).wait()
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

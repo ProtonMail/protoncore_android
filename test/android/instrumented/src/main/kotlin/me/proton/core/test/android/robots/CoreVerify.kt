@@ -37,8 +37,8 @@ open class CoreVerify : CoreRobot() {
     fun errorSnackbarDisplayed(text: String) {
         view
             .withId(R.id.snackbar_text)
+            .withText(text)
             .wait()
-            .checkContains(text)
     }
 
     fun inputErrorDisplayed(@StringRes stringRes: Int) {

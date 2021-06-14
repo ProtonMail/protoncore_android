@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,16 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.login
+package me.proton.core.test.android.uitests.tests.auth.login
 
 import me.proton.android.core.coreexample.R
+import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
 import me.proton.core.test.android.plugins.Requests.jailUnban
 import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.robots.login.WelcomeRobot
-import me.proton.core.test.android.robots.login.LoginRobot
-import me.proton.core.test.android.robots.login.UsernameSetupRobot
+import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -35,12 +36,14 @@ import org.junit.Test
 class LoginTests : BaseTest() {
 
     private val loginRobot = LoginRobot()
-    private var user: User = users.getUser()
+    private val user: User = users.getUser()
 
     @Before
     fun unban() {
         jailUnban()
-        WelcomeRobot().signIn()
+        AddAccountRobot()
+            .signIn()
+            .verify { loginElementsDisplayed() }
     }
 
     @Test
@@ -48,14 +51,12 @@ class LoginTests : BaseTest() {
         loginRobot
             .loginUser<CoreexampleRobot>(user)
             .logoutUser<CoreexampleRobot>(user)
-            .verify { userIsLoggedOut(user) }
+            .verify { userStateIs(user, Disabled, null) }
     }
 
     @Test
     fun missingPasswordAndUsername() {
         loginRobot
-            .username("")
-            .password("")
             .signIn<LoginRobot>()
             .verify { inputErrorDisplayed(R.string.auth_login_assistive_text) }
     }
@@ -79,22 +80,22 @@ class LoginTests : BaseTest() {
     @Test
     fun closeLogin() {
         loginRobot
-            .close<CoreexampleRobot>()
-            .verify { userIsLoggedOut(user) }
+            .close<AddAccountRobot>()
+            .verify { addAccountElementsDisplayed() }
     }
 
     @Test
-    @Ignore
+    @Ignore("Missing setup address robot")
     fun createAddressForExternalUser() {
         val external = users.getUser { it.name.isNotEmpty() }
         loginRobot
-            .loginUser<UsernameSetupRobot>(external)
-            .verify { usernameSetupElementsDisplayed() }
+            .loginUser<ChooseUsernameRobot>(external)
+            .verify { chooseUsernameElementsDisplayed() }
 
-        UsernameSetupRobot()
-            .username(external.firstName)
-            .next()
-            .createAddress<CoreexampleRobot>()
-            .verify { userStateIs(external, Ready, Authenticated) }
+//        ChooseUsernameRobot()
+//            .username(external.firstName)
+//            .next()
+//            .createAddress<CoreexampleRobot>()
+//            .verify { userStateIs(external, Ready, Authenticated) }
     }
 }

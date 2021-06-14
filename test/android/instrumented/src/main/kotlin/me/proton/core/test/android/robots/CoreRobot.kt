@@ -21,13 +21,17 @@ package me.proton.core.test.android.robots
 import android.widget.Button
 import android.widget.EditText
 import androidx.annotation.IdRes
-import me.proton.core.auth.R
 import me.proton.core.test.android.instrumented.Robot
+import me.proton.core.test.android.instrumented.builders.OnView
 
 /**
  * [CoreRobot] Contains common Core specific view actions implementation
  */
 open class CoreRobot : Robot {
+
+    enum class Scroll {
+        UP
+    }
 
     /**
      * Sets text of an element which has an [id] with [value]
@@ -37,7 +41,6 @@ open class CoreRobot : Robot {
         view
             .instanceOf(EditText::class.java)
             .withId(id)
-            .scrollTo()
             .typeText(value)
         return T::class.java.newInstance()
     }
@@ -50,7 +53,18 @@ open class CoreRobot : Robot {
         view
             .instanceOf(clazz)
             .withId(id)
+            .isEnabled()
+            .wait()
             .click()
+        return T::class.java.newInstance()
+    }
+
+    /**
+     * Clicks provided [element]
+     * @param T next Robot to be returned
+     */
+    inline fun <reified T> clickElement(element: OnView): T {
+        element.wait().click()
         return T::class.java.newInstance()
     }
 
@@ -67,13 +81,12 @@ open class CoreRobot : Robot {
     }
 
     /**
-     * Clicks close button
-     * @param T next Robot to be returned
+     * Clicks Android 'Back' button
+     * @param T next Robot in flow
+     * @return an instance of [T]
      */
-    inline fun <reified T> close(): T {
-        view
-            .withId(R.id.closeButton)
-            .click()
+    inline fun <reified T> back(): T {
+        device.clickBackBtn()
         return T::class.java.newInstance()
     }
 }

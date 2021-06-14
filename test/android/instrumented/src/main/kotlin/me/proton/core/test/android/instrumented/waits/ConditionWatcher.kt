@@ -39,23 +39,23 @@ interface ConditionWatcher {
         watchInterval: Long = 250L,
     ) {
         var timeInterval = 0L
-        var exception: Exception = TimeoutException("Condition was not met in $watchTimeout ms. No exceptions caught.")
+        var throwable: Throwable = TimeoutException("Condition was not met in $watchTimeout ms. No exceptions caught.")
 
         while (timeInterval < watchTimeout) {
             try {
                 conditionBlock()
                 return
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 val firstLine = e.message?.split("\n")?.get(0)
                 Log.v(testTag, "Waiting for condition. ${watchTimeout - timeInterval}ms remaining. Status: $firstLine")
-                exception = e
+                throwable = e
             }
             timeInterval += watchInterval
             Thread.sleep(watchInterval)
         }
         Log.d(testTag, "Test \"${testName.methodName}\" failed. Saving screenshot")
         FileUtils.takeScreenshot()
-        throw exception
+        throw throwable
     }
 
     companion object {

@@ -18,17 +18,19 @@
 
 package me.proton.core.test.android.uitests
 
+import android.view.ViewGroup
 import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.instrumented.builders.OnView
-import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
-import me.proton.core.test.android.robots.signup.SignupRobot
+import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
+import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import me.proton.core.test.android.robots.plans.SelectPlanRobot
 
 /**
  * [CoreexampleRobot] class contains actions and verifications for Main screen functionality.
@@ -37,40 +39,41 @@ open class CoreexampleRobot : CoreRobot() {
 
     fun humanVerification(): HumanVerificationRobot = clickElement(R.id.trigger_human_ver)
     inline fun <reified T> upgradePrimary(): T = clickElement(R.id.payment)
-    fun signup(): SignupRobot = clickElement(R.id.signup)
-    fun signupExternal(): SignupRobot = clickElement(R.id.signupExternal)
+    fun signup(): ChooseUsernameRobot = clickElement(R.id.signup)
+    fun signupExternal(): ChooseUsernameRobot = clickElement(R.id.signupExternal)
     inline fun <reified T> logoutUser(user: User): T = clickUserButton(user)
     inline fun <reified T> clickUserButton(
         user: User,
         accountState: AccountState = Ready,
         sessionState: SessionState = Authenticated
     ): T = clickElement(getUserState(user, accountState, sessionState))
+    fun plansUpgrade(): SelectPlanRobot = clickElement(R.id.plansUpgrade)
+    fun plansCurrent(): SelectPlanRobot = clickElement(R.id.plansCurrent)
 
+    fun accountSwitcher(): AccountSwitcherRobot = clickElement(R.id.accountPrimaryView, ViewGroup::class.java)
 
     class Verify : CoreVerify() {
 
-        fun userIsLoggedOut(user: User): OnView =
-            view
-                .withText(user.name)
-                .checkDoesNotExist()
-
-        fun primaryUserIs(user: User?): OnView =
-            view
-//                .withId(R.id.primaryAccountText)
-                .withText("Primary: ${user?.name}")
-                .wait()
-
-        fun userStateIs(user: User, accountState: AccountState, sessionState: SessionState): OnView {
+        fun userStateIs(user: User, accountState: AccountState, sessionState: SessionState?) {
             val userState = getUserState(user, accountState, sessionState)
-            return view.withText(userState).wait().checkDisplayed()
+            view.withText(userState).wait().checkDisplayed()
         }
 
+        fun coreexampleElementsDisplayed() {
+            view.withId(R.id.trigger_human_ver).wait()
+            view.withId(R.id.payment).wait()
+            view.withId(R.id.signupExternal).wait()
+        }
+
+        fun primaryUserIs(user: User) {
+            view.withId(R.id.account_email_textview).withText(user.email).wait()
+        }
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
 
     companion object {
-        fun getUserState(user: User, accountState: AccountState, sessionState: SessionState): String =
+        fun getUserState(user: User, accountState: AccountState, sessionState: SessionState?): String =
             "${user.name} -> $accountState/$sessionState".toUpperCase()
     }
 }

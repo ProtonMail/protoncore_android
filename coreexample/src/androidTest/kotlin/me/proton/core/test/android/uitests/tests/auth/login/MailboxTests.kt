@@ -16,14 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.login
+package me.proton.core.test.android.uitests.tests.auth.login
 
 import me.proton.android.core.coreexample.R
+import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
 import me.proton.core.test.android.plugins.Requests.jailUnban
-import me.proton.core.test.android.robots.login.WelcomeRobot
-import me.proton.core.test.android.robots.login.MailboxPasswordRobot
+import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.auth.login.MailboxPasswordRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -37,7 +38,7 @@ class MailboxTests : BaseTest() {
     @Before
     fun goToMailbox() {
         jailUnban()
-        WelcomeRobot()
+        AddAccountRobot()
             .signIn()
             .username(twoPassUser.name)
             .password(twoPassUser.password)
@@ -54,14 +55,14 @@ class MailboxTests : BaseTest() {
 
         mailboxPasswordRobot
             .close<CoreexampleRobot>()
-            .verify { userIsLoggedOut(twoPassUser) }
+            .verify { userStateIs(twoPassUser, Disabled, null) }
     }
 
     @Test
     fun closeMailbox() {
         mailboxPasswordRobot
             .close<CoreexampleRobot>()
-            .verify { userIsLoggedOut(twoPassUser) }
+            .verify { coreexampleElementsDisplayed() }
     }
 
     @Test

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.robots.login
+package me.proton.core.test.android.robots.auth.login
 
 import android.widget.Button
 import android.widget.EditText
@@ -29,7 +29,6 @@ import me.proton.core.test.android.robots.CoreVerify
  * [LoginRobot] class contains login actions and verifications implementation.
  */
 class LoginRobot : CoreRobot() {
-
     /**
      * Sets the value of username input to [name]
      * @return [LoginRobot]
@@ -56,6 +55,12 @@ class LoginRobot : CoreRobot() {
     inline fun <reified T> signIn(): T = clickElement(R.id.signInButton)
 
     /**
+     * Clicks close button
+     * @param T next Robot to be returned
+     */
+    inline fun <reified T> close(): T = clickElement(R.id.closeButton)
+
+    /**
      * Fills in username and password of a given [user]. Clicks sign in button.
      * @param T next Robot in flow
      * @return an instance of [T]
@@ -68,7 +73,9 @@ class LoginRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun loginElementsDisplayed() {
-            view.withId(R.id.usernameInput).instanceOf(EditText::class.java).wait()
+            view.withId(R.id.usernameInput).instanceOf(EditText::class.java).wait().closeKeyboard()
+            view.withId(R.id.passwordInput).instanceOf(EditText::class.java).wait()
+            view.withId(R.id.signInButton).instanceOf(Button::class.java).wait()
             view.withId(R.id.closeButton).instanceOf(Button::class.java).wait()
         }
     }

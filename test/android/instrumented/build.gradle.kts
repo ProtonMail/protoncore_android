@@ -19,7 +19,7 @@
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
-libVersion = Version(0, 5, 0)
+libVersion = Version(0, 6, 0)
 
 plugins {
     id("com.android.library")
@@ -67,6 +67,7 @@ dependencies {
         project(Module.key),
         project(Module.user),
         project(Module.country),
+        project(Module.plan),
 
         // MockK
         `mockk-android`,

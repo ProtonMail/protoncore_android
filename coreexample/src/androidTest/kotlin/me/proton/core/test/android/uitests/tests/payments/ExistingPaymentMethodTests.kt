@@ -20,8 +20,9 @@ package me.proton.core.test.android.uitests.tests.payments
 
 import me.proton.core.payment.domain.entity.PaymentMethodType.CARD
 import me.proton.core.payment.domain.entity.PaymentMethodType.PAYPAL
-import me.proton.core.test.android.robots.login.WelcomeRobot
-import me.proton.core.test.android.robots.login.LoginRobot
+import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
@@ -34,7 +35,8 @@ class ExistingPaymentMethodTests : BaseTest() {
 
     @Before
     fun goToLogin() {
-        WelcomeRobot().signIn()
+        jailUnban()
+        AddAccountRobot().signIn()
     }
 
     @Test
