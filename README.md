@@ -168,19 +168,19 @@ User Data: **1.1.4** - _released on: Jun 11, 2021_
 
 ### Contact
 
-Contact: **0.1.4** - _released on: Apr 23, 2021_
+Contact: **0.1.5** - _released on: Jun 14, 2021_
 
-Contact Domain: **0.1.4** - _released on: Apr 23, 2021_
+Contact Domain: **0.1.5** - _released on: Jun 14, 2021_
 
-Contact Data: **0.1.4** - _released on: Apr 23, 2021_
+Contact Data: **0.1.5** - _released on: Jun 14, 2021_
 
 ### Mail Message
 
-Mail Message: **0.1.1** - _released on: Mar 04, 2021_
+Mail Message: **0.1.5** - _released on: Jun 14, 2021_
 
-Mail Message Domain: **0.1.1** - _released on: Mar 04, 2021_
+Mail Message Domain: **0.1.5** - _released on: Jun 14, 2021_
 
-Mail Message Data: **0.1.1** - _released on: Mar 04, 2021_
+Mail Message Data: **0.1.5** - _released on: Jun 14, 2021_
 
 ### Human Verification
 
