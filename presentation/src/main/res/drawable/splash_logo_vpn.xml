@@ -1,0 +1,30 @@
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <path
+        android:fillColor="@color/fruit_salad"
+        android:pathData="M24,0L72,0A24,24 0,0 1,96 24L96,72A24,24 0,0 1,72 96L24,96A24,24 0,0 1,0 72L0,24A24,24 0,0 1,24 0z" />
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M67.981,31.1355C67.981,30.461 67.8481,29.7932 67.59,29.1701C67.3318,28.547 66.9535,27.9808 66.4766,27.5039C65.9996,27.027 65.4334,26.6488 64.8103,26.3907C64.1871,26.1327 63.5193,25.9999 62.8448,26C61.4828,26 60.1766,26.5411 59.2135,27.5042C58.2504,28.4672 57.7093,29.7735 57.7093,31.1355V31.2981L35.3719,38.4284C34.5993,37.3113 33.4169,36.5443 32.0819,36.294C30.7469,36.0437 29.3671,36.3303 28.2422,37.0916C27.6909,37.4605 27.2176,37.9343 26.8495,38.4861C26.4813,39.0379 26.2254,39.6568 26.0964,40.3075C25.9674,40.9581 25.9679,41.6279 26.0977,42.2784C26.2276,42.9289 26.4843,43.5474 26.8532,44.0987C26.8648,44.1168 26.8771,44.1348 26.8893,44.1523C27.3732,44.8537 28.0244,45.4233 28.7838,45.8097C29.5433,46.1961 30.3872,46.387 31.239,46.3652C31.7702,46.3626 32.2972,46.2715 32.7984,46.0955L47.4797,64.451C46.9517,65.6853 46.9357,67.0789 47.4352,68.3251C47.9346,69.5712 48.9086,70.568 50.1429,71.0961L50.1868,71.1148C51.4335,71.6437 52.8386,71.6596 54.097,71.1591C55.3554,70.6586 56.3657,69.682 56.9087,68.4413C57.3332,67.4467 57.4272,66.3422 57.177,65.2901C56.9267,64.2381 56.3453,63.2942 55.5184,62.5974L63.3171,36.1871C64.5828,36.0787 65.7616,35.4989 66.62,34.5625C67.4784,33.626 67.9538,32.4013 67.9519,31.131L67.981,31.1355ZM52.1145,61.2645C51.3239,61.2756 50.5464,61.4676 49.8416,61.8258L35.5035,43.8516C35.9008,43.211 36.1482,42.489 36.2274,41.7394L59.0526,34.5245C59.2961,34.7835 59.5592,35.0234 59.8396,35.2419L52.1345,61.2535H52.11L52.1145,61.2645Z" />
+</vector>

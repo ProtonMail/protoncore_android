@@ -18,16 +18,20 @@
   -->
 
 <resources>
-    <string name="auth_add_account_title">Protect your privacy with Proton</string>
-    <string name="auth_add_account_subtitle">Encryption keeps your data private. Your data truly belongs to you.</string>
-    <string name="auth_add_account_title_mail">Protect your privacy with ProtonMail</string>
-    <string name="auth_add_account_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
-    <string name="auth_add_account_title_drive">Protect your privacy with ProtonDrive</string>
-    <string name="auth_add_account_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
-    <string name="auth_add_account_title_calendar">Protect your privacy with ProtonCalendar</string>
-    <string name="auth_add_account_subtitle_calendar">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
-    <string name="auth_add_account_title_vpn">Protect your privacy with ProtonVpn</string>
-    <string name="auth_add_account_subtitle_vpn">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+    <string name="welcome_title">Protect your privacy with Proton</string>
+    <string name="welcome_subtitle">Encryption keeps your data private. Your data truly belongs to you.</string>
+
+    <string name="welcome_title_mail">Protect your privacy with ProtonMail</string>
+    <string name="welcome_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
+
+    <string name="welcome_title_drive">Protect your privacy with ProtonDrive</string>
+    <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+
+    <string name="welcome_title_calendar">Protect your privacy with ProtonCalendar</string>
+    <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
+
+    <string name="welcome_title_vpn">Protect your privacy with ProtonVpn</string>
+    <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.</string>
 
     <string name="auth_password_label">Password</string>
     <string name="auth_email_username">Email or username</string>

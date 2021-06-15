@@ -308,6 +308,13 @@ fun AuthOrchestrator.onAddAccountResult(
     return this
 }
 
+fun AuthOrchestrator.onOnSignUpResult(
+    block: (result: SignUpResult?) -> Unit
+): AuthOrchestrator {
+    setOnSignUpResult { block(it) }
+    return this
+}
+
 fun AuthOrchestrator.onLoginResult(
     block: (result: LoginResult?) -> Unit
 ): AuthOrchestrator {
