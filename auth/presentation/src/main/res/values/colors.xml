@@ -17,7 +17,12 @@
   -->
 
 <resources>
-    <color name="add_account_gradient_start">@color/cloud_burst</color>
-    <color name="add_account_gradient_end">@color/black_pearl</color>
-    <color name="add_account_background">@color/vulcan</color>
+    <!-- Welcome screen - default colors -->
+    <color name="welcome_gradient_start">#263163</color>
+    <color name="welcome_gradient_end">#10152F</color>
+    <color name="welcome_background">#171F3B</color>
+    <!-- Welcome screen - VPN colors -->
+    <color name="welcome_gradient_start_vpn">#17181C</color>
+    <color name="welcome_gradient_end_vpn">#17181C</color>
+    <color name="welcome_background_vpn">#17181C</color>
 </resources>

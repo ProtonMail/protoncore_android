@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -20,9 +19,78 @@
 <resources>
 
     <style name="ProtonTheme.AddAccount">
-        <item name="android:statusBarColor">@color/cloud_burst</item>
-        <item name="android:navigationBarColor">@color/vulcan</item>
+        <!-- ProtonTheme override -->
+        <item name="android:statusBarColor">?attr/add_account_gradient_start</item>
+        <item name="android:navigationBarColor">?attr/add_account_background</item>
         <item name="android:windowLightStatusBar">false</item>
+        <!-- ProtonTheme.AddAccount attributes override -->
+        <item name="add_account_gradient_start">@color/welcome_gradient_start</item>
+        <item name="add_account_gradient_end">@color/welcome_gradient_end</item>
+        <item name="add_account_background">@color/welcome_background</item>
+        <item name="add_account_illustration">@drawable/welcome_illustration_mountain</item>
+        <item name="add_account_title">@string/welcome_title</item>
+        <item name="add_account_subtitle">@string/welcome_subtitle</item>
+        <item name="add_account_logo">@drawable/logo_proton</item>
+    </style>
+
+    <style name="ProtonTheme.Mail.AddAccount">
+        <!-- ProtonTheme override -->
+        <item name="android:statusBarColor">?attr/add_account_gradient_start</item>
+        <item name="android:navigationBarColor">?attr/add_account_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- ProtonTheme.AddAccount attributes override -->
+        <item name="add_account_gradient_start">@color/welcome_gradient_start</item>
+        <item name="add_account_gradient_end">@color/welcome_gradient_end</item>
+        <item name="add_account_background">@color/welcome_background</item>
+        <item name="add_account_illustration">@drawable/welcome_illustration_mountain</item>
+        <item name="add_account_title">@string/welcome_title_mail</item>
+        <item name="add_account_subtitle">@string/welcome_subtitle_mail</item>
+        <item name="add_account_logo">@drawable/logo_mail</item>
+    </style>
+
+    <style name="ProtonTheme.Calendar.AddAccount">
+        <!-- ProtonTheme override -->
+        <item name="android:statusBarColor">?attr/add_account_gradient_start</item>
+        <item name="android:navigationBarColor">?attr/add_account_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- ProtonTheme.AddAccount attributes override -->
+        <item name="add_account_gradient_start">@color/welcome_gradient_start</item>
+        <item name="add_account_gradient_end">@color/welcome_gradient_end</item>
+        <item name="add_account_background">@color/welcome_background</item>
+        <item name="add_account_illustration">@drawable/welcome_illustration_mountain</item>
+        <item name="add_account_title">@string/welcome_title_calendar</item>
+        <item name="add_account_subtitle">@string/welcome_subtitle_calendar</item>
+        <item name="add_account_logo">@drawable/logo_calendar</item>
+    </style>
+
+    <style name="ProtonTheme.Drive.AddAccount">
+        <!-- ProtonTheme override -->
+        <item name="android:statusBarColor">?attr/add_account_gradient_start</item>
+        <item name="android:navigationBarColor">?attr/add_account_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- ProtonTheme.AddAccount attributes override -->
+        <item name="add_account_gradient_start">@color/welcome_gradient_start</item>
+        <item name="add_account_gradient_end">@color/welcome_gradient_end</item>
+        <item name="add_account_background">@color/welcome_background</item>
+        <item name="add_account_illustration">@drawable/welcome_illustration_mountain</item>
+        <item name="add_account_title">@string/welcome_title_drive</item>
+        <item name="add_account_subtitle">@string/welcome_subtitle_drive</item>
+        <item name="add_account_logo">@drawable/logo_drive</item>
+    </style>
+
+    <style name="ProtonTheme.Vpn.AddAccount">
+        <!-- ProtonTheme override -->
+        <item name="android:statusBarColor">?attr/add_account_gradient_start</item>
+        <item name="android:navigationBarColor">?attr/add_account_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- ProtonTheme.AddAccount attributes override -->
+        <item name="add_account_gradient_start">@color/welcome_gradient_start_vpn</item>
+        <item name="add_account_gradient_end">@color/welcome_gradient_end_vpn</item>
+        <item name="add_account_background">@color/welcome_background_vpn</item>
+        <item name="add_account_illustration">@drawable/welcome_illustration_vpn</item>
+        <item name="add_account_title">@string/welcome_title_vpn</item>
+        <item name="add_account_subtitle">@string/welcome_subtitle_vpn</item>
+        <item name="add_account_logo">@drawable/logo_vpn</item>
     </style>
 
     <style name="AuthContent">

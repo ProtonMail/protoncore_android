@@ -107,6 +107,9 @@
         <item name="proton_notification_warning">@color/notification_warning</item>
     </style>
 
+    <style name="ProtonTheme.Calendar" parent="ProtonTheme" />
+    <style name="ProtonTheme.Drive" parent="ProtonTheme" />
+    <style name="ProtonTheme.Mail" parent="ProtonTheme" />
     <style name="ProtonTheme.Vpn" parent="ProtonTheme">
         <item name="brand_norm">@color/fruit_salad</item>
         <item name="brand_darken_20">@color/goblin</item>
@@ -130,6 +133,16 @@
     <style name="ProtonTheme.Splash.Drive">
         <item name="brand_splash_logo">@drawable/splash_logo_drive</item>
         <item name="brand_splash_text">@drawable/splash_text_protondrive</item>
+    </style>
+
+    <style name="ProtonTheme.Splash.Calendar">
+        <item name="brand_splash_logo">@drawable/splash_logo_calendar</item>
+        <item name="brand_splash_text">@drawable/splash_text_protoncalendar</item>
+    </style>
+
+    <style name="ProtonTheme.Splash.Vpn">
+        <item name="brand_splash_logo">@drawable/splash_logo_vpn</item>
+        <item name="brand_splash_text">@drawable/splash_text_protonvpn</item>
     </style>
 
 </resources>

@@ -107,9 +107,4 @@
     <color name="nav_view_item_icon">@color/white</color>
     <color name="nav_view_divider">@color/tuna</color>
 
-    <!-- unapproved colors -->
-    <color name="black_pearl">#02040D</color>
-    <color name="vulcan">#0F1321</color>
-    <color name="cloud_burst">#263163</color>
-
 </resources>

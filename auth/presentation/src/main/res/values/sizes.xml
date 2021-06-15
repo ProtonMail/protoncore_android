@@ -31,7 +31,7 @@
     <dimen name="auth_subtitle_top_margin">@dimen/default_text_top_margin</dimen>
     <dimen name="auth_signup_top_margin">@dimen/gap_medium</dimen>
     <!-- add account sizes -->
-    <dimen name="add_account_mountain_min_height">260dp</dimen>
+    <dimen name="add_account_illustration_height">250dp</dimen>
     <!-- text sizes -->
     <dimen name="auth_help_item_text_size">@dimen/default_text_size</dimen>
 </resources>

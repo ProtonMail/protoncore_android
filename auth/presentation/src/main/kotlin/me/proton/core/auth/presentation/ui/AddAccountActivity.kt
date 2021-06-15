@@ -31,7 +31,6 @@ import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.onLoginResult
 import me.proton.core.auth.presentation.onOnSignUpResult
-import me.proton.core.domain.entity.Product
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.onClick
 import javax.inject.Inject
@@ -49,10 +48,6 @@ class AddAccountActivity : ProtonActivity<ActivityAddAccountBinding>() {
         intent?.extras?.getParcelable(ARG_INPUT)
     }
 
-    private val product: Product? by lazy {
-        input?.product
-    }
-
     private val requiredAccountType: AccountType by lazy {
         input?.requiredAccountType ?: AccountType.Internal
     }
@@ -60,37 +55,7 @@ class AddAccountActivity : ProtonActivity<ActivityAddAccountBinding>() {
     override fun layoutId(): Int = R.layout.activity_add_account
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.ProtonTheme_AddAccount)
         super.onCreate(savedInstanceState)
-
-        when (product) {
-            Product.Mail -> {
-                binding.title.text = getString(R.string.auth_add_account_title_mail)
-                binding.subtitle.text = getString(R.string.auth_add_account_subtitle_mail)
-                binding.logo.setImageResource(R.drawable.logo_mail)
-            }
-            Product.Calendar -> {
-                binding.title.text = getString(R.string.auth_add_account_title_calendar)
-                binding.subtitle.text = getString(R.string.auth_add_account_subtitle_calendar)
-                binding.logo.setImageResource(R.drawable.logo_calendar)
-            }
-            Product.Drive -> {
-                binding.title.text = getString(R.string.auth_add_account_title_drive)
-                binding.subtitle.text = getString(R.string.auth_add_account_subtitle_drive)
-                binding.logo.setImageResource(R.drawable.logo_drive)
-            }
-            Product.Vpn -> {
-                binding.title.text = getString(R.string.auth_add_account_title_vpn)
-                binding.subtitle.text = getString(R.string.auth_add_account_subtitle_vpn)
-                binding.logo.setImageResource(R.drawable.logo_vpn)
-            }
-            else -> {
-                binding.title.text = getString(R.string.auth_add_account_title)
-                binding.subtitle.text = getString(R.string.auth_add_account_subtitle)
-                binding.logo.setImageResource(R.drawable.logo_proton)
-            }
-        }
-
         authOrchestrator.register(this)
 
         binding.signIn.onClick { authOrchestrator.startLoginWorkflow(requiredAccountType) }
