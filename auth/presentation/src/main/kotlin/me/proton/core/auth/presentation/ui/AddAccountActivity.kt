@@ -30,6 +30,7 @@ import me.proton.core.auth.presentation.databinding.ActivityAddAccountBinding
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.onLoginResult
+import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.onClick
@@ -90,12 +91,13 @@ class AddAccountActivity : ProtonActivity<ActivityAddAccountBinding>() {
             }
         }
 
-        binding.signIn.onClick { authOrchestrator.startLoginWorkflow(requiredAccountType) }
-        binding.signUp.onClick { authOrchestrator.startSignupWorkflow(requiredAccountType) }
         authOrchestrator.register(this)
-        authOrchestrator.onLoginResult {
-            if (it != null) onSuccess(it.userId)
-        }
+
+        binding.signIn.onClick { authOrchestrator.startLoginWorkflow(requiredAccountType) }
+        authOrchestrator.onLoginResult { if (it != null) onSuccess(it.userId) }
+
+        binding.signUp.onClick { authOrchestrator.startSignupWorkflow(requiredAccountType) }
+        authOrchestrator.onOnSignUpResult { if (it != null) onSuccess(it.userId) }
     }
 
     override fun onDestroy() {
