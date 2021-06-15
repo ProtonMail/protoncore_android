@@ -286,11 +286,16 @@
     </style>
     <!-- endregion -->
 
-    <!-- region Switches and radio buttons -->
+    <!-- region Switches, Checkboxes and Radio buttons -->
     <style name="ProtonSwitch" parent="Widget.AppCompat.CompoundButton.Switch">
         <item name="android:textAppearance">@style/Proton.Text.Default</item>
         <item name="thumbTint">@color/switch_thumb_selector</item>
         <item name="trackTint">@color/switch_track_selector</item>
+    </style>
+
+    <style name="ProtonCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textAppearance">@style/Proton.Text.Default</item>
+        <item name="android:buttonTint">@color/check_box_selector</item>
     </style>
 
     <style name="ProtonRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
