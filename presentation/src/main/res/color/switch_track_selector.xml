@@ -17,7 +17,7 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="?brand_lighten_40" android:state_checked="true"/>
     <item android:color="@color/shade_10" android:state_enabled="false"/>
+    <item android:color="?brand_lighten_40" android:state_checked="true"/>
     <item android:color="@color/shade_60"/>
 </selector>
