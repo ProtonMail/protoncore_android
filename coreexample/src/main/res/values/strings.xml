@@ -54,7 +54,12 @@
     <string name="example_loading_text_only">Loading</string>
     <string name="example_secondary_button">Secondary</string>
 
-    <string name="example_switch_label">Switch</string>
+    <string name="example_switch_label1">Switch 1</string>
+    <string name="example_switch_label2">Switch 2</string>
+
+    <string name="example_check_box_label1">Switch 1</string>
+    <string name="example_check_box_label2">Switch 2</string>
+    <string name="example_check_box_label3">Switch 3</string>
 
     <string name="example_radio1_label">Radio button 1</string>
     <string name="example_radio2_label">Radio button 2</string>
