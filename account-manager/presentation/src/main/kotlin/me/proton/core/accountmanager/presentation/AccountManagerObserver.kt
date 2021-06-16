@@ -63,8 +63,8 @@ fun AccountManager.observe(
 
 fun AccountManagerObserver.disableInitialNotReadyAccounts(): AccountManagerObserver {
     scope.launch {
-        // For all NotReady Accounts in the first/initial list.
-        accountManager.getAccounts(AccountState.NotReady).first().forEach {
+        // For all NotReady/Removed Accounts in the first/initial list.
+        accountManager.getAccounts(AccountState.NotReady, AccountState.Removed).first().forEach {
             // Do not disable if SecondFactor is pending.
             if (it.sessionState != SessionState.SecondFactorNeeded) {
                 accountManager.disableAccount(it.userId)
