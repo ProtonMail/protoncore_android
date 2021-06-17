@@ -46,7 +46,34 @@ data class SessionDetails(
 
 fun Account.isReady() = state == AccountState.Ready
 fun Account.isDisabled() = state == AccountState.Disabled
+
 fun Account.isTwoPassModeNeeded() = state == AccountState.TwoPassModeNeeded
+fun Account.isCreateAddressNeeded() = state == AccountState.CreateAddressNeeded
 
 fun Account.isAuthenticated() = sessionState == SessionState.Authenticated
 fun Account.isSecondFactorNeeded() = sessionState == SessionState.SecondFactorNeeded
+
+fun Account.isStepNeeded(): Boolean {
+    val isAccountStateStepNeeded = when (state) {
+        AccountState.TwoPassModeNeeded,
+        AccountState.CreateAddressNeeded -> true
+        AccountState.NotReady,
+        AccountState.TwoPassModeSuccess,
+        AccountState.TwoPassModeFailed,
+        AccountState.CreateAddressSuccess,
+        AccountState.CreateAddressFailed,
+        AccountState.Ready,
+        AccountState.Disabled,
+        AccountState.UnlockFailed,
+        AccountState.Removed -> false
+    }
+    val isSessionStateStepNeeded = when (sessionState) {
+        SessionState.SecondFactorNeeded -> true
+        SessionState.SecondFactorSuccess,
+        SessionState.SecondFactorFailed,
+        SessionState.Authenticated,
+        SessionState.ForceLogout,
+        null -> false
+    }
+    return isAccountStateStepNeeded || isSessionStateStepNeeded
+}

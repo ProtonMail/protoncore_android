@@ -44,10 +44,18 @@ fun AccountManager.onAccountState(vararg state: AccountState, initialState: Bool
 fun AccountManager.onSessionState(vararg state: SessionState, initialState: Boolean = true): Flow<Account> =
     onSessionStateChanged(initialState).filter { state.contains(it.sessionState) }
 
+/**
+ * Flow of primary Account.
+ *
+ * @see [AccountManager.getPrimaryUserId]
+ */
 fun AccountManager.getPrimaryAccount(): Flow<Account?> =
     getPrimaryUserId().flatMapLatest { userId ->
         userId?.let { getAccount(it) } ?: flowOf(null)
     }
 
-fun AccountManager.getAccounts(state: AccountState): Flow<List<Account>> =
-    getAccounts().map { list -> list.filter { it.state == state } }.distinctUntilChanged()
+/**
+ * Flow of [List] of Accounts filtered by [Account.state].
+ */
+fun AccountManager.getAccounts(vararg state: AccountState): Flow<List<Account>> =
+    getAccounts().map { list -> list.filter { it.state in state } }.distinctUntilChanged()
