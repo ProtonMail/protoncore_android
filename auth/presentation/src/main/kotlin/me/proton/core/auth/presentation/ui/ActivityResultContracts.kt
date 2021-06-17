@@ -42,6 +42,7 @@ class StartAddAccount : ActivityResultContract<AddAccountInput, AddAccountResult
 
     override fun createIntent(context: Context, input: AddAccountInput) =
         Intent(context, AddAccountActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra(AddAccountActivity.ARG_INPUT, input)
         }
 
@@ -55,7 +56,7 @@ class StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
 
     override fun createIntent(context: Context, input: LoginInput) =
         Intent(context, LoginActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra(LoginActivity.ARG_INPUT, input)
         }
 
@@ -122,6 +123,7 @@ class StartSignup : ActivityResultContract<SignUpInput, SignUpResult?>() {
 
     override fun createIntent(context: Context, input: SignUpInput?) =
         Intent(context, SignupActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra(SignupActivity.ARG_INPUT, input)
         }
 
