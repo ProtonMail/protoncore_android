@@ -23,9 +23,8 @@ import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.StartHumanVerification
-import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
-import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.getType
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 
 class HumanVerificationOrchestrator {
 
@@ -46,7 +45,7 @@ class HumanVerificationOrchestrator {
         }
 
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
-        checkNotNull(launcher) { "You must call authOrchestrator.register(context) before starting workflow!" }
+        checkNotNull(launcher) { "You must call register(context) before starting workflow!" }
 
     // endregion
 
@@ -80,18 +79,17 @@ class HumanVerificationOrchestrator {
      * If both provided, this parameter takes the precedence.
      */
     fun startHumanVerificationWorkflow(
-        clientId: ClientId,
+        details: HumanVerificationDetails,
         captchaBaseUrl: String? = null,
-        methods: HumanVerificationAvailableMethods?,
         recoveryEmailAddress: String? = null
     ) {
         checkRegistered(humanWorkflowLauncher).launch(
             HumanVerificationInput(
-                clientId = clientId.id,
+                clientId = details.clientId.id,
+                clientIdType = details.clientId.getType().value,
+                verificationMethods = details.verificationMethods.map { it.value },
+                captchaToken = details.captchaVerificationToken,
                 captchaBaseUrl = captchaBaseUrl,
-                clientIdType = clientId.getType().value,
-                verificationMethods = methods?.verificationMethods?.map { it.value },
-                captchaToken = methods?.captchaVerificationToken,
                 recoveryEmailAddress = recoveryEmailAddress
             )
         )
