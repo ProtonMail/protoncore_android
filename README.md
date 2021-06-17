@@ -119,13 +119,13 @@ Crypto Android: **1.1.1** - _released on: Jun 11, 2021_
 
 ### Auth
 
-Auth: **1.1.7** - _released on: Jun 17, 2021_
+Auth: **1.1.8** - _released on: Jun 17, 2021_
 
-Auth Domain: **1.1.7** - _released on: Jun 17, 2021_
+Auth Domain: **1.1.8** - _released on: Jun 17, 2021_
 
-Auth Presentation: **1.1.7** - _released on: Jun 17, 2021_
+Auth Presentation: **1.1.8** - _released on: Jun 17, 2021_
 
-Auth Data: **1.1.7** - _released on: Jun 17, 2021_
+Auth Data: **1.1.8** - _released on: Jun 17, 2021_
 
 ### Account
 
@@ -184,13 +184,13 @@ Mail Message Data: **0.1.5** - _released on: Jun 14, 2021_
 
 ### Human Verification
 
-Human Verification: **1.2.3** - _released on: Jun 10, 2021_
+Human Verification: **1.2.4** - _released on: Jun 17, 2021_
 
-Human Verification Domain: **1.2.3** - _released on: Jun 10, 2021_
+Human Verification Domain: **1.2.4** - _released on: Jun 17, 2021_
 
-Human Verification Presentation: **1.2.3** - _released on: Jun 10, 2021_
+Human Verification Presentation: **1.2.4** - _released on: Jun 17, 2021_
 
-Human Verification Data: **1.2.3** - _released on: Jun 10, 2021_
+Human Verification Data: **1.2.4** - _released on: Jun 17, 2021_
 
 ### Countries
 
