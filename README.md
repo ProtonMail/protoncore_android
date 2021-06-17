@@ -119,36 +119,36 @@ Crypto Android: **1.1.1** - _released on: Jun 11, 2021_
 
 ### Auth
 
-Auth: **1.1.6** - _released on: Jun 15, 2021_
+Auth: **1.1.7** - _released on: Jun 17, 2021_
 
-Auth Domain: **1.1.6** - _released on: Jun 15, 2021_
+Auth Domain: **1.1.7** - _released on: Jun 17, 2021_
 
-Auth Presentation: **1.1.6** - _released on: Jun 15, 2021_
+Auth Presentation: **1.1.7** - _released on: Jun 17, 2021_
 
-Auth Data: **1.1.6** - _released on: Jun 15, 2021_
+Auth Data: **1.1.7** - _released on: Jun 17, 2021_
 
 ### Account
 
-Account: **1.1** - _released on: May 12, 2021_
+Account: **1.1.7** - _released on: Jun 17, 2021_
 
-Account Domain: **1.1** - _released on: May 12, 2021_
+Account Domain: **1.1.7** - _released on: Jun 17, 2021_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **1.1** - _released on: May 12, 2021_
+Account Data: **1.1.7** - _released on: Jun 17, 2021_
 
 
 ### Account Manager
 
-Account Manager: **1.1.5** - _released on: Jun 09, 2021_
+Account Manager: **1.1.7** - _released on: Jun 17, 2021_
 
-Account Manager Domain: **1.1.5** - _released on: Jun 09, 2021_
+Account Manager Domain: **1.1.7** - _released on: Jun 17, 2021_
 
-Account Manager Presentation: **1.1.5** - _released on: Jun 09, 2021_
+Account Manager Presentation: **1.1.7** - _released on: Jun 17, 2021_
 
-Account Manager Data: **1.1.5** - _released on: Jun 09, 2021_
+Account Manager Data: **1.1.7** - _released on: Jun 17, 2021_
 
-Account Manager Dagger: **1.1.5** - _released on: Jun 09, 2021_
+Account Manager Dagger: **1.1.7** - _released on: Jun 17, 2021_
 
 ### Key
 
