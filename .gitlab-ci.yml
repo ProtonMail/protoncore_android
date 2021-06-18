@@ -1,4 +1,26 @@
-image: gitlab.protontech.ch:4567/protonvpn/android/android-app-new:latest
+image: ${CI_REGISTRY}/protonvpn/android/android-app-new:latest
+
+include:
+  - project: 'agarroux/publish-github'
+    ref: master
+    file: '/jobs/release.gitlab-ci.yml'
+
+  - project: 'translations/generator'
+    ref: master
+    file: '/jobs/sync-crowdin.gitlab-ci.yml'
+
+  - project: 'translations/generator'
+    ref: master
+    file: '/jobs/commit-locales.gitlab-ci.yml'
+
+stages:
+  - bot
+  - analyze
+  - build
+  - test
+  - publish
+  - commit
+  - slackRelease
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -8,17 +30,11 @@ cache:
     - '**/**/build'
     - '**/**/**/build'
 
-stages:
-  - analyze
-  - build
-  - test
-  - publish
-  - commit
-  - slackRelease
 
 #####################
 detekt analysis:
   stage: analyze
+  when: always
   tags:
     - medium
   script:
@@ -44,10 +60,6 @@ debugTests:
     - medium
   script:
     - ./gradlew -Pci --console=plain allTest
-
-include:
-  - project: 'agarroux/publish-github'
-    file: '/jobs/release.gitlab-ci.yml'
 
 release-publish-github:
   stage: publish
@@ -116,3 +128,17 @@ postReleaseToSlack:
     - ./util/postReleaseToSlack
   only:
     - master
+
+i18n-sync-crowdin:
+  extends: .i18n-sync-crowdin-common
+  variables:
+    I18N_SYNC_CROWDIN_PROJECT: 'android-core'
+    I18N_SYNC_BRANCH: 'master'
+    I18N_FILTER_OUT_ITEMS: 'coreexample'
+
+i18n-commit-locales:
+  extends: .i18n-commit-locales-shared
+  variables:
+    I18N_COMMIT_CROWDIN_PROJECT: 'android-core'
+    I18N_COMMIT_BRANCH_PUSH: 'master'
+    I18N_COMMIT_BRANCH_ALLOWED: 'master'
