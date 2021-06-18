@@ -48,6 +48,7 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
@@ -118,6 +119,7 @@ internal class HumanVerificationTests {
     private lateinit var clientId: ClientId
 
     private var clientIdProvider = mockk<ClientIdProvider>()
+    private var serverTimeListener = mockk<ServerTimeListener>()
     private var sessionProvider = mockk<SessionProvider>()
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
@@ -153,6 +155,7 @@ internal class HumanVerificationTests {
                 "https://example.com/",
                 client,
                 clientIdProvider,
+                serverTimeListener,
                 logger,
                 networkManager,
                 prefs,
@@ -178,6 +181,7 @@ internal class HumanVerificationTests {
             webServer.url("/").toString(),
             client,
             clientIdProvider,
+            serverTimeListener,
             logger,
             sessionId,
             sessionProvider,

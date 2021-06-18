@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,21 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.network.data.server
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.network.domain.server.ServerTimeListener
+import okhttp3.Interceptor
+import okhttp3.Response
 
-libVersion = Version(1, 1, 4)
+class ServerTimeInterceptor(
+    private val serverTimeListener: ServerTimeListener
+) : Interceptor {
 
-android()
-
-dependencies {
-
-    api(
-        project(Module.networkDomain),
-        project(Module.networkData)
-    )
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+        val response = chain.proceed(request)
+        val serverUtc = response.headers.getDate("date")
+        serverUtc?.let { serverTimeListener.onServerTimeUpdated(it.time / 1000) }
+        return response
+    }
 }

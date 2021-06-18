@@ -34,6 +34,7 @@ import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -47,6 +48,7 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger
@@ -97,10 +99,19 @@ object ApplicationModule {
 
     @Provides
     @Singleton
+    fun provideServerTimeListener(context: CryptoContext) = object : ServerTimeListener {
+        override fun onServerTimeUpdated(epochSeconds: Long) {
+            context.pgpCrypto.updateTime(epochSeconds)
+        }
+    }
+
+    @Provides
+    @Singleton
     fun provideApiFactory(
         logger: Logger,
         apiClient: ApiClient,
         clientIdProvider: ClientIdProvider,
+        serverTimeListener: ServerTimeListener,
         networkManager: NetworkManager,
         networkPrefs: NetworkPrefs,
         protonCookieStore: ProtonCookieStore,
@@ -112,6 +123,7 @@ object ApplicationModule {
         BASE_URL,
         apiClient,
         clientIdProvider,
+        serverTimeListener,
         logger,
         networkManager,
         networkPrefs,

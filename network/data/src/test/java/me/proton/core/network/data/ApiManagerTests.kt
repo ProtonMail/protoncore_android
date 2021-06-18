@@ -52,6 +52,7 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -76,6 +77,9 @@ internal class ApiManagerTests {
 
     @MockK
     private lateinit var clientIdProvider: ClientIdProvider
+
+    @MockK
+    private lateinit var serverTimeListener: ServerTimeListener
 
     @MockK
     private lateinit var sessionProvider: SessionProvider
@@ -128,6 +132,7 @@ internal class ApiManagerTests {
                 baseUrl,
                 apiClient,
                 clientIdProvider,
+                serverTimeListener,
                 MockLogger(),
                 networkManager,
                 prefs,
