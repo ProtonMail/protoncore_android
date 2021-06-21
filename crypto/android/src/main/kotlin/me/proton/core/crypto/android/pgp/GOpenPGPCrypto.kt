@@ -18,7 +18,6 @@
 
 package me.proton.core.crypto.android.pgp
 
-import at.favre.lib.crypto.bcrypt.Radix64Encoder
 import com.google.crypto.tink.subtle.Base64
 import com.proton.gopenpgp.constants.Constants
 import com.proton.gopenpgp.crypto.Crypto
@@ -492,6 +491,10 @@ class GOpenPGPCrypto : PGPCrypto {
             PGPCrypto.KeyType.X25519 -> generateKeyFromHelper(username, email, passphrase, keyType, keySecurity)
         }
     }.getOrElse { throw CryptoException("Key cannot be generated.", it) }
+
+    override fun updateTime(epochSeconds: Long) {
+        Crypto.updateTime(epochSeconds)
+    }
 
     @Suppress("MagicNumber")
     private fun generateKeyFromRSA(

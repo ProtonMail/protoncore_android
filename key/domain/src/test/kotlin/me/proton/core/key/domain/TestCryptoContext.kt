@@ -237,5 +237,7 @@ class TestCryptoContext : CryptoContext {
             keyType: PGPCrypto.KeyType,
             keySecurity: PGPCrypto.KeySecurity
         ): Armored = "privateKey"
+
+        override fun updateTime(epochSeconds: Long) = Unit
     }
 }

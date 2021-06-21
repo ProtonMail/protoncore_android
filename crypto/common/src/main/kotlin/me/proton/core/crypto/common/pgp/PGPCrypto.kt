@@ -322,6 +322,13 @@ interface PGPCrypto {
         keySecurity: KeySecurity
     ): Armored
 
+    /**
+     * Update the current time used for crypto function (e.g. signing).
+     *
+     * @param epochSeconds Number of seconds from Epoch (1970-01-01T00:00:00Z).
+     */
+    fun updateTime(epochSeconds: Long)
+
     enum class KeySecurity(val value: Int) {
         HIGH(2048),
         EXTREME(4096),

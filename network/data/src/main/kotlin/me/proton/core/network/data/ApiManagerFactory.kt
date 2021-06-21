@@ -42,6 +42,7 @@ import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -67,6 +68,7 @@ class ApiManagerFactory(
     private val baseUrl: String,
     private val apiClient: ApiClient,
     private val clientIdProvider: ClientIdProvider,
+    private val serverTimeListener: ServerTimeListener,
     private val logger: Logger,
     private val networkManager: NetworkManager,
     private val prefs: NetworkPrefs,
@@ -162,6 +164,7 @@ class ApiManagerFactory(
             baseUrl,
             apiClient,
             clientIdProvider,
+            serverTimeListener,
             logger,
             sessionId,
             sessionProvider,
@@ -190,6 +193,7 @@ class ApiManagerFactory(
                 baseUrl,
                 apiClient,
                 clientIdProvider,
+                serverTimeListener,
                 logger,
                 sessionId,
                 sessionProvider,

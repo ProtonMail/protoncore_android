@@ -45,6 +45,7 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -80,6 +81,7 @@ internal class ProtonApiBackendTests {
     private lateinit var session: Session
     private lateinit var clientId: ClientId
     private var clientIdProvider = mockk<ClientIdProvider>()
+    private var serverTimeListener = mockk<ServerTimeListener>()
 
     private val sessionProvider = mockk<SessionProvider>()
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
@@ -117,6 +119,7 @@ internal class ProtonApiBackendTests {
             "https://example.com/",
             client,
             clientIdProvider,
+            serverTimeListener,
             logger,
             networkManager,
             prefs,
@@ -156,6 +159,7 @@ internal class ProtonApiBackendTests {
             webServer.url("/").toString(),
             client,
             clientIdProvider,
+            serverTimeListener,
             logger,
             session.sessionId,
             sessionProvider,

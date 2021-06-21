@@ -21,6 +21,7 @@ import kotlinx.coroutines.runBlocking
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.ProtonErrorData
 import me.proton.core.network.data.protonApi.RefreshTokenRequest
+import me.proton.core.network.data.server.ServerTimeInterceptor
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
@@ -29,6 +30,7 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
@@ -63,6 +65,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     override val baseUrl: String,
     private val client: ApiClient,
     private val clientIdProvider: ClientIdProvider,
+    serverTimeListener: ServerTimeListener,
     private val logger: Logger,
     private val sessionId: SessionId?,
     private val sessionProvider: SessionProvider,
@@ -83,9 +86,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 chain.proceed(prepareHeaders(chain.request()).build())
             }
             .initLogging(client, logger)
-            .addInterceptor { chain ->
-                interceptErrors(chain)
-            }
+            .addInterceptor { chain -> interceptErrors(chain) }
+            .addNetworkInterceptor(ServerTimeInterceptor(serverTimeListener))
         securityStrategy(builder)
 
         val baseUrlFixed = if (!baseUrl.endsWith('/')) "$baseUrl/" else baseUrl
