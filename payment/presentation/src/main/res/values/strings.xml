@@ -34,6 +34,7 @@
     <string name="payments_add_credit_debit_card">Add new credit/debit card</string>
     <string name="payments_billing_monthly">Billed monthly</string>
     <string name="payments_billing_yearly">Billed yearly</string>
+    <string name="payments_billing_two_years">Billed every two years</string>
     <string name="payments_pay">Pay</string>
     <string name="payments_method_icon">Payment method icon.</string>
     <!-- endregion -->

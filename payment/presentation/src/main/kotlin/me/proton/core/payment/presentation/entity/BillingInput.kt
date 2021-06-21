@@ -21,7 +21,6 @@ package me.proton.core.payment.presentation.entity
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 
 /**
  * Holds main billing request input.
@@ -38,7 +37,7 @@ import me.proton.core.network.domain.session.SessionId
 data class BillingInput(
     val userId: String?,
     val existingPlanIds: List<String> = emptyList(),
-    val plan: PlanDetails,
+    val plan: PlanShortDetails,
     val codes: List<String>? = null,
     val paymentMethodId: String?,
 ) : Parcelable {

@@ -20,7 +20,7 @@ package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.domain.entity.Plan
+import me.proton.core.plan.domain.entity.Plan
 
 @Serializable
 internal data class PlanResponse(

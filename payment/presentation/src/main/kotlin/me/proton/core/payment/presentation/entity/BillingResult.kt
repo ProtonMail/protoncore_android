@@ -20,10 +20,15 @@ package me.proton.core.payment.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 
 @Parcelize
 data class BillingResult(
     val paySuccess: Boolean,
     val token: String?,
-    val subscriptionCreated: Boolean
+    val subscriptionCreated: Boolean,
+    val amount: Long,
+    val currency: Currency,
+    val cycle: SubscriptionCycle
 ) : Parcelable

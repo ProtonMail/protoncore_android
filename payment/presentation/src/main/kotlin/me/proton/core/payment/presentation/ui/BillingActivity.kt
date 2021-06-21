@@ -31,7 +31,9 @@ import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.country.presentation.ui.CountryPickerFragment
 import me.proton.core.country.presentation.ui.showCountryPicker
 import me.proton.core.payment.domain.entity.Card
+import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityBillingBinding
 import me.proton.core.payment.presentation.entity.BillingInput
@@ -112,8 +114,17 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
         viewModel.subscriptionResult.onEach {
             when (it) {
                 is BillingViewModel.State.Processing -> showLoading(true)
-                is BillingViewModel.State.Success.SignUpTokenReady -> onBillingSuccess(it.paymentToken)
-                is BillingViewModel.State.Success.SubscriptionCreated -> onBillingSuccess()
+                is BillingViewModel.State.Success.SignUpTokenReady -> onBillingSuccess(
+                    it.paymentToken,
+                    it.amount,
+                    it.currency,
+                    it.cycle
+                )
+                is BillingViewModel.State.Success.SubscriptionCreated -> onBillingSuccess(
+                    amount = it.amount,
+                    currency = it.currency,
+                    cycle = it.cycle
+                )
                 is BillingViewModel.State.Incomplete.TokenApprovalNeeded ->
                     onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
                 is BillingViewModel.State.Error.Message -> showError(it.message)
@@ -126,9 +137,19 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
         }.launchIn(lifecycleScope)
     }
 
-    private fun onBillingSuccess(token: String? = null) {
+    private fun onBillingSuccess(token: String? = null, amount: Long, currency: Currency, cycle: SubscriptionCycle) {
         val intent = Intent()
-            .putExtra(ARG_RESULT, BillingResult(true, token, token == null))
+            .putExtra(
+                ARG_RESULT,
+                BillingResult(
+                    paySuccess = true,
+                    token = token,
+                    subscriptionCreated = token == null,
+                    amount = amount,
+                    currency = currency,
+                    cycle = cycle
+                )
+            )
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

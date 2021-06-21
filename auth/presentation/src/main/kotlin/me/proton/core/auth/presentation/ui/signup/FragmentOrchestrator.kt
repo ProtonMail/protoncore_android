@@ -109,10 +109,10 @@ internal fun FragmentManager.showRecoveryMethodChooser(
     containerId: Int = android.R.id.content
 ) {
     findFragmentByTag(TAG_RECOVERY_CHOOSER) ?: run {
-        val chooserUsernameFragment = RecoveryMethodFragment()
+        val recoveryMethodFragment = RecoveryMethodFragment()
         inTransaction {
             setCustomAnimations(0, 0)
-            add(containerId, chooserUsernameFragment)
+            add(containerId, recoveryMethodFragment)
             addToBackStack(TAG_RECOVERY_CHOOSER)
         }
     }

@@ -27,14 +27,22 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivitySignupBinding
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.ui.AuthActivity
+import me.proton.core.auth.presentation.viewmodel.AuthViewModel
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.plan.presentation.entity.Cycle
+import me.proton.core.plan.presentation.entity.PlanInput
+import me.proton.core.plan.presentation.entity.SelectedPlan
+import me.proton.core.plan.presentation.ui.PlansFragment
+import me.proton.core.plan.presentation.ui.showPlans
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -60,7 +68,17 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         signUpViewModel.inputState.onEach {
             when (it) {
                 is SignupViewModel.InputState.Ready -> {
-                    signUpViewModel.startCreateUserWorkflow()
+                    supportFragmentManager.showPlans(planInput = PlanInput())
+                    supportFragmentManager.setFragmentResultListener(
+                        PlansFragment.KEY_PLAN_SELECTED, this
+                    ) { _, bundle ->
+                        val plan = bundle.getParcelable<SelectedPlan>(PlansFragment.BUNDLE_KEY_PLAN)
+                        if (plan != null) {
+                            onPlanSelected(plan)
+                        } else {
+                            signUpViewModel.onPlanChooserCancel()
+                        }
+                    }
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -71,6 +89,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
                 is SignupViewModel.State.Processing -> showLoading(true)
                 is SignupViewModel.State.Error.HumanVerification -> Unit
                 is SignupViewModel.State.Error.Message -> showError(it.message)
+                is SignupViewModel.State.Error.PlanChooserCancel -> Unit
                 is SignupViewModel.State.Success -> onSignUpSuccess()
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -93,6 +112,18 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         }.launchIn(lifecycleScope)
     }
 
+    private fun onPlanSelected(plan: SelectedPlan) {
+        if (plan.free) {
+            signUpViewModel.startCreateUserWorkflow()
+        } else {
+            val cycle = when (plan.cycle) {
+                Cycle.MONTHLY -> SubscriptionCycle.MONTHLY
+                Cycle.YEARLY -> SubscriptionCycle.YEARLY
+            }.exhaustive
+            signUpViewModel.startBillingForPaidPlan(plan.planId, plan.planName, cycle)
+        }
+    }
+
     private fun onSignUpSuccess() {
         with(supportFragmentManager) {
             for (i in 0..backStackEntryCount) {
@@ -103,7 +134,8 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         loginViewModel.startLoginWorkflow(
             signUpViewModel.getLoginUsername()!!,
             signUpViewModel.password,
-            signUpViewModel.currentAccountType
+            signUpViewModel.currentAccountType,
+            signUpViewModel.subscriptionDetails
         )
     }
 

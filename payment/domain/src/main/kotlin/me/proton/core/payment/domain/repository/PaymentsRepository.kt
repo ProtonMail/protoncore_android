@@ -107,7 +107,7 @@ interface PaymentsRepository {
      * Authenticated.
      * Returns current active subscription.
      */
-    suspend fun getSubscription(sessionUserId: SessionUserId): Subscription
+    suspend fun getSubscription(sessionUserId: SessionUserId): Subscription?
 
     /**
      * Authenticated.

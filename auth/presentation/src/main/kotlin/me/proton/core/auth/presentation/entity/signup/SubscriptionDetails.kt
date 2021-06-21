@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,18 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.presentation.entity
+package me.proton.core.auth.presentation.entity.signup
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.presentation.entity.BillingResult
 
-@Parcelize
-data class PlanDetails(
-    val id: String,
-    val name: String,
-    val subscriptionCycle: SubscriptionCycle,
-    val amount: Long? = null,
-    val currency: Currency = Currency.EUR
-) : Parcelable
+data class SubscriptionDetails(
+    val planId: String,
+    val planName: String,
+    val cycle: SubscriptionCycle,
+    val billingResult: BillingResult?
+)

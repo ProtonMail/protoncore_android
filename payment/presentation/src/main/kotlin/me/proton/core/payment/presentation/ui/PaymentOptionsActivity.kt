@@ -144,7 +144,10 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                     BillingResult(
                         paySuccess = true,
                         token = it.paymentToken,
-                        subscriptionCreated = true
+                        subscriptionCreated = true,
+                        amount = it.amount,
+                        currency = it.currency,
+                        cycle = it.cycle
                     )
                 )
                 is BillingViewModel.State.Incomplete.TokenApprovalNeeded ->
@@ -175,7 +178,6 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
     private fun onSuccess(availablePaymentMethods: List<PaymentOptionUIModel>) {
         if (availablePaymentMethods.isEmpty()) {
             startBilling(input.userId, viewModel.currentPlans, input.plan.copy(amount = amountDue), input.codes)
-            finish()
             return
         }
         viewModel.validatePlan(user, input.plan.id, input.codes, input.plan.currency, input.plan.subscriptionCycle)

@@ -34,6 +34,9 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.entity.CreateUserType
@@ -51,6 +54,9 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
     private val humanVerificationManager = mockk<HumanVerificationManager>()
     private val humanVerificationOrchestrator = mockk<HumanVerificationOrchestrator>()
+    private val plansOrchestrator = mockk<PlansOrchestrator>(relaxed = true)
+    private val paymentsOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
+    private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     // endregion
 
     // region test data
@@ -87,6 +93,9 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             performCreateUser,
             performCreateExternalUser,
             keyStoreCrypto,
+            plansOrchestrator,
+            paymentsOrchestrator,
+            clientIdProvider,
             humanVerificationManager,
             humanVerificationOrchestrator
         )

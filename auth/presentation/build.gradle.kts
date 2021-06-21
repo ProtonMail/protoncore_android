@@ -28,7 +28,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(1, 1, 8)
+libVersion = Version(1, 2, 0)
 
 android(useDataBinding = true)
 
@@ -52,6 +52,9 @@ dependencies {
         project(Module.keyDomain),
         project(Module.countryPresentation),
         project(Module.countryDomain),
+        project(Module.planPresentation),
+        project(Module.paymentDomain),
+        project(Module.paymentPresentation),
 
         // Kotlin
         `kotlin-jdk7`,

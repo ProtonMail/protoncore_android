@@ -76,9 +76,21 @@ open class BillingViewModel @Inject constructor(
 
         sealed class Success : State() {
             data class SubscriptionPlanValidated(val subscriptionStatus: SubscriptionStatus) : Success()
-            data class SubscriptionCreated(val subscriptionStatus: Subscription, val paymentToken: String?) : Success()
+            data class SubscriptionCreated(
+                val amount: Long,
+                val currency: Currency,
+                val cycle: SubscriptionCycle,
+                val subscriptionStatus: Subscription,
+                val paymentToken: String?
+            ) : Success()
+
             data class TokenCreated(val paymentToken: PaymentToken.CreatePaymentTokenResult) : Success()
-            data class SignUpTokenReady(val paymentToken: String) : Success()
+            data class SignUpTokenReady(
+                val amount: Long,
+                val currency: Currency,
+                val cycle: SubscriptionCycle,
+                val paymentToken: String
+            ) : Success()
         }
 
         sealed class Incomplete : State() {
@@ -129,7 +141,7 @@ open class BillingViewModel @Inject constructor(
             // directly create the subscription
             val subscriptionResult =
                 performSubscribe(userId!!, 0, currency, cycle, planIds, codes, paymentToken = null)
-            emit(State.Success.SubscriptionCreated(subscriptionResult, null))
+            emit(State.Success.SubscriptionCreated(0, currency, cycle, subscriptionResult, null))
         } else {
             if (signUp && paymentType is PaymentType.PaymentMethod) {
                 emit(State.Error.SignUpWithPaymentMethodUnsupported)
@@ -231,11 +243,14 @@ open class BillingViewModel @Inject constructor(
     ): State =
         if (userId == null) {
             // subscription should be created by the sign up module. return payment info (needed for Human Ver headers).
-            State.Success.SignUpTokenReady(token)
+            State.Success.SignUpTokenReady(amount, currency, cycle, token)
         } else {
             State.Success.SubscriptionCreated(
-                performSubscribe(userId, amount, currency, cycle, planIds, codes, token),
-                token
+                amount = amount,
+                currency = currency,
+                cycle = cycle,
+                subscriptionStatus = performSubscribe(userId, amount, currency, cycle, planIds, codes, token),
+                paymentToken = token
             )
         }
 }

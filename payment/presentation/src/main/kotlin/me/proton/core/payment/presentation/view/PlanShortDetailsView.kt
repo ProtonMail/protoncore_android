@@ -26,7 +26,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.PlanShortDetailsBinding
-import me.proton.core.payment.presentation.entity.PlanDetails
+import me.proton.core.payment.presentation.entity.PlanShortDetails
 
 internal class PlanShortDetailsView @JvmOverloads constructor(
     context: Context,
@@ -40,13 +40,14 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
         binding.amountProgress.visibility = View.VISIBLE
     }
 
-    var plan: PlanDetails? = null
+    var plan: PlanShortDetails? = null
         set(value) = with(binding) {
             val notAvailable = context.getString(R.string.payments_info_not_available)
             planNameText.text = value?.name ?: notAvailable
             billingPeriodText.text = when (value?.subscriptionCycle) {
                 SubscriptionCycle.MONTHLY -> context.getString(R.string.payments_billing_monthly)
                 SubscriptionCycle.YEARLY -> context.getString(R.string.payments_billing_yearly)
+                SubscriptionCycle.TWO_YEARS -> context.getString(R.string.payments_billing_two_years)
                 null -> notAvailable
             }
             value?.amount?.let {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,23 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.domain.entity
+package me.proton.core.plan.domain.repository
 
-data class Plan(
-    val id: String,
-    val type: Int,
-    val cycle: Int,
-    val name: String,
-    val title: String,
-    val currency: String,
-    val amount: Int,
-    val maxDomains: Int,
-    val maxAddresses: Int,
-    val maxSpace: Long,
-    val maxMembers: Int,
-    val maxVPN: Int,
-    val services: Int,
-    val features: Int,
-    val quantity: Int,
-    val maxTier: Int
-)
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.plan.domain.entity.Plan
+
+interface PlansRepository {
+
+    /**
+     * Returns from the API all plans available for the user in the moment.
+     */
+    suspend fun getPlans(
+        sessionUserId: SessionUserId?
+    ): List<Plan>
+}

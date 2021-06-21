@@ -211,3 +211,13 @@ Payment Data: **0.1.7** - _released on: Jun 01, 2021_
 Payment Domain: **0.1.7** - _released on: Jun 01, 2021_
 
 Payment Presentation: **0.1.7** - _released on: Jun 01, 2021_
+
+### Plan
+
+Plan: **0** - _released on: May 29, 2021_
+
+Plan Data: **0** - _released on: May 29, 2021_
+
+Plan Domain: **0** - _released on: May 29, 2021_
+
+Plan Presentation: **0** - _released on: May 29, 2021_

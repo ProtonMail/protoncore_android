@@ -128,7 +128,7 @@ class PaymentsRepositoryImpl(
             validateSubscription(CheckSubscription(codes, planIds, currency.name, cycle.value)).toSubscriptionStatus()
         }.valueOrThrow
 
-    override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription =
+    override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription? =
         provider.get<PaymentsApi>(sessionUserId).invoke {
             getCurrentSubscription().subscription.toSubscription()
         }.valueOrThrow

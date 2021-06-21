@@ -20,7 +20,8 @@ package me.proton.core.payment.domain.entity
 
 enum class SubscriptionCycle(val value: Int) {
     MONTHLY(1),
-    YEARLY(12);
+    YEARLY(12),
+    TWO_YEARS(24);
 
     companion object {
         val map = values().associateBy { it.value }

@@ -21,9 +21,9 @@ package me.proton.core.humanverification.domain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.humanverification.HumanVerificationState
 
 interface HumanVerificationManager : HumanVerificationProvider, HumanVerificationListener {
 
@@ -33,6 +33,8 @@ interface HumanVerificationManager : HumanVerificationProvider, HumanVerificatio
      * @param initialState if true, initial state for all details will be raised on subscription.
      */
     fun onHumanVerificationStateChanged(initialState: Boolean = false): Flow<HumanVerificationDetails>
+
+    suspend fun addDetails(details: HumanVerificationDetails)
 }
 
 /**

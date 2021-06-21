@@ -43,13 +43,16 @@ import me.proton.core.auth.domain.usecase.SetupAccountCheck
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
+import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
+import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.session.Session
+import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
@@ -63,8 +66,9 @@ internal class LoginViewModel @Inject constructor(
     private val setupPrimaryKeys: SetupPrimaryKeys,
     private val setupInternalAddress: SetupInternalAddress,
     private val keyStoreCrypto: KeyStoreCrypto,
+    private val performSubscribe: PerformSubscribe,
     humanVerificationManager: HumanVerificationManager,
-    humanVerificationOrchestrator: HumanVerificationOrchestrator
+    humanVerificationOrchestrator: HumanVerificationOrchestrator,
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
 
     private val _state = MutableStateFlow<State>(State.Idle)
@@ -104,7 +108,8 @@ internal class LoginViewModel @Inject constructor(
     fun startLoginWorkflow(
         username: String,
         password: String,
-        requiredAccountType: AccountType
+        requiredAccountType: AccountType,
+        subscriptionDetails: SubscriptionDetails? = null
     ) = flow {
         emit(State.Processing)
 
@@ -112,10 +117,23 @@ internal class LoginViewModel @Inject constructor(
 
         val sessionInfo = performLogin.invoke(username, encryptedPassword)
         val userId = sessionInfo.userId
+
         savedStateHandle.set(STATE_USER_ID, userId.id)
 
         // Storing the session is mandatory for executing subsequent requests.
         handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)
+
+        // perform subscribe
+        subscriptionDetails?.let {
+            it.billingResult?.also { billing ->
+                runCatching {
+                    performSubscribe(
+                        userId = userId, amount = billing.amount, currency = billing.currency,
+                        cycle = billing.cycle, planIds = listOf(it.planId), paymentToken = billing.token
+                    )
+                }
+            }
+        }
 
         // If SecondFactorNeeded, we cannot proceed without.
         if (sessionInfo.isSecondFactorNeeded) {

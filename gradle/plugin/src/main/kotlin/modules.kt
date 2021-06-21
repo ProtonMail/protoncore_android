@@ -120,5 +120,11 @@ object Module {
     const val mailMessageDomain = "$mailMessage:mail-message-domain"
     const val mailMessagePresentation = "$mailMessage:mail-message-presentation"
     const val mailMessageData = "$mailMessage:mail-message-data"
+
+    // Plan
+    const val plan = ":plan"
+    const val planDomain = "$plan:plan-domain"
+    const val planData = "$plan:plan-data"
+    const val planPresentation = "$plan:plan-presentation"
     // endregion
 }

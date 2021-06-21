@@ -18,6 +18,8 @@
 
 package me.proton.core.payment.domain.entity
 
+import me.proton.core.plan.domain.entity.Plan
+
 data class Subscription(
     val id: String,
     val invoiceId: String,
