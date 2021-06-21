@@ -119,13 +119,13 @@ Crypto Android: **1.1.1** - _released on: Jun 11, 2021_
 
 ### Auth
 
-Auth: **1.1.8** - _released on: Jun 17, 2021_
+Auth: **1.2** - _released on: Jun 21, 2021_
 
-Auth Domain: **1.1.8** - _released on: Jun 17, 2021_
+Auth Domain: **1.2** - _released on: Jun 21, 2021_
 
-Auth Presentation: **1.1.8** - _released on: Jun 17, 2021_
+Auth Presentation: **1.2** - _released on: Jun 21, 2021_
 
-Auth Data: **1.1.8** - _released on: Jun 17, 2021_
+Auth Data: **1.2** - _released on: Jun 21, 2021_
 
 ### Account
 
@@ -204,20 +204,20 @@ Country Presentation: **0.1.5** - _released on: Jun 09, 2021_
 
 ### Payment
 
-Payment: **0.1.7** - _released on: Jun 01, 2021_
+Payment: **0.1.8** - _released on: Jun 21, 2021_
 
-Payment Data: **0.1.7** - _released on: Jun 01, 2021_
+Payment Data: **0.1.8** - _released on: Jun 21, 2021_
 
-Payment Domain: **0.1.7** - _released on: Jun 01, 2021_
+Payment Domain: **0.1.8** - _released on: Jun 21, 2021_
 
-Payment Presentation: **0.1.7** - _released on: Jun 01, 2021_
+Payment Presentation: **0.1.8** - _released on: Jun 21, 2021_
 
 ### Plan
 
-Plan: **0** - _released on: May 29, 2021_
+Plan: **0.0.1** - _released on: Jun 21, 2021_
 
-Plan Data: **0** - _released on: May 29, 2021_
+Plan Data: **0.0.1** - _released on: Jun 21, 2021_
 
-Plan Domain: **0** - _released on: May 29, 2021_
+Plan Domain: **0.0.1** - _released on: Jun 21, 2021_
 
-Plan Presentation: **0** - _released on: May 29, 2021_
+Plan Presentation: **0.0.1** - _released on: Jun 21, 2021_
