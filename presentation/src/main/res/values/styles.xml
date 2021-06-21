@@ -348,4 +348,12 @@
     </style>
     <!-- endregion -->
 
+    <!-- region Progress indicator -->
+    <style name="ProtonLinearProgressIndicator" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="trackThickness">2dp</item>
+        <item name="trackColor">?attr/brand_lighten_40</item>
+        <item name="indicatorColor">?attr/brand_norm</item>
+    </style>
+    <!-- endregion -->
+
 </resources>
