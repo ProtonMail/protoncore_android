@@ -30,7 +30,7 @@ import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
 
 @Dao
-abstract class ContactDao: BaseDao<ContactEntity>() {
+abstract class ContactDao : BaseDao<ContactEntity>() {
     @Transaction
     @Query("SELECT * FROM ContactEntity WHERE contactId = :contactId")
     abstract fun observeContact(contactId: ContactId): Flow<ContactWithMailsAndCardsRelation?>

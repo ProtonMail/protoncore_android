@@ -21,6 +21,7 @@ package me.proton.android.core.coreexample.viewmodel
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.transformLatest
@@ -62,6 +63,7 @@ class PublicAddressViewModel @Inject constructor(
 
     fun getPublicAddressState() = accountManager.getPrimaryAccount()
         .flatMapLatest { primary -> primary?.let { userManager.getUserFlow(it.userId) } ?: flowOf(null) }
+        .distinctUntilChangedBy { (it as? DataResult.Success)?.value?.keys }
         .transformLatest { result ->
             if (result == null || result !is DataResult.Success || result.value == null) {
                 emit(PublicAddressState.Error.NoPrimaryAccount)

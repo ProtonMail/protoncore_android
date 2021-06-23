@@ -45,7 +45,7 @@ import javax.inject.Singleton
 @Singleton
 class ContactRepositoryImpl @Inject constructor(
     private val remoteDataSource: ContactRemoteDataSource,
-    private val localDataSource: ContactLocalDataSource
+    private val localDataSource: ContactLocalDataSource,
 ) : ContactRepository {
 
     private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)

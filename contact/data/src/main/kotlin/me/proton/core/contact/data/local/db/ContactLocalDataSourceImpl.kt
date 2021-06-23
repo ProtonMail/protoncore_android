@@ -95,6 +95,10 @@ class ContactLocalDataSourceImpl @Inject constructor(
         contactDatabase.contactDao().deleteAllContacts(userId)
     }
 
+    override suspend fun deleteAllContactEmails(userId: UserId) {
+        contactDatabase.contactEmailDao().deleteAllContactsEmails(userId)
+    }
+
     override suspend fun deleteAllContacts() {
         contactDatabase.contactDao().deleteAllContacts()
     }

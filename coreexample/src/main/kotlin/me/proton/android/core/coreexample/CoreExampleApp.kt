@@ -21,13 +21,23 @@ package me.proton.android.core.coreexample
 import android.app.Application
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
+import me.proton.core.eventmanager.data.CoreEventManagerStarter
 import me.proton.core.util.kotlin.CoreLogger
 import timber.log.Timber
 import timber.log.Timber.DebugTree
+import javax.inject.Inject
 
 @HiltAndroidApp
-class CoreExampleApp : Application() {
+class CoreExampleApp : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    @Inject
+    lateinit var coreEventManagerStarter: CoreEventManagerStarter
 
     private class CrashReportingTree : Timber.Tree() {
         override fun log(priority: Int, tag: String?, message: String, e: Throwable?) {
@@ -54,5 +64,8 @@ class CoreExampleApp : Application() {
         }
 
         setCompatVectorFromResourcesEnabled(true)
+        coreEventManagerStarter.start()
     }
+
+    override fun getWorkManagerConfiguration() = Configuration.Builder().setWorkerFactory(workerFactory).build()
 }

@@ -77,6 +77,11 @@ object Module {
     const val cryptoCommon = "$crypto:crypto-common"
     const val cryptoAndroid = "$crypto:crypto-android"
 
+    // Account
+    const val eventManager = ":event-manager"
+    const val eventManagerDomain = "$eventManager:event-manager-domain"
+    const val eventManagerData = "$eventManager:event-manager-data"
+
     // Key
     const val key = ":key"
     const val keyDomain = "$key:key-domain"

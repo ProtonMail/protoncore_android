@@ -80,6 +80,7 @@ dependencies {
         project(Module.contactHilt),
         project(Module.crypto),
         project(Module.domain),
+        project(Module.eventManager),
         project(Module.gopenpgp),
         project(Module.humanVerification),
         project(Module.key),
@@ -97,14 +98,15 @@ dependencies {
         // Android
         `activity`,
         `appcompat`,
+        `android-work-runtime`,
         `constraint-layout`,
         `fragment`,
         `gotev-cookieStore`,
         `hilt-android`,
+        `hilt-androidx-workManager`,
+        `lifecycle-extensions`,
         `lifecycle-viewModel`,
-        `hilt-androidx-annotations`,
         `material`,
-        `android-work-runtime`,
 
         // Other
         `room-ktx`,
@@ -116,7 +118,8 @@ dependencies {
     kapt(
         `hilt-android-compiler`,
         `hilt-androidx-compiler`,
-        `room-compiler`
+        `room-compiler`,
+        `lifecycle-compiler`
     )
 
     // Test

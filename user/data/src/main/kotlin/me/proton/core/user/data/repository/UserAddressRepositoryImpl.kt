@@ -49,7 +49,6 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.util.kotlin.takeIfNotEmpty
 
 class UserAddressRepositoryImpl(
     private val db: AddressDatabase,
@@ -120,6 +119,9 @@ class UserAddressRepositoryImpl(
     private suspend fun delete(userId: UserId) =
         addressDao.deleteAll(userId)
 
+    private suspend fun deleteAll(userId: UserId) =
+        addressDao.deleteAll(userId)
+
     private suspend fun deleteAll() =
         addressDao.deleteAll()
 
@@ -137,6 +139,9 @@ class UserAddressRepositoryImpl(
 
     override suspend fun deleteAddresses(addressIds: List<AddressId>) =
         delete(*addressIds.toTypedArray())
+
+    override suspend fun deleteAllAddresses(userId: UserId) =
+        deleteAll(userId)
 
     override fun getAddressesFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
         store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh)).map { it.toDataResult() }

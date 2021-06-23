@@ -21,6 +21,7 @@ package me.proton.core.user.domain.repository
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 
@@ -54,6 +55,15 @@ interface UserAddressRepository {
      */
     suspend fun deleteAddresses(
         addressIds: List<AddressId>
+    )
+
+    /**
+     * Delete all [UserAddress] for a given [userId], locally.
+     *
+     * Note: This function is usually used for Events handling.
+     */
+    suspend fun deleteAllAddresses(
+        userId: UserId
     )
 
     /**

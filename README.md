@@ -154,6 +154,14 @@ Account Manager Data Db: **1.16** - _released on: Oct 19, 2021_
 
 Account Manager Dagger: **1.16** - _released on: Oct 19, 2021_
 
+### Event Manager
+
+Event Manager: **0** - _released on: Jun 17, 2021_
+
+Event Manager Domain: **0** - _released on: Jun 17, 2021_
+
+Event Manager Data: **0** - _released on: Jun 17, 2021_
+
 ### Key
 
 Key: **1.15.6** - _released on: Oct 15, 2021_

@@ -38,6 +38,7 @@ dependencies {
         project(Module.dataRoom),
         project(Module.domain),
         project(Module.userDomain),
+        project(Module.eventManagerDomain),
         project(Module.cryptoCommon),
 
         // Features
@@ -70,5 +71,6 @@ dependencies {
         project(Module.gopenpgp),
         project(Module.userSettings),
         project(Module.contact),
+        project(Module.eventManager),
     )
 }

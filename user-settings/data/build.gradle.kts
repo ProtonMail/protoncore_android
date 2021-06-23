@@ -40,8 +40,10 @@ dependencies {
         project(Module.userData),
         project(Module.cryptoCommon),
         project(Module.key),
+        project(Module.eventManagerDomain),
 
         // Other
+        `javax-inject`,
         `retrofit`,
         `retrofit-kotlin-serialization`,
         `room-ktx`,

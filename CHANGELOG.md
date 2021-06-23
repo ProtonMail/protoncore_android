@@ -1,3 +1,147 @@
+## Version [1.18]
+
+25 Oct, 2021
+
+### Dependencies
+
+- Contact 1.18.
+- Domain 1.18.
+- EventManager 1.18.
+- MailSettings 1.18.
+- Presentation 1.18.
+- User 1.18.
+- UserSettings 1.18.
+
+### New Migration
+
+- Please apply changes as follow to your AppDatabase:
+  - Add ```EventMetadataEntity``` to your AppDatabase ```entities```.
+  - Add ```EventManagerConverters``` to your ```TypeConverters```.
+  - Extends ```EventMetadataDatabase```.
+  - Add a migration to your AppDatabase (```addMigration```):
+```
+val MIGRATION_X_Y = object : Migration(X, Y) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        EventMetadataDatabase.MIGRATION_0.migrate(database)
+    }
+}
+```
+
+### New Dagger Module
+
+- To provide the various EventManager components:
+```
+@Module
+@InstallIn(SingletonComponent::class)
+object EventManagerModule {
+
+    @Provides
+    @Singleton
+    @EventManagerCoroutineScope
+    fun provideEventManagerCoroutineScope(): CoroutineScope =
+        CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+    @Provides
+    @Singleton
+    @JvmSuppressWildcards
+    fun provideEventManagerProvider(
+        eventManagerFactory: EventManagerFactory,
+        eventListeners: Set<EventListener<*, *>>
+    ): EventManagerProvider =
+        EventManagerProviderImpl(eventManagerFactory, eventListeners)
+
+    @Provides
+    @Singleton
+    fun provideEventMetadataRepository(
+        db: EventMetadataDatabase,
+        provider: ApiProvider
+    ): EventMetadataRepository = EventMetadataRepositoryImpl(db, provider)
+
+    @Provides
+    @Singleton
+    fun provideEventWorkManager(
+        workManager: WorkManager,
+        appLifecycleProvider: AppLifecycleProvider
+    ): EventWorkManager = EventWorkManagerImpl(workManager, appLifecycleProvider)
+
+    @Provides
+    @Singleton
+    @ElementsIntoSet
+    @JvmSuppressWildcards
+    fun provideEventListenerSet(
+        userEventListener: UserEventListener,
+        userAddressEventListener: UserAddressEventListener,
+        userSettingsEventListener: UserSettingsEventListener,
+        mailSettingsEventListener: MailSettingsEventListener,
+        contactEventListener: ContactEventListener,
+        contactEmailEventListener: ContactEmailEventListener,
+    ): Set<EventListener<*, *>> = setOf(
+        userEventListener,
+        userAddressEventListener,
+        userSettingsEventListener,
+        mailSettingsEventListener,
+        contactEventListener,
+        contactEmailEventListener,
+    )
+}
+```
+- To provide AppLifecycleObserver, AppLifecycleProvider and WorkManager (needed by EventManager):
+```
+@Module
+@InstallIn(SingletonComponent::class)
+object ApplicationModule {
+    ...
+    @Provides
+    @Singleton
+    fun provideAppLifecycleObserver(): AppLifecycleObserver =
+        AppLifecycleObserver()
+
+    @Provides
+    @Singleton
+    fun provideWorkManager(@ApplicationContext context: Context): WorkManager =
+        WorkManager.getInstance(context)
+    ...
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class ApplicationBindsModule {
+    @Binds
+    abstract fun provideAppLifecycleStateProvider(observer: AppLifecycleObserver): AppLifecycleProvider
+}
+```
+
+### WorkManager
+
+**Initialization of WorkManager is up to the client.**
+
+EventManager/EventWorker assume the client support injecting:
+```
+@HiltWorker
+open class EventWorker @AssistedInject constructor(
+    @Assisted context: Context,
+    @Assisted params: WorkerParameters,
+...
+```
+
+Please refer to:
+- https://developer.android.com/training/dependency-injection/hilt-jetpack#workmanager
+- https://developer.android.com/topic/libraries/architecture/workmanager/advanced/custom-configuration.
+
+### Changes
+
+- Added EventManager Domain/Data and EventListeners.
+- Added EventManager LogTags.
+- Added EventManagerConfig and EventManagerConfigProvider.
+- Added EventWorkManager and EventManagerWorker.
+- Added UserEventListener.
+- Added UserAddressEventListener.
+- Added MailSettingsEventListener.
+- Added UserSettingsEventListener.
+- Added ContactEventListener.
+- Added ContactEmailsEventListener.
+- Added AppLifecycleObserver and AppLifecycleProvider.
+
 ## Presentation [1.17.0]
 
 ### Changes

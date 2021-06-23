@@ -24,7 +24,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 15, 0)
+libVersion = parent?.libVersion
 
 android()
 
@@ -38,6 +38,7 @@ dependencies {
         project(Module.network),
         project(Module.mailSettingsDomain),
         project(Module.userData),
+        project(Module.eventManagerDomain),
 
         // Kotlin
         `kotlin-jdk7`,
@@ -45,6 +46,7 @@ dependencies {
         `coroutines-core`,
 
         // Other
+        `hilt-android`,
         `okHttp-logging`,
         `retrofit`,
         `retrofit-kotlin-serialization`,

@@ -59,7 +59,7 @@ class AccountViewModel @Inject constructor(
     private val userManager: UserManager,
     private val humanVerificationManager: HumanVerificationManager,
     private var authOrchestrator: AuthOrchestrator,
-    private var humanVerificationOrchestrator: HumanVerificationOrchestrator
+    private var humanVerificationOrchestrator: HumanVerificationOrchestrator,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State.Processing as State)

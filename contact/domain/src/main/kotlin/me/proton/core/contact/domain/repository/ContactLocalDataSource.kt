@@ -75,6 +75,11 @@ interface ContactLocalDataSource {
     suspend fun deleteAllContacts(userId: UserId)
 
     /**
+     * Delete all contact emails for [userId].
+     */
+    suspend fun deleteAllContactEmails(userId: UserId)
+
+    /**
      * Delete all contacts, for every user.
      */
     suspend fun deleteAllContacts()

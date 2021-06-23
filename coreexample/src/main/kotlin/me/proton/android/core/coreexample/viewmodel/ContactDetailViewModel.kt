@@ -51,6 +51,7 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.util.kotlin.truncateToLength
 import javax.inject.Inject
 
 @HiltViewModel
@@ -109,7 +110,7 @@ class ContactDetailViewModel @Inject constructor(
             contact.contactCards.map { decryptContactCard(it) }
         }
         return ViewState.Success(
-            rawContact = contact.prettyPrint(),
+            rawContact = contact.prettyPrint().truncateToLength(10000).toString(),
             vCardContact = decryptedCards.prettyPrint()
         )
     }

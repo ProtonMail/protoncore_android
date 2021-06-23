@@ -60,7 +60,6 @@ internal fun initVersions() {
 
 // region Android
 const val `android-tools version` =         "30.0.2"        // Updated: Jun, 2020
-const val `androidUi version` =             "0.1.0-dev08"   // Released: Apr 03, 2020
 // endregion
 
 // region Other
