@@ -62,7 +62,7 @@ class RecoverySMSFragment : ProtonFragment<FragmentRecoverySmsBinding>() {
                 afterTextChangeListener = { editable ->
                     recoveryMethodViewModel.setActiveRecoveryMethod(
                         RecoveryMethodType.SMS,
-                        "$callingCodeText${editable}"
+                        "${callingCodeText.text}${editable}"
                     )
                 }
             )
