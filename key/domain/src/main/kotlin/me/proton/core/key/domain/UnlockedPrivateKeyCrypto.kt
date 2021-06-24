@@ -25,7 +25,6 @@ import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
-import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.decryptDataOrNull
 import me.proton.core.crypto.common.pgp.decryptFileOrNull
@@ -36,6 +35,7 @@ import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
+import java.io.File
 
 /**
  * Decrypt [message] as [String].
@@ -62,14 +62,18 @@ fun List<UnlockedPrivateKey>.decryptData(context: CryptoContext, message: Encryp
 }
 
 /**
- * Decrypt [file] as [DecryptedFile].
+ * Decrypt [source] into [destination] as [DecryptedFile].
  *
- * @throws [CryptoException] if [file] cannot be decrypted.
+ * @throws [CryptoException] if [source] cannot be decrypted.
  *
  * @see [PrivateKeyRing.decryptFile]
  */
-fun List<UnlockedPrivateKey>.decryptFile(context: CryptoContext, file: EncryptedFile): DecryptedFile {
-    forEach { it.decryptFileOrNull(context, file)?.let { decrypted -> return decrypted } }
+fun List<UnlockedPrivateKey>.decryptFile(
+    context: CryptoContext,
+    source: EncryptedFile,
+    destination: File
+): DecryptedFile {
+    forEach { it.decryptFileOrNull(context, source, destination)?.let { decrypted -> return decrypted } }
     throw CryptoException("Cannot decrypt file with provided Key list.")
 }
 
@@ -122,14 +126,18 @@ fun List<UnlockedPrivateKey>.decryptSessionKeyOrNull(context: CryptoContext, key
 }
 
 /**
- * Decrypt [file] as [EncryptedFile].
+ * Decrypt [source] into [destination] as [DecryptedFile].
  *
- * @return [EncryptedFile], or `null` if [file] cannot be decrypted.
+ * @return [EncryptedFile], or `null` if [source] cannot be decrypted.
  *
  * @see [PrivateKeyRing.decryptFile]
  */
-fun List<UnlockedPrivateKey>.decryptFileOrNull(context: CryptoContext, file: EncryptedFile): DecryptedFile? {
-    forEach { it.decryptFileOrNull(context, file)?.let { decrypted -> return decrypted } }
+fun List<UnlockedPrivateKey>.decryptFileOrNull(
+    context: CryptoContext,
+    source: EncryptedFile,
+    destination: File
+): DecryptedFile? {
+    forEach { it.decryptFileOrNull(context, source, destination)?.let { decrypted -> return decrypted } }
     return null
 }
 
@@ -154,14 +162,14 @@ fun UnlockedPrivateKey.decryptData(context: CryptoContext, message: EncryptedMes
     context.pgpCrypto.decryptData(message, unlockedKey.value)
 
 /**
- * Decrypt [file] as [EncryptedFile].
+ * Decrypt [source] into [destination] as [EncryptedFile].
  *
- * @throws [CryptoException] if [file] cannot be decrypted.
+ * @throws [CryptoException] if [source] cannot be decrypted.
  *
  * @see [UnlockedPrivateKey.decryptFileOrNull]
  */
-fun UnlockedPrivateKey.decryptFile(context: CryptoContext, file: EncryptedFile): DecryptedFile =
-    context.pgpCrypto.decryptFile(file, unlockedKey.value)
+fun UnlockedPrivateKey.decryptFile(context: CryptoContext, source: EncryptedFile, destination: File): DecryptedFile =
+    context.pgpCrypto.decryptFile(source, destination, unlockedKey.value)
 
 /**
  * Decrypt [message] as [String].
@@ -184,14 +192,17 @@ fun UnlockedPrivateKey.decryptDataOrNull(context: CryptoContext, message: Encryp
     context.pgpCrypto.decryptDataOrNull(message, unlockedKey.value)
 
 /**
- * Decrypt [file] as [DecryptedFile].
+ * Decrypt [source] into [destination] as [DecryptedFile].
  *
- * @return [DecryptedFile], or `null` if [file] cannot be decrypted.
+ * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *
  * @see [UnlockedPrivateKey.decryptFile]
  */
-fun UnlockedPrivateKey.decryptFileOrNull(context: CryptoContext, file: EncryptedFile): DecryptedFile? =
-    context.pgpCrypto.decryptFileOrNull(file, unlockedKey.value)
+fun UnlockedPrivateKey.decryptFileOrNull(
+    context: CryptoContext,
+    source: EncryptedFile,
+    destination: File
+): DecryptedFile? = context.pgpCrypto.decryptFileOrNull(source, destination, unlockedKey.value)
 
 /**
  * Decrypt [keyPacket] as [ByteArray].
@@ -230,7 +241,7 @@ fun UnlockedPrivateKey.signData(context: CryptoContext, data: ByteArray): Signat
  *
  * @see [PublicKey.verifyFile]
  */
-fun UnlockedPrivateKey.signFile(context: CryptoContext, file: PlainFile): Signature =
+fun UnlockedPrivateKey.signFile(context: CryptoContext, file: File): Signature =
     context.pgpCrypto.signFile(file, unlockedKey.value)
 
 /**

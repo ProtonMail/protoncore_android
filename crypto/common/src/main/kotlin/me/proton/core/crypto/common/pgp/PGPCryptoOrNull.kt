@@ -18,6 +18,8 @@
 
 package me.proton.core.crypto.common.pgp
 
+import java.io.File
+
 /**
  * @return [Armored] locked key, or `null` if [unlockedKey] cannot be locked using [passphrase].
  *
@@ -64,9 +66,10 @@ fun PGPCrypto.decryptDataOrNull(
  * @see [PGPCrypto.decryptFile]
  */
 fun PGPCrypto.decryptFileOrNull(
-    file: EncryptedFile,
+    source: EncryptedFile,
+    destination: File,
     unlockedKey: Unarmored
-): DecryptedFile? = runCatching { decryptFile(file, unlockedKey) }.getOrNull()
+): DecryptedFile? = runCatching { decryptFile(source, destination, unlockedKey) }.getOrNull()
 
 /**
  * @return [ByteArray], or `null` if [keyPacket] cannot be decrypted.
@@ -104,7 +107,7 @@ fun PGPCrypto.signDataOrNull(
  * @see [PGPCrypto.signFile]
  */
 fun PGPCrypto.signFileOrNull(
-    file: PlainFile,
+    file: File,
     unlockedKey: Unarmored
 ): Signature? = runCatching { signFile(file, unlockedKey) }.getOrNull()
 
@@ -134,9 +137,10 @@ fun PGPCrypto.encryptDataOrNull(
  * @see [PGPCrypto.encryptData]
  */
 fun PGPCrypto.encryptFileOrNull(
-    file: PlainFile,
+    source: File,
+    destination: File,
     publicKey: Armored
-): EncryptedFile? = runCatching { encryptFile(file, publicKey) }.getOrNull()
+): EncryptedFile? = runCatching { encryptFile(source, destination, publicKey) }.getOrNull()
 
 /**
  * @return [EncryptedMessage], or `null` if [plainText] cannot be encrypted and signed.

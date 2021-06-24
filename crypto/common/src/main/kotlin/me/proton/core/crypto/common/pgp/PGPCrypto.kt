@@ -20,6 +20,7 @@ package me.proton.core.crypto.common.pgp
 
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.exception.CryptoException
+import java.io.File
 
 /**
  * PGP Cryptographic interface (e.g. [lock], [unlock], [encryptData], [decryptData], [signData], [verifyData], ...).
@@ -66,13 +67,13 @@ interface PGPCrypto {
     fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage
 
     /**
-     * Encrypt [file] using [publicKey].
+     * Encrypt [source] into [destination] using [publicKey].
      *
-     * @throws [CryptoException] if [file] cannot be encrypted.
+     * @throws [CryptoException] if [source] cannot be encrypted.
      *
      * @see [decryptFile].
      */
-    fun encryptFile(file: PlainFile, publicKey: Armored): EncryptedFile
+    fun encryptFile(source: File, destination: File, publicKey: Armored): EncryptedFile
 
     /**
      * Encrypt [plainText] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
@@ -131,13 +132,13 @@ interface PGPCrypto {
     fun decryptData(message: EncryptedMessage, unlockedKey: Unarmored): ByteArray
 
     /**
-     * Decrypt [file] as [ByteArray] using [unlockedKey].
+     * Decrypt [source] into [destination] using [unlockedKey].
      *
-     * @throws [CryptoException] if [file] cannot be decrypted.
+     * @throws [CryptoException] if [source] cannot be decrypted.
      *
      * @see [encryptFile]
      */
-    fun decryptFile(file: EncryptedFile, unlockedKey: Unarmored): DecryptedFile
+    fun decryptFile(source: EncryptedFile, destination: File, unlockedKey: Unarmored): DecryptedFile
 
     /**
      * Decrypt [message] as [String] using [unlockedKeys] and verify using [publicKeys].
@@ -211,7 +212,7 @@ interface PGPCrypto {
      *
      * @see [verifyFile]
      */
-    fun signFile(file: PlainFile, unlockedKey: Unarmored): Signature
+    fun signFile(file: File, unlockedKey: Unarmored): Signature
 
     /**
      * Verify [signature] of [plainText] is correctly signed using [publicKey].

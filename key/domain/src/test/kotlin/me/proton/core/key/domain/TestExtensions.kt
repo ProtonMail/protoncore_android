@@ -20,6 +20,7 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.Unarmored
+import java.io.File
 import java.util.Base64
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -45,3 +46,7 @@ internal fun ByteArray.decrypt(key: ByteArray): ByteArray {
     cipher.init(Cipher.DECRYPT_MODE, secretKeySpec)
     return cipher.doFinal(Base64.getDecoder().decode(this))
 }
+
+internal fun ByteArray.allEqual(element: Byte) = all { it == element }
+internal fun getTempFile(filename: String) = File.createTempFile("$filename.", "")
+internal fun ByteArray.getFile(filename: String): File = getTempFile(filename).apply { appendBytes(this@getFile) }

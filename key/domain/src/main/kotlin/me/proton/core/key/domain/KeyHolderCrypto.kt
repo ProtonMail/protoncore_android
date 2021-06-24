@@ -28,21 +28,23 @@ import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
+import me.proton.core.crypto.common.pgp.EncryptedPacket
 import me.proton.core.crypto.common.pgp.KeyPacket
-import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
 import me.proton.core.crypto.common.pgp.exception.CryptoException
+import me.proton.core.key.domain.entity.key.NestedPrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
-import me.proton.core.key.domain.entity.key.NestedPrivateKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import java.io.ByteArrayInputStream
+import java.io.File
+import java.io.IOException
 import java.io.InputStream
 
 /**
@@ -101,15 +103,15 @@ fun KeyHolderContext.decryptData(message: EncryptedMessage): ByteArray =
     privateKeyRing.decryptData(message)
 
 /**
- * Decrypt [file] as [DecryptedFile] using [PrivateKeyRing].
+ * Decrypt [source] into [destination] as [DecryptedFile] using [PrivateKeyRing].
  *
- * @throws [CryptoException] if [file] cannot be decrypted.
+ * @throws [CryptoException] if [source] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptFileOrNull]
  * @see [KeyHolderContext.encryptFile]
  */
-fun KeyHolderContext.decryptFile(file: EncryptedFile): DecryptedFile =
-    privateKeyRing.decryptFile(file)
+fun KeyHolderContext.decryptFile(source: EncryptedFile, destination: File): DecryptedFile =
+    privateKeyRing.decryptFile(source, destination)
 
 /**
  * Decrypt [keyPacket] as [ByteArray] using [PrivateKeyRing].
@@ -145,14 +147,14 @@ fun KeyHolderContext.decryptDataOrNull(message: EncryptedMessage): ByteArray? =
     privateKeyRing.decryptDataOrNull(message)
 
 /**
- * Decrypt [file] as [EncryptedFile] using [PrivateKeyRing].
+ * Decrypt [source] into [destination] as [EncryptedFile] using [PrivateKeyRing].
  *
- * @return [EncryptedFile], or `null` if [file] cannot be decrypted.
+ * @return [EncryptedFile], or `null` if [source] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptFile]
  */
-fun KeyHolderContext.decryptFileOrNull(file: EncryptedFile): DecryptedFile? =
-    privateKeyRing.decryptFileOrNull(file)
+fun KeyHolderContext.decryptFileOrNull(source: EncryptedFile, destination: File): DecryptedFile? =
+    privateKeyRing.decryptFileOrNull(source, destination)
 
 /**
  * Decrypt [keyPacket] as [ByteArray] using [PrivateKeyRing].
@@ -191,7 +193,7 @@ fun KeyHolderContext.signData(data: ByteArray): Signature =
  *
  * @see [KeyHolderContext.verifyFile]
  */
-fun KeyHolderContext.signFile(file: PlainFile): Signature =
+fun KeyHolderContext.signFile(file: File): Signature =
     privateKeyRing.signFile(file)
 
 /**
@@ -251,24 +253,39 @@ fun KeyHolderContext.encryptData(data: ByteArray): EncryptedMessage =
     publicKeyRing.encryptData(context, data)
 
 /**
- * Encrypt [file] using [PublicKeyRing].
+ * Encrypt [source] into [destination] using [PublicKeyRing].
  *
- * @throws [CryptoException] if [file] cannot be encrypted.
+ * @throws [CryptoException] if [source] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptFile]
  */
-fun KeyHolderContext.encryptFile(file: PlainFile): EncryptedFile =
-    publicKeyRing.encryptFile(context, file)
+fun KeyHolderContext.encryptFile(source: File, destination: File): EncryptedFile =
+    publicKeyRing.encryptFile(context, source, destination)
 
 /**
  * Encrypt [inputStream] using [PublicKeyRing].
+ *
+ * Note: Caller must delete generated [EncryptedFile.file] when needed.
  *
  * @throws [CryptoException] if [inputStream] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptFile]
  */
-fun KeyHolderContext.encryptFile(fileName: String, inputStream: InputStream): EncryptedFile =
-    encryptFile(PlainFile(fileName, inputStream))
+fun KeyHolderContext.encryptFile(fileName: String, inputStream: InputStream): EncryptedFile {
+    var source: File? = null
+    var destination: File? = null
+    try {
+        source = File.createTempFile("$fileName.", "")
+        destination = File.createTempFile("$fileName.", ".encrypted")
+        inputStream.use { input -> source.outputStream().use { output -> input.copyTo(output) } }
+        return encryptFile(source, destination)
+    } catch (error: IOException) {
+        destination?.delete()
+        throw error
+    } finally {
+        source?.delete()
+    }
+}
 
 /**
  * Encrypt [data] using [PublicKeyRing].
@@ -278,7 +295,7 @@ fun KeyHolderContext.encryptFile(fileName: String, inputStream: InputStream): En
  * @see [KeyHolderContext.decryptFile]
  */
 fun KeyHolderContext.encryptFile(fileName: String, data: ByteArray): EncryptedFile =
-    encryptFile(PlainFile(fileName, ByteArrayInputStream(data)))
+    encryptFile(fileName, ByteArrayInputStream(data))
 
 /**
  * Encrypt [text] using [PublicKeyRing] and sign using [PrivateKeyRing] in an embedded [EncryptedMessage].
@@ -395,14 +412,24 @@ fun KeyHolderContext.decryptAndVerifyDataOrNull(message: EncryptedMessage, valid
  *
  * @throws [CryptoException] if data cannot be extracted.
  */
-fun KeyHolderContext.getArmored(data: Unarmored): Armored = context.pgpCrypto.getArmored(data)
+fun KeyHolderContext.getArmored(data: Unarmored): Armored =
+    context.pgpCrypto.getArmored(data)
 
 /**
  * Get [Unarmored] from [Armored].
  *
  * @throws [CryptoException] if data cannot be extracted.
  */
-fun KeyHolderContext.getUnarmored(data: Armored): Unarmored = context.pgpCrypto.getUnarmored(data)
+fun KeyHolderContext.getUnarmored(data: Armored): Unarmored =
+    context.pgpCrypto.getUnarmored(data)
+
+/**
+ * Get list of [EncryptedPacket] from [message].
+ *
+ * @throws [CryptoException] if key and data packets cannot be extracted from [message].
+ */
+fun KeyHolderContext.getEncryptedPackets(message: EncryptedMessage): List<EncryptedPacket> =
+    context.pgpCrypto.getEncryptedPackets(message)
 
 /**
  * Decrypt [nestedPrivateKey] using [PrivateKeyRing] and verify using [PublicKeyRing].

@@ -23,12 +23,12 @@ import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
-import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
+import java.io.File
 
 /**
  * Encrypt [text] using this [PublicKeyRing.primaryKey].
@@ -51,14 +51,14 @@ fun PublicKeyRing.encryptData(context: CryptoContext, data: ByteArray): Encrypte
     primaryKey.encryptData(context, data)
 
 /**
- * Encrypt [file] using this [PublicKeyRing.primaryKey].
+ * Encrypt [source] into [destination] using this [PublicKeyRing.primaryKey].
  *
- * @throws [CryptoException] if [file] cannot be encrypted.
+ * @throws [CryptoException] if [source] cannot be encrypted.
  *
  * @see [PrivateKeyRing.decryptFile]
  */
-fun PublicKeyRing.encryptFile(context: CryptoContext, file: PlainFile): EncryptedFile =
-    primaryKey.encryptFile(context, file)
+fun PublicKeyRing.encryptFile(context: CryptoContext, source: File, destination: File): EncryptedFile =
+    primaryKey.encryptFile(context, source, destination)
 
 /**
  * Encrypt [keyPacket] using this [PublicKeyRing.primaryKey].
