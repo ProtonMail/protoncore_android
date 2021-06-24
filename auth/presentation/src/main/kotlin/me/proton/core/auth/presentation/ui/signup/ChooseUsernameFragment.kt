@@ -179,7 +179,6 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
             nextButton.isEnabled = true
             useCurrentEmailButton.isEnabled = true
             if (accountType == AccountType.Internal) {
-                usernameInput.text = ""
                 usernameInput.suffixText = "@${domains.firstOrDefault()}"
             }
         }
@@ -187,6 +186,9 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
 
     private fun onError(message: String?) {
         binding.nextButton.setIdle()
+        if (binding.usernameInput.suffixText.isNullOrEmpty()) {
+            binding.nextButton.isEnabled = false
+        }
         showError(message)
     }
 
