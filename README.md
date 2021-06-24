@@ -119,13 +119,13 @@ Crypto Android: **1.1.2** - _released on: Jun 21, 2021_
 
 ### Auth
 
-Auth: **1.2.1** - _released on: Jun 21, 2021_
+Auth: **1.2.2** - _released on: Jun 24, 2021_
 
-Auth Domain: **1.2.1** - _released on: Jun 21, 2021_
+Auth Domain: **1.2.2** - _released on: Jun 24, 2021_
 
-Auth Presentation: **1.2.1** - _released on: Jun 21, 2021_
+Auth Presentation: **1.2.2** - _released on: Jun 24, 2021_
 
-Auth Data: **1.2.1** - _released on: Jun 21, 2021_
+Auth Data: **1.2.2** - _released on: Jun 24, 2021_
 
 ### Account
 
