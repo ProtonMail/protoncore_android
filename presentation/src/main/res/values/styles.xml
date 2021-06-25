@@ -296,13 +296,14 @@
     <style name="ProtonCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:textAppearance">@style/Proton.Text.Default</item>
         <item name="android:buttonTint">@color/check_box_selector</item>
+        <item name="android:layoutDirection">@integer/reverseLayoutDirection</item>
     </style>
 
     <style name="ProtonRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textAppearance">@style/Proton.Text.Default</item>
         <item name="tint">@color/radio_button_selector</item>
         <item name="useMaterialThemeColors">false</item>
-        <item name="android:layoutDirection">rtl</item>
+        <item name="android:layoutDirection">@integer/reverseLayoutDirection</item>
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingBottom">16dp</item>
     </style>
