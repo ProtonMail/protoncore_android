@@ -86,6 +86,7 @@ class ProtonInput : LinearLayout {
             prefixText = getString(R.styleable.ProtonInput_prefix)
             suffixText = getString(R.styleable.ProtonInput_suffix)
             inputType = getInteger(R.styleable.ProtonInput_android_inputType, InputType.TYPE_CLASS_TEXT)
+            minLines = getInteger(R.styleable.ProtonInput_android_minLines, 1)
             isEnabled = getBoolean(R.styleable.ProtonInput_android_enabled, true)
             endIconMode = EndIconMode.map[getInt(R.styleable.ProtonInput_actionMode, 0)] ?: EndIconMode.NONE
             getDrawable(R.styleable.ProtonInput_endIconDrawable)?.let {
@@ -165,6 +166,15 @@ class ProtonInput : LinearLayout {
         get() = binding.input.inputType
         set(value) {
             binding.input.inputType = value
+        }
+
+    /**
+     * The minLines property of the compound EditText of the view.
+     */
+    var minLines: Int
+        get() = binding.input.minLines
+        set(value) {
+            binding.input.minLines = value
         }
 
     /**

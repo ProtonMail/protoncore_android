@@ -50,6 +50,10 @@
     <string name="example_error_label">Error Label</string>
     <string name="example_error_assistive_text">Error Assistive text</string>
 
+    <string name="example_multiline_hint">Multiline Hint</string>
+    <string name="example_multiline_label">Multiline Label</string>
+    <string name="example_multiline_assistive_text">Multiline Assistive text</string>
+
     <string name="example_default_button">Default text</string>
     <string name="example_text_only">Text only</string>
     <string name="example_outlined">Outlined</string>
