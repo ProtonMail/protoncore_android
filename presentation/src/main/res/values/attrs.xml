@@ -71,6 +71,7 @@
         <attr name="android:hint" />
         <attr name="android:inputType" />
         <attr name="android:enabled" />
+        <attr name="android:minLines" />
         <attr name="label" format="string" />
         <attr name="help" format="string" />
         <attr name="suffix" format="string" />
