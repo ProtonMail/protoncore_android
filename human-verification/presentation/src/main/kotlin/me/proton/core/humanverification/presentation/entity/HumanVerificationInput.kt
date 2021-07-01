@@ -24,7 +24,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class HumanVerificationInput(
     val clientId: String, // this is the value from the ClientId
-    val captchaBaseUrl: String? = null,
+    val captchaUrl: String? = null,
     val clientIdType: String,
     val verificationMethods: List<String>?,
     val captchaToken: String?,

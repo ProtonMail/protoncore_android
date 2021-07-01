@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.presentation.CaptchaBaseUrl
+import me.proton.core.humanverification.presentation.CaptchaHost
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
@@ -50,13 +50,13 @@ import javax.inject.Inject
 internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVerificationCaptchaBinding>() {
 
     @Inject
-    @CaptchaBaseUrl
-    lateinit var captchaBaseUrl: String
+    @CaptchaHost
+    lateinit var captchaHost: String
 
     private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
 
-    private val baseUrl: String by lazy {
-        requireArguments().get(ARG_BASE_URL) as String? ?: "https://$captchaBaseUrl/api/core/v4/captcha"
+    private val captchaUrl: String by lazy {
+        requireArguments().get(ARG_CAPTCHA_URL) as String? ?: "https://$captchaHost/api/core/v4/captcha"
     }
 
     private val humanVerificationBase by lazy {
@@ -99,7 +99,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
 
     private fun loadWebView() {
         binding.run {
-            captchaWebView.loadUrl("$baseUrl?Token=${humanVerificationBase.urlToken}")
+            captchaWebView.loadUrl("$captchaUrl?Token=${humanVerificationBase.urlToken}")
         }
     }
 
@@ -133,15 +133,15 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
     }
 
     companion object {
-        private const val ARG_BASE_URL = "arg.baseUrl"
+        private const val ARG_CAPTCHA_URL = "arg.captchaUrl"
         private const val MAX_PROGRESS = 100
 
         operator fun invoke(
-            captchaBaseUrl: String? = null,
+            captchaUrl: String? = null,
             urlToken: String
         ) = HumanVerificationCaptchaFragment().apply {
             arguments = bundleOf(
-                ARG_BASE_URL to captchaBaseUrl,
+                ARG_CAPTCHA_URL to captchaUrl,
                 ARG_URL_TOKEN to urlToken
             )
         }

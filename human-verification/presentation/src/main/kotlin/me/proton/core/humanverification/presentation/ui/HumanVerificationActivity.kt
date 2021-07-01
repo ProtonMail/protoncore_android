@@ -48,7 +48,7 @@ class HumanVerificationActivity :
         super.onCreate(savedInstanceState)
         supportFragmentManager.showHumanVerification(
             clientId = input.clientId,
-            captchaBaseUrl = input.captchaBaseUrl,
+            captchaUrl = input.captchaUrl,
             clientIdType = input.clientIdType,
             // filter only the app supported verification methods. (the API can send more of them).
             availableVerificationMethods = input.verificationMethods
