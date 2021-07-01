@@ -16,35 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.settings.domain.usecase
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.srp.SrpCrypto
+import javax.inject.Inject
 
-libVersion = Version(0, 0, 1)
+class PerformUpdateRecoveryEmail @Inject constructor(
+    private val srpCrypto: SrpCrypto,
+    private val keyStoreCrypto: KeyStoreCrypto
+) {
+    suspend operator fun invoke() {
 
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
-
-        // Features
-        project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`,
-
-        // Android
-        `dagger`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+    }
 }

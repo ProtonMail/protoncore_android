@@ -15,36 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    `java-library`
-    kotlin("jvm")
+    id("com.android.library")
+    kotlin("android")
+    kotlin("plugin.serialization")
 }
 
 libVersion = Version(0, 0, 1)
 
+android()
+
 dependencies {
 
     implementation(
-        project(Module.kotlinUtil),
         project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
+        project(Module.settingsDomain),
+        project(Module.kotlinUtil),
+        project(Module.network),
 
-        // Features
-        project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`,
-
-        // Android
-        `dagger`
+        // Other
+        `retrofit`,
+        `retrofit-kotlin-serialization`
     )
 
-    testImplementation(project(Module.kotlinTest))
+    testImplementation(project(Module.androidTest))
+    androidTestImplementation(project(Module.androidInstrumentedTest))
 }
