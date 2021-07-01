@@ -57,7 +57,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         private const val ARG_CLIENT_ID_TYPE = "arg.clientIdType"
         private const val ARG_CAPTCHA_TOKEN = "arg.captcha-token"
         private const val ARG_RECOVERY_EMAIL_ADDRESS = "arg.recoveryEmailAddress"
-        private const val ARG_CAPTCHA_BASE_URL = "arg.baseUrl"
+        private const val ARG_CAPTCHA_URL = "arg.captchaUrl"
         const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
         const val ARG_DESTINATION = "arg.destination"
         const val ARG_TOKEN_CODE = "arg.token-code"
@@ -74,7 +74,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
          */
         operator fun invoke(
             clientId: String,
-            captchaBaseUrl: String? = null,
+            captchaUrl: String? = null,
             clientIdType: String,
             availableVerificationMethods: List<String>,
             captchaToken: String?,
@@ -82,7 +82,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         ) = HumanVerificationDialogFragment().apply {
             arguments = bundleOf(
                 ARG_CLIENT_ID to clientId,
-                ARG_CAPTCHA_BASE_URL to captchaBaseUrl,
+                ARG_CAPTCHA_URL to captchaUrl,
                 ARG_CLIENT_ID_TYPE to clientIdType,
                 ARG_VERIFICATION_OPTIONS to availableVerificationMethods,
                 ARG_CAPTCHA_TOKEN to captchaToken,
@@ -114,8 +114,8 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         requireArguments().get(ARG_CAPTCHA_TOKEN) as String?
     }
 
-    private val captchaBaseUrl: String? by lazy {
-        requireArguments().get(ARG_CAPTCHA_BASE_URL) as String?
+    private val captchaUrl: String? by lazy {
+        requireArguments().get(ARG_CAPTCHA_URL) as String?
     }
 
     private val recoveryEmailAddress: String? by lazy {
@@ -196,7 +196,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         when (verificationMethod) {
             TokenType.CAPTCHA -> {
                 childFragmentManager.showHumanVerificationCaptchaContent(
-                    captchaBaseUrl = captchaBaseUrl,
+                    captchaUrl = captchaUrl,
                     token = captchaToken,
                     containerId = binding.fragmentOptionsContainer.id
                 )

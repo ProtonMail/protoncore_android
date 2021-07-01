@@ -48,7 +48,7 @@ val defaultVerificationMethods = listOf(
 /** Shows the human verification dialog. */
 fun FragmentManager.showHumanVerification(
     clientId: String,
-    captchaBaseUrl: String? = null,
+    captchaUrl: String? = null,
     clientIdType: String,
     availableVerificationMethods: List<String> = defaultVerificationMethods,
     captchaToken: String? = null,
@@ -57,7 +57,7 @@ fun FragmentManager.showHumanVerification(
 ) {
     val newFragment = HumanVerificationDialogFragment(
         clientId = clientId,
-        captchaBaseUrl = captchaBaseUrl,
+        captchaUrl = captchaUrl,
         clientIdType = clientIdType,
         availableVerificationMethods = availableVerificationMethods,
         captchaToken = captchaToken,
@@ -81,11 +81,11 @@ fun FragmentManager.showHumanVerification(
  */
 internal fun FragmentManager.showHumanVerificationCaptchaContent(
     containerId: Int = android.R.id.content,
-    captchaBaseUrl: String? = null,
+    captchaUrl: String? = null,
     token: String? = null
 ): Fragment {
     val captchaFragment = HumanVerificationCaptchaFragment(
-        captchaBaseUrl = captchaBaseUrl, urlToken = token ?: TOKEN_DEFAULT
+        captchaUrl = captchaUrl, urlToken = token ?: TOKEN_DEFAULT
     )
     inTransaction {
         setCustomAnimations(0, 0)

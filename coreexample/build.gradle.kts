@@ -32,7 +32,7 @@ android(
 )
 {
     defaultConfig {
-        buildConfigField("String", "ENVIRONMENT", "\"proton.black\"")
+        buildConfigField("String", "ENVIRONMENT", "\"api.proton.black\"")
     }
 }
 
