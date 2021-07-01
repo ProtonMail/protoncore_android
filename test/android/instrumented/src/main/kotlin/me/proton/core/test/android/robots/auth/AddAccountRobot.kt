@@ -16,31 +16,36 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.robots.signup
+package me.proton.core.test.android.robots.auth
 
 import me.proton.core.auth.R
 import me.proton.core.test.android.robots.CoreRobot
+import me.proton.core.test.android.robots.CoreVerify
+import me.proton.core.test.android.robots.auth.login.LoginRobot
 
 /**
- * [PasswordSetupRobot] class contains password setup actions and verifications implementation
+ * [AddAccountRobot] class contains welcome screen actions and verifications implementation.
  */
-class PasswordSetupRobot : CoreRobot() {
+class AddAccountRobot : CoreRobot() {
 
     /**
-     * Sets the value of password input to [password]
-     * @return [PasswordSetupRobot]
+     * Clicks 'sign in' button
+     * @return [LoginRobot]
      */
-    fun password(pwd: String): PasswordSetupRobot = setText(R.id.passwordInput, pwd)
+    fun signIn(): LoginRobot = clickElement(R.id.sign_in)
 
     /**
-     * Sets the value of password confirmation input to [password]
-     * @return [PasswordSetupRobot]
+     * Clicks 'create account' button
+     * @return [ChooseUsernameRobot]
      */
-    fun confirmPassword(pwd: String): PasswordSetupRobot = setText(R.id.confirmPasswordInput, pwd)
+    fun createAccount(): ChooseUsernameRobot = clickElement(R.id.sign_up)
 
-    /**
-     * Clicks 'next' button
-     * @return [RecoveryMethodsRobot]
-     */
-    fun next(): RecoveryMethodsRobot = clickElement(R.id.nextButton)
+    class Verify : CoreVerify() {
+        fun addAccountElementsDisplayed() {
+            view.withId(R.id.sign_in).wait()
+            view.withId(R.id.sign_up).wait()
+        }
+    }
+
+    inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
 }

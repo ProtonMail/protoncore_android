@@ -30,7 +30,8 @@ object Requests {
     @Serializable
     data class InternalApi(
         val baseUrl: String,
-        val endpoints: LinkedHashMap<InternalApiEndpoint, String>
+        val endpoints: LinkedHashMap<InternalApiEndpoint, String>,
+        val constants: LinkedHashMap<String, String>
     )
 
     enum class InternalApiEndpoint {
@@ -48,13 +49,17 @@ object Requests {
         .use { it.readText() }
         .deserialize()
 
-    fun request(endpoint: String, method: String) {
+    private fun request(endpoint: String, method: String = "GET") {
         val url = "https://${internalApi.baseUrl}$endpoint"
-        Log.d(testTag, "Sending $method request to $endpoint")
         with(URL(url).openConnection() as HttpURLConnection) {
             requestMethod = method
+            Log.d(testTag, "\nSent '$method' request to endpoint : $endpoint; Response Code: $responseCode")
         }
     }
 
-    fun jailUnban() = internalApi.endpoints[InternalApiEndpoint.JAIL_UNBAN]?.let { request(it, "GET") }
+    fun jailUnban() = internalApi.endpoints[InternalApiEndpoint.JAIL_UNBAN]?.let { request(it) }
+
+    enum class Constants(val value: String) {
+        DEFAULT_VERIFICATION_CODE(internalApi.constants["DEFAULT_VERIFICATION_CODE"]!!)
+    }
 }

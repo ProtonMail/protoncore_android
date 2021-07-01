@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,26 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.robots.login
+package me.proton.core.test.android.robots.auth.login
 
-import me.proton.core.auth.R
 import me.proton.core.test.android.robots.CoreRobot
-import me.proton.core.test.android.robots.signup.SignupRobot
 
 /**
- * [WelcomeRobot] class contains welcome screen actions and verifications implementation.
+ * [HelpRobot] class contains login help actions and verifications implementation.
  */
-class WelcomeRobot : CoreRobot() {
-
-    /**
-     * Clicks 'sign in' button
-     * @return [LoginRobot]
-     */
-    fun signIn(): LoginRobot = clickElement(R.id.sign_in)
-
-    /**
-     * Clicks 'create account' button
-     * @return [SignupRobot]
-     */
-    fun createAccount(): SignupRobot = clickElement(R.id.sign_up)
-}
+class HelpRobot : CoreRobot()

@@ -24,23 +24,24 @@ import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.test.android.instrumented.utils.StringUtils.getEmailString
 import me.proton.core.util.kotlin.deserializeList
 import kotlin.random.Random
-import me.proton.core.test.android.instrumented.utils.StringUtils.getAlphaNumericStringWithSpecialCharacters as randomString
+import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 
 @Serializable
 data class User(
     val name: String = randomString(),
-    val password: String = "test",
+    val password: String = "12345678",
+    val email: String = getEmailString(),
     val passphrase: String = "",
     val twoFa: String = "",
 
     val firstName: String = randomString(),
     val lastName: String = randomString(),
-    val email: String = getEmailString(),
+    val verificationEmail: String = getEmailString(),
     val phone: String = "",
     val country: String = "",
     val type: Int = Random.nextInt(1, 2),
 
-    val plan: String = "",
+    val plan: Plan? = null,
     val paymentMethods: List<PaymentMethod> = emptyList(),
 ) {
 
@@ -50,7 +51,14 @@ data class User(
         val details: LinkedHashMap<String, String>?
     )
 
+    @Serializable
+    enum class Plan {
+        Free, Professional, Visionary, Plus
+    }
+
     val isDefault: Boolean = passphrase.isEmpty() && twoFa.isEmpty() && name.isNotEmpty()
+
+    val isPaid: Boolean = plan?.equals(Plan.Free) == false
 
     fun hasPaymentMethodType(paymentMethodType: PaymentMethodType): Boolean =
         paymentMethods.any { it.paymentMethodType == paymentMethodType }
@@ -68,6 +76,5 @@ data class User(
 
         fun getUser(predicate: (User) -> Boolean = { it.isDefault }): User =
             userData.filterTo(ArrayList(), predicate).random()
-
     }
 }

@@ -23,39 +23,42 @@ import me.proton.core.payment.presentation.R
 import me.proton.core.test.android.robots.other.CountryRobot
 
 /**
- * [NewCreditCardRobot] classclass contains new credit card addition actions and verifications implementation
+ * [AddCreditCardRobot] class contains new credit card addition actions and verifications implementation
  */
-class NewCreditCardRobot : PaymentRobot() {
+class AddCreditCardRobot : PaymentRobot() {
 
     /**
      * Fills in credit card holder name
-     * @return [NewCreditCardRobot]
+     * @return [AddCreditCardRobot]
      */
-    fun ccname(name: String): NewCreditCardRobot = setText(R.id.cardNameInput, name)
+    fun ccname(name: String): AddCreditCardRobot = setText(R.id.cardNameInput, name)
 
     /**
      * Fills in credit card number
-     * @return [NewCreditCardRobot]
+     * @return [AddCreditCardRobot]
      */
-    fun ccnumber(number: String): NewCreditCardRobot = setText(R.id.cardNumberInput, number)
+    fun ccnumber(number: String): AddCreditCardRobot = setText(R.id.cardNumberInput, number)
 
     /**
      * Fills in credit card expiry date
-     * @return [NewCreditCardRobot]
+     * @return [AddCreditCardRobot]
      */
-    fun expirationDate(date: String): NewCreditCardRobot = setText(R.id.expirationDateInput, date)
+    fun expirationDate(date: String): AddCreditCardRobot = setText(R.id.expirationDateInput, date)
 
     /**
      * Fills in credit card security number
-     * @return [NewCreditCardRobot]
+     * @return [AddCreditCardRobot]
      */
-    fun cvc(securityCode: String): NewCreditCardRobot = setText(R.id.cvcInput, securityCode)
+    fun cvc(securityCode: String): AddCreditCardRobot = setText(R.id.cvcInput, securityCode)
 
     /**
      * Fills in credit card holder postal code
-     * @return [NewCreditCardRobot]
+     * @return [AddCreditCardRobot]
      */
-    fun postalCode(number: String): NewCreditCardRobot = setText(R.id.postalCodeInput, number)
+    fun postalCode(number: String): AddCreditCardRobot {
+        view.withId(R.id.scrollContent).swipeUp()
+        return setText(R.id.postalCodeInput, number)
+    }
 
     /**
      * Clicks country selection element

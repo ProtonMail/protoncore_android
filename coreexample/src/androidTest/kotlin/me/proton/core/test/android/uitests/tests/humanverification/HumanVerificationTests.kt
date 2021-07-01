@@ -18,30 +18,32 @@
 
 package me.proton.core.test.android.uitests.tests.humanverification
 
-import me.proton.android.core.coreexample.R
-import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
+import androidx.test.filters.FlakyTest
+import me.proton.core.account.domain.entity.AccountState.Ready
+import me.proton.core.account.domain.entity.SessionState.Authenticated
+import me.proton.core.test.android.plugins.Requests
 import me.proton.core.test.android.plugins.Requests.jailUnban
-import me.proton.core.test.android.robots.login.WelcomeRobot
-import me.proton.core.test.android.robots.humanverification.CodeVerificationRobot
+import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
-@Ignore
 class HumanVerificationTests : BaseTest() {
 
     private val humanVerificationRobot = HumanVerificationRobot()
-    private val user = users.getUser { it.country == "Lithuania" && it.isDefault }
+    private val user = users.getUser()
+    private val defaultCode = Requests.Constants.DEFAULT_VERIFICATION_CODE
 
     @Before
     fun triggerHumanVerification() {
         jailUnban()
-        WelcomeRobot()
+        AddAccountRobot()
             .signIn()
             .loginUser<CoreexampleRobot>(user)
             .humanVerification()
+            .verify { hvElementsDisplayed() }
     }
 
     @Test
@@ -53,47 +55,58 @@ class HumanVerificationTests : BaseTest() {
             .help()
             .close<HumanVerificationRobot>()
             .close<CoreexampleRobot>()
-            .verify { primaryUserIs(user) }
+            .verify {
+                coreexampleElementsDisplayed()
+                userStateIs(user, Ready, Authenticated)
+            }
     }
 
     @Test
-    fun canRequestEmailVerification() {
+    @FlakyTest
+    fun email() {
+        val testAddress = "testEmail@example.lt"
+
         humanVerificationRobot
             .email()
-            .setEmail(user.email)
+            .setEmail(testAddress)
             .getVerificationCode()
-            .verify { errorSnackbarDisplayed(R.string.human_verification_sending_failed) }
+            .setCode(defaultCode.value)
+            .verifyCode<CoreexampleRobot>()
+            .verify {
+                coreexampleElementsDisplayed()
+                userStateIs(user, Ready, Authenticated)
+            }
     }
 
     @Test
-    fun canRequestPhoneVerification() {
-        val countryWithoutLastChar = user.country.substring(0, user.country.length - 1)
+    @FlakyTest
+    fun phone() {
+        val testPhoneNo = "2087599036"
+        val testCountry = "United Kingdom"
+
         humanVerificationRobot
             .sms()
             .countryCodeList()
-            .search(countryWithoutLastChar)
-            .selectCountry<CodeVerificationRobot>(user.country)
-            .setPhone(user.phone)
+            .search(testCountry)
+            .selectCountry<HumanVerificationRobot>(testCountry)
+            .setPhone(testPhoneNo)
             .getVerificationCode()
-            .verify { errorSnackbarDisplayed(R.string.human_verification_sending_failed) }
-    }
-
-    @Test
-    fun canVerifyCaptcha() {
-        humanVerificationRobot
-            .sms()
-            .email()
-            .captcha()
-            .verify { captchaDisplayed() }
-    }
-
-    @Test
-    fun alreadyHaveCode() {
-        humanVerificationRobot
-            .sms()
-            .alreadyHaveCode()
-            .setCode("1")
+            .setCode(defaultCode.value)
             .verifyCode<CoreexampleRobot>()
-            .verify { primaryUserIs(user) }
+            .verify {
+                coreexampleElementsDisplayed()
+                userStateIs(user, Ready, Authenticated)
+            }
+    }
+
+    @Test
+    fun captcha() {
+        humanVerificationRobot
+            .captcha()
+            .iAmHuman<CoreexampleRobot>()
+            .verify {
+                coreexampleElementsDisplayed()
+                userStateIs(user, Ready, Authenticated)
+            }
     }
 }

@@ -27,7 +27,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import me.proton.core.test.android.instrumented.utils.FileUtils
-import me.proton.core.test.android.instrumented.utils.FileUtils.clearIdlingResources
 import me.proton.core.test.android.instrumented.utils.Shell
 import me.proton.core.test.android.instrumented.utils.Shell.clearLogcat
 import org.hamcrest.CoreMatchers
@@ -42,20 +41,26 @@ import org.junit.runner.Description
 /**
  * Class that holds common setUp() and tearDown() functions.
  *
- * @property activityRule an ActivityScenarioRule for the RuleChain
+ * @property activity an ActivityScenarioRule for the RuleChain
  */
-open class ProtonTest(private val activityRule: ActivityScenarioRule<*>) {
+open class ProtonTest(private val activity: Class<out Activity>) {
 
     class TestExecutionWatcher : TestWatcher() {
         override fun failed(e: Throwable?, description: Description?) = Shell.saveToFile(description)
     }
 
+    private val activityScenarioRule = ActivityScenarioRule(activity)
+    private val retryRule = RetryRule(activity)
+    private val testWatcher = TestExecutionWatcher()
+
     @Rule
     @JvmField
     val ruleChain = RuleChain
         .outerRule(testName)
-        .around(TestExecutionWatcher())
-        .around(activityRule)!!
+        .around(testWatcher)
+        .around(activityScenarioRule)
+        .around(retryRule)!!
+
 
     @Before
     open fun setUp() {
@@ -70,7 +75,7 @@ open class ProtonTest(private val activityRule: ActivityScenarioRule<*>) {
     @After
     open fun tearDown() {
         Intents.release()
-        clearIdlingResources()
+        FileUtils.clearIdlingResources()
         Log.d(testTag, "Finished test execution: ${testName.methodName}")
     }
 

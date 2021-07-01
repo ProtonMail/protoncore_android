@@ -18,17 +18,15 @@
 
 package me.proton.core.test.android.uitests.tests
 
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.test.android.instrumented.ProtonTest
+import me.proton.core.test.android.instrumented.utils.Shell.setupDevice
 import me.proton.core.test.android.plugins.Database.clearAccountManagerDb
 import me.proton.core.test.android.plugins.data.User.Users
 import org.junit.After
 import org.junit.BeforeClass
 
-open class BaseTest(
-    activityRule: ActivityScenarioRule<*> = ActivityScenarioRule(MainActivity::class.java)
-) : ProtonTest(activityRule) {
+open class BaseTest : ProtonTest(MainActivity::class.java) {
 
     @After
     override fun tearDown() {
@@ -37,10 +35,12 @@ open class BaseTest(
     }
 
     companion object {
-        val users = Users("sensitive/mailUsers.json")
+        val users = Users("sensitive/users.json")
 
-        @JvmStatic @BeforeClass
-        fun prepare()  {
+        @JvmStatic
+        @BeforeClass
+        fun prepare() {
+            setupDevice(true)
             clearAccountManagerDb()
         }
     }

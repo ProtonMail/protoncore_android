@@ -50,7 +50,7 @@ object Shell {
 
     /**
      * Can be used to test file sharing from outside of the app.
-     * @param mimeType - file mime type from [MimeTypes]
+     * @param mimeType - file mime type
      * @param fileName - name of the file to share
      */
     fun sendShareFileIntent(mimeType: String, fileName: String) {

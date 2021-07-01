@@ -19,6 +19,8 @@
 package me.proton.core.test.android.robots.payments
 
 import me.proton.core.payment.presentation.R
+import me.proton.core.test.android.instrumented.builders.OnView
+import me.proton.core.test.android.robots.CoreRobot
 
 /**
  * [ExistingPaymentMethodsRobot] class contains existing payment methods view actions and verifications implementation
@@ -27,16 +29,23 @@ class ExistingPaymentMethodsRobot : PaymentRobot() {
 
     /**
      * Clicks 'add credit card' button
-     * @return [NewCreditCardRobot]
+     * @return [AddCreditCardRobot]
      */
-    fun addNewCard(): NewCreditCardRobot = clickElement(R.id.addCreditCardButton)
+    fun addNewCard(): AddCreditCardRobot = clickElement(R.id.addCreditCardButton)
 
     /**
      * Clicks a payment method radio which has a sibling with text [details]
      * @return [ExistingPaymentMethodsRobot]
      */
-    fun selectPaymentMethod(details: String): ExistingPaymentMethodsRobot {
-        view.withId(R.id.paymentMethodRadio).hasSibling(view.withText(details)).click()
-        return this
+    fun selectPaymentMethod(details: String): ExistingPaymentMethodsRobot = clickElement(paymentMethod(details))
+
+    companion object PaymentMethodElement : CoreRobot() {
+        fun paymentMethod(details: String): OnView =
+            view
+                .withId(R.id.paymentMethodRadio)
+                .hasSibling(
+                    view.withText(details)
+                )
+                .wait()
     }
 }

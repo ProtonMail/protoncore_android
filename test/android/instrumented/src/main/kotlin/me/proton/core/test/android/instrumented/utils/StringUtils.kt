@@ -23,16 +23,21 @@ import me.proton.core.test.android.instrumented.ProtonTest.Companion.getContext
 
 object StringUtils {
 
+    private const val letters = "abcdefghijklmnopqrstuuvwxyz"
+    private const val alphaNumericWithSpecialCharacters =
+        "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@+_)(*&^%$#@!"
+    private const val emailCharacters =
+        "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#\$%&'*+-=?^_`{|}~"
+
     fun stringFromResource(@StringRes id: Int): String = getContext().getString(id)
     fun stringFromResource(@StringRes id: Int, arg1: String): String = getContext().getString(id, arg1)
 
-    fun getAlphaNumericStringWithSpecialCharacters(length: Long = 10): String {
-        val source = "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@+_)(*&^%$#@!"
-        return (1..length).map { source.random() }.joinToString { "" }
-    }
+    fun getAlphaNumericStringWithSpecialCharacters(length: Long = 10): String =
+        randomString(length, alphaNumericWithSpecialCharacters)
 
-    fun getEmailString(length: Long = 10): String {
-        val source = "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#\$%&'*+-=?^_`{|}~"
-        return (1..length).map { source.random() }.joinToString { "" }
-    }
+    fun getEmailString(length: Long = 10): String =
+        randomString(length, emailCharacters)
+
+    fun randomString(stringLength: Long = 10, source: String = letters): String =
+        (1..stringLength).map { source.random() }.joinToString(separator = "")
 }

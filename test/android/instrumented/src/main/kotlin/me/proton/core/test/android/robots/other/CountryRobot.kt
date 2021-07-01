@@ -18,7 +18,7 @@
 
 package me.proton.core.test.android.robots.other
 
-import android.widget.TextView
+import com.google.android.material.textview.MaterialTextView
 import me.proton.core.humanverification.R
 import me.proton.core.test.android.robots.CoreRobot
 
@@ -38,5 +38,11 @@ class CountryRobot : CoreRobot() {
      * @param T next Robot in flow
      * @return an instance of [T]
      */
-    inline fun <reified T> selectCountry(country: String?): T = clickElement(country!!, TextView::class.java)
+    inline fun <reified T> selectCountry(country: String?): T = clickElement(country!!, MaterialTextView::class.java)
+
+    /**
+     * Clicks close button
+     * @param T next Robot to be returned
+     */
+    inline fun <reified T> close(): T = clickElement(R.id.closeButton)
 }

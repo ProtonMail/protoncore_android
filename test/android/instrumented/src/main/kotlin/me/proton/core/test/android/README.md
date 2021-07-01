@@ -24,10 +24,10 @@ The code and data files in this distribution are licensed under the terms of the
     - [Requests.kt](plugins/Requests.kt) - Helper class for communication with internal Proton API
 - [robots](robots) - Core robots
     - [humanverification](robots/humanverification)
-    - [login](robots/login)
+    - [login](robots/auth/login)
     - [other](robots/other)
     - [payments](robots/payments)
-    - [signup](robots/signup)
+    - [signup](robots/auth/signup)
     - [CoreRobot.kt](robots/CoreRobot.kt) - common core specific ui actions
     - [CoreVerify.kt](robots/CoreVerify.kt) - common core specific verifications
 
@@ -166,7 +166,7 @@ Test user data then can be loaded and used:
 import me.proton.core.test.android.plugins.data.User.Users
 
 class YourTests {
-    val users = Users(pathToJsonInsideAssets)
+    private val users = Users(pathToJsonInsideAssets)
     val user = users.getUser { it.name == "yourName" }
 }
 ```

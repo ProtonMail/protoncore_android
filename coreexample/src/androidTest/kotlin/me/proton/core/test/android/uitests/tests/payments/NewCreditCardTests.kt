@@ -19,8 +19,9 @@
 package me.proton.core.test.android.uitests.tests.payments
 
 import me.proton.core.payment.presentation.R
-import me.proton.core.test.android.robots.login.WelcomeRobot
-import me.proton.core.test.android.robots.payments.NewCreditCardRobot
+import me.proton.core.test.android.plugins.data.User.Plan.Free
+import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -28,22 +29,22 @@ import org.junit.Test
 
 class NewCreditCardTests : BaseTest() {
 
-    private val user = users.getUser { it.plan == "free" && it.paymentMethods.isEmpty() }
-    private val newCreditCardRobot = NewCreditCardRobot()
+    private val user = users.getUser { it.plan == Free && it.paymentMethods.isEmpty() }
+    private val newCreditCardRobot = AddCreditCardRobot()
 
     @Before
     fun login() {
-        WelcomeRobot()
+        AddAccountRobot()
             .signIn()
             .loginUser<CoreexampleRobot>(user)
-            .upgradePrimary<NewCreditCardRobot>()
+            .upgradePrimary<AddCreditCardRobot>()
             .verify { billingDetailsDisplayed("Plus", "yearly", "EUR", "48.00") }
     }
 
     @Test
     fun missingPaymentDetails() {
         newCreditCardRobot
-            .pay<NewCreditCardRobot>()
+            .pay<AddCreditCardRobot>()
             .verify {
                 inputErrorDisplayed(R.string.payments_error_card_name)
                 inputErrorDisplayed(R.string.payments_error_card_number)
@@ -54,14 +55,14 @@ class NewCreditCardTests : BaseTest() {
     @Test
     fun invalidCreditCardNumber() {
         newCreditCardRobot
-            .ccname(user.firstName)
+            .ccname("${user.firstName} ${user.lastName}")
             .country()
-            .selectCountry<NewCreditCardRobot>("Angola")
-            .postalCode("1234")
+            .selectCountry<AddCreditCardRobot>("Angola")
             .expirationDate("1234")
             .cvc("123")
             .ccnumber("424242424242424")
-            .pay<NewCreditCardRobot>()
+            .postalCode("1234")
+            .pay<AddCreditCardRobot>()
             .verify {
                 errorSnackbarDisplayed("Your card has been declined. Please try a different card or contact your bank to authorize the charge")
             }

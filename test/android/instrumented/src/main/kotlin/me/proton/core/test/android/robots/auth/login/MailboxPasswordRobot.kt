@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,10 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.robots.login
+package me.proton.core.test.android.robots.auth.login
 
 import android.widget.EditText
 import me.proton.core.auth.R
+import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 
@@ -41,10 +42,23 @@ class MailboxPasswordRobot : CoreRobot() {
      */
     inline fun <reified T> unlock(): T = clickElement(R.id.unlockButton)
 
+    /**
+     * Clicks close button
+     * @param T next Robot to be returned
+     */
+    inline fun <reified T> close(): T = clickElement(R.id.closeButton)
+
+    /**
+     * Fills in passphrase of a given [user]. Clicks 'unlock' button.
+     * @param T next Robot in flow
+     * @return an instance of [T]
+     */
+    inline fun <reified T> unlockMailbox(user: User): T = mailboxPassword(user.passphrase).unlock()
+
     class Verify : CoreVerify() {
         fun mailboxPasswordElementsDisplayed() {
             view.withId(R.id.unlockButton).wait().checkDisplayed()
-            view.withId(R.id.mailboxPasswordInput).instanceOf(EditText::class.java).checkDisplayed()
+            view.withId(R.id.mailboxPasswordInput).instanceOf(EditText::class.java).wait()
         }
     }
 
