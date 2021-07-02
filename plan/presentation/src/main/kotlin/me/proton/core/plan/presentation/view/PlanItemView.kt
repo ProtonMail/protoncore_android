@@ -19,6 +19,7 @@
 package me.proton.core.plan.presentation.view
 
 import android.content.Context
+import android.content.res.Resources
 import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -158,7 +159,8 @@ class PlanItemView @JvmOverloads constructor(
             billableAmount = plan.price?.yearly ?: 0
         }
 
-        context.getStringArrayByName(plan.name).forEach { item ->
+        val planContentsList = context.getStringArrayByName(plan.name)
+        planContentsList?.forEach { item ->
             planContents.addView(PlanContentItemView(context).apply {
                 planItem = item
             })
@@ -217,4 +219,8 @@ fun Spinner.selected(action: (Int) -> Unit) {
 }
 
 private fun Context.getStringArrayByName(aString: String) =
-    resources.getStringArray(resources.getIdentifier(aString, "array", packageName))
+    try {
+        resources.getStringArray(resources.getIdentifier(aString, "array", packageName))
+    } catch (notFound: Resources.NotFoundException) {
+        null
+    }
