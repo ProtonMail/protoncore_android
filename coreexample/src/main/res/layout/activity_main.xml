@@ -200,6 +200,16 @@
                 android:text="@string/plans_current" />
         </LinearLayout>
 
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
+            android:id="@+id/settings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_top_margin"
+            android:text="@string/settings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/plans_layout" />
+
         <LinearLayout
             android:id="@+id/accountsLayout"
             android:layout_width="match_parent"
@@ -208,7 +218,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/plans_layout" />
+            app:layout_constraintTop_toBottomOf="@id/settings" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
