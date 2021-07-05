@@ -16,36 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.settings.data.api
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.settings.data.api.request.UpdateRecoveryEmailRequest
+import me.proton.core.settings.data.api.response.UpdateRecoveryEmailResponse
+import retrofit2.http.Body
+import retrofit2.http.PUT
 
-libVersion = Version(0, 0, 1)
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
-
-        // Features
-        project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain),
-        project(Module.authDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`,
-
-        // Android
-        `dagger`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+internal interface UserSettingsApi : BaseRetrofitApi {
+    @PUT("settings/email")
+    suspend fun updateRecoveryEmail(@Body request: UpdateRecoveryEmailRequest): UpdateRecoveryEmailResponse
 }

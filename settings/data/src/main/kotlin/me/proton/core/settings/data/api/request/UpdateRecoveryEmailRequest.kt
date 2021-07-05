@@ -16,36 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.settings.data.api.request
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-libVersion = Version(0, 0, 1)
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
-
-        // Features
-        project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain),
-        project(Module.authDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`,
-
-        // Android
-        `dagger`
-    )
-
-    testImplementation(project(Module.kotlinTest))
-}
+@Serializable
+data class UpdateRecoveryEmailRequest(
+    @SerialName("Email")
+    val email: String,
+    @SerialName("TwoFactorCode")
+    val twoFactorCode: String,
+    @SerialName("ClientEphemeral")
+    val clientEphemeral: String,
+    @SerialName("ClientProof")
+    val clientProof: String,
+    @SerialName("SRPSession")
+    val srpSession: String
+)

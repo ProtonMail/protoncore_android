@@ -18,15 +18,39 @@
 
 package me.proton.core.settings.domain.usecase
 
+import me.proton.core.auth.domain.ClientSecret
+import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.crypto.common.srp.SrpProofs
 import javax.inject.Inject
 
 class PerformUpdateRecoveryEmail @Inject constructor(
+    private val authRepository: AuthRepository,
     private val srpCrypto: SrpCrypto,
-    private val keyStoreCrypto: KeyStoreCrypto
+    private val keyStoreCrypto: KeyStoreCrypto,
+    @ClientSecret private val clientSecret: String
 ) {
-    suspend operator fun invoke() {
+    suspend operator fun invoke(newRecoveryEmail: String,
+                                username: String,
+                                password: EncryptedString) {
+        val loginInfo = authRepository.getLoginInfo(
+            username = username,
+            clientSecret = clientSecret
+        )
+        password.decryptWith(keyStoreCrypto).toByteArray().use {
+            val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
+                username = username,
+                password = it.array,
+                version = loginInfo.version.toLong(),
+                salt = loginInfo.salt,
+                modulus = loginInfo.modulus,
+                serverEphemeral = loginInfo.serverEphemeral
+            )
+        }
 
     }
 }
