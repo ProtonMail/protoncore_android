@@ -16,16 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.settings.data.api.response
+package me.proton.android.core.coreexample.di
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import me.proton.core.settings.domain.entity.UserSettings
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.settings.data.api.repository.UserSettingsRepositoryImpl
+import me.proton.core.settings.domain.repository.UserSettingsRepository
+import javax.inject.Singleton
 
-@Serializable
-data class UpdateRecoveryEmailResponse(
-    @SerialName("UserSettings")
-    val userSettingsResponse: UserSettingsResponse
-) {
-    fun toUserSettings(): UserSettings = userSettingsResponse.toUserSettings()
+@Module
+@InstallIn(SingletonComponent::class)
+object SettingsModule {
+
+    @Provides
+    @Singleton
+    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
+        UserSettingsRepositoryImpl(apiProvider)
 }

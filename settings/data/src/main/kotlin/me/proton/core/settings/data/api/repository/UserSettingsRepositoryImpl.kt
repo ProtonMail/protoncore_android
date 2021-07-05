@@ -28,8 +28,13 @@ class UserSettingsRepositoryImpl(
     private val provider: ApiProvider
 ) : UserSettingsRepository {
 
+    override suspend fun getSettings(sessionUserId: SessionUserId) =
+        provider.get<UserSettingsApi>(sessionUserId).invoke {
+            getSettings().toUserSettings()
+        }.valueOrThrow
+
     override suspend fun updateRecoveryEmail(
-        sessionUserId: SessionUserId?,
+        sessionUserId: SessionUserId,
         email: String,
         clientEphemeral: String,
         clientProof: String,

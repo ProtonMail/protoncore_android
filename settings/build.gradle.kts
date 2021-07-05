@@ -29,6 +29,7 @@ android()
 
 dependencies {
     api(
+        project(Module.settingsData),
         project(Module.settingsDomain),
         project(Module.settingsPresentation)
     )

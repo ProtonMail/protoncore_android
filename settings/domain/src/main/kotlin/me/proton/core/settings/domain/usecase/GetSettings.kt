@@ -16,39 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.settings.domain.usecase
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.settings.domain.repository.UserSettingsRepository
+import javax.inject.Inject
 
-libVersion = Version(0, 0, 1)
-
-dependencies {
-
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.cryptoCommon),
-
-        // Features
-        project(Module.accountDomain),
-        project(Module.userDomain),
-        project(Module.keyDomain),
-        project(Module.authDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`,
-
-        // Android
-        `dagger`,
-
-        // Other
-        `googleTink`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+class GetSettings @Inject constructor(
+    private val userSettingsRepository: UserSettingsRepository
+) {
+    suspend operator fun invoke(sessionUserId: SessionUserId) = userSettingsRepository.getSettings(sessionUserId)
 }

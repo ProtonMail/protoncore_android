@@ -22,11 +22,19 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.settings.domain.entity.UserSettings
 
 interface UserSettingsRepository {
+
+    /**
+     * Returns the general settings for the user.
+     */
+    suspend fun getSettings(
+        sessionUserId: SessionUserId
+    ): UserSettings
+
     /**
      * Updates user's recovery email.
      */
     suspend fun updateRecoveryEmail(
-        sessionUserId: SessionUserId?,
+        sessionUserId: SessionUserId,
         email: String,
         clientEphemeral: String,
         clientProof: String,

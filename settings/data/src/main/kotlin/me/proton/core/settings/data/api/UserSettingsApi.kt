@@ -20,11 +20,15 @@ package me.proton.core.settings.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.settings.data.api.request.UpdateRecoveryEmailRequest
-import me.proton.core.settings.data.api.response.UpdateRecoveryEmailResponse
+import me.proton.core.settings.data.api.response.SettingsResponse
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.PUT
 
 internal interface UserSettingsApi : BaseRetrofitApi {
     @PUT("settings/email")
-    suspend fun updateRecoveryEmail(@Body request: UpdateRecoveryEmailRequest): UpdateRecoveryEmailResponse
+    suspend fun updateRecoveryEmail(@Body request: UpdateRecoveryEmailRequest): SettingsResponse
+
+    @GET("settings")
+    suspend fun getSettings(): SettingsResponse
 }

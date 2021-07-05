@@ -39,6 +39,10 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
         project(Module.networkDomain),
+        project(Module.cryptoCommon),
+
+        // Features
+        project(Module.settingsDomain),
 
         // Android
         `android-ktx`,
