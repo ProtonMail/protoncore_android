@@ -27,6 +27,7 @@ import android.widget.LinearLayout
 import android.widget.ListAdapter
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
+import androidx.core.widget.addTextChangedListener
 import me.proton.core.presentation.R
 import me.proton.core.presentation.databinding.ProtonAutocompleteInputBinding
 import me.proton.core.presentation.ui.isInputTypePassword
@@ -82,6 +83,11 @@ open class ProtonAutoCompleteInput : LinearLayout {
 
         // Set internal input id.
         binding.input.id = id
+
+        // Clear error on text changed.
+        binding.input.addTextChangedListener { editable ->
+            if (editable?.isNotEmpty() == true) clearInputError()
+        }
     }
 
     // region Public API
