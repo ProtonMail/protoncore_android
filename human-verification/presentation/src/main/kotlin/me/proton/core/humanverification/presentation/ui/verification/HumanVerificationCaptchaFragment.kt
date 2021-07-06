@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.presentation.CaptchaHost
+import me.proton.core.humanverification.presentation.CaptchaApiHost
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
@@ -50,13 +50,13 @@ import javax.inject.Inject
 internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVerificationCaptchaBinding>() {
 
     @Inject
-    @CaptchaHost
-    lateinit var captchaHost: String
+    @CaptchaApiHost
+    lateinit var captchaApiHost: String
 
     private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
 
     private val captchaUrl: String by lazy {
-        requireArguments().get(ARG_CAPTCHA_URL) as String? ?: "https://$captchaHost/api/core/v4/captcha"
+        requireArguments().get(ARG_CAPTCHA_URL) as String? ?: "https://$captchaApiHost/core/v4/captcha"
     }
 
     private val humanVerificationBase by lazy {
