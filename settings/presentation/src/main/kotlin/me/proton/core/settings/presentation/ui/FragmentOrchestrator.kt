@@ -19,15 +19,18 @@
 package me.proton.core.settings.presentation.ui
 
 import androidx.fragment.app.FragmentManager
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.inTransaction
+import me.proton.core.settings.presentation.entity.SettingsInput
 
 private const val TAG_RECOVERY_EMAIL = "recovery_fragment"
 
 fun FragmentManager.showRecoveryEmail(
-    containerId: Int = android.R.id.content
+    containerId: Int = android.R.id.content,
+    input: SettingsInput
 ) {
     findFragmentByTag(TAG_RECOVERY_EMAIL) ?: run {
-        val updateRecoveryEmailFragment = UpdateRecoveryEmailFragment()
+        val updateRecoveryEmailFragment = UpdateRecoveryEmailFragment(input)
         inTransaction {
             setCustomAnimations(0, 0)
             add(containerId, updateRecoveryEmailFragment)

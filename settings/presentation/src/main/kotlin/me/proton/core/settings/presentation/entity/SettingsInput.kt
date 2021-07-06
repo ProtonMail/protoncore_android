@@ -20,8 +20,14 @@ package me.proton.core.settings.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import me.proton.core.domain.entity.UserId
+import me.proton.core.settings.domain.entity.UserSettings
 
 @Parcelize
-data class RecoveryEmailInput(
-    val userId: String? = null,
-): Parcelable
+data class SettingsInput(
+    val userId: String,
+    val username: String,
+    val settings: Settings? = null
+): Parcelable {
+    val user = UserId(userId)
+}

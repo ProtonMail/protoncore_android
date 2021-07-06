@@ -57,7 +57,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
     sealed class UpdateRecoveryEmailState {
         object Idle : UpdateRecoveryEmailState()
         object Processing : UpdateRecoveryEmailState()
-        data class Success(val recoveryEmail: String) : UpdateRecoveryEmailState()
+        data class Success(val recoveryEmail: String?) : UpdateRecoveryEmailState()
         sealed class Error : UpdateRecoveryEmailState() {
             data class Message(val message: String?) : UpdateRecoveryEmailState.Error()
         }
@@ -95,7 +95,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
             twoFactorCode = twoFactorCode
         )
         // we expect always value for the email on success, thus !!
-        emit(UpdateRecoveryEmailState.Success(updateRecoveryEmailResult.email!!.value))
+        emit(UpdateRecoveryEmailState.Success(updateRecoveryEmailResult.email?.value))
     }.catch { error ->
         _updateRecoveryEmailState.tryEmit(UpdateRecoveryEmailState.Error.Message(error.message))
     }.onEach { plans ->

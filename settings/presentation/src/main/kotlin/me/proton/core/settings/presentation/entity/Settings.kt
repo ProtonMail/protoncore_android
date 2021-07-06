@@ -16,13 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.settings.domain.entity
+package me.proton.core.settings.presentation.entity
 
-data class UserSettings(
-    val email: Setting?,
-    val phone: Setting?,
-    val password: Password,
-    val twoFA: TwoFA?,
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Settings(
+    val email: RecoverySetting?,
+    val phone: RecoverySetting?,
+    val password: PasswordSetting,
+    val twoFA: TwoFASetting?,
     val news: Int,
     val locale: String,
     val logAuth: Int,
@@ -35,34 +39,39 @@ data class UserSettings(
     val timeFormat: Int,
     val welcome: Int,
     val earlyAccess: Int,
-    val flags: Flags?
-)
+    val flags: FlagsSetting?
+): Parcelable
 
-data class Setting(
+@Parcelize
+data class RecoverySetting(
     val value: String?,
     val status: Int,
     val notify: Int,
     val reset: Int
-)
+): Parcelable
 
-data class Password(
+@Parcelize
+data class PasswordSetting(
     val mode: Int,
     val expirationTime: Int?
-)
+): Parcelable
 
-data class TwoFA(
+@Parcelize
+data class TwoFASetting(
     val enabled: Int,
     val allowed: Int,
     val expirationTime: Int?,
-    val u2fKeys: List<U2FKey>?
-)
+    val u2fKeys: List<U2FKeySetting>?
+): Parcelable
 
-data class U2FKey(
+@Parcelize
+data class U2FKeySetting(
     val label: String,
     val keyHandle: String,
     val compromised: Int
-)
+): Parcelable
 
-data class Flags(
+@Parcelize
+data class FlagsSetting(
     val welcomed: Int
-)
+): Parcelable

@@ -24,4 +24,7 @@
     <string name="settings_recovery_email_new_hint">Enter Email Address</string>
     <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
     <string name="settings_save">Save</string>
+    <string name="settings_password_required">Enter your login password</string>
+    <string name="settings_password_required_ok">OK</string>
+    <string name="settings_not_set">Not set</string>
 </resources>

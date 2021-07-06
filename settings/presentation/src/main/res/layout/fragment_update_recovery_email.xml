@@ -35,7 +35,7 @@
                 android:id="@+id/currentEmailInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text|textEmailAddress|textNoSuggestions"
+                android:inputType="none"
                 app:label="@string/settings_recovery_email_current" />
 
             <View
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text|textEmailAddress|textNoSuggestions"
-                app:label="@string/settings_recovery_email_current" />
+                app:label="@string/settings_recovery_email_new" />
 
             <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/confirmNewEmailInput"

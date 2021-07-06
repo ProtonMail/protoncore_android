@@ -23,13 +23,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.settings.presentation.R
 import me.proton.core.settings.presentation.databinding.ActivityUpdateRecoveryEmailBinding
+import me.proton.core.settings.presentation.entity.SettingsInput
 
 @AndroidEntryPoint
 class UpdateRecoveryEmailActivity : ProtonActivity<ActivityUpdateRecoveryEmailBinding>() {
 
-    companion object {
-        const val ARG_INPUT = "arg.updateRecoveryEmailInput"
-        const val ARG_RESULT = "arg.updateRecoveryEmailResult"
+    private val input: SettingsInput by lazy {
+        requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class UpdateRecoveryEmailActivity : ProtonActivity<ActivityUpdateRecoveryEmailBi
         with(binding.toolbar) {
             title = "Recovery Email"
         }
-        supportFragmentManager.showRecoveryEmail(R.id.layoutContent)
+        supportFragmentManager.showRecoveryEmail(R.id.layoutContent, input)
 
         supportFragmentManager.setFragmentResultListener(
             UpdateRecoveryEmailFragment.KEY_UPDATE_RESULT, this@UpdateRecoveryEmailActivity
@@ -47,4 +47,9 @@ class UpdateRecoveryEmailActivity : ProtonActivity<ActivityUpdateRecoveryEmailBi
     }
 
     override fun layoutId() = R.layout.activity_update_recovery_email
+
+    companion object {
+        const val ARG_INPUT = "arg.updateRecoveryEmailInput"
+        const val ARG_RESULT = "arg.updateRecoveryEmailResult"
+    }
 }

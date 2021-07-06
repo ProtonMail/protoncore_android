@@ -22,11 +22,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import me.proton.core.settings.presentation.entity.RecoveryEmailInput
+import me.proton.core.settings.presentation.entity.SettingsInput
 import me.proton.core.settings.presentation.entity.UpdateRecoveryEmailResult
 
-class StartUpdateRecoveryEmail : ActivityResultContract<RecoveryEmailInput, UpdateRecoveryEmailResult?>() {
-    override fun createIntent(context: Context, input: RecoveryEmailInput?): Intent =
+class StartUpdateRecoveryEmail : ActivityResultContract<SettingsInput, UpdateRecoveryEmailResult?>() {
+    override fun createIntent(context: Context, input: SettingsInput?): Intent =
         Intent(context, UpdateRecoveryEmailActivity::class.java).apply {
             putExtra(UpdateRecoveryEmailActivity.ARG_INPUT, input)
         }

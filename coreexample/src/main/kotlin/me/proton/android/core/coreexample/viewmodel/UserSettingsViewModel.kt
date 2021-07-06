@@ -24,16 +24,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import me.proton.android.core.coreexample.PLAN_PLUS_ID
-import me.proton.android.core.coreexample.PLAN_VISIONARY_ID
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.presentation.entity.PlanShortDetails
-import me.proton.core.payment.presentation.onPaymentResult
-import me.proton.core.plan.presentation.PlansOrchestrator
-import me.proton.core.plan.presentation.onUpgradeResult
-import me.proton.core.presentation.utils.showToast
+import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.settings.presentation.SettingsOrchestrator
 import javax.inject.Inject
 
@@ -47,13 +39,12 @@ class UserSettingsViewModel @Inject constructor(
         settingsOrchestrator.register(context)
     }
 
-    private fun getPrimaryUserId() = accountManager.getPrimaryUserId()
+    private fun getPrimaryAccount() = accountManager.getPrimaryAccount()
 
-    fun onUpdateRecoveryEmailClicked(context: ComponentActivity) {
+    fun onUpdateRecoveryEmailClicked() {
         viewModelScope.launch {
-            getPrimaryUserId().first()?.let {
-                val account = accountManager.getAccount(it).first() ?: return@launch
-                settingsOrchestrator.startUpdateRecoveryEmailWorkflow()
+            getPrimaryAccount().first()?.let {
+                settingsOrchestrator.startUpdateRecoveryEmailWorkflow(it.userId, it.username)
             }
         }
     }

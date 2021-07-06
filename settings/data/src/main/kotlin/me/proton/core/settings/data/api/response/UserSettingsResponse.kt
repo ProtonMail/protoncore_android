@@ -48,7 +48,7 @@ data class UserSettingsResponse(
     @SerialName("Density")
     val density: Int,
     @SerialName("Theme")
-    val theme: String,
+    val theme: String?,
     @SerialName("ThemeType")
     val themeType: Int,
     @SerialName("WeekStart")
@@ -62,7 +62,7 @@ data class UserSettingsResponse(
     @SerialName("EarlyAccess")
     val earlyAccess: Int,
     @SerialName("Flags")
-    val flags: FlagsResponse
+    val flags: FlagsResponse?
 ) {
     fun toUserSettings(): UserSettings =
         UserSettings(
@@ -82,14 +82,14 @@ data class UserSettingsResponse(
             timeFormat = timeFormat,
             welcome = welcome,
             earlyAccess = earlyAccess,
-            flags = flags.toFlags()
+            flags = flags?.toFlags()
         )
 }
 
 @Serializable
 data class SettingResponse(
     @SerialName("Value")
-    val value: String,
+    val value: String?,
     @SerialName("Status")
     val status: Int,
     @SerialName("Notify")

@@ -20,14 +20,15 @@ package me.proton.core.settings.presentation
 
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
-import me.proton.core.settings.presentation.entity.RecoveryEmailInput
+import me.proton.core.domain.entity.UserId
+import me.proton.core.settings.presentation.entity.SettingsInput
 import me.proton.core.settings.presentation.entity.UpdateRecoveryEmailResult
 import me.proton.core.settings.presentation.ui.StartUpdateRecoveryEmail
 import javax.inject.Inject
 
 class SettingsOrchestrator @Inject constructor() {
 
-    private var updateRecoveryEmailLauncher: ActivityResultLauncher<RecoveryEmailInput>? = null
+    private var updateRecoveryEmailLauncher: ActivityResultLauncher<SettingsInput>? = null
 
     private var onUpdateRecoveryEmailResultListener: ((result: UpdateRecoveryEmailResult?) -> Unit)? = {}
 
@@ -37,7 +38,7 @@ class SettingsOrchestrator @Inject constructor() {
 
     private fun registerUpdateRecoveryEmailResult(
         context: ComponentActivity
-    ): ActivityResultLauncher<RecoveryEmailInput> =
+    ): ActivityResultLauncher<SettingsInput> =
         context.registerForActivityResult(
             StartUpdateRecoveryEmail()
         ) {
@@ -69,9 +70,9 @@ class SettingsOrchestrator @Inject constructor() {
      *
      * @see [onUpgradeResult]
      */
-    fun startUpdateRecoveryEmailWorkflow() {
+    fun startUpdateRecoveryEmailWorkflow(userId: UserId, username: String) {
         checkRegistered(updateRecoveryEmailLauncher).launch(
-            RecoveryEmailInput()
+            SettingsInput(userId.id, username)
         )
     }
 }
