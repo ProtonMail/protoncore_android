@@ -82,6 +82,7 @@ class OnView {
     private var spinnerText: String? = null
     private var substring: String? = null
     private var text: String? = null
+    private var indexInParent: Int? = null
 
     private var ancestorMatcher: Matcher<View>? = null
     private var childMatcher: Matcher<View>? = null
@@ -90,6 +91,8 @@ class OnView {
     private var siblingMatcher: Matcher<View>? = null
 
     private var contentDescMatcher: Matcher<out CharSequence?>? = null
+
+    private var customMatcher: Matcher<View>? = null
 
     private var visibility: ViewMatchers.Visibility? = null
 
@@ -162,6 +165,8 @@ class OnView {
 
     fun withParent(parentView: OnView) = apply { this.parentMatcher = parentView.matcher() }
 
+    fun withParentIndex(indexInParent: Int) = apply { this.indexInParent = indexInParent }
+
     fun withResourceName(resourceName: String) = apply { this.resourceName = resourceName }
 
     fun withSubstring(substring: String) = apply { this.substring = substring }
@@ -177,6 +182,8 @@ class OnView {
     fun withText(text: String) = apply { this.text = text }
 
     fun withVisibility(visibility: ViewMatchers.Visibility) = apply { this.visibility = visibility }
+
+    fun withCustomMatcher(matcher: Matcher<View>) = apply { this.customMatcher = matcher }
 
     /** [ViewInteraction] action wrappers. **/
     fun click() = apply { waitForView(viewInteraction()).perform(ViewActions.click()) }
@@ -319,6 +326,9 @@ class OnView {
         if (parentMatcher != null) {
             matchers.add(ViewMatchers.withParent(parentMatcher))
         }
+        if (indexInParent != null) {
+            matchers.add(ViewMatchers.withParentIndex(indexInParent!!))
+        }
         if (className != null) {
             matchers.add(ViewMatchers.withClassName(CoreMatchers.equalTo(className)))
         }
@@ -384,6 +394,9 @@ class OnView {
         }
         if (hasLinks) {
             matchers.add(ViewMatchers.hasLinks())
+        }
+        if (customMatcher != null) {
+            matchers.add(customMatcher!!)
         }
         return AllOf.allOf(matchers)
     }
