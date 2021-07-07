@@ -72,8 +72,8 @@ class HumanVerificationOrchestrator {
      * Start a Human Verification workflow.
      *
      * @param captchaUrl use this one if you want to provide per instance different captcha URL.
-     * Otherwise the one from the DI annotated with [CaptchaHost] will be used.
-     * [CaptchaHost] is only the host, Core is responsible to create the full URL.
+     * Otherwise the one from the DI annotated with [CaptchaApiHost] will be used.
+     * [CaptchaApiHost] is only the host, Core is responsible to create the full URL.
      * [captchaUrl] should not be only a base Url, but you are responsible to create it full, up to the
      * query params section.
      * If both provided, this parameter takes the precedence.
