@@ -28,5 +28,4 @@ interface MailMessageApi : BaseRetrofitApi {
 
     @POST("mail/v4/messages/send/direct")
     suspend fun sendDirect(@Body request: SendDirectRequest): SendDirectResponse
-
 }

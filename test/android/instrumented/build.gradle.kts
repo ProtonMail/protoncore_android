@@ -68,6 +68,7 @@ dependencies {
         project(Module.user),
         project(Module.country),
         project(Module.plan),
+        project(Module.mailSettings),
 
         // MockK
         `mockk-android`,

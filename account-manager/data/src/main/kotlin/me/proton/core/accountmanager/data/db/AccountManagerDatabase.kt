@@ -45,6 +45,8 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.entity.KeySaltEntity
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
+import me.proton.core.mailsettings.data.db.MailSettingsDatabase
+import me.proton.core.mailsettings.data.entity.MailSettingsEntity
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserConverters
 import me.proton.core.user.data.db.UserDatabase
@@ -70,12 +72,15 @@ import me.proton.core.user.data.entity.UserKeyEntity
         PublicAddressEntity::class,
         PublicAddressKeyEntity::class,
         // human-verification
-        HumanVerificationEntity::class
+        HumanVerificationEntity::class,
+        // mail-settings
+        MailSettingsEntity::class
     ],
     autoMigrations = [
-        AutoMigration(from = 4, to = 5, spec = MIGRATION_4_5::class)
+        AutoMigration(from = 4, to = 5, spec = MIGRATION_4_5::class),
+        AutoMigration(from = 5, to = 6)
     ],
-    version = 5,
+    version = 6,
     exportSchema = true
 )
 @TypeConverters(
@@ -92,7 +97,8 @@ abstract class AccountManagerDatabase :
     AddressDatabase,
     KeySaltDatabase,
     HumanVerificationDatabase,
-    PublicAddressDatabase {
+    PublicAddressDatabase,
+    MailSettingsDatabase {
 
     override suspend fun <R> inTransaction(block: suspend () -> R): R = withTransaction(block)
 

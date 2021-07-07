@@ -18,7 +18,7 @@
 
 package me.proton.core.mailmessage.domain.entity
 
-import PackageType
+import me.proton.core.mailsettings.domain.entity.PackageType
 
 data class EncryptedPackage(
     val addresses: Map<String, Address>,
@@ -43,5 +43,4 @@ data class EncryptedPackage(
         val key: String,
         val algorithm: String,
     )
-
 }

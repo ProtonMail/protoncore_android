@@ -16,18 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.mailmessage.data.extension
+package me.proton.core.mailsettings.data.db
 
-import me.proton.core.mailmessage.data.api.request.EmailMessage
-import me.proton.core.mailmessage.domain.entity.EncryptedEmail
+import me.proton.core.data.db.Database
+import me.proton.core.mailsettings.data.db.dao.MailSettingsDao
 
-fun EncryptedEmail.toEmailMessage(): EmailMessage = EmailMessage(
-    subject = subject,
-    sender = EmailMessage.Address(sender.address, sender.name),
-    to = to.map { EmailMessage.Address(it.address, it.name) },
-    cc = cc.map { EmailMessage.Address(it.address, it.name) },
-    bcc = bcc.map { EmailMessage.Address(it.address, it.name) },
-    body = body,
-    mimeType = mimeType,
-    attachments = attachments.map { EmailMessage.Attachment(it.fileName, it.mimeType, it.contents) }
-)
+interface MailSettingsDatabase : Database {
+    fun mailSettingsDao(): MailSettingsDao
+}

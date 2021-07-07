@@ -23,7 +23,7 @@ plugins {
     kotlin("jvm")
 }
 
-libVersion = Version(0, 1, 5)
+libVersion = Version(0, 2, 1)
 
 dependencies {
 
@@ -35,6 +35,7 @@ dependencies {
         project(Module.keyDomain),
         project(Module.userDomain),
         project(Module.cryptoCommon),
+        project(Module.mailSettingsDomain),
 
         // Android
         `dagger`,

@@ -121,6 +121,11 @@ object Module {
     const val mailMessagePresentation = "$mailMessage:mail-message-presentation"
     const val mailMessageData = "$mailMessage:mail-message-data"
 
+    // Mail Settings
+    const val mailSettings = ":mail-settings"
+    const val mailSettingsDomain = "$mailSettings:mail-settings-domain"
+    const val mailSettingsPresentation = "$mailSettings:mail-settings-presentation"
+    const val mailSettingsData = "$mailSettings:mail-settings-data"
     // Plan
     const val plan = ":plan"
     const val planDomain = "$plan:plan-domain"
