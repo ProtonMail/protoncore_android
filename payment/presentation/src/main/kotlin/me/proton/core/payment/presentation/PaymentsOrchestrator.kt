@@ -20,6 +20,7 @@ package me.proton.core.payment.presentation
 
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.Fragment
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -40,6 +41,11 @@ class PaymentsOrchestrator @Inject constructor() {
 
     // region public api
     fun register(context: ComponentActivity) {
+        billingLauncher = registerBillingResult(context)
+        paymentOptionsLauncher = registerPaymentOptionsResult(context)
+    }
+
+    fun register(context: Fragment) {
         billingLauncher = registerBillingResult(context)
         paymentOptionsLauncher = registerPaymentOptionsResult(context)
     }
@@ -84,8 +90,27 @@ class PaymentsOrchestrator @Inject constructor() {
             onPaymentResultListener(it)
         }
 
+    private fun registerBillingResult(
+        context: Fragment
+    ): ActivityResultLauncher<BillingInput> =
+        context.registerForActivityResult(
+            StartBilling()
+        ) {
+            // for Sign Up the token should be used as a human verification header
+            onPaymentResultListener(it)
+        }
+
     private fun registerPaymentOptionsResult(
         context: ComponentActivity
+    ): ActivityResultLauncher<PaymentOptionsInput> =
+        context.registerForActivityResult(
+            StartPaymentOptions()
+        ) {
+            onPaymentResultListener(it?.billing)
+        }
+
+    private fun registerPaymentOptionsResult(
+        context: Fragment
     ): ActivityResultLauncher<PaymentOptionsInput> =
         context.registerForActivityResult(
             StartPaymentOptions()

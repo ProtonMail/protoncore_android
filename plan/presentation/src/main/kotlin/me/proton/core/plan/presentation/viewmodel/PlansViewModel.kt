@@ -18,6 +18,7 @@
 
 package me.proton.core.plan.presentation.viewmodel
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,8 +27,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
+import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.payment.presentation.entity.PlanShortDetails
+import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.plan.domain.SupportedPaidPlanIds
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.usecase.GetPlans
@@ -35,6 +42,7 @@ import me.proton.core.plan.presentation.entity.PlanDetailsListItem
 import me.proton.core.plan.presentation.entity.PlanPricing
 import me.proton.core.plan.presentation.entity.PlanSubscription
 import me.proton.core.plan.presentation.entity.PlanType
+import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -45,7 +53,8 @@ import javax.inject.Inject
 class PlansViewModel @Inject constructor(
     private val getPlansUseCase: GetPlans,
     private val getCurrentSubscription: GetCurrentSubscription,
-    @SupportedPaidPlanIds private val supportedPaidPlanIds: List<String>
+    @SupportedPaidPlanIds private val supportedPaidPlanIds: List<String>,
+    private val paymentsOrchestrator: PaymentsOrchestrator
 ) : ProtonViewModel() {
 
     private val _availablePlansState = MutableStateFlow<State>(State.Idle)
@@ -55,10 +64,14 @@ class PlansViewModel @Inject constructor(
     sealed class State {
         object Idle : State()
         object Processing : State()
-        data class Success(
-            val plans: List<PlanDetailsListItem>,
-            val subscription: PlanSubscription? = null
-        ) : State()
+        sealed class Success : State() {
+            data class Plans(
+                val plans: List<PlanDetailsListItem>,
+                val subscription: PlanSubscription? = null
+            ) : Success()
+
+            data class PaidPlanPayment(val selectedPlan: SelectedPlan, val billing: BillingResult) : Success()
+        }
 
         sealed class Error : State() {
             data class Message(val message: String?) : Error()
@@ -105,12 +118,40 @@ class PlansViewModel @Inject constructor(
             subscribedPlans.isEmpty() || subscribedPlans.find {
                 supportedPaidPlanIds.contains(it.id)
             } != null)
-        emit(State.Success(plans = plans, subscription = planSubscription))
+        emit(State.Success.Plans(plans = plans, subscription = planSubscription))
     }.catch { error ->
         _availablePlansState.tryEmit(State.Error.Message(error.message))
     }.onEach { plans ->
         _availablePlansState.tryEmit(plans)
     }.launchIn(viewModelScope)
+
+    fun register(context: Fragment) {
+        paymentsOrchestrator.register(context)
+    }
+
+    fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan, cycle: SubscriptionCycle) {
+        with(paymentsOrchestrator) {
+            onPaymentResult { result ->
+                result.let { billingResult ->
+                    if (billingResult?.paySuccess == true) {
+                        viewModelScope.launch {
+                            _availablePlansState.emit(State.Success.PaidPlanPayment(selectedPlan, billingResult))
+                        }
+                    }
+                }
+            }
+
+            startBillingWorkFlow(
+                userId = userId,
+                selectedPlan = PlanShortDetails(
+                    id = selectedPlan.planId,
+                    name = selectedPlan.planName,
+                    subscriptionCycle = cycle
+                ),
+                codes = null
+            )
+        }
+    }
 
     private fun createFreePlanAsCurrent(current: Boolean, selectable: Boolean): PlanDetailsListItem {
         return PlanDetailsListItem.FreePlanDetailsListItem(

@@ -30,8 +30,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_upgrade.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansBinding
+import me.proton.core.plan.presentation.entity.Cycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.viewmodel.PlansViewModel
 import me.proton.core.presentation.ui.ProtonFragment
@@ -48,14 +51,15 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
         requireArguments().get(ARG_INPUT) as PlanInput
     }
 
-    private val upgrade: Boolean by lazy {
-        input.user != null
+    private val userId: UserId? by lazy {
+        input.user
     }
 
     override fun layoutId() = R.layout.fragment_plans
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.register(this)
         activity?.onBackPressedDispatcher?.addCallback(
             this,
             object : OnBackPressedCallback(true) {
@@ -68,7 +72,6 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.apply {
             closeButton.onClick {
                 finish()
@@ -97,22 +100,27 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
                 is PlansViewModel.State.Idle -> {
                 }
                 is PlansViewModel.State.Processing -> showLoading(true)
-                is PlansViewModel.State.Success -> {
+                is PlansViewModel.State.Success.Plans -> {
                     showLoading(false)
                     with(binding) {
                         plansView.selectPlanListener = { selectedPlan ->
-                            parentFragmentManager.setFragmentResult(
-                                KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to selectedPlan)
-                            )
-                            if (!upgrade) {
-                                parentFragmentManager.popBackStackImmediate()
+                            if (selectedPlan.free) {
+                                // proceed with result return
+                                parentFragmentManager.setFragmentResult(
+                                    KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to selectedPlan)
+                                )
+                            } else {
+                                val cycle = when (selectedPlan.cycle) {
+                                    Cycle.MONTHLY -> SubscriptionCycle.MONTHLY
+                                    Cycle.YEARLY -> SubscriptionCycle.YEARLY
+                                }.exhaustive
+                                viewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
                             }
                         }
                         plansView.plans = it.plans
 
                         with(customizableFeaturesText) {
-                            if (it.subscription != null && !it.subscription.subscriptionPlanSupportedFromCore
-                            ) {
+                            if (it.subscription != null && !it.subscription.subscriptionPlanSupportedFromCore) {
                                 text = getString(R.string.plans_customizable_features_web)
                             }
                             movementMethod = LinkMovementMethod.getInstance()
@@ -120,8 +128,17 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
                         customizableFeaturesLayout.visibility = View.VISIBLE
                     }
                 }
+                is PlansViewModel.State.Success.PaidPlanPayment -> {
+                    parentFragmentManager.setFragmentResult(
+                        KEY_PLAN_SELECTED, bundleOf(
+                            BUNDLE_KEY_PLAN to it.selectedPlan,
+                            BUNDLE_KEY_BILLING_DETAILS to it.billing
+                        )
+                    )
+                }
             }.exhaustive
         }.launchIn(lifecycleScope)
+
         viewModel.getCurrentPlanWithUpgradeOption(userId = input.user, input.showCurrent)
     }
 
@@ -138,12 +155,12 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
         parentFragmentManager.setFragmentResult(
             KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to null)
         )
-        parentFragmentManager.popBackStackImmediate()
     }
 
     companion object {
         const val KEY_PLAN_SELECTED = "key.plan_selected"
         const val BUNDLE_KEY_PLAN = "bundle.plan"
+        const val BUNDLE_KEY_BILLING_DETAILS = "bundle.billing_details"
         const val ARG_INPUT = "arg.plansInput"
 
         operator fun invoke(input: PlanInput) = PlansFragment().apply {

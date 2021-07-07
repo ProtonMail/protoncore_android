@@ -22,11 +22,9 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
-import me.proton.core.payment.domain.usecase.GetCurrentSubscription.Companion.NO_ACTIVE_SUBSCRIPTION
+import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.plan.domain.usecase.GetPlans
@@ -43,6 +41,7 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
     private val getPlansUseCase = mockk<GetPlans>()
     private val getCurrentSubscription = mockk<GetCurrentSubscription>(relaxed = true)
+    private val paymentOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
     // endregion
 
     // region test data
@@ -88,7 +87,8 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
 
     @Before
     fun beforeEveryTest() {
-        viewModel = PlansViewModel(getPlansUseCase, getCurrentSubscription, testDefaultSupportedPlanIds)
+        viewModel =
+            PlansViewModel(getPlansUseCase, getCurrentSubscription, testDefaultSupportedPlanIds, paymentOrchestrator)
     }
 
     @Test
@@ -104,7 +104,7 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
             assertIs<PlansViewModel.State.Idle>(expectItem())
             assertIs<PlansViewModel.State.Processing>(expectItem())
             val plansStatus = expectItem()
-            assertTrue(plansStatus is PlansViewModel.State.Success)
+            assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
             assertEquals(3, plansStatus.plans.size)
             val planOne = plansStatus.plans[0]
             val planTwo = plansStatus.plans[1]
@@ -128,7 +128,7 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
             assertIs<PlansViewModel.State.Idle>(expectItem())
             assertIs<PlansViewModel.State.Processing>(expectItem())
             val plansStatus = expectItem()
-            assertTrue(plansStatus is PlansViewModel.State.Success)
+            assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
             assertEquals(1, plansStatus.plans.size)
             val planOne = plansStatus.plans[0]
             assertEquals("plan-id-1", planOne.id)
@@ -149,7 +149,7 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
             assertIs<PlansViewModel.State.Idle>(expectItem())
             assertIs<PlansViewModel.State.Processing>(expectItem())
             val plansStatus = expectItem()
-            assertTrue(plansStatus is PlansViewModel.State.Success)
+            assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
             assertEquals(2, plansStatus.plans.size)
             val planFree = plansStatus.plans[0]
             val planPaid = plansStatus.plans[1]
