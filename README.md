@@ -91,7 +91,7 @@ Test Android Instrumented: **0.6.1** - _released on: Jul 06, 2021_
 
 ## Shared
 
-Domain: **1.0.3** - _released on: Jun 09, 2021_
+Domain: **1.0.4** - _released on: Jul 07, 2021_
 
 Presentation: **0.9.2** - _released on: Jul 05, 2021_
 
@@ -140,15 +140,15 @@ Account Data: **1.1.7** - _released on: Jun 17, 2021_
 
 ### Account Manager
 
-Account Manager: **1.1.7** - _released on: Jun 17, 2021_
+Account Manager: **1.1.8** - _released on: Jul 07, 2021_
 
-Account Manager Domain: **1.1.7** - _released on: Jun 17, 2021_
+Account Manager Domain: **1.1.8** - _released on: Jul 07, 2021_
 
-Account Manager Presentation: **1.1.7** - _released on: Jun 17, 2021_
+Account Manager Presentation: **1.1.8** - _released on: Jul 07, 2021_
 
-Account Manager Data: **1.1.7** - _released on: Jun 17, 2021_
+Account Manager Data: **1.1.8** - _released on: Jul 07, 2021_
 
-Account Manager Dagger: **1.1.7** - _released on: Jun 17, 2021_
+Account Manager Dagger: **1.1.8** - _released on: Jul 07, 2021_
 
 ### Key
 
@@ -176,19 +176,19 @@ Contact Data: **0.1.5** - _released on: Jun 14, 2021_
 
 ### Mail Message
 
-Mail Message: **0.1.5** - _released on: Jun 14, 2021_
+Mail Message: **0.2.1** - _released on: Jul 07, 2021_
 
-Mail Message Domain: **0.1.5** - _released on: Jun 14, 2021_
+Mail Message Domain: **0.2.1** - _released on: Jul 07, 2021_
 
-Mail Message Data: **0.1.5** - _released on: Jun 14, 2021_
+Mail Message Data: **0.2.1** - _released on: Jul 07, 2021_
 
 ### Mail Settings
 
-Mail Settings: **0** - _released on: Jun 14, 2021_
+Mail Settings: **0.2.1** - _released on: Jul 07, 2021_
 
-Mail Settings Domain: **0** - _released on: Jun 14, 2021_
+Mail Settings Domain: **0.2.1** - _released on: Jul 07, 2021_
 
-Mail Settings Data: **0** - _released on: Jun 14, 2021_
+Mail Settings Data: **0.2.1** - _released on: Jul 07, 2021_
 
 ### Human Verification
 
