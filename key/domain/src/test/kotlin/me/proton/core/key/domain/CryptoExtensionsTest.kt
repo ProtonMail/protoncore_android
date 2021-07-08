@@ -18,14 +18,12 @@
 
 package me.proton.core.key.domain
 
-import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.extension.primary
 import org.junit.Test
-import java.io.ByteArrayInputStream
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -50,8 +48,6 @@ class CryptoExtensionsTest {
         Mauris sit amet interdum mi, in faucibus ex. Quisque volutpat risus mi, eu lacinia odio tempus ac. Nulla facilisi.
         Fusce fermentum ut turpis at vehicula. Pellentesque ultricies est quis hendrerit convallis. Morbi quis nisi lorem.
         """.trimIndent()
-
-    private fun ByteArray.allEqual(element: Byte) = all { it == element }
 
     @Test
     fun canUnlock() {
@@ -99,18 +95,24 @@ class CryptoExtensionsTest {
     @Test
     fun useKeys_encrypt_sign_decrypt_verify_File() {
         val data = message.toByteArray()
-        val file = PlainFile("fileName", ByteArrayInputStream(data))
+        val file = data.getFile("file")
 
         keyHolder1.useKeys(context) {
-            val encryptedFile = encryptFile(file); file.inputStream.reset()
+            val encryptedFile = encryptFile(file, getTempFile("encrypted"))
             val signatureFile = signFile(file)
 
-            val decryptedFile = decryptFile(encryptedFile)
-            assertNotNull(decryptFileOrNull(encryptedFile))
+            val decryptedFile = decryptFile(encryptedFile, getTempFile("decrypted"))
+            val decryptedOrNullFile = decryptFileOrNull(encryptedFile, getTempFile("decryptedOrNull"))
+            assertNotNull(decryptedOrNullFile)
 
             assertTrue(verifyFile(decryptedFile, signatureFile))
-            assertTrue(file.inputStream.readBytes().contentEquals(decryptedFile.inputStream.readBytes()))
+            assertTrue(file.readBytes().contentEquals(decryptedFile.file.readBytes()))
+
+            encryptedFile.file.delete()
+            decryptedFile.file.delete()
+            decryptedOrNullFile.file.delete()
         }
+        file.delete()
     }
 
     @Test

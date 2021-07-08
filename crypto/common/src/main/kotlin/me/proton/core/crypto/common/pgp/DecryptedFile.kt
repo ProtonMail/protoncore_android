@@ -18,13 +18,24 @@
 
 package me.proton.core.crypto.common.pgp
 
-import java.io.InputStream
+import java.io.File
 
 /**
  * Decrypted file using [PGPCrypto.decryptFile].
  */
 data class DecryptedFile(
-    val fileName: String,
-    val inputStream: InputStream,
-    val status: VerificationStatus
-)
+    val file: File,
+    val status: VerificationStatus,
+    private val filename: String,
+    private val lastModifiedEpochSeconds: Long
+) {
+    /**
+     * Export [file] to [parent], using [filename] and [lastModifiedEpochSeconds].
+     */
+    fun exportTo(parent: File): File {
+        val newFile = File(parent, filename)
+        file.renameTo(newFile)
+        newFile.setLastModified(lastModifiedEpochSeconds * 1000)
+        return newFile
+    }
+}

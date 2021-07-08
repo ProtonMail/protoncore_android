@@ -20,7 +20,6 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicAddress
@@ -28,7 +27,7 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.extension.keyHolder
-import java.io.ByteArrayInputStream
+import java.io.File
 
 internal fun keyHolderApi(
     context: CryptoContext,
@@ -52,9 +51,9 @@ internal fun keyHolderApi(
         val encryptedSignedData = encryptAndSignData(data)
         decryptAndVerifyData(encryptedSignedData)
 
-        val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
-        val encryptedFile = encryptFile(file)
-        decryptFile(encryptedFile)
+        val file = data.getFile("file")
+        val encryptedFile = encryptFile(source = file, destination = File("file.encrypted"))
+        decryptFile(source = encryptedFile, destination = File("file.decrypted"))
     }
 }
 
@@ -88,8 +87,9 @@ internal fun publicAddressApi(
     publicAddresses: List<PublicAddress>
 ) {
     keyHolder.useKeys(context) {
-        val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
-        val encryptedFile = encryptFile(file)
+        val file = File("file.plain")
+
+        val encryptedFile = encryptFile(source = file, destination = File("file.encrypted"))
         val signedFile = signFile(file)
 
         val fileSessionKey = decryptSessionKey(encryptedFile.keyPacket)
@@ -97,7 +97,7 @@ internal fun publicAddressApi(
             publicAddress.encryptSessionKey(context, fileSessionKey)
         }
 
-        decryptFileOrNull(encryptedFile)?.let {
+        decryptFileOrNull(source = encryptedFile, destination = File("file.decrypted"))?.let {
             verifyFile(it, signedFile)
         }
     }
@@ -138,15 +138,15 @@ internal fun optionalOnPublicApi(
     publicKeyRing: PublicKeyRing,
     publicAddress: PublicAddress
 ) {
-    val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
+    val file = File("file.plain")
 
     // PublicKey/PublicKeyRing/PublicAddress can encrypt and verify.
     publicKey.encryptText(context, "message")
-    publicKey.encryptFile(context, file)
+    publicKey.encryptFile(context, source = file, destination = File("file.encrypted"))
     publicKey.verifyText(context, "decryptedMessage", "signature")
 
     publicKeyRing.encryptText(context, "message")
-    publicKeyRing.encryptFile(context, file)
+    publicKeyRing.encryptFile(context, source = file, destination = File("file.encrypted"))
     publicKeyRing.verifyText(context, "decryptedMessage", "signature")
 
     publicAddress.encryptText(context, "message")
@@ -163,8 +163,8 @@ internal fun optionalOnPrivateApi(
     privateKey.signText(context, "message")
 
     // File.
-    val file = PlainFile("filename", ByteArrayInputStream(byteArrayOf()))
-    val encryptedFile = privateKey.encryptFile(context, file)
+    val file = File("file.plain")
+    val encryptedFile = privateKey.encryptFile(context, source = file, destination = File("file.encrypted"))
 
     // PrivateKey can be unlocked (using embedded encrypted passphrase).
     val unlockedPrivateKey = privateKey.unlock(context)
@@ -175,7 +175,7 @@ internal fun optionalOnPrivateApi(
             // Decrypt Text or Data -> throwing exceptions.
             decryptText(context, "encryptedMessage")
             decryptData(context, "encryptedMessage")
-            decryptFile(context, encryptedFile)
+            decryptFile(context, encryptedFile, File("file.decrypted"))
 
             // Decrypt Text or Data -> using orNull extensions.
             decryptTextOrNull(context, "encryptedMessage")
@@ -194,7 +194,7 @@ internal fun optionalOnPrivateApi(
     privateKeyRing.use { key ->
         with(key) {
             decryptText("encryptedMessage")
-            decryptFile(encryptedFile)
+            decryptFile(encryptedFile, File("file.decrypted"))
             signText("message")
         }
     }

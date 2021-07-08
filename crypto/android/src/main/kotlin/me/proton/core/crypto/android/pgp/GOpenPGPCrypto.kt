@@ -27,9 +27,13 @@ import com.proton.gopenpgp.crypto.PGPMessage
 import com.proton.gopenpgp.crypto.PGPSignature
 import com.proton.gopenpgp.crypto.PGPSplitMessage
 import com.proton.gopenpgp.crypto.PlainMessage
+import com.proton.gopenpgp.crypto.PlainMessageMetadata
 import com.proton.gopenpgp.crypto.SessionKey
 import com.proton.gopenpgp.helper.ExplicitVerifyMessage
+import com.proton.gopenpgp.helper.Go2AndroidReader
 import com.proton.gopenpgp.helper.Helper
+import com.proton.gopenpgp.helper.Mobile2GoReader
+import com.proton.gopenpgp.helper.Mobile2GoWriter
 import com.proton.gopenpgp.srp.Srp
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
@@ -39,17 +43,17 @@ import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.EncryptedPacket
+import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.PacketType
-import me.proton.core.crypto.common.pgp.PlainFile
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.pgp.helper.PrimeGenerator
-import java.io.ByteArrayInputStream
 import java.io.Closeable
+import java.io.File
 import java.math.BigInteger
 import java.security.SecureRandom
 
@@ -118,6 +122,54 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
+    private fun encrypt(
+        source: File,
+        destination: File,
+        publicKey: Armored
+    ): EncryptedFile {
+        source.inputStream().use { fileInputStream ->
+            destination.outputStream().use { fileOutputStream ->
+                val writer = Mobile2GoWriter(fileOutputStream.writer())
+                val plainMessageMetadata = PlainMessageMetadata(true, source.name, source.lastModified() / 1000)
+                return newKeyRing(publicKey).encryptSplitStream(writer, plainMessageMetadata, null).use {
+                    fileInputStream.reader().copyTo(it)
+                }.let {
+                    EncryptedFile(
+                        file = destination,
+                        keyPacket = it.keyPacket
+                    )
+                }
+            }
+        }
+    }
+
+    private fun decrypt(
+        source: File,
+        destination: File,
+        unlockedKey: Unarmored,
+        keyPacket: KeyPacket
+    ): DecryptedFile {
+        source.inputStream().use { fileInputStream ->
+            destination.outputStream().use { fileOutputStream ->
+                val reader = Mobile2GoReader(fileInputStream.mobileReader())
+                return newKey(unlockedKey).use { key ->
+                    newKeyRing(key).use { keyRing ->
+                        keyRing.value.decryptSplitStream(keyPacket, reader, null, 0).use {
+                            Go2AndroidReader(it).copyTo(fileOutputStream.writer())
+                        }.let {
+                            DecryptedFile(
+                                file = destination,
+                                status = VerificationStatus.Success,
+                                filename = it.metadata.filename,
+                                lastModifiedEpochSeconds = it.metadata.modTime
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private inline fun <T> decrypt(
         message: EncryptedMessage,
         unlockedKey: Unarmored,
@@ -125,15 +177,6 @@ class GOpenPGPCrypto : PGPCrypto {
     ): T {
         val pgpMessage = Crypto.newPGPMessageFromArmored(message)
         return decrypt(pgpMessage, unlockedKey, block)
-    }
-
-    private inline fun <T> decrypt(
-        file: EncryptedFile,
-        unlockedKey: Unarmored,
-        block: (PlainMessage) -> T
-    ): T {
-        val pgpSplitMessage = Crypto.newPGPSplitMessage(file.keyPacket, file.dataPacket)
-        return decrypt(pgpSplitMessage, unlockedKey, block)
     }
 
     private inline fun <T> decrypt(
@@ -187,6 +230,20 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
+    private fun sign(
+        source: File,
+        unlockedKey: Unarmored
+    ): Signature {
+        source.inputStream().use { fileInputStream ->
+            val reader = Mobile2GoReader(fileInputStream.mobileReader())
+            return newKey(unlockedKey).use { key ->
+                newKeyRing(key).use { keyRing ->
+                    keyRing.value.signDetachedStream(reader).armored
+                }
+            }
+        }
+    }
+
     private fun verify(
         plainMessage: PlainMessage,
         signature: Armored,
@@ -196,6 +253,20 @@ class GOpenPGPCrypto : PGPCrypto {
         val pgpSignature = PGPSignature(signature)
         val publicKeyRing = newKeyRing(publicKey)
         publicKeyRing.verifyDetached(plainMessage, pgpSignature, validAtUtc)
+    }.isSuccess
+
+    private fun verify(
+        source: File,
+        signature: Armored,
+        publicKey: Armored,
+        validAtUtc: Long
+    ): Boolean = runCatching {
+        source.inputStream().use { fileInputStream ->
+            val reader = Mobile2GoReader(fileInputStream.mobileReader())
+            val pgpSignature = PGPSignature(signature)
+            val publicKeyRing = newKeyRing(publicKey)
+            publicKeyRing.verifyDetachedStream(reader, pgpSignature, validAtUtc)
+        }
     }.isSuccess
 
     // endregion
@@ -239,12 +310,11 @@ class GOpenPGPCrypto : PGPCrypto {
     }.getOrElse { throw CryptoException("Data cannot be encrypted.", it) }
 
     override fun encryptFile(
-        file: PlainFile,
+        source: File,
+        destination: File,
         publicKey: Armored
     ): EncryptedFile = runCatching {
-        newKeyRing(publicKey)
-            .newLowMemoryAttachmentProcessor(file.inputStream.available().toLong(), file.fileName)
-            .use(file.inputStream).let { EncryptedFile(it.keyPacket, it.dataPacket) }
+        encrypt(source, destination, publicKey)
     }.getOrElse { throw CryptoException("File cannot be encrypted.", it) }
 
     override fun encryptAndSignText(
@@ -299,13 +369,11 @@ class GOpenPGPCrypto : PGPCrypto {
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
     override fun decryptFile(
-        file: EncryptedFile,
+        source: EncryptedFile,
+        destination: File,
         unlockedKey: Unarmored
     ): DecryptedFile = runCatching {
-        decrypt(file, unlockedKey) {
-            val inputStream = ByteArrayInputStream(it.binary)
-            DecryptedFile(it.filename, inputStream, VerificationStatus.NotSigned)
-        }
+        decrypt(source.file, destination, unlockedKey, source.keyPacket)
     }.getOrElse { throw CryptoException("File cannot be decrypted.", it) }
 
     override fun decryptAndVerifyText(
@@ -366,10 +434,10 @@ class GOpenPGPCrypto : PGPCrypto {
     }.getOrElse { throw CryptoException("Data cannot be signed.", it) }
 
     override fun signFile(
-        file: PlainFile,
+        file: File,
         unlockedKey: Unarmored
     ): Signature = runCatching {
-        sign(PlainMessage(file.inputStream.buffered().use { it.readBytes() }), unlockedKey)
+        sign(file, unlockedKey)
     }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
 
     // endregion
@@ -395,10 +463,7 @@ class GOpenPGPCrypto : PGPCrypto {
         signature: Armored,
         publicKey: Armored,
         validAtUtc: Long
-    ): Boolean {
-        val plainMessage = PlainMessage(file.inputStream.buffered().use { it.readBytes() })
-        return verify(plainMessage, signature, publicKey, validAtUtc)
-    }
+    ): Boolean = verify(file.file, signature, publicKey, validAtUtc)
 
     // endregion
 
@@ -551,4 +616,9 @@ class GOpenPGPCrypto : PGPCrypto {
     ): Armored = Helper.generateKey(name, email, passphrase, keyType.toString(), keySecurity.value.toLong())
 
     // endregion
+
+    companion object {
+        // 32K is usually not far from the optimal buffer size on Android devices.
+        const val DEFAULT_BUFFER_SIZE = 32768
+    }
 }

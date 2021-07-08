@@ -19,25 +19,24 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DecryptedData
+import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.DecryptedText
+import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
+import me.proton.core.crypto.common.pgp.EncryptedPacket
 import me.proton.core.crypto.common.pgp.PGPCrypto
+import me.proton.core.crypto.common.pgp.PacketType
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationStatus
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.PlainByteArray
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.pgp.DecryptedFile
-import me.proton.core.crypto.common.pgp.EncryptedFile
-import me.proton.core.crypto.common.pgp.EncryptedPacket
-import me.proton.core.crypto.common.pgp.PacketType
-import me.proton.core.crypto.common.pgp.PlainFile
-import java.io.ByteArrayInputStream
+import java.io.File
 
 class TestCryptoContext : CryptoContext {
 
@@ -96,8 +95,8 @@ class TestCryptoContext : CryptoContext {
             "sign([${data.fromByteArray()}], with=${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey)
 
-        override fun signFile(file: PlainFile, unlockedKey: Unarmored): Signature =
-            signData(file.inputStream.readBytes(), unlockedKey)
+        override fun signFile(file: File, unlockedKey: Unarmored): Signature =
+            signData(file.readBytes(), unlockedKey)
 
         override fun verifyText(
             plainText: String,
@@ -126,7 +125,7 @@ class TestCryptoContext : CryptoContext {
             validAtUtc: Long
         ): Boolean {
             val decryptedSignature = signature.decryptMessage(publicKey)
-            val data = file.inputStream.readBytes()
+            val data = file.file.readBytes()
             return data.fromByteArray() == decryptedSignature.extractMessage()
         }
 
@@ -151,12 +150,15 @@ class TestCryptoContext : CryptoContext {
                 decrypted.extractMessage().toByteArray()
             }
 
-        override fun decryptFile(file: EncryptedFile, unlockedKey: Unarmored): DecryptedFile =
-            DecryptedFile(
-                fileName =  file.keyPacket.fromByteArray(),
-                inputStream = ByteArrayInputStream(decryptData(file.dataPacket.fromByteArray(), unlockedKey)),
-                status = VerificationStatus.NotSigned
+        override fun decryptFile(source: EncryptedFile, destination: File, unlockedKey: Unarmored): DecryptedFile {
+            val data = source.file.readBytes()
+            return DecryptedFile(
+                file = destination.apply { appendBytes(decryptData(data.fromByteArray(), unlockedKey)) },
+                status = VerificationStatus.NotSigned,
+                filename = source.file.name,
+                lastModifiedEpochSeconds = source.file.lastModified()
             )
+        }
 
         override fun encryptText(plainText: String, publicKey: Armored): EncryptedMessage =
             "TEXT([$plainText]+$publicKey)"
@@ -166,11 +168,11 @@ class TestCryptoContext : CryptoContext {
             "BINARY([${data.fromByteArray()}]+$publicKey)"
                 .encryptMessage(publicKey)
 
-        override fun encryptFile(file: PlainFile, publicKey: Armored): EncryptedFile {
-            val data = file.inputStream.readBytes()
+        override fun encryptFile(source: File, destination: File, publicKey: Armored): EncryptedFile {
+            val data = source.readBytes()
             return EncryptedFile(
-                keyPacket = file.fileName.toByteArray(),
-                dataPacket = encryptData(data, publicKey).toByteArray()
+                file = destination.apply { appendBytes(encryptData(data, publicKey).toByteArray()) },
+                keyPacket = source.name.toByteArray(),
             )
         }
 
