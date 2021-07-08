@@ -109,11 +109,11 @@ Network Data: **1.1.4** - _released on: Jun 21, 2021_
 
 ### Crypto
 
-Crypto: **1.1.2** - _released on: Jun 21, 2021_
+Crypto: **1.1.3** - _released on: Jul 08, 2021_
 
-Crypto Common: **1.1.2** - _released on: Jun 21, 2021_
+Crypto Common: **1.1.3** - _released on: Jul 08, 2021_
 
-Crypto Android: **1.1.2** - _released on: Jun 21, 2021_
+Crypto Android: **1.1.3** - _released on: Jul 08, 2021_
 
 ## Features
 
@@ -152,11 +152,11 @@ Account Manager Dagger: **1.1.8** - _released on: Jul 07, 2021_
 
 ### Key
 
-Key: **1.1.4** - _released on: Jun 11, 2021_
+Key: **1.1.5** - _released on: Jul 08, 2021_
 
-Key Domain: **1.1.4** - _released on: Jun 11, 2021_
+Key Domain: **1.1.5** - _released on: Jul 08, 2021_
 
-Key Data: **1.1.4** - _released on: Jun 11, 2021_
+Key Data: **1.1.5** - _released on: Jul 08, 2021_
 
 ### User
 
@@ -176,11 +176,11 @@ Contact Data: **0.1.5** - _released on: Jun 14, 2021_
 
 ### Mail Message
 
-Mail Message: **0.2.1** - _released on: Jul 07, 2021_
+Mail Message: **0.2.2** - _released on: Jul 08, 2021_
 
-Mail Message Domain: **0.2.1** - _released on: Jul 07, 2021_
+Mail Message Domain: **0.2.2** - _released on: Jul 08, 2021_
 
-Mail Message Data: **0.2.1** - _released on: Jul 07, 2021_
+Mail Message Data: **0.2.2** - _released on: Jul 08, 2021_
 
 ### Mail Settings
 
