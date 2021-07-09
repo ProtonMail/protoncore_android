@@ -43,6 +43,7 @@ import me.proton.core.plan.presentation.entity.PlanPricing
 import me.proton.core.plan.presentation.entity.PlanSubscription
 import me.proton.core.plan.presentation.entity.PlanType
 import me.proton.core.plan.presentation.entity.SelectedPlan
+import me.proton.core.plan.presentation.entity.SelectedPlan.Companion.FREE_PLAN_ID
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -53,7 +54,7 @@ import javax.inject.Inject
 class PlansViewModel @Inject constructor(
     private val getPlansUseCase: GetPlans,
     private val getCurrentSubscription: GetCurrentSubscription,
-    @SupportedPaidPlanIds private val supportedPaidPlanIds: List<String>,
+    @SupportedPaidPlanIds val supportedPaidPlanIds: List<String>,
     private val paymentsOrchestrator: PaymentsOrchestrator
 ) : ProtonViewModel() {
 
@@ -159,10 +160,6 @@ class PlansViewModel @Inject constructor(
             current = current,
             selectable = selectable
         )
-    }
-
-    companion object {
-        const val FREE_PLAN_ID = "free"
     }
 }
 
