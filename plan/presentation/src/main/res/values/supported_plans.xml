@@ -23,7 +23,7 @@
         <item>CHF</item>
     </string-array>
     <string-array name="supported_billing_cycle">
-        <item>Monthly</item>
+        <item>Monthly billing</item>
         <item>Annually billing - SAVE 20%</item>
     </string-array>
 </resources>

@@ -131,6 +131,19 @@
         app:layout_constraintTop_toBottomOf="@id/selectPlan"
         tools:listitem="@layout/plan_spinner_item" />
 
+    <TextView
+        android:id="@+id/billingCycleDescriptionText"
+        style="@style/Proton.Text.Default.Weak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_small"
+        android:maxLines="1"
+        android:text="@string/plans_save_20"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/billingCycleSpinner" />
+
     <Spinner
         android:id="@+id/currencySpinner"
         style="@style/ProtonSpinnerStyle"
@@ -140,6 +153,6 @@
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/billingCycleSpinner" />
+        app:layout_constraintTop_toBottomOf="@id/billingCycleDescriptionText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

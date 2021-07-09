@@ -179,8 +179,16 @@ class PlanItemView @JvmOverloads constructor(
     private fun calculateAndUpdatePriceUI() = with(binding) {
         planCycleText.visibility = VISIBLE
         val monthlyPrice: Double = when (selectedCycle) {
-            Cycle.MONTHLY -> billableAmount
-            Cycle.YEARLY -> billableAmount / 12
+            Cycle.MONTHLY -> {
+                planPriceDescriptionText.visibility = View.GONE
+                billingCycleDescriptionText.visibility = View.VISIBLE
+                billableAmount
+            }
+            Cycle.YEARLY -> {
+                planPriceDescriptionText.visibility = View.VISIBLE
+                billingCycleDescriptionText.visibility = View.GONE
+                billableAmount / 12
+            }
         }.exhaustive.toDouble()
 
         planPriceText.text = when (selectedCurrency) {
