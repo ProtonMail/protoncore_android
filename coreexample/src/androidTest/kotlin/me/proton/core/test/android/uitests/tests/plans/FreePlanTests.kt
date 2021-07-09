@@ -28,7 +28,7 @@ import org.junit.Test
 class FreePlanTests: BaseTest() {
 
     private val coreexampleRobot = CoreexampleRobot()
-    private val freeUser = users.getUser { it.plan == User.Plan.Free }
+    private val freeUser = users.getUser { it.plan == User.Plan.Free && it.isDefault }
 
     @Before
     fun login() {

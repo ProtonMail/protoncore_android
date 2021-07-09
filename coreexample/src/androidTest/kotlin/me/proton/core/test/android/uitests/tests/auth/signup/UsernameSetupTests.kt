@@ -41,7 +41,7 @@ class UsernameSetupTests : BaseTest() {
             .signup()
             .verify {
                 chooseUsernameElementsDisplayed()
-                suffixDisplayed(BuildConfig.ENVIRONMENT)
+                suffixDisplayed(BuildConfig.HOST)
             }
     }
 

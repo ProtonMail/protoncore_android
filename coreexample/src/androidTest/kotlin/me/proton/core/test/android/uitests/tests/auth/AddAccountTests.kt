@@ -46,7 +46,7 @@ class AddAccountTests : BaseTest() {
             .createAccount()
             .verify {
                 chooseUsernameElementsDisplayed()
-                suffixDisplayed(BuildConfig.ENVIRONMENT)
+                suffixDisplayed(BuildConfig.HOST)
             }
     }
 }

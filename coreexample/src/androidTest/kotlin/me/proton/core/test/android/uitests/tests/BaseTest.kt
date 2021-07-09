@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests
 
+import android.util.Log
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.di.AppDatabaseModule
 import me.proton.core.test.android.instrumented.ProtonTest
@@ -31,18 +32,19 @@ open class BaseTest : ProtonTest(MainActivity::class.java) {
     @After
     override fun tearDown() {
         super.tearDown()
-        db.clearAllTables()
+        appDatabase.clearAllTables()
+        Log.d(testTag, "Clearing AccountManager database tables")
     }
 
     companion object {
         val users = Users("sensitive/users.json")
-        val db = AppDatabaseModule.provideAppDatabase(getContext())
+        val appDatabase = AppDatabaseModule.provideAppDatabase(getContext())
 
         @JvmStatic
         @BeforeClass
         fun prepare() {
             setupDevice(true)
-            db.clearAllTables()
+            appDatabase.clearAllTables()
         }
     }
 }

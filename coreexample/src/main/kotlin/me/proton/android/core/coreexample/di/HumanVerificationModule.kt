@@ -23,7 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.android.core.coreexample.BuildConfig
+import me.proton.android.core.coreexample.Constants
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.humanverification.data.HumanVerificationListenerImpl
 import me.proton.core.humanverification.data.HumanVerificationManagerImpl
@@ -49,7 +49,7 @@ object HumanVerificationModule {
 
     @Provides
     @CaptchaApiHost
-    fun provideCaptchaApiHost(): String = BuildConfig.ENVIRONMENT
+    fun provideCaptchaApiHost(): String = Constants.API_HOST
 
     @Provides
     fun provideHumanVerificationOrchestrator(): HumanVerificationOrchestrator =

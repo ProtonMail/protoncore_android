@@ -41,7 +41,7 @@ class PasswordSetupTests : BaseTest() {
 
         CoreexampleRobot()
             .signup()
-            .verify { suffixDisplayed(BuildConfig.ENVIRONMENT) }
+            .verify { suffixDisplayed(BuildConfig.HOST) }
 
         ChooseUsernameRobot()
             .username(randomString())
