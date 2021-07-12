@@ -42,13 +42,9 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
 import me.proton.core.network.domain.client.ClientIdProvider
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -155,7 +151,12 @@ internal class SignupViewModel @Inject constructor(
         }.exhaustive
     }
 
-    fun startCreatePaidUserWorkflow(planId: String, planName: String, cycle: SubscriptionCycle, billingResult: BillingResult) {
+    fun startCreatePaidUserWorkflow(
+        planId: String,
+        planName: String,
+        cycle: SubscriptionCycle,
+        billingResult: BillingResult
+    ) {
         val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
         subscriptionDetails = SubscriptionDetails(
             billingResult = billingResult,
@@ -167,13 +168,9 @@ internal class SignupViewModel @Inject constructor(
             viewModelScope.launch {
                 // update subscription details
                 humanVerificationManager.addDetails(
-                    details = HumanVerificationDetails(
+                    details = BillingResult.paymentDetails(
                         clientId = clientId,
-                        verificationMethods = listOf(VerificationMethod.PAYMENT),
-                        captchaVerificationToken = null,
-                        state = HumanVerificationState.HumanVerificationSuccess,
-                        tokenType = TokenType.PAYMENT.value,
-                        tokenCode = billingResult.token!!
+                        token = billingResult.token!!
                     )
                 )
             }

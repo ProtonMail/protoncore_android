@@ -20,6 +20,11 @@ package me.proton.core.payment.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 
@@ -31,4 +36,16 @@ data class BillingResult(
     val amount: Long,
     val currency: Currency,
     val cycle: SubscriptionCycle
-) : Parcelable
+) : Parcelable {
+
+    companion object {
+        fun paymentDetails(clientId: ClientId, token: String) = HumanVerificationDetails(
+            clientId = clientId,
+            verificationMethods = listOf(VerificationMethod.PAYMENT),
+            captchaVerificationToken = null,
+            state = HumanVerificationState.HumanVerificationSuccess,
+            tokenType = TokenType.PAYMENT.value,
+            tokenCode = token
+        )
+    }
+}

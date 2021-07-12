@@ -18,9 +18,8 @@
 
 package me.proton.core.payment.presentation
 
-import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
-import androidx.fragment.app.Fragment
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -40,14 +39,9 @@ class PaymentsOrchestrator @Inject constructor() {
     private var onPaymentResultListener: (result: BillingResult?) -> Unit = {}
 
     // region public api
-    fun register(context: ComponentActivity) {
-        billingLauncher = registerBillingResult(context)
-        paymentOptionsLauncher = registerPaymentOptionsResult(context)
-    }
-
-    fun register(context: Fragment) {
-        billingLauncher = registerBillingResult(context)
-        paymentOptionsLauncher = registerPaymentOptionsResult(context)
+    fun register(caller: ActivityResultCaller) {
+        billingLauncher = registerBillingResult(caller)
+        paymentOptionsLauncher = registerPaymentOptionsResult(caller)
     }
 
     fun setOnPaymentResult(block: (result: BillingResult?) -> Unit) {
@@ -81,17 +75,7 @@ class PaymentsOrchestrator @Inject constructor() {
     // endregion
 
     private fun registerBillingResult(
-        context: ComponentActivity
-    ): ActivityResultLauncher<BillingInput> =
-        context.registerForActivityResult(
-            StartBilling()
-        ) {
-            // for Sign Up the token should be used as a human verification header
-            onPaymentResultListener(it)
-        }
-
-    private fun registerBillingResult(
-        context: Fragment
+        context: ActivityResultCaller
     ): ActivityResultLauncher<BillingInput> =
         context.registerForActivityResult(
             StartBilling()
@@ -101,18 +85,9 @@ class PaymentsOrchestrator @Inject constructor() {
         }
 
     private fun registerPaymentOptionsResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<PaymentOptionsInput> =
-        context.registerForActivityResult(
-            StartPaymentOptions()
-        ) {
-            onPaymentResultListener(it?.billing)
-        }
-
-    private fun registerPaymentOptionsResult(
-        context: Fragment
-    ): ActivityResultLauncher<PaymentOptionsInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartPaymentOptions()
         ) {
             onPaymentResultListener(it?.billing)
