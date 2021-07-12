@@ -28,8 +28,8 @@ import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.crypto.android.keystore.CryptoConverters
-import me.proton.core.data.db.BaseDatabase
-import me.proton.core.data.db.CommonConverters
+import me.proton.core.data.room.db.BaseDatabase
+import me.proton.core.data.room.db.CommonConverters
 import me.proton.core.humanverification.data.db.HumanVerificationConverters
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.entity.HumanVerificationEntity

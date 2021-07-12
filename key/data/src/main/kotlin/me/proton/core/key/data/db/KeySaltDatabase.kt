@@ -19,8 +19,8 @@
 package me.proton.core.key.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
-import me.proton.core.data.db.Database
-import me.proton.core.data.db.migration.DatabaseMigration
+import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.migration.DatabaseMigration
 
 interface KeySaltDatabase : Database {
     fun keySaltDao(): KeySaltDao

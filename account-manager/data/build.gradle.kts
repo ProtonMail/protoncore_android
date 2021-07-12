@@ -45,6 +45,7 @@ dependencies {
         project(Module.network),
         project(Module.domain),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.accountManagerDomain),
         project(Module.crypto),
 

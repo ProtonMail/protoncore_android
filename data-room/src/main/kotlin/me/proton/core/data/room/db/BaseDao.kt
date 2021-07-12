@@ -16,13 +16,28 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.data.db
+package me.proton.core.data.room.db
 
-interface Database {
-    /**
-     * Calls the specified suspending [block] in a database transaction. The transaction will be
-     * marked as successful unless an exception is thrown in the suspending [block] or the coroutine
-     * is cancelled.
-     */
-    suspend fun <R> inTransaction(block: suspend () -> R): R
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Transaction
+import androidx.room.Update
+
+abstract class BaseDao<in T> {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertOrIgnore(vararg entities: T)
+
+    @Transaction
+    open suspend fun insertOrUpdate(vararg entities: T) {
+        update(*entities)
+        insertOrIgnore(*entities)
+    }
+
+    @Update
+    abstract suspend fun update(vararg entities: T)
+
+    @Delete
+    abstract suspend fun delete(vararg entities: T)
 }

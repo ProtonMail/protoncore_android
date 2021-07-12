@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,10 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.data.db.migration
+package me.proton.core.data.room.db
 
-import androidx.sqlite.db.SupportSQLiteDatabase
-
-interface DatabaseMigration {
-    fun migrate(database: SupportSQLiteDatabase)
+interface Database {
+    /**
+     * Calls the specified suspending [block] in a database transaction. The transaction will be
+     * marked as successful unless an exception is thrown in the suspending [block] or the coroutine
+     * is cancelled.
+     */
+    suspend fun <R> inTransaction(block: suspend () -> R): R
 }

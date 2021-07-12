@@ -52,6 +52,7 @@ dependencies {
         project(Module.network),
         project(Module.domain),
         project(Module.data),
+        project(Module.dataRoom),
 
         // Features
         project(Module.account),
@@ -59,7 +60,6 @@ dependencies {
         project(Module.accountManagerDagger),
         project(Module.auth),
         project(Module.crypto),
-        project(Module.data),
         project(Module.domain),
         project(Module.gopenpgp),
         project(Module.humanVerification),

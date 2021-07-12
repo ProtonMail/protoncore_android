@@ -39,6 +39,7 @@ object Module {
     const val domain = ":domain"
     const val presentation = ":presentation"
     const val data = ":data"
+    const val dataRoom = ":data-room"
     const val gopenpgp = ":gopenpgp"
     // endregion
 

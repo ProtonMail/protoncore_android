@@ -19,8 +19,8 @@
 package me.proton.core.humanverification.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
-import me.proton.core.data.db.Database
-import me.proton.core.data.db.migration.DatabaseMigration
+import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.migration.DatabaseMigration
 
 interface HumanVerificationDatabase : Database {
     fun humanVerificationDetailsDao(): HumanVerificationDetailsDao

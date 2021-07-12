@@ -21,7 +21,7 @@ package me.proton.core.user.data.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.data.db.BaseDao
+import me.proton.core.data.room.db.BaseDao
 import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.domain.entity.AddressId
 

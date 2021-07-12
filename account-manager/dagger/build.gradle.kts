@@ -40,6 +40,7 @@ dependencies {
         project(Module.crypto),
         project(Module.domain),
         project(Module.data),
+        project(Module.dataRoom),
 
         // Features
         project(Module.account),

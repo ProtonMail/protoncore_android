@@ -18,7 +18,7 @@
 
 package me.proton.core.user.data.db
 
-import me.proton.core.data.db.Database
+import me.proton.core.data.room.db.Database
 import me.proton.core.user.data.db.dao.UserKeyDao
 
 interface UserKeyDatabase : Database {

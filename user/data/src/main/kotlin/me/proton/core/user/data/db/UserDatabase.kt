@@ -19,8 +19,8 @@
 package me.proton.core.user.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
-import me.proton.core.data.db.Database
-import me.proton.core.data.db.migration.DatabaseMigration
+import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.user.data.db.dao.UserDao
 import me.proton.core.user.data.db.dao.UserWithKeysDao
 

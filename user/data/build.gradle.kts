@@ -35,6 +35,7 @@ dependencies {
         project(Module.networkDomain),
         project(Module.networkData),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.domain),
         project(Module.userDomain),
         project(Module.cryptoCommon),

@@ -15,29 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
-package me.proton.core.data.db
+plugins {
+    id("com.android.library")
+    kotlin("android")
+}
 
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Transaction
-import androidx.room.Update
+libVersion = Version(1, 3, 1)
 
-abstract class BaseDao<in T> {
+android()
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertOrIgnore(vararg entities: T)
+dependencies {
 
-    @Transaction
-    open suspend fun insertOrUpdate(vararg entities: T) {
-        update(*entities)
-        insertOrIgnore(*entities)
-    }
+    implementation(
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
+        project(Module.domain),
 
-    @Update
-    abstract suspend fun update(vararg entities: T)
+        // Kotlin
+        `kotlin-jdk7`,
+        `coroutines-core`,
 
-    @Delete
-    abstract suspend fun delete(vararg entities: T)
+        // Room
+        `room-ktx`
+    )
+
+    testImplementation(project(Module.kotlinTest))
 }

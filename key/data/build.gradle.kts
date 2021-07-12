@@ -34,6 +34,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.network),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.domain),
         project(Module.keyDomain),
         project(Module.cryptoCommon),

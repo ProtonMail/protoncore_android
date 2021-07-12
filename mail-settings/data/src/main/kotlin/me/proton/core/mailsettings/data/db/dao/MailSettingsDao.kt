@@ -21,7 +21,7 @@ package me.proton.core.mailsettings.data.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.data.db.BaseDao
+import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
 import me.proton.core.mailsettings.data.entity.MailSettingsEntity
 

@@ -33,6 +33,7 @@ dependencies {
     implementation(
         project(Module.kotlinUtil),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.domain),
         project(Module.network),
         project(Module.mailSettingsDomain),

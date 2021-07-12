@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.data.db
+package me.proton.core.data.room.db
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId

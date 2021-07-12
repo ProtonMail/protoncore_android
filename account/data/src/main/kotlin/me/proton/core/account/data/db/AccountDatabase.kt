@@ -19,10 +19,10 @@
 package me.proton.core.account.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
-import me.proton.core.data.db.Database
-import me.proton.core.data.db.extension.dropTable
-import me.proton.core.data.db.extension.dropTableColumn
-import me.proton.core.data.db.migration.DatabaseMigration
+import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.dropTable
+import me.proton.core.data.room.db.extension.dropTableColumn
+import me.proton.core.data.room.db.migration.DatabaseMigration
 
 interface AccountDatabase : Database {
     fun accountDao(): AccountDao

@@ -37,6 +37,7 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.network),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.crypto),
         project(Module.authData),
         project(Module.authDomain),

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.data.db.extension
+package me.proton.core.data.room.db.extension
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 

@@ -16,21 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.data.db
+package me.proton.core.data.room.db.migration
 
-import android.content.Context
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.withTransaction
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-abstract class BaseDatabase : RoomDatabase(), Database {
-
-    override suspend fun <R> inTransaction(block: suspend () -> R): R = withTransaction(block)
-
-    companion object {
-        inline fun <reified DB : RoomDatabase> databaseBuilder(
-            context: Context,
-            dbName: String
-        ): Builder<DB> = Room.databaseBuilder(context, DB::class.java, dbName)
-    }
+interface DatabaseMigration {
+    fun migrate(database: SupportSQLiteDatabase)
 }

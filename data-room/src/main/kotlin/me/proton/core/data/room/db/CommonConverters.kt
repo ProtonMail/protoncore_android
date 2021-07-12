@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.data.db
+package me.proton.core.data.room.db
 
 import androidx.room.TypeConverter
 import me.proton.core.domain.entity.Product

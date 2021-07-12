@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,25 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.data.db
+package me.proton.core.data.room.db
 
-import androidx.room.Dao
-import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.data.room.db.BaseDao
-import me.proton.core.domain.entity.UserId
-import me.proton.core.key.data.entity.KeySaltEntity
+import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.withTransaction
 
-@Dao
-abstract class KeySaltDao : BaseDao<KeySaltEntity>() {
+abstract class BaseDatabase : RoomDatabase(), Database {
 
-    @Query("SELECT * FROM KeySaltEntity WHERE userId = :userId")
-    abstract fun findAllByUserId(userId: UserId): Flow<List<KeySaltEntity>>
+    override suspend fun <R> inTransaction(block: suspend () -> R): R = withTransaction(block)
 
-    @Query("DELETE FROM KeySaltEntity WHERE userId = :userId")
-    abstract suspend fun deleteByUserId(userId: UserId)
-
-    @Query("DELETE FROM KeySaltEntity")
-    abstract suspend fun deleteAll()
-
+    companion object {
+        inline fun <reified DB : RoomDatabase> databaseBuilder(
+            context: Context,
+            dbName: String
+        ): Builder<DB> = Room.databaseBuilder(context, DB::class.java, dbName)
+    }
 }
