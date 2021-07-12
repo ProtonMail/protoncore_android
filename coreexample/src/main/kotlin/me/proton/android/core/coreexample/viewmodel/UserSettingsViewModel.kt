@@ -44,7 +44,11 @@ class UserSettingsViewModel @Inject constructor(
     fun onUpdateRecoveryEmailClicked() {
         viewModelScope.launch {
             getPrimaryAccount().first()?.let {
-                settingsOrchestrator.startUpdateRecoveryEmailWorkflow(it.userId, it.username)
+                settingsOrchestrator.startUpdateRecoveryEmailWorkflow(
+                    userId = it.userId,
+                    username = it.username,
+                    secondFactorNeeded = it.details.session?.twoPassModeEnabled ?: false
+                )
             }
         }
     }

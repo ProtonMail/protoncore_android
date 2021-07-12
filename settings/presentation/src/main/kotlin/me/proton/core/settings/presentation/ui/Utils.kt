@@ -34,7 +34,7 @@ fun FragmentManager.showPasswordEnterDialog(
     context: Context,
     largeLayout: Boolean = false,
     twoFA: Boolean = false,
-    block: (password: String, twoFACode: String) -> Unit
+    block: (password: String, secondFactorCode: String) -> Unit
 ) {
     findFragmentByTag(TAG_PASSWORD_ENTER_DIALOG) ?: run {
         val updateDialogFragment = EnterPasswordDialog(false) { password, twoFA ->

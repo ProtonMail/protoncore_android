@@ -32,7 +32,7 @@ class SettingsOrchestrator @Inject constructor() {
 
     private var onUpdateRecoveryEmailResultListener: ((result: UpdateRecoveryEmailResult?) -> Unit)? = {}
 
-    fun setOnUpgradeResult(block: (result: UpdateRecoveryEmailResult?) -> Unit) {
+    fun setOnUpdateRecoveryEmailResult(block: (result: UpdateRecoveryEmailResult?) -> Unit) {
         onUpdateRecoveryEmailResultListener = block
     }
 
@@ -68,11 +68,18 @@ class SettingsOrchestrator @Inject constructor() {
     /**
      * Starts the Plan Chooser workflow (sign up or upgrade).
      *
-     * @see [onUpgradeResult]
+     * @see [onUpdateRecoveryEmailResult]
      */
-    fun startUpdateRecoveryEmailWorkflow(userId: UserId, username: String) {
+    fun startUpdateRecoveryEmailWorkflow(userId: UserId, secondFactorNeeded: Boolean = false, username: String) {
         checkRegistered(updateRecoveryEmailLauncher).launch(
-            SettingsInput(userId.id, username)
+            SettingsInput(userId.id, username, secondFactorNeeded)
         )
     }
+}
+
+fun SettingsOrchestrator.onUpdateRecoveryEmailResult(
+    block: (result: UpdateRecoveryEmailResult?) -> Unit
+): SettingsOrchestrator {
+    setOnUpdateRecoveryEmailResult { block(it) }
+    return this
 }

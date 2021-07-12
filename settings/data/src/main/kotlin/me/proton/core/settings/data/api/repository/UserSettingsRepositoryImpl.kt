@@ -40,16 +40,15 @@ class UserSettingsRepositoryImpl(
         clientProof: String,
         srpSession: String,
         twoFactorCode: String
-    ) =
-        provider.get<UserSettingsApi>(sessionUserId).invoke {
-            updateRecoveryEmail(
-                UpdateRecoveryEmailRequest(
-                    email = email,
-                    twoFactorCode = twoFactorCode,
-                    clientEphemeral = clientEphemeral,
-                    clientProof = clientProof,
-                    srpSession = srpSession
-                )
-            ).toUserSettings()
-        }.valueOrThrow
+    ) = provider.get<UserSettingsApi>(sessionUserId).invoke {
+        updateRecoveryEmail(
+            UpdateRecoveryEmailRequest(
+                email = email,
+                twoFactorCode = twoFactorCode,
+                clientEphemeral = clientEphemeral,
+                clientProof = clientProof,
+                srpSession = srpSession
+            )
+        ).toUserSettings()
+    }.valueOrThrow
 }

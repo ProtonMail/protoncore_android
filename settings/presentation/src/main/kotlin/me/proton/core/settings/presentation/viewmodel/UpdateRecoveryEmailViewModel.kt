@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.settings.domain.usecase.GetSettings
@@ -35,6 +37,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpdateRecoveryEmailViewModel @Inject constructor(
+    private val keyStoreCrypto: KeyStoreCrypto,
     private val getSettings: GetSettings,
     private val performUpdateRecoveryEmail: PerformUpdateRecoveryEmail
 ) : ProtonViewModel() {
@@ -87,11 +90,12 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         twoFactorCode: String
     ) = flow {
         emit(UpdateRecoveryEmailState.Processing)
+        val encryptedPassword = password.encryptWith(keyStoreCrypto)
         val updateRecoveryEmailResult = performUpdateRecoveryEmail(
             sessionUserId = userId,
             newRecoveryEmail = newRecoveryEmail,
             username = username,
-            password = password,
+            password = encryptedPassword,
             twoFactorCode = twoFactorCode
         )
         // we expect always value for the email on success, thus !!

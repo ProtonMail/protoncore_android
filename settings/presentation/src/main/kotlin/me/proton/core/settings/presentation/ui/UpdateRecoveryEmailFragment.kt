@@ -29,7 +29,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.onFailure
+import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.validateEmail
 import me.proton.core.settings.presentation.R
 import me.proton.core.settings.presentation.databinding.FragmentUpdateRecoveryEmailBinding
 import me.proton.core.settings.presentation.entity.Settings
@@ -73,14 +77,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
         }
         binding.apply {
             saveButton.onClick {
-                childFragmentManager.showPasswordEnterDialog(context = requireContext()) { password: String, twoFA: String ->
-                    viewModel.updateRecoveryEmail(
-                        userId = input.user,
-                        newRecoveryEmail = confirmNewEmailInput.text.toString(),
-                        username = input.username,
-                        password = password,
-                        twoFactorCode = twoFA)
-                }
+                onSaveClicked()
             }
         }
         viewModel.currentRecoveryEmailState.onEach {
@@ -101,6 +98,36 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
             setCurrentRecoveryEmail(it.email?.value)
         } ?: run {
             findOutCurrentRecoveryAddress()
+        }
+    }
+
+    private fun onSaveClicked() {
+        hideKeyboard()
+        with(binding) {
+            newEmailInput.validateEmail()
+                .onFailure { newEmailInput.setInputError(getString(R.string.settings_validation_email)) }
+                .onSuccess { email ->
+                    validateConfirmRecoveryEmailField(email)
+                }
+        }
+    }
+
+    private fun validateConfirmRecoveryEmailField(
+        newRecoveryEmail: String
+    ) = with(binding) {
+        val confirmedRecoveryEmail = confirmNewEmailInput.text.toString()
+        if (newRecoveryEmail == confirmedRecoveryEmail) {
+            childFragmentManager.showPasswordEnterDialog(context = requireContext()) { password: String, secondFactorCode: String ->
+                viewModel.updateRecoveryEmail(
+                    userId = input.user,
+                    newRecoveryEmail = confirmNewEmailInput.text.toString(),
+                    username = input.username,
+                    password = password,
+                    twoFactorCode = secondFactorCode
+                )
+            }
+        } else {
+            confirmNewEmailInput.setInputError(getString(R.string.settings_recovery_email_error_no_match))
         }
     }
 

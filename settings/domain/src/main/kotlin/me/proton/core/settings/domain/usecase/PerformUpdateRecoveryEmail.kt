@@ -50,10 +50,10 @@ class PerformUpdateRecoveryEmail @Inject constructor(
             username = username,
             clientSecret = clientSecret
         )
-        password.decryptWith(keyStoreCrypto).toByteArray().use {
+        password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
                 username = username,
-                password = it.array,
+                password = decryptedPassword.array,
                 version = loginInfo.version.toLong(),
                 salt = loginInfo.salt,
                 modulus = loginInfo.modulus,
