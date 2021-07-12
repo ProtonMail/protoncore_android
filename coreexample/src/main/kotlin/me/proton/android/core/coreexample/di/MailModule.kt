@@ -22,9 +22,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.mailmessage.data.repository.EmailMessageRepositoryImpl
 import me.proton.core.mailmessage.domain.repository.EmailMessageRepository
+import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.repository.MailSettingsRepositoryImpl
 import me.proton.core.mailsettings.domain.repository.MailSettingsRepository
 import me.proton.core.network.data.ApiProvider
@@ -43,7 +43,7 @@ object MailModule {
     @Provides
     @Singleton
     fun provideMailSettingsRepositoryImpl(
-        db: AccountManagerDatabase,
+        db: MailSettingsDatabase,
         provider: ApiProvider
     ): MailSettingsRepository = MailSettingsRepositoryImpl(db, provider)
 }

@@ -16,17 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.accountmanager.data.db.migration
+package me.proton.core.data.room.db.extension
 
+import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-fun SupportSQLiteDatabase.addTableColumn(
-    table: String,
-    column: String,
-    type: String,
-    defaultValue: String? = null
-) {
-    val defaultValueSuffix = defaultValue?.let { "DEFAULT '$defaultValue'" } ?: ""
-    val sqlStatement = "ALTER TABLE $table ADD COLUMN $column $type $defaultValueSuffix"
-    this.execSQL(sqlStatement)
-}
+/**
+ * Create and/or open a database that will be used for reading and writing.
+ *
+ * Any needed/defined migrations will be applied.
+ *
+ * Note: Make sure to call close when you no longer need the database
+ */
+fun RoomDatabase.open(): SupportSQLiteDatabase = openHelper.writableDatabase
+
+/**
+ * Create and/or open a database and directly close it after creation/upgrade/migration.
+ *
+ * Any needed/defined migrations will be applied.
+ */
+fun RoomDatabase.openAndClose(): Unit = openHelper.writableDatabase.close()

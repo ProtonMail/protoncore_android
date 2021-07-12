@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,31 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.data.db.migration
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-libVersion = Version(1, 3, 1)
-
-dependencies {
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.userDomain),
-        project(Module.networkDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`,
-
-        // Android
-        `dagger`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+interface DatabaseMigration {
+    fun migrate(database: SupportSQLiteDatabase)
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.accountmanager.data.db
+package me.proton.android.core.coreexample.db
 
 import android.content.Context
 import androidx.room.Database
@@ -69,7 +69,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
         // mail-settings
         MailSettingsEntity::class
     ],
-    version = AccountManagerDatabase.version,
+    version = AppDatabase.version,
     exportSchema = true
 )
 @TypeConverters(
@@ -79,7 +79,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
     CryptoConverters::class,
     HumanVerificationConverters::class
 )
-abstract class AccountManagerDatabase :
+abstract class AppDatabase :
     BaseDatabase(),
     AccountDatabase,
     UserDatabase,
@@ -94,19 +94,16 @@ abstract class AccountManagerDatabase :
         const val version = 6
 
         val migrations = listOf(
-            AccountManagerDatabaseMigrations.MIGRATION_1_2,
-            AccountManagerDatabaseMigrations.MIGRATION_2_3,
-            AccountManagerDatabaseMigrations.MIGRATION_3_4,
-            AccountManagerDatabaseMigrations.MIGRATION_4_5,
-            AccountManagerDatabaseMigrations.MIGRATION_5_6,
+            AppDatabaseMigrations.MIGRATION_1_2,
+            AppDatabaseMigrations.MIGRATION_2_3,
+            AppDatabaseMigrations.MIGRATION_3_4,
+            AppDatabaseMigrations.MIGRATION_4_5,
+            AppDatabaseMigrations.MIGRATION_5_6,
         )
 
-        fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =
-            databaseBuilder<AccountManagerDatabase>(context, name)
+        fun buildDatabase(context: Context): AppDatabase =
+            databaseBuilder<AppDatabase>(context, name)
                 .apply { migrations.forEach { addMigrations(it) } }
-
-        fun buildDatabase(context: Context): AccountManagerDatabase =
-            databaseBuilder(context)
                 .build()
     }
 }

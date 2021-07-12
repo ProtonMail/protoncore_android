@@ -18,11 +18,31 @@
 
 package me.proton.core.user.data.db
 
+import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.db.Database
+import me.proton.core.data.db.migration.DatabaseMigration
 import me.proton.core.user.data.db.dao.UserDao
 import me.proton.core.user.data.db.dao.UserWithKeysDao
 
 interface UserDatabase : Database, UserKeyDatabase {
     fun userDao(): UserDao
     fun userWithKeysDao(): UserWithKeysDao
+
+    companion object {
+        /**
+         * - Create Table UserEntity.
+         * - Create Table UserKeyEntity.
+         */
+        val MIGRATION_0 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Create Table UserEntity.
+                database.execSQL("CREATE TABLE IF NOT EXISTS `UserEntity` (`userId` TEXT NOT NULL, `email` TEXT, `name` TEXT, `displayName` TEXT, `currency` TEXT NOT NULL, `credit` INTEGER NOT NULL, `usedSpace` INTEGER NOT NULL, `maxSpace` INTEGER NOT NULL, `maxUpload` INTEGER NOT NULL, `role` INTEGER, `private` INTEGER NOT NULL, `subscribed` INTEGER NOT NULL, `services` INTEGER NOT NULL, `delinquent` INTEGER, `passphrase` BLOB, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_UserEntity_userId` ON `UserEntity` (`userId`)")
+                // Create Table UserKeyEntity.
+                database.execSQL("CREATE TABLE IF NOT EXISTS `UserKeyEntity` (`userId` TEXT NOT NULL, `keyId` TEXT NOT NULL, `version` INTEGER NOT NULL, `privateKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, `fingerprint` TEXT, `activation` TEXT, PRIMARY KEY(`keyId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_UserKeyEntity_userId` ON `UserKeyEntity` (`userId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_UserKeyEntity_keyId` ON `UserKeyEntity` (`keyId`)")
+            }
+        }
+    }
 }

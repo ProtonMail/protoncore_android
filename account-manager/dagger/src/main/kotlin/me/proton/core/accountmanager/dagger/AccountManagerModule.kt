@@ -25,6 +25,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.data.AccountManagerImpl
@@ -71,10 +72,10 @@ object AccountManagerModule {
     @Singleton
     fun provideAccountRepository(
         product: Product,
-        accountManagerDatabase: AccountManagerDatabase,
+        db: AccountDatabase,
         keyStoreCrypto: KeyStoreCrypto
     ): AccountRepository =
-        AccountRepositoryImpl(product, accountManagerDatabase, keyStoreCrypto)
+        AccountRepositoryImpl(product, db, keyStoreCrypto)
 
     @Provides
     @Singleton

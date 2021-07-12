@@ -33,6 +33,13 @@ android(
 {
     defaultConfig {
         buildConfigField("String", "ENVIRONMENT", "\"api.proton.black\"")
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+                // arguments["room.incremental"] = "true"
+            }
+        }
     }
 }
 
@@ -80,13 +87,15 @@ dependencies {
         `android-work-runtime`,
 
         // Other
+        `room-ktx`,
         `retrofit`,
         `timber`
     )
 
     kapt(
         `hilt-android-compiler`,
-        `hilt-androidx-compiler`
+        `hilt-androidx-compiler`,
+        `room-compiler`
     )
 
     // Test
@@ -94,5 +103,5 @@ dependencies {
     androidTestImplementation(project(Module.androidInstrumentedTest))
 
     // Lint - off temporary
-//    lintChecks(project(Module.lint))
+    // lintChecks(project(Module.lint))
 }

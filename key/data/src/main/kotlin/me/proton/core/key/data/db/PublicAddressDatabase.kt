@@ -18,10 +18,29 @@
 
 package me.proton.core.key.data.db
 
+import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.db.Database
+import me.proton.core.data.db.migration.DatabaseMigration
 
 interface PublicAddressDatabase : Database {
     fun publicAddressDao(): PublicAddressDao
     fun publicAddressKeyDao(): PublicAddressKeyDao
     fun publicAddressWithKeysDao(): PublicAddressWithKeysDao
+
+    companion object {
+        /**
+         * - Create Table PublicAddressEntity.
+         * - Create Table PublicAddressKeyEntity.
+         */
+        val MIGRATION_0 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Create Table PublicAddressEntity.
+                database.execSQL("CREATE TABLE IF NOT EXISTS `PublicAddressEntity` (`email` TEXT NOT NULL, `recipientType` INTEGER NOT NULL, `mimeType` TEXT, PRIMARY KEY(`email`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_PublicAddressEntity_email` ON `PublicAddressEntity` (`email`)")
+                // Create Table PublicAddressKeyEntity.
+                database.execSQL("CREATE TABLE IF NOT EXISTS `PublicAddressKeyEntity` (`email` TEXT NOT NULL, `flags` INTEGER NOT NULL, `publicKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, PRIMARY KEY(`email`, `publicKey`), FOREIGN KEY(`email`) REFERENCES `PublicAddressEntity`(`email`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_PublicAddressKeyEntity_email` ON `PublicAddressKeyEntity` (`email`)")
+            }
+        }
+    }
 }

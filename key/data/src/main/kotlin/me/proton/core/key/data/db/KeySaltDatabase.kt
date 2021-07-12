@@ -18,8 +18,24 @@
 
 package me.proton.core.key.data.db
 
+import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.db.Database
+import me.proton.core.data.db.migration.DatabaseMigration
 
 interface KeySaltDatabase : Database {
     fun keySaltDao(): KeySaltDao
+
+    companion object {
+        /**
+         * - Create Table KeySaltEntity.
+         */
+        val MIGRATION_0 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Create Table KeySaltEntity.
+                database.execSQL("CREATE TABLE IF NOT EXISTS `KeySaltEntity` (`userId` TEXT NOT NULL, `keyId` TEXT NOT NULL, `keySalt` TEXT, PRIMARY KEY(`userId`, `keyId`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_KeySaltEntity_userId` ON `KeySaltEntity` (`userId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_KeySaltEntity_keyId` ON `KeySaltEntity` (`keyId`)")
+            }
+        }
+    }
 }

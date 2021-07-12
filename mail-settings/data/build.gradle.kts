@@ -24,7 +24,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 2, 1)
+libVersion = Version(1, 3, 1)
 
 android()
 
