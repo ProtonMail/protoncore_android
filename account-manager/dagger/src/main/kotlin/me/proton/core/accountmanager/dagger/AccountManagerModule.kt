@@ -18,12 +18,10 @@
 
 package me.proton.core.accountmanager.dagger
 
-import android.content.Context
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.repository.AccountRepositoryImpl
@@ -32,7 +30,6 @@ import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.SessionListenerImpl
 import me.proton.core.accountmanager.data.SessionManagerImpl
 import me.proton.core.accountmanager.data.SessionProviderImpl
-import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
@@ -50,11 +47,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AccountManagerModule {
-
-    @Provides
-    @Singleton
-    fun provideAccountManagerDatabase(@ApplicationContext context: Context): AccountManagerDatabase =
-        AccountManagerDatabase.buildDatabase(context)
 
     @Provides
     @Singleton
