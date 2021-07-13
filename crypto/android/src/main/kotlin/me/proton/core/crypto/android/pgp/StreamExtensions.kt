@@ -19,7 +19,6 @@
 package me.proton.core.crypto.android.pgp
 
 import com.proton.gopenpgp.crypto.EncryptSplitResult
-import com.proton.gopenpgp.crypto.PlainMessageReader
 import com.proton.gopenpgp.crypto.Reader
 import com.proton.gopenpgp.crypto.Writer
 import com.proton.gopenpgp.helper.MobileReadResult
@@ -64,14 +63,5 @@ internal fun <R> EncryptSplitResult.use(block: (EncryptSplitResult) -> R): Encry
         return this
     } finally {
         close()
-    }
-}
-
-internal fun <R> PlainMessageReader.use(block: (PlainMessageReader) -> R): PlainMessageReader {
-    try {
-        block(this)
-        return this
-    } finally {
-        verifySignature()
     }
 }
