@@ -22,19 +22,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.presentation.entity.PlanShortDetails
-import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.ActivityUpgradeBinding
-import me.proton.core.plan.presentation.entity.Cycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.UpgradeResult
 import me.proton.core.presentation.ui.ProtonActivity
-import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -59,42 +54,15 @@ class UpgradeActivity : ProtonActivity<ActivityUpgradeBinding>() {
             PlansFragment.KEY_PLAN_SELECTED, this@UpgradeActivity
         ) { _, bundle ->
             val plan = bundle.getParcelable<SelectedPlan>(PlansFragment.BUNDLE_KEY_PLAN)
-            if (plan == null) {
+            val billing = bundle.getParcelable<BillingResult>(PlansFragment.BUNDLE_KEY_BILLING_DETAILS)
+            if (plan == null || billing == null) {
                 finish()
             } else {
-                openPayments(
-                    userId = input.user!!,
-                    planId = plan.planId,
-                    planName = plan.planName,
-                    cycle = when (plan.cycle) {
-                        Cycle.MONTHLY -> SubscriptionCycle.MONTHLY
-                        Cycle.YEARLY -> SubscriptionCycle.YEARLY
-                    }.exhaustive
-                )
-            }
-        }
-    }
-
-    private fun openPayments(userId: UserId, planId: String, planName: String, cycle: SubscriptionCycle) {
-        with(paymentsOrchestrator) {
-            onPaymentResult { result ->
-                result?.let {
-                    val intent = Intent()
-                        .putExtra(ARG_RESULT, UpgradeResult(planId, it))
-                    setResult(Activity.RESULT_OK, intent)
-                }
+                val intent = Intent()
+                    .putExtra(ARG_RESULT, UpgradeResult(plan.planId, billing))
+                setResult(Activity.RESULT_OK, intent)
                 finish()
             }
-
-            startBillingWorkFlow(
-                userId = userId,
-                selectedPlan = PlanShortDetails(
-                    id = planId,
-                    name = planName,
-                    subscriptionCycle = cycle
-                ),
-                codes = null
-            )
         }
     }
 

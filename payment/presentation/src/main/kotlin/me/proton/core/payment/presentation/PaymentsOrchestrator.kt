@@ -18,7 +18,7 @@
 
 package me.proton.core.payment.presentation
 
-import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.presentation.entity.BillingInput
@@ -39,9 +39,9 @@ class PaymentsOrchestrator @Inject constructor() {
     private var onPaymentResultListener: (result: BillingResult?) -> Unit = {}
 
     // region public api
-    fun register(context: ComponentActivity) {
-        billingLauncher = registerBillingResult(context)
-        paymentOptionsLauncher = registerPaymentOptionsResult(context)
+    fun register(caller: ActivityResultCaller) {
+        billingLauncher = registerBillingResult(caller)
+        paymentOptionsLauncher = registerPaymentOptionsResult(caller)
     }
 
     fun setOnPaymentResult(block: (result: BillingResult?) -> Unit) {
@@ -75,7 +75,7 @@ class PaymentsOrchestrator @Inject constructor() {
     // endregion
 
     private fun registerBillingResult(
-        context: ComponentActivity
+        context: ActivityResultCaller
     ): ActivityResultLauncher<BillingInput> =
         context.registerForActivityResult(
             StartBilling()
@@ -85,9 +85,9 @@ class PaymentsOrchestrator @Inject constructor() {
         }
 
     private fun registerPaymentOptionsResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<PaymentOptionsInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartPaymentOptions()
         ) {
             onPaymentResultListener(it?.billing)

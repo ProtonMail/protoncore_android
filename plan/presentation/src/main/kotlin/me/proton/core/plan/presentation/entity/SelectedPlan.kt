@@ -29,4 +29,10 @@ data class SelectedPlan(
     val cycle: Cycle,
     val currency: Currency,
     val amount: Int
-) : Parcelable
+) : Parcelable {
+    companion object {
+        const val FREE_PLAN_ID = "free"
+        fun free(freePlanName: String) =
+            SelectedPlan(FREE_PLAN_ID, freePlanName, true, Cycle.YEARLY, Currency.EUR, 0)
+    }
+}

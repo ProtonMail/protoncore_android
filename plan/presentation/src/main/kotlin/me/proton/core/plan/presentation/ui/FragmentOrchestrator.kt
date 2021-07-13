@@ -27,13 +27,22 @@ private const val TAG_PLANS = "plans_fragment"
 fun FragmentManager.showPlans(
     containerId: Int = android.R.id.content,
     planInput: PlanInput
-) {
+) =
     findFragmentByTag(TAG_PLANS) ?: run {
         val chooserUsernameFragment = PlansFragment(planInput)
         inTransaction {
             setCustomAnimations(0, 0)
-            add(containerId, chooserUsernameFragment)
-            addToBackStack(TAG_PLANS)
+            add(containerId, chooserUsernameFragment, TAG_PLANS)
+            addToBackStack(null)
+        }
+        chooserUsernameFragment
+    }
+
+fun FragmentManager.removePlans() {
+    findFragmentByTag(TAG_PLANS)?.let { plans ->
+        inTransaction {
+            setCustomAnimations(0, 0)
+            remove(plans)
         }
     }
 }

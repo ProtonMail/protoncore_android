@@ -42,17 +42,12 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
 import me.proton.core.network.domain.client.ClientIdProvider
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.presentation.entity.PlanShortDetails
-import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.createUserType
@@ -156,45 +151,30 @@ internal class SignupViewModel @Inject constructor(
         }.exhaustive
     }
 
-    fun startBillingForPaidPlan(planId: String, planName: String, cycle: SubscriptionCycle) {
+    fun startCreatePaidUserWorkflow(
+        planId: String,
+        planName: String,
+        cycle: SubscriptionCycle,
+        billingResult: BillingResult
+    ) {
         val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
         subscriptionDetails = SubscriptionDetails(
-            billingResult = null,
+            billingResult = billingResult,
             planId = planId,
             planName = planName,
             cycle = cycle
         )
-        with(paymentsOrchestrator) {
-            onPaymentResult { result ->
-                result.let { billingResult ->
-                    if (billingResult?.paySuccess == true) {
-                        viewModelScope.launch {
-                            // update subscription details
-                            subscriptionDetails = subscriptionDetails?.copy(billingResult = billingResult)
-                            humanVerificationManager.addDetails(
-                                details = HumanVerificationDetails(
-                                    clientId = clientId,
-                                    verificationMethods = listOf(VerificationMethod.PAYMENT),
-                                    captchaVerificationToken = null,
-                                    state = HumanVerificationState.HumanVerificationSuccess,
-                                    tokenType = TokenType.PAYMENT.value,
-                                    tokenCode = billingResult.token!!
-                                )
-                            )
-                        }
-                        startCreateUserWorkflow()
-                    }
-                }
+        if (billingResult.paySuccess) {
+            viewModelScope.launch {
+                // update subscription details
+                humanVerificationManager.addDetails(
+                    details = BillingResult.paymentDetails(
+                        clientId = clientId,
+                        token = billingResult.token!!
+                    )
+                )
             }
-
-            startBillingWorkFlow(
-                selectedPlan = PlanShortDetails(
-                    id = planId,
-                    name = planName,
-                    subscriptionCycle = cycle
-                ),
-                codes = null
-            )
+            startCreateUserWorkflow()
         }
     }
 
