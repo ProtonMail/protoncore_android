@@ -115,9 +115,9 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored
     ): EncryptedMessage {
         val publicKeyRing = newKeyRing(publicKey)
-        return newKey(unlockedKey).use { key ->
+        newKey(unlockedKey).use { key ->
             newKeyRing(key).use { keyRing ->
-                publicKeyRing.encrypt(plainMessage, keyRing.value).armored
+                return publicKeyRing.encrypt(plainMessage, keyRing.value).armored
             }
         }
     }
@@ -131,14 +131,13 @@ class GOpenPGPCrypto : PGPCrypto {
             destination.outputStream().use { fileOutputStream ->
                 val writer = Mobile2GoWriter(fileOutputStream.writer())
                 val plainMessageMetadata = PlainMessageMetadata(true, source.name, source.lastModified() / 1000)
-                return newKeyRing(publicKey).encryptSplitStream(writer, plainMessageMetadata, null).use {
+                val result = newKeyRing(publicKey).encryptSplitStream(writer, plainMessageMetadata, null).use {
                     fileInputStream.reader().copyTo(it)
-                }.let {
-                    EncryptedFile(
-                        file = destination,
-                        keyPacket = it.keyPacket
-                    )
                 }
+                return EncryptedFile(
+                    file = destination,
+                    keyPacket = result.keyPacket
+                )
             }
         }
     }
@@ -152,18 +151,16 @@ class GOpenPGPCrypto : PGPCrypto {
         source.inputStream().use { fileInputStream ->
             destination.outputStream().use { fileOutputStream ->
                 val reader = Mobile2GoReader(fileInputStream.mobileReader())
-                return newKey(unlockedKey).use { key ->
+                newKey(unlockedKey).use { key ->
                     newKeyRing(key).use { keyRing ->
-                        keyRing.value.decryptSplitStream(keyPacket, reader, null, 0).use {
-                            Go2AndroidReader(it).copyTo(fileOutputStream.writer())
-                        }.let {
-                            DecryptedFile(
-                                file = destination,
-                                status = VerificationStatus.Success,
-                                filename = it.metadata.filename,
-                                lastModifiedEpochSeconds = it.metadata.modTime
-                            )
-                        }
+                        val plainMessageReader = keyRing.value.decryptSplitStream(keyPacket, reader, null, 0)
+                        Go2AndroidReader(plainMessageReader).copyTo(fileOutputStream.writer())
+                        return DecryptedFile(
+                            file = destination,
+                            status = VerificationStatus.Unknown,
+                            filename = plainMessageReader.metadata.filename,
+                            lastModifiedEpochSeconds = plainMessageReader.metadata.modTime
+                        )
                     }
                 }
             }
@@ -184,21 +181,9 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored,
         block: (PlainMessage) -> T
     ): T {
-        return newKey(unlockedKey).use { key ->
+        newKey(unlockedKey).use { key ->
             newKeyRing(key).use { keyRing ->
-                block(keyRing.value.decrypt(pgpMessage, null, 0))
-            }
-        }
-    }
-
-    private inline fun <T> decrypt(
-        pgpSplitMessage: PGPSplitMessage,
-        unlockedKey: Unarmored,
-        block: (PlainMessage) -> T
-    ): T {
-        return newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                block(keyRing.value.decryptAttachment(pgpSplitMessage))
+                return block(keyRing.value.decrypt(pgpMessage, null, 0))
             }
         }
     }
@@ -223,9 +208,9 @@ class GOpenPGPCrypto : PGPCrypto {
         plainMessage: PlainMessage,
         unlockedKey: Unarmored
     ): Signature {
-        return newKey(unlockedKey).use { key ->
+        newKey(unlockedKey).use { key ->
             newKeyRing(key).use { keyRing ->
-                keyRing.value.signDetached(plainMessage).armored
+                return keyRing.value.signDetached(plainMessage).armored
             }
         }
     }
@@ -236,9 +221,9 @@ class GOpenPGPCrypto : PGPCrypto {
     ): Signature {
         source.inputStream().use { fileInputStream ->
             val reader = Mobile2GoReader(fileInputStream.mobileReader())
-            return newKey(unlockedKey).use { key ->
+            newKey(unlockedKey).use { key ->
                 newKeyRing(key).use { keyRing ->
-                    keyRing.value.signDetachedStream(reader).armored
+                    return keyRing.value.signDetachedStream(reader).armored
                 }
             }
         }
@@ -277,8 +262,8 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored,
         passphrase: ByteArray
     ): Armored {
-        return newKey(unlockedKey).use { key ->
-            key.value.lock(passphrase).armor()
+        newKey(unlockedKey).use { key ->
+            return key.value.lock(passphrase).armor()
         }
     }
 

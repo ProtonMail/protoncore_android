@@ -25,6 +25,9 @@ package me.proton.core.crypto.common.pgp
  * @see [PGPCrypto.decryptAndVerifyData]
  */
 enum class VerificationStatus {
+    /** No verification at all. */
+    Unknown,
+
     /** Embedded signature is correct. */
     Success,
 
