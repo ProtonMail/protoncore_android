@@ -108,6 +108,11 @@ class UserAddressRepositoryImpl(
             addressKeyDao.insertOrUpdate(*addressKeys.toTypedArray())
         }
 
+    private suspend fun delete(vararg addressId: AddressId) =
+        db.inTransaction {
+            addressId.forEach { addressDao.delete(it) }
+        }
+
     private suspend fun delete(userId: UserId) =
         addressDao.deleteAll(userId)
 
@@ -122,6 +127,12 @@ class UserAddressRepositoryImpl(
 
     override suspend fun addAddresses(addresses: List<UserAddress>) =
         insertOrUpdate(*addresses.toTypedArray())
+
+    override suspend fun updateAddresses(addresses: List<UserAddress>) =
+        insertOrUpdate(*addresses.toTypedArray())
+
+    override suspend fun deleteAddresses(addressIds: List<AddressId>) =
+        delete(*addressIds.toTypedArray())
 
     override fun getAddressesFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
         store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh)).map { it.toDataResult() }

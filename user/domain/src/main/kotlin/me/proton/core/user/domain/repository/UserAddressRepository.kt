@@ -37,6 +37,26 @@ interface UserAddressRepository {
     )
 
     /**
+     * Update [UserAddress], locally.
+     *
+     * Note: This function is usually used for Events handling.
+     *
+     * @throws IllegalStateException if corresponding user(s) doesn't exist.
+     */
+    suspend fun updateAddresses(
+        addresses: List<UserAddress>
+    )
+
+    /**
+     * Delete [UserAddress], locally.
+     *
+     * Note: This function is usually used for Events handling.
+     */
+    suspend fun deleteAddresses(
+        addressIds: List<AddressId>
+    )
+
+    /**
      * Get all [UserAddress], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
