@@ -34,6 +34,8 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.util.kotlin.toBooleanOrFalse
 
+fun UserResponse.toUser(): User = toUser(passphrase = null)
+
 internal fun UserResponse.toUser(passphrase: EncryptedByteArray?): User {
     val userId = UserId(id)
     return User(

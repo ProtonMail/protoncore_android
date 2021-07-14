@@ -34,6 +34,45 @@ import me.proton.core.user.domain.extension.canEncrypt
 import me.proton.core.user.domain.extension.canVerify
 import me.proton.core.util.kotlin.toBooleanOrFalse
 
+fun AddressResponse.toAddress(userId: UserId) = toAddress(userId, passphrase = null)
+
+internal fun AddressResponse.toAddress(userId: UserId, passphrase: EncryptedByteArray?): UserAddress {
+    val addressId = AddressId(id)
+    return UserAddress(
+        userId = userId,
+        addressId = addressId,
+        email = email,
+        displayName = displayName,
+        signature = signature,
+        domainId = domainId,
+        canSend = send.toBooleanOrFalse(),
+        canReceive = receive.toBooleanOrFalse(),
+        enabled = status.toBooleanOrFalse(),
+        type = AddressType.map[type],
+        order = order,
+        keys = keys?.map { it.toUserAddressKey(addressId, passphrase) }.orEmpty(),
+    )
+}
+
+internal fun AddressKeyResponse.toUserAddressKey(
+    addressId: AddressId,
+    passphrase: EncryptedByteArray?
+) = UserAddressKey(
+    addressId = addressId,
+    version = version,
+    flags = flags,
+    token = token,
+    signature = signature,
+    activation = activation,
+    active = active.toBooleanOrFalse(),
+    keyId = KeyId(id),
+    privateKey = PrivateKey(
+        key = privateKey,
+        isPrimary = primary.toBooleanOrFalse(),
+        passphrase = passphrase
+    )
+)
+
 internal fun AddressResponse.toEntity(userId: UserId) = AddressEntity(
     userId = userId,
     addressId = AddressId(id),
