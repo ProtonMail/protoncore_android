@@ -21,10 +21,14 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.InputType
 import android.text.TextWatcher
+import android.text.method.DigitsKeyListener
+import android.text.method.KeyListener
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.widget.addTextChangedListener
@@ -86,11 +90,17 @@ class ProtonInput : LinearLayout {
             prefixText = getString(R.styleable.ProtonInput_prefix)
             suffixText = getString(R.styleable.ProtonInput_suffix)
             inputType = getInteger(R.styleable.ProtonInput_android_inputType, InputType.TYPE_CLASS_TEXT)
+            imeOptions = getInteger(R.styleable.ProtonInput_android_imeOptions, EditorInfo.IME_ACTION_UNSPECIFIED)
             minLines = getInteger(R.styleable.ProtonInput_android_minLines, 1)
             isEnabled = getBoolean(R.styleable.ProtonInput_android_enabled, true)
             endIconMode = EndIconMode.map[getInt(R.styleable.ProtonInput_actionMode, 0)] ?: EndIconMode.NONE
             getDrawable(R.styleable.ProtonInput_endIconDrawable)?.let {
                 endIconDrawable = it
+            }
+
+            val digits = getString(R.styleable.ProtonInput_android_digits)
+            if (digits != null) {
+                keyListener = DigitsKeyListener.getInstance(digits.toString())
             }
         }
 
@@ -160,6 +170,24 @@ class ProtonInput : LinearLayout {
         }
 
     /**
+     * The imeOptions property of the compound EditText of the view.
+     */
+    var imeOptions: Int
+        get() = binding.input.imeOptions
+        set(value) {
+            binding.input.imeOptions = value
+        }
+
+    /**
+     * The keyListener property of the compound EditText of the view.
+     */
+    var keyListener: KeyListener
+        get() = binding.input.keyListener
+        set(value) {
+            binding.input.keyListener
+        }
+
+    /**
      * The [InputType] property of the compound EditText of the view.
      */
     var inputType: Int
@@ -204,6 +232,10 @@ class ProtonInput : LinearLayout {
 
     fun addTextChangedListener(watcher: TextWatcher) {
         binding.input.addTextChangedListener(watcher)
+    }
+
+    fun setOnEditorActionListener(listener: TextView.OnEditorActionListener?) {
+        binding.input.setOnEditorActionListener(listener)
     }
 
     /**
