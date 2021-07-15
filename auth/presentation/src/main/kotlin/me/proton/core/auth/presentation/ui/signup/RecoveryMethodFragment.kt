@@ -181,6 +181,7 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
     }
 
     private fun showSkip() {
+        hideKeyboard()
         with(requireContext()) {
             childFragmentManager.showSkipRecoveryDialog(this) {
                 showLoading()

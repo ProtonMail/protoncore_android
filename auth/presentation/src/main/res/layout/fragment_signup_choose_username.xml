@@ -70,7 +70,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/auth_subtitle_top_margin"
                     android:gravity="center"
-                    android:text="@string/auth_signup_subtitle" />
+                    android:text="@string/auth_one_account_all_services" />
 
                 <me.proton.core.presentation.ui.view.ProtonInput
                     android:id="@+id/usernameInput"

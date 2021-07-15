@@ -101,8 +101,7 @@
                     android:layout_marginTop="@dimen/auth_content_top_margin"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="@string/auth_signup_terms_conditions"
-                    android:textSize="16sp" />
+                    android:text="@string/auth_signup_terms_conditions" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
