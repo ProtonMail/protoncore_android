@@ -28,10 +28,19 @@
         android:id="@+id/paymentMethodRadio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="false"
         android:padding="0dp"
         android:text="@null"
-        android:clickable="false"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/paymentMethodIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/payments_method_icon"
+        android:src="@drawable/ic_credit_card"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -41,30 +50,22 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/payment_option_horizontal_padding"
         android:layout_marginEnd="@dimen/payment_option_horizontal_padding"
+        android:gravity="left"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="@id/paymentMethodRadio"
         app:layout_constraintEnd_toStartOf="@id/paymentMethodIcon"
         app:layout_constraintStart_toEndOf="@id/paymentMethodRadio"
-        app:layout_constraintTop_toTopOf="@id/paymentMethodRadio"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Visa - 3220 (Exp 05/25)" />
 
     <TextView
         android:id="@+id/paymentMethodSubtitleText"
         style="@style/ProtonTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/paymentMethodTitleText"
+        app:layout_constraintEnd_toStartOf="@id/paymentMethodIcon"
+        app:layout_constraintStart_toEndOf="@id/paymentMethodRadio"
         app:layout_constraintTop_toBottomOf="@id/paymentMethodTitleText"
         tools:text="John Doe" />
-
-    <ImageView
-        android:id="@+id/paymentMethodIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/payments_method_icon"
-        android:src="@drawable/ic_credit_card"
-        app:layout_constraintBottom_toBottomOf="@id/paymentMethodTitleText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/paymentMethodTitleText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
