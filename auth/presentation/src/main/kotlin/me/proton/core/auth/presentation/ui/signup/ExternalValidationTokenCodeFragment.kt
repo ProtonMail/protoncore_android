@@ -55,7 +55,7 @@ class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidat
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 parentFragmentManager.popBackStackImmediate()
             }
 
