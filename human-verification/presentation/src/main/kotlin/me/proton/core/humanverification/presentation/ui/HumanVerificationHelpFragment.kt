@@ -26,9 +26,6 @@ import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.openBrowserLink
 
-/**
- * @author Dino Kadrikj.
- */
 class HumanVerificationHelpFragment :
     ProtonDialogFragment<FragmentHumanVerificationHelpBinding>() {
 
@@ -37,11 +34,9 @@ class HumanVerificationHelpFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            binding.headerNavigation.closeButton.onClick {
+            binding.toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
-            headerNavigation.helpButton.visibility = View.INVISIBLE
-            headerNavigation.title.text = getString(R.string.human_verification_help)
             verificationManual.manualVerificationLayout.onClick {
                 requireContext().openBrowserLink(getString(R.string.manual_verification_link))
             }

@@ -20,6 +20,7 @@ package me.proton.core.humanverification.presentation.ui.verification
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -79,11 +80,19 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
 
         binding.apply {
             // this should go inside the custom edit text input view (validation also with error text below the view)
-            headerNavigation.closeButton.apply {
-                binding.headerNavigation.closeButton.setIconResource(R.drawable.ic_arrow_back)
-                onClick { onBackPressed() }
+            toolbar.apply {
+                navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back)
+                setNavigationOnClickListener { onBackPressed() }
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.menu_help -> {
+                            childFragmentManager.showHelp()
+                            true
+                        }
+                        else -> false
+                    }
+                }
             }
-            headerNavigation.helpButton.onClick { childFragmentManager.showHelp() }
             verifyButton.onClick {
                 hideKeyboard()
                 verificationCodeEditText.validate()

@@ -39,6 +39,7 @@
     <style name="HumanVerification.Help.Title" parent="ProtonTextView.Title">
         <item name="android:textColor">@color/text_norm</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
         <item name="android:gravity">start|center_vertical</item>
     </style>
 

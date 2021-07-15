@@ -57,6 +57,9 @@
                     style="@style/ProtonTextView.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/gap_large"
+                    android:gravity="center"
                     android:text="@string/auth_signup_create_account" />
 
                 <TextView
@@ -64,14 +67,16 @@
                     style="@style/ProtonTextView.Subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="@dimen/auth_subtitle_top_margin"
+                    android:gravity="center"
                     android:text="@string/auth_signup_subtitle" />
 
                 <me.proton.core.presentation.ui.view.ProtonInput
                     android:id="@+id/usernameInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/auth_signup_top_margin"
+                    android:layout_marginTop="@dimen/gap_large_plus"
                     android:inputType="text|textEmailAddress|textNoSuggestions"
                     app:label="@string/auth_signup_username" />
 

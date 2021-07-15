@@ -28,7 +28,6 @@
     <dimen name="auth_content_top_margin">@dimen/default_gap</dimen>
     <dimen name="auth_view_items_top_margin">@dimen/default_text_top_margin</dimen>
     <dimen name="auth_subtitle_top_margin">@dimen/default_text_top_margin</dimen>
-    <dimen name="auth_signup_top_margin">@dimen/gap_medium</dimen>
     <!-- add account sizes -->
     <dimen name="add_account_illustration_height">250dp</dimen>
     <!-- text sizes -->
