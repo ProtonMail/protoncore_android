@@ -27,7 +27,16 @@ plugins {
 
 libVersion = Version(1, 3, 1)
 
-android()
+android() {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+                // arguments["room.incremental"] = "true"
+            }
+        }
+    }
+}
 
 dependencies {
 
@@ -36,19 +45,34 @@ dependencies {
         project(Module.network),
         project(Module.domain),
         project(Module.data),
+        project(Module.dataRoom),
+        project(Module.crypto),
 
         // Features
         project(Module.accountManagerDomain),
+        project(Module.authData),
         project(Module.authDomain),
+        project(Module.accountData),
         project(Module.accountDomain),
+        project(Module.userData),
         project(Module.userDomain),
+        project(Module.keyData),
         project(Module.keyDomain),
+        project(Module.humanVerificationData),
         project(Module.humanVerificationDomain),
+        project(Module.mailSettingsData),
         project(Module.mailSettingsDomain),
 
         // Kotlin
         `kotlin-jdk8`,
-        `coroutines-core`
+        `coroutines-core`,
+
+        // Other
+        `room-ktx`
+    )
+
+    kapt(
+        `room-compiler`
     )
 
     testImplementation(project(Module.androidTest))

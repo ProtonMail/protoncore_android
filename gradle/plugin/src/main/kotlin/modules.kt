@@ -69,6 +69,7 @@ object Module {
     const val accountManagerDomain = "$accountManager:account-manager-domain"
     const val accountManagerPresentation = "$accountManager:account-manager-presentation"
     const val accountManagerData = "$accountManager:account-manager-data"
+    const val accountManagerDataDb = "$accountManager:account-manager-data-db"
     const val accountManagerDagger = "$accountManager:account-manager-dagger"
 
     // Crypto

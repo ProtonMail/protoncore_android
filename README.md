@@ -150,6 +150,8 @@ Account Manager Presentation: **1.1.8** - _released on: Jul 07, 2021_
 
 Account Manager Data: **1.1.8** - _released on: Jul 07, 2021_
 
+Account Manager Data Db: **0** - _released on: Jul 07, 2021_
+
 Account Manager Dagger: **1.1.8** - _released on: Jul 07, 2021_
 
 ### Key
