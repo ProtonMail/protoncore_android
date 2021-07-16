@@ -79,7 +79,7 @@ class UserAddressRepositoryImpl(
             delete = { key -> delete(key.userId) },
             deleteAll = { deleteAll() }
         )
-    ).build()
+    ).disableCache().build() // We don't want potential stale data from memory cache.
 
     private fun getAddressesLocal(userId: UserId): Flow<List<UserAddress>> =
         userRepository.getUserFlow(userId)

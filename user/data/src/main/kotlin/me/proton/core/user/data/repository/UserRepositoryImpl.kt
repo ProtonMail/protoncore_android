@@ -71,7 +71,7 @@ class UserRepositoryImpl(
             delete = { userId -> delete(userId) },
             deleteAll = { deleteAll() }
         )
-    ).build()
+    ).disableCache().build() // We don't want potential stale data from memory cache.
 
     private fun getUserLocal(userId: UserId): Flow<User?> = userWithKeysDao.findByUserId(userId)
         .map { user ->
