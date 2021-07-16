@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.account.domain.entity.AccountType
@@ -38,6 +39,10 @@ class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBindin
     private val signupViewModel by activityViewModels<SignupViewModel>()
 
     override fun layoutId() = R.layout.fragment_signup_choose_password
+
+    override fun onBackPressed() {
+        parentFragmentManager.removePasswordChooser()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

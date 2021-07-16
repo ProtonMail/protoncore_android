@@ -24,6 +24,7 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -49,6 +50,8 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
     private val signupViewModel by activityViewModels<SignupViewModel>()
 
     override fun layoutId() = R.layout.fragment_signup_recovery
+
+    override fun onBackPressed() { parentFragmentManager.removeRecoveryMethodChooser() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
