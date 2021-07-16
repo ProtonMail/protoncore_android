@@ -184,7 +184,7 @@ class ProtonInput : LinearLayout {
     var keyListener: KeyListener
         get() = binding.input.keyListener
         set(value) {
-            binding.input.keyListener
+            binding.input.keyListener = value
         }
 
     /**
