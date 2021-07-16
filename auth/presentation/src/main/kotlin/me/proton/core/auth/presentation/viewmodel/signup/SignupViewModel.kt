@@ -144,6 +144,7 @@ internal class SignupViewModel @Inject constructor(
      * @see currentAccountType public property
      */
     fun startCreateUserWorkflow() = viewModelScope.launch {
+        _userCreationState.tryEmit(State.Idle)
         when (currentAccountType) {
             AccountType.Username,
             AccountType.Internal -> createUser()

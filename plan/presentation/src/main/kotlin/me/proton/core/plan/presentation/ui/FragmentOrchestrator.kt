@@ -44,5 +44,6 @@ fun FragmentManager.removePlans() {
             setCustomAnimations(0, 0)
             remove(plans)
         }
+        popBackStack()
     }
 }

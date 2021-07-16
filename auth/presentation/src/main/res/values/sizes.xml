@@ -32,4 +32,6 @@
     <dimen name="add_account_illustration_height">250dp</dimen>
     <!-- text sizes -->
     <dimen name="auth_help_item_text_size">@dimen/default_text_size</dimen>
+    <!-- other -->
+    <dimen name="auth_lottie_animation">160dp</dimen>
 </resources>

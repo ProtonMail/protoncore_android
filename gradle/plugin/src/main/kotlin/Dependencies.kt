@@ -39,6 +39,7 @@ val DependencyHandler.`lint-tests` get() = lint("tests")
 val DependencyHandler.`okHttp-logging` get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp version`
 val DependencyHandler.`store4` get() = dependency("com.dropbox.mobile.store", module = "store4") version `store4 version`
 val DependencyHandler.`lifecycle-extensions` get() = androidxLifecycle("extensions") version `lifecycle-extensions version`
+val DependencyHandler.`lottie` get() = dependency("com.airbnb.android", module = "lottie") version `lottie version`
 
 // region accessors
 fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =

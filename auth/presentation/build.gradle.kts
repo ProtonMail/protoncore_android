@@ -67,7 +67,10 @@ dependencies {
         `fragment`,
         `hilt-android`,
         `lifecycle-viewModel`,
-        `material`
+        `material`,
+
+        // Other
+        `lottie`
     )
 
     kapt(

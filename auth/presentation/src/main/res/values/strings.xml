@@ -126,7 +126,8 @@
     <string name="auth_signup_no_connectivity">No connectivity to display Terms and Conditions.</string>
     <string name="auth_signup_error_passwords_match">Password and Confirm Password do not match.</string>
     <string name="auth_signup_validation_password_length">Password should be at least 8 characters long.</string>
-    <string name="auth_signup_your_account_is_being_setup">Your account is being setup.\nPlease wait.</string>
+    <string name="auth_signup_your_account_is_being_setup">Your account is being created…</string>
+    <string name="auth_signup_please_wait">It usually takes no more than a minute.</string>
     <string name="auth_signup_replacement_code">Did not receive the code?</string>
     <string name="auth_signup_verify">Verify</string>
     <string name="auth_signup_verification_code">Verification Code</string>

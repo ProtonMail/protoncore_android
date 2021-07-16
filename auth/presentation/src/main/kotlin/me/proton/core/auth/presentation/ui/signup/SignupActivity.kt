@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.ui.signup
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -132,7 +133,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
                 popBackStackImmediate()
             }
         }
-        binding.progressLayout.visibility = View.VISIBLE
+        binding.lottieProgress.visibility = View.VISIBLE
         loginViewModel.startLoginWorkflow(
             signUpViewModel.getLoginUsername()!!,
             signUpViewModel.password,

@@ -149,14 +149,14 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
     private fun observeForHumanVerificationFailed() {
         signupViewModel.userCreationState.onEach {
-            // this fragment is only interested in HV and error states, all other are handled by the activity
             when (it) {
+                is SignupViewModel.State.Idle -> { }
                 is SignupViewModel.State.Error.HumanVerification,
                 is SignupViewModel.State.Error.PlanChooserCancel,
                 is SignupViewModel.State.Error.Message -> showLoading(false)
-                is SignupViewModel.State.Idle,
-                is SignupViewModel.State.Processing,
-                is SignupViewModel.State.Success -> {
+                is SignupViewModel.State.Success,
+                is SignupViewModel.State.Processing -> {
+                    binding.progressLayout.visibility = View.VISIBLE
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
