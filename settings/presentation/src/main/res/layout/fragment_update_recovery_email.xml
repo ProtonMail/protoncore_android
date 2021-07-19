@@ -17,54 +17,79 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/double_top_margin"
-        android:paddingTop="@dimen/double_top_margin"
-        android:paddingEnd="@dimen/double_top_margin">
+        android:layout_height="match_parent"
+        android:background="?android:windowBackground">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:paddingStart="@dimen/double_top_margin"
+            android:paddingTop="@dimen/double_top_margin"
+            android:paddingEnd="@dimen/double_top_margin">
 
-            <me.proton.core.presentation.ui.view.ProtonInput
-                android:id="@+id/currentEmailInput"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-                app:label="@string/settings_recovery_email_current" />
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/separator_norm" />
+                <me.proton.core.presentation.ui.view.ProtonInput
+                    android:id="@+id/currentEmailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:inputType="none"
+                    app:label="@string/settings_recovery_email_current" />
 
-            <me.proton.core.presentation.ui.view.ProtonInput
-                android:id="@+id/newEmailInput"
-                android:layout_width="match_parent"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/separator_norm" />
+
+                <me.proton.core.presentation.ui.view.ProtonInput
+                    android:id="@+id/newEmailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|textEmailAddress|textNoSuggestions"
+                    app:label="@string/settings_recovery_email_new" />
+
+                <me.proton.core.presentation.ui.view.ProtonInput
+                    android:id="@+id/confirmNewEmailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|textEmailAddress|textNoSuggestions"
+                    app:label="@string/settings_recovery_email_current" />
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/saveButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_top_margin"
+                    android:text="@string/settings_save" />
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/progressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:windowBackground"
+            android:elevation="3dp">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text|textEmailAddress|textNoSuggestions"
-                app:label="@string/settings_recovery_email_new" />
-
-            <me.proton.core.presentation.ui.view.ProtonInput
-                android:id="@+id/confirmNewEmailInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text|textEmailAddress|textNoSuggestions"
-                app:label="@string/settings_recovery_email_current" />
-
-            <me.proton.core.presentation.ui.view.ProtonProgressButton
-                android:id="@+id/saveButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_top_margin"
-                android:text="@string/settings_save" />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_gravity="center"
+                android:elevation="3dp"
+                android:indeterminate="true"
+                android:indeterminateTint="?attr/brand_norm" />
+        </FrameLayout>
+    </FrameLayout>
 </layout>

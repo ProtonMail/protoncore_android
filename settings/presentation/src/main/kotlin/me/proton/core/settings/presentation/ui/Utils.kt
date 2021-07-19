@@ -31,13 +31,12 @@ private const val TAG_PASSWORD_ENTER_DIALOG = "password_enter_dialog"
  * @param largeLayout how to present the dialog (default false)
  */
 fun FragmentManager.showPasswordEnterDialog(
-    context: Context,
     largeLayout: Boolean = false,
-    twoFA: Boolean = false,
+    secondFactor: Boolean = false,
     block: (password: String, secondFactorCode: String) -> Unit
 ) {
     findFragmentByTag(TAG_PASSWORD_ENTER_DIALOG) ?: run {
-        val updateDialogFragment = EnterPasswordDialog(false) { password, twoFA ->
+        val updateDialogFragment = EnterPasswordDialog(secondFactor) { password, twoFA ->
             block(password, twoFA)
         }
         if (largeLayout) {

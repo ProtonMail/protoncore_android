@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -53,6 +54,8 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
     private val userId: UserId by lazy { input.user }
 
     private val settings: Settings? by lazy { input.settings }
+
+    private val secondFactor: Boolean by lazy { input.secondFactorNeeded }
 
     override fun layoutId() = R.layout.fragment_update_recovery_email
 
@@ -82,15 +85,29 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
         }
         viewModel.currentRecoveryEmailState.onEach {
             when (it) {
-                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Error.Message -> {
-
+                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Error.Message -> showError(it.message)
+                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Idle -> {
                 }
-                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Idle,
-                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Processing -> {
-
-                }
+                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Processing -> showLoading(true)
                 is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Success -> {
+                    showLoading(false)
                     setCurrentRecoveryEmail(it.recoveryEmail)
+                }
+            }.exhaustive
+        }.launchIn(lifecycleScope)
+
+        viewModel.updateRecoveryEmailState.onEach {
+            when (it) {
+                is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Error.Message -> showError(it.message)
+                is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Idle -> {
+                }
+                is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Processing -> showLoading(true)
+                is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Success -> {
+                    binding.apply {
+                        newEmailInput.text = ""
+                        confirmNewEmailInput.text = ""
+                    }
+                    findOutCurrentRecoveryAddress()
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -117,7 +134,9 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
     ) = with(binding) {
         val confirmedRecoveryEmail = confirmNewEmailInput.text.toString()
         if (newRecoveryEmail == confirmedRecoveryEmail) {
-            childFragmentManager.showPasswordEnterDialog(context = requireContext()) { password: String, secondFactorCode: String ->
+            childFragmentManager.showPasswordEnterDialog(
+                secondFactor = secondFactor
+            ) { password: String, secondFactorCode: String ->
                 viewModel.updateRecoveryEmail(
                     userId = input.user,
                     newRecoveryEmail = confirmNewEmailInput.text.toString(),
@@ -143,6 +162,17 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
                 binding.currentEmailInput.hintText = getString(R.string.settings_not_set)
             }
         } ?: run { binding.currentEmailInput.hintText = getString(R.string.settings_not_set) }
+    }
+
+    private fun showLoading(loading: Boolean) {
+        binding.progressLayout.visibility = if (loading) View.VISIBLE else View.GONE
+    }
+
+    private fun showError(message: String?) {
+        showLoading(false)
+        binding.root.errorSnack(
+            message = message ?: getString(R.string.settings_general_error)
+        )
     }
 
     private fun finish() {

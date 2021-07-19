@@ -70,6 +70,7 @@ class EnterPasswordDialog(
                         onClick {
                             with(binding) {
                                 action.invoke(password.text.toString(), twoFA.text.toString())
+                                dismissAllowingStateLoss()
                             }
                         }
                     }

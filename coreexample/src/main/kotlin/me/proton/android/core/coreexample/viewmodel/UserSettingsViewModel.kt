@@ -47,7 +47,7 @@ class UserSettingsViewModel @Inject constructor(
                 settingsOrchestrator.startUpdateRecoveryEmailWorkflow(
                     userId = it.userId,
                     username = it.username,
-                    secondFactorNeeded = it.details.session?.twoPassModeEnabled ?: false
+                    secondFactorNeeded = it.details.session?.secondFactorEnabled ?: false
                 )
             }
         }
