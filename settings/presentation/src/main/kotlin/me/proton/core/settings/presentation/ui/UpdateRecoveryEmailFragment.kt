@@ -19,7 +19,9 @@
 package me.proton.core.settings.presentation.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.presentation.ui.ProtonFragment
@@ -44,5 +46,25 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
                 }
             }
         )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as UpdateRecoveryEmailActivity).binding.toolbar.apply {
+            setNavigationOnClickListener {
+                finish()
+            }
+        }
+    }
+
+    private fun finish() {
+        parentFragmentManager.setFragmentResult(
+            KEY_UPDATE_RESULT, bundleOf(BUNDLE_KEY_PLAN to null)
+        )
+        parentFragmentManager.popBackStackImmediate()
+    }
+    companion object {
+        const val KEY_UPDATE_RESULT = "key.update_result"
+        const val BUNDLE_KEY_PLAN = "bundle.update_result"
     }
 }

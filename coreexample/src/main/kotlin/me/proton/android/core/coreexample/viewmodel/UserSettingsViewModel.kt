@@ -34,15 +34,17 @@ import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.presentation.utils.showToast
+import me.proton.core.settings.presentation.SettingsOrchestrator
 import javax.inject.Inject
 
 @HiltViewModel
 class UserSettingsViewModel @Inject constructor(
-    private val accountManager: AccountManager
+    private val accountManager: AccountManager,
+    private val settingsOrchestrator: SettingsOrchestrator
 ) : ViewModel() {
 
     fun register(context: ComponentActivity) {
-
+        settingsOrchestrator.register(context)
     }
 
     private fun getPrimaryUserId() = accountManager.getPrimaryUserId()
@@ -51,7 +53,7 @@ class UserSettingsViewModel @Inject constructor(
         viewModelScope.launch {
             getPrimaryUserId().first()?.let {
                 val account = accountManager.getAccount(it).first() ?: return@launch
-
+                settingsOrchestrator.startUpdateRecoveryEmailWorkflow()
             }
         }
     }

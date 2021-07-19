@@ -39,11 +39,6 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
         project(Module.networkDomain),
-//        project(Module.paymentDomain),
-//        project(Module.paymentPresentation),
-//
-//        // Features
-//        project(Module.planDomain),
 
         // Android
         `android-ktx`,

@@ -16,6 +16,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<manifest package="me.proton.core.settings.presentation">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.proton.core.settings.presentation">
 
+    <application>
+        <activity android:name=".ui.UpdateRecoveryEmailActivity" />
+    </application>
 </manifest>

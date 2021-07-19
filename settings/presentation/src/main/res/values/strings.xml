@@ -23,4 +23,5 @@
     <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
     <string name="settings_recovery_email_new_hint">Enter Email Address</string>
     <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
+    <string name="settings_save">Save</string>
 </resources>

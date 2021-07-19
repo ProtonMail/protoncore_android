@@ -71,6 +71,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
         accountViewModel.register(this)
         plansViewModel.register(this)
+        settingsViewModel.register(this)
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }

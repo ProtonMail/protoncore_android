@@ -21,7 +21,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/double_top_margin"
+        android:paddingTop="@dimen/double_top_margin"
+        android:paddingEnd="@dimen/double_top_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,6 +37,13 @@
                 android:layout_height="wrap_content"
                 android:inputType="text|textEmailAddress|textNoSuggestions"
                 app:label="@string/settings_recovery_email_current" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/separator_norm" />
 
             <me.proton.core.presentation.ui.view.ProtonInput
                 android:id="@+id/newEmailInput"
@@ -48,6 +58,13 @@
                 android:layout_height="wrap_content"
                 android:inputType="text|textEmailAddress|textNoSuggestions"
                 app:label="@string/settings_recovery_email_current" />
+
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:text="@string/settings_save" />
         </LinearLayout>
     </ScrollView>
 </layout>
