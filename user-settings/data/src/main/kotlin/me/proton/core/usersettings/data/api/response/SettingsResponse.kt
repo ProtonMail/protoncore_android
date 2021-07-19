@@ -16,23 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.usersettings.data.api.response
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.api.repository.UserSettingsRepositoryImpl
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.usersettings.domain.entity.UserSettings
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SettingsModule {
-
-    @Provides
-    @Singleton
-    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
-        UserSettingsRepositoryImpl(apiProvider)
+@Serializable
+data class SettingsResponse(
+    @SerialName("UserSettings")
+    val userSettingsResponse: UserSettingsResponse
+) {
+    fun toUserSettings(): UserSettings = userSettingsResponse.toUserSettings()
 }

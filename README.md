@@ -234,12 +234,12 @@ Plan Domain: **0.1.1** - _released on: Jul 29, 2021_
 
 Plan Presentation: **0.1.1** - _released on: Jul 29, 2021_
 
-### Settings
+### User Settings
 
-Settings: **0** - _released on: Jun 25, 2021_
+User Settings: **0** - _released on: Jun 25, 2021_
 
-Settings Data: **0** - _released on: Jun 25, 2021_
+User Settings Data: **0** - _released on: Jun 25, 2021_
 
-Settings Domain: **0** - _released on: Jun 25, 2021_
+User Settings Domain: **0** - _released on: Jun 25, 2021_
 
-Settings Presentation: **0** - _released on: Jun 25, 2021_
+User Settings Presentation: **0** - _released on: Jun 25, 2021_

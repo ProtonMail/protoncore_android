@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
-import me.proton.core.settings.presentation.SettingsOrchestrator
+import me.proton.core.usersettings.presentation.SettingsOrchestrator
 import javax.inject.Inject
 
 @HiltViewModel

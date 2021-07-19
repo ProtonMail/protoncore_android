@@ -16,23 +16,29 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.usersettings.domain.repository
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.api.repository.UserSettingsRepositoryImpl
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.usersettings.domain.entity.UserSettings
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SettingsModule {
+interface UserSettingsRepository {
 
-    @Provides
-    @Singleton
-    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
-        UserSettingsRepositoryImpl(apiProvider)
+    /**
+     * Returns the general settings for the user.
+     */
+    suspend fun getSettings(
+        sessionUserId: SessionUserId
+    ): UserSettings
+
+    /**
+     * Updates user's recovery email.
+     */
+    suspend fun updateRecoveryEmail(
+        sessionUserId: SessionUserId,
+        email: String,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String,
+        secondFactorCode: String
+    ): UserSettings
 }

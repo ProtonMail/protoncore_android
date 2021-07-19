@@ -16,23 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.usersettings.presentation.entity
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.api.repository.UserSettingsRepositoryImpl
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SettingsModule {
-
-    @Provides
-    @Singleton
-    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
-        UserSettingsRepositoryImpl(apiProvider)
-}
+@Parcelize
+data class UpdateRecoveryEmailResult(
+    val result: Boolean
+) : Parcelable

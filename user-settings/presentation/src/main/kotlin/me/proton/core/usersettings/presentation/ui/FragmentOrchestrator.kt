@@ -16,23 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.usersettings.presentation.ui
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.api.repository.UserSettingsRepositoryImpl
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
+import androidx.fragment.app.FragmentManager
+import me.proton.core.presentation.utils.inTransaction
+import me.proton.core.usersettings.presentation.entity.SettingsInput
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SettingsModule {
+private const val TAG_RECOVERY_EMAIL = "recovery_fragment"
 
-    @Provides
-    @Singleton
-    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
-        UserSettingsRepositoryImpl(apiProvider)
+fun FragmentManager.showRecoveryEmail(
+    containerId: Int = android.R.id.content,
+    input: SettingsInput
+) {
+    findFragmentByTag(TAG_RECOVERY_EMAIL) ?: run {
+        val updateRecoveryEmailFragment = UpdateRecoveryEmailFragment(input)
+        inTransaction {
+            setCustomAnimations(0, 0)
+            add(containerId, updateRecoveryEmailFragment)
+            addToBackStack(TAG_RECOVERY_EMAIL)
+        }
+    }
 }

@@ -15,24 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
-package me.proton.android.core.coreexample.di
+plugins {
+    id("com.android.library")
+    kotlin("android")
+    kotlin("plugin.serialization")
+}
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.api.repository.UserSettingsRepositoryImpl
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
+libVersion = Version(0, 0, 1)
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SettingsModule {
+android()
 
-    @Provides
-    @Singleton
-    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
-        UserSettingsRepositoryImpl(apiProvider)
+dependencies {
+
+    implementation(
+        project(Module.domain),
+        project(Module.userSettingsDomain),
+        project(Module.kotlinUtil),
+        project(Module.network),
+
+        // Other
+        `retrofit`,
+        `retrofit-kotlin-serialization`
+    )
+
+    testImplementation(project(Module.androidTest))
+    androidTestImplementation(project(Module.androidInstrumentedTest))
 }

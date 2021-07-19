@@ -16,23 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+import studio.forface.easygradle.dsl.*
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.api.repository.UserSettingsRepositoryImpl
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
+plugins {
+    id("com.android.library")
+    kotlin("android")
+}
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SettingsModule {
+libVersion = Version(0, 0, 1)
 
-    @Provides
-    @Singleton
-    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
-        UserSettingsRepositoryImpl(apiProvider)
+android()
+
+dependencies {
+    api(
+        project(Module.userSettingsData),
+        project(Module.userSettingsDomain),
+        project(Module.userSettingsPresentation)
+    )
 }

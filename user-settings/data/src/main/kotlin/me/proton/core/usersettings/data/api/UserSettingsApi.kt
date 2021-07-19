@@ -16,23 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.usersettings.data.api
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.api.repository.UserSettingsRepositoryImpl
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
+import me.proton.core.usersettings.data.api.response.SettingsResponse
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.PUT
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SettingsModule {
+internal interface UserSettingsApi : BaseRetrofitApi {
 
-    @Provides
-    @Singleton
-    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
-        UserSettingsRepositoryImpl(apiProvider)
+    @PUT("settings/email")
+    suspend fun updateRecoveryEmail(@Body request: UpdateRecoveryEmailRequest): SettingsResponse
+
+    @GET("settings")
+    suspend fun getSettings(): SettingsResponse
 }

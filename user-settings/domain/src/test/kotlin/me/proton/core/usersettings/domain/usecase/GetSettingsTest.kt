@@ -1,0 +1,102 @@
+/*
+ * Copyright (c) 2021 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package me.proton.core.usersettings.domain.usecase
+
+import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
+import me.proton.core.usersettings.domain.entity.Flags
+import me.proton.core.usersettings.domain.entity.Password
+import me.proton.core.usersettings.domain.entity.Setting
+import me.proton.core.usersettings.domain.entity.UserSettings
+import me.proton.core.usersettings.domain.repository.UserSettingsRepository
+import org.junit.Before
+import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
+
+class GetSettingsTest {
+    // region mocks
+    private val repository = mockk<UserSettingsRepository>(relaxed = true)
+    // endregion
+
+    // region test data
+    private val testUserId = UserId("test-user-id")
+    private val testUserSettingsResponse = UserSettings(
+        email = Setting("test-email", 1, 1, 1),
+        phone = null,
+        twoFA = null,
+        password = Password(mode = 1, expirationTime = null),
+        news = 0,
+        locale = "en",
+        logAuth = 1,
+        density = 1,
+        invoiceText = "",
+        dateFormat = 1,
+        timeFormat = 2,
+        themeType = 1,
+        weekStart = 7,
+        welcome = 1,
+        earlyAccess = 1,
+        theme = "test-theme",
+        flags = Flags(1)
+    )
+    // endregion
+    private lateinit var useCase: GetSettings
+
+    @Before
+    fun beforeEveryTest() {
+        useCase = GetSettings(repository)
+    }
+
+    @Test
+    fun `get user settings returns success`() = runBlockingTest {
+        // GIVEN
+        coEvery { repository.getSettings(testUserId) } returns testUserSettingsResponse
+        // WHEN
+        val result = useCase.invoke(testUserId)
+        // THEN
+        assertEquals(testUserSettingsResponse, result)
+        val email = result.email
+        assertNotNull(email)
+        assertEquals("test-email", email.value)
+    }
+
+    @Test
+    fun `get user settings returns error`() = runBlockingTest {
+        // GIVEN
+        coEvery { repository.getSettings(testUserId) } throws ApiException(
+            ApiResult.Error.Connection(
+                false,
+                RuntimeException("Test error")
+            )
+        )
+        // WHEN
+        val throwable = assertFailsWith(ApiException::class) {
+            useCase.invoke(testUserId)
+        }
+        // THEN
+        assertNotNull(throwable)
+        assertEquals("Test error", throwable.message)
+    }
+}

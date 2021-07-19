@@ -69,7 +69,7 @@ dependencies {
         project(Module.payment),
         project(Module.country),
         project(Module.plan),
-        project(Module.settings),
+        project(Module.userSettings),
 
         `kotlin-jdk7`,
         `coroutines-android`,

@@ -16,23 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.usersettings.domain.usecase
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.api.repository.UserSettingsRepositoryImpl
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SettingsModule {
-
-    @Provides
-    @Singleton
-    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
-        UserSettingsRepositoryImpl(apiProvider)
+class GetSettings @Inject constructor(
+    private val userSettingsRepository: UserSettingsRepository
+) {
+    suspend operator fun invoke(sessionUserId: SessionUserId) = userSettingsRepository.getSettings(sessionUserId)
 }
