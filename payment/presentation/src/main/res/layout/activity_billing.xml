@@ -118,6 +118,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/default_margin"
                             android:layout_weight="1"
+                            android:hint="@string/payments_security_code_hint"
                             android:inputType="number|textNoSuggestions"
                             app:label="@string/payments_security_code" />
 
@@ -127,6 +128,7 @@
                         android:id="@+id/countriesText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
                         android:hint="@string/payments_choose_country"
                         android:inputType="none"
                         app:label="@string/payments_country" />
@@ -134,7 +136,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/double_top_margin"
                         android:orientation="horizontal">
 
                         <me.proton.core.presentation.ui.view.ProtonInput

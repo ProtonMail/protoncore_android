@@ -156,7 +156,10 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
                 is SignupViewModel.State.Idle -> { }
                 is SignupViewModel.State.Error.HumanVerification,
                 is SignupViewModel.State.Error.PlanChooserCancel,
-                is SignupViewModel.State.Error.Message -> showLoading(false)
+                is SignupViewModel.State.Error.Message -> {
+                    showLoading(false)
+                    binding.progressLayout.visibility = View.GONE
+                }
                 is SignupViewModel.State.Success,
                 is SignupViewModel.State.Processing -> {
                     binding.progressLayout.visibility = View.VISIBLE

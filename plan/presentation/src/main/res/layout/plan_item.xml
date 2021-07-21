@@ -58,6 +58,7 @@
             style="@style/Proton.Text.Default.Weak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gap_small"
             android:maxLines="1"
             android:text="@string/plan_price_monthly"
             tools:text="/month" />
@@ -124,7 +125,7 @@
         style="@style/ProtonSpinnerStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_large"
+        android:layout_marginTop="@dimen/gap_large_plus"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,7 +134,7 @@
 
     <TextView
         android:id="@+id/billingCycleDescriptionText"
-        style="@style/Proton.Text.Default.Weak"
+        style="@style/Proton.Text.DefaultSmall.Weak"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/gap_small"
@@ -149,7 +150,7 @@
         style="@style/ProtonSpinnerStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_large"
+        android:layout_marginTop="@dimen/gap_medium"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

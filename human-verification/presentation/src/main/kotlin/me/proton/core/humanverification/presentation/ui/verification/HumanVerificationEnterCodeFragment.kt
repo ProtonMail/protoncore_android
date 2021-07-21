@@ -33,6 +33,7 @@ import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogF
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.ARG_TOKEN_CODE
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.KEY_VERIFICATION_DONE
 import me.proton.core.humanverification.presentation.utils.showHelp
+import me.proton.core.humanverification.presentation.utils.showRequestNewCodeDialog
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
@@ -73,7 +74,11 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
         viewModel.tokenType = tokenType
 
         destination?.let {
-            binding.title.text = String.format(getString(R.string.human_verification_enter_code_subtitle), destination)
+            binding.title.text = if (tokenType == TokenType.EMAIL) {
+                String.format(getString(R.string.human_verification_enter_code_subtitle_email), destination)
+            } else {
+                String.format(getString(R.string.human_verification_enter_code_subtitle), destination)
+            }
         } ?: run {
             binding.title.text = getString(R.string.human_verification_enter_code_subtitle_already_have_code)
         }
@@ -107,7 +112,14 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
                         )
                     }
             }
-            requestReplacementButton.onClick { viewModel.resendCode(sessionId) }
+            requestReplacementButton.onClick {
+                parentFragmentManager.showRequestNewCodeDialog(
+                    context = requireContext(),
+                    destination = destination
+                ) {
+                    viewModel.resendCode(sessionId)
+                }
+            }
         }
 
         viewModel.verificationCodeResendStatus

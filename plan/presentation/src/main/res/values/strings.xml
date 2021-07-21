@@ -23,14 +23,12 @@
     <string name="plans_customizable_features_web">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to customize your plan.</string>
     <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
     <string name="plans_free_name">Free</string>
-    <string name="plan_price_monthly">/month</string>
+    <string name="plan_price_monthly">/ month</string>
     <string name="plans_current_plan">Current Plan</string>
     <string name="plans_upgrade_plan">Upgrade plan</string>
     <string name="plans_subscription">Subscription</string>
     <string name="plans_renewal_date">Your plan will automatically renew on</string>
-    <string name="plans_billed_yearly_eur">Billed as %d %s per year</string>
-    <string name="plans_billed_yearly_usd">Billed as %s %d per year</string>
-    <string name="plans_billed_yearly_chf">Billed as %d %s per year</string>
+    <string name="plans_billed_yearly">Billed as %s per year</string>
     <string name="plans_save_20">Save 20% by switching to annual billing</string>
 
     <!-- plan details -->

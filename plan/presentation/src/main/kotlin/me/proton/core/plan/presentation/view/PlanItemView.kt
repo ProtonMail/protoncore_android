@@ -20,6 +20,7 @@ package me.proton.core.plan.presentation.view
 
 import android.content.Context
 import android.content.res.Resources
+import android.icu.number.NumberFormatter
 import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -34,8 +35,11 @@ import me.proton.core.plan.presentation.databinding.PlanItemBinding
 import me.proton.core.plan.presentation.entity.Currency
 import me.proton.core.plan.presentation.entity.Cycle
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
+import me.proton.core.presentation.utils.formatPriceAndCurrencyDefaultLocale
+import me.proton.core.presentation.utils.formatPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
+import java.text.NumberFormat
 import java.util.Locale
 
 class PlanItemView @JvmOverloads constructor(
@@ -191,29 +195,11 @@ class PlanItemView @JvmOverloads constructor(
             }
         }.exhaustive.toDouble()
 
-        planPriceText.text = when (selectedCurrency) {
-            Currency.EUR -> String.format("%.2f%s", monthlyPrice / 100, selectedCurrency.sign)
-            Currency.USD -> String.format("%s%.2f", selectedCurrency.sign, monthlyPrice / 100)
-            Currency.CHF -> String.format("%.2f%s", monthlyPrice / 100, selectedCurrency.sign)
-        }.exhaustive
-
-        planPriceDescriptionText.text = when (selectedCurrency) {
-            Currency.EUR -> String.format(
-                context.getString(R.string.plans_billed_yearly_eur),
-                billableAmount / 100,
-                selectedCurrency.sign
-            )
-            Currency.USD -> String.format(
-                context.getString(R.string.plans_billed_yearly_usd),
-                selectedCurrency.sign,
-                billableAmount / 100
-            )
-            Currency.CHF -> String.format(
-                context.getString(R.string.plans_billed_yearly_chf),
-                billableAmount / 100,
-                selectedCurrency.sign
-            )
-        }.exhaustive
+        planPriceText.text = (monthlyPrice / 100).formatPriceDefaultLocale(selectedCurrency.name)
+        planPriceDescriptionText.text = String.format(
+            context.getString(R.string.plans_billed_yearly),
+            (billableAmount / 100).formatPriceAndCurrencyDefaultLocale(selectedCurrency.name)
+        )
     }
 }
 

@@ -27,6 +27,8 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.PlanShortDetailsBinding
 import me.proton.core.payment.presentation.entity.PlanShortDetails
+import me.proton.core.presentation.utils.formatPriceAndCurrencyDefaultLocale
+import me.proton.core.presentation.utils.formatPriceDefaultLocale
 
 internal class PlanShortDetailsView @JvmOverloads constructor(
     context: Context,
@@ -52,11 +54,7 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
             }
             value?.amount?.let {
                 amountProgress.visibility = View.GONE
-                amountText.text = context.getString(
-                    R.string.payments_price_amount,
-                    value.currency,
-                    it.toFloat().div(100)
-                )
+                amountText.text = (it.toDouble() / 100).formatPriceDefaultLocale(value.currency.name)
             } ?: run {
                 amountProgress.visibility = View.VISIBLE
             }

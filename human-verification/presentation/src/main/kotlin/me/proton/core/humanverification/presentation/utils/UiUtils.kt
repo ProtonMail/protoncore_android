@@ -18,9 +18,11 @@
 
 package me.proton.core.humanverification.presentation.utils
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationHelpFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationCaptchaFragment
@@ -28,13 +30,12 @@ import me.proton.core.humanverification.presentation.ui.verification.HumanVerifi
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationEnterCodeFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
 
-/**
- * @author Dino Kadrikj.
- */
 private const val TAG_HUMAN_VERIFICATION_DIALOG = "human_verification_dialog"
 private const val TAG_HUMAN_VERIFICATION_ENTER_CODE = "human_verification_code"
+private const val TAG_HUMAN_VERIFICATION_NEW_CODE_DIALOG = "human_verification_new_code_dialog"
 const val TAG_HUMAN_VERIFICATION_HELP = "human_verification_help"
 
 const val TOKEN_DEFAULT = "signup"
@@ -136,5 +137,39 @@ internal fun FragmentManager.showHelp() {
     inTransaction {
         setCustomAnimations(0, 0)
         add(helpFragment, TAG_HUMAN_VERIFICATION_HELP)
+    }
+}
+
+/**
+ * Presents to the user a dialog to confirm that it really wants a replacement code.
+ *
+ * @param largeLayout how to present the dialog (default false)
+ */
+fun FragmentManager.showRequestNewCodeDialog(
+    context: Context,
+    destination: String? = "",
+    largeLayout: Boolean = false,
+    action: () -> Unit
+) {
+    findFragmentByTag(TAG_HUMAN_VERIFICATION_NEW_CODE_DIALOG) ?: run {
+        val updateDialogFragment = ProtonCancellableAlertDialog(
+            title = context.getString(R.string.human_verification_code_request_new_code_title),
+            description = String.format(
+                context.getString(R.string.human_verification_code_request_new_code),
+                destination
+            ),
+            positiveButton = context.getString(R.string.human_verification_code_request_new_code_action)
+        ) {
+            action.invoke()
+        }
+        if (largeLayout) {
+            // For large screens (tablets), we show the fragment as a dialog
+            updateDialogFragment.show(this, TAG_HUMAN_VERIFICATION_NEW_CODE_DIALOG)
+        } else {
+            // The smaller screens (phones), we show the fragment fullscreen
+            inTransaction {
+                add(updateDialogFragment, TAG_HUMAN_VERIFICATION_NEW_CODE_DIALOG)
+            }
+        }
     }
 }
