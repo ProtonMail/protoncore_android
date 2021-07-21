@@ -19,6 +19,7 @@ package me.proton.core.presentation.ui.view
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
@@ -92,6 +93,8 @@ class ProtonInput : LinearLayout {
             inputType = getInteger(R.styleable.ProtonInput_android_inputType, InputType.TYPE_CLASS_TEXT)
             imeOptions = getInteger(R.styleable.ProtonInput_android_imeOptions, EditorInfo.IME_ACTION_UNSPECIFIED)
             minLines = getInteger(R.styleable.ProtonInput_android_minLines, 1)
+            editTextAlignment = getInteger(R.styleable.ProtonInput_editTextAlignment, 0)
+            editTextDirection = getInteger(R.styleable.ProtonInput_editTextDirection, 0)
             isEnabled = getBoolean(R.styleable.ProtonInput_android_enabled, true)
             endIconMode = EndIconMode.map[getInt(R.styleable.ProtonInput_actionMode, 0)] ?: EndIconMode.NONE
             getDrawable(R.styleable.ProtonInput_endIconDrawable)?.let {
@@ -101,6 +104,11 @@ class ProtonInput : LinearLayout {
             val digits = getString(R.styleable.ProtonInput_android_digits)
             if (digits != null) {
                 keyListener = DigitsKeyListener.getInstance(digits.toString())
+            }
+
+            val maxLength = getInt(R.styleable.ProtonInput_android_maxLength, -1)
+            if (maxLength >= 0) {
+                filters += InputFilter.LengthFilter(maxLength)
             }
         }
 
@@ -203,6 +211,33 @@ class ProtonInput : LinearLayout {
         get() = binding.input.minLines
         set(value) {
             binding.input.minLines = value
+        }
+
+    /**
+     * The textDirection property of the compound EditText of the view.
+     */
+    var editTextDirection: Int
+        get() = binding.input.textDirection
+        set(value) {
+            binding.input.textDirection = value
+        }
+
+    /**
+     * The textAlignment property of the compound EditText of the view.
+     */
+    var editTextAlignment: Int
+        get() = binding.input.textAlignment
+        set(value) {
+            binding.input.textAlignment = value
+        }
+
+    /**
+     * The input filters of the compound EditText of the view.
+     */
+    var filters: Array<InputFilter>
+        get() = binding.input.filters
+        set(value) {
+            binding.input.filters = value
         }
 
     /**

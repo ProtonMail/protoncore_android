@@ -74,6 +74,7 @@
         <attr name="android:digits" />
         <attr name="android:enabled" />
         <attr name="android:minLines" />
+        <attr name="android:maxLength" />
         <attr name="label" format="string" />
         <attr name="help" format="string" />
         <attr name="suffix" format="string" />
@@ -83,6 +84,27 @@
             <enum name="clear_text" value="1" />
             <enum name="password_toggle" value="2" />
             <enum name="custom_icon" value="3" />
+        </attr>
+        <!-- Same as textAlignment, but set on the internal EditText -->
+        <attr name="editTextAlignment" format="integer">
+            <enum name="inherit" value="0" />
+            <enum name="gravity" value="1" />
+            <enum name="textStart" value="2" />
+            <enum name="textEnd" value="3" />
+            <enum name="center" value="4" />
+            <enum name="viewStart" value="5" />
+            <enum name="viewEnd" value="6" />
+        </attr>
+        <!-- Same as textDirection, but set on the internal EditText -->
+        <attr name="editTextDirection" format="integer">
+            <enum name="inherit" value="0" />
+            <enum name="firstStrong" value="1" />
+            <enum name="anyRtl" value="2" />
+            <enum name="ltr" value="3" />
+            <enum name="rtl" value="4" />
+            <enum name="locale" value="5" />
+            <enum name="firstStrongLtr" value="6" />
+            <enum name="firstStrongRtl" value="7" />
         </attr>
         <attr name="endIconDrawable" format="reference" />
     </declare-styleable>
