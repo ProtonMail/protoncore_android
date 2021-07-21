@@ -49,6 +49,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.takeIfNotEmpty
 
 class UserAddressRepositoryImpl(
     private val db: AddressDatabase,
@@ -74,7 +75,7 @@ class UserAddressRepositoryImpl(
             list.map { getAddressLocal(it.toEntity(key.userId), it.keys?.toEntityList(AddressId(it.id)).orEmpty()) }
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { key -> getAddressesLocal(key.userId) },
+            reader = { key -> getAddressesLocal(key.userId).map { it.takeIfNotEmpty() } },
             writer = { _, input -> insertOrUpdate(*input.toTypedArray()) },
             delete = { key -> delete(key.userId) },
             deleteAll = { deleteAll() }
