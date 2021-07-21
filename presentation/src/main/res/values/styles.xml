@@ -21,14 +21,14 @@
     <!-- region AppBar's -->
     <style name="ProtonAppBar" parent="Widget.MaterialComponents.AppBarLayout.Surface">
         <item name="elevation">@dimen/no_elevation</item>
-        <item name="navigationIcon">@drawable/ic_arrow_left</item>
+        <item name="navigationIcon">@drawable/ic_arrow_back</item>
         <item name="closeIcon">@drawable/ic_close</item>
     </style>
 
     <style name="ProtonToolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="titleTextAppearance">@style/Proton.Text.Default.Bold</item>
         <item name="titleTextColor">@color/text_norm_selector</item>
-        <item name="navigationIcon">@drawable/ic_arrow_left</item>
+        <item name="navigationIcon">@drawable/ic_arrow_back</item>
         <item name="closeIcon">@drawable/ic_close</item>
     </style>
 
