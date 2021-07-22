@@ -93,7 +93,7 @@ Test Android Instrumented: **0.6.2** - _released on: Jul 22, 2021_
 
 Domain: **1.0.4** - _released on: Jul 07, 2021_
 
-Presentation: **0.9.5** - _released on: Jul 21, 2021_
+Presentation: **0.9.7** - _released on: Jul 22, 2021_
 
 Data: **1.3.1** - _released on: Jul 22, 2021_
 
@@ -121,13 +121,13 @@ Crypto Android: **1.1.4** - _released on: Jul 13, 2021_
 
 ### Auth
 
-Auth: **1.3.1** - _released on: Jul 16, 2021_
+Auth: **1.4** - _released on: Jul 22, 2021_
 
-Auth Domain: **1.3.1** - _released on: Jul 16, 2021_
+Auth Domain: **1.4** - _released on: Jul 22, 2021_
 
-Auth Presentation: **1.3.1** - _released on: Jul 16, 2021_
+Auth Presentation: **1.4** - _released on: Jul 22, 2021_
 
-Auth Data: **1.3.1** - _released on: Jul 16, 2021_
+Auth Data: **1.4** - _released on: Jul 22, 2021_
 
 ### Account
 
@@ -196,13 +196,13 @@ Mail Settings Data: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Human Verification
 
-Human Verification: **1.3.1** - _released on: Jul 22, 2021_
+Human Verification: **1.3.2** - _released on: Jul 22, 2021_
 
-Human Verification Domain: **1.3.1** - _released on: Jul 22, 2021_
+Human Verification Domain: **1.3.2** - _released on: Jul 22, 2021_
 
-Human Verification Presentation: **1.3.1** - _released on: Jul 22, 2021_
+Human Verification Presentation: **1.3.2** - _released on: Jul 22, 2021_
 
-Human Verification Data: **1.3.1** - _released on: Jul 22, 2021_
+Human Verification Data: **1.3.2** - _released on: Jul 22, 2021_
 
 ### Countries
 
@@ -216,20 +216,20 @@ Country Presentation: **0.1.5** - _released on: Jun 09, 2021_
 
 ### Payment
 
-Payment: **0.1.10** - _released on: Jul 13, 2021_
+Payment: **0.2** - _released on: Jul 22, 2021_
 
-Payment Data: **0.1.10** - _released on: Jul 13, 2021_
+Payment Data: **0.2** - _released on: Jul 22, 2021_
 
-Payment Domain: **0.1.10** - _released on: Jul 13, 2021_
+Payment Domain: **0.2** - _released on: Jul 22, 2021_
 
-Payment Presentation: **0.1.10** - _released on: Jul 13, 2021_
+Payment Presentation: **0.2** - _released on: Jul 22, 2021_
 
 ### Plan
 
-Plan: **0.0.3** - _released on: Jul 13, 2021_
+Plan: **0.0.4** - _released on: Jul 22, 2021_
 
-Plan Data: **0.0.3** - _released on: Jul 13, 2021_
+Plan Data: **0.0.4** - _released on: Jul 22, 2021_
 
-Plan Domain: **0.0.3** - _released on: Jul 13, 2021_
+Plan Domain: **0.0.4** - _released on: Jul 22, 2021_
 
-Plan Presentation: **0.0.3** - _released on: Jul 13, 2021_
+Plan Presentation: **0.0.4** - _released on: Jul 22, 2021_
