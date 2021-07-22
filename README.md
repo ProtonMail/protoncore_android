@@ -95,9 +95,9 @@ Domain: **1.0.4** - _released on: Jul 07, 2021_
 
 Presentation: **0.9.5** - _released on: Jul 21, 2021_
 
-Data: **1.0.3** - _released on: May 03, 2021_
+Data: **1.3.1** - _released on: Jul 22, 2021_
 
-Data Room: **0** - _released on: May 03, 2021_
+Data Room: **1.3.1** - _released on: Jul 22, 2021_
 
 ## Support
 
@@ -131,44 +131,44 @@ Auth Data: **1.3.1** - _released on: Jul 16, 2021_
 
 ### Account
 
-Account: **1.1.7** - _released on: Jun 17, 2021_
+Account: **1.3.1** - _released on: Jul 22, 2021_
 
-Account Domain: **1.1.7** - _released on: Jun 17, 2021_
+Account Domain: **1.3.1** - _released on: Jul 22, 2021_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **1.1.7** - _released on: Jun 17, 2021_
+Account Data: **1.3.1** - _released on: Jul 22, 2021_
 
 
 ### Account Manager
 
-Account Manager: **1.1.8** - _released on: Jul 07, 2021_
+Account Manager: **1.3.1** - _released on: Jul 22, 2021_
 
-Account Manager Domain: **1.1.8** - _released on: Jul 07, 2021_
+Account Manager Domain: **1.3.1** - _released on: Jul 22, 2021_
 
-Account Manager Presentation: **1.1.8** - _released on: Jul 07, 2021_
+Account Manager Presentation: **1.3.1** - _released on: Jul 22, 2021_
 
-Account Manager Data: **1.1.8** - _released on: Jul 07, 2021_
+Account Manager Data: **1.3.1** - _released on: Jul 22, 2021_
 
-Account Manager Data Db: **0** - _released on: Jul 07, 2021_
+Account Manager Data Db: **1.3.1** - _released on: Jul 22, 2021_
 
-Account Manager Dagger: **1.1.8** - _released on: Jul 07, 2021_
+Account Manager Dagger: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Key
 
-Key: **1.1.5** - _released on: Jul 08, 2021_
+Key: **1.3.1** - _released on: Jul 22, 2021_
 
-Key Domain: **1.1.5** - _released on: Jul 08, 2021_
+Key Domain: **1.3.1** - _released on: Jul 22, 2021_
 
-Key Data: **1.1.5** - _released on: Jul 08, 2021_
+Key Data: **1.3.1** - _released on: Jul 22, 2021_
 
 ### User
 
-User: **1.1.5** - _released on: Jul 19, 2021_
+User: **1.3.1** - _released on: Jul 22, 2021_
 
-User Domain: **1.1.5** - _released on: Jul 19, 2021_
+User Domain: **1.3.1** - _released on: Jul 22, 2021_
 
-User Data: **1.1.5** - _released on: Jul 19, 2021_
+User Data: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Contact
 
@@ -188,21 +188,21 @@ Mail Message Data: **0.2.2** - _released on: Jul 08, 2021_
 
 ### Mail Settings
 
-Mail Settings: **0.2.1** - _released on: Jul 07, 2021_
+Mail Settings: **1.3.1** - _released on: Jul 22, 2021_
 
-Mail Settings Domain: **0.2.1** - _released on: Jul 07, 2021_
+Mail Settings Domain: **1.3.1** - _released on: Jul 22, 2021_
 
-Mail Settings Data: **0.2.1** - _released on: Jul 07, 2021_
+Mail Settings Data: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Human Verification
 
-Human Verification: **1.2.8** - _released on: Jul 13, 2021_
+Human Verification: **1.3.1** - _released on: Jul 22, 2021_
 
-Human Verification Domain: **1.2.8** - _released on: Jul 13, 2021_
+Human Verification Domain: **1.3.1** - _released on: Jul 22, 2021_
 
-Human Verification Presentation: **1.2.8** - _released on: Jul 13, 2021_
+Human Verification Presentation: **1.3.1** - _released on: Jul 22, 2021_
 
-Human Verification Data: **1.2.8** - _released on: Jul 13, 2021_
+Human Verification Data: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Countries
 
