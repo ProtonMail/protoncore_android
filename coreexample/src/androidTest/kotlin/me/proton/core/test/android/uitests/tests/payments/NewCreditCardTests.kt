@@ -19,7 +19,7 @@
 package me.proton.core.test.android.uitests.tests.payments
 
 import me.proton.core.payment.presentation.R
-import me.proton.core.test.android.plugins.data.User.Plan.Free
+import me.proton.core.test.android.plugins.data.User.Plan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -29,7 +29,7 @@ import org.junit.Test
 
 class NewCreditCardTests : BaseTest() {
 
-    private val user = users.getUser { it.plan == Free && it.paymentMethods.isEmpty() }
+    private val user = users.getUser { it.plan == Plan.Free && it.paymentMethods.isEmpty() }
     private val newCreditCardRobot = AddCreditCardRobot()
 
     @Before
@@ -38,7 +38,7 @@ class NewCreditCardTests : BaseTest() {
             .signIn()
             .loginUser<CoreexampleRobot>(user)
             .upgradePrimary<AddCreditCardRobot>()
-            .verify { billingDetailsDisplayed("Plus", "yearly", "EUR", "48.00") }
+            .verify { billingDetailsDisplayed(Plan.Visionary, "yearly", "EUR", "48.00") }
     }
 
     @Test

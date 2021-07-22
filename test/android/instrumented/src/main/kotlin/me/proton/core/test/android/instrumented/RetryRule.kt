@@ -28,7 +28,7 @@ import org.junit.runners.model.Statement
 
 class RetryRule(
     private val activity: Class<out Activity>,
-    private val retries: Int = 2
+    private val tries: Int = 2
 ) : TestRule {
     override fun apply(base: Statement, description: Description): Statement {
         return object : Statement() {
@@ -36,8 +36,8 @@ class RetryRule(
 
             @Throws(Throwable::class)
             override fun evaluate() {
-                for (i in 0 until retries) {
-                    val run = "${i + 1} / $retries"
+                for (i in 0 until tries) {
+                    val run = "${i + 1} / $tries"
                     Log.d(testTag, "Run $run")
                     try {
                         base.evaluate()
@@ -46,7 +46,7 @@ class RetryRule(
                     } catch (t: Throwable) {
                         throwable = t
                         Log.e(testTag, "Test failed on run $run:\n ${t.message}")
-                        if (i < retries) {
+                        if (i < tries) {
                             ActivityScenario.launch(activity)
                         }
                     }

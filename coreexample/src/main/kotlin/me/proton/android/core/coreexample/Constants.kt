@@ -19,7 +19,8 @@
 package me.proton.android.core.coreexample
 
 object Constants {
-    const val BASE_URL = "https://${BuildConfig.ENVIRONMENT}"
+    const val API_HOST = "api.${BuildConfig.HOST}"
+    const val BASE_URL = "https://$API_HOST"
 }
 
 const val PLAN_PLUS_ID =

@@ -69,8 +69,7 @@ class ExistingPaymentMethodTests : BaseTest() {
             .loginUser<CoreexampleRobot>(userWithCreditCard)
             .upgradePrimary<ExistingPaymentMethodsRobot>()
             .verify {
-                paymentMethodForUserDisplayed("PayPal", "buyer@protonmail.com")
-                paymentMethodForUserDisplayed("Visa - 4242 (Exp 12/2034)", "Mackenzie VonRueden")
+                userPaymentMethodsDisplayed(userWithCreditCard.paymentMethods)
             }
     }
 }

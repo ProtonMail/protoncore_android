@@ -19,7 +19,7 @@
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
-libVersion = Version(0, 6, 1)
+libVersion = Version(0, 6, 2)
 
 plugins {
     id("com.android.library")
@@ -50,17 +50,12 @@ dependencies {
 
     // Test dependencies
     api(
-        project(Module.androidTest)
-            exclude mockk
-            exclude robolectric,
         project(Module.humanVerification),
         project(Module.auth),
         project(Module.presentation),
         project(Module.payment),
+        project(Module.accountManagerPresentation),
         project(Module.kotlinUtil),
-        project(Module.accountManagerDagger),
-        project(Module.accountManagerData),
-        project(Module.accountManager),
         project(Module.account),
         project(Module.domain),
         project(Module.data),
@@ -70,14 +65,10 @@ dependencies {
         project(Module.plan),
         project(Module.mailSettings),
 
-        // MockK
-        `mockk-android`,
-
         // Android
         espresso,
         falcon,
         uiautomator,
-        preference,
         jsonsimple,
         `android-work-testing`,
         `android-test-runner`,

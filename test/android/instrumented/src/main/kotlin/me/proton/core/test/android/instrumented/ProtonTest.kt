@@ -43,23 +43,26 @@ import org.junit.runner.Description
  *
  * @property activity an ActivityScenarioRule for the RuleChain
  */
-open class ProtonTest(private val activity: Class<out Activity>) {
+open class ProtonTest(
+    private val activity: Class<out Activity>,
+    tries: Int = 2,
+    testWatcher: TestWatcher = TestExecutionWatcher(),
+    activityScenarioRule: ActivityScenarioRule<out Activity> = ActivityScenarioRule(activity)
+) {
 
     class TestExecutionWatcher : TestWatcher() {
         override fun failed(e: Throwable?, description: Description?) = Shell.saveToFile(description)
     }
 
-    private val activityScenarioRule = ActivityScenarioRule(activity)
-    private val retryRule = RetryRule(activity)
-    private val testWatcher = TestExecutionWatcher()
+    private val retryRule = RetryRule(activity, tries)
 
     @Rule
     @JvmField
     val ruleChain = RuleChain
         .outerRule(testName)
         .around(testWatcher)
-        .around(activityScenarioRule)
-        .around(retryRule)!!
+        .around(retryRule)
+        .around(activityScenarioRule)!!
 
 
     @Before
