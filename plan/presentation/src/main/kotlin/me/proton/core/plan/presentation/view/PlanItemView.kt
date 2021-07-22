@@ -20,7 +20,6 @@ package me.proton.core.plan.presentation.view
 
 import android.content.Context
 import android.content.res.Resources
-import android.icu.number.NumberFormatter
 import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -32,14 +31,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.bold
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanItemBinding
-import me.proton.core.plan.presentation.entity.Currency
 import me.proton.core.plan.presentation.entity.Cycle
+import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
-import me.proton.core.presentation.utils.formatPriceAndCurrencyDefaultLocale
+import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.formatPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
-import java.text.NumberFormat
 import java.util.Locale
 
 class PlanItemView @JvmOverloads constructor(
@@ -53,21 +51,21 @@ class PlanItemView @JvmOverloads constructor(
     init {
         with(binding) {
             currencySpinner.selected { currencyPosition ->
-                selectedCurrency = Currency.values()[currencyPosition]
+                selectedCurrency = PlanCurrency.values()[currencyPosition]
                 calculateAndUpdatePriceUI()
             }
             billingCycleSpinner.selected { cyclePosition ->
                 selectedCycle = Cycle.values()[cyclePosition]
                 planDetailsListItem.let {
                     billableAmount = when (it) {
-                        is PlanDetailsListItem.FreePlanDetailsListItem -> 0
+                        is PlanDetailsListItem.FreePlanDetailsListItem -> PRICE_ZERO
                         is PlanDetailsListItem.PaidPlanDetailsListItem -> {
                             val planPricing = it.price
                             planPricing?.let { price ->
                                 selectedCycle.getPrice(price)
-                            } ?: 0
+                            } ?: PRICE_ZERO
                         }
-                        null -> 0
+                        null -> PRICE_ZERO
                     }.exhaustive
                 }
                 calculateAndUpdatePriceUI()
@@ -85,11 +83,11 @@ class PlanItemView @JvmOverloads constructor(
         }
     }
 
-    lateinit var planSelectionListener: (String, String, Cycle, Currency, Int) -> Unit
+    lateinit var planSelectionListener: (String, String, Cycle, PlanCurrency, Double) -> Unit
 
-    private var selectedCurrency: Currency = Currency.EUR
+    private var selectedCurrency: PlanCurrency = PlanCurrency.EUR
     private var selectedCycle: Cycle = Cycle.YEARLY
-    private var billableAmount: Int = 0
+    private var billableAmount: Double = PRICE_ZERO
     private lateinit var planId: String
     private lateinit var planName: String
 
@@ -114,7 +112,7 @@ class PlanItemView @JvmOverloads constructor(
             planCycleText.visibility = View.GONE
         }
         planPriceText.visibility = View.GONE
-        billableAmount = 0
+        billableAmount = PRICE_ZERO
 
         resources.getStringArray(R.array.free).forEach { item ->
             planContents.addView(PlanContentItemView(context).apply {
@@ -160,7 +158,7 @@ class PlanItemView @JvmOverloads constructor(
         ).also { adapter ->
             billingCycleSpinner.adapter = adapter
             billingCycleSpinner.setSelection(1)
-            billableAmount = plan.price?.yearly ?: 0
+            billableAmount = plan.price?.yearly ?: PRICE_ZERO
         }
 
         val planContentsList = context.getStringArrayByName(plan.name)
@@ -198,7 +196,7 @@ class PlanItemView @JvmOverloads constructor(
         planPriceText.text = (monthlyPrice / 100).formatPriceDefaultLocale(selectedCurrency.name)
         planPriceDescriptionText.text = String.format(
             context.getString(R.string.plans_billed_yearly),
-            (billableAmount / 100).formatPriceAndCurrencyDefaultLocale(selectedCurrency.name)
+            (billableAmount / 100).formatPriceDefaultLocale(selectedCurrency.name, fractionDigits = 0)
         )
     }
 }

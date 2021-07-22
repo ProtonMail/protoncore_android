@@ -74,7 +74,7 @@ const val `okHttp-url-connection version` = "4.9.0"         // Released: Sep, 20
 const val `trustKit version` =              "1.1.3"         // Released: Apr 30, 2020
 const val `store4 version` =                "4.0.0"         // Released: Nov 30, 2020
 const val `lifecycle-extensions version` =  "2.2.0"         // Released: Jan 00, 2020
-const val `lottie version` =                "3.7.1"         // Released: Jul 08, 2021
+const val `lottie version` =                "3.7.2"         // Released: Jul 18, 2021
 
 // endregion
 

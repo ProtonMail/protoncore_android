@@ -18,6 +18,6 @@
 
 package me.proton.core.plan.presentation.entity
 
-enum class Currency(val sign: String) {
+enum class PlanCurrency(val sign: String) {
     EUR("€"), USD("\$"), CHF("CHF")
 }

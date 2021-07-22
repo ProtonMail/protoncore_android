@@ -27,7 +27,6 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.PlanShortDetailsBinding
 import me.proton.core.payment.presentation.entity.PlanShortDetails
-import me.proton.core.presentation.utils.formatPriceAndCurrencyDefaultLocale
 import me.proton.core.presentation.utils.formatPriceDefaultLocale
 
 internal class PlanShortDetailsView @JvmOverloads constructor(

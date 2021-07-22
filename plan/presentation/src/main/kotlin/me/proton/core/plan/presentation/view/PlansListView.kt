@@ -28,6 +28,7 @@ import me.proton.core.plan.presentation.databinding.PlansListViewBinding
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.presentation.ui.adapter.ProtonAdapter
+import me.proton.core.presentation.utils.PRICE_ZERO
 
 internal class PlansListView @JvmOverloads constructor(
     context: Context,
@@ -42,7 +43,7 @@ internal class PlansListView @JvmOverloads constructor(
         onBind = { plan ->
             planDetails.planDetailsListItem = plan
             planDetails.planSelectionListener = { planId, planName, cycle, currency, amount ->
-                selectPlanListener(SelectedPlan(planId, planName, amount == 0, cycle, currency, amount))
+                selectPlanListener(SelectedPlan(planId, planName, amount == PRICE_ZERO, cycle, currency, amount))
             }
         },
         diffCallback = PlanDetailsListItem.DiffCallback

@@ -21,16 +21,12 @@ package me.proton.core.presentation.utils
 import java.text.NumberFormat
 import java.util.Locale
 
-fun Double.formatPriceDefaultLocale(currency: String): String {
-    val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-    numberFormat.maximumFractionDigits = 2
-    numberFormat.currency = java.util.Currency.getInstance(currency)
-    return numberFormat.format(this)
-}
+typealias Price = Double
+const val PRICE_ZERO = 0.0
 
-fun Int.formatPriceAndCurrencyDefaultLocale(currency: String): String {
+fun Price.formatPriceDefaultLocale(currency: String, fractionDigits: Int = 2): String {
     val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-    numberFormat.maximumFractionDigits = 0
+    numberFormat.maximumFractionDigits = fractionDigits
     numberFormat.currency = java.util.Currency.getInstance(currency)
     return numberFormat.format(this)
 }
