@@ -75,11 +75,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/separator_norm" />
-
                 <include
                     android:id="@+id/verificationHelp"
                     layout="@layout/content_human_verification_help_web"
@@ -87,10 +82,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/double_top_margin" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/separator_norm" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

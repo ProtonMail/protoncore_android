@@ -39,7 +39,7 @@
     </string-array>
     <string-array name="plus">
         <item>1 user</item>
-        <item>5GB storage*</item>
+        <item>5GB storage *</item>
         <item>5 addresses</item>
         <item>200 folders/labels</item>
         <item>Custom email address</item>

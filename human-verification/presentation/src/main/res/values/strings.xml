@@ -47,10 +47,10 @@
     <string name="verification_code_hint">XXXXXX</string>
 
     <!-- TODO: update correct strings below -->
-    <string name="human_verification_help_manual_title">Manual Verification</string>
-    <string name="human_verification_help_manual">If the three options for human verification are not working for you, you can contact us for a manual verification</string>
-    <string name="human_verification_help_website_title">Help page on our web site</string>
-    <string name="human_verification_help_website">If you need more information on the human verification. Why this is needed etc.</string>
+    <string name="human_verification_help_manual_title">Request an invite</string>
+    <string name="human_verification_help_manual">If you are having trouble creating your account, please request an invitation and we will respond within 1 business day.</string>
+    <string name="human_verification_help_website_title">Visit our Help Center</string>
+    <string name="human_verification_help_website">Learn more about human verification and why we ask for it.</string>
 
     <string name="human_verification_sending_failed">Verification code sending failed. Please try again.</string>
     <string name="human_verification_incorrect_code">Incorrect code. Please try again.</string>
