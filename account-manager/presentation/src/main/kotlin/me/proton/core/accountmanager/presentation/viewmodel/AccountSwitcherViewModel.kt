@@ -47,7 +47,6 @@ import me.proton.core.domain.arch.mapSuccessValueOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.entity.displayNameSplit
 import me.proton.core.util.kotlin.takeIfNotBlank
 import java.util.Locale
 import javax.inject.Inject
@@ -96,15 +95,10 @@ class AccountSwitcherViewModel @Inject constructor(
             .mapLatest { user -> getAccountItem(user) }
 
     private fun Account.getAccountItem(user: User?): AccountItem {
-        val split = user?.displayNameSplit
-        val letters = if (split?.firstName.isNullOrBlank() || split?.lastName.isNullOrBlank()) {
-            username.take(2)
-        } else {
-            split?.firstName?.take(1) + split?.lastName?.take(1)
-        }
+        val initials = user?.displayName?.takeIfNotBlank() ?: user?.email?.takeIfNotBlank() ?: username
         return AccountItem(
             userId = userId,
-            initials = letters.toUpperCase(Locale.getDefault()),
+            initials = initials.take(1).toUpperCase(Locale.getDefault()),
             name = user?.displayName?.takeIfNotBlank() ?: username,
             email = user?.email?.takeIfNotBlank() ?: email,
             state = state

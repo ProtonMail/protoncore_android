@@ -1,3 +1,11 @@
+## Account Manager Version [1.3.2]
+
+Jul 27, 2021
+
+### Bug Fixes
+
+- Changed Account Initials Count to 1.
+
 ## Presentation Version [0.9.9]
 
 Jul 26, 2021
