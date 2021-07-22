@@ -34,6 +34,7 @@
     <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.</string>
 
     <string name="auth_password_label">Password</string>
+    <string name="auth_password_help">Password must contain at least 8 characters</string>
     <string name="auth_email_username">Email or username</string>
     <string name="auth_account_details">Enter your Proton Account details.</string>
     <string name="auth_sign_in">Sign in</string>
@@ -98,6 +99,8 @@
     <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
     <string name="auth_user_check_delinquent_action">Pay invoice</string>
 
+    <string name="auth_one_account_all_services">One account for all Proton services.</string>
+    <string name="auth_create_account">Create account</string>
 
     <!-- signup related strings -->
     <string name="auth_signup_create_account">Create your Proton Account</string>
@@ -107,7 +110,7 @@
     <string name="auth_signup_username">Username</string>
     <string name="auth_signup_email">Email</string>
     <string name="auth_signup_next">Next</string>
-    <string name="auth_signup_choose_password">Choose your password</string>
+    <string name="auth_signup_choose_password">Create your password</string>
     <string name="auth_signup_repeat_password">Repeat password</string>
     <string name="auth_signup_recovery_method_title">Set recovery method (Optional)</string>
     <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>

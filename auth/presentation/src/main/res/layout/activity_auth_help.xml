@@ -43,10 +43,6 @@
                 android:paddingStart="@dimen/auth_parent_default_padding"
                 android:paddingEnd="@dimen/auth_parent_default_padding">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/auth_no_toolbar_top_margin"/>
-
                 <TextView
                     android:id="@+id/title"
                     style="@style/ProtonTextView.Title"

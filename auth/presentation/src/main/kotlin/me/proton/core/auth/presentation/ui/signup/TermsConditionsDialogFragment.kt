@@ -32,7 +32,6 @@ import me.proton.core.auth.presentation.databinding.FragmentTermsConditionsBindi
 import me.proton.core.auth.presentation.viewmodel.signup.TermsConditionsViewModel
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.errorSnack
-import me.proton.core.presentation.utils.onClick
 
 @AndroidEntryPoint
 class TermsConditionsDialogFragment : ProtonDialogFragment<FragmentTermsConditionsBinding>() {
@@ -43,7 +42,7 @@ class TermsConditionsDialogFragment : ProtonDialogFragment<FragmentTermsConditio
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.closeButton.onClick {
+        binding.toolbar.setNavigationOnClickListener {
             dismissAllowingStateLoss()
         }
 

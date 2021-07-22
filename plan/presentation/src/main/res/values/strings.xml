@@ -25,7 +25,7 @@
     <string name="plans_free_name">Free</string>
     <string name="plan_price_monthly">/month</string>
     <string name="plans_current_plan">Current Plan</string>
-    <string name="plans_upgrade_plan">Upgrade</string>
+    <string name="plans_upgrade_plan">Upgrade plan</string>
     <string name="plans_subscription">Subscription</string>
     <string name="plans_renewal_date">Your plan will automatically renew on</string>
     <string name="plans_billed_yearly_eur">Billed as %d %s per year</string>

@@ -62,7 +62,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
         super.onCreate(savedInstanceState)
 
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
 

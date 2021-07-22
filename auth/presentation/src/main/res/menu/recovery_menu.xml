@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ Copyright (c) 2021 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
@@ -16,9 +16,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <FrameLayout
-        android:id="@+id/layoutContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</layout>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/recovery_menu_skip"
+        android:title="@string/presentation_skip"
+        app:showAsAction="always"/>
+</menu>

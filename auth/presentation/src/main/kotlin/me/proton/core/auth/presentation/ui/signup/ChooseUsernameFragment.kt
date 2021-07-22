@@ -73,9 +73,9 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 requireActivity().finish()
             }
             usernameInput.setOnFocusLostListener { _, _ ->

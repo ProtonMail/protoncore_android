@@ -37,8 +37,8 @@
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/gap_huge"
-            android:layout_marginStart="@dimen/gap_huge"
-            android:layout_marginEnd="@dimen/gap_huge"
+            android:layout_marginStart="@dimen/default_horizontal_padding"
+            android:layout_marginEnd="@dimen/default_horizontal_padding"
             android:layout_marginBottom="@dimen/gap_huge"
             app:srcCompat="?attr/add_account_logo"
             app:layout_constraintBottom_toTopOf="@id/title"
@@ -51,9 +51,9 @@
             style="@style/Proton.Text.Headline.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginStart="@dimen/default_horizontal_padding"
             android:layout_marginTop="@dimen/gap_huge"
-            android:layout_marginEnd="@dimen/gap_huge"
+            android:layout_marginEnd="@dimen/default_horizontal_padding"
             android:layout_marginBottom="@dimen/gap_medium"
             android:gravity="center"
             android:text="?attr/add_account_title"
@@ -67,9 +67,9 @@
             style="@style/Proton.Text.DefaultSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginStart="@dimen/default_horizontal_padding"
             android:layout_marginTop="@dimen/gap_medium"
-            android:layout_marginEnd="@dimen/gap_huge"
+            android:layout_marginEnd="@dimen/default_horizontal_padding"
             android:layout_marginBottom="@dimen/gap_large"
             android:gravity="center"
             android:text="?attr/add_account_subtitle"
@@ -88,9 +88,9 @@
             style="@style/ProtonButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginStart="@dimen/default_horizontal_padding"
             android:layout_marginTop="@dimen/gap_large"
-            android:layout_marginEnd="@dimen/gap_huge"
+            android:layout_marginEnd="@dimen/default_horizontal_padding"
             android:text="@string/auth_sign_in"
             app:layout_constraintBottom_toTopOf="@id/sign_up"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,10 +102,10 @@
             style="@style/ProtonButton.Borderless.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginStart="@dimen/default_horizontal_padding"
             android:layout_marginTop="@dimen/gap_medium"
-            android:layout_marginEnd="@dimen/gap_huge"
-            android:text="Create account"
+            android:layout_marginEnd="@dimen/default_horizontal_padding"
+            android:text="@string/auth_create_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sign_in" />
@@ -114,9 +114,9 @@
             android:id="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/gap_huge"
+            android:layout_marginStart="@dimen/default_horizontal_padding"
             android:layout_marginTop="@dimen/gap_huge"
-            android:layout_marginEnd="@dimen/gap_huge"
+            android:layout_marginEnd="@dimen/default_horizontal_padding"
             android:layout_marginBottom="@dimen/gap_huge"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -166,13 +166,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="One account for all Proton services."
+                android:text="@string/auth_one_account_all_services"
                 android:textColor="@color/santas_gray" />
 
         </LinearLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>

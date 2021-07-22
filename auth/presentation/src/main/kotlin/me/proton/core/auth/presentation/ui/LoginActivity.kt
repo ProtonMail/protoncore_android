@@ -60,7 +60,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
         viewModel.register(this)
         viewModel.observeHumanVerification(this)
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
 

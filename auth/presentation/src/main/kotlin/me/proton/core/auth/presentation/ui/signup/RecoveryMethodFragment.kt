@@ -54,14 +54,25 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            closeButton.onClick {
-                if (nextButton.currentState == ProtonProgressButton.State.IDLE) {
-                    parentFragmentManager.popBackStackImmediate()
+            toolbar.apply {
+                setNavigationOnClickListener {
+                    if (nextButton.currentState == ProtonProgressButton.State.IDLE) {
+                        parentFragmentManager.popBackStackImmediate()
+                    }
+                }
+
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.recovery_menu_skip -> {
+                            showSkip()
+                            true
+                        }
+                        else -> false
+                    }
                 }
             }
             initTabs()
             initTermsAndConditions()
-            skipButton.onClick(::showSkip)
             nextButton.onClick(::onNextClicked)
         }
 

@@ -43,7 +43,7 @@ class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBindin
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 parentFragmentManager.popBackStackImmediate()
             }
 
