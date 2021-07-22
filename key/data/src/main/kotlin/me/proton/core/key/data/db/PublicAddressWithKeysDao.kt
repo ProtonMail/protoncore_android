@@ -22,7 +22,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.data.db.BaseDao
+import me.proton.core.data.room.db.BaseDao
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressWithKeys
 

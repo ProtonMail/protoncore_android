@@ -49,6 +49,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.takeIfNotEmpty
 
 class UserAddressRepositoryImpl(
     private val db: AddressDatabase,
@@ -74,7 +75,7 @@ class UserAddressRepositoryImpl(
             list.map { getAddressLocal(it.toEntity(key.userId), it.keys?.toEntityList(AddressId(it.id)).orEmpty()) }
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { key -> getAddressesLocal(key.userId) },
+            reader = { key -> getAddressesLocal(key.userId).map { it.takeIfNotEmpty() } },
             writer = { _, input -> insertOrUpdate(*input.toTypedArray()) },
             delete = { key -> delete(key.userId) },
             deleteAll = { deleteAll() }
@@ -108,6 +109,11 @@ class UserAddressRepositoryImpl(
             addressKeyDao.insertOrUpdate(*addressKeys.toTypedArray())
         }
 
+    private suspend fun delete(vararg addressId: AddressId) =
+        db.inTransaction {
+            addressId.forEach { addressDao.delete(it) }
+        }
+
     private suspend fun delete(userId: UserId) =
         addressDao.deleteAll(userId)
 
@@ -122,6 +128,12 @@ class UserAddressRepositoryImpl(
 
     override suspend fun addAddresses(addresses: List<UserAddress>) =
         insertOrUpdate(*addresses.toTypedArray())
+
+    override suspend fun updateAddresses(addresses: List<UserAddress>) =
+        insertOrUpdate(*addresses.toTypedArray())
+
+    override suspend fun deleteAddresses(addressIds: List<AddressId>) =
+        delete(*addressIds.toTypedArray())
 
     override fun getAddressesFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
         store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh)).map { it.toDataResult() }

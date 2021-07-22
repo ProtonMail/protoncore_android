@@ -25,18 +25,9 @@ plugins {
     kotlin("kapt")
 }
 
-libVersion = Version(1, 1, 8)
+libVersion = Version(1, 3, 1)
 
-android() {
-    defaultConfig {
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-                // arguments["room.incremental"] = "true"
-            }
-        }
-    }
-}
+android()
 
 dependencies {
 
@@ -45,33 +36,19 @@ dependencies {
         project(Module.network),
         project(Module.domain),
         project(Module.data),
-        project(Module.accountManagerDomain),
-        project(Module.crypto),
 
         // Features
-        project(Module.authData),
+        project(Module.accountManagerDomain),
         project(Module.authDomain),
-        project(Module.accountData),
         project(Module.accountDomain),
-        project(Module.userData),
         project(Module.userDomain),
-        project(Module.keyData),
         project(Module.keyDomain),
-        project(Module.humanVerificationData),
         project(Module.humanVerificationDomain),
-        project(Module.mailSettingsData),
         project(Module.mailSettingsDomain),
 
         // Kotlin
         `kotlin-jdk8`,
-        `coroutines-core`,
-
-        // Other
-        `room-ktx`
-    )
-
-    kapt(
-        `room-compiler`
+        `coroutines-core`
     )
 
     testImplementation(project(Module.androidTest))

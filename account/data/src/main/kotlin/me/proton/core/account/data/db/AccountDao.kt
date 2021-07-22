@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
-import me.proton.core.data.db.BaseDao
+import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 

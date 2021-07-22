@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 1, 5)
+libVersion = Version(1, 3, 1)
 
 android()
 
@@ -35,6 +35,7 @@ dependencies {
         project(Module.networkDomain),
         project(Module.networkData),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.domain),
         project(Module.userDomain),
         project(Module.cryptoCommon),
@@ -63,6 +64,7 @@ dependencies {
         project(Module.auth),
         project(Module.account),
         project(Module.accountManager),
+        project(Module.accountManagerDataDb),
         project(Module.cryptoAndroid),
         project(Module.gopenpgp)
     )

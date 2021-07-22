@@ -19,9 +19,9 @@
 package me.proton.core.test.android.uitests.tests
 
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.android.core.coreexample.di.AppDatabaseModule
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDevice
-import me.proton.core.test.android.plugins.Database.clearAccountManagerDb
 import me.proton.core.test.android.plugins.data.User.Users
 import org.junit.After
 import org.junit.BeforeClass
@@ -31,17 +31,18 @@ open class BaseTest : ProtonTest(MainActivity::class.java) {
     @After
     override fun tearDown() {
         super.tearDown()
-        clearAccountManagerDb()
+        db.clearAllTables()
     }
 
     companion object {
         val users = Users("sensitive/users.json")
+        val db = AppDatabaseModule.provideAppDatabase(getContext())
 
         @JvmStatic
         @BeforeClass
         fun prepare() {
             setupDevice(true)
-            clearAccountManagerDb()
+            db.clearAllTables()
         }
     }
 }

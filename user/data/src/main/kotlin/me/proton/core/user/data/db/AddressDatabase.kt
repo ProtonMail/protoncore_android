@@ -18,11 +18,43 @@
 
 package me.proton.core.user.data.db
 
-import me.proton.core.data.db.Database
+import androidx.sqlite.db.SupportSQLiteDatabase
+import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
+import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.user.data.db.dao.AddressDao
 import me.proton.core.user.data.db.dao.AddressWithKeysDao
 
 interface AddressDatabase : Database, AddressKeyDatabase {
     fun addressDao(): AddressDao
     fun addressWithKeysDao(): AddressWithKeysDao
+
+    companion object {
+        /**
+         * -  Create Table AddressEntity.
+         * -  Create Table AddressKeyEntity.
+         */
+        val MIGRATION_0 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Create Table AddressEntity.
+                database.execSQL("CREATE TABLE IF NOT EXISTS `AddressEntity` (`userId` TEXT NOT NULL, `addressId` TEXT NOT NULL, `email` TEXT NOT NULL, `displayName` TEXT, `domainId` TEXT, `canSend` INTEGER NOT NULL, `canReceive` INTEGER NOT NULL, `enabled` INTEGER NOT NULL, `type` INTEGER, `order` INTEGER NOT NULL, PRIMARY KEY(`addressId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_AddressEntity_addressId` ON `AddressEntity` (`addressId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_AddressEntity_userId` ON `AddressEntity` (`userId`)")
+
+                // Create Table AddressKeyEntity.
+                database.execSQL("CREATE TABLE IF NOT EXISTS `AddressKeyEntity` (`addressId` TEXT NOT NULL, `keyId` TEXT NOT NULL, `version` INTEGER NOT NULL, `privateKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, `flags` INTEGER NOT NULL, `token` TEXT, `signature` TEXT, `fingerprint` TEXT, `fingerprints` TEXT, `activation` TEXT, `active` INTEGER NOT NULL, PRIMARY KEY(`keyId`), FOREIGN KEY(`addressId`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_AddressKeyEntity_addressId` ON `AddressKeyEntity` (`addressId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_AddressKeyEntity_keyId` ON `AddressKeyEntity` (`keyId`)")
+            }
+        }
+
+        /**
+         * - Added AddressEntity.signature.
+         */
+        val MIGRATION_1 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(table = "AddressEntity", column = "signature", type = "TEXT")
+            }
+        }
+    }
 }

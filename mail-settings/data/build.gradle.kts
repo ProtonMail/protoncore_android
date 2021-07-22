@@ -24,7 +24,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(0, 2, 1)
+libVersion = Version(1, 3, 1)
 
 android()
 
@@ -33,6 +33,7 @@ dependencies {
     implementation(
         project(Module.kotlinUtil),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.domain),
         project(Module.network),
         project(Module.mailSettingsDomain),

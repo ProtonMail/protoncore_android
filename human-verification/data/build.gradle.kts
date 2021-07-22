@@ -26,7 +26,7 @@ plugins {
     kotlin("kapt")
 }
 
-libVersion = Version(1, 2, 8)
+libVersion = Version(1, 3, 1)
 
 android(minSdk = 23)
 
@@ -37,6 +37,7 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.network),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.crypto),
         project(Module.authData),
         project(Module.authDomain),

@@ -22,9 +22,9 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.data.db.CommonConverters
+import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.data.room.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session

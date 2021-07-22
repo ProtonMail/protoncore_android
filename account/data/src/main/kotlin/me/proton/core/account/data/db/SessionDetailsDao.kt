@@ -22,7 +22,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.account.data.entity.SessionDetailsEntity
-import me.proton.core.data.db.BaseDao
+import me.proton.core.data.room.db.BaseDao
 import me.proton.core.network.domain.session.SessionId
 
 @Dao

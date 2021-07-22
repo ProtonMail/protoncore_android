@@ -40,6 +40,17 @@ interface UserRepository {
     )
 
     /**
+     * Update a [User], locally.
+     *
+     * Note: This function is usually used for Events handling.
+     *
+     * @throws IllegalStateException if corresponding account doesn't exist.
+     */
+    suspend fun updateUser(
+        user: User
+    )
+
+    /**
      * Get [User], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
@@ -60,7 +71,7 @@ interface UserRepository {
     ): User
 
     /**
-     * Create new [User]. Used during signup.
+     * Create new [User], remotely. Used during signup.
      */
     suspend fun createUser(
         username: String,
@@ -73,7 +84,7 @@ interface UserRepository {
     ): User
 
     /**
-     * Create new [User]. Used during signup.
+     * Create new [User], remotely. Used during signup.
      */
     suspend fun createExternalEmailUser(
         email: String,

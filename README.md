@@ -97,6 +97,8 @@ Presentation: **0.9.5** - _released on: Jul 21, 2021_
 
 Data: **1.0.3** - _released on: May 03, 2021_
 
+Data Room: **0** - _released on: May 03, 2021_
+
 ## Support
 
 ### Network
@@ -147,6 +149,8 @@ Account Manager Domain: **1.1.8** - _released on: Jul 07, 2021_
 Account Manager Presentation: **1.1.8** - _released on: Jul 07, 2021_
 
 Account Manager Data: **1.1.8** - _released on: Jul 07, 2021_
+
+Account Manager Data Db: **0** - _released on: Jul 07, 2021_
 
 Account Manager Dagger: **1.1.8** - _released on: Jul 07, 2021_
 

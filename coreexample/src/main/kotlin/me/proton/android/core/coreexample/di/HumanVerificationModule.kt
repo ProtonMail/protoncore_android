@@ -24,11 +24,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.android.core.coreexample.BuildConfig
-import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.humanverification.data.HumanVerificationListenerImpl
 import me.proton.core.humanverification.data.HumanVerificationManagerImpl
 import me.proton.core.humanverification.data.HumanVerificationProviderImpl
+import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.repository.HumanVerificationRepositoryImpl
 import me.proton.core.humanverification.data.repository.UserVerificationRepositoryImpl
 import me.proton.core.humanverification.domain.HumanVerificationManager
@@ -72,7 +72,7 @@ object HumanVerificationModule {
     @Provides
     @Singleton
     fun provideHumanVerificationRepository(
-        db: AccountManagerDatabase,
+        db: HumanVerificationDatabase,
         keyStoreCrypto: KeyStoreCrypto
     ): HumanVerificationRepository =
         HumanVerificationRepositoryImpl(db, keyStoreCrypto)
