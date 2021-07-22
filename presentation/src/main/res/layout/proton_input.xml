@@ -42,6 +42,7 @@
         android:layout_height="wrap_content"
         app:errorEnabled="true"
         app:hintEnabled="false"
+        app:suffixTextColor="@color/text_weak"
         tools:endIconMode="clear_text"
         tools:helperText="Optional help text"
         tools:suffixText="\@protonmail.com">

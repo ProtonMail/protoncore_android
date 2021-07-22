@@ -34,8 +34,10 @@
     <dimen name="gap_small">4dp</dimen>
     <dimen name="gap_medium">8dp</dimen>
     <dimen name="gap_large">16dp</dimen>
+    <dimen name="gap_large_plus">24dp</dimen>
     <dimen name="gap_huge">32dp</dimen>
 
+    <dimen name="default_horizontal_padding">@dimen/gap_large_plus</dimen>
     <dimen name="default_gap">16dp</dimen>
     <dimen name="default_text_top_margin">8dp</dimen>
 
@@ -46,7 +48,7 @@
     <dimen name="input_text_size">16sp</dimen>
     <dimen name="default_text_size">18sp</dimen>
     <dimen name="default_text_size_small">12sp</dimen>
-    <dimen name="default_title_text_size">18sp</dimen>
+    <dimen name="default_title_text_size">24sp</dimen>
     <dimen name="default_subtitle_text_size">14sp</dimen>
 
     <!-- splash background items spacing -->

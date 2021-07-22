@@ -67,55 +67,77 @@ internal fun FragmentManager.showTermsConditions() {
 internal fun FragmentManager.showUsernameChooser(
     containerId: Int = android.R.id.content,
     requiredAccountType: AccountType
-) {
-    findFragmentByTag(TAG_USERNAME_CHOOSER) ?: run {
-        val chooserUsernameFragment = ChooseUsernameFragment(requiredAccountType = requiredAccountType)
-        inTransaction {
-            setCustomAnimations(0, 0)
-            add(containerId, chooserUsernameFragment)
-            addToBackStack(TAG_USERNAME_CHOOSER)
-        }
+) = findFragmentByTag(TAG_USERNAME_CHOOSER) ?: run {
+    val chooserUsernameFragment = ChooseUsernameFragment(requiredAccountType = requiredAccountType)
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(containerId, chooserUsernameFragment, TAG_USERNAME_CHOOSER)
+        addToBackStack(null)
     }
+    chooserUsernameFragment
 }
 
 internal fun FragmentManager.showPasswordChooser(
     containerId: Int = android.R.id.content
-) {
-    findFragmentByTag(TAG_PASSWORD_CHOOSER) ?: run {
-        val chooserUsernameFragment = ChoosePasswordFragment()
-        inTransaction {
-            setCustomAnimations(0, 0)
-            add(containerId, chooserUsernameFragment)
-            addToBackStack(TAG_PASSWORD_CHOOSER)
-        }
+) = findFragmentByTag(TAG_PASSWORD_CHOOSER) ?: run {
+    val chooserPasswordFragment = ChoosePasswordFragment()
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(containerId, chooserPasswordFragment, TAG_PASSWORD_CHOOSER)
+        addToBackStack(null)
     }
+    chooserPasswordFragment
+}
+
+internal fun FragmentManager.removePasswordChooser() = findFragmentByTag(TAG_PASSWORD_CHOOSER)?.let { passwordChooser ->
+    inTransaction {
+        setCustomAnimations(0, 0)
+        remove(passwordChooser)
+    }
+    popBackStack()
 }
 
 internal fun FragmentManager.showExternalAccountEnterCode(
     containerId: Int = android.R.id.content,
     destination: String
-) {
-    findFragmentByTag(TAG_EXTERNAL_ACCOUNT_ENTER_CODE) ?: run {
-        val enterCodeFragment = ExternalValidationTokenCodeFragment(destination)
+) = findFragmentByTag(TAG_EXTERNAL_ACCOUNT_ENTER_CODE) ?: run {
+    val enterCodeFragment = ExternalValidationTokenCodeFragment(destination)
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(containerId, enterCodeFragment)
+        addToBackStack(TAG_EXTERNAL_ACCOUNT_ENTER_CODE)
+    }
+    enterCodeFragment
+}
+
+internal fun FragmentManager.removeExternalAccountEnterCode() =
+    findFragmentByTag(TAG_EXTERNAL_ACCOUNT_ENTER_CODE)?.let { enterCode ->
         inTransaction {
             setCustomAnimations(0, 0)
-            add(containerId, enterCodeFragment)
-            addToBackStack(TAG_EXTERNAL_ACCOUNT_ENTER_CODE)
+            remove(enterCode)
         }
+        popBackStack()
     }
-}
+
 
 internal fun FragmentManager.showRecoveryMethodChooser(
     containerId: Int = android.R.id.content
-) {
-    findFragmentByTag(TAG_RECOVERY_CHOOSER) ?: run {
-        val recoveryMethodFragment = RecoveryMethodFragment()
-        inTransaction {
-            setCustomAnimations(0, 0)
-            add(containerId, recoveryMethodFragment)
-            addToBackStack(TAG_RECOVERY_CHOOSER)
-        }
+) = findFragmentByTag(TAG_RECOVERY_CHOOSER) ?: run {
+    val recoveryMethodFragment = RecoveryMethodFragment()
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(containerId, recoveryMethodFragment, TAG_RECOVERY_CHOOSER)
+        addToBackStack(null)
     }
+    recoveryMethodFragment
+}
+
+internal fun FragmentManager.removeRecoveryMethodChooser() = findFragmentByTag(TAG_RECOVERY_CHOOSER)?.let { recovery ->
+    inTransaction {
+        setCustomAnimations(0, 0)
+        remove(recovery)
+    }
+    popBackStack()
 }
 
 internal fun FragmentManager.showSkipRecoveryDialog(

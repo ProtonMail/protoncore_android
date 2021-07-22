@@ -19,6 +19,7 @@
 package me.proton.core.payment.presentation.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -87,7 +88,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
         super.onCreate(savedInstanceState)
 
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
             paymentMethodsList.apply {
@@ -122,7 +123,8 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
             when (it) {
                 is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess -> onSuccess(it.availablePaymentMethods)
                 is PaymentOptionsViewModel.State.Error.Message -> showError(it.message)
-                else -> { }
+                else -> {
+                }
             }.exhaustive
         }.launchIn(lifecycleScope)
 
@@ -133,7 +135,8 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                     binding.selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
                 }
                 is BillingViewModel.PlansValidationState.Error.Message -> showError(it.message)
-                else -> { }
+                else -> {
+                }
             }.exhaustive
         }.launchIn(lifecycleScope)
 

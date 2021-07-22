@@ -24,6 +24,7 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -50,18 +51,31 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
     override fun layoutId() = R.layout.fragment_signup_recovery
 
+    override fun onBackPressed() { parentFragmentManager.removeRecoveryMethodChooser() }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            closeButton.onClick {
-                if (nextButton.currentState == ProtonProgressButton.State.IDLE) {
-                    parentFragmentManager.popBackStackImmediate()
+            toolbar.apply {
+                setNavigationOnClickListener {
+                    if (nextButton.currentState == ProtonProgressButton.State.IDLE) {
+                        parentFragmentManager.popBackStackImmediate()
+                    }
+                }
+
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.recovery_menu_skip -> {
+                            showSkip()
+                            true
+                        }
+                        else -> false
+                    }
                 }
             }
             initTabs()
             initTermsAndConditions()
-            skipButton.onClick(::showSkip)
             nextButton.onClick(::onNextClicked)
         }
 
@@ -138,14 +152,17 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
     private fun observeForHumanVerificationFailed() {
         signupViewModel.userCreationState.onEach {
-            // this fragment is only interested in HV and error states, all other are handled by the activity
             when (it) {
+                is SignupViewModel.State.Idle -> { }
                 is SignupViewModel.State.Error.HumanVerification,
                 is SignupViewModel.State.Error.PlanChooserCancel,
-                is SignupViewModel.State.Error.Message -> showLoading(false)
-                is SignupViewModel.State.Idle,
-                is SignupViewModel.State.Processing,
-                is SignupViewModel.State.Success -> {
+                is SignupViewModel.State.Error.Message -> {
+                    showLoading(false)
+                    binding.progressLayout.visibility = View.GONE
+                }
+                is SignupViewModel.State.Success,
+                is SignupViewModel.State.Processing -> {
+                    binding.progressLayout.visibility = View.VISIBLE
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -170,6 +187,7 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
     }
 
     private fun showSkip() {
+        hideKeyboard()
         with(requireContext()) {
             childFragmentManager.showSkipRecoveryDialog(this) {
                 showLoading()

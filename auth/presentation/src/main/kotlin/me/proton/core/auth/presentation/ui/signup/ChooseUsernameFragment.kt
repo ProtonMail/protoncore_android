@@ -58,24 +58,20 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
 
     override fun layoutId() = R.layout.fragment_signup_choose_username
 
+    override fun onBackPressed() {
+        activity?.finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    activity?.finish()
-                }
-            }
-        )
         viewModel.fetchDomains()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 requireActivity().finish()
             }
             usernameInput.setOnFocusLostListener { _, _ ->

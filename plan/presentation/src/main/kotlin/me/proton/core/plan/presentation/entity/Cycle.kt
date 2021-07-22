@@ -18,15 +18,16 @@
 
 package me.proton.core.plan.presentation.entity
 
+import me.proton.core.presentation.utils.Price
 import me.proton.core.util.kotlin.exhaustive
 
 enum class Cycle {
     MONTHLY, YEARLY;
 
-    fun getPrice(pricing: PlanPricing): Int {
+    fun getPrice(pricing: PlanPricing): Price {
         return when (this) {
             MONTHLY -> pricing.monthly
             YEARLY -> pricing.yearly
-        }.exhaustive
+        }.toDouble().exhaustive
     }
 }

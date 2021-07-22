@@ -74,7 +74,9 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
         super.onCreate(savedInstanceState)
 
         binding.apply {
-            closeButton.onClick(::onBackPressed)
+            toolbar.setNavigationOnClickListener {
+                onBackPressed()
+            }
             nextButton.onClick(::onNextClicked)
             subtitleText.text = String.format(getString(R.string.auth_create_address_subtitle, input.recoveryEmail))
         }

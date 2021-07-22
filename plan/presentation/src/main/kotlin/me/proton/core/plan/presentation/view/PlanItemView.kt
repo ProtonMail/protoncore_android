@@ -31,9 +31,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.bold
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanItemBinding
-import me.proton.core.plan.presentation.entity.Currency
 import me.proton.core.plan.presentation.entity.Cycle
+import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
+import me.proton.core.presentation.utils.PRICE_ZERO
+import me.proton.core.presentation.utils.formatPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 import java.util.Locale
@@ -49,21 +51,21 @@ class PlanItemView @JvmOverloads constructor(
     init {
         with(binding) {
             currencySpinner.selected { currencyPosition ->
-                selectedCurrency = Currency.values()[currencyPosition]
+                selectedCurrency = PlanCurrency.values()[currencyPosition]
                 calculateAndUpdatePriceUI()
             }
             billingCycleSpinner.selected { cyclePosition ->
                 selectedCycle = Cycle.values()[cyclePosition]
                 planDetailsListItem.let {
                     billableAmount = when (it) {
-                        is PlanDetailsListItem.FreePlanDetailsListItem -> 0
+                        is PlanDetailsListItem.FreePlanDetailsListItem -> PRICE_ZERO
                         is PlanDetailsListItem.PaidPlanDetailsListItem -> {
                             val planPricing = it.price
                             planPricing?.let { price ->
                                 selectedCycle.getPrice(price)
-                            } ?: 0
+                            } ?: PRICE_ZERO
                         }
-                        null -> 0
+                        null -> PRICE_ZERO
                     }.exhaustive
                 }
                 calculateAndUpdatePriceUI()
@@ -81,11 +83,11 @@ class PlanItemView @JvmOverloads constructor(
         }
     }
 
-    lateinit var planSelectionListener: (String, String, Cycle, Currency, Int) -> Unit
+    lateinit var planSelectionListener: (String, String, Cycle, PlanCurrency, Double) -> Unit
 
-    private var selectedCurrency: Currency = Currency.EUR
+    private var selectedCurrency: PlanCurrency = PlanCurrency.EUR
     private var selectedCycle: Cycle = Cycle.YEARLY
-    private var billableAmount: Int = 0
+    private var billableAmount: Double = PRICE_ZERO
     private lateinit var planId: String
     private lateinit var planName: String
 
@@ -110,7 +112,7 @@ class PlanItemView @JvmOverloads constructor(
             planCycleText.visibility = View.GONE
         }
         planPriceText.visibility = View.GONE
-        billableAmount = 0
+        billableAmount = PRICE_ZERO
 
         resources.getStringArray(R.array.free).forEach { item ->
             planContents.addView(PlanContentItemView(context).apply {
@@ -156,7 +158,7 @@ class PlanItemView @JvmOverloads constructor(
         ).also { adapter ->
             billingCycleSpinner.adapter = adapter
             billingCycleSpinner.setSelection(1)
-            billableAmount = plan.price?.yearly ?: 0
+            billableAmount = plan.price?.yearly ?: PRICE_ZERO
         }
 
         val planContentsList = context.getStringArrayByName(plan.name)
@@ -191,29 +193,11 @@ class PlanItemView @JvmOverloads constructor(
             }
         }.exhaustive.toDouble()
 
-        planPriceText.text = when (selectedCurrency) {
-            Currency.EUR -> String.format("%.2f%s", monthlyPrice / 100, selectedCurrency.sign)
-            Currency.USD -> String.format("%s%.2f", selectedCurrency.sign, monthlyPrice / 100)
-            Currency.CHF -> String.format("%.2f%s", monthlyPrice / 100, selectedCurrency.sign)
-        }.exhaustive
-
-        planPriceDescriptionText.text = when (selectedCurrency) {
-            Currency.EUR -> String.format(
-                context.getString(R.string.plans_billed_yearly_eur),
-                billableAmount / 100,
-                selectedCurrency.sign
-            )
-            Currency.USD -> String.format(
-                context.getString(R.string.plans_billed_yearly_usd),
-                selectedCurrency.sign,
-                billableAmount / 100
-            )
-            Currency.CHF -> String.format(
-                context.getString(R.string.plans_billed_yearly_chf),
-                billableAmount / 100,
-                selectedCurrency.sign
-            )
-        }.exhaustive
+        planPriceText.text = (monthlyPrice / 100).formatPriceDefaultLocale(selectedCurrency.name)
+        planPriceDescriptionText.text = String.format(
+            context.getString(R.string.plans_billed_yearly),
+            (billableAmount / 100).formatPriceDefaultLocale(selectedCurrency.name, fractionDigits = 0)
+        )
     }
 }
 

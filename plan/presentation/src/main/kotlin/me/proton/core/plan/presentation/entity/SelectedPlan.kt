@@ -20,6 +20,8 @@ package me.proton.core.plan.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import me.proton.core.presentation.utils.PRICE_ZERO
+import me.proton.core.presentation.utils.Price
 
 @Parcelize
 data class SelectedPlan(
@@ -27,12 +29,12 @@ data class SelectedPlan(
     val planName: String,
     val free: Boolean,
     val cycle: Cycle,
-    val currency: Currency,
-    val amount: Int
+    val currency: PlanCurrency,
+    val amount: Price
 ) : Parcelable {
     companion object {
         const val FREE_PLAN_ID = "free"
         fun free(freePlanName: String) =
-            SelectedPlan(FREE_PLAN_ID, freePlanName, true, Cycle.YEARLY, Currency.EUR, 0)
+            SelectedPlan(FREE_PLAN_ID, freePlanName, true, Cycle.YEARLY, PlanCurrency.EUR, PRICE_ZERO)
     }
 }

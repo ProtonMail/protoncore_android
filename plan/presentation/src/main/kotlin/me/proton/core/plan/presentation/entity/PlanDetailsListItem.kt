@@ -22,6 +22,7 @@ import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import kotlinx.android.parcel.Parcelize
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.presentation.utils.Price
 
 sealed class PlanDetailsListItem(
     open val id: String,
@@ -59,15 +60,15 @@ sealed class PlanDetailsListItem(
 
 @Parcelize
 data class PlanPricing(
-    val monthly: Int,
-    val yearly: Int,
-    val twoYearly: Int? = null
+    val monthly: Price,
+    val yearly: Price,
+    val twoYearly: Price? = null
 ) : Parcelable {
 
     companion object {
         fun fromPlan(plan: Plan) =
             plan.pricing?.let {
-                PlanPricing(it.monthly, it.yearly, it.twoYearly)
+                PlanPricing(it.monthly.toDouble(), it.yearly.toDouble(), it.twoYearly?.toDouble())
             } ?: run {
                 null
             }

@@ -34,7 +34,7 @@ class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 finish()
             }
 

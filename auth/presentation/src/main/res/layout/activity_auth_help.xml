@@ -17,24 +17,34 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <me.proton.core.presentation.ui.view.ZeroInsetLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:windowBackground">
 
-        <me.proton.core.presentation.ui.view.ProtonNavigationButton
-            android:id="@+id/closeButton"
-            style="@style/ProtonButton.Navigation"
-            android:layout_marginStart="@dimen/button_nav_margin_start"
-            android:layout_marginTop="@dimen/button_nav_margin_top"
-            app:icon="@drawable/ic_close" />
-
-        <ScrollView
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none">
+            android:layout_height="?attr/actionBarSize"
+            android:fitsSystemWindows="true"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationIcon="@drawable/ic_close"
+                tools:title="Title" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,10 +52,6 @@
                 android:orientation="vertical"
                 android:paddingStart="@dimen/auth_parent_default_padding"
                 android:paddingEnd="@dimen/auth_parent_default_padding">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/auth_no_toolbar_top_margin"/>
 
                 <TextView
                     android:id="@+id/title"
@@ -86,11 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_separator_top_margin" />
-
             </LinearLayout>
-
-        </ScrollView>
-
-    </me.proton.core.presentation.ui.view.ZeroInsetLayout>
-
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -18,31 +18,15 @@
 
 package me.proton.core.auth.presentation.ui
 
-import android.graphics.Color
-import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import androidx.databinding.ViewDataBinding
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorSnack
-import me.proton.core.presentation.utils.isNightMode
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.user.domain.UserManager
 
 abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-            if (!isNightMode()) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
-
-        window.decorView.systemUiVisibility = flags
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = Color.TRANSPARENT
-    }
 
     open fun showLoading(loading: Boolean) {
         // No op
@@ -72,7 +56,7 @@ abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
                 getString(R.string.auth_mailbox_login_error_primary_key_error)
             )
             is UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase -> onError(
-                false,
+                true,
                 getString(R.string.auth_mailbox_login_error_invalid_passphrase)
             )
         }

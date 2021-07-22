@@ -16,8 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.presentation.entity
+package me.proton.core.presentation.utils
 
-enum class Currency(val sign: String) {
-    EUR("€"), USD("\$"), CHF("CHF")
+import java.text.NumberFormat
+import java.util.Locale
+
+typealias Price = Double
+const val PRICE_ZERO = 0.0
+
+fun Price.formatPriceDefaultLocale(currency: String, fractionDigits: Int = 2): String {
+    val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+    numberFormat.maximumFractionDigits = fractionDigits
+    numberFormat.currency = java.util.Currency.getInstance(currency)
+    return numberFormat.format(this)
 }

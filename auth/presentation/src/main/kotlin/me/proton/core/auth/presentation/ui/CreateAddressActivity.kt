@@ -56,7 +56,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
         super.onCreate(savedInstanceState)
 
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 finish()
             }
             createAddressButton.onClick {

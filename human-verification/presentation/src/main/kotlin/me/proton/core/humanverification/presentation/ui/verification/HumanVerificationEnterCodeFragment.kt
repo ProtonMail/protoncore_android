@@ -20,6 +20,7 @@ package me.proton.core.humanverification.presentation.ui.verification
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +33,7 @@ import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogF
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.ARG_TOKEN_CODE
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.KEY_VERIFICATION_DONE
 import me.proton.core.humanverification.presentation.utils.showHelp
+import me.proton.core.humanverification.presentation.utils.showRequestNewCodeDialog
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
@@ -72,18 +74,30 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
         viewModel.tokenType = tokenType
 
         destination?.let {
-            binding.title.text = String.format(getString(R.string.human_verification_enter_code_subtitle), destination)
+            binding.title.text = if (tokenType == TokenType.EMAIL) {
+                String.format(getString(R.string.human_verification_enter_code_subtitle_email), destination)
+            } else {
+                String.format(getString(R.string.human_verification_enter_code_subtitle), destination)
+            }
         } ?: run {
             binding.title.text = getString(R.string.human_verification_enter_code_subtitle_already_have_code)
         }
 
         binding.apply {
             // this should go inside the custom edit text input view (validation also with error text below the view)
-            headerNavigation.closeButton.apply {
-                binding.headerNavigation.closeButton.setIconResource(R.drawable.ic_arrow_back)
-                onClick { onBackPressed() }
+            toolbar.apply {
+                navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back)
+                setNavigationOnClickListener { onBackPressed() }
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.menu_help -> {
+                            childFragmentManager.showHelp()
+                            true
+                        }
+                        else -> false
+                    }
+                }
             }
-            headerNavigation.helpButton.onClick { childFragmentManager.showHelp() }
             verifyButton.onClick {
                 hideKeyboard()
                 verificationCodeEditText.validate()
@@ -98,7 +112,14 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
                         )
                     }
             }
-            requestReplacementButton.onClick { viewModel.resendCode(sessionId) }
+            requestReplacementButton.onClick {
+                parentFragmentManager.showRequestNewCodeDialog(
+                    context = requireContext(),
+                    destination = destination
+                ) {
+                    viewModel.resendCode(sessionId)
+                }
+            }
         }
 
         viewModel.verificationCodeResendStatus

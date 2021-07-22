@@ -16,22 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.plan.presentation.entity
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
-
-libVersion = Version(1, 3, 2)
-
-android()
-
-dependencies {
-
-    api(
-        project(Module.humanVerificationDomain),
-        project(Module.humanVerificationData),
-        project(Module.humanVerificationPresentation)
-    )
+enum class PlanCurrency(val sign: String) {
+    EUR("€"), USD("\$"), CHF("CHF")
 }

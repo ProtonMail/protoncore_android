@@ -40,7 +40,6 @@ import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.PlansViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
-import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -75,25 +74,17 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
         super.onViewCreated(view, savedInstanceState)
         if (viewModel.supportedPaidPlanIds.isNotEmpty()) {
             binding.apply {
-                closeButton.onClick {
-                    finish()
-                }
-                val toolbar = activity?.toolbar
-                toolbar?.setNavigationOnClickListener {
+                toolbar.setNavigationOnClickListener {
                     finish()
                 }
                 input.user?.let {
                     if (input.showCurrent) {
                         plansTitle.visibility = View.GONE
-                        toolbar?.title = getString(R.string.plans_subscription)
+                        toolbar.title = getString(R.string.plans_subscription)
                     } else {
-                        toolbar?.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
+                        toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
                         plansTitle.text = getString(R.string.plans_upgrade_plan)
                     }
-                    closeButton.visibility = View.GONE
-                    gap.visibility = View.GONE
-                } ?: run {
-                    toolbar?.visibility = View.GONE
                 }
             }
             viewModel.availablePlansState.onEach {
@@ -144,8 +135,10 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
             viewModel.getCurrentPlanWithUpgradeOption(userId = input.user, input.showCurrent)
         } else {
             parentFragmentManager.setFragmentResult(
-                KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to
-                    SelectedPlan.free(getString(R.string.plans_free_name)))
+                KEY_PLAN_SELECTED, bundleOf(
+                    BUNDLE_KEY_PLAN to
+                        SelectedPlan.free(getString(R.string.plans_free_name))
+                )
             )
         }
     }

@@ -40,7 +40,7 @@ open class HumanVerificationRobot : CoreRobot() {
      * Clicks 'help' button
      * @return [HumanVerificationRobot]
      */
-    fun help(): HumanVerificationRobot = clickElement(R.id.helpButton)
+    fun help(): HumanVerificationRobot = clickElement(R.id.menu_help)
 
     /**
      * Selects 'email' human verification option

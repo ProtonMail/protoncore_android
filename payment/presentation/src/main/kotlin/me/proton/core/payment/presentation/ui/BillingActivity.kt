@@ -66,11 +66,11 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
 
         binding.apply {
             findOutPlan()
-            closeButton.apply {
+            toolbar.apply {
                 if (input.userId != null) {
-                    setIconResource(R.drawable.ic_arrow_back)
+                    navigationIcon = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back)
                 }
-                onClick {
+                setNavigationOnClickListener {
                     onBackPressed()
                 }
             }

@@ -40,10 +40,9 @@ import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.client.getId
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
-import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -156,11 +155,19 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             .onEach { setActiveVerificationMethod(TokenType.fromString(it)) }
             .launchIn(lifecycleScope)
 
-        binding.headerNavigation.closeButton.onClick {
-            setResult(tokenType = null, tokenCode = null, canceled = true)
-        }
-        binding.headerNavigation.helpButton.onClick {
-            childFragmentManager.showHelp()
+        binding.toolbar.apply {
+            setNavigationOnClickListener {
+                setResult(tokenType = null, tokenCode = null, canceled = true)
+            }
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_help -> {
+                        childFragmentManager.showHelp()
+                        true
+                    }
+                    else -> false
+                }
+            }
         }
 
         binding.verificationOptions.addOnTabSelectedListener(object :

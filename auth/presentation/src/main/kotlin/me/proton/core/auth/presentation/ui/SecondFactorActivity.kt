@@ -64,7 +64,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
         super.onCreate(savedInstanceState)
 
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
 

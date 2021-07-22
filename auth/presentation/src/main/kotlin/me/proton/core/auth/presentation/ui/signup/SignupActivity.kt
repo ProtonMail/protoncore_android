@@ -132,7 +132,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
                 popBackStackImmediate()
             }
         }
-        binding.progressLayout.visibility = View.VISIBLE
+        binding.lottieProgress.visibility = View.VISIBLE
         loginViewModel.startLoginWorkflow(
             signUpViewModel.getLoginUsername()!!,
             signUpViewModel.password,

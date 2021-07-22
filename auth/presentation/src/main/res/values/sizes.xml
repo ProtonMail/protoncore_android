@@ -22,16 +22,16 @@
     <dimen name="auth_help_item_height">@dimen/list_item_height</dimen>
     <dimen name="horizontal_separator_height">1px</dimen>
     <!-- general dimensions gaps -->
-    <dimen name="auth_no_toolbar_top_margin">160dp</dimen>
     <dimen name="auth_help_item_horizontal_margin">12dp</dimen>
     <dimen name="auth_parent_default_padding">@dimen/default_gap</dimen>
     <dimen name="auth_content_separator_top_margin">@dimen/double_top_margin</dimen>
     <dimen name="auth_content_top_margin">@dimen/default_gap</dimen>
     <dimen name="auth_view_items_top_margin">@dimen/default_text_top_margin</dimen>
     <dimen name="auth_subtitle_top_margin">@dimen/default_text_top_margin</dimen>
-    <dimen name="auth_signup_top_margin">@dimen/gap_medium</dimen>
     <!-- add account sizes -->
     <dimen name="add_account_illustration_height">250dp</dimen>
     <!-- text sizes -->
     <dimen name="auth_help_item_text_size">@dimen/default_text_size</dimen>
+    <!-- other -->
+    <dimen name="auth_lottie_animation">160dp</dimen>
 </resources>

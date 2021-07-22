@@ -51,11 +51,15 @@ class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidat
         value
     }
 
+    override fun onBackPressed() {
+        parentFragmentManager.removeExternalAccountEnterCode()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            closeButton.onClick {
+            toolbar.setNavigationOnClickListener {
                 parentFragmentManager.popBackStackImmediate()
             }
 
