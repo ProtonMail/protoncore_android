@@ -57,7 +57,7 @@ assemble:
 debugTests:
   stage: test
   tags:
-    - medium
+    - large
   script:
     - ./gradlew -Pci --console=plain allTest
 
