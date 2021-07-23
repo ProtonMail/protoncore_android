@@ -62,6 +62,8 @@ class UserAddressRepositoryImpl(
     private val addressKeyDao = db.addressKeyDao()
     private val addressWithKeysDao = db.addressWithKeysDao()
 
+    private var fetched = false
+
     private data class StoreKey(val userId: UserId, val addressId: AddressId? = null)
 
     private val store = StoreBuilder.from(
@@ -72,10 +74,11 @@ class UserAddressRepositoryImpl(
                 else
                     getAddresses().addresses
             }.valueOrThrow
+            fetched = true
             list.map { getAddressLocal(it.toEntity(key.userId), it.keys?.toEntityList(AddressId(it.id)).orEmpty()) }
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { key -> getAddressesLocal(key.userId).map { it.takeIfNotEmpty() } },
+            reader = { key -> getAddressesLocal(key.userId).map { it.takeIf { it.isNotEmpty() || fetched } } },
             writer = { _, input -> insertOrUpdate(*input.toTypedArray()) },
             delete = { key -> delete(key.userId) },
             deleteAll = { deleteAll() }
