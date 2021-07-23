@@ -166,7 +166,7 @@ Key Data: **1.3.1** - _released on: Jul 22, 2021_
 
 User: **1.3.2** - _released on: Jul 23, 2021_
 
-User Domain: **1.3.1** - _released on: Jul 22, 2021_
+User Domain: **1.3.2** - _released on: Jul 23, 2021_
 
 User Data: **1.3.2** - _released on: Jul 23, 2021_
 
