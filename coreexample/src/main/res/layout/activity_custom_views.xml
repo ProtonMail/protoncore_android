@@ -307,7 +307,7 @@
                 android:enabled="false"
                 app:layout_constraintTop_toBottomOf="@id/switchExample" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
+            <me.proton.core.presentation.ui.view.ProtonCheckbox
                 android:id="@+id/checkBoxExample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -315,7 +315,7 @@
                 android:text="@string/example_check_box_label1"
                 app:layout_constraintTop_toBottomOf="@id/switchDisabledExample" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
+            <me.proton.core.presentation.ui.view.ProtonCheckbox
                 android:id="@+id/checkBoxCheckedExample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -324,7 +324,7 @@
                 android:checked="true"
                 app:layout_constraintTop_toBottomOf="@id/checkBoxExample" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
+            <me.proton.core.presentation.ui.view.ProtonCheckbox
                 android:id="@+id/checkBoxDisabledExample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -341,12 +341,12 @@
                 android:layout_marginTop="@dimen/double_top_margin"
                 app:layout_constraintTop_toBottomOf="@id/checkBoxDisabledExample">
 
-                <RadioButton
+                <me.proton.core.presentation.ui.view.ProtonRadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/example_radio1_label" />
 
-                <RadioButton
+                <me.proton.core.presentation.ui.view.ProtonRadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/example_radio2_label" />
