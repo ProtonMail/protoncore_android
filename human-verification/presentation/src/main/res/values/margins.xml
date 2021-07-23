@@ -30,4 +30,6 @@
 
     <dimen name="human_verification_header_title_margin">4dp</dimen>
     <dimen name="human_verification_header_horizontal_margin">12dp</dimen>
+
+    <dimen name="human_verification_captcha_vertical_margin">48dp</dimen>
 </resources>
