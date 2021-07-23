@@ -1,3 +1,15 @@
+## User Version [1.3.2]
+
+Jul 23, 2021
+
+### Bug Fixes
+
+- Fixed UserAddressRepositoryImpl issue when no address returned from fetcher.
+
+### Recommendations
+
+- You must update to this version because it prevent to properly sign in/up without address.
+
 ## Version [1.3.1]
 
 Jul 21, 2021
