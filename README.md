@@ -196,13 +196,13 @@ Mail Settings Data: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Human Verification
 
-Human Verification: **1.3.2** - _released on: Jul 22, 2021_
+Human Verification: **1.3.3** - _released on: Jul 26, 2021_
 
-Human Verification Domain: **1.3.2** - _released on: Jul 22, 2021_
+Human Verification Domain: **1.3.3** - _released on: Jul 26, 2021_
 
-Human Verification Presentation: **1.3.2** - _released on: Jul 22, 2021_
+Human Verification Presentation: **1.3.3** - _released on: Jul 26, 2021_
 
-Human Verification Data: **1.3.2** - _released on: Jul 22, 2021_
+Human Verification Data: **1.3.3** - _released on: Jul 26, 2021_
 
 ### Countries
 
