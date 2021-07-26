@@ -142,7 +142,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
                     newRecoveryEmail = confirmNewEmailInput.text.toString(),
                     username = input.username,
                     password = password,
-                    twoFactorCode = secondFactorCode
+                    secondFactorCode = secondFactorCode
                 )
             }
         } else {

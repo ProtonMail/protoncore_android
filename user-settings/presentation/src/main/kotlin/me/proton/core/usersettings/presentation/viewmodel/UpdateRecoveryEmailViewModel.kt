@@ -87,7 +87,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         newRecoveryEmail: String,
         username: String,
         password: EncryptedString,
-        twoFactorCode: String
+        secondFactorCode: String
     ) = flow {
         emit(UpdateRecoveryEmailState.Processing)
         val encryptedPassword = password.encryptWith(keyStoreCrypto)
@@ -96,7 +96,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
             newRecoveryEmail = newRecoveryEmail,
             username = username,
             password = encryptedPassword,
-            twoFactorCode = twoFactorCode
+            secondFactorCode = secondFactorCode
         )
         // we expect always value for the email on success, thus !!
         emit(UpdateRecoveryEmailState.Success(updateRecoveryEmailResult.email?.value))

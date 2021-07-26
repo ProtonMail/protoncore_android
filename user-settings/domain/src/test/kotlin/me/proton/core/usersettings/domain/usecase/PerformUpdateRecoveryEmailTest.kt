@@ -86,7 +86,6 @@ class PerformUpdateRecoveryEmailTest {
 
     @Before
     fun beforeEveryTest() {
-
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
