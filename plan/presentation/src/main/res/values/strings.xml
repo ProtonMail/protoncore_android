@@ -67,6 +67,6 @@
     </string-array>
     <string-array name="supported_billing_cycle">
         <item>Monthly billing</item>
-        <item>Annually billing - SAVE 20%</item>
+        <item>Annual billing - SAVE 20%</item>
     </string-array>
 </resources>

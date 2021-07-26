@@ -110,6 +110,7 @@ class PlanItemView @JvmOverloads constructor(
             planCycleText.text = context.getString(R.string.plans_current_plan)
         } else {
             planCycleText.visibility = View.GONE
+            planPriceDescriptionText.visibility = View.GONE
         }
         planPriceText.visibility = View.GONE
         billableAmount = PRICE_ZERO

@@ -91,7 +91,6 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                 }
             }
             sendDirect.onClick { mailMessageViewModel.sendDirect() }
-            payment.onClick { plansViewModel.onPayUpgradeClicked() }
             plans.onClick { plansViewModel.onPlansClicked() }
             plansUpgrade.onClick { plansViewModel.onPlansUpgradeClicked(this@MainActivity) }
             plansCurrent.onClick { plansViewModel.onCurrentPlanClicked(this@MainActivity) }

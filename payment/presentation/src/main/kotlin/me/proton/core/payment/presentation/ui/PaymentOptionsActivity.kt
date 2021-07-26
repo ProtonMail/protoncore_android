@@ -55,7 +55,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
     private val user by lazy {
         UserId(input.userId)
     }
-    private lateinit var selectedPaymentMethodId: String
+    private var selectedPaymentMethodId: String? = null
 
     private var amountDue: Long? = null
 
@@ -73,8 +73,9 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                 PaymentMethodType.PAYPAL -> ContextCompat.getDrawable(this@PaymentOptionsActivity, R.drawable.ic_paypal)
             }.exhaustive
             paymentMethodIcon.setImageDrawable(drawable)
-            paymentMethodRadio.isChecked = selected || position == 0
-            if (position == 0) {
+            paymentMethodRadio.isChecked = selected
+            if (position == 0 && selectedPaymentMethodId == null) {
+                paymentMethodRadio.isChecked = true
                 selectedPaymentMethodId = paymentMethod.id
             }
         },
@@ -108,7 +109,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                         input.codes,
                         input.plan.currency,
                         input.plan.subscriptionCycle,
-                        PaymentType.PaymentMethod(selectedPaymentMethodId)
+                        PaymentType.PaymentMethod(selectedPaymentMethodId!!)
                     )
                 }
             }
@@ -166,6 +167,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
 
     private fun onPaymentMethodClicked(paymentMethod: PaymentOptionUIModel) {
         selectedPaymentMethodId = paymentMethod.id
+        paymentOptionsAdapter.notifyItemChanged(0) // invalidate the first option
     }
 
     override fun onThreeDSApprovalResult(amount: Long, token: String, success: Boolean) {
