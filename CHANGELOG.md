@@ -1,3 +1,11 @@
+## Presentation Version [0.9.9]
+
+Jul 26, 2021
+
+### New Features
+
+- Added ```ProtonCheckbox``` and ```ProtonRadioButton``` that display their "button" (i.e. the checkbox or circle) to the right of the label.
+
 ## User Version [1.3.2]
 
 Jul 23, 2021
