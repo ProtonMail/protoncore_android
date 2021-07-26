@@ -93,7 +93,7 @@ Test Android Instrumented: **0.6.2** - _released on: Jul 22, 2021_
 
 Domain: **1.0.4** - _released on: Jul 07, 2021_
 
-Presentation: **0.9.8** - _released on: Jul 23, 2021_
+Presentation: **0.9.9** - _released on: Jul 26, 2021_
 
 Data: **1.3.1** - _released on: Jul 22, 2021_
 
