@@ -43,12 +43,6 @@ class MailboxPasswordRobot : CoreRobot() {
     inline fun <reified T> unlock(): T = clickElement(R.id.unlockButton)
 
     /**
-     * Clicks close button
-     * @param T next Robot to be returned
-     */
-    inline fun <reified T> close(): T = clickElement(R.id.closeButton)
-
-    /**
      * Fills in passphrase of a given [user]. Clicks 'unlock' button.
      * @param T next Robot in flow
      * @return an instance of [T]

@@ -40,7 +40,7 @@ open class HumanVerificationRobot : CoreRobot() {
      * Clicks 'help' button
      * @return [HumanVerificationRobot]
      */
-    fun help(): HumanVerificationRobot = clickElement(R.id.menu_help)
+    fun help(): HumanVerificationRobot = clickElement(R.id.menu_help, TextView::class.java)
 
     /**
      * Selects 'email' human verification option
@@ -101,12 +101,6 @@ open class HumanVerificationRobot : CoreRobot() {
         view.instanceOf(WebView::class.java).wait().click()
         return T::class.java.newInstance()
     }
-
-    /**
-     * Clicks close button
-     * @param T next Robot to be returned
-     */
-    inline fun <reified T> close(): T = clickElement(R.id.closeButton)
 
     /**
      * Clicks text view with [option] text

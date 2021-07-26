@@ -19,7 +19,7 @@
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
-libVersion = Version(0, 6, 2)
+libVersion = Version(0, 6, 3)
 
 plugins {
     id("com.android.library")

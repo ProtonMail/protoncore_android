@@ -92,7 +92,7 @@ class RecoveryMethodsRobot : CoreRobot() {
      * Clicks 'Skip' button.
      * @return [SkipRecoveryRobot]
      */
-    fun skip(): SkipRecoveryRobot = clickElement("Skip")
+    fun skip(): SkipRecoveryRobot = clickElement(R.id.recovery_menu_skip, TextView::class.java)
 
     class Verify : CoreVerify() {
         fun recoveryMethodsElementsDisplayed() {

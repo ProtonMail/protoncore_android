@@ -51,7 +51,7 @@ class HumanVerificationTests : BaseTest() {
         humanVerificationRobot
             .sms()
             .countryCodeList()
-            .close<HumanVerificationRobot>()
+            .closeCountries<HumanVerificationRobot>()
             .help()
             .close<HumanVerificationRobot>()
             .close<CoreexampleRobot>()

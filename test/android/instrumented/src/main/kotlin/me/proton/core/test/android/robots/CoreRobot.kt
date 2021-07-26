@@ -20,7 +20,9 @@ package me.proton.core.test.android.robots
 
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.annotation.IdRes
+import me.proton.core.auth.R
 import me.proton.core.test.android.instrumented.Robot
 import me.proton.core.test.android.instrumented.builders.OnView
 
@@ -65,6 +67,21 @@ open class CoreRobot : Robot {
      */
     inline fun <reified T> clickElement(element: OnView): T {
         element.wait().click()
+        return T::class.java.newInstance()
+    }
+
+    /**
+     * Clicks close button
+     * @param T next Robot to be returned
+     */
+    inline fun <reified T> close(): T {
+        view
+            .instanceOf(ImageButton::class.java)
+            .withParent(
+                view.withId(R.id.toolbar)
+            )
+            .wait()
+            .click()
         return T::class.java.newInstance()
     }
 

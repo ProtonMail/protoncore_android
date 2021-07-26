@@ -29,7 +29,7 @@ import org.junit.Test
 
 class NewCreditCardTests : BaseTest() {
 
-    private val user = users.getUser { it.plan == Plan.Free && it.paymentMethods.isEmpty() }
+    private val user = users.getUser { it.plan == Plan.Free && it.cards.isEmpty() }
     private val newCreditCardRobot = AddCreditCardRobot()
 
     @Before
@@ -38,7 +38,7 @@ class NewCreditCardTests : BaseTest() {
             .signIn()
             .loginUser<CoreexampleRobot>(user)
             .upgradePrimary<AddCreditCardRobot>()
-            .verify { billingDetailsDisplayed(Plan.Visionary, "yearly", "EUR", "48.00") }
+            .verify { billingDetailsDisplayed(Plan.Visionary, "yearly", "€", "48.00") }
     }
 
     @Test

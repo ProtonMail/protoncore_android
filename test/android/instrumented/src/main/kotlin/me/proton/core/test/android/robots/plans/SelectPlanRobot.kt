@@ -27,9 +27,6 @@ class SelectPlanRobot : CoreRobot() {
 
     inline fun <reified T> selectPlan(plan: User.Plan): T {
         view
-            .withId(R.id.planListRecyclerView)
-            .wait()
-            .scrollTo()
             .withId(R.id.selectPlan)
             .hasSibling(
                 view.withId(R.id.planNameText).withText(plan.name)
@@ -42,12 +39,10 @@ class SelectPlanRobot : CoreRobot() {
     class Verify : CoreVerify() {
         fun planDetailsDisplayed(plan: User.Plan?) {
             view
-                .withId(R.id.planListRecyclerView)
-                .wait()
-                .scrollTo()
                 .withId(R.id.planContents).hasSibling(
-                view.withId(R.id.planNameText).withText(plan!!.name)
-            ).wait()
+                    view.withId(R.id.planNameText).withText(plan!!.name)
+                )
+                .wait()
         }
 
         fun canSelectPlan(plan: User.Plan) {
