@@ -44,5 +44,5 @@ class CountryRobot : CoreRobot() {
      * Clicks close button
      * @param T next Robot to be returned
      */
-    inline fun <reified T> close(): T = clickElement(R.id.closeButton)
+    inline fun <reified T> closeCountries(): T = clickElement(R.id.closeButton)
 }

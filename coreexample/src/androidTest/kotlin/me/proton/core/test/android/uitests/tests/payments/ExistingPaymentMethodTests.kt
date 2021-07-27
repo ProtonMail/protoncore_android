@@ -18,12 +18,11 @@
 
 package me.proton.core.test.android.uitests.tests.payments
 
-import me.proton.core.payment.domain.entity.PaymentMethodType.CARD
-import me.proton.core.payment.domain.entity.PaymentMethodType.PAYPAL
 import me.proton.core.test.android.plugins.Requests.jailUnban
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot
+import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot.PaymentMethodElement.paymentMethod
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -41,35 +40,46 @@ class ExistingPaymentMethodTests : BaseTest() {
 
     @Test
     fun existingPaypalMethodDisplayed() {
-        val userWithPaypal = users.getUser { it.hasPaymentMethodType(PAYPAL) && !it.hasPaymentMethodType(CARD) }
+        val userWithPaypal = users.getUser { it.paypal.isNotEmpty() }
         loginRobot
             .loginUser<CoreexampleRobot>(userWithPaypal)
             .upgradePrimary<ExistingPaymentMethodsRobot>()
-            .verify { paymentMethodForUserDisplayed("PayPal", "buyer@protonmail.com") }
+            .verify { paymentMethodDisplayed("PayPal", userWithPaypal.paypal) }
     }
 
     @Test
     fun existingCreditCardMethodDisplayed() {
-        val userWithCreditCard = users.getUser { it.hasPaymentMethodType(CARD) && !it.hasPaymentMethodType(PAYPAL) }
+        val userWithCreditCard = users.getUser { it.cards.isNotEmpty() }
+        val card = userWithCreditCard.cards[0]
         loginRobot
             .loginUser<CoreexampleRobot>(userWithCreditCard)
             .upgradePrimary<ExistingPaymentMethodsRobot>()
-            .verify {
-                paymentMethodForUserDisplayed(
-                    "Visa - 4242 (Exp 12/2034)",
-                    "${userWithCreditCard.firstName} ${userWithCreditCard.lastName}"
-                )
-            }
+            .verify { paymentMethodDisplayed(card.details(), card.name) }
     }
 
     @Test
     fun existingCreditCardAndPayPalDisplayed() {
-        val userWithCreditCard = users.getUser { it.hasPaymentMethodType(CARD) && it.hasPaymentMethodType(PAYPAL) }
+        val userWithCreditCardAndPaypal = users.getUser { it.paypal.isNotEmpty() && it.cards.isNotEmpty() }
+        val card = userWithCreditCardAndPaypal.cards[0]
         loginRobot
-            .loginUser<CoreexampleRobot>(userWithCreditCard)
+            .loginUser<CoreexampleRobot>(userWithCreditCardAndPaypal)
             .upgradePrimary<ExistingPaymentMethodsRobot>()
             .verify {
-                userPaymentMethodsDisplayed(userWithCreditCard.paymentMethods)
+                paymentMethodDisplayed(card.details(), card.name)
+                paymentMethodDisplayed("PayPal", userWithCreditCardAndPaypal.paypal)
+            }
+    }
+
+    @Test
+    fun switchPaymentMethod() {
+        val userWithCreditCardAndPaypal = users.getUser { it.paypal.isNotEmpty() && it.cards.isNotEmpty() }
+        loginRobot
+            .loginUser<CoreexampleRobot>(userWithCreditCardAndPaypal)
+            .upgradePrimary<ExistingPaymentMethodsRobot>()
+            .selectPaymentMethod(userWithCreditCardAndPaypal.paypal)
+            .verify {
+                paymentMethod(userWithCreditCardAndPaypal.paypal).checkEnabled()
+                paymentMethod(userWithCreditCardAndPaypal.cards[0].details()).checkDisabled()
             }
     }
 }

@@ -21,6 +21,7 @@ package me.proton.core.test.android.robots.payments
 import android.widget.EditText
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.presentation.R
+import me.proton.core.test.android.plugins.data.Card
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
@@ -41,37 +42,11 @@ open class PaymentRobot : CoreRobot() {
         fun billingDetailsDisplayed(planName: User.Plan, billingCycle: String, currency: String, amount: String) {
             view.withId(R.id.planNameText).wait().checkContains("Proton $planName")
             view.withId(R.id.billingPeriodText).wait().checkContains("Billed $billingCycle")
-            view.withId(R.id.amountText).withText("$currency $amount").wait()
+            view.withId(R.id.amountText).withText("$currency$amount").wait()
         }
 
-        fun userPaymentMethodsDisplayed(paymentMethods: List<User.PaymentMethod>) {
-            var methodTitle = ""
-            var details = ""
-            paymentMethods.forEach {
-                when(it.paymentMethodType) {
-                    PaymentMethodType.CARD -> {
-
-                        val card = it.details!!
-                        val type = card["type"]
-                        val lastFour = card["number"]?.takeLast(4)
-                        val expMonth = card["expiry"]?.take(2)
-                        val expYear = card["expiry"]?.takeLast(2)
-
-                        methodTitle = "$type - $lastFour (Exp $expMonth/20$expYear)"
-                        details = card["name"]!!
-                    }
-                    PaymentMethodType.PAYPAL -> {
-                        methodTitle = "PayPal"
-                        details = it.details!!["account"]!!
-                    }
-                }
-                view.withText(methodTitle).withId(R.id.paymentMethodTitleText).wait()
-                view.withText(details).withId(R.id.paymentMethodSubtitleText).wait()
-            }
-        }
-
-        fun paymentMethodForUserDisplayed(methodTitle: String, details: String) {
-            view.withText(methodTitle).withId(R.id.paymentMethodTitleText).wait()
+        fun paymentMethodDisplayed(title: String, details: String) {
+            view.withText(title).withId(R.id.paymentMethodTitleText).wait()
             view.withText(details).withId(R.id.paymentMethodSubtitleText).wait()
         }
 

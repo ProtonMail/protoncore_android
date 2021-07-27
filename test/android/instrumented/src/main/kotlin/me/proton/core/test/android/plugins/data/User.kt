@@ -20,11 +20,10 @@ package me.proton.core.test.android.plugins.data
 
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.serialization.Serializable
-import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.test.android.instrumented.utils.StringUtils.getEmailString
+import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.util.kotlin.deserializeList
 import kotlin.random.Random
-import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 
 @Serializable
 data class User(
@@ -42,14 +41,9 @@ data class User(
     val type: Int = Random.nextInt(1, 2),
 
     val plan: Plan? = null,
-    val paymentMethods: List<PaymentMethod> = emptyList(),
+    val cards: List<Card> = emptyList(),
+    val paypal: String = ""
 ) {
-
-    @Serializable
-    data class PaymentMethod(
-        val paymentMethodType: PaymentMethodType?,
-        val details: LinkedHashMap<String, String>?
-    )
 
     @Serializable
     enum class Plan {
@@ -59,9 +53,6 @@ data class User(
     val isDefault: Boolean = passphrase.isEmpty() && twoFa.isEmpty() && name.isNotEmpty()
 
     val isPaid: Boolean = plan?.equals(Plan.Free) == false
-
-    fun hasPaymentMethodType(paymentMethodType: PaymentMethodType): Boolean =
-        paymentMethods.any { it.paymentMethodType == paymentMethodType }
 
     class Users(jsonPath: String) {
 

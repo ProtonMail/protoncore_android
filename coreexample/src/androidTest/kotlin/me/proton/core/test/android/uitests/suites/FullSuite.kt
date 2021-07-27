@@ -38,19 +38,27 @@ import org.junit.runners.Suite
 
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
+    AddAccountTests::class,
+
+    // Login
     LoginTests::class,
     MailboxTests::class,
     TwoFaTests::class,
     HumanVerificationTests::class,
+
+    // Payments
     ExistingPaymentMethodTests::class,
     NewCreditCardTests::class,
-    AddAccountTests::class,
+
+    // Signup
     UsernameSetupTests::class,
     PasswordSetupTests::class,
     RecoveryMethodsSetupTests::class,
     AccountSwitcherTests::class,
     ExternalSetupTests::class,
     SelectPlanTests::class,
+
+    // Plans
     PaidPlansTests::class,
     FreePlanTests::class
 )

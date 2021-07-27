@@ -55,12 +55,6 @@ class LoginRobot : CoreRobot() {
     inline fun <reified T> signIn(): T = clickElement(R.id.signInButton)
 
     /**
-     * Clicks close button
-     * @param T next Robot to be returned
-     */
-    inline fun <reified T> close(): T = clickElement(R.id.closeButton)
-
-    /**
      * Fills in username and password of a given [user]. Clicks sign in button.
      * @param T next Robot in flow
      * @return an instance of [T]
@@ -76,7 +70,6 @@ class LoginRobot : CoreRobot() {
             view.withId(R.id.usernameInput).instanceOf(EditText::class.java).wait().closeKeyboard()
             view.withId(R.id.passwordInput).instanceOf(EditText::class.java).wait()
             view.withId(R.id.signInButton).instanceOf(Button::class.java).wait()
-            view.withId(R.id.closeButton).instanceOf(Button::class.java).wait()
         }
     }
 
