@@ -19,10 +19,8 @@
 package me.proton.core.test.android.robots.payments
 
 import android.widget.EditText
-import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.presentation.R
-import me.proton.core.test.android.plugins.data.Card
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 
@@ -39,8 +37,8 @@ open class PaymentRobot : CoreRobot() {
     inline fun <reified T> pay(): T = clickElement(R.id.payButton)
 
     class Verify : CoreVerify() {
-        fun billingDetailsDisplayed(planName: User.Plan, billingCycle: String, currency: String, amount: String) {
-            view.withId(R.id.planNameText).wait().checkContains("Proton $planName")
+        fun billingDetailsDisplayed(planName: Plan, billingCycle: String, currency: String, amount: String) {
+            view.withId(R.id.planNameText).wait().checkContains(planName.toString())
             view.withId(R.id.billingPeriodText).wait().checkContains("Billed $billingCycle")
             view.withId(R.id.amountText).withText("$currency$amount").wait()
         }

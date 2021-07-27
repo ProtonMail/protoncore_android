@@ -19,31 +19,24 @@
 package me.proton.core.test.android.plugins.data
 
 import kotlinx.serialization.Serializable
+import me.proton.core.plan.presentation.R
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.getContext
 
 @Serializable
-data class Card(
-    val number: String,
-    val cvc: String,
-    val expMonth: String,
-    val expYear: String,
-    val name: String,
-    val country: String,
-    val zip: String
-) {
-    val last4: String = number.takeLast(4)
-    val brand: Brand = when(number.take(1).toInt()) {
-        3 -> Brand.AmericanExpress
-        4 -> Brand.Visa
-        5 -> Brand.Mastercard
-        else -> Brand.Unknown
-    }
-    val details: String = "${brand.name} - $last4 (Exp $expMonth/$expYear)"
+enum class Plan {
+    Free, Professional, Visionary, Plus
+}
 
-    @Serializable
-    enum class Brand(name: String) {
-        Mastercard("MasterCard"),
-        AmericanExpress("American Express"),
-        Visa("Visa"),
-        Unknown(""),
-    }
+val supportedBillingCycles: Array<String> =
+    getContext().resources.getStringArray(R.array.supported_billing_cycle)
+
+enum class BillingCycle(val value: String) {
+    Monthly(supportedBillingCycles[0]),
+    Yearly(supportedBillingCycles[1]),
+}
+
+enum class Currency(val symbol: String, val code: String) {
+    Euro("€", "EUR"),
+    USD("$", "USD"),
+    CHF("CHF", "")
 }

@@ -18,7 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.auth.login
 
-import me.proton.core.test.android.plugins.data.User.Plan.Professional
+import me.proton.core.test.android.plugins.data.Plan.Professional
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot.UserAction
 import me.proton.core.test.android.robots.auth.AddAccountRobot
