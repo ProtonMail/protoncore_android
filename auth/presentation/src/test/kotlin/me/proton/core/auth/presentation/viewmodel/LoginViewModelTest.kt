@@ -257,7 +257,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { sessionInfo.isTwoPassModeNeeded } returns false
         coEvery { performLogin.invoke(any(), any()) } returns sessionInfo
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } throws ApiException(
-            ApiResult.Error.NoInternet
+            ApiResult.Error.NoInternet()
         )
         viewModel.state.test {
             // WHEN

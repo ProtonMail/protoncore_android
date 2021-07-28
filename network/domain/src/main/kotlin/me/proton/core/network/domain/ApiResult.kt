@@ -112,7 +112,7 @@ sealed class ApiResult<out T> {
         /**
          * No connectivity.
          */
-        object NoInternet : Connection(false, null)
+        class NoInternet(cause: Throwable? = null) : Connection(false, cause)
     }
 
     /**

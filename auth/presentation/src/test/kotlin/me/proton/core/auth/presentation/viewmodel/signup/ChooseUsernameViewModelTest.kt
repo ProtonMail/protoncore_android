@@ -65,7 +65,9 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `domains loading connectivity error`() = coroutinesTest {
         // GIVEN
-        coEvery { usernameDomainAvailability.getDomains() } throws ApiException(ApiResult.Error.NoInternet)
+        coEvery { usernameDomainAvailability.getDomains() } throws ApiException(
+            ApiResult.Error.NoInternet()
+        )
         // WHEN
         viewModel.state.test {
             // THEN

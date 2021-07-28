@@ -1,3 +1,20 @@
+## Network Version [1.5.4]
+
+Aug 18, 2021
+
+### New Features
+
+- Added optional OkHttp Cache (see ```ApiManagerFactory```). This cache is shared across all user, session, api or call.
+
+### Breaking Changes
+
+- You'll have to instantiate/use ```ApiResult.Error.NoInternet()``` instead of the static object.
+
+### Behavior Changes
+
+- Removed ```isConnectedToNetwork``` check before trying a call (see ```ApiManagerImpl```).
+- You'll now receive ```ApiResult.Error.NoInternet``` only on ```UnknownHostException```.
+
 ## Network Version [1.5.3]
 
 Aug 18, 2021

@@ -25,6 +25,7 @@ import okhttp3.Response
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import java.security.cert.CertificateException
 import javax.net.ssl.SSLHandshakeException
 import javax.net.ssl.SSLPeerUnverifiedException
@@ -51,6 +52,8 @@ internal suspend fun <Api, T> safeApiCall(
         ApiResult.Error.Certificate(e)
     } catch (e: SocketTimeoutException) {
         ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), e)
+    } catch (e: UnknownHostException) {
+        ApiResult.Error.NoInternet(e)
     } catch (e: IOException) {
         ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
     }
