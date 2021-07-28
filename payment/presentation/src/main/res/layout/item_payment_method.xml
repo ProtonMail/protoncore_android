@@ -47,24 +47,26 @@
 
     <TextView
         android:id="@+id/paymentMethodTitleText"
-        style="@style/ProtonTextView"
+        style="@style/Proton.Text.Default"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/payment_option_horizontal_padding"
-        android:layout_marginEnd="@dimen/payment_option_horizontal_padding"
-        android:gravity="left"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="@id/paymentMethodRadio"
         app:layout_constraintEnd_toStartOf="@id/paymentMethodIcon"
         app:layout_constraintStart_toEndOf="@id/paymentMethodRadio"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Visa - 3220 (Exp 05/25)" />
+        app:layout_constraintTop_toTopOf="@id/paymentMethodRadio"
+        tools:text="American Express  - 3220 (Exp 05/25)" />
 
     <TextView
         android:id="@+id/paymentMethodSubtitleText"
-        style="@style/ProtonTextView"
+        style="@style/Proton.Text.DefaultSmall.Weak"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/payment_option_horizontal_padding"
+        android:gravity="start"
         app:layout_constraintEnd_toStartOf="@id/paymentMethodIcon"
         app:layout_constraintStart_toEndOf="@id/paymentMethodRadio"
         app:layout_constraintTop_toBottomOf="@id/paymentMethodTitleText"

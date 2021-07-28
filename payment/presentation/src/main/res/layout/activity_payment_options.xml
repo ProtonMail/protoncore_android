@@ -48,9 +48,22 @@
             android:paddingBottom="@dimen/default_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/payButton"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_gap"
+                android:layout_marginEnd="@dimen/default_gap"
+                android:text="@string/payments_pay"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/paymentOptionsDetails" />
+
+            <LinearLayout
+                android:id="@+id/paymentOptionsDetails"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@id/payButton"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,30 +95,18 @@
                     android:text="@string/payments_add_credit_debit_card"
                     android:textColor="@color/text_norm_selector"
                     app:icon="@drawable/ic_plus"
-                    app:iconTint="@color/icon_norm"
                     app:iconGravity="start"
-                    app:iconPadding="@dimen/double_top_margin" />
+                    app:iconPadding="@dimen/double_top_margin"
+                    app:iconTint="@color/icon_norm" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/paymentMethodsList"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/default_top_margin"
                     android:paddingBottom="@dimen/default_margin" />
 
             </LinearLayout>
-
-            <me.proton.core.presentation.ui.view.ProtonProgressButton
-                android:id="@+id/payButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_gap"
-                android:layout_marginEnd="@dimen/default_gap"
-                android:layout_marginBottom="@dimen/default_extended_margin"
-                android:text="@string/payments_pay"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
