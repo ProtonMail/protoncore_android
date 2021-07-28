@@ -188,11 +188,11 @@ Mail Message Data: **0.2.2** - _released on: Jul 08, 2021_
 
 ### Mail Settings
 
-Mail Settings: **1.3.1** - _released on: Jul 22, 2021_
+Mail Settings: **1.3.2** - _released on: Jul 28, 2021_
 
-Mail Settings Domain: **1.3.1** - _released on: Jul 22, 2021_
+Mail Settings Domain: **1.3.2** - _released on: Jul 28, 2021_
 
-Mail Settings Data: **1.3.1** - _released on: Jul 22, 2021_
+Mail Settings Data: **1.3.2** - _released on: Jul 28, 2021_
 
 ### Human Verification
 
