@@ -113,6 +113,10 @@ class MailSettingsRepositoryImpl(
         return if (refresh) store.fresh(userId) else store.get(userId)
     }
 
+    override suspend fun updateMailSettings(mailSettings: MailSettings) {
+        insertOrUpdate(mailSettings)
+    }
+
     private suspend fun updateProperty(
         userId: UserId,
         updateApiCall: suspend MailSettingsApi.() -> SingleMailSettingsResponse

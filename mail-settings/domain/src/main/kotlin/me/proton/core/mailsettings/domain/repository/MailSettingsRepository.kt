@@ -48,6 +48,15 @@ interface MailSettingsRepository {
     suspend fun getMailSettings(userId: UserId, refresh: Boolean = false): MailSettings
 
     /**
+     * Update [MailSettings], locally.
+     *
+     * Note: This function is usually used for Events handling.
+     *
+     * @throws IllegalArgumentException if corresponding user doesn't exist.
+     */
+    suspend fun updateMailSettings(mailSettings: MailSettings)
+
+    /**
      * Update [displayName] for [userId], remotely.
      */
     suspend fun updateDisplayName(userId: UserId, displayName: String): MailSettings
