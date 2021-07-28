@@ -35,6 +35,8 @@ import me.proton.core.mailsettings.domain.entity.ViewMode
 import me.proton.core.util.kotlin.toBoolean
 import me.proton.core.util.kotlin.toInt
 
+fun MailSettingsResponse.toMailSettings(userId: UserId): MailSettings = fromResponse(userId = userId)
+
 internal fun MailSettings.toEntity() = MailSettingsEntity(
     userId = userId,
     displayName = displayName,

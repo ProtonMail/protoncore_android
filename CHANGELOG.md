@@ -1,3 +1,11 @@
+## Mail Settings Version [1.3.2]
+
+Jul 28, 2021
+
+### New Features
+
+- Added MailSettingsRepository updateMailSettings & MailSettingsResponse.toMailSettings.
+
 ## Account Manager Version [1.3.2]
 
 Jul 27, 2021
