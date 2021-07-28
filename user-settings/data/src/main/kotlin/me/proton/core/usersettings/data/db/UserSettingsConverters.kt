@@ -16,14 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.usecase
+package me.proton.core.usersettings.data.db
 
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Inject
+import androidx.room.TypeConverter
+import me.proton.core.usersettings.data.entity.U2FKeyEntity
+import me.proton.core.util.kotlin.deserializeList
+import me.proton.core.util.kotlin.serialize
 
-class GetSettings @Inject constructor(
-    private val userSettingsRepository: UserSettingsRepository
-) {
-    suspend operator fun invoke(sessionUserId: SessionUserId) = userSettingsRepository.getUserSettings(sessionUserId, true)
+class UserSettingsConverters {
+    @TypeConverter
+    fun fromListOfU2FKeyEntityToString(value: List<U2FKeyEntity>?) = value?.serialize()
+
+    @TypeConverter
+    fun fromStringToListOfU2FKeyEntity(value: String?): List<U2FKeyEntity>? = value?.deserializeList()
 }

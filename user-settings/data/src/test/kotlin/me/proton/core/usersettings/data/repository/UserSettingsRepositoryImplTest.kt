@@ -19,36 +19,44 @@
 package me.proton.core.usersettings.data.repository
 
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiManager
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.usersettings.data.api.UserSettingsApi
-import me.proton.core.usersettings.domain.entity.Flags
-import me.proton.core.usersettings.domain.entity.Password
-import me.proton.core.usersettings.domain.entity.Setting
-import me.proton.core.usersettings.domain.entity.UserSettings
+import me.proton.core.usersettings.data.api.response.FlagsResponse
+import me.proton.core.usersettings.data.api.response.PasswordResponse
+import me.proton.core.usersettings.data.api.response.RecoverySettingResponse
+import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse
+import me.proton.core.usersettings.data.api.response.UserSettingsResponse
+import me.proton.core.usersettings.data.db.UserSettingsDatabase
+import me.proton.core.usersettings.data.db.dao.UserSettingsDao
+import me.proton.core.usersettings.data.extension.fromResponse
+import me.proton.core.usersettings.data.extension.toEntity
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 class UserSettingsRepositoryImplTest {
 
     // region mocks
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
+    private val userSettingsApi = mockk<UserSettingsApi>(relaxed = true)
+
     private val apiFactory = mockk<ApiManagerFactory>(relaxed = true)
-    private val apiManager = mockk<ApiManager<UserSettingsApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: UserSettingsRepositoryImpl
+
+    private val db = mockk<UserSettingsDatabase>(relaxed = true)
+    private val userSettingsDao = mockk<UserSettingsDao>(relaxed = true)
     // endregion
 
     // region test data
@@ -59,29 +67,23 @@ class UserSettingsRepositoryImplTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
+        every { db.userSettingsDao() } returns userSettingsDao
+        coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
         apiProvider = ApiProvider(apiFactory, sessionProvider)
-        every {
-            apiFactory.create(
-                interfaceClass = UserSettingsApi::class
-            )
-        } returns apiManager
-        every {
-            apiFactory.create(
-                SessionId(testSessionId),
-                interfaceClass = UserSettingsApi::class
-            )
-        } returns apiManager
-        repository = UserSettingsRepositoryImpl(apiProvider)
+        every { apiFactory.create(any(), interfaceClass = UserSettingsApi::class) } returns TestApiManager(
+            userSettingsApi
+        )
+
+        repository = UserSettingsRepositoryImpl(db, apiProvider)
     }
 
     @Test
     fun `settings returns success`() = runBlockingTest {
-        val settingsResponse = UserSettings(
-            email = Setting("test-email", 1, 1, 1),
+        val settingsResponse = UserSettingsResponse(
+            email = RecoverySettingResponse("test-email", 1, notify = 1, reset = 1),
             phone = null,
             twoFA = null,
-            password = Password(mode = 1, expirationTime = null),
+            password = PasswordResponse(mode = 1, expirationTime = null),
             news = 0,
             locale = "en",
             logAuth = 1,
@@ -91,44 +93,33 @@ class UserSettingsRepositoryImplTest {
             timeFormat = 2,
             themeType = 1,
             weekStart = 7,
-            welcome = true,
-            earlyAccess = true,
+            welcome = 1,
+            earlyAccess = 1,
             theme = "test-theme",
-            flags = Flags(true)
+            flags = FlagsResponse(1)
         )
         // GIVEN
-        coEvery { apiManager.invoke<UserSettings>(any(), any()) } returns ApiResult.Success(settingsResponse)
+        coEvery { userSettingsApi.getUserSettings() } returns SingleUserSettingsResponse(settingsResponse)
+        every { userSettingsDao.observeByUserId(any()) } returns flowOf(
+            settingsResponse.fromResponse(UserId(testUserId)).toEntity()
+        )
         // WHEN
-        val response = repository.getSettings(sessionUserId = UserId(testUserId))
+        val response = repository.getUserSettings(sessionUserId = UserId(testUserId))
         // THEN
         assertNotNull(response)
         assertEquals("test-email", response.email!!.value)
+        verify { userSettingsDao.observeByUserId(any()) }
     }
 
-    @Test
-    fun `user settings returns error`() = runBlockingTest {
-        // GIVEN
-        coEvery { apiManager.invoke<UserSettings>(any(), any()) } returns ApiResult.Error.Http(
-            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
-        )
-        // WHEN
-        val throwable = assertFailsWith(ApiException::class) {
-            repository.getSettings(sessionUserId = UserId(testUserId))
-        }
-        // THEN
-        assertEquals("test error", throwable.message)
-        val error = throwable.error as? ApiResult.Error.Http
-        assertNotNull(error)
-        assertEquals(1, error.proton?.code)
-    }
 
     @Test
     fun `update recovery email returns result success`() = runBlockingTest {
-        val settingsResponse = UserSettings(
-            email = Setting("test-email2", 1, 1, 1),
+        // GIVEN
+        val settingsResponse = UserSettingsResponse(
+            email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
             phone = null,
             twoFA = null,
-            password = Password(mode = 1, expirationTime = null),
+            password = PasswordResponse(mode = 1, expirationTime = null),
             news = 0,
             locale = "en",
             logAuth = 1,
@@ -138,13 +129,16 @@ class UserSettingsRepositoryImplTest {
             timeFormat = 2,
             themeType = 1,
             weekStart = 7,
-            welcome = true,
-            earlyAccess = true,
+            welcome = 1,
+            earlyAccess = 1,
             theme = "test-theme",
-            flags = Flags(true)
+            flags = FlagsResponse(1)
         )
-        // GIVEN
-        coEvery { apiManager.invoke<UserSettings>(any(), any()) } returns ApiResult.Success(settingsResponse)
+        coEvery { userSettingsApi.updateRecoveryEmail(any()) } returns SingleUserSettingsResponse(settingsResponse)
+        every { userSettingsDao.observeByUserId(any()) } returns flowOf(
+            settingsResponse.fromResponse(UserId(testUserId)).toEntity()
+        )
+
         // WHEN
         val response = repository.updateRecoveryEmail(
             sessionUserId = UserId(testUserId),
@@ -157,29 +151,7 @@ class UserSettingsRepositoryImplTest {
         // THEN
         assertNotNull(response)
         assertEquals("test-email2", response.email!!.value)
-    }
-
-    @Test
-    fun `update recovery email returns error`() = runBlockingTest {
-        // GIVEN
-        coEvery { apiManager.invoke<UserSettings>(any(), any()) } returns ApiResult.Error.Http(
-            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
-        )
-        // WHEN
-        val throwable = assertFailsWith(ApiException::class) {
-            repository.updateRecoveryEmail(
-                sessionUserId = UserId(testUserId),
-                email = "test-email2",
-                clientEphemeral = "test-client-empheral",
-                clientProof = "test-client-proof",
-                srpSession = "test-srp-session",
-                secondFactorCode = ""
-            )
-        }
-        // THEN
-        assertEquals("test error", throwable.message)
-        val error = throwable.error as? ApiResult.Error.Http
-        assertNotNull(error)
-        assertEquals(1, error.proton?.code)
+        coVerify { userSettingsDao.insertOrUpdate(any()) }
+        verify { userSettingsDao.observeByUserId(any()) }
     }
 }

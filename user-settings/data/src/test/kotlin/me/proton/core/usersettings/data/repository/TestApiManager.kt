@@ -16,14 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.usecase
+package me.proton.core.usersettings.data.repository
 
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Inject
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.domain.ApiManager
+import me.proton.core.network.domain.ApiResult
 
-class GetSettings @Inject constructor(
-    private val userSettingsRepository: UserSettingsRepository
-) {
-    suspend operator fun invoke(sessionUserId: SessionUserId) = userSettingsRepository.getUserSettings(sessionUserId, true)
+class TestApiManager<Api : BaseRetrofitApi>(private val api: Api) : ApiManager<Api> {
+    override suspend fun <T> invoke(
+        forceNoRetryOnConnectionErrors: Boolean,
+        block: suspend Api.() -> T
+    ): ApiResult<T> = ApiResult.Success(block.invoke(api))
 }

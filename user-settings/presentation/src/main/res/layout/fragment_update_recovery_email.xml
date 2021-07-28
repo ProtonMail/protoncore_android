@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text|textEmailAddress|textNoSuggestions"
-                    app:label="@string/settings_recovery_email_current" />
+                    app:label="@string/settings_recovery_email_confirm" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/saveButton"

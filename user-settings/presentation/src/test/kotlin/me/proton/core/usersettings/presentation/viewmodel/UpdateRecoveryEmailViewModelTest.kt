@@ -31,8 +31,8 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.usersettings.domain.entity.Flags
-import me.proton.core.usersettings.domain.entity.Password
-import me.proton.core.usersettings.domain.entity.Setting
+import me.proton.core.usersettings.domain.entity.PasswordSetting
+import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.GetSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateRecoveryEmail
@@ -55,10 +55,11 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
     private val testPassword: EncryptedString = "test-password"
 
     private val testUserSettingsResponse = UserSettings(
-        email = Setting("test-email", 1, 1, 1),
+        userId = testUserId,
+        email = RecoverySetting("test-email", 1, notify = true, reset = true),
         phone = null,
         twoFA = null,
-        password = Password(mode = 1, expirationTime = null),
+        password = PasswordSetting(mode = 1, expirationTime = null),
         news = 0,
         locale = "en",
         logAuth = 1,
@@ -149,7 +150,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
                 password = "encrypted-test-password",
                 secondFactorCode = ""
             )
-        } returns testUserSettingsResponse.copy(email = Setting("", 1, 1, 1))
+        } returns testUserSettingsResponse.copy(email = RecoverySetting("", 1, notify = true, reset = true))
 
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
@@ -176,7 +177,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
                 password = "encrypted-test-password",
                 secondFactorCode = ""
             )
-        } returns testUserSettingsResponse.copy(email = Setting("new-email", 1, 1, 1))
+        } returns testUserSettingsResponse.copy(email = RecoverySetting("new-email", 1, notify = true, reset = true))
 
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
@@ -203,7 +204,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
                 password = "encrypted-test-password",
                 secondFactorCode = "123456"
             )
-        } returns testUserSettingsResponse.copy(email = Setting("new-email", 1, 1, 1))
+        } returns testUserSettingsResponse.copy(email = RecoverySetting("new-email", 1, notify = true, reset = true))
 
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"

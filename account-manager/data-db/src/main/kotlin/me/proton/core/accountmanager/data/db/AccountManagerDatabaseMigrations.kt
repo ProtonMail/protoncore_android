@@ -27,6 +27,7 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserDatabase
+import me.proton.core.usersettings.data.db.UserSettingsDatabase
 
 object AccountManagerDatabaseMigrations {
 
@@ -62,6 +63,12 @@ object AccountManagerDatabaseMigrations {
     val MIGRATION_5_6 = object : Migration(5, 6) {
         override fun migrate(database: SupportSQLiteDatabase) {
             MailSettingsDatabase.MIGRATION_0.migrate(database)
+        }
+    }
+
+    val MIGRATION_6_7 = object : Migration(6, 7) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            UserSettingsDatabase.MIGRATION_0.migrate(database)
         }
     }
 }

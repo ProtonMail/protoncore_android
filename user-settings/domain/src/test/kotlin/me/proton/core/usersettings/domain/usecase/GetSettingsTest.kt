@@ -25,8 +25,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.usersettings.domain.entity.Flags
-import me.proton.core.usersettings.domain.entity.Password
-import me.proton.core.usersettings.domain.entity.Setting
+import me.proton.core.usersettings.domain.entity.PasswordSetting
+import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import org.junit.Before
@@ -43,10 +43,11 @@ class GetSettingsTest {
     // region test data
     private val testUserId = UserId("test-user-id")
     private val testUserSettingsResponse = UserSettings(
-        email = Setting("test-email", 1, 1, 1),
+        userId = testUserId,
+        email = RecoverySetting("test-email", 1, true, true),
         phone = null,
         twoFA = null,
-        password = Password(mode = 1, expirationTime = null),
+        password = PasswordSetting(mode = 1, expirationTime = null),
         news = 0,
         locale = "en",
         logAuth = 1,
@@ -72,7 +73,7 @@ class GetSettingsTest {
     @Test
     fun `get user settings returns success`() = runBlockingTest {
         // GIVEN
-        coEvery { repository.getSettings(testUserId) } returns testUserSettingsResponse
+        coEvery { repository.getUserSettings(testUserId) } returns testUserSettingsResponse
         // WHEN
         val result = useCase.invoke(testUserId)
         // THEN
@@ -85,7 +86,7 @@ class GetSettingsTest {
     @Test
     fun `get user settings returns error`() = runBlockingTest {
         // GIVEN
-        coEvery { repository.getSettings(testUserId) } throws ApiException(
+        coEvery { repository.getUserSettings(testUserId) } throws ApiException(
             ApiResult.Error.Connection(
                 false,
                 RuntimeException("Test error")

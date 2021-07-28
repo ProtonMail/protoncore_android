@@ -23,6 +23,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.repository.UserSettingsRepositoryImpl
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Singleton
@@ -33,6 +34,9 @@ object SettingsModule {
 
     @Provides
     @Singleton
-    fun provideUserSettingsRepository(apiProvider: ApiProvider): UserSettingsRepository =
-        UserSettingsRepositoryImpl(apiProvider)
+    fun provideUserSettingsRepository(
+        db: UserSettingsDatabase,
+        apiProvider: ApiProvider
+    ): UserSettingsRepository =
+        UserSettingsRepositoryImpl(db, apiProvider)
 }

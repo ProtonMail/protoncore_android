@@ -66,8 +66,8 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         emit(State.LoadingSuccess(currentSettings.email?.value))
     }.catch { error ->
         _state.tryEmit(State.Error.Message(error.message))
-    }.onEach { plans ->
-        _state.tryEmit(plans)
+    }.onEach { state ->
+        _state.tryEmit(state)
     }.launchIn(viewModelScope)
 
     /**
@@ -93,7 +93,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         emit(State.UpdatingSuccess(updateRecoveryEmailResult.email?.value))
     }.catch { error ->
         _state.tryEmit(State.Error.Message(error.message))
-    }.onEach { plans ->
-        _state.tryEmit(plans)
+    }.onEach { state ->
+        _state.tryEmit(state)
     }.launchIn(viewModelScope)
 }

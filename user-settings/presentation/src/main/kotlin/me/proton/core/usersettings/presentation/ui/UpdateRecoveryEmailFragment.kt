@@ -53,8 +53,6 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
 
     private val userId: UserId by lazy { input.user }
 
-    private val settings: Settings? by lazy { input.settings }
-
     private val secondFactor: Boolean by lazy { input.secondFactorNeeded }
 
     override fun layoutId() = R.layout.fragment_update_recovery_email
@@ -97,11 +95,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
             }.exhaustive
         }.launchIn(lifecycleScope)
 
-        settings?.let {
-            setCurrentRecoveryEmail(it.email?.value)
-        } ?: run {
-            findOutCurrentRecoveryAddress()
-        }
+        findOutCurrentRecoveryAddress()
     }
 
     private fun onSaveClicked() {

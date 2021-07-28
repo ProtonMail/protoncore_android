@@ -62,6 +62,8 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.mailSettingsData),
         project(Module.mailSettingsDomain),
+        project(Module.userSettingsData),
+        project(Module.userSettingsDomain),
 
         // Kotlin
         `kotlin-jdk8`,

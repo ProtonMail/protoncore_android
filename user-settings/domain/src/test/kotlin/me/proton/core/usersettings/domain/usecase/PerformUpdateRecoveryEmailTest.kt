@@ -31,8 +31,8 @@ import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.domain.entity.Flags
-import me.proton.core.usersettings.domain.entity.Password
-import me.proton.core.usersettings.domain.entity.Setting
+import me.proton.core.usersettings.domain.entity.PasswordSetting
+import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import org.junit.Before
@@ -62,10 +62,11 @@ class PerformUpdateRecoveryEmailTest {
     private val testSalt = "test-salt"
 
     private val testUserSettingsResponse = UserSettings(
-        email = Setting("test-email", 1, 1, 1),
+        userId = testUserId,
+        email = RecoverySetting("test-email", 1, notify = true, reset = true),
         phone = null,
         twoFA = null,
-        password = Password(mode = 1, expirationTime = null),
+        password = PasswordSetting(mode = 1, expirationTime = null),
         news = 0,
         locale = "en",
         logAuth = 1,

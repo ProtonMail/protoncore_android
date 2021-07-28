@@ -18,27 +18,67 @@
 
 package me.proton.core.usersettings.data.repository
 
+import com.dropbox.android.external.store4.Fetcher
+import com.dropbox.android.external.store4.SourceOfTruth
+import com.dropbox.android.external.store4.StoreBuilder
+import com.dropbox.android.external.store4.fresh
+import com.dropbox.android.external.store4.get
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.usersettings.data.api.UserSettingsApi
 import me.proton.core.usersettings.data.api.request.SetUsernameRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
+import me.proton.core.usersettings.data.db.UserSettingsDatabase
+import me.proton.core.usersettings.data.extension.fromEntity
+import me.proton.core.usersettings.data.extension.fromResponse
+import me.proton.core.usersettings.data.extension.toEntity
+import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 
 class UserSettingsRepositoryImpl(
-    private val provider: ApiProvider
+    db: UserSettingsDatabase,
+    private val apiProvider: ApiProvider
 ) : UserSettingsRepository {
 
+    private val userSettingsDao = db.userSettingsDao()
+
+    private val store = StoreBuilder.from(
+        fetcher = Fetcher.of { key: UserId ->
+            apiProvider.get<UserSettingsApi>(key).invoke {
+                getUserSettings().settings.fromResponse(key)
+            }.valueOrThrow
+        },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = { key -> observeByUserId(key) },
+            writer = { _, input -> insertOrUpdate(input) },
+            delete = { key -> delete(key) },
+            deleteAll = { deleteAll() }
+        )
+    ).disableCache().build() // We don't want potential stale data from memory cache
+
+    private fun observeByUserId(userId: UserId): Flow<UserSettings?> =
+        userSettingsDao.observeByUserId(userId).map { it?.fromEntity() }
+
+    private suspend fun insertOrUpdate(settings: UserSettings) =
+        userSettingsDao.insertOrUpdate(settings.toEntity())
+
+    private suspend fun delete(userId: UserId) =
+        userSettingsDao.delete(userId)
+
+    private suspend fun deleteAll() =
+        userSettingsDao.deleteAll()
+
     override suspend fun setUsername(sessionUserId: SessionUserId, username: String): Boolean =
-        provider.get<UserSettingsApi>(sessionUserId).invoke {
+        apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
             setUsername(SetUsernameRequest(username = username)).isSuccess()
         }.valueOrThrow
 
-    override suspend fun getSettings(sessionUserId: SessionUserId) =
-        provider.get<UserSettingsApi>(sessionUserId).invoke {
-            getSettings().toUserSettings()
-        }.valueOrThrow
+    override suspend fun getUserSettings(sessionUserId: SessionUserId, refresh: Boolean) =
+        if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)
 
     override suspend fun updateRecoveryEmail(
         sessionUserId: SessionUserId,
@@ -47,15 +87,19 @@ class UserSettingsRepositoryImpl(
         clientProof: String,
         srpSession: String,
         secondFactorCode: String
-    ) = provider.get<UserSettingsApi>(sessionUserId).invoke {
-        updateRecoveryEmail(
-            UpdateRecoveryEmailRequest(
-                email = email,
-                twoFactorCode = secondFactorCode,
-                clientEphemeral = clientEphemeral,
-                clientProof = clientProof,
-                srpSession = srpSession
+    ): UserSettings {
+        return apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
+            val response = updateRecoveryEmail(
+                UpdateRecoveryEmailRequest(
+                    email = email,
+                    twoFactorCode = secondFactorCode,
+                    clientEphemeral = clientEphemeral,
+                    clientProof = clientProof,
+                    srpSession = srpSession
+                )
             )
-        ).toUserSettings()
-    }.valueOrThrow
+            insertOrUpdate(response.settings.fromResponse(sessionUserId))
+            getUserSettings(sessionUserId)
+        }.valueOrThrow
+    }
 }

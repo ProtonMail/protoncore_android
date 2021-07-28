@@ -22,7 +22,7 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.usersettings.data.api.request.SetUsernameRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
-import me.proton.core.usersettings.data.api.response.SettingsResponse
+import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
@@ -33,8 +33,8 @@ internal interface UserSettingsApi : BaseRetrofitApi {
     suspend fun setUsername(@Body request: SetUsernameRequest): GenericResponse
 
     @PUT("settings/email")
-    suspend fun updateRecoveryEmail(@Body request: UpdateRecoveryEmailRequest): SettingsResponse
+    suspend fun updateRecoveryEmail(@Body request: UpdateRecoveryEmailRequest): SingleUserSettingsResponse
 
     @GET("settings")
-    suspend fun getSettings(): SettingsResponse
+    suspend fun getUserSettings(): SingleUserSettingsResponse
 }

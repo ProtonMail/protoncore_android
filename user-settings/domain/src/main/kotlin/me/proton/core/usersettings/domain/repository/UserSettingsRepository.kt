@@ -28,8 +28,9 @@ interface UserSettingsRepository {
     /**
      * Returns the general settings for the user.
      */
-    suspend fun getSettings(
-        sessionUserId: SessionUserId
+    suspend fun getUserSettings(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
     ): UserSettings
 
     /**

@@ -23,9 +23,7 @@ import kotlinx.serialization.Serializable
 import me.proton.core.usersettings.domain.entity.UserSettings
 
 @Serializable
-data class SettingsResponse(
+data class SingleUserSettingsResponse(
     @SerialName("UserSettings")
-    val userSettingsResponse: UserSettingsResponse
-) {
-    fun toUserSettings(): UserSettings = userSettingsResponse.toUserSettings()
-}
+    val settings: UserSettingsResponse
+)

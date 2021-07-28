@@ -16,16 +16,36 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.entity
+package me.proton.core.usersettings.data.entity
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.data.entity.UserEntity
 
-data class UserSettings(
+@Entity(
+    primaryKeys = ["userId"],
+    foreignKeys = [
+        ForeignKey(
+            entity = UserEntity::class,
+            parentColumns = ["userId"],
+            childColumns = ["userId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+data class UserSettingsEntity(
     val userId: UserId,
-    val email: RecoverySetting?,
-    val phone: RecoverySetting?,
-    val password: PasswordSetting,
-    val twoFA: TwoFASetting?,
+    @Embedded(prefix = "email_")
+    val email: RecoverySettingEntity?,
+    @Embedded(prefix = "phone_")
+    val phone: RecoverySettingEntity?,
+    @Embedded(prefix = "password_")
+    val password: PasswordEntity,
+    @Embedded(prefix = "twoFA_")
+    val twoFA: TwoFAEntity?,
     val news: Int,
     val locale: String,
     val logAuth: Int,
@@ -38,34 +58,36 @@ data class UserSettings(
     val timeFormat: Int,
     val welcome: Boolean,
     val earlyAccess: Boolean,
-    val flags: Flags?
+    @Embedded(prefix = "flags_")
+    val flags: FlagsEntity?
 )
 
-data class RecoverySetting(
+data class RecoverySettingEntity(
     val value: String?,
     val status: Int,
-    val notify: Boolean,
-    val reset: Boolean
+    val notify: Int,
+    val reset: Int
 )
 
-data class PasswordSetting(
+data class PasswordEntity(
     val mode: Int,
     val expirationTime: Int?
 )
 
-data class TwoFASetting(
-    val enabled: Boolean,
+data class TwoFAEntity(
+    val enabled: Int,
     val allowed: Int,
     val expirationTime: Int?,
-    val u2fKeys: List<U2FKeySetting>?
+    val u2fKeys: List<U2FKeyEntity>?
 )
 
-data class U2FKeySetting(
+@Serializable
+data class U2FKeyEntity(
     val label: String,
     val keyHandle: String,
-    val compromised: Boolean
+    val compromised: Int
 )
 
-data class Flags(
+data class FlagsEntity(
     val welcomed: Boolean
 )

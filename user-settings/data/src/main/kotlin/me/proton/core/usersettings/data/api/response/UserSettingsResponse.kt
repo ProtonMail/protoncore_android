@@ -21,19 +21,17 @@ package me.proton.core.usersettings.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.usersettings.domain.entity.Flags
-import me.proton.core.usersettings.domain.entity.Password
-import me.proton.core.usersettings.domain.entity.Setting
-import me.proton.core.usersettings.domain.entity.TwoFA
-import me.proton.core.usersettings.domain.entity.U2FKey
-import me.proton.core.usersettings.domain.entity.UserSettings
+import me.proton.core.usersettings.domain.entity.PasswordSetting
+import me.proton.core.usersettings.domain.entity.TwoFASetting
+import me.proton.core.usersettings.domain.entity.U2FKeySetting
 import me.proton.core.util.kotlin.toBoolean
 
 @Serializable
 data class UserSettingsResponse(
     @SerialName("Email")
-    val email: SettingResponse?,
+    val email: RecoverySettingResponse?,
     @SerialName("Phone")
-    val phone: SettingResponse?,
+    val phone: RecoverySettingResponse?,
     @SerialName("Password")
     val password: PasswordResponse,
     @SerialName("2FA")
@@ -64,31 +62,10 @@ data class UserSettingsResponse(
     val earlyAccess: Int,
     @SerialName("Flags")
     val flags: FlagsResponse?
-) {
-    fun toUserSettings(): UserSettings =
-        UserSettings(
-            email = email?.toSetting(),
-            phone = phone?.toSetting(),
-            password = password.toPassword(),
-            twoFA = twoFA?.toTwoFA(),
-            news = news,
-            locale = locale,
-            logAuth = logAuth,
-            invoiceText = invoiceText,
-            density = density,
-            theme = theme,
-            themeType = themeType,
-            weekStart = weekStart,
-            dateFormat = dateFormat,
-            timeFormat = timeFormat,
-            welcome = welcome.toBoolean(),
-            earlyAccess = earlyAccess.toBoolean(),
-            flags = flags?.toFlags()
-        )
-}
+)
 
 @Serializable
-data class SettingResponse(
+data class RecoverySettingResponse(
     @SerialName("Value")
     val value: String?,
     @SerialName("Status")
@@ -97,9 +74,7 @@ data class SettingResponse(
     val notify: Int,
     @SerialName("Reset")
     val reset: Int
-) {
-    fun toSetting(): Setting = Setting(value, status, notify, reset)
-}
+)
 
 @Serializable
 data class PasswordResponse(
@@ -107,9 +82,7 @@ data class PasswordResponse(
     val mode: Int,
     @SerialName("ExpirationTime")
     val expirationTime: Int?
-) {
-    fun toPassword(): Password = Password(mode, expirationTime)
-}
+)
 
 @Serializable
 data class TwoFAResponse(
@@ -121,11 +94,7 @@ data class TwoFAResponse(
     val expirationTime: Int?,
     @SerialName("U2FKeys")
     val u2fKeys: List<U2FKeyResponse>?
-) {
-    fun toTwoFA(): TwoFA = TwoFA(enabled, allowed, expirationTime, u2fKeys?.map {
-        it.toU2FKey()
-    })
-}
+)
 
 @Serializable
 data class U2FKeyResponse(
@@ -135,14 +104,10 @@ data class U2FKeyResponse(
     val keyHandle: String,
     @SerialName("Compromised")
     val compromised: Int
-) {
-    fun toU2FKey(): U2FKey = U2FKey(label, keyHandle, compromised)
-}
+)
 
 @Serializable
 data class FlagsResponse(
     @SerialName("Welcomed")
     val welcomed: Int
-) {
-    fun toFlags(): Flags = Flags(welcomed.toBoolean())
-}
+)

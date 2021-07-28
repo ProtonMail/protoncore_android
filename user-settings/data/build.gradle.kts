@@ -35,10 +35,15 @@ dependencies {
         project(Module.userSettingsDomain),
         project(Module.kotlinUtil),
         project(Module.network),
+        project(Module.data),
+        project(Module.dataRoom),
+        project(Module.userData),
 
         // Other
         `retrofit`,
-        `retrofit-kotlin-serialization`
+        `retrofit-kotlin-serialization`,
+        `room-ktx`,
+        `store4`
     )
 
     testImplementation(project(Module.androidTest))
