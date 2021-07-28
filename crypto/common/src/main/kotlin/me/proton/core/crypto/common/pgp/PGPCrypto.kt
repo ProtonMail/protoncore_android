@@ -94,6 +94,15 @@ interface PGPCrypto {
     fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
 
     /**
+     * Encrypt [source] into [destination] using [publicKey] and sign using [unlockedKey].
+     *
+     * @throws [CryptoException] if [source] cannot be encrypted or signed.
+     *
+     * @see [decryptAndVerifyFile].
+     */
+    fun encryptAndSignFile(source: File, destination: File, publicKey: Armored, unlockedKey: Unarmored): EncryptedFile
+
+    /**
      * Encrypt [keyPacket] using [publicKey].
      *
      * @throws [CryptoException] if [keyPacket] cannot be encrypted.
@@ -177,6 +186,25 @@ interface PGPCrypto {
         unlockedKeys: List<Unarmored>,
         validAtUtc: Long = 0
     ): DecryptedData
+
+    /**
+     * Decrypt [source] into [destination] using [unlockedKeys] and verify using [publicKeys].
+     *
+     * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+     *
+     * @throws [CryptoException] if [source] cannot be decrypted.
+     *
+     * @see [DecryptedFile]
+     * @see [VerificationStatus]
+     * @see [encryptAndSignFile]
+     */
+    fun decryptAndVerifyFile(
+        source: EncryptedFile,
+        destination: File,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>,
+        validAtUtc: Long = 0
+    ): DecryptedFile
 
     /**
      * Decrypt [keyPacket] as [ByteArray] using [unlockedKey].

@@ -142,6 +142,32 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
+    private fun encryptAndSign(
+        source: File,
+        destination: File,
+        publicKey: Armored,
+        unlockedKey: Unarmored
+    ): EncryptedFile {
+        source.inputStream().use { fileInputStream ->
+            destination.outputStream().use { fileOutputStream ->
+                val writer = Mobile2GoWriter(fileOutputStream.writer())
+                val plainMessageMetadata = PlainMessageMetadata(true, source.name, source.lastModified() / 1000)
+                val publicKeyRing = newKeyRing(publicKey)
+                newKey(unlockedKey).use { key ->
+                    newKeyRing(key).use { keyRing ->
+                        val result = publicKeyRing.encryptSplitStream(writer, plainMessageMetadata, keyRing.value).use {
+                            fileInputStream.reader().copyTo(it)
+                        }
+                        return EncryptedFile(
+                            file = destination,
+                            keyPacket = result.keyPacket
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     private fun decrypt(
         source: File,
         destination: File,
@@ -158,6 +184,35 @@ class GOpenPGPCrypto : PGPCrypto {
                         return DecryptedFile(
                             file = destination,
                             status = VerificationStatus.Unknown,
+                            filename = plainMessageReader.metadata.filename,
+                            lastModifiedEpochSeconds = plainMessageReader.metadata.modTime
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun decryptAndVerify(
+        source: File,
+        destination: File,
+        keyPacket: KeyPacket,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>,
+        validAtUtc: Long
+    ): DecryptedFile {
+        source.inputStream().use { fileInputStream ->
+            destination.outputStream().use { fileOutputStream ->
+                val reader = Mobile2GoReader(fileInputStream.mobileReader())
+                val publicKeyRing = newKeyRing(publicKeys)
+                return newKeys(unlockedKeys).use { keys ->
+                    newKeyRing(keys).use { keyRing ->
+                        val plainMessageReader =
+                            keyRing.value.decryptSplitStream(keyPacket, reader, publicKeyRing, validAtUtc)
+                        Go2AndroidReader(plainMessageReader).copyTo(fileOutputStream.writer())
+                        DecryptedFile(
+                            file = destination,
+                            status = Helper.verifySignatureExplicit(plainMessageReader).toVerificationStatus(),
                             filename = plainMessageReader.metadata.filename,
                             lastModifiedEpochSeconds = plainMessageReader.metadata.modTime
                         )
@@ -318,6 +373,15 @@ class GOpenPGPCrypto : PGPCrypto {
         encryptAndSign(PlainMessage(data), publicKey, unlockedKey)
     }.getOrElse { throw CryptoException("Data cannot be encrypted or signed.", it) }
 
+    override fun encryptAndSignFile(
+        source: File,
+        destination: File,
+        publicKey: Armored,
+        unlockedKey: Unarmored
+    ): EncryptedFile = runCatching {
+        encryptAndSign(source, destination, publicKey, unlockedKey)
+    }.getOrElse { throw CryptoException("File cannot be encrypted or signed.", it) }
+
     override fun encryptSessionKey(
         keyPacket: ByteArray,
         publicKey: Armored
@@ -388,6 +452,16 @@ class GOpenPGPCrypto : PGPCrypto {
             )
         }
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
+
+    override fun decryptAndVerifyFile(
+        source: EncryptedFile,
+        destination: File,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>,
+        validAtUtc: Long
+    ): DecryptedFile = runCatching {
+        decryptAndVerify(source.file, destination, source.keyPacket, publicKeys, unlockedKeys, validAtUtc)
+    }.getOrElse { throw CryptoException("File cannot be decrypted.", it) }
 
     override fun decryptSessionKey(
         keyPacket: ByteArray,

@@ -24,7 +24,7 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(1, 1, 4)
+libVersion = Version(1, 1, 5)
 
 android()
 
@@ -47,8 +47,10 @@ dependencies {
     )
 
     compileOnly(project(Module.gopenpgp))
-    androidTestImplementation(project(Module.gopenpgp))
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    androidTestImplementation(
+        project(Module.androidTest).exclude(robolectric), `mockk-android`,
+        project(Module.androidInstrumentedTest),
+        project(Module.gopenpgp)
+    )
 }

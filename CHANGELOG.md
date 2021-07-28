@@ -1,3 +1,11 @@
+## Crypto Version [1.1.5], Key Version [1.3.2]
+
+Jul 28, 2021
+
+### New Features
+
+- Added Crypto encryptAndSignFile & decryptAndVerifyFile.
+
 ## Mail Settings Version [1.3.2]
 
 Jul 28, 2021

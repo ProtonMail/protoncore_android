@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 3, 1)
+libVersion = Version(1, 3, 2)
 
 android()
 
@@ -53,8 +53,9 @@ dependencies {
         `store4`
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
-
-    androidTestImplementation(project(Module.gopenpgp))
+    androidTestImplementation(
+        project(Module.androidTest).exclude(robolectric), `mockk-android`,
+        project(Module.androidInstrumentedTest),
+        project(Module.gopenpgp)
+    )
 }
