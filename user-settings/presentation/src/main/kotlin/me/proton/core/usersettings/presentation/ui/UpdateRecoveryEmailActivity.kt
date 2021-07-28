@@ -35,7 +35,7 @@ class UpdateRecoveryEmailActivity : ProtonActivity<ActivityUpdateRecoveryEmailBi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding.toolbar) {
-            title = "Recovery Email"
+            title = getString(R.string.settings_recovery_email_header)
         }
         supportFragmentManager.showRecoveryEmail(R.id.layoutContent, input)
 

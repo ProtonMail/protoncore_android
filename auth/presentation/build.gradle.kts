@@ -47,6 +47,7 @@ dependencies {
         project(Module.accountDomain),
         project(Module.accountManagerDomain),
         project(Module.humanVerificationDomain),
+        project(Module.userSettingsDomain),
         project(Module.humanVerificationPresentation),
         project(Module.userDomain),
         project(Module.keyDomain),

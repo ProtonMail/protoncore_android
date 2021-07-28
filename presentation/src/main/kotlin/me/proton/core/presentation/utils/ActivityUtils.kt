@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,16 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.data.api
+package me.proton.core.presentation.utils
 
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.GenericResponse
-import me.proton.core.user.data.api.request.SetUsernameRequest
-import retrofit2.http.Body
-import retrofit2.http.PUT
+import android.app.Activity
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.FragmentActivity
 
-interface SettingApi : BaseRetrofitApi {
-
-    @PUT("settings/username")
-    suspend fun setUsername(@Body request: SetUsernameRequest): GenericResponse
+/**
+ * Fragment onBackPressed callback. This will close the activity but prior to that it will call the block to inform the
+ * call site to do any work prior to closing.
+ */
+fun FragmentActivity.addOnBackPressedCallback(block: (Activity.() -> Unit)? = null) {
+    onBackPressedDispatcher.addCallback(
+        this,
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                block?.let { it() }
+                finish()
+            }
+        }
+    )
 }

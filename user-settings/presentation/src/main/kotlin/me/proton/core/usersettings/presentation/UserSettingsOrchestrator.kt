@@ -19,6 +19,7 @@
 package me.proton.core.usersettings.presentation
 
 import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.presentation.entity.SettingsInput
@@ -26,7 +27,7 @@ import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
 import me.proton.core.usersettings.presentation.ui.StartUpdateRecoveryEmail
 import javax.inject.Inject
 
-class SettingsOrchestrator @Inject constructor() {
+class UserSettingsOrchestrator @Inject constructor() {
 
     private var updateRecoveryEmailLauncher: ActivityResultLauncher<SettingsInput>? = null
 
@@ -37,9 +38,9 @@ class SettingsOrchestrator @Inject constructor() {
     }
 
     private fun registerUpdateRecoveryEmailResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<SettingsInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartUpdateRecoveryEmail()
         ) {
             onUpdateRecoveryEmailResultListener?.invoke(it)
@@ -50,8 +51,8 @@ class SettingsOrchestrator @Inject constructor() {
      *
      * Note: This function have to be called [ComponentActivity.onCreate]] before [ComponentActivity.onResume].
      */
-    fun register(context: ComponentActivity) {
-        updateRecoveryEmailLauncher = registerUpdateRecoveryEmailResult(context)
+    fun register(caller: ActivityResultCaller) {
+        updateRecoveryEmailLauncher = registerUpdateRecoveryEmailResult(caller)
     }
 
     /**
@@ -77,9 +78,9 @@ class SettingsOrchestrator @Inject constructor() {
     }
 }
 
-fun SettingsOrchestrator.onUpdateRecoveryEmailResult(
+fun UserSettingsOrchestrator.onUpdateRecoveryEmailResult(
     block: (result: UpdateRecoveryEmailResult?) -> Unit
-): SettingsOrchestrator {
+): UserSettingsOrchestrator {
     setOnUpdateRecoveryEmailResult { block(it) }
     return this
 }

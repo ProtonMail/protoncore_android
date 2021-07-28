@@ -20,7 +20,6 @@ package me.proton.core.usersettings.presentation.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +28,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -61,14 +61,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    activity?.finish()
-                }
-            }
-        )
+        activity?.addOnBackPressedCallback()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,26 +76,18 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
                 onSaveClicked()
             }
         }
-        viewModel.currentRecoveryEmailState.onEach {
+        viewModel.state.onEach {
             when (it) {
-                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Error.Message -> showError(it.message)
-                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Idle -> {
+                is UpdateRecoveryEmailViewModel.State.Error.Message -> showError(it.message)
+                is UpdateRecoveryEmailViewModel.State.Idle -> {
                 }
-                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Processing -> showLoading(true)
-                is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Success -> {
+                is UpdateRecoveryEmailViewModel.State.LoadingCurrent -> showLoading(true)
+                is UpdateRecoveryEmailViewModel.State.UpdatingCurrent -> showLoading(true)
+                is UpdateRecoveryEmailViewModel.State.LoadingSuccess -> {
                     showLoading(false)
                     setCurrentRecoveryEmail(it.recoveryEmail)
                 }
-            }.exhaustive
-        }.launchIn(lifecycleScope)
-
-        viewModel.updateRecoveryEmailState.onEach {
-            when (it) {
-                is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Error.Message -> showError(it.message)
-                is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Idle -> {
-                }
-                is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Processing -> showLoading(true)
-                is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Success -> {
+                is UpdateRecoveryEmailViewModel.State.UpdatingSuccess -> {
                     binding.apply {
                         newEmailInput.text = ""
                         confirmNewEmailInput.text = ""
@@ -111,6 +96,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
+
         settings?.let {
             setCurrentRecoveryEmail(it.email?.value)
         } ?: run {

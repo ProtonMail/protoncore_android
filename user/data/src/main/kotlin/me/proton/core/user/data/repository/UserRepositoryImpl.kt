@@ -36,6 +36,7 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.request.AuthRequest
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
@@ -104,6 +105,11 @@ class UserRepositoryImpl(
 
     override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User =
         if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)
+
+    override suspend fun isUsernameAvailable(username: String): Boolean =
+        provider.get<UserApi>().invoke {
+            usernameAvailable(username).isSuccess()
+        }.valueOrThrow
 
     /**
      * Create new [User]. Used during signup.

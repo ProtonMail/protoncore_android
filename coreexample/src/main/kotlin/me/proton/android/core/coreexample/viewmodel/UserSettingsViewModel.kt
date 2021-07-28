@@ -26,25 +26,30 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
-import me.proton.core.usersettings.presentation.SettingsOrchestrator
+import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import javax.inject.Inject
 
 @HiltViewModel
 class UserSettingsViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val settingsOrchestrator: SettingsOrchestrator
+    private val userSettingsOrchestrator: UserSettingsOrchestrator
 ) : ViewModel() {
 
     fun register(context: ComponentActivity) {
-        settingsOrchestrator.register(context)
+        userSettingsOrchestrator.register(context)
     }
+
+    override fun onCleared() {
+        userSettingsOrchestrator.unregister()
+    }
+
 
     private fun getPrimaryAccount() = accountManager.getPrimaryAccount()
 
     fun onUpdateRecoveryEmailClicked() {
         viewModelScope.launch {
             getPrimaryAccount().first()?.let {
-                settingsOrchestrator.startUpdateRecoveryEmailWorkflow(
+                userSettingsOrchestrator.startUpdateRecoveryEmailWorkflow(
                     userId = it.userId,
                     username = it.username,
                     secondFactorNeeded = it.details.session?.secondFactorEnabled ?: false

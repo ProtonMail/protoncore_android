@@ -22,7 +22,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.user.domain.repository.UserSettingRepository
 import javax.inject.Inject
 
 /**
@@ -30,8 +29,7 @@ import javax.inject.Inject
  */
 class UsernameDomainAvailability @Inject constructor(
     private val userRepository: UserRepository,
-    private val domainRepository: DomainRepository,
-    private val userSettingRepository: UserSettingRepository
+    private val domainRepository: DomainRepository
 ) {
     suspend fun getDomains(): List<Domain> = domainRepository.getAvailableDomains()
 
@@ -43,12 +41,12 @@ class UsernameDomainAvailability @Inject constructor(
         val user = userRepository.getUser(userId)
         if (user.name == username) return true
 
-        return userSettingRepository.isUsernameAvailable(username)
+        return userRepository.isUsernameAvailable(username)
     }
 
     suspend fun isUsernameAvailable(username: String): Boolean {
         check(username.isNotBlank()) { "Username must not be blank." }
 
-        return userSettingRepository.isUsernameAvailable(username)
+        return userRepository.isUsernameAvailable(username)
     }
 }

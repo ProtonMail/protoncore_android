@@ -28,6 +28,8 @@ import me.proton.core.user.domain.entity.User
 
 interface UserRepository {
 
+    suspend fun isUsernameAvailable(username: String): Boolean
+
     /**
      * Add a [User], locally.
      *

@@ -42,27 +42,18 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
     private val performUpdateRecoveryEmail: PerformUpdateRecoveryEmail
 ) : ProtonViewModel() {
 
-    private val _currentRecoveryEmailState = MutableStateFlow<CurrentRecoveryEmailState>(CurrentRecoveryEmailState.Idle)
-    private val _updateRecoveryEmailState = MutableStateFlow<UpdateRecoveryEmailState>(UpdateRecoveryEmailState.Idle)
+    private val _state = MutableStateFlow<State>(State.Idle)
 
-    val currentRecoveryEmailState = _currentRecoveryEmailState.asStateFlow()
-    val updateRecoveryEmailState = _updateRecoveryEmailState.asStateFlow()
+    val state = _state.asStateFlow()
 
-    sealed class CurrentRecoveryEmailState {
-        object Idle : CurrentRecoveryEmailState()
-        object Processing : CurrentRecoveryEmailState()
-        data class Success(val recoveryEmail: String?) : CurrentRecoveryEmailState()
-        sealed class Error : CurrentRecoveryEmailState() {
-            data class Message(val message: String?) : CurrentRecoveryEmailState.Error()
-        }
-    }
-
-    sealed class UpdateRecoveryEmailState {
-        object Idle : UpdateRecoveryEmailState()
-        object Processing : UpdateRecoveryEmailState()
-        data class Success(val recoveryEmail: String?) : UpdateRecoveryEmailState()
-        sealed class Error : UpdateRecoveryEmailState() {
-            data class Message(val message: String?) : UpdateRecoveryEmailState.Error()
+    sealed class State {
+        object Idle : State()
+        object LoadingCurrent : State()
+        object UpdatingCurrent : State()
+        data class LoadingSuccess(val recoveryEmail: String?) : State()
+        data class UpdatingSuccess(val recoveryEmail: String?) : State()
+        sealed class Error : State() {
+            data class Message(val message: String?) : State.Error()
         }
     }
 
@@ -70,13 +61,13 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
      * Returns the current recovery email address.
      */
     fun getCurrentRecoveryAddress(userId: UserId) = flow {
-        emit(CurrentRecoveryEmailState.Processing)
+        emit(State.LoadingCurrent)
         val currentSettings = getSettings(userId)
-        emit(CurrentRecoveryEmailState.Success(currentSettings.email?.value))
+        emit(State.LoadingSuccess(currentSettings.email?.value))
     }.catch { error ->
-        _currentRecoveryEmailState.tryEmit(CurrentRecoveryEmailState.Error.Message(error.message))
+        _state.tryEmit(State.Error.Message(error.message))
     }.onEach { plans ->
-        _currentRecoveryEmailState.tryEmit(plans)
+        _state.tryEmit(plans)
     }.launchIn(viewModelScope)
 
     /**
@@ -89,7 +80,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         password: EncryptedString,
         secondFactorCode: String
     ) = flow {
-        emit(UpdateRecoveryEmailState.Processing)
+        emit(State.UpdatingCurrent)
         val encryptedPassword = password.encryptWith(keyStoreCrypto)
         val updateRecoveryEmailResult = performUpdateRecoveryEmail(
             sessionUserId = userId,
@@ -99,10 +90,10 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
             secondFactorCode = secondFactorCode
         )
         // we expect always value for the email on success, thus !!
-        emit(UpdateRecoveryEmailState.Success(updateRecoveryEmailResult.email?.value))
+        emit(State.UpdatingSuccess(updateRecoveryEmailResult.email?.value))
     }.catch { error ->
-        _updateRecoveryEmailState.tryEmit(UpdateRecoveryEmailState.Error.Message(error.message))
+        _state.tryEmit(State.Error.Message(error.message))
     }.onEach { plans ->
-        _updateRecoveryEmailState.tryEmit(plans)
+        _state.tryEmit(plans)
     }.launchIn(viewModelScope)
 }

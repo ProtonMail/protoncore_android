@@ -23,6 +23,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.ViewDataBinding
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 
 /**
@@ -34,12 +35,7 @@ abstract class SignupFragment<DB : ViewDataBinding> : ProtonFragment<DB>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() = onBackPressed()
-            }
-        )
+        activity?.addOnBackPressedCallback { onBackPressed() }
     }
 
     open fun showLoading(loading: Boolean = true) {

@@ -20,13 +20,20 @@ package me.proton.core.usersettings.data.api.repository
 
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.usersettings.data.api.UserSettingsApi
+import me.proton.core.usersettings.data.api.request.SetUsernameRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 
 class UserSettingsRepositoryImpl(
     private val provider: ApiProvider
 ) : UserSettingsRepository {
+
+    override suspend fun setUsername(sessionUserId: SessionUserId, username: String): Boolean =
+        provider.get<UserSettingsApi>(sessionUserId).invoke {
+            setUsername(SetUsernameRequest(username = username)).isSuccess()
+        }.valueOrThrow
 
     override suspend fun getSettings(sessionUserId: SessionUserId) =
         provider.get<UserSettingsApi>(sessionUserId).invoke {

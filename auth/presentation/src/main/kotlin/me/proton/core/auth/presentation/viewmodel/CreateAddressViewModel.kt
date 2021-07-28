@@ -30,13 +30,13 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
-import me.proton.core.auth.domain.usecase.SetupUsername
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.firstInternalOrNull
+import me.proton.core.usersettings.domain.usecase.SetupUsername
 import javax.inject.Inject
 
 @HiltViewModel

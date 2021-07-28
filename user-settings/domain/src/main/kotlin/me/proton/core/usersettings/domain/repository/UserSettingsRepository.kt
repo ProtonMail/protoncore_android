@@ -23,6 +23,8 @@ import me.proton.core.usersettings.domain.entity.UserSettings
 
 interface UserSettingsRepository {
 
+    suspend fun setUsername(sessionUserId: SessionUserId, username: String): Boolean
+
     /**
      * Returns the general settings for the user.
      */
