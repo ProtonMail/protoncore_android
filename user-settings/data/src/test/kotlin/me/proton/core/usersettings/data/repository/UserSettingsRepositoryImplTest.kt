@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.api.repository
+package me.proton.core.usersettings.data.repository
 
 import io.mockk.coEvery
 import io.mockk.every
@@ -91,10 +91,10 @@ class UserSettingsRepositoryImplTest {
             timeFormat = 2,
             themeType = 1,
             weekStart = 7,
-            welcome = 1,
-            earlyAccess = 1,
+            welcome = true,
+            earlyAccess = true,
             theme = "test-theme",
-            flags = Flags(1)
+            flags = Flags(true)
         )
         // GIVEN
         coEvery { apiManager.invoke<UserSettings>(any(), any()) } returns ApiResult.Success(settingsResponse)
@@ -138,10 +138,10 @@ class UserSettingsRepositoryImplTest {
             timeFormat = 2,
             themeType = 1,
             weekStart = 7,
-            welcome = 1,
-            earlyAccess = 1,
+            welcome = true,
+            earlyAccess = true,
             theme = "test-theme",
-            flags = Flags(1)
+            flags = Flags(true)
         )
         // GIVEN
         coEvery { apiManager.invoke<UserSettings>(any(), any()) } returns ApiResult.Success(settingsResponse)

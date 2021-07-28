@@ -56,10 +56,10 @@ class GetSettingsTest {
         timeFormat = 2,
         themeType = 1,
         weekStart = 7,
-        welcome = 1,
-        earlyAccess = 1,
+        welcome = true,
+        earlyAccess = true,
         theme = "test-theme",
-        flags = Flags(1)
+        flags = Flags(true)
     )
     // endregion
     private lateinit var useCase: GetSettings

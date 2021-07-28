@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.api.repository
+package me.proton.core.usersettings.data.repository
 
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider

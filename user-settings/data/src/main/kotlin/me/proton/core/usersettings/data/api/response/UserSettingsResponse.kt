@@ -26,6 +26,7 @@ import me.proton.core.usersettings.domain.entity.Setting
 import me.proton.core.usersettings.domain.entity.TwoFA
 import me.proton.core.usersettings.domain.entity.U2FKey
 import me.proton.core.usersettings.domain.entity.UserSettings
+import me.proton.core.util.kotlin.toBoolean
 
 @Serializable
 data class UserSettingsResponse(
@@ -80,8 +81,8 @@ data class UserSettingsResponse(
             weekStart = weekStart,
             dateFormat = dateFormat,
             timeFormat = timeFormat,
-            welcome = welcome,
-            earlyAccess = earlyAccess,
+            welcome = welcome.toBoolean(),
+            earlyAccess = earlyAccess.toBoolean(),
             flags = flags?.toFlags()
         )
 }
@@ -143,5 +144,5 @@ data class FlagsResponse(
     @SerialName("Welcomed")
     val welcomed: Int
 ) {
-    fun toFlags(): Flags = Flags(welcomed)
+    fun toFlags(): Flags = Flags(welcomed.toBoolean())
 }

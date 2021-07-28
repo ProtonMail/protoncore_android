@@ -33,8 +33,8 @@ data class UserSettings(
     val weekStart: Int,
     val dateFormat: Int,
     val timeFormat: Int,
-    val welcome: Int,
-    val earlyAccess: Int,
+    val welcome: Boolean,
+    val earlyAccess: Boolean,
     val flags: Flags?
 )
 
@@ -64,5 +64,5 @@ data class U2FKey(
 )
 
 data class Flags(
-    val welcomed: Int
+    val welcomed: Boolean
 )

@@ -68,10 +68,10 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         timeFormat = 2,
         themeType = 1,
         weekStart = 7,
-        welcome = 1,
-        earlyAccess = 1,
+        welcome = true,
+        earlyAccess = true,
         theme = "test-theme",
-        flags = Flags(1)
+        flags = Flags(true)
     )
     // endregion
 
@@ -89,28 +89,28 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse.copy(
             email = null
         )
-        viewModel.currentRecoveryEmailState.test {
+        viewModel.state.test {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Processing>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(expectItem())
             val result = expectItem()
-            assertTrue(result is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Success)
+            assertTrue(result is UpdateRecoveryEmailViewModel.State.LoadingSuccess)
             assertNull(result.recoveryEmail)
         }
     }
 
     @Test
     fun `get current recovery email non-empty handled correctly`() = coroutinesTest {
-        viewModel.currentRecoveryEmailState.test {
+        viewModel.state.test {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Processing>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(expectItem())
             val result = expectItem()
-            assertTrue(result is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Success)
+            assertTrue(result is UpdateRecoveryEmailViewModel.State.LoadingSuccess)
             assertEquals("test-email", result.recoveryEmail)
         }
     }
@@ -127,14 +127,14 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
             )
-        viewModel.currentRecoveryEmailState.test {
+        viewModel.state.test {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Processing>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(expectItem())
             val result = expectItem()
-            assertTrue(result is UpdateRecoveryEmailViewModel.CurrentRecoveryEmailState.Error.Message)
+            assertTrue(result is UpdateRecoveryEmailViewModel.State.Error.Message)
             assertEquals("proton error", result.message)
         }
     }
@@ -154,14 +154,14 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
-        viewModel.updateRecoveryEmailState.test {
+        viewModel.state.test {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "", testUsername, testPassword, "")
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Processing>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
             val result = expectItem()
-            assertTrue(result is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Success)
+            assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
             assertEquals("", result.recoveryEmail)
         }
     }
@@ -181,14 +181,14 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
-        viewModel.updateRecoveryEmailState.test {
+        viewModel.state.test {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "new-email", testUsername, testPassword, "")
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Processing>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
             val result = expectItem()
-            assertTrue(result is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Success)
+            assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
             assertEquals("new-email", result.recoveryEmail)
         }
     }
@@ -208,14 +208,14 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
-        viewModel.updateRecoveryEmailState.test {
+        viewModel.state.test {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "new-email", testUsername, testPassword, "123456")
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Processing>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
             val result = expectItem()
-            assertTrue(result is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Success)
+            assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
             assertEquals("new-email", result.recoveryEmail)
         }
     }
@@ -244,14 +244,14 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
-        viewModel.updateRecoveryEmailState.test {
+        viewModel.state.test {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "new-email", testUsername, testPassword, "")
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Processing>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
             val result = expectItem()
-            assertTrue(result is UpdateRecoveryEmailViewModel.UpdateRecoveryEmailState.Error.Message)
+            assertTrue(result is UpdateRecoveryEmailViewModel.State.Error.Message)
             assertEquals("proton error", result.message)
         }
     }
