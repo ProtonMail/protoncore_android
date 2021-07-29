@@ -18,8 +18,8 @@
 
 package me.proton.core.test.android.uitests.tests.auth.signup
 
-import me.proton.core.test.android.plugins.data.User.Plan.Plus
-import me.proton.core.test.android.plugins.data.User.Plan.Free
+import me.proton.core.test.android.plugins.data.Plan.Plus
+import me.proton.core.test.android.plugins.data.Plan.Free
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot

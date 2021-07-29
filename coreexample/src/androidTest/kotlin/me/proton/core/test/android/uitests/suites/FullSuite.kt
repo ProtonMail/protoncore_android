@@ -31,8 +31,8 @@ import me.proton.core.test.android.uitests.tests.auth.signup.UsernameSetupTests
 import me.proton.core.test.android.uitests.tests.humanverification.HumanVerificationTests
 import me.proton.core.test.android.uitests.tests.payments.ExistingPaymentMethodTests
 import me.proton.core.test.android.uitests.tests.payments.NewCreditCardTests
-import me.proton.core.test.android.uitests.tests.plans.FreePlanTests
-import me.proton.core.test.android.uitests.tests.plans.PaidPlansTests
+import me.proton.core.test.android.uitests.tests.plans.CurrentPlanTests
+import me.proton.core.test.android.uitests.tests.plans.UpgradePlanTests
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
@@ -59,7 +59,7 @@ import org.junit.runners.Suite
     SelectPlanTests::class,
 
     // Plans
-    PaidPlansTests::class,
-    FreePlanTests::class
+    CurrentPlanTests::class,
+    UpgradePlanTests::class
 )
 class FullSuite

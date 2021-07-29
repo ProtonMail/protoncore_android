@@ -22,7 +22,7 @@ import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.test.android.plugins.Requests
 import me.proton.core.test.android.plugins.Requests.jailUnban
 import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.plugins.data.User.Plan.Free
+import me.proton.core.test.android.plugins.data.Plan.Free
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.humanverification.CodeVerificationRobot

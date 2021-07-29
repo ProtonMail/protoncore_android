@@ -18,36 +18,45 @@
 
 package me.proton.core.test.android.uitests.tests.plans
 
+import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.auth.login.LoginRobot
+import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
-class PaidPlansTests: BaseTest() {
+class CurrentPlanTests: BaseTest() {
 
-    private val coreexampleRobot = CoreexampleRobot()
-    private val paidUser = users.getUser { it.isPaid }
+    private val freeUser = users.getUser { !it.isPaid && it.isDefault }
+    private val paidUser = users.getUser { it.isPaid && it.isDefault }
 
     @Before
     fun login() {
         AddAccountRobot()
             .signIn()
-            .loginUser<CoreexampleRobot>(paidUser)
-            .verify { coreexampleElementsDisplayed() }
     }
 
-    @Test
-    fun currentPlanPaid() {
-        coreexampleRobot
+    private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot =
+        LoginRobot()
+            .loginUser<CoreexampleRobot>(user)
             .plansCurrent()
-            .verify { planDetailsDisplayed(paidUser.plan) }
+
+    @Test
+    fun userWithFreePlan() {
+        navigateUserToCurrentPlans(freeUser)
+            .verify {
+                canSelectPlan(Plan.Plus)
+                planDetailsDisplayed(Plan.Plus)
+                planDetailsDisplayed(Plan.Free)
+            }
     }
 
     @Test
-    fun upgradePlanPaid() {
-        coreexampleRobot
-            .plansUpgrade()
+    fun userWithPaidPlan() {
+        navigateUserToCurrentPlans(paidUser)
             .verify { planDetailsDisplayed(paidUser.plan) }
     }
 }

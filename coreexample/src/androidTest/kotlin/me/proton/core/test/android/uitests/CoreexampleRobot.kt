@@ -38,7 +38,6 @@ import me.proton.core.test.android.robots.plans.SelectPlanRobot
 open class CoreexampleRobot : CoreRobot() {
 
     fun humanVerification(): HumanVerificationRobot = clickElement(R.id.trigger_human_ver)
-    inline fun <reified T> upgradePrimary(): T = clickElement(R.id.payment)
     fun signup(): ChooseUsernameRobot = clickElement(R.id.signup)
     fun signupExternal(): ChooseUsernameRobot = clickElement(R.id.signupExternal)
     inline fun <reified T> logoutUser(user: User): T = clickUserButton(user)
@@ -61,7 +60,6 @@ open class CoreexampleRobot : CoreRobot() {
 
         fun coreexampleElementsDisplayed() {
             view.withId(R.id.trigger_human_ver).wait()
-            view.withId(R.id.payment).wait()
             view.withId(R.id.signupExternal).wait()
         }
 

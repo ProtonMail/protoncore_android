@@ -40,19 +40,14 @@ data class User(
     val country: String = "",
     val type: Int = Random.nextInt(1, 2),
 
-    val plan: Plan? = null,
+    val plan: Plan = Plan.Free,
     val cards: List<Card> = emptyList(),
     val paypal: String = ""
 ) {
 
-    @Serializable
-    enum class Plan {
-        Free, Professional, Visionary, Plus
-    }
-
     val isDefault: Boolean = passphrase.isEmpty() && twoFa.isEmpty() && name.isNotEmpty()
 
-    val isPaid: Boolean = plan?.equals(Plan.Free) == false
+    val isPaid: Boolean = plan != Plan.Free
 
     class Users(jsonPath: String) {
 
