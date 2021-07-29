@@ -216,20 +216,20 @@ Country Presentation: **0.1.5** - _released on: Jun 09, 2021_
 
 ### Payment
 
-Payment: **0.2** - _released on: Jul 22, 2021_
+Payment: **0.2.2** - _released on: Jul 29, 2021_
 
-Payment Data: **0.2.1** - _released on: Jul 26, 2021_
+Payment Data: **0.2.2** - _released on: Jul 29, 2021_
 
-Payment Domain: **0.2.1** - _released on: Jul 26, 2021_
+Payment Domain: **0.2.2** - _released on: Jul 29, 2021_
 
-Payment Presentation: **0.2.1** - _released on: Jul 26, 2021_
+Payment Presentation: **0.2.2** - _released on: Jul 29, 2021_
 
 ### Plan
 
-Plan: **0.0.4** - _released on: Jul 22, 2021_
+Plan: **0.1.1** - _released on: Jul 29, 2021_
 
-Plan Data: **0.1** - _released on: Jul 26, 2021_
+Plan Data: **0.1.1** - _released on: Jul 29, 2021_
 
-Plan Domain: **0.1** - _released on: Jul 26, 2021_
+Plan Domain: **0.1.1** - _released on: Jul 29, 2021_
 
-Plan Presentation: **0.1** - _released on: Jul 26, 2021_
+Plan Presentation: **0.1.1** - _released on: Jul 29, 2021_
