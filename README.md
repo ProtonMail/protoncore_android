@@ -236,10 +236,10 @@ Plan Presentation: **0.2** - _released on: Jul 30, 2021_
 
 ### User Settings
 
-User Settings: **1.5** - _released on: Jul 30, 2021_
+User Settings: **1.5.1** - _released on: Jul 30, 2021_
 
-User Settings Data: **1.5** - _released on: Jul 30, 2021_
+User Settings Data: **1.5.1** - _released on: Jul 30, 2021_
 
-User Settings Domain: **1.5** - _released on: Jul 30, 2021_
+User Settings Domain: **1.5.1** - _released on: Jul 30, 2021_
 
-User Settings Presentation: **1.5** - _released on: Jul 30, 2021_
+User Settings Presentation: **1.5.1** - _released on: Jul 30, 2021_
