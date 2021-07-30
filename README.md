@@ -93,7 +93,7 @@ Test Android Instrumented: **0.6.4** - _released on: Jul 29, 2021_
 
 Domain: **1.0.4** - _released on: Jul 07, 2021_
 
-Presentation: **0.9.9** - _released on: Jul 26, 2021_
+Presentation: **0.10** - _released on: Jul 30, 2021_
 
 Data: **1.3.1** - _released on: Jul 22, 2021_
 
@@ -121,13 +121,13 @@ Crypto Android: **1.1.5** - _released on: Jul 30, 2021_
 
 ### Auth
 
-Auth: **1.4** - _released on: Jul 22, 2021_
+Auth: **1.5** - _released on: Jul 30, 2021_
 
-Auth Domain: **1.4** - _released on: Jul 22, 2021_
+Auth Domain: **1.5** - _released on: Jul 30, 2021_
 
-Auth Presentation: **1.4** - _released on: Jul 22, 2021_
+Auth Presentation: **1.5** - _released on: Jul 30, 2021_
 
-Auth Data: **1.4** - _released on: Jul 22, 2021_
+Auth Data: **1.5** - _released on: Jul 30, 2021_
 
 ### Account
 
@@ -142,17 +142,17 @@ Account Data: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Account Manager
 
-Account Manager: **1.3.2** - _released on: Jul 27, 2021_
+Account Manager: **1.5** - _released on: Jul 30, 2021_
 
-Account Manager Domain: **1.3.2** - _released on: Jul 27, 2021_
+Account Manager Domain: **1.5** - _released on: Jul 30, 2021_
 
-Account Manager Presentation: **1.3.2** - _released on: Jul 27, 2021_
+Account Manager Presentation: **1.5** - _released on: Jul 30, 2021_
 
-Account Manager Data: **1.3.2** - _released on: Jul 27, 2021_
+Account Manager Data: **1.5** - _released on: Jul 30, 2021_
 
-Account Manager Data Db: **1.3.2** - _released on: Jul 27, 2021_
+Account Manager Data Db: **1.5** - _released on: Jul 30, 2021_
 
-Account Manager Dagger: **1.3.2** - _released on: Jul 27, 2021_
+Account Manager Dagger: **1.5** - _released on: Jul 30, 2021_
 
 ### Key
 
@@ -164,11 +164,11 @@ Key Data: **1.3.2** - _released on: Jul 30, 2021_
 
 ### User
 
-User: **1.3.2** - _released on: Jul 23, 2021_
+User: **1.5** - _released on: Jul 30, 2021_
 
-User Domain: **1.3.2** - _released on: Jul 23, 2021_
+User Domain: **1.5** - _released on: Jul 30, 2021_
 
-User Data: **1.3.2** - _released on: Jul 23, 2021_
+User Data: **1.5** - _released on: Jul 30, 2021_
 
 ### Contact
 
@@ -226,20 +226,20 @@ Payment Presentation: **0.2.2** - _released on: Jul 29, 2021_
 
 ### Plan
 
-Plan: **0.1.1** - _released on: Jul 29, 2021_
+Plan: **0.2** - _released on: Jul 30, 2021_
 
-Plan Data: **0.1.1** - _released on: Jul 29, 2021_
+Plan Data: **0.2** - _released on: Jul 30, 2021_
 
-Plan Domain: **0.1.1** - _released on: Jul 29, 2021_
+Plan Domain: **0.2** - _released on: Jul 30, 2021_
 
-Plan Presentation: **0.1.1** - _released on: Jul 29, 2021_
+Plan Presentation: **0.2** - _released on: Jul 30, 2021_
 
 ### User Settings
 
-User Settings: **0** - _released on: Jun 25, 2021_
+User Settings: **1.5** - _released on: Jul 30, 2021_
 
-User Settings Data: **0** - _released on: Jun 25, 2021_
+User Settings Data: **1.5** - _released on: Jul 30, 2021_
 
-User Settings Domain: **0** - _released on: Jun 25, 2021_
+User Settings Domain: **1.5** - _released on: Jul 30, 2021_
 
-User Settings Presentation: **0** - _released on: Jun 25, 2021_
+User Settings Presentation: **1.5** - _released on: Jul 30, 2021_
