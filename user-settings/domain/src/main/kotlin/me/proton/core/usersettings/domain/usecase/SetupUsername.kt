@@ -16,12 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.usecase
+package me.proton.core.usersettings.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.user.domain.repository.UserSettingRepository
+import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
 /**
@@ -29,7 +29,7 @@ import javax.inject.Inject
  */
 class SetupUsername @Inject constructor(
     private val userRepository: UserRepository,
-    private val userSettingRepository: UserSettingRepository
+    private val userSettingRepository: UserSettingsRepository
 ) {
     suspend operator fun invoke(
         userId: UserId,

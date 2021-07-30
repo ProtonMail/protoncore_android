@@ -38,6 +38,7 @@ import me.proton.android.core.coreexample.viewmodel.AccountViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
 import me.proton.android.core.coreexample.viewmodel.PlansViewModel
+import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.auth.presentation.ui.AddAccountActivity
@@ -59,6 +60,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
     private val accountSwitcherViewModel: AccountSwitcherViewModel by viewModels()
     private val mailMessageViewModel: MailMessageViewModel by viewModels()
     private val mailSettingsViewModel: MailSettingsViewModel by viewModels()
+    private val settingsViewModel: UserSettingsViewModel by viewModels()
 
     override fun layoutId(): Int = R.layout.activity_main
 
@@ -69,6 +71,7 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
 
         accountViewModel.register(this)
         plansViewModel.register(this)
+        settingsViewModel.register(this)
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
@@ -94,6 +97,8 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             plans.onClick { plansViewModel.onPlansClicked() }
             plansUpgrade.onClick { plansViewModel.onPlansUpgradeClicked(this@MainActivity) }
             plansCurrent.onClick { plansViewModel.onCurrentPlanClicked(this@MainActivity) }
+
+            settings.onClick { settingsViewModel.onUpdateRecoveryEmailClicked() }
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {

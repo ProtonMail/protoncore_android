@@ -27,7 +27,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
-import me.proton.core.auth.domain.usecase.SetupUsername
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.ArchTest
@@ -38,6 +37,7 @@ import me.proton.core.user.domain.entity.AddressType
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserKey
+import me.proton.core.usersettings.domain.usecase.SetupUsername
 import org.junit.Before
 import org.junit.Test
 

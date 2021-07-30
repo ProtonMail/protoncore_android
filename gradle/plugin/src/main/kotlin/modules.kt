@@ -106,10 +106,10 @@ object Module {
     const val countryPresentation = "$country:country-presentation"
 
     // Settings
-    const val settings = ":settings"
-    const val settingsDomain = "$settings:settings-domain"
-    const val settingsPresentation = "$settings:settings-presentation"
-    const val settingsData = "$settings:settings-data"
+    const val userSettings = ":user-settings"
+    const val userSettingsDomain = "$userSettings:user-settings-domain"
+    const val userSettingsPresentation = "$userSettings:user-settings-presentation"
+    const val userSettingsData = "$userSettings:user-settings-data"
 
     // Human Verification
     const val humanVerification = ":human-verification"

@@ -1,3 +1,47 @@
+## Version [1.5.0]
+
+Jul 30, 2021
+
+Add user settings, with initial update recovery email option.
+
+### Dependencies
+
+- Auth 1.5.0.
+- Account Manager 1.5.0.
+- User 1.5.0.
+- UserSettings 1.5.0.
+- Plan 0.2.0.
+- Presentation 0.10.0.
+
+### New Modules
+
+- **User Settings**: Get and update UserSettings.
+
+### New Migration
+
+- If you use ```Account Manager Data Db``` module, nothing to do, it's transparently applied.
+- If you use your own AppDatabase, please apply changes as follow:
+    - Add ```UserSettingsEntity``` to your AppDatabase ```entities```.
+    - Add ```UserSettingsConverters``` to your AppDatabase ```TypeConverters```.
+    - Extends ```UserSettingsDatabase``` from your AppDatabase.
+    - Add a migration to your AppDatabase (```addMigration```):
+```
+val MIGRATION_X_Y = object : Migration(X, Y) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        UserSettingsDatabase.MIGRATION_0.migrate(database)
+    }
+}
+```
+
+### New Features
+
+- Added ```UserSettings module``` with Update Recovery Email feature.
+- Added ```FragmentActivity.addOnBackPressedCallback``` in presentation module.
+
+### Recommendations
+
+- Do not expect ```UserSettings``` properties to be stable, they could change in future.
+
 ## Crypto Version [1.1.5], Key Version [1.3.2]
 
 Jul 28, 2021

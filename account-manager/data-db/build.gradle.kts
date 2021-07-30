@@ -25,7 +25,7 @@ plugins {
     kotlin("kapt")
 }
 
-libVersion = Version(1, 3, 2)
+libVersion = Version(1, 5, 0)
 
 android() {
     defaultConfig {
@@ -62,6 +62,8 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.mailSettingsData),
         project(Module.mailSettingsDomain),
+        project(Module.userSettingsData),
+        project(Module.userSettingsDomain),
 
         // Kotlin
         `kotlin-jdk8`,

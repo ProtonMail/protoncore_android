@@ -27,7 +27,7 @@ plugins {
 }
 
 android(
-    version = Version(0, 4, 3),
+    version = Version(0, 4, 4),
     useDataBinding = true
 )
 {
@@ -69,6 +69,7 @@ dependencies {
         project(Module.payment),
         project(Module.country),
         project(Module.plan),
+        project(Module.userSettings),
 
         `kotlin-jdk7`,
         `coroutines-android`,

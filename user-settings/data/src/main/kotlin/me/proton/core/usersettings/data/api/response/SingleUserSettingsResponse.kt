@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,14 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.data.api.request
+package me.proton.core.usersettings.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.usersettings.domain.entity.UserSettings
 
 @Serializable
-data class SetUsernameRequest(
-    @SerialName("Username")
-    /** Length <= 40. */
-    val username: String
+data class SingleUserSettingsResponse(
+    @SerialName("UserSettings")
+    val settings: UserSettingsResponse
 )

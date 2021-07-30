@@ -39,6 +39,7 @@ import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.PlansViewModel
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.util.kotlin.exhaustive
 
@@ -60,14 +61,7 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.register(this)
-        activity?.onBackPressedDispatcher?.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    finish()
-                }
-            }
-        )
+        activity?.addOnBackPressedCallback()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

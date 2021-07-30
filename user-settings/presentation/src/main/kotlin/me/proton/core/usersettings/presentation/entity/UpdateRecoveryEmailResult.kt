@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,13 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.domain.repository
+package me.proton.core.usersettings.presentation.entity
 
-import me.proton.core.domain.entity.SessionUserId
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-interface UserSettingRepository {
-
-    suspend fun isUsernameAvailable(username: String): Boolean
-
-    suspend fun setUsername(sessionUserId: SessionUserId, username: String): Boolean
-}
+@Parcelize
+data class UpdateRecoveryEmailResult(
+    val result: Boolean
+) : Parcelable

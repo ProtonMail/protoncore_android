@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,16 +16,39 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.data.api
+import studio.forface.easygradle.dsl.*
 
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.GenericResponse
-import me.proton.core.user.data.api.request.SetUsernameRequest
-import retrofit2.http.Body
-import retrofit2.http.PUT
+plugins {
+    `java-library`
+    kotlin("jvm")
+}
 
-interface SettingApi : BaseRetrofitApi {
+libVersion = Version(1, 5, 0)
 
-    @PUT("settings/username")
-    suspend fun setUsername(@Body request: SetUsernameRequest): GenericResponse
+dependencies {
+
+    implementation(
+        project(Module.kotlinUtil),
+        project(Module.domain),
+        project(Module.networkDomain),
+        project(Module.cryptoCommon),
+
+        // Features
+        project(Module.accountDomain),
+        project(Module.userDomain),
+        project(Module.keyDomain),
+        project(Module.authDomain),
+
+        // Kotlin
+        `kotlin-jdk8`,
+        `coroutines-core`,
+
+        // Android
+        `dagger`,
+
+        // Other
+        `googleTink`
+    )
+
+    testImplementation(project(Module.kotlinTest))
 }
