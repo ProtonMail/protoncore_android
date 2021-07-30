@@ -258,6 +258,45 @@ class KeyHolderTest {
     }
 
     @Test
+    fun useKeys_encryptAndSign_decryptAndVerify_File() {
+        val file = getTempFile("large")
+        file.appendBytes(Random.nextBytes(10 * 1000 * 1000)) // 10MB
+
+        keyHolder1.useKeys(context) {
+            val encryptedFile = encryptAndSignFile(file, getTempFile("encrypted"))
+            val decryptedFile = decryptAndVerifyFile(encryptedFile, getTempFile("decrypted"))
+            val decryptedOrNullFile = decryptAndVerifyFileOrNull(encryptedFile, getTempFile("decryptedOrNull"))
+
+            assertNotNull(decryptedOrNullFile)
+            assertEquals(VerificationStatus.Success, decryptedFile.status)
+            assertTrue(file.readBytes().contentEquals(decryptedFile.file.readBytes()))
+
+            encryptedFile.file.delete()
+            decryptedFile.file.delete()
+            decryptedOrNullFile.file.delete()
+        }
+        file.delete()
+    }
+
+    @Test
+    fun useKeys_encryptAndSign_decryptAndVerify_fail_File() {
+        val file = getTempFile("large")
+        file.appendBytes(Random.nextBytes(10 * 1000 * 1000)) // 10MB
+
+        keyHolder1.useKeys(context) {
+            encryptAndSignFile(file, getTempFile("encrypted"))
+        }.also { encryptedFile ->
+            keyHolder2.useKeys(context) {
+                val tempFile = getTempFile("decrypted")
+                assertNull(decryptAndVerifyFileOrNull(encryptedFile, tempFile))
+                tempFile.delete()
+            }
+            encryptedFile.file.delete()
+        }
+        file.delete()
+    }
+
+    @Test
     fun useKeys_encrypt_sign__close__decrypt_verify() {
         keyHolder1.useKeys(context) {
             val encryptedText = encryptText(message)

@@ -188,6 +188,13 @@ class TestCryptoContext : CryptoContext {
             "BINARY([${data.fromByteArray()}]+$publicKey+${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey)
 
+        override fun encryptAndSignFile(
+            source: File,
+            destination: File,
+            publicKey: Armored,
+            unlockedKey: Unarmored
+        ): EncryptedFile = encryptFile(source, destination, publicKey)
+
         override fun encryptSessionKey(keyPacket: ByteArray, publicKey: Armored): ByteArray = keyPacket
 
         override fun encryptSessionKey(keyPacket: ByteArray, password: ByteArray): ByteArray = keyPacket
@@ -217,6 +224,14 @@ class TestCryptoContext : CryptoContext {
             },
             VerificationStatus.Success
         )
+
+        override fun decryptAndVerifyFile(
+            source: EncryptedFile,
+            destination: File,
+            publicKeys: List<Armored>,
+            unlockedKeys: List<Unarmored>,
+            validAtUtc: Long
+        ): DecryptedFile = decryptFile(source, destination, unlockedKeys.first())
 
         override fun decryptSessionKey(keyPacket: ByteArray, unlockedKey: Unarmored): ByteArray = keyPacket
 

@@ -57,8 +57,8 @@ dependencies {
         `store4`
     )
 
-    testImplementation(project(Module.androidTest))
     androidTestImplementation(
+        project(Module.androidTest).exclude(robolectric), `mockk-android`,
         project(Module.androidInstrumentedTest),
         project(Module.domain),
         project(Module.auth),

@@ -33,6 +33,7 @@ import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
+import me.proton.core.crypto.common.pgp.decryptAndVerifyFileOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.NestedPrivateKey
@@ -326,6 +327,21 @@ fun KeyHolderContext.encryptAndSignData(data: ByteArray): EncryptedMessage =
     )
 
 /**
+ * Encrypt [source] into [destination] using [PublicKeyRing] and sign using [PrivateKeyRing].
+ *
+ * @throws [CryptoException] if [source] cannot be encrypted or signed.
+ *
+ * @see [KeyHolderContext.decryptAndVerifyFile].
+ */
+fun KeyHolderContext.encryptAndSignFile(source: File, destination: File): EncryptedFile =
+    context.pgpCrypto.encryptAndSignFile(
+        source,
+        destination,
+        publicKeyRing.primaryKey.key,
+        privateKeyRing.unlockedPrimaryKey.unlockedKey.value
+    )
+
+/**
  * Encrypt [keyPacket] using [PublicKeyRing].
  *
  * @throws [CryptoException] if [keyPacket] cannot be encrypted.
@@ -372,6 +388,24 @@ fun KeyHolderContext.decryptAndVerifyData(message: EncryptedMessage, validAtUtc:
     )
 
 /**
+ * Decrypt [source] into [destination] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ *
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @throws [CryptoException] if [source] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.encryptAndSignFile]
+ */
+fun KeyHolderContext.decryptAndVerifyFile(source: EncryptedFile, destination: File, validAtUtc: Long = 0): DecryptedFile =
+    context.pgpCrypto.decryptAndVerifyFile(
+        source,
+        destination,
+        publicKeyRing.keys.map { it.key },
+        privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
+        validAtUtc
+    )
+
+/**
  * Decrypt [message] as [String] using [PrivateKeyRing] and verify using [PublicKeyRing].
  *
  * Note: String canonicalization/standardization is applied.
@@ -402,6 +436,24 @@ fun KeyHolderContext.decryptAndVerifyTextOrNull(message: EncryptedMessage, valid
 fun KeyHolderContext.decryptAndVerifyDataOrNull(message: EncryptedMessage, validAtUtc: Long = 0): DecryptedData? =
     context.pgpCrypto.decryptAndVerifyDataOrNull(
         message,
+        publicKeyRing.keys.map { it.key },
+        privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
+        validAtUtc
+    )
+
+/**
+ * Decrypt [source] into [destination] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ *
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptAndVerifyFile]
+ */
+fun KeyHolderContext.decryptAndVerifyFileOrNull(source: EncryptedFile, destination: File, validAtUtc: Long = 0): DecryptedFile? =
+    context.pgpCrypto.decryptAndVerifyFileOrNull(
+        source,
+        destination,
         publicKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
         validAtUtc

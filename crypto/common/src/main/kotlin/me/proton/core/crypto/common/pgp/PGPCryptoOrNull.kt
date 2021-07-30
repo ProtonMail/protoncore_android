@@ -193,6 +193,21 @@ fun PGPCrypto.decryptAndVerifyDataOrNull(
 ): DecryptedData? = runCatching { decryptAndVerifyData(message, publicKeys, unlockedKeys, validAtUtc) }.getOrNull()
 
 /**
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
+ *
+ * @see [PGPCrypto.decryptAndVerifyFile]
+ */
+fun PGPCrypto.decryptAndVerifyFileOrNull(
+    source: EncryptedFile,
+    destination: File,
+    publicKeys: List<Armored>,
+    unlockedKeys: List<Unarmored>,
+    validAtUtc: Long = 0
+): DecryptedFile? = runCatching { decryptAndVerifyFile(source, destination, publicKeys, unlockedKeys, validAtUtc) }.getOrNull()
+
+/**
  * @return [Armored] public key, or `null` if public key cannot be extracted from [privateKey].
  *
  * @see [PGPCrypto.getPublicKey]
