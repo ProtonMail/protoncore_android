@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common strings -->
+  <string name="human_verification_help">Nápověda</string>
+  <string name="human_verification_title">CAPTCHA</string>
+  <string name="human_verification_main_subtitle">Chcete-li zabránit zneužití, ověřte pomocí jedné z následujících možností, že jste člověk</string>
+  <string name="human_verification_enter_code_subtitle">Zadejte ověřovací kód, který byl odeslán na %s.</string>
+  <string name="human_verification_enter_code_subtitle_email">Zadejte ověřovací kód, který byl odeslán na adresu %s. Pokud nenajdete tento e-mail ve své schránce, zkontrolujte prosím složku se spamem.</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Zadejte ověřovací kód, který již máte:</string>
+  <string name="human_verification_option_captcha">CAPTCHA</string>
+  <string name="human_verification_option_email">E-mail</string>
+  <string name="human_verification_option_email_subtitle">Váš e-mail bude použit pouze pro toto jednorázové ověření. Pokud e-mail nenajdete ve Vaší schránce, zkontrolujte prosím složku se spamem.</string>
+  <string name="human_verification_option_sms">Telefonní číslo</string>
+  <string name="human_verification_option_sms_subtitle">Vaše telefonní číslo bude použito pouze pro toto jednorázové ověření.</string>
+  <string name="human_verification_get_verification_code">Získat ověřovací kód</string>
+  <string name="human_verification_already_have_code">Už mám kód</string>
+  <string name="human_verification_request_replacement_code">Nedostali jste kód?</string>
+  <string name="human_verification_verify">Ověřit</string>
+  <!-- To verify the entered code - action -->
+  <string name="human_verification_help_title">Potřebujete pomoc s ověřením CAPTCHA?</string>
+  <string name="human_verification_code">Ověřovací kód</string>
+  <string name="human_verification_code_request_new_code_title">Požádat o nový kód?</string>
+  <string name="human_verification_code_request_new_code_action">Vyžádejte si nový kód</string>
+  <string name="human_verification_code_request_new_code">Získat náhradní kód zaslaný na adresu %s.</string>
+  <string name="email">E-mail</string>
+  <string name="email_hint">email@example.com</string>
+  <string name="sms_hint">XX XXX XX XX</string>
+  <string name="verification_code_hint">XXXXXX</string>
+  <!-- TODO: update correct strings below -->
+  <string name="human_verification_help_manual_title">Požádat o pozvánku</string>
+  <string name="human_verification_help_manual">Pokud máte potíže s vytvořením účtu, požádejte prosím o pozvánku a my odpovíme do jednoho pracovního dne.</string>
+  <string name="human_verification_help_website_title">Navštivte naše poradenské centrum</string>
+  <string name="human_verification_help_website">Zjistěte více o ověření CAPTCHA a o tom, proč o ně žádáme.</string>
+  <string name="human_verification_sending_failed">Odeslání ověřovacího kódu se nezdařilo. Zkuste to prosím znovu.</string>
+  <string name="human_verification_incorrect_code">Nesprávný kód. Zkuste znovu.</string>
+  <string name="human_verification_resent_code">Poslali jsme vám další kód.</string>
+  <string name="human_verification_captcha_failed">Ověření CAPTCHA se nezdařilo. Zkuste to prosím ještě jednou, nebo zvolte jinou možnost ověření.</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
+  <string name="human_verification_captcha_no_connectivity">Žádné připojení. CAPTCHA nelze načíst.</string>
+</resources>

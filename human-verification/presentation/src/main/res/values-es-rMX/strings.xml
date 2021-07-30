@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common strings -->
+  <string name="human_verification_help">Ayuda</string>
+  <string name="human_verification_title">Verificación humana</string>
+  <string name="human_verification_main_subtitle">Para evitar abusos, por favor verifique que es humano usando una de las siguientes opciones</string>
+  <string name="human_verification_enter_code_subtitle">Ingrese el código de verificación enviado a %s.</string>
+  <string name="human_verification_enter_code_subtitle_email">Ingrese el código de verificación enviado a %s. Si no encuentra el correo en su bandeja de entrada, revise su carpeta de spam.</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Ingrese el código de verificación que ya tiene:</string>
+  <string name="human_verification_option_captcha">CAPTCHA</string>
+  <string name="human_verification_option_email">Correo</string>
+  <string name="human_verification_option_email_subtitle">Su correo electrónico sólo se usará para esta verificación única. Si no encuentra el correo electrónico en su bandeja de entrada, revise su carpeta de spam.</string>
+  <string name="human_verification_option_sms">Numéro telefónico</string>
+  <string name="human_verification_option_sms_subtitle">Su número de teléfono sólo se usará para esta verificación única.</string>
+  <string name="human_verification_get_verification_code">Obtener código de verificación</string>
+  <string name="human_verification_already_have_code">Ya tengo un código</string>
+  <string name="human_verification_request_replacement_code">¿No recibió el código?</string>
+  <string name="human_verification_verify">Verificar</string>
+  <!-- To verify the entered code - action -->
+  <string name="human_verification_help_title">¿Necesita ayuda para la verificación humana?</string>
+  <string name="human_verification_code">Código de verificación</string>
+  <string name="human_verification_code_request_new_code_title">¿Solicitar código nuevo?</string>
+  <string name="human_verification_code_request_new_code_action">Solicitar código nuevo</string>
+  <string name="human_verification_code_request_new_code">Obtener un código de reemplazo enviado a %s.</string>
+  <string name="email">Correo</string>
+  <string name="email_hint">cuenta@ejemplo.com</string>
+  <string name="sms_hint">XX XXX XX XX</string>
+  <string name="verification_code_hint">XXXXXX</string>
+  <!-- TODO: update correct strings below -->
+  <string name="human_verification_help_manual_title">Solicitar una invitación</string>
+  <string name="human_verification_help_manual">Si tiene problemas al crear su cuenta, por favor, solicite una invitación y responderemos dentro de un día hábil.</string>
+  <string name="human_verification_help_website_title">Visite nuestro centro de ayuda</string>
+  <string name="human_verification_help_website">Más información sobre la verificación humana y por qué la pedimos.</string>
+  <string name="human_verification_sending_failed">Error al enviar el código de verificación. Vuelva a intentarlo.</string>
+  <string name="human_verification_incorrect_code">Código incorrecto. Vuelva a intentarlo.</string>
+  <string name="human_verification_resent_code">Le hemos enviado otro código.</string>
+  <string name="human_verification_captcha_failed">Falló la verificación del CAPTCHA. Intente una vez más o elija otra opción de verificación.</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
+  <string name="human_verification_captcha_no_connectivity">Sin conexión. No se pudo cargar el CAPTCHA.</string>
+</resources>

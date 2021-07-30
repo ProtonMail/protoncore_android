@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_plan">Vybrat plán</string>
+  <string name="plans_select_a_plan">Vyberte plán</string>
+  <string name="plans_customizable_features">  Navštivte  pro upgrade na tarif Professional a Visionary, nebo pro přizpůsobení Vašeho plánu.
+  <a href="https://protonmail.com/pricing">protonmail.com</a>
+  </string>
+  <string name="plans_customizable_features_web">  Navštivte  pro přizpůsobení Vašeho plánu.
+  <a href="https://protonmail.com/pricing">protonmail.com</a>
+  </string>
+  <string name="plans_fetching_general_error">Při načítání plánů došlo k chybě.</string>
+  <string name="plans_free_name">Zdarma</string>
+  <string name="plan_price_monthly">/měsíčně</string>
+  <string name="plans_current_plan">Aktuální plán</string>
+  <string name="plans_upgrade_plan">Upgradovat</string>
+  <string name="plans_subscription">Předplatné</string>
+  <string name="plans_renewal_date">Váš plán se automaticky obnoví dne</string>
+  <string name="plans_billed_yearly">Účtováno jako %s za rok</string>
+  <string name="plans_save_20">Ušetřete 20% přechodem na roční fakturaci</string>
+  <!-- plan details -->
+  <string-array name="free">
+    <item>1 uživatel</item>
+    <item>0,5GB úložiště</item>
+    <item>1 adresa</item>
+  </string-array>
+  <string-array name="plus">
+    <item>1 uživatel</item>
+    <item>5GB úložiště*</item>
+    <item>5 adres</item>
+    <item>200 složek/štítků</item>
+    <item>Vlastní e-mailová adresa</item>
+  </string-array>
+  <string-array name="professional">
+    <item>1–5000 uživatelů *</item>
+    <item>5 GB úložiště / uživatel</item>
+    <item>5 adres / uživatel</item>
+    <item>Neomezený počet složek / štítků / filtrů</item>
+    <item>Vlastní e-mailové adresy</item>
+  </string-array>
+  <string-array name="visionary">
+    <item>6 uživatelů</item>
+    <item>20 GB úložiště</item>
+    <item>50 adres</item>
+    <item>Neomezený počet složek / štítků / filtrů</item>
+    <item>Vlastní e-mailové adresy</item>
+  </string-array>
+  <!-- supported plans -->
+  <string-array name="supported_currencies">
+    <item>€ EUR</item>
+    <item>$ USD</item>
+    <item>CHF</item>
+  </string-array>
+  <string-array name="supported_billing_cycle">
+    <item>Měsíční fakturace</item>
+    <item>Roční fakturace - UŠETŘÍTE 20%</item>
+  </string-array>
+</resources>
