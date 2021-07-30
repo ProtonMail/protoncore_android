@@ -1,3 +1,11 @@
+## User Settings Version [1.5.1]
+
+Jul 30, 2021
+
+### Bug Fixes
+
+- Fixed UserSettingsDatabase MIGRATION_0.
+
 ## Version [1.5.0]
 
 Jul 30, 2021
