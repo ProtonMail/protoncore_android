@@ -34,4 +34,3 @@ open class ProtonButton @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = com.google.android.material.R.attr.materialButtonStyle
 ) : MaterialButton(context, attrs, defStyleAttr)
-

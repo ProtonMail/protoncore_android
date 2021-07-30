@@ -26,7 +26,7 @@ import com.google.android.material.radiobutton.MaterialRadioButton
 /**
  * A radio button that draws its button at the end (on the right in LTR).
  */
-class ProtonRadioButton : MaterialRadioButton {
+open class ProtonRadioButton : MaterialRadioButton {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)

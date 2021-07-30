@@ -26,7 +26,7 @@ import com.google.android.material.checkbox.MaterialCheckBox
 /**
  * A checkbox that draws its button at the end (on the right in LTR).
  */
-class ProtonCheckbox : MaterialCheckBox {
+open class ProtonCheckbox : MaterialCheckBox {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
