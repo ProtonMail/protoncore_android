@@ -71,7 +71,7 @@ class UserAddressKeyViewModel @Inject constructor(
                 return@transformLatest
             }
 
-            val addresses = userManager.getAddresses(user.userId, refresh = true)
+            val addresses = userManager.getAddresses(user.userId)
 
             val primary = addresses.primary()
             if (primary == null) {

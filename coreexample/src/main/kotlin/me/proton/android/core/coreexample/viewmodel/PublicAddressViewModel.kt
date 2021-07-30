@@ -32,6 +32,7 @@ import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.extension.areAllLocked
 import me.proton.core.key.domain.repository.PublicAddressRepository
+import me.proton.core.key.domain.repository.getPublicAddressOrNull
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
@@ -73,7 +74,7 @@ class PublicAddressViewModel @Inject constructor(
             }
 
             // Get Addresses from primary User.
-            val addresses = userManager.getAddresses(user.userId, refresh = true)
+            val addresses = userManager.getAddresses(user.userId)
 
             // Get Primary address from primary User.
             val primaryAddress = addresses.primary()
@@ -83,7 +84,7 @@ class PublicAddressViewModel @Inject constructor(
             }
 
             // Get PublicAddress from server.
-            val publicAddress = publicAddressRepository.getPublicAddress(user.userId, primaryAddress.email)
+            val publicAddress = publicAddressRepository.getPublicAddressOrNull(user.userId, primaryAddress.email)
             if (publicAddress == null) {
                 emit(PublicAddressState.Error.NoPublicAddress)
                 return@transformLatest
@@ -98,10 +99,11 @@ class PublicAddressViewModel @Inject constructor(
                 val decryptedText = decryptTextOrNull(encryptedText)
                     ?: return@useKeys PublicAddressState.Error.CannotDecrypt
 
-                if (decryptedText != message)
+                if (decryptedText != message) {
                     return@useKeys PublicAddressState.Error.DecryptedAreNotEqual
-                else
+                } else {
                     return@useKeys PublicAddressState.Success
+                }
             }
             emit(state)
         }.catch { error ->

@@ -38,6 +38,9 @@ import me.proton.android.core.coreexample.viewmodel.AccountViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
 import me.proton.android.core.coreexample.viewmodel.PlansViewModel
+import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
+import me.proton.android.core.coreexample.viewmodel.UserAddressKeyViewModel
+import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
@@ -60,6 +63,9 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
     private val accountSwitcherViewModel: AccountSwitcherViewModel by viewModels()
     private val mailMessageViewModel: MailMessageViewModel by viewModels()
     private val mailSettingsViewModel: MailSettingsViewModel by viewModels()
+    private val userKeyViewModel: UserKeyViewModel by viewModels()
+    private val userAddressKeyViewModel: UserAddressKeyViewModel by viewModels()
+    private val publicAddressViewModel: PublicAddressViewModel by viewModels()
     private val settingsViewModel: UserSettingsViewModel by viewModels()
 
     override fun layoutId(): Int = R.layout.activity_main
@@ -120,16 +126,22 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             }.exhaustive
         }.launchIn(lifecycleScope)
 
-        mailMessageViewModel.getState().onEach {
-            showToast("MailMessage: $it")
-        }.launchIn(lifecycleScope)
+        mailMessageViewModel.getState().onEach { showToast("MailMessage: $it") }.launchIn(lifecycleScope)
 
         mailSettingsViewModel.getMailSettingsState().onEach {
-            when (it) {
-                is MailSettingsViewModel.MailSettingsState.Error.Message -> showToast("MailSettings: $it")
-                is MailSettingsViewModel.MailSettingsState.Error.NoPrimaryAccount,
-                is MailSettingsViewModel.MailSettingsState.Success -> Unit
-            }.exhaustive
+            if (it is MailSettingsViewModel.MailSettingsState.Error) { showToast("MailSettings: $it") }
+        }.launchIn(lifecycleScope)
+
+        userKeyViewModel.getUserKeyState().onEach {
+            if (it is UserKeyViewModel.UserKeyState.Error) { showToast("UserKey: $it") }
+        }.launchIn(lifecycleScope)
+
+        userAddressKeyViewModel.getUserAddressKeyState().onEach {
+            if (it is UserKeyViewModel.UserKeyState.Error) { showToast("UserAddressKey: $it") }
+        }.launchIn(lifecycleScope)
+
+        publicAddressViewModel.getPublicAddressState().onEach {
+            if (it is UserKeyViewModel.UserKeyState.Error) { showToast("PublicAddress: $it") }
         }.launchIn(lifecycleScope)
     }
 
