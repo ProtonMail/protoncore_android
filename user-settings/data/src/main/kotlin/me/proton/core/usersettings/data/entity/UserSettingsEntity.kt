@@ -46,48 +46,48 @@ data class UserSettingsEntity(
     val password: PasswordEntity,
     @Embedded(prefix = "twoFA_")
     val twoFA: TwoFAEntity?,
-    val news: Int,
-    val locale: String,
-    val logAuth: Int,
-    val invoiceText: String,
-    val density: Int,
+    val news: Int?,
+    val locale: String?,
+    val logAuth: Int?,
+    val invoiceText: String?,
+    val density: Int?,
     val theme: String?,
-    val themeType: Int,
-    val weekStart: Int,
-    val dateFormat: Int,
-    val timeFormat: Int,
-    val welcome: Boolean,
-    val earlyAccess: Boolean,
+    val themeType: Int?,
+    val weekStart: Int?,
+    val dateFormat: Int?,
+    val timeFormat: Int?,
+    val welcome: Boolean?,
+    val earlyAccess: Boolean?,
     @Embedded(prefix = "flags_")
     val flags: FlagsEntity?
 )
 
 data class RecoverySettingEntity(
     val value: String?,
-    val status: Int,
-    val notify: Int,
-    val reset: Int
+    val status: Int?,
+    val notify: Int?,
+    val reset: Int?
 )
 
 data class PasswordEntity(
-    val mode: Int,
+    val mode: Int?,
     val expirationTime: Int?
 )
 
 data class TwoFAEntity(
-    val enabled: Int,
-    val allowed: Int,
+    val enabled: Int?,
+    val allowed: Int?,
     val expirationTime: Int?,
     val u2fKeys: List<U2FKeyEntity>?
 )
 
 @Serializable
 data class U2FKeyEntity(
-    val label: String,
-    val keyHandle: String,
-    val compromised: Int
+    val label: String?,
+    val keyHandle: String?,
+    val compromised: Int?
 )
 
 data class FlagsEntity(
-    val welcomed: Boolean
+    val welcomed: Boolean?
 )

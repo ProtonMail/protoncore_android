@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 7,
-    "identityHash": "5559340b1b8f5b3021092ea071ee624d",
+    "identityHash": "1f466d6b0f73446f5c4ec9b2814ede13",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -1134,7 +1134,7 @@
       },
       {
         "tableName": "UserSettingsEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `news` INTEGER NOT NULL, `locale` TEXT NOT NULL, `logAuth` INTEGER NOT NULL, `invoiceText` TEXT NOT NULL, `density` INTEGER NOT NULL, `theme` TEXT, `themeType` INTEGER NOT NULL, `weekStart` INTEGER NOT NULL, `dateFormat` INTEGER NOT NULL, `timeFormat` INTEGER NOT NULL, `welcome` INTEGER NOT NULL, `earlyAccess` INTEGER NOT NULL, `email_value` TEXT, `email_status` INTEGER, `email_notify` INTEGER, `email_reset` INTEGER, `phone_value` TEXT, `phone_status` INTEGER, `phone_notify` INTEGER, `phone_reset` INTEGER, `password_mode` INTEGER NOT NULL, `password_expirationTime` INTEGER, `twoFA_enabled` INTEGER, `twoFA_allowed` INTEGER, `twoFA_expirationTime` INTEGER, `twoFA_u2fKeys` TEXT, `flags_welcomed` INTEGER, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `news` INTEGER, `locale` TEXT, `logAuth` INTEGER, `invoiceText` TEXT, `density` INTEGER, `theme` TEXT, `themeType` INTEGER, `weekStart` INTEGER, `dateFormat` INTEGER, `timeFormat` INTEGER, `welcome` INTEGER, `earlyAccess` INTEGER, `email_value` TEXT, `email_status` INTEGER, `email_notify` INTEGER, `email_reset` INTEGER, `phone_value` TEXT, `phone_status` INTEGER, `phone_notify` INTEGER, `phone_reset` INTEGER, `password_mode` INTEGER, `password_expirationTime` INTEGER, `twoFA_enabled` INTEGER, `twoFA_allowed` INTEGER, `twoFA_expirationTime` INTEGER, `twoFA_u2fKeys` TEXT, `flags_welcomed` INTEGER, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -1146,31 +1146,31 @@
             "fieldPath": "news",
             "columnName": "news",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "locale",
             "columnName": "locale",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "logAuth",
             "columnName": "logAuth",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "invoiceText",
             "columnName": "invoiceText",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "density",
             "columnName": "density",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "theme",
@@ -1182,37 +1182,37 @@
             "fieldPath": "themeType",
             "columnName": "themeType",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "weekStart",
             "columnName": "weekStart",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "dateFormat",
             "columnName": "dateFormat",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "timeFormat",
             "columnName": "timeFormat",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "welcome",
             "columnName": "welcome",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "earlyAccess",
             "columnName": "earlyAccess",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "email.value",
@@ -1266,7 +1266,7 @@
             "fieldPath": "password.mode",
             "columnName": "password_mode",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "password.expirationTime",
@@ -1330,7 +1330,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5559340b1b8f5b3021092ea071ee624d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1f466d6b0f73446f5c4ec9b2814ede13')"
     ]
   }
 }

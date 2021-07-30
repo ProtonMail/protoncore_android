@@ -50,9 +50,7 @@ class UserSettingsViewModel @Inject constructor(
         viewModelScope.launch {
             getPrimaryAccount().first()?.let {
                 userSettingsOrchestrator.startUpdateRecoveryEmailWorkflow(
-                    userId = it.userId,
-                    username = it.username,
-                    secondFactorNeeded = it.details.session?.secondFactorEnabled ?: false
+                    userId = it.userId
                 )
             }
         }

@@ -24,9 +24,7 @@ import me.proton.core.domain.entity.UserId
 
 @Parcelize
 data class SettingsInput(
-    val userId: String,
-    val username: String,
-    val secondFactorNeeded: Boolean = false
+    val userId: String
 ): Parcelable {
     val user = UserId(userId)
 }

@@ -26,11 +26,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.usecase.GetSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateRecoveryEmail
 import javax.inject.Inject
@@ -39,12 +39,15 @@ import javax.inject.Inject
 class UpdateRecoveryEmailViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val getSettings: GetSettings,
+    private val userRepository: UserRepository,
     private val performUpdateRecoveryEmail: PerformUpdateRecoveryEmail
 ) : ProtonViewModel() {
 
     private val _state = MutableStateFlow<State>(State.Idle)
 
     val state = _state.asStateFlow()
+
+    var secondFactorEnabled: Boolean? = null
 
     sealed class State {
         object Idle : State()
@@ -53,7 +56,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         data class LoadingSuccess(val recoveryEmail: String?) : State()
         data class UpdatingSuccess(val recoveryEmail: String?) : State()
         sealed class Error : State() {
-            data class Message(val message: String?) : State.Error()
+            data class Message(val message: String?) : Error()
         }
     }
 
@@ -63,6 +66,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
     fun getCurrentRecoveryAddress(userId: UserId) = flow {
         emit(State.LoadingCurrent)
         val currentSettings = getSettings(userId)
+        secondFactorEnabled = currentSettings.twoFA?.enabled ?: false
         emit(State.LoadingSuccess(currentSettings.email?.value))
     }.catch { error ->
         _state.tryEmit(State.Error.Message(error.message))
@@ -76,12 +80,14 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
     fun updateRecoveryEmail(
         userId: UserId,
         newRecoveryEmail: String,
-        username: String,
-        password: EncryptedString,
+        password: String,
         secondFactorCode: String
     ) = flow {
         emit(State.UpdatingCurrent)
         val encryptedPassword = password.encryptWith(keyStoreCrypto)
+        val user = userRepository.getUser(userId)
+        val username = requireNotNull(user.name ?: user.email)
+
         val updateRecoveryEmailResult = performUpdateRecoveryEmail(
             sessionUserId = userId,
             newRecoveryEmail = newRecoveryEmail,
@@ -89,7 +95,6 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
             password = encryptedPassword,
             secondFactorCode = secondFactorCode
         )
-        // we expect always value for the email on success, thus !!
         emit(State.UpdatingSuccess(updateRecoveryEmailResult.email?.value))
     }.catch { error ->
         _state.tryEmit(State.Error.Message(error.message))

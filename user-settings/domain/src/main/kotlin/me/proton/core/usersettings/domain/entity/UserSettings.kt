@@ -26,46 +26,46 @@ data class UserSettings(
     val phone: RecoverySetting?,
     val password: PasswordSetting,
     val twoFA: TwoFASetting?,
-    val news: Int,
-    val locale: String,
-    val logAuth: Int,
-    val invoiceText: String,
-    val density: Int,
+    val news: Int?,
+    val locale: String?,
+    val logAuth: Int?,
+    val invoiceText: String?,
+    val density: Int?,
     val theme: String?,
-    val themeType: Int,
-    val weekStart: Int,
-    val dateFormat: Int,
-    val timeFormat: Int,
-    val welcome: Boolean,
-    val earlyAccess: Boolean,
+    val themeType: Int?,
+    val weekStart: Int?,
+    val dateFormat: Int?,
+    val timeFormat: Int?,
+    val welcome: Boolean?,
+    val earlyAccess: Boolean?,
     val flags: Flags?
 )
 
 data class RecoverySetting(
     val value: String?,
-    val status: Int,
-    val notify: Boolean,
-    val reset: Boolean
+    val status: Int?,
+    val notify: Boolean?,
+    val reset: Boolean?
 )
 
 data class PasswordSetting(
-    val mode: Int,
+    val mode: Int?,
     val expirationTime: Int?
 )
 
 data class TwoFASetting(
-    val enabled: Boolean,
-    val allowed: Int,
+    val enabled: Boolean?,
+    val allowed: Int?,
     val expirationTime: Int?,
     val u2fKeys: List<U2FKeySetting>?
 )
 
 data class U2FKeySetting(
-    val label: String,
-    val keyHandle: String,
-    val compromised: Boolean
+    val label: String?,
+    val keyHandle: String?,
+    val compromised: Boolean?
 )
 
 data class Flags(
-    val welcomed: Boolean
+    val welcomed: Boolean?
 )

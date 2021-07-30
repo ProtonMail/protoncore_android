@@ -30,6 +30,8 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.Flags
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
@@ -47,6 +49,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
     private val getUserSettingsUseCase = mockk<GetSettings>()
     private val performUpdateRecoveryEmailUseCase = mockk<PerformUpdateRecoveryEmail>()
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
+    private val userRepository = mockk<UserRepository>(relaxed = true)
     // endregion
 
     // region test data
@@ -74,15 +77,38 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
         theme = "test-theme",
         flags = Flags(true)
     )
+    private val testUser = User(
+        userId = testUserId,
+        email = null,
+        name = testUsername,
+        displayName = null,
+        currency = "test-curr",
+        credit = 0,
+        usedSpace = 0,
+        maxSpace = 100,
+        maxUpload = 100,
+        role = null,
+        private = true,
+        services = 1,
+        subscribed = 0,
+        delinquent = null,
+        keys = emptyList()
+    )
     // endregion
 
     private lateinit var viewModel: UpdateRecoveryEmailViewModel
 
     @Before
     fun beforeEveryTest() {
+        coEvery { userRepository.getUser(any()) } returns testUser
         coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse
         viewModel =
-            UpdateRecoveryEmailViewModel(keyStoreCrypto, getUserSettingsUseCase, performUpdateRecoveryEmailUseCase)
+            UpdateRecoveryEmailViewModel(
+                keyStoreCrypto,
+                getUserSettingsUseCase,
+                userRepository,
+                performUpdateRecoveryEmailUseCase
+            )
     }
 
     @Test
@@ -127,7 +153,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
                     error = "proton error"
                 )
             )
-            )
+        )
         viewModel.state.test {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
@@ -157,7 +183,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
 
         viewModel.state.test {
             // WHEN
-            viewModel.updateRecoveryEmail(testUserId, "", testUsername, testPassword, "")
+            viewModel.updateRecoveryEmail(testUserId, "", testPassword, "")
             // THEN
             assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
@@ -184,7 +210,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
 
         viewModel.state.test {
             // WHEN
-            viewModel.updateRecoveryEmail(testUserId, "new-email", testUsername, testPassword, "")
+            viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "")
             // THEN
             assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
@@ -211,7 +237,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
 
         viewModel.state.test {
             // WHEN
-            viewModel.updateRecoveryEmail(testUserId, "new-email", testUsername, testPassword, "123456")
+            viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "123456")
             // THEN
             assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
@@ -247,7 +273,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
 
         viewModel.state.test {
             // WHEN
-            viewModel.updateRecoveryEmail(testUserId, "new-email", testUsername, testPassword, "")
+            viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "")
             // THEN
             assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())

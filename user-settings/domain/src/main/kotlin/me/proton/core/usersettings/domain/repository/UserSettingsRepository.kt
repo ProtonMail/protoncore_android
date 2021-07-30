@@ -18,12 +18,36 @@
 
 package me.proton.core.usersettings.domain.repository
 
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.usersettings.domain.entity.UserSettings
 
 interface UserSettingsRepository {
 
     suspend fun setUsername(sessionUserId: SessionUserId, username: String): Boolean
+
+    /**
+     * Update [UserSettings], locally.
+     *
+     * Note: This function is usually used for Events handling.
+     *
+     * @throws IllegalStateException if corresponding user doesn't exist.
+     */
+    suspend fun updateUserSettings(
+        userSettings: UserSettings
+    )
+
+    /**
+     * Get [UserSettings], using [sessionUserId].
+     *
+     * @return values emitted from cache/disk, and also from fetcher if [refresh] is true.
+     */
+    fun getUserSettingsFlow(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): Flow<DataResult<UserSettings>>
+
 
     /**
      * Returns the general settings for the user.

@@ -67,13 +67,13 @@ class UserSettingsOrchestrator @Inject constructor() {
         checkNotNull(launcher) { "You must call settingsOrchestrator.register(context) before starting workflow!" }
 
     /**
-     * Starts the Plan Chooser workflow (sign up or upgrade).
+     * Starts the Recovery email workflow (part of the User Settings).
      *
      * @see [onUpdateRecoveryEmailResult]
      */
-    fun startUpdateRecoveryEmailWorkflow(userId: UserId, secondFactorNeeded: Boolean = false, username: String) {
+    fun startUpdateRecoveryEmailWorkflow(userId: UserId) {
         checkRegistered(updateRecoveryEmailLauncher).launch(
-            SettingsInput(userId.id, username, secondFactorNeeded)
+            SettingsInput(userId.id)
         )
     }
 }

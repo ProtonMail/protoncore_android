@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.presentation.ui.alert
+package me.proton.core.auth.presentation.alert
 
 import android.app.Dialog
 import android.os.Bundle
@@ -25,8 +25,8 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
 import me.proton.core.presentation.R
-import me.proton.core.presentation.databinding.DialogEnterPasswordBinding
 import me.proton.core.presentation.utils.onClick
 
 class EnterPasswordDialog(

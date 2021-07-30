@@ -21,10 +21,13 @@ package me.proton.core.usersettings.data.repository
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
+import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.data.arch.toDataResult
+import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
@@ -76,6 +79,14 @@ class UserSettingsRepositoryImpl(
         apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
             setUsername(SetUsernameRequest(username = username)).isSuccess()
         }.valueOrThrow
+
+    override suspend fun updateUserSettings(userSettings: UserSettings) {
+        insertOrUpdate(userSettings)
+    }
+
+    override fun getUserSettingsFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<UserSettings>> {
+        return store.stream(StoreRequest.cached(sessionUserId, refresh = refresh)).map { it.toDataResult() }
+    }
 
     override suspend fun getUserSettings(sessionUserId: SessionUserId, refresh: Boolean) =
         if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)

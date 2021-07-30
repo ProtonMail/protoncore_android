@@ -25,5 +25,5 @@ import javax.inject.Inject
 class GetSettings @Inject constructor(
     private val userSettingsRepository: UserSettingsRepository
 ) {
-    suspend operator fun invoke(sessionUserId: SessionUserId) = userSettingsRepository.getUserSettings(sessionUserId, true)
+    suspend operator fun invoke(sessionUserId: SessionUserId) = userSettingsRepository.getUserSettings(sessionUserId)
 }

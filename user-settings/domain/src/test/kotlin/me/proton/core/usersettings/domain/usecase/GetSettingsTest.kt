@@ -73,7 +73,7 @@ class GetSettingsTest {
     @Test
     fun `get user settings returns success`() = runBlockingTest {
         // GIVEN
-        coEvery { repository.getUserSettings(testUserId) } returns testUserSettingsResponse
+        coEvery { repository.getUserSettings(testUserId, any()) } returns testUserSettingsResponse
         // WHEN
         val result = useCase.invoke(testUserId)
         // THEN
@@ -86,7 +86,7 @@ class GetSettingsTest {
     @Test
     fun `get user settings returns error`() = runBlockingTest {
         // GIVEN
-        coEvery { repository.getUserSettings(testUserId) } throws ApiException(
+        coEvery { repository.getUserSettings(testUserId, any()) } throws ApiException(
             ApiResult.Error.Connection(
                 false,
                 RuntimeException("Test error")

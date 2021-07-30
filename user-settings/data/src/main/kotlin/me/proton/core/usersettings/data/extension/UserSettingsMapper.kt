@@ -40,6 +40,8 @@ import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.util.kotlin.toBoolean
 import me.proton.core.util.kotlin.toInt
 
+fun UserSettingsResponse.toUserSettings(userId: UserId): UserSettings = fromResponse(userId)
+
 internal fun UserSettingsResponse.fromResponse(userId: UserId) = UserSettings(
     userId = userId,
     email = email?.fromResponse(),
@@ -118,15 +120,15 @@ internal fun UserSettings.toEntity() = UserSettingsEntity(
 internal fun RecoverySettingEntity.fromEntity() = RecoverySetting(
     value = value,
     status = status,
-    notify = notify.toBoolean(),
-    reset = reset.toBoolean()
+    notify = notify?.toBoolean(),
+    reset = reset?.toBoolean()
 )
 
 internal fun RecoverySetting.toEntity() = RecoverySettingEntity(
     value = value,
     status = status,
-    notify = notify.toInt(),
-    reset = reset.toInt()
+    notify = notify?.toInt(),
+    reset = reset?.toInt()
 )
 
 internal fun PasswordEntity.fromEntity() = PasswordSetting(
@@ -140,7 +142,7 @@ internal fun PasswordSetting.toEntity() = PasswordEntity(
 )
 
 internal fun TwoFAEntity.fromEntity() = TwoFASetting(
-    enabled = enabled.toBoolean(),
+    enabled = enabled?.toBoolean(),
     allowed = allowed,
     expirationTime = expirationTime,
     u2fKeys = u2fKeys?.map {
@@ -149,8 +151,8 @@ internal fun TwoFAEntity.fromEntity() = TwoFASetting(
 )
 
 internal fun TwoFASetting.toEntity() = TwoFAEntity(
-    enabled = enabled.toInt(),
-    allowed = allowed.toInt(),
+    enabled = enabled?.toInt(),
+    allowed = allowed?.toInt(),
     expirationTime = expirationTime,
     u2fKeys = u2fKeys?.map {
         it.toEntity()
@@ -160,13 +162,13 @@ internal fun TwoFASetting.toEntity() = TwoFAEntity(
 internal fun U2FKeyEntity.fromEntity() = U2FKeySetting(
     label = label,
     keyHandle = keyHandle,
-    compromised = compromised.toBoolean()
+    compromised = compromised?.toBoolean()
 )
 
 internal fun U2FKeySetting.toEntity() = U2FKeyEntity(
     label = label,
     keyHandle = keyHandle,
-    compromised = compromised.toInt()
+    compromised = compromised?.toInt()
 )
 
 internal fun FlagsEntity.fromEntity() = Flags(

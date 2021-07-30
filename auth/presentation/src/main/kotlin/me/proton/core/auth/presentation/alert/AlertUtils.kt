@@ -16,10 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.presentation.ui
+package me.proton.core.auth.presentation.alert
 
 import androidx.fragment.app.FragmentManager
-import me.proton.core.presentation.ui.alert.EnterPasswordDialog
 import me.proton.core.presentation.utils.inTransaction
 
 private const val TAG_PASSWORD_ENTER_DIALOG = "password_enter_dialog"

@@ -26,6 +26,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.presentation.alert.showPasswordEnterDialog
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
@@ -37,7 +38,6 @@ import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateEmail
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.FragmentUpdateRecoveryEmailBinding
-import me.proton.core.usersettings.presentation.entity.Settings
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.viewmodel.UpdateRecoveryEmailViewModel
 import me.proton.core.util.kotlin.exhaustive
@@ -53,8 +53,6 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
 
     private val userId: UserId by lazy { input.user }
 
-    private val secondFactor: Boolean by lazy { input.secondFactorNeeded }
-
     override fun layoutId() = R.layout.fragment_update_recovery_email
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,16 +67,13 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
                 finish()
             }
         }
-        binding.apply {
-            saveButton.onClick {
-                onSaveClicked()
-            }
+        binding.saveButton.onClick {
+            onSaveClicked()
         }
         viewModel.state.onEach {
             when (it) {
                 is UpdateRecoveryEmailViewModel.State.Error.Message -> showError(it.message)
-                is UpdateRecoveryEmailViewModel.State.Idle -> {
-                }
+                is UpdateRecoveryEmailViewModel.State.Idle -> Unit
                 is UpdateRecoveryEmailViewModel.State.LoadingCurrent -> showLoading(true)
                 is UpdateRecoveryEmailViewModel.State.UpdatingCurrent -> showLoading(true)
                 is UpdateRecoveryEmailViewModel.State.LoadingSuccess -> {
@@ -86,10 +81,8 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
                     setCurrentRecoveryEmail(it.recoveryEmail)
                 }
                 is UpdateRecoveryEmailViewModel.State.UpdatingSuccess -> {
-                    binding.apply {
-                        newEmailInput.text = ""
-                        confirmNewEmailInput.text = ""
-                    }
+                    binding.newEmailInput.text = ""
+                    binding.confirmNewEmailInput.text = ""
                     findOutCurrentRecoveryAddress()
                 }
             }.exhaustive
@@ -115,12 +108,11 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
         val confirmedRecoveryEmail = confirmNewEmailInput.text.toString()
         if (newRecoveryEmail == confirmedRecoveryEmail) {
             childFragmentManager.showPasswordEnterDialog(
-                secondFactor = secondFactor
+                secondFactor = viewModel.secondFactorEnabled!!
             ) { password: String, secondFactorCode: String ->
                 viewModel.updateRecoveryEmail(
                     userId = input.user,
                     newRecoveryEmail = confirmNewEmailInput.text.toString(),
-                    username = input.username,
                     password = password,
                     secondFactorCode = secondFactorCode
                 )
@@ -135,6 +127,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
     }
 
     private fun setCurrentRecoveryEmail(recoveryEmail: String?) {
+        binding.saveButton.isEnabled = true
         recoveryEmail?.let {
             if (it.isNotEmpty()) {
                 binding.currentEmailInput.text = it
@@ -144,8 +137,12 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
         } ?: run { binding.currentEmailInput.hintText = getString(R.string.settings_not_set) }
     }
 
-    private fun showLoading(loading: Boolean) {
-        binding.progressLayout.visibility = if (loading) View.VISIBLE else View.GONE
+    private fun showLoading(loading: Boolean) = with(binding) {
+        if (loading) {
+            saveButton.setLoading()
+        } else {
+            saveButton.setIdle()
+        }
     }
 
     private fun showError(message: String?) {
