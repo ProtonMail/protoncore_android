@@ -39,6 +39,7 @@ import me.proton.core.presentation.R
 import me.proton.core.presentation.databinding.ProtonInputBinding
 import me.proton.core.presentation.ui.isInputTypePassword
 import me.proton.core.presentation.ui.setTextOrGoneIfNull
+import me.proton.core.presentation.utils.clearTextAndOverwriteMemory
 
 /**
  * Custom Proton input (advanced complex [EditText]) view.
@@ -292,6 +293,17 @@ class ProtonInput : LinearLayout {
      * The interpretation of the enabled state varies by subclass.
      */
     override fun isEnabled(): Boolean = binding.inputLayout.isEnabled
+
+    /**
+     * Clear input text and overwrite the input text memory.
+     *
+     * Use this to clear password fields.
+     * The method relies on undocumented behavior and it's not guaranteed that no text copies are left.
+     * Make sure to avoid making copies of the password when using it!
+     */
+    fun clearTextAndOverwriteMemory() {
+        binding.input.clearTextAndOverwriteMemory()
+    }
 
     /**
      * Set the error UI layout to the ProtonInput view.
