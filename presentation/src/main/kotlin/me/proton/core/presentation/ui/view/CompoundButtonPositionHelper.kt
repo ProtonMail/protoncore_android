@@ -18,13 +18,13 @@
 
 package me.proton.core.presentation.ui.view
 
+import android.graphics.Canvas
+import android.view.Gravity
 import android.widget.CompoundButton
 import com.google.android.material.checkbox.MaterialCheckBox
 
 /**
  * A helper for putting CompoundButton's button on the end side of the view.
- *
- * Note: it uses drawableEnd to display the button drawable.
  */
 class CompoundButtonPositionHelper(private val button: CompoundButton) {
 
@@ -32,26 +32,36 @@ class CompoundButtonPositionHelper(private val button: CompoundButton) {
 
     init {
         button.buttonDrawable = null
-        val originalDrawables = button.compoundDrawablesRelative
-        button.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            originalDrawables[0],
-            originalDrawables[1],
-            drawable,
-            originalDrawables[2]
-        )
+        drawable?.jumpToCurrentState()
     }
 
-    fun afterDraw() {
-        drawable?.bounds?.let {
+    fun onDraw(canvas: Canvas) {
+        if (drawable != null) {
             // Similar to what CompoundButton.onDraw does.
+            val verticalGravity = button.gravity and Gravity.VERTICAL_GRAVITY_MASK
+            val w = drawable.intrinsicWidth
+            val h = drawable.intrinsicHeight
+
+            val top = when (verticalGravity) {
+                Gravity.BOTTOM -> button.height - h
+                Gravity.CENTER_VERTICAL -> (button.height - h) / 2
+                else -> 0
+            }
+
             val isLayoutRtl = MaterialCheckBox.LAYOUT_DIRECTION_RTL == button.getLayoutDirection()
-            val rippleLeft = if (isLayoutRtl) 0 else button.width - it.width()
-            val rippleRight = if (isLayoutRtl) it.width() else button.width
+            val left = if (isLayoutRtl) 0 else button.width - w
+            val right = if (isLayoutRtl) w else button.width
+            val bottom = top + h
 
-            val contentHeight = button.height - button.paddingTop - button.paddingBottom
-            val rippleTop = button.paddingTop + (contentHeight - it.height()) / 2
+            drawable.setBounds(left, top, right, bottom)
+            button.background.setHotspotBounds(left, top, right, bottom)
+            drawable.draw(canvas)
+        }
+    }
 
-            button.background.setHotspotBounds(rippleLeft, rippleTop, rippleRight, rippleTop + it.height())
+    fun onDrawableStateChanged() {
+        if (drawable != null && drawable.isStateful && drawable.setState(button.drawableState)) {
+            button.invalidateDrawable(drawable)
         }
     }
 }

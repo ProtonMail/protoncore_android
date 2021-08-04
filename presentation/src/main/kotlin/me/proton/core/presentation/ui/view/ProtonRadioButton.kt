@@ -26,15 +26,23 @@ import com.google.android.material.radiobutton.MaterialRadioButton
 /**
  * A radio button that draws its button at the end (on the right in LTR).
  */
-class ProtonRadioButton : MaterialRadioButton {
+open class ProtonRadioButton : MaterialRadioButton {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    private val helper = CompoundButtonPositionHelper(this)
+    // drawableStateChanged() is called by the constructor of the super class which is before this field is
+    // initialized, that's why the field is nullable.
+    @Suppress("LeakingThis", "RedundantNullableReturnType")
+    private val helper: CompoundButtonPositionHelper? = CompoundButtonPositionHelper(this)
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        helper.afterDraw()
+        helper?.onDraw(canvas)
+    }
+
+    override fun drawableStateChanged() {
+        super.drawableStateChanged()
+        helper?.onDrawableStateChanged()
     }
 }

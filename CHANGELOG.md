@@ -1,3 +1,14 @@
+## Presentation Version [0.10.1]
+
+Aug 3, 2021
+
+### API Changes
+
+- ProtonCheckbox and ProtonRadioButton are now open classes.
+- ProtonCheckbox and ProtonRadioButton don't use compound drawables to draw the button on the right. This means that setting a drawable with e.g. setCompoundDrawablesRelative(icon, null, null, null) doesn't unexpectedly break them.
+- Add Proton.Text.Hero style.
+- Add ProtonInput.clearTextAndOverwriteMemory() -  the method overwrites and clears the input's text buffer. It should be used to limit the time passwords are kept in memory.
+
 ## User Settings Version [1.5.1]
 
 Jul 30, 2021

@@ -42,6 +42,7 @@ import androidx.core.view.marginTop
 import com.google.android.material.snackbar.Snackbar
 import me.proton.core.presentation.R
 import me.proton.core.presentation.ui.view.ProtonInput
+import me.proton.core.util.kotlin.times
 
 /**
  * Shortcut for [AdapterView.setOnItemSelectedListener]
@@ -88,6 +89,18 @@ inline fun <T : Adapter> AdapterView<T>.onItemSelected(crossinline block: (posit
  * Clears the edit text content.
  */
 fun EditText.clearText() = setText("")
+
+/**
+ * Clears edit text content and attempt to clear text memory (use for password fields).
+ */
+fun EditText.clearTextAndOverwriteMemory() {
+    with(text) {
+        // Override memory and clear - undocumented behavior.
+        replace(0, length, " " * length)
+        clear()
+    }
+    clearComposingText()
+}
 
 /** Execute the [textChangeListener] on [TextWatcher.onTextChanged] */
 inline fun ProtonInput.onTextChange(
