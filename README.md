@@ -121,13 +121,13 @@ Crypto Android: **1.1.5** - _released on: Jul 30, 2021_
 
 ### Auth
 
-Auth: **1.5** - _released on: Jul 30, 2021_
+Auth: **1.5.1** - _released on: Aug 05, 2021_
 
-Auth Domain: **1.5** - _released on: Jul 30, 2021_
+Auth Domain: **1.5.1** - _released on: Aug 05, 2021_
 
-Auth Presentation: **1.5** - _released on: Jul 30, 2021_
+Auth Presentation: **1.5.1** - _released on: Aug 05, 2021_
 
-Auth Data: **1.5** - _released on: Jul 30, 2021_
+Auth Data: **1.5.1** - _released on: Aug 05, 2021_
 
 ### Account
 
@@ -142,17 +142,17 @@ Account Data: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Account Manager
 
-Account Manager: **1.5** - _released on: Jul 30, 2021_
+Account Manager: **1.5.1** - _released on: Aug 05, 2021_
 
-Account Manager Domain: **1.5** - _released on: Jul 30, 2021_
+Account Manager Domain: **1.5.1** - _released on: Aug 05, 2021_
 
-Account Manager Presentation: **1.5** - _released on: Jul 30, 2021_
+Account Manager Presentation: **1.5.1** - _released on: Aug 05, 2021_
 
-Account Manager Data: **1.5** - _released on: Jul 30, 2021_
+Account Manager Data: **1.5.1** - _released on: Aug 05, 2021_
 
-Account Manager Data Db: **1.5** - _released on: Jul 30, 2021_
+Account Manager Data Db: **1.5.1** - _released on: Aug 05, 2021_
 
-Account Manager Dagger: **1.5** - _released on: Jul 30, 2021_
+Account Manager Dagger: **1.5.1** - _released on: Aug 05, 2021_
 
 ### Key
 
@@ -196,43 +196,43 @@ Mail Settings Data: **1.3.2** - _released on: Jul 28, 2021_
 
 ### Human Verification
 
-Human Verification: **1.3.3** - _released on: Jul 26, 2021_
+Human Verification: **1.3.4** - _released on: Aug 05, 2021_
 
-Human Verification Domain: **1.3.3** - _released on: Jul 26, 2021_
+Human Verification Domain: **1.3.4** - _released on: Aug 05, 2021_
 
-Human Verification Presentation: **1.3.3** - _released on: Jul 26, 2021_
+Human Verification Presentation: **1.3.4** - _released on: Aug 05, 2021_
 
-Human Verification Data: **1.3.3** - _released on: Jul 26, 2021_
+Human Verification Data: **1.3.4** - _released on: Aug 05, 2021_
 
 ### Countries
 
-Country: **0.1.5** - _released on: Jun 09, 2021_
+Country: **0.1.6** - _released on: Aug 05, 2021_
 
-Country Domain: **0.1.5** - _released on: Jun 09, 2021_
+Country Domain: **0.1.6** - _released on: Aug 05, 2021_
 
-Country Data: **0.1.5** - _released on: Jun 09, 2021_
+Country Data: **0.1.6** - _released on: Aug 05, 2021_
 
-Country Presentation: **0.1.5** - _released on: Jun 09, 2021_
+Country Presentation: **0.1.6** - _released on: Aug 05, 2021_
 
 ### Payment
 
-Payment: **0.2.2** - _released on: Jul 29, 2021_
+Payment: **0.2.3** - _released on: Aug 05, 2021_
 
-Payment Data: **0.2.2** - _released on: Jul 29, 2021_
+Payment Data: **0.2.3** - _released on: Aug 05, 2021_
 
-Payment Domain: **0.2.2** - _released on: Jul 29, 2021_
+Payment Domain: **0.2.3** - _released on: Aug 05, 2021_
 
-Payment Presentation: **0.2.2** - _released on: Jul 29, 2021_
+Payment Presentation: **0.2.3** - _released on: Aug 05, 2021_
 
 ### Plan
 
-Plan: **0.2** - _released on: Jul 30, 2021_
+Plan: **0.2.1** - _released on: Aug 05, 2021_
 
-Plan Data: **0.2** - _released on: Jul 30, 2021_
+Plan Data: **0.2.1** - _released on: Aug 05, 2021_
 
-Plan Domain: **0.2** - _released on: Jul 30, 2021_
+Plan Domain: **0.2.1** - _released on: Aug 05, 2021_
 
-Plan Presentation: **0.2** - _released on: Jul 30, 2021_
+Plan Presentation: **0.2.1** - _released on: Aug 05, 2021_
 
 ### User Settings
 
