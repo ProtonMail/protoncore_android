@@ -162,6 +162,8 @@ coroutines:
     active: true
   RedundantSuspendModifier:
     active: true
+  SleepInsteadOfDelay:
+    active: true
   SuspendFunWithFlowReturnType:
     active: true
 
@@ -213,6 +215,8 @@ exceptions:
     # excludes: ['**/test/**', '**/**Test/**', '**/gradle/**', '**/buildSrc/**']
   # reports all exceptions of the type NotImplementedError and `TO\\DO(..)`
   NotImplementedDeclaration:
+    active: true
+  ObjectExtendsThrowable:
     active: true
   PrintStackTrace:
     active: true
@@ -356,6 +360,9 @@ formatting:
     active: true
     autoCorrect: true
     indentSize: 4
+  SpacingAroundAngleBrackets:
+    active: true
+    autoCorrect: true
   SpacingAroundColon:
     active: true
     autoCorrect: true
@@ -383,6 +390,9 @@ formatting:
   SpacingAroundRangeOperator:
     active: false
     # autoCorrect: true
+  SpacingAroundUnaryOperator:
+    active: true
+    autoCorrect: true
   # example compliant     `@file:JvmName(...)`
   # example non compliant `@file: JvmName(...)`
   SpacingBetweenDeclarationsWithAnnotations:
@@ -446,6 +456,8 @@ naming:
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
+  NoNameShadowing:
+    active: false
   NonBooleanPropertyPrefixedWithIs:
     active: true
     excludes: ['**/test/**', '**/**Test/**', '**/gradle/**', '**/buildSrc/**']
@@ -496,6 +508,8 @@ performance:
 
 potential-bugs:
   active: true
+  CastToNullableType:
+    active: true
   Deprecation:
     active: true
   DuplicateCaseInWhenExpression:
@@ -576,6 +590,8 @@ potential-bugs:
     active: true
   UnsafeCallOnNullableType:
     active: true
+  UnreachableCatchBlock:
+    active: true
   UnsafeCast:
     active: false
   UselessPostfixExpression:
@@ -625,7 +641,8 @@ style:
     # methods: ['kotlin.io.println', 'kotlin.io.print']
   ForbiddenPublicDataClass:
     active: false
-    # ignorePackages: '*.internal,*.internal.*'
+    # excludes: ['**']
+    # ignorePackages: ['*.internal, *.internal.*']
   ForbiddenVoid:
     active: true
     ignoreOverridden: false
@@ -637,8 +654,10 @@ style:
     excludeAnnotatedFunction: "dagger.Provides"
   LibraryCodeMustSpecifyReturnType:
     active: false
+    # excludes: ['**']
   LibraryEntitiesShouldNotBePublic:
     active: false
+    # excludes: ['**']
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 2
@@ -670,6 +689,8 @@ style:
     active: true
   ModifierOrder:
     active: true
+  MultilineLambdaItParameter:
+    active: false
   NestedClassesVisibility:
     active: true
   NewLineAtEndOfFile:
@@ -809,6 +830,10 @@ style:
   UseIfEmptyOrIfBlank:
     active: true
   UseIfInsteadOfWhen:
+    active: true
+  UseIsNullOrEmpty:
+    active: true
+  UseOrEmpty:
     active: true
   UseRequire:
     active: true
