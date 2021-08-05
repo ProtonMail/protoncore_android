@@ -9,6 +9,33 @@ Aug 3, 2021
 - Add Proton.Text.Hero style.
 - Add ProtonInput.clearTextAndOverwriteMemory() -  the method overwrites and clears the input's text buffer. It should be used to limit the time passwords are kept in memory.
 
+## Translations Version [2021-07-30-140045]
+
+Jul 30, 2021
+
+### Dependencies
+
+- Account Manager 1.5.1.
+- Auth 1.4.1.
+- Country 0.1.6.
+- Human Verification 1.3.4.
+- Payment 0.2.3.
+- Plan 0.1.2.
+- Presentation 0.10.1.
+
+### New Supported Languages
+
+- From Agency: en, de, fr.
+- From Community: cs, es-rMX, fr-rCA, pl.
+- You can filter them by using:
+```
+android {
+    defaultConfig {
+        resConfigs "de", "en", "fr"
+    }
+}
+```
+
 ## User Settings Version [1.5.1]
 
 Jul 30, 2021

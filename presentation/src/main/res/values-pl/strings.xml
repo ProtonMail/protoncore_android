@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common presentation strings -->
+  <string name="presentation_browser_missing">Nie można znaleźć przeglądarki, aby otworzyć link.</string>
+  <string name="presentation_force_update_title">Aktualizacja jest wymagana</string>
+  <string name="presentation_force_update_message">Ta wersja aplikacji nie jest już dłużej wspierana. Zaktualizuj ją, aby nadal z niej korzystać.</string>
+  <string name="presentation_force_update_learn_more">Dowiedz się więcej</string>
+  <string name="presentation_force_update_update">Zaktualizuj</string>
+  <string name="presentation_market_missing">Nie można znaleźć sklepu z aplikacjami zainstalowanego na urządzeniu. Zaktualizuj aplikację ręcznie.</string>
+  <string name="presentation_alert_title">Ostrzeżenie</string>
+  <string name="presentation_alert_ok">OK</string>
+  <string name="presentation_alert_cancel">Anuluj</string>
+  <!-- Common menu items -->
+  <string name="presentation_menu_item_title_report_a_bug">Zgłoś błąd</string>
+  <string name="presentation_menu_item_title_settings">Ustawienia</string>
+  <string name="presentation_menu_item_title_sign_out">Wyloguj</string>
+  <!-- Other -->
+  <string name="presentation_close">Zamknij</string>
+  <string name="presentation_skip">Pomiń</string>
+  <string name="presentation_phone_calling_code_template">+%s</string>
+</resources>

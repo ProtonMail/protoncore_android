@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common strings -->
+  <string name="human_verification_help">Pomoc</string>
+  <string name="human_verification_title">Weryfikacja antyspamowa</string>
+  <string name="human_verification_main_subtitle">Aby zapobiec nadużyciom, udowodnij, że jesteś człowiekiem za pomocą jednej z następujących opcji</string>
+  <string name="human_verification_enter_code_subtitle">Wpisz kod weryfikacyjny wysłany do %s.</string>
+  <string name="human_verification_enter_code_subtitle_email">Wpisz kod weryfikacyjny wysłany do %s. Jeśli nie widzisz wiadomości w skrzynce odbiorczej, sprawdź folder Spam.</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Wpisz kod weryfikacyjny, który już posiadasz:</string>
+  <string name="human_verification_option_captcha">CAPTCHA</string>
+  <string name="human_verification_option_email">Adres e-mail</string>
+  <string name="human_verification_option_email_subtitle">Adres e-mail zostanie użyty tylko do jednorazowej weryfikacji. Jeśli nie widzisz wiadomości w skrzynce odbiorczej, sprawdź folder Spam.</string>
+  <string name="human_verification_option_sms">Numer telefonu</string>
+  <string name="human_verification_option_sms_subtitle">Numer telefonu zostanie użyty tylko do jednorazowej weryfikacji.</string>
+  <string name="human_verification_get_verification_code">Otrzymaj kod weryfikacyjny</string>
+  <string name="human_verification_already_have_code">Mam już kod</string>
+  <string name="human_verification_request_replacement_code">Nie otrzymałeś kodu?</string>
+  <string name="human_verification_verify">Zweryfikuj</string>
+  <!-- To verify the entered code - action -->
+  <string name="human_verification_help_title">Potrzebujesz pomocy z weryfikacją antyspamową?</string>
+  <string name="human_verification_code">Kod weryfikacyjny</string>
+  <string name="human_verification_code_request_new_code_title">Potrzebujesz nowy kod?</string>
+  <string name="human_verification_code_request_new_code_action">Poproś o nowy kod</string>
+  <string name="human_verification_code_request_new_code">Kod zastępczy został wysłany do %s.</string>
+  <string name="email">Adres e-mail</string>
+  <string name="email_hint">adres@przyklad.pl</string>
+  <string name="sms_hint">XXX XXX XXX</string>
+  <string name="verification_code_hint">XXXXXX</string>
+  <!-- TODO: update correct strings below -->
+  <string name="human_verification_help_manual_title">Poproś o zaproszenie</string>
+  <string name="human_verification_help_manual">Jeśli masz problem z utworzeniem konta, poproś o zaproszenie, a my odpowiemy w ciągu jednego dnia roboczego.</string>
+  <string name="human_verification_help_website_title">Odwiedź centrum pomocy</string>
+  <string name="human_verification_help_website">Dowiedz się więcej o weryfikacji antyspamowej.</string>
+  <string name="human_verification_sending_failed">Wysyłanie kodu weryfikacyjnego nie powiodło się. Spróbuj ponownie.</string>
+  <string name="human_verification_incorrect_code">Kod jest nieprawidłowy. Spróbuj ponownie.</string>
+  <string name="human_verification_resent_code">Wysłaliśmy nowy kod.</string>
+  <string name="human_verification_captcha_failed">Weryfikacja CAPTCHA nie powiodła się. Spróbuj ponownie lub wybierz inną metodę weryfikacji.</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
+  <string name="human_verification_captcha_no_connectivity">Brak połączenia z Internetem. Nie można załadować weryfikacji CAPTCHA.</string>
+</resources>
