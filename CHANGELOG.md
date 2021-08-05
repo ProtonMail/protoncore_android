@@ -1,3 +1,16 @@
+## Presentation Version [0.10.2]
+
+Aug 5, 2021
+
+### New Features
+
+- Added View.snack extension that accepts a function block allowing for full customization of the created Snackbar.
+
+### Style Changes
+
+- Snackbar text styles have been updated to Proton.Text.\* to match designs.
+- Snackbar text color has been forced to white also in dark theme.
+
 ## Presentation Version [0.10.1]
 
 Aug 3, 2021
