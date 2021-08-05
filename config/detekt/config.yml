@@ -57,6 +57,8 @@ comments:
   # do not report private property with comments
   CommentOverPrivateProperty:
     active: false
+  DeprecatedBlockTag:
+    active: true
   # do not report comments with wrong end of sentence
   EndOfSentenceFormat:
     active: false
@@ -512,6 +514,8 @@ potential-bugs:
     active: true
   Deprecation:
     active: true
+  DoubleMutabilityForCollection:
+    active: true
   DuplicateCaseInWhenExpression:
     active: true
   EqualsAlwaysReturnsTrueOrFalse:
@@ -696,6 +700,8 @@ style:
   NewLineAtEndOfFile:
     active: true
   NoTabs:
+    active: false
+  ObjectLiteralToLambda:
     active: false
   OptionalAbstractKeyword:
     active: true

@@ -51,6 +51,6 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.14.2")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
     implementation("studio.forface.easygradle:dsl:2.7")
 }
