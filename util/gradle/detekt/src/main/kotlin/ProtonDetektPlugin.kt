@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -56,7 +56,7 @@ abstract class ProtonDetektPlugin : Plugin<Project> {
  */
 private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 
-    `detekt version` = "1.14.2" // Released: Oct 20, 2020
+    `detekt version` = "1.15.0" // Released: Oct 20, 2020
     `detect-code-analysis version` = "0.3.2" // Released:
 
     val reportsDirPath = "config/detekt/reports"
