@@ -36,16 +36,38 @@ open class CoreRobot : Robot {
     }
 
     /**
-     * Sets text of an element which has an [id] with [value]
+     * Adds text to an element which has an [id] with [value]
      * @param T next Robot to be returned
      */
-    inline fun <reified T> setText(@IdRes id: Int, value: String): T {
+    inline fun <reified T> addText(@IdRes id: Int, value: String): T {
         view
             .instanceOf(EditText::class.java)
             .withId(id)
             .typeText(value)
         return T::class.java.newInstance()
     }
+
+    /**
+     * Sets new text to an element which has an [id] with [value]
+     * @param T next Robot to be returned
+     */
+    inline fun <reified T> replaceText(@IdRes id: Int, value: String): T {
+        view
+            .instanceOf(EditText::class.java)
+            .withId(id)
+            .clearText()
+            .typeText(value)
+        return T::class.java.newInstance()
+    }
+
+    /**
+     * Adds more text to an element which has an [id] with [value]
+     * @param T next Robot to be returned
+     */
+    @Deprecated("Use addText for the same functionality or replaceText to set new text.",
+        ReplaceWith("addText<T>(id, value)")
+    )
+    inline fun <reified T> setText(@IdRes id: Int, value: String): T = addText(id, value)
 
     /**
      * Clicks an element with [id] of class [clazz] (default: android.widget.Button)

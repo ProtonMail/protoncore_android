@@ -1,3 +1,16 @@
+## Test Android Instrumented [0.6.5]
+
+Aug 12, 2021
+
+### New Features
+
+- CoreRobot.addText() and replaceText() are added as replacements for setText().
+  addText() behaves exactly the same as setText().
+
+### Deprecations
+
+- CoreRobot.setText() is deprecated for confusing behavior - it adds text instead of setting new text on a view.
+
 ## Presentation Version [0.10.3]
 
 Aug 11, 2021
