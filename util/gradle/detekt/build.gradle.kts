@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ plugins {
 
 val plugin = PluginConfig(
     name = "Detekt",
-    version = Version(0, 2, 1)
+    version = Version(0, 3)
 )
 pluginConfig = plugin
 
@@ -51,6 +51,6 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.14.2")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
     implementation("studio.forface.easygradle:dsl:2.7")
 }

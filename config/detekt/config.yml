@@ -57,6 +57,8 @@ comments:
   # do not report private property with comments
   CommentOverPrivateProperty:
     active: false
+  DeprecatedBlockTag:
+    active: true
   # do not report comments with wrong end of sentence
   EndOfSentenceFormat:
     active: false
@@ -128,8 +130,8 @@ complexity:
     active: true
     threshold: 6
   NamedArguments:
-    active: false
-    # threshold: 6
+    active: true
+    threshold: 5
   NestedBlockDepth:
     active: true
     threshold: 4
@@ -161,6 +163,8 @@ coroutines:
   GlobalCoroutineUsage:
     active: true
   RedundantSuspendModifier:
+    active: true
+  SleepInsteadOfDelay:
     active: true
   SuspendFunWithFlowReturnType:
     active: true
@@ -213,6 +217,8 @@ exceptions:
     # excludes: ['**/test/**', '**/**Test/**', '**/gradle/**', '**/buildSrc/**']
   # reports all exceptions of the type NotImplementedError and `TO\\DO(..)`
   NotImplementedDeclaration:
+    active: true
+  ObjectExtendsThrowable:
     active: true
   PrintStackTrace:
     active: true
@@ -356,6 +362,9 @@ formatting:
     active: true
     autoCorrect: true
     indentSize: 4
+  SpacingAroundAngleBrackets:
+    active: true
+    autoCorrect: true
   SpacingAroundColon:
     active: true
     autoCorrect: true
@@ -383,6 +392,9 @@ formatting:
   SpacingAroundRangeOperator:
     active: false
     # autoCorrect: true
+  SpacingAroundUnaryOperator:
+    active: true
+    autoCorrect: true
   # example compliant     `@file:JvmName(...)`
   # example non compliant `@file: JvmName(...)`
   SpacingBetweenDeclarationsWithAnnotations:
@@ -446,6 +458,8 @@ naming:
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
+  NoNameShadowing:
+    active: false
   NonBooleanPropertyPrefixedWithIs:
     active: true
     excludes: ['**/test/**', '**/**Test/**', '**/gradle/**', '**/buildSrc/**']
@@ -496,7 +510,11 @@ performance:
 
 potential-bugs:
   active: true
+  CastToNullableType:
+    active: true
   Deprecation:
+    active: true
+  DoubleMutabilityForCollection:
     active: true
   DuplicateCaseInWhenExpression:
     active: true
@@ -576,6 +594,8 @@ potential-bugs:
     active: true
   UnsafeCallOnNullableType:
     active: true
+  UnreachableCatchBlock:
+    active: true
   UnsafeCast:
     active: false
   UselessPostfixExpression:
@@ -625,7 +645,8 @@ style:
     # methods: ['kotlin.io.println', 'kotlin.io.print']
   ForbiddenPublicDataClass:
     active: false
-    # ignorePackages: '*.internal,*.internal.*'
+    # excludes: ['**']
+    # ignorePackages: ['*.internal, *.internal.*']
   ForbiddenVoid:
     active: true
     ignoreOverridden: false
@@ -637,8 +658,10 @@ style:
     excludeAnnotatedFunction: "dagger.Provides"
   LibraryCodeMustSpecifyReturnType:
     active: false
+    # excludes: ['**']
   LibraryEntitiesShouldNotBePublic:
     active: false
+    # excludes: ['**']
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 2
@@ -670,11 +693,15 @@ style:
     active: true
   ModifierOrder:
     active: true
+  MultilineLambdaItParameter:
+    active: false
   NestedClassesVisibility:
     active: true
   NewLineAtEndOfFile:
     active: true
   NoTabs:
+    active: false
+  ObjectLiteralToLambda:
     active: false
   OptionalAbstractKeyword:
     active: true
@@ -809,6 +836,10 @@ style:
   UseIfEmptyOrIfBlank:
     active: true
   UseIfInsteadOfWhen:
+    active: true
+  UseIsNullOrEmpty:
+    active: true
+  UseOrEmpty:
     active: true
   UseRequire:
     active: true
