@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.ui.view.ProtonInput
@@ -36,6 +37,7 @@ import me.proton.core.usersettings.presentation.databinding.FragmentUpdatePasswo
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel
 
+@AndroidEntryPoint
 class PasswordManagementFragment : ProtonFragment<FragmentUpdatePasswordBinding>() {
     private val viewModel by viewModels<PasswordManagementViewModel>()
 
@@ -84,7 +86,7 @@ class PasswordManagementFragment : ProtonFragment<FragmentUpdatePasswordBinding>
                 .onSuccess { password ->
                     val confirmedPassword = confirmNewLoginPasswordInput.text.toString()
                     if (password == confirmedPassword) {
-                        viewModel.updateLoginPassword()
+                        viewModel.updateLoginPassword(userId, currentLoginPasswordInput.text.toString(), confirmedPassword, "")
                     } else {
                         confirmNewLoginPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_match))
                     }
@@ -100,7 +102,7 @@ class PasswordManagementFragment : ProtonFragment<FragmentUpdatePasswordBinding>
                 .onSuccess { password ->
                     val confirmedPassword = confirmNewMailboxPasswordInput.text.toString()
                     if (password == confirmedPassword) {
-                        viewModel.updateMailboxPassword()
+                        viewModel.updateMailboxPassword(userId, "", "", "")
                     } else {
                         confirmNewMailboxPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_match))
                     }

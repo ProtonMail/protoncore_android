@@ -19,6 +19,7 @@
 package me.proton.core.usersettings.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.usersettings.domain.entity.UserSettings
@@ -67,5 +68,17 @@ interface UserSettingsRepository {
         clientProof: String,
         srpSession: String,
         secondFactorCode: String
+    ): UserSettings
+
+    /**
+     * Updates user's login password.
+     */
+    suspend fun updateLoginPassword(
+        sessionUserId: SessionUserId,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String,
+        secondFactorCode: String,
+        auth: Auth
     ): UserSettings
 }

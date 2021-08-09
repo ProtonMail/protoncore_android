@@ -38,6 +38,8 @@ dependencies {
         project(Module.data),
         project(Module.dataRoom),
         project(Module.userData),
+        project(Module.cryptoCommon),
+        project(Module.key),
 
         // Other
         `retrofit`,

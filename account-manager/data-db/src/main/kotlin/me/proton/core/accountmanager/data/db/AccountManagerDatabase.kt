@@ -47,8 +47,10 @@ import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.entity.UserKeyEntity
+import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.UserSettingsConverters
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
+import me.proton.core.usersettings.data.entity.OrganizationEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 
 @Database(
@@ -72,7 +74,9 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         // mail-settings
         MailSettingsEntity::class,
         // user-settings
-        UserSettingsEntity::class
+        UserSettingsEntity::class,
+        // organization
+        OrganizationEntity::class
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -94,11 +98,12 @@ abstract class AccountManagerDatabase :
     HumanVerificationDatabase,
     PublicAddressDatabase,
     MailSettingsDatabase,
-    UserSettingsDatabase {
+    UserSettingsDatabase,
+    OrganizationDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 7
+        const val version = 8
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -106,7 +111,8 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_3_4,
             AccountManagerDatabaseMigrations.MIGRATION_4_5,
             AccountManagerDatabaseMigrations.MIGRATION_5_6,
-            AccountManagerDatabaseMigrations.MIGRATION_6_7
+            AccountManagerDatabaseMigrations.MIGRATION_6_7,
+            AccountManagerDatabaseMigrations.MIGRATION_7_8
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =
