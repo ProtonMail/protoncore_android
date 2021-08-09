@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.usersettings.presentation.entity.SettingsInput
+import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
 import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
 
 class StartUpdateRecoveryEmail : ActivityResultContract<SettingsInput, UpdateRecoveryEmailResult?>() {
@@ -34,5 +35,17 @@ class StartUpdateRecoveryEmail : ActivityResultContract<SettingsInput, UpdateRec
     override fun parseResult(resultCode: Int, intent: Intent?): UpdateRecoveryEmailResult? {
         if (resultCode != Activity.RESULT_OK) return null
         return intent?.getParcelableExtra(UpdateRecoveryEmailActivity.ARG_RESULT)
+    }
+}
+
+class StartPasswordManagement : ActivityResultContract<SettingsInput, PasswordManagementResult?>() {
+    override fun createIntent(context: Context, input: SettingsInput?): Intent =
+        Intent(context, PasswordManagementActivity::class.java).apply {
+            putExtra(PasswordManagementActivity.ARG_INPUT, input)
+        }
+
+    override fun parseResult(resultCode: Int, intent: Intent?): PasswordManagementResult? {
+        if (resultCode != Activity.RESULT_OK) return null
+        return intent?.getParcelableExtra(PasswordManagementActivity.ARG_RESULT)
     }
 }

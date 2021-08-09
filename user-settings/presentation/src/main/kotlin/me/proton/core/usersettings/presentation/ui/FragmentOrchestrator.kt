@@ -23,6 +23,7 @@ import me.proton.core.presentation.utils.inTransaction
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 
 private const val TAG_RECOVERY_EMAIL = "recovery_fragment"
+private const val TAG_UPDATE_PASSWORD = "update_password_fragment"
 
 fun FragmentManager.showRecoveryEmail(
     containerId: Int = android.R.id.content,
@@ -34,6 +35,20 @@ fun FragmentManager.showRecoveryEmail(
             setCustomAnimations(0, 0)
             add(containerId, updateRecoveryEmailFragment)
             addToBackStack(TAG_RECOVERY_EMAIL)
+        }
+    }
+}
+
+fun FragmentManager.showUpdatePassword(
+    containerId: Int = android.R.id.content,
+    input: SettingsInput
+) {
+    findFragmentByTag(TAG_UPDATE_PASSWORD) ?: run {
+        val updatePasswordFragment = PasswordManagementFragment(input)
+        inTransaction {
+            setCustomAnimations(0, 0)
+            add(containerId, updatePasswordFragment)
+            addToBackStack(TAG_UPDATE_PASSWORD)
         }
     }
 }

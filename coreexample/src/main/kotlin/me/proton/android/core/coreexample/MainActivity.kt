@@ -104,7 +104,8 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             plansUpgrade.onClick { plansViewModel.onPlansUpgradeClicked(this@MainActivity) }
             plansCurrent.onClick { plansViewModel.onCurrentPlanClicked(this@MainActivity) }
 
-            settings.onClick { settingsViewModel.onUpdateRecoveryEmailClicked() }
+            settingsRecovery.onClick { settingsViewModel.onUpdateRecoveryEmailClicked() }
+            settingsPassword.onClick { settingsViewModel.onPasswordManagementClicked() }
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {
