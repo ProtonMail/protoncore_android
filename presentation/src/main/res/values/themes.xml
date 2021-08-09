@@ -69,6 +69,7 @@
         <item name="navigationViewStyle">@style/ProtonNavigationView.Dark</item>
         <item name="radioButtonStyle">@style/ProtonRadioButton</item>
         <item name="snackbarStyle">@style/ProtonSnackbar</item>
+        <item name="snackbarTextViewStyle">@style/ProtonSnackbarText</item>
         <item name="snackbarButtonStyle">@style/ProtonSnackbarButton</item>
         <item name="switchStyle">@style/ProtonSwitch</item>
         <item name="checkboxStyle">@style/ProtonCheckBox</item>

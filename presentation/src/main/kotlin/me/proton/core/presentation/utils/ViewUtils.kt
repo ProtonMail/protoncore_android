@@ -195,10 +195,25 @@ fun View.snack(
     actionOnClick: (() -> Unit)? = null,
     length: Int = Snackbar.LENGTH_LONG
 ) {
+    snack(message, color, length) {
+        if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
+    }
+}
+
+/**
+ * General snack bar util function which takes message, color and length and a configuration block.
+ * The default showing length is [Snackbar.LENGTH_LONG].
+ */
+fun View.snack(
+    message: String,
+    @DrawableRes color: Int,
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null
+) {
     Snackbar.make(this, message, length).apply {
         view.background = ResourcesCompat.getDrawable(context.resources, color, null)
         view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).apply { maxLines = 5 }
-        if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
+        configBlock?.invoke(this)
     }.show()
 }
 
