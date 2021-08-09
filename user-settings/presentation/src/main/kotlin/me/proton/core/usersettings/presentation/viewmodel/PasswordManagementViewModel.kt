@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
@@ -34,24 +33,25 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.extension.hasSubscription
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPasswordTwoPasswordMode
+import me.proton.core.usersettings.domain.usecase.GetSettings
+import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import javax.inject.Inject
 
 @HiltViewModel
 class PasswordManagementViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
+    private val getSettings: GetSettings,
     private val userRepository: UserRepository,
-    private val performUpdateLoginPasswordTwoPasswordMode: PerformUpdateLoginPasswordTwoPasswordMode
+    private val performUpdateLoginPassword: PerformUpdateLoginPassword
 ) : ProtonViewModel() {
 
     private val _state = MutableStateFlow<State>(State.Idle)
 
     val state = _state.asStateFlow()
 
-    var secondFactorEnabled: Boolean? = null
-
     sealed class State {
         object Idle : State()
+        data class Mode(val twoPasswordMode: Boolean): State()
         object UpdatingLoginPassword : State()
         object UpdatingMailboxPassword : State()
         data class UpdatingLoginPasswordSuccess(val settings: UserSettings) : State()
@@ -60,6 +60,15 @@ class PasswordManagementViewModel @Inject constructor(
             data class Message(val message: String?) : Error()
         }
     }
+
+    fun init(userId: UserId) = flow {
+        val currentSettings = getSettings(userId)
+        emit(State.Mode(currentSettings.password.mode == 2))
+    }.catch { error ->
+        _state.tryEmit(State.Error.Message(error.message))
+    }.onEach { state ->
+        _state.tryEmit(state)
+    }.launchIn(viewModelScope)
 
     /**
      * Updates the password for single password mode users.
@@ -83,7 +92,7 @@ class PasswordManagementViewModel @Inject constructor(
         val user = userRepository.getUser(userId)
         val username = requireNotNull(user.name ?: user.email)
 
-        val result = performUpdateLoginPasswordTwoPasswordMode(
+        val result = performUpdateLoginPassword(
             sessionUserId = userId,
             password = encryptedPassword,
             paid = user.hasSubscription(),

@@ -35,13 +35,16 @@ import me.proton.core.key.data.api.request.AuthRequest
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.usersettings.data.api.UserSettingsApi
+import me.proton.core.usersettings.data.api.request.PrivateKeyRequest
 import me.proton.core.usersettings.data.api.request.SetUsernameRequest
+import me.proton.core.usersettings.data.api.request.UpdateKeysForPasswordChangeRequest
 import me.proton.core.usersettings.data.api.request.UpdateLoginPasswordRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.extension.fromEntity
 import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toEntity
+import me.proton.core.usersettings.domain.entity.PrivateKey
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 
@@ -137,6 +140,37 @@ class UserSettingsRepositoryImpl(
             )
             insertOrUpdate(response.settings.fromResponse(sessionUserId))
             getUserSettings(sessionUserId)
+        }.valueOrThrow
+    }
+
+    override suspend fun updateKeysForPasswordChange(
+        sessionUserId: SessionUserId,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String,
+        secondFactorCode: String,
+        auth: Auth?,
+        keys: List<PrivateKey>,
+        userKeys: List<PrivateKey>,
+        organizationKey: String
+    ) {
+        apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
+            updateKeysForPasswordChange(
+                UpdateKeysForPasswordChangeRequest(
+                    clientEphemeral = clientEphemeral,
+                    clientProof = clientProof,
+                    srpSession = srpSession,
+                    twoFactorCode = secondFactorCode,
+                    auth = if (auth != null) AuthRequest.from(auth) else null,
+                    keys = keys.map {
+                        PrivateKeyRequest(privateKey = it.privateKey, id = it.id)
+                    },
+                    userKeys = userKeys.map {
+                        PrivateKeyRequest(privateKey = it.privateKey, id = it.id)
+                    },
+                    organizationKey = organizationKey
+                )
+            )
         }.valueOrThrow
     }
 }

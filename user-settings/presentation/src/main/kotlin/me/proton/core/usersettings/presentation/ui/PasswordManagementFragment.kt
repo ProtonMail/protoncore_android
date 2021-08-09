@@ -22,23 +22,31 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_password_management.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.ui.view.ProtonButton
 import me.proton.core.presentation.ui.view.ProtonInput
+import me.proton.core.presentation.ui.view.ProtonProgressButton
 import me.proton.core.presentation.utils.addOnBackPressedCallback
+import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validatePasswordMinLength
 import me.proton.core.usersettings.presentation.R
-import me.proton.core.usersettings.presentation.databinding.FragmentUpdatePasswordBinding
+import me.proton.core.usersettings.presentation.databinding.FragmentPasswordManagementBinding
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel
+import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class PasswordManagementFragment : ProtonFragment<FragmentUpdatePasswordBinding>() {
+class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBinding>() {
     private val viewModel by viewModels<PasswordManagementViewModel>()
 
     private val input: SettingsInput by lazy {
@@ -47,7 +55,7 @@ class PasswordManagementFragment : ProtonFragment<FragmentUpdatePasswordBinding>
 
     private val userId: UserId by lazy { input.user }
 
-    override fun layoutId() = R.layout.fragment_update_password
+    override fun layoutId() = R.layout.fragment_password_management
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +69,7 @@ class PasswordManagementFragment : ProtonFragment<FragmentUpdatePasswordBinding>
                 finish()
             }
         }
+        viewModel.init(userId)
         binding.apply {
             currentLoginPasswordInput.validatePassword()
             newLoginPasswordInput.validatePassword()
@@ -76,6 +85,20 @@ class PasswordManagementFragment : ProtonFragment<FragmentUpdatePasswordBinding>
                 onSaveMailboxPasswordClicked()
             }
         }
+
+        viewModel.state.onEach {
+            when (it) {
+                is PasswordManagementViewModel.State.Error.Message -> showError(it.message)
+                is PasswordManagementViewModel.State.Idle -> { }
+                is PasswordManagementViewModel.State.Mode -> {
+                    binding.mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
+                }
+                is PasswordManagementViewModel.State.UpdatingLoginPassword -> binding.saveLoginPasswordButton.showLoading(true)
+                is PasswordManagementViewModel.State.UpdatingLoginPasswordSuccess -> binding.saveLoginPasswordButton.showLoading(false)
+                is PasswordManagementViewModel.State.UpdatingMailboxPassword -> binding.saveMailboxPasswordButton.showLoading(true)
+                is PasswordManagementViewModel.State.UpdatingMailboxPasswordSuccess -> binding.saveMailboxPasswordButton.showLoading(false)
+            }.exhaustive
+        }.launchIn(lifecycleScope)
     }
 
     private fun onSaveLoginPasswordClicked() {
@@ -86,7 +109,12 @@ class PasswordManagementFragment : ProtonFragment<FragmentUpdatePasswordBinding>
                 .onSuccess { password ->
                     val confirmedPassword = confirmNewLoginPasswordInput.text.toString()
                     if (password == confirmedPassword) {
-                        viewModel.updateLoginPassword(userId, currentLoginPasswordInput.text.toString(), confirmedPassword, "")
+                        viewModel.updateLoginPassword(
+                            userId,
+                            currentLoginPasswordInput.text.toString(),
+                            confirmedPassword,
+                            ""
+                        )
                     } else {
                         confirmNewLoginPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_match))
                     }
@@ -125,6 +153,22 @@ class PasswordManagementFragment : ProtonFragment<FragmentUpdatePasswordBinding>
                 }
                 .onSuccess { clearInputError() }
         }
+    }
+
+    private fun ProtonProgressButton.showLoading(loading: Boolean) {
+        if (loading) {
+            setLoading()
+        } else {
+            setIdle()
+        }
+    }
+
+    private fun showError(message: String?) {
+        binding.saveLoginPasswordButton.showLoading(false)
+        binding.saveMailboxPasswordButton.showLoading(false)
+        binding.root.errorSnack(
+            message = message ?: getString(R.string.settings_general_error)
+        )
     }
 
     companion object {

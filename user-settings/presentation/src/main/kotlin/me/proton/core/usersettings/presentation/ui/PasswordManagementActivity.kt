@@ -22,18 +22,18 @@ import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.usersettings.presentation.R
-import me.proton.core.usersettings.presentation.databinding.ActivityUpdatePasswordBinding
+import me.proton.core.usersettings.presentation.databinding.ActivityPasswordManagementBinding
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.ui.PasswordManagementFragment.Companion.KEY_UPDATE_RESULT
 
 @AndroidEntryPoint
-class PasswordManagementActivity : ProtonActivity<ActivityUpdatePasswordBinding>() {
+class PasswordManagementActivity : ProtonActivity<ActivityPasswordManagementBinding>() {
 
     private val input: SettingsInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
-    override fun layoutId() = R.layout.activity_update_password
+    override fun layoutId() = R.layout.activity_password_management
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

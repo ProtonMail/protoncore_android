@@ -33,10 +33,10 @@ import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
-class PerformUpdatePasswordOnePasswordMode @Inject constructor(
+class PerformUpdateLoginPassword @Inject constructor(
     private val authRepository: AuthRepository,
-    private val organizationRepository: OrganizationRepository,
     private val userSettingsRepository: UserSettingsRepository,
+    private val organizationRepository: OrganizationRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
     @ClientSecret private val clientSecret: String
@@ -59,29 +59,40 @@ class PerformUpdatePasswordOnePasswordMode @Inject constructor(
             organizationRepository.getOrganizationKeys(sessionUserId)
         } else null
 
-        password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedPassword ->
-            val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
-                username = username,
-                password = decryptedPassword.array,
-                version = loginInfo.version.toLong(),
-                salt = loginInfo.salt,
-                modulus = loginInfo.modulus,
-                serverEphemeral = loginInfo.serverEphemeral
-            )
-            val auth = srpCrypto.calculatePasswordVerifier(
-                username = username,
-                password = decryptedPassword.array,
-                modulusId = modulus.modulusId,
-                modulus = modulus.modulus
-            )
-            return userSettingsRepository.updateLoginPassword(
-                sessionUserId = sessionUserId,
-                clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
-                clientProof = Base64.encode(clientProofs.clientProof),
-                srpSession = loginInfo.srpSession,
-                secondFactorCode = secondFactorCode,
-                auth = auth
-            )
+//    } catch (exception: ApiException) {
+//        val error = exception.error
+//        if (error is ApiResult.Error.Http && error.proton?.code == NO_ACTIVE_SUBSCRIPTION) {
+//            return null
+//        } else {
+//            throw exception
+//        }
+//    }
+
+        password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedCurrentPassword ->
+            newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassword ->
+                val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
+                    username = username,
+                    password = decryptedCurrentPassword.array,
+                    version = loginInfo.version.toLong(),
+                    salt = loginInfo.salt,
+                    modulus = loginInfo.modulus,
+                    serverEphemeral = loginInfo.serverEphemeral
+                )
+                val auth = srpCrypto.calculatePasswordVerifier(
+                    username = username,
+                    password = decryptedNewPassword.array,
+                    modulusId = modulus.modulusId,
+                    modulus = modulus.modulus
+                )
+                return userSettingsRepository.updateLoginPassword(
+                    sessionUserId = sessionUserId,
+                    clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
+                    clientProof = Base64.encode(clientProofs.clientProof),
+                    srpSession = loginInfo.srpSession,
+                    secondFactorCode = secondFactorCode,
+                    auth = auth
+                )
+            }
         }
     }
 }

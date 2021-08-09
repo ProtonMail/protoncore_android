@@ -21,6 +21,7 @@ package me.proton.core.usersettings.domain.usecase
 import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
@@ -28,70 +29,67 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
+import me.proton.core.usersettings.domain.entity.PrivateKey
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
-class PerformUpdateLoginPasswordTwoPasswordMode @Inject constructor(
+class PerformUpdateMailboxPassword @Inject constructor(
     private val authRepository: AuthRepository,
     private val userSettingsRepository: UserSettingsRepository,
-    private val organizationRepository: OrganizationRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
+    private val cryptoContext: CryptoContext,
     @ClientSecret private val clientSecret: String
 ) {
     suspend operator fun invoke(
         sessionUserId: SessionUserId,
-        password: EncryptedString,
-        paid: Boolean,
-        newPassword: EncryptedString,
+        twoPasswordMode: Boolean,
         username: String,
+        loginPassword: EncryptedString,
+        newPassword: EncryptedString,
         secondFactorCode: String = ""
-    ): UserSettings {
+    ) {
         val loginInfo = authRepository.getLoginInfo(
             username = username,
             clientSecret = clientSecret
         )
         val modulus = authRepository.randomModulus()
-        val orgKeys = if (paid) {
-            val org = organizationRepository.getOrganization(sessionUserId)
-            organizationRepository.getOrganizationKeys(sessionUserId)
-        } else null
+        val keySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
 
-//    } catch (exception: ApiException) {
-//        val error = exception.error
-//        if (error is ApiResult.Error.Http && error.proton?.code == NO_ACTIVE_SUBSCRIPTION) {
-//            return null
-//        } else {
-//            throw exception
-//        }
-//    }
-
-        password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedCurrentPassword ->
+        loginPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedLoginPassword ->
             newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassword ->
                 val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
                     username = username,
-                    password = decryptedCurrentPassword.array,
+                    password = decryptedLoginPassword.array,
                     version = loginInfo.version.toLong(),
                     salt = loginInfo.salt,
                     modulus = loginInfo.modulus,
                     serverEphemeral = loginInfo.serverEphemeral
                 )
-                val auth = srpCrypto.calculatePasswordVerifier(
+
+                val auth = if (!twoPasswordMode) srpCrypto.calculatePasswordVerifier(
                     username = username,
                     password = decryptedNewPassword.array,
                     modulusId = modulus.modulusId,
                     modulus = modulus.modulus
-                )
-                return userSettingsRepository.updateLoginPassword(
-                    sessionUserId = sessionUserId,
-                    clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
-                    clientProof = Base64.encode(clientProofs.clientProof),
-                    srpSession = loginInfo.srpSession,
-                    secondFactorCode = secondFactorCode,
-                    auth = auth
-                )
+                ) else null
+                // todo: calculate the keys
+                val keys: List<PrivateKey> = emptyList()
+                val userKeys: List<PrivateKey> = emptyList()
+                val organizationKey = ""
+                cryptoContext.pgpCrypto.getPassphrase(decryptedNewPassword.array, keySalt).use { passphrase ->
+                    userSettingsRepository.updateKeysForPasswordChange(
+                        sessionUserId = sessionUserId,
+                        clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
+                        clientProof = Base64.encode(clientProofs.clientProof),
+                        srpSession = loginInfo.srpSession,
+                        secondFactorCode = secondFactorCode,
+                        auth = auth,
+                        keys = keys,
+                        userKeys = userKeys,
+                        organizationKey = organizationKey
+                    )
+                }
             }
         }
     }
