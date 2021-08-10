@@ -118,8 +118,8 @@
     <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
     <string name="auth_signup_recovery_method_email">Email</string>
     <string name="auth_signup_recovery_method_phone">Phone</string>
-    <string name="auth_signup_recovery_method_email_hint">Recovery Email</string>
-    <string name="auth_signup_recovery_method_phone_hint">Recovery Phone number</string>
+    <string name="auth_signup_recovery_method_email_hint">Recovery email</string>
+    <string name="auth_signup_recovery_method_phone_hint">Recovery phone number</string>
     <string name="auth_signup_terms_conditions">Terms and Conditions</string>
     <string name="auth_signup_terms_conditions_full">By clicking Next, you agree with Proton\'s Terms and Conditions.</string>
     <string name="auth_signup_skip_recovery_title">Skip recovery method?</string>
