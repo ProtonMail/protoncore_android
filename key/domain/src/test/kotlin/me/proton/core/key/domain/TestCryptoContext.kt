@@ -253,6 +253,12 @@ class TestCryptoContext : CryptoContext {
             passphrase: ByteArray
         ): Armored = "privateKey"
 
+        override fun updatePrivateKeyPassphrase(
+            privateKey: String,
+            oldPassphrase: ByteArray,
+            newPassphrase: ByteArray
+        ): Armored? = "privateKey"
+
         override fun updateTime(epochSeconds: Long) = Unit
     }
 }

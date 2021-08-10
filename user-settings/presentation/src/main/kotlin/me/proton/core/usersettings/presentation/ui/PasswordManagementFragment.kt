@@ -24,12 +24,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_password_management.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
-import me.proton.core.presentation.ui.view.ProtonButton
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.ui.view.ProtonProgressButton
 import me.proton.core.presentation.utils.addOnBackPressedCallback
@@ -38,6 +36,7 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validatePasswordMinLength
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.FragmentPasswordManagementBinding
@@ -71,12 +70,12 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
         }
         viewModel.init(userId)
         binding.apply {
-            currentLoginPasswordInput.validatePassword()
-            newLoginPasswordInput.validatePassword()
-            confirmNewLoginPasswordInput.validatePassword()
-            currentMailboxPasswordInput.validatePassword()
-            newMailboxPasswordInput.validatePassword()
-            confirmNewMailboxPasswordInput.validatePassword()
+            currentLoginPasswordInput.passwordValidation(false)
+            newLoginPasswordInput.passwordValidation()
+            confirmNewLoginPasswordInput.passwordValidation()
+            currentMailboxPasswordInput.passwordValidation(false)
+            newMailboxPasswordInput.passwordValidation()
+            confirmNewMailboxPasswordInput.passwordValidation()
 
             saveLoginPasswordButton.onClick {
                 onSaveLoginPasswordClicked()
@@ -88,15 +87,22 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
 
         viewModel.state.onEach {
             when (it) {
+                is PasswordManagementViewModel.State.Idle -> {
+                }
                 is PasswordManagementViewModel.State.Error.Message -> showError(it.message)
-                is PasswordManagementViewModel.State.Idle -> { }
                 is PasswordManagementViewModel.State.Mode -> {
                     binding.mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
                 }
-                is PasswordManagementViewModel.State.UpdatingLoginPassword -> binding.saveLoginPasswordButton.showLoading(true)
-                is PasswordManagementViewModel.State.UpdatingLoginPasswordSuccess -> binding.saveLoginPasswordButton.showLoading(false)
-                is PasswordManagementViewModel.State.UpdatingMailboxPassword -> binding.saveMailboxPasswordButton.showLoading(true)
-                is PasswordManagementViewModel.State.UpdatingMailboxPasswordSuccess -> binding.saveMailboxPasswordButton.showLoading(false)
+                is PasswordManagementViewModel.State.UpdatingLoginPassword ->
+                    binding.saveLoginPasswordButton.showLoading(true)
+                is PasswordManagementViewModel.State.Success.UpdatingLoginPassword ->
+                    binding.saveLoginPasswordButton.showLoading(false)
+                is PasswordManagementViewModel.State.UpdatingMailboxPassword ->
+                    binding.saveMailboxPasswordButton.showLoading(true)
+                is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword ->
+                    binding.saveMailboxPasswordButton.showLoading(false)
+                is PasswordManagementViewModel.State.Error.UpdatingMailboxPassword ->
+                    showError(getString(R.string.settings_change_password_error))
             }.exhaustive
         }.launchIn(lifecycleScope)
     }
@@ -130,7 +136,11 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
                 .onSuccess { password ->
                     val confirmedPassword = confirmNewMailboxPasswordInput.text.toString()
                     if (password == confirmedPassword) {
-                        viewModel.updateMailboxPassword(userId, "", "", "")
+                        viewModel.updateMailboxPassword(
+                            userId,
+                            currentMailboxPasswordInput.text.toString(),
+                            confirmedPassword
+                        )
                     } else {
                         confirmNewMailboxPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_match))
                     }
@@ -145,13 +155,16 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
         parentFragmentManager.popBackStackImmediate()
     }
 
-    private fun ProtonInput.validatePassword() {
+    private fun ProtonInput.passwordValidation(validateLength: Boolean = true) {
         setOnFocusLostListener { _, _ ->
-            validatePasswordMinLength()
-                .onFailure {
-                    setInputError(getString(R.string.auth_signup_validation_password_length))
-                }
-                .onSuccess { clearInputError() }
+            val validation = if (validateLength) {
+                validatePasswordMinLength()
+            } else {
+                validatePassword()
+            }
+            validation.onFailure {
+                setInputError(getString(R.string.auth_signup_validation_password_length))
+            }.onSuccess { clearInputError() }
         }
     }
 

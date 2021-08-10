@@ -40,7 +40,7 @@
     <string name="settings_login_password_hint_current">Current login password</string>
     <string name="settings_login_password_hint_new">New login password</string>
     <string name="settings_login_password_hint_new_confirm">Confirm new login password</string>
-    <string name="settings_mailbox_password_hint_current">Current mailbox password</string>
     <string name="settings_mailbox_password_hint_new">New mailbox password</string>
     <string name="settings_mailbox_password_hint_new_confirm">Confirm new mailbox password</string>
+    <string name="settings_change_password_error">A change password error has occurred.</string>
 </resources>

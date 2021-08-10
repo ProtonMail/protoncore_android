@@ -42,7 +42,4 @@ internal interface UserSettingsApi : BaseRetrofitApi {
 
     @PUT("settings/password")
     suspend fun updateLoginPassword(@Body request: UpdateLoginPasswordRequest): SingleUserSettingsResponse
-
-    @PUT("settings/password")
-    suspend fun updateKeysForPasswordChange(@Body request: UpdateKeysForPasswordChangeRequest): GenericResponse
 }

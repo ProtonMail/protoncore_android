@@ -16,9 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.entity
+package me.proton.core.key.domain.entity.key
 
-data class PrivateKey(
+data class Key(
     val privateKey: String,
     val id: String
 )

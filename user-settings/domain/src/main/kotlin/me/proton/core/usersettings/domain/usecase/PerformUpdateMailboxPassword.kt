@@ -28,36 +28,53 @@ import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.usersettings.domain.entity.PrivateKey
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
+import me.proton.core.key.domain.entity.key.Key
+import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
+import me.proton.core.key.domain.repository.PrivateKeyRepository
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.hasMigratedKey
+import me.proton.core.user.domain.extension.hasSubscription
+import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.user.domain.repository.UserAddressRepository
+import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import javax.inject.Inject
 
 class PerformUpdateMailboxPassword @Inject constructor(
     private val authRepository: AuthRepository,
-    private val userSettingsRepository: UserSettingsRepository,
+    private val userAddressRepository: UserAddressRepository,
+    private val organizationRepository: OrganizationRepository,
+    private val passphraseRepository: PassphraseRepository,
+    private val keyRepository: PrivateKeyRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val cryptoContext: CryptoContext,
     @ClientSecret private val clientSecret: String
 ) {
     suspend operator fun invoke(
-        sessionUserId: SessionUserId,
         twoPasswordMode: Boolean,
-        username: String,
+        user: User,
         loginPassword: EncryptedString,
         newPassword: EncryptedString,
         secondFactorCode: String = ""
-    ) {
+    ): Boolean {
+        val username = requireNotNull(user.name ?: user.email)
+        val userId = user.userId
+        val paid = user.hasSubscription()
+
         val loginInfo = authRepository.getLoginInfo(
             username = username,
             clientSecret = clientSecret
         )
         val modulus = authRepository.randomModulus()
+
+        val orgKeys = if (paid) {
+            organizationRepository.getOrganizationKeys(userId)
+        } else null
+
         val keySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
 
         loginPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedLoginPassword ->
-            newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassword ->
+            newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassphrase ->
                 val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
                     username = username,
                     password = decryptedLoginPassword.array,
@@ -69,17 +86,49 @@ class PerformUpdateMailboxPassword @Inject constructor(
 
                 val auth = if (!twoPasswordMode) srpCrypto.calculatePasswordVerifier(
                     username = username,
-                    password = decryptedNewPassword.array,
+                    password = decryptedNewPassphrase.array,
                     modulusId = modulus.modulusId,
                     modulus = modulus.modulus
                 ) else null
-                // todo: calculate the keys
-                val keys: List<PrivateKey> = emptyList()
-                val userKeys: List<PrivateKey> = emptyList()
-                val organizationKey = ""
-                cryptoContext.pgpCrypto.getPassphrase(decryptedNewPassword.array, keySalt).use { passphrase ->
-                    userSettingsRepository.updateKeysForPasswordChange(
-                        sessionUserId = sessionUserId,
+
+                var keys: MutableList<Key>? = null
+                var userKeys: MutableList<Key>? = null
+
+                cryptoContext.pgpCrypto.getPassphrase(decryptedNewPassphrase.array, keySalt).use { newPassphrase ->
+                    val addresses = userAddressRepository.getAddresses(userId)
+
+                    if (addresses.hasMigratedKey()) {
+                        // for migrated accounts, we update only the user keys
+                        userKeys = mutableListOf()
+                        for (userKey in user.keys) {
+                            val updatedKey = userKey.updatePrivateKey(newPassphrase.array)
+                            updatedKey?.let { userKeys!!.add(it) }
+                        }
+                    } else {
+                        // for non-migrated all keys (user + address) go into keys field
+                        keys = mutableListOf()
+                        for (userKey in user.keys) {
+                            val updatedKey = userKey.updatePrivateKey(newPassphrase.array)
+                            updatedKey?.let { keys!!.add(it) }
+                        }
+                        for (address in addresses) {
+                            for (addressKey in address.keys) {
+                                val updatedAddressKey = addressKey.updatePrivateKey(newPassphrase.array)
+                                updatedAddressKey?.let { keys!!.add(it) }
+                            }
+                        }
+                    }
+
+                    val organizationKey = if (orgKeys != null && orgKeys.privateKey.isNotEmpty()) {
+                        val currentPassphrase =
+                            requireNotNull(passphraseRepository.getPassphrase(userId)?.decryptWith(keyStoreCrypto))
+                        orgKeys.privateKey.updateOrganizationPrivateKey(currentPassphrase.array, newPassphrase.array)
+                            ?: ""
+                    } else ""
+
+                    return keyRepository.updateKeysForPasswordChange(
+                        sessionUserId = userId,
+                        keySalt = keySalt,
                         clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
                         clientProof = Base64.encode(clientProofs.clientProof),
                         srpSession = loginInfo.srpSession,
@@ -92,5 +141,23 @@ class PerformUpdateMailboxPassword @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun KeyHolderPrivateKey.updatePrivateKey(newPassphrase: ByteArray): Key? {
+        val passphrase = privateKey.passphrase?.decryptWith(keyStoreCrypto)?.array ?: return null
+        val armored = cryptoContext.pgpCrypto.updatePrivateKeyPassphrase(
+            privateKey = privateKey.key,
+            oldPassphrase = passphrase,
+            newPassphrase = newPassphrase
+        )
+        return if (armored != null) Key(armored, keyId.id) else null
+    }
+
+    private fun String.updateOrganizationPrivateKey(currentPassphrase: ByteArray, newPassphrase: ByteArray): String? {
+        return cryptoContext.pgpCrypto.updatePrivateKeyPassphrase(
+            privateKey = this,
+            oldPassphrase = currentPassphrase,
+            newPassphrase = newPassphrase
+        )
     }
 }

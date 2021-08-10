@@ -16,11 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.api.request
+package me.proton.core.key.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.key.data.api.request.AuthRequest
 
 @Serializable
 data class UpdateKeysForPasswordChangeRequest(

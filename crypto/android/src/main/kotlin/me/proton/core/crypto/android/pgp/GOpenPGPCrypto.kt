@@ -524,6 +524,18 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // endregion
 
+    // region update
+
+    override fun updatePrivateKeyPassphrase(privateKey: String, oldPassphrase: ByteArray, newPassphrase: ByteArray): Armored? =
+        runCatching {
+            check(oldPassphrase.isNotEmpty()) { "The passphrase for generating key can't be empty." }
+            check(newPassphrase.isNotEmpty()) { "The passphrase for generating key can't be empty." }
+
+            Helper.updatePrivateKeyPassphrase(privateKey, oldPassphrase, newPassphrase)
+        }.getOrThrow()
+
+    // endregion
+
     // region Get
 
     override fun getArmored(

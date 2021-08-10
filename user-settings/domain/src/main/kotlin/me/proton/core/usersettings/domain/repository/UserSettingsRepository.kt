@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.usersettings.domain.entity.PrivateKey
 import me.proton.core.usersettings.domain.entity.UserSettings
 
 interface UserSettingsRepository {
@@ -82,16 +81,4 @@ interface UserSettingsRepository {
         secondFactorCode: String,
         auth: Auth
     ): UserSettings
-
-    suspend fun updateKeysForPasswordChange(
-        sessionUserId: SessionUserId,
-        clientEphemeral: String,
-        clientProof: String,
-        srpSession: String,
-        secondFactorCode: String,
-        auth: Auth?,
-        keys: List<PrivateKey>,
-        userKeys: List<PrivateKey>,
-        organizationKey: String
-    )
 }

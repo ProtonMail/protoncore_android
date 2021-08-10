@@ -347,6 +347,12 @@ interface PGPCrypto {
         passphrase: ByteArray
     ): Armored
 
+    fun updatePrivateKeyPassphrase(
+        privateKey: String,
+        oldPassphrase: ByteArray,
+        newPassphrase: ByteArray
+    ): Armored?
+
     /**
      * Update the current time used for crypto function (e.g. signing).
      *

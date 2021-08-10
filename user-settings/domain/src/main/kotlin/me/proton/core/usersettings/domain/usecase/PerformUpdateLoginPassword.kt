@@ -29,14 +29,12 @@ import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
 class PerformUpdateLoginPassword @Inject constructor(
     private val authRepository: AuthRepository,
     private val userSettingsRepository: UserSettingsRepository,
-    private val organizationRepository: OrganizationRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
     @ClientSecret private val clientSecret: String
@@ -44,7 +42,6 @@ class PerformUpdateLoginPassword @Inject constructor(
     suspend operator fun invoke(
         sessionUserId: SessionUserId,
         password: EncryptedString,
-        paid: Boolean,
         newPassword: EncryptedString,
         username: String,
         secondFactorCode: String = ""
@@ -54,19 +51,6 @@ class PerformUpdateLoginPassword @Inject constructor(
             clientSecret = clientSecret
         )
         val modulus = authRepository.randomModulus()
-        val orgKeys = if (paid) {
-            val org = organizationRepository.getOrganization(sessionUserId)
-            organizationRepository.getOrganizationKeys(sessionUserId)
-        } else null
-
-//    } catch (exception: ApiException) {
-//        val error = exception.error
-//        if (error is ApiResult.Error.Http && error.proton?.code == NO_ACTIVE_SUBSCRIPTION) {
-//            return null
-//        } else {
-//            throw exception
-//        }
-//    }
 
         password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedCurrentPassword ->
             newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassword ->
