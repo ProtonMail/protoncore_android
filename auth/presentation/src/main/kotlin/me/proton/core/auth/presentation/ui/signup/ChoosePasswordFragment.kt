@@ -83,7 +83,9 @@ class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBindin
         if (password == confirmedPassword) {
             onInputValidationSuccess()
         } else {
-            confirmPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_match))
+            showError(getString(R.string.auth_signup_error_passwords_do_not_match))
+            passwordInput.setInputError(" ")
+            confirmPasswordInput.setInputError(" ")
         }
     }
 
