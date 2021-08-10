@@ -73,7 +73,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
         val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
 
         viewModel.activeMethod.test {
-            assertEquals(TokenType.CAPTCHA.value, expectItem())
+            assertEquals(TokenType.EMAIL.value, expectItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
