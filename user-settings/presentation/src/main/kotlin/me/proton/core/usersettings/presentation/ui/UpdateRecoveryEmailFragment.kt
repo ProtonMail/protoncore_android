@@ -57,15 +57,13 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.addOnBackPressedCallback()
+        addOnBackPressedCallback { setFragmentResult() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as UpdateRecoveryEmailActivity).binding.toolbar.apply {
-            setNavigationOnClickListener {
-                finish()
-            }
+        (activity as? UpdateRecoveryEmailActivity)?.binding?.toolbar?.apply {
+            setNavigationOnClickListener { setFragmentResult() }
         }
         binding.saveButton.onClick {
             onSaveClicked()
@@ -93,12 +91,10 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
 
     private fun onSaveClicked() {
         hideKeyboard()
-        with(binding) {
-            newEmailInput.validateEmail()
-                .onFailure { newEmailInput.setInputError(getString(R.string.settings_validation_email)) }
-                .onSuccess { email ->
-                    validateConfirmRecoveryEmailField(email)
-                }
+        binding.newEmailInput.apply {
+            validateEmail()
+                .onFailure { setInputError(getString(R.string.settings_validation_email)) }
+                .onSuccess { email -> validateConfirmRecoveryEmailField(email) }
         }
     }
 
@@ -152,16 +148,15 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
         )
     }
 
-    private fun finish() {
+    private fun setFragmentResult() {
         parentFragmentManager.setFragmentResult(
-            KEY_UPDATE_RESULT, bundleOf(BUNDLE_KEY_PLAN to null)
+            KEY_UPDATE_RESULT, bundleOf(ARG_UPDATE_RESULT to null)
         )
-        parentFragmentManager.popBackStackImmediate()
     }
 
     companion object {
         const val KEY_UPDATE_RESULT = "key.update_result"
-        const val BUNDLE_KEY_PLAN = "bundle.update_result"
+        const val ARG_UPDATE_RESULT = "arg.update_result"
         const val ARG_INPUT = "arg.settingsInput"
 
         operator fun invoke(input: SettingsInput) = UpdateRecoveryEmailFragment().apply {

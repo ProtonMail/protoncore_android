@@ -20,7 +20,6 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -64,23 +63,23 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         binding.apply {
-            toolbar.setNavigationOnClickListener {
-                requireActivity().finish()
+            toolbar.setNavigationOnClickListener { onBackPressed() }
+
+            usernameInput.apply {
+                setOnFocusLostListener { _, _ ->
+                    validateUsername()
+                        .onFailure { setInputError() }
+                        .onSuccess { clearInputError() }
+                }
             }
-            usernameInput.setOnFocusLostListener { _, _ ->
-                usernameInput.validateUsername()
-                    .onFailure { usernameInput.setInputError() }
-                    .onSuccess { usernameInput.clearInputError() }
-            }
+
             nextButton.onClick(::onNextClicked)
             onAccountTypeSelection()
             useCurrentEmailButton.apply {
                 visibility = if (input.requiredAccountType.canSwitchToExternal()) View.VISIBLE else View.GONE
-                onClick {
-                    viewModel.onUserSwitchAccountType()
-                }
+                onClick { viewModel.onUserSwitchAccountType() }
             }
         }
 

@@ -21,13 +21,11 @@ package me.proton.core.plan.presentation.ui
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_upgrade.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
@@ -61,16 +59,15 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.register(this)
-        activity?.addOnBackPressedCallback()
+        addOnBackPressedCallback { finish() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (viewModel.supportedPaidPlanIds.isNotEmpty()) {
             binding.apply {
-                toolbar.setNavigationOnClickListener {
-                    finish()
-                }
+                toolbar.setNavigationOnClickListener { finish() }
+
                 input.user?.let {
                     if (input.showCurrent) {
                         plansTitle.visibility = View.GONE
@@ -84,8 +81,7 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
             viewModel.availablePlansState.onEach {
                 when (it) {
                     is PlansViewModel.State.Error.Message -> onError(it.message)
-                    is PlansViewModel.State.Idle -> {
-                    }
+                    is PlansViewModel.State.Idle -> Unit
                     is PlansViewModel.State.Processing -> showLoading(true)
                     is PlansViewModel.State.Success.Plans -> {
                         showLoading(false)

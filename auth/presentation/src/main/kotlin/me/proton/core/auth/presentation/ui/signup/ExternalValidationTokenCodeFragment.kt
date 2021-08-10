@@ -52,16 +52,14 @@ class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidat
     }
 
     override fun onBackPressed() {
-        parentFragmentManager.removeExternalAccountEnterCode()
+        parentFragmentManager.popBackStack()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            toolbar.setNavigationOnClickListener {
-                parentFragmentManager.popBackStackImmediate()
-            }
+            toolbar.setNavigationOnClickListener { onBackPressed() }
 
             title.text = String.format(
                 getString(R.string.human_verification_enter_code_subtitle),
@@ -85,8 +83,7 @@ class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidat
 
         viewModel.validationState.onEach {
             when (it) {
-                is ExternalValidationTokenCodeViewModel.ValidationState.Idle -> {
-                }
+                is ExternalValidationTokenCodeViewModel.ValidationState.Idle -> Unit
                 is ExternalValidationTokenCodeViewModel.ValidationState.Processing -> showLoading()
                 is ExternalValidationTokenCodeViewModel.ValidationState.Error.Message -> onValidationError(it.message)
                 is ExternalValidationTokenCodeViewModel.ValidationState.Success -> onValidationSuccess()
@@ -95,9 +92,8 @@ class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidat
 
         viewModel.verificationCodeResendState.onEach {
             when (it) {
+                is ViewModelResult.None -> Unit
                 is ViewModelResult.Error -> showError(message = it.throwable?.message)
-                is ViewModelResult.None -> {
-                }
                 is ViewModelResult.Processing -> showLoading(true)
                 is ViewModelResult.Success -> {
                     showLoading(false)
