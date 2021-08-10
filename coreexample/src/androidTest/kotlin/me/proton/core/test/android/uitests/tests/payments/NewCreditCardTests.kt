@@ -19,10 +19,12 @@
 package me.proton.core.test.android.uitests.tests.payments
 
 import me.proton.core.payment.presentation.R
+import me.proton.core.test.android.instrumented.builders.OnView
 import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
+import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
@@ -31,7 +33,7 @@ import org.junit.Test
 class NewCreditCardTests : BaseTest() {
 
     private val user = users.getUser {
-        !it.isPaid && it.cards.isEmpty() && it.paypal.isEmpty() && it.isDefault
+        !it.isPaid && it.cards.isEmpty() && it.paypal.isEmpty() && it.isOnePasswordWithUsername
     }
     private val newCreditCardRobot = AddCreditCardRobot()
 
@@ -43,6 +45,14 @@ class NewCreditCardTests : BaseTest() {
             .plansUpgrade()
             .selectPlan<AddCreditCardRobot>(Plan.Plus)
             .verify { billingDetailsDisplayed(Plan.Plus, "yearly", Currency.Euro.symbol, "48.00") }
+    }
+
+    @Test
+    fun backToPlanSelection() {
+        newCreditCardRobot
+            .back<AddCreditCardRobot>()
+            .back<SelectPlanRobot>()
+            .verify { planDetailsDisplayed(Plan.Plus) }
     }
 
     @Test
@@ -59,7 +69,7 @@ class NewCreditCardTests : BaseTest() {
     @Test
     fun invalidCreditCardNumber() {
         newCreditCardRobot
-            .ccname("${user.firstName} ${user.lastName}")
+            .ccname("Test name")
             .country()
             .selectCountry<AddCreditCardRobot>("Angola")
             .expirationDate("1234")

@@ -24,12 +24,14 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.proton.core.accountmanager.presentation.R
 import me.proton.core.test.android.instrumented.builders.OnView
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.test.android.robots.auth.login.LoginRobot
+import org.hamcrest.CoreMatchers.startsWith
 
 /**
  * [AccountSwitcherRobot] class contains account switcher actions and verifications implementation
@@ -77,7 +79,7 @@ class AccountSwitcherRobot : CoreRobot() {
         fun userEmail(user: User): OnView =
             view
                 .withId(R.id.account_email_textview)
-                .withText(user.email)
+                .startsWith("${user.name}@")
                 .wait()
 
         fun userMore(user: User): OnView =

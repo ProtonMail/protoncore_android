@@ -22,7 +22,7 @@ import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.plugins.Quark
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
@@ -30,17 +30,16 @@ import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Ignore
 import org.junit.Test
 
 class LoginTests : BaseTest() {
-
     private val loginRobot = LoginRobot()
-    private val user: User = users.getUser()
+    private val user: User = users.getUser { it.name == "pro" }
 
     @Before
     fun unban() {
-        jailUnban()
         AddAccountRobot()
             .signIn()
             .verify { loginElementsDisplayed() }

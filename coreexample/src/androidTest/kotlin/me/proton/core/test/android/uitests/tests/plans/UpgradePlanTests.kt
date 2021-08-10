@@ -33,8 +33,8 @@ import org.junit.Test
 class UpgradePlanTests: BaseTest() {
 
     private val selectPlanRobot = SelectPlanRobot()
-    private val freeUser = users.getUser { !it.isPaid && it.isDefault }
-    private val paidUser = users.getUser { it.isPaid && it.isDefault }
+    private val freeUser = users.getUser { !it.isPaid && it.isOnePasswordWithUsername }
+    private val paidUser = users.getUser { it.isPaid && it.isOnePasswordWithUsername }
 
     @Before
     fun login() {

@@ -30,9 +30,6 @@ import org.junit.Test
 
 class CurrentPlanTests: BaseTest() {
 
-    private val freeUser = users.getUser { !it.isPaid && it.isDefault }
-    private val paidUser = users.getUser { it.isPaid && it.isDefault }
-
     @Before
     fun login() {
         AddAccountRobot()
@@ -46,6 +43,7 @@ class CurrentPlanTests: BaseTest() {
 
     @Test
     fun userWithFreePlan() {
+        val freeUser = users.getUser()
         navigateUserToCurrentPlans(freeUser)
             .verify {
                 canSelectPlan(Plan.Plus)
@@ -56,6 +54,7 @@ class CurrentPlanTests: BaseTest() {
 
     @Test
     fun userWithPaidPlan() {
+        val paidUser = users.getUser { it.isPaid }
         navigateUserToCurrentPlans(paidUser)
             .verify { planDetailsDisplayed(paidUser.plan) }
     }

@@ -22,7 +22,7 @@ import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.plugins.Quark.jailUnban
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.MailboxPasswordRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -32,7 +32,7 @@ import org.junit.Test
 
 class MailboxTests : BaseTest() {
 
-    private val twoPassUser = users.getUser { it.passphrase.isNotEmpty() }
+    private val twoPassUser = users.getUser(false) { it.passphrase.isNotEmpty() }
     private val mailboxPasswordRobot = MailboxPasswordRobot()
 
     @Before

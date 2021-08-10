@@ -19,7 +19,7 @@
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
-libVersion = Version(0, 6, 5)
+libVersion = Version(0, 6, 6)
 
 plugins {
     id("com.android.library")
@@ -77,6 +77,7 @@ dependencies {
         `espresso-intents`,
         `android-ktx`,
         `junit-ktx`,
-        `serialization-json`
+        `serialization-json`,
+        `okhttp-url-connection`
     )
 }

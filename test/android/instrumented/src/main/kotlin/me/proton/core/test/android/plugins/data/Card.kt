@@ -22,13 +22,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Card(
-    val number: String,
-    val cvc: String,
-    val expMonth: String,
-    val expYear: String,
-    val name: String,
-    val country: String,
-    val zip: String
+    val number: String = "",
+    val expMonth: String = "",
+    val expYear: String = "",
+    val name: String = "",
+    val cvc: String = "",
+    val country: String = "",
+    val zip: String = ""
 ) {
     val last4: String = number.takeLast(4)
     val brand: Brand = when(number.take(1).toInt()) {
@@ -45,5 +45,9 @@ data class Card(
         AmericanExpress("American Express"),
         Visa("Visa"),
         Unknown(""),
+    }
+
+    companion object {
+        val default: Card = Card("4242424242424242", "08", "2022", "Test Account")
     }
 }
