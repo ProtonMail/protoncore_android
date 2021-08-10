@@ -62,11 +62,6 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
         activity?.finish()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.fetchDomains()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         

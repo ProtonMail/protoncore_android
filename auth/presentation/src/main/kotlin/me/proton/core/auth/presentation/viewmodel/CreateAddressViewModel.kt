@@ -20,8 +20,8 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -49,9 +49,9 @@ class CreateAddressViewModel @Inject constructor(
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey
 ) : ProtonViewModel() {
 
-    private val _state = MutableStateFlow<State>(State.Idle)
+    private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
-    val state = _state.asStateFlow()
+    val state = _state.asSharedFlow()
 
     sealed class State {
         object Idle : State()
@@ -91,7 +91,7 @@ class CreateAddressViewModel @Inject constructor(
             emit(it)
         }
     }.catch { error ->
-        _state.tryEmit(State.Error.Message(error.message))
+        emit(State.Error.Message(error.message))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)

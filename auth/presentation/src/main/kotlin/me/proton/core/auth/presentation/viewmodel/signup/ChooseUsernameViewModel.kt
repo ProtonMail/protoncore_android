@@ -20,14 +20,17 @@ package me.proton.core.auth.presentation.viewmodel.signup
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.flow.retryWhen
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
@@ -42,14 +45,22 @@ internal class ChooseUsernameViewModel @Inject constructor(
     private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination
 ) : ProtonViewModel() {
 
-    private val _state = MutableStateFlow<State>(State.Idle)
-    private val _selectedAccountTypeState = MutableSharedFlow<AccountTypeState>(extraBufferCapacity = 10)
+    private lateinit var fetchDomainJob: Job
+
+    private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
+    private val _selectedAccountTypeState = MutableSharedFlow<AccountTypeState>(replay = 1, extraBufferCapacity = 3)
     private lateinit var clientAppRequiredAccountType: AccountType
 
     lateinit var currentAccountType: AccountType
         private set
 
-    val state = _state.asStateFlow()
+    val state = _state.asSharedFlow()
+        .onSubscription {
+            fetchDomainJob = fetchDomains()
+        }.onCompletion {
+            fetchDomainJob.cancel()
+        }
+
     val selectedAccountTypeState = _selectedAccountTypeState.asSharedFlow()
 
     var domains: List<Domain>? = null
@@ -80,7 +91,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
         }
     }
 
-    fun fetchDomains() = flow {
+    private fun fetchDomains() = flow {
         emit(State.Processing)
         val domains = usernameDomainAvailability.getDomains()
         if (domains.isEmpty()) {
@@ -88,9 +99,12 @@ internal class ChooseUsernameViewModel @Inject constructor(
             return@flow
         }
         this@ChooseUsernameViewModel.domains = domains
-        emit(State.AvailableDomains(domains, currentAccountType))
-    }.catch { error ->
-        emit(State.Error.Message(error.message))
+        emit(State.AvailableDomains(domains, requireCurrentAccountType()))
+    }.retryWhen { cause, _ ->
+        emit(State.Error.Message(cause.message))
+        // Retry every 5 seconds.
+        delay(5000)
+        true
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
@@ -146,11 +160,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
     // endregion
 
     private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
-        require(this::currentAccountType.isInitialized) {
-            "currentAccountType is not set. Call setClientAppRequiredAccountType first."
-        }
-
-        return when (currentAccountType) {
+        return when (requireCurrentAccountType()) {
             AccountType.Username,
             AccountType.Internal -> {
                 requireNotNull(domain) { "For AccountType Internal a domain must be supplied." }
@@ -167,6 +177,13 @@ internal class ChooseUsernameViewModel @Inject constructor(
                 State.ExternalAccountTokenSent(username)
             }
         }.exhaustive
+    }
+
+    private fun requireCurrentAccountType(): AccountType {
+        require(this::currentAccountType.isInitialized) {
+            "currentAccountType is not set. Call setClientAppRequiredAccountType first."
+        }
+        return currentAccountType
     }
 }
 

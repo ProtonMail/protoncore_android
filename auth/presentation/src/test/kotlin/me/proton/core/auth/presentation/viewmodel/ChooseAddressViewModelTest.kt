@@ -65,7 +65,6 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setUserId(userId)
 
             // THEN
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Idle)
             assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
 
             val data = expectItem()
@@ -88,7 +87,6 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setUserId(userId)
 
             // THEN
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Idle)
             assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
             assertTrue(expectItem() is ChooseAddressViewModel.State.Error.Message)
 
@@ -107,7 +105,6 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             viewModel.checkUsername("test-username", "domain")
 
             // THEN
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Idle)
             assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
             assertTrue(expectItem() is ChooseAddressViewModel.State.Data)
             assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
@@ -132,7 +129,6 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             viewModel.checkUsername("test-username", "domain")
 
             // THEN
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Idle)
             assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
             assertTrue(expectItem() is ChooseAddressViewModel.State.Data)
             assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)

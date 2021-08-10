@@ -22,9 +22,7 @@ import androidx.activity.ComponentActivity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -67,15 +65,15 @@ internal class SignupViewModel @Inject constructor(
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
 
     // region private properties
-    private val _inputState = MutableSharedFlow<InputState>(extraBufferCapacity = 10)
-    private val _userCreationState = MutableStateFlow<State>(State.Idle)
+    private val _inputState = MutableSharedFlow<InputState>(replay = 1, extraBufferCapacity = 3)
+    private val _userCreationState = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
     private var _recoveryMethod: RecoveryMethod? = null
     private lateinit var _password: EncryptedString
 
     // endregion
     // region public properties
     var subscriptionDetails: SubscriptionDetails? = null
-    val userCreationState = _userCreationState.asStateFlow()
+    val userCreationState = _userCreationState.asSharedFlow()
     val inputState = _inputState.asSharedFlow()
 
     var currentAccountType: AccountType = AccountType.Internal

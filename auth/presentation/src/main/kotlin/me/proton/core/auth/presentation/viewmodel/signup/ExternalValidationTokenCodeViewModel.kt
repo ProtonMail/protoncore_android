@@ -20,8 +20,8 @@ package me.proton.core.auth.presentation.viewmodel.signup
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -41,11 +41,17 @@ class ExternalValidationTokenCodeViewModel @Inject constructor(
     private val checkCreationTokenValidity: CheckCreationTokenValidity
 ) : ProtonViewModel() {
 
-    private val _verificationCodeResendState = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
-    private val _validationState = MutableStateFlow<ValidationState>(ValidationState.Idle)
+    private val _verificationCodeResendState = MutableSharedFlow<ViewModelResult<Boolean>>(
+        replay = 1,
+        extraBufferCapacity = 3
+    )
+    private val _validationState = MutableSharedFlow<ValidationState>(
+        replay = 1,
+        extraBufferCapacity = 3
+    )
 
-    val verificationCodeResendState = _verificationCodeResendState.asStateFlow()
-    val validationState = _validationState.asStateFlow()
+    val verificationCodeResendState = _verificationCodeResendState.asSharedFlow()
+    val validationState = _validationState.asSharedFlow()
 
     sealed class ValidationState {
         object Idle : ValidationState()

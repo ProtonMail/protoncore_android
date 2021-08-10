@@ -110,7 +110,6 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
             coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
 
-            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
             assertIs<CreateAddressViewModel.State.Processing>(expectItem())
             assertIs<CreateAddressViewModel.State.Success>(expectItem())
 
@@ -137,7 +136,6 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
             coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
 
-            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
             assertIs<CreateAddressViewModel.State.Processing>(expectItem())
             assertIs<CreateAddressViewModel.State.Success>(expectItem())
 
@@ -164,7 +162,6 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
             coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
 
-            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
             assertIs<CreateAddressViewModel.State.Processing>(expectItem())
             assertIs<CreateAddressViewModel.State.Success>(expectItem())
 
@@ -191,7 +188,6 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
             coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
 
-            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
             assertIs<CreateAddressViewModel.State.Processing>(expectItem())
             assertIs<CreateAddressViewModel.State.Success>(expectItem())
 
@@ -225,7 +221,6 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) { accountHandler.handleUnlockFailed(any()) }
             coVerify(exactly = 0) { accountHandler.handleAccountReady(any()) }
 
-            assertIs<CreateAddressViewModel.State.Idle>(expectItem())
             assertIs<CreateAddressViewModel.State.Processing>(expectItem())
             assertIs<CreateAddressViewModel.State.Error.CannotUnlockPrimaryKey>(expectItem())
 

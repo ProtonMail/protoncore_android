@@ -45,18 +45,16 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         viewModel = ChooseUsernameViewModel(usernameDomainAvailability, sendVerificationCodeToEmailDestination)
+        coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
     }
 
     @Test
     fun `domains are loaded correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { usernameDomainAvailability.getDomains() } returns listOf("protonmail.com", "protonmail.ch")
         viewModel.setClientAppRequiredAccountType(AccountType.Internal)
+        // WHEN
         viewModel.state.test {
-            // WHEN
-            viewModel.fetchDomains()
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
             val domainsItem = expectItem() as ChooseUsernameViewModel.State.AvailableDomains
             assertEquals(listOf("protonmail.com", "protonmail.ch"), domainsItem.domains)
@@ -67,15 +65,12 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `domains loading connectivity error`() = coroutinesTest {
         // GIVEN
-        coEvery { usernameDomainAvailability.getDomains() } throws ApiException(
-            ApiResult.Error.NoInternet
-        )
+        coEvery { usernameDomainAvailability.getDomains() } throws ApiException(ApiResult.Error.NoInternet)
+        // WHEN
         viewModel.state.test {
-            // WHEN
-            viewModel.fetchDomains()
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.Error)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -93,11 +88,9 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
         )
+        // WHEN
         viewModel.state.test {
-            // WHEN
-            viewModel.fetchDomains()
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
             val errorItem = expectItem() as ChooseUsernameViewModel.State.Error.Message
             assertEquals("domains error", errorItem.message)
@@ -246,7 +239,6 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             // WHEN
             viewModel.checkUsername(testUsername, testDomain)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
             val errorItem = expectItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.Error.Message)
@@ -264,12 +256,13 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         val testUsername = "test-username"
         val testDomain = "test-domain"
         coEvery { usernameDomainAvailability.isUsernameAvailable(testUsername) } returns true
+        // WHEN
+        viewModel.setClientAppRequiredAccountType(AccountType.Internal)
         viewModel.state.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.Internal)
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
             val item = expectItem() as ChooseUsernameViewModel.State.UsernameAvailable
             assertEquals(testUsername, item.username)
@@ -284,12 +277,13 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         val testUsername = "test-username"
         val testDomain = "test-domain"
         coEvery { usernameDomainAvailability.isUsernameAvailable(testUsername) } returns false
+        // WHEN
+        viewModel.setClientAppRequiredAccountType(AccountType.Internal)
         viewModel.state.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.Internal)
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Error.UsernameNotAvailable)
             cancelAndConsumeRemainingEvents()
@@ -311,12 +305,13 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
                 )
             )
         )
+        // WHEN
+        viewModel.setClientAppRequiredAccountType(AccountType.Internal)
         viewModel.state.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.Internal)
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Error.Message)
             cancelAndConsumeRemainingEvents()
@@ -328,11 +323,13 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val testUsername = "test-username"
         coEvery { sendVerificationCodeToEmailDestination.invoke(emailAddress = testUsername) } returns Unit
+        // WHEN
+        viewModel.setClientAppRequiredAccountType(AccountType.External)
         viewModel.state.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.External)
             viewModel.checkUsername(testUsername)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
+
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
             val errorItem = expectItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.ExternalAccountTokenSent)
@@ -345,11 +342,13 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val testUsername = "test-username"
         coEvery { sendVerificationCodeToEmailDestination.invoke(emailAddress = testUsername) } throws Exception("Error with the email")
+        // WHEN
+        viewModel.setClientAppRequiredAccountType(AccountType.External)
         viewModel.state.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.External)
             viewModel.checkUsername(testUsername)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Idle)
+
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
             assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
             val errorItem = expectItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.Error.Message)

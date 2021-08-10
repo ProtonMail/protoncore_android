@@ -69,7 +69,6 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.validateToken(testDestination, testToken, AccountType.Internal)
             // THEN
-            assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Idle)
             assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Processing)
             val successItem = expectItem()
             assertTrue(successItem is ExternalValidationTokenCodeViewModel.ValidationState.Success)
@@ -104,7 +103,6 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.validateToken(testDestination, testToken, AccountType.Internal)
             // THEN
-            assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Idle)
             assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Processing)
             val errorItem = expectItem()
             assertTrue(errorItem is ExternalValidationTokenCodeViewModel.ValidationState.Error.Message)
@@ -148,7 +146,6 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.validateToken(testDestination, testToken, AccountType.Internal)
             // THEN
-            assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Idle)
             assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Processing)
             val errorItem = expectItem()
             assertTrue(errorItem is ExternalValidationTokenCodeViewModel.ValidationState.Error.Message)
@@ -181,7 +178,6 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.resendCode(testDestination)
             // THEN
-            assertTrue(expectItem() is ViewModelResult.None)
             assertTrue(expectItem() is ViewModelResult.Processing)
             val successItem = expectItem()
             assertTrue(successItem is ViewModelResult.Success)
@@ -213,7 +209,6 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.resendCode(testDestination)
             // THEN
-            assertTrue(expectItem() is ViewModelResult.None)
             assertTrue(expectItem() is ViewModelResult.Processing)
             val errorItem = expectItem()
             assertTrue(errorItem is ViewModelResult.Error)
@@ -256,7 +251,6 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.resendCode(testDestination)
             // THEN
-            assertTrue(expectItem() is ViewModelResult.None)
             assertTrue(expectItem() is ViewModelResult.Processing)
             val errorItem = expectItem()
             assertTrue(errorItem is ViewModelResult.Error)

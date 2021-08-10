@@ -23,8 +23,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
@@ -50,7 +50,6 @@ import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
-import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.session.Session
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
@@ -71,9 +70,9 @@ internal class LoginViewModel @Inject constructor(
     humanVerificationOrchestrator: HumanVerificationOrchestrator,
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
 
-    private val _state = MutableStateFlow<State>(State.Idle)
+    private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
-    val state = _state.asStateFlow()
+    val state = _state.asSharedFlow()
 
     sealed class State {
         object Idle : State()
@@ -158,7 +157,7 @@ internal class LoginViewModel @Inject constructor(
             emit(it)
         }
     }.catch { error ->
-        _state.tryEmit(State.Error.Message(error.message))
+        emit(State.Error.Message(error.message))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
@@ -235,10 +234,11 @@ internal class LoginViewModel @Inject constructor(
         sessionInfo: SessionInfo,
         password: EncryptedString
     ) {
-        val sessionState = if (sessionInfo.isSecondFactorNeeded)
+        val sessionState = if (sessionInfo.isSecondFactorNeeded) {
             SessionState.SecondFactorNeeded
-        else
+        } else {
             SessionState.Authenticated
+        }
 
         val account = Account(
             username = sessionInfo.username,
