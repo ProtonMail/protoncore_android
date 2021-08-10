@@ -132,7 +132,7 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
         with(binding.usernameInput) {
             hideKeyboard()
             validateUsername()
-                .onFailure { setInputError() }
+                .onFailure { setInputError(getString(R.string.auth_signup_error_username_blank)) }
                 .onSuccess {
                     signupViewModel.currentAccountType = viewModel.currentAccountType
                     viewModel.checkUsername(it, suffixText?.toString()?.replace("@", ""))
