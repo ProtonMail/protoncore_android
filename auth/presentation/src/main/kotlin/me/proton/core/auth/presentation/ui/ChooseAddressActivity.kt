@@ -39,7 +39,6 @@ import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.user.domain.entity.Domain
-import me.proton.core.user.domain.entity.firstOrDefault
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -121,7 +120,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
 
     private fun onData(username: String?, domains: List<Domain>) {
         with(binding.usernameInput) {
-            suffixText = "@${domains.firstOrDefault()}"
+            suffixText = "@${domains.first()}"
             text = username
             isEnabled = username == null
         }

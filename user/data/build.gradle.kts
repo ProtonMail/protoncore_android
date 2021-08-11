@@ -50,6 +50,7 @@ dependencies {
         `coroutines-core`,
 
         // Other
+        `hilt-android`,
         `okHttp-logging`,
         `retrofit`,
         `retrofit-kotlin-serialization`,

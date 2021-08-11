@@ -30,7 +30,6 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.entity.firstOrDefault
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -70,7 +69,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             val data = expectItem()
             assertTrue(data is ChooseAddressViewModel.State.Data)
             assertEquals(listOf("protonmail.com", "protonmail.ch"), data.domains)
-            assertEquals("protonmail.com", data.domains.firstOrDefault())
+            assertEquals("protonmail.com", data.domains.first())
 
             cancelAndIgnoreRemainingEvents()
         }

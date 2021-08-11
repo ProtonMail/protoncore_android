@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,6 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.domain.entity
+package me.proton.core.user.data
 
-typealias Domain = String
+import javax.inject.Qualifier
+
+/**
+ * Hilt Qualifier annotation for Default Domain Host.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class DefaultDomainHost

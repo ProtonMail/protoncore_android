@@ -25,7 +25,6 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
-import me.proton.core.user.domain.entity.firstOrDefault
 import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -50,7 +49,7 @@ class SetupInternalAddress @Inject constructor(
         val user = userRepository.getUser(userId)
         val username = checkNotNull(user.name) { "Username is needed to setup new internal address." }
 
-        val finalDomain = domain ?: domainRepository.getAvailableDomains().firstOrDefault()
+        val finalDomain = domain ?: domainRepository.getAvailableDomains().first()
 
         val address = userAddressManager.getAddresses(userId).firstInternalOrNull()
         if (address == null || address.keys.isEmpty()) {

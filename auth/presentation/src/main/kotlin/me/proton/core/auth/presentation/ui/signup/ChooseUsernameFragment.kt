@@ -40,7 +40,6 @@ import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.user.domain.entity.Domain
-import me.proton.core.user.domain.entity.firstOrDefault
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -169,7 +168,7 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
             nextButton.isEnabled = true
             useCurrentEmailButton.isEnabled = true
             if (accountType == AccountType.Internal) {
-                usernameInput.suffixText = "@${domains.firstOrDefault()}"
+                usernameInput.suffixText = "@${domains.first()}"
             }
         }
     }
