@@ -1,3 +1,11 @@
+## Presentation Version [0.10.3]
+
+Aug 11, 2021
+
+### Style Changes
+
+- ```@color/text_weak_selector``` is updated to use ```?attr/proton_text_weak``` and ```?attr/proton_text_disabled``` instead of directly using ```@color``` values.
+
 ## Presentation Version [0.10.2]
 
 Aug 5, 2021
