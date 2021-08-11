@@ -48,9 +48,11 @@ import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.entity.UserKeyEntity
 import me.proton.core.usersettings.data.db.OrganizationDatabase
+import me.proton.core.usersettings.data.db.OrganizationKeysDatabase
 import me.proton.core.usersettings.data.db.UserSettingsConverters
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.entity.OrganizationEntity
+import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 
 @Database(
@@ -76,7 +78,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         // user-settings
         UserSettingsEntity::class,
         // organization
-        OrganizationEntity::class
+        OrganizationEntity::class,
+        OrganizationKeysEntity::class
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -99,7 +102,8 @@ abstract class AccountManagerDatabase :
     PublicAddressDatabase,
     MailSettingsDatabase,
     UserSettingsDatabase,
-    OrganizationDatabase {
+    OrganizationDatabase,
+    OrganizationKeysDatabase {
 
     companion object {
         const val name = "db-account-manager"

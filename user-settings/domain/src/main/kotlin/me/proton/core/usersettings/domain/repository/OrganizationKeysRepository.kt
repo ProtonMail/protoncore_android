@@ -22,17 +22,17 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.usersettings.domain.entity.Organization
+import me.proton.core.usersettings.domain.entity.OrganizationKeys
 
-interface OrganizationRepository {
+interface OrganizationKeysRepository {
 
-    suspend fun getOrganizationFlow(
+    suspend fun getOrganizationKeysFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
-    ): Flow<DataResult<Organization>>
+    ): Flow<DataResult<OrganizationKeys>>
 
-
-    suspend fun getOrganization(
+    suspend fun getOrganizationKeys(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
-    ): Organization
+    ): OrganizationKeys
 }

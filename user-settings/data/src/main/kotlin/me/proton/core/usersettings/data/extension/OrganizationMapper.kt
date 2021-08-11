@@ -22,6 +22,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.data.api.response.OrganizationKeysResponse
 import me.proton.core.usersettings.data.api.response.OrganizationResponse
 import me.proton.core.usersettings.data.entity.OrganizationEntity
+import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.domain.entity.Organization
 import me.proton.core.usersettings.domain.entity.OrganizationKeys
 
@@ -83,6 +84,12 @@ internal fun OrganizationEntity.fromEntity() = Organization(
     toMigrate = toMigrate
 )
 
+internal fun OrganizationKeysEntity.fromEntity() = OrganizationKeys(
+    userId = userId,
+    publicKey = publicKey,
+    privateKey = privateKey
+)
+
 internal fun Organization.toEntity() = OrganizationEntity(
     userId = userId,
     name = name,
@@ -107,4 +114,10 @@ internal fun Organization.toEntity() = OrganizationEntity(
     usedVPN = usedVPN,
     hasKeys = hasKeys,
     toMigrate = toMigrate
+)
+
+internal fun OrganizationKeys.toEntity() = OrganizationKeysEntity(
+    userId = userId,
+    publicKey = publicKey,
+    privateKey = privateKey
 )

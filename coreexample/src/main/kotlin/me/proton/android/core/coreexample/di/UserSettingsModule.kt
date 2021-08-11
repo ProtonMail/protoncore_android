@@ -24,16 +24,19 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.usersettings.data.db.OrganizationDatabase
+import me.proton.core.usersettings.data.db.OrganizationKeysDatabase
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
+import me.proton.core.usersettings.data.repository.OrganizationKeysRepositoryImpl
 import me.proton.core.usersettings.data.repository.OrganizationRepositoryImpl
 import me.proton.core.usersettings.data.repository.UserSettingsRepositoryImpl
+import me.proton.core.usersettings.domain.repository.OrganizationKeysRepository
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SettingsModule {
+object UserSettingsModule {
 
     @Provides
     @Singleton
@@ -50,4 +53,12 @@ object SettingsModule {
         apiProvider: ApiProvider
     ): OrganizationRepository =
         OrganizationRepositoryImpl(db, apiProvider)
+
+    @Provides
+    @Singleton
+    fun provideOrganizationKeysRepository(
+        db: OrganizationKeysDatabase,
+        apiProvider: ApiProvider
+    ): OrganizationKeysRepository =
+        OrganizationKeysRepositoryImpl(db, apiProvider)
 }

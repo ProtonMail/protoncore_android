@@ -36,13 +36,13 @@ import me.proton.core.user.domain.extension.hasMigratedKey
 import me.proton.core.user.domain.extension.hasSubscription
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
+import me.proton.core.usersettings.domain.repository.OrganizationKeysRepository
 import javax.inject.Inject
 
 class PerformUpdateMailboxPassword @Inject constructor(
     private val authRepository: AuthRepository,
     private val userAddressRepository: UserAddressRepository,
-    private val organizationRepository: OrganizationRepository,
+    private val organizationKeysRepository: OrganizationKeysRepository,
     private val passphraseRepository: PassphraseRepository,
     private val keyRepository: PrivateKeyRepository,
     private val srpCrypto: SrpCrypto,
@@ -68,7 +68,7 @@ class PerformUpdateMailboxPassword @Inject constructor(
         val modulus = authRepository.randomModulus()
 
         val organizationKeys = if (paid) {
-            organizationRepository.getOrganizationKeys(userId)
+            organizationKeysRepository.getOrganizationKeys(userId)
         } else null
 
         val keySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
@@ -122,7 +122,10 @@ class PerformUpdateMailboxPassword @Inject constructor(
                     val orgPrivateKey = if (organizationKeys != null && organizationKeys.privateKey.isNotEmpty()) {
                         val currentPassphrase =
                             requireNotNull(passphraseRepository.getPassphrase(userId)?.decryptWith(keyStoreCrypto))
-                        organizationKeys.privateKey.updateOrganizationPrivateKey(currentPassphrase.array, newPassphrase.array)
+                        organizationKeys.privateKey.updateOrganizationPrivateKey(
+                            currentPassphrase.array,
+                            newPassphrase.array
+                        )
                             ?: ""
                     } else ""
 

@@ -16,23 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.repository
+package me.proton.core.usersettings.data.entity
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.usersettings.domain.entity.Organization
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import me.proton.core.domain.entity.UserId
+import me.proton.core.user.data.entity.UserEntity
 
-interface OrganizationRepository {
-
-    suspend fun getOrganizationFlow(
-        sessionUserId: SessionUserId,
-        refresh: Boolean = false
-    ): Flow<DataResult<Organization>>
-
-
-    suspend fun getOrganization(
-        sessionUserId: SessionUserId,
-        refresh: Boolean = false
-    ): Organization
-}
+@Entity(
+    primaryKeys = ["userId"],
+    foreignKeys = [
+        ForeignKey(
+            entity = UserEntity::class,
+            parentColumns = ["userId"],
+            childColumns = ["userId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+data class OrganizationKeysEntity(
+    val userId: UserId,
+    val publicKey: String,
+    val privateKey: String
+)
