@@ -42,9 +42,8 @@ class HumanVerificationManagerObserver(
     ) {
         humanVerificationManager.onHumanVerificationState(state, initialState = initialState)
             .flowWithLifecycle(lifecycle, minActiveState)
-            .onEach {
-                block(it)
-            }.launchIn(scope)
+            .onEach { block(it) }
+            .launchIn(scope)
     }
 }
 
