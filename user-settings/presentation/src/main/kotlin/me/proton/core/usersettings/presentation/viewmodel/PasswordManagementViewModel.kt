@@ -136,7 +136,6 @@ class PasswordManagementViewModel @Inject constructor(
             emit(State.Success.UpdatingMailboxPassword)
         } else {
             emit(State.Error.UpdatingMailboxPassword)
-
         }
     }.catch { error ->
         _state.tryEmit(State.Error.Message(error.message))

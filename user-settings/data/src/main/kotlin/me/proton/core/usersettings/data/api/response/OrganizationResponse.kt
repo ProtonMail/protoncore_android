@@ -62,7 +62,7 @@ data class OrganizationResponse(
     @SerialName("UsedMembers")
     val usedMembers: Int,
     @SerialName("UsedVPN")
-    val usedVPN: Int,
+    val usedVPN: Int?,
     @SerialName("HasKeys")
     val hasKeys: Int,
     @SerialName("ToMigrate")
