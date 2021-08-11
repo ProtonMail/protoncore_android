@@ -194,8 +194,8 @@ class AccountRepositoryImpl(
                 AccountState.UnlockFailed -> deleteAccountMetadata(userId)
             }.exhaustive
             accountDao.updateAccountState(userId, state)
-            getAccountOrNull(userId)?.let { tryEmitAccountStateChanged(it) }
         }
+        getAccountOrNull(userId)?.let { tryEmitAccountStateChanged(it) }
     }
 
     override suspend fun updateAccountState(sessionId: SessionId, state: AccountState) {
@@ -205,8 +205,8 @@ class AccountRepositoryImpl(
     override suspend fun updateSessionState(sessionId: SessionId, state: SessionState) {
         db.inTransaction {
             accountDao.updateSessionState(sessionId, state)
-            getAccountOrNull(sessionId)?.let { tryEmitSessionStateChanged(it) }
         }
+        getAccountOrNull(sessionId)?.let { tryEmitSessionStateChanged(it) }
     }
 
     override suspend fun updateSessionScopes(sessionId: SessionId, scopes: List<String>) =
