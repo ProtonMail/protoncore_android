@@ -51,6 +51,7 @@ class PasswordManagementViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     private var twoPasswordMode: Boolean? = null
+    var secondFactorEnabled: Boolean? = null
 
     sealed class State {
         object Idle : State()
@@ -70,6 +71,7 @@ class PasswordManagementViewModel @Inject constructor(
     fun init(userId: UserId) = flow {
         val currentSettings = getSettings(userId)
         twoPasswordMode = currentSettings.password.mode == 2
+        secondFactorEnabled = currentSettings.twoFA?.enabled ?: false
         emit(State.Mode(twoPasswordMode!!))
     }.catch { error ->
         _state.tryEmit(State.Error.Message(error.message))
@@ -84,10 +86,10 @@ class PasswordManagementViewModel @Inject constructor(
         userId: UserId,
         password: String,
         newPassword: String,
-        secondFactorCode: String
+        secondFactorCode: String = ""
     ) = flow {
         if (twoPasswordMode == false) {
-            updateMailboxPassword(userId, password, newPassword)
+            updateMailboxPassword(userId, password, newPassword, secondFactorCode)
             return@flow
         }
         emit(State.UpdatingLoginPassword)
@@ -116,7 +118,8 @@ class PasswordManagementViewModel @Inject constructor(
     fun updateMailboxPassword(
         userId: UserId,
         loginPassword: String,
-        newMailboxPassword: String
+        newMailboxPassword: String,
+        secondFactorCode: String = ""
     ) = flow {
         emit(State.UpdatingMailboxPassword)
         val encryptedLoginPassword = loginPassword.encryptWith(keyStoreCrypto)
@@ -127,7 +130,7 @@ class PasswordManagementViewModel @Inject constructor(
             user = user,
             loginPassword = encryptedLoginPassword,
             newPassword = encryptedNewMailboxPassword,
-            secondFactorCode = ""
+            secondFactorCode = secondFactorCode
         )
         if (result) {
             emit(State.Success.UpdatingMailboxPassword)

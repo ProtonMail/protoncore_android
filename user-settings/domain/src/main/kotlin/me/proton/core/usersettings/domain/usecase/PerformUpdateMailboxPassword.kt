@@ -67,7 +67,7 @@ class PerformUpdateMailboxPassword @Inject constructor(
         )
         val modulus = authRepository.randomModulus()
 
-        val orgKeys = if (paid) {
+        val organizationKeys = if (paid) {
             organizationRepository.getOrganizationKeys(userId)
         } else null
 
@@ -105,7 +105,7 @@ class PerformUpdateMailboxPassword @Inject constructor(
                             updatedKey?.let { userKeys!!.add(it) }
                         }
                     } else {
-                        // for non-migrated all keys (user + address) go into keys field
+                        // for non-migrated accounts all keys (user + address) go into keys field
                         keys = mutableListOf()
                         for (userKey in user.keys) {
                             val updatedKey = userKey.updatePrivateKey(newPassphrase.array)
@@ -119,10 +119,10 @@ class PerformUpdateMailboxPassword @Inject constructor(
                         }
                     }
 
-                    val organizationKey = if (orgKeys != null && orgKeys.privateKey.isNotEmpty()) {
+                    val orgPrivateKey = if (organizationKeys != null && organizationKeys.privateKey.isNotEmpty()) {
                         val currentPassphrase =
                             requireNotNull(passphraseRepository.getPassphrase(userId)?.decryptWith(keyStoreCrypto))
-                        orgKeys.privateKey.updateOrganizationPrivateKey(currentPassphrase.array, newPassphrase.array)
+                        organizationKeys.privateKey.updateOrganizationPrivateKey(currentPassphrase.array, newPassphrase.array)
                             ?: ""
                     } else ""
 
@@ -136,7 +136,7 @@ class PerformUpdateMailboxPassword @Inject constructor(
                         auth = auth,
                         keys = keys,
                         userKeys = userKeys,
-                        organizationKey = organizationKey
+                        organizationKey = orgPrivateKey
                     )
                 }
             }
