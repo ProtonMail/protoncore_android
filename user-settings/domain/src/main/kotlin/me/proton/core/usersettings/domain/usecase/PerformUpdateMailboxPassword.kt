@@ -36,11 +36,13 @@ import me.proton.core.user.domain.extension.hasMigratedKey
 import me.proton.core.user.domain.extension.hasSubscription
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.repository.OrganizationKeysRepository
 import javax.inject.Inject
 
 class PerformUpdateMailboxPassword @Inject constructor(
     private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     private val userAddressRepository: UserAddressRepository,
     private val organizationKeysRepository: OrganizationKeysRepository,
     private val passphraseRepository: PassphraseRepository,
@@ -129,7 +131,7 @@ class PerformUpdateMailboxPassword @Inject constructor(
                             ?: ""
                     } else ""
 
-                    return keyRepository.updateKeysForPasswordChange(
+                    val result = keyRepository.updateKeysForPasswordChange(
                         sessionUserId = userId,
                         keySalt = keySalt,
                         clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
@@ -141,6 +143,12 @@ class PerformUpdateMailboxPassword @Inject constructor(
                         userKeys = userKeys,
                         organizationKey = orgPrivateKey
                     )
+
+                    if (result) {
+                        userAddressRepository.getAddresses(userId, refresh = true)
+                        userRepository.getUser(userId, refresh = true)
+                    }
+                    return result
                 }
             }
         }

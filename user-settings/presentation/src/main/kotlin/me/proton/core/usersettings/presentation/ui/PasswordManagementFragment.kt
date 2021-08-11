@@ -90,22 +90,38 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
             when (it) {
                 is PasswordManagementViewModel.State.Idle -> {
                 }
-                is PasswordManagementViewModel.State.Error.Message -> showError(it.message)
                 is PasswordManagementViewModel.State.Mode -> {
                     binding.mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
                 }
-                is PasswordManagementViewModel.State.UpdatingLoginPassword ->
-                    binding.saveLoginPasswordButton.showLoading(true)
-                is PasswordManagementViewModel.State.Success.UpdatingLoginPassword ->
-                    binding.saveLoginPasswordButton.showLoading(false)
-                is PasswordManagementViewModel.State.UpdatingMailboxPassword ->
-                    binding.saveMailboxPasswordButton.showLoading(true)
-                is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword ->
-                    binding.saveMailboxPasswordButton.showLoading(false)
+                is PasswordManagementViewModel.State.Error.Message -> showError(it.message)
                 is PasswordManagementViewModel.State.Error.UpdatingMailboxPassword ->
                     showError(getString(R.string.settings_change_password_error))
+                is PasswordManagementViewModel.State.UpdatingLoginPassword ->
+                    binding.saveLoginPasswordButton.showLoading(true)
+                is PasswordManagementViewModel.State.UpdatingMailboxPassword ->
+                    binding.saveMailboxPasswordButton.showLoading(true)
+                is PasswordManagementViewModel.State.Success.UpdatingLoginPassword -> {
+                    resetLoginPasswordInput()
+                }
+                is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword -> {
+                    resetMailboxPasswordInput()
+                }
             }.exhaustive
         }.launchIn(lifecycleScope)
+    }
+
+    private fun resetLoginPasswordInput() = with(binding) {
+        saveLoginPasswordButton.showLoading(false)
+        currentLoginPasswordInput.text = ""
+        newLoginPasswordInput.text = ""
+        confirmNewLoginPasswordInput.text = ""
+    }
+
+    private fun resetMailboxPasswordInput() = with(binding) {
+        saveMailboxPasswordButton.showLoading(false)
+        currentMailboxPasswordInput.text = ""
+        newMailboxPasswordInput.text = ""
+        confirmNewMailboxPasswordInput.text = ""
     }
 
     private fun onSaveLoginPasswordClicked() {
