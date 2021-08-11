@@ -19,10 +19,12 @@
 package me.proton.core.auth.presentation.ui.signup
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -102,8 +104,8 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
                 is LoginViewModel.State.Processing -> showLoading(true)
                 is LoginViewModel.State.Success.UserUnLocked -> onLoginSuccess(it.userId)
                 is LoginViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
-                is LoginViewModel.State.Error.UserCheckError -> onError(true, it.error.localizedMessage)
-                is LoginViewModel.State.Error.Message -> onError(true, it.message)
+                is LoginViewModel.State.Error.UserCheckError -> onLoginError(it.error.localizedMessage)
+                is LoginViewModel.State.Error.Message -> onLoginError(it.message)
                 is LoginViewModel.State.Need.ChangePassword,
                 is LoginViewModel.State.Need.ChooseUsername,
                 is LoginViewModel.State.Need.SecondFactor,
@@ -141,9 +143,13 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         )
     }
 
-    override fun onError(triggerValidation: Boolean, message: String?) {
-        showError(message)
-        finish()
+    private fun onLoginError(message: String? = null) {
+        AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setTitle(R.string.presentation_alert_title)
+            .setMessage(message ?: getString(R.string.auth_login_general_error))
+            .setPositiveButton(R.string.presentation_alert_ok) { _: DialogInterface, _: Int -> finish() }
+            .show()
     }
 
     private fun onLoginSuccess(userId: UserId) {
