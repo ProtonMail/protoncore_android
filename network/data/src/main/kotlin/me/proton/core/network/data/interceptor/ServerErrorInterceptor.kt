@@ -16,21 +16,30 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.data.server
+package me.proton.core.network.data.interceptor
 
-import me.proton.core.network.domain.server.ServerTimeListener
+import me.proton.core.network.data.ProtonErrorException
+import me.proton.core.network.data.protonApi.ProtonErrorData
+import me.proton.core.util.kotlin.deserializeOrNull
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class ServerTimeInterceptor(
-    private val serverTimeListener: ServerTimeListener
-) : Interceptor {
+class ServerErrorInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val response = chain.proceed(request)
-        val serverUtc = response.headers.getDate("date")
-        serverUtc?.let { serverTimeListener.onServerTimeUpdated(it.time / 1000) }
+        if (!response.isSuccessful) {
+            val errorBody = response.peekBody(MAX_ERROR_BYTES).string()
+            val protonError = errorBody.deserializeOrNull(ProtonErrorData.serializer())?.apiResultData
+            if (protonError != null) {
+                throw ProtonErrorException(response, protonError)
+            }
+        }
         return response
+    }
+
+    companion object {
+        private const val MAX_ERROR_BYTES = 1_000_000L
     }
 }

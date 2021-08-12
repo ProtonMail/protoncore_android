@@ -19,9 +19,10 @@ package me.proton.core.network.data
 
 import kotlinx.coroutines.runBlocking
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.ProtonErrorData
 import me.proton.core.network.data.protonApi.RefreshTokenRequest
-import me.proton.core.network.data.server.ServerTimeInterceptor
+import me.proton.core.network.data.interceptor.ServerErrorInterceptor
+import me.proton.core.network.data.interceptor.ServerTimeInterceptor
+import me.proton.core.network.data.interceptor.TooManyRequestInterceptor
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
@@ -35,12 +36,10 @@ import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger
-import me.proton.core.util.kotlin.deserializeOrNull
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.util.Locale
@@ -74,8 +73,9 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     converters: List<Converter.Factory>,
     interfaceClass: KClass<Api>,
     private val networkManager: NetworkManager,
-    securityStrategy: (OkHttpClient.Builder) -> Unit
-) : ApiBackend<Api> {
+    securityStrategy: (OkHttpClient.Builder) -> Unit,
+    wallClockMs: () -> Long
+    ) : ApiBackend<Api> {
 
     private val api: Api
 
@@ -86,7 +86,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 chain.proceed(prepareHeaders(chain.request()).build())
             }
             .initLogging(client, logger)
-            .addInterceptor { chain -> interceptErrors(chain) }
+            .addInterceptor(ServerErrorInterceptor())
+            .addInterceptor(TooManyRequestInterceptor(sessionId, wallClockMs))
             .addNetworkInterceptor(ServerTimeInterceptor(serverTimeListener))
         securityStrategy(builder)
 
@@ -142,21 +143,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         return request
     }
 
-    private fun interceptErrors(chain: Interceptor.Chain): Response {
-        val request = chain.request()
-        val response = chain.proceed(request)
-
-        if (!response.isSuccessful) {
-            val errorBody = response.peekBody(MAX_ERROR_BYTES).string()
-            val protonError = errorBody.deserializeOrNull(ProtonErrorData.serializer())?.apiResultData
-            if (protonError != null) {
-                response.close()
-                throw ProtonErrorException(response, protonError)
-            }
-        }
-        return response
-    }
-
     override suspend fun <T> invoke(call: ApiManager.Call<Api, T>): ApiResult<T> =
         invokeInternal(call.block)
 
@@ -184,8 +170,4 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
 
     override suspend fun isPotentiallyBlocked(): Boolean =
         invokeInternal { ping() }.isPotentialBlocking
-
-    companion object {
-        private const val MAX_ERROR_BYTES = 1_000_000L
-    }
 }

@@ -26,6 +26,7 @@ import io.mockk.spyk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import me.proton.core.network.data.interceptor.TooManyRequestInterceptor
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
 import me.proton.core.network.data.util.MockLogger
@@ -69,6 +70,8 @@ import kotlin.test.assertTrue
 @Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 internal class ProtonApiBackendTests {
+
+    private fun javaWallClockMs(): Long = System.currentTimeMillis()
 
     val scope = CoroutineScope(TestCoroutineDispatcher())
 
@@ -171,7 +174,8 @@ internal class ProtonApiBackendTests {
             ),
             TestRetrofitApi::class,
             networkManager,
-            pinningInit
+            pinningInit,
+            ::javaWallClockMs
         )
 
     @AfterTest
@@ -214,6 +218,8 @@ internal class ProtonApiBackendTests {
         assertTrue(result is ApiResult.Error.TooManyRequest)
         assertEquals(429, result.httpCode)
         assertEquals(5, result.retryAfterSeconds)
+
+        TooManyRequestInterceptor.reset()
     }
 
     @Test

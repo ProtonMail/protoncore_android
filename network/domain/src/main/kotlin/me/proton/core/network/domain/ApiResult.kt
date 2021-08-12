@@ -72,6 +72,18 @@ sealed class ApiResult<out T> {
         )
 
         /**
+         * 429 "Too Many Requests"
+         *
+         * @property retryAfterSeconds Number of seconds to hold all requests (network layer will
+         *  automatically fail requests that don't comply)
+         */
+        class TooManyRequest(val retryAfterSeconds: Int, proton: ProtonData? = null) : Http(
+            httpCode = HTTP_TOO_MANY_REQUESTS,
+            message = "Too Many Requests",
+            proton = proton
+        )
+
+        /**
          * Parsing error. Should not normally happen.
          */
         class Parse(cause: Throwable?) : Error(cause)
@@ -101,15 +113,6 @@ sealed class ApiResult<out T> {
          * No connectivity.
          */
         object NoInternet : Connection(false, null)
-
-        /**
-         * 429 "Too Many Requests"
-         *
-         * @property retryAfterSeconds Number of seconds to hold all requests (network layer will
-         *  automatically fail requests that don't comply)
-         */
-        class TooManyRequest(val retryAfterSeconds: Int, proton: ProtonData? = null) :
-            Http(HTTP_TOO_MANY_REQUESTS, "Too Many Requests", proton)
     }
 
     /**
