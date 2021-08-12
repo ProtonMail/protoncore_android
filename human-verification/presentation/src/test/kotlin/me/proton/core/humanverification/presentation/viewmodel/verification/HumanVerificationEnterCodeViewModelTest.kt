@@ -23,6 +23,7 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.usecase.CheckCreationTokenValidity
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -37,6 +38,7 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
     val instantTaskRule = InstantTaskExecutorRule()
 
     private val resendVerificationCodeToDestination = mockk<ResendVerificationCodeToDestination>()
+    private val checkCreationTokenValidity = mockk<CheckCreationTokenValidity>()
 
     private val sessionId: SessionId = SessionId("id")
     private val testEmail = "test@protonmail.com"
@@ -44,27 +46,23 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
 
     private val viewModel by lazy {
         HumanVerificationEnterCodeViewModel(
-            resendVerificationCodeToDestination
+            resendVerificationCodeToDestination,
+            checkCreationTokenValidity
         )
     }
 
     @Test
     fun `resend token success`() = coroutinesTest {
         // given
+        val destination = testEmail
         val tokenType = TokenType.EMAIL
-        viewModel.tokenType = tokenType
-        viewModel.destination = testEmail
         coEvery {
-            resendVerificationCodeToDestination.invoke(
-                sessionId = any(),
-                tokenType = any(),
-                destination = any()
-            )
+            resendVerificationCodeToDestination.invoke(any(), any(), any())
         } returns Unit
         // when
-        viewModel.resendCode(sessionId)
+        viewModel.resendCode(sessionId, destination, tokenType)
         // then
-        viewModel.verificationCodeResendStatus.test {
+        viewModel.verificationCodeResendState.test {
             assertIs<ViewModelResult.Success<Boolean>>(expectItem())
         }
     }
@@ -72,23 +70,52 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
     @Test
     fun `resend token failure`() = coroutinesTest {
         // given
+        val destination = testEmail
         val tokenType = TokenType.EMAIL
-        viewModel.tokenType = tokenType
-        viewModel.destination = testEmail
         coEvery {
-            resendVerificationCodeToDestination.invoke(
-                sessionId = any(),
-                tokenType = any(),
-                destination = any()
-            )
+            resendVerificationCodeToDestination.invoke(any(), any(), any())
         } throws IllegalArgumentException(errorResponse)
         // when
-        viewModel.resendCode(sessionId)
+        viewModel.resendCode(sessionId, destination, tokenType)
         // then
-        viewModel.verificationCodeResendStatus.test {
+        viewModel.verificationCodeResendState.test {
             val result = expectItem() as ViewModelResult.Error
             assertIs<IllegalArgumentException>(result.throwable)
             cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `validate token success`() = coroutinesTest {
+        // given
+        val destination = testEmail
+        val token = "$destination:123456"
+        val tokenType = TokenType.EMAIL
+        coEvery {
+            checkCreationTokenValidity.invoke(any(), any(), any())
+        } returns Unit
+        // when
+        viewModel.validateToken(sessionId, token, tokenType)
+        // then
+        viewModel.validationState.test {
+            assertIs<ViewModelResult.Success<String>>(expectItem())
+        }
+    }
+
+    @Test
+    fun `validate token failure`() = coroutinesTest {
+        // given
+        val destination = testEmail
+        val token = "$destination:123456"
+        val tokenType = TokenType.EMAIL
+        coEvery {
+            checkCreationTokenValidity.invoke(any(), any(), any())
+        } throws IllegalArgumentException(errorResponse)
+        // when
+        viewModel.validateToken(sessionId, token, tokenType)
+        // then
+        viewModel.validationState.test {
+            assertIs<ViewModelResult.Error>(expectItem())
         }
     }
 }

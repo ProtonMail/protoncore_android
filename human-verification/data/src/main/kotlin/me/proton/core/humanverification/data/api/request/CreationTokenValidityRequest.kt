@@ -26,7 +26,5 @@ data class CreationTokenValidityRequest(
     @SerialName("Token")
     val token: String,
     @SerialName("TokenType")
-    val tokenType: String,
-    @SerialName("Type")
-    val type: Int
+    val tokenType: String
 )

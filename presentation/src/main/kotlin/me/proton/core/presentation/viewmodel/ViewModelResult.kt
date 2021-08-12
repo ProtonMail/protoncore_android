@@ -28,6 +28,13 @@ sealed class ViewModelResult<out T> {
     data class Error(val throwable: Throwable?) : ViewModelResult<Nothing>()
 }
 
+fun <T> ViewModelResult<T>.onProcessing(action: () -> Unit): ViewModelResult<T> {
+    if (this is ViewModelResult.Processing) {
+        action()
+    }
+    return this
+}
+
 fun <T> ViewModelResult<T>.onSuccess(action: (T) -> Unit): ViewModelResult<T> {
     if (this is ViewModelResult.Success) {
         action(value)
@@ -40,6 +47,10 @@ fun <T> ViewModelResult<T>.onError(action: (Throwable?) -> Unit): ViewModelResul
         action(throwable)
     }
     return this
+}
+
+fun <T> Flow<ViewModelResult<T>>.onProcessing(action: () -> Unit): Flow<ViewModelResult<T>> {
+    return onEach { it.onProcessing { action() } }
 }
 
 fun <T> Flow<ViewModelResult<T>>.onSuccess(action: (T) -> Unit): Flow<ViewModelResult<T>> {

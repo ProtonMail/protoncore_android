@@ -23,16 +23,15 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.usecase.CheckCreationTokenValidity
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
+import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.user.domain.entity.CreateUserType
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -45,44 +44,44 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
     private val checkCreationTokenValidity = mockk<CheckCreationTokenValidity>(relaxed = true)
     // endregion
 
-    private lateinit var viewModel: ExternalValidationTokenCodeViewModel
+    private lateinit var viewModel: HumanVerificationEnterCodeViewModel
 
     @Before
     fun beforeEveryTest() {
-        viewModel =
-            ExternalValidationTokenCodeViewModel(resendVerificationCodeToDestination, checkCreationTokenValidity)
+        viewModel = HumanVerificationEnterCodeViewModel(resendVerificationCodeToDestination, checkCreationTokenValidity)
     }
 
     @Test
     fun `verification token sent success`() = coroutinesTest {
         // GIVEN
         val testDestination = "test-destination"
-        val testToken = "test-token"
+        val testCode = "test-code"
+        val testToken = viewModel.getToken(testDestination, testCode)
         coEvery {
             checkCreationTokenValidity.invoke(
+                null,
                 any(),
-                TokenType.EMAIL.value,
-                CreateUserType.Normal
+                TokenType.EMAIL
             )
         } returns Unit
         viewModel.validationState.test {
             // WHEN
-            viewModel.validateToken(testDestination, testToken, AccountType.Internal)
+            viewModel.validateToken(null, testToken, TokenType.EMAIL)
             // THEN
-            assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Processing)
+            assertTrue(expectItem() is ViewModelResult.Processing)
             val successItem = expectItem()
-            assertTrue(successItem is ExternalValidationTokenCodeViewModel.ValidationState.Success)
-            assertEquals("test-destination:test-token", successItem.token)
+            assertTrue(successItem is ViewModelResult.Success)
+            assertEquals("test-destination:test-code", successItem.value)
 
             val destinationTokenSlot = slot<String>()
             coVerify(exactly = 1) {
                 checkCreationTokenValidity.invoke(
+                    any(),
                     capture(destinationTokenSlot),
-                    TokenType.EMAIL.value,
-                    CreateUserType.Normal
+                    TokenType.EMAIL
                 )
             }
-            assertEquals("test-destination:test-token", destinationTokenSlot.captured)
+            assertEquals("test-destination:test-code", destinationTokenSlot.captured)
         }
     }
 
@@ -90,33 +89,34 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
     fun `verification token sent error`() = coroutinesTest {
         // GIVEN
         val testDestination = "test-destination"
-        val testToken = "test-token"
+        val testCode = "test-code"
+        val testToken = viewModel.getToken(testDestination, testCode)
         coEvery {
             checkCreationTokenValidity.invoke(
+                null,
                 any(),
-                TokenType.EMAIL.value,
-                CreateUserType.Normal
+                TokenType.EMAIL
             )
         } throws Exception("Sending to destination error.")
 
         viewModel.validationState.test {
             // WHEN
-            viewModel.validateToken(testDestination, testToken, AccountType.Internal)
+            viewModel.validateToken(null, testToken, TokenType.EMAIL)
             // THEN
-            assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Processing)
+            assertTrue(expectItem() is ViewModelResult.Processing)
             val errorItem = expectItem()
-            assertTrue(errorItem is ExternalValidationTokenCodeViewModel.ValidationState.Error.Message)
-            assertEquals("Sending to destination error.", errorItem.message)
+            assertTrue(errorItem is ViewModelResult.Error)
+            assertEquals("Sending to destination error.", errorItem.throwable?.message)
 
             val destinationTokenSlot = slot<String>()
             coVerify(exactly = 1) {
                 checkCreationTokenValidity.invoke(
+                    null,
                     capture(destinationTokenSlot),
-                    TokenType.EMAIL.value,
-                    CreateUserType.Normal
+                    TokenType.EMAIL
                 )
             }
-            assertEquals("test-destination:test-token", destinationTokenSlot.captured)
+            assertEquals("test-destination:test-code", destinationTokenSlot.captured)
         }
     }
 
@@ -124,12 +124,13 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
     fun `verification token sent API error`() = coroutinesTest {
         // GIVEN
         val testDestination = "test-destination"
-        val testToken = "test-token"
+        val testCode = "test-code"
+        val testToken = viewModel.getToken(testDestination, testCode)
         coEvery {
             checkCreationTokenValidity.invoke(
+                null,
                 any(),
-                TokenType.EMAIL.value,
-                CreateUserType.Normal
+                TokenType.EMAIL,
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -144,22 +145,22 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
 
         viewModel.validationState.test {
             // WHEN
-            viewModel.validateToken(testDestination, testToken, AccountType.Internal)
+            viewModel.validateToken(null, testToken, TokenType.EMAIL)
             // THEN
-            assertTrue(expectItem() is ExternalValidationTokenCodeViewModel.ValidationState.Processing)
+            assertTrue(expectItem() is ViewModelResult.Processing)
             val errorItem = expectItem()
-            assertTrue(errorItem is ExternalValidationTokenCodeViewModel.ValidationState.Error.Message)
-            assertEquals("API error.", errorItem.message)
+            assertTrue(errorItem is ViewModelResult.Error)
+            assertEquals("API error.", errorItem.throwable?.message)
 
             val destinationTokenSlot = slot<String>()
             coVerify(exactly = 1) {
                 checkCreationTokenValidity.invoke(
+                    null,
                     capture(destinationTokenSlot),
-                    TokenType.EMAIL.value,
-                    CreateUserType.Normal
+                    TokenType.EMAIL
                 )
             }
-            assertEquals("test-destination:test-token", destinationTokenSlot.captured)
+            assertEquals("test-destination:test-code", destinationTokenSlot.captured)
         }
     }
 
@@ -170,13 +171,14 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
         val testTokenType = TokenType.EMAIL
         coEvery {
             resendVerificationCodeToDestination.invoke(
+                sessionId = null,
                 tokenType = testTokenType,
                 destination = testDestination
             )
         } returns Unit
         viewModel.verificationCodeResendState.test {
             // WHEN
-            viewModel.resendCode(testDestination)
+            viewModel.resendCode(null, testDestination, testTokenType)
             // THEN
             assertTrue(expectItem() is ViewModelResult.Processing)
             val successItem = expectItem()
@@ -186,6 +188,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             val destinationTokenSlot = slot<TokenType>()
             coVerify(exactly = 1) {
                 resendVerificationCodeToDestination.invoke(
+                    sessionId = null,
                     destination = testDestination,
                     tokenType = capture(destinationTokenSlot)
                 )
@@ -201,13 +204,14 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
         val testTokenType = TokenType.EMAIL
         coEvery {
             resendVerificationCodeToDestination.invoke(
+                sessionId = null,
                 tokenType = testTokenType,
                 destination = testDestination
             )
         } throws Exception("Error resending code.")
         viewModel.verificationCodeResendState.test {
             // WHEN
-            viewModel.resendCode(testDestination)
+            viewModel.resendCode(null, testDestination, testTokenType)
             // THEN
             assertTrue(expectItem() is ViewModelResult.Processing)
             val errorItem = expectItem()
@@ -219,6 +223,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             val destinationTokenSlot = slot<TokenType>()
             coVerify(exactly = 1) {
                 resendVerificationCodeToDestination.invoke(
+                    sessionId = null,
                     destination = testDestination,
                     tokenType = capture(destinationTokenSlot)
                 )
@@ -234,6 +239,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
         val testTokenType = TokenType.EMAIL
         coEvery {
             resendVerificationCodeToDestination.invoke(
+                sessionId = null,
                 tokenType = testTokenType,
                 destination = testDestination
             )
@@ -249,7 +255,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
         )
         viewModel.verificationCodeResendState.test {
             // WHEN
-            viewModel.resendCode(testDestination)
+            viewModel.resendCode(null, testDestination, testTokenType)
             // THEN
             assertTrue(expectItem() is ViewModelResult.Processing)
             val errorItem = expectItem()
@@ -261,6 +267,7 @@ class ExternalValidationTokenCodeViewModelTest : ArchTest, CoroutinesTest {
             val destinationTokenSlot = slot<TokenType>()
             coVerify(exactly = 1) {
                 resendVerificationCodeToDestination.invoke(
+                    sessionId = null,
                     destination = testDestination,
                     tokenType = capture(destinationTokenSlot)
                 )

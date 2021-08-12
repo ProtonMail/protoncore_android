@@ -29,8 +29,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupValidationTokenCodeBinding
-import me.proton.core.auth.presentation.viewmodel.signup.ExternalValidationTokenCodeViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
+import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -43,13 +44,14 @@ import me.proton.core.util.kotlin.exhaustive
 @AndroidEntryPoint
 class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidationTokenCodeBinding>() {
 
-    private val viewModel by viewModels<ExternalValidationTokenCodeViewModel>()
+    private val viewModel by viewModels<HumanVerificationEnterCodeViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
 
     private val destination: String by lazy {
-        val value = requireArguments().get(ARG_DESTINATION) as String
-        value
+        requireArguments().get(ARG_DESTINATION) as String
     }
+
+    override fun layoutId() = R.layout.fragment_signup_validation_token_code
 
     override fun onBackPressed() {
         parentFragmentManager.popBackStack()
@@ -61,39 +63,43 @@ class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidat
         binding.apply {
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
-            title.text = String.format(
-                getString(R.string.human_verification_enter_code_subtitle),
-                destination
-            )
+            title.text = String.format(getString(R.string.human_verification_enter_code_subtitle), destination)
 
             verifyButton.onClick {
                 hideKeyboard()
                 verificationCodeEditText.validate()
                     .onFailure { verificationCodeEditText.setInputError() }
-                    .onSuccess {
+                    .onSuccess { code ->
                         viewModel.validateToken(
-                            destination,
-                            token = it,
-                            signupViewModel.currentAccountType
+                            sessionId = null,
+                            token = viewModel.getToken(destination, code),
+                            tokenType = TokenType.EMAIL,
                         )
                     }
             }
-            requestReplacementButton.onClick { viewModel.resendCode(destination) }
+            requestReplacementButton.onClick {
+                hideKeyboard()
+                viewModel.resendCode(
+                    sessionId = null,
+                    destination = destination,
+                    tokenType = TokenType.EMAIL
+                )
+            }
         }
 
         viewModel.validationState.onEach {
             when (it) {
-                is ExternalValidationTokenCodeViewModel.ValidationState.Idle -> Unit
-                is ExternalValidationTokenCodeViewModel.ValidationState.Processing -> showLoading()
-                is ExternalValidationTokenCodeViewModel.ValidationState.Error.Message -> onValidationError(it.message)
-                is ExternalValidationTokenCodeViewModel.ValidationState.Success -> onValidationSuccess()
+                is ViewModelResult.None -> Unit
+                is ViewModelResult.Processing -> showLoading()
+                is ViewModelResult.Error -> onValidationError(it.throwable?.message)
+                is ViewModelResult.Success -> onValidationSuccess()
             }.exhaustive
         }.launchIn(lifecycleScope)
 
         viewModel.verificationCodeResendState.onEach {
             when (it) {
                 is ViewModelResult.None -> Unit
-                is ViewModelResult.Error -> showError(message = it.throwable?.message)
+                is ViewModelResult.Error -> showError(it.throwable?.message)
                 is ViewModelResult.Processing -> showLoading(true)
                 is ViewModelResult.Success -> {
                     showLoading(false)
@@ -110,22 +116,19 @@ class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidat
                 is SignupViewModel.State.Error.Message -> showLoading(false)
                 is SignupViewModel.State.Idle,
                 is SignupViewModel.State.Processing,
-                is SignupViewModel.State.Success -> {
-                }
+                is SignupViewModel.State.Success -> Unit
             }.exhaustive
         }.launchIn(lifecycleScope)
     }
 
     private fun onValidationError(message: String?) {
         showLoading(false)
-        showError(message = message)
+        showError(message)
     }
 
     private fun onValidationSuccess() {
         signupViewModel.setExternalAccountEmailValidationDone()
     }
-
-    override fun layoutId() = R.layout.fragment_signup_validation_token_code
 
     override fun showLoading(loading: Boolean) = with(binding) {
         if (loading) {

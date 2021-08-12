@@ -48,11 +48,11 @@ interface UserVerificationRepository {
     )
 
     /**
-     * Check the token validity sent to an external email address.
+     * Check the token validity sent to a user (via SMS or Email).
      */
     suspend fun checkCreationTokenValidity(
+        sessionId: SessionId?,
         token: String,
-        tokenType: String,
-        type: Int
+        tokenType: TokenType
     )
 }

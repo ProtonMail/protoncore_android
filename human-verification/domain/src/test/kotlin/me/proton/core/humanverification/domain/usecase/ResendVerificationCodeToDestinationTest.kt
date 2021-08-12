@@ -65,13 +65,13 @@ class ResendVerificationCodeToDestinationTest {
     @Test
     fun `send verification token with token type email`() = runBlockingTest {
         val useCase = ResendVerificationCodeToDestination(remoteRepository)
-        useCase.invoke(sessionId, TokenType.EMAIL, testEmail)
+        useCase.invoke(sessionId, testEmail, TokenType.EMAIL)
     }
 
     @Test
     fun `send verification token with token type sms`() = runBlockingTest {
         val useCase = ResendVerificationCodeToDestination(remoteRepository)
-        useCase.invoke(sessionId, TokenType.SMS, testPhoneNumber)
+        useCase.invoke(sessionId, testPhoneNumber, TokenType.SMS)
     }
 
     @Test
@@ -81,6 +81,6 @@ class ResendVerificationCodeToDestinationTest {
         thrown.expect(Exception::class.java)
         thrown.expectMessage("Invalid verification type selected")
 
-        useCase.invoke(sessionId, TokenType.CAPTCHA, testPhoneNumber)
+        useCase.invoke(sessionId, testPhoneNumber, TokenType.CAPTCHA)
     }
 }
