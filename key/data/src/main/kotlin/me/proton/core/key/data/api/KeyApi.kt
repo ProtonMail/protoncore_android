@@ -51,5 +51,5 @@ interface KeyApi : BaseRetrofitApi {
     suspend fun setupInitialKeys(@Body request: SetupInitialKeysRequest): SetupInitialKeysResponse
 
     @PUT("keys/private")
-    suspend fun updateKeysForPasswordChange(@Body request: UpdateKeysForPasswordChangeRequest): GenericResponse
+    suspend fun updatePrivateKeys(@Body request: UpdateKeysForPasswordChangeRequest): GenericResponse
 }

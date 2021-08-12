@@ -131,7 +131,7 @@ class PerformUpdateMailboxPassword @Inject constructor(
                             ?: ""
                     } else ""
 
-                    val result = keyRepository.updateKeysForPasswordChange(
+                    val result = keyRepository.updatePrivateKeys(
                         sessionUserId = userId,
                         keySalt = keySalt,
                         clientEphemeral = Base64.encode(clientProofs.clientEphemeral),

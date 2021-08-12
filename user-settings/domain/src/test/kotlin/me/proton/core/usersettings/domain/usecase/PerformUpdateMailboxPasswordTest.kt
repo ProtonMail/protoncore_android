@@ -127,7 +127,7 @@ class PerformUpdateMailboxPasswordTest {
         )
 
         coEvery {
-            keyRepository.updateKeysForPasswordChange(
+            keyRepository.updatePrivateKeys(
                 sessionUserId = testUserId,
                 clientEphemeral = any(),
                 clientProof = any(),
@@ -193,7 +193,7 @@ class PerformUpdateMailboxPasswordTest {
         )
         // THEN
         coVerify(exactly = 1) {
-            keyRepository.updateKeysForPasswordChange(
+            keyRepository.updatePrivateKeys(
                 sessionUserId = testUserId,
                 clientEphemeral = Base64.encode(testClientEphemeral.toByteArray()),
                 clientProof = Base64.encode(testClientProof.toByteArray()),
@@ -225,7 +225,7 @@ class PerformUpdateMailboxPasswordTest {
         )
         // THEN
         coVerify(exactly = 1) {
-            keyRepository.updateKeysForPasswordChange(
+            keyRepository.updatePrivateKeys(
                 sessionUserId = testUserId,
                 clientEphemeral = Base64.encode(testClientEphemeral.toByteArray()),
                 clientProof = Base64.encode(testClientProof.toByteArray()),

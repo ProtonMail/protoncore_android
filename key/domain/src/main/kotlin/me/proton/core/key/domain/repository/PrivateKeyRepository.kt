@@ -45,7 +45,7 @@ interface PrivateKeyRepository {
         key: PrivateAddressKey
     )
 
-    suspend fun updateKeysForPasswordChange(
+    suspend fun updatePrivateKeys(
         sessionUserId: SessionUserId,
         keySalt: String,
         clientEphemeral: String,

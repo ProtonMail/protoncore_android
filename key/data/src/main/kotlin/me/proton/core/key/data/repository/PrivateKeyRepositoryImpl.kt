@@ -93,7 +93,7 @@ class PrivateKeyRepositoryImpl(
         }.throwIfError()
     }
 
-    override suspend fun updateKeysForPasswordChange(
+    override suspend fun updatePrivateKeys(
         sessionUserId: SessionUserId,
         keySalt: String,
         clientEphemeral: String,
@@ -106,7 +106,7 @@ class PrivateKeyRepositoryImpl(
         organizationKey: String
     ): Boolean {
         return provider.get<KeyApi>(sessionUserId).invoke {
-            updateKeysForPasswordChange(
+            updatePrivateKeys(
                 UpdateKeysForPasswordChangeRequest(
                     keySalt = keySalt,
                     clientEphemeral = clientEphemeral,
