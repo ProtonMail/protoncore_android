@@ -201,14 +201,22 @@
 
     <style name="ProtonInput.TextInputLayout.Border" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="android:textSize">@dimen/input_text_size</item>
-        <item name="boxBackgroundColor">@color/background_secondary</item>
         <item name="helperTextTextColor">?attr/brand_norm</item>
+        <item name="boxBackgroundColor">?proton_background_secondary</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/input_outlined_stroke_color</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
     </style>
 
     <style name="ProtonInput.TextInputLayout.Border.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
         <item name="android:textSize">@dimen/input_text_size</item>
-        <item name="boxBackgroundColor">@color/background_secondary</item>
         <item name="helperTextTextColor">?attr/brand_norm</item>
+        <item name="boxBackgroundColor">?proton_background_secondary</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/input_outlined_stroke_color</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
     </style>
     <!-- endregion -->
 
