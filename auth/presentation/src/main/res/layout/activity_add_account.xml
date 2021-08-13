@@ -25,9 +25,11 @@
         android:background="?attr/add_account_background">
 
         <ImageView
+            android:adjustViewBounds="true"
             android:id="@+id/add_account_illustration"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/add_account_illustration_height"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/add_account_illustration_height"
             android:layout_gravity="bottom"
             android:scaleType="centerCrop"
             app:srcCompat="?attr/add_account_illustration"
