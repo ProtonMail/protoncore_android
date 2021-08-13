@@ -1,3 +1,64 @@
+## Version [1.5.2]
+
+Aug 13, 2021
+
+Various SignUp/SignIn fixes & improvements.
+
+### Dependencies
+
+- Account 1.5.2.
+- Auth 1.5.2.
+- Human Verification 1.5.2.
+- Network 1.5.2.
+- User 1.5.2.
+- Plan 1.5.2.
+- Presentation 1.5.2.
+
+### Bug Fixes
+
+- HumanVerification: Fixed concurrency issue while updating state/token.
+- Account: Fixed concurrency issue while updating account/session state.
+- Auth: Fixed error on login within SignUp process.
+- Auth: Fixed wrong initial Fragment shown if available HV methods equal ("sms", "email").
+- Auth: Fixed "Recovery Email" & "Recovery Phone number".
+- Auth: Fixed blank username error.
+- Auth: Fixed passwords do not match error.
+- Auth Presentation: Fixed Add Account Portrait Orientation.
+- Presentation: Fixed TextInputLayout Outline stroke (color/size).
+- Presentation: Fixed OnBackPressedCallback & and Fragments backstack flow.
+- Presentation: Fixed Fragment hideKeyboard.
+- Auth: Fixed missing state changes (e.g. no network).
+
+### New Features
+
+- Network: Added TooManyRequest error handling per Session.
+- HumanVerification: Added SMS/Email Token code validation.
+- User: Added default Domain fallback.
+
+### API Changes
+
+- ```UserVerificationRepositoryImpl``` do not depend anymore on ```clientIdProvider``` & ```humanVerificationRepository```:
+```
+@Provides
+@Singleton
+fun provideUserVerificationRepository(
+    apiProvider: ApiProvider
+): UserVerificationRepository = UserVerificationRepositoryImpl(apiProvider)
+```
+- You must now provide a Default Domain Host to ```DomainRepositoryImpl```. 
+``` 
+@Provides
+@DefaultDomainHost
+fun provideDefaultDomainHost() = Constants.HOST // "protonmail.com"
+...
+@Provides
+@Singleton
+fun provideDomainRepository(
+    @DefaultDomainHost defaultDomain : Domain,
+    provider: ApiProvider
+): DomainRepository = DomainRepositoryImpl(defaultDomain, provider)
+```
+
 ## Test Android Instrumented [0.6.5]
 
 Aug 12, 2021
