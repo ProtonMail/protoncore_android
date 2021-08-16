@@ -20,7 +20,6 @@ package me.proton.core.usersettings.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.usersettings.domain.entity.UserSettings
 
 @Serializable
 data class SingleOrganizationResponse(

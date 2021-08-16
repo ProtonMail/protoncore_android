@@ -21,7 +21,6 @@ package me.proton.core.usersettings.data.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.usersettings.data.api.request.SetUsernameRequest
-import me.proton.core.usersettings.data.api.request.UpdateKeysForPasswordChangeRequest
 import me.proton.core.usersettings.data.api.request.UpdateLoginPasswordRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
 import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse

@@ -528,8 +528,8 @@ class GOpenPGPCrypto : PGPCrypto {
 
     override fun updatePrivateKeyPassphrase(privateKey: String, oldPassphrase: ByteArray, newPassphrase: ByteArray): Armored? =
         runCatching {
-            check(oldPassphrase.isNotEmpty()) { "The passphrase for generating key can't be empty." }
-            check(newPassphrase.isNotEmpty()) { "The passphrase for generating key can't be empty." }
+            check(oldPassphrase.isNotEmpty()) { "The old passphrase for generating key can't be empty." }
+            check(newPassphrase.isNotEmpty()) { "The new passphrase for generating key can't be empty." }
 
             Helper.updatePrivateKeyPassphrase(privateKey, oldPassphrase, newPassphrase)
         }.getOrThrow()

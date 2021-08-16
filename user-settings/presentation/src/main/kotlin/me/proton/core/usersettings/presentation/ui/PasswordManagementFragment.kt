@@ -59,7 +59,9 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.addOnBackPressedCallback()
+        activity?.addOnBackPressedCallback {
+            finish()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -152,7 +154,7 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
                             )
                         }
                     } else {
-                        confirmNewLoginPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_match))
+                        confirmNewLoginPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_do_not_match))
                     }
                 }
         }
@@ -186,7 +188,9 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
                             )
                         }
                     } else {
-                        confirmNewMailboxPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_match))
+                        confirmNewMailboxPasswordInput.setInputError(
+                            getString(R.string.auth_signup_error_passwords_do_not_match)
+                        )
                     }
                 }
         }
