@@ -344,6 +344,7 @@
                 <me.proton.core.presentation.ui.view.ProtonRadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/example_radio1_label" />
 
                 <me.proton.core.presentation.ui.view.ProtonRadioButton
