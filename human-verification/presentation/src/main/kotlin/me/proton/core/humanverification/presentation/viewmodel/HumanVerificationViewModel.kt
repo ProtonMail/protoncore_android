@@ -71,7 +71,7 @@ class HumanVerificationViewModel @Inject constructor(
         userSelectedMethod?.let {
             currentActiveVerificationMethod = it
         } ?: run {
-            currentActiveVerificationMethod = TokenType.fromString(availableVerificationMethods.sorted()[0])
+            currentActiveVerificationMethod = TokenType.fromString(availableVerificationMethods[0])
         }
         _activeMethod.tryEmit(currentActiveVerificationMethod.value)
     }

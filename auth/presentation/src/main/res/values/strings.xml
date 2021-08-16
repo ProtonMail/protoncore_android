@@ -118,8 +118,8 @@
     <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
     <string name="auth_signup_recovery_method_email">Email</string>
     <string name="auth_signup_recovery_method_phone">Phone</string>
-    <string name="auth_signup_recovery_method_email_hint">Recovery Email</string>
-    <string name="auth_signup_recovery_method_phone_hint">Recovery Phone number</string>
+    <string name="auth_signup_recovery_method_email_hint">Recovery email</string>
+    <string name="auth_signup_recovery_method_phone_hint">Recovery phone number</string>
     <string name="auth_signup_terms_conditions">Terms and Conditions</string>
     <string name="auth_signup_terms_conditions_full">By clicking Next, you agree with Proton\'s Terms and Conditions.</string>
     <string name="auth_signup_skip_recovery_title">Skip recovery method?</string>
@@ -127,7 +127,8 @@
     <string name="auth_signup_skip_recovery">Skip</string>
     <string name="auth_signup_set_recovery">Set recovery method</string>
     <string name="auth_signup_no_connectivity">No connectivity to display Terms and Conditions.</string>
-    <string name="auth_signup_error_passwords_match">Password and Confirm Password do not match.</string>
+    <string name="auth_signup_error_username_blank">Username must not be blank.</string>
+    <string name="auth_signup_error_passwords_do_not_match">Passwords do not match.</string>
     <string name="auth_signup_validation_password_length">Password should be at least 8 characters long.</string>
     <string name="auth_signup_your_account_is_being_setup">Your account is being created…</string>
     <string name="auth_signup_please_wait">It usually takes no more than a minute.</string>

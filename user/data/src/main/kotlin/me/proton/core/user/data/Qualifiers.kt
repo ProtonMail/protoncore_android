@@ -16,21 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.data.server
+package me.proton.core.user.data
 
-import me.proton.core.network.domain.server.ServerTimeListener
-import okhttp3.Interceptor
-import okhttp3.Response
+import javax.inject.Qualifier
 
-class ServerTimeInterceptor(
-    private val serverTimeListener: ServerTimeListener
-) : Interceptor {
-
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
-        val response = chain.proceed(request)
-        val serverUtc = response.headers.getDate("date")
-        serverUtc?.let { serverTimeListener.onServerTimeUpdated(it.time / 1000) }
-        return response
-    }
-}
+/**
+ * Hilt Qualifier annotation for Default Domain Host.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class DefaultDomainHost

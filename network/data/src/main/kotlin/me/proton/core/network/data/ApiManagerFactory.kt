@@ -173,7 +173,8 @@ class ApiManagerFactory(
             listOf(jsonConverter),
             interfaceClass,
             networkManager,
-            pinningStrategy
+            pinningStrategy,
+            ::javaWallClockMs
         )
 
         val errorHandlers = createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs) + clientErrorHandlers
@@ -202,7 +203,8 @@ class ApiManagerFactory(
                 listOf(jsonConverter),
                 interfaceClass,
                 networkManager,
-                alternativePinningStrategy
+                alternativePinningStrategy,
+                ::javaWallClockMs
             )
         }
 

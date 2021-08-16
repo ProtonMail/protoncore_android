@@ -32,7 +32,6 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.entity.emailSplit
-import me.proton.core.user.domain.entity.firstOrDefault
 import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
@@ -66,7 +65,7 @@ class SetupPrimaryKeys @Inject constructor(
                 AccountType.External -> {
                     checkNotNull(emailSplit?.domain) { "Email domain is needed to setup primary keys." }
                 }
-                else -> domainRepository.getAvailableDomains().firstOrDefault()
+                else -> domainRepository.getAvailableDomains().first()
             }
 
             val email = when (accountType) {

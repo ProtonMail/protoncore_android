@@ -149,7 +149,6 @@ internal class ApiManagerTests {
         dohApiHandler = DohApiHandler(apiClient, backend, dohProvider, prefs, ::wallTime, ::time) {
             altBackend1
         }
-        ApiManagerImpl.failRequestBeforeTimeMs = Long.MIN_VALUE
         apiManager = ApiManagerImpl(
             apiClient, backend, dohApiHandler, networkManager,
             apiManagerFactory.createBaseErrorHandlers(session.sessionId, ::time), ::time
@@ -332,18 +331,11 @@ internal class ApiManagerTests {
             ApiResult.Success(TestResult(5, "foo"))
         )
 
-        time = 0
-
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Error.TooManyRequest)
 
         val result2 = apiManager.invoke { test() }
-        assertTrue(result2 is ApiResult.Error.TooManyRequest)
-
-        time = 5001
-
-        val result3 = apiManager.invoke { test() }
-        assertTrue(result3 is ApiResult.Success)
+        assertTrue(result2 is ApiResult.Success)
     }
 
     @Test

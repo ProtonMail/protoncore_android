@@ -18,17 +18,45 @@
 
 package me.proton.core.humanverification.domain.usecase
 
+import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
-import me.proton.core.user.domain.entity.CreateUserType
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 class CheckCreationTokenValidity @Inject constructor(
-    private val userVerificationRepository: UserVerificationRepository
+    private val clientIdProvider: ClientIdProvider,
+    private val userVerificationRepository: UserVerificationRepository,
+    private val humanVerificationRepository: HumanVerificationRepository
 ) {
-    suspend operator fun invoke(token: String, tokenType: String, type: CreateUserType) =
+    suspend operator fun invoke(sessionId: SessionId?, token: String, tokenType: TokenType) {
         userVerificationRepository.checkCreationTokenValidity(
+            sessionId = sessionId,
             token = token,
             tokenType = tokenType,
-            type = type.value
         )
+
+        val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = sessionId))
+
+        humanVerificationRepository.insertHumanVerificationDetails(
+            details = HumanVerificationDetails(
+                clientId = clientId,
+                verificationMethods = listOf(
+                    when (tokenType) {
+                        TokenType.EMAIL -> VerificationMethod.EMAIL
+                        TokenType.SMS -> VerificationMethod.PHONE
+                        TokenType.CAPTCHA -> VerificationMethod.CAPTCHA
+                        TokenType.PAYMENT -> VerificationMethod.PAYMENT
+                    }
+                ),
+                state = HumanVerificationState.HumanVerificationSuccess,
+                tokenType = tokenType.value,
+                tokenCode = token
+            )
+        )
+    }
 }

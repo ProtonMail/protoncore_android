@@ -20,10 +20,14 @@ package me.proton.core.humanverification.presentation.viewmodel.verification
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.usecase.CheckCreationTokenValidity
 import me.proton.core.humanverification.domain.usecase.ResendVerificationCodeToDestination
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -34,37 +38,60 @@ import javax.inject.Inject
  * View model class that handles the input of the verification code (token) previously sent to any
  * destination [TokenType.EMAIL] or [TokenType.SMS].
  * It will contact the API in order to verify that the entered code is the correct one.
- *
- * @author Dino Kadrikj.
  */
 @HiltViewModel
 class HumanVerificationEnterCodeViewModel @Inject constructor(
-    private val resendVerificationCodeToDestination: ResendVerificationCodeToDestination
+    private val resendVerificationCodeToDestination: ResendVerificationCodeToDestination,
+    private val checkCreationTokenValidity: CheckCreationTokenValidity
 ) : ProtonViewModel() {
 
-    private val _verificationCodeResendStatus = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
+    private val _verificationCodeResendState = MutableSharedFlow<ViewModelResult<Boolean>>(
+        replay = 1,
+        extraBufferCapacity = 3
+    )
+    private val _validationState = MutableSharedFlow<ViewModelResult<String>>(
+        replay = 1,
+        extraBufferCapacity = 3
+    )
 
-    lateinit var tokenType: TokenType
+    val verificationCodeResendState = _verificationCodeResendState.asSharedFlow()
+    val validationState = _validationState.asSharedFlow()
 
-    // a special case is when the destination is absent because the user has the code from
-    // somewhere else (ex. from customer support)
-    var destination: String? = null
+    fun getToken(destination: String?, code: String) = "$destination:$code"
 
-    val verificationCodeResendStatus = _verificationCodeResendStatus.asStateFlow()
+    fun validateToken(
+        sessionId: SessionId?,
+        token: String,
+        tokenType: TokenType
+    ) = flow {
+        emit(ViewModelResult.Processing)
+        checkCreationTokenValidity.invoke(
+            sessionId = sessionId,
+            token = token,
+            tokenType = tokenType
+        )
+        emit(ViewModelResult.Success(token))
+    }.catch { error ->
+        emit(ViewModelResult.Error(error))
+    }.onEach {
+        _validationState.tryEmit(it)
+    }.launchIn(viewModelScope)
 
-    /**
-     * This function resends another token to the same previously set destination.
-     */
-    fun resendCode(sessionId: SessionId?) = viewModelScope.launch {
-        destination?.let {
-            runCatching {
-                _verificationCodeResendStatus.tryEmit(ViewModelResult.Processing)
-                resendVerificationCodeToDestination(sessionId, tokenType, it)
-            }.onSuccess {
-                _verificationCodeResendStatus.tryEmit(ViewModelResult.Success(true))
-            }.onFailure {
-                _verificationCodeResendStatus.tryEmit(ViewModelResult.Error(it))
-            }
-        }
-    }
+    fun resendCode(
+        sessionId: SessionId?,
+        destination: String,
+        tokenType: TokenType
+    ) = flow {
+        emit(ViewModelResult.Processing)
+        resendVerificationCodeToDestination.invoke(
+            sessionId = sessionId,
+            destination = destination,
+            tokenType = tokenType
+        )
+        emit(ViewModelResult.Success(true))
+    }.catch { error ->
+        emit(ViewModelResult.Error(error))
+    }.onEach {
+        _verificationCodeResendState.tryEmit(it)
+    }.launchIn(viewModelScope)
 }

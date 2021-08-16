@@ -20,7 +20,6 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.account.domain.entity.AccountType
@@ -41,45 +40,41 @@ class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBindin
     override fun layoutId() = R.layout.fragment_signup_choose_password
 
     override fun onBackPressed() {
-        parentFragmentManager.removePasswordChooser()
+        parentFragmentManager.popBackStack()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            toolbar.setNavigationOnClickListener {
-                parentFragmentManager.popBackStackImmediate()
-            }
+            toolbar.setNavigationOnClickListener { onBackPressed() }
 
             nextButton.onClick(::onNextClicked)
 
-            passwordInput.setOnFocusLostListener { _, _ ->
-                passwordInput.validatePasswordMinLength()
-                    .onFailure {
-                        passwordInput.setInputError(getString(R.string.auth_signup_validation_password_length))
-                    }
-                    .onSuccess { passwordInput.clearInputError() }
+            passwordInput.apply {
+                setOnFocusLostListener { _, _ ->
+                    validatePasswordMinLength()
+                        .onFailure { setInputError(getString(R.string.auth_signup_validation_password_length)) }
+                        .onSuccess { clearInputError() }
+                }
             }
 
-            confirmPasswordInput.setOnFocusLostListener { _, _ ->
-                confirmPasswordInput.validatePasswordMinLength()
-                    .onFailure {
-                        confirmPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length))
-                    }
-                    .onSuccess { confirmPasswordInput.clearInputError() }
+            confirmPasswordInput.apply {
+                setOnFocusLostListener { _, _ ->
+                    validatePasswordMinLength()
+                        .onFailure { setInputError(getString(R.string.auth_signup_validation_password_length)) }
+                        .onSuccess { clearInputError() }
+                }
             }
         }
     }
 
     private fun onNextClicked() {
         hideKeyboard()
-        with(binding) {
-            passwordInput.validatePasswordMinLength()
-                .onFailure { passwordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
-                .onSuccess { password ->
-                    validateConfirmPasswordField(password)
-                }
+        binding.passwordInput.apply {
+            validatePasswordMinLength()
+                .onFailure { setInputError(getString(R.string.auth_signup_validation_password_length)) }
+                .onSuccess { password -> validateConfirmPasswordField(password) }
         }
     }
 
@@ -88,7 +83,9 @@ class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBindin
         if (password == confirmedPassword) {
             onInputValidationSuccess()
         } else {
-            confirmPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_match))
+            showError(getString(R.string.auth_signup_error_passwords_do_not_match))
+            passwordInput.setInputError(" ")
+            confirmPasswordInput.setInputError(" ")
         }
     }
 

@@ -54,7 +54,7 @@ internal class HumanVerificationEmailViewModel @Inject constructor(
         sendVerificationCodeToEmailDestination.invoke(sessionId, email)
         emit(ViewModelResult.Success(email))
     }.catch { error ->
-        _verificationCodeStatusEmail.tryEmit(ViewModelResult.Error(error))
+        emit(ViewModelResult.Error(error))
     }.onEach {
         _verificationCodeStatusEmail.tryEmit(it)
     }.launchIn(viewModelScope)

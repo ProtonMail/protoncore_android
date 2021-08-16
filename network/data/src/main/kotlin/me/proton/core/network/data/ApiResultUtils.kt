@@ -54,8 +54,9 @@ internal suspend fun <Api, T> safeApiCall(
     } catch (e: IOException) {
         ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
     }
-    if (result is ApiResult.Error)
+    if (result is ApiResult.Error) {
         result.cause?.let { logger.e(LogTag.DEFAULT, it) }
+    }
     return result
 }
 
@@ -64,8 +65,8 @@ private fun <T> parseHttpError(
     protonData: ApiResult.Error.ProtonData?,
     cause: Exception
 ): ApiResult<T> {
-    val retryAfter = response.headers["Retry-After"]?.toIntOrNull()
-    return if (response.code == ApiResult.HTTP_TOO_MANY_REQUESTS && retryAfter != null) {
+    return if (response.code == ApiResult.HTTP_TOO_MANY_REQUESTS) {
+        val retryAfter = response.headers["Retry-After"]?.toIntOrNull() ?: 0
         ApiResult.Error.TooManyRequest(retryAfter, protonData)
     } else {
         ApiResult.Error.Http(response.code, response.message, protonData, cause)

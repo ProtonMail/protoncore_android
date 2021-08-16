@@ -16,24 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.presentation.utils
+package me.proton.core.network.data.interceptor
 
-import android.app.Activity
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.FragmentActivity
+import me.proton.core.network.domain.server.ServerTimeListener
+import okhttp3.Interceptor
+import okhttp3.Response
 
-/**
- * Fragment onBackPressed callback. This will close the activity but prior to that it will call the block to inform the
- * call site to do any work prior to closing.
- */
-fun FragmentActivity.addOnBackPressedCallback(block: (Activity.() -> Unit)? = null) {
-    onBackPressedDispatcher.addCallback(
-        this,
-        object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                block?.let { it() }
-                finish()
-            }
-        }
-    )
+class ServerTimeInterceptor(
+    private val serverTimeListener: ServerTimeListener
+) : Interceptor {
+
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+        val response = chain.proceed(request)
+        val serverUtc = response.headers.getDate("date")
+        serverUtc?.let { serverTimeListener.onServerTimeUpdated(it.time / 1000) }
+        return response
+    }
 }

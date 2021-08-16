@@ -21,13 +21,13 @@ package me.proton.core.auth.presentation.viewmodel.signup
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onSubscription
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
@@ -42,17 +42,18 @@ internal class ChooseUsernameViewModel @Inject constructor(
     private val sendVerificationCodeToEmailDestination: SendVerificationCodeToEmailDestination
 ) : ProtonViewModel() {
 
-    private val _state = MutableStateFlow<State>(State.Idle)
-    private val _selectedAccountTypeState = MutableSharedFlow<AccountTypeState>(extraBufferCapacity = 10)
+    private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
+    private val _selectedAccountTypeState = MutableSharedFlow<AccountTypeState>(replay = 1, extraBufferCapacity = 3)
     private lateinit var clientAppRequiredAccountType: AccountType
 
     lateinit var currentAccountType: AccountType
         private set
 
-    val state = _state.asStateFlow()
-    val selectedAccountTypeState = _selectedAccountTypeState.asSharedFlow()
-
     var domains: List<Domain>? = null
+        private set
+
+    val state = _state.asSharedFlow().onSubscription { emitAll(fetchDomains()) }
+    val selectedAccountTypeState = _selectedAccountTypeState.asSharedFlow()
 
     sealed class AccountTypeState {
         data class NewAccountType(val type: AccountType) : AccountTypeState()
@@ -80,22 +81,41 @@ internal class ChooseUsernameViewModel @Inject constructor(
         }
     }
 
-    fun fetchDomains() = flow {
-        emit(State.Processing)
-        val domains = usernameDomainAvailability.getDomains()
-        if (domains.isEmpty()) {
-            emit(State.Error.DomainsNotAvailable)
-            return@flow
+    private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
+        return when (requireCurrentAccountType()) {
+            AccountType.Username,
+            AccountType.Internal -> {
+                requireNotNull(domain) { "For AccountType Internal a domain must be supplied." }
+                if (usernameDomainAvailability.isUsernameAvailable(username)) {
+                    // if selected Internal account, domain must be set along with username
+                    State.UsernameAvailable(username, domain)
+                } else {
+                    State.Error.UsernameNotAvailable
+                }
+            }
+            AccountType.External -> {
+                // for External accounts, the email is the username
+                sendVerificationCodeToEmailDestination(emailAddress = username)
+                State.ExternalAccountTokenSent(username)
+            }
+        }.exhaustive
+    }
+
+    private fun requireCurrentAccountType(): AccountType {
+        require(this::currentAccountType.isInitialized) {
+            "currentAccountType is not set. Call setClientAppRequiredAccountType first."
         }
-        this@ChooseUsernameViewModel.domains = domains
-        emit(State.AvailableDomains(domains, currentAccountType))
+        return currentAccountType
+    }
+
+    private fun fetchDomains() = flow {
+        emit(State.Processing)
+        domains = usernameDomainAvailability.getDomains()
+        emit(State.AvailableDomains(domains!!, requireCurrentAccountType()))
     }.catch { error ->
         emit(State.Error.Message(error.message))
-    }.onEach {
-        _state.tryEmit(it)
-    }.launchIn(viewModelScope)
+    }
 
-    // region public API
     /**
      * This is where the client need to set the [AccountType] it want's to create.
      * Note, some clients can support [AccountType.External] (such as Drive) so the user will be allowed to switch
@@ -143,31 +163,6 @@ internal class ChooseUsernameViewModel @Inject constructor(
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
-    // endregion
-
-    private suspend fun checkUsernameForAccountType(username: String, domain: String?): State {
-        require(this::currentAccountType.isInitialized) {
-            "currentAccountType is not set. Call setClientAppRequiredAccountType first."
-        }
-
-        return when (currentAccountType) {
-            AccountType.Username,
-            AccountType.Internal -> {
-                requireNotNull(domain) { "For AccountType Internal a domain must be supplied." }
-                if (usernameDomainAvailability.isUsernameAvailable(username)) {
-                    // if selected Internal account, domain must be set along with username
-                    State.UsernameAvailable(username, domain)
-                } else {
-                    State.Error.UsernameNotAvailable
-                }
-            }
-            AccountType.External -> {
-                // for External accounts, the email is the username
-                sendVerificationCodeToEmailDestination(emailAddress = username)
-                State.ExternalAccountTokenSent(username)
-            }
-        }.exhaustive
-    }
 }
 
 /**

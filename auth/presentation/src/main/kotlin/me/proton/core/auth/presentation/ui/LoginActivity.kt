@@ -156,7 +156,6 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
             passwordInput.validatePassword()
                 .onFailure { passwordInput.setInputError() }
                 .onSuccess { password ->
-                    signInButton.setLoading()
                     viewModel.startLoginWorkflow(username, password, input.requiredAccountType)
                 }
         }

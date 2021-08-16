@@ -20,7 +20,6 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -41,7 +40,6 @@ import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.user.domain.entity.Domain
-import me.proton.core.user.domain.entity.firstOrDefault
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -62,30 +60,25 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
         activity?.finish()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.fetchDomains()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         binding.apply {
-            toolbar.setNavigationOnClickListener {
-                requireActivity().finish()
+            toolbar.setNavigationOnClickListener { onBackPressed() }
+
+            usernameInput.apply {
+                setOnFocusLostListener { _, _ ->
+                    validateUsername()
+                        .onFailure { setInputError() }
+                        .onSuccess { clearInputError() }
+                }
             }
-            usernameInput.setOnFocusLostListener { _, _ ->
-                usernameInput.validateUsername()
-                    .onFailure { usernameInput.setInputError() }
-                    .onSuccess { usernameInput.clearInputError() }
-            }
+
             nextButton.onClick(::onNextClicked)
             onAccountTypeSelection()
             useCurrentEmailButton.apply {
                 visibility = if (input.requiredAccountType.canSwitchToExternal()) View.VISIBLE else View.GONE
-                onClick {
-                    viewModel.onUserSwitchAccountType()
-                }
+                onClick { viewModel.onUserSwitchAccountType() }
             }
         }
 
@@ -138,7 +131,7 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
         with(binding.usernameInput) {
             hideKeyboard()
             validateUsername()
-                .onFailure { setInputError() }
+                .onFailure { setInputError(getString(R.string.auth_signup_error_username_blank)) }
                 .onSuccess {
                     signupViewModel.currentAccountType = viewModel.currentAccountType
                     viewModel.checkUsername(it, suffixText?.toString()?.replace("@", ""))
@@ -175,7 +168,7 @@ class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBindin
             nextButton.isEnabled = true
             useCurrentEmailButton.isEnabled = true
             if (accountType == AccountType.Internal) {
-                usernameInput.suffixText = "@${domains.firstOrDefault()}"
+                usernameInput.suffixText = "@${domains.first()}"
             }
         }
     }

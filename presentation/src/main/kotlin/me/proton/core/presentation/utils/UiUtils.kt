@@ -83,7 +83,7 @@ fun FragmentActivity.hideKeyboard() {
     hideKeyboard(currentFocus ?: window.decorView.rootView)
 }
 
-fun Fragment.hideKeyboard() = requireActivity().hideKeyboard()
+fun Fragment.hideKeyboard() = requireContext().hideKeyboard(requireView())
 
 /**
  * @return true if current [Configuration] UiMode is in Night Mode.

@@ -65,6 +65,7 @@ internal class HumanVerificationMethodCommon(
                     onVerificationCodeError(it.throwable)
                 }
                 is ViewModelResult.Success -> {
+                    loadable?.loadingComplete()
                     onGetCodeClicked(it.value, parentFragmentManager)
                 }
             }.exhaustive

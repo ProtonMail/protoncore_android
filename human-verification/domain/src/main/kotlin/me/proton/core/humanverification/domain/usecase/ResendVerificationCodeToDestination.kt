@@ -41,17 +41,17 @@ class ResendVerificationCodeToDestination @Inject constructor(
      * Send the verification code (token) to the API. This is an alternative function with slightly
      * different signature than the [invoke] function.
      *
-     * @param tokenType the verification method (type)
      * @param destination destination (could be email address or phone number) depending on the
      * verification type (method) from the [tokenType]
+     * @param tokenType the verification method (type)
      *
      * @throws IllegalArgumentException if the verification type (method) does not support
      * sending the verification code (currently supported [TokenType.EMAIL] and [TokenType.SMS].
      */
     suspend operator fun invoke(
-        sessionId: SessionId? = null,
-        tokenType: TokenType,
-        destination: String
+        sessionId: SessionId?,
+        destination: String,
+        tokenType: TokenType
     ) {
         return when (tokenType) {
             TokenType.SMS -> userVerificationRepository.sendVerificationCodePhoneNumber(

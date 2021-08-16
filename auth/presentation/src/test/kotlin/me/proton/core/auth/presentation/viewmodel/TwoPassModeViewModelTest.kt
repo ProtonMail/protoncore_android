@@ -71,7 +71,6 @@ class TwoPassModeViewModelTest : ArchTest, CoroutinesTest {
             viewModel.tryUnlockUser(testUserId, testPassword)
 
             // THEN
-            assertIs<TwoPassModeViewModel.State.Idle>(expectItem())
             assertIs<TwoPassModeViewModel.State.Processing>(expectItem())
             assertIs<TwoPassModeViewModel.State.Success.UserUnLocked>(expectItem())
 

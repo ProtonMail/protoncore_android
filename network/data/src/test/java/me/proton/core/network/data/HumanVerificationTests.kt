@@ -105,6 +105,8 @@ internal class HumanVerificationTests {
             }
         """.trimIndent()
 
+    private fun javaWallClockMs(): Long = System.currentTimeMillis()
+
     private val scope = CoroutineScope(TestCoroutineDispatcher())
 
     private val testTlsHelper = TestTLSHelper()
@@ -193,7 +195,8 @@ internal class HumanVerificationTests {
             ),
             TestRetrofitApi::class,
             networkManager,
-            pinningInit
+            pinningInit,
+            ::javaWallClockMs
         )
 
     @After

@@ -24,7 +24,6 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -51,18 +50,16 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
     override fun layoutId() = R.layout.fragment_signup_recovery
 
-    override fun onBackPressed() { parentFragmentManager.removeRecoveryMethodChooser() }
+    override fun onBackPressed() {
+        parentFragmentManager.popBackStack()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
             toolbar.apply {
-                setNavigationOnClickListener {
-                    if (nextButton.currentState == ProtonProgressButton.State.IDLE) {
-                        parentFragmentManager.popBackStackImmediate()
-                    }
-                }
+                setNavigationOnClickListener { onBackPressed() }
 
                 setOnMenuItemClickListener {
                     when (it.itemId) {
@@ -85,8 +82,7 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
         viewModel.validationResult.onEach {
             when (it) {
-                is ViewModelResult.None -> {
-                }
+                is ViewModelResult.None -> Unit
                 is ViewModelResult.Error -> showError(it.throwable?.message)
                 is ViewModelResult.Processing -> showLoading(true)
                 is ViewModelResult.Success -> {
@@ -153,7 +149,7 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
     private fun observeForHumanVerificationFailed() {
         signupViewModel.userCreationState.onEach {
             when (it) {
-                is SignupViewModel.State.Idle -> { }
+                is SignupViewModel.State.Idle -> Unit
                 is SignupViewModel.State.Error.HumanVerification,
                 is SignupViewModel.State.Error.PlanChooserCancel,
                 is SignupViewModel.State.Error.Message -> {
@@ -169,11 +165,10 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
     }
 
     private fun setActiveVerificationMethod(methodType: RecoveryMethodType) {
+        val containerId = binding.fragmentOptionsContainer.id
         when (methodType) {
-            RecoveryMethodType.EMAIL ->
-                childFragmentManager.showEmailRecoveryMethodFragment(containerId = binding.fragmentOptionsContainer.id)
-            RecoveryMethodType.SMS ->
-                childFragmentManager.showSMSRecoveryMethodFragment(containerId = binding.fragmentOptionsContainer.id)
+            RecoveryMethodType.EMAIL -> childFragmentManager.showEmailRecoveryMethodFragment(containerId)
+            RecoveryMethodType.SMS -> childFragmentManager.showSMSRecoveryMethodFragment(containerId)
         }.exhaustive
     }
 
@@ -190,7 +185,6 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
         hideKeyboard()
         with(requireContext()) {
             childFragmentManager.showSkipRecoveryDialog(this) {
-                showLoading()
                 signupViewModel.skipRecoveryMethod()
             }
         }

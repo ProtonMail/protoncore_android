@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 5, 0)
+libVersion = Version(1, 5, 2)
 
 android()
 
@@ -50,6 +50,7 @@ dependencies {
         `coroutines-core`,
 
         // Other
+        `hilt-android`,
         `okHttp-logging`,
         `retrofit`,
         `retrofit-kotlin-serialization`,

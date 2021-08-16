@@ -19,5 +19,3 @@
 package me.proton.core.user.domain.entity
 
 typealias Domain = String
-
-fun List<Domain>.firstOrDefault() = firstOrNull() ?: "protonmail.com"

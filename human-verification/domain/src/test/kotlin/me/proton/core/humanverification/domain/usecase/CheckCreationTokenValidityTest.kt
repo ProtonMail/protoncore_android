@@ -22,46 +22,82 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
-import me.proton.core.user.domain.entity.CreateUserType
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.session.SessionId
+import org.junit.Before
 import org.junit.Test
 
 class CheckCreationTokenValidityTest {
 
-    private val remoteRepository = mockk<UserVerificationRepository>()
+    private val clientIdProvider = mockk<ClientIdProvider>()
+    private val userVerificationRepository = mockk<UserVerificationRepository>()
+    private val humanVerificationRepository = mockk<HumanVerificationRepository>()
 
+    private lateinit var useCase: CheckCreationTokenValidity
+
+    private val sessionId = SessionId("sessionId")
     private val testToken = "test-token"
-    private val testTokenType = CreateUserType.Normal
+
+    @Before
+    fun before() {
+        coEvery { clientIdProvider.getClientId(any()) } returns ClientId.newClientId(sessionId, "cookieSessionId")
+        coEvery { humanVerificationRepository.insertHumanVerificationDetails(any()) } returns Unit
+
+        useCase = CheckCreationTokenValidity(
+            clientIdProvider,
+            userVerificationRepository,
+            humanVerificationRepository
+        )
+    }
 
     @Test
     fun `code verification with email success`() = runBlockingTest {
-        val useCase = CheckCreationTokenValidity(remoteRepository)
-        coEvery { remoteRepository.checkCreationTokenValidity(testToken, "email", 1) } returns Unit
+        coEvery {
+            userVerificationRepository.checkCreationTokenValidity(
+                sessionId,
+                testToken,
+                TokenType.EMAIL
+            )
+        } returns Unit
 
-        useCase.invoke(testToken, TokenType.EMAIL.value, testTokenType)
+        useCase.invoke(sessionId, testToken, TokenType.EMAIL)
     }
 
     @Test(expected = Exception::class)
     fun `code verification with email error`() = runBlockingTest {
-        val useCase = CheckCreationTokenValidity(remoteRepository)
-        coEvery { remoteRepository.checkCreationTokenValidity(testToken, "email", 1) } throws Exception("test error")
+        coEvery {
+            userVerificationRepository.checkCreationTokenValidity(sessionId, testToken, TokenType.EMAIL)
+        } throws Exception("test error")
 
-        useCase.invoke(testToken, TokenType.EMAIL.value, testTokenType)
+        useCase.invoke(sessionId, testToken, TokenType.EMAIL)
     }
 
     @Test
     fun `code verification with sms success`() = runBlockingTest {
-        val useCase = CheckCreationTokenValidity(remoteRepository)
-        coEvery { remoteRepository.checkCreationTokenValidity(testToken, "sms", 1) } returns Unit
+        coEvery {
+            userVerificationRepository.checkCreationTokenValidity(
+                sessionId,
+                testToken,
+                TokenType.SMS
+            )
+        } returns Unit
 
-        useCase.invoke(testToken, TokenType.SMS.value, testTokenType)
+        useCase.invoke(sessionId, testToken, TokenType.SMS)
     }
 
     @Test(expected = Exception::class)
     fun `code verification with sms error`() = runBlockingTest {
-        val useCase = CheckCreationTokenValidity(remoteRepository)
-        coEvery { remoteRepository.checkCreationTokenValidity(testToken, "sms", 1) } throws Exception("test error")
+        coEvery {
+            userVerificationRepository.checkCreationTokenValidity(
+                sessionId,
+                testToken,
+                TokenType.SMS
+            )
+        } throws Exception("test error")
 
-        useCase.invoke(testToken, TokenType.SMS.value, testTokenType)
+        useCase.invoke(sessionId, testToken, TokenType.SMS)
     }
 }

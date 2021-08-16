@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,6 +46,7 @@ import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.validate
 import me.proton.core.presentation.viewmodel.onError
+import me.proton.core.presentation.viewmodel.onProcessing
 import me.proton.core.presentation.viewmodel.onSuccess
 
 @AndroidEntryPoint
@@ -70,9 +72,6 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.destination = destination
-        viewModel.tokenType = tokenType
-
         destination?.let {
             binding.title.text = if (tokenType == TokenType.EMAIL) {
                 String.format(getString(R.string.human_verification_enter_code_subtitle_email), destination)
@@ -81,6 +80,7 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
             }
         } ?: run {
             binding.title.text = getString(R.string.human_verification_enter_code_subtitle_already_have_code)
+            binding.requestReplacementButton.isVisible = false
         }
 
         binding.apply {
@@ -102,30 +102,34 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
                 hideKeyboard()
                 verificationCodeEditText.validate()
                     .onFailure { verificationCodeEditText.setInputError() }
-                    .onSuccess {
-                        parentFragmentManager.setFragmentResult(
-                            KEY_VERIFICATION_DONE,
-                            bundleOf(
-                                ARG_TOKEN_CODE to "$destination:$it",
-                                HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.value
-                            )
-                        )
+                    .onSuccess { code ->
+                        val token = viewModel.getToken(destination, code)
+                        viewModel.validateToken(sessionId, token, tokenType)
                     }
             }
             requestReplacementButton.onClick {
-                parentFragmentManager.showRequestNewCodeDialog(
-                    context = requireContext(),
-                    destination = destination
-                ) {
-                    viewModel.resendCode(sessionId)
+                destination?.let {
+                    parentFragmentManager.showRequestNewCodeDialog(requireContext(), it) {
+                        viewModel.resendCode(sessionId, it, tokenType)
+                    }
                 }
             }
         }
 
-        viewModel.verificationCodeResendStatus
+        viewModel.verificationCodeResendState
             .onSuccess { showCodeResent() }
             .onError { showError(it) }
             .launchIn(lifecycleScope)
+
+        viewModel.validationState
+            .onProcessing { showLoading() }
+            .onSuccess { tokenCodeValidated(it) }
+            .onError { showError(it) }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun showLoading() {
+        binding.verifyButton.setLoading()
     }
 
     private fun showError(error: Throwable?) {
@@ -136,6 +140,16 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
     private fun showCodeResent() {
         binding.verifyButton.setIdle()
         view?.successSnack(R.string.human_verification_resent_code)
+    }
+
+    private fun tokenCodeValidated(tokenCode: String) {
+        parentFragmentManager.setFragmentResult(
+            KEY_VERIFICATION_DONE,
+            bundleOf(
+                ARG_TOKEN_CODE to tokenCode,
+                HumanVerificationDialogFragment.ARG_TOKEN_TYPE to tokenType.value
+            )
+        )
     }
 
     override fun onBackPressed() {

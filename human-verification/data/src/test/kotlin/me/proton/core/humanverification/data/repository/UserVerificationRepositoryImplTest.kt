@@ -25,7 +25,6 @@ import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.data.api.UserVerificationApi
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -59,9 +58,6 @@ class UserVerificationRepositoryImplTest {
     private lateinit var sessionProvider: SessionProvider
 
     @RelaxedMockK
-    private lateinit var humanVerificationRepository: HumanVerificationRepository
-
-    @RelaxedMockK
     private lateinit var apiManagerFactory: ApiManagerFactory
     private lateinit var apiProvider: ApiProvider
 
@@ -81,7 +77,7 @@ class UserVerificationRepositoryImplTest {
         every { clientIdProvider.getClientId(any()) } returns clientId
         every { apiManagerFactory.create(sessionId, UserVerificationApi::class) } returns apiManager
 
-        remoteRepository = UserVerificationRepositoryImpl(apiProvider, clientIdProvider, humanVerificationRepository)
+        remoteRepository = UserVerificationRepositoryImpl(apiProvider)
     }
 
     @Test(expected = IllegalArgumentException::class)

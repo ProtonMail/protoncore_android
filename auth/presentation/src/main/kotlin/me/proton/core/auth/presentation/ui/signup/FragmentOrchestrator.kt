@@ -61,6 +61,7 @@ internal fun FragmentManager.showTermsConditions() {
     inTransaction {
         setCustomAnimations(0, 0)
         add(termsConditionsDialogFragment, TAG_TERMS_CONDITIONS_FRAGMENT)
+        addToBackStack(TAG_TERMS_CONDITIONS_FRAGMENT)
     }
 }
 
@@ -72,7 +73,7 @@ internal fun FragmentManager.showUsernameChooser(
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, chooserUsernameFragment, TAG_USERNAME_CHOOSER)
-        addToBackStack(null)
+        addToBackStack(TAG_USERNAME_CHOOSER)
     }
     chooserUsernameFragment
 }
@@ -84,17 +85,9 @@ internal fun FragmentManager.showPasswordChooser(
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, chooserPasswordFragment, TAG_PASSWORD_CHOOSER)
-        addToBackStack(null)
+        addToBackStack(TAG_PASSWORD_CHOOSER)
     }
     chooserPasswordFragment
-}
-
-internal fun FragmentManager.removePasswordChooser() = findFragmentByTag(TAG_PASSWORD_CHOOSER)?.let { passwordChooser ->
-    inTransaction {
-        setCustomAnimations(0, 0)
-        remove(passwordChooser)
-    }
-    popBackStack()
 }
 
 internal fun FragmentManager.showExternalAccountEnterCode(
@@ -110,16 +103,6 @@ internal fun FragmentManager.showExternalAccountEnterCode(
     enterCodeFragment
 }
 
-internal fun FragmentManager.removeExternalAccountEnterCode() =
-    findFragmentByTag(TAG_EXTERNAL_ACCOUNT_ENTER_CODE)?.let { enterCode ->
-        inTransaction {
-            setCustomAnimations(0, 0)
-            remove(enterCode)
-        }
-        popBackStack()
-    }
-
-
 internal fun FragmentManager.showRecoveryMethodChooser(
     containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_RECOVERY_CHOOSER) ?: run {
@@ -127,17 +110,9 @@ internal fun FragmentManager.showRecoveryMethodChooser(
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, recoveryMethodFragment, TAG_RECOVERY_CHOOSER)
-        addToBackStack(null)
+        addToBackStack(TAG_RECOVERY_CHOOSER)
     }
     recoveryMethodFragment
-}
-
-internal fun FragmentManager.removeRecoveryMethodChooser() = findFragmentByTag(TAG_RECOVERY_CHOOSER)?.let { recovery ->
-    inTransaction {
-        setCustomAnimations(0, 0)
-        remove(recovery)
-    }
-    popBackStack()
 }
 
 internal fun FragmentManager.showSkipRecoveryDialog(

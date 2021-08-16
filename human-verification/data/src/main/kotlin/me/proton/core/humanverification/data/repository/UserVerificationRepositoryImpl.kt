@@ -23,19 +23,12 @@ import me.proton.core.humanverification.data.api.request.CreationTokenValidityRe
 import me.proton.core.humanverification.data.api.request.Destination
 import me.proton.core.humanverification.data.api.request.VerificationRequest
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.client.ClientIdProvider
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.SessionId
 
 class UserVerificationRepositoryImpl(
-    private val apiProvider: ApiProvider,
-    private val clientIdProvider: ClientIdProvider,
-    private val humanVerificationRepository: HumanVerificationRepository
+    private val apiProvider: ApiProvider
 ) : UserVerificationRepository {
 
     override suspend fun sendVerificationCodePhoneNumber(
@@ -68,21 +61,13 @@ class UserVerificationRepositoryImpl(
         }.valueOrThrow
     }
 
-    override suspend fun checkCreationTokenValidity(token: String, tokenType: String, type: Int) {
-        val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-
-        apiProvider.get<UserVerificationApi>().invoke {
-            checkCreationTokenValidity(CreationTokenValidityRequest(token, tokenType, type))
+    override suspend fun checkCreationTokenValidity(
+        sessionId: SessionId?,
+        token: String,
+        tokenType: TokenType
+    ) {
+        apiProvider.get<UserVerificationApi>(sessionId).invoke {
+            checkCreationTokenValidity(CreationTokenValidityRequest(token, tokenType.value))
         }.valueOrThrow
-
-        humanVerificationRepository.insertHumanVerificationDetails(
-            details = HumanVerificationDetails(
-                clientId = clientId,
-                verificationMethods = listOf(VerificationMethod.EMAIL),
-                state = HumanVerificationState.HumanVerificationSuccess,
-                tokenType = tokenType,
-                tokenCode = token
-            )
-        )
     }
 }

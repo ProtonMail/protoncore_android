@@ -30,10 +30,10 @@ import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.entity.HumanVerificationEntity
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.getType
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationState
 
 class HumanVerificationRepositoryImpl(
     private val db: HumanVerificationDatabase,
@@ -58,8 +58,8 @@ class HumanVerificationRepositoryImpl(
             .distinctUntilChanged()
 
     override suspend fun insertHumanVerificationDetails(details: HumanVerificationDetails) {
+        val clientId = details.clientId
         db.inTransaction {
-            val clientId = details.clientId
             humanVerificationDetailsDao.insertOrUpdate(
                 HumanVerificationEntity(
                     clientId = clientId.id,
@@ -71,8 +71,8 @@ class HumanVerificationRepositoryImpl(
                     humanHeaderTokenCode = details.tokenCode?.encryptWith(keyStoreCrypto)
                 )
             )
-            getHumanVerificationDetails(clientId)?.let { tryEmitStateChanged(it) }
         }
+        getHumanVerificationDetails(clientId)?.let { tryEmitStateChanged(it) }
     }
 
     override suspend fun updateHumanVerificationState(
@@ -88,8 +88,8 @@ class HumanVerificationRepositoryImpl(
                 tokenType?.encryptWith(keyStoreCrypto),
                 tokenCode?.encryptWith(keyStoreCrypto)
             )
-            getHumanVerificationDetails(clientId)?.let { tryEmitStateChanged(it) }
         }
+        getHumanVerificationDetails(clientId)?.let { tryEmitStateChanged(it) }
     }
 
     override fun onHumanVerificationStateChanged(
