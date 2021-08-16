@@ -31,8 +31,6 @@ for (m in modules) include(m)
 
 for (m in namedModules) project(m.first).name = m.second
 
-enableFeaturePreview("GRADLE_METADATA")
-
 pluginManagement {
     repositories {
         mavenCentral()

@@ -38,8 +38,8 @@ buildscript {
     dependencies {
         val kotlinVersion = "1.4.31" // Feb 25, 2021
         val dokkaVersion = "1.4.10.2" // Oct 20, 2020
-        val agpVersion = "4.1.2" // Jan 14, 2021
-        val hiltVersion = "2.35.1" // Apr 28, 2021
+        val agpVersion = "7.0.0" // July, 2021
+        val hiltVersion = "2.38.1" // Jul 27, 2021
 
         classpath(kotlin("gradle-plugin", kotlinVersion))
         classpath(kotlin("serialization", kotlinVersion))

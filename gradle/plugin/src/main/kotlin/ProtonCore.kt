@@ -29,5 +29,5 @@ object ProtonCore {
     /** The Android API level required for run the App */
     const val minSdk = 23
     /** The version of the JDK  */
-    val jdkVersion = JavaVersion.VERSION_1_8
+    val jdkVersion = JavaVersion.VERSION_11
 }

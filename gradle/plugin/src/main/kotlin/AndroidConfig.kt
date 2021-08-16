@@ -58,16 +58,6 @@ fun org.gradle.api.Project.android(
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
-
-        // Annotation processors must be explicitly declared now.  The following dependencies on
-        // the compile classpath are found to contain annotation processor.  Please add them to the
-        // annotationProcessor configuration.
-        // - auto-service-1.0-rc4.jar (com.google.auto.service:auto-service:1.0-rc4)
-        //
-        // Note that this option ( 👇 ) is deprecated and will be removed in the future.
-        // See https://developer.android.com/r/tools/annotation-processor-error-message.html for
-        // more details.
-        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
 
     // Data/View Binding turned off by default to prevent unneeded generation.

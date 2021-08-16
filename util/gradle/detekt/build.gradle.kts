@@ -22,6 +22,7 @@ import studio.forface.easygradle.dsl.Version
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
+    kotlin("plugin.serialization")
     `java-gradle-plugin`
 }
 
@@ -51,6 +52,7 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
-    implementation("studio.forface.easygradle:dsl:2.7")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.18.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation("studio.forface.easygradle:dsl:2.8")
 }

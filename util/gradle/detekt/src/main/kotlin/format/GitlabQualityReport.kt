@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,14 +16,33 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "Gradle"
+package format
 
-include("plugin")
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-pluginManagement {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        maven("https://plugins.gradle.org/m2/")
+@Serializable
+data class GitlabQualityReport(
+    @SerialName("description")
+    val description: String,
+    @SerialName("fingerprint")
+    val fingerprint: String,
+    @SerialName("location")
+    val location: Location
+) {
+    @Serializable
+    data class Location(
+        @SerialName("lines")
+        val lines: Lines,
+        @SerialName("path")
+        val path: String
+    ) {
+        @Serializable
+        data class Lines(
+            @SerialName("begin")
+            val begin: Int,
+            @SerialName("end")
+            val end: Int
+        )
     }
 }

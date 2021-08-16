@@ -17,6 +17,10 @@
  */
 
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import net.rubygrapefruit.platform.file.FilePermissionException
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
@@ -28,6 +32,8 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.register
+import format.GitlabQualityReport
+import format.SarifQualityReport
 import studio.forface.easygradle.dsl.*
 import java.io.BufferedWriter
 import java.io.File
@@ -56,8 +62,7 @@ abstract class ProtonDetektPlugin : Plugin<Project> {
  */
 private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 
-    `detekt version` = "1.17.1" // Released: May 15, 2021
-    `detect-code-analysis version` = "0.3.2" // Released:
+    `detekt version` = "1.18.0" // Released: Aug 12, 2021
 
     val reportsDirPath = "config/detekt/reports"
     val configFilePath = "config/detekt/config.yml"
@@ -65,8 +70,9 @@ private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
     val detektReportsDir = File(rootDir, reportsDirPath)
     val configFile = File(rootDir, configFilePath)
 
-    if (rootProject.name != "Proton Core")
+    if (rootProject.name != "Proton Core") {
         downloadDetektConfig(configFilePath, configFile)
+    }
 
     if (!configFile.exists()) {
         println("Detekt configuration file not found!")
@@ -78,30 +84,25 @@ private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 
         sub.apply(plugin = "io.gitlab.arturbosch.detekt")
         sub.extensions.configure<DetektExtension> {
-
-            failFast = false
+            buildUponDefaultConfig = true
+            allRules = false
             config = files(configFile)
-            input = files(sub.projectDir.path + "/src/")
+            source = files(sub.projectDir.path + "/src/")
 
             reports {
                 xml.enabled = false
                 html.enabled = false
                 txt.enabled = false
-                custom {
-                    reportId = "DetektQualityOutputReport"
-                    destination = File(detektReportsDir, "${sub.name}.json")
-                }
+                sarif.enabled = true
             }
         }
         sub.dependencies {
             add("detekt", `detekt-cli`)
-            add("detektPlugins", `detekt-code-analysis`)
             add("detektPlugins", `detekt-formatting`)
         }
-
     }
 
-    tasks.register<MergeDetektReports>("multiModuleDetekt") {
+    val convertToGitlabFormat = tasks.register<ConvertToGitlabFormat>("convertToGitlabFormat") {
         reportsDir = detektReportsDir
 
         // Execute after 'detekt' is completed for sub-projects
@@ -109,11 +110,68 @@ private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
         dependsOn(subTasks)
     }
 
+    tasks.register<MergeDetektReports>("multiModuleDetekt") {
+        reportsDir = detektReportsDir
+        dependsOn(convertToGitlabFormat)
+    }
+}
+
+internal open class ConvertToGitlabFormat : DefaultTask() {
+
+    private val json = Json {
+        ignoreUnknownKeys = true
+        prettyPrint = true
+    }
+
+    @InputDirectory
+    lateinit var reportsDir: File
+
+    @TaskAction
+    fun run() = project.generateReport()
+
+    @OptIn(ExperimentalSerializationApi::class)
+    private fun Project.generateReport() {
+        subprojects.forEach { project ->
+            project.generateReport()
+        }
+        val report = File(reportsDir, "${project.name}.json")
+            .apply { if (exists()) writeText("") }
+
+        println("Looking for detekt.sarif in $reportsDir")
+        File(project.buildDir, "reports/detekt")
+            .listFiles { _, name -> name == "detekt.sarif" }
+            ?.firstOrNull()
+            ?.let { file ->
+                json.decodeFromString<SarifQualityReport>(file.readText())
+            }?.runs?.flatMap { run ->
+                run.results
+            }?.flatMap { result ->
+                result.locations.map { location ->
+                    GitlabQualityReport(
+                        description = result.message.text,
+                        fingerprint = "${location.physicalLocation.artifactLocation.uri}:${location.physicalLocation.region.startLine}",
+                        location = GitlabQualityReport.Location(
+                            lines = GitlabQualityReport.Location.Lines(
+                                begin = location.physicalLocation.region.startLine,
+                                end = location.physicalLocation.region.startLine,
+                            ),
+                            path = location.physicalLocation.artifactLocation.uri
+                        )
+                    )
+                }
+            }?.takeIf { results ->
+                results.isNotEmpty()
+            }?.let { results ->
+                report.writeText(json.encodeToString(results))
+                println("Report in ${report.absolutePath}")
+            }
+    }
 }
 
 internal open class MergeDetektReports : DefaultTask() {
     @InputDirectory
     lateinit var reportsDir: File
+
     @Input
     var outputName: String = "mergedReport.json"
 

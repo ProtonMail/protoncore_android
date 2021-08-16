@@ -47,8 +47,8 @@ internal fun initVersions() {
     // endregion
 
     // region Others
-    `dagger version` =                          "2.35.1"        // Released: Apr 28, 2021
-    `hilt-android version` =                    "2.35.1"        // Released: Apr 28, 2021
+    `dagger version` =                          "2.38.1"        // Released: Jul 27, 2021
+    `hilt-android version` =                    "2.38.1"        // Released: Jul 27, 2021
     `hilt-androidx version` =                   "1.0.0"         // Released: May 05, 2021
     `mockK version` =                           "1.10.5"        // Released: Jan 13, 2021
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
@@ -59,7 +59,7 @@ internal fun initVersions() {
 }
 
 // region Android
-const val `android-tools version` =         "26.6.3"        // Updated: Apr 17, 2020
+const val `android-tools version` =         "30.0.2"        // Updated: Jun, 2020
 const val `androidUi version` =             "0.1.0-dev08"   // Released: Apr 03, 2020
 // endregion
 

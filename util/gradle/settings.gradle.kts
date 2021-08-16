@@ -26,8 +26,6 @@ include(
     "tests"
 )
 
-enableFeaturePreview("GRADLE_METADATA")
-
 pluginManagement {
     repositories {
         mavenCentral()

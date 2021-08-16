@@ -23,8 +23,6 @@ include(
     "plugins"
 )
 
-enableFeaturePreview("GRADLE_METADATA")
-
 pluginManagement {
     repositories {
         mavenCentral()
