@@ -93,7 +93,7 @@ Test Android Instrumented: **0.6.5** - _released on: Aug 13, 2021_
 
 Domain: **1.0.4** - _released on: Jul 07, 2021_
 
-Presentation: **0.10.3** - _released on: Aug 12, 2021_
+Presentation: **1.5.2** - _released on: Aug 16, 2021_
 
 Data: **1.3.1** - _released on: Jul 22, 2021_
 
@@ -103,11 +103,11 @@ Data Room: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Network
 
-Network: **1.1.4** - _released on: Jun 21, 2021_
+Network: **1.5.2** - _released on: Aug 16, 2021_
 
-Network Domain: **1.1.4** - _released on: Jun 21, 2021_
+Network Domain: **1.5.2** - _released on: Aug 16, 2021_
 
-Network Data: **1.1.4** - _released on: Jun 21, 2021_
+Network Data: **1.5.2** - _released on: Aug 16, 2021_
 
 ### Crypto
 
@@ -121,23 +121,23 @@ Crypto Android: **1.1.5** - _released on: Jul 30, 2021_
 
 ### Auth
 
-Auth: **1.5.1** - _released on: Aug 05, 2021_
+Auth: **1.5.2** - _released on: Aug 16, 2021_
 
-Auth Domain: **1.5.1** - _released on: Aug 05, 2021_
+Auth Domain: **1.5.2** - _released on: Aug 16, 2021_
 
-Auth Presentation: **1.5.1** - _released on: Aug 05, 2021_
+Auth Presentation: **1.5.2** - _released on: Aug 16, 2021_
 
-Auth Data: **1.5.1** - _released on: Aug 05, 2021_
+Auth Data: **1.5.2** - _released on: Aug 16, 2021_
 
 ### Account
 
-Account: **1.3.1** - _released on: Jul 22, 2021_
+Account: **1.5.2** - _released on: Aug 16, 2021_
 
-Account Domain: **1.3.1** - _released on: Jul 22, 2021_
+Account Domain: **1.5.2** - _released on: Aug 16, 2021_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **1.3.1** - _released on: Jul 22, 2021_
+Account Data: **1.5.2** - _released on: Aug 16, 2021_
 
 
 ### Account Manager
@@ -164,11 +164,11 @@ Key Data: **1.3.2** - _released on: Jul 30, 2021_
 
 ### User
 
-User: **1.5** - _released on: Jul 30, 2021_
+User: **1.5.2** - _released on: Aug 16, 2021_
 
-User Domain: **1.5** - _released on: Jul 30, 2021_
+User Domain: **1.5.2** - _released on: Aug 16, 2021_
 
-User Data: **1.5** - _released on: Jul 30, 2021_
+User Data: **1.5.2** - _released on: Aug 16, 2021_
 
 ### Contact
 
@@ -196,13 +196,13 @@ Mail Settings Data: **1.3.2** - _released on: Jul 28, 2021_
 
 ### Human Verification
 
-Human Verification: **1.3.4** - _released on: Aug 05, 2021_
+Human Verification: **1.5.2** - _released on: Aug 16, 2021_
 
-Human Verification Domain: **1.3.4** - _released on: Aug 05, 2021_
+Human Verification Domain: **1.5.2** - _released on: Aug 16, 2021_
 
-Human Verification Presentation: **1.3.4** - _released on: Aug 05, 2021_
+Human Verification Presentation: **1.5.2** - _released on: Aug 16, 2021_
 
-Human Verification Data: **1.3.4** - _released on: Aug 05, 2021_
+Human Verification Data: **1.5.2** - _released on: Aug 16, 2021_
 
 ### Countries
 
@@ -226,13 +226,13 @@ Payment Presentation: **0.2.3** - _released on: Aug 05, 2021_
 
 ### Plan
 
-Plan: **0.2.1** - _released on: Aug 05, 2021_
+Plan: **1.5.2** - _released on: Aug 16, 2021_
 
-Plan Data: **0.2.1** - _released on: Aug 05, 2021_
+Plan Data: **1.5.2** - _released on: Aug 16, 2021_
 
-Plan Domain: **0.2.1** - _released on: Aug 05, 2021_
+Plan Domain: **1.5.2** - _released on: Aug 16, 2021_
 
-Plan Presentation: **0.2.1** - _released on: Aug 05, 2021_
+Plan Presentation: **1.5.2** - _released on: Aug 16, 2021_
 
 ### User Settings
 
