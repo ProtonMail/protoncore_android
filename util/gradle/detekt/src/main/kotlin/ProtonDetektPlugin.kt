@@ -62,7 +62,7 @@ abstract class ProtonDetektPlugin : Plugin<Project> {
  */
 private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 
-    `detekt version` = "1.18.0" // Released: Aug 12, 2021
+    `detekt version` = "1.17.1" // Released: May 15, 2021
 
     val reportsDirPath = "config/detekt/reports"
     val configFilePath = "config/detekt/config.yml"
@@ -84,10 +84,9 @@ private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
 
         sub.apply(plugin = "io.gitlab.arturbosch.detekt")
         sub.extensions.configure<DetektExtension> {
-            buildUponDefaultConfig = true
-            allRules = false
+            failFast = false
             config = files(configFile)
-            source = files(sub.projectDir.path + "/src/")
+            input = files(sub.projectDir.path + "/src/")
 
             reports {
                 xml.enabled = false
@@ -100,6 +99,10 @@ private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
             add("detekt", `detekt-cli`)
             add("detektPlugins", `detekt-formatting`)
         }
+    }
+
+    if (!detektReportsDir.exists()) {
+        detektReportsDir.mkdirs()
     }
 
     val convertToGitlabFormat = tasks.register<ConvertToGitlabFormat>("convertToGitlabFormat") {
