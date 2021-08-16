@@ -1,4 +1,4 @@
-image: ${CI_REGISTRY}/protonvpn/android/android-app-new:latest
+image: ${CI_REGISTRY}/protonvpn/android/android-app-new:branch-compose
 
 include:
   - project: 'agarroux/publish-github'
