@@ -34,7 +34,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.GetSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
-import me.proton.core.usersettings.domain.usecase.PerformUpdateMailboxPassword
+import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,7 +43,7 @@ class PasswordManagementViewModel @Inject constructor(
     private val getSettings: GetSettings,
     private val userRepository: UserRepository,
     private val performUpdateLoginPassword: PerformUpdateLoginPassword,
-    private val performUpdateMailboxPassword: PerformUpdateMailboxPassword
+    private val performUpdateUserPassword: PerformUpdateUserPassword
 ) : ProtonViewModel() {
 
     private val _state = MutableStateFlow<State>(State.Idle)
@@ -125,7 +125,7 @@ class PasswordManagementViewModel @Inject constructor(
         val encryptedLoginPassword = loginPassword.encryptWith(keyStoreCrypto)
         val encryptedNewMailboxPassword = newMailboxPassword.encryptWith(keyStoreCrypto)
         val user = userRepository.getUser(userId)
-        val result = performUpdateMailboxPassword(
+        val result = performUpdateUserPassword(
             twoPasswordMode = twoPasswordMode!!,
             user = user,
             loginPassword = encryptedLoginPassword,

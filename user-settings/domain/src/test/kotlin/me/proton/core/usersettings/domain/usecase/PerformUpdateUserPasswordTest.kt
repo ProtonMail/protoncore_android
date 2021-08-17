@@ -46,7 +46,7 @@ import org.junit.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-class PerformUpdateMailboxPasswordTest {
+class PerformUpdateUserPasswordTest {
     // region mocks
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val userRepository = mockk<UserRepository>(relaxed = true)
@@ -104,7 +104,7 @@ class PerformUpdateMailboxPasswordTest {
     private val testAddress = mockk<UserAddress>()
     // endregion
 
-    private lateinit var useCase: PerformUpdateMailboxPassword
+    private lateinit var useCase: PerformUpdateUserPassword
 
     @Before
     fun beforeEveryTest() {
@@ -113,7 +113,7 @@ class PerformUpdateMailboxPasswordTest {
         every { keyStoreCrypto.decrypt("encrypted-test-new-mailbox-password") } returns testNewMailboxPassword
         every { keyStoreCrypto.encrypt(testNewMailboxPassword) } returns "encrypted-test-new-mailbox-password"
 
-        useCase = PerformUpdateMailboxPassword(
+        useCase = PerformUpdateUserPassword(
             authRepository = authRepository,
             userRepository = userRepository,
             userAddressRepository = userAddressRepository,

@@ -23,7 +23,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.ArchTest
@@ -38,7 +37,7 @@ import me.proton.core.usersettings.domain.entity.TwoFASetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.GetSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
-import me.proton.core.usersettings.domain.usecase.PerformUpdateMailboxPassword
+import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFalse
@@ -49,7 +48,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
     private val getUserSettingsUseCase = mockk<GetSettings>()
     private val performUpdateLoginPassword = mockk<PerformUpdateLoginPassword>()
-    private val performUpdateMailboxPassword = mockk<PerformUpdateMailboxPassword>()
+    private val performUpdateMailboxPassword = mockk<PerformUpdateUserPassword>()
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
     private val userRepository = mockk<UserRepository>(relaxed = true)
     // endregion

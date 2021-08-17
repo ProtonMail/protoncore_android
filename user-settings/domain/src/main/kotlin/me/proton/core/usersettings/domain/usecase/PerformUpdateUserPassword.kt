@@ -30,6 +30,8 @@ import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
+import me.proton.core.key.domain.extension.updateOrganizationPrivateKey
+import me.proton.core.key.domain.extension.updatePrivateKey
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasMigratedKey
@@ -40,7 +42,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.repository.OrganizationKeysRepository
 import javax.inject.Inject
 
-class PerformUpdateMailboxPassword @Inject constructor(
+class PerformUpdateUserPassword @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     private val userAddressRepository: UserAddressRepository,
@@ -103,19 +105,21 @@ class PerformUpdateMailboxPassword @Inject constructor(
                         // for migrated accounts, we update only the user keys
                         userKeys = mutableListOf()
                         for (userKey in user.keys) {
-                            val updatedKey = userKey.updatePrivateKey(newPassphrase.array)
+                            val updatedKey = userKey.update(
+                                newPassphrase = newPassphrase.array
+                            )
                             updatedKey?.let { userKeys!!.add(it) }
                         }
                     } else {
                         // for non-migrated accounts all keys (user + address) go into keys field
                         keys = mutableListOf()
                         for (userKey in user.keys) {
-                            val updatedKey = userKey.updatePrivateKey(newPassphrase.array)
+                            val updatedKey = userKey.update(newPassphrase.array)
                             updatedKey?.let { keys!!.add(it) }
                         }
                         for (address in addresses) {
                             for (addressKey in address.keys) {
-                                val updatedAddressKey = addressKey.updatePrivateKey(newPassphrase.array)
+                                val updatedAddressKey = addressKey.update(newPassphrase.array)
                                 updatedAddressKey?.let { keys!!.add(it) }
                             }
                         }
@@ -125,10 +129,10 @@ class PerformUpdateMailboxPassword @Inject constructor(
                         val currentPassphrase =
                             requireNotNull(passphraseRepository.getPassphrase(userId)?.decryptWith(keyStoreCrypto))
                         organizationKeys.privateKey.updateOrganizationPrivateKey(
-                            currentPassphrase.array,
-                            newPassphrase.array
-                        )
-                            ?: ""
+                            cryptoContext = cryptoContext,
+                            currentPassphrase = currentPassphrase.array,
+                            newPassphrase = newPassphrase.array
+                        ) ?: ""
                     } else ""
 
                     val result = keyRepository.updatePrivateKeys(
@@ -154,21 +158,10 @@ class PerformUpdateMailboxPassword @Inject constructor(
         }
     }
 
-    private fun KeyHolderPrivateKey.updatePrivateKey(newPassphrase: ByteArray): Key? {
-        val passphrase = privateKey.passphrase?.decryptWith(keyStoreCrypto)?.array ?: return null
-        val armored = cryptoContext.pgpCrypto.updatePrivateKeyPassphrase(
-            privateKey = privateKey.key,
-            oldPassphrase = passphrase,
+    private fun KeyHolderPrivateKey.update(newPassphrase: ByteArray) =
+        updatePrivateKey(
+            keyStoreCrypto = keyStoreCrypto,
+            cryptoContext = cryptoContext,
             newPassphrase = newPassphrase
         )
-        return if (armored != null) Key(armored, keyId.id) else null
-    }
-
-    private fun String.updateOrganizationPrivateKey(currentPassphrase: ByteArray, newPassphrase: ByteArray): String? {
-        return cryptoContext.pgpCrypto.updatePrivateKeyPassphrase(
-            privateKey = this,
-            oldPassphrase = currentPassphrase,
-            newPassphrase = newPassphrase
-        )
-    }
 }
