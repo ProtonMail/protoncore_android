@@ -150,9 +150,9 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.getAvailablePaymentMethods(testUserId)
             // THEN
-            assertIs<PaymentOptionsViewModel.State.Idle>(expectItem())
-            assertIs<PaymentOptionsViewModel.State.Processing>(expectItem())
-            val paymentMethodsStatus = expectItem()
+            assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
+            val paymentMethodsStatus = awaitItem()
             assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
             assertEquals(2, paymentMethodsStatus.availablePaymentMethods.size)
         }
@@ -167,9 +167,9 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             viewModel.getAvailablePaymentMethods(testUserId)
             // THEN
             coVerify(exactly = 1) { getCurrentSubscription.invoke(any()) }
-            assertIs<PaymentOptionsViewModel.State.Idle>(expectItem())
-            assertIs<PaymentOptionsViewModel.State.Processing>(expectItem())
-            val paymentMethodsStatus = expectItem()
+            assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
+            val paymentMethodsStatus = awaitItem()
             assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess)
             assertTrue(paymentMethodsStatus.availablePaymentMethods.isEmpty())
         }
@@ -192,9 +192,9 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.getAvailablePaymentMethods(testUserId)
             // THEN
-            assertIs<PaymentOptionsViewModel.State.Idle>(expectItem())
-            assertIs<PaymentOptionsViewModel.State.Processing>(expectItem())
-            val paymentMethodsStatus = expectItem()
+            assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
+            val paymentMethodsStatus = awaitItem()
             assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Error.Message)
             assertEquals("proton error", paymentMethodsStatus.message)
         }

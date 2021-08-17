@@ -48,7 +48,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
 
         val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
         viewModel.enabledMethods.test {
-            assertEquals(availableMethods, expectItem())
+            assertEquals(availableMethods, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -73,7 +73,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
         val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
 
         viewModel.activeMethod.test {
-            assertEquals(TokenType.EMAIL.value, expectItem())
+            assertEquals(TokenType.EMAIL.value, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -88,7 +88,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
 
         val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
         viewModel.activeMethod.test {
-            assertEquals(TokenType.EMAIL.value, expectItem())
+            assertEquals(TokenType.EMAIL.value, awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

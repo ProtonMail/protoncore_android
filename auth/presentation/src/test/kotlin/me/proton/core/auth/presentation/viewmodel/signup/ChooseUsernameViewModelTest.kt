@@ -55,8 +55,8 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         // WHEN
         viewModel.state.test {
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            val domainsItem = expectItem() as ChooseUsernameViewModel.State.AvailableDomains
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            val domainsItem = awaitItem() as ChooseUsernameViewModel.State.AvailableDomains
             assertEquals(listOf("protonmail.com", "protonmail.ch"), domainsItem.domains)
             cancelAndConsumeRemainingEvents()
         }
@@ -71,8 +71,8 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         // WHEN
         viewModel.state.test {
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Error)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Error)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -93,8 +93,8 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         // WHEN
         viewModel.state.test {
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            val errorItem = expectItem() as ChooseUsernameViewModel.State.Error.Message
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            val errorItem = awaitItem() as ChooseUsernameViewModel.State.Error.Message
             assertEquals("domains error", errorItem.message)
             cancelAndConsumeRemainingEvents()
         }
@@ -106,12 +106,12 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.setClientAppRequiredAccountType(AccountType.Internal)
             // THEN
-            val event = expectItem()
+            val event = awaitItem()
             assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Internal, event.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfterChange = expectItem()
+            val eventAfterChange = awaitItem()
             assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Internal, eventAfterChange.type)
         }
@@ -123,22 +123,22 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.setClientAppRequiredAccountType(AccountType.Internal)
             // THEN
-            val event = expectItem()
+            val event = awaitItem()
             assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Internal, event.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfterChange = expectItem()
+            val eventAfterChange = awaitItem()
             assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Internal, eventAfterChange.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfter2ndChange = expectItem()
+            val eventAfter2ndChange = awaitItem()
             assertTrue(eventAfter2ndChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Internal, eventAfter2ndChange.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfter3rdChange = expectItem()
+            val eventAfter3rdChange = awaitItem()
             assertTrue(eventAfter3rdChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Internal, eventAfter3rdChange.type)
         }
@@ -150,12 +150,12 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.setClientAppRequiredAccountType(AccountType.External)
             // THEN
-            val event = expectItem()
+            val event = awaitItem()
             assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.External, event.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfterChange = expectItem()
+            val eventAfterChange = awaitItem()
             assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Internal, eventAfterChange.type)
         }
@@ -167,22 +167,22 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.setClientAppRequiredAccountType(AccountType.External)
             // THEN
-            val event = expectItem()
+            val event = awaitItem()
             assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.External, event.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfterChange = expectItem()
+            val eventAfterChange = awaitItem()
             assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Internal, eventAfterChange.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfter2ndChange = expectItem()
+            val eventAfter2ndChange = awaitItem()
             assertTrue(eventAfter2ndChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.External, eventAfter2ndChange.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfter3rdChange = expectItem()
+            val eventAfter3rdChange = awaitItem()
             assertTrue(eventAfter3rdChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Internal, eventAfter3rdChange.type)
         }
@@ -194,12 +194,12 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.setClientAppRequiredAccountType(AccountType.Username)
             // THEN
-            val event = expectItem()
+            val event = awaitItem()
             assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Username, event.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfterChange = expectItem()
+            val eventAfterChange = awaitItem()
             assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.External, eventAfterChange.type)
         }
@@ -211,22 +211,22 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.setClientAppRequiredAccountType(AccountType.Username)
             // THEN
-            val event = expectItem()
+            val event = awaitItem()
             assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Username, event.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfterChange = expectItem()
+            val eventAfterChange = awaitItem()
             assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.External, eventAfterChange.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfter2ndChange = expectItem()
+            val eventAfter2ndChange = awaitItem()
             assertTrue(eventAfter2ndChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.Username, eventAfter2ndChange.type)
 
             viewModel.onUserSwitchAccountType()
-            val eventAfter3rdChange = expectItem()
+            val eventAfter3rdChange = awaitItem()
             assertTrue(eventAfter3rdChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
             assertEquals(AccountType.External, eventAfter3rdChange.type)
         }
@@ -241,8 +241,8 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             // WHEN
             viewModel.checkUsername(testUsername, testDomain)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            val errorItem = awaitItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.Error.Message)
             assertEquals(
                 "currentAccountType is not set. Call setClientAppRequiredAccountType first.",
@@ -263,10 +263,10 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            val item = expectItem() as ChooseUsernameViewModel.State.UsernameAvailable
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.AvailableDomains)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            val item = awaitItem() as ChooseUsernameViewModel.State.UsernameAvailable
             assertEquals(testUsername, item.username)
             assertEquals(testDomain, item.domain)
             cancelAndConsumeRemainingEvents()
@@ -284,10 +284,10 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Error.UsernameNotAvailable)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.AvailableDomains)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Error.UsernameNotAvailable)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -312,10 +312,10 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Error.Message)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.AvailableDomains)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Error.Message)
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -330,10 +330,10 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
 
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.AvailableDomains)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            val errorItem = awaitItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.ExternalAccountTokenSent)
             cancelAndConsumeRemainingEvents()
         }
@@ -349,10 +349,10 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
 
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.AvailableDomains)
-            assertTrue(expectItem() is ChooseUsernameViewModel.State.Processing)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.AvailableDomains)
+            assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
+            val errorItem = awaitItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.Error.Message)
             assertEquals("Error with the email", errorItem.message)
             cancelAndConsumeRemainingEvents()

@@ -51,15 +51,15 @@ internal class SerializationUtilsTest {
         assert(output is SerializableTestSealedClass.Two)
     }
 
+    @Suppress("UseDataClass", "unused")
+    @Serializable
+    class Regular(val name: String, val language: String, val country: String?, val level: String? = null)
+
+    @Serializable
+    data class Data(val name: String, val language: String, val country: String?, val level: String? = null)
+
     @Test
     fun `serialize regular class vs data class`() = `run only on Java 1_8-242` {
-
-        @Suppress("UseDataClass")
-        @Serializable
-        class Regular(val name: String, val language: String, val country: String?, val level: String? = null)
-
-        @Serializable
-        data class Data(val name: String, val language: String, val country: String?, val level: String? = null)
 
         val inputRegular = Regular(name = "Core", language = "en", country = null)
         val inputData = Data(name = "Core", language = "en", country = null)
@@ -82,14 +82,13 @@ internal class SerializationUtilsTest {
         assertEquals(inputData, inputRegular.serialize().deserialize())
     }
 
+    @Serializable
+    data class ProjectSerializeNullValue(val name: String, val language: String?)
 
     @Test
     fun `serialize null value`() = `run only on Java 1_8-242` {
 
-        @Serializable
-        data class Project(val name: String, val language: String?)
-
-        val input = Project(name = "Core", language = null)
+        val input = ProjectSerializeNullValue(name = "Core", language = null)
         val output = input.serialize().split(",")
 
         // Expected: {"name":"Core","language":null}
@@ -103,15 +102,15 @@ internal class SerializationUtilsTest {
         assertEquals(input, input.serialize().deserialize())
     }
 
+    @Serializable
+    data class ProjectDoNotSerializeDefaultValue(val name: String = "default", val language: String = "en")
+
     @Test
     fun `DO NOT serialize default value`() = `run only on Java 1_8-242` {
 
         // See ProtonCoreConfig.defaultJsonStringFormat -> encodeDefaults = false.
 
-        @Serializable
-        data class Project(val name: String = "default", val language: String = "en")
-
-        val input = Project(name = "Core")
+        val input = ProjectDoNotSerializeDefaultValue(name = "Core")
         val output = input.serialize().split(",")
 
         // Expected: {"name":"Core"}
@@ -125,15 +124,16 @@ internal class SerializationUtilsTest {
         assertEquals(input, input.serialize().deserialize())
     }
 
+
+    @Serializable
+    data class ProjectSerializeDefaultValueRequired(val name: String, @Required val language: String = "en")
+
     @Test
     fun `serialize default value if required`() = `run only on Java 1_8-242` {
 
         // See ProtonCoreConfig.defaultJsonStringFormat -> encodeDefaults = false.
 
-        @Serializable
-        data class Project(val name: String, @Required val language: String = "en")
-
-        val input = Project(name = "Core")
+        val input = ProjectSerializeDefaultValueRequired(name = "Core")
         val output = input.serialize().split(",")
 
         // {"name":"Core","language":"en"}
@@ -147,15 +147,16 @@ internal class SerializationUtilsTest {
         assertEquals(input, input.serialize().deserialize())
     }
 
+
+    @Serializable
+    data class ProjectDoNotSerializeDefaultNullValue(val name: String? = null, val language: String? = null)
+
     @Test
     fun `DO NOT serialize default null value`() = `run only on Java 1_8-242` {
 
         // See ProtonCoreConfig.defaultJsonStringFormat -> encodeDefaults = false.
 
-        @Serializable
-        data class Project(val name: String? = null, val language: String? = null)
-
-        val input = Project(name = "Core")
+        val input = ProjectDoNotSerializeDefaultNullValue(name = "Core")
         val output = input.serialize().split(",")
 
         // {"name":"Core"}
@@ -169,47 +170,49 @@ internal class SerializationUtilsTest {
         assertEquals(input, input.serialize().deserialize())
     }
 
+    @Serializable
+    data class ProjectDeserializeNullValue(val name: String? = null, val language: String? = null)
+
     @Test
     fun `deserialize default null value correctly`() = `run only on Java 1_8-242` {
 
         // See ProtonCoreConfig.defaultJsonStringFormat -> encodeDefaults = false.
 
-        @Serializable
-        data class Project(val name: String? = null, val language: String? = null)
-
         val input = "{\"name\":\"Core\"}"
 
-        val expected = Project(name = "Core")
+        val expected = ProjectDeserializeNullValue(name = "Core")
 
         assertEquals(expected, input.deserialize())
     }
+
+
+    @Serializable
+    data class ProjectDeserializeDefaultValueCorrectly(val name: String? = null, val language: String? = null)
 
     @Test
     fun `deserialize default value correctly`() = `run only on Java 1_8-242` {
 
         // See ProtonCoreConfig.defaultJsonStringFormat -> encodeDefaults = false.
 
-        @Serializable
-        data class Project(val name: String? = null, val language: String? = null)
-
         val input = "{\"name\":\"Core\",\"language\":\"en\"}"
 
-        val expected = Project(name = "Core", language = "en")
+        val expected = ProjectDeserializeDefaultValueCorrectly(name = "Core", language = "en")
 
         assertEquals(expected, input.deserialize())
     }
+
+
+    @Serializable
+    data class ProjectDeserializeProvidedNullableValue(val name: String? = null, val language: String?)
 
     @Test
     fun `deserialize provided nullable value`() = `run only on Java 1_8-242` {
 
         // See ProtonCoreConfig.defaultJsonStringFormat -> encodeDefaults = false.
 
-        @Serializable
-        data class Project(val name: String? = null, val language: String?)
-
         val input = "{\"name\":\"Core\",\"language\":\"en\"}"
 
-        val expected = Project(name = "Core", language = "en")
+        val expected = ProjectDeserializeProvidedNullableValue(name = "Core", language = "en")
 
         assertEquals(expected, input.deserialize())
     }

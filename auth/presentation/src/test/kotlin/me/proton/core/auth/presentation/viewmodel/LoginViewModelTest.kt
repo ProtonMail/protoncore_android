@@ -117,9 +117,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
             // THEN
-            assertIs<LoginViewModel.State.Processing>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
 
-            val successState = expectItem()
+            val successState = awaitItem()
             assertTrue(successState is LoginViewModel.State.Need.SecondFactor)
             assertEquals(sessionInfo.userId, successState.userId)
 
@@ -150,9 +150,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
             // THEN
-            assertIs<LoginViewModel.State.Processing>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
 
-            val successState = expectItem()
+            val successState = awaitItem()
             assertTrue(successState is LoginViewModel.State.Need.SecondFactor)
             assertEquals(sessionInfo.userId, successState.userId)
 
@@ -186,9 +186,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
             // THEN
-            assertIs<LoginViewModel.State.Processing>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
 
-            val successState = expectItem()
+            val successState = awaitItem()
             assertTrue(successState is LoginViewModel.State.Success.UserUnLocked)
             assertEquals(sessionInfo.userId, successState.userId)
 
@@ -228,9 +228,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
             // THEN
-            assertIs<LoginViewModel.State.Processing>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
 
-            val successState = expectItem()
+            val successState = awaitItem()
             assertTrue(successState is LoginViewModel.State.Success.UserUnLocked)
             assertEquals(sessionInfo.userId, successState.userId)
 
@@ -264,9 +264,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
             // THEN
-            assertIs<LoginViewModel.State.Processing>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
 
-            assertTrue(expectItem() is LoginViewModel.State.Error.Message)
+            assertTrue(awaitItem() is LoginViewModel.State.Error.Message)
 
             verify { savedStateHandle.set(any(), any<String>()) }
 
@@ -295,9 +295,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
             // THEN
-            assertIs<LoginViewModel.State.Processing>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
 
-            assertTrue(expectItem() is LoginViewModel.State.Need.SecondFactor)
+            assertTrue(awaitItem() is LoginViewModel.State.Need.SecondFactor)
 
             verify { savedStateHandle.set(any(), any<String>()) }
 
@@ -333,9 +333,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
             // THEN
-            assertIs<LoginViewModel.State.Processing>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
 
-            val errorState = expectItem()
+            val errorState = awaitItem()
             assertTrue(errorState is LoginViewModel.State.Error.Message)
             assertEquals("proton error", errorState.message)
 
@@ -366,9 +366,9 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) { accountHandler.handleSession(capture(accountArgument), capture(sessionArgument)) }
 
-            assertIs<LoginViewModel.State.Processing>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
 
-            val successState = expectItem()
+            val successState = awaitItem()
             assertTrue(successState is LoginViewModel.State.Success.UserUnLocked)
             assertEquals(sessionInfo.userId, successState.userId)
             val account = accountArgument.captured
@@ -453,8 +453,8 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
 
             // THEN
-            assertIs<LoginViewModel.State.Processing>(expectItem())
-            assertIs<LoginViewModel.State.Need.ChangePassword>(expectItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
+            assertIs<LoginViewModel.State.Need.ChangePassword>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }

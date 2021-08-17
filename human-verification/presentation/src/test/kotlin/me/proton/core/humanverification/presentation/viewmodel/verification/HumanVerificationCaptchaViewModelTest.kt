@@ -51,7 +51,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Metered)
         viewModel.networkConnectionState.test {
-            val result = expectItem()
+            val result = awaitItem()
             assertTrue(result is ViewModelResult.Success<Boolean>)
             assertTrue(result.value)
         }
@@ -63,7 +63,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Unmetered)
         viewModel.networkConnectionState.test {
-            val result = expectItem()
+            val result = awaitItem()
             assertTrue(result is ViewModelResult.Success<Boolean>)
             assertTrue(result.value)
         }
@@ -75,7 +75,7 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
             networkManager.observe()
         } returns flowOf(NetworkStatus.Disconnected)
         viewModel.networkConnectionState.test {
-            val result = expectItem()
+            val result = awaitItem()
             assertTrue(result is ViewModelResult.Success<Boolean>)
             assertFalse(result.value)
         }

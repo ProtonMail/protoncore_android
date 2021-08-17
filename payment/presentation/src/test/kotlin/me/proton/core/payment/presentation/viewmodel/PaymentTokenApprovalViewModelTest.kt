@@ -67,8 +67,8 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
     fun `network manager returns has connection`() = coroutinesTest {
         viewModel.networkConnectionState.test {
             viewModel.watchNetwork()
-            assertNull(expectItem())
-            assertTrue(expectItem()!!)
+            assertNull(awaitItem())
+            assertTrue(awaitItem()!!)
         }
     }
 
@@ -77,9 +77,9 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
         every { networkManager.observe() } returns flowOf(NetworkStatus.Disconnected, NetworkStatus.Unmetered)
         viewModel.networkConnectionState.test {
             viewModel.watchNetwork()
-            assertNull(expectItem())
-            assertFalse(expectItem()!!)
-            assertTrue(expectItem()!!)
+            assertNull(awaitItem())
+            assertFalse(awaitItem()!!)
+            assertTrue(awaitItem()!!)
         }
     }
 
@@ -113,9 +113,9 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
             val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
             // THEN
             assertFalse(result)
-            assertIs<PaymentTokenApprovalViewModel.State.Idle>(expectItem())
-            assertIs<PaymentTokenApprovalViewModel.State.Processing>(expectItem())
-            val approvalStatus = expectItem()
+            assertIs<PaymentTokenApprovalViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentTokenApprovalViewModel.State.Processing>(awaitItem())
+            val approvalStatus = awaitItem()
             assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
             assertEquals(PaymentTokenStatus.CHARGEABLE, approvalStatus.paymentTokenStatus)
         }
@@ -139,9 +139,9 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
             val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
             // THEN
             assertFalse(result)
-            assertIs<PaymentTokenApprovalViewModel.State.Idle>(expectItem())
-            assertIs<PaymentTokenApprovalViewModel.State.Processing>(expectItem())
-            val approvalStatus = expectItem()
+            assertIs<PaymentTokenApprovalViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentTokenApprovalViewModel.State.Processing>(awaitItem())
+            val approvalStatus = awaitItem()
             assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
             assertEquals(PaymentTokenStatus.FAILED, approvalStatus.paymentTokenStatus)
         }
@@ -169,9 +169,9 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
             val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
             // THEN
             assertFalse(result)
-            assertIs<PaymentTokenApprovalViewModel.State.Idle>(expectItem())
-            assertIs<PaymentTokenApprovalViewModel.State.Processing>(expectItem())
-            val approvalStatus = expectItem()
+            assertIs<PaymentTokenApprovalViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentTokenApprovalViewModel.State.Processing>(awaitItem())
+            val approvalStatus = awaitItem()
             assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Error.Message)
             assertEquals("proton error", approvalStatus.message)
         }
@@ -192,9 +192,9 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
             val result = viewModel.handleRedirection(testUserId, testToken, testUri, testReturnHost)
             // THEN
             assertFalse(result)
-            assertIs<PaymentTokenApprovalViewModel.State.Idle>(expectItem())
-            assertIs<PaymentTokenApprovalViewModel.State.Processing>(expectItem())
-            val approvalStatus = expectItem()
+            assertIs<PaymentTokenApprovalViewModel.State.Idle>(awaitItem())
+            assertIs<PaymentTokenApprovalViewModel.State.Processing>(awaitItem())
+            val approvalStatus = awaitItem()
             assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Success)
             assertEquals(PaymentTokenStatus.CHARGEABLE, approvalStatus.paymentTokenStatus)
         }

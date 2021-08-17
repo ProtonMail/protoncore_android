@@ -98,7 +98,7 @@ class AccountSwitcherViewModel @Inject constructor(
         val initials = user?.displayName?.takeIfNotBlank() ?: user?.email?.takeIfNotBlank() ?: username
         return AccountItem(
             userId = userId,
-            initials = initials.take(1).toUpperCase(Locale.getDefault()),
+            initials = initials.take(1).uppercase(Locale.getDefault()),
             name = user?.displayName?.takeIfNotBlank() ?: username,
             email = user?.email?.takeIfNotBlank() ?: email,
             state = state

@@ -109,7 +109,7 @@ class CountryPickerFragment :
         countriesAdapter.submitList(
             countries.map { country ->
                 val id: Int = context.resources.getIdentifier(
-                    country.countryCode.toLowerCase(Locale.ROOT),
+                    country.countryCode.lowercase(Locale.ROOT),
                     "drawable",
                     context.packageName
                 )

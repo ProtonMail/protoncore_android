@@ -39,8 +39,8 @@ fun MockWebServer.prepareResponse(code: Int, body: String = "") {
 
 class TestTLSHelper {
 
-    lateinit var trustManagers: Array<TrustManager>
-    lateinit var sslContext: SSLContext
+    var trustManagers: Array<TrustManager>
+    var sslContext: SSLContext
 
     init {
         File("./src/test/resources/test.jks").inputStream().use { jksInput ->

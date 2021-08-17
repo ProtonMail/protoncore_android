@@ -22,9 +22,9 @@ import studio.forface.easygradle.dsl.android.*
 internal fun initVersions() {
 
     // region Kotlin
-    `kotlin version` =                          "1.4.32"        // Released: Feb 25, 2021
-    `coroutines version` =                      "1.4.2"         // Released: Nov 26, 2020
-    `serialization version` =                   "1.0.1"         // Released: Oct 28, 2020
+    `kotlin version` =                          "1.5.21"        // Released: Jul 13, 2021
+    `coroutines version` =                      "1.5.1"         // Released: Jul 9, 2021
+    `serialization version` =                   "1.2.2"         // Released: Jul 8, 2021
     // endregion
 
     // region Android
@@ -72,7 +72,7 @@ const val `miniDsn version` =               "1.0.0"         // Released: Jul 18,
 const val `okHttp version` =                "4.8.0"         // Released: Jul 11, 2020
 const val `okHttp-url-connection version` = "4.9.0"         // Released: Sep, 2020
 const val `trustKit version` =              "1.1.3"         // Released: Apr 30, 2020
-const val `store4 version` =                "4.0.0"         // Released: Nov 30, 2020
+const val `store4 version` =                "4.0.2-KT15"    // Released: May 17, 2021
 const val `lifecycle-extensions version` =  "2.2.0"         // Released: Jan 00, 2020
 const val `lottie version` =                "3.7.2"         // Released: Jul 18, 2021
 
@@ -83,6 +83,6 @@ const val `falcon version` =                    "2.1.1"         // Released: Sep
 const val `uiautomator version` =               "2.2.0"         // Released: Oct 25, 2018
 const val `preference version` =                "1.1.1"         // Released: Apr 15, 2020
 const val `json-simple version` =               "1.1.1"         // Released: Mar 21, 2012
-const val `turbine version` =                   "0.4.1"         // Released: Mar 15, 2021
+const val `turbine version` =                   "0.6.0"         // Released: Jul 27, 2021
 const val `junit-ktx version` =                 "1.1.2"         // Released: Aug 26, 2020
 // endregion

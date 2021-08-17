@@ -18,6 +18,7 @@
 
 package me.proton.core.payment.domain.entity
 
-inline class PaymentMethodId(
+@JvmInline
+value class PaymentMethodId(
     val paymentMethodId: String
 )

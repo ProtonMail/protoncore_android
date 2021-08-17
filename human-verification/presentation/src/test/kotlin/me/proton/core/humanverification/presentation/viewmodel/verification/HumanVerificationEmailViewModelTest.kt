@@ -53,7 +53,7 @@ class HumanVerificationEmailViewModelTest : CoroutinesTest {
 
         viewModel.sendVerificationCode(sessionId, testEmail)
         viewModel.verificationCodeStatus.test {
-            assertIs<ViewModelResult.Success<Boolean>>(expectItem())
+            assertIs<ViewModelResult.Success<Boolean>>(awaitItem())
         }
     }
 
@@ -65,7 +65,7 @@ class HumanVerificationEmailViewModelTest : CoroutinesTest {
 
         viewModel.sendVerificationCode(sessionId, testEmail)
         viewModel.verificationCodeStatus.test {
-            val result = expectItem() as ViewModelResult.Error
+            val result = awaitItem() as ViewModelResult.Error
             assertIs<Exception>(result.throwable)
         }
     }
@@ -77,7 +77,7 @@ class HumanVerificationEmailViewModelTest : CoroutinesTest {
 
         viewModel.sendVerificationCode(sessionId, "")
         viewModel.verificationCodeStatus.test {
-            val result = expectItem() as ViewModelResult.Error
+            val result = awaitItem() as ViewModelResult.Error
             assertIs<IllegalArgumentException>(result.throwable)
         }
     }

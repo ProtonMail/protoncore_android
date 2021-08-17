@@ -100,8 +100,7 @@ class ObserveTest : CoroutinesTest {
         prefs["boolean"] = true
 
         // then
-        @Suppress("TYPE_INFERENCE_ONLY_INPUT_TYPES_WARNING")
-        assertEquals(expected, result)
+        assertEquals<List<Pair<String?, Map<String, Any?>>>>(expected, result)
         job.cancel()
     }
 

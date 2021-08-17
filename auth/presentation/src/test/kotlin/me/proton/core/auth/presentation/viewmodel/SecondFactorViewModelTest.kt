@@ -102,8 +102,8 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             )
 
             // THEN
-            assertIs<SecondFactorViewModel.State.Processing>(expectItem())
-            assertIs<SecondFactorViewModel.State.Success.UserUnLocked>(expectItem())
+            assertIs<SecondFactorViewModel.State.Processing>(awaitItem())
+            assertIs<SecondFactorViewModel.State.Success.UserUnLocked>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -132,8 +132,8 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) { accountManager.handleSecondFactorSuccess(capture(accountManagerArguments), any()) }
             coVerify(exactly = 0) { accountManager.handleSecondFactorFailed(any()) }
 
-            assertIs<SecondFactorViewModel.State.Processing>(expectItem())
-            assertIs<SecondFactorViewModel.State.Need.TwoPassMode>(expectItem())
+            assertIs<SecondFactorViewModel.State.Processing>(awaitItem())
+            assertIs<SecondFactorViewModel.State.Need.TwoPassMode>(awaitItem())
 
             assertEquals(testSessionId, accountManagerArguments.captured)
 

@@ -130,7 +130,7 @@ class PlanItemView @JvmOverloads constructor(
     }
 
     private fun bindPaidPlan(plan: PlanDetailsListItem.PaidPlanDetailsListItem) = with(binding) {
-        planName = plan.name.capitalize(Locale.getDefault())
+        planName = plan.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         planNameText.text = planName
         plan.renewalDate?.let {
             planRenewalText.apply {

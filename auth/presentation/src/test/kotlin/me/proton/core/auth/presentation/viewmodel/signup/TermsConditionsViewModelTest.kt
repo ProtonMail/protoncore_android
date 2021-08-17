@@ -49,8 +49,8 @@ class TermsConditionsViewModelTest : ArchTest, CoroutinesTest {
     fun `network manager returns has connection`() = coroutinesTest {
         viewModel.networkConnectionState.test {
             viewModel.watchNetwork()
-            assertNull(expectItem())
-            assertTrue(expectItem()!!)
+            assertNull(awaitItem())
+            assertTrue(awaitItem()!!)
         }
     }
 
@@ -59,9 +59,9 @@ class TermsConditionsViewModelTest : ArchTest, CoroutinesTest {
         every { networkManager.observe() } returns flowOf(NetworkStatus.Disconnected, NetworkStatus.Unmetered)
         viewModel.networkConnectionState.test {
             viewModel.watchNetwork()
-            assertNull(expectItem())
-            assertFalse(expectItem()!!)
-            assertTrue(expectItem()!!)
+            assertNull(awaitItem())
+            assertFalse(awaitItem()!!)
+            assertTrue(awaitItem()!!)
         }
     }
 }
