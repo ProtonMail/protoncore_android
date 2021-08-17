@@ -1,3 +1,11 @@
+## Presentation Version [1.5.3]
+
+Aug 17, 2021
+
+### Bug Fixes
+
+- Fixed ProtonCheckbox and ProtonRadioButton not updating their button drawable in certain scenarios.
+
 ## Version [1.5.2]
 
 Aug 13, 2021

@@ -19,6 +19,7 @@
 package me.proton.core.presentation.ui.view
 
 import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.view.Gravity
 import android.widget.CompoundButton
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -64,4 +65,10 @@ class CompoundButtonPositionHelper(private val button: CompoundButton) {
             button.invalidateDrawable(drawable)
         }
     }
+
+    fun jumpDrawablesToCurrentState() {
+        drawable?.jumpToCurrentState()
+    }
+
+    fun verifyDrawable(who: Drawable): Boolean = drawable == who
 }

@@ -20,6 +20,7 @@ package me.proton.core.presentation.ui.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import com.google.android.material.checkbox.MaterialCheckBox
 
@@ -44,5 +45,14 @@ open class ProtonCheckbox : MaterialCheckBox {
     override fun drawableStateChanged() {
         super.drawableStateChanged()
         helper?.onDrawableStateChanged()
+    }
+
+    override fun jumpDrawablesToCurrentState() {
+        super.jumpDrawablesToCurrentState()
+        helper?.jumpDrawablesToCurrentState()
+    }
+
+    override fun verifyDrawable(who: Drawable): Boolean {
+        return super.verifyDrawable(who) || helper?.verifyDrawable(who) ?: false
     }
 }
