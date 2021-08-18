@@ -605,7 +605,7 @@ class GOpenPGPCrypto : PGPCrypto {
         Crypto.setKeyGenerationOffset(-86_400L)
 
         val email = "$username@$domain"
-        Helper.generateKey(username, email, passphrase, PGPCrypto.KeyType.X25519.toString(), 0)
+        Helper.generateKey(email, email, passphrase, PGPCrypto.KeyType.X25519.toString(), 0)
     }.getOrElse { throw CryptoException("Key cannot be generated.", it) }
 
     override fun updateTime(epochSeconds: Long) {

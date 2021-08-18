@@ -11,6 +11,7 @@ Aug 18, 2021
 ### Behavior Changes
 
 - Set X25519 as default Key type for generation (removed RSA).
+- Changed Key identity as: email <email>.
 
 ## Presentation Version [1.5.4]
 
