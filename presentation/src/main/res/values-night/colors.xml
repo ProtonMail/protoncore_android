@@ -28,4 +28,8 @@
     <color name="shade_10">@color/charade</color>
     <color name="shade_0">@color/woodsmoke</color>
 
+    <!-- colors to use in the app -->
+
+    <color name="blender_norm">#85000000</color>
+
 </resources>

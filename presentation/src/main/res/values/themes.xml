@@ -107,6 +107,7 @@
         <item name="proton_notification_error">@color/notification_error</item>
         <item name="proton_notification_success">@color/notification_success</item>
         <item name="proton_notification_warning">@color/notification_warning</item>
+        <item name="proton_blender_norm">@color/blender_norm</item>
     </style>
 
     <style name="ProtonTheme.Calendar" parent="ProtonTheme" />

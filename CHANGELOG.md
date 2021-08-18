@@ -1,3 +1,11 @@
+## Presentation Version [1.5.4]
+
+Aug 20, 2021
+
+### New Features
+
+- Added color ```?attr/proton_blender_norm``` for greying out content behind dialogs.
+
 ## Network Version [1.5.4]
 
 Aug 18, 2021
