@@ -1,3 +1,40 @@
+## Network Version [1.5.3]
+
+Aug 18, 2021
+
+### Bug Fixes
+
+- Fixed Network error retryable conditions:
+```
+/**
+ * Return true if [ApiResult] is retryable (e.g. connection issue or http error 5XX).
+ */
+fun <T> ApiResult<T>.isRetryable(): Boolean = when (this) {
+    is ApiResult.Success,
+    is ApiResult.Error.Parse,
+    is ApiResult.Error.Certificate,
+    is ApiResult.Error.TooManyRequest -> false
+    is ApiResult.Error.Connection -> true
+    is ApiResult.Error.Http -> httpCode in 500..599
+}
+```
+
+### Behavior Changes
+
+- As a result of the above fix, any HTTP Error 5XX will trigger backoff retry, see ```ApiClient```:
+```
+/**
+ * Retry count for exponential backoff.
+ */
+val backoffRetryCount: Int get() = 2
+
+/**
+ * Base value (in milliseconds) for exponential backoff logic. e.g. for value 500 first retry
+ * will happen randomly after 500-1000ms, next one after 1000-2000ms ...
+ */
+val backoffBaseDelayMs: Int get() = 500
+```
+
 ## Presentation Version [1.5.3]
 
 Aug 17, 2021
