@@ -103,11 +103,11 @@ Data Room: **1.3.1** - _released on: Jul 22, 2021_
 
 ### Network
 
-Network: **1.5.2** - _released on: Aug 16, 2021_
+Network: **1.5.3** - _released on: Aug 18, 2021_
 
-Network Domain: **1.5.2** - _released on: Aug 16, 2021_
+Network Domain: **1.5.3** - _released on: Aug 18, 2021_
 
-Network Data: **1.5.2** - _released on: Aug 16, 2021_
+Network Data: **1.5.3** - _released on: Aug 18, 2021_
 
 ### Crypto
 
