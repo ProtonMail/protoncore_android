@@ -23,7 +23,6 @@ import com.proton.gopenpgp.crypto.ClearTextMessage
 import com.proton.gopenpgp.srp.Auth
 import com.proton.gopenpgp.srp.Proofs
 import com.proton.gopenpgp.srp.Srp
-import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import java.security.SecureRandom
@@ -52,7 +51,7 @@ class GOpenPGPSrpCrypto : SrpCrypto {
             modulus,
             serverEphemeral
         )
-        return auth.generateProofs(SRP_PROOF_BITS).toSrpProofs()
+        return auth.generateProofs(SRP_BIT_LENGTH.toLong()).toSrpProofs()
     }
 
     override fun calculatePasswordVerifier(
@@ -72,11 +71,11 @@ class GOpenPGPSrpCrypto : SrpCrypto {
             base64Modulus
         )
         val passwordVerifier = PasswordVerifier(version = CURRENT_AUTH_VERSION, modulusId = modulusId, salt = salt)
-        return passwordVerifier.generateAuth(PGPCrypto.KeySecurity.HIGH.value, base64Modulus, hashedPassword)
+        return passwordVerifier.generateAuth(SRP_BIT_LENGTH, base64Modulus, hashedPassword)
     }
 
     companion object {
-        const val SRP_PROOF_BITS: Long = 2048
+        const val SRP_BIT_LENGTH: Int = 2048
         const val CURRENT_AUTH_VERSION = 4
     }
 }

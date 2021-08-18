@@ -24,7 +24,6 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.crypto.common.keystore.use
-import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
@@ -148,9 +147,7 @@ class UserManagerImpl(
             val privateKey = cryptoContext.pgpCrypto.generateNewPrivateKey(
                 username = username,
                 domain = domain,
-                passphrase = passphrase.array,
-                keyType = PGPCrypto.KeyType.RSA,
-                keySecurity = PGPCrypto.KeySecurity.HIGH
+                passphrase = passphrase.array
             )
             val encryptedPassphrase = passphrase.encryptWith(cryptoContext.keyStoreCrypto)
             val userPrivateKey = PrivateKey(

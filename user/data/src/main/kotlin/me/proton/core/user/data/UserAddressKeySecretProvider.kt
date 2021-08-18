@@ -24,7 +24,6 @@ import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.decryptAndVerifyNestedKey
 import me.proton.core.key.domain.encryptData
@@ -109,9 +108,7 @@ class UserAddressKeySecretProvider(
                 key = cryptoContext.pgpCrypto.generateNewPrivateKey(
                     username = email.username,
                     domain = email.domain,
-                    passphrase = decryptedPassphrase.array,
-                    keyType = PGPCrypto.KeyType.RSA,
-                    keySecurity = PGPCrypto.KeySecurity.HIGH
+                    passphrase = decryptedPassphrase.array
                 ),
                 isPrimary = isPrimary,
                 passphrase = secret.passphrase
