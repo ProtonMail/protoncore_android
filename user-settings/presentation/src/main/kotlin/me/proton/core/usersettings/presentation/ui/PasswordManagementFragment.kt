@@ -96,12 +96,16 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
                     binding.mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
                 }
                 is PasswordManagementViewModel.State.Error.Message -> showError(it.message)
+                is PasswordManagementViewModel.State.Error.UpdatingSinglePassModePassword,
                 is PasswordManagementViewModel.State.Error.UpdatingMailboxPassword ->
                     showError(getString(R.string.settings_change_password_error))
                 is PasswordManagementViewModel.State.UpdatingLoginPassword ->
                     binding.saveLoginPasswordButton.showLoading(true)
                 is PasswordManagementViewModel.State.UpdatingMailboxPassword ->
                     binding.saveMailboxPasswordButton.showLoading(true)
+                is PasswordManagementViewModel.State.UpdatingSinglePassModePassword ->
+                    binding.saveLoginPasswordButton.showLoading(true)
+                is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword,
                 is PasswordManagementViewModel.State.Success.UpdatingLoginPassword -> {
                     resetLoginPasswordInput()
                 }
@@ -132,31 +136,33 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
             newLoginPasswordInput.validatePasswordMinLength()
                 .onFailure { newLoginPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
                 .onSuccess { password ->
-                    val confirmedPassword = confirmNewLoginPasswordInput.text.toString()
-                    if (password == confirmedPassword) {
-                        if (viewModel.secondFactorEnabled == true) {
-                            childFragmentManager.showPasswordEnterDialog(
-                                password = false,
-                                secondFactor = true
-                            ) { _: String, secondFactorCode: String ->
-                                viewModel.updateLoginPassword(
-                                    userId = userId,
-                                    password = currentLoginPasswordInput.text.toString(),
-                                    newPassword = confirmedPassword,
-                                    secondFactorCode = secondFactorCode
-                                )
-                            }
-                        } else {
-                            viewModel.updateLoginPassword(
-                                userId = userId,
-                                password = currentLoginPasswordInput.text.toString(),
-                                newPassword = confirmedPassword
-                            )
-                        }
-                    } else {
-                        confirmNewLoginPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_do_not_match))
+                    when (val confirmedPassword = confirmNewLoginPasswordInput.text.toString()) {
+                        password -> onLoginPasswordConfirmed(confirmedPassword)
+                        else -> confirmNewLoginPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_do_not_match))
                     }
                 }
+        }
+    }
+
+    private fun onLoginPasswordConfirmed(confirmedPassword: String) = with(binding) {
+        if (viewModel.secondFactorEnabled == true) {
+            childFragmentManager.showPasswordEnterDialog(
+                password = false,
+                secondFactor = true
+            ) { _: String, secondFactorCode: String ->
+                viewModel.updateLoginPassword(
+                    userId = userId,
+                    password = currentLoginPasswordInput.text.toString(),
+                    newPassword = confirmedPassword,
+                    secondFactorCode = secondFactorCode
+                )
+            }
+        } else {
+            viewModel.updateLoginPassword(
+                userId = userId,
+                password = currentLoginPasswordInput.text.toString(),
+                newPassword = confirmedPassword
+            )
         }
     }
 
@@ -166,33 +172,35 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
             newMailboxPasswordInput.validatePasswordMinLength()
                 .onFailure { newMailboxPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
                 .onSuccess { password ->
-                    val confirmedPassword = confirmNewMailboxPasswordInput.text.toString()
-                    if (password == confirmedPassword) {
-                        if (viewModel.secondFactorEnabled == true) {
-                            childFragmentManager.showPasswordEnterDialog(
-                                password = false,
-                                secondFactor = true
-                            ) { _: String, secondFactorCode: String ->
-                                viewModel.updateMailboxPassword(
-                                    userId = userId,
-                                    loginPassword = currentMailboxPasswordInput.text.toString(),
-                                    newMailboxPassword = confirmedPassword,
-                                    secondFactorCode = secondFactorCode
-                                )
-                            }
-                        } else {
-                            viewModel.updateMailboxPassword(
-                                userId = userId,
-                                loginPassword = currentMailboxPasswordInput.text.toString(),
-                                newMailboxPassword = confirmedPassword
-                            )
-                        }
-                    } else {
-                        confirmNewMailboxPasswordInput.setInputError(
+                    when (val confirmedPassword = confirmNewMailboxPasswordInput.text.toString()) {
+                        password -> onMailboxPasswordConfirmed(confirmedPassword)
+                        else -> confirmNewMailboxPasswordInput.setInputError(
                             getString(R.string.auth_signup_error_passwords_do_not_match)
                         )
                     }
                 }
+        }
+    }
+
+    private fun onMailboxPasswordConfirmed(confirmedPassword: String) = with(binding) {
+        if (viewModel.secondFactorEnabled == true) {
+            childFragmentManager.showPasswordEnterDialog(
+                password = false,
+                secondFactor = true
+            ) { _: String, secondFactorCode: String ->
+                viewModel.updateMailboxPassword(
+                    userId = userId,
+                    loginPassword = currentMailboxPasswordInput.text.toString(),
+                    newMailboxPassword = confirmedPassword,
+                    secondFactorCode = secondFactorCode
+                )
+            }
+        } else {
+            viewModel.updateMailboxPassword(
+                userId = userId,
+                loginPassword = currentMailboxPasswordInput.text.toString(),
+                newMailboxPassword = confirmedPassword
+            )
         }
     }
 

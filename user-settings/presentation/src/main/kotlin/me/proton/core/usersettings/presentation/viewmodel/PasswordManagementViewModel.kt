@@ -55,16 +55,20 @@ class PasswordManagementViewModel @Inject constructor(
 
     sealed class State {
         object Idle : State()
-        data class Mode(val twoPasswordMode: Boolean): State()
+        data class Mode(val twoPasswordMode: Boolean) : State()
         object UpdatingLoginPassword : State()
         object UpdatingMailboxPassword : State()
+        object UpdatingSinglePassModePassword : State()
         sealed class Success : State() {
             data class UpdatingLoginPassword(val settings: UserSettings) : State()
             object UpdatingMailboxPassword : State()
+            object UpdatingSinglePassModePassword : State()
         }
+
         sealed class Error : State() {
             data class Message(val message: String?) : Error()
             object UpdatingMailboxPassword : Error()
+            object UpdatingSinglePassModePassword : Error()
         }
     }
 
@@ -121,7 +125,7 @@ class PasswordManagementViewModel @Inject constructor(
         newMailboxPassword: String,
         secondFactorCode: String = ""
     ) = flow {
-        emit(State.UpdatingMailboxPassword)
+        emit(if (twoPasswordMode == true) State.UpdatingMailboxPassword else State.UpdatingSinglePassModePassword)
         val encryptedLoginPassword = loginPassword.encryptWith(keyStoreCrypto)
         val encryptedNewMailboxPassword = newMailboxPassword.encryptWith(keyStoreCrypto)
         val user = userRepository.getUser(userId)
@@ -133,9 +137,19 @@ class PasswordManagementViewModel @Inject constructor(
             secondFactorCode = secondFactorCode
         )
         if (result) {
-            emit(State.Success.UpdatingMailboxPassword)
+            emit(
+                if (twoPasswordMode == true)
+                    State.Success.UpdatingMailboxPassword
+                else
+                    State.Success.UpdatingSinglePassModePassword
+            )
         } else {
-            emit(State.Error.UpdatingMailboxPassword)
+            emit(
+                if (twoPasswordMode == true)
+                    State.Error.UpdatingMailboxPassword
+                else
+                    State.Error.UpdatingSinglePassModePassword
+            )
         }
     }.catch { error ->
         _state.tryEmit(State.Error.Message(error.message))
