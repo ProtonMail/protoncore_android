@@ -59,7 +59,7 @@ class ApiManagerImpl<Api>(
         var retryCount = 0
         while (true) {
             val result = handledCall(primaryBackend, call)
-            if (retryCount < client.backoffRetryCount && shouldRetry(result)) {
+            if (retryCount < client.backoffRetryCount && result.isRetryable()) {
                 val delayCoefficient = sample(
                     min = 2.0.pow(retryCount),
                     max = 2.0.pow(retryCount + 1)
@@ -70,14 +70,6 @@ class ApiManagerImpl<Api>(
                 return result
             }
         }
-    }
-
-    private fun <T> shouldRetry(result: ApiResult<T>) = when (result) {
-        is ApiResult.Error.TooManyRequest,
-        is ApiResult.Error.Certificate,
-        is ApiResult.Error.Parse,
-        is ApiResult.Success -> false
-        else -> true
     }
 
     private suspend fun <T> handledCall(

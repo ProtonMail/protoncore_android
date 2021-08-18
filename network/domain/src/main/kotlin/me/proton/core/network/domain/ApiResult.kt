@@ -173,6 +173,25 @@ open class ApiException(val error: ApiResult.Error) : Exception(
 )
 
 /**
+ * Return true if [ApiException.error] is retryable (e.g. connection issue or http error 5XX).
+ *
+ * @see ApiResult.isRetryable
+ */
+fun ApiException.isRetryable() = error.isRetryable()
+
+/**
+ * Return true if [ApiResult] is retryable (e.g. connection issue or http error 5XX).
+ */
+fun <T> ApiResult<T>.isRetryable(): Boolean = when (this) {
+    is ApiResult.Success,
+    is ApiResult.Error.Parse,
+    is ApiResult.Error.Certificate,
+    is ApiResult.Error.TooManyRequest -> false
+    is ApiResult.Error.Connection -> true
+    is ApiResult.Error.Http -> httpCode in 500..599
+}
+
+/**
  * Performs the given [action] if this instance represents an [ApiResult.Error].
  * Returns the original `Result` unchanged.
  */
