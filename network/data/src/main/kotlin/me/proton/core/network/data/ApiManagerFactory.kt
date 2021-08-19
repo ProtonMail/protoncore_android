@@ -48,6 +48,7 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.ProtonCoreConfig
+import okhttp3.Cache
 import okhttp3.JavaNetCookieJar
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -63,6 +64,7 @@ import kotlin.reflect.KClass
  * @param baseUrl Base url for the api e.g. "https://api.protonvpn.ch/"
  * @param cookieStore The cookie store. If set to null, a default InMemory cookie store will be used. Otherwise, for
  * permanent Cookie Store please use instance of [ProtonCookieStore].
+ * @param cache [Cache] shared across all user, session, api or call.
  */
 class ApiManagerFactory(
     private val baseUrl: String,
@@ -80,6 +82,7 @@ class ApiManagerFactory(
     scope: CoroutineScope,
     private val certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
     private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
+    private val cache: Cache? = null
 ) {
 
     @OptIn(ObsoleteCoroutinesApi::class)
@@ -96,6 +99,7 @@ class ApiManagerFactory(
     @VisibleForTesting
     val baseOkHttpClient by lazy {
         val builder = OkHttpClient.Builder()
+            .cache(cache)
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .readTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
@@ -209,7 +213,7 @@ class ApiManagerFactory(
         }
 
         return ApiManagerImpl(
-            apiClient, primaryBackend, dohApiHandler, networkManager, errorHandlers, ::javaMonoClockMs
+            apiClient, primaryBackend, dohApiHandler, errorHandlers, ::javaMonoClockMs
         )
     }
 }

@@ -47,6 +47,8 @@ import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.Logger
+import okhttp3.Cache
+import java.io.File
 import javax.inject.Singleton
 
 @Module
@@ -83,6 +85,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideApiFactory(
+        @ApplicationContext context: Context,
         logger: Logger,
         apiClient: ApiClient,
         clientIdProvider: ClientIdProvider,
@@ -108,7 +111,11 @@ class NetworkModule {
         humanVerificationListener,
         protonCookieStore,
         CoroutineScope(Job() + Dispatchers.Default),
-        emptyArray(), emptyList()
+        emptyArray(), emptyList(),
+        cache = Cache(
+            directory = File(context.cacheDir, "http_cache"),
+            maxSize = 10L * 1024L * 1024L // 10 MiB
+        )
     )
 
     @Provides

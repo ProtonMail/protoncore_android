@@ -150,7 +150,7 @@ internal class ApiManagerTests {
             altBackend1
         }
         apiManager = ApiManagerImpl(
-            apiClient, backend, dohApiHandler, networkManager,
+            apiClient, backend, dohApiHandler,
             apiManagerFactory.createBaseErrorHandlers(session.sessionId, ::time), ::time
         )
 
@@ -167,13 +167,6 @@ internal class ApiManagerTests {
         assertTrue(result is ApiResult.Success)
         assertEquals(5, result.value.number)
         assertEquals("foo", result.value.string)
-    }
-
-    @Test
-    fun `test no internet`() = runBlockingTest {
-        networkManager.networkStatus = NetworkStatus.Disconnected
-        val result = apiManager.invoke { test() }
-        assertTrue(result is ApiResult.Error.NoInternet)
     }
 
     @Test

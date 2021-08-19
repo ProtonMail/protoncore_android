@@ -21,7 +21,9 @@ package me.proton.android.core.coreexample.viewmodel
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.transformLatest
+import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.mailsettings.domain.entity.MailSettings
@@ -39,17 +41,13 @@ class MailSettingsViewModel @Inject constructor(
         data class Success(val mailSettings: MailSettings) : MailSettingsState()
         sealed class Error : MailSettingsState() {
             data class Message(val message: String?) : Error()
-            object NoPrimaryAccount : Error()
         }
     }
 
     fun getMailSettingsState() = accountManager.getPrimaryAccount()
+        .filterIsInstance<Account>()
         .transformLatest { account ->
-            if (account == null) {
-                emit(MailSettingsState.Error.NoPrimaryAccount)
-                return@transformLatest
-            }
-            emit(MailSettingsState.Success(mailSettingsRepository.getMailSettings(account.userId)))
+            emit(MailSettingsState.Success(mailSettingsRepository.getMailSettings(account.userId)) as MailSettingsState)
         }.catch { error ->
             Timber.e(error)
             emit(MailSettingsState.Error.Message(error.message))

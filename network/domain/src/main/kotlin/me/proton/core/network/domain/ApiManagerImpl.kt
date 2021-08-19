@@ -28,7 +28,6 @@ import kotlin.random.Random
  * @property client [ApiClient] for client-library integration.
  * @property primaryBackend [ApiBackend] for regular API calls.
  * @property dohApiHandler [DohApiHandler] instance to handle DoH logic for API calls.
- * @property networkManager [NetworkManager] for connectivity checks.
  * @property errorHandlers list of [ApiErrorHandler] for call error recovery.
  * @property monoClockMs Monotonic clock with millisecond resolution.
  */
@@ -36,7 +35,6 @@ class ApiManagerImpl<Api>(
     private val client: ApiClient,
     private val primaryBackend: ApiBackend<Api>,
     private val dohApiHandler: DohApiHandler<Api>,
-    private val networkManager: NetworkManager,
     private val errorHandlers: List<ApiErrorHandler<Api>>,
     private val monoClockMs: () -> Long
 ) : ApiManager<Api> {
@@ -47,7 +45,6 @@ class ApiManagerImpl<Api>(
     ): ApiResult<T> {
         val call = ApiManager.Call(monoClockMs(), block)
         return when {
-            !networkManager.isConnectedToNetwork() -> ApiResult.Error.NoInternet
             forceNoRetryOnConnectionErrors -> handledCall(primaryBackend, call)
             client.shouldUseDoh -> dohApiHandler(::handledCall, call)
             else -> callWithBackoff(call)

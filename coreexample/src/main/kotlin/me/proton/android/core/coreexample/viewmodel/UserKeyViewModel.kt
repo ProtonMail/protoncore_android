@@ -21,6 +21,7 @@ package me.proton.android.core.coreexample.viewmodel
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.transformLatest
@@ -35,6 +36,7 @@ import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -49,7 +51,6 @@ class UserKeyViewModel @Inject constructor(
         object Success : UserKeyState()
         sealed class Error : UserKeyState() {
             data class Message(val message: String?) : Error()
-            object NoPrimaryAccount : Error()
             object KeyLocked : Error()
             object CannotDecrypt : Error()
             object CannotVerify : Error()
@@ -58,12 +59,9 @@ class UserKeyViewModel @Inject constructor(
 
     fun getUserKeyState() = accountManager.getPrimaryAccount()
         .flatMapLatest { primary -> primary?.let { userManager.getUserFlow(it.userId) } ?: flowOf(null) }
+        .filterIsInstance<DataResult.Success<User>>()
         .transformLatest { result ->
-            if (result == null || result !is DataResult.Success || result.value == null) {
-                emit(UserKeyState.Error.NoPrimaryAccount)
-                return@transformLatest
-            }
-            val user = result.value!!
+            val user = result.value
             if (user.keys.areAllLocked()) {
                 emit(UserKeyState.Error.KeyLocked)
                 return@transformLatest
@@ -73,10 +71,11 @@ class UserKeyViewModel @Inject constructor(
                 val encrypted = encryptText(message)
                 val signature = signText(message)
                 val decrypted = decryptTextOrNull(encrypted) ?: return@useKeys UserKeyState.Error.CannotDecrypt
-                if (verifyText(decrypted, signature))
+                if (verifyText(decrypted, signature)) {
                     return@useKeys UserKeyState.Success
-                else
+                } else {
                     return@useKeys UserKeyState.Error.CannotVerify
+                }
             }
             emit(state)
         }.catch { error ->

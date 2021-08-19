@@ -79,7 +79,7 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
     fun `available domains error path`() = coroutinesTest {
         // GIVEN
         coEvery { usernameDomainAvailability.getDomains() } throws ApiException(
-            ApiResult.Error.NoInternet
+            ApiResult.Error.NoInternet()
         )
         viewModel.state.test {
             // WHEN

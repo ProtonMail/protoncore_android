@@ -43,7 +43,7 @@ sealed class ApiResult<out T> {
      * Base class for error result.
      * @param cause [Exception] exception that caused this error for debugging purposes.
      */
-    sealed class Error(val cause: Throwable?) : ApiResult<Nothing>() {
+    sealed class Error(val cause: Throwable? = Exception("Unknown error")) : ApiResult<Nothing>() {
 
         /**
          * HTTP error.
@@ -93,7 +93,7 @@ sealed class ApiResult<out T> {
          *
          * @property potentialBlock [true] if our API might have been blocked.
          */
-        open class Connection(val potentialBlock: Boolean, cause: Throwable? = null) : Error(cause) {
+        open class Connection(private val potentialBlock: Boolean = false, cause: Throwable? = null) : Error(cause) {
             override val isPotentialBlocking get() = potentialBlock
         }
 
@@ -112,7 +112,7 @@ sealed class ApiResult<out T> {
         /**
          * No connectivity.
          */
-        object NoInternet : Connection(false, null)
+        class NoInternet(cause: Throwable? = null) : Connection(false, cause)
     }
 
     /**
