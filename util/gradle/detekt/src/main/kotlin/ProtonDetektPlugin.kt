@@ -16,6 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import format.GitlabQualityReport
+import format.SarifQualityReport
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
@@ -25,22 +27,21 @@ import net.rubygrapefruit.platform.file.FilePermissionException
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.register
-import format.GitlabQualityReport
-import format.SarifQualityReport
-import org.gradle.api.provider.Property
-import org.gradle.kotlin.dsl.create
 import studio.forface.easygradle.dsl.*
 import java.io.BufferedWriter
 import java.io.File
-import java.lang.IllegalStateException
 import java.net.URL
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 abstract class ProtonDetektPlugin : Plugin<Project> {
 
@@ -261,8 +262,14 @@ internal open class MergeDetektReports : DefaultTask() {
 private fun downloadDetektConfig(path: String, to: File) {
 
     val dir = to.parentFile
-    if (dir.exists().not() && dir.mkdirs().not())
+    if (dir.exists().not() && dir.mkdirs().not()) {
         throw FilePermissionException("Cannot create directory ${dir.canonicalPath}")
+    }
+
+    if (to.isLessThanADayOld) {
+        println("Detekt rule-set is less than a day old, skipping download.")
+        return
+    }
 
     val url = "https://raw.githubusercontent.com/ProtonMail/protoncore_android/master/$path"
     println("Fetching Detekt rule-set from $url")
@@ -272,6 +279,7 @@ private fun downloadDetektConfig(path: String, to: File) {
         require(content.startsWith("# Integrity check *")) { "Integrity check not passed" }
 
         to.bufferedWriter().use { writer ->
+            writer.write("# ${DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now())}\n")
             writer.write(content)
         }
 
@@ -279,4 +287,13 @@ private fun downloadDetektConfig(path: String, to: File) {
         println("Cannot download Detekt configuration: ${t.message}")
     }
 }
+
+private val File.isLessThanADayOld: Boolean
+    get() = exists() && useLines { lines -> lines.firstOrNull() }?.let { line ->
+        try {
+            DateTimeFormatter.ISO_DATE_TIME.parse(line.substring(2), LocalDateTime::from)
+        } catch (e: Exception) {
+            null
+        }
+    }?.isAfter(LocalDateTime.now().minusDays(1)) == true
 
