@@ -83,6 +83,38 @@ Aug 17, 2021
 
 - Fixed ProtonCheckbox and ProtonRadioButton not updating their button drawable in certain scenarios.
 
+## User Settings Version [1.6.0]
+
+Aug 17, 2021
+
+### New Features
+
+- Password Change: Single Pass mode password change, Two Pass mode login and mailbox password change.
+
+### New Migration
+
+- If you use ```Account Manager Data Db``` module, nothing to do, it's transparently applied.
+- If you use your own AppDatabase, please apply changes as follow:
+    - Add ```OrganizationEntity``` to your AppDatabase ```entities```.
+    - Add ```OrganizationKeysEntity``` to your AppDatabase ```entities```.
+    - Add a migration to your AppDatabase (```addMigration```):
+```
+val MIGRATION_X_Y = object : Migration(X, Y) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        OrganizationDatabase.MIGRATION_0.migrate(database)
+        OrganizationKeysDatabase.MIGRATION_0.migrate(database)
+    }
+}
+```
+
+### Dependencies
+
+- Account-Manager 1.5.2.
+- Auth 1.5.3.
+- Crypto 1.1.6.
+- Key 1.4.0.
+- User-Settings 1.6.0.
+
 ## Version [1.5.2]
 
 Aug 13, 2021
