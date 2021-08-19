@@ -90,16 +90,15 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration, filter
     configuration._configFilePath.convention(File(rootDir, configFilePath))
     configuration._mergedReportName.convention("mergedReport.json")
 
-    val downloadProtonDetektConfig = tasks.register("downloadProtonDetektConfig") {
-        val configFile = configuration.configFilePath
+    val configFile = configuration.configFilePath
 
-        if (rootProject.name != "Proton Core") {
-            downloadDetektConfig(configFilePath, configFile)
-        }
+    if (rootProject.name != "Proton Core") {
+        downloadDetektConfig(configFilePath, configFile)
+    }
 
-        if (!configFile.exists()) {
-            throw IllegalStateException("Detekt configuration file not found!")
-        }
+    if (!configFile.exists()) {
+        println("Detekt configuration file not found!")
+        return
     }
 
     subprojects.filter(filter).forEach { sub -> sub.apply(plugin = "io.gitlab.arturbosch.detekt") }
@@ -129,9 +128,6 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration, filter
                 add("detekt", `detekt-cli`)
                 add("detektPlugins", `detekt-formatting`)
             }
-            sub.getTasksByName("detekt", true).forEach {  task ->
-                task.dependsOn(downloadProtonDetektConfig)
-            }
         }
     }
 
@@ -139,8 +135,7 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration, filter
         reportsDir = configuration.reportDir
 
         // Execute after 'detekt' is completed for sub-projects
-        val subTasks = getTasksByName("detekt", true)
-        dependsOn(subTasks)
+        dependsOn(getTasksByName("detekt", true))
     }
 
     tasks.register<MergeDetektReports>("multiModuleDetekt") {
