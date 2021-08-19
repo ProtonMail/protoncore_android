@@ -248,9 +248,9 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             assertIs<PasswordManagementViewModel.State.Idle>(expectItem())
             assertIs<PasswordManagementViewModel.State.Mode>(expectItem())
-            assertIs<PasswordManagementViewModel.State.UpdatingMailboxPassword>(expectItem())
+            assertIs<PasswordManagementViewModel.State.UpdatingSinglePassModePassword>(expectItem())
             val result = expectItem()
-            assertTrue(result is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword)
+            assertTrue(result is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword)
 
             coVerify(exactly = 1) {
                 performUpdateMailboxPassword(
