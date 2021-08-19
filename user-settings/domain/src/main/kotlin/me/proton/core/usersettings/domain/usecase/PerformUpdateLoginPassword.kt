@@ -27,25 +27,29 @@ import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
 class PerformUpdateLoginPassword @Inject constructor(
     private val authRepository: AuthRepository,
+    private val userRepository: UserRepository,
     private val userSettingsRepository: UserSettingsRepository,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
     @ClientSecret private val clientSecret: String
 ) {
     suspend operator fun invoke(
-        sessionUserId: SessionUserId,
+        userId: UserId,
         password: EncryptedString,
         newPassword: EncryptedString,
-        username: String,
         secondFactorCode: String = ""
     ): UserSettings {
+        val user = userRepository.getUser(userId)
+        val username = requireNotNull(user.name ?: user.email)
+
         val loginInfo = authRepository.getLoginInfo(
             username = username,
             clientSecret = clientSecret
@@ -69,7 +73,7 @@ class PerformUpdateLoginPassword @Inject constructor(
                     modulus = modulus.modulus
                 )
                 return userSettingsRepository.updateLoginPassword(
-                    sessionUserId = sessionUserId,
+                    sessionUserId = userId,
                     clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
                     clientProof = Base64.encode(clientProofs.clientProof),
                     srpSession = loginInfo.srpSession,

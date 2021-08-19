@@ -31,7 +31,6 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.usersettings.data.api.OrganizationApi
 import me.proton.core.usersettings.data.api.response.OrganizationKeysResponse
-import me.proton.core.usersettings.data.db.OrganizationKeysDatabase
 import me.proton.core.usersettings.data.db.dao.OrganizationKeysDao
 import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toEntity

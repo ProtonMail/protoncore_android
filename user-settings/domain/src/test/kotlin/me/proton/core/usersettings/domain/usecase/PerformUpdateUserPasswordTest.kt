@@ -18,9 +18,7 @@
 
 package me.proton.core.usersettings.domain.usecase
 
-import com.google.crypto.tink.subtle.Base64
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
@@ -34,29 +32,24 @@ import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.repository.PrivateKeyRepository
+import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.repository.PassphraseRepository
-import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.repository.OrganizationKeysRepository
+import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 
 class PerformUpdateUserPasswordTest {
     // region mocks
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val userRepository = mockk<UserRepository>(relaxed = true)
-    private val userAddressRepository = mockk<UserAddressRepository>(relaxed = true)
-    private val organizationKeysRepository = mockk<OrganizationKeysRepository>(relaxed = true)
-    private val passphraseRepository = mockk<PassphraseRepository>(relaxed = true)
-    private val keyRepository = mockk<PrivateKeyRepository>(relaxed = true)
+    private val organizationRepository = mockk<OrganizationRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
     private val cryptoContext = mockk<CryptoContext>(relaxed = true)
+    private val userManager = mockk<UserManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -116,28 +109,23 @@ class PerformUpdateUserPasswordTest {
         useCase = PerformUpdateUserPassword(
             authRepository = authRepository,
             userRepository = userRepository,
-            userAddressRepository = userAddressRepository,
-            organizationKeysRepository = organizationKeysRepository,
-            passphraseRepository = passphraseRepository,
-            keyRepository = keyRepository,
-            srpCrypto = srpCrypto,
+            organizationRepository = organizationRepository,
             keyStoreCrypto = keyStoreCrypto,
             cryptoContext = cryptoContext,
-            clientSecret = testClientSecret
+            clientSecret = testClientSecret,
+            userManager = userManager
         )
 
         coEvery {
-            keyRepository.updatePrivateKeys(
-                sessionUserId = testUserId,
-                clientEphemeral = any(),
-                clientProof = any(),
-                srpSession = any(),
+            userManager.changePassword(
+                userId = testUserId,
+                oldPassword = any(),
+                newPassword = any(),
                 secondFactorCode = any(),
+                proofs = any(),
+                srpSession = any(),
                 auth = any(),
-                keySalt = testKeySalt,
-                keys = any(),
-                userKeys = any(),
-                organizationKey = any()
+                organizationPrivateKey = any()
             )
         } returns true
 
@@ -153,14 +141,25 @@ class PerformUpdateUserPasswordTest {
             modulusId = testModulusId,
             modulus = testModulus
         )
-        coEvery { organizationKeysRepository.getOrganizationKeys(testUserId, any()) } returns mockk()
+        coEvery { organizationRepository.getOrganizationKeys(testUserId, any()) } returns mockk()
         every { cryptoContext.pgpCrypto } returns testPGPCrypto
         every {
             testPGPCrypto.generateNewKeySalt()
         } returns testKeySalt
+
+        every { cryptoContext.srpCrypto } returns srpCrypto
+
         every {
-            srpCrypto.calculatePasswordVerifier(testUsername, testNewMailboxPassword.toByteArray(), testModulusId, testModulus)
+            srpCrypto.calculatePasswordVerifier(
+                testUsername,
+                testNewMailboxPassword.toByteArray(),
+                testModulusId,
+                testModulus
+            )
         } returns testAuth
+
+        coEvery { userRepository.getUser(testUserId) } returns testUser
+
         every {
             srpCrypto.generateSrpProofs(
                 username = testUsername,
@@ -179,73 +178,12 @@ class PerformUpdateUserPasswordTest {
     }
 
     @Test
-    fun `update mailbox password two pass mode returns success`() = runBlockingTest {
-        // GIVEN
-        every { testAddress.keys } returns emptyList()
-        coEvery { userAddressRepository.getAddresses(testUserId, any() ) } returns listOf(testAddress)
-        // WHEN
-        val result = useCase.invoke(
-            user = testUser,
-            secondFactorCode = testSecondFactor,
-            loginPassword = keyStoreCrypto.encrypt(testLoginPassword),
-            newPassword = keyStoreCrypto.encrypt(testNewMailboxPassword),
-            twoPasswordMode = true
-        )
-        // THEN
-        coVerify(exactly = 1) {
-            keyRepository.updatePrivateKeys(
-                sessionUserId = testUserId,
-                clientEphemeral = Base64.encode(testClientEphemeral.toByteArray()),
-                clientProof = Base64.encode(testClientProof.toByteArray()),
-                srpSession = testSrpSession,
-                secondFactorCode = testSecondFactor,
-                keySalt = testKeySalt,
-                organizationKey = any(),
-                auth = null,
-                keys = any(),
-                userKeys = any()
-            )
-        }
-        assertTrue(result)
-    }
-
-    @Test
-    fun `update mailbox password one pass mode returns success`() = runBlockingTest {
-        // GIVEN
-        every { testAddress.keys } returns emptyList()
-        coEvery { userAddressRepository.getAddresses(testUserId, any() ) } returns listOf(testAddress)
-
-        // WHEN
-        val result = useCase.invoke(
-            user = testUser,
-            secondFactorCode = testSecondFactor,
-            loginPassword = keyStoreCrypto.encrypt(testLoginPassword),
-            newPassword = keyStoreCrypto.encrypt(testNewMailboxPassword),
-            twoPasswordMode = false
-        )
-        // THEN
-        coVerify(exactly = 1) {
-            keyRepository.updatePrivateKeys(
-                sessionUserId = testUserId,
-                clientEphemeral = Base64.encode(testClientEphemeral.toByteArray()),
-                clientProof = Base64.encode(testClientProof.toByteArray()),
-                srpSession = testSrpSession,
-                secondFactorCode = testSecondFactor,
-                keySalt = testKeySalt,
-                organizationKey = any(),
-                auth = testAuth,
-                keys = any(),
-                userKeys = any()
-            )
-        }
-        assertTrue(result)
-    }
-
-    @Test
     fun `update mailbox password no username fails`() = runBlockingTest {
+        coEvery { userRepository.getUser(testUserId) } returns testUser.copy(name = null)
+
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
-                user = testUser.copy(name = null),
+                userId = testUserId,
                 secondFactorCode = testSecondFactor,
                 loginPassword = keyStoreCrypto.encrypt(testLoginPassword),
                 newPassword = keyStoreCrypto.encrypt(testNewMailboxPassword),

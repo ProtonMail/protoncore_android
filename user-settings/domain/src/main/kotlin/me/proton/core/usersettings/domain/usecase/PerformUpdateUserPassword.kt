@@ -18,7 +18,6 @@
 
 package me.proton.core.usersettings.domain.usecase
 
-import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
@@ -26,43 +25,32 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.use
-import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.key.domain.entity.key.Key
-import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
-import me.proton.core.key.domain.extension.updateOrganizationPrivateKey
-import me.proton.core.key.domain.extension.updatePrivateKey
-import me.proton.core.key.domain.repository.PrivateKeyRepository
-import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.extension.hasMigratedKey
+import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.hasSubscription
-import me.proton.core.user.domain.repository.PassphraseRepository
-import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.repository.OrganizationKeysRepository
+import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import javax.inject.Inject
 
 class PerformUpdateUserPassword @Inject constructor(
     private val authRepository: AuthRepository,
+    private val userManager: UserManager,
     private val userRepository: UserRepository,
-    private val userAddressRepository: UserAddressRepository,
-    private val organizationKeysRepository: OrganizationKeysRepository,
-    private val passphraseRepository: PassphraseRepository,
-    private val keyRepository: PrivateKeyRepository,
-    private val srpCrypto: SrpCrypto,
+    private val organizationRepository: OrganizationRepository,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val cryptoContext: CryptoContext,
     @ClientSecret private val clientSecret: String
 ) {
     suspend operator fun invoke(
         twoPasswordMode: Boolean,
-        user: User,
+        userId: UserId,
         loginPassword: EncryptedString,
         newPassword: EncryptedString,
         secondFactorCode: String = ""
     ): Boolean {
+        val user = userRepository.getUser(userId)
         val username = requireNotNull(user.name ?: user.email)
-        val userId = user.userId
         val paid = user.hasSubscription()
 
         val loginInfo = authRepository.getLoginInfo(
@@ -72,14 +60,12 @@ class PerformUpdateUserPassword @Inject constructor(
         val modulus = authRepository.randomModulus()
 
         val organizationKeys = if (paid) {
-            organizationKeysRepository.getOrganizationKeys(userId)
+            organizationRepository.getOrganizationKeys(userId)
         } else null
-
-        val keySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
 
         loginPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedLoginPassword ->
             newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassphrase ->
-                val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
+                val clientProofs: SrpProofs = cryptoContext.srpCrypto.generateSrpProofs(
                     username = username,
                     password = decryptedLoginPassword.array,
                     version = loginInfo.version.toLong(),
@@ -88,80 +74,24 @@ class PerformUpdateUserPassword @Inject constructor(
                     serverEphemeral = loginInfo.serverEphemeral
                 )
 
-                val auth = if (!twoPasswordMode) srpCrypto.calculatePasswordVerifier(
+                val auth = if (!twoPasswordMode) cryptoContext.srpCrypto.calculatePasswordVerifier(
                     username = username,
                     password = decryptedNewPassphrase.array,
                     modulusId = modulus.modulusId,
                     modulus = modulus.modulus
                 ) else null
 
-                var keys: MutableList<Key>? = null
-                var userKeys: MutableList<Key>? = null
-
-                cryptoContext.pgpCrypto.getPassphrase(decryptedNewPassphrase.array, keySalt).use { newPassphrase ->
-                    val addresses = userAddressRepository.getAddresses(userId)
-
-                    if (addresses.hasMigratedKey()) {
-                        // for migrated accounts, we update only the user keys
-                        userKeys = mutableListOf()
-                        for (userKey in user.keys) {
-                            val updatedKey = userKey.update(
-                                newPassphrase = newPassphrase.array
-                            )
-                            updatedKey?.let { userKeys!!.add(it) }
-                        }
-                    } else {
-                        // for non-migrated accounts all keys (user + address) go into keys field
-                        keys = mutableListOf()
-                        for (userKey in user.keys) {
-                            val updatedKey = userKey.update(newPassphrase.array)
-                            updatedKey?.let { keys!!.add(it) }
-                        }
-                        for (address in addresses) {
-                            for (addressKey in address.keys) {
-                                val updatedAddressKey = addressKey.update(newPassphrase.array)
-                                updatedAddressKey?.let { keys!!.add(it) }
-                            }
-                        }
-                    }
-
-                    val orgPrivateKey = if (organizationKeys != null && organizationKeys.privateKey.isNotEmpty()) {
-                        val currentPassphrase =
-                            requireNotNull(passphraseRepository.getPassphrase(userId)?.decryptWith(keyStoreCrypto))
-                        organizationKeys.privateKey.updateOrganizationPrivateKey(
-                            cryptoContext = cryptoContext,
-                            currentPassphrase = currentPassphrase.array,
-                            newPassphrase = newPassphrase.array
-                        ) ?: ""
-                    } else ""
-
-                    val result = keyRepository.updatePrivateKeys(
-                        sessionUserId = userId,
-                        keySalt = keySalt,
-                        clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
-                        clientProof = Base64.encode(clientProofs.clientProof),
-                        srpSession = loginInfo.srpSession,
-                        secondFactorCode = secondFactorCode,
-                        auth = auth,
-                        keys = keys,
-                        userKeys = userKeys,
-                        organizationKey = orgPrivateKey
-                    )
-
-                    if (result) {
-                        userAddressRepository.getAddresses(userId, refresh = true)
-                        userRepository.getUser(userId, refresh = true)
-                    }
-                    return result
-                }
+                return userManager.changePassword(
+                    userId = userId,
+                    oldPassword = loginPassword,
+                    newPassword = newPassword,
+                    secondFactorCode = secondFactorCode,
+                    proofs = clientProofs,
+                    srpSession = loginInfo.srpSession,
+                    auth = auth,
+                    organizationPrivateKey = organizationKeys?.privateKey
+                )
             }
         }
     }
-
-    private fun KeyHolderPrivateKey.update(newPassphrase: ByteArray) =
-        updatePrivateKey(
-            keyStoreCrypto = keyStoreCrypto,
-            cryptoContext = cryptoContext,
-            newPassphrase = newPassphrase
-        )
 }

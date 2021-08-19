@@ -30,7 +30,6 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.GetSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
@@ -41,7 +40,6 @@ import javax.inject.Inject
 class PasswordManagementViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val getSettings: GetSettings,
-    private val userRepository: UserRepository,
     private val performUpdateLoginPassword: PerformUpdateLoginPassword,
     private val performUpdateUserPassword: PerformUpdateUserPassword
 ) : ProtonViewModel() {
@@ -99,14 +97,11 @@ class PasswordManagementViewModel @Inject constructor(
         emit(State.UpdatingLoginPassword)
         val encryptedPassword = password.encryptWith(keyStoreCrypto)
         val encryptedNewPassword = newPassword.encryptWith(keyStoreCrypto)
-        val user = userRepository.getUser(userId)
-        val username = requireNotNull(user.name ?: user.email)
 
         val result = performUpdateLoginPassword(
-            sessionUserId = userId,
+            userId = userId,
             password = encryptedPassword,
             newPassword = encryptedNewPassword,
-            username = username,
             secondFactorCode = secondFactorCode
         )
         emit(State.Success.UpdatingLoginPassword(result))
@@ -128,10 +123,9 @@ class PasswordManagementViewModel @Inject constructor(
         emit(if (twoPasswordMode == true) State.UpdatingMailboxPassword else State.UpdatingSinglePassModePassword)
         val encryptedLoginPassword = loginPassword.encryptWith(keyStoreCrypto)
         val encryptedNewMailboxPassword = newMailboxPassword.encryptWith(keyStoreCrypto)
-        val user = userRepository.getUser(userId)
         val result = performUpdateUserPassword(
             twoPasswordMode = twoPasswordMode!!,
-            user = user,
+            userId = userId,
             loginPassword = encryptedLoginPassword,
             newPassword = encryptedNewMailboxPassword,
             secondFactorCode = secondFactorCode

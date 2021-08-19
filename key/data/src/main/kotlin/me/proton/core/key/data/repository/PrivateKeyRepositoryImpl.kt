@@ -115,10 +115,10 @@ class PrivateKeyRepositoryImpl(
                     twoFactorCode = secondFactorCode,
                     auth = if (auth != null) AuthRequest.from(auth) else null,
                     keys = keys?.map {
-                        PrivateKeyRequest(privateKey = it.privateKey, id = it.id)
+                        PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)
                     },
                     userKeys = userKeys?.map {
-                        PrivateKeyRequest(privateKey = it.privateKey, id = it.id)
+                        PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)
                     },
                     organizationKey = organizationKey
                 )

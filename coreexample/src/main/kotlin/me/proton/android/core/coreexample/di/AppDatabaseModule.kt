@@ -34,7 +34,6 @@ import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
-import me.proton.core.usersettings.data.db.OrganizationKeysDatabase
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import javax.inject.Singleton
 
@@ -76,7 +75,4 @@ abstract class AppDatabaseBindsModule {
 
     @Binds
     abstract fun provideOrganizationDatabase(appDatabase: AppDatabase): OrganizationDatabase
-
-    @Binds
-    abstract fun provideOrganizationKeysDatabase(appDatabase: AppDatabase): OrganizationKeysDatabase
 }

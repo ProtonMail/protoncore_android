@@ -48,7 +48,6 @@ import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.entity.UserKeyEntity
 import me.proton.core.usersettings.data.db.OrganizationDatabase
-import me.proton.core.usersettings.data.db.OrganizationKeysDatabase
 import me.proton.core.usersettings.data.db.UserSettingsConverters
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.entity.OrganizationEntity
@@ -102,8 +101,7 @@ abstract class AppDatabase :
     PublicAddressDatabase,
     MailSettingsDatabase,
     UserSettingsDatabase,
-    OrganizationDatabase,
-    OrganizationKeysDatabase {
+    OrganizationDatabase {
 
     companion object {
         const val name = "db-account-manager"

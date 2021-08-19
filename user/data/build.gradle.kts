@@ -55,7 +55,8 @@ dependencies {
         `retrofit`,
         `retrofit-kotlin-serialization`,
         `room-ktx`,
-        `store4`
+        `store4`,
+        `googleTink`
     )
 
     androidTestImplementation(

@@ -18,7 +18,9 @@
 
 package me.proton.core.key.domain.entity.key
 
+import me.proton.core.crypto.common.pgp.Armored
+
 data class Key(
-    val privateKey: String,
-    val id: String
+    val privateKey: Armored,
+    val keyId: KeyId
 )

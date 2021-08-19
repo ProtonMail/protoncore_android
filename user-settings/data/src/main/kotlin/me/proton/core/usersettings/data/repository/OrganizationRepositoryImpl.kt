@@ -37,6 +37,7 @@ import me.proton.core.usersettings.data.extension.fromEntity
 import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toEntity
 import me.proton.core.usersettings.domain.entity.Organization
+import me.proton.core.usersettings.domain.entity.OrganizationKeys
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 
 class OrganizationRepositoryImpl(
@@ -45,40 +46,78 @@ class OrganizationRepositoryImpl(
 ) : OrganizationRepository {
 
     private val organizationDao = db.organizationDao()
+    private val organizationKeysDao = db.organizationKeysDao()
 
-    private val store = StoreBuilder.from(
+    private val storeOrganization = StoreBuilder.from(
         fetcher = Fetcher.of { key: UserId ->
             apiProvider.get<OrganizationApi>(key).invoke {
                 getOrganization().organization.fromResponse(key)
             }.valueOrThrow
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { key -> observeByUserId(key) },
+            reader = { key -> observeOrganizationByUserId(key) },
             writer = { _, input -> insertOrUpdate(input) },
-            delete = { key -> delete(key) },
-            deleteAll = { deleteAll() }
+            delete = { key -> deleteOrganization(key) },
+            deleteAll = { deleteAllOrganizations() }
         )
     ).disableCache().build() // We don't want potential stale data from memory cache
 
-    private fun observeByUserId(userId: UserId): Flow<Organization?> =
+    private val storeOrganizationKeys = StoreBuilder.from(
+        fetcher = Fetcher.of { key: UserId ->
+            apiProvider.get<OrganizationApi>(key).invoke {
+                getOrganizationKeys().fromResponse(key)
+            }.valueOrThrow
+        },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = { key -> observeOrganizationKeysByUserId(key) },
+            writer = { _, input -> insertOrUpdate(input) },
+            delete = { key -> deleteOrganizationKeys(key) },
+            deleteAll = { deleteAllOrganizationKeys() }
+        )
+    ).disableCache().build() // We don't want potential stale data from memory cache
+
+    private fun observeOrganizationByUserId(userId: UserId): Flow<Organization?> =
         organizationDao.observeByUserId(userId).map { it?.fromEntity() }
 
     private suspend fun insertOrUpdate(organization: Organization) =
         organizationDao.insertOrUpdate(organization.toEntity())
 
-    private suspend fun delete(userId: UserId) =
+    private suspend fun deleteOrganization(userId: UserId) =
         organizationDao.delete(userId)
 
-    private suspend fun deleteAll() =
+    private suspend fun deleteAllOrganizations() =
         organizationDao.deleteAll()
 
     override suspend fun getOrganizationFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<DataResult<Organization>> {
-        return store.stream(StoreRequest.cached(sessionUserId, refresh = refresh)).map { it.toDataResult() }
+        return storeOrganization.stream(StoreRequest.cached(sessionUserId, refresh = refresh)).map { it.toDataResult() }
     }
 
     override suspend fun getOrganization(sessionUserId: SessionUserId, refresh: Boolean): Organization =
-        if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)
+        if (refresh) storeOrganization.fresh(sessionUserId) else storeOrganization.get(sessionUserId)
+
+    // organization keys
+    private fun observeOrganizationKeysByUserId(userId: UserId): Flow<OrganizationKeys?> =
+        organizationKeysDao.observeByUserId(userId).map { it?.fromEntity() }
+
+    private suspend fun insertOrUpdate(organizationKeys: OrganizationKeys) =
+        organizationKeysDao.insertOrUpdate(organizationKeys.toEntity())
+
+    private suspend fun deleteOrganizationKeys(userId: UserId) =
+        organizationKeysDao.delete(userId)
+
+    private suspend fun deleteAllOrganizationKeys() =
+        organizationKeysDao.deleteAll()
+
+    override suspend fun getOrganizationKeysFlow(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): Flow<DataResult<OrganizationKeys>> {
+        return storeOrganizationKeys.stream(StoreRequest.cached(sessionUserId, refresh = refresh)).map { it.toDataResult() }
+    }
+
+    override suspend fun getOrganizationKeys(sessionUserId: SessionUserId, refresh: Boolean) =
+        if (refresh) storeOrganizationKeys.fresh(sessionUserId) else storeOrganizationKeys.get(sessionUserId)
 }

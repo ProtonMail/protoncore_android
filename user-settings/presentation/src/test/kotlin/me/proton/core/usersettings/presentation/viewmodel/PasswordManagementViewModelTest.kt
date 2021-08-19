@@ -174,7 +174,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performUpdateLoginPassword(
-                    sessionUserId = testUserId,
+                    userId = testUserId,
                     password = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
                     username = testUsername,
@@ -214,7 +214,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performUpdateMailboxPassword(
-                    user = testUser,
+                    userId = testUser,
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
                     secondFactorCode = "",
@@ -254,7 +254,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performUpdateMailboxPassword(
-                    user = testUser,
+                    userId = testUser,
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
                     secondFactorCode = "",

@@ -32,6 +32,8 @@ import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.Flags
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
@@ -44,6 +46,7 @@ import kotlin.test.assertNotNull
 class PerformUpdateLoginPasswordTest {
     // region mocks
     private val authRepository = mockk<AuthRepository>(relaxed = true)
+    private val userRepository = mockk<UserRepository>(relaxed = true)
     private val repository = mockk<UserSettingsRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
@@ -70,6 +73,24 @@ class PerformUpdateLoginPasswordTest {
         modulusId = testModulusId,
         salt = testSalt,
         verifier = "test-verifier"
+    )
+
+    private val testUser = User(
+        userId = UserId("test-user-id"),
+        email = null,
+        name = testUsername,
+        displayName = null,
+        currency = "test-curr",
+        credit = 0,
+        usedSpace = 0,
+        maxSpace = 100,
+        maxUpload = 100,
+        role = null,
+        private = true,
+        services = 1,
+        subscribed = 0,
+        delinquent = null,
+        keys = emptyList()
     )
 
     private val testUserSettingsResponse = UserSettings(
@@ -105,6 +126,7 @@ class PerformUpdateLoginPasswordTest {
 
         useCase = PerformUpdateLoginPassword(
             authRepository = authRepository,
+            userRepository = userRepository,
             userSettingsRepository = repository,
             srpCrypto = srpCrypto,
             keyStoreCrypto = keyStoreCrypto,
@@ -121,6 +143,8 @@ class PerformUpdateLoginPasswordTest {
                 auth = testAuth
             )
         } returns testUserSettingsResponse
+
+        coEvery { userRepository.getUser(any()) } returns testUser
     }
 
     @Test
@@ -159,8 +183,7 @@ class PerformUpdateLoginPasswordTest {
 
         // WHEN
         val result = useCase.invoke(
-            sessionUserId = testUserId,
-            username = testUsername,
+            userId = testUserId,
             password = keyStoreCrypto.encrypt(testPassword),
             secondFactorCode = testSecondFactor,
             newPassword = keyStoreCrypto.encrypt(testNewPassword)

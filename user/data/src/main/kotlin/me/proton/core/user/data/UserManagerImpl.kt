@@ -18,20 +18,28 @@
 
 package me.proton.core.user.data
 
+import com.google.crypto.tink.subtle.Base64
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.Auth
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
+import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
 import me.proton.core.key.domain.extension.primary
+import me.proton.core.key.domain.extension.updateOrganizationPrivateKey
+import me.proton.core.key.domain.extension.updatePrivateKey
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.signedKeyList
@@ -51,7 +59,8 @@ class UserManagerImpl(
     private val keySaltRepository: KeySaltRepository,
     private val privateKeyRepository: PrivateKeyRepository,
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
-    private val cryptoContext: CryptoContext
+    private val cryptoContext: CryptoContext,
+    private val keyStoreCrypto: KeyStoreCrypto
 ) : UserManager {
 
     override suspend fun addUser(user: User, addresses: List<UserAddress>) {
@@ -122,16 +131,80 @@ class UserManagerImpl(
 
     override suspend fun changePassword(
         userId: UserId,
-        oldPassword: String,
-        newPassword: String
-    ) {
-        TODO("Change password not yet implemented")
-        // oldPassword: Check if valid.
-        // oldPassphrase: Get from DB.
-        // passphrase = generatePassphrase(password, keySalt).
-        // isOldValid = passphraseCanUnlockKey(privateKey, passphrase).
-        // newPassphrase: generate.
-        // keySaltRepository.clear(userId)
+        loginPassword: String,
+        newPassword: String,
+        secondFactorCode: String,
+        clientProofs: SrpProofs,
+        srpSession: String,
+        auth: Auth?,
+        organizationPrivateKey: String?
+    ): Boolean {
+        val user = userRepository.getUser(userId)
+        val keySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
+
+        loginPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedLoginPassword ->
+            newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassphrase ->
+
+                cryptoContext.pgpCrypto.getPassphrase(decryptedNewPassphrase.array, keySalt).use { newPassphrase ->
+                    val addresses = userAddressRepository.getAddresses(userId)
+
+                    var keys: MutableList<Key>? = null
+                    var userKeys: MutableList<Key>? = null
+
+                    if (addresses.hasMigratedKey()) {
+                        // for migrated accounts, we update only the user keys
+                        userKeys = mutableListOf()
+                        for (userKey in user.keys) {
+                            val updatedKey = userKey.update(
+                                newPassphrase = newPassphrase.array
+                            )
+                            updatedKey?.let { userKeys.add(it) }
+                        }
+                    } else {
+                        // for non-migrated accounts all keys (user + address) go into keys field
+                        keys = mutableListOf()
+                        for (userKey in user.keys) {
+                            val updatedKey = userKey.update(newPassphrase.array)
+                            updatedKey?.let { keys.add(it) }
+                        }
+                        for (address in addresses) {
+                            for (addressKey in address.keys) {
+                                val updatedAddressKey = addressKey.update(newPassphrase.array)
+                                updatedAddressKey?.let { keys.add(it) }
+                            }
+                        }
+                    }
+
+                    val orgPrivateKey = if (organizationPrivateKey != null && organizationPrivateKey.isNotEmpty()) {
+                        val currentPassphrase =
+                            requireNotNull(passphraseRepository.getPassphrase(userId)?.decryptWith(keyStoreCrypto))
+                        organizationPrivateKey.updateOrganizationPrivateKey(
+                            cryptoContext = cryptoContext,
+                            currentPassphrase = currentPassphrase.array,
+                            newPassphrase = newPassphrase.array
+                        ) ?: ""
+                    } else ""
+
+                    val result = privateKeyRepository.updatePrivateKeys(
+                        sessionUserId = userId,
+                        keySalt = keySalt,
+                        clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
+                        clientProof = Base64.encode(clientProofs.clientProof),
+                        srpSession = srpSession,
+                        secondFactorCode = secondFactorCode,
+                        auth = auth,
+                        keys = keys,
+                        userKeys = userKeys,
+                        organizationKey = orgPrivateKey
+                    )
+
+                    userAddressRepository.getAddresses(userId, refresh = true)
+                    userRepository.getUser(userId, refresh = true)
+                    passphraseRepository.setPassphrase(userId, newPassphrase.encryptWith(keyStoreCrypto))
+                    return result
+                }
+            }
+        }
     }
 
     override suspend fun setupPrimaryKeys(
@@ -198,4 +271,11 @@ class UserManagerImpl(
             return checkNotNull(userRepository.getUser(sessionUserId, refresh = true))
         }
     }
+
+    private fun KeyHolderPrivateKey.update(newPassphrase: ByteArray) =
+        updatePrivateKey(
+            keyStoreCrypto = keyStoreCrypto,
+            cryptoContext = cryptoContext,
+            newPassphrase = newPassphrase
+        )
 }

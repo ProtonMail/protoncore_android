@@ -35,7 +35,7 @@ fun KeyHolderPrivateKey.updatePrivateKey(
         oldPassphrase = passphrase,
         newPassphrase = newPassphrase
     )
-    return if (armored != null) Key(armored, keyId.id) else null
+    return if (armored != null) Key(armored, keyId) else null
 }
 
 fun String.updateOrganizationPrivateKey(
