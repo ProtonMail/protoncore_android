@@ -34,16 +34,35 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.register
 import format.GitlabQualityReport
 import format.SarifQualityReport
+import org.gradle.api.provider.Property
+import org.gradle.kotlin.dsl.create
 import studio.forface.easygradle.dsl.*
 import java.io.BufferedWriter
 import java.io.File
+import java.lang.IllegalStateException
 import java.net.URL
 
 abstract class ProtonDetektPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        target.setupDetekt()
+        val configuration = target.extensions.create<ProtonDetektConfiguration>("protonDetekt")
+        target.setupDetekt(configuration)
     }
+}
+
+abstract class ProtonDetektConfiguration {
+    abstract val _configFilePath: Property<File>
+    var configFilePath: File
+        get() = _configFilePath.get()
+        set(value) = _configFilePath.set(value)
+    abstract val _reportDir: Property<File>
+    var reportDir: File
+        get() = _reportDir.get()
+        set(value) = _reportDir.set(value)
+    abstract val _mergedReportName: Property<String>
+    var mergedReportName: String
+        get() = _mergedReportName.get()
+        set(value) = _mergedReportName.set(value)
 }
 
 /**
@@ -60,61 +79,73 @@ abstract class ProtonDetektPlugin : Plugin<Project> {
  *
  * @author Davide Farella
  */
-private fun Project.setupDetekt(filter: (Project) -> Boolean = { true }) {
+private fun Project.setupDetekt(configuration: ProtonDetektConfiguration, filter: (Project) -> Boolean = { true }) {
 
     `detekt version` = "1.17.1" // Released: May 15, 2021
 
     val reportsDirPath = "config/detekt/reports"
     val configFilePath = "config/detekt/config.yml"
 
-    val detektReportsDir = File(rootDir, reportsDirPath)
-    val configFile = File(rootDir, configFilePath)
+    configuration._reportDir.convention(File(rootDir, reportsDirPath))
+    configuration._configFilePath.convention(File(rootDir, configFilePath))
+    configuration._mergedReportName.convention("mergedReport.json")
 
-    if (rootProject.name != "Proton Core") {
-        downloadDetektConfig(configFilePath, configFile)
+    val downloadProtonDetektConfig = tasks.register("downloadProtonDetektConfig") {
+        val configFile = configuration.configFilePath
+
+        if (rootProject.name != "Proton Core") {
+            downloadDetektConfig(configFilePath, configFile)
+        }
+
+        if (!configFile.exists()) {
+            throw IllegalStateException("Detekt configuration file not found!")
+        }
     }
 
-    if (!configFile.exists()) {
-        println("Detekt configuration file not found!")
-        return
-    }
+    subprojects.filter(filter).forEach { sub -> sub.apply(plugin = "io.gitlab.arturbosch.detekt") }
 
-    // Configure sub-projects
-    for (sub in subprojects.filter(filter)) {
+    afterEvaluate {
 
-        sub.apply(plugin = "io.gitlab.arturbosch.detekt")
-        sub.extensions.configure<DetektExtension> {
-            failFast = false
-            config = files(configFile)
-            input = files(sub.projectDir.path + "/src/")
+        if (!configuration.reportDir.exists()) {
+            configuration.reportDir.mkdirs()
+        }
 
-            reports {
-                xml.enabled = false
-                html.enabled = false
-                txt.enabled = false
-                sarif.enabled = true
+        // Configure sub-projects
+        subprojects.filter(filter).forEach { sub ->
+
+            sub.extensions.configure<DetektExtension> {
+                failFast = false
+                config = files(configuration.configFilePath)
+                input = files(sub.projectDir.path + "/src/")
+
+                reports {
+                    xml.enabled = false
+                    html.enabled = false
+                    txt.enabled = false
+                    sarif.enabled = true
+                }
+            }
+            sub.dependencies {
+                add("detekt", `detekt-cli`)
+                add("detektPlugins", `detekt-formatting`)
+            }
+            sub.getTasksByName("detekt", true).forEach {  task ->
+                task.dependsOn(downloadProtonDetektConfig)
             }
         }
-        sub.dependencies {
-            add("detekt", `detekt-cli`)
-            add("detektPlugins", `detekt-formatting`)
-        }
-    }
-
-    if (!detektReportsDir.exists()) {
-        detektReportsDir.mkdirs()
     }
 
     val convertToGitlabFormat = tasks.register<ConvertToGitlabFormat>("convertToGitlabFormat") {
-        reportsDir = detektReportsDir
+        reportsDir = configuration.reportDir
 
         // Execute after 'detekt' is completed for sub-projects
-        val subTasks = subprojects.flatMap { getTasksByName("detekt", true) }
+        val subTasks = getTasksByName("detekt", true)
         dependsOn(subTasks)
     }
 
     tasks.register<MergeDetektReports>("multiModuleDetekt") {
-        reportsDir = detektReportsDir
+        reportsDir = configuration.reportDir
+        outputName = configuration.mergedReportName
         dependsOn(convertToGitlabFormat)
     }
 }
@@ -140,8 +171,9 @@ internal open class ConvertToGitlabFormat : DefaultTask() {
         val report = File(reportsDir, "${project.name}.json")
             .apply { if (exists()) writeText("") }
 
-        println("Looking for detekt.sarif in $reportsDir")
-        File(project.buildDir, "reports/detekt")
+        val detektReports = File(project.buildDir, "reports/detekt")
+        println("Looking for detekt.sarif in $detektReports")
+        detektReports
             .listFiles { _, name -> name == "detekt.sarif" }
             ?.firstOrNull()
             ?.let { file ->
