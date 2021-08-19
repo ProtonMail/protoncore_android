@@ -20,6 +20,7 @@ package me.proton.core.usersettings.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -37,6 +38,7 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validatePasswordMinLength
 import me.proton.core.usersettings.presentation.R
@@ -105,12 +107,17 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
                     binding.saveMailboxPasswordButton.showLoading(true)
                 is PasswordManagementViewModel.State.UpdatingSinglePassModePassword ->
                     binding.saveLoginPasswordButton.showLoading(true)
-                is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword,
+                is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword -> {
+                    resetLoginPasswordInput()
+                    showSuccess(R.string.settings_password_management_success)
+                }
                 is PasswordManagementViewModel.State.Success.UpdatingLoginPassword -> {
                     resetLoginPasswordInput()
+                    showSuccess(R.string.settings_password_management_change_login_password)
                 }
                 is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword -> {
                     resetMailboxPasswordInput()
+                    showSuccess(R.string.settings_password_management_change_mailbox_password)
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -230,6 +237,10 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
         } else {
             setIdle()
         }
+    }
+
+    private fun showSuccess(@StringRes messageRes: Int) {
+        binding.root.successSnack(messageRes)
     }
 
     private fun showError(message: String?) {

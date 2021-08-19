@@ -43,4 +43,8 @@
     <string name="settings_mailbox_password_hint_new">New mailbox password</string>
     <string name="settings_mailbox_password_hint_new_confirm">Confirm new mailbox password</string>
     <string name="settings_change_password_error">A change password error has occurred.</string>
+    <string name="settings_recovery_email_success">Recovery email updated</string>
+    <string name="settings_password_management_success">Password updated</string>
+    <string name="settings_password_management_login_password_success">Login password updated</string>
+    <string name="settings_password_management_mailbox_password_success">Mailbox password updated</string>
 </resources>
