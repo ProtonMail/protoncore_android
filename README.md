@@ -216,13 +216,13 @@ Country Presentation: **0.1.6** - _released on: Aug 05, 2021_
 
 ### Payment
 
-Payment: **0.2.3** - _released on: Aug 05, 2021_
+Payment: **0.2.4** - _released on: Aug 20, 2021_
 
-Payment Data: **0.2.3** - _released on: Aug 05, 2021_
+Payment Data: **0.2.4** - _released on: Aug 20, 2021_
 
-Payment Domain: **0.2.3** - _released on: Aug 05, 2021_
+Payment Domain: **0.2.4** - _released on: Aug 20, 2021_
 
-Payment Presentation: **0.2.3** - _released on: Aug 05, 2021_
+Payment Presentation: **0.2.4** - _released on: Aug 20, 2021_
 
 ### Plan
 
