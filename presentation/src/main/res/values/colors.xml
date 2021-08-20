@@ -96,6 +96,8 @@
     <color name="notification_success">@color/apple</color>
     <color name="notification_warning">@color/sunglow</color>
 
+    <color name="blender_norm">#750C0C14</color>
+
     <!-- status & navigation bar color -->
     <color name="status_bar">@color/background_norm</color>
     <color name="nav_bar">@color/scrim</color>

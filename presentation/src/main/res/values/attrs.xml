@@ -53,6 +53,7 @@
         <attr name="proton_notification_error" format="reference" />
         <attr name="proton_notification_success" format="reference" />
         <attr name="proton_notification_warning" format="reference" />
+        <attr name="proton_blender_norm" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="ProtonProgressButton">
