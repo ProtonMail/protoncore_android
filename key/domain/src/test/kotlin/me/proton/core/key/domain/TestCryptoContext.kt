@@ -259,12 +259,13 @@ class TestCryptoContext : CryptoContext {
 
         override fun updatePrivateKeyPassphrase(
             privateKey: String,
-            oldPassphrase: ByteArray,
+            passphrase: ByteArray,
             newPassphrase: ByteArray
-        ): Armored? = "privateKey"
+        ): Armored = "privateKey"
 
         override fun updateTime(epochSeconds: Long) = Unit
     }
+
     override val srpCrypto = object : SrpCrypto {
         override fun generateSrpProofs(
             username: String,
@@ -285,6 +286,5 @@ class TestCryptoContext : CryptoContext {
         ): Auth {
             return Auth(mockk(), mockk(), mockk(), mockk())
         }
-
     }
 }

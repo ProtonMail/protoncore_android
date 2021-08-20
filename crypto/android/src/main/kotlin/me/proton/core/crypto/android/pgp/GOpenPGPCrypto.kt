@@ -51,6 +51,7 @@ import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
+import me.proton.core.crypto.common.pgp.unlockOrNull
 import java.io.Closeable
 import java.io.File
 import java.security.SecureRandom
@@ -524,18 +525,6 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // endregion
 
-    // region update
-
-    override fun updatePrivateKeyPassphrase(privateKey: String, oldPassphrase: ByteArray, newPassphrase: ByteArray): Armored? =
-        runCatching {
-            check(oldPassphrase.isNotEmpty()) { "The old passphrase for generating key can't be empty." }
-            check(newPassphrase.isNotEmpty()) { "The new passphrase for generating key can't be empty." }
-
-            Helper.updatePrivateKeyPassphrase(privateKey, oldPassphrase, newPassphrase)
-        }.getOrThrow()
-
-    // endregion
-
     // region Get
 
     override fun getArmored(
@@ -589,6 +578,8 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
+    // region PrivateKey/Token generation
+
     override fun generateNewKeySalt(): String {
         val salt = ByteArray(16)
         SecureRandom().nextBytes(salt)
@@ -619,6 +610,21 @@ class GOpenPGPCrypto : PGPCrypto {
         val email = "$username@$domain"
         Helper.generateKey(email, email, passphrase, PGPCrypto.KeyType.X25519.toString(), 0)
     }.getOrElse { throw CryptoException("Key cannot be generated.", it) }
+
+    override fun updatePrivateKeyPassphrase(
+        privateKey: String,
+        passphrase: ByteArray,
+        newPassphrase: ByteArray
+    ): Armored = runCatching {
+        check(passphrase.isNotEmpty()) { "The current passphrase key can't be empty." }
+        check(newPassphrase.isNotEmpty()) { "The new passphrase for generating key can't be empty." }
+        checkNotNull(unlockOrNull(privateKey, passphrase)) { "The passphrase cannot unlock the private key." }
+        Helper.updatePrivateKeyPassphrase(privateKey, passphrase, newPassphrase)
+    }.getOrElse { throw CryptoException("Passphrase cannot be changed for Private Key.", it) }
+
+    // endregion
+
+    // region Time
 
     override fun updateTime(epochSeconds: Long) {
         Crypto.updateTime(epochSeconds)

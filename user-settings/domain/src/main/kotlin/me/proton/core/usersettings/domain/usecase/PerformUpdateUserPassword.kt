@@ -22,7 +22,6 @@ import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -34,14 +33,16 @@ import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import javax.inject.Inject
 
 class PerformUpdateUserPassword @Inject constructor(
+    context: CryptoContext,
     private val authRepository: AuthRepository,
     private val userManager: UserManager,
     private val userRepository: UserRepository,
     private val organizationRepository: OrganizationRepository,
-    private val keyStoreCrypto: KeyStoreCrypto,
-    private val cryptoContext: CryptoContext,
     @ClientSecret private val clientSecret: String
 ) {
+    private val keyStore = context.keyStoreCrypto
+    private val srp = context.srpCrypto
+
     suspend operator fun invoke(
         twoPasswordMode: Boolean,
         userId: UserId,
@@ -51,21 +52,17 @@ class PerformUpdateUserPassword @Inject constructor(
     ): Boolean {
         val user = userRepository.getUser(userId)
         val username = requireNotNull(user.name ?: user.email)
-        val paid = user.hasSubscription()
 
-        val loginInfo = authRepository.getLoginInfo(
-            username = username,
-            clientSecret = clientSecret
-        )
+        val loginInfo = authRepository.getLoginInfo(username, clientSecret)
         val modulus = authRepository.randomModulus()
 
-        val organizationKeys = if (paid) {
+        val organizationKeys = if (user.hasSubscription()) {
             organizationRepository.getOrganizationKeys(userId)
         } else null
 
-        loginPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedLoginPassword ->
-            newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassword ->
-                val clientProofs: SrpProofs = cryptoContext.srpCrypto.generateSrpProofs(
+        loginPassword.decryptWith(keyStore).toByteArray().use { decryptedLoginPassword ->
+            newPassword.decryptWith(keyStore).toByteArray().use { decryptedNewPassword ->
+                val clientProofs: SrpProofs = srp.generateSrpProofs(
                     username = username,
                     password = decryptedLoginPassword.array,
                     version = loginInfo.version.toLong(),
@@ -74,7 +71,7 @@ class PerformUpdateUserPassword @Inject constructor(
                     serverEphemeral = loginInfo.serverEphemeral
                 )
 
-                val auth = if (!twoPasswordMode) cryptoContext.srpCrypto.calculatePasswordVerifier(
+                val auth = if (!twoPasswordMode) srp.calculatePasswordVerifier(
                     username = username,
                     password = decryptedNewPassword.array,
                     modulusId = modulus.modulusId,
@@ -88,7 +85,7 @@ class PerformUpdateUserPassword @Inject constructor(
                     proofs = clientProofs,
                     srpSession = loginInfo.srpSession,
                     auth = auth,
-                    organizationPrivateKey = organizationKeys?.privateKey
+                    orgPrivateKey = organizationKeys?.privateKey
                 )
             }
         }

@@ -123,7 +123,7 @@ class PasswordManagementViewModel @Inject constructor(
         emit(if (twoPasswordMode == true) State.UpdatingMailboxPassword else State.UpdatingSinglePassModePassword)
         val encryptedLoginPassword = loginPassword.encryptWith(keyStoreCrypto)
         val encryptedNewMailboxPassword = newMailboxPassword.encryptWith(keyStoreCrypto)
-        val result = performUpdateUserPassword(
+        val result = performUpdateUserPassword.invoke(
             twoPasswordMode = twoPasswordMode!!,
             userId = userId,
             loginPassword = encryptedLoginPassword,

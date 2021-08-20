@@ -21,11 +21,10 @@ package me.proton.core.usersettings.domain.usecase
 import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
 import me.proton.core.crypto.common.keystore.use
-import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.repository.UserRepository
@@ -34,13 +33,15 @@ import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
 class PerformUpdateLoginPassword @Inject constructor(
+    context: CryptoContext,
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     private val userSettingsRepository: UserSettingsRepository,
-    private val srpCrypto: SrpCrypto,
-    private val keyStoreCrypto: KeyStoreCrypto,
     @ClientSecret private val clientSecret: String
 ) {
+    private val keyStore = context.keyStoreCrypto
+    private val srp = context.srpCrypto
+
     suspend operator fun invoke(
         userId: UserId,
         password: EncryptedString,
@@ -56,17 +57,17 @@ class PerformUpdateLoginPassword @Inject constructor(
         )
         val modulus = authRepository.randomModulus()
 
-        password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedCurrentPassword ->
-            newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassword ->
-                val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
+        password.decryptWith(keyStore).toByteArray().use { decryptedPassword ->
+            newPassword.decryptWith(keyStore).toByteArray().use { decryptedNewPassword ->
+                val clientProofs: SrpProofs = srp.generateSrpProofs(
                     username = username,
-                    password = decryptedCurrentPassword.array,
+                    password = decryptedPassword.array,
                     version = loginInfo.version.toLong(),
                     salt = loginInfo.salt,
                     modulus = loginInfo.modulus,
                     serverEphemeral = loginInfo.serverEphemeral
                 )
-                val auth = srpCrypto.calculatePasswordVerifier(
+                val auth = srp.calculatePasswordVerifier(
                     username = username,
                     password = decryptedNewPassword.array,
                     modulusId = modulus.modulusId,

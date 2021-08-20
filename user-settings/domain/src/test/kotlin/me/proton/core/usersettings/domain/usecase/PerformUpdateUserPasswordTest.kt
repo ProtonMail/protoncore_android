@@ -34,7 +34,6 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import org.junit.Before
@@ -61,7 +60,6 @@ class PerformUpdateUserPasswordTest {
     private val testClientEphemeral = "test-client-ephemeral"
     private val testClientProof = "test-client-proof"
     private val testSrpSession = "test-srp-session"
-    private val testOrgKey = "test-org-key"
     private val testLoginPassword = "test-login-password"
     private val testNewMailboxPassword = "test-new-mailbox-password"
     private val testExpectedServerProof = "test-server-proof"
@@ -94,7 +92,6 @@ class PerformUpdateUserPasswordTest {
         delinquent = null,
         keys = emptyList()
     )
-    private val testAddress = mockk<UserAddress>()
     // endregion
 
     private lateinit var useCase: PerformUpdateUserPassword
@@ -107,11 +104,10 @@ class PerformUpdateUserPasswordTest {
         every { keyStoreCrypto.encrypt(testNewMailboxPassword) } returns "encrypted-test-new-mailbox-password"
 
         useCase = PerformUpdateUserPassword(
+            context = cryptoContext,
             authRepository = authRepository,
             userRepository = userRepository,
             organizationRepository = organizationRepository,
-            keyStoreCrypto = keyStoreCrypto,
-            cryptoContext = cryptoContext,
             clientSecret = testClientSecret,
             userManager = userManager
         )
@@ -119,13 +115,12 @@ class PerformUpdateUserPasswordTest {
         coEvery {
             userManager.changePassword(
                 userId = testUserId,
-                oldPassword = any(),
                 newPassword = any(),
                 secondFactorCode = any(),
                 proofs = any(),
                 srpSession = any(),
                 auth = any(),
-                organizationPrivateKey = any()
+                orgPrivateKey = any()
             )
         } returns true
 

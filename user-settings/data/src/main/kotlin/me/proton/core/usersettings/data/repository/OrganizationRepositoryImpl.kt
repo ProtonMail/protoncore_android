@@ -88,11 +88,11 @@ class OrganizationRepositoryImpl(
     private suspend fun deleteAllOrganizations() =
         organizationDao.deleteAll()
 
-    override suspend fun getOrganizationFlow(
+    override fun getOrganizationFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<DataResult<Organization>> {
-        return storeOrganization.stream(StoreRequest.cached(sessionUserId, refresh = refresh)).map { it.toDataResult() }
+        return storeOrganization.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
     }
 
     override suspend fun getOrganization(sessionUserId: SessionUserId, refresh: Boolean): Organization =
@@ -111,11 +111,11 @@ class OrganizationRepositoryImpl(
     private suspend fun deleteAllOrganizationKeys() =
         organizationKeysDao.deleteAll()
 
-    override suspend fun getOrganizationKeysFlow(
+    override fun getOrganizationKeysFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<DataResult<OrganizationKeys>> {
-        return storeOrganizationKeys.stream(StoreRequest.cached(sessionUserId, refresh = refresh)).map { it.toDataResult() }
+        return storeOrganizationKeys.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
     }
 
     override suspend fun getOrganizationKeys(sessionUserId: SessionUserId, refresh: Boolean) =

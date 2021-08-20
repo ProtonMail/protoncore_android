@@ -26,18 +26,17 @@ import me.proton.core.usersettings.domain.entity.OrganizationKeys
 
 interface OrganizationRepository {
 
-    suspend fun getOrganizationFlow(
+    fun getOrganizationFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
     ): Flow<DataResult<Organization>>
-
 
     suspend fun getOrganization(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
     ): Organization
 
-    suspend fun getOrganizationKeysFlow(
+    fun getOrganizationKeysFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
     ): Flow<DataResult<OrganizationKeys>>

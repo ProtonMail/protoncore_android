@@ -19,33 +19,32 @@
 package me.proton.core.key.domain.extension
 
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
 
-fun KeyHolderPrivateKey.updatePrivateKey(
-    keyStoreCrypto: KeyStoreCrypto,
+fun KeyHolderPrivateKey.updatePrivateKeyPassphraseOrNull(
     cryptoContext: CryptoContext,
     newPassphrase: ByteArray
 ): Key? {
-    val passphrase = privateKey.passphrase?.decryptWith(keyStoreCrypto)?.array ?: return null
-    val armored = cryptoContext.pgpCrypto.updatePrivateKeyPassphrase(
+    val passphrase = privateKey.passphrase?.decryptWith(cryptoContext.keyStoreCrypto)?.array ?: return null
+    return cryptoContext.pgpCrypto.updatePrivateKeyPassphraseOrNull(
         privateKey = privateKey.key,
-        oldPassphrase = passphrase,
+        passphrase = passphrase,
         newPassphrase = newPassphrase
-    )
-    return if (armored != null) Key(armored, keyId) else null
+    )?.let { Key(keyId, it) }
 }
 
-fun String.updateOrganizationPrivateKey(
+fun Armored.updatePrivateKeyPassphrase(
     cryptoContext: CryptoContext,
-    currentPassphrase: ByteArray,
+    passphrase: ByteArray,
     newPassphrase: ByteArray
-): String? {
+): Armored {
     return cryptoContext.pgpCrypto.updatePrivateKeyPassphrase(
         privateKey = this,
-        oldPassphrase = currentPassphrase,
+        passphrase = passphrase,
         newPassphrase = newPassphrase
     )
 }

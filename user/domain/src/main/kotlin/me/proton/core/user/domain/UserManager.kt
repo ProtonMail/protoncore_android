@@ -143,7 +143,7 @@ interface UserManager {
         proofs: SrpProofs,
         srpSession: String,
         auth: Auth?,
-        organizationPrivateKey: Armored?
+        orgPrivateKey: Armored?
     ): Boolean
 
     /**

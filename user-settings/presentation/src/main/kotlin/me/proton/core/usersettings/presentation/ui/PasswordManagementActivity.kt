@@ -37,14 +37,10 @@ class PasswordManagementActivity : ProtonActivity<ActivityPasswordManagementBind
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        with(binding.toolbar) {
-            title = getString(R.string.settings_password_management_header)
-        }
-        supportFragmentManager.showUpdatePassword(R.id.layoutContent, input)
+        binding.toolbar.title = getString(R.string.settings_password_management_header)
 
-        supportFragmentManager.setFragmentResultListener(
-            KEY_UPDATE_RESULT, this@PasswordManagementActivity
-        ) { _, _ ->
+        supportFragmentManager.showUpdatePassword(R.id.layoutContent, input)
+        supportFragmentManager.setFragmentResultListener(KEY_UPDATE_RESULT, this) { _, _ ->
             finish()
         }
     }

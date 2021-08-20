@@ -124,8 +124,7 @@ object UserManagerModule {
         keySaltRepository: KeySaltRepository,
         privateKeyRepository: PrivateKeyRepository,
         userAddressKeySecretProvider: UserAddressKeySecretProvider,
-        cryptoContext: CryptoContext,
-        keyStoreCrypto: KeyStoreCrypto
+        cryptoContext: CryptoContext
     ): UserManager = UserManagerImpl(
         userRepository,
         userAddressRepository,
@@ -133,8 +132,7 @@ object UserManagerModule {
         keySaltRepository,
         privateKeyRepository,
         userAddressKeySecretProvider,
-        cryptoContext,
-        keyStoreCrypto
+        cryptoContext
     )
 
     @Provides

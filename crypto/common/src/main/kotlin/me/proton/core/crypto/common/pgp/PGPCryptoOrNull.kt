@@ -224,3 +224,12 @@ fun PGPCrypto.getPublicKeyOrNull(
 fun PGPCrypto.getFingerprintOrNull(
     key: Armored
 ): String? = runCatching { getFingerprint(key) }.getOrNull()
+
+/**
+ * @return updated [Armored] private key, or `null` if key cannot be updated.
+ */
+fun PGPCrypto.updatePrivateKeyPassphraseOrNull(
+    privateKey: Armored,
+    passphrase: ByteArray,
+    newPassphrase: ByteArray
+): Armored? = runCatching { updatePrivateKeyPassphrase(privateKey, passphrase, newPassphrase) }.getOrNull()

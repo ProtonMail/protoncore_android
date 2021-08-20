@@ -347,11 +347,20 @@ interface PGPCrypto {
         passphrase: ByteArray
     ): Armored
 
+    /**
+     * Update private key passphrase.
+     *
+     * @param privateKey [Armored] private key to change.
+     * @param passphrase  current passphrase to unlock the key.
+     * @param newPassphrase new passphrase to set.
+     *
+     * @throws [CryptoException] if key cannot be updated.
+     */
     fun updatePrivateKeyPassphrase(
-        privateKey: String,
-        oldPassphrase: ByteArray,
+        privateKey: Armored,
+        passphrase: ByteArray,
         newPassphrase: ByteArray
-    ): Armored?
+    ): Armored
 
     /**
      * Update the current time used for crypto function (e.g. signing).

@@ -61,17 +61,13 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.addOnBackPressedCallback {
-            finish()
-        }
+        activity?.addOnBackPressedCallback { finish() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as PasswordManagementActivity).binding.toolbar.apply {
-            setNavigationOnClickListener {
-                finish()
-            }
+            setNavigationOnClickListener { finish() }
         }
         viewModel.init(userId)
         binding.apply {
@@ -92,8 +88,7 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
 
         viewModel.state.onEach {
             when (it) {
-                is PasswordManagementViewModel.State.Idle -> {
-                }
+                is PasswordManagementViewModel.State.Idle -> Unit
                 is PasswordManagementViewModel.State.Mode -> {
                     binding.mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
                 }
