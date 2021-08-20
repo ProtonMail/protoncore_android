@@ -108,7 +108,6 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
             PasswordManagementViewModel(
                 keyStoreCrypto,
                 getUserSettingsUseCase,
-                userRepository,
                 performUpdateLoginPassword,
                 performUpdateMailboxPassword
             )
@@ -160,7 +159,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
             password = PasswordSetting(mode = 1, expirationTime = null)
         )
 
-        coEvery { performUpdateLoginPassword.invoke(testUserId, any(), any(), any(), any()) } returns testUserSettingsResponse
+        coEvery { performUpdateLoginPassword.invoke(testUserId, any(), any(), any()) } returns testUserSettingsResponse
 
         viewModel.state.test {
             // WHEN
@@ -177,7 +176,6 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
                     userId = testUserId,
                     password = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
-                    username = testUsername,
                     secondFactorCode = ""
                 )
             }
@@ -214,7 +212,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performUpdateMailboxPassword(
-                    userId = testUser,
+                    userId = testUserId,
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
                     secondFactorCode = "",
@@ -254,7 +252,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
             coVerify(exactly = 1) {
                 performUpdateMailboxPassword(
-                    userId = testUser,
+                    userId = testUserId,
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
                     secondFactorCode = "",

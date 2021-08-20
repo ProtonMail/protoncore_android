@@ -27,6 +27,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
@@ -50,6 +51,7 @@ class PerformUpdateLoginPasswordTest {
     private val repository = mockk<UserSettingsRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
+    private val cryptoContext = mockk<CryptoContext>(relaxed = true)
     // endregion
 
     // region test data
@@ -68,15 +70,16 @@ class PerformUpdateLoginPasswordTest {
 
     private val testSalt = "test-salt"
     private val testModulusId = "test-modulus-id"
+    private val testVerifier = "test-verifier"
     private val testAuth = Auth(
         version = 1,
         modulusId = testModulusId,
         salt = testSalt,
-        verifier = "test-verifier"
+        verifier = testVerifier
     )
 
     private val testUser = User(
-        userId = UserId("test-user-id"),
+        userId = testUserId,
         email = null,
         name = testUsername,
         displayName = null,
@@ -124,14 +127,17 @@ class PerformUpdateLoginPasswordTest {
         every { keyStoreCrypto.decrypt("encrypted-test-new-password") } returns testNewPassword
         every { keyStoreCrypto.encrypt(testNewPassword) } returns "encrypted-test-new-password"
 
+        every { cryptoContext.srpCrypto } returns srpCrypto
+        every { cryptoContext.keyStoreCrypto } returns keyStoreCrypto
+
         useCase = PerformUpdateLoginPassword(
             authRepository = authRepository,
             userRepository = userRepository,
             userSettingsRepository = repository,
-            srpCrypto = srpCrypto,
-            keyStoreCrypto = keyStoreCrypto,
-            clientSecret = testClientSecret
+            clientSecret = testClientSecret,
+            context = cryptoContext
         )
+
 
         coEvery {
             repository.updateLoginPassword(
@@ -185,8 +191,8 @@ class PerformUpdateLoginPasswordTest {
         val result = useCase.invoke(
             userId = testUserId,
             password = keyStoreCrypto.encrypt(testPassword),
-            secondFactorCode = testSecondFactor,
-            newPassword = keyStoreCrypto.encrypt(testNewPassword)
+            newPassword = keyStoreCrypto.encrypt(testNewPassword),
+            secondFactorCode = testSecondFactor
         )
         // THEN
         coVerify(exactly = 1) {

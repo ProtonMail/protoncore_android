@@ -31,6 +31,7 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.usersettings.data.api.OrganizationApi
 import me.proton.core.usersettings.data.api.response.OrganizationKeysResponse
+import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.dao.OrganizationKeysDao
 import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toEntity
@@ -46,9 +47,9 @@ class OrganizationKeysRepositoryImplTest {
 
     private val apiFactory = mockk<ApiManagerFactory>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
-    private lateinit var repository: OrganizationKeysRepositoryImpl
+    private lateinit var repository: OrganizationRepositoryImpl
 
-    private val db = mockk<OrganizationKeysDatabase>(relaxed = true)
+    private val db = mockk<OrganizationDatabase>(relaxed = true)
     private val organizationKeysDao = mockk<OrganizationKeysDao>(relaxed = true)
     // endregion
 
@@ -67,7 +68,7 @@ class OrganizationKeysRepositoryImplTest {
             organizationApi
         )
 
-        repository = OrganizationKeysRepositoryImpl(db, apiProvider)
+        repository = OrganizationRepositoryImpl(db, apiProvider)
     }
 
     @Test

@@ -23,11 +23,12 @@ val MIGRATION_X_Y = object : Migration(X, Y) {
 
 ### Dependencies
 
-- Account-Manager 1.5.2.
-- Auth 1.5.3.
-- Crypto 1.1.6.
-- Key 1.4.0.
-- UserSettings 1.6.0.
+- Account Manager 1.6.
+- Auth 1.6.
+- Crypto 1.6.
+- Key 1.6.
+- User 1.6.
+- UserSettings 1.6.
 
 ## Crypto Version [1.5.3]
 
