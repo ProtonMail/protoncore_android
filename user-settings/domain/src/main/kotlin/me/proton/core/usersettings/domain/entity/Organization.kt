@@ -22,7 +22,7 @@ import me.proton.core.domain.entity.UserId
 
 data class Organization(
     val userId: UserId,
-    val name: String?,
+    val name: String,
     val displayName: String?,
     val planName: String?,
     val vpnPlanName: String?,

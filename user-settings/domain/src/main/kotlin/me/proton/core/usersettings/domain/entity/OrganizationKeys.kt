@@ -18,10 +18,11 @@
 
 package me.proton.core.usersettings.domain.entity
 
+import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.domain.entity.UserId
 
 data class OrganizationKeys(
     val userId: UserId,
-    val publicKey: String,
-    val privateKey: String
+    val publicKey: Armored,
+    val privateKey: Armored
 )

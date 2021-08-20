@@ -37,7 +37,7 @@ import me.proton.core.user.data.entity.UserEntity
 )
 data class OrganizationEntity(
     val userId: UserId,
-    val name: String?,
+    val name: String,
     val displayName: String?,
     val planName: String?,
     val vpnPlanName: String?,

@@ -22,6 +22,7 @@ import com.google.crypto.tink.subtle.Base64
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.decryptWith
@@ -33,10 +34,8 @@ import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
-import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
-import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.extension.updateOrganizationPrivateKey
 import me.proton.core.key.domain.extension.updatePrivateKey
@@ -51,6 +50,7 @@ import me.proton.core.user.domain.extension.hasMigratedKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.takeIfNotEmpty
 
 class UserManagerImpl(
     private val userRepository: UserRepository,
@@ -131,10 +131,9 @@ class UserManagerImpl(
 
     override suspend fun changePassword(
         userId: UserId,
-        loginPassword: String,
-        newPassword: String,
+        newPassword: EncryptedString,
         secondFactorCode: String,
-        clientProofs: SrpProofs,
+        proofs: SrpProofs,
         srpSession: String,
         auth: Auth?,
         organizationPrivateKey: String?
@@ -142,67 +141,54 @@ class UserManagerImpl(
         val user = userRepository.getUser(userId)
         val keySalt = cryptoContext.pgpCrypto.generateNewKeySalt()
 
-        loginPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedLoginPassword ->
-            newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassphrase ->
+        newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassphrase ->
+            cryptoContext.pgpCrypto.getPassphrase(decryptedNewPassphrase.array, keySalt).use { newPassphrase ->
+                val addresses = userAddressRepository.getAddresses(userId)
 
-                cryptoContext.pgpCrypto.getPassphrase(decryptedNewPassphrase.array, keySalt).use { newPassphrase ->
-                    val addresses = userAddressRepository.getAddresses(userId)
-
-                    var keys: MutableList<Key>? = null
-                    var userKeys: MutableList<Key>? = null
-
-                    if (addresses.hasMigratedKey()) {
-                        // for migrated accounts, we update only the user keys
-                        userKeys = mutableListOf()
-                        for (userKey in user.keys) {
-                            val updatedKey = userKey.update(
-                                newPassphrase = newPassphrase.array
-                            )
-                            updatedKey?.let { userKeys.add(it) }
-                        }
-                    } else {
-                        // for non-migrated accounts all keys (user + address) go into keys field
-                        keys = mutableListOf()
-                        for (userKey in user.keys) {
-                            val updatedKey = userKey.update(newPassphrase.array)
-                            updatedKey?.let { keys.add(it) }
-                        }
-                        for (address in addresses) {
-                            for (addressKey in address.keys) {
-                                val updatedAddressKey = addressKey.update(newPassphrase.array)
-                                updatedAddressKey?.let { keys.add(it) }
-                            }
-                        }
+                // for migrated accounts, we update only the user keys
+                val userKeys = user.keys.takeIf { addresses.hasMigratedKey() }?.mapNotNull { userKey ->
+                    userKey.updatePrivateKey(
+                        keyStoreCrypto = keyStoreCrypto,
+                        cryptoContext = cryptoContext,
+                        newPassphrase = newPassphrase.array
+                    )
+                }
+                val keys = user.keys.takeUnless { addresses.hasMigratedKey() }?.plus(addresses.flatMap { it.keys })
+                    ?.mapNotNull { key ->
+                        key.updatePrivateKey(
+                            keyStoreCrypto = keyStoreCrypto,
+                            cryptoContext = cryptoContext,
+                            newPassphrase = newPassphrase.array
+                        )
                     }
 
-                    val orgPrivateKey = if (organizationPrivateKey != null && organizationPrivateKey.isNotEmpty()) {
-                        val currentPassphrase =
-                            requireNotNull(passphraseRepository.getPassphrase(userId)?.decryptWith(keyStoreCrypto))
-                        organizationPrivateKey.updateOrganizationPrivateKey(
-                            cryptoContext = cryptoContext,
-                            currentPassphrase = currentPassphrase.array,
-                            newPassphrase = newPassphrase.array
-                        ) ?: ""
-                    } else ""
+                val orgPrivateKey = organizationPrivateKey?.takeIfNotEmpty()?.let {
+                    val currentPassphrase =
+                        requireNotNull(passphraseRepository.getPassphrase(userId)?.decryptWith(keyStoreCrypto))
+                    it.updateOrganizationPrivateKey(
+                        cryptoContext = cryptoContext,
+                        currentPassphrase = currentPassphrase.array,
+                        newPassphrase = newPassphrase.array
+                    ) ?: ""
+                } ?: ""
 
-                    val result = privateKeyRepository.updatePrivateKeys(
-                        sessionUserId = userId,
-                        keySalt = keySalt,
-                        clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
-                        clientProof = Base64.encode(clientProofs.clientProof),
-                        srpSession = srpSession,
-                        secondFactorCode = secondFactorCode,
-                        auth = auth,
-                        keys = keys,
-                        userKeys = userKeys,
-                        organizationKey = orgPrivateKey
-                    )
+                val result = privateKeyRepository.updatePrivateKeys(
+                    sessionUserId = userId,
+                    keySalt = keySalt,
+                    clientEphemeral = Base64.encode(proofs.clientEphemeral),
+                    clientProof = Base64.encode(proofs.clientProof),
+                    srpSession = srpSession,
+                    secondFactorCode = secondFactorCode,
+                    auth = auth,
+                    keys = keys,
+                    userKeys = userKeys,
+                    organizationKey = orgPrivateKey
+                )
 
-                    userAddressRepository.getAddresses(userId, refresh = true)
-                    userRepository.getUser(userId, refresh = true)
-                    passphraseRepository.setPassphrase(userId, newPassphrase.encryptWith(keyStoreCrypto))
-                    return result
-                }
+                userAddressRepository.getAddresses(userId, refresh = true)
+                userRepository.getUser(userId, refresh = true)
+                passphraseRepository.setPassphrase(userId, newPassphrase.encryptWith(keyStoreCrypto))
+                return result
             }
         }
     }
@@ -271,11 +257,4 @@ class UserManagerImpl(
             return checkNotNull(userRepository.getUser(sessionUserId, refresh = true))
         }
     }
-
-    private fun KeyHolderPrivateKey.update(newPassphrase: ByteArray) =
-        updatePrivateKey(
-            keyStoreCrypto = keyStoreCrypto,
-            cryptoContext = cryptoContext,
-            newPassphrase = newPassphrase
-        )
 }

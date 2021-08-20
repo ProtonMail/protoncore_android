@@ -64,7 +64,7 @@ class PerformUpdateUserPassword @Inject constructor(
         } else null
 
         loginPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedLoginPassword ->
-            newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassphrase ->
+            newPassword.decryptWith(keyStoreCrypto).toByteArray().use { decryptedNewPassword ->
                 val clientProofs: SrpProofs = cryptoContext.srpCrypto.generateSrpProofs(
                     username = username,
                     password = decryptedLoginPassword.array,
@@ -76,14 +76,13 @@ class PerformUpdateUserPassword @Inject constructor(
 
                 val auth = if (!twoPasswordMode) cryptoContext.srpCrypto.calculatePasswordVerifier(
                     username = username,
-                    password = decryptedNewPassphrase.array,
+                    password = decryptedNewPassword.array,
                     modulusId = modulus.modulusId,
                     modulus = modulus.modulus
                 ) else null
 
                 return userManager.changePassword(
                     userId = userId,
-                    oldPassword = loginPassword,
                     newPassword = newPassword,
                     secondFactorCode = secondFactorCode,
                     proofs = clientProofs,
