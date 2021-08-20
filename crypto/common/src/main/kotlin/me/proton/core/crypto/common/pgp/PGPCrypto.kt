@@ -333,22 +333,18 @@ interface PGPCrypto {
     fun generateNewToken(size: Long = 32): ByteArray
 
     /**
-     * Generate new private key.
+     * Generate new private key of type [KeyType.X25519].
      *
      * @param username for which the key is generated.
      * @param domain for which the key is generated.
      * @param passphrase passphrase to lock the key.
-     * @param keyType [KeyType.RSA] or [KeyType.X25519].
-     * @param keySecurity key length in bits.
      *
      * @throws [CryptoException] if key cannot be generated.
      */
     fun generateNewPrivateKey(
         username: String,
         domain: String,
-        passphrase: ByteArray,
-        keyType: KeyType,
-        keySecurity: KeySecurity
+        passphrase: ByteArray
     ): Armored
 
     /**
@@ -358,13 +354,7 @@ interface PGPCrypto {
      */
     fun updateTime(epochSeconds: Long)
 
-    enum class KeySecurity(val value: Int) {
-        HIGH(2048),
-        EXTREME(4096),
-    }
-
     enum class KeyType(private val value: String) {
-        RSA("rsa"),
         X25519("x25519");
 
         override fun toString(): String = value

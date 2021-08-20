@@ -23,7 +23,6 @@ import me.proton.core.crypto.common.keystore.encryptWith
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.EncryptedMessage
-import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 
@@ -61,9 +60,7 @@ data class NestedPrivateKey(
                 val privateKey = context.pgpCrypto.generateNewPrivateKey(
                     username = username,
                     domain = domain,
-                    passphrase = passphrase.array,
-                    keyType = PGPCrypto.KeyType.RSA,
-                    keySecurity = PGPCrypto.KeySecurity.HIGH
+                    passphrase = passphrase.array
                 )
                 val encryptedPassphrase = passphrase.encryptWith(context.keyStoreCrypto)
                 val keyHolderPrivateKey = PrivateKey(

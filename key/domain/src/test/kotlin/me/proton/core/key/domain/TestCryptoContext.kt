@@ -250,9 +250,7 @@ class TestCryptoContext : CryptoContext {
         override fun generateNewPrivateKey(
             username: String,
             domain: String,
-            passphrase: ByteArray,
-            keyType: PGPCrypto.KeyType,
-            keySecurity: PGPCrypto.KeySecurity
+            passphrase: ByteArray
         ): Armored = "privateKey"
 
         override fun updateTime(epochSeconds: Long) = Unit

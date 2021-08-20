@@ -51,10 +51,8 @@ import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
-import me.proton.core.crypto.common.pgp.helper.PrimeGenerator
 import java.io.Closeable
 import java.io.File
-import java.math.BigInteger
 import java.security.SecureRandom
 
 /**
@@ -599,9 +597,7 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun generateNewPrivateKey(
         username: String,
         domain: String,
-        passphrase: ByteArray,
-        keyType: PGPCrypto.KeyType,
-        keySecurity: PGPCrypto.KeySecurity
+        passphrase: ByteArray
     ): Armored = runCatching {
         check(passphrase.isNotEmpty()) { "The passphrase for generating key can't be empty." }
 
@@ -609,70 +605,12 @@ class GOpenPGPCrypto : PGPCrypto {
         Crypto.setKeyGenerationOffset(-86_400L)
 
         val email = "$username@$domain"
-
-        when (keyType) {
-            PGPCrypto.KeyType.RSA -> generateKeyFromRSA(username, email, passphrase, keySecurity)
-            PGPCrypto.KeyType.X25519 -> generateKeyFromHelper(username, email, passphrase, keyType, keySecurity)
-        }
+        Helper.generateKey(email, email, passphrase, PGPCrypto.KeyType.X25519.toString(), 0)
     }.getOrElse { throw CryptoException("Key cannot be generated.", it) }
 
     override fun updateTime(epochSeconds: Long) {
         Crypto.updateTime(epochSeconds)
     }
-
-    @Suppress("MagicNumber")
-    private fun generateKeyFromRSA(
-        name: String,
-        email: String,
-        passphrase: ByteArray,
-        keySecurity: PGPCrypto.KeySecurity
-    ): Armored {
-        // Generate some primes as the go library is quite slow.
-        // On android we can use SSL + multithreading.
-        // This reduces the generation time from 3 minutes to 1 second.
-        val primes: Array<BigInteger?>? = PrimeGenerator().generatePrimes(keySecurity.value / 2, 4)
-
-        checkNotNull(primes) { "Generating primes error. Null list of primes." }
-
-        val arrays = primes
-            .map { checkNotNull(it) { "At least one of the primes is null." } }
-            .map { it.toByteArray() }
-
-        return generateRSAKeyWithPrimes(
-            name,
-            email,
-            passphrase,
-            keySecurity.value,
-            arrays[0], arrays[1], arrays[2], arrays[3]
-        )
-    }
-
-    @Suppress("LongParameterList")
-    private fun generateRSAKeyWithPrimes(
-        name: String,
-        email: String,
-        passphrase: ByteArray,
-        bits: Int,
-        prime1: ByteArray,
-        prime2: ByteArray,
-        prime3: ByteArray,
-        prime4: ByteArray
-    ): Armored = runCatching {
-        val generatedKey = Crypto.generateRSAKeyWithPrimes(name, email, bits.toLong(), prime1, prime2, prime3, prime4)
-        newKey(generatedKey).use { key ->
-            val lockedKey = key.value.lock(passphrase)
-            check(lockedKey.isLocked) { "Could not lock newly generated key." }
-            lockedKey.armor()
-        }
-    }.getOrElse { throw CryptoException("Key cannot be generated.", it) }
-
-    private fun generateKeyFromHelper(
-        name: String,
-        email: String,
-        passphrase: ByteArray,
-        keyType: PGPCrypto.KeyType,
-        keySecurity: PGPCrypto.KeySecurity
-    ): Armored = Helper.generateKey(name, email, passphrase, keyType.toString(), keySecurity.value.toLong())
 
     // endregion
 
