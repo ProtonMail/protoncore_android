@@ -111,23 +111,23 @@ Network Data: **1.5.4** - _released on: Aug 19, 2021_
 
 ### Crypto
 
-Crypto: **1.5.3** - _released on: Aug 20, 2021_
+Crypto: **1.6** - _released on: Aug 21, 2021_
 
-Crypto Common: **1.5.3** - _released on: Aug 20, 2021_
+Crypto Common: **1.6** - _released on: Aug 21, 2021_
 
-Crypto Android: **1.5.3** - _released on: Aug 20, 2021_
+Crypto Android: **1.6** - _released on: Aug 21, 2021_
 
 ## Features
 
 ### Auth
 
-Auth: **1.5.2** - _released on: Aug 16, 2021_
+Auth: **1.6** - _released on: Aug 21, 2021_
 
-Auth Domain: **1.5.2** - _released on: Aug 16, 2021_
+Auth Domain: **1.6** - _released on: Aug 21, 2021_
 
-Auth Presentation: **1.5.2** - _released on: Aug 16, 2021_
+Auth Presentation: **1.6** - _released on: Aug 21, 2021_
 
-Auth Data: **1.5.2** - _released on: Aug 16, 2021_
+Auth Data: **1.6** - _released on: Aug 21, 2021_
 
 ### Account
 
@@ -142,33 +142,33 @@ Account Data: **1.5.2** - _released on: Aug 16, 2021_
 
 ### Account Manager
 
-Account Manager: **1.5.1** - _released on: Aug 05, 2021_
+Account Manager: **1.6** - _released on: Aug 21, 2021_
 
-Account Manager Domain: **1.5.1** - _released on: Aug 05, 2021_
+Account Manager Domain: **1.6** - _released on: Aug 21, 2021_
 
-Account Manager Presentation: **1.5.1** - _released on: Aug 05, 2021_
+Account Manager Presentation: **1.6** - _released on: Aug 21, 2021_
 
-Account Manager Data: **1.5.1** - _released on: Aug 05, 2021_
+Account Manager Data: **1.6** - _released on: Aug 21, 2021_
 
-Account Manager Data Db: **1.5.1** - _released on: Aug 05, 2021_
+Account Manager Data Db: **1.6** - _released on: Aug 21, 2021_
 
-Account Manager Dagger: **1.5.1** - _released on: Aug 05, 2021_
+Account Manager Dagger: **1.6** - _released on: Aug 21, 2021_
 
 ### Key
 
-Key: **1.5.3** - _released on: Aug 20, 2021_
+Key: **1.6** - _released on: Aug 21, 2021_
 
-Key Domain: **1.5.3** - _released on: Aug 20, 2021_
+Key Domain: **1.6** - _released on: Aug 21, 2021_
 
-Key Data: **1.5.3** - _released on: Aug 20, 2021_
+Key Data: **1.6** - _released on: Aug 21, 2021_
 
 ### User
 
-User: **1.5.3** - _released on: Aug 20, 2021_
+User: **1.6** - _released on: Aug 21, 2021_
 
-User Domain: **1.5.3** - _released on: Aug 20, 2021_
+User Domain: **1.6** - _released on: Aug 21, 2021_
 
-User Data: **1.5.3** - _released on: Aug 20, 2021_
+User Data: **1.6** - _released on: Aug 21, 2021_
 
 ### Contact
 
@@ -236,10 +236,10 @@ Plan Presentation: **1.5.2** - _released on: Aug 16, 2021_
 
 ### User Settings
 
-User Settings: **1.5.1** - _released on: Jul 30, 2021_
+User Settings: **1.6** - _released on: Aug 21, 2021_
 
-User Settings Data: **1.5.1** - _released on: Jul 30, 2021_
+User Settings Data: **1.6** - _released on: Aug 21, 2021_
 
-User Settings Domain: **1.5.1** - _released on: Jul 30, 2021_
+User Settings Domain: **1.6** - _released on: Aug 21, 2021_
 
-User Settings Presentation: **1.5.1** - _released on: Jul 30, 2021_
+User Settings Presentation: **1.6** - _released on: Aug 21, 2021_
