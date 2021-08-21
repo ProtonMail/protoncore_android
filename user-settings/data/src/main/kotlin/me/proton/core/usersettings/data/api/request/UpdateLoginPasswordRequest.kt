@@ -16,27 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.usersettings.data.api.request
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.usersettings.data.db.UserSettingsDatabase
-import me.proton.core.usersettings.data.repository.UserSettingsRepositoryImpl
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.key.data.api.request.AuthRequest
 
-@Module
-@InstallIn(SingletonComponent::class)
-object SettingsModule {
-
-    @Provides
-    @Singleton
-    fun provideUserSettingsRepository(
-        db: UserSettingsDatabase,
-        apiProvider: ApiProvider
-    ): UserSettingsRepository =
-        UserSettingsRepositoryImpl(db, apiProvider)
-}
+@Serializable
+data class UpdateLoginPasswordRequest(
+    @SerialName("ClientEphemeral")
+    val clientEphemeral: String,
+    @SerialName("ClientProof")
+    val clientProof: String,
+    @SerialName("SRPSession")
+    val srpSession: String,
+    @SerialName("TwoFactorCode")
+    val twoFactorCode: String,
+    @SerialName("Auth")
+    val auth: AuthRequest
+)

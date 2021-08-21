@@ -104,7 +104,8 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             plansUpgrade.onClick { plansViewModel.onPlansUpgradeClicked(this@MainActivity) }
             plansCurrent.onClick { plansViewModel.onCurrentPlanClicked(this@MainActivity) }
 
-            settings.onClick { settingsViewModel.onUpdateRecoveryEmailClicked() }
+            settingsRecovery.onClick { settingsViewModel.onUpdateRecoveryEmailClicked() }
+            settingsPassword.onClick { settingsViewModel.onPasswordManagementClicked() }
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {
@@ -137,11 +138,11 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
         }.launchIn(lifecycleScope)
 
         userAddressKeyViewModel.getUserAddressKeyState().onEach {
-            if (it is UserKeyViewModel.UserKeyState.Error) { showToast("UserAddressKey: $it") }
+            if (it is UserAddressKeyViewModel.UserAddressKeyState.Error) { showToast("UserAddressKey: $it") }
         }.launchIn(lifecycleScope)
 
         publicAddressViewModel.getPublicAddressState().onEach {
-            if (it is UserKeyViewModel.UserKeyState.Error) { showToast("PublicAddress: $it") }
+            if (it is PublicAddressViewModel.PublicAddressState.Error) { showToast("PublicAddress: $it") }
         }.launchIn(lifecycleScope)
     }
 

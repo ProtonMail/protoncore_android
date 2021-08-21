@@ -35,6 +35,7 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.validateEmail
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.FragmentUpdateRecoveryEmailBinding
@@ -82,6 +83,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
                     binding.newEmailInput.text = ""
                     binding.confirmNewEmailInput.text = ""
                     findOutCurrentRecoveryAddress()
+                    binding.root.successSnack(R.string.settings_recovery_email_success)
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)

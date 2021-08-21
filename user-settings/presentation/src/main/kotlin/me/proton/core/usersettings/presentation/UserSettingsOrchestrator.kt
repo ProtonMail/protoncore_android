@@ -23,18 +23,26 @@ import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.presentation.entity.SettingsInput
+import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
 import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
+import me.proton.core.usersettings.presentation.ui.StartPasswordManagement
 import me.proton.core.usersettings.presentation.ui.StartUpdateRecoveryEmail
 import javax.inject.Inject
 
 class UserSettingsOrchestrator @Inject constructor() {
 
     private var updateRecoveryEmailLauncher: ActivityResultLauncher<SettingsInput>? = null
+    private var passwordManagementLauncher: ActivityResultLauncher<SettingsInput>? = null
 
     private var onUpdateRecoveryEmailResultListener: ((result: UpdateRecoveryEmailResult?) -> Unit)? = {}
+    private var onPasswordManagementResultListener: ((result: PasswordManagementResult?) -> Unit)? = {}
 
     fun setOnUpdateRecoveryEmailResult(block: (result: UpdateRecoveryEmailResult?) -> Unit) {
         onUpdateRecoveryEmailResultListener = block
+    }
+
+    fun setPasswordManagementResult(block: (result: PasswordManagementResult?) -> Unit) {
+        onPasswordManagementResultListener = block
     }
 
     private fun registerUpdateRecoveryEmailResult(
@@ -46,6 +54,15 @@ class UserSettingsOrchestrator @Inject constructor() {
             onUpdateRecoveryEmailResultListener?.invoke(it)
         }
 
+    private fun registerPasswordManagementResult(
+        caller: ActivityResultCaller
+    ): ActivityResultLauncher<SettingsInput> =
+        caller.registerForActivityResult(
+            StartPasswordManagement()
+        ) {
+            onPasswordManagementResultListener?.invoke(it)
+        }
+
     /**
      * Register all needed workflow for internal usage.
      *
@@ -53,6 +70,7 @@ class UserSettingsOrchestrator @Inject constructor() {
      */
     fun register(caller: ActivityResultCaller) {
         updateRecoveryEmailLauncher = registerUpdateRecoveryEmailResult(caller)
+        passwordManagementLauncher = registerPasswordManagementResult(caller)
     }
 
     /**
@@ -61,6 +79,8 @@ class UserSettingsOrchestrator @Inject constructor() {
     fun unregister() {
         updateRecoveryEmailLauncher?.unregister()
         updateRecoveryEmailLauncher = null
+        passwordManagementLauncher?.unregister()
+        passwordManagementLauncher = null
     }
 
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
@@ -76,11 +96,29 @@ class UserSettingsOrchestrator @Inject constructor() {
             SettingsInput(userId.id)
         )
     }
+
+    /**
+     * Starts the Password Management workflow (part of the User Settings).
+     *
+     * @see [onPasswordManagementResult]
+     */
+    fun startPasswordManagementWorkflow(userId: UserId) {
+        checkRegistered(passwordManagementLauncher).launch(
+            SettingsInput(userId.id)
+        )
+    }
 }
 
 fun UserSettingsOrchestrator.onUpdateRecoveryEmailResult(
     block: (result: UpdateRecoveryEmailResult?) -> Unit
 ): UserSettingsOrchestrator {
     setOnUpdateRecoveryEmailResult { block(it) }
+    return this
+}
+
+fun UserSettingsOrchestrator.onPasswordManagementResult(
+    block: (result: PasswordManagementResult?) -> Unit
+): UserSettingsOrchestrator {
+    setPasswordManagementResult { block(it) }
     return this
 }

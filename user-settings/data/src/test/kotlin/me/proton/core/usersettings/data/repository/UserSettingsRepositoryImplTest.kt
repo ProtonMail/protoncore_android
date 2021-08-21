@@ -25,6 +25,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -78,7 +79,7 @@ class UserSettingsRepositoryImplTest {
     }
 
     @Test
-    fun `settings returns success`() = runBlockingTest {
+    fun `user settings returns success`() = runBlockingTest {
         val settingsResponse = UserSettingsResponse(
             email = RecoverySettingResponse("test-email", 1, notify = 1, reset = 1),
             phone = null,
@@ -110,7 +111,6 @@ class UserSettingsRepositoryImplTest {
         assertEquals("test-email", response.email!!.value)
         verify { userSettingsDao.observeByUserId(any()) }
     }
-
 
     @Test
     fun `update recovery email returns result success`() = runBlockingTest {
@@ -147,6 +147,57 @@ class UserSettingsRepositoryImplTest {
             clientProof = "test-client-proof",
             srpSession = "test-srp-session",
             secondFactorCode = ""
+        )
+        // THEN
+        assertNotNull(response)
+        assertEquals("test-email2", response.email!!.value)
+        coVerify { userSettingsDao.insertOrUpdate(any()) }
+        verify { userSettingsDao.observeByUserId(any()) }
+    }
+
+    @Test
+    fun `update login password returns success`() = runBlockingTest {
+        // GIVEN
+        val settingsResponse = UserSettingsResponse(
+            email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
+            phone = null,
+            twoFA = null,
+            password = PasswordResponse(mode = 1, expirationTime = null),
+            news = 0,
+            locale = "en",
+            logAuth = 1,
+            density = 1,
+            invoiceText = "",
+            dateFormat = 1,
+            timeFormat = 2,
+            themeType = 1,
+            weekStart = 7,
+            welcome = 1,
+            earlyAccess = 1,
+            theme = "test-theme",
+            flags = FlagsResponse(1)
+        )
+        val testSalt = "test-salt"
+        val testModulusId = "test-modulus-id"
+        val testAuth = Auth(
+            version = 1,
+            modulusId = testModulusId,
+            salt = testSalt,
+            verifier = "test-verifier"
+        )
+        coEvery { userSettingsApi.updateLoginPassword(any()) } returns SingleUserSettingsResponse(settingsResponse)
+        every { userSettingsDao.observeByUserId(any()) } returns flowOf(
+            settingsResponse.fromResponse(UserId(testUserId)).toEntity()
+        )
+
+        // WHEN
+        val response = repository.updateLoginPassword(
+            sessionUserId = UserId(testUserId),
+            clientEphemeral = "test-client-empheral",
+            clientProof = "test-client-proof",
+            srpSession = "test-srp-session",
+            secondFactorCode = "",
+            auth = testAuth
         )
         // THEN
         assertNotNull(response)

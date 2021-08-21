@@ -348,6 +348,21 @@ interface PGPCrypto {
     ): Armored
 
     /**
+     * Update private key passphrase.
+     *
+     * @param privateKey [Armored] private key to change.
+     * @param passphrase  current passphrase to unlock the key.
+     * @param newPassphrase new passphrase to set.
+     *
+     * @throws [CryptoException] if key cannot be updated.
+     */
+    fun updatePrivateKeyPassphrase(
+        privateKey: Armored,
+        passphrase: ByteArray,
+        newPassphrase: ByteArray
+    ): Armored
+
+    /**
      * Update the current time used for crypto function (e.g. signing).
      *
      * @param epochSeconds Number of seconds from Epoch (1970-01-01T00:00:00Z).

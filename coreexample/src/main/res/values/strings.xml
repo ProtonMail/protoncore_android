@@ -34,7 +34,8 @@
     <string name="plans_signup">Plans Signup</string>
     <string name="plans_upgrade">Plans Upgrade</string>
     <string name="plans_current">Plans Current</string>
-    <string name="settings">User Settings</string>
+    <string name="settings_recovery_email">Recovery Email</string>
+    <string name="settings_password_management">Password Mng</string>
 
     <string name="example_hint">Hint</string>
     <string name="example_hint_disabled">Hint Disabled input</string>

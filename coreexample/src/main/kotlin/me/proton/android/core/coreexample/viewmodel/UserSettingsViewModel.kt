@@ -55,4 +55,14 @@ class UserSettingsViewModel @Inject constructor(
             }
         }
     }
+
+    fun onPasswordManagementClicked() {
+        viewModelScope.launch {
+            getPrimaryAccount().first()?.let {
+                userSettingsOrchestrator.startPasswordManagementWorkflow(
+                    userId = it.userId
+                )
+            }
+        }
+    }
 }

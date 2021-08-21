@@ -30,20 +30,21 @@ private const val TAG_PASSWORD_ENTER_DIALOG = "password_enter_dialog"
  */
 fun FragmentManager.showPasswordEnterDialog(
     largeLayout: Boolean = false,
+    password: Boolean = true,
     secondFactor: Boolean = false,
     block: (password: String, secondFactorCode: String) -> Unit
 ) {
     findFragmentByTag(TAG_PASSWORD_ENTER_DIALOG) ?: run {
-        val updateDialogFragment = EnterPasswordDialog(secondFactor) { password, twoFA ->
+        val fragment = PasswordAnd2FADialog(password, secondFactor) { password, twoFA ->
             block(password, twoFA)
         }
         if (largeLayout) {
             // For large screens (tablets), we show the fragment as a dialog
-            updateDialogFragment.show(this, TAG_PASSWORD_ENTER_DIALOG)
+            fragment.show(this, TAG_PASSWORD_ENTER_DIALOG)
         } else {
             // The smaller screens (phones), we show the fragment fullscreen
             inTransaction {
-                add(updateDialogFragment, TAG_PASSWORD_ENTER_DIALOG)
+                add(fragment, TAG_PASSWORD_ENTER_DIALOG)
             }
         }
     }

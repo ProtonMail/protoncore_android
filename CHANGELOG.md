@@ -1,3 +1,35 @@
+## User Settings Version [1.6.0]
+
+Aug 17, 2021
+
+### New Features
+
+- Password Change: Single Pass mode password change, Two Pass mode login and mailbox password change.
+
+### New Migration
+
+- If you use ```Account Manager Data Db``` module, nothing to do, it's transparently applied.
+- If you use your own AppDatabase, please apply changes as follow:
+  - Add ```OrganizationEntity``` to your AppDatabase ```entities```.
+  - Add ```OrganizationKeysEntity``` to your AppDatabase ```entities```.
+  - Add a migration to your AppDatabase (```addMigration```):
+```
+val MIGRATION_X_Y = object : Migration(X, Y) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        OrganizationDatabase.MIGRATION_0.migrate(database)
+    }
+}
+```
+
+### Dependencies
+
+- Account Manager 1.6.
+- Auth 1.6.
+- Crypto 1.6.
+- Key 1.6.
+- User 1.6.
+- UserSettings 1.6.
+
 ## Crypto Version [1.5.3]
 
 Aug 18, 2021

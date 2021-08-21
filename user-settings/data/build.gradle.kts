@@ -24,7 +24,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 5, 1)
+libVersion = Version(1, 6, 0)
 
 android()
 
@@ -38,6 +38,8 @@ dependencies {
         project(Module.data),
         project(Module.dataRoom),
         project(Module.userData),
+        project(Module.cryptoCommon),
+        project(Module.key),
 
         // Other
         `retrofit`,

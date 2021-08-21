@@ -18,6 +18,7 @@
 
 package me.proton.core.key.domain
 
+import io.mockk.mockk
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -36,6 +37,9 @@ import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationStatus
+import me.proton.core.crypto.common.srp.Auth
+import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.crypto.common.srp.SrpProofs
 import java.io.File
 
 class TestCryptoContext : CryptoContext {
@@ -253,6 +257,34 @@ class TestCryptoContext : CryptoContext {
             passphrase: ByteArray
         ): Armored = "privateKey"
 
+        override fun updatePrivateKeyPassphrase(
+            privateKey: String,
+            passphrase: ByteArray,
+            newPassphrase: ByteArray
+        ): Armored = "privateKey"
+
         override fun updateTime(epochSeconds: Long) = Unit
+    }
+
+    override val srpCrypto = object : SrpCrypto {
+        override fun generateSrpProofs(
+            username: String,
+            password: ByteArray,
+            version: Long,
+            salt: String,
+            modulus: String,
+            serverEphemeral: String
+        ): SrpProofs {
+            return SrpProofs(mockk(), mockk(), mockk())
+        }
+
+        override fun calculatePasswordVerifier(
+            username: String,
+            password: ByteArray,
+            modulusId: String,
+            modulus: String
+        ): Auth {
+            return Auth(mockk(), mockk(), mockk(), mockk())
+        }
     }
 }

@@ -29,19 +29,22 @@ import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
 import me.proton.core.presentation.R
 import me.proton.core.presentation.utils.onClick
 
-class EnterPasswordDialog(
+class PasswordAnd2FADialog(
     private val action: (password: String, twoFA: String) -> Unit
 ) : DialogFragment() {
 
     companion object {
         private const val ARG_SHOW_TWO_FA = "arg.showTwoFA"
+        private const val ARG_SHOW_PASSWORD = "arg.showPassword"
 
         operator fun invoke(
+            showPassword: Boolean,
             showTwoFA: Boolean,
             action: (password: String, twoFA: String) -> Unit
-        ) = EnterPasswordDialog(action).apply {
+        ) = PasswordAnd2FADialog(action).apply {
             arguments = bundleOf(
-                ARG_SHOW_TWO_FA to showTwoFA
+                ARG_SHOW_TWO_FA to showTwoFA,
+                ARG_SHOW_PASSWORD to showPassword
             )
         }
     }
@@ -50,10 +53,15 @@ class EnterPasswordDialog(
         if (requireArguments().getBoolean(ARG_SHOW_TWO_FA)) View.VISIBLE else View.GONE
     }
 
+    private val passwordVisibility: Int by lazy {
+        if (requireArguments().getBoolean(ARG_SHOW_PASSWORD)) View.VISIBLE else View.GONE
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val binding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(requireContext()))
             binding.twoFA.visibility = twoFAVisibility
+            binding.password.visibility = passwordVisibility
             val builder = AlertDialog.Builder(requireContext())
                 .setTitle(R.string.presentation_authenticate)
                 // passing null to the listeners is a workaround to prevent the dialog to auto-dismiss on button click

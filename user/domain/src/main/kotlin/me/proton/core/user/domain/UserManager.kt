@@ -20,8 +20,11 @@ package me.proton.core.user.domain
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
@@ -135,9 +138,13 @@ interface UserManager {
      */
     suspend fun changePassword(
         userId: UserId,
-        oldPassword: String,
-        newPassword: String
-    )
+        newPassword: EncryptedString,
+        secondFactorCode: String = "",
+        proofs: SrpProofs,
+        srpSession: String,
+        auth: Auth?,
+        orgPrivateKey: Armored?
+    ): Boolean
 
     /**
      * Create a new primary [UserKey], [UserAddressKey], and set the derived passphrase for the user.

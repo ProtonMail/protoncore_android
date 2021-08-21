@@ -26,14 +26,17 @@ import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.data.api.request.AuthRequest
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.usersettings.data.api.UserSettingsApi
 import me.proton.core.usersettings.data.api.request.SetUsernameRequest
+import me.proton.core.usersettings.data.api.request.UpdateLoginPasswordRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.extension.fromEntity
@@ -107,6 +110,29 @@ class UserSettingsRepositoryImpl(
                     clientEphemeral = clientEphemeral,
                     clientProof = clientProof,
                     srpSession = srpSession
+                )
+            )
+            insertOrUpdate(response.settings.fromResponse(sessionUserId))
+            getUserSettings(sessionUserId)
+        }.valueOrThrow
+    }
+
+    override suspend fun updateLoginPassword(
+        sessionUserId: SessionUserId,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String,
+        secondFactorCode: String,
+        auth: Auth
+    ): UserSettings {
+        return apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
+            val response = updateLoginPassword(
+                UpdateLoginPasswordRequest(
+                    twoFactorCode = secondFactorCode,
+                    clientEphemeral = clientEphemeral,
+                    clientProof = clientProof,
+                    srpSession = srpSession,
+                    auth = AuthRequest.from(auth)
                 )
             )
             insertOrUpdate(response.settings.fromResponse(sessionUserId))

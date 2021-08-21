@@ -21,6 +21,7 @@ package me.proton.core.key.domain.repository
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 
 interface PrivateKeyRepository {
@@ -43,4 +44,17 @@ interface PrivateKeyRepository {
         sessionUserId: SessionUserId,
         key: PrivateAddressKey
     )
+
+    suspend fun updatePrivateKeys(
+        sessionUserId: SessionUserId,
+        keySalt: String,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String,
+        secondFactorCode: String,
+        auth: Auth?,
+        keys: List<Key>? = null,
+        userKeys: List<Key>? = null,
+        organizationKey: String
+    ): Boolean
 }

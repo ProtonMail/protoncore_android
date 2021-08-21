@@ -24,11 +24,15 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.key.data.api.KeyApi
 import me.proton.core.key.data.api.request.AuthRequest
 import me.proton.core.key.data.api.request.CreateAddressKeyRequest
+import me.proton.core.key.data.api.request.PrivateKeyRequest
 import me.proton.core.key.data.api.request.SetupInitialKeysRequest
 import me.proton.core.key.data.api.request.SignedKeyListRequest
+import me.proton.core.key.data.api.request.UpdateKeysForPasswordChangeRequest
+import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.util.kotlin.toInt
 
 class PrivateKeyRepositoryImpl(
@@ -87,5 +91,38 @@ class PrivateKeyRepositoryImpl(
             else
                 createAddressKey(request)
         }.throwIfError()
+    }
+
+    override suspend fun updatePrivateKeys(
+        sessionUserId: SessionUserId,
+        keySalt: String,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String,
+        secondFactorCode: String,
+        auth: Auth?,
+        keys: List<Key>?,
+        userKeys: List<Key>?,
+        organizationKey: String
+    ): Boolean {
+        return provider.get<KeyApi>(sessionUserId).invoke {
+            updatePrivateKeys(
+                UpdateKeysForPasswordChangeRequest(
+                    keySalt = keySalt,
+                    clientEphemeral = clientEphemeral,
+                    clientProof = clientProof,
+                    srpSession = srpSession,
+                    twoFactorCode = secondFactorCode,
+                    auth = if (auth != null) AuthRequest.from(auth) else null,
+                    keys = keys?.map {
+                        PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)
+                    },
+                    userKeys = userKeys?.map {
+                        PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)
+                    },
+                    organizationKey = organizationKey
+                )
+            ).isSuccess()
+        }.valueOrThrow
     }
 }
