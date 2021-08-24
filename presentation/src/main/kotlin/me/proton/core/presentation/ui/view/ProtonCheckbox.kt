@@ -55,4 +55,10 @@ open class ProtonCheckbox : MaterialCheckBox {
     override fun verifyDrawable(who: Drawable): Boolean {
         return super.verifyDrawable(who) || helper?.verifyDrawable(who) ?: false
     }
+
+    override fun getCompoundPaddingLeft(): Int =
+        super.getCompoundPaddingLeft() + (helper?.getWidthLeft() ?: 0)
+
+    override fun getCompoundPaddingRight(): Int =
+        super.getCompoundPaddingRight() + (helper?.getWidthRight() ?: 0)
 }
