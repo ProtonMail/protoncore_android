@@ -21,16 +21,6 @@ package me.proton.core.crypto.common.pgp
 import java.io.File
 
 /**
- * Symmetrically encrypted [file] with [keyPacket].
+ * Symmetrically encrypted [File].
  */
-data class EncryptedFile(
-    val file: File,
-    val keyPacket: KeyPacket
-) {
-    override fun equals(other: Any?): Boolean =
-        this === other || other is EncryptedFile &&
-            keyPacket.contentEquals(other.keyPacket) &&
-            file == other.file
-
-    override fun hashCode(): Int = 31 * keyPacket.contentHashCode() + file.hashCode()
-}
+typealias EncryptedFile = File

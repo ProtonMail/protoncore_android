@@ -26,8 +26,8 @@ import java.io.File
 data class DecryptedFile(
     val file: File,
     val status: VerificationStatus,
-    private val filename: String,
-    private val lastModifiedEpochSeconds: Long
+    val filename: String,
+    val lastModifiedEpochSeconds: Long
 ) {
     /**
      * Export [file] to [parent], using [filename] and [lastModifiedEpochSeconds].

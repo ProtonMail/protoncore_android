@@ -29,9 +29,12 @@ import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.EncryptedPacket
+import me.proton.core.crypto.common.pgp.HashKey
 import me.proton.core.crypto.common.pgp.KeyPacket
+import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
+import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyFileOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
@@ -104,26 +107,51 @@ fun KeyHolderContext.decryptData(message: EncryptedMessage): ByteArray =
     privateKeyRing.decryptData(message)
 
 /**
- * Decrypt [source] into [destination] as [DecryptedFile] using [PrivateKeyRing].
+ * Decrypt [source] into [destination] as [DecryptedFile] using [keyPacket].
  *
  * @throws [CryptoException] if [source] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptFileOrNull]
  * @see [KeyHolderContext.encryptFile]
  */
-fun KeyHolderContext.decryptFile(source: EncryptedFile, destination: File): DecryptedFile =
-    privateKeyRing.decryptFile(source, destination)
+fun KeyHolderContext.decryptFile(source: EncryptedFile, destination: File, keyPacket: KeyPacket): DecryptedFile =
+    decryptSessionKey(keyPacket).use { key -> decryptFile(source, destination, key) }
 
 /**
- * Decrypt [keyPacket] as [ByteArray] using [PrivateKeyRing].
+ * Decrypt [source] into [destination] as [DecryptedFile] using [sessionKey].
+ *
+ * @throws [CryptoException] if [source] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptFileOrNull]
+ * @see [KeyHolderContext.encryptFile]
+ */
+fun KeyHolderContext.decryptFile(source: EncryptedFile, destination: File, sessionKey: SessionKey): DecryptedFile =
+    sessionKey.decryptFile(context, source, destination)
+
+/**
+ * Decrypt [keyPacket] as [SessionKey] using [PrivateKeyRing].
  *
  * @throws [CryptoException] if [keyPacket] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptSessionKeyOrNull]
  * @see [KeyHolderContext.encryptSessionKey]
  */
-fun KeyHolderContext.decryptSessionKey(keyPacket: KeyPacket): ByteArray =
+fun KeyHolderContext.decryptSessionKey(keyPacket: KeyPacket): SessionKey =
     privateKeyRing.decryptSessionKey(keyPacket)
+
+/**
+ * Decrypt [hashKey] as [HashKey] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ *
+ * @throws [CryptoException] if [hashKey] cannot be encrypted and verified.
+ *
+ * @see [KeyHolderContext.decryptHashKeyOrNull]
+ * @see [KeyHolderContext.encryptHashKey]
+ */
+fun KeyHolderContext.decryptHashKey(hashKey: EncryptedMessage): HashKey =
+    decryptAndVerifyText(hashKey).let {
+        require(it.status == VerificationStatus.Success)
+        HashKey(context.pgpCrypto.getBase64Decoded(it.text))
+    }
 
 /**
  * Decrypt [message] as [String] using [PrivateKeyRing].
@@ -148,24 +176,49 @@ fun KeyHolderContext.decryptDataOrNull(message: EncryptedMessage): ByteArray? =
     privateKeyRing.decryptDataOrNull(message)
 
 /**
- * Decrypt [source] into [destination] as [EncryptedFile] using [PrivateKeyRing].
+ * Decrypt [source] into [destination] as [DecryptedFile] using [keyPacket].
  *
- * @return [EncryptedFile], or `null` if [source] cannot be decrypted.
+ * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *
- * @see [KeyHolderContext.decryptFile]
+ * @see [KeyHolderContext.decryptFileOrNull]
+ * @see [KeyHolderContext.encryptFile]
  */
-fun KeyHolderContext.decryptFileOrNull(source: EncryptedFile, destination: File): DecryptedFile? =
-    privateKeyRing.decryptFileOrNull(source, destination)
+fun KeyHolderContext.decryptFileOrNull(source: EncryptedFile, destination: File, keyPacket: KeyPacket): DecryptedFile? =
+    decryptSessionKeyOrNull(keyPacket)?.use { key -> decryptFileOrNull(source, destination, key) }
 
 /**
- * Decrypt [keyPacket] as [ByteArray] using [PrivateKeyRing].
+ * Decrypt [source] into [destination] as [DecryptedFile] using [sessionKey].
  *
- * @return [ByteArray], or `null` if [keyPacket] cannot be decrypted.
+ * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptFileOrNull]
+ * @see [KeyHolderContext.encryptFile]
+ */
+fun KeyHolderContext.decryptFileOrNull(
+    source: EncryptedFile,
+    destination: File,
+    sessionKey: SessionKey
+): DecryptedFile? = sessionKey.decryptFileOrNull(context, source, destination)
+
+/**
+ * Decrypt [keyPacket] as [SessionKey] using [PrivateKeyRing].
+ *
+ * @return [SessionKey], or `null` if [keyPacket] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptSessionKey]
  */
-fun KeyHolderContext.decryptSessionKeyOrNull(keyPacket: KeyPacket): ByteArray? =
+fun KeyHolderContext.decryptSessionKeyOrNull(keyPacket: KeyPacket): SessionKey? =
     privateKeyRing.decryptSessionKeyOrNull(keyPacket)
+
+/**
+ * Decrypt [hashKey] as [HashKey] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ *
+ * @return [HashKey], or `null` if [hashKey] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptHashKey]
+ */
+fun KeyHolderContext.decryptHashKeyOrNull(hashKey: EncryptedMessage): HashKey? =
+    runCatching { decryptHashKey(hashKey) }.getOrNull()
 
 /**
  * Sign [text] using [PrivateKeyRing].
@@ -254,32 +307,42 @@ fun KeyHolderContext.encryptData(data: ByteArray): EncryptedMessage =
     publicKeyRing.encryptData(context, data)
 
 /**
- * Encrypt [source] into [destination] using [PublicKeyRing].
+ * Encrypt [source] into [destination] using [keyPacket].
  *
  * @throws [CryptoException] if [source] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptFile]
  */
-fun KeyHolderContext.encryptFile(source: File, destination: File): EncryptedFile =
-    publicKeyRing.encryptFile(context, source, destination)
+fun KeyHolderContext.encryptFile(source: File, destination: File, keyPacket: KeyPacket): EncryptedFile =
+    decryptSessionKey(keyPacket).use { key -> encryptFile(source, destination, key) }
+
+/**
+ * Encrypt [source] into [destination] using [sessionKey].
+ *
+ * @throws [CryptoException] if [source] cannot be encrypted.
+ *
+ * @see [KeyHolderContext.decryptFile]
+ */
+fun KeyHolderContext.encryptFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile =
+    sessionKey.encryptFile(context, source, destination)
 
 /**
  * Encrypt [inputStream] using [PublicKeyRing].
  *
- * Note: Caller must delete generated [EncryptedFile.file] when needed.
+ * Note: Caller must delete generated [EncryptedFile] when needed.
  *
  * @throws [CryptoException] if [inputStream] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptFile]
  */
-fun KeyHolderContext.encryptFile(fileName: String, inputStream: InputStream): EncryptedFile {
+fun KeyHolderContext.encryptFile(fileName: String, inputStream: InputStream, keyPacket: KeyPacket): EncryptedFile {
     var source: File? = null
     var destination: File? = null
     try {
         source = File.createTempFile("$fileName.", "")
         destination = File.createTempFile("$fileName.", ".encrypted")
         inputStream.use { input -> source.outputStream().use { output -> input.copyTo(output) } }
-        return encryptFile(source, destination)
+        return encryptFile(source, destination, keyPacket)
     } catch (error: IOException) {
         destination?.delete()
         throw error
@@ -295,8 +358,8 @@ fun KeyHolderContext.encryptFile(fileName: String, inputStream: InputStream): En
  *
  * @see [KeyHolderContext.decryptFile]
  */
-fun KeyHolderContext.encryptFile(fileName: String, data: ByteArray): EncryptedFile =
-    encryptFile(fileName, ByteArrayInputStream(data))
+fun KeyHolderContext.encryptFile(fileName: String, data: ByteArray, keyPacket: KeyPacket): EncryptedFile =
+    encryptFile(fileName, ByteArrayInputStream(data), keyPacket)
 
 /**
  * Encrypt [text] using [PublicKeyRing] and sign using [PrivateKeyRing] in an embedded [EncryptedMessage].
@@ -327,29 +390,49 @@ fun KeyHolderContext.encryptAndSignData(data: ByteArray): EncryptedMessage =
     )
 
 /**
- * Encrypt [source] into [destination] using [PublicKeyRing] and sign using [PrivateKeyRing].
+ * Encrypt [source] into [destination] using [keyPacket] and sign using [PrivateKeyRing].
  *
  * @throws [CryptoException] if [source] cannot be encrypted or signed.
  *
  * @see [KeyHolderContext.decryptAndVerifyFile].
  */
-fun KeyHolderContext.encryptAndSignFile(source: File, destination: File): EncryptedFile =
+fun KeyHolderContext.encryptAndSignFile(source: File, destination: File, keyPacket: KeyPacket): EncryptedFile =
+    decryptSessionKey(keyPacket).use { key -> encryptAndSignFile(source, destination, key) }
+
+/**
+ * Encrypt [source] into [destination] using [sessionKey] and sign using [PrivateKeyRing].
+ *
+ * @throws [CryptoException] if [source] cannot be encrypted or signed.
+ *
+ * @see [KeyHolderContext.decryptAndVerifyFile].
+ */
+fun KeyHolderContext.encryptAndSignFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile =
     context.pgpCrypto.encryptAndSignFile(
         source,
         destination,
-        publicKeyRing.primaryKey.key,
+        sessionKey,
         privateKeyRing.unlockedPrimaryKey.unlockedKey.value
     )
 
 /**
- * Encrypt [keyPacket] using [PublicKeyRing].
+ * Encrypt [sessionKey] using [PublicKeyRing].
  *
- * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+ * @throws [CryptoException] if [sessionKey] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptSessionKey]
  */
-fun KeyHolderContext.encryptSessionKey(keyPacket: KeyPacket): ByteArray =
-    publicKeyRing.encryptSessionKey(context, keyPacket)
+fun KeyHolderContext.encryptSessionKey(sessionKey: SessionKey): KeyPacket =
+    publicKeyRing.encryptSessionKey(context, sessionKey)
+
+/**
+ * Encrypt [hashKey] using [PublicKeyRing] and sign using [PrivateKeyRing] in an embedded [EncryptedMessage].
+ *
+ * @throws [CryptoException] if [hashKey] cannot be encrypted.
+ *
+ * @see [KeyHolderContext.decryptHashKey]
+ */
+fun KeyHolderContext.encryptHashKey(hashKey: HashKey): EncryptedMessage =
+    encryptAndSignText(context.pgpCrypto.getBase64Encoded(hashKey.key))
 
 /**
  * Decrypt [message] as [String] using [PrivateKeyRing] and verify using [PublicKeyRing].
@@ -388,7 +471,7 @@ fun KeyHolderContext.decryptAndVerifyData(message: EncryptedMessage, validAtUtc:
     )
 
 /**
- * Decrypt [source] into [destination] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ * Decrypt [source] into [destination] using [keyPacket] and verify using [PublicKeyRing].
  *
  * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
  *
@@ -396,12 +479,34 @@ fun KeyHolderContext.decryptAndVerifyData(message: EncryptedMessage, validAtUtc:
  *
  * @see [KeyHolderContext.encryptAndSignFile]
  */
-fun KeyHolderContext.decryptAndVerifyFile(source: EncryptedFile, destination: File, validAtUtc: Long = 0): DecryptedFile =
+fun KeyHolderContext.decryptAndVerifyFile(
+    source: EncryptedFile,
+    destination: File,
+    keyPacket: KeyPacket,
+    validAtUtc: Long = 0
+): DecryptedFile =
+    decryptSessionKey(keyPacket).use { key -> decryptAndVerifyFile(source, destination, key, validAtUtc) }
+
+/**
+ * Decrypt [source] into [destination] using [sessionKey] and verify using [PublicKeyRing].
+ *
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @throws [CryptoException] if [source] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.encryptAndSignFile]
+ */
+fun KeyHolderContext.decryptAndVerifyFile(
+    source: EncryptedFile,
+    destination: File,
+    sessionKey: SessionKey,
+    validAtUtc: Long = 0
+): DecryptedFile =
     context.pgpCrypto.decryptAndVerifyFile(
         source,
         destination,
+        sessionKey,
         publicKeyRing.keys.map { it.key },
-        privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
         validAtUtc
     )
 
@@ -442,7 +547,7 @@ fun KeyHolderContext.decryptAndVerifyDataOrNull(message: EncryptedMessage, valid
     )
 
 /**
- * Decrypt [source] into [destination] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ * Decrypt [source] into [destination] using [keyPacket] and verify using [PublicKeyRing].
  *
  * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
  *
@@ -450,12 +555,34 @@ fun KeyHolderContext.decryptAndVerifyDataOrNull(message: EncryptedMessage, valid
  *
  * @see [KeyHolderContext.decryptAndVerifyFile]
  */
-fun KeyHolderContext.decryptAndVerifyFileOrNull(source: EncryptedFile, destination: File, validAtUtc: Long = 0): DecryptedFile? =
+fun KeyHolderContext.decryptAndVerifyFileOrNull(
+    source: EncryptedFile,
+    destination: File,
+    keyPacket: KeyPacket,
+    validAtUtc: Long = 0
+): DecryptedFile? =
+    decryptSessionKeyOrNull(keyPacket)?.use { key -> decryptAndVerifyFileOrNull(source, destination, key, validAtUtc) }
+
+/**
+ * Decrypt [source] into [destination] using [sessionKey] and verify using [PublicKeyRing].
+ *
+ * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ *
+ * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptAndVerifyFile]
+ */
+fun KeyHolderContext.decryptAndVerifyFileOrNull(
+    source: EncryptedFile,
+    destination: File,
+    sessionKey: SessionKey,
+    validAtUtc: Long = 0
+): DecryptedFile? =
     context.pgpCrypto.decryptAndVerifyFileOrNull(
         source,
         destination,
+        sessionKey,
         publicKeyRing.keys.map { it.key },
-        privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
         validAtUtc
     )
 
@@ -545,3 +672,26 @@ fun KeyHolderContext.encryptAndSignNestedKey(nestedPrivateKey: NestedPrivateKey)
  */
 fun KeyHolderContext.generateNestedPrivateKey(username: String, domain: String): NestedPrivateKey =
     encryptAndSignNestedKey(NestedPrivateKey.generateNestedPrivateKey(context, username, domain))
+
+/**
+ * Generate new [SessionKey].
+ *
+ * Note: Consider using [use] on returned [SessionKey], to clear memory after usage.
+ *
+ * @see generateNewKeyPacket
+ */
+fun KeyHolderContext.generateNewSessionKey(): SessionKey = context.pgpCrypto.generateNewSessionKey()
+
+/**
+ * Generate new [KeyPacket].
+ *
+ * @see generateNewSessionKey
+ */
+fun KeyHolderContext.generateNewKeyPacket(): KeyPacket = generateNewSessionKey().use { encryptSessionKey(it) }
+
+/**
+ * Generate new [HashKey].
+ *
+ * Note: Consider using [use] on returned [SessionKey], to clear memory after usage.
+ */
+fun KeyHolderContext.generateNewHashKey(): HashKey = context.pgpCrypto.generateNewHashKey()

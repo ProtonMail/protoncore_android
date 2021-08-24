@@ -31,8 +31,11 @@ import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.EncryptedPacket
+import me.proton.core.crypto.common.pgp.HashKey
+import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.PacketType
+import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
@@ -154,13 +157,13 @@ class TestCryptoContext : CryptoContext {
                 decrypted.extractMessage().toByteArray()
             }
 
-        override fun decryptFile(source: EncryptedFile, destination: File, unlockedKey: Unarmored): DecryptedFile {
-            val data = source.file.readBytes()
+        override fun decryptFile(source: EncryptedFile, destination: File, sessionKey: SessionKey): DecryptedFile {
+            val data = source.readBytes()
             return DecryptedFile(
-                file = destination.apply { appendBytes(decryptData(data.fromByteArray(), unlockedKey)) },
+                file = destination.apply { appendBytes(data) },
                 status = VerificationStatus.NotSigned,
-                filename = source.file.name,
-                lastModifiedEpochSeconds = source.file.lastModified()
+                filename = source.name,
+                lastModifiedEpochSeconds = source.lastModified()
             )
         }
 
@@ -172,13 +175,8 @@ class TestCryptoContext : CryptoContext {
             "BINARY([${data.fromByteArray()}]+$publicKey)"
                 .encryptMessage(publicKey)
 
-        override fun encryptFile(source: File, destination: File, publicKey: Armored): EncryptedFile {
-            val data = source.readBytes()
-            return EncryptedFile(
-                file = destination.apply { appendBytes(encryptData(data, publicKey).toByteArray()) },
-                keyPacket = source.name.toByteArray(),
-            )
-        }
+        override fun encryptFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile =
+            destination.apply { appendBytes(source.readBytes()) }
 
         override fun encryptAndSignText(
             plainText: String,
@@ -195,13 +193,15 @@ class TestCryptoContext : CryptoContext {
         override fun encryptAndSignFile(
             source: File,
             destination: File,
-            publicKey: Armored,
+            sessionKey: SessionKey,
             unlockedKey: Unarmored
-        ): EncryptedFile = encryptFile(source, destination, publicKey)
+        ): EncryptedFile = encryptFile(source, destination, sessionKey)
 
-        override fun encryptSessionKey(keyPacket: ByteArray, publicKey: Armored): ByteArray = keyPacket
+        override fun encryptSessionKey(sessionKey: SessionKey, publicKey: Armored): ByteArray =
+            sessionKey.key
 
-        override fun encryptSessionKey(keyPacket: ByteArray, password: ByteArray): ByteArray = keyPacket
+        override fun encryptSessionKeyWithPassword(sessionKey: SessionKey, password: ByteArray): KeyPacket =
+            sessionKey.key
 
         override fun decryptAndVerifyText(
             message: EncryptedMessage,
@@ -232,12 +232,16 @@ class TestCryptoContext : CryptoContext {
         override fun decryptAndVerifyFile(
             source: EncryptedFile,
             destination: File,
+            sessionKey: SessionKey,
             publicKeys: List<Armored>,
-            unlockedKeys: List<Unarmored>,
             validAtUtc: Long
-        ): DecryptedFile = decryptFile(source, destination, unlockedKeys.first())
+        ): DecryptedFile = decryptFile(source, destination, sessionKey)
 
-        override fun decryptSessionKey(keyPacket: ByteArray, unlockedKey: Unarmored): ByteArray = keyPacket
+        override fun decryptSessionKey(keyPacket: KeyPacket, unlockedKey: Unarmored): SessionKey =
+            SessionKey(keyPacket)
+
+        override fun decryptSessionKeyWithPassword(keyPacket: KeyPacket, password: ByteArray): SessionKey =
+            SessionKey(keyPacket)
 
         override fun getPublicKey(privateKey: Armored): Armored = privateKey
 
@@ -245,7 +249,15 @@ class TestCryptoContext : CryptoContext {
 
         override fun getJsonSHA256Fingerprints(key: Armored): String = "jsonSHA256Fingerprint($key)"
 
+        override fun getBase64Encoded(array: ByteArray): String = array.toString()
+
+        override fun getBase64Decoded(string: String): ByteArray = string.toByteArray()
+
         override fun getPassphrase(password: ByteArray, encodedSalt: String): ByteArray = password.copyOf()
+
+        override fun generateNewSessionKey(): SessionKey = SessionKey("sessionKey".toByteArray())
+
+        override fun generateNewHashKey(): HashKey = HashKey("hashKey".toByteArray())
 
         override fun generateNewKeySalt(): String = "keySalt"
 

@@ -28,7 +28,6 @@ import com.proton.gopenpgp.crypto.PGPSignature
 import com.proton.gopenpgp.crypto.PGPSplitMessage
 import com.proton.gopenpgp.crypto.PlainMessage
 import com.proton.gopenpgp.crypto.PlainMessageMetadata
-import com.proton.gopenpgp.crypto.SessionKey
 import com.proton.gopenpgp.helper.ExplicitVerifyMessage
 import com.proton.gopenpgp.helper.Go2AndroidReader
 import com.proton.gopenpgp.helper.Helper
@@ -43,9 +42,11 @@ import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.EncryptedPacket
+import me.proton.core.crypto.common.pgp.HashKey
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.PacketType
+import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
@@ -55,6 +56,8 @@ import me.proton.core.crypto.common.pgp.unlockOrNull
 import java.io.Closeable
 import java.io.File
 import java.security.SecureRandom
+
+import com.proton.gopenpgp.crypto.SessionKey as InternalSessionKey
 
 /**
  * [PGPCrypto] implementation based on GOpenPGP Android library.
@@ -84,6 +87,8 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
+    private fun SessionKey.toInternalSessionKey() = InternalSessionKey(key, Constants.AES256)
+
     private fun newKey(key: Key) = CloseableUnlockedKey(key)
     private fun newKey(key: Unarmored) = newKey(Crypto.newKey(key))
     private fun newKeys(keys: List<Unarmored>) = keys.map { newKey(it) }
@@ -102,10 +107,11 @@ class GOpenPGPCrypto : PGPCrypto {
 
     private fun encrypt(
         plainMessage: PlainMessage,
-        publicKey: Armored
+        publicKey: Armored,
+        signKeyRing: KeyRing? = null
     ): EncryptedMessage {
         val publicKeyRing = newKeyRing(publicKey)
-        return publicKeyRing.encrypt(plainMessage, null).armored
+        return publicKeyRing.encrypt(plainMessage, signKeyRing).armored
     }
 
     private fun encryptAndSign(
@@ -113,10 +119,9 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKey: Armored,
         unlockedKey: Unarmored
     ): EncryptedMessage {
-        val publicKeyRing = newKeyRing(publicKey)
         newKey(unlockedKey).use { key ->
             newKeyRing(key).use { keyRing ->
-                return publicKeyRing.encrypt(plainMessage, keyRing.value).armored
+                return encrypt(plainMessage, publicKey, keyRing.value)
             }
         }
     }
@@ -124,19 +129,18 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun encrypt(
         source: File,
         destination: File,
-        publicKey: Armored
+        sessionKey: SessionKey,
+        signKeyRing: KeyRing? = null
     ): EncryptedFile {
         source.inputStream().use { fileInputStream ->
             destination.outputStream().use { fileOutputStream ->
                 val writer = Mobile2GoWriter(fileOutputStream.writer())
                 val plainMessageMetadata = PlainMessageMetadata(true, source.name, source.lastModified() / 1000)
-                val result = newKeyRing(publicKey).encryptSplitStream(writer, plainMessageMetadata, null).use {
-                    fileInputStream.reader().copyTo(it)
-                }
-                return EncryptedFile(
-                    file = destination,
-                    keyPacket = result.keyPacket
-                )
+                val internalSessionKey = sessionKey.toInternalSessionKey()
+                val writeCloser = internalSessionKey.encryptStream(writer, plainMessageMetadata, signKeyRing)
+                fileInputStream.reader().copyTo(writeCloser)
+                writeCloser.close()
+                return destination
             }
         }
     }
@@ -144,25 +148,12 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun encryptAndSign(
         source: File,
         destination: File,
-        publicKey: Armored,
+        sessionKey: SessionKey,
         unlockedKey: Unarmored
     ): EncryptedFile {
-        source.inputStream().use { fileInputStream ->
-            destination.outputStream().use { fileOutputStream ->
-                val writer = Mobile2GoWriter(fileOutputStream.writer())
-                val plainMessageMetadata = PlainMessageMetadata(true, source.name, source.lastModified() / 1000)
-                val publicKeyRing = newKeyRing(publicKey)
-                newKey(unlockedKey).use { key ->
-                    newKeyRing(key).use { keyRing ->
-                        val result = publicKeyRing.encryptSplitStream(writer, plainMessageMetadata, keyRing.value).use {
-                            fileInputStream.reader().copyTo(it)
-                        }
-                        return EncryptedFile(
-                            file = destination,
-                            keyPacket = result.keyPacket
-                        )
-                    }
-                }
+        newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                return encrypt(source, destination, sessionKey, keyRing.value)
             }
         }
     }
@@ -170,24 +161,24 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun decrypt(
         source: File,
         destination: File,
-        unlockedKey: Unarmored,
-        keyPacket: KeyPacket
+        sessionKey: SessionKey,
+        verifyKeyRing: KeyRing? = null,
+        validAtUtc: Long = 0
     ): DecryptedFile {
         source.inputStream().use { fileInputStream ->
             destination.outputStream().use { fileOutputStream ->
                 val reader = Mobile2GoReader(fileInputStream.mobileReader())
-                newKey(unlockedKey).use { key ->
-                    newKeyRing(key).use { keyRing ->
-                        val plainMessageReader = keyRing.value.decryptSplitStream(keyPacket, reader, null, 0)
-                        Go2AndroidReader(plainMessageReader).copyTo(fileOutputStream.writer())
-                        return DecryptedFile(
-                            file = destination,
-                            status = VerificationStatus.Unknown,
-                            filename = plainMessageReader.metadata.filename,
-                            lastModifiedEpochSeconds = plainMessageReader.metadata.modTime
-                        )
-                    }
-                }
+                val internalSessionKey = sessionKey.toInternalSessionKey()
+                val plainMessageReader = internalSessionKey.decryptStream(reader, verifyKeyRing, validAtUtc)
+                Go2AndroidReader(plainMessageReader).copyTo(fileOutputStream.writer())
+                return DecryptedFile(
+                    file = destination,
+                    status = verifyKeyRing?.let {
+                        Helper.verifySignatureExplicit(plainMessageReader).toVerificationStatus()
+                    } ?: VerificationStatus.Unknown,
+                    filename = plainMessageReader.metadata.filename,
+                    lastModifiedEpochSeconds = plainMessageReader.metadata.modTime
+                )
             }
         }
     }
@@ -195,30 +186,11 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun decryptAndVerify(
         source: File,
         destination: File,
-        keyPacket: KeyPacket,
+        sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        unlockedKeys: List<Unarmored>,
         validAtUtc: Long
     ): DecryptedFile {
-        source.inputStream().use { fileInputStream ->
-            destination.outputStream().use { fileOutputStream ->
-                val reader = Mobile2GoReader(fileInputStream.mobileReader())
-                val publicKeyRing = newKeyRing(publicKeys)
-                return newKeys(unlockedKeys).use { keys ->
-                    newKeyRing(keys).use { keyRing ->
-                        val plainMessageReader =
-                            keyRing.value.decryptSplitStream(keyPacket, reader, publicKeyRing, validAtUtc)
-                        Go2AndroidReader(plainMessageReader).copyTo(fileOutputStream.writer())
-                        DecryptedFile(
-                            file = destination,
-                            status = Helper.verifySignatureExplicit(plainMessageReader).toVerificationStatus(),
-                            filename = plainMessageReader.metadata.filename,
-                            lastModifiedEpochSeconds = plainMessageReader.metadata.modTime
-                        )
-                    }
-                }
-            }
-        }
+        return decrypt(source, destination, sessionKey, newKeyRing(publicKeys), validAtUtc)
     }
 
     private inline fun <T> decrypt(
@@ -351,9 +323,9 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun encryptFile(
         source: File,
         destination: File,
-        publicKey: Armored
+        sessionKey: SessionKey,
     ): EncryptedFile = runCatching {
-        encrypt(source, destination, publicKey)
+        encrypt(source, destination, sessionKey)
     }.getOrElse { throw CryptoException("File cannot be encrypted.", it) }
 
     override fun encryptAndSignText(
@@ -375,28 +347,28 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun encryptAndSignFile(
         source: File,
         destination: File,
-        publicKey: Armored,
+        sessionKey: SessionKey,
         unlockedKey: Unarmored
     ): EncryptedFile = runCatching {
-        encryptAndSign(source, destination, publicKey, unlockedKey)
+        encryptAndSign(source, destination, sessionKey, unlockedKey)
     }.getOrElse { throw CryptoException("File cannot be encrypted or signed.", it) }
 
     override fun encryptSessionKey(
-        keyPacket: ByteArray,
+        sessionKey: SessionKey,
         publicKey: Armored
-    ): ByteArray = runCatching {
+    ): KeyPacket = runCatching {
         val publicKeyRing = newKeyRing(publicKey)
-        val sessionKey = SessionKey(keyPacket, Constants.AES256)
-        return publicKeyRing.encryptSessionKey(sessionKey)
-    }.getOrElse { throw CryptoException("KeyPacket cannot be encrypted.", it) }
+        val internalSessionKey = sessionKey.toInternalSessionKey()
+        return publicKeyRing.encryptSessionKey(internalSessionKey)
+    }.getOrElse { throw CryptoException("SessionKey cannot be encrypted.", it) }
 
-    override fun encryptSessionKey(
-        keyPacket: ByteArray,
+    override fun encryptSessionKeyWithPassword(
+        sessionKey: SessionKey,
         password: ByteArray
-    ): ByteArray = runCatching {
-        val sessionKey = SessionKey(keyPacket, Constants.AES256)
-        return Crypto.encryptSessionKeyWithPassword(sessionKey, password)
-    }.getOrElse { throw CryptoException("KeyPacket cannot be encrypted with password.", it) }
+    ): KeyPacket = runCatching {
+        val internalSessionKey = sessionKey.toInternalSessionKey()
+        return Crypto.encryptSessionKeyWithPassword(internalSessionKey, password)
+    }.getOrElse { throw CryptoException("SessionKey cannot be encrypted with password.", it) }
 
     // endregion
 
@@ -417,11 +389,11 @@ class GOpenPGPCrypto : PGPCrypto {
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
     override fun decryptFile(
-        source: EncryptedFile,
+        source: File,
         destination: File,
-        unlockedKey: Unarmored
+        sessionKey: SessionKey
     ): DecryptedFile = runCatching {
-        decrypt(source.file, destination, unlockedKey, source.keyPacket)
+        decrypt(source, destination, sessionKey)
     }.getOrElse { throw CryptoException("File cannot be decrypted.", it) }
 
     override fun decryptAndVerifyText(
@@ -455,23 +427,30 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun decryptAndVerifyFile(
         source: EncryptedFile,
         destination: File,
+        sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        unlockedKeys: List<Unarmored>,
         validAtUtc: Long
     ): DecryptedFile = runCatching {
-        decryptAndVerify(source.file, destination, source.keyPacket, publicKeys, unlockedKeys, validAtUtc)
+        decryptAndVerify(source, destination, sessionKey, publicKeys, validAtUtc)
     }.getOrElse { throw CryptoException("File cannot be decrypted.", it) }
 
     override fun decryptSessionKey(
-        keyPacket: ByteArray,
+        keyPacket: KeyPacket,
         unlockedKey: Unarmored
-    ): ByteArray = runCatching {
+    ): SessionKey = runCatching {
         newKey(unlockedKey).use { key ->
             newKeyRing(key).use { keyRing ->
-                keyRing.value.decryptSessionKey(keyPacket).key
+                SessionKey(keyRing.value.decryptSessionKey(keyPacket).key)
             }
         }
-    }.getOrElse { throw CryptoException("KeyPacket cannot be decrypted.", it) }
+    }.getOrElse { throw CryptoException("SessionKey cannot be decrypted from KeyPacket.", it) }
+
+    override fun decryptSessionKeyWithPassword(
+        keyPacket: KeyPacket,
+        password: ByteArray
+    ): SessionKey = runCatching {
+        SessionKey(Crypto.decryptSessionKeyWithPassword(keyPacket, password).key)
+    }.getOrElse { throw CryptoException("SessionKey cannot be decrypted from KeyPacket.", it) }
 
     // endregion
 
@@ -567,6 +546,14 @@ class GOpenPGPCrypto : PGPCrypto {
         Helper.getJsonSHA256Fingerprints(key).toString(Charsets.UTF_8)
     }.getOrElse { throw CryptoException("SHA256 Fingerprints cannot be extracted from key.", it) }
 
+    override fun getBase64Encoded(array: ByteArray): String {
+        return Base64.encodeToString(array, Base64.DEFAULT)
+    }
+
+    override fun getBase64Decoded(string: String): ByteArray {
+        return Base64.decode(string)
+    }
+
     override fun getPassphrase(
         password: ByteArray,
         encodedSalt: String
@@ -578,7 +565,17 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
-    // region PrivateKey/Token generation
+    // endregion
+
+    // region SessionKey/HashKey/PrivateKey/Token generation
+
+    override fun generateNewSessionKey(): SessionKey {
+        return SessionKey(Crypto.generateSessionKey().key)
+    }
+
+    override fun generateNewHashKey(): HashKey {
+        return HashKey(generateNewToken(32))
+    }
 
     override fun generateNewKeySalt(): String {
         val salt = ByteArray(16)

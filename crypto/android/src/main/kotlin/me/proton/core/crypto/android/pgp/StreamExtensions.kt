@@ -18,7 +18,6 @@
 
 package me.proton.core.crypto.android.pgp
 
-import com.proton.gopenpgp.crypto.EncryptSplitResult
 import com.proton.gopenpgp.crypto.Reader
 import com.proton.gopenpgp.crypto.Writer
 import com.proton.gopenpgp.helper.MobileReadResult
@@ -55,13 +54,4 @@ internal fun Reader.copyTo(writer: Writer): Long {
         bytes = read(buffer).toInt()
     }
     return bytesCopied
-}
-
-internal fun <R> EncryptSplitResult.use(block: (EncryptSplitResult) -> R): EncryptSplitResult {
-    try {
-        block(this)
-        return this
-    } finally {
-        close()
-    }
 }

@@ -21,6 +21,7 @@ package me.proton.core.key.domain
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
+import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
@@ -82,14 +83,14 @@ fun PublicAddress.encryptData(context: CryptoContext, data: ByteArray): Encrypte
     primaryKey.publicKey.encryptData(context, data)
 
 /**
- * Encrypt [keyPacket] using this [PublicAddress.primaryKey].
+ * Encrypt [sessionKey] using this [PublicAddress.primaryKey].
  *
- * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+ * @throws [CryptoException] if [sessionKey] cannot be encrypted.
  *
  * @see [KeyHolderContext.decryptText]
  */
-fun PublicAddress.encryptSessionKey(context: CryptoContext, keyPacket: KeyPacket): ByteArray =
-    primaryKey.publicKey.encryptSessionKey(context, keyPacket)
+fun PublicAddress.encryptSessionKey(context: CryptoContext, sessionKey: SessionKey): KeyPacket =
+    primaryKey.publicKey.encryptSessionKey(context, sessionKey)
 
 /**
  * Get [PublicKeyRing] from this [PublicAddress].

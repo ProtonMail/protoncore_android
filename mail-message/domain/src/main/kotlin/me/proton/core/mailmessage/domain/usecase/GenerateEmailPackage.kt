@@ -20,6 +20,7 @@ package me.proton.core.mailmessage.domain.usecase
 
 import com.google.crypto.tink.subtle.Base64
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.dataPacket
 import me.proton.core.crypto.common.pgp.keyPacket
 import me.proton.core.crypto.common.pgp.split
@@ -46,7 +47,7 @@ class GenerateEmailPackage @Inject constructor(
                 .encryptText(cryptoContext, arguments.body)
                 .split(cryptoContext.pgpCrypto)
             val encryptedAttachmentKeyPackets = decryptedAttachmentSessionKeys.map {
-                Base64.encode(recipient.encryptSessionKey(cryptoContext, it))
+                Base64.encode(recipient.encryptSessionKey(cryptoContext, SessionKey(it)))
             }
             EncryptedPackage(
                 addresses = mapOf(

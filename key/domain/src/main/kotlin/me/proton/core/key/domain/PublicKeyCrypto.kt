@@ -20,15 +20,14 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.DecryptedFile
-import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
+import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
-import java.io.File
 
 /**
  * Verify [signature] of [text] is correctly signed using this [PublicKey].
@@ -99,29 +98,16 @@ fun PublicKey.encryptData(context: CryptoContext, data: ByteArray): EncryptedMes
 }
 
 /**
- * Encrypt [source] into [destination] using this [PublicKey].
+ * Encrypt [sessionKey] using this [PublicKey].
  *
- * @throws [CryptoException] if [source] cannot be encrypted.
- *
- * @see [UnlockedPrivateKey.decryptText]
- */
-fun PublicKey.encryptFile(context: CryptoContext, source: File, destination: File): EncryptedFile {
-    if (!isActive) throw CryptoException("Key cannot be used while inactive.")
-    if (!canEncrypt) throw CryptoException("Key cannot be used to encrypt.")
-    return context.pgpCrypto.encryptFile(source, destination, key)
-}
-
-/**
- * Encrypt [keyPacket] using this [PublicKey].
- *
- * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+ * @throws [CryptoException] if [sessionKey] cannot be encrypted.
  *
  * @see [UnlockedPrivateKey.decryptSessionKey]
  */
-fun PublicKey.encryptSessionKey(context: CryptoContext, keyPacket: KeyPacket): ByteArray {
+fun PublicKey.encryptSessionKey(context: CryptoContext, sessionKey: SessionKey): KeyPacket {
     if (!isActive) throw CryptoException("Key cannot be used while inactive.")
     if (!canEncrypt) throw CryptoException("Key cannot be used to encrypt.")
-    return context.pgpCrypto.encryptSessionKey(keyPacket, key)
+    return context.pgpCrypto.encryptSessionKey(sessionKey, key)
 }
 
 /**

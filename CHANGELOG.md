@@ -1,3 +1,18 @@
+## Crypto Version [1.6.1]
+
+Aug 25, 2021
+
+### Dependencies
+
+- Crypto 1.6.1.
+- Key 1.6.1.
+- Mail Message 1.6.1.
+- Util Kotlin 0.2.6.
+
+### New Features
+
+- Added Crypto encrypt/decrypt File with KeyPacket/SessionKey/HashKey support.
+
 ## Auth Version [1.6.1]
 
 Aug 25, 2021
