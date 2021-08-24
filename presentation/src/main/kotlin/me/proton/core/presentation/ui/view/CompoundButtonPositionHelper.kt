@@ -33,6 +33,7 @@ class CompoundButtonPositionHelper(private val button: CompoundButton) {
 
     init {
         button.buttonDrawable = null
+        drawable?.callback = button
         drawable?.jumpToCurrentState()
     }
 
