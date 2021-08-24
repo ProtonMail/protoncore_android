@@ -1,3 +1,20 @@
+## Presentation [1.5.5]
+
+Aug 27, 2021
+
+### New Features
+
+- Added ```?attr/proton_text_accent``` and ```?attr/proton_icon_accent```.
+
+### Style Changes
+
+- Linear progress bar styling has changed. The track is now 50% of the brand color so that it is lighter than the indicator in light mode and darker in dark mode.
+
+### Bug Fixes
+
+- ProtonRadioButton and ProtonCheckbox animations are fixed in Android 6.
+- ProtonRadioButton and ProtonCheckbox padding is fixed to avoid long labels overlapping the button.
+
 ## Crypto Version [1.6.1]
 
 Aug 25, 2021
