@@ -18,7 +18,7 @@
 
 <resources>
 
-    <style name="ProtonTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="ProtonThemeBase" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Material color attributes -->
         <item name="android:colorBackground">@color/background_norm</item>
@@ -108,6 +108,11 @@
         <item name="proton_notification_success">@color/notification_success</item>
         <item name="proton_notification_warning">@color/notification_warning</item>
         <item name="proton_blender_norm">@color/blender_norm</item>
+    </style>
+
+    <style name="ProtonTheme" parent="ProtonThemeBase">
+        <item name="proton_text_accent">?attr/brand_norm</item>
+        <item name="proton_icon_accent">?attr/brand_norm</item>
     </style>
 
     <style name="ProtonTheme.Calendar" parent="ProtonTheme" />
