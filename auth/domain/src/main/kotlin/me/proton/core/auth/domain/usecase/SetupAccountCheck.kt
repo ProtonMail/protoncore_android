@@ -68,15 +68,15 @@ class SetupAccountCheck @Inject constructor(
         val hasUsername = !user.name.isNullOrBlank()
         val hasKeys = user.keys.isNotEmpty()
 
+        val addresses = addressRepository.getAddresses(userId, refresh = true)
+        val hasInternalAddressKey = addresses.firstInternalOrNull()?.keys?.isNotEmpty() ?: false
+
         // Force private OrganizationMember to change password for the first login.
         // We assume, after changing password, user.keys will not be empty (added by web).
         if (!hasKeys && user.role == Role.OrganizationMember && user.private) return Result.ChangePasswordNeeded
 
         // API bug: TwoPassMode is not needed if user has no key!
         if (isTwoPassModeNeeded && hasKeys) return Result.TwoPassNeeded
-
-        val addresses = addressRepository.getAddresses(userId, refresh = true)
-        val hasInternalAddressKey = addresses.firstInternalOrNull()?.keys?.isNotEmpty() ?: false
 
         return when (requiredAccountType) {
             AccountType.Username -> Result.NoSetupNeeded

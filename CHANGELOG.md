@@ -1,3 +1,11 @@
+## Auth Version [1.6.1]
+
+Aug 25, 2021
+
+### Bug Fixes
+
+- Fixed SetupAccountCheck to always refresh User Addresses before proceeding.
+
 ## User Settings Version [1.6.0]
 
 Aug 17, 2021
