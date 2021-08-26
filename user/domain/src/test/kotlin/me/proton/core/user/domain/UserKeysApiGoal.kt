@@ -26,22 +26,37 @@ import me.proton.core.key.domain.decryptAndVerifyDataOrNull
 import me.proton.core.key.domain.decryptAndVerifyNestedKey
 import me.proton.core.key.domain.decryptAndVerifyText
 import me.proton.core.key.domain.decryptAndVerifyTextOrNull
+import me.proton.core.key.domain.decryptFile
+import me.proton.core.key.domain.decryptHashKey
+import me.proton.core.key.domain.decryptSessionKey
 import me.proton.core.key.domain.decryptText
 import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptAndSignData
 import me.proton.core.key.domain.encryptAndSignText
+import me.proton.core.key.domain.encryptFile
+import me.proton.core.key.domain.encryptHashKey
+import me.proton.core.key.domain.encryptSessionKey
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.entity.key.KeyId
+import me.proton.core.key.domain.entity.key.NestedPrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
 import me.proton.core.key.domain.extension.keyHolder
 import me.proton.core.key.domain.generateNestedPrivateKey
+import me.proton.core.key.domain.generateNewHashKey
+import me.proton.core.key.domain.generateNewKeyPacket
+import me.proton.core.key.domain.generateNewSessionKey
+import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
+import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.util.kotlin.HashUtils
+import me.proton.core.util.kotlin.sha256
+import java.io.File
 
 internal fun userKeysApi(
     context: CryptoContext,
@@ -176,5 +191,62 @@ internal fun convertToKeyHolderApi(
     // Use KeyHolder Api.
     calendar.useKeys(context) {
         verifyText(decryptText(encryptText(message)), signText(message))
+    }
+}
+
+// For example, Drive Node that can be the parent of other Nodes.
+data class Node(override val keys: List<KeyHolderPrivateKey>) : KeyHolder
+
+/**
+ * Generate and encrypt a new [NestedPrivateKey] from [Node] keys.
+ *
+ * Note: Only this [Node] will be able to decrypt.
+ */
+fun Node.generateNestedPrivateKey(context: CryptoContext, username: String, domain: Domain): NestedPrivateKey =
+    useKeys(context) { generateNestedPrivateKey(username, domain) }
+
+@SuppressWarnings("UnusedPrivateMember")
+internal fun nestedNodeKeyCreation(
+    context: CryptoContext,
+    parentNode: Node,
+    decryptedSourceFile: File,
+    encryptedDestinationFile: File,
+    decryptedDestinationFile: File,
+) {
+    // Generate a new Nested Private Key from Parent Node.
+    val username = "username"
+    val domain = "domain.com"
+    val nestedPrivateKey = parentNode.generateNestedPrivateKey(context, username, domain)
+    // Save those below to nested KeyHolder.
+    checkNotNull(nestedPrivateKey.passphraseSignature)
+    checkNotNull(nestedPrivateKey.passphrase)
+    checkNotNull(nestedPrivateKey.privateKey)
+
+    nestedPrivateKey.keyHolder().useKeys(context) {
+        // If KeyPacket is needed.
+        val keyPacket = generateNewKeyPacket()
+        encryptFile(decryptedSourceFile, encryptedDestinationFile, keyPacket)
+        decryptFile(encryptedDestinationFile, decryptedDestinationFile, keyPacket)
+
+        // If SessionKey is needed (for multiple chunk encryption in the same useKeys block).
+        generateNewSessionKey().use { sessionKey ->
+            val encryptedFile = encryptFile(decryptedSourceFile, encryptedDestinationFile, sessionKey)
+            val decryptedFile = decryptFile(encryptedDestinationFile, decryptedDestinationFile, sessionKey)
+
+            val nameHash = generateNewHashKey().use { hashKey ->
+                val encryptedHashKey = encryptHashKey(hashKey)
+                val decryptedHashKey = decryptHashKey(encryptedHashKey)
+                HashUtils.hmacSha256(decryptedSourceFile.name, hashKey.key)
+            }
+            val fileHash = encryptedFile.sha256()
+            val nodeKey = nestedPrivateKey.privateKey.key
+            val nodePassphrase = nestedPrivateKey.passphrase
+            val nodePassphraseSignature = nestedPrivateKey.passphraseSignature
+            val contentKeyPacket = encryptSessionKey(sessionKey)
+            val contentKeyPacketSignature = signData(contentKeyPacket)
+        }
+
+        // If you need to get the sessionKey from KeyPacket.
+        val sessionKey = decryptSessionKey(keyPacket)
     }
 }

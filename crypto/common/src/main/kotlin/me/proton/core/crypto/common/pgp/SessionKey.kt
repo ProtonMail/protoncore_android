@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,37 +16,25 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.crypto.common.pgp
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import java.io.Closeable
 
-libVersion = Version(1, 6, 1)
+/**
+ * Symmetric key to encrypt/decrypt [DataPacket], unarmored, implementing [Closeable] to clear memory after usage.
+ *
+ * @see [KeyPacket]
+ */
+data class SessionKey(
+    val key: Unarmored
+) : Closeable {
 
-dependencies {
+    override fun close() {
+        key.fill(0)
+    }
 
-    implementation(
+    override fun equals(other: Any?): Boolean =
+        this === other || other is SessionKey && key.contentEquals(other.key)
 
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.keyDomain),
-        project(Module.userDomain),
-        project(Module.cryptoCommon),
-        project(Module.mailSettingsDomain),
-
-        // Android
-        `dagger`,
-
-        // Other
-        `googleTink`,
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+    override fun hashCode(): Int = key.contentHashCode()
 }

@@ -68,6 +68,7 @@ dependencies {
         project(Module.accountManager),
         project(Module.accountManagerDataDb),
         project(Module.cryptoAndroid),
-        project(Module.gopenpgp)
+        project(Module.gopenpgp),
+        project(Module.userSettings)
     )
 }

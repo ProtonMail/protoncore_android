@@ -25,6 +25,7 @@ import me.proton.core.crypto.common.pgp.keyPacket
 import me.proton.core.key.domain.encryptData
 import me.proton.core.key.domain.encryptFile
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
+import me.proton.core.key.domain.generateNewKeyPacket
 import me.proton.core.key.domain.getEncryptedPackets
 import me.proton.core.key.domain.getUnarmored
 import me.proton.core.key.domain.signData
@@ -55,14 +56,15 @@ private fun KeyHolderContext.encryptAndSignAttachment(
 ): EncryptedAttachment {
     val destination = File.createTempFile("${attachment.fileName}.", ".encrypted")
     try {
-        val encryptedFile = encryptFile(attachmentFile, destination)
+        val keyPacket = generateNewKeyPacket()
+        val encryptedFile = encryptFile(attachmentFile, destination, keyPacket)
         return EncryptedAttachment(
             fileName = attachment.fileName,
             mimeType = attachment.mimeType,
             fileSize = attachment.fileSize,
             signature = EncryptedPacket(getUnarmored(signFile(attachmentFile)), PacketType.Signature),
-            keyPacket = EncryptedPacket(encryptedFile.keyPacket, PacketType.Key),
-            dataPacket = EncryptedPacket(encryptedFile.file.readBytes(), PacketType.Data)
+            keyPacket = EncryptedPacket(keyPacket, PacketType.Key),
+            dataPacket = EncryptedPacket(encryptedFile.readBytes(), PacketType.Data)
         )
     } finally {
         destination.delete()

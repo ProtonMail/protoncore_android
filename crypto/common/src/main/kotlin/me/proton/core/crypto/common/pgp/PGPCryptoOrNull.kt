@@ -61,25 +61,25 @@ fun PGPCrypto.decryptDataOrNull(
 ): ByteArray? = runCatching { decryptData(message, unlockedKey) }.getOrNull()
 
 /**
- * @return [DecryptedFile], or `null` if [file] cannot be decrypted.
+ * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *
  * @see [PGPCrypto.decryptFile]
  */
 fun PGPCrypto.decryptFileOrNull(
     source: EncryptedFile,
     destination: File,
-    unlockedKey: Unarmored
-): DecryptedFile? = runCatching { decryptFile(source, destination, unlockedKey) }.getOrNull()
+    sessionKey: SessionKey
+): DecryptedFile? = runCatching { decryptFile(source, destination, sessionKey) }.getOrNull()
 
 /**
- * @return [ByteArray], or `null` if [keyPacket] cannot be decrypted.
+ * @return [SessionKey], or `null` if [keyPacket] cannot be decrypted.
  *
  * @see [PGPCrypto.decryptData]
  */
 fun PGPCrypto.decryptSessionKeyOrNull(
     keyPacket: KeyPacket,
     unlockedKey: Unarmored
-): ByteArray? = runCatching { decryptSessionKey(keyPacket, unlockedKey) }.getOrNull()
+): SessionKey? = runCatching { decryptSessionKey(keyPacket, unlockedKey) }.getOrNull()
 
 /**
  * @return [Signature], or `null` if [plainText] cannot be signed.
@@ -132,15 +132,15 @@ fun PGPCrypto.encryptDataOrNull(
 ): EncryptedMessage? = runCatching { encryptData(data, publicKey) }.getOrNull()
 
 /**
- * @return [EncryptedMessage], or `null` if [file] cannot be encrypted.
+ * @return [EncryptedMessage], or `null` if [source] cannot be encrypted.
  *
  * @see [PGPCrypto.encryptData]
  */
 fun PGPCrypto.encryptFileOrNull(
     source: File,
     destination: File,
-    publicKey: Armored
-): EncryptedFile? = runCatching { encryptFile(source, destination, publicKey) }.getOrNull()
+    sessionKey: SessionKey
+): EncryptedFile? = runCatching { encryptFile(source, destination, sessionKey) }.getOrNull()
 
 /**
  * @return [EncryptedMessage], or `null` if [plainText] cannot be encrypted and signed.
@@ -202,10 +202,11 @@ fun PGPCrypto.decryptAndVerifyDataOrNull(
 fun PGPCrypto.decryptAndVerifyFileOrNull(
     source: EncryptedFile,
     destination: File,
+    sessionKey: SessionKey,
     publicKeys: List<Armored>,
-    unlockedKeys: List<Unarmored>,
     validAtUtc: Long = 0
-): DecryptedFile? = runCatching { decryptAndVerifyFile(source, destination, publicKeys, unlockedKeys, validAtUtc) }.getOrNull()
+): DecryptedFile? =
+    runCatching { decryptAndVerifyFile(source, destination, sessionKey, publicKeys, validAtUtc) }.getOrNull()
 
 /**
  * @return [Armored] public key, or `null` if public key cannot be extracted from [privateKey].

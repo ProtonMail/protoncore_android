@@ -20,15 +20,14 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.DecryptedFile
-import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
+import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
-import java.io.File
 
 /**
  * Encrypt [text] using this [PublicKeyRing.primaryKey].
@@ -51,24 +50,14 @@ fun PublicKeyRing.encryptData(context: CryptoContext, data: ByteArray): Encrypte
     primaryKey.encryptData(context, data)
 
 /**
- * Encrypt [source] into [destination] using this [PublicKeyRing.primaryKey].
+ * Encrypt [sessionKey] using this [PublicKeyRing.primaryKey].
  *
- * @throws [CryptoException] if [source] cannot be encrypted.
- *
- * @see [PrivateKeyRing.decryptFile]
- */
-fun PublicKeyRing.encryptFile(context: CryptoContext, source: File, destination: File): EncryptedFile =
-    primaryKey.encryptFile(context, source, destination)
-
-/**
- * Encrypt [keyPacket] using this [PublicKeyRing.primaryKey].
- *
- * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+ * @throws [CryptoException] if [sessionKey] cannot be encrypted.
  *
  * @see [PrivateKeyRing.decryptSessionKey]
  */
-fun PublicKeyRing.encryptSessionKey(context: CryptoContext, keyPacket: KeyPacket): ByteArray =
-    primaryKey.encryptSessionKey(context, keyPacket)
+fun PublicKeyRing.encryptSessionKey(context: CryptoContext, sessionKey: SessionKey): KeyPacket =
+    primaryKey.encryptSessionKey(context, sessionKey)
 
 /**
  * Verify [signature] of [text] is correctly signed using this [PublicKeyRing].

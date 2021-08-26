@@ -67,13 +67,13 @@ interface PGPCrypto {
     fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage
 
     /**
-     * Encrypt [source] into [destination] using [publicKey].
+     * Encrypt [source] into [destination] using [sessionKey].
      *
      * @throws [CryptoException] if [source] cannot be encrypted.
      *
      * @see [decryptFile].
      */
-    fun encryptFile(source: File, destination: File, publicKey: Armored): EncryptedFile
+    fun encryptFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile
 
     /**
      * Encrypt [plainText] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
@@ -94,31 +94,36 @@ interface PGPCrypto {
     fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
 
     /**
-     * Encrypt [source] into [destination] using [publicKey] and sign using [unlockedKey].
+     * Encrypt [source] into [destination] using [sessionKey] and sign using [unlockedKey].
      *
      * @throws [CryptoException] if [source] cannot be encrypted or signed.
      *
      * @see [decryptAndVerifyFile].
      */
-    fun encryptAndSignFile(source: File, destination: File, publicKey: Armored, unlockedKey: Unarmored): EncryptedFile
+    fun encryptAndSignFile(
+        source: File,
+        destination: File,
+        sessionKey: SessionKey,
+        unlockedKey: Unarmored
+    ): EncryptedFile
 
     /**
-     * Encrypt [keyPacket] using [publicKey].
+     * Encrypt [sessionKey] using [publicKey].
      *
-     * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+     * @throws [CryptoException] if [sessionKey] cannot be encrypted.
      *
      * @see [decryptSessionKey].
      */
-    fun encryptSessionKey(keyPacket: ByteArray, publicKey: Armored): ByteArray
+    fun encryptSessionKey(sessionKey: SessionKey, publicKey: Armored): KeyPacket
 
     /**
-     * Encrypt [keyPacket] using [password].
+     * Encrypt [sessionKey] using [password].
      *
-     * @throws [CryptoException] if [keyPacket] cannot be encrypted.
+     * @throws [CryptoException] if [sessionKey] cannot be encrypted.
      *
-     * @see [decryptSessionKey].
+     * @see [decryptSessionKeyWithPassword].
      */
-    fun encryptSessionKey(keyPacket: ByteArray, password: ByteArray): ByteArray
+    fun encryptSessionKeyWithPassword(sessionKey: SessionKey, password: ByteArray): KeyPacket
 
     /**
      * Decrypt [message] as [String] using [unlockedKey].
@@ -141,13 +146,13 @@ interface PGPCrypto {
     fun decryptData(message: EncryptedMessage, unlockedKey: Unarmored): ByteArray
 
     /**
-     * Decrypt [source] into [destination] using [unlockedKey].
+     * Decrypt [source] into [destination] using [sessionKey].
      *
      * @throws [CryptoException] if [source] cannot be decrypted.
      *
      * @see [encryptFile]
      */
-    fun decryptFile(source: EncryptedFile, destination: File, unlockedKey: Unarmored): DecryptedFile
+    fun decryptFile(source: EncryptedFile, destination: File, sessionKey: SessionKey): DecryptedFile
 
     /**
      * Decrypt [message] as [String] using [unlockedKeys] and verify using [publicKeys].
@@ -188,7 +193,7 @@ interface PGPCrypto {
     ): DecryptedData
 
     /**
-     * Decrypt [source] into [destination] using [unlockedKeys] and verify using [publicKeys].
+     * Decrypt [source] into [destination] using [sessionKey] and verify using [publicKeys].
      *
      * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
      *
@@ -201,19 +206,28 @@ interface PGPCrypto {
     fun decryptAndVerifyFile(
         source: EncryptedFile,
         destination: File,
+        sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        unlockedKeys: List<Unarmored>,
-        validAtUtc: Long = 0
+        validAtUtc: Long
     ): DecryptedFile
 
     /**
-     * Decrypt [keyPacket] as [ByteArray] using [unlockedKey].
+     * Decrypt [keyPacket] as [SessionKey] using [unlockedKey].
      *
      * @throws [CryptoException] if [keyPacket] cannot be decrypted.
      *
      * @see [encryptSessionKey]
      */
-    fun decryptSessionKey(keyPacket: ByteArray, unlockedKey: Unarmored): ByteArray
+    fun decryptSessionKey(keyPacket: KeyPacket, unlockedKey: Unarmored): SessionKey
+
+    /**
+     * Decrypt [keyPacket] as [SessionKey] using [password].
+     *
+     * @throws [CryptoException] if [keyPacket] cannot be decrypted.
+     *
+     * @see [encryptSessionKey]
+     */
+    fun decryptSessionKeyWithPassword(keyPacket: KeyPacket, password: ByteArray): SessionKey
 
     /**
      * Sign [plainText] using [unlockedKey].
@@ -312,11 +326,39 @@ interface PGPCrypto {
     fun getJsonSHA256Fingerprints(key: Armored): String
 
     /**
+     * Get Base64 encoded string from [array].
+     *
+     * @see getBase64Decoded
+     */
+    fun getBase64Encoded(array: ByteArray): String
+
+    /**
+     * Get Base64 decoded array from [string].
+     *
+     * @see getBase64Encoded
+     */
+    fun getBase64Decoded(string: String): ByteArray
+
+    /**
      * Get passphrase from [password] using [encodedSalt].
      *
      * Note: Consider using [use] on returned [ByteArray], to clear memory after usage.
      */
     fun getPassphrase(password: ByteArray, encodedSalt: String): ByteArray
+
+    /**
+     * Generate new SessionKey.
+     *
+     * Note: Consider using [use] on returned [SessionKey], to clear memory after usage.
+     */
+    fun generateNewSessionKey(): SessionKey
+
+    /**
+     * Generate new HashKey.
+     *
+     * Note: Consider using [use] on returned [HashKey], to clear memory after usage.
+     */
+    fun generateNewHashKey(): HashKey
 
     /**
      * Generate new random salt.

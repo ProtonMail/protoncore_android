@@ -20,6 +20,8 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.pgp.KeyPacket
+import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicAddress
@@ -52,8 +54,9 @@ internal fun keyHolderApi(
         decryptAndVerifyData(encryptedSignedData)
 
         val file = data.getFile("file")
-        val encryptedFile = encryptFile(source = file, destination = File("file.encrypted"))
-        decryptFile(source = encryptedFile, destination = File("file.decrypted"))
+        val keyPacket = generateNewKeyPacket()
+        val encryptedFile = encryptFile(source = file, destination = File("file.encrypted"), keyPacket)
+        decryptFile(source = encryptedFile, destination = File("file.decrypted"), keyPacket)
     }
 }
 
@@ -89,15 +92,16 @@ internal fun publicAddressApi(
     keyHolder.useKeys(context) {
         val file = File("file.plain")
 
-        val encryptedFile = encryptFile(source = file, destination = File("file.encrypted"))
+        val keyPacket = generateNewKeyPacket()
+        val encryptedFile = encryptFile(source = file, destination = File("file.encrypted"), keyPacket)
         val signedFile = signFile(file)
 
-        val fileSessionKey = decryptSessionKey(encryptedFile.keyPacket)
+        val fileSessionKey = decryptSessionKey(keyPacket)
         publicAddresses.map { publicAddress ->
             publicAddress.encryptSessionKey(context, fileSessionKey)
         }
 
-        decryptFileOrNull(source = encryptedFile, destination = File("file.decrypted"))?.let {
+        decryptFileOrNull(source = encryptedFile, destination = File("file.decrypted"), keyPacket)?.let {
             verifyFile(it, signedFile)
         }
     }
@@ -138,15 +142,15 @@ internal fun optionalOnPublicApi(
     publicKeyRing: PublicKeyRing,
     publicAddress: PublicAddress
 ) {
-    val file = File("file.plain")
+    val sessionKey = SessionKey("key".toByteArray())
 
     // PublicKey/PublicKeyRing/PublicAddress can encrypt and verify.
     publicKey.encryptText(context, "message")
-    publicKey.encryptFile(context, source = file, destination = File("file.encrypted"))
+    publicKey.encryptSessionKey(context, sessionKey)
     publicKey.verifyText(context, "decryptedMessage", "signature")
 
     publicKeyRing.encryptText(context, "message")
-    publicKeyRing.encryptFile(context, source = file, destination = File("file.encrypted"))
+    publicKeyRing.encryptSessionKey(context, sessionKey)
     publicKeyRing.verifyText(context, "decryptedMessage", "signature")
 
     publicAddress.encryptText(context, "message")
@@ -162,9 +166,8 @@ internal fun optionalOnPrivateApi(
     privateKey.encryptText(context, "message")
     privateKey.signText(context, "message")
 
-    // File.
-    val file = File("file.plain")
-    val encryptedFile = privateKey.encryptFile(context, source = file, destination = File("file.encrypted"))
+    // KeyPacket for File, for example.
+    val keyPacket = "keyPacket".toByteArray()
 
     // PrivateKey can be unlocked (using embedded encrypted passphrase).
     val unlockedPrivateKey = privateKey.unlock(context)
@@ -175,7 +178,7 @@ internal fun optionalOnPrivateApi(
             // Decrypt Text or Data -> throwing exceptions.
             decryptText(context, "encryptedMessage")
             decryptData(context, "encryptedMessage")
-            decryptFile(context, encryptedFile, File("file.decrypted"))
+            decryptSessionKey(context, keyPacket)
 
             // Decrypt Text or Data -> using orNull extensions.
             decryptTextOrNull(context, "encryptedMessage")
@@ -194,7 +197,7 @@ internal fun optionalOnPrivateApi(
     privateKeyRing.use { key ->
         with(key) {
             decryptText("encryptedMessage")
-            decryptFile(encryptedFile, File("file.decrypted"))
+            decryptSessionKey(keyPacket)
             signText("message")
         }
     }

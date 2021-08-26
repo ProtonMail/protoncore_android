@@ -22,6 +22,7 @@ import android.util.Log
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedFile
+import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
@@ -132,19 +133,96 @@ class KeyHolderTest {
         val file = data.getFile("file")
 
         keyHolder1.useKeys(context) {
-            val encryptedFile = encryptFile(file, getTempFile("encrypted"))
+            val keyPacket = generateNewKeyPacket()
+            val encryptedFile = encryptFile(file, getTempFile("encrypted"), keyPacket)
             val signatureFile = signFile(file)
 
-            val decryptedFile = decryptFile(encryptedFile, getTempFile("decrypted"))
-            val decryptedOrNullFile = decryptFileOrNull(encryptedFile, getTempFile("decryptedOrNull"))
+            val decryptedFile = decryptFile(encryptedFile, getTempFile("decrypted"), keyPacket)
+            val decryptedOrNullFile = decryptFileOrNull(encryptedFile, getTempFile("decryptedOrNull"), keyPacket)
             assertNotNull(decryptedOrNullFile)
 
             assertTrue(verifyFile(decryptedFile, signatureFile))
             assertTrue(file.readBytes().contentEquals(decryptedFile.file.readBytes()))
 
-            encryptedFile.file.delete()
+            encryptedFile.delete()
             decryptedFile.file.delete()
             decryptedOrNullFile.file.delete()
+        }
+        file.delete()
+    }
+
+    @Test
+    fun useKeys_encrypt_sign_decrypt_verify_File_SessionKey() {
+        val file = getTempFile("chunk")
+        file.appendBytes(Random.nextBytes(4 * 1000 * 1000)) // 4MB
+
+        keyHolder1.useKeys(context) {
+            generateNewSessionKey().use { sessionKey ->
+                val encryptedFile = encryptFile(file, getTempFile("encrypted"), sessionKey)
+                val signatureFile = signFile(file)
+                val decryptedFile = decryptFile(encryptedFile, getTempFile("decrypted"), sessionKey)
+
+                assertTrue(verifyFile(decryptedFile, signatureFile))
+                assertTrue(file.readBytes().contentEquals(decryptedFile.file.readBytes()))
+
+                encryptedFile.delete()
+                decryptedFile.file.delete()
+            }
+        }
+        file.delete()
+    }
+
+    @Test
+    fun useKeys_encrypt_sign_decrypt_verify_File_KeyPacket() {
+        val file = getTempFile("chunk")
+        file.appendBytes(Random.nextBytes(4 * 1000 * 1000)) // 4MB
+
+        keyHolder1.useKeys(context) {
+            val keyPacket = generateNewKeyPacket()
+            val encryptedFile = encryptFile(file, getTempFile("encrypted"), keyPacket)
+            val signatureFile = signFile(file)
+
+            val decryptedFile = decryptFile(encryptedFile, getTempFile("decrypted"), keyPacket)
+            val decryptedOrNullFile = decryptFileOrNull(encryptedFile, getTempFile("decryptedOrNull"), keyPacket)
+            assertNotNull(decryptedOrNullFile)
+
+            assertTrue(verifyFile(decryptedFile, signatureFile))
+            assertTrue(file.readBytes().contentEquals(decryptedFile.file.readBytes()))
+            assertTrue(file.readBytes().contentEquals(decryptedOrNullFile.file.readBytes()))
+
+            encryptedFile.delete()
+            decryptedFile.file.delete()
+            decryptedOrNullFile.file.delete()
+        }
+        file.delete()
+    }
+
+    @Test
+    fun useKeys_encrypt_sign_decrypt_verify_File_KeyPacket_vs_sessionKey() {
+        val file = getTempFile("chunk")
+        file.appendBytes(Random.nextBytes(4 * 1000 * 1000)) // 4MB
+
+        keyHolder1.useKeys(context) {
+            val keyPacket = generateNewKeyPacket()
+            decryptSessionKey(keyPacket).use { sessionKey ->
+                val encryptedFile = encryptFile(file, getTempFile("encrypted"), keyPacket)
+                val signatureFile = signFile(file)
+
+                val decryptedFile1 = decryptFile(encryptedFile, getTempFile("decrypted"), keyPacket)
+                val decryptedFile2 = decryptFile(encryptedFile, getTempFile("decrypted"), sessionKey)
+                val decryptedOrNullFile = decryptFileOrNull(encryptedFile, getTempFile("decryptedOrNull"), keyPacket)
+                assertNotNull(decryptedOrNullFile)
+
+                assertTrue(verifyFile(decryptedFile1, signatureFile))
+                assertTrue(file.readBytes().contentEquals(decryptedFile1.file.readBytes()))
+                assertTrue(decryptedFile1.file.readBytes().contentEquals(decryptedFile2.file.readBytes()))
+                assertTrue(decryptedFile2.file.readBytes().contentEquals(decryptedOrNullFile.file.readBytes()))
+
+                encryptedFile.delete()
+                decryptedFile1.file.delete()
+                decryptedFile2.file.delete()
+                decryptedOrNullFile.file.delete()
+            }
         }
         file.delete()
     }
@@ -155,12 +233,17 @@ class KeyHolderTest {
         file.appendBytes(Random.nextBytes(10 * 1000 * 1000)) // 10MB
 
         keyHolder1.useKeys(context) {
+            val keyPacket: KeyPacket
             val encryptedFile: EncryptedFile
             val signatureFile: Signature
             val decryptedFile: DecryptedFile
 
+            val keyPacketTimeMillis = measureTimeMillis {
+                keyPacket = generateNewKeyPacket()
+            }
+
             val encryptTimeMillis = measureTimeMillis {
-                encryptedFile = encryptFile(file, getTempFile("encrypted"))
+                encryptedFile = encryptFile(file, getTempFile("encrypted"), keyPacket)
             }
 
             assertNotNull(encryptedFile)
@@ -172,12 +255,12 @@ class KeyHolderTest {
             assertNotNull(encryptedFile)
 
             val decryptTimeMillis = measureTimeMillis {
-                decryptedFile = decryptFile(encryptedFile, getTempFile("decrypted"))
+                decryptedFile = decryptFile(encryptedFile, getTempFile("decrypted"), keyPacket)
             }
 
             assertNotNull(decryptedFile)
 
-            val decryptedOrNullFile = decryptFileOrNull(encryptedFile, getTempFile("decryptedOrNull"))
+            val decryptedOrNullFile = decryptFileOrNull(encryptedFile, getTempFile("decryptedOrNull"), keyPacket)
             assertNotNull(decryptedOrNullFile)
 
             val verifyTimeMillis = measureTimeMillis {
@@ -191,7 +274,7 @@ class KeyHolderTest {
             Log.d("Crypto Stream", "decryptTimeMillis: $decryptTimeMillis")
             Log.d("Crypto Stream", "verifyTimeMillis: $verifyTimeMillis")
 
-            encryptedFile.file.delete()
+            encryptedFile.delete()
             decryptedFile.file.delete()
             decryptedOrNullFile.file.delete()
         }
@@ -208,7 +291,7 @@ class KeyHolderTest {
             val encryptedKey = encryptSessionKey(sessionKey)
             val decryptedKey = decryptSessionKey(encryptedKey)
 
-            assertTrue(sessionKey.contentEquals(decryptedKey))
+            assertEquals(sessionKey, decryptedKey)
         }
     }
 
@@ -218,15 +301,16 @@ class KeyHolderTest {
         val file = data.getFile("filename")
 
         keyHolder1.useKeys(context) {
-            val encryptedFile = encryptFile(file, getTempFile("decrypted"))
-            val sessionKey = decryptSessionKey(encryptedFile.keyPacket)
+            val keyPacket = generateNewKeyPacket()
+            val encryptedFile = encryptFile(file, getTempFile("decrypted"), keyPacket)
+            val sessionKey = decryptSessionKey(keyPacket)
 
             val encryptedKey = encryptSessionKey(sessionKey)
             val decryptedKey = decryptSessionKey(encryptedKey)
 
-            assertTrue(sessionKey.contentEquals(decryptedKey))
+            assertEquals(sessionKey, decryptedKey)
 
-            encryptedFile.file.delete()
+            encryptedFile.delete()
         }
         file.delete()
     }
@@ -263,15 +347,16 @@ class KeyHolderTest {
         file.appendBytes(Random.nextBytes(10 * 1000 * 1000)) // 10MB
 
         keyHolder1.useKeys(context) {
-            val encryptedFile = encryptAndSignFile(file, getTempFile("encrypted"))
-            val decryptedFile = decryptAndVerifyFile(encryptedFile, getTempFile("decrypted"))
-            val decryptedOrNullFile = decryptAndVerifyFileOrNull(encryptedFile, getTempFile("decryptedOrNull"))
+            val keyPacket = generateNewKeyPacket()
+            val encryptedFile = encryptAndSignFile(file, getTempFile("encrypted"), keyPacket)
+            val decryptedFile = decryptAndVerifyFile(encryptedFile, getTempFile("decrypted"), keyPacket)
+            val decryptedOrNullFile = decryptAndVerifyFileOrNull(encryptedFile, getTempFile("decryptedOrNull"), keyPacket)
 
             assertNotNull(decryptedOrNullFile)
             assertEquals(VerificationStatus.Success, decryptedFile.status)
             assertTrue(file.readBytes().contentEquals(decryptedFile.file.readBytes()))
 
-            encryptedFile.file.delete()
+            encryptedFile.delete()
             decryptedFile.file.delete()
             decryptedOrNullFile.file.delete()
         }
@@ -284,14 +369,15 @@ class KeyHolderTest {
         file.appendBytes(Random.nextBytes(10 * 1000 * 1000)) // 10MB
 
         keyHolder1.useKeys(context) {
-            encryptAndSignFile(file, getTempFile("encrypted"))
-        }.also { encryptedFile ->
+            val keyPacket = generateNewKeyPacket()
+            keyPacket to encryptAndSignFile(file, getTempFile("encrypted"), keyPacket)
+        }.also { (keyPacket, encryptedFile) ->
             keyHolder2.useKeys(context) {
                 val tempFile = getTempFile("decrypted")
-                assertNull(decryptAndVerifyFileOrNull(encryptedFile, tempFile))
+                assertNull(decryptAndVerifyFileOrNull(encryptedFile, tempFile, keyPacket))
                 tempFile.delete()
             }
-            encryptedFile.file.delete()
+            encryptedFile.delete()
         }
         file.delete()
     }

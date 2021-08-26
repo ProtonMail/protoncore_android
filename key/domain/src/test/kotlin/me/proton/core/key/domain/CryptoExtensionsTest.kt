@@ -98,17 +98,18 @@ class CryptoExtensionsTest {
         val file = data.getFile("file")
 
         keyHolder1.useKeys(context) {
-            val encryptedFile = encryptFile(file, getTempFile("encrypted"))
+            val keyPacket = generateNewKeyPacket()
+            val encryptedFile = encryptFile(file, getTempFile("encrypted"), keyPacket)
             val signatureFile = signFile(file)
 
-            val decryptedFile = decryptFile(encryptedFile, getTempFile("decrypted"))
-            val decryptedOrNullFile = decryptFileOrNull(encryptedFile, getTempFile("decryptedOrNull"))
+            val decryptedFile = decryptFile(encryptedFile, getTempFile("decrypted"), keyPacket)
+            val decryptedOrNullFile = decryptFileOrNull(encryptedFile, getTempFile("decryptedOrNull"), keyPacket)
             assertNotNull(decryptedOrNullFile)
 
             assertTrue(verifyFile(decryptedFile, signatureFile))
             assertTrue(file.readBytes().contentEquals(decryptedFile.file.readBytes()))
 
-            encryptedFile.file.delete()
+            encryptedFile.delete()
             decryptedFile.file.delete()
             decryptedOrNullFile.file.delete()
         }
@@ -117,13 +118,12 @@ class CryptoExtensionsTest {
 
     @Test
     fun useKeys_encrypt_decrypt_SessionKey() {
-        val sessionKey = message.toByteArray()
-
         keyHolder1.useKeys(context) {
-            val encryptedKey = encryptSessionKey(sessionKey)
-            val decryptedKey = decryptSessionKey(encryptedKey)
+            val sessionKey = generateNewSessionKey()
+            val keyPacket = encryptSessionKey(sessionKey)
+            val decryptedKey = decryptSessionKey(keyPacket)
 
-            assertTrue(sessionKey.contentEquals(decryptedKey))
+            assertEquals(sessionKey, decryptedKey)
         }
     }
 

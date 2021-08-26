@@ -19,7 +19,9 @@
 package me.proton.core.crypto.common.pgp
 
 /**
- * Asymmetrically Encrypted key to decrypt [DataPacket], unarmored.
+ * Asymmetrically encrypted key to decrypt [DataPacket], unarmored.
+ *
+ * @see SessionKey
  */
 typealias KeyPacket = Unarmored
 

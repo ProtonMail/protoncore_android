@@ -123,7 +123,9 @@ class SendEmailDirect @Inject constructor(
             // encodedAttachmentKeyPackets.add(Base64.encode(encryptedAttachment.keyPacket))
 
             // Decrypt session keys of all attachments for later creation of packages for plaintext recipients.
-            decryptedAttachmentSessionKeys.addAll(encryptedAttachments.map { decryptSessionKey(it.keyPacket.packet) })
+            decryptedAttachmentSessionKeys.addAll(
+                encryptedAttachments.map { decryptSessionKey(it.keyPacket.packet).key }
+            )
             val encryptedBodyPgpMessage = encryptAndSignText(arguments.body)
 
             encryptedEmail = EncryptedEmail(
@@ -142,7 +144,7 @@ class SendEmailDirect @Inject constructor(
 
             // Decrypt body's session key to send it for plaintext recipients.
             val encryptedBodySplit = encryptedBodyPgpMessage.split(cryptoContext.pgpCrypto)
-            decryptedBodySessionKey = decryptSessionKey(encryptedBodySplit.keyPacket())
+            decryptedBodySessionKey = decryptSessionKey(encryptedBodySplit.keyPacket()).key
             encryptedBodyDataPacket = encryptedBodySplit.dataPacket()
         }
 
