@@ -79,7 +79,7 @@ Util Android Shared Preferences: **0.2.3** - _released on: Dec 18, 2020_
 
 Util Android Work Manager: **0.2.2** - _released on: Dec 18, 2020_
 
-Util Kotlin: **0.2.5** - _released on: Apr 07, 2021_
+Util Kotlin: **0.2.6** - _released on: Aug 26, 2021_
 
 ### Test
 
@@ -111,11 +111,11 @@ Network Data: **1.5.4** - _released on: Aug 19, 2021_
 
 ### Crypto
 
-Crypto: **1.6** - _released on: Aug 21, 2021_
+Crypto: **1.6.1** - _released on: Aug 26, 2021_
 
-Crypto Common: **1.6** - _released on: Aug 21, 2021_
+Crypto Common: **1.6.1** - _released on: Aug 26, 2021_
 
-Crypto Android: **1.6** - _released on: Aug 21, 2021_
+Crypto Android: **1.6.1** - _released on: Aug 26, 2021_
 
 ## Features
 
@@ -156,11 +156,11 @@ Account Manager Dagger: **1.6** - _released on: Aug 21, 2021_
 
 ### Key
 
-Key: **1.6** - _released on: Aug 21, 2021_
+Key: **1.6.1** - _released on: Aug 26, 2021_
 
-Key Domain: **1.6** - _released on: Aug 21, 2021_
+Key Domain: **1.6.1** - _released on: Aug 26, 2021_
 
-Key Data: **1.6** - _released on: Aug 21, 2021_
+Key Data: **1.6.1** - _released on: Aug 26, 2021_
 
 ### User
 
@@ -180,11 +180,11 @@ Contact Data: **0.1.5** - _released on: Jun 14, 2021_
 
 ### Mail Message
 
-Mail Message: **0.2.2** - _released on: Jul 08, 2021_
+Mail Message: **1.6.1** - _released on: Aug 26, 2021_
 
-Mail Message Domain: **0.2.2** - _released on: Jul 08, 2021_
+Mail Message Domain: **1.6.1** - _released on: Aug 26, 2021_
 
-Mail Message Data: **0.2.2** - _released on: Jul 08, 2021_
+Mail Message Data: **1.6.1** - _released on: Aug 26, 2021_
 
 ### Mail Settings
 
