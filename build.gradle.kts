@@ -38,7 +38,7 @@ buildscript {
     dependencies {
         val kotlinVersion = "1.5.21" // Jul 13, 2021
         val dokkaVersion = "1.4.10.2" // Oct 20, 2020
-        val agpVersion = "7.0.0" // July, 2021
+        val agpVersion = "7.0.1" // Aug 18, 2021
         val hiltVersion = "2.38.1" // Jul 27, 2021
 
         classpath(kotlin("gradle-plugin", kotlinVersion))

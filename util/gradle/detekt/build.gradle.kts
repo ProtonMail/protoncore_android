@@ -28,7 +28,7 @@ plugins {
 
 val plugin = PluginConfig(
     name = "Detekt",
-    version = Version(0, 3)
+    version = Version(0, 4)
 )
 pluginConfig = plugin
 
