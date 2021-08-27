@@ -21,8 +21,8 @@ package me.proton.core.presentation.ui.view
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.view.Gravity
+import android.view.View
 import android.widget.CompoundButton
-import com.google.android.material.checkbox.MaterialCheckBox
 
 /**
  * A helper for putting CompoundButton's button on the end side of the view.
@@ -33,6 +33,7 @@ class CompoundButtonPositionHelper(private val button: CompoundButton) {
 
     init {
         button.buttonDrawable = null
+        drawable?.callback = button
         drawable?.jumpToCurrentState()
     }
 
@@ -49,7 +50,7 @@ class CompoundButtonPositionHelper(private val button: CompoundButton) {
                 else -> 0
             }
 
-            val isLayoutRtl = MaterialCheckBox.LAYOUT_DIRECTION_RTL == button.getLayoutDirection()
+            val isLayoutRtl = View.LAYOUT_DIRECTION_RTL == button.layoutDirection
             val left = if (isLayoutRtl) 0 else button.width - w
             val right = if (isLayoutRtl) w else button.width
             val bottom = top + h
@@ -71,4 +72,18 @@ class CompoundButtonPositionHelper(private val button: CompoundButton) {
     }
 
     fun verifyDrawable(who: Drawable): Boolean = drawable == who
+
+    fun getWidthLeft() =
+        if (View.LAYOUT_DIRECTION_RTL == button.layoutDirection) {
+            drawable?.intrinsicWidth ?: 0
+        } else {
+            0
+        }
+
+    fun getWidthRight() =
+        if (View.LAYOUT_DIRECTION_RTL != button.layoutDirection) {
+            drawable?.intrinsicWidth ?: 0
+        } else {
+            0
+        }
 }

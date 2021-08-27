@@ -342,12 +342,14 @@
                 app:layout_constraintTop_toBottomOf="@id/checkBoxDisabledExample">
 
                 <me.proton.core.presentation.ui.view.ProtonRadioButton
+                    android:id="@+id/radioButton1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="@string/example_radio1_label" />
 
                 <me.proton.core.presentation.ui.view.ProtonRadioButton
+                    android:id="@+id/radioButton2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/example_radio2_label" />

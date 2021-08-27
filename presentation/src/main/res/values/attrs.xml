@@ -34,11 +34,13 @@
         <attr name="proton_text_hint" format="reference" />
         <attr name="proton_text_disabled" format="reference" />
         <attr name="proton_text_inverted" format="reference" />
+        <attr name="proton_text_accent" format="reference" />
         <attr name="proton_icon_norm" format="reference" />
         <attr name="proton_icon_weak" format="reference" />
         <attr name="proton_icon_hint" format="reference" />
         <attr name="proton_icon_disabled" format="reference" />
         <attr name="proton_icon_inverted" format="reference" />
+        <attr name="proton_icon_accent" format="reference" />
         <attr name="proton_interaction_weak" format="reference" />
         <attr name="proton_interaction_weak_pressed" format="reference" />
         <attr name="proton_interaction_weak_disabled" format="reference" />
