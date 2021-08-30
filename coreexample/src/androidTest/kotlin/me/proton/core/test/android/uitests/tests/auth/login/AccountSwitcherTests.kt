@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.auth.login
 
-import me.proton.core.test.android.plugins.data.Plan.Professional
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot.UserAction
 import me.proton.core.test.android.robots.auth.AddAccountRobot
@@ -32,8 +31,7 @@ import org.junit.Test
 class AccountSwitcherTests : BaseTest() {
 
     private val accountSwitcherRobot = AccountSwitcherRobot()
-    private val onePassUser = users.getUser { it.plan == Professional }
-    private val twoPassUser = users.getUser { it.passphrase.isNotEmpty() }
+    private val onePassUser = users.getUser { it.isPaid }
 
     @Before
     fun loginOnePass() {
@@ -61,6 +59,7 @@ class AccountSwitcherTests : BaseTest() {
 
     @Test
     fun addAndRemoveSecondAccount() {
+        val twoPassUser = users.getUser(false) { it.passphrase.isNotEmpty() }
         accountSwitcherRobot
             .addAccount()
             .loginUser<MailboxPasswordRobot>(twoPassUser)

@@ -23,8 +23,11 @@ import me.proton.core.plan.presentation.R
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.getContext
 
 @Serializable
-enum class Plan {
-    Free, Professional, Visionary, Plus
+enum class Plan(val value: String) {
+    Free("free"),
+    Professional("pro"),
+    Visionary("visionary"),
+    Plus("plus")
 }
 
 val supportedBillingCycles: Array<String> =

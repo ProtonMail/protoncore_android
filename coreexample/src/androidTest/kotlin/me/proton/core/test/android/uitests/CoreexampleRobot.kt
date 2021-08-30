@@ -64,7 +64,7 @@ open class CoreexampleRobot : CoreRobot() {
         }
 
         fun primaryUserIs(user: User) {
-            view.withId(R.id.account_email_textview).withText(user.email).wait()
+            view.withId(R.id.account_email_textview).startsWith("${user.name}@").wait()
         }
     }
 

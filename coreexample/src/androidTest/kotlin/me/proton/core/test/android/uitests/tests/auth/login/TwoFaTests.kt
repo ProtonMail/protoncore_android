@@ -18,7 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.auth.login
 
-import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.plugins.Quark.jailUnban
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.auth.login.TwoFaRobot
@@ -28,13 +28,13 @@ import org.junit.Test
 
 class TwoFaTests : BaseTest() {
 
-    private val user = users.getUser { it.twoFa.isNotEmpty() }
     private val invalidCode = "123456"
     private val twoFaRobot = TwoFaRobot()
     private val incorrectCredMessage = "Incorrect login credentials. Please try again"
 
     @Before
     fun goToTwoFa() {
+        val user = users.getUser(false) { it.twoFa.isNotEmpty() }
         AddAccountRobot()
             .signIn()
             .loginUser<TwoFaRobot>(user)

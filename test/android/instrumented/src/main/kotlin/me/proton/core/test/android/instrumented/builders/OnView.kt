@@ -82,6 +82,7 @@ class OnView {
     private var spinnerText: String? = null
     private var substring: String? = null
     private var text: String? = null
+    private var startsWith: String? = null
     private var indexInParent: Int? = null
 
     private var ancestorMatcher: Matcher<View>? = null
@@ -180,6 +181,8 @@ class OnView {
     fun withText(@StringRes textId: Int) = apply { this.text = stringFromResource(textId) }
 
     fun withText(text: String) = apply { this.text = text }
+
+    fun startsWith(text: String) = apply { this.startsWith = text }
 
     fun withVisibility(visibility: ViewMatchers.Visibility) = apply { this.visibility = visibility }
 
@@ -397,6 +400,9 @@ class OnView {
         }
         if (customMatcher != null) {
             matchers.add(customMatcher!!)
+        }
+        if (startsWith != null) {
+            matchers.add(ViewMatchers.withText(CoreMatchers.startsWith(startsWith)))
         }
         return AllOf.allOf(matchers)
     }

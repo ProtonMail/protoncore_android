@@ -20,47 +20,55 @@ package me.proton.core.test.android.plugins.data
 
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.serialization.Serializable
-import me.proton.core.test.android.instrumented.utils.StringUtils.getEmailString
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.util.kotlin.deserializeList
-import kotlin.random.Random
 
 @Serializable
 data class User(
-    val name: String = randomString(),
-    val password: String = "12345678",
-    val email: String = getEmailString(),
+    var name: String = "proton_core_${randomString(stringLength = 4)}",
+    var password: String = "12345678",
+    val email: String = "",
+
     val passphrase: String = "",
     val twoFa: String = "",
 
-    val firstName: String = randomString(),
-    val lastName: String = randomString(),
-    val verificationEmail: String = getEmailString(),
+    val firstName: String = "",
+    val lastName: String = "",
+    val verificationEmail: String = "",
     val phone: String = "",
     val country: String = "",
-    val type: Int = Random.nextInt(1, 2),
 
     val plan: Plan = Plan.Free,
     val cards: List<Card> = emptyList(),
-    val paypal: String = ""
+    val paypal: String = "",
 ) {
 
-    val isDefault: Boolean = passphrase.isEmpty() && twoFa.isEmpty() && name.isNotEmpty()
+    val isOnePasswordWithUsername: Boolean = passphrase.isEmpty() && twoFa.isEmpty() && name.isNotEmpty()
 
     val isPaid: Boolean = plan != Plan.Free
 
-    class Users(jsonPath: String) {
+    class Users(private val jsonPath: String) {
 
-        private val userData: List<User> = InstrumentationRegistry
+        private val userData: MutableList<User> = InstrumentationRegistry
             .getInstrumentation()
             .context
             .assets
             .open(jsonPath)
             .bufferedReader()
             .use { it.readText() }
-            .deserializeList()
+            .deserializeList<User>() as MutableList<User>
 
-        fun getUser(predicate: (User) -> Boolean = { it.isDefault }): User =
-            userData.filterTo(ArrayList(), predicate).random()
+        fun getUser(usernameAndOnePass: Boolean = true, predicate: (User) -> Boolean = { true }): User {
+            userData
+                .filter { it.isOnePasswordWithUsername == usernameAndOnePass }
+                .filter(predicate)
+                .let {
+                    try {
+                        return it.random()
+                    } catch (e: NoSuchElementException) {
+                        throw NoSuchElementException("User does not exist in assets/$jsonPath")
+                    }
+                }
+        }
     }
 }

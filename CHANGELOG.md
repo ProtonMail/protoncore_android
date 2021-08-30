@@ -1,3 +1,13 @@
+## Test Android Instrumented [0.6.6]
+
+Aug 27, 2021
+
+### New Features
+
+- Added startsWith() matcher
+- Added user creation quark commands
+- Minor test data classes improvements
+
 ## Presentation [1.5.5]
 
 Aug 27, 2021

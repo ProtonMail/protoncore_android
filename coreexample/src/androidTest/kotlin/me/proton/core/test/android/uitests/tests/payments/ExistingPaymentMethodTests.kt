@@ -18,7 +18,9 @@
 
 package me.proton.core.test.android.uitests.tests.payments
 
-import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.plugins.Quark
+import me.proton.core.test.android.plugins.Quark.jailUnban
+import me.proton.core.test.android.plugins.data.Card
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
@@ -57,11 +59,10 @@ class ExistingPaymentMethodTests : BaseTest() {
 
     @Test
     fun existingCreditCardMethodDisplayed() {
-        val user = users.getUser { it.cards.isNotEmpty() }
-        val card = user.cards[0]
-
+        val user = Quark.userCreate(User())
+        Quark.seedUserWithCreditCard(user)
         upgradeUserToPlan(user)
-            .verify { paymentMethodDisplayed(card.details, card.name) }
+            .verify { paymentMethodDisplayed(Card.default.details, Card.default.name) }
     }
 
     @Test

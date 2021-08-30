@@ -23,7 +23,7 @@ import me.proton.core.test.android.instrumented.ProtonTest.Companion.getContext
 
 object StringUtils {
 
-    private const val letters = "abcdefghijklmnopqrstuuvwxyz"
+    private const val lettersAndNumbers = "abcdefghijklmnopqrstuuvwxyz0123456789"
     private const val alphaNumericWithSpecialCharacters =
         "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@+_)(*&^%$#@!"
     private const val emailCharacters =
@@ -38,6 +38,6 @@ object StringUtils {
     fun getEmailString(length: Long = 10): String =
         randomString(length, emailCharacters)
 
-    fun randomString(stringLength: Long = 10, source: String = letters): String =
+    fun randomString(stringLength: Long = 10, source: String = lettersAndNumbers): String =
         (1..stringLength).map { source.random() }.joinToString(separator = "")
 }

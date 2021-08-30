@@ -59,7 +59,7 @@ class PasswordSetupTests : BaseTest() {
             .next<PasswordSetupRobot>()
             .verify {
                 passwordSetupElementsDisplayed()
-                inputErrorDisplayed(R.string.auth_signup_error_passwords_match)
+                errorSnackbarDisplayed(R.string.auth_signup_error_passwords_do_not_match)
             }
     }
 

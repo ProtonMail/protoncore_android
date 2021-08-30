@@ -21,8 +21,9 @@ package me.proton.core.test.android.uitests.tests.humanverification
 import androidx.test.filters.FlakyTest
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.plugins.Requests
-import me.proton.core.test.android.plugins.Requests.jailUnban
+import me.proton.core.test.android.plugins.Quark
+import me.proton.core.test.android.plugins.Quark.jailUnban
+import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -34,7 +35,7 @@ class HumanVerificationTests : BaseTest() {
 
     private val humanVerificationRobot = HumanVerificationRobot()
     private val user = users.getUser()
-    private val defaultCode = Requests.Constants.DEFAULT_VERIFICATION_CODE
+    private val defaultCode = Quark.Constants.DEFAULT_VERIFICATION_CODE
 
     @Before
     fun triggerHumanVerification() {
