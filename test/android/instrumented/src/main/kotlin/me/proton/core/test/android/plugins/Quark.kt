@@ -117,7 +117,6 @@ object Quark {
     }
 
     fun seedPaypalPaymentMethod(user: User) {
-        // Currently doesn't work due to bug in atlas
         val args = arrayOf(
             "-u=${user.name}",
             "-p=${user.password}",

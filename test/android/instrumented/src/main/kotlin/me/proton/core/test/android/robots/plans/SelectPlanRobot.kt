@@ -29,6 +29,11 @@ import me.proton.core.test.android.robots.CoreVerify
 
 class SelectPlanRobot : CoreRobot() {
 
+    /**
+     * Clicks 'Select' button on a provided [plan]
+     * @param T next Robot in flow
+     * @return an instance of [T]
+     */
     inline fun <reified T> selectPlan(plan: Plan): T {
         view
             .withId(R.id.selectPlan)
@@ -40,12 +45,18 @@ class SelectPlanRobot : CoreRobot() {
         return T::class.java.newInstance()
     }
 
+    /**
+     * Changes billing cycle to provided [billingCycle]
+     */
     fun changeBillingCycle(billingCycle: BillingCycle): SelectPlanRobot {
         view.withId(R.id.billingCycleSpinner).wait().click()
         view.withText(billingCycle.value).wait().click()
         return this
     }
 
+    /**
+     * Changes currency to provided [currency]
+     */
     fun changeCurrency(currency: Currency): SelectPlanRobot {
         val currencyString = when(currency) {
             Currency.CHF -> currency.symbol

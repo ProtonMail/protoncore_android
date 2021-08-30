@@ -43,7 +43,7 @@ class CurrentPlanTests: BaseTest() {
 
     @Test
     fun userWithFreePlan() {
-        val freeUser = users.getUser()
+        val freeUser = users.getUser { !it.isPaid }
         navigateUserToCurrentPlans(freeUser)
             .verify {
                 canSelectPlan(Plan.Plus)
