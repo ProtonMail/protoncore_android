@@ -38,6 +38,7 @@ import me.proton.core.humanverification.presentation.utils.showRequestNewCodeDia
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -109,8 +110,14 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
             }
             requestReplacementButton.onClick {
                 destination?.let {
-                    parentFragmentManager.showRequestNewCodeDialog(requireContext(), it) {
-                        viewModel.resendCode(sessionId, it, tokenType)
+                    parentFragmentManager.apply {
+                        showRequestNewCodeDialog(requireContext(), it)
+                        setFragmentResultListener(
+                            ProtonCancellableAlertDialog.KEY_ACTION_DONE,
+                            this@HumanVerificationEnterCodeFragment
+                        ) { _, _ ->
+                            viewModel.resendCode(sessionId, it, tokenType)
+                        }
                     }
                 }
             }

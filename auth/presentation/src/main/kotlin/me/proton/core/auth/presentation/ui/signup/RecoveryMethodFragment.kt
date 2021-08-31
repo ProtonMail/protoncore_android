@@ -36,7 +36,7 @@ import me.proton.core.auth.presentation.databinding.FragmentSignupRecoveryBindin
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.viewmodel.signup.RecoveryMethodViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
-import me.proton.core.presentation.ui.view.ProtonProgressButton
+import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -183,8 +183,12 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
     private fun showSkip() {
         hideKeyboard()
-        with(requireContext()) {
-            childFragmentManager.showSkipRecoveryDialog(this) {
+        childFragmentManager.apply {
+            showSkipRecoveryDialog(requireContext())
+            setFragmentResultListener(
+                ProtonCancellableAlertDialog.KEY_ACTION_DONE,
+                this@RecoveryMethodFragment
+            ) { _, _ ->
                 signupViewModel.skipRecoveryMethod()
             }
         }

@@ -116,8 +116,7 @@ internal fun FragmentManager.showRecoveryMethodChooser(
 }
 
 internal fun FragmentManager.showSkipRecoveryDialog(
-    context: Context,
-    action: () -> Unit
+    context: Context
 ) {
     findFragmentByTag(TAG_SKIP_RECOVERY_DIALOG) ?: run {
         val updateDialogFragment = ProtonCancellableAlertDialog(
@@ -125,9 +124,7 @@ internal fun FragmentManager.showSkipRecoveryDialog(
             description = context.getString(R.string.auth_signup_skip_recovery_description),
             positiveButton = context.getString(R.string.auth_signup_skip_recovery),
             negativeButton = context.getString(R.string.auth_signup_set_recovery)
-        ) {
-            action()
-        }
+        )
         updateDialogFragment.show(this, TAG_SKIP_RECOVERY_DIALOG)
     }
 }

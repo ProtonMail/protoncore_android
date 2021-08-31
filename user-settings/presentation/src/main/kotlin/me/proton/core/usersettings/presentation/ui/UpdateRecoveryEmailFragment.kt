@@ -26,7 +26,9 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.presentation.alert.PasswordAnd2FADialog
 import me.proton.core.auth.presentation.alert.showPasswordEnterDialog
+import me.proton.core.auth.presentation.entity.PasswordAnd2FAInput
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
@@ -105,15 +107,24 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
     ) = with(binding) {
         val confirmedRecoveryEmail = confirmNewEmailInput.text.toString()
         if (newRecoveryEmail == confirmedRecoveryEmail) {
-            childFragmentManager.showPasswordEnterDialog(
-                secondFactor = viewModel.secondFactorEnabled!!
-            ) { password: String, secondFactorCode: String ->
-                viewModel.updateRecoveryEmail(
-                    userId = input.user,
-                    newRecoveryEmail = confirmNewEmailInput.text.toString(),
-                    password = password,
-                    secondFactorCode = secondFactorCode
+            childFragmentManager.apply {
+                showPasswordEnterDialog(
+                    secondFactor = viewModel.secondFactorEnabled!!
                 )
+                setFragmentResultListener(
+                    PasswordAnd2FADialog.KEY_PASS_2FA_SET,
+                    this@UpdateRecoveryEmailFragment
+                ) { _, bundle ->
+                    val result = bundle.getParcelable<PasswordAnd2FAInput>(PasswordAnd2FADialog.BUNDLE_KEY_PASS_2FA_DATA)
+                    if (result != null) {
+                        viewModel.updateRecoveryEmail(
+                            userId = input.user,
+                            newRecoveryEmail = confirmNewEmailInput.text.toString(),
+                            password = result.password,
+                            secondFactorCode = result.twoFA
+                        )
+                    }
+                }
             }
         } else {
             confirmNewEmailInput.setInputError(getString(R.string.settings_recovery_email_error_no_match))
