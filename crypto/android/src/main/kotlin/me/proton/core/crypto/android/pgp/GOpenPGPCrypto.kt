@@ -574,7 +574,7 @@ class GOpenPGPCrypto : PGPCrypto {
     }
 
     override fun generateNewHashKey(): HashKey {
-        return HashKey(generateNewToken(32))
+        return HashKey(generateNewToken(32), VerificationStatus.NotSigned)
     }
 
     override fun generateNewKeySalt(): String {

@@ -24,7 +24,8 @@ import java.io.Closeable
  * Key to hash data, unarmored, implementing [Closeable] to clear memory after usage.
  */
 data class HashKey(
-    val key: Unarmored
+    val key: Unarmored,
+    val status: VerificationStatus
 ) : Closeable {
 
     override fun close() {
