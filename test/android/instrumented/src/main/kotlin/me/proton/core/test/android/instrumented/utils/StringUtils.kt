@@ -19,7 +19,7 @@
 package me.proton.core.test.android.instrumented.utils
 
 import androidx.annotation.StringRes
-import me.proton.core.test.android.instrumented.ProtonTest.Companion.getContext
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetContext
 
 object StringUtils {
 
@@ -29,8 +29,9 @@ object StringUtils {
     private const val emailCharacters =
         "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#\$%&'*+-=?^_`{|}~"
 
-    fun stringFromResource(@StringRes id: Int): String = getContext().getString(id)
-    fun stringFromResource(@StringRes id: Int, arg1: String): String = getContext().getString(id, arg1)
+    fun stringFromResource(@StringRes id: Int): String = getTargetContext().resources.getString(id)
+
+    fun stringFromResource(@StringRes id: Int, arg1: String): String = getTargetContext().getString(id, arg1)
 
     fun getAlphaNumericStringWithSpecialCharacters(length: Long = 10): String =
         randomString(length, alphaNumericWithSpecialCharacters)

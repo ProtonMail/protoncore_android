@@ -29,6 +29,7 @@ import me.proton.core.test.android.robots.humanverification.HumanVerificationRob
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 class HumanVerificationTests : BaseTest() {
@@ -63,7 +64,7 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
-    @FlakyTest
+    @Ignore("Backend issue")
     fun email() {
         val testAddress = "testEmail@example.lt"
 
@@ -80,7 +81,7 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
-    @FlakyTest
+    @Ignore("Backend issue")
     fun phone() {
         val testPhoneNo = "2087599036"
         val testCountry = "United Kingdom"

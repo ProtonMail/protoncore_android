@@ -19,15 +19,17 @@
 package me.proton.core.test.android.uitests.tests
 
 import android.util.Log
+import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.di.AppDatabaseModule
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDevice
+import me.proton.core.test.android.plugins.Quark
 import me.proton.core.test.android.plugins.data.User.Users
 import org.junit.After
 import org.junit.BeforeClass
 
-open class BaseTest : ProtonTest(MainActivity::class.java) {
+open class BaseTest : ProtonTest(MainActivity::class.java, tries = 1) {
 
     @After
     override fun tearDown() {
@@ -38,12 +40,13 @@ open class BaseTest : ProtonTest(MainActivity::class.java) {
 
     companion object {
         val users = Users("sensitive/users.json")
-        val appDatabase = AppDatabaseModule.provideAppDatabase(getContext())
+        val appDatabase = AppDatabaseModule.provideAppDatabase(getTargetContext())
 
         @JvmStatic
         @BeforeClass
         fun prepare() {
             setupDevice(true)
+            Quark.jailUnban()
             appDatabase.clearAllTables()
         }
     }

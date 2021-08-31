@@ -1,3 +1,11 @@
+## Test Android Instrumented [1.15.1]
+
+Sep 12, 2021
+
+### New Features
+
+- Added PasswordManagementRobot
+
 ## Version [1.15.0]
 
 Sep 8, 2021.

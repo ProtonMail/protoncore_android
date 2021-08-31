@@ -84,8 +84,8 @@ open class ProtonTest(
 
     companion object {
         const val testTag = "ESPRESSO_TEST"
-        val screenshotPath = "${getContext().filesDir.path}/artifacts/screenshots"
+        val screenshotPath = "${getTargetContext().filesDir.path}/artifacts/screenshots"
         val testName = TestName()
-        fun getContext() = InstrumentationRegistry.getInstrumentation().targetContext!!
+        fun getTargetContext() = InstrumentationRegistry.getInstrumentation().targetContext!!
     }
 }

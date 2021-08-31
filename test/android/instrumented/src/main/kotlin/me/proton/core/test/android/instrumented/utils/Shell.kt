@@ -19,7 +19,7 @@
 package me.proton.core.test.android.instrumented.utils
 
 import androidx.test.platform.app.InstrumentationRegistry
-import me.proton.core.test.android.instrumented.ProtonTest.Companion.getContext
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetContext
 import me.proton.core.util.kotlin.toInt
 import org.junit.runner.Description
 import java.io.File
@@ -32,7 +32,7 @@ object Shell {
      * Deletes artifacts folder from /sdcard/Download.
      */
     fun deleteDownloadArtifactsFolder() {
-        val downloadArtifactsPath = getContext().getExternalFilesDir(null)!!.absolutePath
+        val downloadArtifactsPath = getTargetContext().getExternalFilesDir(null)!!.absolutePath
         automation.executeShellCommand("rm -rf $downloadArtifactsPath")
     }
 
@@ -58,7 +58,7 @@ object Shell {
             .executeShellCommand(
                 "am start -a android.intent.action.SEND -t $mimeType " +
                     "--eu android.intent.extra.STREAM " +
-                    "file:///data/data/${getContext().packageName}/files/$fileName " +
+                    "file:///data/data/${getTargetContext().packageName}/files/$fileName " +
                     " --grant-read-uri-permission"
             )
     }
@@ -73,8 +73,8 @@ object Shell {
      * Saves file with provided [Description]
      */
     fun saveToFile(description: Description?) {
-        val logcatArtifactsPath = "${getContext().filesDir.path}/artifacts/logcat"
+        val logcatArtifactsPath = "${getTargetContext().filesDir.path}/artifacts/logcat"
         val logcatFile = File(logcatArtifactsPath, "${description?.methodName}-logcat.txt")
-        automation.executeShellCommand("run-as ${getContext().packageName} -d -f $logcatFile")
+        automation.executeShellCommand("run-as ${getTargetContext().packageName} -d -f $logcatFile")
     }
 }

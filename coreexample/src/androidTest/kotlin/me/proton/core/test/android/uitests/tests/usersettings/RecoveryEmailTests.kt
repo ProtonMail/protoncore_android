@@ -18,6 +18,8 @@
 
 package me.proton.core.test.android.uitests.tests.usersettings
 
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot.AuthenticationRobot
@@ -73,7 +75,7 @@ class RecoveryEmailTests: BaseTest() {
             .confirmNewEmail(user.recoveryEmail)
             .save<AuthenticationRobot>()
             .password("incorrect")
-            .enter()
+            .enter<RecoveryEmailRobot>()
             .verify { errorSnackbarDisplayed("Incorrect login credentials. Please try again") }
     }
 
@@ -97,10 +99,10 @@ class RecoveryEmailTests: BaseTest() {
             .confirmNewEmail(user.recoveryEmail)
             .save<AuthenticationRobot>()
             .password(user.password)
-            .enter()
+            .enter<CoreexampleRobot>()
             .verify {
-                errorSnackbarDisplayed(R.string.settings_recovery_email_success)
-                currentRecoveryEmailIs(user.recoveryEmail)
+                coreexampleElementsDisplayed()
+                userStateIs(user, AccountState.Ready, SessionState.Authenticated)
             }
     }
 }
