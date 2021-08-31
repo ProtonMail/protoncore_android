@@ -1,3 +1,11 @@
+## Test Android Instrumented [0.6.7]
+
+Aug 30, 2021
+
+### New Features
+
+- Added RecoveryEmail robot
+
 ## Test Android Instrumented [0.6.6]
 
 Aug 27, 2021

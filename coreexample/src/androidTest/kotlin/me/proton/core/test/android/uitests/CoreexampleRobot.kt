@@ -31,6 +31,7 @@ import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
+import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
 
 /**
  * [CoreexampleRobot] class contains actions and verifications for Main screen functionality.
@@ -48,6 +49,7 @@ open class CoreexampleRobot : CoreRobot() {
     ): T = clickElement(getUserState(user, accountState, sessionState))
     fun plansUpgrade(): SelectPlanRobot = clickElement(R.id.plansUpgrade)
     fun plansCurrent(): SelectPlanRobot = clickElement(R.id.plansCurrent)
+    fun settingsRecoveryEmail(): RecoveryEmailRobot = clickElement(R.id.settingsRecovery)
 
     fun accountSwitcher(): AccountSwitcherRobot = clickElement(R.id.accountPrimaryView, ViewGroup::class.java)
 

@@ -41,6 +41,8 @@ data class User(
     val plan: Plan = Plan.Free,
     val cards: List<Card> = emptyList(),
     val paypal: String = "",
+
+    val recoveryEmail: String = ""
 ) {
 
     val isOnePasswordWithUsername: Boolean = passphrase.isEmpty() && twoFa.isEmpty() && name.isNotEmpty()
