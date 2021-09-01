@@ -30,6 +30,7 @@ import me.proton.core.humanverification.presentation.ui.verification.HumanVerifi
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationEnterCodeFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
 
@@ -138,6 +139,20 @@ internal fun FragmentManager.showHelp() {
         setCustomAnimations(0, 0)
         add(helpFragment, TAG_HUMAN_VERIFICATION_HELP)
     }
+}
+
+fun FragmentManager.registerRequestNewCodeDialogResultLauncher(
+    fragment: Fragment,
+    destination: String? = "",
+    onResult: () -> Unit
+): FragmentDialogResultLauncher {
+    setFragmentResultListener(ProtonCancellableAlertDialog.KEY_ACTION_DONE, fragment) { _, _ ->
+        onResult()
+    }
+    return FragmentDialogResultLauncher(
+        requestKey = ProtonCancellableAlertDialog.KEY_ACTION_DONE,
+        show = { showRequestNewCodeDialog(fragment.requireContext(), destination) }
+    )
 }
 
 /**

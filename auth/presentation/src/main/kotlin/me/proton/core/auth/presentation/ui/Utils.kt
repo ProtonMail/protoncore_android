@@ -18,17 +18,12 @@
 
 package me.proton.core.auth.presentation.ui
 
-import android.content.Context
+import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LifecycleOwner
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
 import me.proton.core.presentation.utils.openBrowserLink
-
-/**
- * @author Dino Kadrikj.
- */
 
 private const val TAG_PASSWORD_CHOOSER_DIALOG = "password_chooser_dialog"
 
@@ -39,8 +34,7 @@ private const val TAG_PASSWORD_CHOOSER_DIALOG = "password_chooser_dialog"
  * @param largeLayout how to present the dialog (default false)
  */
 fun FragmentManager.showPasswordChangeDialog(
-    context: Context,
-    lifecycleOwner: LifecycleOwner,
+    context: ComponentActivity,
     largeLayout: Boolean = false
 ) {
     findFragmentByTag(TAG_PASSWORD_CHOOSER_DIALOG) ?: run {
@@ -51,7 +45,7 @@ fun FragmentManager.showPasswordChangeDialog(
         )
         setFragmentResultListener(
             ProtonCancellableAlertDialog.KEY_ACTION_DONE,
-            lifecycleOwner
+            context
         ) { _, _ ->
             context.openBrowserLink(context.getString(R.string.login_link))
         }

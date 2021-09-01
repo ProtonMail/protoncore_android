@@ -104,7 +104,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>() {
     private fun onChangePassword() {
         showLoading(false)
         binding.passwordInput.text = ""
-        supportFragmentManager.showPasswordChangeDialog(context = this, lifecycleOwner = this)
+        supportFragmentManager.showPasswordChangeDialog(context = this)
     }
 
     override fun onBackPressed() {
