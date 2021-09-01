@@ -78,6 +78,7 @@ class PerformUpdateUserPassword @Inject constructor(
                     modulus = modulus.modulus
                 ) else null
 
+                val organizationPrivateKey = organizationKeys?.privateKey ?: ""
                 return userManager.changePassword(
                     userId = userId,
                     newPassword = newPassword,
@@ -85,7 +86,7 @@ class PerformUpdateUserPassword @Inject constructor(
                     proofs = clientProofs,
                     srpSession = loginInfo.srpSession,
                     auth = auth,
-                    orgPrivateKey = organizationKeys?.privateKey
+                    orgPrivateKey = if (organizationPrivateKey.isNotEmpty()) organizationPrivateKey else null
                 )
             }
         }

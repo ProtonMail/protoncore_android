@@ -20,7 +20,11 @@
     package="me.proton.core.usersettings.presentation">
 
     <application>
-        <activity android:name="me.proton.core.usersettings.presentation.ui.UpdateRecoveryEmailActivity" />
-        <activity android:name="me.proton.core.usersettings.presentation.ui.PasswordManagementActivity" />
+        <activity
+            android:name="me.proton.core.usersettings.presentation.ui.UpdateRecoveryEmailActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.usersettings.presentation.ui.PasswordManagementActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 </manifest>

@@ -137,15 +137,21 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
     private fun onSaveLoginPasswordClicked() {
         hideKeyboard()
         with(binding) {
-            newLoginPasswordInput.validatePasswordMinLength()
-                .onFailure { newLoginPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
-                .onSuccess { password ->
-                    when (val confirmedPassword = confirmNewLoginPasswordInput.text.toString()) {
-                        password -> onLoginPasswordConfirmed(confirmedPassword)
-                        else -> confirmNewLoginPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_do_not_match))
-                    }
-                }
+            currentLoginPasswordInput.validatePassword()
+                .onFailure { currentLoginPasswordInput.setInputError(getString(R.string.auth_signup_validation_password)) }
+                .onSuccess { onLoginPasswordValidationSuccess() }
         }
+    }
+
+    private fun onLoginPasswordValidationSuccess() = with(binding) {
+        newLoginPasswordInput.validatePasswordMinLength()
+            .onFailure { newLoginPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
+            .onSuccess { password ->
+                when (val confirmedPassword = confirmNewLoginPasswordInput.text.toString()) {
+                    password -> onLoginPasswordConfirmed(confirmedPassword)
+                    else -> confirmNewLoginPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_do_not_match))
+                }
+            }
     }
 
     private fun onLoginPasswordConfirmed(confirmedPassword: String) = with(binding) {
@@ -156,7 +162,8 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
                     PasswordAnd2FADialog.KEY_PASS_2FA_SET,
                     this@PasswordManagementFragment
                 ) { _, bundle ->
-                    val result = bundle.getParcelable<PasswordAnd2FAInput>(PasswordAnd2FADialog.BUNDLE_KEY_PASS_2FA_DATA)
+                    val result =
+                        bundle.getParcelable<PasswordAnd2FAInput>(PasswordAnd2FADialog.BUNDLE_KEY_PASS_2FA_DATA)
                     if (result != null) {
                         viewModel.updateLoginPassword(
                             userId = userId,
@@ -179,17 +186,23 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
     private fun onSaveMailboxPasswordClicked() {
         hideKeyboard()
         with(binding) {
-            newMailboxPasswordInput.validatePasswordMinLength()
-                .onFailure { newMailboxPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
-                .onSuccess { password ->
-                    when (val confirmedPassword = confirmNewMailboxPasswordInput.text.toString()) {
-                        password -> onMailboxPasswordConfirmed(confirmedPassword)
-                        else -> confirmNewMailboxPasswordInput.setInputError(
-                            getString(R.string.auth_signup_error_passwords_do_not_match)
-                        )
-                    }
-                }
+            currentMailboxPasswordInput.validatePassword()
+                .onFailure { currentMailboxPasswordInput.setInputError(getString(R.string.auth_signup_validation_password)) }
+                .onSuccess { onMailboxPasswordValidationSuccess() }
         }
+    }
+
+    private fun onMailboxPasswordValidationSuccess() = with(binding) {
+        newMailboxPasswordInput.validatePasswordMinLength()
+            .onFailure { newMailboxPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
+            .onSuccess { password ->
+                when (val confirmedPassword = confirmNewMailboxPasswordInput.text.toString()) {
+                    password -> onMailboxPasswordConfirmed(confirmedPassword)
+                    else -> confirmNewMailboxPasswordInput.setInputError(
+                        getString(R.string.auth_signup_error_passwords_do_not_match)
+                    )
+                }
+            }
     }
 
     private fun onMailboxPasswordConfirmed(confirmedPassword: String) = with(binding) {
@@ -203,7 +216,8 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
                     PasswordAnd2FADialog.KEY_PASS_2FA_SET,
                     this@PasswordManagementFragment
                 ) { _, bundle ->
-                    val result = bundle.getParcelable<PasswordAnd2FAInput>(PasswordAnd2FADialog.BUNDLE_KEY_PASS_2FA_DATA)
+                    val result =
+                        bundle.getParcelable<PasswordAnd2FAInput>(PasswordAnd2FADialog.BUNDLE_KEY_PASS_2FA_DATA)
                     if (result != null) {
                         viewModel.updateMailboxPassword(
                             userId = userId,
@@ -238,7 +252,11 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
                 validatePassword()
             }
             validation.onFailure {
-                setInputError(getString(R.string.auth_signup_validation_password_length))
+                if (validateLength) {
+                    setInputError(getString(R.string.auth_signup_validation_password_length))
+                } else {
+                    setInputError(getString(R.string.auth_signup_validation_password))
+                }
             }.onSuccess { clearInputError() }
         }
     }
