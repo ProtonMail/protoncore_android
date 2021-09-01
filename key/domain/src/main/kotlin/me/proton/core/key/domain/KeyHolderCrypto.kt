@@ -142,16 +142,13 @@ fun KeyHolderContext.decryptSessionKey(keyPacket: KeyPacket): SessionKey =
 /**
  * Decrypt [hashKey] as [HashKey] using [PrivateKeyRing] and verify using [PublicKeyRing].
  *
- * @throws [CryptoException] if [hashKey] cannot be encrypted and verified.
+ * @throws [CryptoException] if [hashKey] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptHashKeyOrNull]
  * @see [KeyHolderContext.encryptHashKey]
  */
 fun KeyHolderContext.decryptHashKey(hashKey: EncryptedMessage): HashKey =
-    decryptAndVerifyText(hashKey).let {
-        require(it.status == VerificationStatus.Success)
-        HashKey(context.pgpCrypto.getBase64Decoded(it.text))
-    }
+    decryptAndVerifyText(hashKey).let { HashKey(context.pgpCrypto.getBase64Decoded(it.text), it.status) }
 
 /**
  * Decrypt [message] as [String] using [PrivateKeyRing].

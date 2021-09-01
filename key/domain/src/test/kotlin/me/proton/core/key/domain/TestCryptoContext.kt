@@ -257,7 +257,7 @@ class TestCryptoContext : CryptoContext {
 
         override fun generateNewSessionKey(): SessionKey = SessionKey("sessionKey".toByteArray())
 
-        override fun generateNewHashKey(): HashKey = HashKey("hashKey".toByteArray())
+        override fun generateNewHashKey(): HashKey = HashKey("hashKey".toByteArray(), VerificationStatus.NotSigned)
 
         override fun generateNewKeySalt(): String = "keySalt"
 

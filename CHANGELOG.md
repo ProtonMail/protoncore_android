@@ -1,3 +1,16 @@
+## Crypto Version [1.6.2]
+
+Aug 31, 2021
+
+### Dependencies
+
+- Crypto 1.6.2.
+- Key 1.6.2.
+
+### Bug Fixes
+
+- Fixed HashKey signature verification (do not throw IllegalArgumentException anymore on decryption).
+
 ## Test Android Instrumented [0.6.7]
 
 Aug 30, 2021
