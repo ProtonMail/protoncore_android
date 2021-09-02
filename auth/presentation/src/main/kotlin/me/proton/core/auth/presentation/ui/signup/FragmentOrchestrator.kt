@@ -40,7 +40,7 @@ fun FragmentManager.registerSkipRecoveryDialogResultLauncher(
     fragment: Fragment,
     onResult: () -> Unit
 ): FragmentDialogResultLauncher {
-    setFragmentResultListener(ProtonCancellableAlertDialog.KEY_ACTION_DONE, fragment) { _, bundle ->
+    setFragmentResultListener(ProtonCancellableAlertDialog.KEY_ACTION_DONE, fragment) { _, _ ->
         onResult()
     }
     return FragmentDialogResultLauncher(

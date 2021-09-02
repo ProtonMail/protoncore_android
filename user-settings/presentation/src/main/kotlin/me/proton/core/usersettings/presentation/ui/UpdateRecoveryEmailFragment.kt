@@ -26,9 +26,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.auth.presentation.alert.PasswordAnd2FADialog
-import me.proton.core.auth.presentation.alert.showPasswordEnterDialog
-import me.proton.core.auth.presentation.entity.PasswordAnd2FAInput
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
@@ -50,6 +47,8 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
 
     private val viewModel by viewModels<UpdateRecoveryEmailViewModel>()
 
+    private lateinit var showPasswordDialogResultLauncher: FragmentDialogResultLauncher<ShowPasswordInput>
+
     private val input: SettingsInput by lazy {
         requireArguments().get(ARG_INPUT) as SettingsInput
     }
@@ -65,6 +64,19 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        showPasswordDialogResultLauncher =
+            childFragmentManager.registerShowPasswordDialogResultLauncher(this) { result ->
+                if (result != null) {
+                    viewModel.updateRecoveryEmail(
+                        userId = input.user,
+                        newRecoveryEmail = binding.confirmNewEmailInput.text.toString(),
+                        password = result.password,
+                        secondFactorCode = result.twoFA
+                    )
+                }
+            }
+
         (activity as? UpdateRecoveryEmailActivity)?.binding?.toolbar?.apply {
             setNavigationOnClickListener { setFragmentResult() }
         }
@@ -107,25 +119,12 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
     ) = with(binding) {
         val confirmedRecoveryEmail = confirmNewEmailInput.text.toString()
         if (newRecoveryEmail == confirmedRecoveryEmail) {
-            childFragmentManager.apply {
-                showPasswordEnterDialog(
-                    secondFactor = viewModel.secondFactorEnabled!!
+            showPasswordDialogResultLauncher.show(
+                ShowPasswordInput(
+                    showPassword = true,
+                    showTwoFA = viewModel.secondFactorEnabled!!
                 )
-                setFragmentResultListener(
-                    PasswordAnd2FADialog.KEY_PASS_2FA_SET,
-                    this@UpdateRecoveryEmailFragment
-                ) { _, bundle ->
-                    val result = bundle.getParcelable<PasswordAnd2FAInput>(PasswordAnd2FADialog.BUNDLE_KEY_PASS_2FA_DATA)
-                    if (result != null) {
-                        viewModel.updateRecoveryEmail(
-                            userId = input.user,
-                            newRecoveryEmail = confirmNewEmailInput.text.toString(),
-                            password = result.password,
-                            secondFactorCode = result.twoFA
-                        )
-                    }
-                }
-            }
+            )
         } else {
             confirmNewEmailInput.setInputError(getString(R.string.settings_recovery_email_error_no_match))
         }

@@ -27,9 +27,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.auth.presentation.alert.PasswordAnd2FADialog
-import me.proton.core.auth.presentation.alert.showPasswordEnterDialog
-import me.proton.core.auth.presentation.entity.PasswordAnd2FAInput
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.ui.view.ProtonInput
@@ -53,6 +50,9 @@ import me.proton.core.util.kotlin.exhaustive
 class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBinding>() {
     private val viewModel by viewModels<PasswordManagementViewModel>()
 
+    private lateinit var showLoginPasswordDialogResultLauncher: FragmentDialogResultLauncher<ShowPasswordInput>
+    private lateinit var showMailboxPasswordDialogResultLauncher: FragmentDialogResultLauncher<ShowPasswordInput>
+
     private val input: SettingsInput by lazy {
         requireArguments().get(ARG_INPUT) as SettingsInput
     }
@@ -68,6 +68,32 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        showLoginPasswordDialogResultLauncher =
+            childFragmentManager.registerShowPasswordDialogResultLauncher(this@PasswordManagementFragment) { result ->
+                if (result != null) {
+                    viewModel.updateLoginPassword(
+                        userId = userId,
+                        password = binding.currentLoginPasswordInput.text.toString(),
+                        newPassword = binding.confirmNewLoginPasswordInput.text.toString(),
+                        secondFactorCode = result.twoFA
+                    )
+                }
+            }
+
+        showMailboxPasswordDialogResultLauncher =
+            childFragmentManager.registerShowPasswordDialogResultLauncher(
+                this@PasswordManagementFragment,
+                onResultMailboxPassword = { result ->
+                    if (result != null) {
+                        viewModel.updateMailboxPassword(
+                            userId = userId,
+                            loginPassword = binding.currentMailboxPasswordInput.text.toString(),
+                            newMailboxPassword = binding.confirmNewMailboxPasswordInput.text.toString(),
+                            secondFactorCode = result.twoFA
+                        )
+                    }
+                })
         (activity as PasswordManagementActivity).binding.toolbar.apply {
             setNavigationOnClickListener { finish() }
         }
@@ -157,22 +183,7 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
     private fun onLoginPasswordConfirmed(confirmedPassword: String) = with(binding) {
         if (viewModel.secondFactorEnabled == true) {
             childFragmentManager.apply {
-                showPasswordEnterDialog(password = false, secondFactor = true)
-                setFragmentResultListener(
-                    PasswordAnd2FADialog.KEY_PASS_2FA_SET,
-                    this@PasswordManagementFragment
-                ) { _, bundle ->
-                    val result =
-                        bundle.getParcelable<PasswordAnd2FAInput>(PasswordAnd2FADialog.BUNDLE_KEY_PASS_2FA_DATA)
-                    if (result != null) {
-                        viewModel.updateLoginPassword(
-                            userId = userId,
-                            password = currentLoginPasswordInput.text.toString(),
-                            newPassword = confirmedPassword,
-                            secondFactorCode = result.twoFA
-                        )
-                    }
-                }
+                showLoginPasswordDialogResultLauncher.show(ShowPasswordInput(showPassword = false, showTwoFA = true))
             }
         } else {
             viewModel.updateLoginPassword(
@@ -208,25 +219,7 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
     private fun onMailboxPasswordConfirmed(confirmedPassword: String) = with(binding) {
         if (viewModel.secondFactorEnabled == true) {
             childFragmentManager.apply {
-                showPasswordEnterDialog(
-                    password = false,
-                    secondFactor = true
-                )
-                setFragmentResultListener(
-                    PasswordAnd2FADialog.KEY_PASS_2FA_SET,
-                    this@PasswordManagementFragment
-                ) { _, bundle ->
-                    val result =
-                        bundle.getParcelable<PasswordAnd2FAInput>(PasswordAnd2FADialog.BUNDLE_KEY_PASS_2FA_DATA)
-                    if (result != null) {
-                        viewModel.updateMailboxPassword(
-                            userId = userId,
-                            loginPassword = currentMailboxPasswordInput.text.toString(),
-                            newMailboxPassword = confirmedPassword,
-                            secondFactorCode = result.twoFA
-                        )
-                    }
-                }
+                showMailboxPasswordDialogResultLauncher.show(ShowPasswordInput(showPassword = false, showTwoFA = true))
             }
         } else {
             viewModel.updateMailboxPassword(

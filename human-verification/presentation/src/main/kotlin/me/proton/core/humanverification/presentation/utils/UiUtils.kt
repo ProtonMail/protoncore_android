@@ -141,20 +141,6 @@ internal fun FragmentManager.showHelp() {
     }
 }
 
-fun FragmentManager.registerRequestNewCodeDialogResultLauncher(
-    fragment: Fragment,
-    destination: String? = "",
-    onResult: () -> Unit
-): FragmentDialogResultLauncher {
-    setFragmentResultListener(ProtonCancellableAlertDialog.KEY_ACTION_DONE, fragment) { _, _ ->
-        onResult()
-    }
-    return FragmentDialogResultLauncher(
-        requestKey = ProtonCancellableAlertDialog.KEY_ACTION_DONE,
-        show = { showRequestNewCodeDialog(fragment.requireContext(), destination) }
-    )
-}
-
 /**
  * Presents to the user a dialog to confirm that it really wants a replacement code.
  *
