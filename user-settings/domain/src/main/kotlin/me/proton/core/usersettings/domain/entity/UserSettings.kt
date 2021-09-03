@@ -19,6 +19,7 @@
 package me.proton.core.usersettings.domain.entity
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.domain.type.IntEnum
 
 data class UserSettings(
     val userId: UserId,
@@ -28,18 +29,74 @@ data class UserSettings(
     val twoFA: TwoFASetting?,
     val news: Int?,
     val locale: String?,
-    val logAuth: Int?,
+    val logAuth: IntEnum<LogAuth>?,
     val invoiceText: String?,
-    val density: Int?,
+    val density: IntEnum<Density>?,
     val theme: String?,
     val themeType: Int?,
-    val weekStart: Int?,
-    val dateFormat: Int?,
-    val timeFormat: Int?,
+    val weekStart: IntEnum<WeekStart>?,
+    val dateFormat: IntEnum<DateFormat>?,
+    val timeFormat: IntEnum<TimeFormat>?,
     val welcome: Boolean?,
     val earlyAccess: Boolean?,
     val flags: Flags?
-)
+) {
+    enum class LogAuth(val value: Int) {
+        Disabled(0),
+        Basic(1),
+        Advanced(2);
+
+        companion object {
+            val map = values().associateBy { it.value }
+            fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
+        }
+    }
+
+    enum class Density(val value: Int) {
+        Comfortable(0),
+        Compact(1);
+
+        companion object {
+            val map = values().associateBy { it.value }
+            fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
+        }
+    }
+
+    enum class WeekStart(val value: Int) {
+        Default(0),
+        Monday(1),
+        Saturday(6),
+        Sunday(7);
+
+        companion object {
+            val map = values().associateBy { it.value }
+            fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
+        }
+    }
+
+    enum class DateFormat(val value: Int) {
+        Default(0),
+        DayMonthYear(1),
+        MonthDayYear(2),
+        YearMonthDay(3);
+
+        companion object {
+            val map = values().associateBy { it.value }
+            fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
+        }
+    }
+
+    enum class TimeFormat(val value: Int) {
+        Default(0),
+        TwentyFourHours(1),
+        TwelveHours(2);
+
+        companion object {
+            val map = values().associateBy { it.value }
+            fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
+        }
+    }
+}
 
 data class RecoverySetting(
     val value: String?,
