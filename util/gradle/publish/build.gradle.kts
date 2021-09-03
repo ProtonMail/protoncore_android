@@ -17,7 +17,7 @@
  */
 
 plugins {
-    val kotlinVersion = "1.4.31"
+    val kotlinVersion = "1.5.21" // Jul 13, 2021
     val easyGradle = "2.7"
 
     kotlin("jvm") version kotlinVersion

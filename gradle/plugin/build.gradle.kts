@@ -18,7 +18,7 @@
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm") version "1.4.31"
+    kotlin("jvm") version "1.5.21" // Jul 13, 2021
     `java-gradle-plugin`
 }
 
@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     val easyGradle = "2.7" // Oct 15, 2020
-    val agpVersion = "4.1.1" // Nov 10, 2020
+    val agpVersion = "7.0.1" // Aug 18, 2021
 
     implementation(gradleApi())
     compileOnly("com.android.tools.build:gradle:$agpVersion")
