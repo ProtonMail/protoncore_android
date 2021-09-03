@@ -18,7 +18,7 @@
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm") version "1.5.21" // Jul 13, 2021
+    kotlin("jvm") version "1.5.30" // Aug 23, 2021
     `java-gradle-plugin`
 }
 
