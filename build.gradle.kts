@@ -1,3 +1,5 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+
 /*
  * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
@@ -23,6 +25,7 @@
  * * `multiModuleDetekt` ( 'me.proton.detekt' plugin )
  * * `publishAll` ( 'me.proton.publish-libraries' plugin )
  * * `dokka`
+ * * `dependencyUpdates`
  */
 plugins {
     id("core")
@@ -30,6 +33,7 @@ plugins {
     id("me.proton.kotlin")
     id("me.proton.publish-libraries")
     id("me.proton.tests")
+    id("com.github.ben-manes.versions") version "0.39.0"
 }
 
 buildscript {
@@ -62,4 +66,23 @@ kotlinCompilerArgs(
 
 tasks.register("clean", Delete::class.java) {
     delete(rootProject.buildDir)
+}
+
+fun isNonStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
+}
+
+tasks.withType<DependencyUpdatesTask> {
+    rejectVersionIf {
+        // Disallow release candidates as upgradable versions from stable versions
+        isNonStable(candidate.version) && !isNonStable(currentVersion)
+    }
+
+    checkForGradleUpdate = true
+    outputFormatter = "json, html, plain"
+    outputDir = "build/dependencyUpdates"
+    reportfileName = "report"
 }
