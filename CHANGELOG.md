@@ -1,3 +1,29 @@
+Sep 03, 2021
+
+### Bug fixes
+
+- Fixed dialog fragments crash on orientation change, mainly this stands for ProtonCancellableDialogFragment and PasswordAnd2FADialogFragment
+- Note, breaking change, the API of these dialog fragments has changed a bit.
+
+### Dependencies
+
+- Auth 1.7.0
+- HumanVerification 1.6.0
+- Presentation 1.6.0
+- UserSettings 1.7.0
+
+### New Usage Example with fragment result pattern
+```
+private lateinit var requestNewCodeDialogResultLauncher: FragmentDialogResultLauncher<String>
+
+requestNewCodeDialogResultLauncher =
+            parentFragmentManager.registerRequestNewCodeDialogResultLauncher(this@HumanVerificationEnterCodeFragment) {
+                // your code
+            }
+
+equestNewCodeDialogResultLauncher.show("string")
+```
+
 ## Crypto Version [1.6.2]
 
 Aug 31, 2021
