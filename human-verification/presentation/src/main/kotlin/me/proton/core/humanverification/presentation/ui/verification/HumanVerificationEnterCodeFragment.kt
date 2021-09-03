@@ -33,12 +33,12 @@ import me.proton.core.humanverification.presentation.databinding.FragmentHumanVe
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.ARG_TOKEN_CODE
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.KEY_VERIFICATION_DONE
-import me.proton.core.humanverification.presentation.utils.FragmentDialogResultLauncher
 import me.proton.core.humanverification.presentation.utils.registerRequestNewCodeDialogResultLauncher
 import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick

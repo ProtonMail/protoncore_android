@@ -39,7 +39,7 @@ private const val TAG_TERMS_CONDITIONS_FRAGMENT = "terms_conditions_fragment"
 fun FragmentManager.registerSkipRecoveryDialogResultLauncher(
     fragment: Fragment,
     onResult: () -> Unit
-): FragmentDialogResultLauncher {
+): FragmentDialogResultLauncher<Unit> {
     setFragmentResultListener(ProtonCancellableAlertDialog.KEY_ACTION_DONE, fragment) { _, _ ->
         onResult()
     }

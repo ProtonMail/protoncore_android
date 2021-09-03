@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentManager
 import me.proton.core.auth.presentation.alert.PasswordAnd2FADialog
 import me.proton.core.auth.presentation.alert.showPasswordEnterDialog
 import me.proton.core.auth.presentation.entity.PasswordAnd2FAInput
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 
 enum class PasswordType {
     LOGIN, MAILBOX
@@ -33,13 +34,6 @@ data class ShowPasswordInput(
     val showPassword: Boolean,
     val showTwoFA: Boolean
 )
-
-data class FragmentDialogResultLauncher<Input>(
-    val requestKey: String,
-    val show: (Input) -> Unit
-) {
-    fun show(input: Input) = show.invoke(input)
-}
 
 fun FragmentManager.registerShowPasswordDialogResultLauncher(
     fragment: Fragment,
@@ -64,6 +58,7 @@ fun FragmentManager.registerShowPasswordDialogResultLauncher(
     return FragmentDialogResultLauncher(
         requestKey = PasswordAnd2FADialog.KEY_PASS_2FA_SET,
         show = { input ->
+            requireNotNull(input) { "Input must not be null" }
             showPasswordEnterDialog(password = input.showPassword, secondFactor = input.showTwoFA)
         }
     )

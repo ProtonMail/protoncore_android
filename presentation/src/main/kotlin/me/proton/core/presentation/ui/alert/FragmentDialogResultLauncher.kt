@@ -18,9 +18,9 @@
 
 package me.proton.core.presentation.ui.alert
 
-data class FragmentDialogResultLauncher(
+data class FragmentDialogResultLauncher<Input>(
     val requestKey: String,
-    val show: () -> Unit
+    val show: (Input?) -> Unit
 ) {
-    fun show() = show.invoke()
+    fun show(input: Input? = null) = show.invoke(input)
 }

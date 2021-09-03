@@ -48,7 +48,7 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
     private val viewModel by viewModels<RecoveryMethodViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
 
-    private lateinit var skipRecoveryDialogResultLauncher: FragmentDialogResultLauncher
+    private lateinit var skipRecoveryDialogResultLauncher: FragmentDialogResultLauncher<Unit>
 
     override fun layoutId() = R.layout.fragment_signup_recovery
 

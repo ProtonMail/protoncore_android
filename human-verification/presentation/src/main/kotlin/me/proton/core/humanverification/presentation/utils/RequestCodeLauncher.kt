@@ -20,14 +20,8 @@ package me.proton.core.humanverification.presentation.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
-
-data class FragmentDialogResultLauncher<Input>(
-    val requestKey: String,
-    val show: (Input) -> Unit
-) {
-    fun show(input: Input) = show.invoke(input)
-}
 
 fun FragmentManager.registerRequestNewCodeDialogResultLauncher(
     fragment: Fragment,
