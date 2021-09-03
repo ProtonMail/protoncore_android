@@ -28,22 +28,22 @@ internal fun initVersions() {
     // endregion
 
     // region Android
-    `activity version` =                        "1.2.0"         // Released: Feb 10, 2021
-    `android-annotation version` =              "1.1.0"         // Released: Jun 05, 2019
-    `appcompat version` =                       "1.2.0"         // Released: Aug 19, 2020
+    `activity version` =                        "1.3.1"         // Released: Aug 04, 2021
+    `android-annotation version` =              "1.2.0"         // Released: Mar 24, 2021
+    `appcompat version` =                       "1.3.1"         // Released: Jul 21, 2021
     `android-arch version` =                    "2.1.0"         // Released: Sep 06, 2019
-    `constraint-layout version` =               "2.0.4"         // Released: Oct 29, 2020
-    `espresso version` =                        "3.3.0"         // Released: Aug 25, 2020
-    `fragment version` =                        "1.3.0"         // Released: Feb 10, 2021
-    `ktx version` =                             "1.5.0"         // Released: May 18, 2021
-    `lifecycle version` =                       "2.4.0-alpha01" // Released: Mar 24, 2021
-    `material version` =                        "1.3.0"         // Released: Feb 05, 2021
-    `android-paging version` =                  "2.1.2"         // Released: Mar 18, 2020
-    `android-work version` =                    "2.2.0"         // Released: Aug 16, 2019
+    `constraint-layout version` =               "2.1.0"         // Released: Jul 22, 2021
+    `espresso version` =                        "3.4.0"         // Released: Jul 04, 2021
+    `fragment version` =                        "1.3.6"         // Released: Sep 01, 2021
+    `ktx version` =                             "1.6.0"         // Released: Jun 30, 2021
+    `lifecycle version` =                       "2.4.0-alpha03" // Released: Aug 04, 2021
+    `material version` =                        "1.4.0"         // Released: Jul 02, 2021
+    `android-paging version` =                  "3.0.1"         // Released: Jul 21, 2021
+    `android-work version` =                    "2.6.0"         // Released: Sep 01, 2021
     `android-room version` =                    "2.3.0"         // Released: Apr 21, 2021
 
-    `android-test version` =                    "1.3.0"         // Released: Aug 25, 2020
-    `robolectric version` =                     "4.4"           // Released: Aug 24, 2020
+    `android-test version` =                    "1.4.0"         // Released: Jun 30, 2021
+    `robolectric version` =                     "4.6.1"         // Released: Jul 04, 2021
     // endregion
 
     // region Others
