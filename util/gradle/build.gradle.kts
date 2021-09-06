@@ -17,7 +17,7 @@
  */
 
 plugins {
-    val kotlinVersion = "1.5.30" // Aug 23, 2021
+    val kotlinVersion = embeddedKotlinVersion
     val publishVersion = "0.7"
 
     kotlin("jvm") version kotlinVersion

@@ -17,10 +17,9 @@
  */
 
 plugins {
-    val kotlinVersion = "1.5.30" // Aug 23, 2021
     val easyGradle = "2.7"
 
-    kotlin("jvm") version kotlinVersion
+    kotlin("jvm") version embeddedKotlinVersion
     id("studio.forface.easygradle") version easyGradle
 }
 
