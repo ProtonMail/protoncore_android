@@ -29,6 +29,9 @@
   <string name="welcome_subtitle_vpn">VPN suisse haute vitesse qui protège votre vie privée en chiffrant votre connexion Internet.</string>
   <string name="auth_password_label">Mot de passe</string>
   <string name="auth_password_help">Le mot de passe doit contenir au moins 8 caractères</string>
+  <string name="auth_current_login_password">Mot de passe de connexion actuel</string>
+  <string name="auth_enter_six_digit_code">Saisissez le code à 6 chiffres</string>
+  <string name="auth_second_factor_code">Code à deux facteurs</string>
   <string name="auth_email_username">Adresse électronique ou nom d\'utilisateur</string>
   <string name="auth_account_details">Saisissez les informations de votre compte Proton.</string>
   <string name="auth_sign_in">Se connecter</string>
@@ -107,7 +110,8 @@
   <string name="auth_signup_skip_recovery">Passer</string>
   <string name="auth_signup_set_recovery">Définir une méthode de récupération</string>
   <string name="auth_signup_no_connectivity">Aucune connexion pour afficher les conditions générales d’utilisation.</string>
-  <string name="auth_signup_error_passwords_match">Le mot de passe et la confirmation du mot de passe ne correspondent pas.</string>
+  <string name="auth_signup_error_username_blank">Le nom d\'utilisateur ne doit pas être vide.</string>
+  <string name="auth_signup_error_passwords_do_not_match">Les mots de passe ne correspondent pas.</string>
   <string name="auth_signup_validation_password_length">Le mot de passe doit comporter au moins 8 caractères.</string>
   <string name="auth_signup_your_account_is_being_setup">Votre compte a été créé…</string>
   <string name="auth_signup_please_wait">En général, ceci ne prend pas plus d\'une minute.</string>

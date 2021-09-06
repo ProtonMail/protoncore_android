@@ -19,17 +19,15 @@
 <resources>
   <string name="plans_select_plan">Vybrat plán</string>
   <string name="plans_select_a_plan">Vyberte plán</string>
-  <string name="plans_customizable_features">  Navštivte  pro upgrade na tarif Professional a Visionary, nebo pro přizpůsobení Vašeho plánu.
-  <a href="https://protonmail.com/pricing">protonmail.com</a>
-  </string>
+  <string name="plans_customizable_features">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to upgrade to Professional and Visionary plans, or to customize your plan.</string>
   <string name="plans_customizable_features_web">  Navštivte  pro přizpůsobení Vašeho plánu.
   <a href="https://protonmail.com/pricing">protonmail.com</a>
   </string>
   <string name="plans_fetching_general_error">Při načítání plánů došlo k chybě.</string>
   <string name="plans_free_name">Zdarma</string>
-  <string name="plan_price_monthly">/měsíčně</string>
+  <string name="plan_price_monthly">/ month</string>
   <string name="plans_current_plan">Aktuální plán</string>
-  <string name="plans_upgrade_plan">Upgradovat</string>
+  <string name="plans_upgrade_plan">Upgrade plan</string>
   <string name="plans_subscription">Předplatné</string>
   <string name="plans_renewal_date">Váš plán se automaticky obnoví dne</string>
   <string name="plans_billed_yearly">Účtováno jako %s za rok</string>

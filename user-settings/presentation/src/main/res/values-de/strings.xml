@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">Wiederherstellungs-E-Mail-Adresse</string>
+  <string name="settings_recovery_email_current">Aktuelle E-Mail-Adresse zum Zurücksetzen und für Benachrichtigen</string>
+  <string name="settings_recovery_email_new">Neue E-Mail-Adresse zum Zurücksetzen und für Benachrichtigen</string>
+  <string name="settings_recovery_email_confirm">Wiederherstellungs-E-Mail-Adresse bestätigen</string>
+  <string name="settings_recovery_email_new_hint">E‐Mail‐Adresse eingeben</string>
+  <string name="settings_recovery_email_confirm_hint">E‐Mail‐Adresse erneut eingeben</string>
+  <string name="settings_save">Speichern</string>
+  <string name="settings_password_required">Anmeldepasswort eingeben</string>
+  <string name="settings_password_required_ok">OK</string>
+  <string name="settings_not_set">Nicht festgelegt</string>
+  <string name="settings_recovery_email_error_no_match">E-Mail-Adresse zum Zurücksetzen und für Benachrichtigen stimmen nicht überein.</string>
+  <string name="settings_validation_email">Ungültige E-Mail-Adresse.</string>
+  <string name="settings_general_error">Ein Fehler ist aufgetreten.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">Passwort ändern</string>
+  <string name="settings_password_management_change_mailbox_password">Postfach-Passwort ändern</string>
+  <string name="settings_password_management_header">Passwörter verwalten</string>
+  <string name="settings_login_password_hint_current">Aktuelles Anmeldepasswort</string>
+  <string name="settings_login_password_hint_new">Neues Anmeldepasswort</string>
+  <string name="settings_login_password_hint_new_confirm">Neues Anmeldepasswort bestätigen</string>
+  <string name="settings_mailbox_password_hint_new">Neues Postfachpasswort</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Neues Postfachpasswort bestätigen</string>
+  <string name="settings_change_password_error">Das Ändern des Passworts ist fehlgeschlagen.</string>
+  <string name="settings_recovery_email_success">Wiederherstellungs-E-Mail wurde aktualisiert</string>
+  <string name="settings_password_management_success">Passwort wurde aktualisiert</string>
+  <string name="settings_password_management_login_password_success">Anmeldepasswort wurde aktualisiert</string>
+  <string name="settings_password_management_mailbox_password_success">Postfach-Passwort wurde aktualisiert</string>
+</resources>

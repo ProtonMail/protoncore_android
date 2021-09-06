@@ -32,7 +32,7 @@
   <string name="human_verification_get_verification_code">Obtenir un code de vérification</string>
   <string name="human_verification_already_have_code">J\'ai déjà un code</string>
   <string name="human_verification_request_replacement_code">Vous n\'avez pas reçu le code ?</string>
-  <string name="human_verification_verify">Vérifier </string>
+  <string name="human_verification_verify">Vérifier</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Avez-vous besoin d\'aide pour la vérification humaine ?</string>
   <string name="human_verification_code">Code de vérification</string>
