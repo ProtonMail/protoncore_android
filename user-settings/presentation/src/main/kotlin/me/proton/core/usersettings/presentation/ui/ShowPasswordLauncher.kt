@@ -25,12 +25,7 @@ import me.proton.core.auth.presentation.alert.showPasswordEnterDialog
 import me.proton.core.auth.presentation.entity.PasswordAnd2FAInput
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 
-enum class PasswordType {
-    LOGIN, MAILBOX
-}
-
 data class ShowPasswordInput(
-    val passwordType: PasswordType = PasswordType.LOGIN,
     val showPassword: Boolean,
     val showTwoFA: Boolean
 )

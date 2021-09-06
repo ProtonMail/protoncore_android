@@ -1,3 +1,5 @@
+## Auth Version [1.7.0]
+
 Sep 03, 2021
 
 ### Bug fixes
