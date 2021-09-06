@@ -85,3 +85,5 @@ fun File.projectsAndModules(): Pair<Set<String>, Set<String>> {
     val formattedProjects = projects.map { it.replace(":", "/") }.toSet()
     return formattedProjects to modules
 }
+
+enableFeaturePreview("VERSION_CATALOGS")

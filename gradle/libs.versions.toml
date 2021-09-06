@@ -1,0 +1,2 @@
+[libraries]
+android-pluginGradle = "com.android.tools.build:gradle:7.0.2"

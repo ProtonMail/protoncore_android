@@ -27,3 +27,14 @@ pluginManagement {
         maven("https://plugins.gradle.org/m2/")
     }
 }
+
+enableFeaturePreview("VERSION_CATALOGS")
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("./libs.versions.toml"))
+        }
+    }
+}
+

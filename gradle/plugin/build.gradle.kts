@@ -41,9 +41,8 @@ repositories {
 
 dependencies {
     val easyGradle = "2.7" // Oct 15, 2020
-    val agpVersion = "7.0.1" // Aug 18, 2021
 
     implementation(gradleApi())
-    compileOnly("com.android.tools.build:gradle:$agpVersion")
+    compileOnly(libs.android.pluginGradle)
     api("studio.forface.easygradle:dsl-android:$easyGradle")
 }
