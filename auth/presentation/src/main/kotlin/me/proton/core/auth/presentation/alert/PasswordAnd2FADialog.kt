@@ -26,22 +26,23 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
+import me.proton.core.auth.presentation.entity.PasswordAnd2FAInput
 import me.proton.core.presentation.R
 import me.proton.core.presentation.utils.onClick
 
-class PasswordAnd2FADialog(
-    private val action: (password: String, twoFA: String) -> Unit
-) : DialogFragment() {
+class PasswordAnd2FADialog : DialogFragment() {
 
     companion object {
         private const val ARG_SHOW_TWO_FA = "arg.showTwoFA"
         private const val ARG_SHOW_PASSWORD = "arg.showPassword"
 
+        const val KEY_PASS_2FA_SET = "key.pass_2fa_set"
+        const val BUNDLE_KEY_PASS_2FA_DATA = "bundle.pass_2fa_data"
+
         operator fun invoke(
             showPassword: Boolean,
-            showTwoFA: Boolean,
-            action: (password: String, twoFA: String) -> Unit
-        ) = PasswordAnd2FADialog(action).apply {
+            showTwoFA: Boolean
+        ) = PasswordAnd2FADialog().apply {
             arguments = bundleOf(
                 ARG_SHOW_TWO_FA to showTwoFA,
                 ARG_SHOW_PASSWORD to showPassword
@@ -77,7 +78,14 @@ class PasswordAnd2FADialog(
                         isAllCaps = false
                         onClick {
                             with(binding) {
-                                action.invoke(password.text.toString(), twoFA.text.toString())
+                                parentFragmentManager.setFragmentResult(
+                                    KEY_PASS_2FA_SET, bundleOf(
+                                        BUNDLE_KEY_PASS_2FA_DATA to PasswordAnd2FAInput(
+                                            password.text.toString(), twoFA.text.toString()
+                                        )
+                                    )
+                                )
+
                                 dismissAllowingStateLoss()
                             }
                         }

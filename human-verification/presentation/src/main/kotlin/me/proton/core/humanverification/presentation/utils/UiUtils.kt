@@ -30,6 +30,7 @@ import me.proton.core.humanverification.presentation.ui.verification.HumanVerifi
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationEnterCodeFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
 
@@ -148,27 +149,24 @@ internal fun FragmentManager.showHelp() {
 fun FragmentManager.showRequestNewCodeDialog(
     context: Context,
     destination: String? = "",
-    largeLayout: Boolean = false,
-    action: () -> Unit
+    largeLayout: Boolean = false
 ) {
     findFragmentByTag(TAG_HUMAN_VERIFICATION_NEW_CODE_DIALOG) ?: run {
-        val updateDialogFragment = ProtonCancellableAlertDialog(
+        val dialogFragment = ProtonCancellableAlertDialog(
             title = context.getString(R.string.human_verification_code_request_new_code_title),
             description = String.format(
                 context.getString(R.string.human_verification_code_request_new_code),
                 destination
             ),
             positiveButton = context.getString(R.string.human_verification_code_request_new_code_action)
-        ) {
-            action.invoke()
-        }
+        )
         if (largeLayout) {
             // For large screens (tablets), we show the fragment as a dialog
-            updateDialogFragment.show(this, TAG_HUMAN_VERIFICATION_NEW_CODE_DIALOG)
+            dialogFragment.show(this, TAG_HUMAN_VERIFICATION_NEW_CODE_DIALOG)
         } else {
             // The smaller screens (phones), we show the fragment fullscreen
             inTransaction {
-                add(updateDialogFragment, TAG_HUMAN_VERIFICATION_NEW_CODE_DIALOG)
+                add(dialogFragment, TAG_HUMAN_VERIFICATION_NEW_CODE_DIALOG)
             }
         }
     }

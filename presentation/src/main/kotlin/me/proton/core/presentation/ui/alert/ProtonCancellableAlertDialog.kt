@@ -28,13 +28,8 @@ import me.proton.core.presentation.utils.onClick
 
 /**
  * A base cancellable alert dialog.
- *
- * @param action the action to be executed on positive button response.
- * @author Dino Kadrikj.
  */
-class ProtonCancellableAlertDialog(
-    private val action: () -> Unit
-) : DialogFragment() {
+class ProtonCancellableAlertDialog : DialogFragment() {
 
     companion object {
         private const val ARG_TITLE = "arg.title"
@@ -42,13 +37,14 @@ class ProtonCancellableAlertDialog(
         private const val ARG_POSITIVE_BTN = "arg.positiveButton"
         private const val ARG_NEGATIVE_BTN = "arg.negativeButton"
 
+        const val KEY_ACTION_DONE = "key.action_done"
+
         operator fun invoke(
             title: String,
             description: String,
             positiveButton: String?,
-            negativeButton: String? = null,
-            action: () -> Unit
-        ) = ProtonCancellableAlertDialog(action).apply {
+            negativeButton: String? = null
+        ) = ProtonCancellableAlertDialog().apply {
             arguments = bundleOf(
                 ARG_TITLE to title,
                 ARG_DESCRIPTION to description,
@@ -90,7 +86,9 @@ class ProtonCancellableAlertDialog(
                     getButton(AlertDialog.BUTTON_POSITIVE).apply {
                         isAllCaps = false
                         onClick {
-                            action.invoke()
+                            parentFragmentManager.setFragmentResult(
+                                KEY_ACTION_DONE, bundleOf()
+                            )
                             dismissAllowingStateLoss()
                         }
                     }

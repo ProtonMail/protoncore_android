@@ -36,7 +36,7 @@ import me.proton.core.auth.presentation.databinding.FragmentSignupRecoveryBindin
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.viewmodel.signup.RecoveryMethodViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
-import me.proton.core.presentation.ui.view.ProtonProgressButton
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -48,6 +48,8 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
     private val viewModel by viewModels<RecoveryMethodViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
 
+    private lateinit var skipRecoveryDialogResultLauncher: FragmentDialogResultLauncher<Unit>
+
     override fun layoutId() = R.layout.fragment_signup_recovery
 
     override fun onBackPressed() {
@@ -56,6 +58,11 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        skipRecoveryDialogResultLauncher = childFragmentManager.registerSkipRecoveryDialogResultLauncher(this) {
+            signupViewModel.skipRecoveryMethod()
+        }
+
 
         binding.apply {
             toolbar.apply {
@@ -183,11 +190,7 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
     private fun showSkip() {
         hideKeyboard()
-        with(requireContext()) {
-            childFragmentManager.showSkipRecoveryDialog(this) {
-                signupViewModel.skipRecoveryMethod()
-            }
-        }
+        skipRecoveryDialogResultLauncher.show()
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {

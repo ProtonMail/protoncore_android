@@ -30,6 +30,7 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.hasSubscription
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
+import me.proton.core.util.kotlin.takeIfNotEmpty
 import javax.inject.Inject
 
 class PerformUpdateUserPassword @Inject constructor(
@@ -85,7 +86,7 @@ class PerformUpdateUserPassword @Inject constructor(
                     proofs = clientProofs,
                     srpSession = loginInfo.srpSession,
                     auth = auth,
-                    orgPrivateKey = organizationKeys?.privateKey
+                    orgPrivateKey = organizationKeys?.privateKey?.takeIfNotEmpty()
                 )
             }
         }

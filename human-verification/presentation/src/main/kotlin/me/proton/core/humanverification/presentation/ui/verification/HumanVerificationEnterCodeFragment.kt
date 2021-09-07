@@ -33,11 +33,12 @@ import me.proton.core.humanverification.presentation.databinding.FragmentHumanVe
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.ARG_TOKEN_CODE
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment.Companion.KEY_VERIFICATION_DONE
+import me.proton.core.humanverification.presentation.utils.registerRequestNewCodeDialogResultLauncher
 import me.proton.core.humanverification.presentation.utils.showHelp
-import me.proton.core.humanverification.presentation.utils.showRequestNewCodeDialog
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
@@ -53,6 +54,8 @@ import me.proton.core.presentation.viewmodel.onSuccess
 class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVerificationEnterCodeBinding>() {
 
     private val viewModel by viewModels<HumanVerificationEnterCodeViewModel>()
+
+    private lateinit var requestNewCodeDialogResultLauncher: FragmentDialogResultLauncher<String>
 
     private val sessionId: SessionId? by lazy {
         requireArguments().getString(ARG_SESSION_ID)?.let { SessionId(it) }
@@ -71,6 +74,11 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requestNewCodeDialogResultLauncher =
+            parentFragmentManager.registerRequestNewCodeDialogResultLauncher(this@HumanVerificationEnterCodeFragment) {
+                destination?.let { viewModel.resendCode(sessionId, it, tokenType) }
+            }
 
         destination?.let {
             binding.title.text = if (tokenType == TokenType.EMAIL) {
@@ -108,11 +116,7 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
                     }
             }
             requestReplacementButton.onClick {
-                destination?.let {
-                    parentFragmentManager.showRequestNewCodeDialog(requireContext(), it) {
-                        viewModel.resendCode(sessionId, it, tokenType)
-                    }
-                }
+                destination?.let { requestNewCodeDialogResultLauncher.show(it) }
             }
         }
 

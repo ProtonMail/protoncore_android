@@ -19,9 +19,11 @@
 package me.proton.core.auth.presentation.ui.signup
 
 import android.content.Context
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
 
@@ -33,6 +35,20 @@ private const val TAG_EXTERNAL_ACCOUNT_ENTER_CODE = "external_account_enter_code
 private const val TAG_EMAIL_RECOVERY_FRAGMENT = "email_recovery_fragment"
 private const val TAG_SMS_RECOVERY_FRAGMENT = "skip_recovery_fragment"
 private const val TAG_TERMS_CONDITIONS_FRAGMENT = "terms_conditions_fragment"
+
+fun FragmentManager.registerSkipRecoveryDialogResultLauncher(
+    fragment: Fragment,
+    onResult: () -> Unit
+): FragmentDialogResultLauncher<Unit> {
+    setFragmentResultListener(ProtonCancellableAlertDialog.KEY_ACTION_DONE, fragment) { _, _ ->
+        onResult()
+    }
+    return FragmentDialogResultLauncher(
+        requestKey = ProtonCancellableAlertDialog.KEY_ACTION_DONE,
+        show = { showSkipRecoveryDialog(fragment.requireContext()) }
+    )
+}
+
 
 internal fun FragmentManager.showEmailRecoveryMethodFragment(
     containerId: Int = android.R.id.content,
@@ -116,8 +132,7 @@ internal fun FragmentManager.showRecoveryMethodChooser(
 }
 
 internal fun FragmentManager.showSkipRecoveryDialog(
-    context: Context,
-    action: () -> Unit
+    context: Context
 ) {
     findFragmentByTag(TAG_SKIP_RECOVERY_DIALOG) ?: run {
         val updateDialogFragment = ProtonCancellableAlertDialog(
@@ -125,9 +140,7 @@ internal fun FragmentManager.showSkipRecoveryDialog(
             description = context.getString(R.string.auth_signup_skip_recovery_description),
             positiveButton = context.getString(R.string.auth_signup_skip_recovery),
             negativeButton = context.getString(R.string.auth_signup_set_recovery)
-        ) {
-            action()
-        }
+        )
         updateDialogFragment.show(this, TAG_SKIP_RECOVERY_DIALOG)
     }
 }

@@ -16,21 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.humanverification.presentation.utils
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
+import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 
-libVersion = Version(1, 7, 0)
-
-android()
-
-dependencies {
-    api(
-        project(Module.authPresentation),
-        project(Module.authDomain),
-        project(Module.authData)
+fun FragmentManager.registerRequestNewCodeDialogResultLauncher(
+    fragment: Fragment,
+    onResult: () -> Unit,
+): FragmentDialogResultLauncher<String> {
+    setFragmentResultListener(ProtonCancellableAlertDialog.KEY_ACTION_DONE, fragment) { _, _ ->
+        onResult()
+    }
+    return FragmentDialogResultLauncher(
+        requestKey = ProtonCancellableAlertDialog.KEY_ACTION_DONE,
+        show = { input -> showRequestNewCodeDialog(fragment.requireContext(), input) }
     )
 }
