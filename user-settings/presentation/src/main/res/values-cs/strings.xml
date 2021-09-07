@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">Sekundární e-mail</string>
+  <string name="settings_recovery_email_current">Aktuální sekundární e-mailová adresa</string>
+  <string name="settings_recovery_email_new">Nová sekundární e-mailová adresa</string>
+  <string name="settings_recovery_email_confirm">Potvrdit sekundární e-mailovou adresu</string>
+  <string name="settings_recovery_email_new_hint">Zadejte e-mailovou adresu</string>
+  <string name="settings_recovery_email_confirm_hint">Znovu zadejte e-mailovou adresu</string>
+  <string name="settings_save">Uložit</string>
+  <string name="settings_password_required">Zadejte své přihlašovací heslo</string>
+  <string name="settings_password_required_ok">OK</string>
+  <string name="settings_not_set">Nenastaveno</string>
+  <string name="settings_recovery_email_error_no_match">Sekundární e-mail a potvrzení sekundárního e-mailu se neshodují.</string>
+  <string name="settings_validation_email">E-mail je neplatný.</string>
+  <string name="settings_general_error">Došlo k chybě.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">Změnit heslo</string>
+  <string name="settings_password_management_change_mailbox_password">Změnit heslo poštovní schránky</string>
+  <string name="settings_password_management_header">Správa hesel</string>
+  <string name="settings_login_password_hint_current">Aktuální přihlašovací heslo</string>
+  <string name="settings_login_password_hint_new">Nové heslo pro přihlašování</string>
+  <string name="settings_login_password_hint_new_confirm">Potvrdit nové přihlašovací heslo</string>
+  <string name="settings_mailbox_password_hint_new">Nové heslo k poštovní schránce</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Potvrdit nové heslo poštovní schránky</string>
+  <string name="settings_change_password_error">Při změně hesla došlo k chybě.</string>
+  <string name="settings_recovery_email_success">Sekundární e-mail byl aktualizován</string>
+  <string name="settings_password_management_success">Heslo bylo změněno</string>
+  <string name="settings_password_management_login_password_success">Přihlašovací heslo bylo aktualizováno</string>
+  <string name="settings_password_management_mailbox_password_success">Heslo k e-mailové schránce bylo aktualizováno</string>
+</resources>
