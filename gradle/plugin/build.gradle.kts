@@ -40,9 +40,7 @@ repositories {
 }
 
 dependencies {
-    val easyGradle = "2.7" // Oct 15, 2020
-
     implementation(gradleApi())
     compileOnly(libs.android.pluginGradle)
-    api("studio.forface.easygradle:dsl-android:$easyGradle")
+    api(libs.easyGradle.androidDsl)
 }

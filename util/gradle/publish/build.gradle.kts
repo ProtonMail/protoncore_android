@@ -17,10 +17,8 @@
  */
 
 plugins {
-    val easyGradle = "2.7"
-
     kotlin("jvm") version embeddedKotlinVersion
-    id("studio.forface.easygradle") version easyGradle
+    alias(libs.plugins.easyGradle)
 }
 
 subprojects {

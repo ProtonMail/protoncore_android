@@ -72,5 +72,5 @@ dependencies {
     implementation(gradleApi())
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.4.10")
     implementation("com.gradle.publish:plugin-publish-plugin:0.12.0")
-    implementation("studio.forface.easygradle:dsl:2.7")
+    implementation(libs.easyGradle.dsl)
 }

@@ -49,6 +49,6 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("studio.forface.easygradle:dsl:2.7")
+    implementation(libs.easyGradle.dsl)
     implementation("gradle.plugin.EasyPublish:plugin:0.3.5-build-1")
 }
