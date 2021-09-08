@@ -47,6 +47,9 @@
             android:name=".ui.TextStylesActivity"
             android:configChanges="orientation" />
         <activity
+            android:name=".ui.ContactsActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name="me.proton.core.auth.presentation.ui.AuthHelpActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity

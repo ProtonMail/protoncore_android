@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.android.core.coreexample.databinding.ActivityMainBinding
+import me.proton.android.core.coreexample.ui.ContactsActivity
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
@@ -119,6 +120,8 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
                     is AccountSwitcherViewModel.Action.SetPrimary -> accountViewModel.setAsPrimary(it.account.userId)
                 }
             }.launchIn(lifecycleScope)
+
+            contacts.onClick { startActivity(Intent(this@MainActivity, ContactsActivity::class.java)) }
         }
 
         accountViewModel.state.onEach { state ->

@@ -58,6 +58,7 @@ dependencies {
         project(Module.accountManager),
         project(Module.accountManagerDagger),
         project(Module.auth),
+        project(Module.contact),
         project(Module.crypto),
         project(Module.domain),
         project(Module.gopenpgp),

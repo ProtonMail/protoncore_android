@@ -23,6 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         android:padding="@dimen/parent_padding">
 
         <me.proton.core.accountmanager.presentation.view.AccountPrimaryView
@@ -235,6 +236,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/settings_layout" />
+
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
+            android:id="@+id/contacts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_top_margin"
+            android:layout_weight="1"
+            android:text="@string/contacts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accountsLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
