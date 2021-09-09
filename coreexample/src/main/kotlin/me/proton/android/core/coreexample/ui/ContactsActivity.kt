@@ -19,6 +19,7 @@
 package me.proton.android.core.coreexample.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -45,7 +46,7 @@ class ContactsActivity : ProtonActivity<ActivityContactsBinding>() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect {
-                    logger.d("contacts state", it.toString())
+                    logger.d("contacts-state", it.toString())
                 }
             }
         }

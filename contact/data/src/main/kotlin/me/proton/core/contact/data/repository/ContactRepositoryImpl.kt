@@ -19,16 +19,24 @@
 package me.proton.core.contact.data.repository
 
 import com.dropbox.android.external.store4.Fetcher
+import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
+import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import me.proton.core.contact.data.api.ContactApi
 import me.proton.core.contact.data.local.db.ContactDatabase
+import me.proton.core.contact.data.local.db.toContactEmail
+import me.proton.core.contact.data.local.db.toContactEmailEntity
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.data.arch.toDataResult
+import me.proton.core.domain.arch.DataResult
 import me.proton.core.network.data.ApiProvider
 
 class ContactRepositoryImpl(
@@ -51,7 +59,13 @@ class ContactRepositoryImpl(
             provider.get<ContactApi>(userId).invoke {
                 getContactEmails().contactEmails.map { it.toContactEmail() }
             }.valueOrThrow
-        }
+        },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = database::getAllContactsEmails,
+            writer = database::insertOrUpdateContactsEmails,
+            delete = database.contactEmailDao()::deleteAllContactsEmails,
+            deleteAll = database.contactEmailDao()::deleteAllContactsEmails
+        )
     ).build()
 
     override suspend fun getContact(sessionUserId: SessionUserId, contactId: String, refresh: Boolean): Contact {
@@ -63,11 +77,14 @@ class ContactRepositoryImpl(
 
     override suspend fun clearAllContacts() = contactStore.clearAll()
 
-    override suspend fun getContactEmails(sessionUserId: SessionUserId, refresh: Boolean): List<ContactEmail> =
-        if (refresh) emailStore.fresh(sessionUserId) else emailStore.get(sessionUserId)
+    override suspend fun getContactEmails(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): Flow<DataResult<List<ContactEmail>>> {
+        return emailStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+    }
 
     override suspend fun clearContactEmails(userId: UserId) = emailStore.clear(userId)
 
     override suspend fun clearAllContactEmails() = emailStore.clearAll()
-
 }

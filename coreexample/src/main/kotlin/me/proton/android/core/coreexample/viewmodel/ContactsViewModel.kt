@@ -24,12 +24,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.domain.arch.DataResult
 import me.proton.core.util.kotlin.Logger
+import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,15 +43,22 @@ class ContactsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<State?>(null)
-    val state = _state.asStateFlow()
+    val state = _state.asStateFlow().filterNotNull()
 
     init {
-        viewModelScope.launch {
-            _state.value = State.Processing
-            accountManager.getAccounts().collect { accounts ->
-                accounts.forEach { account ->
-                    val contactEmails = contactRepository.getContactEmails(account.userId, refresh = true)
-                    _state.value = State.Contacts(contactEmails)
+        viewModelScope.launch { observeFirstAccountContactsEmails() }
+    }
+
+    private suspend fun observeFirstAccountContactsEmails() {
+        accountManager.getAccounts().collect { accounts ->
+            accounts.firstOrNull()?.let { account ->
+                contactRepository.getContactEmails(account.userId, refresh = true).collect { result ->
+                    when (result) {
+                        is DataResult.Error.Local -> _state.value = State.Error(result.message)
+                        is DataResult.Error.Remote -> _state.value = State.Error(result.message)
+                        is DataResult.Processing -> _state.value = State.Processing
+                        is DataResult.Success -> _state.value = State.Contacts(result.value)
+                    }.exhaustive
                 }
             }
         }
@@ -57,5 +67,6 @@ class ContactsViewModel @Inject constructor(
     sealed class State {
         object Processing : State()
         data class Contacts(val emails: List<ContactEmail>) : State()
+        data class Error(val reason: String?) : State()
     }
 }

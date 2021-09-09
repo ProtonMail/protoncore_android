@@ -18,8 +18,10 @@
 
 package me.proton.core.contact.domain.repository
 
+import kotlinx.coroutines.flow.Flow
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 
@@ -43,7 +45,7 @@ interface ContactRepository {
     /**
      * Get list of [ContactEmail] using [sessionUserId].
      */
-    suspend fun getContactEmails(sessionUserId: SessionUserId, refresh: Boolean = false): List<ContactEmail>
+    suspend fun getContactEmails(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<ContactEmail>>>
 
     /**
      * Clear all persisted Contact Email data, by [userId].

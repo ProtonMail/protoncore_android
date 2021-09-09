@@ -19,10 +19,24 @@
 package me.proton.core.contact.data.local.db
 
 import androidx.room.Dao
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.data.room.db.BaseDao
+import me.proton.core.domain.entity.UserId
 
 @Dao
 abstract class ContactDao: BaseDao<ContactEntity>()
 
 @Dao
-abstract class ContactEmailDao: BaseDao<ContactEmailEntity>()
+abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
+    @Query("SELECT * FROM ContactEmailEntity WHERE userId = :userId")
+    abstract fun getAllContactsEmails(userId: UserId): Flow<List<ContactEmailEntity>>
+
+    @Query("DELETE FROM ContactEmailEntity WHERE userId = :userId")
+    abstract suspend fun deleteAllContactsEmails(userId: UserId)
+
+    @Query("DELETE FROM ContactEmailEntity")
+    abstract suspend fun deleteAllContactsEmails()
+}

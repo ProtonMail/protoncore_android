@@ -19,11 +19,29 @@
 package me.proton.core.contact.data.local.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.data.room.db.migration.DatabaseMigration
+import me.proton.core.domain.entity.UserId
 
 interface ContactDatabase {
     fun contactDao(): ContactDao
     fun contactEmailDao(): ContactEmailDao
+
+    fun getAllContactsEmails(userId: UserId): Flow<List<ContactEmail>> {
+        return contactEmailDao().getAllContactsEmails(userId).map { entities ->
+            entities.map {
+                it.toContactEmail()
+            }
+        }
+    }
+
+    suspend fun insertOrUpdateContactsEmails(userId: UserId, contactsEmails: List<ContactEmail>) {
+        val entities = contactsEmails.map { it.toContactEmailEntity(userId) }
+        contactEmailDao().insertOrUpdate(*entities.toTypedArray())
+    }
+
     companion object {
         val MIGRATION_0 = object : DatabaseMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
