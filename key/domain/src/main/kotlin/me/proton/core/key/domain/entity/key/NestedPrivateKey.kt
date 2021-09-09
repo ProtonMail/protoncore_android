@@ -37,6 +37,9 @@ data class NestedPrivateKey(
     val passphrase: EncryptedMessage?,
     val passphraseSignature: Signature?
 ) {
+
+    val isEncrypted = passphrase != null && passphraseSignature != null && privateKey.passphrase == null
+
     companion object {
         fun from(key: Armored, passphrase: EncryptedMessage, signature: Signature) = NestedPrivateKey(
             privateKey = PrivateKey(

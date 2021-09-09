@@ -18,6 +18,7 @@
 
 package me.proton.core.crypto.common.pgp
 
+import me.proton.core.util.kotlin.HashUtils
 import java.io.Closeable
 
 /**
@@ -37,3 +38,6 @@ data class HashKey(
 
     override fun hashCode(): Int = key.contentHashCode()
 }
+
+fun HashKey.hmacSha256(input: String) = HashUtils.hmacSha256(input, key)
+fun HashKey.hmacSha512(input: String) = HashUtils.hmacSha512(input, key)

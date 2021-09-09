@@ -1,3 +1,17 @@
+## Crypto Version [1.6.3]
+
+Sep 09, 2021
+
+### Dependencies
+
+- Crypto 1.6.3.
+- Key 1.6.3.
+- User 1.6.3.
+
+### New Features
+
+- Added encryptAndSign/decryptAndVerify PublicKeyRing parameter (default to KeyHolderContext.publicKeyRing).
+
 ## Presentation [1.6.1]
 
 Sep 09, 2021
