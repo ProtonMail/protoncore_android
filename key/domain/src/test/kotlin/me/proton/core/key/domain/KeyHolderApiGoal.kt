@@ -20,7 +20,6 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
@@ -113,11 +112,8 @@ internal fun nestedKeyCreation(
 ) {
     // Generate a new Nested Private Key from keyHolder keys.
     val decryptedNestedPrivateKey = keyHolder.useKeys(context) {
-        val encryptedKey = generateNestedPrivateKey("username", "domain")
-        // Save those below to nested KeyHolder.
-        checkNotNull(encryptedKey.passphraseSignature)
-        checkNotNull(encryptedKey.passphrase)
-        checkNotNull(encryptedKey.privateKey)
+        val encryptedKey = encryptAndSignNestedKey(generateNestedPrivateKey("username", "domain"))
+        check(encryptedKey.isEncrypted)
 
         // Use this parent to decrypt the nested Private Key.
         decryptAndVerifyNestedKey(encryptedKey)

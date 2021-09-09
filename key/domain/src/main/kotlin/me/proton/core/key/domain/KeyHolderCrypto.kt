@@ -34,7 +34,6 @@ import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
-import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyFileOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
@@ -140,15 +139,21 @@ fun KeyHolderContext.decryptSessionKey(keyPacket: KeyPacket): SessionKey =
     privateKeyRing.decryptSessionKey(keyPacket)
 
 /**
- * Decrypt [hashKey] as [HashKey] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ * Decrypt [hashKey] as [HashKey] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
+ *
+ * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  *
  * @throws [CryptoException] if [hashKey] cannot be decrypted.
  *
- * @see [KeyHolderContext.decryptHashKeyOrNull]
- * @see [KeyHolderContext.encryptHashKey]
+ * @see [KeyHolderContext.decryptAndVerifyHashKeyOrNull]
+ * @see [KeyHolderContext.encryptAndSignHashKey]
  */
-fun KeyHolderContext.decryptHashKey(hashKey: EncryptedMessage): HashKey =
-    decryptAndVerifyText(hashKey).let { HashKey(context.pgpCrypto.getBase64Decoded(it.text), it.status) }
+fun KeyHolderContext.decryptAndVerifyHashKey(
+    hashKey: EncryptedMessage,
+    verifyKeyRing: PublicKeyRing = publicKeyRing
+): HashKey = decryptAndVerifyText(hashKey, verifyKeyRing).let {
+    HashKey(context.pgpCrypto.getBase64Decoded(it.text), it.status)
+}
 
 /**
  * Decrypt [message] as [String] using [PrivateKeyRing].
@@ -208,14 +213,18 @@ fun KeyHolderContext.decryptSessionKeyOrNull(keyPacket: KeyPacket): SessionKey? 
     privateKeyRing.decryptSessionKeyOrNull(keyPacket)
 
 /**
- * Decrypt [hashKey] as [HashKey] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ * Decrypt [hashKey] as [HashKey] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
+ *
+ * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  *
  * @return [HashKey], or `null` if [hashKey] cannot be decrypted.
  *
- * @see [KeyHolderContext.decryptHashKey]
+ * @see [KeyHolderContext.decryptAndVerifyHashKey]
  */
-fun KeyHolderContext.decryptHashKeyOrNull(hashKey: EncryptedMessage): HashKey? =
-    runCatching { decryptHashKey(hashKey) }.getOrNull()
+fun KeyHolderContext.decryptAndVerifyHashKeyOrNull(
+    hashKey: EncryptedMessage,
+    verifyKeyRing: PublicKeyRing = publicKeyRing
+): HashKey? = runCatching { decryptAndVerifyHashKey(hashKey, verifyKeyRing) }.getOrNull()
 
 /**
  * Sign [text] using [PrivateKeyRing].
@@ -359,30 +368,37 @@ fun KeyHolderContext.encryptFile(fileName: String, data: ByteArray, keyPacket: K
     encryptFile(fileName, ByteArrayInputStream(data), keyPacket)
 
 /**
- * Encrypt [text] using [PublicKeyRing] and sign using [PrivateKeyRing] in an embedded [EncryptedMessage].
+ * Encrypt [text] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing] in an embedded [EncryptedMessage].
+ *
+ * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
  *
  * @throws [CryptoException] if [text] cannot be encrypted or signed.
  *
  * @see [KeyHolderContext.decryptAndVerifyText].
  */
-fun KeyHolderContext.encryptAndSignText(text: String): EncryptedMessage =
+fun KeyHolderContext.encryptAndSignText(text: String, encryptKeyRing: PublicKeyRing = publicKeyRing): EncryptedMessage =
     context.pgpCrypto.encryptAndSignText(
         text,
-        publicKeyRing.primaryKey.key,
+        encryptKeyRing.primaryKey.key,
         privateKeyRing.unlockedPrimaryKey.unlockedKey.value
     )
 
 /**
- * Encrypt [data] using [PublicKeyRing] and sign using [PrivateKeyRing] in an embedded [EncryptedMessage].
+ * Encrypt [data] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing] in an embedded [EncryptedMessage].
+ *
+ * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
  *
  * @throws [CryptoException] if [data] cannot be encrypted or signed.
  *
  * @see [KeyHolderContext.decryptAndVerifyData].
  */
-fun KeyHolderContext.encryptAndSignData(data: ByteArray): EncryptedMessage =
+fun KeyHolderContext.encryptAndSignData(
+    data: ByteArray,
+    encryptKeyRing: PublicKeyRing = publicKeyRing
+): EncryptedMessage =
     context.pgpCrypto.encryptAndSignData(
         data,
-        publicKeyRing.primaryKey.key,
+        encryptKeyRing.primaryKey.key,
         privateKeyRing.unlockedPrimaryKey.unlockedKey.value
     )
 
@@ -422,47 +438,61 @@ fun KeyHolderContext.encryptSessionKey(sessionKey: SessionKey): KeyPacket =
     publicKeyRing.encryptSessionKey(context, sessionKey)
 
 /**
- * Encrypt [hashKey] using [PublicKeyRing] and sign using [PrivateKeyRing] in an embedded [EncryptedMessage].
+ * Encrypt [hashKey] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing] in an embedded [EncryptedMessage].
+ *
+ * @param encryptKeyRing [PublicKeyRing] used to encrypt. Default: [KeyHolderContext.publicKeyRing].
  *
  * @throws [CryptoException] if [hashKey] cannot be encrypted.
  *
- * @see [KeyHolderContext.decryptHashKey]
+ * @see [KeyHolderContext.decryptAndVerifyHashKey]
  */
-fun KeyHolderContext.encryptHashKey(hashKey: HashKey): EncryptedMessage =
-    encryptAndSignText(context.pgpCrypto.getBase64Encoded(hashKey.key))
+fun KeyHolderContext.encryptAndSignHashKey(
+    hashKey: HashKey,
+    encryptKeyRing: PublicKeyRing = publicKeyRing
+): EncryptedMessage = encryptAndSignText(context.pgpCrypto.getBase64Encoded(hashKey.key), encryptKeyRing)
 
 /**
- * Decrypt [message] as [String] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ * Decrypt [message] as [String] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
  *
  * Note: String canonicalization/standardization is applied.
  *
+ * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
  *
  * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.encryptAndSignText]
  */
-fun KeyHolderContext.decryptAndVerifyText(message: EncryptedMessage, validAtUtc: Long = 0): DecryptedText =
+fun KeyHolderContext.decryptAndVerifyText(
+    message: EncryptedMessage,
+    verifyKeyRing: PublicKeyRing = publicKeyRing,
+    validAtUtc: Long = 0
+): DecryptedText =
     context.pgpCrypto.decryptAndVerifyText(
         message,
-        publicKeyRing.keys.map { it.key },
+        verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
         validAtUtc
     )
 
 /**
- * Decrypt [message] as [ByteArray] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ * Decrypt [message] as [ByteArray] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
  *
+ * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
  *
  * @throws [CryptoException] if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.encryptAndSignData]
  */
-fun KeyHolderContext.decryptAndVerifyData(message: EncryptedMessage, validAtUtc: Long = 0): DecryptedData =
+fun KeyHolderContext.decryptAndVerifyData(
+    message: EncryptedMessage,
+    verifyKeyRing: PublicKeyRing = publicKeyRing,
+    validAtUtc: Long = 0
+): DecryptedData =
     context.pgpCrypto.decryptAndVerifyData(
         message,
-        publicKeyRing.keys.map { it.key },
+        verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
         validAtUtc
     )
@@ -508,37 +538,47 @@ fun KeyHolderContext.decryptAndVerifyFile(
     )
 
 /**
- * Decrypt [message] as [String] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ * Decrypt [message] as [String] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
  *
  * Note: String canonicalization/standardization is applied.
  *
+ * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
  *
  * @return [DecryptedText], or `null` if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptAndVerifyText]
  */
-fun KeyHolderContext.decryptAndVerifyTextOrNull(message: EncryptedMessage, validAtUtc: Long = 0): DecryptedText? =
+fun KeyHolderContext.decryptAndVerifyTextOrNull(
+    message: EncryptedMessage,
+    verifyKeyRing: PublicKeyRing = publicKeyRing,
+    validAtUtc: Long = 0
+): DecryptedText? =
     context.pgpCrypto.decryptAndVerifyTextOrNull(
         message,
-        publicKeyRing.keys.map { it.key },
+        verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
         validAtUtc
     )
 
 /**
- * Decrypt [message] as [ByteArray] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ * Decrypt [message] as [ByteArray] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
  *
+ * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
  *
  * @return [DecryptedData], or `null` if [message] cannot be decrypted.
  *
  * @see [KeyHolderContext.decryptAndVerifyData]
  */
-fun KeyHolderContext.decryptAndVerifyDataOrNull(message: EncryptedMessage, validAtUtc: Long = 0): DecryptedData? =
+fun KeyHolderContext.decryptAndVerifyDataOrNull(
+    message: EncryptedMessage,
+    verifyKeyRing: PublicKeyRing = publicKeyRing,
+    validAtUtc: Long = 0
+): DecryptedData? =
     context.pgpCrypto.decryptAndVerifyDataOrNull(
         message,
-        publicKeyRing.keys.map { it.key },
+        verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
         validAtUtc
     )
@@ -608,7 +648,9 @@ fun KeyHolderContext.getEncryptedPackets(message: EncryptedMessage): List<Encryp
     context.pgpCrypto.getEncryptedPackets(message)
 
 /**
- * Decrypt [nestedPrivateKey] using [PrivateKeyRing] and verify using [PublicKeyRing].
+ * Decrypt [nestedPrivateKey] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
+ *
+ * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  *
@@ -616,13 +658,16 @@ fun KeyHolderContext.getEncryptedPackets(message: EncryptedMessage): List<Encryp
  *
  * @see [KeyHolderContext.encryptAndSignNestedKey]
  */
-fun KeyHolderContext.decryptAndVerifyNestedKey(nestedPrivateKey: NestedPrivateKey): NestedPrivateKey {
+fun KeyHolderContext.decryptAndVerifyNestedKey(
+    nestedPrivateKey: NestedPrivateKey,
+    verifyKeyRing: PublicKeyRing = publicKeyRing
+): NestedPrivateKey {
     checkNotNull(nestedPrivateKey.passphrase) { "Cannot decrypt key without encrypted passphrase." }
     checkNotNull(nestedPrivateKey.passphraseSignature) { "Cannot verify without passphrase signature." }
     return nestedPrivateKey.copy(
         privateKey = nestedPrivateKey.privateKey.copy(
             passphrase = decryptDataOrNull(nestedPrivateKey.passphrase)
-                ?.takeIf { verifyData(it, nestedPrivateKey.passphraseSignature) }
+                ?.takeIf { verifyKeyRing.verifyData(context, it, nestedPrivateKey.passphraseSignature) }
                 ?.let { plain -> plain.use { it.encryptWith(context.keyStoreCrypto) } }
         )
     )
@@ -630,6 +675,8 @@ fun KeyHolderContext.decryptAndVerifyNestedKey(nestedPrivateKey: NestedPrivateKe
 
 /**
  * Decrypt [passphrase] using [PrivateKeyRing] and verify [signature] using [PublicKeyRing].
+ *
+ * @param verifyKeyRing [PublicKeyRing] used to verify the signature. Default: [KeyHolderContext.publicKeyRing].
  *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  *
@@ -640,35 +687,40 @@ fun KeyHolderContext.decryptAndVerifyNestedKey(nestedPrivateKey: NestedPrivateKe
 fun KeyHolderContext.decryptAndVerifyNestedKey(
     key: Armored,
     passphrase: EncryptedMessage,
-    signature: Signature
-): NestedPrivateKey =
-    decryptAndVerifyNestedKey(NestedPrivateKey.from(key = key, passphrase = passphrase, signature = signature))
+    signature: Signature,
+    verifyKeyRing: PublicKeyRing = publicKeyRing
+): NestedPrivateKey = decryptAndVerifyNestedKey(NestedPrivateKey.from(key, passphrase, signature), verifyKeyRing)
 
 /**
- * Encrypt [PrivateKey.passphrase] using [PublicKeyRing] and sign using [PrivateKeyRing].
+ * Encrypt [PrivateKey.passphrase] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].
+ *
+ * @param encryptKeyRing [PublicKeyRing] used to encrypt passphrase. Default: [KeyHolderContext.publicKeyRing].
  *
  * @throws [CryptoException] if [nestedPrivateKey] cannot be encrypted or signed.
  *
  * @see [KeyHolderContext.decryptAndVerifyData].
  */
-fun KeyHolderContext.encryptAndSignNestedKey(nestedPrivateKey: NestedPrivateKey): NestedPrivateKey {
+fun KeyHolderContext.encryptAndSignNestedKey(
+    nestedPrivateKey: NestedPrivateKey,
+    encryptKeyRing: PublicKeyRing = publicKeyRing
+): NestedPrivateKey {
     checkNotNull(nestedPrivateKey.privateKey.passphrase) { "Cannot encrypt without passphrase." }
     return nestedPrivateKey.privateKey.passphrase.decryptWith(context.keyStoreCrypto).use { passphrase ->
         nestedPrivateKey.copy(
             privateKey = nestedPrivateKey.privateKey.copy(passphrase = null),
-            passphrase = encryptData(passphrase.array),
+            passphrase = encryptKeyRing.encryptData(context, passphrase.array),
             passphraseSignature = signData(passphrase.array)
         )
     }
 }
 
 /**
- * Generate and encrypt a new [NestedPrivateKey] from [KeyHolder] keys.
+ * Generate new [NestedPrivateKey].
  *
  * Note: Only this [KeyHolder] will be able to decrypt.
  */
 fun KeyHolderContext.generateNestedPrivateKey(username: String, domain: String): NestedPrivateKey =
-    encryptAndSignNestedKey(NestedPrivateKey.generateNestedPrivateKey(context, username, domain))
+    NestedPrivateKey.generateNestedPrivateKey(context, username, domain)
 
 /**
  * Generate new [SessionKey].

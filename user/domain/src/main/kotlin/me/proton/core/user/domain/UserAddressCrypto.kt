@@ -20,16 +20,13 @@ package me.proton.core.user.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.key.domain.entity.key.NestedPrivateKey
-import me.proton.core.key.domain.generateNestedPrivateKey
-import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.emailSplit
 
 /**
- * Generate and encrypt a new [NestedPrivateKey] from [UserAddress] keys.
+ * Generate new [NestedPrivateKey] from [UserAddress] username & domain.
  *
  * Note: Only this [UserAddress] will be able to decrypt.
  */
-fun UserAddress.generateNestedPrivateKey(cryptoContext: CryptoContext): NestedPrivateKey = useKeys(cryptoContext) {
-    emailSplit.let { generateNestedPrivateKey(it.username, it.domain) }
-}
+fun UserAddress.generateNestedPrivateKey(context: CryptoContext): NestedPrivateKey =
+    emailSplit.let { NestedPrivateKey.generateNestedPrivateKey(context, it.username, it.domain) }
