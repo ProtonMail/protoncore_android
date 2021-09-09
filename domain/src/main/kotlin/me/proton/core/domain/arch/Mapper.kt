@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2021 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package me.proton.core.domain.arch
 
 import kotlinx.coroutines.flow.Flow
@@ -28,12 +46,19 @@ interface Mapper<in In, out Out> : Invokable
  *
  * @return [List] of [Out]
  */
+@Deprecated(
+    "Use standard stdlib syntax",
+    ReplaceWith(
+        "this.map { mapper { f(it) } }",
+        "me.proton.core.util.kotlin.invoke"
+    )
+)
 fun <M : Mapper<In, Out>, In, Out> Iterable<In>.map(mapper: M, f: M.(In) -> Out): List<Out> =
     map { mapper.f(it) }
 
 /**
  * Enable to execute a `map` operation on the [Flow] receiver, passing the [Mapper] as argument.
- * Example: `` myBusinessModelList.map(myUiModelMapper) { it.toUiModel() } ``
+ * Example: `` myBusinessModelFlow.map(myUiModelMapper) { it.toUiModel() } ``
  *
  * @param M type of the [Mapper]
  * @param In source model
@@ -41,5 +66,12 @@ fun <M : Mapper<In, Out>, In, Out> Iterable<In>.map(mapper: M, f: M.(In) -> Out)
  *
  * @return [Flow] of [Out]
  */
+@Deprecated(
+    "Use standard stdlib syntax",
+    ReplaceWith(
+        "this.map { mapper { f(it) } }",
+        "me.proton.core.util.kotlin.invoke", "kotlinx.coroutines.flow.map"
+    )
+)
 fun <M : Mapper<In, Out>, In, Out> Flow<In>.map(mapper: M, f: M.(In) -> Out): Flow<Out> =
     map { mapper.f(it) }
