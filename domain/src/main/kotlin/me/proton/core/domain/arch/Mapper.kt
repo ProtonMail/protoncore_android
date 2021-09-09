@@ -46,6 +46,13 @@ interface Mapper<in In, out Out> : Invokable
  *
  * @return [List] of [Out]
  */
+@Deprecated(
+    "Use standard stdlib syntax",
+    ReplaceWith(
+        "this.map { mapper { f(it) } }",
+        "me.proton.core.util.kotlin.invoke"
+    )
+)
 fun <M : Mapper<In, Out>, In, Out> Iterable<In>.map(mapper: M, f: M.(In) -> Out): List<Out> =
     map { mapper.f(it) }
 
@@ -59,5 +66,12 @@ fun <M : Mapper<In, Out>, In, Out> Iterable<In>.map(mapper: M, f: M.(In) -> Out)
  *
  * @return [Flow] of [Out]
  */
+@Deprecated(
+    "Use standard stdlib syntax",
+    ReplaceWith(
+        "this.map { mapper { f(it) } }",
+        "me.proton.core.util.kotlin.invoke", "kotlinx.coroutines.flow.map"
+    )
+)
 fun <M : Mapper<In, Out>, In, Out> Flow<In>.map(mapper: M, f: M.(In) -> Out): Flow<Out> =
     map { mapper.f(it) }
