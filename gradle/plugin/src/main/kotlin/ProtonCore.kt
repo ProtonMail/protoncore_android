@@ -16,8 +16,6 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.api.JavaVersion
-
 /**
  * An object containing params for the Project
  * @author Davide Farella
@@ -28,6 +26,4 @@ object ProtonCore {
     const val targetSdk = 30
     /** The Android API level required for run the App */
     const val minSdk = 23
-    /** The version of the JDK  */
-    val jdkVersion = JavaVersion.VERSION_11
 }

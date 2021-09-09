@@ -43,7 +43,6 @@ fun Project.kotlinCompilerArgs(vararg extraCompilerArgs: String) {
         sub.tasks.withType<KotlinCompile> {
             // Ignore IDE errors
             kotlinOptions {
-                jvmTarget = "1.8"
                 freeCompilerArgs = freeCompilerArgs + extraCompilerArgs
             }
         }

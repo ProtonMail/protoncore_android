@@ -49,9 +49,8 @@ fun org.gradle.api.Project.android(
         this.version = version
 
         // SDK
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetSdk)
-        buildToolsVersion = "30.0.2"
+        this.minSdk = minSdk
+        this.targetSdk = targetSdk
         ndkVersion = "21.3.6528147"
 
         // Other
@@ -65,18 +64,6 @@ fun org.gradle.api.Project.android(
     buildFeatures.viewBinding = useDataBinding
     dataBinding.isEnabled = useDataBinding
 
-    // Add support for `src/x/kotlin` instead of `src/x/java` only
-    sourceSets {
-        getByName("main").java.srcDirs("src/main/kotlin")
-        getByName("test").java.srcDirs("src/test/kotlin")
-        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
-    }
-
-    compileOptions {
-        sourceCompatibility = ProtonCore.jdkVersion
-        targetCompatibility = sourceCompatibility
-    }
-
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
@@ -88,25 +75,30 @@ fun org.gradle.api.Project.android(
     }
 
     packagingOptions {
-        exclude("go/*.java")
-        exclude("licenses/*.txt")
-        exclude("licenses/*.TXT")
-        exclude("licenses/*.xml")
-        exclude("META-INF/*.txt")
-        exclude("META-INF/AL2.0")
-        exclude("META-INF/LGPL2.1")
-        exclude("META-INF/licenses/ASM")
-        exclude("META-INF/plexus/*.xml")
-        exclude("org/apache/maven/project/*.xml")
-        exclude("org/codehaus/plexus/*.xml")
-        exclude("org/cyberneko/html/res/*.txt")
-        exclude("org/cyberneko/html/res/*.properties")
-        pickFirst("lib/armeabi-v7a/libgojni.so")
-        pickFirst("lib/arm64-v8a/libgojni.so")
-        pickFirst("lib/x86/libgojni.so")
-        pickFirst("lib/x86_64/libgojni.so")
-        pickFirst("win32-x86-64/attach_hotspot_windows.dll")
-        pickFirst("win32-x86/attach_hotspot_windows.dll")
+        resources.excludes.addAll(listOf(
+            "go/*.java",
+            "licenses/*.txt",
+            "licenses/*.txt",
+            "licenses/*.TXT",
+            "licenses/*.xml",
+            "META-INF/*.txt",
+            "META-INF/AL2.0",
+            "META-INF/LGPL2.1",
+            "META-INF/licenses/ASM",
+            "META-INF/plexus/*.xml",
+            "org/apache/maven/project/*.xml",
+            "org/codehaus/plexus/*.xml",
+            "org/cyberneko/html/res/*.txt",
+            "org/cyberneko/html/res/*.properties"
+        ))
+        resources.pickFirsts.addAll(listOf(
+            "lib/armeabi-v7a/libgojni.so",
+            "lib/arm64-v8a/libgojni.so",
+            "lib/x86/libgojni.so",
+            "lib/x86_64/libgojni.so",
+            "win32-x86-64/attach_hotspot_windows.dll",
+            "win32-x86/attach_hotspot_windows.dll"
+        ))
     }
 
     apply(config)
