@@ -123,6 +123,13 @@ fun Context.hideKeyboard(view: View) {
  * @param learnMoreURL an option if the client want's to override the default URL.
  * @param largeLayout how to present the dialog (default false)
  */
+@Deprecated(
+    "Use `ForceUpdateActivity` which can be started with just an application context.",
+    replaceWith = ReplaceWith(
+        "startActivity(ForceUpdateActivity(context, apiErrorMessage, learnMoreURL))",
+        "me.proton.core.presentation.ui.alert.ForceUpdateActivity"
+    )
+)
 fun FragmentManager.showForceUpdate(
     apiErrorMessage: String,
     learnMoreURL: String? = null,

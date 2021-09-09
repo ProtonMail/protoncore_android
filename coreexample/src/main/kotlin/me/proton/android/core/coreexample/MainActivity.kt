@@ -46,8 +46,8 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.ui.alert.ForceUpdateActivity
 import me.proton.core.presentation.utils.onClick
-import me.proton.core.presentation.utils.showForceUpdate
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -86,7 +86,9 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
             signIn.onClick { accountViewModel.signIn() }
             signup.onClick { accountViewModel.onSignUpClicked() }
             signupExternal.onClick { accountViewModel.onExternalSignUpClicked() }
-            forceUpdate.onClick { supportFragmentManager.showForceUpdate("Error Message coming from the API.") }
+            forceUpdate.onClick {
+                startActivity(ForceUpdateActivity(this@MainActivity, "Error Message coming from the API."))
+            }
             triggerHumanVer.onClick {
                 lifecycleScope.launch(Dispatchers.IO) {
                     accountViewModel.getPrimaryUserId().first()?.let {
