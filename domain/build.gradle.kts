@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ plugins {
     kotlin("jvm")
 }
 
-libVersion = Version(1, 0, 4)
+libVersion = Version(1, 0, 5)
 
 dependencies {
 
