@@ -58,6 +58,11 @@ class ForceUpdateDialog : DialogFragment() {
         requireArguments().getString(ARG_API_ERROR_MESSAGE)!! // this one is mandatory
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isCancelable = false
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -66,7 +71,6 @@ class ForceUpdateDialog : DialogFragment() {
                 // passing null to the listeners is a workaround to prevent the dialog to auto-dismiss on button click
                 .setPositiveButton(R.string.presentation_force_update_update, null)
                 .setNeutralButton(R.string.presentation_force_update_learn_more, null)
-                .setCancelable(false)
             val alertDialog = builder.create()
             alertDialog.apply {
                 setOnShowListener {
@@ -84,7 +88,6 @@ class ForceUpdateDialog : DialogFragment() {
                         }
                     }
                 }
-                setCanceledOnTouchOutside(false)
             }
             alertDialog
         } ?: throw IllegalStateException("Activity cannot be null")
