@@ -16,25 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.contact.data.local.db
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.contact.data.local.db.ContactDatabase
-import me.proton.core.contact.data.repository.ContactRepositoryImpl
-import me.proton.core.contact.domain.repository.ContactRepository
-import me.proton.core.network.data.ApiProvider
-import javax.inject.Singleton
+import androidx.room.Dao
+import me.proton.core.data.room.db.BaseDao
 
-@Module
-@InstallIn(SingletonComponent::class)
-object ContactsModule {
+@Dao
+abstract class ContactDao: BaseDao<ContactEntity>()
 
-    @Provides
-    @Singleton
-    fun provideContactsRepository(apiProvider: ApiProvider, contactDatabase: ContactDatabase): ContactRepository {
-        return ContactRepositoryImpl(apiProvider, contactDatabase)
-    }
-}
+@Dao
+abstract class ContactEmailDao: BaseDao<ContactEmailEntity>()

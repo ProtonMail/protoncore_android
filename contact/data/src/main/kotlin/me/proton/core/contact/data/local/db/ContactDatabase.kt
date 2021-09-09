@@ -16,25 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.contact.data.local.db
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.contact.data.local.db.ContactDatabase
-import me.proton.core.contact.data.repository.ContactRepositoryImpl
-import me.proton.core.contact.domain.repository.ContactRepository
-import me.proton.core.network.data.ApiProvider
-import javax.inject.Singleton
+import androidx.sqlite.db.SupportSQLiteDatabase
+import me.proton.core.data.room.db.migration.DatabaseMigration
 
-@Module
-@InstallIn(SingletonComponent::class)
-object ContactsModule {
-
-    @Provides
-    @Singleton
-    fun provideContactsRepository(apiProvider: ApiProvider, contactDatabase: ContactDatabase): ContactRepository {
-        return ContactRepositoryImpl(apiProvider, contactDatabase)
+interface ContactDatabase {
+    fun contactDao(): ContactDao
+    fun contactEmailDao(): ContactEmailDao
+    companion object {
+        val MIGRATION_0 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                TODO("provide migration when feature done")
+            }
+        }
     }
 }

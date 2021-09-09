@@ -34,11 +34,13 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.network),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.domain),
         project(Module.keyDomain),
         project(Module.contactDomain),
         project(Module.cryptoCommon),
         project(Module.cryptoAndroid),
+        project(Module.userData),
 
         // Kotlin
         `kotlin-jdk7`,

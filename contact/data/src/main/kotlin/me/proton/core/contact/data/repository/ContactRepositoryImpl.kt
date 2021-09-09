@@ -23,6 +23,7 @@ import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import me.proton.core.contact.data.api.ContactApi
+import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.domain.entity.SessionUserId
@@ -31,7 +32,8 @@ import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.network.data.ApiProvider
 
 class ContactRepositoryImpl(
-    private val provider: ApiProvider
+    private val provider: ApiProvider,
+    private val database: ContactDatabase
 ) : ContactRepository {
 
     private data class ContactStoreKey(val userId: UserId, val contactId: String)

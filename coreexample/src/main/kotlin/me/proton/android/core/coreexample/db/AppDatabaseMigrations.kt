@@ -21,6 +21,7 @@ package me.proton.android.core.coreexample.db
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.account.data.db.AccountDatabase
+import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
@@ -77,6 +78,12 @@ object AppDatabaseMigrations {
     val MIGRATION_7_8 = object : Migration(7, 8) {
         override fun migrate(database: SupportSQLiteDatabase) {
             OrganizationDatabase.MIGRATION_0.migrate(database)
+        }
+    }
+
+    val MIGRATION_8_9 = object : Migration(8, 9) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            ContactDatabase.MIGRATION_0.migrate(database)
         }
     }
 }
