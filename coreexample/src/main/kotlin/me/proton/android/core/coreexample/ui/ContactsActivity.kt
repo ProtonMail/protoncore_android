@@ -18,16 +18,36 @@
 
 package me.proton.android.core.coreexample.ui
 
+import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.R
 import me.proton.android.core.coreexample.databinding.ActivityContactsBinding
 import me.proton.android.core.coreexample.viewmodel.ContactsViewModel
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.util.kotlin.Logger
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ContactsActivity : ProtonActivity<ActivityContactsBinding>() {
     override fun layoutId(): Int = R.layout.activity_contacts
 
+    @Inject lateinit var logger: Logger
     private val viewModel: ContactsViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect {
+                    logger.d("contacts state", it.toString())
+                }
+            }
+        }
+    }
 }

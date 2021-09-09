@@ -19,13 +19,43 @@
 package me.proton.android.core.coreexample.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.util.kotlin.Logger
 import javax.inject.Inject
 
 @HiltViewModel
 class ContactsViewModel @Inject constructor(
-    private val contactRepository: ContactRepository
+    private val contactRepository: ContactRepository,
+    private val accountManager: AccountManager,
+    private val logger: Logger,
 ) : ViewModel() {
 
+    private val _state = MutableStateFlow<State?>(null)
+    val state = _state.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            _state.value = State.Processing
+            accountManager.getAccounts().collect { accounts ->
+                accounts.forEach { account ->
+                    val contactEmails = contactRepository.getContactEmails(account.userId, refresh = true)
+                    _state.value = State.Contacts(contactEmails)
+                }
+            }
+        }
+    }
+
+    sealed class State {
+        object Processing : State()
+        data class Contacts(val emails: List<ContactEmail>) : State()
+    }
 }
