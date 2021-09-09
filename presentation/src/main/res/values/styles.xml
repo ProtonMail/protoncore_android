@@ -378,7 +378,6 @@
         <item name="tabIconTint">@color/text_selectable_selector</item>
         <item name="tabIndicatorColor">?attr/proton_interaction_strong</item>
         <item name="tabTextColor">@color/text_selectable_selector</item>
-        <item name="tabRippleColor">@color/tabs_ripple_color</item>
     </style>
     <!-- endregion -->
 

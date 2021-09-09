@@ -1,3 +1,11 @@
+## Presentation [1.6.1]
+
+Sep 09, 2021
+
+### Changes
+
+- Revert tab ripple effect to the default.
+
 ## Auth Version [1.7.0]
 
 Sep 03, 2021
