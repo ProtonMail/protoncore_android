@@ -20,7 +20,6 @@ package me.proton.core.usersettings.presentation.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -38,11 +37,11 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
-import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validatePasswordMinLength
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.FragmentPasswordManagementBinding
+import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel
 import me.proton.core.util.kotlin.exhaustive
@@ -131,17 +130,14 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
                     binding.saveMailboxPasswordButton.showLoading(true)
                 is PasswordManagementViewModel.State.UpdatingSinglePassModePassword ->
                     binding.saveLoginPasswordButton.showLoading(true)
-                is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword -> {
-                    resetLoginPasswordInput()
-                    showSuccess(R.string.settings_password_management_success)
-                }
+                is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword,
                 is PasswordManagementViewModel.State.Success.UpdatingLoginPassword -> {
                     resetLoginPasswordInput()
-                    showSuccess(R.string.settings_password_management_change_login_password)
+                    showSuccess()
                 }
                 is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword -> {
                     resetMailboxPasswordInput()
-                    showSuccess(R.string.settings_password_management_change_mailbox_password)
+                    showSuccess()
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -231,9 +227,9 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
         }
     }
 
-    private fun finish() {
+    private fun finish(success: Boolean = false) {
         parentFragmentManager.setFragmentResult(
-            KEY_UPDATE_RESULT, bundleOf(BUNDLE_KEY_RESULT to null)
+            KEY_UPDATE_RESULT, bundleOf(ARG_UPDATE_RESULT to PasswordManagementResult(success))
         )
         parentFragmentManager.popBackStackImmediate()
     }
@@ -263,8 +259,8 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
         }
     }
 
-    private fun showSuccess(@StringRes messageRes: Int) {
-        binding.root.successSnack(messageRes)
+    private fun showSuccess() {
+        finish(success = true)
     }
 
     private fun showError(message: String?) {
@@ -277,7 +273,7 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
 
     companion object {
         const val KEY_UPDATE_RESULT = "key.update_result"
-        const val BUNDLE_KEY_RESULT = "bundle.update_result"
+        const val ARG_UPDATE_RESULT = "bundle.update_result"
         const val ARG_INPUT = "arg.settingsInput"
 
         operator fun invoke(input: SettingsInput) = PasswordManagementFragment().apply {

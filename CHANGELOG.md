@@ -1,3 +1,16 @@
+## User Settings Version [1.7.1]
+
+Sep 10, 2021
+
+### Added features
+
+- Add better result callback for password management and recovery email change features.
+- Password management and recovery email change screens now auto-close themselves on success.
+
+### Dependencies
+
+- UserSettings 1.7.1
+
 ## Crypto Version [1.6.3]
 
 Sep 09, 2021

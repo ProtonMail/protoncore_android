@@ -18,12 +18,15 @@
 
 package me.proton.core.usersettings.presentation.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.ActivityUpdateRecoveryEmailBinding
 import me.proton.core.usersettings.presentation.entity.SettingsInput
+import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
 
 @AndroidEntryPoint
 class UpdateRecoveryEmailActivity : ProtonActivity<ActivityUpdateRecoveryEmailBinding>() {
@@ -41,7 +44,10 @@ class UpdateRecoveryEmailActivity : ProtonActivity<ActivityUpdateRecoveryEmailBi
 
         supportFragmentManager.setFragmentResultListener(
             UpdateRecoveryEmailFragment.KEY_UPDATE_RESULT, this@UpdateRecoveryEmailActivity
-        ) { _, _ ->
+        ) { _, bundle ->
+            val result = bundle.getParcelable<UpdateRecoveryEmailResult>(UpdateRecoveryEmailFragment.ARG_UPDATE_RESULT)
+            val intent = Intent().putExtra(ARG_RESULT, result)
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }
