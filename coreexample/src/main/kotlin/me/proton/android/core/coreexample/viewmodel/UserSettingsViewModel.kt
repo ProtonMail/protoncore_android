@@ -71,7 +71,7 @@ class UserSettingsViewModel @Inject constructor(
                     onPasswordManagementResult {
                         context.showToast("Password updated")
                     }
-                    userSettingsOrchestrator.startPasswordManagementWorkflow(userId = it.userId)
+                    startPasswordManagementWorkflow(userId = it.userId)
                 }
             }
         }
