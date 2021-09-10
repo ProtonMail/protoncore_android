@@ -26,7 +26,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
+import me.proton.core.presentation.utils.showToast
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import me.proton.core.usersettings.presentation.onPasswordManagementResult
+import me.proton.core.usersettings.presentation.onUpdateRecoveryEmailResult
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,22 +49,30 @@ class UserSettingsViewModel @Inject constructor(
 
     private fun getPrimaryAccount() = accountManager.getPrimaryAccount()
 
-    fun onUpdateRecoveryEmailClicked() {
+    fun onUpdateRecoveryEmailClicked(context: ComponentActivity) {
         viewModelScope.launch {
             getPrimaryAccount().first()?.let {
-                userSettingsOrchestrator.startUpdateRecoveryEmailWorkflow(
-                    userId = it.userId
-                )
+                with(userSettingsOrchestrator) {
+                    onUpdateRecoveryEmailResult {
+                        context.showToast(
+                            "Recovery email updated"
+                        )
+                    }
+                    startUpdateRecoveryEmailWorkflow(userId = it.userId)
+                }
             }
         }
     }
 
-    fun onPasswordManagementClicked() {
+    fun onPasswordManagementClicked(context: ComponentActivity) {
         viewModelScope.launch {
             getPrimaryAccount().first()?.let {
-                userSettingsOrchestrator.startPasswordManagementWorkflow(
-                    userId = it.userId
-                )
+                with(userSettingsOrchestrator) {
+                    onPasswordManagementResult {
+                        context.showToast("Password updated")
+                    }
+                    startPasswordManagementWorkflow(userId = it.userId)
+                }
             }
         }
     }

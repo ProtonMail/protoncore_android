@@ -35,11 +35,11 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
-import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.validateEmail
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.FragmentUpdateRecoveryEmailBinding
 import me.proton.core.usersettings.presentation.entity.SettingsInput
+import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
 import me.proton.core.usersettings.presentation.viewmodel.UpdateRecoveryEmailViewModel
 import me.proton.core.util.kotlin.exhaustive
 
@@ -60,7 +60,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        addOnBackPressedCallback { setFragmentResult() }
+        addOnBackPressedCallback { finish() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,7 +79,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
             }
 
         (activity as? UpdateRecoveryEmailActivity)?.binding?.toolbar?.apply {
-            setNavigationOnClickListener { setFragmentResult() }
+            setNavigationOnClickListener { finish() }
         }
         binding.saveButton.onClick {
             onSaveClicked()
@@ -98,7 +98,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
                     binding.newEmailInput.text = ""
                     binding.confirmNewEmailInput.text = ""
                     findOutCurrentRecoveryAddress()
-                    binding.root.successSnack(R.string.settings_recovery_email_success)
+                    finish(success = true)
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -161,15 +161,15 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
         )
     }
 
-    private fun setFragmentResult() {
+    private fun finish(success: Boolean = false) {
         parentFragmentManager.setFragmentResult(
-            KEY_UPDATE_RESULT, bundleOf(ARG_UPDATE_RESULT to null)
+            KEY_UPDATE_RESULT, bundleOf(ARG_UPDATE_RESULT to UpdateRecoveryEmailResult(success))
         )
     }
 
     companion object {
         const val KEY_UPDATE_RESULT = "key.update_result"
-        const val ARG_UPDATE_RESULT = "arg.update_result"
+        const val ARG_UPDATE_RESULT = "bundle.update_result"
         const val ARG_INPUT = "arg.settingsInput"
 
         operator fun invoke(input: SettingsInput) = UpdateRecoveryEmailFragment().apply {
