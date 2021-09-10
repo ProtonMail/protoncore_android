@@ -21,6 +21,8 @@ package me.proton.core.contact.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactEmailId
+import me.proton.core.contact.domain.entity.ContactId
 
 @Serializable
 data class ContactEmailsResponse(
@@ -48,12 +50,12 @@ data class ContactEmailResponse(
     val canonicalEmail: String? = null
 ) {
     fun toContactEmail(): ContactEmail = ContactEmail(
-        id,
+        ContactEmailId(id),
         name,
         email,
         defaults,
         order,
-        contactId,
+        ContactId(contactId),
         canonicalEmail
     )
 }

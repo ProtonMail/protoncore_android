@@ -19,7 +19,7 @@
 package me.proton.core.contact.domain.entity
 
 data class Contact(
-    val id: String,
+    val id: ContactId,
     val name: String,
     val contactEmails: List<ContactEmail>,
     val cards: List<ContactCard>

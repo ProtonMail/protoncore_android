@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.UserId
@@ -69,7 +70,7 @@ class ContactsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun testContactApi(userId: UserId, contactId: String) {
+    private suspend fun testContactApi(userId: UserId, contactId: ContactId) {
         val contact = contactRepository.getContact(sessionUserId = userId, contactId = contactId, refresh = true)
         logger.d("contact", contact.toString())
     }

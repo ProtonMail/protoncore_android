@@ -28,6 +28,7 @@ import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.contact.data.local.db.ContactCardEntity
+import me.proton.core.contact.data.local.db.ContactConverters
 import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.data.local.db.ContactEmailEntity
 import me.proton.core.contact.data.local.db.ContactEntity
@@ -97,7 +98,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     UserConverters::class,
     CryptoConverters::class,
     HumanVerificationConverters::class,
-    UserSettingsConverters::class
+    UserSettingsConverters::class,
+    ContactConverters::class
 )
 abstract class AppDatabase :
     BaseDatabase(),

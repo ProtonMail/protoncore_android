@@ -19,7 +19,7 @@
 package me.proton.core.contact.domain.entity
 
 data class ContactEmail(
-    val id: String,
+    val id: ContactEmailId,
     val name: String,
     val email: String,
     /**
@@ -27,6 +27,6 @@ data class ContactEmail(
      */
     val defaults: Int,
     val order: Int,
-    val contactId: String,
+    val contactId: ContactId,
     val canonicalEmail: String?
 )

@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.domain.entity.UserId
@@ -33,18 +34,25 @@ interface ContactDatabase: Database {
     fun contactCardDao(): ContactCardDao
     fun contactEmailDao(): ContactEmailDao
 
-    fun getContact(contactId: String): Flow<Contact> {
+    fun getContact(contactId: ContactId): Flow<Contact> {
         return contactDao().getContact(contactId).map { it.toContact() }
     }
 
-    suspend fun deleteContact(contactId: String) {
+    suspend fun deleteContact(contactId: ContactId) {
         inTransaction {
             contactEmailDao().deleteAllContactsEmails(contactId = contactId)
             contactDao().deleteContact(contactId = contactId)
         }
     }
 
-    suspend fun deleteAllContact() {
+    suspend fun deleteAllContacts(userId: UserId) {
+        inTransaction {
+            contactDao().deleteAllContacts(userId)
+            contactEmailDao().deleteAllContactsEmails(userId)
+        }
+    }
+
+    suspend fun deleteAllContacts() {
         inTransaction {
             contactDao().deleteAllContacts()
             contactEmailDao().deleteAllContactsEmails()

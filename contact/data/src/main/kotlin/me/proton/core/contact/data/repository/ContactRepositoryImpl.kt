@@ -30,6 +30,7 @@ import me.proton.core.contact.data.api.ContactApi
 import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.contact.domain.repository.ContactRepository
@@ -42,19 +43,19 @@ class ContactRepositoryImpl(
     private val database: ContactDatabase
 ) : ContactRepository {
 
-    private data class ContactStoreKey(val userId: UserId, val contactId: String)
+    private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)
 
     private val contactStore = StoreBuilder.from(
         fetcher = Fetcher.of { key: ContactStoreKey ->
             provider.get<ContactApi>(key.userId).invoke {
-                getContact(key.contactId).contact.toContact()
+                getContact(key.contactId.id).contact.toContact()
             }.valueOrThrow
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { contactStoreKey -> database.getContact(contactStoreKey.contactId) },
             writer = { contactStoreKey, contact -> database.insertOrUpdate(contactStoreKey.userId, contact) },
             delete = { key -> database.deleteContact(key.contactId) },
-            deleteAll = database::deleteAllContact
+            deleteAll = database::deleteAllContacts
         )
     ).build()
 
@@ -72,12 +73,12 @@ class ContactRepositoryImpl(
         )
     ).build()
 
-    override suspend fun getContact(sessionUserId: SessionUserId, contactId: String, refresh: Boolean): Contact {
+    override suspend fun getContact(sessionUserId: SessionUserId, contactId: ContactId, refresh: Boolean): Contact {
         val key = ContactStoreKey(sessionUserId, contactId)
         return if (refresh) contactStore.fresh(key) else contactStore.get(key)
     }
 
-    override suspend fun clearContacts(userId: UserId) = contactStore.clear(ContactStoreKey(userId, ""))
+    override suspend fun clearContacts(userId: UserId) = database.deleteAllContacts(userId)
 
     override suspend fun clearAllContacts() = contactStore.clearAll()
 

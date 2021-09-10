@@ -27,6 +27,8 @@ import androidx.room.Relation
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactEmailId
+import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
 
@@ -46,7 +48,7 @@ import me.proton.core.user.data.entity.UserEntity
 )
 data class ContactEntity (
     val userId: UserId,
-    val contactId: String,
+    val contactId: ContactId,
     val name: String,
 )
 
@@ -78,7 +80,7 @@ data class ContactCompoundEntity(
     ]
 )
 data class ContactCardEntity(
-    val contactId: String,
+    val contactId: ContactId,
     val type: Int,
     val data: String,
     val signature: String?
@@ -103,12 +105,12 @@ data class ContactCardEntity(
 )
 data class ContactEmailEntity(
     val userId: UserId,
-    val contactEmailId: String,
+    val contactEmailId: ContactEmailId,
     val name: String,
     val email: String,
     val defaults: Int,
     val order: Int,
-    val contactId: String,
+    val contactId: ContactId,
     val canonicalEmail: String?
 )
 
@@ -125,7 +127,7 @@ fun ContactCompoundEntity.toContact() = Contact(
     cards = cards.map { it.toContactCard() }
 )
 
-fun ContactCard.toContactCardEntity(contactId: String) = ContactCardEntity(
+fun ContactCard.toContactCardEntity(contactId: ContactId) = ContactCardEntity(
     contactId = contactId,
     type = type,
     data = data,
