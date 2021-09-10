@@ -33,6 +33,7 @@ interface ContactDatabase: Database {
     fun contactDao(): ContactDao
     fun contactCardDao(): ContactCardDao
     fun contactEmailDao(): ContactEmailDao
+    fun contactEmailLabelDao(): ContactEmailLabelCrossRefDao
 
     fun getContact(contactId: ContactId): Flow<Contact> {
         return contactDao().getContact(contactId).map { it.toContact() }
@@ -81,8 +82,15 @@ interface ContactDatabase: Database {
     }
 
     suspend fun insertOrUpdateContactsEmails(userId: UserId, contactsEmails: List<ContactEmail>) {
-        val entities = contactsEmails.map { it.toContactEmailEntity(userId) }
-        contactEmailDao().insertOrUpdate(*entities.toTypedArray())
+        inTransaction {
+            contactEmailLabelDao().deleteAllLabels(contactsEmails.map { it.id })
+
+            val mailEntities = contactsEmails.map { it.toContactEmailEntity(userId) }
+            contactEmailDao().insertOrUpdate(*mailEntities.toTypedArray())
+
+            val mailLabelEntities = contactsEmails.flatMap { it.toContactEmailLabelCrossRefs() }
+            contactEmailLabelDao().insertOrUpdate(*mailLabelEntities.toTypedArray())
+        }
     }
 
     companion object {

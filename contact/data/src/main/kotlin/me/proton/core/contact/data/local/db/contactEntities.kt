@@ -22,6 +22,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import androidx.room.Junction
 import androidx.room.PrimaryKey
 import androidx.room.Relation
 import me.proton.core.contact.domain.entity.Contact
@@ -61,9 +62,10 @@ data class ContactCompoundEntity(
     val cards: List<ContactCardEntity>,
     @Relation(
         parentColumn = "contactId",
-        entityColumn = "contactId"
+        entityColumn = "contactId",
+        entity = ContactEmailEntity::class
     )
-    val emails: List<ContactEmailEntity>,
+    val emails: List<ContactEmailCompoundEntity>,
 )
 
 @Entity(
@@ -114,6 +116,34 @@ data class ContactEmailEntity(
     val canonicalEmail: String?
 )
 
+@Entity(
+    primaryKeys = ["contactEmailId", "labelId"],
+    foreignKeys = [
+        ForeignKey(
+            entity = ContactEmailEntity::class,
+            parentColumns = ["contactEmailId"],
+            childColumns = ["contactEmailId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+data class ContactEmailLabelCrossRef(
+    val contactEmailId: ContactEmailId,
+    val labelId: String
+)
+
+data class ContactEmailCompoundEntity(
+    @Embedded
+    val contactEmail: ContactEmailEntity,
+    @Relation(
+        parentColumn = "contactEmailId",
+        entityColumn = "contactEmailId",
+        entity = ContactEmailLabelCrossRef::class,
+        projection = ["labelId"]
+    )
+    val labelIds: List<String>
+)
+
 fun Contact.toContactEntity(userId: UserId) = ContactEntity(
     userId = userId,
     contactId = id,
@@ -147,12 +177,20 @@ fun ContactEmail.toContactEmailEntity(userId: UserId) = ContactEmailEntity(
     canonicalEmail = canonicalEmail
 )
 
-fun ContactEmailEntity.toContactEmail() = ContactEmail(
-    id = contactEmailId,
-    name = name,
-    email = email,
-    defaults = defaults,
-    order = order,
-    contactId = contactId,
-    canonicalEmail = canonicalEmail
+fun ContactEmailCompoundEntity.toContactEmail() = ContactEmail(
+    id = contactEmail.contactEmailId,
+    name = contactEmail.name,
+    email = contactEmail.email,
+    defaults = contactEmail.defaults,
+    order = contactEmail.order,
+    contactId = contactEmail.contactId,
+    canonicalEmail = contactEmail.canonicalEmail,
+    labelIds = labelIds
 )
+
+fun ContactEmail.toContactEmailLabelCrossRefs() = labelIds.map {
+    ContactEmailLabelCrossRef(
+        contactEmailId = id,
+        labelId = it
+    )
+}

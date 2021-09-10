@@ -22,6 +22,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
@@ -51,7 +52,7 @@ abstract class ContactCardDao: BaseDao<ContactCardEntity>() {
 @Dao
 abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
     @Query("SELECT * FROM ContactEmailEntity WHERE userId = :userId ORDER BY `order`, name")
-    abstract fun getAllContactsEmails(userId: UserId): Flow<List<ContactEmailEntity>>
+    abstract fun getAllContactsEmails(userId: UserId): Flow<List<ContactEmailCompoundEntity>>
 
     @Query("DELETE FROM ContactEmailEntity WHERE userId = :userId")
     abstract suspend fun deleteAllContactsEmails(userId: UserId)
@@ -61,4 +62,10 @@ abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
 
     @Query("DELETE FROM ContactEmailEntity")
     abstract suspend fun deleteAllContactsEmails()
+}
+
+@Dao
+abstract class ContactEmailLabelCrossRefDao: BaseDao<ContactEmailLabelCrossRef>() {
+    @Query("DELETE FROM ContactEmailLabelCrossRef WHERE contactEmailId IN (:contactEmailIds)")
+    abstract suspend fun deleteAllLabels(contactEmailIds: List<ContactEmailId>)
 }
