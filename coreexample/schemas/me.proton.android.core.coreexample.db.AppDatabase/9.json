@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "62fbf101981a817a18046933c116975b",
+    "identityHash": "18021c45b695e07cdd26aaceaf465d2d",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -1588,6 +1588,71 @@
         ]
       },
       {
+        "tableName": "ContactCardEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contactId` TEXT NOT NULL, `type` INTEGER NOT NULL, `data` TEXT NOT NULL, `signature` TEXT, `cardId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`contactId`) REFERENCES `ContactEntity`(`contactId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "contactId",
+            "columnName": "contactId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "data",
+            "columnName": "data",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "signature",
+            "columnName": "signature",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cardId",
+            "columnName": "cardId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "cardId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_ContactCardEntity_contactId",
+            "unique": false,
+            "columnNames": [
+              "contactId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ContactCardEntity_contactId` ON `${TABLE_NAME}` (`contactId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "ContactEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "contactId"
+            ],
+            "referencedColumns": [
+              "contactId"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "ContactEmailEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `contactEmailId` TEXT NOT NULL, `name` TEXT NOT NULL, `email` TEXT NOT NULL, `defaults` INTEGER NOT NULL, `order` INTEGER NOT NULL, `contactId` TEXT NOT NULL, `canonicalEmail` TEXT, PRIMARY KEY(`contactEmailId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
@@ -1674,7 +1739,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '62fbf101981a817a18046933c116975b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '18021c45b695e07cdd26aaceaf465d2d')"
     ]
   }
 }

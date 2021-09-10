@@ -20,22 +20,40 @@ package me.proton.core.contact.data.local.db
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
 
 @Dao
-abstract class ContactDao: BaseDao<ContactEntity>()
+abstract class ContactDao: BaseDao<ContactEntity>() {
+    @Transaction
+    @Query("SELECT * FROM ContactEntity WHERE contactId = :contactId")
+    abstract fun getContact(contactId: String): Flow<ContactCompoundEntity>
+
+    @Query("DELETE FROM ContactEntity WHERE contactId = :contactId")
+    abstract suspend fun deleteContact(contactId: String)
+
+    @Query("DELETE FROM ContactEntity")
+    abstract suspend fun deleteAllContacts()
+}
+
+@Dao
+abstract class ContactCardDao: BaseDao<ContactCardEntity>() {
+    @Query("DELETE FROM ContactCardEntity WHERE contactId = :contactId")
+    abstract suspend fun deleteAllContactCards(contactId: String)
+}
 
 @Dao
 abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
-    @Query("SELECT * FROM ContactEmailEntity WHERE userId = :userId")
+    @Query("SELECT * FROM ContactEmailEntity WHERE userId = :userId ORDER BY `order`, name")
     abstract fun getAllContactsEmails(userId: UserId): Flow<List<ContactEmailEntity>>
 
     @Query("DELETE FROM ContactEmailEntity WHERE userId = :userId")
     abstract suspend fun deleteAllContactsEmails(userId: UserId)
+
+    @Query("DELETE FROM ContactEmailEntity WHERE contactId = :contactId")
+    abstract suspend fun deleteAllContactsEmails(contactId: String)
 
     @Query("DELETE FROM ContactEmailEntity")
     abstract suspend fun deleteAllContactsEmails()

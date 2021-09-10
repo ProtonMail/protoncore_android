@@ -28,8 +28,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.contact.data.api.ContactApi
 import me.proton.core.contact.data.local.db.ContactDatabase
-import me.proton.core.contact.data.local.db.toContactEmail
-import me.proton.core.contact.data.local.db.toContactEmailEntity
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.domain.entity.SessionUserId
@@ -52,6 +50,12 @@ class ContactRepositoryImpl(
                 getContact(key.contactId).contact.toContact()
             }.valueOrThrow
         },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = { contactStoreKey -> database.getContact(contactStoreKey.contactId) },
+            writer = { contactStoreKey, contact -> database.insertOrUpdate(contactStoreKey.userId, contact) },
+            delete = { key -> database.deleteContact(key.contactId) },
+            deleteAll = database::deleteAllContact
+        )
     ).build()
 
     private val emailStore = StoreBuilder.from(

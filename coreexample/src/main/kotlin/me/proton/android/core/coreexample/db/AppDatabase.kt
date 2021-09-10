@@ -27,6 +27,7 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.contact.data.local.db.ContactCardEntity
 import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.data.local.db.ContactEmailEntity
 import me.proton.core.contact.data.local.db.ContactEntity
@@ -84,6 +85,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         OrganizationKeysEntity::class,
         // contact
         ContactEntity::class,
+        ContactCardEntity::class,
         ContactEmailEntity::class
     ],
     version = AppDatabase.version,

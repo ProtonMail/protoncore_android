@@ -26,11 +26,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -57,11 +57,21 @@ class ContactsViewModel @Inject constructor(
                         is DataResult.Error.Local -> _state.value = State.Error(result.message)
                         is DataResult.Error.Remote -> _state.value = State.Error(result.message)
                         is DataResult.Processing -> _state.value = State.Processing
-                        is DataResult.Success -> _state.value = State.Contacts(result.value)
+                        is DataResult.Success -> {
+                            result.value.firstOrNull()?.let { email ->
+                                viewModelScope.launch { testContactApi(account.userId, email.contactId) }
+                            }
+                            _state.value = State.Contacts(result.value)
+                        }
                     }.exhaustive
                 }
             }
         }
+    }
+
+    private suspend fun testContactApi(userId: UserId, contactId: String) {
+        val contact = contactRepository.getContact(sessionUserId = userId, contactId = contactId, refresh = true)
+        logger.d("contact", contact.toString())
     }
 
     sealed class State {
