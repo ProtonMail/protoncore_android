@@ -20,17 +20,44 @@ package me.proton.core.contact.tests
 
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.contact.data.local.db.ContactCardEntity
 import me.proton.core.contact.data.local.db.ContactEntity
+import me.proton.core.contact.data.local.db.toContactCardEntity
+import me.proton.core.contact.data.local.db.toContactEmailEntity
+import me.proton.core.contact.data.local.db.toContactEmailLabelCrossRefs
+import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
 
-val user0_id = UserId("0")
-val user0 = UserEntity(
-    userId = user0_id,
+object User0 {
+    val userId = UserId("user0")
+    val userEntity = userId.userEntity()
+    val accountEntity = userId.accountEntity()
+    object Contact0 {
+        val contactId = ContactId("contact0")
+        val contact = contactId.contact(
+            listOf(ContactEmail0.contactEmail),
+            listOf(ContactCard0.contactCard)
+        )
+        val contactEntity = userId.contactEntity(contactId)
+        object ContactCard0 {
+            val contactCard = contactCard("data0")
+            val contactCardEntity = contactCard.toContactCardEntity(contactId)
+        }
+        object ContactEmail0 {
+            val contactEmailId = ContactEmailId("contactEmail0")
+            val contactEmail = contactId.contactEmail(contactEmailId, listOf("label0"))
+            val contactEmailEntity = contactEmail.toContactEmailEntity(userId)
+            val emailLabelEntities = contactEmail.toContactEmailLabelCrossRefs().toTypedArray()
+        }
+    }
+}
+
+fun UserId.userEntity() = UserEntity(
+    userId = this,
     email = null,
     name = null,
     displayName = null,
@@ -46,8 +73,9 @@ val user0 = UserEntity(
     delinquent = null,
     passphrase = null
 )
-val account0 = AccountEntity(
-    userId = user0_id,
+
+fun UserId.accountEntity() = AccountEntity(
+    userId = this,
     username = "",
     email = null,
     state = AccountState.Ready,
@@ -55,29 +83,32 @@ val account0 = AccountEntity(
     sessionState = null
 )
 
-val contact1_id = ContactId("1")
-val contact1 = ContactEntity(
-    userId = user0_id,
-    contactId = contact1_id,
-    name = "contact1"
+fun UserId.contactEntity(contactId: ContactId) = ContactEntity(
+    userId = this,
+    contactId = contactId,
+    name = "contact$contactId"
 )
 
-val contactCard1_1 = ContactCardEntity(
-    contactId = contact1_id,
+fun ContactId.contact(emails: List<ContactEmail>, cards: List<ContactCard>) = Contact(
+    id = this,
+    name = "contact$this",
+    contactEmails = emails,
+    cards = cards
+)
+
+fun contactCard(data: String) = ContactCard(
     type = 0,
-    data = "contactCard1_1_data",
+    data = data,
     signature = null
 )
 
-val contactEmail1_1_id = ContactEmailId("11")
-val label0 = "label0"
-val contactEmail1_1 = ContactEmail(
-    id = contactEmail1_1_id,
+fun ContactId.contactEmail(contactEmailId: ContactEmailId, labelIds: List<String>) = ContactEmail(
+    id = contactEmailId,
     name = "",
     email = "",
     defaults = 0,
     order = 0,
-    contactId = contact1_id,
+    contactId = this,
     canonicalEmail = null,
-    labelIds = listOf(label0)
+    labelIds = labelIds
 )
