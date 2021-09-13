@@ -23,12 +23,20 @@ include(
     "plugins"
 )
 
-enableFeaturePreview("GRADLE_METADATA")
-
 pluginManagement {
     repositories {
         mavenCentral()
         gradlePluginPortal()
         maven("https://plugins.gradle.org/m2/")
+    }
+}
+
+enableFeaturePreview("VERSION_CATALOGS")
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("../../../gradle/libs.versions.toml"))
+        }
     }
 }

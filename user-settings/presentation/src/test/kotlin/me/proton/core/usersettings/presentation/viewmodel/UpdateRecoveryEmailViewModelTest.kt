@@ -120,9 +120,9 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(expectItem())
-            val result = expectItem()
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.LoadingSuccess)
             assertNull(result.recoveryEmail)
         }
@@ -134,9 +134,9 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(expectItem())
-            val result = expectItem()
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.LoadingSuccess)
             assertEquals("test-email", result.recoveryEmail)
         }
@@ -158,9 +158,9 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.getCurrentRecoveryAddress(testUserId)
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(expectItem())
-            val result = expectItem()
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.Error.Message)
             assertEquals("proton error", result.message)
         }
@@ -185,9 +185,9 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "", testPassword, "")
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
-            val result = expectItem()
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
             assertEquals("", result.recoveryEmail)
         }
@@ -212,9 +212,9 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "")
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
-            val result = expectItem()
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
             assertEquals("new-email", result.recoveryEmail)
         }
@@ -239,9 +239,9 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "123456")
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
-            val result = expectItem()
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
             assertEquals("new-email", result.recoveryEmail)
         }
@@ -275,9 +275,9 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "")
             // THEN
-            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(expectItem())
-            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(expectItem())
-            val result = expectItem()
+            assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.Error.Message)
             assertEquals("proton error", result.message)
         }

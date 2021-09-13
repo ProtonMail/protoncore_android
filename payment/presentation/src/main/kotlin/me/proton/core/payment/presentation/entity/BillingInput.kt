@@ -19,6 +19,7 @@
 package me.proton.core.payment.presentation.entity
 
 import android.os.Parcelable
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import me.proton.core.domain.entity.UserId
 
@@ -41,6 +42,7 @@ data class BillingInput(
     val codes: List<String>? = null,
     val paymentMethodId: String?,
 ) : Parcelable {
+    @IgnoredOnParcel
     val user = if (userId.isNullOrBlank()) null else UserId(userId)
 }
 

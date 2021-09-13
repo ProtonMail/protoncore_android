@@ -49,43 +49,20 @@ fun org.gradle.api.Project.android(
         this.version = version
 
         // SDK
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetSdk)
-        buildToolsVersion = "30.0.2"
+        this.minSdk = minSdk
+        this.targetSdk = targetSdk
         ndkVersion = "21.3.6528147"
 
         // Other
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
-
-        // Annotation processors must be explicitly declared now.  The following dependencies on
-        // the compile classpath are found to contain annotation processor.  Please add them to the
-        // annotationProcessor configuration.
-        // - auto-service-1.0-rc4.jar (com.google.auto.service:auto-service:1.0-rc4)
-        //
-        // Note that this option ( 👇 ) is deprecated and will be removed in the future.
-        // See https://developer.android.com/r/tools/annotation-processor-error-message.html for
-        // more details.
-        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
 
     // Data/View Binding turned off by default to prevent unneeded generation.
     // You must turn it on if you need it in your module:  android(useDataBinding = true).
     buildFeatures.viewBinding = useDataBinding
     dataBinding.isEnabled = useDataBinding
-
-    // Add support for `src/x/kotlin` instead of `src/x/java` only
-    sourceSets {
-        getByName("main").java.srcDirs("src/main/kotlin")
-        getByName("test").java.srcDirs("src/test/kotlin")
-        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
-    }
-
-    compileOptions {
-        sourceCompatibility = ProtonCore.jdkVersion
-        targetCompatibility = sourceCompatibility
-    }
 
     testOptions {
         unitTests.isIncludeAndroidResources = true
@@ -98,25 +75,30 @@ fun org.gradle.api.Project.android(
     }
 
     packagingOptions {
-        exclude("go/*.java")
-        exclude("licenses/*.txt")
-        exclude("licenses/*.TXT")
-        exclude("licenses/*.xml")
-        exclude("META-INF/*.txt")
-        exclude("META-INF/AL2.0")
-        exclude("META-INF/LGPL2.1")
-        exclude("META-INF/licenses/ASM")
-        exclude("META-INF/plexus/*.xml")
-        exclude("org/apache/maven/project/*.xml")
-        exclude("org/codehaus/plexus/*.xml")
-        exclude("org/cyberneko/html/res/*.txt")
-        exclude("org/cyberneko/html/res/*.properties")
-        pickFirst("lib/armeabi-v7a/libgojni.so")
-        pickFirst("lib/arm64-v8a/libgojni.so")
-        pickFirst("lib/x86/libgojni.so")
-        pickFirst("lib/x86_64/libgojni.so")
-        pickFirst("win32-x86-64/attach_hotspot_windows.dll")
-        pickFirst("win32-x86/attach_hotspot_windows.dll")
+        resources.excludes.addAll(listOf(
+            "go/*.java",
+            "licenses/*.txt",
+            "licenses/*.txt",
+            "licenses/*.TXT",
+            "licenses/*.xml",
+            "META-INF/*.txt",
+            "META-INF/AL2.0",
+            "META-INF/LGPL2.1",
+            "META-INF/licenses/ASM",
+            "META-INF/plexus/*.xml",
+            "org/apache/maven/project/*.xml",
+            "org/codehaus/plexus/*.xml",
+            "org/cyberneko/html/res/*.txt",
+            "org/cyberneko/html/res/*.properties"
+        ))
+        resources.pickFirsts.addAll(listOf(
+            "lib/armeabi-v7a/libgojni.so",
+            "lib/arm64-v8a/libgojni.so",
+            "lib/x86/libgojni.so",
+            "lib/x86_64/libgojni.so",
+            "win32-x86-64/attach_hotspot_windows.dll",
+            "win32-x86/attach_hotspot_windows.dll"
+        ))
     }
 
     apply(config)

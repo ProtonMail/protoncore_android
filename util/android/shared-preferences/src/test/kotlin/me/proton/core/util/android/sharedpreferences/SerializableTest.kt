@@ -65,9 +65,9 @@ internal class SerializableTest {
         val block = { p["key2"] = ns }
 
         // THEN
-        val message = assertFails(block).localizedMessage
-        assert(message startsWith "Serializer for class 'NonSerializableTestClass' is not found.") {
-            message
+        val message: String? = assertFails(block).localizedMessage
+        assert(message?.startsWith("Serializer for class 'NonSerializableTestClass' is not found.") == true) {
+            message.toString()
         }
     }
 }

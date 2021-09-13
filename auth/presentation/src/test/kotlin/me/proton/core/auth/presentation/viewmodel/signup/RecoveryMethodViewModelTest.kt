@@ -59,9 +59,9 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
             viewModel.validateRecoveryDestinationInput()
             // THEN
-            assertTrue(expectItem() is ViewModelResult.None)
-            assertTrue(expectItem() is ViewModelResult.Processing)
-            val successItem = expectItem()
+            assertTrue(awaitItem() is ViewModelResult.None)
+            assertTrue(awaitItem() is ViewModelResult.Processing)
+            val successItem = awaitItem()
             assertTrue(successItem is ViewModelResult.Success)
             assertTrue(successItem.value)
             coVerify(exactly = 1) {
@@ -81,9 +81,9 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
             viewModel.validateRecoveryDestinationInput()
             // THEN
-            assertTrue(expectItem() is ViewModelResult.None)
-            assertTrue(expectItem() is ViewModelResult.Processing)
-            val successItem = expectItem()
+            assertTrue(awaitItem() is ViewModelResult.None)
+            assertTrue(awaitItem() is ViewModelResult.Processing)
+            val successItem = awaitItem()
             assertTrue(successItem is ViewModelResult.Success)
             assertFalse(successItem.value)
             coVerify(exactly = 1) {
@@ -112,9 +112,9 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
             viewModel.validateRecoveryDestinationInput()
             // THEN
-            assertTrue(expectItem() is ViewModelResult.None)
-            assertTrue(expectItem() is ViewModelResult.Processing)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is ViewModelResult.None)
+            assertTrue(awaitItem() is ViewModelResult.Processing)
+            val errorItem = awaitItem()
             assertTrue(errorItem is ViewModelResult.Error)
             coVerify(exactly = 1) {
                 validateEmail.invoke(testEmail)
@@ -133,9 +133,9 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.SMS, testPhone)
             viewModel.validateRecoveryDestinationInput()
             // THEN
-            assertTrue(expectItem() is ViewModelResult.None)
-            assertTrue(expectItem() is ViewModelResult.Processing)
-            val successItem = expectItem()
+            assertTrue(awaitItem() is ViewModelResult.None)
+            assertTrue(awaitItem() is ViewModelResult.Processing)
+            val successItem = awaitItem()
             assertTrue(successItem is ViewModelResult.Success)
             assertTrue(successItem.value)
             coVerify(exactly = 1) {
@@ -155,9 +155,9 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.SMS, testPhone)
             viewModel.validateRecoveryDestinationInput()
             // THEN
-            assertTrue(expectItem() is ViewModelResult.None)
-            assertTrue(expectItem() is ViewModelResult.Processing)
-            val successItem = expectItem()
+            assertTrue(awaitItem() is ViewModelResult.None)
+            assertTrue(awaitItem() is ViewModelResult.Processing)
+            val successItem = awaitItem()
             assertTrue(successItem is ViewModelResult.Success)
             assertFalse(successItem.value)
             coVerify(exactly = 1) {
@@ -186,9 +186,9 @@ class RecoveryMethodViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setActiveRecoveryMethod(RecoveryMethodType.SMS, testPhone)
             viewModel.validateRecoveryDestinationInput()
             // THEN
-            assertTrue(expectItem() is ViewModelResult.None)
-            assertTrue(expectItem() is ViewModelResult.Processing)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is ViewModelResult.None)
+            assertTrue(awaitItem() is ViewModelResult.Processing)
+            val errorItem = awaitItem()
             assertTrue(errorItem is ViewModelResult.Error)
 
             coVerify(exactly = 1) {

@@ -19,6 +19,7 @@
 package me.proton.core.plan.presentation.entity
 
 import android.os.Parcelable
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import me.proton.core.domain.entity.UserId
 
@@ -27,5 +28,6 @@ data class PlanInput(
     val userId: String? = null,
     val showCurrent: Boolean = true
 ) : Parcelable {
+    @IgnoredOnParcel
     val user = if (userId.isNullOrBlank()) null else UserId(userId)
 }

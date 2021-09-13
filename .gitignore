@@ -57,6 +57,7 @@ coreexample/src/androidTest/assets/sensitive/*
 .idea/runConfigurations.xml
 .idea/assetWizardSettings.xml
 .idea/sonarlint/issuestore
+.idea/deploymentTargetDropDown.xml
 
 # Generated files
 .idea/**/contentModel.xml

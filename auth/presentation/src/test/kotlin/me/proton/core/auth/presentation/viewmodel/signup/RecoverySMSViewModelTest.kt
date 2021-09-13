@@ -54,9 +54,9 @@ class RecoverySMSViewModelTest : ArchTest, CoroutinesTest {
         coEvery { defaultCountryCode.invoke() } returns country
         viewModel.countryCallingCode.test() {
             viewModel.getCountryCallingCode()
-            assertIs<ViewModelResult.None>(expectItem())
-            assertIs<ViewModelResult.Processing>(expectItem())
-            assertIs<ViewModelResult.Success<Int>>(expectItem())
+            assertIs<ViewModelResult.None>(awaitItem())
+            assertIs<ViewModelResult.Processing>(awaitItem())
+            assertIs<ViewModelResult.Success<Int>>(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -66,9 +66,9 @@ class RecoverySMSViewModelTest : ArchTest, CoroutinesTest {
         coEvery { defaultCountryCode.invoke() } returns country
         viewModel.countryCallingCode.test() {
             viewModel.getCountryCallingCode()
-            assertIs<ViewModelResult.None>(expectItem())
-            assertIs<ViewModelResult.Processing>(expectItem())
-            Assert.assertEquals(0, (expectItem() as ViewModelResult.Success).value)
+            assertIs<ViewModelResult.None>(awaitItem())
+            assertIs<ViewModelResult.Processing>(awaitItem())
+            Assert.assertEquals(0, (awaitItem() as ViewModelResult.Success).value)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -78,9 +78,9 @@ class RecoverySMSViewModelTest : ArchTest, CoroutinesTest {
         coEvery { defaultCountryCode.invoke() } returns null
         viewModel.countryCallingCode.test() {
             viewModel.getCountryCallingCode()
-            assertIs<ViewModelResult.None>(expectItem())
-            assertIs<ViewModelResult.Processing>(expectItem())
-            assertIs<ViewModelResult.Error>(expectItem())
+            assertIs<ViewModelResult.None>(awaitItem())
+            assertIs<ViewModelResult.Processing>(awaitItem())
+            assertIs<ViewModelResult.Error>(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }

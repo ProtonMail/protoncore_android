@@ -22,12 +22,13 @@ import studio.forface.easygradle.dsl.Version
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
+    kotlin("plugin.serialization")
     `java-gradle-plugin`
 }
 
 val plugin = PluginConfig(
     name = "Detekt",
-    version = Version(0, 3)
+    version = Version(0, 4)
 )
 pluginConfig = plugin
 
@@ -52,5 +53,6 @@ repositories {
 dependencies {
     implementation(gradleApi())
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
-    implementation("studio.forface.easygradle:dsl:2.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation(libs.easyGradle.dsl)
 }

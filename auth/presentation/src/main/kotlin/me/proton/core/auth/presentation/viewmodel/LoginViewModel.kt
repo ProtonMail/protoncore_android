@@ -109,7 +109,7 @@ internal class LoginViewModel @Inject constructor(
         password: String,
         requiredAccountType: AccountType,
         subscriptionDetails: SubscriptionDetails? = null
-    ) = flow {
+    ) = flow<State> {
         emit(State.Processing)
 
         val encryptedPassword = password.encryptWith(keyStoreCrypto)

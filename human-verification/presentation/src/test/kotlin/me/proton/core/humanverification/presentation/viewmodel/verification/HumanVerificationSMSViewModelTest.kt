@@ -29,13 +29,12 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.test.kotlin.coroutinesTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import kotlin.time.seconds
+import kotlin.time.Duration
 
-class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
+class HumanVerificationSMSViewModelTest : CoroutinesTest {
 
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
@@ -63,9 +62,9 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
         coEvery { defaultCountry.invoke() } returns country
         viewModel.countryCallingCode.test() {
             viewModel.getCountryCallingCode()
-            assertIs<ViewModelResult.None>(expectItem())
-            assertIs<ViewModelResult.Processing>(expectItem())
-            assertIs<ViewModelResult.Success<Int>>(expectItem())
+            assertIs<ViewModelResult.None>(awaitItem())
+            assertIs<ViewModelResult.Processing>(awaitItem())
+            assertIs<ViewModelResult.Success<Int>>(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -75,9 +74,9 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
         coEvery { defaultCountry.invoke() } returns country
         viewModel.countryCallingCode.test() {
             viewModel.getCountryCallingCode()
-            assertIs<ViewModelResult.None>(expectItem())
-            assertIs<ViewModelResult.Processing>(expectItem())
-            assertEquals(0, (expectItem() as ViewModelResult.Success).value)
+            assertIs<ViewModelResult.None>(awaitItem())
+            assertIs<ViewModelResult.Processing>(awaitItem())
+            assertEquals(0, (awaitItem() as ViewModelResult.Success).value)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -87,9 +86,9 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
         coEvery { defaultCountry.invoke() } returns null
         viewModel.countryCallingCode.test() {
             viewModel.getCountryCallingCode()
-            assertIs<ViewModelResult.None>(expectItem())
-            assertIs<ViewModelResult.Processing>(expectItem())
-            assertIs<ViewModelResult.Error>(expectItem())
+            assertIs<ViewModelResult.None>(awaitItem())
+            assertIs<ViewModelResult.Processing>(awaitItem())
+            assertIs<ViewModelResult.Error>(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -99,8 +98,8 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
         coEvery { defaultCountry.invoke() } returns country
         coEvery { sendToPhoneDestinationUseCase.invoke(any(), any()) } returns Unit
         viewModel.sendVerificationCodeToDestination(sessionId, "+0", "123456789")
-        viewModel.verificationCodeStatus.test(timeout = 2.seconds) {
-            assertIs<ViewModelResult.Success<Boolean>>(expectItem())
+        viewModel.verificationCodeStatus.test(timeout = Duration.seconds(2)) {
+            assertIs<ViewModelResult.Success<Boolean>>(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -114,8 +113,8 @@ class HumanVerificationSMSViewModelTest : CoroutinesTest by coroutinesTest {
         // when
         viewModel.sendVerificationCodeToDestination(sessionId, "", "")
         // then
-        viewModel.validation.test(timeout = 2.seconds) {
-            val result = expectItem() as ViewModelResult.Error
+        viewModel.validation.test(timeout = Duration.seconds(2)) {
+            val result = awaitItem() as ViewModelResult.Error
             assertIs<IllegalArgumentException>(result.throwable)
             cancelAndIgnoreRemainingEvents()
         }

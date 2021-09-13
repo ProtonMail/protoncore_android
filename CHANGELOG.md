@@ -1,3 +1,47 @@
+## Version [1.15.0]
+
+Sep 8, 2021.
+
+Upgrade Kotlin to 1.5.
+
+### Dependencies
+
+- Core Modules 1.15.0.
+- Kotlin 1.5.30.
+- Kotlin Coroutines 1.5.2.
+- Kotlin Serialization 1.2.2.
+- Gradle 7.2.
+- Java 11.
+- Android Gradle Plugins 7.0.2.
+- Android Tools 30.0.2.
+- Android Annotation 1.2.0.
+- AndroidX Activity 1.3.1.
+- AndroidX AppCompat 1.3.1.
+- AndroidX Constraintlayout 2.1.0.
+- AndroidX Fragment 1.3.6.
+- AndroidX KTX 1.6.0.
+- AndroidX Lifecycle 2.4.0-alpha03.
+- AndroidX Paging 1.4.0.
+- AndroidX Work 2.6.0.
+- AndroidX Test 1.4.0.
+- Android Material Components 1.4.0.
+- Dagger 2.38.1
+- Hilt 2.38.1.
+- Timber 5.0.1.
+- Turbine 0.6.1.
+- OkHttp 4.9.1.
+- Trust Kit 1.1.5.
+- Store 4.0.2-KT15.
+- Lottie 4.1.0.
+- Falcon 2.2.0.
+- Apache Common Codec 1.15.
+- Gotev CookieStore 1.3.5.
+- Google Tink 1.6.1.
+- Espresso 3.4.0.
+- Robolectric 4.6.1.
+- Mockk 1.11.0.
+- Junit KTX 1.1.3.
+
 ## User Settings Version [1.7.1]
 
 Sep 10, 2021

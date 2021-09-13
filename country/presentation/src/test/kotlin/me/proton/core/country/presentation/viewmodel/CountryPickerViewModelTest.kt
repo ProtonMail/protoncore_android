@@ -46,7 +46,7 @@ class CountryPickerViewModelTest : ArchTest, CoroutinesTest {
     fun `load countries has data`() = coroutinesTest {
         coEvery { loadCountries.invoke() } returns testCountries
         viewModel.countries.test {
-            val success = expectItem()
+            val success = awaitItem()
             assertTrue(success is CountryPickerViewModel.State.Success)
             assertEquals(9, success.countries.size)
         }
@@ -56,7 +56,7 @@ class CountryPickerViewModelTest : ArchTest, CoroutinesTest {
     fun `load countries returns empty list`() = coroutinesTest {
         coEvery { loadCountries.invoke() } returns emptyList()
         viewModel.countries.test {
-            val success = expectItem()
+            val success = awaitItem()
             assertTrue(success is CountryPickerViewModel.State.Success)
             assertEquals(0, success.countries.size)
         }

@@ -17,10 +17,11 @@
  */
 
 plugins {
-    val kotlinVersion = "1.4.31"
+    val kotlinVersion = embeddedKotlinVersion
     val publishVersion = "0.7"
 
     kotlin("jvm") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
     id("me.proton.publish-plugins") version publishVersion
 }
 

@@ -128,8 +128,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            val errorItem = awaitItem()
             assertTrue(errorItem is SignupViewModel.State.Error.Message)
             assertEquals("Username is not set.", errorItem.message)
 
@@ -155,8 +155,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            val errorItem = awaitItem()
             assertTrue(errorItem is SignupViewModel.State.Error.Message)
             assertEquals("Username is not set.", errorItem.message)
 
@@ -181,8 +181,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            val errorItem = awaitItem()
             assertTrue(errorItem is SignupViewModel.State.Error.Message)
             assertEquals("Password is not set (initialized).", errorItem.message)
 
@@ -208,9 +208,9 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            assertTrue(expectItem() is SignupViewModel.State.Processing)
-            val successItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            assertTrue(awaitItem() is SignupViewModel.State.Processing)
+            val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
             assertEquals(testUsername, successItem.user.name)
 
@@ -239,9 +239,9 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            assertTrue(expectItem() is SignupViewModel.State.Processing)
-            val successItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            assertTrue(awaitItem() is SignupViewModel.State.Processing)
+            val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
             assertEquals(testUsername, successItem.user.name)
 
@@ -269,9 +269,9 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            assertTrue(expectItem() is SignupViewModel.State.Processing)
-            val successItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            assertTrue(awaitItem() is SignupViewModel.State.Processing)
+            val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
             assertEquals(testUsername, successItem.user.name)
 
@@ -316,9 +316,9 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            assertTrue(expectItem() is SignupViewModel.State.Processing)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            assertTrue(awaitItem() is SignupViewModel.State.Processing)
+            val errorItem = awaitItem()
             assertTrue(errorItem is SignupViewModel.State.Error.Message)
             assertEquals("create user error", errorItem.message)
 
@@ -343,8 +343,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            val errorItem = awaitItem()
             assertTrue(errorItem is SignupViewModel.State.Error.Message)
             assertEquals("External email is not set.", errorItem.message)
 
@@ -367,8 +367,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            val errorItem = awaitItem()
             assertTrue(errorItem is SignupViewModel.State.Error.Message)
             assertEquals("External email is not set.", errorItem.message)
 
@@ -391,8 +391,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            val errorItem = awaitItem()
             assertTrue(errorItem is SignupViewModel.State.Error.Message)
             assertEquals("Password is not set (initialized).", errorItem.message)
 
@@ -416,9 +416,9 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            assertTrue(expectItem() is SignupViewModel.State.Processing)
-            val successItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            assertTrue(awaitItem() is SignupViewModel.State.Processing)
+            val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
             assertEquals(testUsername, successItem.user.name)
 
@@ -459,9 +459,9 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.startCreateUserWorkflow()
             // THEN
-            assertTrue(expectItem() is SignupViewModel.State.Idle)
-            assertTrue(expectItem() is SignupViewModel.State.Processing)
-            val errorItem = expectItem()
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            assertTrue(awaitItem() is SignupViewModel.State.Processing)
+            val errorItem = awaitItem()
             assertTrue(errorItem is SignupViewModel.State.Error.Message)
             assertEquals("create user error", errorItem.message)
 

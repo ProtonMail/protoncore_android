@@ -19,6 +19,7 @@
 package me.proton.core.usersettings.presentation.entity
 
 import android.os.Parcelable
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import me.proton.core.domain.entity.UserId
 
@@ -26,5 +27,6 @@ import me.proton.core.domain.entity.UserId
 data class SettingsInput(
     val userId: String
 ): Parcelable {
+    @IgnoredOnParcel
     val user = UserId(userId)
 }

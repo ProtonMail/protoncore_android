@@ -18,7 +18,7 @@
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm") version "1.4.31"
+    kotlin("jvm") version embeddedKotlinVersion
     `java-gradle-plugin`
 }
 
@@ -40,10 +40,7 @@ repositories {
 }
 
 dependencies {
-    val easyGradle = "2.7" // Oct 15, 2020
-    val agpVersion = "4.1.1" // Nov 10, 2020
-
     implementation(gradleApi())
-    compileOnly("com.android.tools.build:gradle:$agpVersion")
-    api("studio.forface.easygradle:dsl-android:$easyGradle")
+    compileOnly(libs.android.pluginGradle)
+    api(libs.easyGradle.androidDsl)
 }

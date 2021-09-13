@@ -31,8 +31,6 @@ for (m in modules) include(m)
 
 for (m in namedModules) project(m.first).name = m.second
 
-enableFeaturePreview("GRADLE_METADATA")
-
 pluginManagement {
     repositories {
         mavenCentral()
@@ -87,3 +85,5 @@ fun File.projectsAndModules(): Pair<Set<String>, Set<String>> {
     val formattedProjects = projects.map { it.replace(":", "/") }.toSet()
     return formattedProjects to modules
 }
+
+enableFeaturePreview("VERSION_CATALOGS")

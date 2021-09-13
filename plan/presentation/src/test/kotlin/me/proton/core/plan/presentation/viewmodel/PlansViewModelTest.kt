@@ -101,9 +101,9 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.getCurrentPlanWithUpgradeOption()
             // THEN
-            assertIs<PlansViewModel.State.Idle>(expectItem())
-            assertIs<PlansViewModel.State.Processing>(expectItem())
-            val plansStatus = expectItem()
+            assertIs<PlansViewModel.State.Idle>(awaitItem())
+            assertIs<PlansViewModel.State.Processing>(awaitItem())
+            val plansStatus = awaitItem()
             assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
             assertEquals(3, plansStatus.plans.size)
             val planOne = plansStatus.plans[0]
@@ -125,9 +125,9 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.getCurrentPlanWithUpgradeOption(testUserId)
             // THEN
-            assertIs<PlansViewModel.State.Idle>(expectItem())
-            assertIs<PlansViewModel.State.Processing>(expectItem())
-            val plansStatus = expectItem()
+            assertIs<PlansViewModel.State.Idle>(awaitItem())
+            assertIs<PlansViewModel.State.Processing>(awaitItem())
+            val plansStatus = awaitItem()
             assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
             assertEquals(1, plansStatus.plans.size)
             val planOne = plansStatus.plans[0]
@@ -146,9 +146,9 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.getCurrentPlanWithUpgradeOption(testUserId)
             // THEN
-            assertIs<PlansViewModel.State.Idle>(expectItem())
-            assertIs<PlansViewModel.State.Processing>(expectItem())
-            val plansStatus = expectItem()
+            assertIs<PlansViewModel.State.Idle>(awaitItem())
+            assertIs<PlansViewModel.State.Processing>(awaitItem())
+            val plansStatus = awaitItem()
             assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
             assertEquals(2, plansStatus.plans.size)
             val planFree = plansStatus.plans[0]

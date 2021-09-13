@@ -64,9 +64,9 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setUserId(userId)
 
             // THEN
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
 
-            val data = expectItem()
+            val data = awaitItem()
             assertTrue(data is ChooseAddressViewModel.State.Data)
             assertEquals(listOf("protonmail.com", "protonmail.ch"), data.domains)
             assertEquals("protonmail.com", data.domains.first())
@@ -86,8 +86,8 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             viewModel.setUserId(userId)
 
             // THEN
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Error.Message)
+            assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseAddressViewModel.State.Error.Message)
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -104,11 +104,11 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             viewModel.checkUsername("test-username", "domain")
 
             // THEN
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Data)
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseAddressViewModel.State.Data)
+            assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
 
-            val successState = expectItem()
+            val successState = awaitItem()
             assertTrue(successState is ChooseAddressViewModel.State.Success)
             assertEquals("test-username", successState.username)
             assertEquals("domain", successState.domain)
@@ -128,11 +128,11 @@ class ChooseAddressViewModelTest : ArchTest, CoroutinesTest {
             viewModel.checkUsername("test-username", "domain")
 
             // THEN
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Data)
-            assertTrue(expectItem() is ChooseAddressViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
+            assertTrue(awaitItem() is ChooseAddressViewModel.State.Data)
+            assertTrue(awaitItem() is ChooseAddressViewModel.State.Processing)
 
-            val state = expectItem()
+            val state = awaitItem()
             assertTrue(state is ChooseAddressViewModel.State.Error.Message)
 
             cancelAndIgnoreRemainingEvents()
