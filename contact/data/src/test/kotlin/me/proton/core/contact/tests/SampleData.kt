@@ -20,7 +20,10 @@ package me.proton.core.contact.tests
 
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.contact.data.local.db.ContactCardEntity
 import me.proton.core.contact.data.local.db.ContactEntity
+import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
@@ -57,4 +60,24 @@ val contact1 = ContactEntity(
     userId = user0_id,
     contactId = contact1_id,
     name = "contact1"
+)
+
+val contactCard1_1 = ContactCardEntity(
+    contactId = contact1_id,
+    type = 0,
+    data = "contactCard1_1_data",
+    signature = null
+)
+
+val contactEmail1_1_id = ContactEmailId("11")
+val label0 = "label0"
+val contactEmail1_1 = ContactEmail(
+    id = contactEmail1_1_id,
+    name = "",
+    email = "",
+    defaults = 0,
+    order = 0,
+    contactId = contact1_id,
+    canonicalEmail = null,
+    labelIds = listOf(label0)
 )

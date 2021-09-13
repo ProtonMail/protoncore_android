@@ -19,16 +19,13 @@
 package me.proton.core.contact.tests
 
 import android.content.Context
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -57,6 +54,44 @@ class ContactDatabaseTests {
         assert(db.contactDao().getContact(contact1_id).firstOrNull() != null)
         db.userDao().delete(user0_id)
         assert(db.contactDao().getContact(contact1_id).firstOrNull() == null)
+    }
+
+    @Test
+    fun `contact card deleted on foreign key deletion`() = runBlocking {
+        val hasContactCard = suspend {
+            db.contactDao().getContact(contact1_id).firstOrNull()?.cards?.any {
+                it.data == contactCard1_1.data
+            } ?: false
+        }
+        db.contactDao().insertOrUpdate(contact1)
+        db.contactCardDao().insertOrUpdate(contactCard1_1)
+        assert(hasContactCard())
+        db.contactDao().deleteContact(contactId = contact1_id)
+        assert(!hasContactCard())
+    }
+
+    @Test
+    fun `contact email is deleted on foreign key deletion`() = runBlocking {
+        val hasContactEmail = suspend {
+            db.contactEmailDao().getAllContactsEmails(user0_id).first().any {
+                it.contactEmail.contactEmailId == contactEmail1_1_id
+            }
+        }
+        db.insertOrUpdateContactsEmails(user0_id, listOf(contactEmail1_1))
+        assert(hasContactEmail())
+        db.userDao().delete(user0_id)
+        assert(!hasContactEmail())
+    }
+
+    @Test
+    fun `contact email label cross ref deleted on foreign key deletion`() = runBlocking {
+        val hasLabels = suspend {
+            db.contactEmailLabelDao().getAllLabels(contactEmail1_1_id).first() == contactEmail1_1.labelIds
+        }
+        db.insertOrUpdateContactsEmails(user0_id, listOf(contactEmail1_1))
+        assert(hasLabels())
+        db.contactEmailDao().deleteAllContactsEmails(contact1_id)
+        assert(!hasLabels())
     }
 
     @After

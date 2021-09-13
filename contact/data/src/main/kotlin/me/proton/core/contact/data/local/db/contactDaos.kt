@@ -51,6 +51,7 @@ abstract class ContactCardDao: BaseDao<ContactCardEntity>() {
 
 @Dao
 abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
+    @Transaction
     @Query("SELECT * FROM ContactEmailEntity WHERE userId = :userId ORDER BY `order`, name")
     abstract fun getAllContactsEmails(userId: UserId): Flow<List<ContactEmailCompoundEntity>>
 
@@ -66,6 +67,10 @@ abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
 
 @Dao
 abstract class ContactEmailLabelCrossRefDao: BaseDao<ContactEmailLabelCrossRef>() {
+    @Transaction
+    @Query("SELECT labelId FROM ContactEmailLabelCrossRef WHERE contactEmailId = :contactEmailId")
+    abstract fun getAllLabels(contactEmailId: ContactEmailId): Flow<List<String>>
+
     @Query("DELETE FROM ContactEmailLabelCrossRef WHERE contactEmailId IN (:contactEmailIds)")
     abstract suspend fun deleteAllLabels(contactEmailIds: List<ContactEmailId>)
 }
