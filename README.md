@@ -75,171 +75,171 @@ Tests: **0.1** - _released on: Oct 09, 2020_
 
 ### Utils
 
-Util Android Shared Preferences: **0.2.3** - _released on: Dec 18, 2020_
+Util Android Shared Preferences: **1.15** - _released on: Sep 13, 2021_
 
-Util Android Work Manager: **0.2.2** - _released on: Dec 18, 2020_
+Util Android Work Manager: **1.15** - _released on: Sep 13, 2021_
 
-Util Kotlin: **0.2.6** - _released on: Aug 26, 2021_
+Util Kotlin: **1.15** - _released on: Sep 13, 2021_
 
 ### Test
 
-Test Kotlin: **0.2.1** - _released on: Apr 05, 2021_
+Test Kotlin: **1.15** - _released on: Sep 13, 2021_
 
-Test Android: **0.6** - _released on: Jul 01, 2021_
+Test Android: **1.15** - _released on: Sep 13, 2021_
 
-Test Android Instrumented: **0.6.7** - _released on: Aug 31, 2021_
+Test Android Instrumented: **1.15** - _released on: Sep 13, 2021_
 
 ## Shared
 
-Domain: **1.0.5** - _released on: Sep 09, 2021_
+Domain: **1.15** - _released on: Sep 13, 2021_
 
-Presentation: **1.6.1** - _released on: Sep 09, 2021_
+Presentation: **1.15** - _released on: Sep 13, 2021_
 
-Data: **1.3.1** - _released on: Jul 22, 2021_
+Data: **1.15** - _released on: Sep 13, 2021_
 
-Data Room: **1.3.1** - _released on: Jul 22, 2021_
+Data Room: **1.15** - _released on: Sep 13, 2021_
 
 ## Support
 
 ### Network
 
-Network: **1.5.4** - _released on: Aug 19, 2021_
+Network: **1.15** - _released on: Sep 13, 2021_
 
-Network Domain: **1.5.4** - _released on: Aug 19, 2021_
+Network Domain: **1.15** - _released on: Sep 13, 2021_
 
-Network Data: **1.5.4** - _released on: Aug 19, 2021_
+Network Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Crypto
 
-Crypto: **1.6.3** - _released on: Sep 09, 2021_
+Crypto: **1.15** - _released on: Sep 13, 2021_
 
-Crypto Common: **1.6.3** - _released on: Sep 09, 2021_
+Crypto Common: **1.15** - _released on: Sep 13, 2021_
 
-Crypto Android: **1.6.3** - _released on: Sep 09, 2021_
+Crypto Android: **1.15** - _released on: Sep 13, 2021_
 
 ## Features
 
 ### Auth
 
-Auth: **1.7** - _released on: Sep 07, 2021_
+Auth: **1.15** - _released on: Sep 13, 2021_
 
-Auth Domain: **1.7** - _released on: Sep 07, 2021_
+Auth Domain: **1.15** - _released on: Sep 13, 2021_
 
-Auth Presentation: **1.7** - _released on: Sep 07, 2021_
+Auth Presentation: **1.15** - _released on: Sep 13, 2021_
 
-Auth Data: **1.7** - _released on: Sep 07, 2021_
+Auth Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Account
 
-Account: **1.5.2** - _released on: Aug 16, 2021_
+Account: **1.15** - _released on: Sep 13, 2021_
 
-Account Domain: **1.5.2** - _released on: Aug 16, 2021_
+Account Domain: **1.15** - _released on: Sep 13, 2021_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **1.5.2** - _released on: Aug 16, 2021_
+Account Data: **1.15** - _released on: Sep 13, 2021_
 
 
 ### Account Manager
 
-Account Manager: **1.6** - _released on: Aug 21, 2021_
+Account Manager: **1.15** - _released on: Sep 13, 2021_
 
-Account Manager Domain: **1.6** - _released on: Aug 21, 2021_
+Account Manager Domain: **1.15** - _released on: Sep 13, 2021_
 
-Account Manager Presentation: **1.6** - _released on: Aug 21, 2021_
+Account Manager Presentation: **1.15** - _released on: Sep 13, 2021_
 
-Account Manager Data: **1.6** - _released on: Aug 21, 2021_
+Account Manager Data: **1.15** - _released on: Sep 13, 2021_
 
-Account Manager Data Db: **1.6** - _released on: Aug 21, 2021_
+Account Manager Data Db: **1.15** - _released on: Sep 13, 2021_
 
-Account Manager Dagger: **1.6** - _released on: Aug 21, 2021_
+Account Manager Dagger: **1.15** - _released on: Sep 13, 2021_
 
 ### Key
 
-Key: **1.6.3** - _released on: Sep 09, 2021_
+Key: **1.15** - _released on: Sep 13, 2021_
 
-Key Domain: **1.6.3** - _released on: Sep 09, 2021_
+Key Domain: **1.15** - _released on: Sep 13, 2021_
 
-Key Data: **1.6.3** - _released on: Sep 09, 2021_
+Key Data: **1.15** - _released on: Sep 13, 2021_
 
 ### User
 
-User: **1.6.3** - _released on: Sep 09, 2021_
+User: **1.15** - _released on: Sep 13, 2021_
 
-User Domain: **1.6.3** - _released on: Sep 09, 2021_
+User Domain: **1.15** - _released on: Sep 13, 2021_
 
-User Data: **1.6.3** - _released on: Sep 09, 2021_
+User Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Contact
 
-Contact: **0.1.5** - _released on: Jun 14, 2021_
+Contact: **1.15** - _released on: Sep 13, 2021_
 
-Contact Domain: **0.1.5** - _released on: Jun 14, 2021_
+Contact Domain: **1.15** - _released on: Sep 13, 2021_
 
-Contact Data: **0.1.5** - _released on: Jun 14, 2021_
+Contact Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Mail Message
 
-Mail Message: **1.6.1** - _released on: Aug 26, 2021_
+Mail Message: **1.15** - _released on: Sep 13, 2021_
 
-Mail Message Domain: **1.6.1** - _released on: Aug 26, 2021_
+Mail Message Domain: **1.15** - _released on: Sep 13, 2021_
 
-Mail Message Data: **1.6.1** - _released on: Aug 26, 2021_
+Mail Message Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Mail Settings
 
-Mail Settings: **1.3.2** - _released on: Jul 28, 2021_
+Mail Settings: **1.15** - _released on: Sep 13, 2021_
 
-Mail Settings Domain: **1.3.2** - _released on: Jul 28, 2021_
+Mail Settings Domain: **1.15** - _released on: Sep 13, 2021_
 
-Mail Settings Data: **1.3.2** - _released on: Jul 28, 2021_
+Mail Settings Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Human Verification
 
-Human Verification: **1.6** - _released on: Sep 07, 2021_
+Human Verification: **1.15** - _released on: Sep 13, 2021_
 
-Human Verification Domain: **1.6** - _released on: Sep 07, 2021_
+Human Verification Domain: **1.15** - _released on: Sep 13, 2021_
 
-Human Verification Presentation: **1.6** - _released on: Sep 07, 2021_
+Human Verification Presentation: **1.15** - _released on: Sep 13, 2021_
 
-Human Verification Data: **1.6** - _released on: Sep 07, 2021_
+Human Verification Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Countries
 
-Country: **0.1.6** - _released on: Aug 05, 2021_
+Country: **1.15** - _released on: Sep 13, 2021_
 
-Country Domain: **0.1.6** - _released on: Aug 05, 2021_
+Country Domain: **1.15** - _released on: Sep 13, 2021_
 
-Country Data: **0.1.6** - _released on: Aug 05, 2021_
+Country Data: **1.15** - _released on: Sep 13, 2021_
 
-Country Presentation: **0.1.6** - _released on: Aug 05, 2021_
+Country Presentation: **1.15** - _released on: Sep 13, 2021_
 
 ### Payment
 
-Payment: **0.2.4** - _released on: Aug 20, 2021_
+Payment: **1.15** - _released on: Sep 13, 2021_
 
-Payment Data: **0.2.4** - _released on: Aug 20, 2021_
+Payment Data: **1.15** - _released on: Sep 13, 2021_
 
-Payment Domain: **0.2.4** - _released on: Aug 20, 2021_
+Payment Domain: **1.15** - _released on: Sep 13, 2021_
 
-Payment Presentation: **0.2.4** - _released on: Aug 20, 2021_
+Payment Presentation: **1.15** - _released on: Sep 13, 2021_
 
 ### Plan
 
-Plan: **1.5.2** - _released on: Aug 16, 2021_
+Plan: **1.15** - _released on: Sep 13, 2021_
 
-Plan Data: **1.5.2** - _released on: Aug 16, 2021_
+Plan Data: **1.15** - _released on: Sep 13, 2021_
 
-Plan Domain: **1.5.2** - _released on: Aug 16, 2021_
+Plan Domain: **1.15** - _released on: Sep 13, 2021_
 
-Plan Presentation: **1.5.2** - _released on: Aug 16, 2021_
+Plan Presentation: **1.15** - _released on: Sep 13, 2021_
 
 ### User Settings
 
-User Settings: **1.7.1** - _released on: Sep 10, 2021_
+User Settings: **1.15** - _released on: Sep 13, 2021_
 
-User Settings Data: **1.7.1** - _released on: Sep 10, 2021_
+User Settings Data: **1.15** - _released on: Sep 13, 2021_
 
-User Settings Domain: **1.7.1** - _released on: Sep 10, 2021_
+User Settings Domain: **1.15** - _released on: Sep 13, 2021_
 
-User Settings Presentation: **1.7.1** - _released on: Sep 10, 2021_
+User Settings Presentation: **1.15** - _released on: Sep 13, 2021_
