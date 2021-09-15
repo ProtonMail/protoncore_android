@@ -80,13 +80,11 @@ class AccountSwitcherRobot : CoreRobot() {
             view
                 .withId(R.id.account_email_textview)
                 .startsWith("${user.name}@")
-                .wait()
 
         fun userMore(user: User): OnView =
             view
                 .withId(R.id.account_more_button)
                 .hasSibling(userEmail(user))
-                .wait()
     }
 
     class Verify : CoreVerify() {

@@ -45,10 +45,15 @@ import org.junit.runner.Description
  */
 open class ProtonTest(
     private val activity: Class<out Activity>,
+    defaultTimeout: Long = 10_000L,
     tries: Int = 2,
     testWatcher: TestWatcher = TestExecutionWatcher(),
-    activityScenarioRule: ActivityScenarioRule<out Activity> = ActivityScenarioRule(activity)
+    activityScenarioRule: ActivityScenarioRule<out Activity> = ActivityScenarioRule(activity),
 ) {
+
+    init {
+        commandTimeout = defaultTimeout
+    }
 
     class TestExecutionWatcher : TestWatcher() {
         override fun failed(e: Throwable?, description: Description?) = Shell.saveToFile(description)
@@ -84,6 +89,7 @@ open class ProtonTest(
 
     companion object {
         const val testTag = "ESPRESSO_TEST"
+        var commandTimeout: Long = 10_000L
         val screenshotPath = "${getTargetContext().filesDir.path}/artifacts/screenshots"
         val testName = TestName()
         fun getTargetContext() = InstrumentationRegistry.getInstrumentation().targetContext!!

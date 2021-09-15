@@ -16,13 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.auth.login
+package me.proton.core.test.android.uitests.tests.medium.auth.login
 
 import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.plugins.Quark.jailUnban
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.MailboxPasswordRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -37,7 +36,7 @@ class MailboxTests : BaseTest() {
 
     @Before
     fun goToMailbox() {
-        jailUnban()
+        quark.jailUnban()
         AddAccountRobot()
             .signIn()
             .username(twoPassUser.name)

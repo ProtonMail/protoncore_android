@@ -16,10 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.usersettings
+package me.proton.core.test.android.uitests.tests.medium.usersettings
 
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
+import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot.AuthenticationRobot
@@ -32,7 +33,10 @@ import org.junit.Test
 class RecoveryEmailTests: BaseTest() {
 
     private val recoveryEmailRobot = RecoveryEmailRobot()
-    private val user = users.getUser { it.recoveryEmail.isNotEmpty() }
+
+    companion object {
+        val user: User = quark.userCreate(User(recoveryEmail = "recovery@example.lt"))
+    }
 
     @Before
     fun navigateToPasswordManagement() {
@@ -44,7 +48,6 @@ class RecoveryEmailTests: BaseTest() {
                 recoveryEmailElementsDisplayed()
                 currentRecoveryEmailIs(user.recoveryEmail)
             }
-
     }
 
     @Test

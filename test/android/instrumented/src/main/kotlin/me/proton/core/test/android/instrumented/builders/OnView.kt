@@ -23,20 +23,14 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Root
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
-import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import me.proton.core.test.android.instrumented.matchers.SystemUI
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
-import me.proton.core.test.android.instrumented.waits.ConditionWatcher.Companion.TIMEOUT_10S
-import me.proton.core.test.android.instrumented.waits.UIWaits.waitForView
-import me.proton.core.test.android.instrumented.waits.UIWaits.waitUntilViewIsGone
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf
@@ -45,370 +39,294 @@ import java.util.ArrayList
 /**
  * Builder like class that allows to write [ViewActions] and [ViewAssertion] for single [View].
  */
-@Suppress("HasPlatformType")
-class OnView {
-    private var tag: Any? = null
+class OnView : ConditionWatcher {
+    private val matchers: ArrayList<Matcher<View>> = arrayListOf()
 
-    private var isCompletelyDisplayed: Boolean = false
-    private var hasLinks: Boolean = false
-    private var hasFocus: Boolean = false
-    private var hasContentDescription: Boolean = false
-    private var isClickable: Boolean = false
-    private var isChecked: Boolean = false
-    private var isDisabled: Boolean = false
-    private var isEnabled: Boolean = false
-    private var isFocusable: Boolean = false
-    private var isFocused: Boolean = false
-    private var isNotChecked: Boolean = false
-    private var isSelected: Boolean = false
-    private var supportsInputMethods: Boolean = false
+    /** [ViewInteraction] wait. **/
+    private fun viewInteraction(viewAssertion: ViewAssertion = matches(ViewMatchers.isDisplayed())): ViewInteraction {
+        waitForCondition({ onView(viewMatcher()).check(viewAssertion) })
+        return onView(viewMatcher())
+    }
 
-    private var clazz: Class<*>? = null
+    /** Matcher wrappers **/
+    fun instanceOf(clazz: Class<*>?) = apply {
+        matchers.add(CoreMatchers.instanceOf(clazz))
+    }
 
-    private var childCount: Int? = null
-    private var displayedPercentage: Int? = null
-    private var hintId: Int? = null
-    private var inputType: Int? = null
-    private var imeAction: Int? = null
-    private var id: Int? = null
-    private var tagKey: Int? = null
+    fun isEnabled() = apply {
+        matchers.add(ViewMatchers.isEnabled())
+    }
 
-    private var className: String? = null
-    private var contentDescText: String? = null
-    private var contentDescTextId: Int? = null
-    private var errorText: String? = null
-    private var hint: String? = null
-    private var resourceName: String? = null
-    private var spinnerText: String? = null
-    private var substring: String? = null
-    private var text: String? = null
-    private var startsWith: String? = null
-    private var indexInParent: Int? = null
+    fun hasSibling(siblingView: OnView) = apply {
+        matchers.add(ViewMatchers.hasSibling(siblingView.viewMatcher()))
+    }
 
-    private var ancestorMatcher: Matcher<View>? = null
-    private var childMatcher: Matcher<View>? = null
-    private var descendantMatcher: Matcher<View>? = null
-    private var parentMatcher: Matcher<View>? = null
-    private var siblingMatcher: Matcher<View>? = null
+    fun withId(@IdRes id: Int) = apply {
+        matchers.add(ViewMatchers.withId(id))
+    }
 
-    private var contentDescMatcher: Matcher<out CharSequence?>? = null
+    fun withParent(parentView: OnView) = apply {
+        matchers.add(ViewMatchers.withParent(parentView.viewMatcher()))
+    }
 
-    private var customMatcher: Matcher<View>? = null
+    fun withText(@StringRes textId: Int) = apply {
+        matchers.add(ViewMatchers.withText(stringFromResource(textId)))
+    }
 
-    private var visibility: ViewMatchers.Visibility? = null
+    fun withText(text: String) = apply {
+        matchers.add(ViewMatchers.withText(text))
+    }
 
-    val positiveDialogButton = SystemUI.positiveDialogBtn
-    val neutralDialogBtn = SystemUI.neutralDialogBtn
-    val negativeDialogBtn = SystemUI.negativeDialogBtn
-    val moreOptionsBtn = SystemUI.moreOptionsBtn
+    fun startsWith(text: String) = apply {
+        matchers.add(ViewMatchers.withText(CoreMatchers.startsWith(text)))
+    }
 
-    /** [View] properties. **/
-    fun instanceOf(clazz: Class<*>?) = apply { this.clazz = clazz }
+    fun isClickable() = apply {
+        matchers.add(ViewMatchers.isClickable())
+    }
 
-    fun isClickable() = apply { this.isClickable = true }
+    fun isChecked() = apply {
+        matchers.add(ViewMatchers.isChecked())
+    }
 
-    fun isChecked() = apply { this.isChecked = true }
+    fun isCompletelyDisplayed() = apply {
+        matchers.add(ViewMatchers.isCompletelyDisplayed())
+    }
 
-    fun isCompletelyDisplayed() = apply { this.isCompletelyDisplayed = true }
+    fun isDescendantOf(ancestorView: OnView) = apply {
+        matchers.add(ViewMatchers.isDescendantOfA(ancestorView.viewMatcher()))
+    }
 
-    fun isDescendantOf(ancestorView: OnView) = apply { this.ancestorMatcher = ancestorView.matcher() }
+    fun isDisplayingAtLeast(displayedPercentage: Int) = apply {
+        matchers.add(ViewMatchers.isDisplayingAtLeast(displayedPercentage))
+    }
 
-    fun isDisplayingAtLeast(displayedPercentage: Int) = apply { this.displayedPercentage = displayedPercentage }
+    fun isDisabled() = apply {
+        matchers.add(CoreMatchers.not(ViewMatchers.isEnabled()))
+    }
 
-    fun isDisabled() = apply { this.isDisabled = true }
+    fun isFocusable() = apply {
+        matchers.add(ViewMatchers.isFocusable())
+    }
 
-    fun isEnabled() = apply { this.isEnabled = true }
+    fun isFocused() = apply {
+        matchers.add(ViewMatchers.isFocused())
+    }
 
-    fun isFocusable() = apply { this.isFocusable = true }
+    fun isNotChecked() = apply {
+        matchers.add(ViewMatchers.isNotChecked())
+    }
 
-    fun isFocused() = apply { this.isFocused = true }
+    fun isSelected() = apply {
+        matchers.add(ViewMatchers.isSelected())
+    }
 
-    fun isNotChecked() = apply { this.isNotChecked = true }
+    fun hasChildCount(childCount: Int) = apply {
+        matchers.add(ViewMatchers.hasChildCount(childCount))
+    }
 
-    fun isSelected() = apply { this.isSelected = true }
+    fun hasContentDescription() = apply {
+        matchers.add(ViewMatchers.hasContentDescription())
+    }
 
-    fun hasChildCount(childCount: Int) = apply { this.childCount = childCount }
+    fun hasDescendant(descendantView: OnView) = apply {
+        matchers.add(ViewMatchers.hasDescendant(descendantView.viewMatcher()))
+    }
 
-    fun hasContentDescription() = apply { this.hasContentDescription = true }
+    fun hasErrorText(errorText: String) = apply {
+        matchers.add(ViewMatchers.hasErrorText(errorText))
+    }
 
-    fun hasDescendant(descendantView: OnView) = apply { this.descendantMatcher = descendantView.matcher() }
+    fun hasFocus() = apply {
+        matchers.add(ViewMatchers.hasFocus())
+    }
 
-    fun hasErrorText(errorText: String) = apply { this.errorText = errorText }
+    fun hasImeAction(imeAction: Int) = apply {
+        matchers.add(ViewMatchers.hasImeAction(imeAction))
+    }
 
-    fun hasFocus() = apply { this.hasFocus = true }
+    fun hasLinks() = apply {
+        matchers.add(ViewMatchers.hasLinks())
+    }
 
-    fun hasImeAction(imeAction: Int) = apply { this.imeAction = imeAction }
+    fun supportsInputMethods() = apply {
+        matchers.add(ViewMatchers.supportsInputMethods())
+    }
 
-    fun hasLinks() = apply { this.hasLinks = true }
+    fun withChild(childMatcher: OnView) = apply {
+        matchers.add(ViewMatchers.withChild(childMatcher.viewMatcher()))
+    }
 
-    fun hasSibling(siblingView: OnView) = apply { this.siblingMatcher = siblingView.matcher() }
+    fun withClassName(className: String) = apply {
+        matchers.add(ViewMatchers.withClassName(CoreMatchers.equalTo(className)))
+    }
 
-    fun supportsInputMethods() = apply { this.supportsInputMethods = true }
+    fun withContentDesc(contentDescText: String) = apply {
+        matchers.add(ViewMatchers.withContentDescription(contentDescText))
+    }
 
-    fun withChild(childMatcher: OnView) = apply { this.childMatcher = childMatcher.matcher() }
+    fun withContentDesc(@StringRes contentDescTextId: Int) = apply {
+        matchers.add(
+            ViewMatchers.withContentDescription(
+                stringFromResource(contentDescTextId)
+            )
+        )
+    }
 
-    fun withClassName(className: String) = apply { this.className = className }
+    fun withContentDesc(contentDescMatcher: Matcher<out CharSequence?>?) = apply {
+        matchers.add(ViewMatchers.withContentDescription(contentDescMatcher))
+    }
 
-    fun withContentDesc(contentDescText: String) = apply { this.contentDescText = contentDescText }
+    fun withHint(hint: String) = apply {
+        matchers.add(ViewMatchers.withHint(hint))
+    }
 
-    fun withContentDesc(@StringRes contentDescTextId: Int) = apply { this.contentDescTextId = contentDescTextId }
+    fun withHint(@StringRes hintId: Int) = apply {
+        matchers.add(ViewMatchers.withHint(hintId))
+    }
 
-    fun withContentDesc(contentDescMatcher: Matcher<out CharSequence?>?) =
-        apply { this.contentDescMatcher = contentDescMatcher }
+    fun withInputType(inputType: Int) = apply {
+        matchers.add(ViewMatchers.withInputType(inputType))
+    }
 
-    fun withHint(hint: String) = apply { this.hint = hint }
+    fun withParentIndex(indexInParent: Int) = apply {
+        matchers.add(ViewMatchers.withParentIndex(indexInParent))
+    }
 
-    fun withHint(@StringRes hintId: Int) = apply { this.hintId = hintId }
+    fun withResourceName(resourceName: String) = apply {
+        matchers.add(ViewMatchers.withResourceName(resourceName))
+    }
 
-    fun withId(@IdRes id: Int) = apply { this.id = id }
+    fun withSubstring(substring: String) = apply {
+        matchers.add(ViewMatchers.withSubstring(substring))
+    }
 
-    fun withInputType(inputType: Int) = apply { this.inputType = inputType }
+    fun withSpinnerText(spinnerText: String) = apply {
+        matchers.add(ViewMatchers.withSpinnerText(spinnerText))
+    }
 
-    fun withParent(parentView: OnView) = apply { this.parentMatcher = parentView.matcher() }
+    fun withTag(tag: Any) = apply {
+        matchers.add(ViewMatchers.withTagValue(CoreMatchers.`is`(tag)))
+    }
 
-    fun withParentIndex(indexInParent: Int) = apply { this.indexInParent = indexInParent }
+    fun withTagKey(tagKey: Int) = apply {
+        matchers.add(ViewMatchers.withTagKey(tagKey))
+    }
 
-    fun withResourceName(resourceName: String) = apply { this.resourceName = resourceName }
+    fun withVisibility(visibility: ViewMatchers.Visibility) = apply {
+        matchers.add(ViewMatchers.withEffectiveVisibility(visibility))
+    }
 
-    fun withSubstring(substring: String) = apply { this.substring = substring }
+    fun withCustomMatcher(matcher: Matcher<View>) = apply {
+        matchers.add(matcher)
+    }
 
-    fun withSpinnerText(spinnerText: String) = apply { this.spinnerText = spinnerText }
+    /** Final [Matcher] for the view. **/
+    fun viewMatcher(): Matcher<View> = AllOf.allOf(matchers)
 
-    fun withTag(tag: Any) = apply { this.tag = tag }
-
-    fun withTagKey(tagKey: Int) = apply { this.tagKey = tagKey }
-
-    fun withText(@StringRes textId: Int) = apply { this.text = stringFromResource(textId) }
-
-    fun withText(text: String) = apply { this.text = text }
-
-    fun startsWith(text: String) = apply { this.startsWith = text }
-
-    fun withVisibility(visibility: ViewMatchers.Visibility) = apply { this.visibility = visibility }
-
-    fun withCustomMatcher(matcher: Matcher<View>) = apply { this.customMatcher = matcher }
-
-    /** [ViewInteraction] action wrappers. **/
-    fun click() = apply { waitForView(viewInteraction()).perform(ViewActions.click()) }
+    /** Action wrappers. **/
+    fun click() = apply {
+        viewInteraction().perform(ViewActions.click())
+    }
 
     fun clearText() = apply {
-        waitForView(viewInteraction()).perform(ViewActions.clearText(), ViewActions.closeSoftKeyboard())
+        viewInteraction().perform(ViewActions.clearText(), ViewActions.closeSoftKeyboard())
     }
-
-    fun closeDrawer() = apply { waitForView(viewInteraction()).perform(DrawerActions.close()) }
-
-    fun closeKeyboard() = apply { waitForView(viewInteraction()).perform(ViewActions.closeSoftKeyboard()) }
-
-    fun customAction(action: ViewAction) = apply { waitForView(viewInteraction()).perform(action) }
-
-    fun doubleClick() = apply { waitForView(viewInteraction()).perform(ViewActions.doubleClick()) }
-
-    fun longClick() = apply { waitForView(viewInteraction()).perform(ViewActions.longClick()) }
-
-    fun openDrawer() = apply { waitForView(viewInteraction()).perform(DrawerActions.open()) }
-
-    fun pressBack() = apply { waitForView(viewInteraction()).perform(ViewActions.pressBack()) }
-
-    fun pressImeActionBtn() = apply { waitForView(viewInteraction()).perform(ViewActions.pressImeActionButton()) }
 
     fun replaceText(text: String) = apply {
-        waitForView(viewInteraction()).perform(ViewActions.replaceText(text), ViewActions.closeSoftKeyboard())
+        viewInteraction().perform(ViewActions.replaceText(text), ViewActions.closeSoftKeyboard())
     }
 
-    fun scrollTo() = apply { waitForView(viewInteraction()).perform(ViewActions.scrollTo()) }
+    fun swipeDown() = apply {
+        viewInteraction().perform(ViewActions.swipeDown())
+    }
 
-    fun swipeDown() = apply { waitForView(viewInteraction()).perform(ViewActions.swipeDown()) }
+    fun swipeLeft() = apply {
+        viewInteraction().perform(ViewActions.swipeLeft())
+    }
 
-    fun swipeLeft() = apply { waitForView(viewInteraction()).perform(ViewActions.swipeLeft()) }
+    fun swipeRight() = apply {
+        viewInteraction().perform(ViewActions.swipeRight())
+    }
 
-    fun swipeRight() = apply { waitForView(viewInteraction()).perform(ViewActions.swipeRight()) }
-
-    fun swipeUp() = apply { waitForView(viewInteraction()).perform(ViewActions.swipeUp()) }
+    fun swipeUp() = apply {
+        viewInteraction().perform(ViewActions.swipeUp())
+    }
 
     fun typeText(text: String) = apply {
-        waitForView(viewInteraction()).perform(ViewActions.typeText(text), ViewActions.closeSoftKeyboard())
+        viewInteraction().perform(ViewActions.typeText(text), ViewActions.closeSoftKeyboard())
     }
 
-    /** [ViewInteraction] assertion wrappers. **/
-    fun checkContains(text: String) = apply {
-        waitForView(viewInteraction())
-            .check(ViewAssertions.matches(ViewMatchers.withText(CoreMatchers.containsString(text))))
+    fun closeKeyboard() = apply {
+        viewInteraction().perform(ViewActions.closeSoftKeyboard())
     }
 
+    fun closeDrawer() = apply {
+        viewInteraction().perform(DrawerActions.close())
+    }
+
+    fun doubleClick() = apply {
+        viewInteraction().perform(ViewActions.doubleClick())
+    }
+
+    fun longClick() = apply {
+        viewInteraction().perform(ViewActions.longClick())
+    }
+
+    fun openDrawer() = apply {
+        viewInteraction().perform(DrawerActions.open())
+    }
+
+    fun pressBack() = apply {
+        viewInteraction().perform(ViewActions.pressBack())
+    }
+
+    fun pressImeActionBtn() = apply {
+        viewInteraction().perform(ViewActions.pressImeActionButton())
+    }
+
+    fun scrollTo() = apply {
+        viewInteraction().perform(ViewActions.scrollTo())
+    }
+
+    /** Assertion wrappers **/
     fun checkIsChecked() = apply {
-        waitForView(viewInteraction()).check(ViewAssertions.matches(ViewMatchers.isChecked()))
+        viewInteraction(matches(ViewMatchers.isChecked()))
     }
 
     fun checkIsNotChecked() = apply {
-        waitForView(viewInteraction()).check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isChecked())))
+        viewInteraction(matches(CoreMatchers.not(ViewMatchers.isChecked())))
     }
 
-    fun checkDisplayed() = apply { viewInteraction().check(ViewAssertions.matches(ViewMatchers.isDisplayed())) }
-
-    fun checkDoesNotExist() = apply { waitUntilViewIsGone(viewInteraction()) }
+    fun checkDisplayed() = apply {
+        viewInteraction(matches(ViewMatchers.isDisplayed()))
+    }
 
     fun checkDisabled() = apply {
-        waitForView(viewInteraction()).check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isEnabled())))
+        viewInteraction(matches(CoreMatchers.not(ViewMatchers.isEnabled())))
     }
 
     fun checkEnabled() = apply {
-        waitForView(viewInteraction()).check(ViewAssertions.matches(ViewMatchers.isEnabled()))
-    }
-
-    fun checkNotDisplayed() = apply {
-        viewInteraction().check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isDisplayed())))
+        viewInteraction(matches(ViewMatchers.isEnabled()))
     }
 
     fun checkSelected() = apply {
-        waitForView(viewInteraction()).check(ViewAssertions.matches(ViewMatchers.isSelected()))
+        viewInteraction(matches(ViewMatchers.isSelected()))
     }
 
-    /** [ViewInteraction] wait functions. **/
-    fun wait(timeout: Long = TIMEOUT_10S) = apply { waitForView(viewInteraction(), timeout) }
-
-    fun waitUntilGone(timeout: Long = TIMEOUT_10S) = apply { waitUntilViewIsGone(viewInteraction(), timeout) }
-
-    fun waitForEnabled(timeout: Long = TIMEOUT_10S) = apply {
-        isEnabled = true
-        isDisabled = false
-        waitForView(viewInteraction(), timeout)
+    fun checkContains(text: String) = apply {
+        viewInteraction(matches(ViewMatchers.withText(CoreMatchers.containsString(text))))
     }
 
-    fun waitForDisabled(timeout: Long = TIMEOUT_10S) = apply {
-        isDisabled = true
-        isEnabled = false
-        waitForView(viewInteraction(), timeout)
+    fun checkContains(@StringRes textId: Int) = apply {
+        viewInteraction(matches(ViewMatchers.withText(stringFromResource(textId))))
     }
 
-    /** Indicates that [View] is part of a root view described by [OnRootView]. **/
-    fun inRoot(rootView: OnRootView) = apply { rootMatcher = rootView.matcher() }
-
-    /** Builds final [Matcher] for the view. **/
-    internal fun matcher(): Matcher<View> = viewMatcher()
-
-    private fun viewInteraction(): ViewInteraction {
-        return onView(viewMatcher())
-            .apply { inRoot(rootMatcher) }
+    fun checkDoesNotExist() = apply {
+        viewInteraction(matches(CoreMatchers.`is`(doesNotExist())))
     }
 
-    private fun viewMatcher(): Matcher<View> {
-        val matchers = ArrayList<Matcher<View>>()
-        if (id != null) {
-            matchers.add(ViewMatchers.withId(id!!))
-        }
-        if (text != null) {
-            matchers.add(ViewMatchers.withText(text))
-        }
-        if (spinnerText != null) {
-            matchers.add(ViewMatchers.withSpinnerText(spinnerText))
-        }
-        if (substring != null) {
-            matchers.add(ViewMatchers.withSubstring(substring))
-        }
-        if (clazz != null) {
-            matchers.add(CoreMatchers.instanceOf(clazz))
-        }
-        if (ancestorMatcher != null) {
-            matchers.add(ViewMatchers.isDescendantOfA(ancestorMatcher))
-        }
-        if (tag != null) {
-            matchers.add(ViewMatchers.withTagValue(CoreMatchers.`is`(tag)))
-        }
-        if (tagKey != null) {
-            matchers.add(ViewMatchers.withTagKey(tagKey!!))
-        }
-        if (hint != null) {
-            matchers.add(ViewMatchers.withHint(hint))
-        }
-        if (inputType != null) {
-            matchers.add(ViewMatchers.withInputType(inputType!!))
-        }
-        if (visibility != null) {
-            matchers.add(ViewMatchers.withEffectiveVisibility(visibility))
-        }
-        if (parentMatcher != null) {
-            matchers.add(ViewMatchers.withParent(parentMatcher))
-        }
-        if (indexInParent != null) {
-            matchers.add(ViewMatchers.withParentIndex(indexInParent!!))
-        }
-        if (className != null) {
-            matchers.add(ViewMatchers.withClassName(CoreMatchers.equalTo(className)))
-        }
-        if (resourceName != null) {
-            matchers.add(ViewMatchers.withResourceName(resourceName))
-        }
-        if (contentDescMatcher != null) {
-            matchers.add(ViewMatchers.withContentDescription(contentDescMatcher))
-        }
-        if (contentDescText != null) {
-            matchers.add(ViewMatchers.withContentDescription(contentDescText))
-        }
-        if (contentDescTextId != null) {
-            matchers.add(ViewMatchers.withContentDescription(contentDescTextId!!))
-        }
-        if (descendantMatcher != null) {
-            matchers.add(ViewMatchers.hasDescendant(descendantMatcher))
-        }
-        if (siblingMatcher != null) {
-            matchers.add(ViewMatchers.hasSibling(siblingMatcher))
-        }
-        if (displayedPercentage != null) {
-            matchers.add(ViewMatchers.isDisplayingAtLeast(displayedPercentage!!))
-        }
-        if (errorText != null) {
-            matchers.add(ViewMatchers.hasErrorText(errorText))
-        }
-        if (childCount != null) {
-            matchers.add(ViewMatchers.hasChildCount(childCount!!))
-        }
-        if (imeAction != null) {
-            matchers.add(ViewMatchers.hasImeAction(imeAction!!))
-        }
-        if (supportsInputMethods) {
-            matchers.add(ViewMatchers.supportsInputMethods())
-        }
-        if (isCompletelyDisplayed) {
-            matchers.add(ViewMatchers.isCompletelyDisplayed())
-        }
-        if (isClickable) {
-            matchers.add(ViewMatchers.isClickable())
-        }
-        if (isChecked) {
-            matchers.add(ViewMatchers.isChecked())
-        }
-        if (isDisabled) {
-            matchers.add(CoreMatchers.not(ViewMatchers.isEnabled()))
-        }
-        if (isEnabled) {
-            matchers.add(ViewMatchers.isEnabled())
-        }
-        if (isFocusable) {
-            matchers.add(ViewMatchers.isFocusable())
-        }
-        if (isFocused) {
-            matchers.add(ViewMatchers.isFocused())
-        }
-        if (isNotChecked) {
-            matchers.add(ViewMatchers.isNotChecked())
-        }
-        if (isSelected) {
-            matchers.add(ViewMatchers.isSelected())
-        }
-        if (hasLinks) {
-            matchers.add(ViewMatchers.hasLinks())
-        }
-        if (customMatcher != null) {
-            matchers.add(customMatcher!!)
-        }
-        if (startsWith != null) {
-            matchers.add(ViewMatchers.withText(CoreMatchers.startsWith(startsWith)))
-        }
-        return AllOf.allOf(matchers)
-    }
-
-    companion object {
-        /** Default rootMatcher value for [OnListView] instance. **/
-        private var rootMatcher: Matcher<Root> = RootMatchers.DEFAULT
+    fun checkNotDisplayed() = apply {
+        viewInteraction(matches(CoreMatchers.not(ViewMatchers.isDisplayed())))
     }
 }

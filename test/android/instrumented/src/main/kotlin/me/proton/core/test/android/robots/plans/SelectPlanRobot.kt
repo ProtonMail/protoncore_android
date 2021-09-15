@@ -47,8 +47,8 @@ class SelectPlanRobot : CoreRobot() {
      * Changes billing cycle to provided [billingCycle]
      */
     fun changeBillingCycle(billingCycle: BillingCycle): SelectPlanRobot {
-        view.withId(R.id.billingCycleSpinner).wait().click()
-        view.withText(billingCycle.value).wait().click()
+        view.withId(R.id.billingCycleSpinner).click()
+        view.withText(billingCycle.value).click()
         return this
     }
 
@@ -57,8 +57,8 @@ class SelectPlanRobot : CoreRobot() {
      */
     fun changeCurrency(currency: Currency): SelectPlanRobot {
         val currencyString = "${currency.symbol} ${currency.code}".trim()
-        view.withId(R.id.currencySpinner).wait().click()
-        view.withText(currencyString).wait().click()
+        view.withId(R.id.currencySpinner).click()
+        view.withText(currencyString).click()
         return this
     }
 
@@ -68,7 +68,6 @@ class SelectPlanRobot : CoreRobot() {
                 .withId(R.id.planContents).hasSibling(
                     view.withId(R.id.planNameText).withText(plan!!.name)
                 )
-                .wait()
         }
 
         fun canSelectPlan(plan: Plan) {
@@ -77,19 +76,18 @@ class SelectPlanRobot : CoreRobot() {
                 .hasSibling(
                     view.withId(R.id.planNameText).withText(plan.name)
                 )
-                .wait()
         }
 
         fun billingCycleIs(billingCycle: BillingCycle, currency: Currency = Currency.Euro) {
             when (billingCycle) {
                 BillingCycle.Monthly -> {
-                    view.withId(R.id.planPriceText).withText("${currency.symbol}5.00").wait()
+                    view.withId(R.id.planPriceText).withText("${currency.symbol}5.00")
                 }
                 BillingCycle.Yearly -> {
                     val billedAsString =
                         stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}48")
-                    view.withId(R.id.planPriceDescriptionText).withText(billedAsString).wait()
-                    view.withId(R.id.planPriceText).withText("${currency.symbol}4.00").wait()
+                    view.withId(R.id.planPriceDescriptionText).checkContains(billedAsString)
+                    view.withId(R.id.planPriceText).checkContains("${currency.symbol}4.00")
                 }
             }
         }

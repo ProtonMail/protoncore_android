@@ -34,23 +34,34 @@ class OnRootView {
     private val matchers = ArrayList<Matcher<Root>>()
     private val notCurrentActivityWindow = CoreMatchers.not(ActivityProvider.currentActivity!!.window.decorView)
 
-    fun isPlatformPopUp(): OnRootView = apply { matchers.add(RootMatchers.isPlatformPopup()) }
+    fun isPlatformPopUp() = apply {
+        matchers.add(RootMatchers.isPlatformPopup())
+    }
 
-    fun isDialog(): OnRootView = apply { matchers.add(RootMatchers.isDialog()) }
+    fun isDialog() = apply {
+        matchers.add(RootMatchers.isDialog())
+    }
 
-    fun isFocusable(): OnRootView = apply { matchers.add(RootMatchers.isFocusable()) }
+    fun isFocusable() = apply {
+        matchers.add(RootMatchers.isFocusable())
+    }
 
-    fun isSystemAlertWindow(): OnRootView = apply { matchers.add(RootMatchers.isSystemAlertWindow()) }
+    fun isSystemAlertWindow() = apply {
+        matchers.add(RootMatchers.isSystemAlertWindow())
+    }
 
-    fun isTouchable(): OnRootView = apply { matchers.add(RootMatchers.isTouchable()) }
+    fun isTouchable() = apply {
+        matchers.add(RootMatchers.isTouchable())
+    }
 
-    fun withDecorView(view: OnView): OnRootView = apply {
-        matchers.add(RootMatchers.withDecorView(view.matcher()))
+    fun withDecorView(view: OnView) = apply {
+        matchers.add(RootMatchers.withDecorView(view.viewMatcher()))
     }
 
     // Can be used to locate toast view.
-    fun withNotCurrentActivityDecorView(): OnRootView =
-        apply { matchers.add(RootMatchers.withDecorView(notCurrentActivityWindow)) }
+    fun withNotCurrentActivityDecorView() = apply {
+        matchers.add(RootMatchers.withDecorView(notCurrentActivityWindow))
+    }
 
     /** Matcher function should be used when we would like to point which [Root] we wanna operate on. **/
     internal fun matcher(): Matcher<Root> = AllOf.allOf(matchers)

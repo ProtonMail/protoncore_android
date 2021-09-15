@@ -58,8 +58,8 @@ class PasswordSetupRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun passwordSetupElementsDisplayed() {
-            view.withId(R.id.confirmPasswordInput).instanceOf(TextView::class.java).wait()
-            view.withId(R.id.passwordInput).instanceOf(TextView::class.java).wait()
+            view.withId(R.id.confirmPasswordInput).instanceOf(TextView::class.java).checkDisplayed()
+            view.withId(R.id.passwordInput).instanceOf(TextView::class.java).checkDisplayed()
         }
     }
 

@@ -51,8 +51,8 @@ class MailboxPasswordRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun mailboxPasswordElementsDisplayed() {
-            view.withId(R.id.unlockButton).wait().checkDisplayed()
-            view.withId(R.id.mailboxPasswordInput).instanceOf(EditText::class.java).wait()
+            view.withId(R.id.unlockButton).checkDisplayed()
+            view.withId(R.id.mailboxPasswordInput).instanceOf(EditText::class.java).checkDisplayed()
         }
     }
 

@@ -16,26 +16,25 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.instrumented.waits
+package me.proton.core.test.android.instrumented.builders
 
 import android.util.Log
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.commandTimeout
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testName
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 import me.proton.core.test.android.instrumented.utils.FileUtils
 import java.util.concurrent.TimeoutException
 
-/**
- * Mechanism that allows watching for a condition to be met within specified timeout and with specified interval.
- */
 interface ConditionWatcher {
 
     /**
      * Waits until [conditionBlock] does not throw any exceptions
      * @throws Exception which was last caught during condition check after given [watchTimeout] ms
      */
+
     fun waitForCondition(
         conditionBlock: () -> Unit,
-        watchTimeout: Long = TIMEOUT_5S,
+        watchTimeout: Long = commandTimeout,
         watchInterval: Long = 250L,
     ) {
         var timeInterval = 0L
@@ -43,8 +42,7 @@ interface ConditionWatcher {
 
         while (timeInterval < watchTimeout) {
             try {
-                conditionBlock()
-                return
+                return conditionBlock()
             } catch (e: Throwable) {
                 val firstLine = e.message?.split("\n")?.get(0)
                 Log.v(testTag, "Waiting for condition. ${watchTimeout - timeInterval}ms remaining. Status: $firstLine")
@@ -56,10 +54,5 @@ interface ConditionWatcher {
         Log.d(testTag, "Test \"${testName.methodName}\" failed. Saving screenshot")
         FileUtils.takeScreenshot()
         throw throwable
-    }
-
-    companion object {
-        const val TIMEOUT_5S = 5000L
-        const val TIMEOUT_10S = 10_000L
     }
 }

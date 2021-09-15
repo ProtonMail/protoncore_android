@@ -46,6 +46,6 @@ class ExistingPaymentMethodsRobot : PaymentRobot() {
                 .hasSibling(
                     view.withText(details)
                 )
-                .wait()
+                .checkDisplayed()
     }
 }

@@ -97,8 +97,9 @@ open class HumanVerificationRobot : CoreRobot() {
      * @return an instance of [T]
      */
     inline fun <reified T> iAmHuman(): T {
+        verify { hvElementsDisplayed() }
         Thread.sleep(2000) // Special case
-        view.instanceOf(WebView::class.java).wait().click()
+        view.instanceOf(WebView::class.java).click()
         return T::class.java.newInstance()
     }
 
@@ -107,16 +108,16 @@ open class HumanVerificationRobot : CoreRobot() {
      * @return [CodeVerificationRobot]
      */
     private fun hvOption(option: TokenType): HumanVerificationRobot =
-        clickElement(option.value.toUpperCase(Locale.ROOT), TextView::class.java)
+        clickElement(option.value.uppercase(Locale.ROOT), TextView::class.java)
 
     class Verify : CoreVerify() {
         fun hvElementsDisplayed() {
-            view.withText(EMAIL.value.toUpperCase(Locale.ROOT)).wait()
-            view.withText(SMS.value.toUpperCase(Locale.ROOT)).wait()
-            view.withText(CAPTCHA.value.toUpperCase(Locale.ROOT)).wait()
+            view.withText(EMAIL.value.uppercase(Locale.ROOT)).checkDisplayed()
+            view.withText(SMS.value.uppercase(Locale.ROOT)).checkDisplayed()
+            view.withText(CAPTCHA.value.uppercase(Locale.ROOT)).checkDisplayed()
         }
 
-        fun captchaDisplayed() = view.withId(R.id.captchaWebView).wait()
+        fun captchaDisplayed() = view.withId(R.id.captchaWebView)
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

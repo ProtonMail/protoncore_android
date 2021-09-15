@@ -28,24 +28,34 @@ import androidx.test.uiautomator.Until
  */
 class OnDevice {
 
-    fun clickHomeBtn(): OnDevice = apply { device.pressHome() }
+    fun clickHomeBtn() = apply {
+        device.pressHome()
+    }
 
-    fun clickRecentAppsBtn(): OnDevice = apply { device.pressRecentApps() }
+    fun clickRecentAppsBtn() = apply {
+        device.pressRecentApps()
+    }
 
-    fun clickBackBtn(): OnDevice = apply { device.pressBack() }
+    fun clickBackBtn() = apply {
+        device.pressBack()
+    }
 
-    fun expandNotifications(): OnDevice = apply { device.openNotification() }
+    fun expandNotifications() = apply {
+        device.openNotification()
+    }
 
-    fun clickNotificationByText(text: String, timeout: Long = TIMEOUT_5S): OnDevice =
-        apply { device.wait(Until.findObject(By.text(text)), timeout).click() }
+    fun clickNotificationByText(text: String, timeout: Long = TIMEOUT_5S) = apply {
+        device.wait(Until.findObject(By.text(text)), timeout).click()
+    }
 
     fun clickShareDialogJustOnceBtn(applicationName: String, timeout: Long = TIMEOUT_5S): OnDevice = apply {
         device.wait(Until.findObject(By.textStartsWith(applicationName)), timeout)?.click()
         device.wait(Until.findObject(By.res("android:id/button_once")), timeout).click()
     }
 
-    fun waitForObjectByText(text: String, timeout: Long = TIMEOUT_5S) =
-        apply { device.wait(Until.hasObject(By.text(text)), timeout) }
+    fun waitForObjectByText(text: String, timeout: Long = TIMEOUT_5S) = apply {
+        device.wait(Until.hasObject(By.text(text)), timeout)
+    }
 
     companion object {
         private const val TIMEOUT_5S = 5000L

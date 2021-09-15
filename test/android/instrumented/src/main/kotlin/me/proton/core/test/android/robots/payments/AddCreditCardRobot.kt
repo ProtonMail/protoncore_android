@@ -20,6 +20,8 @@ package me.proton.core.test.android.robots.payments
 
 import android.widget.EditText
 import me.proton.core.payment.presentation.R
+import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
+import me.proton.core.test.android.plugins.data.Card
 import me.proton.core.test.android.robots.other.CountryRobot
 
 /**
@@ -59,6 +61,16 @@ class AddCreditCardRobot : PaymentRobot() {
         view.withId(R.id.scrollContent).swipeUp()
         return setText(R.id.postalCodeInput, number)
     }
+
+    inline fun <reified T> payWithCreditCard(card: Card) =
+        ccname(card.name)
+            .ccnumber(card.number)
+            .cvc(card.cvc)
+            .expirationDate("${card.expMonth}${card.expYear.takeLast(2)}")
+            .postalCode(randomString(stringLength = 4))
+            .country()
+            .selectCountry<AddCreditCardRobot>(card.country)
+            .pay<T>()
 
     /**
      * Clicks country selection element

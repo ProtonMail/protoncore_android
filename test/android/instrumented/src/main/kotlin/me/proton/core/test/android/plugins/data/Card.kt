@@ -19,7 +19,9 @@
 package me.proton.core.test.android.plugins.data
 
 import kotlinx.serialization.Serializable
+import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import java.util.Calendar
+import java.util.Locale
 
 @Serializable
 data class Card(
@@ -49,10 +51,13 @@ data class Card(
 
     companion object {
         val default: Card = Card(
-            "4242424242424242",
-            String.format("%02d", Calendar.getInstance().get(Calendar.MONTH) + 1),
-            (Calendar.getInstance().get(Calendar.YEAR) + 1).toString(),
-            "Test Account"
+            number = "4242424242424242",
+            expMonth = String.format(Locale.ROOT, "%02d", Calendar.getInstance().get(Calendar.MONTH) + 1),
+            expYear = (Calendar.getInstance().get(Calendar.YEAR) + 1).toString(),
+            name = "Test Account",
+            cvc = (111..999).random().toString(),
+            country = "Angola",
+            zip = randomString(stringLength = 4)
         )
     }
 }

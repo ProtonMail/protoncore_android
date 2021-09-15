@@ -27,114 +27,122 @@ import androidx.test.espresso.intent.ActivityResultFunction
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import me.proton.core.test.android.instrumented.waits.ConditionWatcher.Companion.TIMEOUT_5S
-import me.proton.core.test.android.instrumented.waits.IntentWaits.waitUntilIntentMatcherFulfilled
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf
 
 /**
  * Builder like class that simplifies [intending] and [intended] syntax.
  */
-class OnIntent {
-    private var anyIntentMatcher: Matcher<Intent>? = null
-    private var isInternalMatcher: Matcher<Intent>? = null
-    private var flag: Int? = null
-    private var flags: Int? = null
+class OnIntent : ConditionWatcher {
+    val matchers = mutableListOf(
+        IntentMatchers.anyIntent(),
+        IntentMatchers.isInternal()
+    )
 
-    private var extraValue: Any? = null
-    private var extraValueMatcher: Matcher<Any>? = null
+    fun anyIntent() = apply {
+        matchers.add(IntentMatchers.anyIntent())
+    }
 
-    private var filterIntent: Intent? = null
+    fun isInternal() = apply {
+        matchers.add(IntentMatchers.isInternal())
+    }
 
-    private var action: String? = null
-    private var data: String? = null
-    private var extraKey: String? = null
-    private var extraKeyMatcher: Matcher<String>? = null
-    private var extraWithKey: String? = null
-    private var packageName: String? = null
-    private var packageNameToPackage: String? = null
-    private var toPackage: String? = null
-    private var type: String? = null
-
-    private var dataUri: Uri? = null
-
-    private var dataUriMatcher: Matcher<Uri>? = null
-
-    private var categories: Set<String>? = null
-    private var component: String? = null
-    private var componentName: ComponentName? = null
-
-    private var componentNameMatcher: Matcher<ComponentName>? = null
-
-    private var actionMatcher: Matcher<String>? = null
-    private var dataString: Matcher<String>? = null
-    private var extraWithKeyMatcher: Matcher<String>? = null
-    private var packageNameMatcher: Matcher<String>? = null
-    private var typeMatcher: Matcher<String>? = null
-
-    private var extraMatcherBundle: Matcher<Bundle>? = null
-
-    fun anyIntent() = apply { this.anyIntentMatcher = IntentMatchers.anyIntent() }
-
-    fun isInternal() = apply { this.isInternalMatcher = IntentMatchers.isInternal() }
-
-    fun filterEquals(filterIntent: Intent) = apply { this.filterIntent = filterIntent }
+    fun filterEquals(filterIntent: Intent) = apply {
+        matchers.add(IntentMatchers.filterEquals(filterIntent))
+    }
 
     /** See [Intent] for the list of actions. **/
-    fun hasAction(action: String) = apply { this.action = action }
+    fun hasAction(action: String) = apply {
+        matchers.add(IntentMatchers.hasAction(action))
+    }
 
-    fun hasAction(actionMatcher: Matcher<String>) = apply { this.actionMatcher = actionMatcher }
+    fun hasAction(actionMatcher: Matcher<String>) = apply {
+        matchers.add(IntentMatchers.hasAction(actionMatcher))
+    }
 
-    fun hasCategories(categories: Set<String>) = apply { this.categories = categories }
+    fun hasCategories(categories: Set<String>) = apply {
+        matchers.add(IntentMatchers.hasCategories(categories))
+    }
 
-    fun hasComponent(component: String) = apply { this.component = component }
+    fun hasComponent(component: String) = apply {
+        this.matchers.add(IntentMatchers.hasComponent(component))
+    }
 
-    fun hasComponent(componentName: ComponentName) = apply { this.componentName = componentName }
+    fun hasComponent(componentName: ComponentName) = apply {
+        matchers.add(IntentMatchers.hasComponent(componentName))
+    }
 
-    fun hasComponent(componentNameMatcher: Matcher<ComponentName>) =
-        apply { this.componentNameMatcher = componentNameMatcher }
+    fun hasComponent(componentNameMatcher: Matcher<ComponentName>) = apply {
+        matchers.add(IntentMatchers.hasComponent(componentNameMatcher))
+    }
 
-    fun hasData(data: String) = apply { this.data = data }
+    fun hasData(data: String) = apply {
+        matchers.add(IntentMatchers.hasData(data))
+    }
 
-    fun hasDataUri(dataUri: Uri) = apply { this.dataUri = dataUri }
+    fun hasDataUri(dataUri: Uri) = apply {
+        matchers.add(IntentMatchers.hasData(dataUri))
+    }
 
-    fun hasDataUriMatcher(dataUriMatcher: Matcher<Uri>) = apply { this.dataUriMatcher = dataUriMatcher }
+    fun hasDataUriMatcher(dataUriMatcher: Matcher<Uri>) = apply {
+        matchers.add(IntentMatchers.hasData(dataUriMatcher))
+    }
 
-    fun hasDataString(dataString: Matcher<String>) = apply { this.dataString = dataString }
+    fun hasDataString(dataString: Matcher<String>) = apply {
+        matchers.add(IntentMatchers.hasDataString(dataString))
+    }
 
     fun hasExtra(extraKey: String, extraValue: Any) = apply {
-        this.extraKey = extraKey
-        this.extraValue = extraValue
+        matchers.add(IntentMatchers.hasExtra(extraKey, extraValue))
     }
 
     fun hasExtra(extraKeyMatcher: Matcher<String>, extraValueMatcher: Matcher<Any>) = apply {
-        this.extraKeyMatcher = extraKeyMatcher
-        this.extraValueMatcher = extraValueMatcher
+        matchers.add(IntentMatchers.hasExtra(extraKeyMatcher, extraValueMatcher))
     }
 
-    fun hasExtras(extraMatcherBundle: Matcher<Bundle>) = apply { this.extraMatcherBundle = extraMatcherBundle }
+    fun hasExtras(extraMatcherBundle: Matcher<Bundle>) = apply {
+        matchers.add(IntentMatchers.hasExtras(extraMatcherBundle))
+    }
 
-    fun hasExtraWithKey(extraWithKey: String) = apply { this.extraWithKey = extraWithKey }
+    fun hasExtraWithKey(extraWithKey: String) = apply {
+        matchers.add(IntentMatchers.hasExtraWithKey(extraWithKey))
+    }
 
-    fun hasExtraWithKey(extraWithKeyMatcher: Matcher<String>) = apply { this.extraWithKeyMatcher = extraWithKeyMatcher }
+    fun hasExtraWithKey(extraWithKeyMatcher: Matcher<String>) = apply {
+        matchers.add(IntentMatchers.hasExtraWithKey(extraWithKeyMatcher))
+    }
 
-    fun hasFlag(flag: Int) = apply { this.flag = flag }
+    fun hasFlag(flag: Int) = apply {
+        matchers.add(IntentMatchers.hasFlag(flag))
+    }
 
-    fun hasFlags(flags: Int) = apply { this.flags = flags }
+    fun hasFlags(flags: Int) = apply {
+        matchers.add(IntentMatchers.hasFlags(flags))
+    }
 
-    fun hasPackage(packageName: String) = apply { this.packageName = packageName }
+    fun hasPackage(packageName: String) = apply {
+        matchers.add(IntentMatchers.hasPackage(packageName))
+    }
 
-    fun hasPackage(packageNameMatcher: Matcher<String>) = apply { this.packageNameMatcher = packageNameMatcher }
+    fun hasPackage(packageNameMatcher: Matcher<String>) = apply {
+        matchers.add(IntentMatchers.hasPackage(packageNameMatcher))
+    }
 
-    fun hasType(type: String) = apply { this.type = type }
+    fun hasType(type: String) = apply {
+        matchers.add(IntentMatchers.hasType(type))
+    }
 
-    fun hasType(typeMatcher: Matcher<String>) = apply { this.typeMatcher = typeMatcher }
+    fun hasType(typeMatcher: Matcher<String>) = apply {
+        matchers.add(IntentMatchers.hasType(typeMatcher))
+    }
 
-    fun toPackage(toPackage: String) = apply { this.toPackage = toPackage }
+    fun toPackage(toPackage: String) = apply {
+        matchers.add(IntentMatchers.toPackage(toPackage))
+    }
 
     // Checks with wait that intent with given matchers is sent
-    fun checkSent(timeout: Long = TIMEOUT_5S) {
-        waitUntilIntentMatcherFulfilled(intentMatcher(), timeout)
+    fun checkSent() {
+        waitForCondition({ intended(intentMatcher()) })
     }
 
     fun respondWith(result: Instrumentation.ActivityResult) {
@@ -145,84 +153,5 @@ class OnIntent {
         intending(intentMatcher()).respondWithFunction(resultFunction)
     }
 
-    private fun intentMatcher(): Matcher<Intent> {
-        val matchers = mutableListOf(
-            anyIntentMatcher,
-            isInternalMatcher
-        )
-
-        if (filterIntent != null) {
-            matchers.add(IntentMatchers.filterEquals(filterIntent))
-        }
-        if (action != null) {
-            matchers.add(IntentMatchers.hasAction(action))
-        }
-        if (actionMatcher != null) {
-            matchers.add(IntentMatchers.hasAction(actionMatcher))
-        }
-        if (categories != null) {
-            matchers.add(IntentMatchers.hasCategories(categories))
-        }
-        if (component != null) {
-            matchers.add(IntentMatchers.hasComponent(component))
-        }
-        if (componentName != null) {
-            matchers.add(IntentMatchers.hasComponent(componentName))
-        }
-        if (componentNameMatcher != null) {
-            matchers.add(IntentMatchers.hasComponent(componentNameMatcher))
-        }
-        if (data != null) {
-            matchers.add(IntentMatchers.hasData(data))
-        }
-        if (dataUri != null) {
-            matchers.add(IntentMatchers.hasData(dataUri))
-        }
-        if (dataUriMatcher != null) {
-            matchers.add(IntentMatchers.hasData(dataUriMatcher))
-        }
-        if (dataString != null) {
-            matchers.add(IntentMatchers.hasDataString(dataString))
-        }
-        if (extraKey != null && extraValue != null) {
-            matchers.add(IntentMatchers.hasExtra(extraKey, extraValue))
-        }
-        if (extraKeyMatcher != null && extraValueMatcher != null) {
-            matchers.add(IntentMatchers.hasExtra(extraKeyMatcher, extraValueMatcher))
-        }
-        if (extraMatcherBundle != null) {
-            matchers.add(IntentMatchers.hasExtras(extraMatcherBundle))
-        }
-        if (extraWithKey != null) {
-            matchers.add(IntentMatchers.hasExtraWithKey(extraWithKey))
-        }
-        if (extraWithKeyMatcher != null) {
-            matchers.add(IntentMatchers.hasExtraWithKey(extraWithKeyMatcher))
-        }
-        if (filterIntent != null) {
-            matchers.add(IntentMatchers.filterEquals(filterIntent))
-        }
-        if (flag != null) {
-            matchers.add(IntentMatchers.hasFlag(flag!!))
-        }
-        if (flags != null) {
-            matchers.add(IntentMatchers.hasFlags(flags!!))
-        }
-        if (type != null) {
-            matchers.add(IntentMatchers.hasType(type))
-        }
-        if (typeMatcher != null) {
-            matchers.add(IntentMatchers.hasType(typeMatcher))
-        }
-        if (packageName != null) {
-            matchers.add(IntentMatchers.hasPackage(packageName))
-        }
-        if (packageNameMatcher != null) {
-            matchers.add(IntentMatchers.hasPackage(packageNameMatcher))
-        }
-        if (packageNameToPackage != null) {
-            matchers.add(IntentMatchers.toPackage(packageNameToPackage))
-        }
-        return AllOf.allOf(matchers.filterNotNull())
-    }
+    private fun intentMatcher() = AllOf.allOf(matchers)
 }

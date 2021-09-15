@@ -19,119 +19,105 @@
 
 package me.proton.core.test.android.instrumented.builders
 
-import android.view.View
 import androidx.test.espresso.DataInteraction
 import androidx.test.espresso.Espresso.onData
-import androidx.test.espresso.Root
+import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.RootMatchers
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
-import me.proton.core.test.android.instrumented.waits.UIWaits.waitForView
-import me.proton.core.test.android.instrumented.waits.UIWaits.waitUntilViewIsGone
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
 
 /**
  * Builder like class that allows to write [ViewActions] and view assertions for ListView items.
  */
-class OnListView {
+class OnListView : ConditionWatcher {
+
     private var dataMatcher: Matcher<out Any?>? = null
 
-    class Builder(private val dataMatcher: Matcher<out Any?>) {
-        private var position: Int? = null
-        private var itemChildViewMatcher: Matcher<View>? = null
-        private var adapterMatcher: Matcher<View>? = null
-
-
-        /** [DataInteraction] actions wrappers. **/
-        fun click() = apply { waitForView(dataInteraction()).perform(ViewActions.click()) }
-
-        fun longClick() = apply { waitForView(dataInteraction()).perform(ViewActions.longClick()) }
-
-        fun replaceText(text: String) = apply {
-            waitForView(dataInteraction()).perform(ViewActions.replaceText(text), ViewActions.closeSoftKeyboard())
-        }
-
-        fun swipeRight() = apply { waitForView(dataInteraction()).perform(ViewActions.swipeRight()) }
-
-        fun swipeLeft() = apply { waitForView(dataInteraction()).perform(ViewActions.swipeLeft()) }
-
-        fun swipeDown() = apply { waitForView(dataInteraction()).perform(ViewActions.swipeDown()) }
-
-        fun swipeUp() = apply { waitForView(dataInteraction()).perform(ViewActions.swipeUp()) }
-
-        fun scrollTo() = apply { waitForView(dataInteraction()).perform(ViewActions.scrollTo()) }
-
-        fun typeText(text: String) = apply {
-            waitForView(dataInteraction()).perform(ViewActions.typeText(text), ViewActions.closeSoftKeyboard())
-        }
-
-
-        /** [DataInteraction] assertions wrappers. **/
-        fun checkContains(text: String) = apply {
-            waitForView(dataInteraction())
-                .check(ViewAssertions.matches(ViewMatchers.withText(CoreMatchers.containsString(text))))
-        }
-
-        fun checkDoesNotExist() = apply { waitUntilViewIsGone(dataInteraction()).check(ViewAssertions.doesNotExist()) }
-
-        fun checkDisabled() = apply {
-            waitForView(dataInteraction()).check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isEnabled())))
-        }
-
-        fun checkDisplayed() = apply {
-            waitForView(dataInteraction()).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-        }
-
-        fun checkNotDisplayed() = apply {
-            dataInteraction().check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isDisplayed())))
-        }
-
-
-        /** [DataInteraction] matcher functions. **/
-        fun atPosition(position: Int): Builder = apply { this.position = position }
-
-        fun inAdapter(adapterView: OnView): Builder = apply { this.adapterMatcher = adapterView.matcher() }
-
-        fun inRoot(rootView: OnRootView): Builder = apply { rootMatcher = rootView.matcher() }
-
-        fun onChild(childView: OnView): Builder = apply { this.itemChildViewMatcher = childView.matcher() }
-
-
-        /** Wait functions. **/
-        fun wait(): Builder = apply { waitForView(dataInteraction()) }
-
-        fun waitUntilGone(): DataInteraction = waitUntilViewIsGone(dataInteraction())
-
-
-        /** Builds [DataInteraction] based on parameters provided to [OnListView.Builder]. **/
-        private fun dataInteraction(): DataInteraction {
-            return onData(dataMatcher)
-                .apply { inRoot(rootMatcher) }
-                .apply {
-                    if (position != null) {
-                        atPosition(position)
-                    }
-                }.apply {
-                    if (adapterMatcher != null) {
-                        inAdapterView(adapterMatcher)
-                    }
-                }.apply {
-                    if (itemChildViewMatcher != null) {
-                        this.apply { onChildView(itemChildViewMatcher) }
-                    }
-                }
-        }
-
-        companion object {
-            /** Default rootMatcher value for[OnListView] instance. **/
-            private var rootMatcher: Matcher<Root> = RootMatchers.DEFAULT
-        }
+    fun onListItem(dataMatcher: Matcher<out Any?>): OnListView = apply {
+        this.dataMatcher = dataMatcher
     }
 
-    fun onListItem(dataMatcher: Matcher<out Any?>): Builder {
-        this.dataMatcher = dataMatcher
-        return Builder(dataMatcher)
+    /** [DataInteraction] matcher functions. **/
+    fun atPosition(position: Int): OnListView = apply {
+        dataInteraction().atPosition(position)
+    }
+
+    fun inAdapterView(adapterView: OnView): OnListView = apply {
+        dataInteraction().inAdapterView(adapterView.viewMatcher())
+    }
+
+    fun inRoot(rootView: OnRootView): OnListView = apply {
+        dataInteraction().inRoot(rootView.matcher())
+    }
+
+    fun onChild(childView: OnView): OnListView = apply {
+        dataInteraction().onChildView(childView.viewMatcher())
+    }
+
+    /** [DataInteraction] actions wrappers. **/
+    fun click() = apply {
+        dataInteraction().perform(ViewActions.click())
+    }
+
+    fun longClick() = apply {
+        dataInteraction().perform(ViewActions.longClick())
+    }
+
+    fun replaceText(text: String) = apply {
+        dataInteraction().perform(ViewActions.replaceText(text), ViewActions.closeSoftKeyboard())
+    }
+
+    fun swipeRight() = apply {
+        dataInteraction().perform(ViewActions.swipeRight())
+    }
+
+    fun swipeLeft() = apply {
+        dataInteraction().perform(ViewActions.swipeLeft())
+    }
+
+    fun swipeDown() = apply {
+        dataInteraction().perform(ViewActions.swipeDown())
+    }
+
+    fun swipeUp() = apply {
+        dataInteraction().perform(ViewActions.swipeUp())
+    }
+
+    fun scrollTo() = apply {
+        dataInteraction().perform(ViewActions.scrollTo())
+    }
+
+    fun typeText(text: String) = apply {
+        dataInteraction().perform(ViewActions.typeText(text), ViewActions.closeSoftKeyboard())
+    }
+
+    /** [DataInteraction] assertions wrappers. **/
+    fun checkContains(text: String) = apply {
+        dataInteraction(matches(ViewMatchers.withText(CoreMatchers.containsString(text))))
+    }
+
+    fun checkDoesNotExist() = apply {
+        dataInteraction(ViewAssertions.doesNotExist())
+    }
+
+    fun checkDisabled() = apply {
+        dataInteraction(matches(CoreMatchers.not(ViewMatchers.isEnabled())))
+    }
+
+    fun checkDisplayed() = apply {
+        dataInteraction(matches(ViewMatchers.isDisplayed()))
+    }
+
+    fun checkNotDisplayed() = apply {
+        dataInteraction(matches(CoreMatchers.not(ViewMatchers.isDisplayed())))
+    }
+
+    /** Builds [DataInteraction] based on parameters provided to [OnListView.Builder]. **/
+    private fun dataInteraction(viewAssertion: ViewAssertion = matches(ViewMatchers.isDisplayed())): DataInteraction {
+        waitForCondition({ onData(dataMatcher).check(viewAssertion) })
+        return onData(dataMatcher)
     }
 }

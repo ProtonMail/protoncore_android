@@ -67,9 +67,9 @@ class LoginRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun loginElementsDisplayed() {
-            view.withId(R.id.usernameInput).instanceOf(EditText::class.java).wait().closeKeyboard()
-            view.withId(R.id.passwordInput).instanceOf(EditText::class.java).wait()
-            view.withId(R.id.signInButton).instanceOf(Button::class.java).wait()
+            view.withId(R.id.usernameInput).instanceOf(EditText::class.java).closeKeyboard()
+            view.withId(R.id.passwordInput).instanceOf(EditText::class.java).checkDisplayed()
+            view.withId(R.id.signInButton).instanceOf(Button::class.java).checkDisplayed()
         }
     }
 

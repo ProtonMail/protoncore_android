@@ -28,7 +28,7 @@ plugins {
 }
 
 android(
-    minSdk = 23
+    minSdk = ProtonCore.minSdk
 ) {
     defaultConfig {
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")

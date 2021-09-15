@@ -29,24 +29,20 @@ open class CoreVerify : CoreRobot() {
     fun errorSnackbarDisplayed(@StringRes stringRes: Int) {
         view
             .withId(R.id.snackbar_text)
-            .wait()
-            .withText(stringRes)
-            .checkDisplayed()
+            .checkContains(stringRes)
     }
 
     fun errorSnackbarDisplayed(text: String) {
         view
             .withId(R.id.snackbar_text)
-            .withText(text)
-            .wait()
+            .checkContains(text)
     }
 
     fun inputErrorDisplayed(@StringRes stringRes: Int) {
         view
-            .instanceOf(TextView::class.java)
             .withId(R.id.textinput_error)
+            .instanceOf(TextView::class.java)
             .withText(stringRes)
-            .wait()
             .checkDisplayed()
     }
 }

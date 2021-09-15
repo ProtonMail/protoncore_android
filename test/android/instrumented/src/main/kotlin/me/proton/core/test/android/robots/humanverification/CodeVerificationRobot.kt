@@ -49,8 +49,8 @@ class CodeVerificationRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun codeVerificationElementsDisplayed() {
-            view.withId(R.id.verifyButton).wait()
-            view.withId(R.id.verificationCodeEditText).instanceOf(EditText::class.java).wait()
+            view.withId(R.id.verifyButton).checkDisplayed()
+            view.withId(R.id.verificationCodeEditText).instanceOf(EditText::class.java).checkDisplayed()
         }
     }
 

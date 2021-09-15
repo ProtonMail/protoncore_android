@@ -16,10 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.payments
+package me.proton.core.test.android.uitests.tests.medium.payments
 
-import me.proton.core.test.android.plugins.Quark
-import me.proton.core.test.android.plugins.Quark.jailUnban
 import me.proton.core.test.android.plugins.data.Card
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.plugins.data.Plan
@@ -37,9 +35,13 @@ class ExistingPaymentMethodTests : BaseTest() {
 
     private val loginRobot = LoginRobot()
 
+    companion object {
+        val userWithCard: User = quark.seedUserWithCreditCard()
+    }
+
     @Before
     fun goToLogin() {
-        jailUnban()
+        quark.jailUnban()
         AddAccountRobot().signIn()
     }
 
@@ -61,9 +63,7 @@ class ExistingPaymentMethodTests : BaseTest() {
 
     @Test
     fun existingCreditCardMethodDisplayed() {
-        val user = Quark.userCreate()
-        Quark.seedUserWithCreditCard(user)
-        upgradeUserToPlan(user)
+        upgradeUserToPlan(userWithCard)
             .verify { paymentMethodDisplayed(Card.default.details, Card.default.name) }
     }
 

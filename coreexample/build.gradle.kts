@@ -18,6 +18,8 @@
 
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -38,9 +40,21 @@ android(
                 // arguments["room.incremental"] = "true"
             }
         }
-        buildConfigField("String", "HOST", "\"proton.black\"")
-        val proxyToken = System.getenv("PROXY_TOKEN")?.let { "\"$it\"" } ?: "null"
+
+        val localProperties = Properties().apply {
+            try {
+                load(FileInputStream("local.properties"))
+            } catch (e: java.io.FileNotFoundException) {
+                put("HOST", "proton.black")
+                put("PROXY_TOKEN", "null")
+            }
+        }
+
+        val proxyToken = localProperties["PROXY_TOKEN"]?.let { "\"$it\"" }!!
+        val host = localProperties["HOST"]?.let { "\"$it\"" }!!
+
         buildConfigField("String", "PROXY_TOKEN", proxyToken)
+        buildConfigField("String", "HOST", host)
     }
     sourceSets.getByName("androidTest") {
         // Add schema for android tests
@@ -97,7 +111,7 @@ dependencies {
         // Other
         `room-ktx`,
         `retrofit`,
-        `timber`
+        `timber`,
     )
 
     kapt(
