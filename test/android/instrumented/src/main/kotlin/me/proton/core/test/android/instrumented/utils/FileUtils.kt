@@ -26,7 +26,7 @@ import android.util.Log
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.platform.app.InstrumentationRegistry
 import com.jraska.falcon.Falcon
-import me.proton.core.test.android.instrumented.ProtonTest.Companion.getContext
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetContext
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testName
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 import java.io.File
@@ -88,7 +88,9 @@ object FileUtils {
     /**
      * Saves screenshot in provided [screenshotPath]
      */
-    fun takeScreenshot(screenshotPath: String = "${getContext().filesDir.path}/artifacts/screenshots") {
+    fun takeScreenshot(
+        screenshotPath: String = "${getTargetContext().filesDir.path}/artifacts/screenshots"
+    ) {
         try {
             val file = File(screenshotPath, "${testName.methodName}-screenshot.png")
             Falcon.takeScreenshot(ActivityProvider.currentActivity, file)
@@ -117,7 +119,7 @@ object FileUtils {
      */
     fun copyAssetFileToInternalFilesStorage(fileName: String) {
         val testContext = InstrumentationRegistry.getInstrumentation().context
-        val file = File("${getContext().filesDir.path}/$fileName")
+        val file = File("${getTargetContext().filesDir.path}/$fileName")
 
         if (!file.exists()) {
             try {
@@ -138,7 +140,7 @@ object FileUtils {
 
         // Declare variables for test and application context.
         val testContext = InstrumentationRegistry.getInstrumentation().context
-        val file = File("${getContext().cacheDir}/$fileName")
+        val file = File("${getTargetContext().cacheDir}/$fileName")
 
         if (!file.exists()) {
             try {

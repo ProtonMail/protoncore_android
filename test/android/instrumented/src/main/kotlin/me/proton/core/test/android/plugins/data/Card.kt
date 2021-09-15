@@ -19,6 +19,7 @@
 package me.proton.core.test.android.plugins.data
 
 import kotlinx.serialization.Serializable
+import java.util.Calendar
 
 @Serializable
 data class Card(
@@ -30,14 +31,13 @@ data class Card(
     val country: String = "",
     val zip: String = ""
 ) {
-    val last4: String = number.takeLast(4)
-    val brand: Brand = when(number.take(1).toInt()) {
+    val brand: Brand = when (number.take(1).toInt()) {
         3 -> Brand.AmericanExpress
         4 -> Brand.Visa
         5 -> Brand.Mastercard
         else -> Brand.Unknown
     }
-    val details: String = "${brand.name} - $last4 (Exp $expMonth/$expYear)"
+    val details: String = "${brand.name} - ${number.takeLast(4)} (Exp $expMonth/$expYear)"
 
     @Serializable
     enum class Brand(name: String) {
@@ -48,6 +48,11 @@ data class Card(
     }
 
     companion object {
-        val default: Card = Card("4242424242424242", "08", "2022", "Test Account")
+        val default: Card = Card(
+            "4242424242424242",
+            String.format("%02d", Calendar.getInstance().get(Calendar.MONTH) + 1),
+            (Calendar.getInstance().get(Calendar.YEAR) + 1).toString(),
+            "Test Account"
+        )
     }
 }

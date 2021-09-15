@@ -18,23 +18,22 @@
 
 package me.proton.core.test.android.plugins.data
 
+import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.serialization.Serializable
-import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
+import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.core.util.kotlin.deserializeList
 
 @Serializable
 data class User(
-    var name: String = "proton_core_${randomString(stringLength = 4)}",
-    var password: String = "12345678",
+    val name: String = "proton_core_${StringUtils.randomString(stringLength = 6)}",
+    val password: String = "11111111",
     val email: String = "",
 
     val passphrase: String = "",
     val twoFa: String = "",
 
-    val firstName: String = "",
-    val lastName: String = "",
-    val verificationEmail: String = "",
     val phone: String = "",
     val country: String = "",
 
@@ -68,7 +67,8 @@ data class User(
                     try {
                         return it.random()
                     } catch (e: NoSuchElementException) {
-                        throw NoSuchElementException("User does not exist in assets/$jsonPath")
+                        Log.e(testTag, "User does not exist in assets/$jsonPath")
+                        throw e
                     }
                 }
         }

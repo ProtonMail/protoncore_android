@@ -23,6 +23,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.serialization.Serializable
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.android.plugins.data.randomPaidPlan
 import me.proton.core.util.kotlin.deserialize
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -41,19 +42,6 @@ object Quark {
         USER_CREATE,
         PAYMENTS_SEED_PAYMENT_METHOD,
         PAYMENTS_SEED_SUBSCRIBER
-    }
-
-    enum class EncryptionKeys {
-        None,
-        RSA2048,
-        RSA4096,
-        Curve25519
-    }
-
-    enum class PaymentMethodType(val value: String) {
-        Card("card"),
-        Card3DSecure("threeDSecureCard"),
-        Paypal("paypal")
     }
 
     private val client = OkHttpClient
@@ -75,7 +63,6 @@ object Quark {
         .deserialize()
 
     private fun quarkRequest(endpoint: String, args: Array<String> = emptyArray()): String {
-
         val argString = args.filter { it.isNotEmpty() }.joinToString("&")
         val url = "https://${internalApi.baseUrl}$endpoint?$argString"
         val req = Request.Builder().url(url).build()
@@ -86,13 +73,9 @@ object Quark {
         }
     }
 
-    fun jailUnban() {
-        internalApi.endpoints[InternalApiEndpoint.JAIL_UNBAN]?.let {
-            quarkRequest(it)
-        }
-    }
+    fun jailUnban() = internalApi.endpoints[InternalApiEndpoint.JAIL_UNBAN]?.let { quarkRequest(it) }
 
-    fun seedSubscriber(user: User): User {
+    fun seedSubscriber(user: User = User(plan = randomPaidPlan())): User {
         val args = arrayOf(
             "username=${user.name}",
             "password=${user.password}",
@@ -108,7 +91,7 @@ object Quark {
         val args = arrayOf(
             "-u=${user.name}",
             "-p=${user.password}",
-            "-t=${PaymentMethodType.Card.value}"
+            "-t=card"
         )
         internalApi.endpoints[InternalApiEndpoint.PAYMENTS_SEED_PAYMENT_METHOD]?.let {
             quarkRequest(it, args)
@@ -122,7 +105,7 @@ object Quark {
             "-p=${user.password}",
             "-x=${Constants.PAYPAL_USERNAME.value}",
             "-z=${Constants.PAYPAL_PASSWORD.value}",
-            "-t=${PaymentMethodType.Paypal.value}"
+            "-t=paypal"
         )
         internalApi.endpoints[InternalApiEndpoint.PAYMENTS_SEED_PAYMENT_METHOD]?.let {
             quarkRequest(it, args)
@@ -132,25 +115,18 @@ object Quark {
     fun userCreate(
         user: User = User(),
         createAddress: Boolean = true,
-        keysEncryption: EncryptionKeys = EncryptionKeys.Curve25519
+        keysEncryption: String = "Curve25519"
     ): User {
         val args = arrayOf(
             if (user.name.isNotEmpty()) "-N=${user.name}" else "",
             if (user.name.isNotEmpty()) "-p=${user.password}" else "",
             if (createAddress) "-c=true" else "",
-            if (keysEncryption != EncryptionKeys.None) "-k=${keysEncryption}" else "",
-            if (user.passphrase.isNotEmpty()) "-m=${user.passphrase}" else ""
+            if (user.passphrase.isNotEmpty()) "-m=${user.passphrase}" else "",
+            "-k=$keysEncryption"
         )
 
-        val responseString = quarkRequest((internalApi.endpoints[InternalApiEndpoint.USER_CREATE]!!), args)
-
-        user.name = getQuarkOutputValueForKey("Name", responseString)
-        user.password = getQuarkOutputValueForKey("Password", responseString)
+        quarkRequest(internalApi.endpoints[InternalApiEndpoint.USER_CREATE]!!, args)
         return user
-    }
-
-    private fun getQuarkOutputValueForKey(key: String, quarkOutput: String): String {
-        return "$key: \\w+".toRegex().find(quarkOutput)!!.value.split(": ")[1]
     }
 
     enum class Constants(val value: String) {

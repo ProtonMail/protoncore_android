@@ -37,15 +37,20 @@ open class PaymentRobot : CoreRobot() {
     inline fun <reified T> pay(): T = clickElement(R.id.payButton)
 
     class Verify : CoreVerify() {
-        fun billingDetailsDisplayed(planName: Plan, billingCycle: String, currency: String, amount: String) {
-            view.withId(R.id.planNameText).wait().checkContains(planName.toString())
-            view.withId(R.id.billingPeriodText).wait().checkContains("Billed $billingCycle")
-            view.withId(R.id.amountText).withText("$currency$amount").wait()
+        fun billingDetailsDisplayed(
+            plan: Plan,
+            billingCycle: String,
+            currency: String,
+            amount: String
+        ) {
+            view.withId(R.id.planNameText).withText(plan.toString()).wait().checkDisplayed()
+            view.withId(R.id.billingPeriodText).withText("Billed $billingCycle").wait().checkDisplayed()
+            view.withId(R.id.amountText).withText("$currency$amount").wait().checkDisplayed()
         }
 
         fun paymentMethodDisplayed(title: String, details: String) {
-            view.withText(title).withId(R.id.paymentMethodTitleText).wait()
-            view.withText(details).withId(R.id.paymentMethodSubtitleText).wait()
+            view.withText(title).withId(R.id.paymentMethodTitleText).wait().checkDisplayed()
+            view.withText(details).withId(R.id.paymentMethodSubtitleText).wait().checkDisplayed()
         }
 
         fun addCreditCardElementsDisplayed() {
@@ -56,7 +61,7 @@ open class PaymentRobot : CoreRobot() {
                 R.id.expirationDateInput,
                 R.id.cvcInput
             ).forEach {
-                view.withId(it).instanceOf(EditText::class.java).wait()
+                view.withId(it).instanceOf(EditText::class.java).wait().checkDisplayed()
             }
         }
     }

@@ -30,6 +30,7 @@ import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot.P
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 class ExistingPaymentMethodTests : BaseTest() {
@@ -50,6 +51,7 @@ class ExistingPaymentMethodTests : BaseTest() {
 
 
     @Test
+    @Ignore("Requires user with paypal account linked")
     fun existingPaypalMethodDisplayed() {
         val user = users.getUser { it.paypal.isNotEmpty() }
 
@@ -59,13 +61,14 @@ class ExistingPaymentMethodTests : BaseTest() {
 
     @Test
     fun existingCreditCardMethodDisplayed() {
-        val user = Quark.userCreate(User())
+        val user = Quark.userCreate()
         Quark.seedUserWithCreditCard(user)
         upgradeUserToPlan(user)
             .verify { paymentMethodDisplayed(Card.default.details, Card.default.name) }
     }
 
     @Test
+    @Ignore("Requires user with paypal account linked")
     fun existingCreditCardAndPayPalDisplayed() {
         val user = users.getUser { it.paypal.isNotEmpty() && it.cards.isNotEmpty() && !it.isPaid }
         val card = user.cards[0]
@@ -78,6 +81,7 @@ class ExistingPaymentMethodTests : BaseTest() {
     }
 
     @Test
+    @Ignore("Requires user with paypal account linked")
     fun switchPaymentMethod() {
         val user = users.getUser { it.paypal.isNotEmpty() && it.cards.isNotEmpty() && !it.isPaid }
 

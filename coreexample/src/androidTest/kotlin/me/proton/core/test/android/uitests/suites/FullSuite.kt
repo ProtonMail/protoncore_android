@@ -33,6 +33,7 @@ import me.proton.core.test.android.uitests.tests.payments.ExistingPaymentMethodT
 import me.proton.core.test.android.uitests.tests.payments.NewCreditCardTests
 import me.proton.core.test.android.uitests.tests.plans.CurrentPlanTests
 import me.proton.core.test.android.uitests.tests.plans.UpgradePlanTests
+import me.proton.core.test.android.uitests.tests.usersettings.PasswordManagementTests
 import me.proton.core.test.android.uitests.tests.usersettings.RecoveryEmailTests
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
@@ -64,6 +65,7 @@ import org.junit.runners.Suite
     UpgradePlanTests::class,
 
     // User Settings
-    RecoveryEmailTests::class
+    RecoveryEmailTests::class,
+    PasswordManagementTests::class
 )
 class FullSuite

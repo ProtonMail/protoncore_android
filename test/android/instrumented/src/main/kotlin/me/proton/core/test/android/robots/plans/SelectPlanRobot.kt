@@ -19,7 +19,6 @@
 package me.proton.core.test.android.robots.plans
 
 import me.proton.core.plan.presentation.R
-import me.proton.core.test.android.instrumented.ProtonTest.Companion.getContext
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Currency
@@ -40,7 +39,6 @@ class SelectPlanRobot : CoreRobot() {
             .hasSibling(
                 view.withId(R.id.planNameText).withText(plan.name)
             )
-            .wait()
             .click()
         return T::class.java.newInstance()
     }
@@ -58,11 +56,7 @@ class SelectPlanRobot : CoreRobot() {
      * Changes currency to provided [currency]
      */
     fun changeCurrency(currency: Currency): SelectPlanRobot {
-        val currencyString = when(currency) {
-            Currency.CHF -> currency.symbol
-            else -> "${currency.symbol} ${currency.code}"
-        }
-
+        val currencyString = "${currency.symbol} ${currency.code}".trim()
         view.withId(R.id.currencySpinner).wait().click()
         view.withText(currencyString).wait().click()
         return this
@@ -99,11 +93,6 @@ class SelectPlanRobot : CoreRobot() {
                 }
             }
         }
-    }
-
-    companion object {
-        val supportedBillingCycles: Array<String> =
-            getContext().resources.getStringArray(R.array.supported_billing_cycle)
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

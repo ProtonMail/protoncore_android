@@ -50,7 +50,7 @@ class NewCreditCardTests : BaseTest() {
     @Test
     fun backToPlanSelection() {
         newCreditCardRobot
-            .back<AddCreditCardRobot>()
+            .back<AddCreditCardRobot>() // to close soft keyboard
             .back<SelectPlanRobot>()
             .verify { planDetailsDisplayed(Plan.Plus) }
     }

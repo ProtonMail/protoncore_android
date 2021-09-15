@@ -20,12 +20,11 @@ package me.proton.core.test.android.robots.settings
 
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.usersettings.R
 
-class RecoveryEmailRobot: CoreRobot() {
+class RecoveryEmailRobot : CoreRobot() {
 
     /**
      * Replaces new email input with [email]
@@ -67,7 +66,7 @@ class RecoveryEmailRobot: CoreRobot() {
          * Clicks "Enter" button
          * @return [RecoveryEmailRobot]
          */
-        fun enter(): RecoveryEmailRobot = clickElement("Enter")
+        inline fun <reified T> enter(): T = clickElement("Enter")
     }
 
 

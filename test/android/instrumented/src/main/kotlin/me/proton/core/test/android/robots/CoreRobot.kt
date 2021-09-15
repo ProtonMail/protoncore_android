@@ -64,7 +64,8 @@ open class CoreRobot : Robot {
      * Adds more text to an element which has an [id] with [value]
      * @param T next Robot to be returned
      */
-    @Deprecated("Use addText for the same functionality or replaceText to set new text.",
+    @Deprecated(
+        "Use addText for the same functionality or replaceText to set new text.",
         ReplaceWith("addText<T>(id, value)")
     )
     inline fun <reified T> setText(@IdRes id: Int, value: String): T = addText(id, value)
