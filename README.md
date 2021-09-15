@@ -87,7 +87,7 @@ Test Kotlin: **1.15** - _released on: Sep 13, 2021_
 
 Test Android: **1.15** - _released on: Sep 13, 2021_
 
-Test Android Instrumented: **1.15** - _released on: Sep 13, 2021_
+Test Android Instrumented: **1.15.1** - _released on: Sep 15, 2021_
 
 ## Shared
 
