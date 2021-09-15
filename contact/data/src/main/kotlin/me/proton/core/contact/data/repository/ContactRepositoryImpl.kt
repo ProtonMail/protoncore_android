@@ -62,7 +62,7 @@ class ContactRepositoryImpl(
     private val emailStore = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
             provider.get<ContactApi>(userId).invoke {
-                getContactEmails().contactEmails.map { it.toContactEmail() }
+                getContactEmails(page = 0, pageSize = 1000).contactEmails.map { it.toContactEmail() }
             }.valueOrThrow
         },
         sourceOfTruth = SourceOfTruth.of(

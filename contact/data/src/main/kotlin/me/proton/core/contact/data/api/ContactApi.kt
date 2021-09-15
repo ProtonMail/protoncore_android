@@ -19,17 +19,28 @@
 package me.proton.core.contact.data.api
 
 import me.proton.core.contact.data.api.response.ContactEmailsResponse
+import me.proton.core.contact.data.api.response.ContactsResponse
 import me.proton.core.contact.data.api.response.GetContactResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ContactApi : BaseRetrofitApi {
 
     @GET("contacts/{id}")
     suspend fun getContact(@Path("id") contactId: String): GetContactResponse
 
+    @GET("contacts")
+    suspend fun getContacts(
+        @Query("Page") page: Int,
+        @Query("PageSize") pageSize: Int,
+    ): ContactsResponse
+
     @GET("contacts/emails")
-    suspend fun getContactEmails(): ContactEmailsResponse
+    suspend fun getContactEmails(
+        @Query("Page") page: Int,
+        @Query("PageSize") pageSize: Int,
+    ): ContactEmailsResponse
 
 }
