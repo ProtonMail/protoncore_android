@@ -57,6 +57,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
                 it.contactEmail.contactEmailId == User0.Contact0.ContactEmail0.contactEmailId
             }
         }
+        db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
         assert(hasContactEmail())
         db.userDao().delete(User0.userId)
@@ -70,6 +71,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
             val dbLabels = db.contactEmailLabelDao().getAllLabels(testContactEmail.contactEmailId).first()
             dbLabels == testContactEmail.contactEmail.labelIds
         }
+        db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(testContactEmail.contactEmailEntity)
         db.contactEmailLabelDao().insertOrUpdate(*testContactEmail.emailLabelEntities)
         assert(hasLabels())

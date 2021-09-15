@@ -33,7 +33,7 @@ class TransactionTests: ContactDatabaseTests() {
     fun `delete contact delete contact and emails`() = runBlocking {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
-        db.deleteContact(User0.Contact0.contactId)
+        db.contactDao().deleteContact(User0.Contact0.contactId)
         assert(db.contactDao().getContact(User0.Contact0.contactId).firstOrNull() == null)
         assert(db.contactEmailDao().getAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
     }
@@ -42,7 +42,7 @@ class TransactionTests: ContactDatabaseTests() {
     fun `delete all contacts from user also delete all contacts and emails from user`() = runBlocking {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
-        db.deleteAllContacts(User0.userId)
+        db.contactDao().deleteAllContacts(User0.userId)
         assert(db.contactDao().getContact(User0.Contact0.contactId).firstOrNull() == null)
         assert(db.contactEmailDao().getAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
     }
@@ -51,13 +51,14 @@ class TransactionTests: ContactDatabaseTests() {
     fun `delete all contacts delete all contacts and emails`() = runBlocking {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
-        db.deleteAllContacts()
+        db.contactDao().deleteAllContacts()
         assert(db.contactDao().getContact(User0.Contact0.contactId).firstOrNull() == null)
         assert(db.contactEmailDao().getAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
     }
 
     @Test
     fun `insert or update contacts emails apply correct diff`() = runBlocking {
+        db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
         db.contactEmailLabelDao().insertOrUpdate(*User0.Contact0.ContactEmail0.emailLabelEntities)
 

@@ -49,27 +49,6 @@ interface ContactDatabase: Database {
         return contactDao().getContact(contactId).map { it.toContact() }
     }
 
-    suspend fun deleteContact(contactId: ContactId) {
-        inTransaction {
-            contactEmailDao().deleteAllContactsEmails(contactId = contactId)
-            contactDao().deleteContact(contactId = contactId)
-        }
-    }
-
-    suspend fun deleteAllContacts(userId: UserId) {
-        inTransaction {
-            contactDao().deleteAllContacts(userId)
-            contactEmailDao().deleteAllContactsEmails(userId)
-        }
-    }
-
-    suspend fun deleteAllContacts() {
-        inTransaction {
-            contactDao().deleteAllContacts()
-            contactEmailDao().deleteAllContactsEmails()
-        }
-    }
-
     suspend fun insertOrUpdate(userId: UserId, contact: Contact) {
         inTransaction {
             contactDao().insertOrUpdate(contact.toContactEntity(userId))

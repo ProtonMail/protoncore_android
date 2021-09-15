@@ -38,6 +38,12 @@ import me.proton.core.user.data.entity.UserEntity
             parentColumns = ["userId"],
             childColumns = ["userId"],
             onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = ContactEntity::class,
+            parentColumns = ["contactId"],
+            childColumns = ["contactId"],
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )

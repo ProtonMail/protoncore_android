@@ -54,8 +54,8 @@ class ContactRepositoryImpl(
         sourceOfTruth = SourceOfTruth.of(
             reader = { contactStoreKey -> database.getContact(contactStoreKey.contactId) },
             writer = { contactStoreKey, contact -> database.insertOrUpdate(contactStoreKey.userId, contact) },
-            delete = { key -> database.deleteContact(key.contactId) },
-            deleteAll = database::deleteAllContacts
+            delete = { key -> database.contactDao().deleteContact(key.contactId) },
+            deleteAll = database.contactDao()::deleteAllContacts
         )
     ).build()
 
@@ -78,7 +78,7 @@ class ContactRepositoryImpl(
         return if (refresh) contactStore.fresh(key) else contactStore.get(key)
     }
 
-    override suspend fun clearContacts(userId: UserId) = database.deleteAllContacts(userId)
+    override suspend fun clearContacts(userId: UserId) = database.contactDao().deleteAllContacts(userId)
 
     override suspend fun clearAllContacts() = contactStore.clearAll()
 

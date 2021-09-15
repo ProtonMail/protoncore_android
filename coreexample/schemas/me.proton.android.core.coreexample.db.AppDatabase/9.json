@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "23e74d2494c3804de9ca50ef03d1fe50",
+    "identityHash": "a2d3ecf63316cd30e298d6310db02dee",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -1654,7 +1654,7 @@
       },
       {
         "tableName": "ContactEmailEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `contactEmailId` TEXT NOT NULL, `name` TEXT NOT NULL, `email` TEXT NOT NULL, `defaults` INTEGER NOT NULL, `order` INTEGER NOT NULL, `contactId` TEXT NOT NULL, `canonicalEmail` TEXT, PRIMARY KEY(`contactEmailId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `contactEmailId` TEXT NOT NULL, `name` TEXT NOT NULL, `email` TEXT NOT NULL, `defaults` INTEGER NOT NULL, `order` INTEGER NOT NULL, `contactId` TEXT NOT NULL, `canonicalEmail` TEXT, PRIMARY KEY(`contactEmailId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`contactId`) REFERENCES `ContactEntity`(`contactId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -1732,6 +1732,17 @@
             "referencedColumns": [
               "userId"
             ]
+          },
+          {
+            "table": "ContactEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "contactId"
+            ],
+            "referencedColumns": [
+              "contactId"
+            ]
           }
         ]
       },
@@ -1778,7 +1789,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '23e74d2494c3804de9ca50ef03d1fe50')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a2d3ecf63316cd30e298d6310db02dee')"
     ]
   }
 }
