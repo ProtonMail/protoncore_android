@@ -22,6 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactId
+import me.proton.core.contact.domain.entity.ContactWithCards
 
 @Serializable
 data class ContactResponse(
@@ -34,10 +35,12 @@ data class ContactResponse(
     @SerialName("Cards")
     val cards: List<ContactCardResponse>
 ) {
-    fun toContact() = Contact(
-        ContactId(id),
-        name,
-        contactEmails.map { it.toContactEmail() },
-        cards.map { it.toContactCard() }
+    fun toContactWithCards() = ContactWithCards(
+        contact = Contact(
+            ContactId(id),
+            name,
+            contactEmails.map { it.toContactEmail() },
+        ),
+        contactCards = cards.map { it.toContactCard() }
     )
 }

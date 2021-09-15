@@ -31,6 +31,7 @@ import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
+import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
@@ -48,7 +49,7 @@ class ContactRepositoryImpl(
     private val contactStore = StoreBuilder.from(
         fetcher = Fetcher.of { key: ContactStoreKey ->
             provider.get<ContactApi>(key.userId).invoke {
-                getContact(key.contactId.id).contact.toContact()
+                getContact(key.contactId.id).contact.toContactWithCards()
             }.valueOrThrow
         },
         sourceOfTruth = SourceOfTruth.of(
@@ -73,7 +74,11 @@ class ContactRepositoryImpl(
         )
     ).build()
 
-    override suspend fun getContact(sessionUserId: SessionUserId, contactId: ContactId, refresh: Boolean): Contact {
+    override suspend fun getContact(
+        sessionUserId: SessionUserId,
+        contactId: ContactId,
+        refresh: Boolean
+    ): ContactWithCards {
         val key = ContactStoreKey(sessionUserId, contactId)
         return if (refresh) contactStore.fresh(key) else contactStore.get(key)
     }

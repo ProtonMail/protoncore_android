@@ -26,15 +26,15 @@ import me.proton.core.contact.data.local.db.dao.ContactCardDao
 import me.proton.core.contact.data.local.db.dao.ContactDao
 import me.proton.core.contact.data.local.db.dao.ContactEmailDao
 import me.proton.core.contact.data.local.db.dao.ContactEmailLabelCrossRefDao
-import me.proton.core.contact.data.local.db.entity.toContact
 import me.proton.core.contact.data.local.db.entity.toContactCardEntity
 import me.proton.core.contact.data.local.db.entity.toContactEmail
 import me.proton.core.contact.data.local.db.entity.toContactEmailEntity
 import me.proton.core.contact.data.local.db.entity.toContactEmailLabelCrossRefs
 import me.proton.core.contact.data.local.db.entity.toContactEntity
-import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.data.local.db.entity.toContactWithCards
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
+import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.domain.entity.UserId
@@ -45,20 +45,20 @@ interface ContactDatabase: Database {
     fun contactEmailDao(): ContactEmailDao
     fun contactEmailLabelDao(): ContactEmailLabelCrossRefDao
 
-    fun getContact(contactId: ContactId): Flow<Contact> {
-        return contactDao().getContact(contactId).map { it.toContact() }
+    fun getContact(contactId: ContactId): Flow<ContactWithCards> {
+        return contactDao().getContact(contactId).map { it.toContactWithCards() }
     }
 
-    suspend fun insertOrUpdate(userId: UserId, contact: Contact) {
+    suspend fun insertOrUpdate(userId: UserId, contactWithCards: ContactWithCards) {
         inTransaction {
-            contactDao().insertOrUpdate(contact.toContactEntity(userId))
+            contactDao().insertOrUpdate(contactWithCards.contact.toContactEntity(userId))
 
-            contactCardDao().deleteAllContactCards(contact.id)
-            val contactCardsEntities = contact.cards.map { it.toContactCardEntity(contact.id) }
+            contactCardDao().deleteAllContactCards(contactWithCards.id)
+            val contactCardsEntities = contactWithCards.contactCards.map { it.toContactCardEntity(contactWithCards.id) }
             contactCardDao().insertOrUpdate(*contactCardsEntities.toTypedArray())
 
-            contactEmailDao().deleteAllContactsEmails(contactId = contact.id)
-            insertOrUpdateContactsEmails(userId, contact.contactEmails)
+            contactEmailDao().deleteAllContactsEmails(contactId = contactWithCards.id)
+            insertOrUpdateContactsEmails(userId, contactWithCards.contactEmails)
         }
     }
 

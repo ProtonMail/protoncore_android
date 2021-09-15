@@ -29,6 +29,7 @@ import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
+import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
 
@@ -38,7 +39,7 @@ object User0 {
     val accountEntity = userId.accountEntity()
     object Contact0 {
         val contactId = ContactId("contact0")
-        val contact = contactId.contact(
+        val contactWithCards = contactId.contactWithCards(
             listOf(ContactEmail0.contactEmail),
             listOf(ContactCard0.contactCard)
         )
@@ -89,11 +90,13 @@ fun UserId.contactEntity(contactId: ContactId) = ContactEntity(
     name = "contact$contactId"
 )
 
-fun ContactId.contact(emails: List<ContactEmail>, cards: List<ContactCard>) = Contact(
-    id = this,
-    name = "contact$this",
-    contactEmails = emails,
-    cards = cards
+fun ContactId.contactWithCards(emails: List<ContactEmail>, cards: List<ContactCard>) = ContactWithCards(
+    contact = Contact(
+        id = this,
+        name = "contact$this",
+        contactEmails = emails,
+    ),
+    contactCards = cards
 )
 
 fun contactCard(data: String) = ContactCard(

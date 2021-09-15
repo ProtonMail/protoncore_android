@@ -77,13 +77,13 @@ class TransactionTests: ContactDatabaseTests() {
         val updatedCards = listOf(contactCard("card-b"))
         val baseEmails = listOf(User0.Contact0.contactId.contactEmail(ContactEmailId("a"), emptyList()))
         val updatedEmails = listOf(User0.Contact0.contactId.contactEmail(ContactEmailId("b"), emptyList()))
-        val baseContact = User0.Contact0.contact.copy(
-            cards = baseCards,
-            contactEmails = baseEmails
+        val baseContact = User0.Contact0.contactWithCards.copy(
+            contact = User0.Contact0.contactWithCards.contact.copy(contactEmails = baseEmails),
+            contactCards = baseCards,
         )
-        val updatedContact = User0.Contact0.contact.copy(
-            cards = updatedCards,
-            contactEmails = updatedEmails
+        val updatedContact = User0.Contact0.contactWithCards.copy(
+            contact = User0.Contact0.contactWithCards.contact.copy(contactEmails = updatedEmails),
+            contactCards = updatedCards,
         )
 
         db.insertOrUpdate(User0.userId, baseContact)

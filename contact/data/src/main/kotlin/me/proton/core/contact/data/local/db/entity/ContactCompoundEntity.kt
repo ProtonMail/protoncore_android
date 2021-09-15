@@ -21,6 +21,7 @@ package me.proton.core.contact.data.local.db.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactWithCards
 
 data class ContactCompoundEntity(
     @Embedded val contact: ContactEntity,
@@ -37,9 +38,11 @@ data class ContactCompoundEntity(
     val emails: List<ContactEmailCompoundEntity>,
 )
 
-fun ContactCompoundEntity.toContact() = Contact(
-    id = contact.contactId,
-    name = contact.name,
-    contactEmails = emails.map { it.toContactEmail() },
-    cards = cards.map { it.toContactCard() }
+fun ContactCompoundEntity.toContactWithCards() = ContactWithCards(
+    contact = Contact(
+        id = contact.contactId,
+        name = contact.name,
+        contactEmails = emails.map { it.toContactEmail() },
+    ),
+    contactCards = cards.map { it.toContactCard() }
 )
