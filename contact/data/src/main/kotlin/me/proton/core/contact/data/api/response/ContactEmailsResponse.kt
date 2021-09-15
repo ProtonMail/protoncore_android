@@ -20,9 +20,6 @@ package me.proton.core.contact.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.contact.domain.entity.ContactEmail
-import me.proton.core.contact.domain.entity.ContactEmailId
-import me.proton.core.contact.domain.entity.ContactId
 
 @Serializable
 data class ContactEmailsResponse(
@@ -31,35 +28,3 @@ data class ContactEmailsResponse(
     @SerialName("ContactEmails")
     val contactEmails: List<ContactEmailResponse>
 )
-
-@Serializable
-data class ContactEmailResponse(
-    @SerialName("ID")
-    val id: String,
-    @SerialName("Name")
-    val name: String,
-    @SerialName("Email")
-    val email: String,
-    @SerialName("Defaults")
-    val defaults: Int, // 0 if contact contains custom sending preferences or keys, 1 otherwise
-    @SerialName("Order")
-    val order: Int,
-    @SerialName("ContactID")
-    val contactId: String,
-    @SerialName("CanonicalEmail")
-    val canonicalEmail: String? = null,
-    @SerialName("LabelIDs")
-    val labelIds: List<String>
-) {
-    fun toContactEmail(): ContactEmail = ContactEmail(
-        ContactEmailId(id),
-        name,
-        email,
-        defaults,
-        order,
-        ContactId(contactId),
-        canonicalEmail,
-        labelIds
-    )
-}
-

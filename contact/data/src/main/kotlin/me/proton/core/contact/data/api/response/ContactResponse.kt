@@ -21,14 +21,7 @@ package me.proton.core.contact.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.contact.domain.entity.Contact
-import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactId
-
-@Serializable
-data class GetContactResponse(
-    @SerialName("Contact")
-    val contact: ContactResponse
-)
 
 @Serializable
 data class ContactResponse(
@@ -36,7 +29,6 @@ data class ContactResponse(
     val id: String,
     @SerialName("Name")
     val name: String,
-    // @Ignore ?
     @SerialName("ContactEmails")
     val contactEmails: List<ContactEmailResponse>,
     @SerialName("Cards")
@@ -47,21 +39,5 @@ data class ContactResponse(
         name,
         contactEmails.map { it.toContactEmail() },
         cards.map { it.toContactCard() }
-    )
-}
-
-@Serializable
-data class ContactCardResponse(
-    @SerialName("Type")
-    val type: Int,
-    @SerialName("Data")
-    val data: String,
-    @SerialName("Signature")
-    val signature: String? = null
-) {
-    fun toContactCard() = ContactCard(
-        type,
-        data,
-        signature
     )
 }

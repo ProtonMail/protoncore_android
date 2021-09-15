@@ -16,38 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.data.local.db
+package me.proton.core.contact.data.local.db.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.contact.domain.entity.ContactEmailId
+import me.proton.core.contact.data.local.db.entity.ContactEmailCompoundEntity
+import me.proton.core.contact.data.local.db.entity.ContactEmailEntity
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
-
-@Dao
-abstract class ContactDao: BaseDao<ContactEntity>() {
-    @Transaction
-    @Query("SELECT * FROM ContactEntity WHERE contactId = :contactId")
-    abstract fun getContact(contactId: ContactId): Flow<ContactCompoundEntity>
-
-    @Query("DELETE FROM ContactEntity WHERE contactId = :contactId")
-    abstract suspend fun deleteContact(contactId: ContactId)
-
-    @Query("DELETE FROM ContactEntity")
-    abstract suspend fun deleteAllContacts()
-
-    @Query("DELETE FROM ContactEntity WHERE userId = :userId")
-    abstract suspend fun deleteAllContacts(userId: UserId)
-}
-
-@Dao
-abstract class ContactCardDao: BaseDao<ContactCardEntity>() {
-    @Query("DELETE FROM ContactCardEntity WHERE contactId = :contactId")
-    abstract suspend fun deleteAllContactCards(contactId: ContactId)
-}
 
 @Dao
 abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
@@ -67,14 +46,4 @@ abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
 
     @Query("DELETE FROM ContactEmailEntity")
     abstract suspend fun deleteAllContactsEmails()
-}
-
-@Dao
-abstract class ContactEmailLabelCrossRefDao: BaseDao<ContactEmailLabelCrossRef>() {
-    @Transaction
-    @Query("SELECT labelId FROM ContactEmailLabelCrossRef WHERE contactEmailId = :contactEmailId")
-    abstract fun getAllLabels(contactEmailId: ContactEmailId): Flow<List<String>>
-
-    @Query("DELETE FROM ContactEmailLabelCrossRef WHERE contactEmailId IN (:contactEmailIds)")
-    abstract suspend fun deleteAllLabels(contactEmailIds: List<ContactEmailId>)
 }

@@ -20,10 +20,10 @@ package me.proton.core.contact.tests
 
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.contact.data.local.db.ContactEntity
-import me.proton.core.contact.data.local.db.toContactCardEntity
-import me.proton.core.contact.data.local.db.toContactEmailEntity
-import me.proton.core.contact.data.local.db.toContactEmailLabelCrossRefs
+import me.proton.core.contact.data.local.db.entity.ContactEntity
+import me.proton.core.contact.data.local.db.entity.toContactCardEntity
+import me.proton.core.contact.data.local.db.entity.toContactEmailEntity
+import me.proton.core.contact.data.local.db.entity.toContactEmailLabelCrossRefs
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactEmail

@@ -46,7 +46,7 @@ interface ContactRepository {
     /**
      * Get list of [ContactEmail] using [sessionUserId].
      */
-    suspend fun getContactEmails(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<ContactEmail>>>
+    fun getContactEmailsFlow(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<ContactEmail>>>
 
     /**
      * Clear all persisted Contact Email data, by [userId].

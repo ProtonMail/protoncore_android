@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "d5fc020121013f7d9c16300ed7867e35",
+    "identityHash": "23e74d2494c3804de9ca50ef03d1fe50",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -1736,7 +1736,7 @@
         ]
       },
       {
-        "tableName": "ContactEmailLabelCrossRef",
+        "tableName": "ContactEmailLabelCrossRefEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contactEmailId` TEXT NOT NULL, `labelId` TEXT NOT NULL, PRIMARY KEY(`contactEmailId`, `labelId`), FOREIGN KEY(`contactEmailId`) REFERENCES `ContactEmailEntity`(`contactEmailId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
@@ -1778,7 +1778,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5fc020121013f7d9c16300ed7867e35')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '23e74d2494c3804de9ca50ef03d1fe50')"
     ]
   }
 }

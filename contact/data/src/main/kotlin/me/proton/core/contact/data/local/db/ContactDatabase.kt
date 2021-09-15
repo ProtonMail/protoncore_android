@@ -22,6 +22,16 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import me.proton.core.contact.data.local.db.dao.ContactCardDao
+import me.proton.core.contact.data.local.db.dao.ContactDao
+import me.proton.core.contact.data.local.db.dao.ContactEmailDao
+import me.proton.core.contact.data.local.db.dao.ContactEmailLabelCrossRefDao
+import me.proton.core.contact.data.local.db.entity.toContact
+import me.proton.core.contact.data.local.db.entity.toContactCardEntity
+import me.proton.core.contact.data.local.db.entity.toContactEmail
+import me.proton.core.contact.data.local.db.entity.toContactEmailEntity
+import me.proton.core.contact.data.local.db.entity.toContactEmailLabelCrossRefs
+import me.proton.core.contact.data.local.db.entity.toContactEntity
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId

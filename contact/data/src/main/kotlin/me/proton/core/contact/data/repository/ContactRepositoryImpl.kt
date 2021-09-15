@@ -31,11 +31,11 @@ import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.domain.entity.UserId
 import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 
 class ContactRepositoryImpl(
@@ -82,7 +82,7 @@ class ContactRepositoryImpl(
 
     override suspend fun clearAllContacts() = contactStore.clearAll()
 
-    override suspend fun getContactEmails(
+    override fun getContactEmailsFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<DataResult<List<ContactEmail>>> {

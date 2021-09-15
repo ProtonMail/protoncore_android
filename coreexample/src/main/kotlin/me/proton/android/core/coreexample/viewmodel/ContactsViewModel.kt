@@ -53,7 +53,7 @@ class ContactsViewModel @Inject constructor(
     private suspend fun observeFirstAccountContactsEmails() {
         accountManager.getAccounts().collect { accounts ->
             accounts.firstOrNull()?.let { account ->
-                contactRepository.getContactEmails(account.userId, refresh = true).collect { result ->
+                contactRepository.getContactEmailsFlow(account.userId, refresh = true).collect { result ->
                     when (result) {
                         is DataResult.Error.Local -> _state.value = State.Error(result.message)
                         is DataResult.Error.Remote -> _state.value = State.Error(result.message)

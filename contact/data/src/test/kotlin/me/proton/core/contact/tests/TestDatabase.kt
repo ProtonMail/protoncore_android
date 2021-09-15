@@ -26,12 +26,12 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
-import me.proton.core.contact.data.local.db.ContactCardEntity
 import me.proton.core.contact.data.local.db.ContactConverters
 import me.proton.core.contact.data.local.db.ContactDatabase
-import me.proton.core.contact.data.local.db.ContactEmailEntity
-import me.proton.core.contact.data.local.db.ContactEmailLabelCrossRef
-import me.proton.core.contact.data.local.db.ContactEntity
+import me.proton.core.contact.data.local.db.entity.ContactCardEntity
+import me.proton.core.contact.data.local.db.entity.ContactEmailEntity
+import me.proton.core.contact.data.local.db.entity.ContactEmailLabelCrossRefEntity
+import me.proton.core.contact.data.local.db.entity.ContactEntity
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.room.db.BaseDatabase
 import me.proton.core.data.room.db.CommonConverters
@@ -51,7 +51,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
         ContactEntity::class,
         ContactCardEntity::class,
         ContactEmailEntity::class,
-        ContactEmailLabelCrossRef::class,
+        ContactEmailLabelCrossRefEntity::class,
     ],
     version = 1
 )
