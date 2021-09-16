@@ -58,7 +58,7 @@ interface ContactDatabase: Database {
 
     suspend fun mergeContacts(userId: UserId, contacts: List<Contact>) {
         inTransaction {
-            contactDao().deleteAllContactsNotIn(contacts.map { it.id })
+            contactDao().deleteAllContacts(userId)
             contacts.forEach { mergeContact(userId, it) }
         }
     }
