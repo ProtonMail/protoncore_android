@@ -50,6 +50,9 @@
             android:name=".ui.ContactsActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".ui.ContactDetailActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name="me.proton.core.auth.presentation.ui.AuthHelpActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity

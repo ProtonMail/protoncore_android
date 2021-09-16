@@ -18,6 +18,7 @@
 
 package me.proton.android.core.coreexample.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,51 +27,48 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
+import me.proton.android.core.coreexample.utils.prettyPrint
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.repository.ContactRepository
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.util.kotlin.Logger
-import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @HiltViewModel
-class ContactsViewModel @Inject constructor(
-    private val contactRepository: ContactRepository,
-    private val accountManager: AccountManager,
+class ContactDetailViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val logger: Logger,
+    private val accountManager: AccountManager,
+    private val contactRepository: ContactRepository,
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow<State?>(null)
     val state = mutableState.asStateFlow().filterNotNull()
+    private val contactId: ContactId = ContactId(savedStateHandle.get(ARG_CONTACT_ID)!!)
 
     init {
-        viewModelScope.launch { observePrimaryAccountContacts() }
+        logger.d("contact", "presenting contact $contactId")
+        viewModelScope.launch { observeContact() }
     }
 
-    private suspend fun observePrimaryAccountContacts() {
+    private suspend fun observeContact() {
         accountManager.getPrimaryUserId().filterNotNull().collect { userId ->
-            contactRepository.getAllContactsFlow(userId, refresh = true).collect { result ->
-                when (result) {
-                    is DataResult.Error.Local -> handleDataResultError(result)
-                    is DataResult.Error.Remote -> handleDataResultError(result)
-                    is DataResult.Processing -> mutableState.value = State.Processing
-                    is DataResult.Success -> mutableState.value = State.Contacts(result.value)
-                }.exhaustive
+            try {
+                val contactWithCards = contactRepository.getContactWithCards(userId, contactId, refresh = true)
+                mutableState.value = State.ContactDetails(contactWithCards.prettyPrint())
+            } catch (throwable: Throwable) {
+                logger.e("contact", throwable)
+                mutableState.value = State.Error(throwable.message ?: "unknown error")
             }
         }
     }
 
-    private fun handleDataResultError(error: DataResult.Error) {
-        val errorMessage = error.message ?: "Unknown error"
-        val errorCause = error.cause ?: Throwable(errorMessage)
-        logger.e("contact", errorCause, errorMessage)
-        mutableState.value = State.Error(errorMessage)
+    sealed class State {
+        data class ContactDetails(val contact: String) : State()
+        data class Error(val reason: String) : State()
     }
 
-    sealed class State {
-        object Processing : State()
-        data class Contacts(val contacts: List<Contact>) : State()
-        data class Error(val reason: String) : State()
+    companion object {
+        const val ARG_CONTACT_ID = "arg.contactId"
     }
 }

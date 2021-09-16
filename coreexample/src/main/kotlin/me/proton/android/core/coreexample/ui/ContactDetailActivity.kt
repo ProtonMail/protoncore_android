@@ -18,6 +18,8 @@
 
 package me.proton.android.core.coreexample.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
@@ -27,9 +29,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.R
-import me.proton.android.core.coreexample.adapter.ContactsAdapter
-import me.proton.android.core.coreexample.databinding.ActivityContactsBinding
-import me.proton.android.core.coreexample.viewmodel.ContactsViewModel
+import me.proton.android.core.coreexample.databinding.ActivityContactDetailsBinding
+import me.proton.android.core.coreexample.viewmodel.ContactDetailViewModel
+import me.proton.android.core.coreexample.viewmodel.ContactDetailViewModel.Companion.ARG_CONTACT_ID
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.showToast
@@ -38,30 +40,32 @@ import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ContactsActivity : ProtonActivity<ActivityContactsBinding>() {
-    override fun layoutId(): Int = R.layout.activity_contacts
+class ContactDetailActivity : ProtonActivity<ActivityContactDetailsBinding>() {
+    override fun layoutId(): Int = R.layout.activity_contact_details
 
-    @Inject lateinit var logger: Logger
-    private val viewModel: ContactsViewModel by viewModels()
-    private val contactsAdapter = ContactsAdapter(::onClickContact)
+    private val viewModel: ContactDetailViewModel by viewModels()
+
+    @Inject
+    lateinit var logger: Logger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.contactsRecyclerView.adapter = contactsAdapter
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     when (state) {
-                        is ContactsViewModel.State.Contacts -> contactsAdapter.submitList(state.contacts)
-                        is ContactsViewModel.State.Error -> showToast(state.reason)
-                        ContactsViewModel.State.Processing -> showToast("processing")
+                        is ContactDetailViewModel.State.ContactDetails -> binding.contactDetails.text = state.contact
+                        is ContactDetailViewModel.State.Error -> showToast(state.reason)
                     }.exhaustive
                 }
             }
         }
     }
 
-    private fun onClickContact(contactId: ContactId) {
-        startActivity(ContactDetailActivity.createIntent(this, contactId))
+    companion object {
+        fun createIntent(context: Context, contactId: ContactId) =
+            Intent(context, ContactDetailActivity::class.java).apply {
+                putExtra(ARG_CONTACT_ID, contactId.id)
+            }
     }
 }
