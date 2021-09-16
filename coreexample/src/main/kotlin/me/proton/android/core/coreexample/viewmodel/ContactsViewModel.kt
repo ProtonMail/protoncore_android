@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.domain.arch.DataResult
@@ -43,29 +43,27 @@ class ContactsViewModel @Inject constructor(
     private val logger: Logger,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<State?>(null)
-    val state = _state.asStateFlow().filterNotNull()
+    private val mutableState = MutableStateFlow<State?>(null)
+    val state = mutableState.asStateFlow().filterNotNull()
 
     init {
-        viewModelScope.launch { observeFirstAccountContactsEmails() }
+        viewModelScope.launch { observePrimaryAccountContacts() }
     }
 
-    private suspend fun observeFirstAccountContactsEmails() {
-        accountManager.getAccounts().collect { accounts ->
-            accounts.firstOrNull()?.let { account ->
-                contactRepository.getAllContactEmailsFlow(account.userId, refresh = true).collect { result ->
-                    when (result) {
-                        is DataResult.Error.Local -> _state.value = State.Error(result.message)
-                        is DataResult.Error.Remote -> _state.value = State.Error(result.message)
-                        is DataResult.Processing -> _state.value = State.Processing
-                        is DataResult.Success -> {
-                            result.value.firstOrNull()?.let { email ->
-                                viewModelScope.launch { testContactApi(account.userId, email.contactId) }
-                            }
-                            _state.value = State.Contacts(result.value)
+    private suspend fun observePrimaryAccountContacts() {
+        accountManager.getPrimaryUserId().filterNotNull().collect { userId ->
+            contactRepository.getAllContactsFlow(userId).collect { result ->
+                when (result) {
+                    is DataResult.Error.Local -> mutableState.value = State.Error(result.message)
+                    is DataResult.Error.Remote -> mutableState.value = State.Error(result.message)
+                    is DataResult.Processing -> mutableState.value = State.Processing
+                    is DataResult.Success -> {
+                        result.value.firstOrNull()?.let { contact ->
+                            viewModelScope.launch { testContactApi(userId, contact.id) }
                         }
-                    }.exhaustive
-                }
+                        mutableState.value = State.Contacts(result.value)
+                    }
+                }.exhaustive
             }
         }
     }
@@ -77,7 +75,7 @@ class ContactsViewModel @Inject constructor(
 
     sealed class State {
         object Processing : State()
-        data class Contacts(val emails: List<ContactEmail>) : State()
+        data class Contacts(val emails: List<Contact>) : State()
         data class Error(val reason: String?) : State()
     }
 }
