@@ -86,9 +86,9 @@ class TransactionTests: ContactDatabaseTests() {
             contactCards = updatedCards,
         )
 
-        db.insertOrUpdate(User0.userId, baseContact)
+        db.insertOrUpdateWithCards(User0.userId, baseContact)
         assert(db.getContact(User0.Contact0.contactId).first() == baseContact)
-        db.insertOrUpdate(User0.userId, updatedContact)
+        db.insertOrUpdateWithCards(User0.userId, updatedContact)
         assert(db.getContact(User0.Contact0.contactId).first() == updatedContact)
     }
 }

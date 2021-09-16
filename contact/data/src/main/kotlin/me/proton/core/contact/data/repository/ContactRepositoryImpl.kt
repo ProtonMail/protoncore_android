@@ -27,8 +27,8 @@ import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.contact.data.api.ContactApi
+import me.proton.core.contact.data.api.ContactApiHelper
 import me.proton.core.contact.data.local.db.ContactDatabase
-import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
@@ -44,6 +44,8 @@ class ContactRepositoryImpl(
     private val database: ContactDatabase
 ) : ContactRepository {
 
+    private val contactApiHelper = ContactApiHelper(provider)
+
     private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)
 
     private val contactStore = StoreBuilder.from(
@@ -54,23 +56,21 @@ class ContactRepositoryImpl(
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { contactStoreKey -> database.getContact(contactStoreKey.contactId) },
-            writer = { contactStoreKey, contact -> database.insertOrUpdate(contactStoreKey.userId, contact) },
+            writer = { key, input -> database.insertOrUpdateWithCards(key.userId, input) },
             delete = { key -> database.contactDao().deleteContact(key.contactId) },
             deleteAll = database.contactDao()::deleteAllContacts
         )
     ).build()
 
-    private val emailStore = StoreBuilder.from(
+    private val allEmailsStore = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
-            provider.get<ContactApi>(userId).invoke {
-                getContactEmails(page = 0, pageSize = 1000).contactEmails.map { it.toContactEmail() }
-            }.valueOrThrow
+            contactApiHelper.getAllContacts(userId)
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = database::getAllContactsEmails,
-            writer = database::insertOrUpdateContactsEmails,
-            delete = database.contactEmailDao()::deleteAllContactsEmails,
-            deleteAll = database.contactEmailDao()::deleteAllContactsEmails
+            writer = database::sync,
+            delete = database.contactDao()::deleteAllContacts,
+            deleteAll = database.contactDao()::deleteAllContacts
         )
     ).build()
 
@@ -91,10 +91,10 @@ class ContactRepositoryImpl(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<DataResult<List<ContactEmail>>> {
-        return emailStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+        return allEmailsStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
     }
 
-    override suspend fun clearContactEmails(userId: UserId) = emailStore.clear(userId)
+    override suspend fun clearContactEmails(userId: UserId) = allEmailsStore.clear(userId)
 
-    override suspend fun clearAllContactEmails() = emailStore.clearAll()
+    override suspend fun clearAllContactEmails() = allEmailsStore.clearAll()
 }
