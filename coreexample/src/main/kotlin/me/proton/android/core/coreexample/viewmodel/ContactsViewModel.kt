@@ -52,10 +52,10 @@ class ContactsViewModel @Inject constructor(
 
     private suspend fun observePrimaryAccountContacts() {
         accountManager.getPrimaryUserId().filterNotNull().collect { userId ->
-            contactRepository.getAllContactsFlow(userId).collect { result ->
+            contactRepository.getAllContactsFlow(userId, refresh = true).collect { result ->
                 when (result) {
-                    is DataResult.Error.Local -> mutableState.value = State.Error(result.message)
-                    is DataResult.Error.Remote -> mutableState.value = State.Error(result.message)
+                    is DataResult.Error.Local -> handleDataResultError(result)
+                    is DataResult.Error.Remote -> handleDataResultError(result)
                     is DataResult.Processing -> mutableState.value = State.Processing
                     is DataResult.Success -> {
                         result.value.firstOrNull()?.let { contact ->
@@ -68,6 +68,13 @@ class ContactsViewModel @Inject constructor(
         }
     }
 
+    private fun handleDataResultError(error: DataResult.Error) {
+        val errorMessage = error.message ?: "Unknown error"
+        val errorCause = error.cause ?: Throwable(errorMessage)
+        logger.e("contact", errorCause, errorMessage)
+        mutableState.value = State.Error(errorMessage)
+    }
+
     private suspend fun testContactApi(userId: UserId, contactId: ContactId) {
         val contact = contactRepository.getContactWithCards(sessionUserId = userId, contactId = contactId, refresh = true)
         logger.d("contact", contact.toString())
@@ -75,7 +82,7 @@ class ContactsViewModel @Inject constructor(
 
     sealed class State {
         object Processing : State()
-        data class Contacts(val emails: List<Contact>) : State()
-        data class Error(val reason: String?) : State()
+        data class Contacts(val contacts: List<Contact>) : State()
+        data class Error(val reason: String) : State()
     }
 }

@@ -19,7 +19,6 @@
 package me.proton.android.core.coreexample.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -28,10 +27,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.R
+import me.proton.android.core.coreexample.adapter.ContactsAdapter
 import me.proton.android.core.coreexample.databinding.ActivityContactsBinding
 import me.proton.android.core.coreexample.viewmodel.ContactsViewModel
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.showToast
 import me.proton.core.util.kotlin.Logger
+import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,13 +42,19 @@ class ContactsActivity : ProtonActivity<ActivityContactsBinding>() {
 
     @Inject lateinit var logger: Logger
     private val viewModel: ContactsViewModel by viewModels()
+    private val contactsAdapter = ContactsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.contactsRecyclerView.adapter = contactsAdapter
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
-                    logger.d("contacts-state", it.toString())
+                viewModel.state.collect { state ->
+                    when (state) {
+                        is ContactsViewModel.State.Contacts -> contactsAdapter.submitList(state.contacts)
+                        is ContactsViewModel.State.Error -> showToast(state.reason)
+                        ContactsViewModel.State.Processing -> showToast("processing")
+                    }.exhaustive
                 }
             }
         }
