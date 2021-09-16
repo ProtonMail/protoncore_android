@@ -66,7 +66,7 @@ class TransactionTests: ContactDatabaseTests() {
         val updatedContactEmail = User0.Contact0.ContactEmail0.contactEmail.copy(
             labelIds = updatedLabels
         )
-        db.insertOrUpdateContactsEmails(User0.userId, listOf(updatedContactEmail))
+        db.mergeContactEmails(User0.userId, listOf(updatedContactEmail))
 
         assert(db.contactEmailLabelDao().getAllLabels(User0.Contact0.ContactEmail0.contactEmailId).first() == updatedLabels)
     }
@@ -86,9 +86,9 @@ class TransactionTests: ContactDatabaseTests() {
             contactCards = updatedCards,
         )
 
-        db.insertOrUpdateWithCards(User0.userId, baseContact)
+        db.mergeContactWithCards(User0.userId, baseContact)
         assert(db.getContact(User0.Contact0.contactId).first() == baseContact)
-        db.insertOrUpdateWithCards(User0.userId, updatedContact)
+        db.mergeContactWithCards(User0.userId, updatedContact)
         assert(db.getContact(User0.Contact0.contactId).first() == updatedContact)
     }
 }

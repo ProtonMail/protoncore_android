@@ -29,12 +29,14 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.contact.data.api.ContactApi
 import me.proton.core.contact.data.api.ContactApiHelper
 import me.proton.core.contact.data.local.db.ContactDatabase
+import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.arch.mapSuccess
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
@@ -48,7 +50,7 @@ class ContactRepositoryImpl(
 
     private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)
 
-    private val contactStore = StoreBuilder.from(
+    private val contactWithCardsStore = StoreBuilder.from(
         fetcher = Fetcher.of { key: ContactStoreKey ->
             provider.get<ContactApi>(key.userId).invoke {
                 getContact(key.contactId.id).contact.toContactWithCards()
@@ -56,45 +58,46 @@ class ContactRepositoryImpl(
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { contactStoreKey -> database.getContact(contactStoreKey.contactId) },
-            writer = { key, input -> database.insertOrUpdateWithCards(key.userId, input) },
+            writer = { key, input -> database.mergeContactWithCards(key.userId, input) },
             delete = { key -> database.contactDao().deleteContact(key.contactId) },
             deleteAll = database.contactDao()::deleteAllContacts
         )
     ).build()
 
-    private val allEmailsStore = StoreBuilder.from(
+    private val allContactsStore = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
             contactApiHelper.getAllContacts(userId)
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = database::getAllContactsEmails,
-            writer = database::sync,
+            reader = database::getAllContacts,
+            writer = database::mergeContacts,
             delete = database.contactDao()::deleteAllContacts,
             deleteAll = database.contactDao()::deleteAllContacts
         )
     ).build()
 
-    override suspend fun getContact(
+    override suspend fun getContactWithCards(
         sessionUserId: SessionUserId,
         contactId: ContactId,
         refresh: Boolean
     ): ContactWithCards {
         val key = ContactStoreKey(sessionUserId, contactId)
-        return if (refresh) contactStore.fresh(key) else contactStore.get(key)
+        return if (refresh) contactWithCardsStore.fresh(key) else contactWithCardsStore.get(key)
     }
 
-    override suspend fun clearContacts(userId: UserId) = database.contactDao().deleteAllContacts(userId)
+    override fun getAllContactsFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
+        return allContactsStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+    }
 
-    override suspend fun clearAllContacts() = contactStore.clearAll()
-
-    override fun getContactEmailsFlow(
+    override fun getAllContactEmailsFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<DataResult<List<ContactEmail>>> {
-        return allEmailsStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+        return getAllContactsFlow(sessionUserId, refresh).mapSuccess {  contactsResult ->
+            DataResult.Success(
+                source = contactsResult.source,
+                value = contactsResult.value.flatMap { it.contactEmails }
+            )
+        }
     }
-
-    override suspend fun clearContactEmails(userId: UserId) = allEmailsStore.clear(userId)
-
-    override suspend fun clearAllContactEmails() = allEmailsStore.clearAll()
 }

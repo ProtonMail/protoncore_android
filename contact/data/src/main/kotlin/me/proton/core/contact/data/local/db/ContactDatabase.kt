@@ -28,7 +28,6 @@ import me.proton.core.contact.data.local.db.dao.ContactEmailDao
 import me.proton.core.contact.data.local.db.dao.ContactEmailLabelCrossRefDao
 import me.proton.core.contact.data.local.db.entity.toContact
 import me.proton.core.contact.data.local.db.entity.toContactCardEntity
-import me.proton.core.contact.data.local.db.entity.toContactEmail
 import me.proton.core.contact.data.local.db.entity.toContactEmailEntity
 import me.proton.core.contact.data.local.db.entity.toContactEmailLabelCrossRefs
 import me.proton.core.contact.data.local.db.entity.toContactEntity
@@ -57,25 +56,25 @@ interface ContactDatabase: Database {
         }.distinctUntilChanged()
     }
 
-    suspend fun sync(userId: UserId, contacts: List<Contact>) {
+    suspend fun mergeContacts(userId: UserId, contacts: List<Contact>) {
         inTransaction {
             contactDao().deleteAllContactsNotIn(contacts.map { it.id })
-            contacts.forEach { insertOrUpdateContact(userId, it) }
+            contacts.forEach { mergeContact(userId, it) }
         }
     }
 
-    suspend fun insertOrUpdateContact(userId: UserId, contact: Contact) {
+    suspend fun mergeContact(userId: UserId, contact: Contact) {
         inTransaction {
             contactDao().insertOrUpdate(contact.toContactEntity(userId))
 
             contactEmailDao().deleteAllContactsEmails(contact.id)
-            insertOrUpdateContactsEmails(userId, contact.contactEmails)
+            mergeContactEmails(userId, contact.contactEmails)
         }
     }
 
-    suspend fun insertOrUpdateWithCards(userId: UserId, contactWithCards: ContactWithCards) {
+    suspend fun mergeContactWithCards(userId: UserId, contactWithCards: ContactWithCards) {
         inTransaction {
-            insertOrUpdateContact(userId, contactWithCards.contact)
+            mergeContact(userId, contactWithCards.contact)
 
             contactCardDao().deleteAllContactCards(contactWithCards.id)
             val contactCardsEntities = contactWithCards.contactCards.map { it.toContactCardEntity(contactWithCards.id) }
@@ -83,15 +82,7 @@ interface ContactDatabase: Database {
         }
     }
 
-    fun getAllContactsEmails(userId: UserId): Flow<List<ContactEmail>> {
-        return contactEmailDao().getAllContactsEmails(userId).map { entities ->
-            entities.map {
-                it.toContactEmail()
-            }
-        }.distinctUntilChanged()
-    }
-
-    suspend fun insertOrUpdateContactsEmails(userId: UserId, contactsEmails: List<ContactEmail>) {
+    suspend fun mergeContactEmails(userId: UserId, contactsEmails: List<ContactEmail>) {
         inTransaction {
             contactEmailLabelDao().deleteAllLabels(contactsEmails.map { it.id })
 

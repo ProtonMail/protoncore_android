@@ -25,42 +25,28 @@ import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.domain.entity.UserId
 
 interface ContactRepository {
 
     /**
-     * Get [Contact] using [sessionUserId] and [contactId].
+     * Get [ContactWithCards] using [sessionUserId] and [contactId].
      */
-    suspend fun getContact(
+    suspend fun getContactWithCards(
         sessionUserId: SessionUserId,
         contactId: ContactId,
         refresh: Boolean = false
     ): ContactWithCards
 
     /**
-     * Clear all persisted Contact data, by [userId].
+     * Get all [Contact] using [sessionUserId].
      */
-    suspend fun clearContacts(userId: UserId)
+    fun getAllContactsFlow(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<Contact>>>
 
     /**
-     * Clear all persisted Contact data.
+     * Get all [ContactEmail] using [sessionUserId].
      */
-    suspend fun clearAllContacts()
-
-    /**
-     * Get list of [ContactEmail] using [sessionUserId].
-     */
-    fun getContactEmailsFlow(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<ContactEmail>>>
-
-    /**
-     * Clear all persisted Contact Email data, by [userId].
-     */
-    suspend fun clearContactEmails(userId: UserId)
-
-    /**
-     * Clear all persisted Contact Email data.
-     */
-    suspend fun clearAllContactEmails()
-
+    fun getAllContactEmailsFlow(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): Flow<DataResult<List<ContactEmail>>>
 }

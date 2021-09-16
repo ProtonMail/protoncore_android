@@ -53,7 +53,7 @@ class ContactsViewModel @Inject constructor(
     private suspend fun observeFirstAccountContactsEmails() {
         accountManager.getAccounts().collect { accounts ->
             accounts.firstOrNull()?.let { account ->
-                contactRepository.getContactEmailsFlow(account.userId, refresh = true).collect { result ->
+                contactRepository.getAllContactEmailsFlow(account.userId, refresh = true).collect { result ->
                     when (result) {
                         is DataResult.Error.Local -> _state.value = State.Error(result.message)
                         is DataResult.Error.Remote -> _state.value = State.Error(result.message)
@@ -71,7 +71,7 @@ class ContactsViewModel @Inject constructor(
     }
 
     private suspend fun testContactApi(userId: UserId, contactId: ContactId) {
-        val contact = contactRepository.getContact(sessionUserId = userId, contactId = contactId, refresh = true)
+        val contact = contactRepository.getContactWithCards(sessionUserId = userId, contactId = contactId, refresh = true)
         logger.d("contact", contact.toString())
     }
 
