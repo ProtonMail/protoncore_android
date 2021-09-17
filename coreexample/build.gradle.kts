@@ -40,6 +40,10 @@ android(
         }
         buildConfigField("String", "HOST", "\"proton.black\"")
     }
+    sourceSets.getByName("debug") {
+        // Add schema for robolectric
+        assets.srcDirs("$projectDir/schemas")
+    }
 }
 
 dependencies {

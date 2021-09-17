@@ -48,6 +48,7 @@ dependencies {
         // Android
         `android-arch-testing`,
         `android-test-core`,
+        `room-testing`,
         robolectric
     )
 }

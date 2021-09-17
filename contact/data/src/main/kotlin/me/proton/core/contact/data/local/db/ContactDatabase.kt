@@ -97,7 +97,20 @@ interface ContactDatabase: Database {
     companion object {
         val MIGRATION_0 = object : DatabaseMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
-                TODO("provide migration when feature done")
+                // Create ContactEntity table
+                database.execSQL("CREATE TABLE IF NOT EXISTS `ContactEntity` (`userId` TEXT NOT NULL, `contactId` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`contactId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_ContactEntity_userId` ON `ContactEntity` (`userId`)")
+
+                // Create ContactCardEntity table
+                database.execSQL("CREATE TABLE IF NOT EXISTS `ContactCardEntity` (`contactId` TEXT NOT NULL, `type` INTEGER NOT NULL, `data` TEXT NOT NULL, `signature` TEXT, `cardId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FOREIGN KEY(`contactId`) REFERENCES `ContactEntity`(`contactId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_ContactCardEntity_contactId` ON `ContactCardEntity` (`contactId`)")
+
+                // Create ContactEmailEntity table
+                database.execSQL("CREATE TABLE IF NOT EXISTS `ContactEmailEntity` (`userId` TEXT NOT NULL, `contactEmailId` TEXT NOT NULL, `name` TEXT NOT NULL, `email` TEXT NOT NULL, `defaults` INTEGER NOT NULL, `order` INTEGER NOT NULL, `contactId` TEXT NOT NULL, `canonicalEmail` TEXT, PRIMARY KEY(`contactEmailId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`contactId`) REFERENCES `ContactEntity`(`contactId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_ContactEmailEntity_userId` ON `ContactEmailEntity` (`userId`)")
+
+                // Create ContactEmailLabelCrossRefEntity table
+                database.execSQL("CREATE TABLE IF NOT EXISTS `ContactEmailLabelCrossRefEntity` (`contactEmailId` TEXT NOT NULL, `labelId` TEXT NOT NULL, PRIMARY KEY(`contactEmailId`, `labelId`), FOREIGN KEY(`contactEmailId`) REFERENCES `ContactEmailEntity`(`contactEmailId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
             }
         }
     }
