@@ -53,7 +53,6 @@ fun FragmentManager.registerShowPasswordDialogResultLauncher(
     return FragmentDialogResultLauncher(
         requestKey = PasswordAnd2FADialog.KEY_PASS_2FA_SET,
         show = { input ->
-            requireNotNull(input) { "Input must not be null" }
             showPasswordEnterDialog(password = input.showPassword, secondFactor = input.showTwoFA)
         }
     )

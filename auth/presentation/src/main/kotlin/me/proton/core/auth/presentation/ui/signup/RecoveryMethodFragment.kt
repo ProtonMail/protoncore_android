@@ -190,7 +190,7 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
 
     private fun showSkip() {
         hideKeyboard()
-        skipRecoveryDialogResultLauncher.show()
+        skipRecoveryDialogResultLauncher.show(Unit)
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {

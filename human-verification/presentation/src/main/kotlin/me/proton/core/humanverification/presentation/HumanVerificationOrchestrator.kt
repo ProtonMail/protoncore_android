@@ -60,7 +60,6 @@ class HumanVerificationOrchestrator {
                 onHumanVerificationResultListener?.invoke(hvResult)
             })
         humanWorkflowLauncher = FragmentDialogResultLauncher(HumanVerificationDialogFragment.REQUEST_KEY) { input ->
-            input ?: return@FragmentDialogResultLauncher // TODO
             context.supportFragmentManager.showHumanVerification(
                 clientId = input.clientId,
                 captchaUrl = input.captchaUrl,
