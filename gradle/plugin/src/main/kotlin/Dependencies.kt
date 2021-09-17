@@ -41,6 +41,7 @@ val DependencyHandler.`store4` get() = dependency("com.dropbox.mobile.store", mo
 val DependencyHandler.`lifecycle-extensions` get() = androidxLifecycle("extensions") version `lifecycle-extensions version`
 val DependencyHandler.`lottie` get() = dependency("com.airbnb.android", module = "lottie") version `lottie version`
 val DependencyHandler.`javax-inject` get() = dependency("javax.inject", module = "javax.inject") version `javax-inject version`
+val DependencyHandler.`ez-vcard` get() = dependency("com.googlecode.ez-vcard", module = "ez-vcard") version `ez-vcard_version`
 
 // region accessors
 fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =
