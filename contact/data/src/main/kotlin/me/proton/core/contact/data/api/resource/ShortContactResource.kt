@@ -16,13 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.data.api.response
+package me.proton.core.contact.data.api.resource
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ListItemContactResponse(
+data class ShortContactResource(
     @SerialName("ID")
     val id: String,
     @SerialName("Name")

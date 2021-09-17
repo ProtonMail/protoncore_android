@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.data.api.response
+package me.proton.core.contact.data.api.resource
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -25,7 +25,7 @@ import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 
 @Serializable
-data class ContactEmailResponse(
+data class ContactEmailResource(
     @SerialName("ID")
     val id: String,
     @SerialName("Name")

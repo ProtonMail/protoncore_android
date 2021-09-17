@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.data.api.response
+package me.proton.core.contact.data.api.resource
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -25,15 +25,15 @@ import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 
 @Serializable
-data class ContactResponse(
+data class DetailedContactResource(
     @SerialName("ID")
     val id: String,
     @SerialName("Name")
     val name: String,
     @SerialName("ContactEmails")
-    val contactEmails: List<ContactEmailResponse>,
+    val contactEmails: List<ContactEmailResource>,
     @SerialName("Cards")
-    val cards: List<ContactCardResponse>
+    val cards: List<ContactCardResource>
 ) {
     fun toContactWithCards() = ContactWithCards(
         contact = Contact(

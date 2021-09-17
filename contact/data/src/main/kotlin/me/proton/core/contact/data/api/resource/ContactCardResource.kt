@@ -16,14 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.data.api.response
+package me.proton.core.contact.data.api.resource
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.contact.domain.entity.ContactCard
 
 @Serializable
-data class ContactCardResponse(
+data class ContactCardResource(
     @SerialName("Type")
     val type: Int,
     @SerialName("Data")

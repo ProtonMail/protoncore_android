@@ -20,11 +20,12 @@ package me.proton.core.contact.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.contact.data.api.resource.ContactEmailResource
 
 @Serializable
-data class ContactEmailsResponse(
+data class GetContactEmailsResponse(
     @SerialName("Total")
     val total: Int,
     @SerialName("ContactEmails")
-    val contactEmails: List<ContactEmailResponse>
+    val contactEmails: List<ContactEmailResource>
 )

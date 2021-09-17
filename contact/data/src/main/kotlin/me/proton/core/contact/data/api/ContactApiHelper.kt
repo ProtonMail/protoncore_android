@@ -18,8 +18,8 @@
 
 package me.proton.core.contact.data.api
 
-import me.proton.core.contact.data.api.response.ContactEmailResponse
-import me.proton.core.contact.data.api.response.ListItemContactResponse
+import me.proton.core.contact.data.api.resource.ContactEmailResource
+import me.proton.core.contact.data.api.resource.ShortContactResource
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.domain.entity.UserId
@@ -40,9 +40,9 @@ class ContactApiHelper(private val provider: ApiProvider) {
         }
     }
 
-    private suspend fun getAllApiContacts(userId: UserId): Map<ContactId, ListItemContactResponse> {
+    private suspend fun getAllApiContacts(userId: UserId): Map<ContactId, ShortContactResource> {
         return provider.get<ContactApi>(userId).invoke {
-            val contacts = mutableMapOf<ContactId, ListItemContactResponse>()
+            val contacts = mutableMapOf<ContactId, ShortContactResource>()
             var pageIndex = 0
             val pageSize = 1000
             var shouldContinuePaging = true
@@ -56,9 +56,9 @@ class ContactApiHelper(private val provider: ApiProvider) {
         }.valueOrThrow
     }
 
-    private suspend fun getAllApiContactsEmails(userId: UserId): Map<ContactId, List<ContactEmailResponse>> {
+    private suspend fun getAllApiContactsEmails(userId: UserId): Map<ContactId, List<ContactEmailResource>> {
         return provider.get<ContactApi>(userId).invoke {
-            val contactEmails = mutableMapOf<ContactId, MutableList<ContactEmailResponse>>()
+            val contactEmails = mutableMapOf<ContactId, MutableList<ContactEmailResource>>()
             var pageIndex = 0
             val pageSize = 1000
             var shouldContinuePaging = true

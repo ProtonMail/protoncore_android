@@ -18,9 +18,9 @@
 
 package me.proton.core.contact.data.api
 
-import me.proton.core.contact.data.api.response.ContactEmailsResponse
-import me.proton.core.contact.data.api.response.ContactsResponse
+import me.proton.core.contact.data.api.response.GetContactEmailsResponse
 import me.proton.core.contact.data.api.response.GetContactResponse
+import me.proton.core.contact.data.api.response.GetContactsResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -35,12 +35,11 @@ interface ContactApi : BaseRetrofitApi {
     suspend fun getContacts(
         @Query("Page") page: Int,
         @Query("PageSize") pageSize: Int,
-    ): ContactsResponse
+    ): GetContactsResponse
 
     @GET("contacts/emails")
     suspend fun getContactEmails(
         @Query("Page") page: Int,
         @Query("PageSize") pageSize: Int,
-    ): ContactEmailsResponse
-
+    ): GetContactEmailsResponse
 }
