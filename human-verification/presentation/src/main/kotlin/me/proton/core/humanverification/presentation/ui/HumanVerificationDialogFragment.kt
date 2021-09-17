@@ -18,10 +18,10 @@
 
 package me.proton.core.humanverification.presentation.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
@@ -63,6 +63,8 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         const val ARG_TOKEN_TYPE = "arg.token-type"
         const val KEY_PHASE_TWO = "key.phase_two"
         const val KEY_VERIFICATION_DONE = "key.verification_done"
+        internal const val RESULT_HUMAN_VERIFICATION = "result.HumanVerificationResult"
+        internal const val REQUEST_KEY = "HumanVerificationDialogFragment.requestKey"
 
         /**
          * The only verification method (type) that is receiving aa token from the 9001 human
@@ -91,7 +93,6 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
     }
 
     private val viewModel by viewModels<HumanVerificationViewModel>()
-    private lateinit var resultListener: OnResultListener
 
     private val clientIdType: ClientIdType by lazy {
         ClientIdType.getByValue(requireArguments().getString(ARG_CLIENT_ID_TYPE, null))
@@ -138,11 +139,6 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             val tokenType = bundle.getString(ARG_TOKEN_TYPE)
             setResult(tokenType, tokenCode)
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        resultListener = context as OnResultListener
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -229,13 +225,12 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
     private fun setResult(tokenType: String? = null, tokenCode: String? = null, canceled: Boolean = false) {
         viewModel.onHumanVerificationSuccess(clientId, tokenType, tokenCode).invokeOnCompletion {
-            resultListener.setResult(
-                HumanVerificationResult(
-                    clientId = clientId.id,
-                    clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
-                    tokenType = tokenType, tokenCode = tokenCode, canceled = canceled
-                )
-            )
+            setFragmentResult(HumanVerificationResult(
+                clientId = clientId.id,
+                clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
+                tokenType = tokenType, tokenCode = tokenCode, canceled = canceled
+            ))
+            dismiss()
         }
     }
 
@@ -245,7 +240,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
                 popBackStack()
             } else {
                 viewModel.onHumanVerificationFailed(clientId).invokeOnCompletion {
-                    resultListener.setResult(
+                    setFragmentResult(
                         HumanVerificationResult(
                             clientId = clientId.id,
                             clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
@@ -260,7 +255,8 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         }
     }
 
-    interface OnResultListener {
-        fun setResult(result: HumanVerificationResult?)
+    private fun setFragmentResult(result: HumanVerificationResult) {
+        val resultBundle = Bundle().apply { putParcelable(RESULT_HUMAN_VERIFICATION, result) }
+        setFragmentResult(REQUEST_KEY, resultBundle)
     }
 }

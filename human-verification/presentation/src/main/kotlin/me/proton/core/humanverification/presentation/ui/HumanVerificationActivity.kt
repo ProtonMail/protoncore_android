@@ -22,21 +22,23 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.ActivityHumanVerificationBinding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
-import me.proton.core.humanverification.presentation.utils.defaultVerificationMethods
-import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.presentation.ui.ProtonActivity
+import javax.inject.Inject
 
 /**
  * Activity that "wraps" and handles the whole Human Verification process.
  */
 @AndroidEntryPoint
-class HumanVerificationActivity :
-    ProtonActivity<ActivityHumanVerificationBinding>(),
-    HumanVerificationDialogFragment.OnResultListener {
+@Deprecated("Use `HumanVerificationOrchestrator` instead.")
+class HumanVerificationActivity : ProtonActivity<ActivityHumanVerificationBinding>() {
+
+    @Inject
+    internal lateinit var humanVerificationOrchestrator: HumanVerificationOrchestrator
 
     override fun layoutId(): Int = R.layout.activity_human_verification
 
@@ -46,21 +48,12 @@ class HumanVerificationActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportFragmentManager.showHumanVerification(
-            clientId = input.clientId,
-            captchaUrl = input.captchaUrl,
-            clientIdType = input.clientIdType,
-            // filter only the app supported verification methods. (the API can send more of them).
-            availableVerificationMethods = input.verificationMethods
-                ?.filter { defaultVerificationMethods.contains(it) }
-                ?: defaultVerificationMethods,
-            captchaToken = input.captchaToken,
-            largeLayout = false,
-            recoveryEmailAddress = input.recoveryEmailAddress
-        )
+        humanVerificationOrchestrator.register(this)
+        humanVerificationOrchestrator.setOnHumanVerificationResult(this::onHumanVerificationResult)
+        humanVerificationOrchestrator.startHumanVerificationWorkflow(input)
     }
 
-    override fun setResult(result: HumanVerificationResult?) {
+    private fun onHumanVerificationResult(result: HumanVerificationResult?) {
         if (result != null) {
             val intent = Intent().apply { putExtra(ARG_HUMAN_VERIFICATION_RESULT, result) }
             setResult(Activity.RESULT_OK, intent)

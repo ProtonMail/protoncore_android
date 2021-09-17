@@ -19,32 +19,27 @@
 package me.proton.core.humanverification.presentation
 
 import androidx.activity.ComponentActivity
-import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.FragmentActivity
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
-import me.proton.core.humanverification.presentation.ui.StartHumanVerification
+import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
+import me.proton.core.humanverification.presentation.utils.defaultVerificationMethods
+import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.network.domain.client.getType
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 
 class HumanVerificationOrchestrator {
 
     // region result launchers
-    private var humanWorkflowLauncher: ActivityResultLauncher<HumanVerificationInput>? = null
+    private var humanWorkflowLauncher: FragmentDialogResultLauncher<HumanVerificationInput>? = null
     // endregion
 
     private var onHumanVerificationResultListener: ((result: HumanVerificationResult?) -> Unit)? = {}
 
     // region private functions
-    private fun registerHumanVerificationResult(
-        context: ComponentActivity
-    ): ActivityResultLauncher<HumanVerificationInput> =
-        context.registerForActivityResult(
-            StartHumanVerification()
-        ) { result ->
-            onHumanVerificationResultListener?.invoke(result)
-        }
 
-    private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
+    private fun <T> checkRegistered(launcher: FragmentDialogResultLauncher<T>?) =
         checkNotNull(launcher) { "You must call register(context) before starting workflow!" }
 
     // endregion
@@ -55,16 +50,37 @@ class HumanVerificationOrchestrator {
      *
      * Note: This function have to be called [ComponentActivity.onCreate]] before [ComponentActivity.onResume].
      */
-    fun register(context: ComponentActivity) {
-        humanWorkflowLauncher = registerHumanVerificationResult(context)
+    fun register(context: FragmentActivity, largeLayout: Boolean = false) {
+        context.supportFragmentManager.setFragmentResultListener(
+            HumanVerificationDialogFragment.REQUEST_KEY,
+            context,
+            { _, bundle ->
+                val hvResult =
+                    bundle.getParcelable<HumanVerificationResult>(HumanVerificationDialogFragment.RESULT_HUMAN_VERIFICATION)
+                onHumanVerificationResultListener?.invoke(hvResult)
+            })
+        humanWorkflowLauncher = FragmentDialogResultLauncher(HumanVerificationDialogFragment.REQUEST_KEY) { input ->
+            input ?: return@FragmentDialogResultLauncher // TODO
+            context.supportFragmentManager.showHumanVerification(
+                clientId = input.clientId,
+                captchaUrl = input.captchaUrl,
+                clientIdType = input.clientIdType,
+                // filter only the app supported verification methods. (the API can send more of them).
+                availableVerificationMethods = input.verificationMethods
+                    ?.filter { defaultVerificationMethods.contains(it) }
+                    ?: defaultVerificationMethods,
+                captchaToken = input.captchaToken,
+                largeLayout = largeLayout,
+                recoveryEmailAddress = input.recoveryEmailAddress
+            )
+        }
     }
 
     /**
      * Unregister all workflow activity launcher and listener.
      */
-    fun unregister() {
-        humanWorkflowLauncher?.unregister()
-        humanWorkflowLauncher = null
+    fun unregister(context: FragmentActivity) {
+        context.supportFragmentManager.clearFragmentResultListener(HumanVerificationDialogFragment.REQUEST_KEY)
         onHumanVerificationResultListener = null
     }
 
@@ -83,7 +99,7 @@ class HumanVerificationOrchestrator {
         captchaUrl: String? = null,
         recoveryEmailAddress: String? = null
     ) {
-        checkRegistered(humanWorkflowLauncher).launch(
+        startHumanVerificationWorkflow(
             HumanVerificationInput(
                 clientId = details.clientId.id,
                 clientIdType = details.clientId.getType().value,
@@ -93,6 +109,10 @@ class HumanVerificationOrchestrator {
                 recoveryEmailAddress = recoveryEmailAddress
             )
         )
+    }
+
+    internal fun startHumanVerificationWorkflow(humanVerificationInput: HumanVerificationInput) {
+        checkRegistered(humanWorkflowLauncher).show(humanVerificationInput)
     }
 
     fun setOnHumanVerificationResult(block: (result: HumanVerificationResult?) -> Unit) {

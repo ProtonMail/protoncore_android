@@ -24,6 +24,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 
+@Deprecated("Use HumanVerificationOrchestrator")
 internal class StartHumanVerification : ActivityResultContract<HumanVerificationInput, HumanVerificationResult?>() {
 
     override fun createIntent(context: Context, input: HumanVerificationInput) =

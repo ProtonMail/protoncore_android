@@ -19,6 +19,7 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -177,7 +178,7 @@ internal class SignupViewModel @Inject constructor(
         }
     }
 
-    override fun register(context: ComponentActivity) {
+    override fun register(context: FragmentActivity) {
         super.register(context)
         plansOrchestrator.register(context)
         paymentsOrchestrator.register(context)
