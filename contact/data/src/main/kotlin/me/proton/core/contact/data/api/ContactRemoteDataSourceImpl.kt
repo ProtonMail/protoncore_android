@@ -18,9 +18,13 @@
 
 package me.proton.core.contact.data.api
 
+import me.proton.core.contact.data.api.request.CreateContactsRequest
+import me.proton.core.contact.data.api.resource.ContactCardsResource
 import me.proton.core.contact.data.api.resource.ContactEmailResource
 import me.proton.core.contact.data.api.resource.ShortContactResource
+import me.proton.core.contact.data.api.resource.toContactCardResource
 import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRemoteDataSource
@@ -81,6 +85,15 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
                 pageIndex++
             }
             contactEmails
+        }.valueOrThrow
+    }
+
+    override suspend fun createContact(userId: UserId, contactCards: List<ContactCard>) {
+        val request = CreateContactsRequest(
+            contacts = listOf(ContactCardsResource(cards = contactCards.map { it.toContactCardResource() }))
+        )
+        apiProvider.get<ContactApi>(userId).invoke {
+            createContacts(request)
         }.valueOrThrow
     }
 }

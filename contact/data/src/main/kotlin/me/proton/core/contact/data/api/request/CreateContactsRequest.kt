@@ -27,7 +27,7 @@ class CreateContactsRequest(
     @SerialName("Contacts")
     val contacts: List<ContactCardsResource>,
     @SerialName("Overwrite")
-    val overwrite: Int,
+    val overwrite: Int = 0,
     @SerialName("Labels")
-    val labels: Int
+    val labels: Int = 0
 )

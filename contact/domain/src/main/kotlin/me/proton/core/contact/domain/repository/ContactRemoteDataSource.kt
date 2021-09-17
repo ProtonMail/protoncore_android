@@ -19,6 +19,7 @@
 package me.proton.core.contact.domain.repository
 
 import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.entity.UserId
@@ -26,4 +27,5 @@ import me.proton.core.domain.entity.UserId
 interface ContactRemoteDataSource {
     suspend fun getContactWithCards(userId: UserId, contactId: ContactId): ContactWithCards
     suspend fun getAllContacts(userId: UserId): List<Contact>
+    suspend fun createContact(userId: UserId, contactCards: List<ContactCard>)
 }

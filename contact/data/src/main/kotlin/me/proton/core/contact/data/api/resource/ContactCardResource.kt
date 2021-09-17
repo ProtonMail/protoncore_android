@@ -30,10 +30,16 @@ data class ContactCardResource(
     val data: String,
     @SerialName("Signature")
     val signature: String? = null
-) {
-    fun toContactCard() = ContactCard(
-        type,
-        data,
-        signature
-    )
-}
+)
+
+fun ContactCardResource.toContactCard() = ContactCard(
+    type,
+    data,
+    signature
+)
+
+fun ContactCard.toContactCardResource() = ContactCardResource(
+    type,
+    data,
+    signature
+)
