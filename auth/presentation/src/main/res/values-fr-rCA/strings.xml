@@ -67,7 +67,7 @@
   <string name="auth_create_address_result_title">%s est disponible</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s sera votre nouvelle adresse électronique ProtonMail.</string>
   <string name="auth_create_address_result_subtitle">Vous utiliserez cette adresse pour vous connecter à tous les services Proton.</string>
-  <string name="auth_create_address_result_recovery_title">Votre adresse électronique de récupération est :</string>
+  <string name="auth_create_address_result_recovery_title">Votre adresse électronique de récupération est:</string>
   <string name="auth_create_address_create">Créer une adresse</string>
   <string name="auth_create_address_creating">Création de l’adresse</string>
   <string name="auth_create_address_terms">En cliquant sur « Créer une adresse », vous acceptez les <a href="https://protonmail.com/terms-and-conditions">conditions générales d\'utilisation</a> de Proton.</string>
@@ -113,12 +113,13 @@
   <string name="auth_signup_error_username_blank">Le nom d\'utilisateur·rice ne doit pas être vide.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les mots de passe ne correspondent pas.</string>
   <string name="auth_signup_validation_password_length">Le mot de passe doit comporter au moins 8 caractères.</string>
+  <string name="auth_signup_validation_password">Le mot de passe ne doit pas être vide.</string>
   <string name="auth_signup_your_account_is_being_setup">Votre compte a été créé…</string>
   <string name="auth_signup_please_wait">En général, ceci ne prend pas plus d\'une minute.</string>
   <string name="auth_signup_replacement_code">Vous n\'avez pas reçu le code?</string>
   <string name="auth_signup_verify">Vérifier </string>
   <string name="auth_signup_verification_code">Code de vérification</string>
-  <string name="auth_signup_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s :</string>
+  <string name="auth_signup_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s:</string>
   <string name="auth_signup_error_human_verification_failed">La vérification humaine a échoué.</string>
   <string name="auth_signup_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="auth_signup_token_code_resent">Code jeton renvoyé.</string>

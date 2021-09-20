@@ -113,6 +113,7 @@
   <string name="auth_signup_error_username_blank">El nombre de usuario no puede estar en blanco.</string>
   <string name="auth_signup_error_passwords_do_not_match">Las contraseñas no coinciden.</string>
   <string name="auth_signup_validation_password_length">La contraseña debe tener al menos 8 caracteres.</string>
+  <string name="auth_signup_validation_password">La contraseña no debe estar vacía.</string>
   <string name="auth_signup_your_account_is_being_setup">Su cuenta está siendo creada…</string>
   <string name="auth_signup_please_wait">Usualmente no tarda más de un minuto.</string>
   <string name="auth_signup_replacement_code">¿No recibió el código?</string>

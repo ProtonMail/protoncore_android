@@ -113,6 +113,7 @@
   <string name="auth_signup_error_username_blank">Nazwa użytkownika nie może być pusta.</string>
   <string name="auth_signup_error_passwords_do_not_match">Hasła nie pasują do siebie.</string>
   <string name="auth_signup_validation_password_length">Hasło musi zawierać co najmniej 8 znaków.</string>
+  <string name="auth_signup_validation_password">Hasło nie może być puste.</string>
   <string name="auth_signup_your_account_is_being_setup">Tworzenie konta…</string>
   <string name="auth_signup_please_wait">Zazwyczaj nie trwa to dłużej niż minutę.</string>
   <string name="auth_signup_replacement_code">Nie otrzymałeś kodu?</string>
