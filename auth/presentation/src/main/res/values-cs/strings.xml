@@ -113,6 +113,7 @@
   <string name="auth_signup_error_username_blank">Uživatelské jméno nesmí být prázdné.</string>
   <string name="auth_signup_error_passwords_do_not_match">Hesla se neshodují.</string>
   <string name="auth_signup_validation_password_length">Heslo by mělo být nejméně 8 znaků dlouhé.</string>
+  <string name="auth_signup_validation_password">Heslo nesmí být prázdné.</string>
   <string name="auth_signup_your_account_is_being_setup">Váš účet se vytváří…</string>
   <string name="auth_signup_please_wait">Obvykle to netrvá déle než minutu.</string>
   <string name="auth_signup_replacement_code">Nedostali jste kód?</string>
