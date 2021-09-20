@@ -65,7 +65,7 @@ In order to use the all-in-one Detekt configuration, you have to:
 
 ## Plugins
 
-Detekt: **0.3** - _released on: Aug 06, 2021_
+Detekt: **0.4** - _released on: Sep 13, 2021_
 
 Kotlin: **0.1** - _released on: Oct 09, 2020_
 
