@@ -37,6 +37,7 @@ import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
 import me.proton.core.usersettings.domain.entity.U2FKeySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
+import me.proton.core.usersettings.domain.entity.UserSettings.*
 import me.proton.core.util.kotlin.toBoolean
 import me.proton.core.util.kotlin.toInt
 
@@ -50,14 +51,14 @@ internal fun UserSettingsResponse.fromResponse(userId: UserId) = UserSettings(
     twoFA = twoFA?.fromResponse(),
     news = news,
     locale = locale,
-    logAuth = logAuth,
+    logAuth = LogAuth.enumOf(logAuth),
     invoiceText = invoiceText,
-    density = density,
+    density = Density.enumOf(density),
     theme = theme,
     themeType = themeType,
-    weekStart = weekStart,
-    dateFormat = dateFormat,
-    timeFormat = timeFormat,
+    weekStart = WeekStart.enumOf(weekStart),
+    dateFormat = DateFormat.enumOf(dateFormat),
+    timeFormat = TimeFormat.enumOf(timeFormat),
     welcome = welcome.toBoolean(),
     earlyAccess = earlyAccess.toBoolean(),
     flags = flags?.fromResponse()
@@ -83,14 +84,14 @@ internal fun UserSettingsEntity.fromEntity() = UserSettings(
     twoFA = twoFA?.fromEntity(),
     news = news,
     locale = locale,
-    logAuth = logAuth,
+    logAuth = LogAuth.enumOf(logAuth),
     invoiceText = invoiceText,
-    density = density,
+    density = Density.enumOf(density),
     theme = theme,
     themeType = themeType,
-    weekStart = weekStart,
-    dateFormat = dateFormat,
-    timeFormat = timeFormat,
+    weekStart = WeekStart.enumOf(weekStart),
+    dateFormat = DateFormat.enumOf(dateFormat),
+    timeFormat = TimeFormat.enumOf(timeFormat),
     welcome = welcome,
     earlyAccess = earlyAccess,
     flags = flags?.fromEntity()
@@ -104,14 +105,14 @@ internal fun UserSettings.toEntity() = UserSettingsEntity(
     twoFA = twoFA?.toEntity(),
     news = news,
     locale = locale,
-    logAuth = logAuth,
+    logAuth = logAuth?.value,
     invoiceText = invoiceText,
-    density = density,
+    density = density?.value,
     theme = theme,
     themeType = themeType,
-    weekStart = weekStart,
-    dateFormat = dateFormat,
-    timeFormat = timeFormat,
+    weekStart = weekStart?.value,
+    dateFormat = dateFormat?.value,
+    timeFormat = timeFormat?.value,
     welcome = welcome,
     earlyAccess = earlyAccess,
     flags = flags?.toEntity()

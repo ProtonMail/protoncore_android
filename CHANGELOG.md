@@ -1,3 +1,11 @@
+## User Settings [1.15.1]
+
+Sep 20, 2021
+
+### New Features
+
+- Added IntEnum support for UserSettings.
+
 ## Test Android Instrumented [1.15.1]
 
 Sep 12, 2021
