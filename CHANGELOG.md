@@ -4,7 +4,7 @@ Sep 21, 2021
 
 ### Changes
 
-- `FragmentManager.showForceUpdate` is deprecated; use `ForceUpdateActivity` to present a "Forced Update" dialog
+- Removed `FragmentManager.showForceUpdate` method; to present a "Forced Update" dialog, use `ForceUpdateActivity` instead
 
 ## User Settings [1.15.1]
 

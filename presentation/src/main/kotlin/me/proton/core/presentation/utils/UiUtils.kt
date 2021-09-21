@@ -34,9 +34,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import me.proton.core.presentation.R
-import me.proton.core.presentation.ui.alert.ForceUpdateDialog
-
-private const val TAG_FORCE_UPDATE_DIALOG = "force_update_dialog"
 
 inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> FragmentTransaction) {
     val transaction = beginTransaction()
@@ -113,38 +110,4 @@ fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     view.clearFocus()
-}
-
-/**
- * Presents to the user non dismissable dialog to inform that the current version of the application is no longer
- * supported.
- *
- * @param apiErrorMessage the error message returned from the API that triggered force update required error.
- * @param learnMoreURL an option if the client want's to override the default URL.
- * @param largeLayout how to present the dialog (default false)
- */
-@Deprecated(
-    "Use `ForceUpdateActivity` which can be started with just an application context.",
-    replaceWith = ReplaceWith(
-        "startActivity(ForceUpdateActivity(context, apiErrorMessage, learnMoreURL))",
-        "me.proton.core.presentation.ui.alert.ForceUpdateActivity"
-    )
-)
-fun FragmentManager.showForceUpdate(
-    apiErrorMessage: String,
-    learnMoreURL: String? = null,
-    largeLayout: Boolean = false
-) {
-    findFragmentByTag(TAG_FORCE_UPDATE_DIALOG) ?: run {
-        val updateDialogFragment = ForceUpdateDialog(apiErrorMessage, learnMoreURL)
-        if (largeLayout) {
-            // For large screens (tablets), we show the fragment as a dialog
-            updateDialogFragment.show(this, TAG_FORCE_UPDATE_DIALOG)
-        } else {
-            // The smaller screens (phones), we show the fragment fullscreen
-            inTransaction {
-                add(updateDialogFragment, TAG_FORCE_UPDATE_DIALOG)
-            }
-        }
-    }
 }
