@@ -27,5 +27,5 @@ data class CreateContactResponse(
     @SerialName("Index")
     val index: Int,
     @SerialName("Response")
-    val response: DetailedContactResource
+    val response: GetContactResponse
 )

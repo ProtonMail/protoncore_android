@@ -27,7 +27,15 @@ class CreateContactsRequest(
     @SerialName("Contacts")
     val contacts: List<ContactCardsResource>,
     @SerialName("Overwrite")
-    val overwrite: Int = 0,
+    val overwrite: Int,
     @SerialName("Labels")
-    val labels: Int = 0
-)
+    val labels: Int
+) {
+    companion object {
+        fun create(contacts: List<ContactCardsResource>, overwrite: Boolean, labels: Int = 0) = CreateContactsRequest(
+            contacts = contacts,
+            overwrite = if (overwrite) 1 else 0,
+            labels = labels
+        )
+    }
+}

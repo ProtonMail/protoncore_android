@@ -22,7 +22,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ezvcard.VCard
+import ezvcard.VCardVersion
+import ezvcard.property.Email
 import ezvcard.property.FormattedName
+import ezvcard.property.Uid
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,13 +35,21 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.repository.ContactRemoteDataSource
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.key.domain.encryptText
+import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
+import me.proton.core.key.domain.signText
+import me.proton.core.key.domain.useKeys
+import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateContactViewModel @Inject constructor(
     private val contactRemoteDataSource: ContactRemoteDataSource,
+    private val userManager: UserManager,
     private val accountManager: AccountManager,
+    private val cryptoContext: CryptoContext,
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow<State>(State.Idling)
@@ -48,16 +59,12 @@ class CreateContactViewModel @Inject constructor(
         mutableState.value = State.Processing
         viewModelScope.launch {
             try {
-                val vCard = VCard().apply {
-                    formattedName = FormattedName(name)
-                }
-                val contactCard = ContactCard(
-                    type = 0,
-                    data = vCard.write(),
-                    signature = null
-                )
                 val userId = accountManager.getPrimaryUserId().filterNotNull().first()
-                contactRemoteDataSource.createContact(userId, contactCard)
+                val user = userManager.getUser(userId)
+                val cards = user.useKeys(cryptoContext) {
+                    listOf(createSignedContactCard(name), createEncryptedContactCard(name))
+                }
+                contactRemoteDataSource.createContact(userId, cards)
             } catch (throwable: Throwable) {
                 if (throwable is CancellationException) throw throwable
                 CoreLogger.e("contact", throwable)
@@ -65,6 +72,30 @@ class CreateContactViewModel @Inject constructor(
             }
             mutableState.value = State.Idling
         }
+    }
+
+    private fun KeyHolderContext.createSignedContactCard(seedName: String): ContactCard {
+        val vCard = VCard().apply {
+            formattedName = FormattedName(seedName)
+            addEmail(Email("$seedName@testmail.com").apply {
+                group = "ITEM1"
+            })
+            uid = Uid.random()
+            version = VCardVersion.V4_0
+        }
+        val vCardData = vCard.write()
+        val vCardSignature = signText(vCardData)
+        return ContactCard(type = 2, data = vCardData, signature = vCardSignature)
+    }
+
+    private fun KeyHolderContext.createEncryptedContactCard(seedName: String): ContactCard {
+        val vCard = VCard().apply {
+            addNote("confidential note about $seedName")
+        }
+        val vCardData = vCard.write()
+        val encryptedVCardData = encryptText(vCardData)
+        val vCardSignature = signText(vCardData)
+        return ContactCard(type = 3, data = encryptedVCardData, signature = vCardSignature)
     }
 
     sealed class State {
