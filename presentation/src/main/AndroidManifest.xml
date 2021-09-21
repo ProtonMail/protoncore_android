@@ -27,7 +27,9 @@
     </queries>
 
     <application android:theme="@style/ProtonTheme">
-
+        <activity
+            android:name=".ui.alert.ForceUpdateActivity"
+            android:theme="@style/ProtonTheme.Transparent" />
     </application>
 
 </manifest>

@@ -153,4 +153,10 @@
         <item name="brand_splash_text">@drawable/splash_text_protonvpn</item>
     </style>
 
+    <style name="ProtonTheme.Transparent">
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>
