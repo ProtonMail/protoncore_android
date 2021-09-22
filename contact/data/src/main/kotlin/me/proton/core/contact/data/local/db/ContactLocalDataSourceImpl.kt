@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.contact.data.local.db.entity.toContact
 import me.proton.core.contact.data.local.db.entity.toContactCardEntity
 import me.proton.core.contact.data.local.db.entity.toContactEmailEntity
-import me.proton.core.contact.data.local.db.entity.toContactEmailLabelCrossRefs
+import me.proton.core.contact.data.local.db.entity.toContactEmailLabel
 import me.proton.core.contact.data.local.db.entity.toContactEntity
 import me.proton.core.contact.data.local.db.entity.toContactWithCards
 import me.proton.core.contact.domain.entity.Contact
@@ -38,12 +38,12 @@ class ContactLocalDataSourceImpl(
     private val contactDatabase: ContactDatabase
 ): ContactLocalDataSource {
 
-    override fun getContact(contactId: ContactId): Flow<ContactWithCards> {
-        return contactDatabase.contactDao().getContact(contactId).map { it.toContactWithCards() }
+    override fun observeContact(contactId: ContactId): Flow<ContactWithCards> {
+        return contactDatabase.contactDao().observeContact(contactId).map { it.toContactWithCards() }
     }
 
-    override fun getAllContacts(userId: UserId): Flow<List<Contact>> {
-        return contactDatabase.contactDao().getAllContacts(userId).map { entities ->
+    override fun observeAllContacts(userId: UserId): Flow<List<Contact>> {
+        return contactDatabase.contactDao().observeAllContacts(userId).map { entities ->
             entities.map { it.toContact() }
         }.distinctUntilChanged()
     }
@@ -76,7 +76,7 @@ class ContactLocalDataSourceImpl(
             val mailEntities = contactsEmails.map { it.toContactEmailEntity(userId) }
             contactDatabase.contactEmailDao().insertOrUpdate(*mailEntities.toTypedArray())
 
-            val mailLabelEntities = contactsEmails.flatMap { it.toContactEmailLabelCrossRefs() }
+            val mailLabelEntities = contactsEmails.flatMap { it.toContactEmailLabel() }
             contactDatabase.contactEmailLabelDao().insertOrUpdate(*mailLabelEntities.toTypedArray())
         }
     }

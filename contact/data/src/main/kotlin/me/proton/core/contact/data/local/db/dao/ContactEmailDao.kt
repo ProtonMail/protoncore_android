@@ -32,11 +32,11 @@ import me.proton.core.domain.entity.UserId
 abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
     @Transaction
     @Query("SELECT * FROM ContactEmailEntity WHERE userId = :userId ORDER BY `order`, name")
-    abstract fun getAllContactsEmails(userId: UserId): Flow<List<ContactEmailCompoundEntity>>
+    abstract fun observeAllContactsEmails(userId: UserId): Flow<List<ContactEmailCompoundEntity>>
 
     @Transaction
     @Query("SELECT * FROM ContactEmailEntity WHERE contactId = :contactId ORDER BY `order`, name")
-    abstract fun getAllContactsEmails(contactId: ContactId): Flow<List<ContactEmailCompoundEntity>>
+    abstract fun observeAllContactsEmails(contactId: ContactId): Flow<List<ContactEmailCompoundEntity>>
 
     @Query("DELETE FROM ContactEmailEntity WHERE userId = :userId")
     abstract suspend fun deleteAllContactsEmails(userId: UserId)

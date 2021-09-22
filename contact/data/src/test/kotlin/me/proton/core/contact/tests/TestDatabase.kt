@@ -30,7 +30,7 @@ import me.proton.core.contact.data.local.db.ContactConverters
 import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.data.local.db.entity.ContactCardEntity
 import me.proton.core.contact.data.local.db.entity.ContactEmailEntity
-import me.proton.core.contact.data.local.db.entity.ContactEmailLabelCrossRefEntity
+import me.proton.core.contact.data.local.db.entity.ContactEmailLabelEntity
 import me.proton.core.contact.data.local.db.entity.ContactEntity
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.room.db.BaseDatabase
@@ -51,7 +51,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
         ContactEntity::class,
         ContactCardEntity::class,
         ContactEmailEntity::class,
-        ContactEmailLabelCrossRefEntity::class,
+        ContactEmailLabelEntity::class,
     ],
     version = 1
 )

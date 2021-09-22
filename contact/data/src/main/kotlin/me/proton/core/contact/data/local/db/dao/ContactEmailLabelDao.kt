@@ -16,22 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.domain.repository
+package me.proton.core.contact.data.local.db.dao
 
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.contact.domain.entity.Contact
-import me.proton.core.contact.domain.entity.ContactId
-import me.proton.core.contact.domain.entity.ContactWithCards
-import me.proton.core.domain.entity.UserId
+import me.proton.core.contact.data.local.db.entity.ContactEmailLabelEntity
+import me.proton.core.contact.domain.entity.ContactEmailId
+import me.proton.core.data.room.db.BaseDao
 
-interface ContactLocalDataSource {
-    fun observeContact(contactId: ContactId): Flow<ContactWithCards>
-    fun observeAllContacts(userId: UserId): Flow<List<Contact>>
+@Dao
+abstract class ContactEmailLabelDao: BaseDao<ContactEmailLabelEntity>() {
+    @Transaction
+    @Query("SELECT labelId FROM ContactEmailLabelEntity WHERE contactEmailId = :contactEmailId")
+    abstract fun observeAllLabels(contactEmailId: ContactEmailId): Flow<List<String>>
 
-    suspend fun deleteContact(contactId: ContactId)
-    suspend fun deleteAllContacts(userId: UserId)
-    suspend fun deleteAllContacts()
-
-    suspend fun mergeContacts(userId: UserId, contacts: List<Contact>)
-    suspend fun mergeContactWithCards(userId: UserId, contactWithCards: ContactWithCards)
+    @Query("DELETE FROM ContactEmailLabelEntity WHERE contactEmailId IN (:contactEmailIds)")
+    abstract suspend fun deleteAllLabels(contactEmailIds: List<ContactEmailId>)
 }

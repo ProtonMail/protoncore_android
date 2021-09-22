@@ -31,15 +31,15 @@ class ForeignKeyTests : ContactDatabaseTests() {
     @Test
     fun `contact is deleted on foreign key deletion`() = runBlocking {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
-        assert(db.contactDao().getContact(User0.Contact0.contactId).firstOrNull() != null)
+        assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() != null)
         db.userDao().delete(User0.userId)
-        assert(db.contactDao().getContact(User0.Contact0.contactId).firstOrNull() == null)
+        assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() == null)
     }
 
     @Test
     fun `contact card deleted on foreign key deletion`() = runBlocking {
         val hasContactCard = suspend {
-            db.contactDao().getContact(User0.Contact0.contactId).firstOrNull()?.cards?.any {
+            db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull()?.cards?.any {
                 it.data == User0.Contact0.ContactCard0.contactCardEntity.data
             } ?: false
         }
@@ -53,7 +53,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
     @Test
     fun `contact email is deleted on foreign key deletion`() = runBlocking {
         val hasContactEmail = suspend {
-            db.contactEmailDao().getAllContactsEmails(User0.userId).first().any {
+            db.contactEmailDao().observeAllContactsEmails(User0.userId).first().any {
                 it.contactEmail.contactEmailId == User0.Contact0.ContactEmail0.contactEmailId
             }
         }
@@ -68,7 +68,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
     fun `contact email label cross ref deleted on foreign key deletion`() = runBlocking {
         val testContactEmail = User0.Contact0.ContactEmail0
         val hasLabels = suspend {
-            val dbLabels = db.contactEmailLabelDao().getAllLabels(testContactEmail.contactEmailId).first()
+            val dbLabels = db.contactEmailLabelDao().observeAllLabels(testContactEmail.contactEmailId).first()
             dbLabels == testContactEmail.contactEmail.labelIds
         }
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)

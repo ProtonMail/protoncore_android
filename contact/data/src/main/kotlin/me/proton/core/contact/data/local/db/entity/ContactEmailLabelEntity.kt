@@ -18,29 +18,30 @@
 
 package me.proton.core.contact.data.local.db.entity
 
-import androidx.room.Embedded
-import androidx.room.Relation
+import androidx.room.Entity
+import androidx.room.ForeignKey
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactEmailId
 
-data class ContactEmailCompoundEntity(
-    @Embedded
-    val contactEmail: ContactEmailEntity,
-    @Relation(
-        parentColumn = "contactEmailId",
-        entityColumn = "contactEmailId",
-        entity = ContactEmailLabelEntity::class,
-        projection = ["labelId"]
+@Entity(
+    primaryKeys = ["contactEmailId", "labelId"],
+    foreignKeys = [
+        ForeignKey(
+            entity = ContactEmailEntity::class,
+            parentColumns = ["contactEmailId"],
+            childColumns = ["contactEmailId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
+data class ContactEmailLabelEntity(
+    val contactEmailId: ContactEmailId,
+    val labelId: String // Add foreign key on label when module available
+)
+
+fun ContactEmail.toContactEmailLabel() = labelIds.map {
+    ContactEmailLabelEntity(
+        contactEmailId = id,
+        labelId = it
     )
-    val labelIds: List<String>
-)
-
-fun ContactEmailCompoundEntity.toContactEmail() = ContactEmail(
-    id = contactEmail.contactEmailId,
-    name = contactEmail.name,
-    email = contactEmail.email,
-    defaults = contactEmail.defaults,
-    order = contactEmail.order,
-    contactId = contactEmail.contactId,
-    canonicalEmail = contactEmail.canonicalEmail,
-    labelIds = labelIds
-)
+}

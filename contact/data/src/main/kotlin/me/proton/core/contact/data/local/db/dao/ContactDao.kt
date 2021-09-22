@@ -33,11 +33,11 @@ import me.proton.core.domain.entity.UserId
 abstract class ContactDao: BaseDao<ContactEntity>() {
     @Transaction
     @Query("SELECT * FROM ContactEntity WHERE contactId = :contactId")
-    abstract fun getContact(contactId: ContactId): Flow<ContactWithMailsAndCardsEntity>
+    abstract fun observeContact(contactId: ContactId): Flow<ContactWithMailsAndCardsEntity>
 
     @Transaction
     @Query("SELECT * FROM ContactEntity WHERE userId = :userId")
-    abstract fun getAllContacts(userId: UserId): Flow<List<ContactWithMailsEntity>>
+    abstract fun observeAllContacts(userId: UserId): Flow<List<ContactWithMailsEntity>>
 
     @Query("DELETE FROM ContactEntity WHERE contactId = :contactId")
     abstract suspend fun deleteContact(contactId: ContactId)

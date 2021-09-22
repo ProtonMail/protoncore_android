@@ -34,8 +34,8 @@ class TransactionTests: ContactDatabaseTests() {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
         db.contactDao().deleteContact(User0.Contact0.contactId)
-        assert(db.contactDao().getContact(User0.Contact0.contactId).firstOrNull() == null)
-        assert(db.contactEmailDao().getAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
+        assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() == null)
+        assert(db.contactEmailDao().observeAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
     }
 
     @Test
@@ -43,8 +43,8 @@ class TransactionTests: ContactDatabaseTests() {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
         db.contactDao().deleteAllContacts(User0.userId)
-        assert(db.contactDao().getContact(User0.Contact0.contactId).firstOrNull() == null)
-        assert(db.contactEmailDao().getAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
+        assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() == null)
+        assert(db.contactEmailDao().observeAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
     }
 
     @Test
@@ -52,8 +52,8 @@ class TransactionTests: ContactDatabaseTests() {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
         db.contactDao().deleteAllContacts()
-        assert(db.contactDao().getContact(User0.Contact0.contactId).firstOrNull() == null)
-        assert(db.contactEmailDao().getAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
+        assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() == null)
+        assert(db.contactEmailDao().observeAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
     }
 
     @Test
@@ -68,7 +68,7 @@ class TransactionTests: ContactDatabaseTests() {
         )
         db.mergeContactEmails(User0.userId, listOf(updatedContactEmail))
 
-        assert(db.contactEmailLabelDao().getAllLabels(User0.Contact0.ContactEmail0.contactEmailId).first() == updatedLabels)
+        assert(db.contactEmailLabelDao().observeAllLabels(User0.Contact0.ContactEmail0.contactEmailId).first() == updatedLabels)
     }
 
     @Test

@@ -22,7 +22,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.contact.data.local.db.dao.ContactCardDao
 import me.proton.core.contact.data.local.db.dao.ContactDao
 import me.proton.core.contact.data.local.db.dao.ContactEmailDao
-import me.proton.core.contact.data.local.db.dao.ContactEmailLabelCrossRefDao
+import me.proton.core.contact.data.local.db.dao.ContactEmailLabelDao
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.migration.DatabaseMigration
 
@@ -30,12 +30,7 @@ interface ContactDatabase: Database {
     fun contactDao(): ContactDao
     fun contactCardDao(): ContactCardDao
     fun contactEmailDao(): ContactEmailDao
-    fun contactEmailLabelDao(): ContactEmailLabelCrossRefDao
-
-    /*
-    fun getContact(contactId: ContactId): Flow<ContactWithCards> {
-        return contactDao().getContact(contactId).map { it.toContactWithCards() }
-    }*/
+    fun contactEmailLabelDao(): ContactEmailLabelDao
 
     companion object {
         val MIGRATION_0 = object : DatabaseMigration {
@@ -52,8 +47,8 @@ interface ContactDatabase: Database {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `ContactEmailEntity` (`userId` TEXT NOT NULL, `contactEmailId` TEXT NOT NULL, `name` TEXT NOT NULL, `email` TEXT NOT NULL, `defaults` INTEGER NOT NULL, `order` INTEGER NOT NULL, `contactId` TEXT NOT NULL, `canonicalEmail` TEXT, PRIMARY KEY(`contactEmailId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`contactId`) REFERENCES `ContactEntity`(`contactId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_ContactEmailEntity_userId` ON `ContactEmailEntity` (`userId`)")
 
-                // Create ContactEmailLabelCrossRefEntity table
-                database.execSQL("CREATE TABLE IF NOT EXISTS `ContactEmailLabelCrossRefEntity` (`contactEmailId` TEXT NOT NULL, `labelId` TEXT NOT NULL, PRIMARY KEY(`contactEmailId`, `labelId`), FOREIGN KEY(`contactEmailId`) REFERENCES `ContactEmailEntity`(`contactEmailId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                // Create ContactEmailLabelEntity table
+                database.execSQL("CREATE TABLE IF NOT EXISTS `ContactEmailLabelEntity` (`contactEmailId` TEXT NOT NULL, `labelId` TEXT NOT NULL, PRIMARY KEY(`contactEmailId`, `labelId`), FOREIGN KEY(`contactEmailId`) REFERENCES `ContactEmailEntity`(`contactEmailId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
             }
         }
     }

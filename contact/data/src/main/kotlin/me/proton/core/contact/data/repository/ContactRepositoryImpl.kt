@@ -52,7 +52,7 @@ class ContactRepositoryImpl(
             remoteDataSource.getContactWithCards(key.userId, key.contactId)
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { contactStoreKey -> localDataSource.getContact(contactStoreKey.contactId) },
+            reader = { contactStoreKey -> localDataSource.observeContact(contactStoreKey.contactId) },
             writer = { key, input -> localDataSource.mergeContactWithCards(key.userId, input) },
             delete = { key -> localDataSource.deleteContact(key.contactId) },
             deleteAll = localDataSource::deleteAllContacts
@@ -64,9 +64,9 @@ class ContactRepositoryImpl(
             remoteDataSource.getAllContacts(userId)
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = localDataSource::getAllContacts,
+            reader = localDataSource::observeAllContacts,
             writer = localDataSource::mergeContacts,
-            delete = localDataSource::deleteAllContacts,
+            delete = { userId -> localDataSource.deleteAllContacts(userId) },
             deleteAll = localDataSource::deleteAllContacts
         )
     ).build()
@@ -80,15 +80,15 @@ class ContactRepositoryImpl(
         return if (refresh) contactWithCardsStore.fresh(key) else contactWithCardsStore.get(key)
     }
 
-    override fun getAllContactsFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
+    override fun observeAllContacts(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
         return allContactsStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
     }
 
-    override fun getAllContactEmailsFlow(
+    override fun observeAllContactEmails(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<DataResult<List<ContactEmail>>> {
-        return getAllContactsFlow(sessionUserId, refresh).mapSuccess {  contactsResult ->
+        return observeAllContacts(sessionUserId, refresh).mapSuccess { contactsResult ->
             DataResult.Success(
                 source = contactsResult.source,
                 value = contactsResult.value.flatMap { it.contactEmails }

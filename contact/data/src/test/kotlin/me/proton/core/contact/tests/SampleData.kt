@@ -23,7 +23,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.contact.data.local.db.entity.ContactEntity
 import me.proton.core.contact.data.local.db.entity.toContactCardEntity
 import me.proton.core.contact.data.local.db.entity.toContactEmailEntity
-import me.proton.core.contact.data.local.db.entity.toContactEmailLabelCrossRefs
+import me.proton.core.contact.data.local.db.entity.toContactEmailLabel
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactEmail
@@ -52,7 +52,7 @@ object User0 {
             val contactEmailId = ContactEmailId("contactEmail0")
             val contactEmail = contactId.contactEmail(contactEmailId, listOf("label0"))
             val contactEmailEntity = contactEmail.toContactEmailEntity(userId)
-            val emailLabelEntities = contactEmail.toContactEmailLabelCrossRefs().toTypedArray()
+            val emailLabelEntities = contactEmail.toContactEmailLabel().toTypedArray()
         }
     }
 }

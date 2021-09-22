@@ -40,12 +40,12 @@ interface ContactRepository {
     /**
      * Get all [Contact] using [sessionUserId].
      */
-    fun getAllContactsFlow(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<Contact>>>
+    fun observeAllContacts(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<Contact>>>
 
     /**
      * Get all [ContactEmail] using [sessionUserId].
      */
-    fun getAllContactEmailsFlow(
+    fun observeAllContactEmails(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
     ): Flow<DataResult<List<ContactEmail>>>
