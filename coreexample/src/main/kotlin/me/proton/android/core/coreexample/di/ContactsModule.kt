@@ -22,8 +22,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.contact.data.api.ContactRemoteDataSourceImpl
 import me.proton.core.contact.data.local.db.ContactDatabase
+import me.proton.core.contact.data.local.db.ContactLocalDataSourceImpl
 import me.proton.core.contact.data.repository.ContactRepositoryImpl
+import me.proton.core.contact.domain.repository.ContactLocalDataSource
+import me.proton.core.contact.domain.repository.ContactRemoteDataSource
 import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
@@ -34,7 +38,22 @@ object ContactsModule {
 
     @Provides
     @Singleton
-    fun provideContactsRepository(apiProvider: ApiProvider, contactDatabase: ContactDatabase): ContactRepository {
-        return ContactRepositoryImpl(apiProvider, contactDatabase)
+    fun provideContactLocalDataSource(contactDatabase: ContactDatabase): ContactLocalDataSource {
+        return ContactLocalDataSourceImpl(contactDatabase)
+    }
+
+    @Provides
+    @Singleton
+    fun provideContactRemoteDataSource(apiProvider: ApiProvider): ContactRemoteDataSource {
+        return ContactRemoteDataSourceImpl(apiProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideContactsRepository(
+        remoteDataSource: ContactRemoteDataSource,
+        localDataSource: ContactLocalDataSource
+    ): ContactRepository {
+        return ContactRepositoryImpl(remoteDataSource, localDataSource)
     }
 }
