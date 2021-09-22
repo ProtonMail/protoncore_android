@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -32,7 +33,7 @@ import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 /**
  * Verify [signature] of [text] is correctly signed using this [PublicKey].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @see [PrivateKeyRing.signText]
  */
@@ -40,13 +41,13 @@ fun PublicKey.verifyText(
     context: CryptoContext,
     text: String,
     signature: Signature,
-    validAtUtc: Long = 0
-): Boolean = isActive && canVerify && context.pgpCrypto.verifyText(text, signature, key, validAtUtc)
+    time: VerificationTime = VerificationTime.Now
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyText(text, signature, key, time)
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicKey].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @see [PrivateKeyRing.signData]
  */
@@ -54,13 +55,13 @@ fun PublicKey.verifyData(
     context: CryptoContext,
     data: ByteArray,
     signature: Signature,
-    validAtUtc: Long = 0
-): Boolean = isActive && canVerify && context.pgpCrypto.verifyData(data, signature, key, validAtUtc)
+    time: VerificationTime = VerificationTime.Now
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyData(data, signature, key, time)
 
 /**
  * Verify [signature] of [file] is correctly signed using this [PublicKey].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @see [PrivateKeyRing.signData]
  */
@@ -68,8 +69,8 @@ fun PublicKey.verifyFile(
     context: CryptoContext,
     file: DecryptedFile,
     signature: Signature,
-    validAtUtc: Long = 0
-): Boolean = isActive && canVerify && context.pgpCrypto.verifyFile(file, signature, key, validAtUtc)
+    time: VerificationTime = VerificationTime.Now
+): Boolean = isActive && canVerify && context.pgpCrypto.verifyFile(file, signature, key, time)
 
 /**
  * Encrypt [text] using this [PublicKey].

@@ -81,6 +81,7 @@ class UserAddressRepositoryImplTests {
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
         keyStoreCrypto = object : KeyStoreCrypto {
+            override fun isUsingKeyStore(): Boolean = false
             override fun encrypt(value: String): EncryptedString = value
             override fun decrypt(value: EncryptedString): String = value
             override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array.copyOf())

@@ -1,3 +1,11 @@
+## Crypto and Key  [1.15.4]
+
+8 Oct, 2021
+
+### Changes
+
+- Replaced Signature Verification validAtUtc (Long) by VerificationTime (Ignore, Now, Utc).
+
 ## Crypto [1.15.3]
 
 ### Changes

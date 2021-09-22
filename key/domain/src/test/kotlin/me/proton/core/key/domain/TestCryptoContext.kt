@@ -40,6 +40,7 @@ import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationStatus
+import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -112,7 +113,7 @@ class TestCryptoContext : CryptoContext {
             plainText: String,
             signature: Signature,
             publicKey: Armored,
-            validAtUtc: Long
+            time: VerificationTime
         ): Boolean {
             val decryptedSignature = signature.decryptMessage(publicKey)
             return plainText == decryptedSignature.extractMessage()
@@ -122,7 +123,7 @@ class TestCryptoContext : CryptoContext {
             data: ByteArray,
             signature: Signature,
             publicKey: Armored,
-            validAtUtc: Long
+            time: VerificationTime
         ): Boolean {
             val decryptedSignature = signature.decryptMessage(publicKey)
             return data.fromByteArray() == decryptedSignature.extractMessage()
@@ -132,7 +133,7 @@ class TestCryptoContext : CryptoContext {
             file: DecryptedFile,
             signature: Armored,
             publicKey: Armored,
-            validAtUtc: Long
+            time: VerificationTime
         ): Boolean {
             val decryptedSignature = signature.decryptMessage(publicKey)
             val data = file.file.readBytes()
@@ -210,7 +211,7 @@ class TestCryptoContext : CryptoContext {
             message: EncryptedMessage,
             publicKeys: List<Armored>,
             unlockedKeys: List<Unarmored>,
-            validAtUtc: Long
+            time: VerificationTime
         ): DecryptedText = DecryptedText(
             message.decryptMessage(unlockedKeys.first()).let {
                 check(it.startsWith("TEXT"))
@@ -223,7 +224,7 @@ class TestCryptoContext : CryptoContext {
             message: EncryptedMessage,
             publicKeys: List<Armored>,
             unlockedKeys: List<Unarmored>,
-            validAtUtc: Long
+            time: VerificationTime
         ): DecryptedData = DecryptedData(
             message.decryptMessage(unlockedKeys.first()).let {
                 check(it.startsWith("BINARY"))
@@ -237,7 +238,7 @@ class TestCryptoContext : CryptoContext {
             destination: File,
             sessionKey: SessionKey,
             publicKeys: List<Armored>,
-            validAtUtc: Long
+            time: VerificationTime
         ): DecryptedFile = decryptFile(source, destination, sessionKey)
 
         override fun decryptSessionKey(keyPacket: KeyPacket, unlockedKey: Unarmored): SessionKey =

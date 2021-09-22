@@ -165,7 +165,7 @@ fun PGPCrypto.encryptAndSignDataOrNull(
 ): EncryptedMessage? = runCatching { encryptAndSignData(data, publicKey, unlockedKey) }.getOrNull()
 
 /**
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return [DecryptedText], or `null` if [message] cannot be decrypted.
  *
@@ -175,11 +175,11 @@ fun PGPCrypto.decryptAndVerifyTextOrNull(
     message: EncryptedMessage,
     publicKeys: List<Armored>,
     unlockedKeys: List<Unarmored>,
-    validAtUtc: Long = 0
-): DecryptedText? = runCatching { decryptAndVerifyText(message, publicKeys, unlockedKeys, validAtUtc) }.getOrNull()
+    time: VerificationTime = VerificationTime.Now
+): DecryptedText? = runCatching { decryptAndVerifyText(message, publicKeys, unlockedKeys, time) }.getOrNull()
 
 /**
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return [DecryptedData], or `null` if [message] cannot be decrypted.
  *
@@ -189,11 +189,11 @@ fun PGPCrypto.decryptAndVerifyDataOrNull(
     message: EncryptedMessage,
     publicKeys: List<Armored>,
     unlockedKeys: List<Unarmored>,
-    validAtUtc: Long = 0
-): DecryptedData? = runCatching { decryptAndVerifyData(message, publicKeys, unlockedKeys, validAtUtc) }.getOrNull()
+    time: VerificationTime = VerificationTime.Now
+): DecryptedData? = runCatching { decryptAndVerifyData(message, publicKeys, unlockedKeys, time) }.getOrNull()
 
 /**
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *
@@ -204,9 +204,9 @@ fun PGPCrypto.decryptAndVerifyFileOrNull(
     destination: File,
     sessionKey: SessionKey,
     publicKeys: List<Armored>,
-    validAtUtc: Long = 0
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedFile? =
-    runCatching { decryptAndVerifyFile(source, destination, sessionKey, publicKeys, validAtUtc) }.getOrNull()
+    runCatching { decryptAndVerifyFile(source, destination, sessionKey, publicKeys, time) }.getOrNull()
 
 /**
  * @return [Armored] public key, or `null` if public key cannot be extracted from [privateKey].

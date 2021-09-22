@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -62,7 +63,7 @@ fun PublicKeyRing.encryptSessionKey(context: CryptoContext, sessionKey: SessionK
 /**
  * Verify [signature] of [text] is correctly signed using this [PublicKeyRing].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -72,13 +73,13 @@ fun PublicKeyRing.verifyText(
     context: CryptoContext,
     text: String,
     signature: Signature,
-    validAtUtc: Long = 0
-): Boolean = keys.any { it.verifyText(context, text, signature, validAtUtc) }
+    time: VerificationTime = VerificationTime.Now
+): Boolean = keys.any { it.verifyText(context, text, signature, time) }
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicKeyRing].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -88,13 +89,13 @@ fun PublicKeyRing.verifyData(
     context: CryptoContext,
     data: ByteArray,
     signature: Signature,
-    validAtUtc: Long = 0
-): Boolean = keys.any { it.verifyData(context, data, signature, validAtUtc) }
+    time: VerificationTime = VerificationTime.Now
+): Boolean = keys.any { it.verifyData(context, data, signature, time) }
 
 /**
  * Verify [signature] of [file] is correctly signed using this [PublicKeyRing].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -104,5 +105,5 @@ fun PublicKeyRing.verifyFile(
     context: CryptoContext,
     file: DecryptedFile,
     signature: Signature,
-    validAtUtc: Long = 0
-): Boolean = keys.any { it.verifyFile(context, file, signature, validAtUtc) }
+    time: VerificationTime = VerificationTime.Now
+): Boolean = keys.any { it.verifyFile(context, file, signature, time) }

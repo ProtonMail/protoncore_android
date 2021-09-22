@@ -16,40 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.crypto.common.pgp
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+/**
+ * Verification time for the signature.
+ */
+sealed class VerificationTime {
+    /**
+     * The signature time verification will be ignored.
+     */
+    object Ignore : VerificationTime()
 
-libVersion = parent?.libVersion
+    /**
+     * The signature time verification will use the current/server time (last value from PGPCrypto.updateTime).
+     */
+    object Now : VerificationTime()
 
-android()
-
-dependencies {
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.cryptoCommon),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`,
-
-        // Android
-        `room-runtime`,
-
-        // Other
-        `bcrypt`,
-        `googleTink`
-    )
-
-    compileOnly(project(Module.gopenpgp))
-
-    androidTestImplementation(
-        project(Module.androidInstrumentedTest),
-        project(Module.gopenpgp)
-    )
+    /**
+     * The signature time verification will use the UTC [seconds] provided.
+     */
+    data class Utc(val seconds: Long) : VerificationTime()
 }

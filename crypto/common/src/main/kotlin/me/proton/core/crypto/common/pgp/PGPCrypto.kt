@@ -159,7 +159,7 @@ interface PGPCrypto {
      *
      * Note: String canonicalization/standardization is applied.
      *
-     * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
      *
      * @throws [CryptoException] if [message] cannot be decrypted.
      *
@@ -171,13 +171,13 @@ interface PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        validAtUtc: Long = 0
+        time: VerificationTime = VerificationTime.Now
     ): DecryptedText
 
     /**
      * Decrypt [message] as [ByteArray] using [unlockedKeys] and verify using [publicKeys].
      *
-     * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
      *
      * @throws [CryptoException] if [message] cannot be decrypted.
      *
@@ -189,13 +189,13 @@ interface PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        validAtUtc: Long = 0
+        time: VerificationTime = VerificationTime.Now
     ): DecryptedData
 
     /**
      * Decrypt [source] into [destination] using [sessionKey] and verify using [publicKeys].
      *
-     * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
      *
      * @throws [CryptoException] if [source] cannot be decrypted.
      *
@@ -208,7 +208,7 @@ interface PGPCrypto {
         destination: File,
         sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        validAtUtc: Long
+        time: VerificationTime = VerificationTime.Now
     ): DecryptedFile
 
     /**
@@ -259,29 +259,44 @@ interface PGPCrypto {
     /**
      * Verify [signature] of [plainText] is correctly signed using [publicKey].
      *
-     * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
      *
      * @see [signText]
      */
-    fun verifyText(plainText: String, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
+    fun verifyText(
+        plainText: String,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime = VerificationTime.Now
+    ): Boolean
 
     /**
      * Verify [signature] of [data] is correctly signed using [publicKey].
      *
-     * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
      *
      * @see [signData]
      */
-    fun verifyData(data: ByteArray, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
+    fun verifyData(
+        data: ByteArray,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime = VerificationTime.Now
+    ): Boolean
 
     /**
      * Verify [signature] of [file] is correctly signed using [publicKey].
      *
-     * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
      *
      * @see [signFile]
      */
-    fun verifyFile(file: DecryptedFile, signature: Armored, publicKey: Armored, validAtUtc: Long = 0): Boolean
+    fun verifyFile(
+        file: DecryptedFile,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime = VerificationTime.Now
+    ): Boolean
 
     /**
      * Get [Armored] from [data].

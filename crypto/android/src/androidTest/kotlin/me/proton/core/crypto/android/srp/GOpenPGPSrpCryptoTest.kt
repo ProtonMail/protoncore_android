@@ -26,6 +26,8 @@ import kotlin.test.fail
 
 internal class GOpenPGPSrpCryptoTest {
 
+    private fun ByteArray.encodeBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)
+
     private val crypto = GOpenPGPSrpCrypto(
         saltGenerator = { Base64.decode(testSalt, Base64.DEFAULT) }
     )
@@ -103,7 +105,4 @@ internal class GOpenPGPSrpCryptoTest {
             proofs.expectedServerProof.encodeBase64()
         ) { "server proof didn't match" }
     }
-
-    private fun ByteArray.encodeBase64(): String =
-        Base64.encodeToString(this, Base64.NO_WRAP)
 }

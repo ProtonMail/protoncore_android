@@ -23,6 +23,7 @@ import com.proton.gopenpgp.crypto.Crypto
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.crypto.common.pgp.VerificationTime
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
@@ -145,7 +146,8 @@ internal class GOpenPGPCryptoTest {
 
                 val message = "message\r\nnewline"
                 val encryptedOriginal = crypto.encryptAndSignText(message, publicKey, unlockedKey.value)
-                val decryptedText = crypto.decryptAndVerifyText(encryptedOriginal, listOf(publicKey), listOf(lockedUnlocked.value), 0)
+                val decryptedText =
+                    crypto.decryptAndVerifyText(encryptedOriginal, listOf(publicKey), listOf(lockedUnlocked.value))
 
                 assertEquals(
                     expected = VerificationStatus.Success,
@@ -173,7 +175,7 @@ internal class GOpenPGPCryptoTest {
 
             // THEN
             val decryptedText = crypto.decryptText(encrypted, unlocked.value)
-            val isVerified = crypto.verifyText(decryptedText, signature, publicKey, 0)
+            val isVerified = crypto.verifyText(decryptedText, signature, publicKey)
             assertTrue(isVerified)
 
             assertEquals(
@@ -198,7 +200,7 @@ internal class GOpenPGPCryptoTest {
 
             // THEN
             val decryptData = crypto.decryptData(encrypted, unlocked.value)
-            val isVerified = crypto.verifyData(decryptData, signature, publicKey, 0)
+            val isVerified = crypto.verifyData(decryptData, signature, publicKey)
             assertTrue(isVerified)
 
             decryptData.use {
@@ -332,10 +334,45 @@ internal class GOpenPGPCryptoTest {
             val encryptedAndSigned = crypto.encryptAndSignText(message, publicKey, unlockedKey.value)
 
             // THEN
-            val decryptedText = crypto.decryptAndVerifyText(encryptedAndSigned, listOf(publicKey), listOf(unlockedKey.value), 0)
+            val decryptedText = crypto.decryptAndVerifyText(
+                message = encryptedAndSigned,
+                publicKeys = listOf(publicKey),
+                unlockedKeys = listOf(unlockedKey.value)
+            )
 
             assertEquals(
                 expected = VerificationStatus.Success,
+                actual = decryptedText.status
+            )
+            assertEquals(
+                expected = message,
+                actual = decryptedText.text
+            )
+        }
+    }
+
+    @Test
+    fun encryptAndSignDecryptAndVerifyProvidedTime() {
+        // GIVEN
+        val message = "message\nnewline"
+
+        val publicKey = crypto.getPublicKey(TestKey.privateKey)
+
+        crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase).use { unlockedKey ->
+            // WHEN
+            crypto.updateTime(1632312383) // 2021.
+            val encryptedAndSigned = crypto.encryptAndSignText(message, publicKey, unlockedKey.value)
+
+            // THEN
+            val decryptedText = crypto.decryptAndVerifyText(
+                message = encryptedAndSigned,
+                publicKeys = listOf(publicKey),
+                unlockedKeys = listOf(unlockedKey.value),
+                time = VerificationTime.Utc(392039755) // 1982, keys have been generated later.
+            )
+
+            assertEquals(
+                expected = VerificationStatus.Failure,
                 actual = decryptedText.status
             )
             assertEquals(
@@ -358,7 +395,11 @@ internal class GOpenPGPCryptoTest {
             val encryptedAndSigned = crypto.encryptAndSignData(data, publicKey, unlockedKey.value)
 
             // THEN
-            val decryptedData = crypto.decryptAndVerifyData(encryptedAndSigned, listOf(publicKey), listOf(unlockedKey.value), 0)
+            val decryptedData = crypto.decryptAndVerifyData(
+                message = encryptedAndSigned,
+                publicKeys = listOf(publicKey),
+                unlockedKeys = listOf(unlockedKey.value)
+            )
 
             assertEquals(
                 expected = VerificationStatus.Success,
