@@ -24,8 +24,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.utils.prettyPrint
 import me.proton.core.accountmanager.domain.AccountManager
@@ -52,15 +54,14 @@ class ContactDetailViewModel @Inject constructor(
     }
 
     private suspend fun observeContact() {
-        accountManager.getPrimaryUserId().filterNotNull().collect { userId ->
-            try {
+        accountManager.getPrimaryUserId().filterNotNull()
+            .onEach { userId ->
                 val contactWithCards = contactRepository.getContactWithCards(userId, contactId, refresh = true)
                 mutableState.value = State.ContactDetails(contactWithCards.prettyPrint())
-            } catch (throwable: Throwable) {
-                logger.e("contact", throwable)
-                mutableState.value = State.Error(throwable.message ?: "unknown error")
-            }
-        }
+            }.catch {
+                logger.e("contact", it)
+                mutableState.value = State.Error(it.message ?: "unknown error")
+            }.collect()
     }
 
     sealed class State {

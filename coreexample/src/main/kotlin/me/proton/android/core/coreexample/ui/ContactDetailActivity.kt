@@ -23,11 +23,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import me.proton.android.core.coreexample.R
 import me.proton.android.core.coreexample.databinding.ActivityContactDetailsBinding
 import me.proton.android.core.coreexample.viewmodel.ContactDetailViewModel
@@ -50,16 +50,12 @@ class ContactDetailActivity : ProtonActivity<ActivityContactDetailsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state ->
-                    when (state) {
-                        is ContactDetailViewModel.State.ContactDetails -> binding.contactDetails.text = state.contact
-                        is ContactDetailViewModel.State.Error -> showToast(state.reason)
-                    }.exhaustive
-                }
-            }
-        }
+        viewModel.state.flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED).onEach { state ->
+            when (state) {
+                is ContactDetailViewModel.State.ContactDetails -> binding.contactDetails.text = state.contact
+                is ContactDetailViewModel.State.Error -> showToast(state.reason)
+            }.exhaustive
+        }.launchIn(lifecycleScope)
     }
 
     companion object {
