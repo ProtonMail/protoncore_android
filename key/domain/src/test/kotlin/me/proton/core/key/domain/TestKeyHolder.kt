@@ -19,7 +19,7 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.keystore.PlainByteArray
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
@@ -46,7 +46,7 @@ class TestKeyHolder(
             isPrimary = isPrimary,
             isActive = isActive,
             // Encrypt passphrase as it should be stored in PrivateKey.
-            passphrase = passphrase?.let { PlainByteArray(passphrase).encryptWith(context.keyStoreCrypto) }
+            passphrase = passphrase?.let { PlainByteArray(passphrase).encrypt(context.keyStoreCrypto) }
         ).also { key ->
             // Workaround: Remember unlockedKey to be able to decrypt messages encrypted with PublicKey.
             val publicKey = context.pgpCrypto.getPublicKey(key.key)

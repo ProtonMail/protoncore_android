@@ -31,7 +31,6 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
-import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkManager
 import me.proton.core.network.data.util.MockNetworkPrefs
 import me.proton.core.network.data.util.MockSession
@@ -133,7 +132,6 @@ internal class ApiManagerTests {
                 apiClient,
                 clientIdProvider,
                 serverTimeListener,
-                MockLogger(),
                 networkManager,
                 prefs,
                 sessionProvider,

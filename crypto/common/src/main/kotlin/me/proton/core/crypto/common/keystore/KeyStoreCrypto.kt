@@ -18,11 +18,18 @@
 
 package me.proton.core.crypto.common.keystore
 
+import me.proton.core.util.kotlin.CoreLogger
+
 /**
  * KeyStore Cryptographic interface providing [encrypt] function on [String] and [PlainByteArray],
  * and a [decrypt] function on [EncryptedString] and [EncryptedByteArray].
  */
 interface KeyStoreCrypto {
+    /**
+     * Returns whether System Keystore is being used providing secure key, or false otherwise.
+     */
+    fun isUsingKeyStore(): Boolean
+
     /**
      * Encrypt a [String] [value] and return an [EncryptedString].
      */
@@ -42,4 +49,75 @@ interface KeyStoreCrypto {
      * Decrypt an [EncryptedByteArray] [value] and return a [PlainByteArray].
      */
     fun decrypt(value: EncryptedByteArray): PlainByteArray
+}
+
+/**
+ * Returns encrypted value, or the result of [onFailure] function on encryption failure.
+ *
+ * @see [KeyStoreCrypto.encrypt]
+ */
+fun KeyStoreCrypto.encryptOrElse(
+    value: String,
+    onFailure: (Throwable) -> EncryptedString?
+): EncryptedString? = runCatching {
+    encrypt(value)
+}.getOrElse {
+    CoreLogger.e(LogTag.KEYSTORE_ENCRYPT, it)
+    onFailure(it)
+}
+
+/**
+ * Returns encrypted value, or the result of [onFailure] function on encryption failure.
+ *
+ * @see [KeyStoreCrypto.encrypt]
+ */
+fun KeyStoreCrypto.encryptOrElse(
+    value: PlainByteArray,
+    onFailure: (Throwable) -> EncryptedByteArray?
+): EncryptedByteArray? = runCatching {
+    encrypt(value)
+}.getOrElse {
+    CoreLogger.e(LogTag.KEYSTORE_ENCRYPT, it)
+    onFailure(it)
+}
+
+/**
+ * Returns decrypted value, or the result of [onFailure] function on decryption failure.
+ *
+ * @see [KeyStoreCrypto.decrypt]
+ */
+fun KeyStoreCrypto.decryptOrElse(
+    value: EncryptedString,
+    onFailure: (Throwable) -> String?
+): String? = runCatching {
+    decrypt(value)
+}.getOrElse {
+    CoreLogger.e(LogTag.KEYSTORE_DECRYPT, it)
+    onFailure(it)
+}
+
+/**
+ * Returns decrypted value, or the result of [onFailure] function on decryption failure.
+ *
+ * @see [KeyStoreCrypto.decrypt]
+ */
+fun KeyStoreCrypto.decryptOrElse(
+    value: EncryptedByteArray,
+    onFailure: (Throwable) -> PlainByteArray?
+): PlainByteArray? = runCatching {
+    decrypt(value)
+}.getOrElse {
+    CoreLogger.e(LogTag.KEYSTORE_DECRYPT, it)
+    onFailure(it)
+}
+
+object LogTag {
+    /** Tag for KeyStore initialization check failure. */
+    const val KEYSTORE_INIT = "core.crypto.common.keystore.init"
+
+    /** Tag for KeyStore encrypt failure. */
+    const val KEYSTORE_ENCRYPT = "core.crypto.common.keystore.encrypt"
+
+    /** Tag for KeyStore decrypt failure. */
+    const val KEYSTORE_DECRYPT = "core.crypto.common.keystore.decrypt"
 }

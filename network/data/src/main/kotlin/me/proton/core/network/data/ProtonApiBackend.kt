@@ -35,7 +35,7 @@ import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.util.kotlin.Logger
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -65,7 +65,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private val client: ApiClient,
     private val clientIdProvider: ClientIdProvider,
     serverTimeListener: ServerTimeListener,
-    private val logger: Logger,
     private val sessionId: SessionId?,
     private val sessionProvider: SessionProvider,
     private val humanVerificationProvider: HumanVerificationProvider,
@@ -85,7 +84,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 val chain = handleTimeoutTag(orgChain)
                 chain.proceed(prepareHeaders(chain.request()).build())
             }
-            .initLogging(client, logger)
+            .initLogging(client)
             .addInterceptor(ServerErrorInterceptor())
             .addInterceptor(TooManyRequestInterceptor(sessionId, wallClockMs))
             .addNetworkInterceptor(ServerTimeInterceptor(serverTimeListener))
@@ -147,7 +146,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         invokeInternal(call.block)
 
     private suspend fun <T> invokeInternal(block: suspend Api.() -> T): ApiResult<T> =
-        safeApiCall(networkManager, logger, api, block)
+        safeApiCall(networkManager, api, block)
 
     override suspend fun refreshSession(session: Session): ApiResult<Session> {
         val result = invokeInternal {
@@ -155,8 +154,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
         }
         return when (result) {
             is ApiResult.Success -> {
-                logger.log(LogTag.REFRESH_TOKEN, "new access token: ${result.value.accessToken.formatToken(client)}")
-                logger.log(LogTag.REFRESH_TOKEN, "new refresh token: ${result.value.refreshToken.formatToken(client)}")
+                CoreLogger.log(LogTag.REFRESH_TOKEN, "Access & refresh tokens refreshed.")
                 ApiResult.Success(
                     session.refreshWith(
                         accessToken = result.value.accessToken,

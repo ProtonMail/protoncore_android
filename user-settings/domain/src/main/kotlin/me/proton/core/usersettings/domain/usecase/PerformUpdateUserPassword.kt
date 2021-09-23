@@ -22,7 +22,7 @@ import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
@@ -61,8 +61,8 @@ class PerformUpdateUserPassword @Inject constructor(
             organizationRepository.getOrganizationKeys(userId)
         } else null
 
-        loginPassword.decryptWith(keyStore).toByteArray().use { decryptedLoginPassword ->
-            newPassword.decryptWith(keyStore).toByteArray().use { decryptedNewPassword ->
+        loginPassword.decrypt(keyStore).toByteArray().use { decryptedLoginPassword ->
+            newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
                 val clientProofs: SrpProofs = srp.generateSrpProofs(
                     username = username,
                     password = decryptedLoginPassword.array,

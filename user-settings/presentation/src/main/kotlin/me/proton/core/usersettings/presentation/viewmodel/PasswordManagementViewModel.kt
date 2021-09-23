@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.entity.UserSettings
@@ -95,8 +95,8 @@ class PasswordManagementViewModel @Inject constructor(
             return@flow
         }
         emit(State.UpdatingLoginPassword)
-        val encryptedPassword = password.encryptWith(keyStoreCrypto)
-        val encryptedNewPassword = newPassword.encryptWith(keyStoreCrypto)
+        val encryptedPassword = password.encrypt(keyStoreCrypto)
+        val encryptedNewPassword = newPassword.encrypt(keyStoreCrypto)
 
         val result = performUpdateLoginPassword(
             userId = userId,
@@ -121,8 +121,8 @@ class PasswordManagementViewModel @Inject constructor(
         secondFactorCode: String = ""
     ) = flow {
         emit(if (twoPasswordMode == true) State.UpdatingMailboxPassword else State.UpdatingSinglePassModePassword)
-        val encryptedLoginPassword = loginPassword.encryptWith(keyStoreCrypto)
-        val encryptedNewMailboxPassword = newMailboxPassword.encryptWith(keyStoreCrypto)
+        val encryptedLoginPassword = loginPassword.encrypt(keyStoreCrypto)
+        val encryptedNewMailboxPassword = newMailboxPassword.encrypt(keyStoreCrypto)
         val result = performUpdateUserPassword.invoke(
             twoPasswordMode = twoPasswordMode!!,
             userId = userId,

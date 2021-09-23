@@ -20,7 +20,7 @@ package me.proton.core.network.data
 import kotlinx.serialization.SerializationException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
-import me.proton.core.util.kotlin.Logger
+import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.Response
 import retrofit2.HttpException
 import java.io.IOException
@@ -32,7 +32,6 @@ import javax.net.ssl.SSLPeerUnverifiedException
 
 internal suspend fun <Api, T> safeApiCall(
     networkManager: NetworkManager,
-    logger: Logger,
     api: Api,
     block: suspend (Api) -> T
 ): ApiResult<T> {
@@ -58,7 +57,7 @@ internal suspend fun <Api, T> safeApiCall(
         ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
     }
     if (result is ApiResult.Error) {
-        result.cause?.let { logger.e(LogTag.DEFAULT, it) }
+        result.cause?.let { CoreLogger.e(LogTag.DEFAULT, it) }
     }
     return result
 }

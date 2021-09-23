@@ -32,7 +32,7 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
@@ -72,7 +72,7 @@ class TwoPassModeViewModel @Inject constructor(
     ) = flow {
         emit(State.Processing)
 
-        val encryptedPassword = password.encryptWith(keyStoreCrypto)
+        val encryptedPassword = password.encrypt(keyStoreCrypto)
         val state = unlockUserPrimaryKey(userId, encryptedPassword)
 
         emit(state)

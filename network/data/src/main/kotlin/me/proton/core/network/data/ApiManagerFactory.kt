@@ -46,7 +46,6 @@ import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.Cache
 import okhttp3.JavaNetCookieJar
@@ -71,7 +70,6 @@ class ApiManagerFactory(
     private val apiClient: ApiClient,
     private val clientIdProvider: ClientIdProvider,
     private val serverTimeListener: ServerTimeListener,
-    private val logger: Logger,
     private val networkManager: NetworkManager,
     private val prefs: NetworkPrefs,
     private val sessionProvider: SessionProvider,
@@ -117,7 +115,7 @@ class ApiManagerFactory(
 
     private val dohProvider by lazy {
         val dohServices = Constants.DOH_PROVIDERS_URLS.map { serviceUrl ->
-            DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, apiClient, networkManager, logger)
+            DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, apiClient, networkManager)
         }
         DohProvider(baseUrl, apiClient, dohServices, mainScope, prefs, ::javaMonoClockMs)
     }
@@ -169,7 +167,6 @@ class ApiManagerFactory(
             apiClient,
             clientIdProvider,
             serverTimeListener,
-            logger,
             sessionId,
             sessionProvider,
             humanVerificationProvider,
@@ -199,7 +196,6 @@ class ApiManagerFactory(
                 apiClient,
                 clientIdProvider,
                 serverTimeListener,
-                logger,
                 sessionId,
                 sessionProvider,
                 humanVerificationProvider,

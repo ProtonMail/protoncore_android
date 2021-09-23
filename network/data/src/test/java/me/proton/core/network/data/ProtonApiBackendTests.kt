@@ -107,7 +107,6 @@ internal class ProtonApiBackendTests {
     @BeforeTest
     fun before() {
         MockKAnnotations.init(this)
-        logger = MockLogger()
         client = MockApiClient()
         prefs = MockNetworkPrefs()
 
@@ -123,7 +122,6 @@ internal class ProtonApiBackendTests {
             client,
             clientIdProvider,
             serverTimeListener,
-            logger,
             networkManager,
             prefs,
             sessionProvider,
@@ -163,7 +161,6 @@ internal class ProtonApiBackendTests {
             client,
             clientIdProvider,
             serverTimeListener,
-            logger,
             session.sessionId,
             sessionProvider,
             humanVerificationProvider,

@@ -21,7 +21,7 @@ package me.proton.core.auth.domain.usecase.signup
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.user.domain.entity.CreateUserType
@@ -44,7 +44,7 @@ class PerformCreateExternalEmailUser @Inject constructor(
         require(email.isNotBlank()) { "Email must not be empty." }
         val modulus = authRepository.randomModulus()
 
-        password.decryptWith(keyStoreCrypto).toByteArray().use { decryptedPassword ->
+        password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val auth = srpCrypto.calculatePasswordVerifier(
                 username = email,
                 password = decryptedPassword.array,

@@ -19,17 +19,17 @@ package me.proton.core.network.data
 
 import android.os.SystemClock
 import me.proton.core.network.domain.ApiClient
-import me.proton.core.util.kotlin.Logger
+import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
-internal fun OkHttpClient.Builder.initLogging(client: ApiClient, logger: Logger): OkHttpClient.Builder {
+internal fun OkHttpClient.Builder.initLogging(client: ApiClient): OkHttpClient.Builder {
     if (client.enableDebugLogging) {
         // HttpLoggingInterceptor generate log messages and forward them into provided Logger.
         addInterceptor(
             HttpLoggingInterceptor(
                 logger = object : HttpLoggingInterceptor.Logger {
-                    override fun log(message: String) = logger.d(LogTag.DEFAULT, message)
+                    override fun log(message: String) = CoreLogger.d(LogTag.DEFAULT, message)
                 }
             ).apply { level = HttpLoggingInterceptor.Level.BODY }
         )
@@ -38,7 +38,7 @@ internal fun OkHttpClient.Builder.initLogging(client: ApiClient, logger: Logger)
         addInterceptor { chain ->
             val request = chain.request()
             val auth = request.header("Authorization").formatToken(client)
-            logger.log(
+            CoreLogger.log(
                 LogTag.API_CALL,
                 with(request) { "--> $method $url (auth $auth)" },
             )
@@ -46,7 +46,7 @@ internal fun OkHttpClient.Builder.initLogging(client: ApiClient, logger: Logger)
             val startMs = SystemClock.elapsedRealtime()
             val response = chain.proceed(request)
             val durationMs = SystemClock.elapsedRealtime() - startMs
-            logger.log(
+            CoreLogger.log(
                 LogTag.API_CALL,
                 with(response) { "<-- $code $message ${request.method} ${request.url} (${durationMs}ms)" }
             )

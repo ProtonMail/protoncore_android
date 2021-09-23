@@ -26,9 +26,29 @@ typealias EncryptedString = String
 /**
  * Decrypt an [EncryptedString] using a [KeyStoreCrypto].
  */
-fun EncryptedString.decryptWith(crypto: KeyStoreCrypto) = crypto.decrypt(this)
+fun EncryptedString.decrypt(crypto: KeyStoreCrypto) = crypto.decrypt(this)
 
 /**
  * Encrypt a [String] using a [KeyStoreCrypto].
  */
-fun String.encryptWith(crypto: KeyStoreCrypto) = crypto.encrypt(this)
+fun String.encrypt(crypto: KeyStoreCrypto) = crypto.encrypt(this)
+
+/**
+ * Returns decrypted value, or the result of onFailure function on decryption failure.
+ *
+ * @see [EncryptedString.decryptWith]
+ */
+fun EncryptedString.decryptOrElse(
+    crypto: KeyStoreCrypto,
+    onFailure: (Throwable) -> String?
+) = crypto.decryptOrElse(this, onFailure)
+
+/**
+ * Returns encrypted value, or the result of [onFailure] function on encryption failure.
+ *
+ * @see [String.encrypt]
+ */
+fun String.encryptOrElse(
+    crypto: KeyStoreCrypto,
+    onFailure: (Throwable) -> EncryptedString?
+) = crypto.encryptOrElse(this, onFailure)

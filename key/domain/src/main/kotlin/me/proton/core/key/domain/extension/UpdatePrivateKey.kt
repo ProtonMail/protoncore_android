@@ -19,7 +19,7 @@
 package me.proton.core.key.domain.extension
 
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decryptWith
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.entity.key.Key
@@ -29,7 +29,7 @@ fun KeyHolderPrivateKey.updatePrivateKeyPassphraseOrNull(
     cryptoContext: CryptoContext,
     newPassphrase: ByteArray
 ): Key? {
-    val passphrase = privateKey.passphrase?.decryptWith(cryptoContext.keyStoreCrypto)?.array ?: return null
+    val passphrase = privateKey.passphrase?.decrypt(cryptoContext.keyStoreCrypto)?.array ?: return null
     return cryptoContext.pgpCrypto.updatePrivateKeyPassphraseOrNull(
         privateKey = privateKey.key,
         passphrase = passphrase,

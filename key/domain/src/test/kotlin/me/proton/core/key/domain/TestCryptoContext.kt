@@ -52,6 +52,9 @@ class TestCryptoContext : CryptoContext {
 
     // Use the defaultKey to encrypt/decrypt.
     override val keyStoreCrypto: KeyStoreCrypto = object : KeyStoreCrypto {
+
+        override fun isUsingKeyStore(): Boolean = false
+
         override fun encrypt(value: String): EncryptedString =
             value.toByteArray().encrypt(defaultKey).fromByteArray()
 

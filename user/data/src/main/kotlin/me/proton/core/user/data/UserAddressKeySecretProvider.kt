@@ -20,8 +20,8 @@ package me.proton.core.user.data
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.decryptWith
-import me.proton.core.crypto.common.keystore.encryptWith
+import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.domain.entity.UserId
@@ -86,7 +86,7 @@ class UserAddressKeySecretProvider(
             // New address key format -> user keys encrypt token + signature -> address passphrase.
             cryptoContext.pgpCrypto.generateNewToken().use { passphrase ->
                 UserAddressKeySecret(
-                    passphrase = passphrase.encryptWith(keyStoreCrypto),
+                    passphrase = passphrase.encrypt(keyStoreCrypto),
                     token = userPrivateKey.encryptData(cryptoContext, passphrase.array),
                     signature = userPrivateKey.signData(cryptoContext, passphrase.array)
                 )
@@ -102,7 +102,7 @@ class UserAddressKeySecretProvider(
         isPrimary: Boolean
     ): UserAddressKey {
         val secret = generateUserAddressKeySecret(userPrivateKey, generateOldFormat)
-        secret.passphrase.decryptWith(keyStoreCrypto).use { decryptedPassphrase ->
+        secret.passphrase.decrypt(keyStoreCrypto).use { decryptedPassphrase ->
             val email = userAddress.emailSplit
             val privateKey = PrivateKey(
                 key = cryptoContext.pgpCrypto.generateNewPrivateKey(

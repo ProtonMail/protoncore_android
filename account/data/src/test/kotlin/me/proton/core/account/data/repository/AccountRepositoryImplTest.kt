@@ -67,6 +67,7 @@ class AccountRepositoryImplTest {
     private lateinit var metadataDao: AccountMetadataDao
 
     private val simpleCrypto = object : KeyStoreCrypto {
+        override fun isUsingKeyStore(): Boolean = false
         override fun encrypt(value: String): EncryptedString = value
         override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array)
         override fun decrypt(value: EncryptedString): String = value
