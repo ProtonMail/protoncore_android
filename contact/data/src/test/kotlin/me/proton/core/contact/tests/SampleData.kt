@@ -39,6 +39,7 @@ object User0 {
     val accountEntity = userId.accountEntity()
     object Contact0 {
         val contactId = ContactId("contact0")
+        val contact = contactId.contact(listOf(ContactEmail0.contactEmail))
         val contactWithCards = contactId.contactWithCards(
             listOf(ContactEmail0.contactEmail),
             listOf(ContactCard0.contactCard)
@@ -90,12 +91,14 @@ fun UserId.contactEntity(contactId: ContactId) = ContactEntity(
     name = "contact$contactId"
 )
 
+fun ContactId.contact(emails: List<ContactEmail>) = Contact(
+    id = this,
+    name = "contact$this",
+    contactEmails = emails,
+)
+
 fun ContactId.contactWithCards(emails: List<ContactEmail>, cards: List<ContactCard>) = ContactWithCards(
-    contact = Contact(
-        id = this,
-        name = "contact$this",
-        contactEmails = emails,
-    ),
+    contact = contact(emails),
     contactCards = cards
 )
 

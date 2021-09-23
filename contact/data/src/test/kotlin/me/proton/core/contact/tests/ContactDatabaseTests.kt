@@ -22,17 +22,21 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.runBlocking
+import me.proton.core.contact.data.local.db.ContactLocalDataSourceImpl
+import me.proton.core.contact.domain.repository.ContactLocalDataSource
 import org.junit.After
 import org.junit.Before
 
 abstract class ContactDatabaseTests {
 
     protected lateinit var db: TestDatabase
+    protected lateinit var localDataSource: ContactLocalDataSource
 
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, TestDatabase::class.java).build()
+        localDataSource = ContactLocalDataSourceImpl(db)
 
         // Room does not support runBlockingTest (especially for transactions) so have to use runBlocking.
         // Assuming we have an user

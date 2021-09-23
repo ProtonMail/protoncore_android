@@ -57,22 +57,20 @@ class TransactionTests: ContactDatabaseTests() {
     }
 
     @Test
-    fun `insert or update contacts emails apply correct diff`() = runBlocking {
-        db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
-        db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
-        db.contactEmailLabelDao().insertOrUpdate(*User0.Contact0.ContactEmail0.emailLabelEntities)
+    fun `merge contacts apply correct diff`() = runBlocking {
+        val baseEmails = listOf(User0.Contact0.contactId.contactEmail(ContactEmailId("a"), emptyList()))
+        val updatedEmails = listOf(User0.Contact0.contactId.contactEmail(ContactEmailId("b"), emptyList()))
+        val baseContact = User0.Contact0.contact.copy(contactEmails = baseEmails)
+        val updatedContact = User0.Contact0.contact.copy(contactEmails = updatedEmails)
 
-        val updatedLabels = User0.Contact0.ContactEmail0.contactEmail.labelIds.map { it.reversed() }
-        val updatedContactEmail = User0.Contact0.ContactEmail0.contactEmail.copy(
-            labelIds = updatedLabels
-        )
-        db.mergeContactEmails(User0.userId, listOf(updatedContactEmail))
-
-        assert(db.contactEmailLabelDao().observeAllLabels(User0.Contact0.ContactEmail0.contactEmailId).first() == updatedLabels)
+        localDataSource.mergeContacts(User0.userId, listOf(baseContact))
+        assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == baseContact)
+        localDataSource.mergeContacts(User0.userId, listOf(updatedContact))
+        assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == updatedContact)
     }
 
     @Test
-    fun `insert or update contact apply correct diff`() = runBlocking {
+    fun `merge contacts with cards apply correct diff`() = runBlocking {
         val baseCards = listOf(contactCard("card-a"))
         val updatedCards = listOf(contactCard("card-b"))
         val baseEmails = listOf(User0.Contact0.contactId.contactEmail(ContactEmailId("a"), emptyList()))
@@ -86,9 +84,9 @@ class TransactionTests: ContactDatabaseTests() {
             contactCards = updatedCards,
         )
 
-        db.mergeContactWithCards(User0.userId, baseContact)
-        assert(db.getContact(User0.Contact0.contactId).first() == baseContact)
-        db.mergeContactWithCards(User0.userId, updatedContact)
-        assert(db.getContact(User0.Contact0.contactId).first() == updatedContact)
+        localDataSource.mergeContactWithCards(User0.userId, baseContact)
+        assert(localDataSource.observeContact(User0.Contact0.contactId).first() == baseContact)
+        localDataSource.mergeContactWithCards(User0.userId, updatedContact)
+        assert(localDataSource.observeContact(User0.Contact0.contactId).first() == updatedContact)
     }
 }
