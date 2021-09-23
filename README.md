@@ -79,7 +79,7 @@ Util Android Shared Preferences: **1.15** - _released on: Sep 13, 2021_
 
 Util Android Work Manager: **1.15** - _released on: Sep 13, 2021_
 
-Util Kotlin: **1.15** - _released on: Sep 13, 2021_
+Util Kotlin: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Test
 
@@ -103,41 +103,41 @@ Data Room: **1.15** - _released on: Sep 13, 2021_
 
 ### Network
 
-Network: **1.15** - _released on: Sep 13, 2021_
+Network: **1.15.2** - _released on: Sep 23, 2021_
 
-Network Domain: **1.15** - _released on: Sep 13, 2021_
+Network Domain: **1.15.2** - _released on: Sep 23, 2021_
 
-Network Data: **1.15** - _released on: Sep 13, 2021_
+Network Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Crypto
 
-Crypto: **1.15** - _released on: Sep 13, 2021_
+Crypto: **1.15.2** - _released on: Sep 23, 2021_
 
-Crypto Common: **1.15** - _released on: Sep 13, 2021_
+Crypto Common: **1.15.2** - _released on: Sep 23, 2021_
 
-Crypto Android: **1.15** - _released on: Sep 13, 2021_
+Crypto Android: **1.15.2** - _released on: Sep 23, 2021_
 
 ## Features
 
 ### Auth
 
-Auth: **1.15** - _released on: Sep 13, 2021_
+Auth: **1.15.2** - _released on: Sep 23, 2021_
 
-Auth Domain: **1.15** - _released on: Sep 13, 2021_
+Auth Domain: **1.15.2** - _released on: Sep 23, 2021_
 
-Auth Presentation: **1.15** - _released on: Sep 13, 2021_
+Auth Presentation: **1.15.2** - _released on: Sep 23, 2021_
 
-Auth Data: **1.15** - _released on: Sep 13, 2021_
+Auth Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Account
 
-Account: **1.15** - _released on: Sep 13, 2021_
+Account: **1.15.2** - _released on: Sep 23, 2021_
 
-Account Domain: **1.15** - _released on: Sep 13, 2021_
+Account Domain: **1.15.2** - _released on: Sep 23, 2021_
 
 Account Presentation: **0** - _released on: ND_
 
-Account Data: **1.15** - _released on: Sep 13, 2021_
+Account Data: **1.15.2** - _released on: Sep 23, 2021_
 
 
 ### Account Manager
@@ -156,19 +156,19 @@ Account Manager Dagger: **1.15** - _released on: Sep 13, 2021_
 
 ### Key
 
-Key: **1.15** - _released on: Sep 13, 2021_
+Key: **1.15.2** - _released on: Sep 23, 2021_
 
-Key Domain: **1.15** - _released on: Sep 13, 2021_
+Key Domain: **1.15.2** - _released on: Sep 23, 2021_
 
-Key Data: **1.15** - _released on: Sep 13, 2021_
+Key Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### User
 
-User: **1.15** - _released on: Sep 13, 2021_
+User: **1.15.2** - _released on: Sep 23, 2021_
 
-User Domain: **1.15** - _released on: Sep 13, 2021_
+User Domain: **1.15.2** - _released on: Sep 23, 2021_
 
-User Data: **1.15** - _released on: Sep 13, 2021_
+User Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Contact
 
@@ -196,13 +196,13 @@ Mail Settings Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Human Verification
 
-Human Verification: **1.15** - _released on: Sep 13, 2021_
+Human Verification: **1.15.2** - _released on: Sep 23, 2021_
 
-Human Verification Domain: **1.15** - _released on: Sep 13, 2021_
+Human Verification Domain: **1.15.2** - _released on: Sep 23, 2021_
 
-Human Verification Presentation: **1.15** - _released on: Sep 13, 2021_
+Human Verification Presentation: **1.15.2** - _released on: Sep 23, 2021_
 
-Human Verification Data: **1.15** - _released on: Sep 13, 2021_
+Human Verification Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Countries
 
@@ -236,10 +236,10 @@ Plan Presentation: **1.15** - _released on: Sep 13, 2021_
 
 ### User Settings
 
-User Settings: **1.15.1** - _released on: Sep 20, 2021_
+User Settings: **1.15.2** - _released on: Sep 23, 2021_
 
-User Settings Data: **1.15.1** - _released on: Sep 20, 2021_
+User Settings Data: **1.15.2** - _released on: Sep 23, 2021_
 
-User Settings Domain: **1.15.1** - _released on: Sep 20, 2021_
+User Settings Domain: **1.15.2** - _released on: Sep 23, 2021_
 
-User Settings Presentation: **1.15.1** - _released on: Sep 20, 2021_
+User Settings Presentation: **1.15.2** - _released on: Sep 23, 2021_
