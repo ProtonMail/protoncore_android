@@ -35,6 +35,7 @@ data class ContactEmailCompoundEntity(
 )
 
 fun ContactEmailCompoundEntity.toContactEmail() = ContactEmail(
+    userId = contactEmail.userId,
     id = contactEmail.contactEmailId,
     name = contactEmail.name,
     email = contactEmail.email,

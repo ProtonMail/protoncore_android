@@ -58,8 +58,8 @@ class TransactionTests: ContactDatabaseTests() {
 
     @Test
     fun `merge contacts apply correct diff`() = runBlocking {
-        val baseEmails = listOf(User0.Contact0.contactId.contactEmail(ContactEmailId("a"), emptyList()))
-        val updatedEmails = listOf(User0.Contact0.contactId.contactEmail(ContactEmailId("b"), emptyList()))
+        val baseEmails = listOf(User0.Contact0.createContactEmail(ContactEmailId("a"), emptyList()))
+        val updatedEmails = listOf(User0.Contact0.createContactEmail(ContactEmailId("b"), emptyList()))
         val baseContact = User0.Contact0.contact.copy(contactEmails = baseEmails)
         val updatedContact = User0.Contact0.contact.copy(contactEmails = updatedEmails)
 
@@ -73,8 +73,8 @@ class TransactionTests: ContactDatabaseTests() {
     fun `merge contacts with cards apply correct diff`() = runBlocking {
         val baseCards = listOf(contactCard("card-a"))
         val updatedCards = listOf(contactCard("card-b"))
-        val baseEmails = listOf(User0.Contact0.contactId.contactEmail(ContactEmailId("a"), emptyList()))
-        val updatedEmails = listOf(User0.Contact0.contactId.contactEmail(ContactEmailId("b"), emptyList()))
+        val baseEmails = listOf(User0.Contact0.createContactEmail(ContactEmailId("a"), emptyList()))
+        val updatedEmails = listOf(User0.Contact0.createContactEmail(ContactEmailId("b"), emptyList()))
         val baseContact = User0.Contact0.contactWithCards.copy(
             contact = User0.Contact0.contactWithCards.contact.copy(contactEmails = baseEmails),
             contactCards = baseCards,

@@ -23,6 +23,7 @@ import kotlinx.serialization.Serializable
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
+import me.proton.core.domain.entity.UserId
 
 @Serializable
 data class ContactEmailResource(
@@ -43,7 +44,8 @@ data class ContactEmailResource(
     @SerialName("LabelIDs")
     val labelIds: List<String>
 ) {
-    fun toContactEmail(): ContactEmail = ContactEmail(
+    fun toContactEmail(userId: UserId): ContactEmail = ContactEmail(
+        userId,
         ContactEmailId(id),
         name,
         email,

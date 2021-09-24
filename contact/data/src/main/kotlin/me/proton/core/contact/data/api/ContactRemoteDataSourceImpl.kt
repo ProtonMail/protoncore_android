@@ -31,7 +31,7 @@ class ContactRemoteDataSourceImpl(private val apiProvider: ApiProvider): Contact
 
     override suspend fun getContactWithCards(userId: UserId, contactId: ContactId): ContactWithCards {
         return apiProvider.get<ContactApi>(userId).invoke {
-            getContact(contactId.id).contact.toContactWithCards()
+            getContact(contactId.id).contact.toContactWithCards(userId)
         }.valueOrThrow
     }
 
@@ -39,8 +39,9 @@ class ContactRemoteDataSourceImpl(private val apiProvider: ApiProvider): Contact
         val apiContacts = getAllApiContacts(userId)
         val apiContactEmails = getAllApiContactsEmails(userId)
         return apiContacts.entries.map { entry ->
-            val contactEmails = (apiContactEmails[entry.key] ?: emptyList()).map { it.toContactEmail() }
+            val contactEmails = (apiContactEmails[entry.key] ?: emptyList()).map { it.toContactEmail(userId) }
             Contact(
+                userId = userId,
                 id = entry.key,
                 name = entry.value.name,
                 contactEmails = contactEmails

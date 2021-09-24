@@ -40,6 +40,7 @@ data class ContactWithMailsAndCardsEntity(
 
 fun ContactWithMailsAndCardsEntity.toContactWithCards() = ContactWithCards(
     contact = Contact(
+        userId = contact.userId,
         id = contact.contactId,
         name = contact.name,
         contactEmails = emails.map { it.toContactEmail() },

@@ -39,19 +39,25 @@ object User0 {
     val accountEntity = userId.accountEntity()
     object Contact0 {
         val contactId = ContactId("contact0")
-        val contact = contactId.contact(listOf(ContactEmail0.contactEmail))
-        val contactWithCards = contactId.contactWithCards(
+        val contact = contact(userId, contactId, listOf(ContactEmail0.contactEmail))
+        val contactWithCards = contactWithCards(
+            userId,
+            contactId,
             listOf(ContactEmail0.contactEmail),
             listOf(ContactCard0.contactCard)
         )
         val contactEntity = userId.contactEntity(contactId)
+        fun createContactEmail(
+            contactEmailId: ContactEmailId,
+            labelIds: List<String>
+        ) = contactEmail(userId, contactId, contactEmailId, labelIds)
         object ContactCard0 {
             val contactCard = contactCard("data0")
             val contactCardEntity = contactCard.toContactCardEntity(contactId)
         }
         object ContactEmail0 {
             val contactEmailId = ContactEmailId("contactEmail0")
-            val contactEmail = contactId.contactEmail(contactEmailId, listOf("label0"))
+            val contactEmail = contactEmail(userId, contactId, contactEmailId, listOf("label0"))
             val contactEmailEntity = contactEmail.toContactEmailEntity(userId)
             val emailLabelEntities = contactEmail.toContactEmailLabel().toTypedArray()
         }
@@ -91,14 +97,20 @@ fun UserId.contactEntity(contactId: ContactId) = ContactEntity(
     name = "contact$contactId"
 )
 
-fun ContactId.contact(emails: List<ContactEmail>) = Contact(
-    id = this,
-    name = "contact$this",
+fun contact(userId: UserId, contactId: ContactId, emails: List<ContactEmail>) = Contact(
+    userId = userId,
+    id = contactId,
+    name = "contact$contactId",
     contactEmails = emails,
 )
 
-fun ContactId.contactWithCards(emails: List<ContactEmail>, cards: List<ContactCard>) = ContactWithCards(
-    contact = contact(emails),
+fun contactWithCards(
+    userId: UserId,
+    contactId: ContactId,
+    emails: List<ContactEmail>,
+    cards: List<ContactCard>
+) = ContactWithCards(
+    contact = contact(userId, contactId, emails),
     contactCards = cards
 )
 
@@ -108,13 +120,19 @@ fun contactCard(data: String) = ContactCard(
     signature = null
 )
 
-fun ContactId.contactEmail(contactEmailId: ContactEmailId, labelIds: List<String>) = ContactEmail(
+fun contactEmail(
+    userId: UserId,
+    contactId: ContactId,
+    contactEmailId: ContactEmailId,
+    labelIds: List<String>
+) = ContactEmail(
+    userId = userId,
     id = contactEmailId,
     name = "",
     email = "",
     defaults = 0,
     order = 0,
-    contactId = this,
+    contactId = contactId,
     canonicalEmail = null,
     labelIds = labelIds
 )
