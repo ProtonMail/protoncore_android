@@ -33,15 +33,12 @@ import me.proton.android.core.coreexample.viewmodel.ContactsViewModel
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.showToast
-import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.exhaustive
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ContactsActivity : ProtonActivity<ActivityContactsBinding>() {
     override fun layoutId(): Int = R.layout.activity_contacts
 
-    @Inject lateinit var logger: Logger
     private val viewModel: ContactsViewModel by viewModels()
     private val contactsAdapter = ContactsAdapter(::onClickContact)
 

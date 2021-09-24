@@ -33,13 +33,12 @@ import me.proton.android.core.coreexample.utils.prettyPrint
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.repository.ContactRepository
-import me.proton.core.util.kotlin.Logger
+import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 
 @HiltViewModel
 class ContactDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val logger: Logger,
     private val accountManager: AccountManager,
     private val contactRepository: ContactRepository,
 ) : ViewModel() {
@@ -49,7 +48,7 @@ class ContactDetailViewModel @Inject constructor(
     private val contactId: ContactId = ContactId(savedStateHandle.get(ARG_CONTACT_ID)!!)
 
     init {
-        logger.d("contact", "presenting contact $contactId")
+        CoreLogger.d("contact", "presenting contact $contactId")
         viewModelScope.launch { observeContact() }
     }
 
@@ -59,7 +58,7 @@ class ContactDetailViewModel @Inject constructor(
                 val contactWithCards = contactRepository.getContactWithCards(userId, contactId, refresh = true)
                 mutableState.value = State.ContactDetails(contactWithCards.prettyPrint())
             }.catch {
-                logger.e("contact", it)
+                CoreLogger.e("contact", it)
                 mutableState.value = State.Error(it.message ?: "unknown error")
             }.collect()
     }

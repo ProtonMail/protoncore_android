@@ -35,18 +35,13 @@ import me.proton.android.core.coreexample.viewmodel.ContactDetailViewModel.Compa
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.showToast
-import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.exhaustive
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ContactDetailActivity : ProtonActivity<ActivityContactDetailsBinding>() {
     override fun layoutId(): Int = R.layout.activity_contact_details
 
     private val viewModel: ContactDetailViewModel by viewModels()
-
-    @Inject
-    lateinit var logger: Logger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

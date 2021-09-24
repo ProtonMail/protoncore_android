@@ -30,7 +30,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.domain.arch.DataResult
-import me.proton.core.util.kotlin.Logger
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -38,7 +38,6 @@ import javax.inject.Inject
 class ContactsViewModel @Inject constructor(
     private val contactRepository: ContactRepository,
     private val accountManager: AccountManager,
-    private val logger: Logger,
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow<State?>(null)
@@ -64,7 +63,7 @@ class ContactsViewModel @Inject constructor(
     private fun handleDataResultError(error: DataResult.Error) {
         val errorMessage = error.message ?: "Unknown error"
         val errorCause = error.cause ?: Throwable(errorMessage)
-        logger.e("contact", errorCause, errorMessage)
+        CoreLogger.e("contact", errorCause, errorMessage)
         mutableState.value = State.Error(errorMessage)
     }
 
