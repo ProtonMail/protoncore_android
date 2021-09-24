@@ -58,7 +58,7 @@ object User0 {
         object ContactEmail0 {
             val contactEmailId = ContactEmailId("contactEmail0")
             val contactEmail = contactEmail(userId, contactId, contactEmailId, listOf("label0"))
-            val contactEmailEntity = contactEmail.toContactEmailEntity(userId)
+            val contactEmailEntity = contactEmail.toContactEmailEntity()
             val emailLabelEntities = contactEmail.toContactEmailLabel().toTypedArray()
         }
     }

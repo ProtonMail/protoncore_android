@@ -63,9 +63,9 @@ class TransactionTests: ContactDatabaseTests() {
         val baseContact = User0.Contact0.contact.copy(contactEmails = baseEmails)
         val updatedContact = User0.Contact0.contact.copy(contactEmails = updatedEmails)
 
-        localDataSource.mergeContacts(User0.userId, listOf(baseContact))
+        localDataSource.mergeContacts(listOf(baseContact))
         assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == baseContact)
-        localDataSource.mergeContacts(User0.userId, listOf(updatedContact))
+        localDataSource.mergeContacts(listOf(updatedContact))
         assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == updatedContact)
     }
 
@@ -84,9 +84,9 @@ class TransactionTests: ContactDatabaseTests() {
             contactCards = updatedCards,
         )
 
-        localDataSource.mergeContactWithCards(User0.userId, baseContact)
+        localDataSource.mergeContactWithCards(baseContact)
         assert(localDataSource.observeContact(User0.Contact0.contactId).first() == baseContact)
-        localDataSource.mergeContactWithCards(User0.userId, updatedContact)
+        localDataSource.mergeContactWithCards(updatedContact)
         assert(localDataSource.observeContact(User0.Contact0.contactId).first() == updatedContact)
     }
 }

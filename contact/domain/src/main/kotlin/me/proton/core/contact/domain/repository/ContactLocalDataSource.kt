@@ -39,6 +39,6 @@ interface ContactLocalDataSource {
     suspend fun deleteAllContacts(userId: UserId)
     suspend fun deleteAllContacts()
 
-    suspend fun mergeContacts(userId: UserId, contacts: List<Contact>)
-    suspend fun mergeContactWithCards(userId: UserId, contactWithCards: ContactWithCards)
+    suspend fun mergeContacts(contacts: List<Contact>)
+    suspend fun mergeContactWithCards(contactWithCards: ContactWithCards)
 }

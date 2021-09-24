@@ -77,20 +77,20 @@ class ContactLocalDataSourceImpl(
         contactDatabase.contactDao().deleteAllContacts()
     }
 
-    private suspend fun mergeContact(userId: UserId, contact: Contact) {
+    private suspend fun mergeContact(contact: Contact) {
         contactDatabase.inTransaction {
-            contactDatabase.contactDao().insertOrUpdate(contact.toContactEntity(userId))
+            contactDatabase.contactDao().insertOrUpdate(contact.toContactEntity())
 
             contactDatabase.contactEmailDao().deleteAllContactsEmails(contact.id)
-            mergeContactEmails(userId, contact.contactEmails)
+            mergeContactEmails(contact.contactEmails)
         }
     }
 
-    private suspend fun mergeContactEmails(userId: UserId, contactsEmails: List<ContactEmail>) {
+    private suspend fun mergeContactEmails(contactsEmails: List<ContactEmail>) {
         contactDatabase.inTransaction {
             contactDatabase.contactEmailLabelDao().deleteAllLabels(contactsEmails.map { it.id })
 
-            val mailEntities = contactsEmails.map { it.toContactEmailEntity(userId) }
+            val mailEntities = contactsEmails.map { it.toContactEmailEntity() }
             contactDatabase.contactEmailDao().insertOrUpdate(*mailEntities.toTypedArray())
 
             val mailLabelEntities = contactsEmails.flatMap { it.toContactEmailLabel() }
@@ -98,16 +98,16 @@ class ContactLocalDataSourceImpl(
         }
     }
 
-    override suspend fun mergeContacts(userId: UserId, contacts: List<Contact>) {
+    override suspend fun mergeContacts(contacts: List<Contact>) {
         contactDatabase.inTransaction {
-            contactDatabase.contactDao().deleteAllContacts(userId)
-            contacts.forEach { mergeContact(userId, it) }
+            contactDatabase.contactDao().deleteAllContacts(*contacts.map { it.userId }.toTypedArray())
+            contacts.forEach { mergeContact(it) }
         }
     }
 
-    override suspend fun mergeContactWithCards(userId: UserId, contactWithCards: ContactWithCards) {
+    override suspend fun mergeContactWithCards(contactWithCards: ContactWithCards) {
         contactDatabase.inTransaction {
-            mergeContact(userId, contactWithCards.contact)
+            mergeContact(contactWithCards.contact)
 
             contactDatabase.contactCardDao().deleteAllContactCards(contactWithCards.id)
             val contactCardsEntities = contactWithCards.contactCards.map { it.toContactCardEntity(contactWithCards.id) }
