@@ -49,28 +49,24 @@ class ContactLocalDataSourceImpl(
         }.distinctUntilChanged()
     }
 
-    override suspend fun updateContactsOrThrow(contacts: List<Contact>) {
+    override suspend fun updateContactsOrThrow(vararg contacts: Contact) {
         val updateCount = contactDatabase.contactDao().update(*contacts.map { it.toContactEntity() }.toTypedArray())
         if (updateCount != contacts.size) throw IllegalStateException()
     }
 
-    override suspend fun updateContactEmailsOrThrow(emails: List<ContactEmail>) {
+    override suspend fun updateContactEmailsOrThrow(vararg emails: ContactEmail) {
         val updateCount = contactDatabase.contactEmailDao().update(
             *emails.map { it.toContactEmailEntity() }.toTypedArray()
         )
         if (updateCount != emails.size) throw IllegalStateException()
     }
 
-    override suspend fun deleteContact(contactId: ContactId) {
-        contactDatabase.contactDao().deleteContacts(contactId)
+    override suspend fun deleteContacts(vararg contactIds: ContactId) {
+        contactDatabase.contactDao().deleteContacts(*contactIds)
     }
 
-    override suspend fun deleteContacts(contactIds: List<ContactId>) {
-        contactDatabase.contactDao().deleteContacts(*contactIds.toTypedArray())
-    }
-
-    override suspend fun deleteContactEmails(emailIds: List<ContactEmailId>) {
-        contactDatabase.contactEmailDao().deleteContactsEmails(*emailIds.toTypedArray())
+    override suspend fun deleteContactEmails(vararg emailIds: ContactEmailId) {
+        contactDatabase.contactEmailDao().deleteContactsEmails(*emailIds)
     }
 
     override suspend fun deleteAllContacts(userId: UserId) {
@@ -102,7 +98,7 @@ class ContactLocalDataSourceImpl(
         }
     }
 
-    override suspend fun mergeContacts(contacts: List<Contact>) {
+    override suspend fun mergeContacts(vararg contacts: Contact) {
         contactDatabase.inTransaction {
             contactDatabase.contactDao().deleteAllContacts(*contacts.map { it.userId }.toTypedArray())
             contacts.forEach { mergeContact(it) }

@@ -54,7 +54,7 @@ class ContactRepositoryImpl(
         sourceOfTruth = SourceOfTruth.of(
             reader = { contactStoreKey -> localDataSource.observeContact(contactStoreKey.contactId) },
             writer = { _, contactWithCards -> localDataSource.mergeContactWithCards(contactWithCards) },
-            delete = { key -> localDataSource.deleteContact(key.contactId) },
+            delete = { key -> localDataSource.deleteContacts(key.contactId) },
             deleteAll = localDataSource::deleteAllContacts
         )
     ).build()
@@ -65,7 +65,7 @@ class ContactRepositoryImpl(
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = localDataSource::observeAllContacts,
-            writer = { _, contacts -> localDataSource.mergeContacts(contacts) },
+            writer = { _, contacts -> localDataSource.mergeContacts(*contacts.toTypedArray()) },
             delete = { userId -> localDataSource.deleteAllContacts(userId) },
             deleteAll = localDataSource::deleteAllContacts
         )

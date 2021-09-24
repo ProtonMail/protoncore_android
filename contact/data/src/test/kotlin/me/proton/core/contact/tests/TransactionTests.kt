@@ -63,9 +63,9 @@ class TransactionTests: ContactDatabaseTests() {
         val baseContact = User0.Contact0.contact.copy(contactEmails = baseEmails)
         val updatedContact = User0.Contact0.contact.copy(contactEmails = updatedEmails)
 
-        localDataSource.mergeContacts(listOf(baseContact))
+        localDataSource.mergeContacts(baseContact)
         assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == baseContact)
-        localDataSource.mergeContacts(listOf(updatedContact))
+        localDataSource.mergeContacts(updatedContact)
         assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == updatedContact)
     }
 
@@ -92,12 +92,12 @@ class TransactionTests: ContactDatabaseTests() {
 
     @Test(expected = IllegalStateException::class)
     fun `update throws if entity not present`() = runBlocking {
-        localDataSource.updateContactsOrThrow(listOf(User0.Contact0.contact))
+        localDataSource.updateContactsOrThrow(User0.Contact0.contact)
     }
 
     @Test
     fun `update doesn't throws if same entity present`() = runBlocking {
-        localDataSource.mergeContacts(listOf(User0.Contact0.contact))
-        localDataSource.updateContactsOrThrow(listOf(User0.Contact0.contact))
+        localDataSource.mergeContacts(User0.Contact0.contact)
+        localDataSource.updateContactsOrThrow(User0.Contact0.contact)
     }
 }
