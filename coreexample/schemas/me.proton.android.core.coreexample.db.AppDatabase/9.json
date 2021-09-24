@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "e86f82eaa746e7a89138d840bb39fdc6",
+    "identityHash": "699db515b75d4ed5a131c674f55a8c8a",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -1719,6 +1719,14 @@
               "userId"
             ],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_ContactEmailEntity_userId` ON `${TABLE_NAME}` (`userId`)"
+          },
+          {
+            "name": "index_ContactEmailEntity_contactId",
+            "unique": false,
+            "columnNames": [
+              "contactId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_ContactEmailEntity_contactId` ON `${TABLE_NAME}` (`contactId`)"
           }
         ],
         "foreignKeys": [
@@ -1789,7 +1797,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e86f82eaa746e7a89138d840bb39fdc6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '699db515b75d4ed5a131c674f55a8c8a')"
     ]
   }
 }

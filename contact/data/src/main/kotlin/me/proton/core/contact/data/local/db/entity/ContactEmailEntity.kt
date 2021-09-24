@@ -31,6 +31,7 @@ import me.proton.core.user.data.entity.UserEntity
     primaryKeys = ["contactEmailId"],
     indices = [
         Index("userId"),
+        Index("contactId")
     ],
     foreignKeys = [
         ForeignKey(
