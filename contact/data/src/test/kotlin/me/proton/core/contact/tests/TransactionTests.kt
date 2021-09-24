@@ -33,7 +33,7 @@ class TransactionTests: ContactDatabaseTests() {
     fun `delete contact delete contact and emails`() = runBlocking {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
-        db.contactDao().deleteContact(User0.Contact0.contactId)
+        db.contactDao().deleteContacts(User0.Contact0.contactId)
         assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() == null)
         assert(db.contactEmailDao().observeAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
     }
@@ -88,5 +88,16 @@ class TransactionTests: ContactDatabaseTests() {
         assert(localDataSource.observeContact(User0.Contact0.contactId).first() == baseContact)
         localDataSource.mergeContactWithCards(updatedContact)
         assert(localDataSource.observeContact(User0.Contact0.contactId).first() == updatedContact)
+    }
+
+    @Test(expected = IllegalStateException::class)
+    fun `update throws if entity not present`() = runBlocking {
+        localDataSource.updateContactsOrThrow(listOf(User0.Contact0.contact))
+    }
+
+    @Test
+    fun `update doesn't throws if same entity present`() = runBlocking {
+        localDataSource.mergeContacts(listOf(User0.Contact0.contact))
+        localDataSource.updateContactsOrThrow(listOf(User0.Contact0.contact))
     }
 }

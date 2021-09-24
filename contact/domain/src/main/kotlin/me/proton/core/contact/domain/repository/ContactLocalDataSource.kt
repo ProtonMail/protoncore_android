@@ -30,8 +30,8 @@ interface ContactLocalDataSource {
     fun observeContact(contactId: ContactId): Flow<ContactWithCards>
     fun observeAllContacts(userId: UserId): Flow<List<Contact>>
 
-    suspend fun updateContacts(contacts: List<Contact>)
-    suspend fun updateContactEmails(emails: List<ContactEmail>)
+    suspend fun updateContactsOrThrow(contacts: List<Contact>)
+    suspend fun updateContactEmailsOrThrow(emails: List<ContactEmail>)
 
     suspend fun deleteContact(contactId: ContactId)
     suspend fun deleteContacts(contactIds: List<ContactId>)

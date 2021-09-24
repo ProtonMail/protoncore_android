@@ -36,7 +36,7 @@ abstract class BaseDao<in T> {
     }
 
     @Update
-    abstract suspend fun update(vararg entities: T)
+    abstract suspend fun update(vararg entities: T): Int
 
     @Delete
     abstract suspend fun delete(vararg entities: T)

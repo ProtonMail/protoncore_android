@@ -39,8 +39,8 @@ abstract class ContactDao: BaseDao<ContactEntity>() {
     @Query("SELECT * FROM ContactEntity WHERE userId = :userId")
     abstract fun observeAllContacts(userId: UserId): Flow<List<ContactWithMailsRelation>>
 
-    @Query("DELETE FROM ContactEntity WHERE contactId = :contactId")
-    abstract suspend fun deleteContact(contactId: ContactId)
+    @Query("DELETE FROM ContactEntity WHERE contactId IN (:contactIds)")
+    abstract suspend fun deleteContacts(vararg contactIds: ContactId)
 
     @Query("DELETE FROM ContactEntity")
     abstract suspend fun deleteAllContacts()

@@ -49,24 +49,28 @@ class ContactLocalDataSourceImpl(
         }.distinctUntilChanged()
     }
 
-    override suspend fun updateContacts(contacts: List<Contact>) {
-        TODO("Not yet implemented")
+    override suspend fun updateContactsOrThrow(contacts: List<Contact>) {
+        val updateCount = contactDatabase.contactDao().update(*contacts.map { it.toContactEntity() }.toTypedArray())
+        if (updateCount != contacts.size) throw IllegalStateException()
     }
 
-    override suspend fun updateContactEmails(emails: List<ContactEmail>) {
-        TODO("Not yet implemented")
+    override suspend fun updateContactEmailsOrThrow(emails: List<ContactEmail>) {
+        val updateCount = contactDatabase.contactEmailDao().update(
+            *emails.map { it.toContactEmailEntity() }.toTypedArray()
+        )
+        if (updateCount != emails.size) throw IllegalStateException()
     }
 
     override suspend fun deleteContact(contactId: ContactId) {
-        contactDatabase.contactDao().deleteContact(contactId)
+        contactDatabase.contactDao().deleteContacts(contactId)
     }
 
     override suspend fun deleteContacts(contactIds: List<ContactId>) {
-        TODO("Not yet implemented")
+        contactDatabase.contactDao().deleteContacts(*contactIds.toTypedArray())
     }
 
     override suspend fun deleteContactEmails(emailIds: List<ContactEmailId>) {
-        TODO("Not yet implemented")
+        contactDatabase.contactEmailDao().deleteContactsEmails(*emailIds.toTypedArray())
     }
 
     override suspend fun deleteAllContacts(userId: UserId) {

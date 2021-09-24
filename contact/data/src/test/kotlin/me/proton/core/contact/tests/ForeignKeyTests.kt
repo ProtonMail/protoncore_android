@@ -46,7 +46,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactCardDao().insertOrUpdate(User0.Contact0.ContactCard0.contactCardEntity)
         assert(hasContactCard())
-        db.contactDao().deleteContact(User0.Contact0.contactId)
+        db.contactDao().deleteContacts(User0.Contact0.contactId)
         assert(!hasContactCard())
     }
 
