@@ -29,6 +29,7 @@ import me.proton.core.contact.data.local.db.entity.toContactEmailLabel
 import me.proton.core.contact.data.local.db.entity.toContactEntity
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactLocalDataSource
@@ -48,8 +49,24 @@ class ContactLocalDataSourceImpl(
         }.distinctUntilChanged()
     }
 
+    override suspend fun updateContacts(contacts: List<Contact>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateContactEmails(emails: List<ContactEmail>) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun deleteContact(contactId: ContactId) {
         contactDatabase.contactDao().deleteContact(contactId)
+    }
+
+    override suspend fun deleteContacts(contactIds: List<ContactId>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteContactEmails(emailIds: List<ContactEmailId>) {
+        TODO("Not yet implemented")
     }
 
     override suspend fun deleteAllContacts(userId: UserId) {

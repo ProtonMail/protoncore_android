@@ -20,6 +20,8 @@ package me.proton.core.contact.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.entity.UserId
@@ -28,7 +30,12 @@ interface ContactLocalDataSource {
     fun observeContact(contactId: ContactId): Flow<ContactWithCards>
     fun observeAllContacts(userId: UserId): Flow<List<Contact>>
 
+    suspend fun updateContacts(contacts: List<Contact>)
+    suspend fun updateContactEmails(emails: List<ContactEmail>)
+
     suspend fun deleteContact(contactId: ContactId)
+    suspend fun deleteContacts(contactIds: List<ContactId>)
+    suspend fun deleteContactEmails(emailIds: List<ContactEmailId>)
     suspend fun deleteAllContacts(userId: UserId)
     suspend fun deleteAllContacts()
 
