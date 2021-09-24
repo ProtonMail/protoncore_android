@@ -64,6 +64,7 @@
 
         <!-- Material styles override -->
         <item name="linearProgressIndicatorStyle">@style/ProtonLinearProgressIndicator</item>
+        <item name="materialAlertDialogTheme">@style/Proton.ThemeOverlay.AlertDialog</item>
         <item name="materialButtonStyle">@style/ProtonButton</item>
         <item name="materialButtonOutlinedStyle">@style/ProtonButton.OutlinedButton</item>
         <item name="navigationViewStyle">@style/ProtonNavigationView.Dark</item>

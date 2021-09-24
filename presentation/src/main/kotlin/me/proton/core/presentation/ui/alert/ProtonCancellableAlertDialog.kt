@@ -23,6 +23,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.proton.core.presentation.R
 import me.proton.core.presentation.utils.onClick
 
@@ -72,7 +73,7 @@ class ProtonCancellableAlertDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            val builder = AlertDialog.Builder(it)
+            val builder = MaterialAlertDialogBuilder(it)
             builder.setMessage(description)
                 .setTitle(title)
                 // passing null to the listeners is a workaround to prevent the dialog to auto-dismiss on button click
