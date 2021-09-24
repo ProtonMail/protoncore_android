@@ -23,8 +23,8 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.contact.data.local.db.entity.ContactEntity
-import me.proton.core.contact.data.local.db.entity.ContactWithMailsAndCardsEntity
-import me.proton.core.contact.data.local.db.entity.ContactWithMailsEntity
+import me.proton.core.contact.data.local.db.entity.relation.ContactWithMailsAndCardsRelation
+import me.proton.core.contact.data.local.db.entity.relation.ContactWithMailsRelation
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
@@ -33,11 +33,11 @@ import me.proton.core.domain.entity.UserId
 abstract class ContactDao: BaseDao<ContactEntity>() {
     @Transaction
     @Query("SELECT * FROM ContactEntity WHERE contactId = :contactId")
-    abstract fun observeContact(contactId: ContactId): Flow<ContactWithMailsAndCardsEntity>
+    abstract fun observeContact(contactId: ContactId): Flow<ContactWithMailsAndCardsRelation>
 
     @Transaction
     @Query("SELECT * FROM ContactEntity WHERE userId = :userId")
-    abstract fun observeAllContacts(userId: UserId): Flow<List<ContactWithMailsEntity>>
+    abstract fun observeAllContacts(userId: UserId): Flow<List<ContactWithMailsRelation>>
 
     @Query("DELETE FROM ContactEntity WHERE contactId = :contactId")
     abstract suspend fun deleteContact(contactId: ContactId)

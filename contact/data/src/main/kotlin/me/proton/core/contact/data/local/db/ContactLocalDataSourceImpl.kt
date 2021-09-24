@@ -21,12 +21,12 @@ package me.proton.core.contact.data.local.db
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import me.proton.core.contact.data.local.db.entity.toContact
+import me.proton.core.contact.data.local.db.entity.relation.toContact
+import me.proton.core.contact.data.local.db.entity.relation.toContactWithCards
 import me.proton.core.contact.data.local.db.entity.toContactCardEntity
 import me.proton.core.contact.data.local.db.entity.toContactEmailEntity
 import me.proton.core.contact.data.local.db.entity.toContactEmailLabel
 import me.proton.core.contact.data.local.db.entity.toContactEntity
-import me.proton.core.contact.data.local.db.entity.toContactWithCards
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId

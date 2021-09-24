@@ -22,8 +22,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.contact.data.local.db.entity.ContactEmailCompoundEntity
 import me.proton.core.contact.data.local.db.entity.ContactEmailEntity
+import me.proton.core.contact.data.local.db.entity.relation.ContactEmailWithLabelsRelation
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
@@ -32,11 +32,11 @@ import me.proton.core.domain.entity.UserId
 abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
     @Transaction
     @Query("SELECT * FROM ContactEmailEntity WHERE userId = :userId ORDER BY `order`, name")
-    abstract fun observeAllContactsEmails(userId: UserId): Flow<List<ContactEmailCompoundEntity>>
+    abstract fun observeAllContactsEmails(userId: UserId): Flow<List<ContactEmailWithLabelsRelation>>
 
     @Transaction
     @Query("SELECT * FROM ContactEmailEntity WHERE contactId = :contactId ORDER BY `order`, name")
-    abstract fun observeAllContactsEmails(contactId: ContactId): Flow<List<ContactEmailCompoundEntity>>
+    abstract fun observeAllContactsEmails(contactId: ContactId): Flow<List<ContactEmailWithLabelsRelation>>
 
     @Query("DELETE FROM ContactEmailEntity WHERE userId = :userId")
     abstract suspend fun deleteAllContactsEmails(userId: UserId)

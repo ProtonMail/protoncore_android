@@ -16,13 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.data.local.db.entity
+package me.proton.core.contact.data.local.db.entity.relation
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import me.proton.core.contact.data.local.db.entity.ContactEmailEntity
+import me.proton.core.contact.data.local.db.entity.ContactEmailLabelEntity
 import me.proton.core.contact.domain.entity.ContactEmail
 
-data class ContactEmailCompoundEntity(
+data class ContactEmailWithLabelsRelation(
     @Embedded
     val contactEmail: ContactEmailEntity,
     @Relation(
@@ -34,7 +36,7 @@ data class ContactEmailCompoundEntity(
     val labelIds: List<String>
 )
 
-fun ContactEmailCompoundEntity.toContactEmail() = ContactEmail(
+fun ContactEmailWithLabelsRelation.toContactEmail() = ContactEmail(
     userId = contactEmail.userId,
     id = contactEmail.contactEmailId,
     name = contactEmail.name,
