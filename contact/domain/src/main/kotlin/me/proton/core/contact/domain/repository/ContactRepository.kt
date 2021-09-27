@@ -24,39 +24,30 @@ import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
 
 interface ContactRepository {
 
     fun observeContactWithCards(
-        sessionUserId: SessionUserId,
+        userId: UserId,
         contactId: ContactId,
         refresh: Boolean = false
     ): Flow<DataResult<ContactWithCards>>
 
-    /**
-     * Get [ContactWithCards] using [sessionUserId] and [contactId].
-     */
     suspend fun getContactWithCards(
-        sessionUserId: SessionUserId,
+        userId: UserId,
         contactId: ContactId,
         fresh: Boolean = false
     ): ContactWithCards
 
-    /**
-     * Get all [Contact] using [sessionUserId].
-     */
-    fun observeAllContacts(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<Contact>>>
+    fun observeAllContacts(userId: UserId, refresh: Boolean = false): Flow<DataResult<List<Contact>>>
 
-    suspend fun getAllContacts(sessionUserId: SessionUserId, fresh: Boolean = false): List<Contact>
+    suspend fun getAllContacts(userId: UserId, fresh: Boolean = false): List<Contact>
 
-    /**
-     * Get all [ContactEmail] using [sessionUserId].
-     */
     fun observeAllContactEmails(
-        sessionUserId: SessionUserId,
+        userId: UserId,
         refresh: Boolean = false
     ): Flow<DataResult<List<ContactEmail>>>
 
-    suspend fun getAllContactEmails(sessionUserId: SessionUserId, fresh: Boolean = false): List<ContactEmail>
+    suspend fun getAllContactEmails(userId: UserId, fresh: Boolean = false): List<ContactEmail>
 }

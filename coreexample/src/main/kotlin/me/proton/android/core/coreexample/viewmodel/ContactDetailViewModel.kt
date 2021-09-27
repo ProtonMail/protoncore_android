@@ -55,7 +55,7 @@ class ContactDetailViewModel @Inject constructor(
     private suspend fun observeContact() {
         accountManager.getPrimaryUserId().filterNotNull()
             .onEach { userId ->
-                val contactWithCards = contactRepository.getContactWithCards(userId, contactId, refresh = true)
+                val contactWithCards = contactRepository.getContactWithCards(userId, contactId, fresh = true)
                 mutableState.value = State.ContactDetails(contactWithCards.prettyPrint())
             }.catch {
                 CoreLogger.e("contact", it)

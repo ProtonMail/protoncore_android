@@ -37,7 +37,6 @@ import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.mapSuccess
-import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 
 class ContactRepositoryImpl(
@@ -72,36 +71,36 @@ class ContactRepositoryImpl(
     ).build()
 
     override fun observeContactWithCards(
-        sessionUserId: SessionUserId,
+        userId: UserId,
         contactId: ContactId,
         refresh: Boolean
     ): Flow<DataResult<ContactWithCards>> {
-        val key = ContactStoreKey(sessionUserId, contactId)
+        val key = ContactStoreKey(userId, contactId)
         return contactWithCardsStore.stream(StoreRequest.cached(key, refresh)).map { it.toDataResult() }
     }
 
     override suspend fun getContactWithCards(
-        sessionUserId: SessionUserId,
+        userId: UserId,
         contactId: ContactId,
         fresh: Boolean
     ): ContactWithCards {
-        val key = ContactStoreKey(sessionUserId, contactId)
+        val key = ContactStoreKey(userId, contactId)
         return if (fresh) contactWithCardsStore.fresh(key) else contactWithCardsStore.get(key)
     }
 
-    override fun observeAllContacts(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
-        return allContactsStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+    override fun observeAllContacts(userId: UserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
+        return allContactsStore.stream(StoreRequest.cached(userId, refresh)).map { it.toDataResult() }
     }
 
-    override suspend fun getAllContacts(sessionUserId: SessionUserId, fresh: Boolean): List<Contact> {
-        return if (fresh) allContactsStore.fresh(sessionUserId) else allContactsStore.get(sessionUserId)
+    override suspend fun getAllContacts(userId: UserId, fresh: Boolean): List<Contact> {
+        return if (fresh) allContactsStore.fresh(userId) else allContactsStore.get(userId)
     }
 
     override fun observeAllContactEmails(
-        sessionUserId: SessionUserId,
+        userId: UserId,
         refresh: Boolean
     ): Flow<DataResult<List<ContactEmail>>> {
-        return observeAllContacts(sessionUserId, refresh).mapSuccess { contactsResult ->
+        return observeAllContacts(userId, refresh).mapSuccess { contactsResult ->
             DataResult.Success(
                 source = contactsResult.source,
                 value = contactsResult.value.flatMap { it.contactEmails }
@@ -109,7 +108,7 @@ class ContactRepositoryImpl(
         }
     }
 
-    override suspend fun getAllContactEmails(sessionUserId: SessionUserId, fresh: Boolean): List<ContactEmail> {
-        return getAllContacts(sessionUserId, fresh).flatMap { it.contactEmails }
+    override suspend fun getAllContactEmails(userId: UserId, fresh: Boolean): List<ContactEmail> {
+        return getAllContacts(userId, fresh).flatMap { it.contactEmails }
     }
 }
