@@ -27,7 +27,7 @@ import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.entity.UserId
 
 interface ContactLocalDataSource {
-    fun observeContact(contactId: ContactId): Flow<ContactWithCards>
+    fun observeContact(contactId: ContactId): Flow<ContactWithCards?>
     fun observeAllContacts(userId: UserId): Flow<List<Contact>>
 
     suspend fun updateContactsOrThrow(vararg contacts: Contact)

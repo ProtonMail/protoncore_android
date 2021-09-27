@@ -63,7 +63,12 @@ class ContactRepositoryImpl(
             remoteDataSource.getAllContacts(userId)
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = localDataSource::observeAllContacts,
+            reader = { userId ->
+                localDataSource.observeAllContacts(userId).map { contacts ->
+                    // Force refresh if no contact in db
+                    contacts.ifEmpty { null }
+                }
+            },
             writer = { _, contacts -> localDataSource.mergeContacts(*contacts.toTypedArray()) },
             delete = { userId -> localDataSource.deleteAllContacts(userId) },
             deleteAll = localDataSource::deleteAllContacts

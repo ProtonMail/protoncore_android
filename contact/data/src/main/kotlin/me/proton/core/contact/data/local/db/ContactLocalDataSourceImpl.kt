@@ -39,8 +39,8 @@ class ContactLocalDataSourceImpl(
     private val contactDatabase: ContactDatabase
 ): ContactLocalDataSource {
 
-    override fun observeContact(contactId: ContactId): Flow<ContactWithCards> {
-        return contactDatabase.contactDao().observeContact(contactId).map { it.toContactWithCards() }
+    override fun observeContact(contactId: ContactId): Flow<ContactWithCards?> {
+        return contactDatabase.contactDao().observeContact(contactId).map { it?.toContactWithCards() }
     }
 
     override fun observeAllContacts(userId: UserId): Flow<List<Contact>> {

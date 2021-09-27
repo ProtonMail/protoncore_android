@@ -64,9 +64,9 @@ class TransactionTests: ContactDatabaseTests() {
         val updatedContact = User0.Contact0.contact.copy(contactEmails = updatedEmails)
 
         localDataSource.mergeContacts(baseContact)
-        assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == baseContact)
+        assert(localDataSource.observeContact(User0.Contact0.contactId).first()?.contact == baseContact)
         localDataSource.mergeContacts(updatedContact)
-        assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == updatedContact)
+        assert(localDataSource.observeContact(User0.Contact0.contactId).first()?.contact == updatedContact)
     }
 
     @Test

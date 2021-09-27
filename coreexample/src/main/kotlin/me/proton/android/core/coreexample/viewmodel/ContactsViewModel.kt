@@ -49,7 +49,7 @@ class ContactsViewModel @Inject constructor(
 
     private suspend fun observePrimaryAccountContacts() {
         accountManager.getPrimaryUserId().filterNotNull().collect { userId ->
-            contactRepository.observeAllContacts(userId, refresh = true).collect { result ->
+            contactRepository.observeAllContacts(userId).collect { result ->
                 when (result) {
                     is DataResult.Error.Local -> handleDataResultError(result)
                     is DataResult.Error.Remote -> handleDataResultError(result)
