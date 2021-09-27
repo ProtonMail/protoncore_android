@@ -63,6 +63,8 @@
         <item name="colorControlHighlight">?colorSecondary</item>
 
         <!-- Material styles override -->
+        <item name="actionMenuTextColor">?attr/proton_text_accent</item>
+        <item name="actionMenuTextAppearance">@style/Proton.Text.Default</item>
         <item name="linearProgressIndicatorStyle">@style/ProtonLinearProgressIndicator</item>
         <item name="materialAlertDialogTheme">@style/Proton.ThemeOverlay.AlertDialog</item>
         <item name="materialButtonStyle">@style/ProtonButton</item>
