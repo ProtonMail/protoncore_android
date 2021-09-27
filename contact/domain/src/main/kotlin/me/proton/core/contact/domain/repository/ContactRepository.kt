@@ -28,19 +28,27 @@ import me.proton.core.domain.entity.SessionUserId
 
 interface ContactRepository {
 
+    fun observeContactWithCards(
+        sessionUserId: SessionUserId,
+        contactId: ContactId,
+        refresh: Boolean = false
+    ): Flow<DataResult<ContactWithCards>>
+
     /**
      * Get [ContactWithCards] using [sessionUserId] and [contactId].
      */
     suspend fun getContactWithCards(
         sessionUserId: SessionUserId,
         contactId: ContactId,
-        refresh: Boolean = false
+        fresh: Boolean = false
     ): ContactWithCards
 
     /**
      * Get all [Contact] using [sessionUserId].
      */
     fun observeAllContacts(sessionUserId: SessionUserId, refresh: Boolean = false): Flow<DataResult<List<Contact>>>
+
+    suspend fun getAllContacts(sessionUserId: SessionUserId, fresh: Boolean = false): List<Contact>
 
     /**
      * Get all [ContactEmail] using [sessionUserId].
@@ -49,4 +57,6 @@ interface ContactRepository {
         sessionUserId: SessionUserId,
         refresh: Boolean = false
     ): Flow<DataResult<List<ContactEmail>>>
+
+    suspend fun getAllContactEmails(sessionUserId: SessionUserId, fresh: Boolean = false): List<ContactEmail>
 }

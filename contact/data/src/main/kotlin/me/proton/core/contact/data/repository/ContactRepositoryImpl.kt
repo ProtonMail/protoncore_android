@@ -71,17 +71,30 @@ class ContactRepositoryImpl(
         )
     ).build()
 
-    override suspend fun getContactWithCards(
+    override fun observeContactWithCards(
         sessionUserId: SessionUserId,
         contactId: ContactId,
         refresh: Boolean
+    ): Flow<DataResult<ContactWithCards>> {
+        val key = ContactStoreKey(sessionUserId, contactId)
+        return contactWithCardsStore.stream(StoreRequest.cached(key, refresh)).map { it.toDataResult() }
+    }
+
+    override suspend fun getContactWithCards(
+        sessionUserId: SessionUserId,
+        contactId: ContactId,
+        fresh: Boolean
     ): ContactWithCards {
         val key = ContactStoreKey(sessionUserId, contactId)
-        return if (refresh) contactWithCardsStore.fresh(key) else contactWithCardsStore.get(key)
+        return if (fresh) contactWithCardsStore.fresh(key) else contactWithCardsStore.get(key)
     }
 
     override fun observeAllContacts(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
         return allContactsStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+    }
+
+    override suspend fun getAllContacts(sessionUserId: SessionUserId, fresh: Boolean): List<Contact> {
+        return if (fresh) allContactsStore.fresh(sessionUserId) else allContactsStore.get(sessionUserId)
     }
 
     override fun observeAllContactEmails(
@@ -94,5 +107,9 @@ class ContactRepositoryImpl(
                 value = contactsResult.value.flatMap { it.contactEmails }
             )
         }
+    }
+
+    override suspend fun getAllContactEmails(sessionUserId: SessionUserId, fresh: Boolean): List<ContactEmail> {
+        return getAllContacts(sessionUserId, fresh).flatMap { it.contactEmails }
     }
 }
