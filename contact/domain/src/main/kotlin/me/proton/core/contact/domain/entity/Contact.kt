@@ -18,9 +18,11 @@
 
 package me.proton.core.contact.domain.entity
 
+import me.proton.core.domain.entity.UserId
+
 data class Contact(
-    val id: String,
+    val userId: UserId,
+    val id: ContactId,
     val name: String,
-    val contactEmails: List<ContactEmail>,
-    val cards: List<ContactCard>
+    val contactEmails: List<ContactEmail>
 )

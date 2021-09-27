@@ -19,53 +19,80 @@
 package me.proton.core.contact.data.repository
 
 import com.dropbox.android.external.store4.Fetcher
+import com.dropbox.android.external.store4.SourceOfTruth
+import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreBuilder
+import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
-import me.proton.core.contact.data.api.ContactApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactId
+import me.proton.core.contact.domain.entity.ContactWithCards
+import me.proton.core.contact.domain.repository.ContactLocalDataSource
+import me.proton.core.contact.domain.repository.ContactRemoteDataSource
+import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.data.arch.toDataResult
+import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.arch.mapSuccess
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.contact.domain.repository.ContactRepository
-import me.proton.core.network.data.ApiProvider
 
 class ContactRepositoryImpl(
-    private val provider: ApiProvider
+    private val remoteDataSource: ContactRemoteDataSource,
+    private val localDataSource: ContactLocalDataSource
 ) : ContactRepository {
 
-    private data class ContactStoreKey(val userId: UserId, val contactId: String)
+    private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)
 
-    private val contactStore = StoreBuilder.from(
+    private val contactWithCardsStore: Store<ContactStoreKey, ContactWithCards> = StoreBuilder.from(
         fetcher = Fetcher.of { key: ContactStoreKey ->
-            provider.get<ContactApi>(key.userId).invoke {
-                getContact(key.contactId).contact.toContact()
-            }.valueOrThrow
+            remoteDataSource.getContactWithCards(key.userId, key.contactId)
         },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = { contactStoreKey -> localDataSource.observeContact(contactStoreKey.contactId) },
+            writer = { key, input -> localDataSource.mergeContactWithCards(key.userId, input) },
+            delete = { key -> localDataSource.deleteContact(key.contactId) },
+            deleteAll = localDataSource::deleteAllContacts
+        )
     ).build()
 
-    private val emailStore = StoreBuilder.from(
+    private val allContactsStore: Store<UserId, List<Contact>> = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
-            provider.get<ContactApi>(userId).invoke {
-                getContactEmails().contactEmails.map { it.toContactEmail() }
-            }.valueOrThrow
-        }
+            remoteDataSource.getAllContacts(userId)
+        },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = localDataSource::observeAllContacts,
+            writer = localDataSource::mergeContacts,
+            delete = { userId -> localDataSource.deleteAllContacts(userId) },
+            deleteAll = localDataSource::deleteAllContacts
+        )
     ).build()
 
-    override suspend fun getContact(sessionUserId: SessionUserId, contactId: String, refresh: Boolean): Contact {
+    override suspend fun getContactWithCards(
+        sessionUserId: SessionUserId,
+        contactId: ContactId,
+        refresh: Boolean
+    ): ContactWithCards {
         val key = ContactStoreKey(sessionUserId, contactId)
-        return if (refresh) contactStore.fresh(key) else contactStore.get(key)
+        return if (refresh) contactWithCardsStore.fresh(key) else contactWithCardsStore.get(key)
     }
 
-    override suspend fun clearContacts(userId: UserId) = contactStore.clear(ContactStoreKey(userId, ""))
+    override fun observeAllContacts(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
+        return allContactsStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+    }
 
-    override suspend fun clearAllContacts() = contactStore.clearAll()
-
-    override suspend fun getContactEmails(sessionUserId: SessionUserId, refresh: Boolean): List<ContactEmail> =
-        if (refresh) emailStore.fresh(sessionUserId) else emailStore.get(sessionUserId)
-
-    override suspend fun clearContactEmails(userId: UserId) = emailStore.clear(userId)
-
-    override suspend fun clearAllContactEmails() = emailStore.clearAll()
-
+    override fun observeAllContactEmails(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): Flow<DataResult<List<ContactEmail>>> {
+        return observeAllContacts(sessionUserId, refresh).mapSuccess { contactsResult ->
+            DataResult.Success(
+                source = contactsResult.source,
+                value = contactsResult.value.flatMap { it.contactEmails }
+            )
+        }
+    }
 }

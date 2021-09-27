@@ -23,9 +23,10 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("plugin.serialization")
+    kotlin("kapt")
 }
 
-libVersion = Version(1, 15, 0)
+libVersion = parent?.libVersion
 
 android()
 
@@ -34,27 +35,32 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.network),
         project(Module.data),
+        project(Module.dataRoom),
         project(Module.domain),
-        project(Module.keyDomain),
         project(Module.contactDomain),
-        project(Module.cryptoCommon),
-        project(Module.cryptoAndroid),
+        project(Module.userData),
 
         // Kotlin
-        `kotlin-jdk7`,
         `serialization-json`,
         `coroutines-core`,
 
         // Other
         `okHttp-logging`,
-        `retrofit`,
+        retrofit,
         `retrofit-kotlin-serialization`,
         `room-ktx`,
-        `store4`
+        store4,
     )
 
-    testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    kaptTest(`room-compiler`)
 
-    androidTestImplementation(project(Module.gopenpgp))
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.cryptoCommon),
+        project(Module.cryptoAndroid),
+        project(Module.accountData),
+        project(Module.accountDomain),
+        project(Module.userDomain),
+        project(Module.keyDomain)
+    )
 }

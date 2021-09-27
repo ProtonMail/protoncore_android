@@ -27,6 +27,12 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.contact.data.local.db.ContactConverters
+import me.proton.core.contact.data.local.db.ContactDatabase
+import me.proton.core.contact.data.local.db.entity.ContactCardEntity
+import me.proton.core.contact.data.local.db.entity.ContactEmailEntity
+import me.proton.core.contact.data.local.db.entity.ContactEmailLabelEntity
+import me.proton.core.contact.data.local.db.entity.ContactEntity
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.room.db.BaseDatabase
 import me.proton.core.data.room.db.CommonConverters
@@ -78,7 +84,12 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         UserSettingsEntity::class,
         // organization
         OrganizationEntity::class,
-        OrganizationKeysEntity::class
+        OrganizationKeysEntity::class,
+        // contact
+        ContactEntity::class,
+        ContactCardEntity::class,
+        ContactEmailEntity::class,
+        ContactEmailLabelEntity::class,
     ],
     version = AppDatabase.version,
     exportSchema = true
@@ -89,7 +100,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     UserConverters::class,
     CryptoConverters::class,
     HumanVerificationConverters::class,
-    UserSettingsConverters::class
+    UserSettingsConverters::class,
+    ContactConverters::class
 )
 abstract class AppDatabase :
     BaseDatabase(),
@@ -101,11 +113,12 @@ abstract class AppDatabase :
     PublicAddressDatabase,
     MailSettingsDatabase,
     UserSettingsDatabase,
-    OrganizationDatabase {
+    OrganizationDatabase,
+    ContactDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 8
+        const val version = 9
 
         val migrations = listOf(
             AppDatabaseMigrations.MIGRATION_1_2,
@@ -114,7 +127,8 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_4_5,
             AppDatabaseMigrations.MIGRATION_5_6,
             AppDatabaseMigrations.MIGRATION_6_7,
-            AppDatabaseMigrations.MIGRATION_7_8
+            AppDatabaseMigrations.MIGRATION_7_8,
+            AppDatabaseMigrations.MIGRATION_8_9
         )
 
         fun buildDatabase(context: Context): AppDatabase =
