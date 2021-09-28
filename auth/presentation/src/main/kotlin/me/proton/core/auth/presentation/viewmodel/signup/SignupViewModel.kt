@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.viewmodel.signup
 
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -48,6 +49,8 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.PlansOrchestrator
+import me.proton.core.presentation.savedstate.flowState
+import me.proton.core.presentation.savedstate.state
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.createUserType
 import me.proton.core.util.kotlin.exhaustive
@@ -62,30 +65,38 @@ internal class SignupViewModel @Inject constructor(
     private val paymentsOrchestrator: PaymentsOrchestrator,
     private val clientIdProvider: ClientIdProvider,
     private val humanVerificationManager: HumanVerificationManager,
-    humanVerificationOrchestrator: HumanVerificationOrchestrator
+    humanVerificationOrchestrator: HumanVerificationOrchestrator,
+    savedStateHandle: SavedStateHandle
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
 
     // region private properties
-    private val _inputState = MutableSharedFlow<InputState>(replay = 1, extraBufferCapacity = 3)
-    private val _userCreationState = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
-    private var _recoveryMethod: RecoveryMethod? = null
-    private lateinit var _password: EncryptedString
+    private val _inputState by savedStateHandle.flowState(
+        MutableSharedFlow<InputState>(replay = 1, extraBufferCapacity = 3),
+        viewModelScope
+    )
+    private val _userCreationState by savedStateHandle.flowState(
+        MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3),
+        viewModelScope,
+        onRestoreState = this::onUserCreationStateRestored
+    )
+    private var _recoveryMethod: RecoveryMethod? by savedStateHandle.state(null)
+    private var _password: EncryptedString? by savedStateHandle.state(null)
 
     // endregion
     // region public properties
-    var subscriptionDetails: SubscriptionDetails? = null
+    var subscriptionDetails: SubscriptionDetails? by savedStateHandle.state(null)
     val userCreationState = _userCreationState.asSharedFlow()
     val inputState = _inputState.asSharedFlow()
 
-    var currentAccountType: AccountType = AccountType.Internal
-    var username: String? = null
-    var domain: String? = null
-    var externalEmail: String? = null
+    var currentAccountType: AccountType by savedStateHandle.state(AccountType.Internal)
+    var username: String? by savedStateHandle.state(null)
+    var domain: String? by savedStateHandle.state(null)
+    var externalEmail: String? by savedStateHandle.state(null)
 
-    var password: String
-        get() = _password.decrypt(keyStoreCrypto)
+    var password: String?
+        get() = _password?.decrypt(keyStoreCrypto)
         set(value) {
-            _password = value.encrypt(keyStoreCrypto)
+            _password = value?.encrypt(keyStoreCrypto)
         }
 
     override val recoveryEmailAddress: String?
@@ -189,7 +200,7 @@ internal class SignupViewModel @Inject constructor(
     // region private functions
     private suspend fun createUser() = flow {
         val username = requireNotNull(username) { "Username is not set." }
-        require(this@SignupViewModel::_password.isInitialized) { "Password is not set (initialized)." }
+        val encryptedPassword = requireNotNull(_password) { "Password is not set (initialized)." }
         emit(State.Processing)
 
         val verification = _recoveryMethod?.let {
@@ -205,7 +216,7 @@ internal class SignupViewModel @Inject constructor(
         }
 
         val result = performCreateUser(
-            username = username, password = _password, recoveryEmail = verification.first,
+            username = username, password = encryptedPassword, recoveryEmail = verification.first,
             recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
         )
         emit(State.Success(result))
@@ -217,11 +228,11 @@ internal class SignupViewModel @Inject constructor(
 
     private suspend fun createExternalUser() = flow {
         val externalEmail = requireNotNull(externalEmail) { "External email is not set." }
-        require(this@SignupViewModel::_password.isInitialized) { "Password is not set (initialized)." }
+        val encryptedPassword = requireNotNull(_password) { "Password is not set (initialized)." }
         emit(State.Processing)
         val user = performCreateExternalEmailUser(
             email = externalEmail,
-            password = _password,
+            password = encryptedPassword,
             referrer = null
         )
         emit(State.Success(user))
@@ -230,6 +241,13 @@ internal class SignupViewModel @Inject constructor(
     }.onEach {
         _userCreationState.tryEmit(it)
     }.launchIn(viewModelScope)
+
+    private fun onUserCreationStateRestored(state: State) {
+        if (state == State.Processing) {
+            // The view model was destroyed while creating the account; try to resume the process:
+            startCreateUserWorkflow()
+        }
+    }
 
     // endregion
 }

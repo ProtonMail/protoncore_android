@@ -18,12 +18,15 @@
 
 package me.proton.core.auth.presentation.entity.signup
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.entity.BillingResult
 
+@Parcelize
 data class SubscriptionDetails(
     val planId: String,
     val planName: String,
     val cycle: SubscriptionCycle,
     val billingResult: BillingResult?
-)
+): Parcelable

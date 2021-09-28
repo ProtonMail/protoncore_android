@@ -97,7 +97,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             paymentsOrchestrator,
             clientIdProvider,
             humanVerificationManager,
-            humanVerificationOrchestrator
+            humanVerificationOrchestrator,
+            mockk()
         )
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns "encrypted-$testPassword"

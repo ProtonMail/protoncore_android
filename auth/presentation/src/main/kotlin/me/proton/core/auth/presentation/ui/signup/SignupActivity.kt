@@ -138,7 +138,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         binding.lottieProgress.visibility = View.VISIBLE
         loginViewModel.startLoginWorkflow(
             signUpViewModel.getLoginUsername()!!,
-            signUpViewModel.password,
+            signUpViewModel.password!!,
             signUpViewModel.currentAccountType,
             signUpViewModel.subscriptionDetails
         )
