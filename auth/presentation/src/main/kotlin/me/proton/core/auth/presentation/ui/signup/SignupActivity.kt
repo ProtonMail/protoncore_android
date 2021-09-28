@@ -26,6 +26,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -144,7 +145,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
     }
 
     private fun onLoginError(message: String? = null) {
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setCancelable(false)
             .setTitle(R.string.presentation_alert_title)
             .setMessage(message ?: getString(R.string.auth_login_general_error))

@@ -1,3 +1,13 @@
+## Presentation [1.15.3], Auth [1.15.3]
+
+Sep 27, 2021
+
+### Changes
+
+- Add styling for dialogs created with MaterialAlertDialogBuilder.
+- Use MaterialAlertDialogBuilder for all dialogs.
+- Add styling for action menu text.
+
 ## Crypto Version [1.15.2]
 
 Sep 20, 2021

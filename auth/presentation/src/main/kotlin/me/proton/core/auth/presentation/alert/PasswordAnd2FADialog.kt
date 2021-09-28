@@ -25,6 +25,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
 import me.proton.core.auth.presentation.entity.PasswordAnd2FAInput
 import me.proton.core.presentation.R
@@ -63,7 +64,7 @@ class PasswordAnd2FADialog : DialogFragment() {
             val binding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(requireContext()))
             binding.twoFA.visibility = twoFAVisibility
             binding.password.visibility = passwordVisibility
-            val builder = AlertDialog.Builder(requireContext())
+            val builder = MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.presentation_authenticate)
                 // passing null to the listeners is a workaround to prevent the dialog to auto-dismiss on button click
                 .setPositiveButton(R.string.presentation_alert_enter, null)
