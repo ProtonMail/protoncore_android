@@ -28,26 +28,37 @@ import me.proton.core.domain.entity.UserId
 
 interface ContactRepository {
 
+    /**
+     * Observe [ContactWithCards] from [userId] by [contactId].
+     */
     fun observeContactWithCards(
         userId: UserId,
         contactId: ContactId,
         refresh: Boolean = false
     ): Flow<DataResult<ContactWithCards>>
 
-    suspend fun getContactWithCards(
-        userId: UserId,
-        contactId: ContactId,
-        fresh: Boolean = false
-    ): ContactWithCards
+    /**
+     * Get [ContactWithCards] from [userId] by [contactId].
+     */
+    suspend fun getContactWithCards(userId: UserId, contactId: ContactId, refresh: Boolean = false): ContactWithCards
 
+    /**
+     * Observe all [Contact] from [userId].
+     */
     fun observeAllContacts(userId: UserId, refresh: Boolean = false): Flow<DataResult<List<Contact>>>
 
-    suspend fun getAllContacts(userId: UserId, fresh: Boolean = false): List<Contact>
+    /**
+     * Get all [Contact] from [userId].
+     */
+    suspend fun getAllContacts(userId: UserId, refresh: Boolean = false): List<Contact>
 
-    fun observeAllContactEmails(
-        userId: UserId,
-        refresh: Boolean = false
-    ): Flow<DataResult<List<ContactEmail>>>
+    /**
+     * Observe all [ContactEmail] from [userId].
+     */
+    fun observeAllContactEmails(userId: UserId, refresh: Boolean = false): Flow<DataResult<List<ContactEmail>>>
 
-    suspend fun getAllContactEmails(userId: UserId, fresh: Boolean = false): List<ContactEmail>
+    /**
+     * Get all [ContactEmail] from [userId].
+     */
+    suspend fun getAllContactEmails(userId: UserId, refresh: Boolean = false): List<ContactEmail>
 }

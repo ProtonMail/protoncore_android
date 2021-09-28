@@ -27,17 +27,66 @@ import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.entity.UserId
 
 interface ContactLocalDataSource {
+
+    /**
+     * Observe local [ContactWithCards] by [contactId].
+     */
     fun observeContact(contactId: ContactId): Flow<ContactWithCards?>
+
+    /**
+     * Observe all [Contact] from [userId].
+     */
     fun observeAllContacts(userId: UserId): Flow<List<Contact>>
 
+    /**
+     * Update [Contact].
+     *
+     * @throws IllegalStateException if corresponding contact(s) doesn't exist.
+     */
     suspend fun updateContactsOrThrow(vararg contacts: Contact)
+
+    /**
+     * Update [ContactEmail].
+     *
+     * @throws IllegalStateException if corresponding contact(s) doesn't exist.
+     */
     suspend fun updateContactEmailsOrThrow(vararg emails: ContactEmail)
 
+    /**
+     * Delete contact(s) by [contactIds].
+     */
     suspend fun deleteContacts(vararg contactIds: ContactId)
+
+    /**
+     * Delete contact email(s) by [emailIds].
+     */
     suspend fun deleteContactEmails(vararg emailIds: ContactEmailId)
+
+    /**
+     * Delete all contacts for [userId].
+     */
     suspend fun deleteAllContacts(userId: UserId)
+
+    /**
+     * Delete all contacts, for every user.
+     */
     suspend fun deleteAllContacts()
 
+    /**
+     * Merge given [contacts] with local contacts.
+     * Merge is base on matches between given contact ids and local contact ids, using following strategy:
+     * - Not matched local contacts are deleted.
+     * - Matched local contacts are updated to given contacts.
+     * - Not matched given contacts are inserted locally.
+     */
     suspend fun mergeContacts(vararg contacts: Contact)
+
+    /**
+     * Merge given [contactWithCards] with local contact.
+     * Merge is base on matches between given contact id and local contact id, using following strategy:
+     * - Not matched local contact is deleted.
+     * - Matched local contact is updated to given contact.
+     * - Not matched given contact is inserted locally.
+     */
     suspend fun mergeContactWithCards(contactWithCards: ContactWithCards)
 }

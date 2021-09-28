@@ -87,18 +87,18 @@ class ContactRepositoryImpl(
     override suspend fun getContactWithCards(
         userId: UserId,
         contactId: ContactId,
-        fresh: Boolean
+        refresh: Boolean
     ): ContactWithCards {
         val key = ContactStoreKey(userId, contactId)
-        return if (fresh) contactWithCardsStore.fresh(key) else contactWithCardsStore.get(key)
+        return if (refresh) contactWithCardsStore.fresh(key) else contactWithCardsStore.get(key)
     }
 
     override fun observeAllContacts(userId: UserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
         return allContactsStore.stream(StoreRequest.cached(userId, refresh)).map { it.toDataResult() }
     }
 
-    override suspend fun getAllContacts(userId: UserId, fresh: Boolean): List<Contact> {
-        return if (fresh) allContactsStore.fresh(userId) else allContactsStore.get(userId)
+    override suspend fun getAllContacts(userId: UserId, refresh: Boolean): List<Contact> {
+        return if (refresh) allContactsStore.fresh(userId) else allContactsStore.get(userId)
     }
 
     override fun observeAllContactEmails(
@@ -113,7 +113,7 @@ class ContactRepositoryImpl(
         }
     }
 
-    override suspend fun getAllContactEmails(userId: UserId, fresh: Boolean): List<ContactEmail> {
-        return getAllContacts(userId, fresh).flatMap { it.contactEmails }
+    override suspend fun getAllContactEmails(userId: UserId, refresh: Boolean): List<ContactEmail> {
+        return getAllContacts(userId, refresh).flatMap { it.contactEmails }
     }
 }
