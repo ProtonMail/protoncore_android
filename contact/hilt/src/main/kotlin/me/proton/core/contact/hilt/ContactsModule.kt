@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.contact.hilt
 
 import dagger.Binds
 import dagger.Module
