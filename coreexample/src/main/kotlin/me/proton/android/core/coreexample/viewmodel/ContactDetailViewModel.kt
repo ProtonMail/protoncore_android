@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.utils.prettyPrint
 import me.proton.core.accountmanager.domain.AccountManager
@@ -58,8 +57,7 @@ class ContactDetailViewModel @Inject constructor(
     private suspend fun observeContact() {
         accountManager.getPrimaryUserId().filterNotNull()
             .flatMapLatest { contactRepository.observeContactWithCards(it, contactId) }
-            .onEach { result -> handleResult(result) }
-            .collect()
+            .collect { result -> handleResult(result) }
     }
 
     private fun handleResult(result: DataResult<ContactWithCards>) {
