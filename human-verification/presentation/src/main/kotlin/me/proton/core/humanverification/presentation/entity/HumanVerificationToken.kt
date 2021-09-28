@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,14 +22,11 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 /**
- * Human Verification result entity.
- * @param clientId Represents [me.proton.core.network.domain.client.ClientId] value
- * @param clientIdType Corresponds to the [me.proton.core.network.domain.client.ClientIdType.value] value
- * @param token The resulting token; if null, human verification was cancelled or unsuccessful
+ * @param code The resulting token code
+ * @param type Corresponds to [me.proton.core.humanverification.domain.entity.TokenType.value]
  */
 @Parcelize
-data class HumanVerificationResult(
-    val clientId: String,
-    val clientIdType: String,
-    val token: HumanVerificationToken?
+data class HumanVerificationToken(
+    val code: String,
+    val type: String
 ) : Parcelable

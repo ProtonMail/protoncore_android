@@ -32,6 +32,7 @@ import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationMainBinding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
+import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
 import me.proton.core.humanverification.presentation.utils.showEnterCode
 import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.utils.showHumanVerificationCaptchaContent
@@ -135,9 +136,14 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             )
         }
         childFragmentManager.setFragmentResultListener(KEY_VERIFICATION_DONE, this) { _, bundle ->
-            val tokenCode = bundle.getString(ARG_TOKEN_CODE)
-            val tokenType = bundle.getString(ARG_TOKEN_TYPE)
-            setResult(tokenType, tokenCode)
+            val tokenCode = requireNotNull(bundle.getString(ARG_TOKEN_CODE)) { "Missing token code" }
+            val tokenType = requireNotNull(bundle.getString(ARG_TOKEN_TYPE)) { "Missing token type" }
+            setResultAndDismiss(
+                token = HumanVerificationToken(
+                    code = tokenCode,
+                    type = tokenType
+                )
+            )
         }
     }
 
@@ -153,7 +159,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
 
         binding.toolbar.apply {
             setNavigationOnClickListener {
-                setResult(tokenType = null, tokenCode = null, canceled = true)
+                setResultAndDismiss(token = null)
             }
             setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -179,6 +185,16 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
                 }
             }
         })
+    }
+
+    override fun onBackPressed() {
+        with(childFragmentManager) {
+            if (backStackEntryCount >= 1) {
+                popBackStack()
+            } else {
+                setResultAndDismiss(token = null)
+            }
+        }
     }
 
     override fun layoutId(): Int = R.layout.dialog_human_verification_main
@@ -223,40 +239,16 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
         }
     }
 
-    private fun setResult(tokenType: String? = null, tokenCode: String? = null, canceled: Boolean = false) {
-        viewModel.onHumanVerificationSuccess(clientId, tokenType, tokenCode).invokeOnCompletion {
-            setFragmentResult(HumanVerificationResult(
+    private fun setResultAndDismiss(token: HumanVerificationToken?) {
+        viewModel.onHumanVerificationResult(clientId, token).invokeOnCompletion {
+            val result = HumanVerificationResult(
                 clientId = clientId.id,
                 clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
-                tokenType = tokenType, tokenCode = tokenCode, canceled = canceled
-            ))
-            dismiss()
+                token = token
+            )
+            val resultBundle = Bundle().apply { putParcelable(RESULT_HUMAN_VERIFICATION, result) }
+            setFragmentResult(REQUEST_KEY, resultBundle)
+            dismissAllowingStateLoss()
         }
-    }
-
-    override fun onBackPressed() {
-        with(childFragmentManager) {
-            if (backStackEntryCount >= 1) {
-                popBackStack()
-            } else {
-                viewModel.onHumanVerificationFailed(clientId).invokeOnCompletion {
-                    setFragmentResult(
-                        HumanVerificationResult(
-                            clientId = clientId.id,
-                            clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
-                            tokenType = null,
-                            tokenCode = null,
-                            canceled = true
-                        )
-                    )
-                    dismissAllowingStateLoss()
-                }
-            }
-        }
-    }
-
-    private fun setFragmentResult(result: HumanVerificationResult) {
-        val resultBundle = Bundle().apply { putParcelable(RESULT_HUMAN_VERIFICATION, result) }
-        setFragmentResult(REQUEST_KEY, resultBundle)
     }
 }

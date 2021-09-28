@@ -53,13 +53,9 @@ class HumanVerificationActivity : ProtonActivity<ActivityHumanVerificationBindin
         humanVerificationOrchestrator.startHumanVerificationWorkflow(input)
     }
 
-    private fun onHumanVerificationResult(result: HumanVerificationResult?) {
-        if (result != null) {
-            val intent = Intent().apply { putExtra(ARG_HUMAN_VERIFICATION_RESULT, result) }
-            setResult(Activity.RESULT_OK, intent)
-        } else {
-            setResult(Activity.RESULT_CANCELED)
-        }
+    private fun onHumanVerificationResult(result: HumanVerificationResult) {
+        val intent = Intent().apply { putExtra(ARG_HUMAN_VERIFICATION_RESULT, result) }
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 

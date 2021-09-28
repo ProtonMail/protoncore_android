@@ -35,7 +35,7 @@ class HumanVerificationOrchestrator {
     private var humanWorkflowLauncher: FragmentDialogResultLauncher<HumanVerificationInput>? = null
     // endregion
 
-    private var onHumanVerificationResultListener: ((result: HumanVerificationResult?) -> Unit)? = {}
+    private var onHumanVerificationResultListener: ((result: HumanVerificationResult) -> Unit)? = null
 
     // region private functions
 
@@ -57,6 +57,7 @@ class HumanVerificationOrchestrator {
             { _, bundle ->
                 val hvResult =
                     bundle.getParcelable<HumanVerificationResult>(HumanVerificationDialogFragment.RESULT_HUMAN_VERIFICATION)
+                        ?: error("HumanVerificationDialogFragment did not return a result")
                 onHumanVerificationResultListener?.invoke(hvResult)
             })
         humanWorkflowLauncher = FragmentDialogResultLauncher(HumanVerificationDialogFragment.REQUEST_KEY) { input ->
@@ -114,7 +115,7 @@ class HumanVerificationOrchestrator {
         checkRegistered(humanWorkflowLauncher).show(humanVerificationInput)
     }
 
-    fun setOnHumanVerificationResult(block: (result: HumanVerificationResult?) -> Unit) {
+    fun setOnHumanVerificationResult(block: (result: HumanVerificationResult) -> Unit) {
         onHumanVerificationResultListener = block
     }
     // endregion

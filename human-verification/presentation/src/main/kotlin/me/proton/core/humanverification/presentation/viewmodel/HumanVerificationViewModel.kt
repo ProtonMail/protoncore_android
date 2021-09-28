@@ -21,11 +21,13 @@ package me.proton.core.humanverification.presentation.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
 import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.network.domain.client.ClientId
@@ -76,19 +78,15 @@ class HumanVerificationViewModel @Inject constructor(
         _activeMethod.tryEmit(currentActiveVerificationMethod.value)
     }
 
-    fun onHumanVerificationSuccess(clientId: ClientId, tokenType: String?, tokenCode: String?) = viewModelScope.launch {
-        if (!tokenType.isNullOrBlank() && !tokenCode.isNullOrBlank()) {
+    fun onHumanVerificationResult(clientId: ClientId, token: HumanVerificationToken?): Job = viewModelScope.launch {
+        if (token != null) {
             humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
                 clientId = clientId,
-                tokenType = tokenType,
-                tokenCode = tokenCode
+                tokenType = token.type,
+                tokenCode = token.code
             )
         } else {
             humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
         }
-    }
-
-    fun onHumanVerificationFailed(clientId: ClientId) = viewModelScope.launch {
-        humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
     }
 }
