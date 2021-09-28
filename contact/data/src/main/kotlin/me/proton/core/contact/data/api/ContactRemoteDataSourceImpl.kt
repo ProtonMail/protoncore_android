@@ -26,8 +26,9 @@ import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRemoteDataSource
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import javax.inject.Inject
 
-class ContactRemoteDataSourceImpl(private val apiProvider: ApiProvider): ContactRemoteDataSource {
+class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: ApiProvider): ContactRemoteDataSource {
 
     override suspend fun getContactWithCards(userId: UserId, contactId: ContactId): ContactWithCards {
         return apiProvider.get<ContactApi>(userId).invoke {

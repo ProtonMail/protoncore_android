@@ -75,6 +75,7 @@ const val `trustKit version` =              "1.1.5"
 const val `store4 version` =                "4.0.2-KT15"    // Released: May 17, 2021
 const val `lifecycle-extensions version` =  "2.2.0"         // Released: Jan 00, 2020
 const val `lottie version` =                "4.1.0"
+const val `javax-inject version` =          "1"
 
 // endregion
 

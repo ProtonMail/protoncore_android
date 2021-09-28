@@ -34,8 +34,9 @@ import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactLocalDataSource
 import me.proton.core.domain.entity.UserId
+import javax.inject.Inject
 
-class ContactLocalDataSourceImpl(
+class ContactLocalDataSourceImpl @Inject constructor(
     private val contactDatabase: ContactDatabase
 ): ContactLocalDataSource {
 

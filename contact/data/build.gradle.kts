@@ -50,6 +50,7 @@ dependencies {
         `retrofit-kotlin-serialization`,
         `room-ktx`,
         store4,
+        `javax-inject`,
     )
 
     kaptTest(`room-compiler`)
