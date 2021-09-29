@@ -25,14 +25,16 @@ interface PublicAddressRepository {
     /**
      * Get [PublicAddress], by [email], using [sessionUserId].
      *
-     * @return value from cache/disk if [refresh] is false, otherwise from fetcher if [refresh] is true.
+     * @return value from cache/disk if [source] is [Source.LocalIfAvailable] - it will fallback to network if it can't
+     * find any -, otherwise from fetcher if it's [Source.RemoteOrCached], using [Source.RemoteNoCache] to ask for a
+     * guaranteed fresh copy from the remote server.
      *
      * @see [getPublicAddressOrNull]
      */
     suspend fun getPublicAddress(
         sessionUserId: SessionUserId,
         email: String,
-        refresh: Boolean = true
+        source: Source = Source.RemoteNoCache,
     ): PublicAddress
 
     /**
@@ -51,7 +53,9 @@ interface PublicAddressRepository {
 suspend fun PublicAddressRepository.getPublicAddressOrNull(
     sessionUserId: SessionUserId,
     email: String,
-    refresh: Boolean = true
+    source: Source = Source.RemoteNoCache,
 ): PublicAddress? = runCatching {
-    getPublicAddress(sessionUserId, email, refresh)
+    getPublicAddress(sessionUserId, email, source)
 }.getOrNull()
+
+enum class Source { LocalIfAvailable, RemoteOrCached, RemoteNoCache }

@@ -34,7 +34,9 @@ import me.proton.core.key.data.extension.toEntityList
 import me.proton.core.key.data.extension.toPublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.repository.PublicAddressRepository
+import me.proton.core.key.domain.repository.Source
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.CacheOverride
 
 class PublicAddressRepositoryImpl(
     private val db: PublicAddressDatabase,
@@ -45,12 +47,15 @@ class PublicAddressRepositoryImpl(
     private val publicAddressKeyDao = db.publicAddressKeyDao()
     private val publicAddressWithKeysDao = db.publicAddressWithKeysDao()
 
-    private data class StoreKey(val userId: UserId, val email: String)
+    private data class StoreKey(val userId: UserId, val email: String, val forceNoCache: Boolean)
 
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey ->
             provider.get<KeyApi>(key.userId).invoke {
-                getPublicAddressKeys(key.email).toPublicAddress(key.email)
+                    getPublicAddressKeys(
+                        key.email,
+                        if (key.forceNoCache) CacheOverride().noCache() else null
+                    ).toPublicAddress(key.email)
             }.valueOrThrow
         },
         sourceOfTruth = SourceOfTruth.of(
@@ -78,8 +83,9 @@ class PublicAddressRepositoryImpl(
     override suspend fun getPublicAddress(
         sessionUserId: SessionUserId,
         email: String,
-        refresh: Boolean
-    ): PublicAddress = StoreKey(sessionUserId, email).let { if (refresh) store.fresh(it) else store.get(it) }
+        source: Source
+    ): PublicAddress = StoreKey(sessionUserId, email, source == Source.RemoteNoCache)
+        .let { if (source == Source.LocalIfAvailable) store.get(it) else store.fresh(it) }
 
     override suspend fun clearAll() = store.clearAll()
 }

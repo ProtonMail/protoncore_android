@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,28 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.network.data.interceptor
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-}
+import me.proton.core.network.domain.CacheOverride
+import okhttp3.Interceptor
+import okhttp3.Response
 
-libVersion = parent?.libVersion
+class CacheOverrideInterceptor: Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+        val cacheControl = request.tag(CacheOverride::class.java) ?: return chain.proceed(request)
 
-dependencies {
+        val newRequest = request.newBuilder()
+            .addHeader("Cache-Control", cacheControl.controlHeaderValue)
+            .build()
 
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
-
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-core`,
-        `serialization-json`
-    )
-
-    testImplementation(project(Module.kotlinTest))
+        return chain.proceed(newRequest)
+    }
 }

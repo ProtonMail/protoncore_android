@@ -18,11 +18,12 @@
 package me.proton.core.network.data
 
 import kotlinx.coroutines.runBlocking
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.RefreshTokenRequest
+import me.proton.core.network.data.interceptor.CacheOverrideInterceptor
 import me.proton.core.network.data.interceptor.ServerErrorInterceptor
 import me.proton.core.network.data.interceptor.ServerTimeInterceptor
 import me.proton.core.network.data.interceptor.TooManyRequestInterceptor
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.data.protonApi.RefreshTokenRequest
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
@@ -85,6 +86,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 chain.proceed(prepareHeaders(chain.request()).build())
             }
             .initLogging(client)
+            .addInterceptor(CacheOverrideInterceptor())
             .addInterceptor(ServerErrorInterceptor())
             .addInterceptor(TooManyRequestInterceptor(sessionId, wallClockMs))
             .addNetworkInterceptor(ServerTimeInterceptor(serverTimeListener))
