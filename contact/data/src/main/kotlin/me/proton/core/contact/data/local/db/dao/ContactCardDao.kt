@@ -26,6 +26,6 @@ import me.proton.core.data.room.db.BaseDao
 
 @Dao
 abstract class ContactCardDao: BaseDao<ContactCardEntity>() {
-    @Query("DELETE FROM ContactCardEntity WHERE contactId = :contactId")
-    abstract suspend fun deleteAllContactCards(contactId: ContactId)
+    @Query("DELETE FROM ContactCardEntity WHERE contactId IN (:contactIds)")
+    abstract suspend fun deleteAllContactCards(vararg contactIds: ContactId)
 }

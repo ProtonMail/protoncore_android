@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
@@ -123,5 +124,10 @@ class ContactRepositoryImpl @Inject constructor(
 
     override suspend fun getAllContactEmails(userId: UserId, refresh: Boolean): List<ContactEmail> {
         return getAllContacts(userId, refresh).flatMap { it.contactEmails }
+    }
+
+    override suspend fun createContacts(userId: UserId, contactCards: List<ContactCard>) {
+        val createdContactWithCards = remoteDataSource.createContacts(userId, listOf(contactCards))
+        localDataSource.upsertContactWithCards(*createdContactWithCards.toTypedArray())
     }
 }

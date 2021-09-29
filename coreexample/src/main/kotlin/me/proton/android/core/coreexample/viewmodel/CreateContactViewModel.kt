@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.entity.ContactCard
-import me.proton.core.contact.domain.repository.ContactRemoteDataSource
+import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
@@ -46,7 +46,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateContactViewModel @Inject constructor(
-    private val contactRemoteDataSource: ContactRemoteDataSource,
+    private val contactRepository: ContactRepository,
     private val userManager: UserManager,
     private val accountManager: AccountManager,
     private val cryptoContext: CryptoContext,
@@ -64,7 +64,7 @@ class CreateContactViewModel @Inject constructor(
                 val cards = user.useKeys(cryptoContext) {
                     listOf(createSignedContactCard(name), createEncryptedContactCard(name))
                 }
-                contactRemoteDataSource.createContact(userId, cards)
+                contactRepository.createContacts(userId, cards)
             } catch (throwable: Throwable) {
                 if (throwable is CancellationException) throw throwable
                 CoreLogger.e("contact", throwable)

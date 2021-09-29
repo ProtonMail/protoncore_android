@@ -27,5 +27,5 @@ import me.proton.core.domain.entity.UserId
 interface ContactRemoteDataSource {
     suspend fun getContactWithCards(userId: UserId, contactId: ContactId): ContactWithCards
     suspend fun getAllContacts(userId: UserId): List<Contact>
-    suspend fun createContact(userId: UserId, contactCards: List<ContactCard>)
+    suspend fun createContacts(userId: UserId, contactCards: List<List<ContactCard>>): List<ContactWithCards>
 }

@@ -88,13 +88,19 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
         }.valueOrThrow
     }
 
-    override suspend fun createContact(userId: UserId, contactCards: List<ContactCard>) {
+    override suspend fun createContacts(userId: UserId, contactCards: List<List<ContactCard>>): List<ContactWithCards> {
+        val contactCardsResources = contactCards.map {
+            ContactCardsResource(it.map { contactCard ->
+                contactCard.toContactCardResource()
+            })
+        }
         val request = CreateContactsRequest.create(
-            contacts = listOf(ContactCardsResource(cards = contactCards.map { it.toContactCardResource() })),
+            contacts = contactCardsResources,
             overwrite = false,
         )
-        apiProvider.get<ContactApi>(userId).invoke {
+         val apiResponse = apiProvider.get<ContactApi>(userId).invoke {
             createContacts(request)
         }.valueOrThrow
+        return apiResponse.responses.map { it.response.contact.toContactWithCards(userId) }
     }
 }
