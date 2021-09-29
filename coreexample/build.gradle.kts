@@ -39,6 +39,8 @@ android(
             }
         }
         buildConfigField("String", "HOST", "\"proton.black\"")
+        val proxyToken = System.getenv("PROXY_TOKEN")?.let { "\"$it\"" } ?: "null"
+        buildConfigField("String", "PROXY_TOKEN", proxyToken)
     }
     sourceSets.getByName("androidTest") {
         // Add schema for android tests

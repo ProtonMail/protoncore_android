@@ -16,22 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.network.data.client
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.util.kotlin.removeFirst
 
-libVersion = Version(1, 15, 3)
+class ExtraHeaderProviderImpl: ExtraHeaderProvider {
+    private var _headers = mutableListOf<Pair<String, String>>()
+    override val headers: List<Pair<String, String>> = _headers
 
-android()
+    override fun addHeaders(vararg headers: Pair<String, String>) {
+        _headers.addAll(headers)
+    }
 
-dependencies {
+    override fun removeFirst(key: String) {
+        _headers.removeFirst { it.first == key }
+    }
 
-    api(
-        project(Module.humanVerificationDomain),
-        project(Module.humanVerificationData),
-        project(Module.humanVerificationPresentation)
-    )
+    override fun removeAll(key: String) {
+        _headers.removeAll { it.first == key }
+    }
+
+    override fun clear() = _headers.clear()
 }

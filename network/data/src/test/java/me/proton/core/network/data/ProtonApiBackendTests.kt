@@ -43,6 +43,7 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
@@ -53,6 +54,7 @@ import me.proton.core.network.domain.session.SessionProvider
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import org.junit.Assert
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -83,6 +85,7 @@ internal class ProtonApiBackendTests {
 
     private lateinit var session: Session
     private lateinit var clientId: ClientId
+    private var extraHeaderProvider = mockk<ExtraHeaderProvider>()
     private var clientIdProvider = mockk<ClientIdProvider>()
     private var serverTimeListener = mockk<ServerTimeListener>()
 
@@ -116,6 +119,7 @@ internal class ProtonApiBackendTests {
         coEvery { sessionProvider.getSessionId(any()) } returns session.sessionId
         coEvery { sessionProvider.getSession(any()) } returns session
         every { cookieStore.get(any()) } returns emptyList()
+        every { extraHeaderProvider.headers }.answers { emptyList() }
 
         apiManagerFactory = ApiManagerFactory(
             "https://example.com/",
@@ -172,7 +176,8 @@ internal class ProtonApiBackendTests {
             TestRetrofitApi::class,
             networkManager,
             pinningInit,
-            ::javaWallClockMs
+            ::javaWallClockMs,
+            extraHeaderProvider,
         )
 
     @AfterTest
@@ -365,5 +370,17 @@ internal class ProtonApiBackendTests {
 
         val result = badAltBackend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Certificate)
+    }
+
+    @Test
+    fun `Headers in extraHeaderProvider are included in requests`() = runBlocking {
+        val extraHeader = "my-header" to "some value"
+        every { extraHeaderProvider.headers }.answers { listOf(extraHeader) }
+
+        backend(ApiManager.Call(0) { test() })
+
+        val request = webServer.takeRequest()
+        val headerFound = request.headers.any { it == extraHeader }
+        Assert.assertTrue(headerFound)
     }
 }

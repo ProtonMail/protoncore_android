@@ -31,6 +31,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
@@ -74,7 +75,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     interfaceClass: KClass<Api>,
     private val networkManager: NetworkManager,
     securityStrategy: (OkHttpClient.Builder) -> Unit,
-    wallClockMs: () -> Long
+    wallClockMs: () -> Long,
+    private val extraHeaderProvider: ExtraHeaderProvider? = null,
     ) : ApiBackend<Api> {
 
     private val api: Api
@@ -141,6 +143,11 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 }
             }
         }
+
+        extraHeaderProvider?.headers?.forEach {
+            request.header(it.first, it.second)
+        }
+
         return request
     }
 

@@ -28,6 +28,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.core.crypto.common.context.CryptoContext
@@ -37,15 +38,18 @@ import me.proton.core.network.data.NetworkManager
 import me.proton.core.network.data.NetworkPrefs
 import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientIdProviderImpl
+import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.Cache
 import java.io.File
 import javax.inject.Singleton
@@ -83,6 +87,12 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideExtraHeaderProvider(): ExtraHeaderProvider = ExtraHeaderProviderImpl().apply {
+        BuildConfig.PROXY_TOKEN?.takeIfNotBlank()?.let { addHeaders("X-atlas-secret" to it) }
+    }
+
+    @Provides
+    @Singleton
     fun provideApiFactory(
         @ApplicationContext context: Context,
         apiClient: ApiClient,
@@ -94,7 +104,8 @@ class NetworkModule {
         sessionProvider: SessionProvider,
         sessionListener: SessionListener,
         humanVerificationProvider: HumanVerificationProvider,
-        humanVerificationListener: HumanVerificationListener
+        humanVerificationListener: HumanVerificationListener,
+        extraHeaderProvider: ExtraHeaderProvider,
     ): ApiManagerFactory = ApiManagerFactory(
         Constants.BASE_URL,
         apiClient,
@@ -112,7 +123,8 @@ class NetworkModule {
         cache = Cache(
             directory = File(context.cacheDir, "http_cache"),
             maxSize = 10L * 1024L * 1024L // 10 MiB
-        )
+        ),
+        extraHeaderProvider
     )
 
     @Provides

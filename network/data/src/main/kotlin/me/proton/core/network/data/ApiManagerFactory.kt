@@ -36,6 +36,7 @@ import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
@@ -80,7 +81,8 @@ class ApiManagerFactory(
     scope: CoroutineScope,
     private val certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
     private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
-    private val cache: Cache? = null
+    private val cache: Cache? = null,
+    private val extraHeaderProvider: ExtraHeaderProvider? = null,
 ) {
 
     @OptIn(ObsoleteCoroutinesApi::class)
@@ -175,7 +177,8 @@ class ApiManagerFactory(
             interfaceClass,
             networkManager,
             pinningStrategy,
-            ::javaWallClockMs
+            ::javaWallClockMs,
+            extraHeaderProvider
         )
 
         val errorHandlers = createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs) + clientErrorHandlers
@@ -204,7 +207,8 @@ class ApiManagerFactory(
                 interfaceClass,
                 networkManager,
                 alternativePinningStrategy,
-                ::javaWallClockMs
+                ::javaWallClockMs,
+                extraHeaderProvider
             )
         }
 
