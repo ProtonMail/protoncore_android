@@ -39,18 +39,23 @@ interface ContactLocalDataSource {
     fun observeAllContacts(userId: UserId): Flow<List<Contact>>
 
     /**
-     * Update [Contact].
-     *
-     * @throws IllegalStateException if corresponding contact(s) doesn't exist.
+     * Update or insert [ContactWithCards].
      */
-    suspend fun updateContactsOrThrow(vararg contacts: Contact)
+    suspend fun upsertContactWithCards(contactWithCards: ContactWithCards)
 
     /**
-     * Update [ContactEmail].
+     * Update or insert [Contact].
      *
-     * @throws IllegalStateException if corresponding contact(s) doesn't exist.
+     * @throws SQLiteConstraintException if corresponding user(s) doesn't exist.
      */
-    suspend fun updateContactEmailsOrThrow(vararg emails: ContactEmail)
+    suspend fun upsertContacts(vararg contacts: Contact)
+
+    /**
+     * Update or insert [ContactEmail].
+     *
+     * @throws SQLiteConstraintException if corresponding contact(s) doesn't exist.
+     */
+    suspend fun upsertContactEmails(vararg emails: ContactEmail)
 
     /**
      * Delete contact(s) by [contactIds].
@@ -78,15 +83,8 @@ interface ContactLocalDataSource {
      * - Not matched local contacts are deleted.
      * - Matched local contacts are updated to given contacts.
      * - Not matched given contacts are inserted locally.
+     *
+     * @throws SQLiteConstraintException if corresponding user(s) doesn't exist.
      */
     suspend fun mergeContacts(vararg contacts: Contact)
-
-    /**
-     * Merge given [contactWithCards] with local contact.
-     * Merge is base on matches between given contact id and local contact id, using following strategy:
-     * - Not matched local contact is deleted.
-     * - Matched local contact is updated to given contact.
-     * - Not matched given contact is inserted locally.
-     */
-    suspend fun mergeContactWithCards(contactWithCards: ContactWithCards)
 }

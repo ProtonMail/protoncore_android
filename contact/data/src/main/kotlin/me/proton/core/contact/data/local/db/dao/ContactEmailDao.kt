@@ -45,8 +45,8 @@ abstract class ContactEmailDao: BaseDao<ContactEmailEntity>() {
     @Query("DELETE FROM ContactEmailEntity WHERE userId = :userId")
     abstract suspend fun deleteAllContactsEmails(userId: UserId)
 
-    @Query("DELETE FROM ContactEmailEntity WHERE contactId = :contactId")
-    abstract suspend fun deleteAllContactsEmails(contactId: ContactId)
+    @Query("DELETE FROM ContactEmailEntity WHERE contactId IN (:contactIds)")
+    abstract suspend fun deleteAllContactsEmails(vararg contactIds: ContactId)
 
     @Query("DELETE FROM ContactEmailEntity")
     abstract suspend fun deleteAllContactsEmails()

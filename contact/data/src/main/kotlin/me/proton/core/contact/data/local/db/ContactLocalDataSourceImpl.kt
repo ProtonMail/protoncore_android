@@ -49,16 +49,35 @@ class ContactLocalDataSourceImpl(
         }.distinctUntilChanged()
     }
 
-    override suspend fun updateContactsOrThrow(vararg contacts: Contact) {
-        val updateCount = contactDatabase.contactDao().update(*contacts.map { it.toContactEntity() }.toTypedArray())
-        if (updateCount != contacts.size) throw IllegalStateException()
+    override suspend fun upsertContactWithCards(contactWithCards: ContactWithCards) {
+        contactDatabase.inTransaction {
+            upsertContacts(contactWithCards.contact)
+
+            contactDatabase.contactCardDao().deleteAllContactCards(contactWithCards.id)
+            val contactCardsEntities = contactWithCards.contactCards.map { it.toContactCardEntity(contactWithCards.id) }
+            contactDatabase.contactCardDao().insertOrUpdate(*contactCardsEntities.toTypedArray())
+        }
     }
 
-    override suspend fun updateContactEmailsOrThrow(vararg emails: ContactEmail) {
-        val updateCount = contactDatabase.contactEmailDao().update(
-            *emails.map { it.toContactEmailEntity() }.toTypedArray()
-        )
-        if (updateCount != emails.size) throw IllegalStateException()
+    override suspend fun upsertContacts(vararg contacts: Contact) {
+        contactDatabase.inTransaction {
+            val contactEntities = contacts.map { it.toContactEntity() }
+            contactDatabase.contactDao().insertOrUpdate(*contactEntities.toTypedArray())
+
+            contactDatabase.contactEmailDao().deleteAllContactsEmails(*contacts.map { it.id }.toTypedArray())
+            upsertContactEmails(*contacts.flatMap { it.contactEmails }.toTypedArray())
+        }
+    }
+
+    override suspend fun upsertContactEmails(vararg emails: ContactEmail) {
+        contactDatabase.inTransaction {
+            val emailEntities = emails.map { it.toContactEmailEntity() }
+            contactDatabase.contactEmailDao().insertOrUpdate(*emailEntities.toTypedArray())
+
+            contactDatabase.contactEmailLabelDao().deleteAllLabels(*emails.map { it.id }.toTypedArray())
+            val labelEntities = emails.flatMap { it.toContactEmailLabel() }
+            contactDatabase.contactEmailLabelDao().insertOrUpdate(*labelEntities.toTypedArray())
+        }
     }
 
     override suspend fun deleteContacts(vararg contactIds: ContactId) {
@@ -77,41 +96,10 @@ class ContactLocalDataSourceImpl(
         contactDatabase.contactDao().deleteAllContacts()
     }
 
-    private suspend fun mergeContact(contact: Contact) {
-        contactDatabase.inTransaction {
-            contactDatabase.contactDao().insertOrUpdate(contact.toContactEntity())
-
-            contactDatabase.contactEmailDao().deleteAllContactsEmails(contact.id)
-            mergeContactEmails(contact.contactEmails)
-        }
-    }
-
-    private suspend fun mergeContactEmails(contactsEmails: List<ContactEmail>) {
-        contactDatabase.inTransaction {
-            contactDatabase.contactEmailLabelDao().deleteAllLabels(contactsEmails.map { it.id })
-
-            val mailEntities = contactsEmails.map { it.toContactEmailEntity() }
-            contactDatabase.contactEmailDao().insertOrUpdate(*mailEntities.toTypedArray())
-
-            val mailLabelEntities = contactsEmails.flatMap { it.toContactEmailLabel() }
-            contactDatabase.contactEmailLabelDao().insertOrUpdate(*mailLabelEntities.toTypedArray())
-        }
-    }
-
     override suspend fun mergeContacts(vararg contacts: Contact) {
         contactDatabase.inTransaction {
             contactDatabase.contactDao().deleteAllContacts(*contacts.map { it.userId }.toTypedArray())
-            contacts.forEach { mergeContact(it) }
-        }
-    }
-
-    override suspend fun mergeContactWithCards(contactWithCards: ContactWithCards) {
-        contactDatabase.inTransaction {
-            mergeContact(contactWithCards.contact)
-
-            contactDatabase.contactCardDao().deleteAllContactCards(contactWithCards.id)
-            val contactCardsEntities = contactWithCards.contactCards.map { it.toContactCardEntity(contactWithCards.id) }
-            contactDatabase.contactCardDao().insertOrUpdate(*contactCardsEntities.toTypedArray())
+            upsertContacts(*contacts)
         }
     }
 }
