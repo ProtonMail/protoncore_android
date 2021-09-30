@@ -59,6 +59,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     // endregion
 
+
     // region test data
     private val testUsername = "test-username"
     private val testPassword = "test-password"
@@ -98,7 +99,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             clientIdProvider,
             humanVerificationManager,
             humanVerificationOrchestrator,
-            mockk()
+            mockk(relaxed = true)
         )
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns "encrypted-$testPassword"
@@ -213,7 +214,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
             val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
-            assertEquals(testUsername, successItem.user.name)
+            assertEquals(testUser.userId.id, successItem.userId)
 
             coVerify(exactly = 1) {
                 performCreateUser(
@@ -244,7 +245,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
             val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
-            assertEquals(testUsername, successItem.user.name)
+            assertEquals(testUser.userId.id, successItem.userId)
 
             coVerify(exactly = 1) {
                 performCreateUser(
@@ -274,7 +275,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
             val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
-            assertEquals(testUsername, successItem.user.name)
+            assertEquals(testUser.userId.id, successItem.userId)
 
             coVerify(exactly = 1) {
                 performCreateUser(
@@ -421,7 +422,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
             val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
-            assertEquals(testUsername, successItem.user.name)
+            assertEquals(testUser.userId.id, successItem.userId)
 
             coVerify(exactly = 1) {
                 performCreateExternalUser(

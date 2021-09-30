@@ -18,11 +18,13 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
+import android.os.Parcelable
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
@@ -51,7 +53,6 @@ import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
-import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.createUserType
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -70,6 +71,7 @@ internal class SignupViewModel @Inject constructor(
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
 
     // region private properties
+    private var _currentAccountTypeOrdinal: Int by savedStateHandle.state(AccountType.Internal.ordinal)
     private val _inputState by savedStateHandle.flowState(
         MutableSharedFlow<InputState>(replay = 1, extraBufferCapacity = 3),
         viewModelScope
@@ -88,7 +90,11 @@ internal class SignupViewModel @Inject constructor(
     val userCreationState = _userCreationState.asSharedFlow()
     val inputState = _inputState.asSharedFlow()
 
-    var currentAccountType: AccountType by savedStateHandle.state(AccountType.Internal)
+    var currentAccountType: AccountType
+        get() = AccountType.values()[_currentAccountTypeOrdinal]
+        set(value) {
+            _currentAccountTypeOrdinal = value.ordinal
+        }
     var username: String? by savedStateHandle.state(null)
     var domain: String? by savedStateHandle.state(null)
     var externalEmail: String? by savedStateHandle.state(null)
@@ -104,17 +110,29 @@ internal class SignupViewModel @Inject constructor(
     // endregion
 
     // region state classes
-    sealed class InputState {
+    sealed class InputState : Parcelable {
+        @Parcelize
         object Ready : InputState()
     }
 
-    sealed class State {
+    sealed class State : Parcelable {
+        @Parcelize
         object Idle : State()
+
+        @Parcelize
         object Processing : State()
-        data class Success(val user: User) : State()
+
+        @Parcelize
+        data class Success(val userId: String) : State()
+
         sealed class Error : State() {
+            @Parcelize
             object HumanVerification : Error()
+
+            @Parcelize
             object PlanChooserCancel : Error()
+
+            @Parcelize
             data class Message(val message: String?) : Error()
         }
     }
@@ -219,7 +237,7 @@ internal class SignupViewModel @Inject constructor(
             username = username, password = encryptedPassword, recoveryEmail = verification.first,
             recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
         )
-        emit(State.Success(result))
+        emit(State.Success(result.userId.id))
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {
@@ -235,7 +253,7 @@ internal class SignupViewModel @Inject constructor(
             password = encryptedPassword,
             referrer = null
         )
-        emit(State.Success(user))
+        emit(State.Success(user.userId.id))
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {
