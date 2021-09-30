@@ -87,8 +87,8 @@ internal class SignupViewModel @Inject constructor(
     // endregion
     // region public properties
     var subscriptionDetails: SubscriptionDetails? by savedStateHandle.state(null)
-    val userCreationState = _userCreationState.asSharedFlow()
-    val inputState = _inputState.asSharedFlow()
+    val userCreationState by lazy { _userCreationState.asSharedFlow() }
+    val inputState by lazy { _inputState.asSharedFlow() }
 
     var currentAccountType: AccountType
         get() = AccountType.values()[_currentAccountTypeOrdinal]
