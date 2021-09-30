@@ -1,3 +1,11 @@
+## Presentation [1.15.4]
+
+Sep 30, 2021
+
+### Changes
+
+- Add a work around for MIUI Dark Mode breaking theming.
+
 ## Presentation [1.15.3], Auth [1.15.3]
 
 Sep 27, 2021
