@@ -30,7 +30,6 @@ import me.proton.core.humanverification.presentation.ui.verification.HumanVerifi
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationEnterCodeFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationSMSFragment
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
 
@@ -57,6 +56,8 @@ fun FragmentManager.showHumanVerification(
     recoveryEmailAddress: String? = null,
     largeLayout: Boolean
 ) {
+    if (findFragmentByTag(TAG_HUMAN_VERIFICATION_DIALOG) != null) return
+
     val newFragment = HumanVerificationDialogFragment(
         clientId = clientId,
         captchaUrl = captchaUrl,
