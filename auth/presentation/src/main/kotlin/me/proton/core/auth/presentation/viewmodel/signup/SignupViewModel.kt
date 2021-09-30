@@ -46,6 +46,8 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
+import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
+import me.proton.core.humanverification.presentation.onHumanVerificationSucceeded
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
@@ -120,6 +122,9 @@ internal class SignupViewModel @Inject constructor(
         object Idle : State()
 
         @Parcelize
+        object HumanVerificationNeeded : State()
+
+        @Parcelize
         object Processing : State()
 
         @Parcelize
@@ -146,6 +151,12 @@ internal class SignupViewModel @Inject constructor(
     }.exhaustive
 
     fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context)
+        .onHumanVerificationNeeded {
+            _userCreationState.tryEmit(State.HumanVerificationNeeded)
+        }
+        .onHumanVerificationSucceeded {
+            _userCreationState.tryEmit(State.Processing)
+        }
         .onHumanVerificationFailed {
             _userCreationState.tryEmit(State.Error.HumanVerification)
         }

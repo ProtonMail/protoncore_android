@@ -163,6 +163,7 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
                     showLoading(false)
                     binding.progressLayout.visibility = View.GONE
                 }
+                is SignupViewModel.State.HumanVerificationNeeded,
                 is SignupViewModel.State.Success,
                 is SignupViewModel.State.Processing -> {
                     binding.progressLayout.visibility = View.VISIBLE

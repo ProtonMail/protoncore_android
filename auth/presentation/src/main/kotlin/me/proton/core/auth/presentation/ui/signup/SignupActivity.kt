@@ -91,6 +91,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         signUpViewModel.userCreationState.onEach {
             when (it) {
                 is SignupViewModel.State.Idle -> Unit
+                is SignupViewModel.State.HumanVerificationNeeded,
                 is SignupViewModel.State.Processing -> showLoading(true)
                 is SignupViewModel.State.Error.HumanVerification -> Unit
                 is SignupViewModel.State.Error.Message -> showError(it.message)
