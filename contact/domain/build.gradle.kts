@@ -31,10 +31,13 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.domain),
         project(Module.cryptoCommon),
+        project(Module.userDomain),
+        project(Module.keyDomain),
 
         // Kotlin
         `kotlin-jdk8`,
-        `coroutines-core`
+        `coroutines-core`,
+        `ez-vcard`
     )
 
     testImplementation(project(Module.kotlinTest))

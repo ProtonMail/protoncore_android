@@ -21,14 +21,33 @@ package me.proton.core.contact.domain
 import ezvcard.VCard
 import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.key.domain.encryptText
+import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
 
-fun createSignedContactCard(user: User, cryptoContext: CryptoContext, vCard: VCard): ContactCard.Signed {
-    return user.useKeys(cryptoContext) {
-        val vCardData = vCard.write()
-        val vCardSignature = signText(vCardData)
-        ContactCard.Signed(vCardData, vCardSignature)
+fun User.signContactCard(cryptoContext: CryptoContext, vCard: VCard): ContactCard.Signed {
+    return useKeys(cryptoContext) {
+        signContactCard(vCard)
     }
+}
+
+fun User.encryptAndSignContactCard(cryptoContext: CryptoContext, vCard: VCard): ContactCard.Encrypted {
+    return useKeys(cryptoContext) {
+        encryptAndSignContactCard(vCard)
+    }
+}
+
+internal fun KeyHolderContext.signContactCard(vCard: VCard): ContactCard.Signed {
+    val vCardData = vCard.write()
+    val vCardSignature = signText(vCardData)
+    return ContactCard.Signed(vCardData, vCardSignature)
+}
+
+internal fun KeyHolderContext.encryptAndSignContactCard(vCard: VCard): ContactCard.Encrypted {
+    val vCardData = vCard.write()
+    val encryptedVCardData = encryptText(vCardData)
+    val vCardSignature = signText(vCardData)
+    return ContactCard.Encrypted(encryptedVCardData, vCardSignature)
 }

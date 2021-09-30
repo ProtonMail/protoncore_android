@@ -33,13 +33,10 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.contact.domain.entity.ContactCard
+import me.proton.core.contact.domain.encryptAndSignContactCard
 import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.contact.domain.signContactCard
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.key.domain.encryptText
-import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
-import me.proton.core.key.domain.signText
-import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
@@ -61,9 +58,10 @@ class CreateContactViewModel @Inject constructor(
             try {
                 val userId = accountManager.getPrimaryUserId().filterNotNull().first()
                 val user = userManager.getUser(userId)
-                val cards = user.useKeys(cryptoContext) {
-                    listOf(createSignedContactCard(name), createEncryptedContactCard(name))
-                }
+                val cards = listOf(
+                    user.signContactCard(cryptoContext, createToBeSignedVCard(name)),
+                    user.encryptAndSignContactCard(cryptoContext, createToBeEncryptedAndSignedVCard(name))
+                )
                 contactRepository.createContacts(userId, cards)
             } catch (throwable: Throwable) {
                 if (throwable is CancellationException) throw throwable
@@ -74,8 +72,8 @@ class CreateContactViewModel @Inject constructor(
         }
     }
 
-    private fun KeyHolderContext.createSignedContactCard(seedName: String): ContactCard {
-        val vCard = VCard().apply {
+    private fun createToBeSignedVCard(seedName: String): VCard {
+        return VCard().apply {
             formattedName = FormattedName(seedName)
             addEmail(Email("$seedName@testmail.com").apply {
                 group = "ITEM1"
@@ -83,19 +81,12 @@ class CreateContactViewModel @Inject constructor(
             uid = Uid.random()
             version = VCardVersion.V4_0
         }
-        val vCardData = vCard.write()
-        val vCardSignature = signText(vCardData)
-        return ContactCard.Signed(data = vCardData, signature = vCardSignature)
     }
 
-    private fun KeyHolderContext.createEncryptedContactCard(seedName: String): ContactCard {
-        val vCard = VCard().apply {
+    private fun createToBeEncryptedAndSignedVCard(seedName: String): VCard {
+        return VCard().apply {
             addNote("confidential note about $seedName")
         }
-        val vCardData = vCard.write()
-        val encryptedVCardData = encryptText(vCardData)
-        val vCardSignature = signText(vCardData)
-        return ContactCard.Encrypted(data = encryptedVCardData, signature = vCardSignature)
     }
 
     sealed class State {
