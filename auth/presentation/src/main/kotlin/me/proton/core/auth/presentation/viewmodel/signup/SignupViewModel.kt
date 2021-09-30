@@ -79,7 +79,7 @@ internal class SignupViewModel @Inject constructor(
     private val _userCreationState by savedStateHandle.flowState(
         MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3),
         viewModelScope,
-        onRestoreState = this::onUserCreationStateRestored
+        onStateRestored = this::onUserCreationStateRestored
     )
     private var _recoveryMethod: RecoveryMethod? by savedStateHandle.state(null)
     private var _password: EncryptedString? by savedStateHandle.state(null)

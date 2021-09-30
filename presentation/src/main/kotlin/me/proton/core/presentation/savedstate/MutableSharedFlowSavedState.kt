@@ -32,7 +32,7 @@ import kotlin.reflect.KProperty
  * @param mutableSharedFlow The flow for which the most recent value will be saved and restored.
  * @param coroutineScope Scope that will be used to save and restore values from the [mutableSharedFlow].
  * @param savedStateHandleKey Optional custom key to use when reading from [SavedStateHandle].
- * @param onRestoreState Called when a value has been restored from [SavedStateHandle].
+ * @param onStateRestored Called when a value has been restored from [SavedStateHandle].
  * @param T Any type that can be accepted by Bundle.
  * @sample me.proton.core.presentation.savedstate.MutableSharedFlowSavedStateTest
  */
@@ -40,9 +40,9 @@ fun <T> SavedStateHandle.flowState(
     mutableSharedFlow: MutableSharedFlow<T>,
     coroutineScope: CoroutineScope,
     savedStateHandleKey: String? = null,
-    onRestoreState: ((T) -> Unit)? = null
+    onStateRestored: ((T) -> Unit)? = null
 ): MutableSharedFlowSavedState<T> {
-    return MutableSharedFlowSavedState(coroutineScope, mutableSharedFlow, onRestoreState, this, savedStateHandleKey)
+    return MutableSharedFlowSavedState(coroutineScope, mutableSharedFlow, onStateRestored, this, savedStateHandleKey)
 }
 
 class MutableSharedFlowSavedState<T>(
