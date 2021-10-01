@@ -1,3 +1,11 @@
+## Network [1.15.4]
+
+5 Oct, 2021
+
+### Changes
+
+- Add log in ServerTimeInterceptor on Date parse failure.
+
 ## Key [1.15.3], Network [1.15.3]
 
 Oct 4, 2021
