@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.account.domain.entity.AccountType
@@ -45,6 +46,9 @@ class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBindin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Prevent screen capture etc. to record user password
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
 
         binding.apply {
             toolbar.setNavigationOnClickListener { onBackPressed() }
@@ -96,5 +100,11 @@ class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBindin
         } else {
             parentFragmentManager.showRecoveryMethodChooser()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 }

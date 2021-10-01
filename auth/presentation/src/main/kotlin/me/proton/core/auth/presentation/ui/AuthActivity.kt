@@ -22,11 +22,12 @@ import androidx.databinding.ViewDataBinding
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.ui.ProtonSecureActivity
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.user.domain.UserManager
 
-abstract class AuthActivity<DB : ViewDataBinding> : ProtonActivity<DB>() {
+abstract class AuthActivity<DB : ViewDataBinding> : ProtonSecureActivity<DB>() {
 
     open fun showLoading(loading: Boolean) {
         // No op

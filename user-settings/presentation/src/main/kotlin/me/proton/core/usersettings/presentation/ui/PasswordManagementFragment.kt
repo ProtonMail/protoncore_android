@@ -20,6 +20,7 @@ package me.proton.core.usersettings.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -68,6 +69,9 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Prevent screen capture etc. to record user password
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
 
         showLoginPasswordDialogResultLauncher =
             childFragmentManager.registerShowPasswordDialogResultLauncher(this@PasswordManagementFragment) { result ->
@@ -269,6 +273,12 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
         binding.root.errorSnack(
             message = message ?: getString(R.string.settings_general_error)
         )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 
     companion object {
