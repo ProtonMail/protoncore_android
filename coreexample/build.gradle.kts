@@ -40,8 +40,8 @@ android(
         }
         buildConfigField("String", "HOST", "\"proton.black\"")
     }
-    sourceSets.getByName("debug") {
-        // Add schema for robolectric
+    sourceSets.getByName("androidTest") {
+        // Add schema for android tests
         assets.srcDirs("$projectDir/schemas")
     }
 }
@@ -105,7 +105,10 @@ dependencies {
 
     // Test
     testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    androidTestImplementation(
+        project(Module.androidTest),
+        project(Module.androidInstrumentedTest)
+    )
 
     // Lint - off temporary
     // lintChecks(project(Module.lint))
