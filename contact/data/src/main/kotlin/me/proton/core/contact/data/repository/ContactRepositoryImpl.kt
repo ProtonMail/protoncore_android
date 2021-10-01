@@ -27,6 +27,8 @@ import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
@@ -58,15 +60,18 @@ class ContactRepositoryImpl(
         )
     ).build()
 
+    private val allContactsFetchedOnce = mutableMapOf<UserId, Boolean>()
     private val allContactsStore: Store<UserId, List<Contact>> = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
-            remoteDataSource.getAllContacts(userId)
+            val contacts = remoteDataSource.getAllContacts(userId)
+            allContactsFetchedOnce[userId] = true
+            contacts
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { userId ->
                 localDataSource.observeAllContacts(userId).map { contacts ->
-                    // Force refresh if no contact in db
-                    contacts.ifEmpty { null }
+                    val fetchedOnce = allContactsFetchedOnce[userId] ?: false
+                    contacts.takeIf { it.isNotEmpty() || fetchedOnce }
                 }
             },
             writer = { _, contacts -> localDataSource.mergeContacts(*contacts.toTypedArray()) },
