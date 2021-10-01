@@ -64,4 +64,6 @@ interface ContactRepository {
     suspend fun getAllContactEmails(userId: UserId, refresh: Boolean = false): List<ContactEmail>
 
     suspend fun createContacts(userId: UserId, contactCards: List<ContactCard>)
+
+    suspend fun deleteContact(contactId: ContactId)
 }

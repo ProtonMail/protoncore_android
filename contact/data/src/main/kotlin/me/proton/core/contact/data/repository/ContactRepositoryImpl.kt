@@ -130,4 +130,8 @@ class ContactRepositoryImpl @Inject constructor(
         val createdContactWithCards = remoteDataSource.createContacts(userId, listOf(contactCards))
         localDataSource.upsertContactWithCards(*createdContactWithCards.toTypedArray())
     }
+
+    override suspend fun deleteContact(contactId: ContactId) {
+        TODO("Not yet implemented")
+    }
 }

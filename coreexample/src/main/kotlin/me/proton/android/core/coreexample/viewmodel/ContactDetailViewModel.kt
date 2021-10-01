@@ -22,7 +22,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
@@ -45,8 +49,18 @@ class ContactDetailViewModel @Inject constructor(
     private val contactRepository: ContactRepository,
 ) : ViewModel() {
 
-    private val mutableState = MutableStateFlow<State?>(null)
-    val state = mutableState.asStateFlow().filterNotNull()
+    private val mutableViewState = MutableStateFlow<ViewState?>(null)
+    private val mutableLoadingState = MutableStateFlow(false)
+    private val mutableViewEvent = MutableSharedFlow<ViewEvent>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+
+    val viewState = mutableViewState.asStateFlow().filterNotNull()
+    val loadingState = mutableLoadingState.asStateFlow()
+    val viewEvent = mutableViewEvent.asSharedFlow()
+
     private val contactId: ContactId = ContactId(savedStateHandle.get(ARG_CONTACT_ID)!!)
 
     init {
@@ -63,9 +77,13 @@ class ContactDetailViewModel @Inject constructor(
     private fun handleResult(result: DataResult<ContactWithCards>) {
         when (result) {
             is DataResult.Error -> handleDataResultError(result)
-            is DataResult.Processing -> { /* no-op */ }
+            is DataResult.Processing -> {
+                val viewStateIsShown = mutableViewState.value != null
+                mutableLoadingState.value = !viewStateIsShown
+            }
             is DataResult.Success -> {
-                mutableState.value = State.ContactDetails(result.value.prettyPrint())
+                mutableLoadingState.value = false
+                mutableViewState.value = ViewState(result.value.prettyPrint())
             }
         }.exhaustive
     }
@@ -73,13 +91,34 @@ class ContactDetailViewModel @Inject constructor(
     private fun handleDataResultError(error: DataResult.Error) {
         val errorMessage = error.message ?: "Unknown error"
         val errorCause = error.cause ?: Throwable(errorMessage)
-        CoreLogger.e("contact", errorCause, errorMessage)
-        mutableState.value = State.Error(errorMessage)
+        handleError(errorCause, errorMessage)
     }
 
-    sealed class State {
-        data class ContactDetails(val contact: String) : State()
-        data class Error(val reason: String) : State()
+    private fun handleError(throwable: Throwable, errorMessage: String) {
+        CoreLogger.e("contact", throwable, errorMessage)
+        mutableLoadingState.value = false
+        mutableViewEvent.tryEmit(ViewEvent.Error(errorMessage))
+    }
+
+    fun deleteContact() {
+        mutableLoadingState.value = true
+        viewModelScope.launch {
+            try {
+                contactRepository.deleteContact(contactId)
+                mutableLoadingState.value = false
+                mutableViewEvent.tryEmit(ViewEvent.Success)
+            } catch (throwable: Throwable) {
+                if (throwable is CancellationException) throw throwable
+                handleError(throwable, "Error deleting contact $contactId")
+            }
+        }
+    }
+
+    data class ViewState(val contact: String)
+
+    sealed class ViewEvent {
+        data class Error(val reason: String) : ViewEvent()
+        object Success : ViewEvent()
     }
 
     companion object {
