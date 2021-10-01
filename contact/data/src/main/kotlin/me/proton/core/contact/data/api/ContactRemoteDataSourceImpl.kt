@@ -19,10 +19,12 @@
 package me.proton.core.contact.data.api
 
 import me.proton.core.contact.data.api.request.CreateContactsRequest
+import me.proton.core.contact.data.api.request.DeleteContactsRequest
 import me.proton.core.contact.data.api.resource.ContactCardsResource
 import me.proton.core.contact.data.api.resource.ContactEmailResource
 import me.proton.core.contact.data.api.resource.ShortContactResource
 import me.proton.core.contact.data.api.resource.toContactCardResource
+import me.proton.core.contact.data.api.response.DeleteContactsResponse
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactId
@@ -30,6 +32,9 @@ import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRemoteDataSource
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.ProtonErrorException
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 import javax.inject.Inject
 
 class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: ApiProvider): ContactRemoteDataSource {
@@ -98,9 +103,15 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
             contacts = contactCardsResources,
             overwrite = false,
         )
-         val apiResponse = apiProvider.get<ContactApi>(userId).invoke {
+        val apiResponse = apiProvider.get<ContactApi>(userId).invoke {
             createContacts(request)
         }.valueOrThrow
         return apiResponse.responses.map { it.response.contact.toContactWithCards(userId) }
+    }
+
+    override suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>) {
+        apiProvider.get<ContactApi>(userId).invoke {
+            deleteContacts(DeleteContactsRequest.create(contactIds))
+        }.valueOrThrow
     }
 }

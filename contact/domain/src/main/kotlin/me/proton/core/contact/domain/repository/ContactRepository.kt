@@ -65,5 +65,8 @@ interface ContactRepository {
 
     suspend fun createContacts(userId: UserId, contactCards: List<ContactCard>)
 
-    suspend fun deleteContact(contactId: ContactId)
+    /**
+     * Delete contacts from [userId] by [contactIds].
+     */
+    suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>)
 }

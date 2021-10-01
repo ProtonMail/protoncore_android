@@ -131,7 +131,8 @@ class ContactRepositoryImpl @Inject constructor(
         localDataSource.upsertContactWithCards(*createdContactWithCards.toTypedArray())
     }
 
-    override suspend fun deleteContact(contactId: ContactId) {
-        TODO("Not yet implemented")
+    override suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>) {
+        localDataSource.deleteContacts(*contactIds.toTypedArray())
+        remoteDataSource.deleteContacts(userId, contactIds)
     }
 }

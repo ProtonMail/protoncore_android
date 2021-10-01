@@ -19,7 +19,9 @@
 package me.proton.core.contact.data.api
 
 import me.proton.core.contact.data.api.request.CreateContactsRequest
+import me.proton.core.contact.data.api.request.DeleteContactsRequest
 import me.proton.core.contact.data.api.response.CreateContactsResponse
+import me.proton.core.contact.data.api.response.DeleteContactsResponse
 import me.proton.core.contact.data.api.response.GetContactEmailsResponse
 import me.proton.core.contact.data.api.response.GetContactResponse
 import me.proton.core.contact.data.api.response.GetContactsResponse
@@ -27,6 +29,7 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -49,4 +52,7 @@ interface ContactApi : BaseRetrofitApi {
         @Query("Page") page: Int,
         @Query("PageSize") pageSize: Int,
     ): GetContactEmailsResponse
+
+    @PUT("contacts/delete")
+    suspend fun deleteContacts(@Body request: DeleteContactsRequest): DeleteContactsResponse
 }

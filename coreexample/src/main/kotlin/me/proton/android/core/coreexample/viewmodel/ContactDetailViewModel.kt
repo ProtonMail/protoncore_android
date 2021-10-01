@@ -23,6 +23,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +32,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.utils.prettyPrint
@@ -62,27 +65,32 @@ class ContactDetailViewModel @Inject constructor(
     val viewEvent = mutableViewEvent.asSharedFlow()
 
     private val contactId: ContactId = ContactId(savedStateHandle.get(ARG_CONTACT_ID)!!)
+    private var observeContactJob: Job? = null
 
     init {
         CoreLogger.d("contact", "presenting contact $contactId")
-        viewModelScope.launch { observeContact() }
+        observeContact()
     }
 
-    private suspend fun observeContact() {
-        accountManager.getPrimaryUserId().filterNotNull()
-            .flatMapLatest { contactRepository.observeContactWithCards(it, contactId) }
-            .collect { result -> handleResult(result) }
+    private fun observeContact() {
+        cancelObserveContact()
+        observeContactJob = viewModelScope.launch {
+            accountManager.getPrimaryUserId().filterNotNull()
+                .flatMapLatest { contactRepository.observeContactWithCards(it, contactId) }
+                .collect { result -> handleResult(result) }
+        }
+    }
+
+    private fun cancelObserveContact() {
+        observeContactJob?.cancel()
+        observeContactJob = null
     }
 
     private fun handleResult(result: DataResult<ContactWithCards>) {
         when (result) {
             is DataResult.Error -> handleDataResultError(result)
-            is DataResult.Processing -> {
-                val viewStateIsShown = mutableViewState.value != null
-                mutableLoadingState.value = !viewStateIsShown
-            }
+            is DataResult.Processing -> { /* no-op */ }
             is DataResult.Success -> {
-                mutableLoadingState.value = false
                 mutableViewState.value = ViewState(result.value.prettyPrint())
             }
         }.exhaustive
@@ -102,10 +110,11 @@ class ContactDetailViewModel @Inject constructor(
 
     fun deleteContact() {
         mutableLoadingState.value = true
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             try {
-                contactRepository.deleteContact(contactId)
-                mutableLoadingState.value = false
+                cancelObserveContact()
+                val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+                contactRepository.deleteContacts(userId, listOf(contactId))
                 mutableViewEvent.tryEmit(ViewEvent.Success)
             } catch (throwable: Throwable) {
                 if (throwable is CancellationException) throw throwable
