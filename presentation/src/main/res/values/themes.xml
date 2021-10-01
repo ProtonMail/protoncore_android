@@ -16,7 +16,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="ProtonThemeBase" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
@@ -111,6 +111,9 @@
         <item name="proton_notification_success">@color/notification_success</item>
         <item name="proton_notification_warning">@color/notification_warning</item>
         <item name="proton_blender_norm">@color/blender_norm</item>
+
+        <!-- Tell MIUI Dark Mode to stop breaking our theming. -->
+        <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
     </style>
 
     <style name="ProtonTheme" parent="ProtonThemeBase">
