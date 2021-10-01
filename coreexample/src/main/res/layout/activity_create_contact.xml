@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:hint="Name" />
 
-        <me.proton.core.presentation.ui.view.ProtonButton
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
             android:id="@+id/createButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

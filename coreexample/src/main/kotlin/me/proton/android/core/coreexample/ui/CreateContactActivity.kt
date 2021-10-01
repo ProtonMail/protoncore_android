@@ -30,7 +30,9 @@ import me.proton.android.core.coreexample.R
 import me.proton.android.core.coreexample.databinding.ActivityCreateContactBinding
 import me.proton.android.core.coreexample.viewmodel.CreateContactViewModel
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.showToast
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
 class CreateContactActivity : ProtonActivity<ActivityCreateContactBinding>() {
@@ -45,8 +47,16 @@ class CreateContactActivity : ProtonActivity<ActivityCreateContactBinding>() {
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
-                    CoreLogger.d("contact", it.toString())
+                viewModel.state.collect { state ->
+                    when (state) {
+                        is CreateContactViewModel.State.Error -> showToast(state.reason)
+                        CreateContactViewModel.State.Idling -> binding.createButton.setIdle()
+                        CreateContactViewModel.State.Processing -> binding.createButton.setLoading()
+                        CreateContactViewModel.State.Success -> {
+                            showToast("Success")
+                            finish()
+                        }
+                    }.exhaustive
                 }
             }
         }

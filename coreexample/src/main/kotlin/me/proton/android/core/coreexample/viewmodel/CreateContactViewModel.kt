@@ -63,6 +63,7 @@ class CreateContactViewModel @Inject constructor(
                     user.encryptAndSignContactCard(cryptoContext, createToBeEncryptedAndSignedVCard(name))
                 )
                 contactRepository.createContacts(userId, cards)
+                mutableState.value = State.Success
             } catch (throwable: Throwable) {
                 if (throwable is CancellationException) throw throwable
                 CoreLogger.e("contact", throwable)
@@ -93,5 +94,6 @@ class CreateContactViewModel @Inject constructor(
         object Idling : State()
         object Processing : State()
         data class Error(val reason: String) : State()
+        object Success : State()
     }
 }
