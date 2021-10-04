@@ -147,7 +147,7 @@ class ContactRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>) {
-        localDataSource.deleteContacts(*contactIds.toTypedArray())
         remoteDataSource.deleteContacts(userId, contactIds)
+        localDataSource.deleteContacts(*contactIds.toTypedArray())
     }
 }
