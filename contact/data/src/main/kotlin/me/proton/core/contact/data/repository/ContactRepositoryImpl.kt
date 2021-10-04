@@ -52,12 +52,27 @@ class ContactRepositoryImpl @Inject constructor(
 
     private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)
 
+    private val contactDetailFetchedOnce = mutableMapOf<ContactId, Boolean>()
     private val contactWithCardsStore: Store<ContactStoreKey, ContactWithCards> = StoreBuilder.from(
         fetcher = Fetcher.of { key: ContactStoreKey ->
-            remoteDataSource.getContactWithCards(key.userId, key.contactId)
+            val contactWithCards = remoteDataSource.getContactWithCards(key.userId, key.contactId)
+            contactDetailFetchedOnce[key.contactId] = true
+            contactWithCards
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { contactStoreKey -> localDataSource.observeContact(contactStoreKey.contactId) },
+            reader = { contactStoreKey ->
+                localDataSource.observeContact(contactStoreKey.contactId).map {
+                    return@map it?.let { contactWithCards ->
+                        val fetchedOnce = contactDetailFetchedOnce[contactStoreKey.contactId] ?: false
+                        if (contactWithCards.contactCards.isNotEmpty() && fetchedOnce) {
+                            contactWithCards
+                        } else {
+                            null
+                        }
+                    }
+                }
+
+            },
             writer = { _, contactWithCards -> localDataSource.upsertContactWithCards(contactWithCards) },
             delete = { key -> localDataSource.deleteContacts(key.contactId) },
             deleteAll = localDataSource::deleteAllContacts
