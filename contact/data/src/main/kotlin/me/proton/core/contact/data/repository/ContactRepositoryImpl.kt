@@ -126,7 +126,7 @@ class ContactRepositoryImpl @Inject constructor(
         return getAllContacts(userId, refresh).flatMap { it.contactEmails }
     }
 
-    override suspend fun createContacts(userId: UserId, contactCards: List<ContactCard>) {
+    override suspend fun createContact(userId: UserId, contactCards: List<ContactCard>) {
         val createdContactWithCards = remoteDataSource.createContacts(userId, listOf(contactCards))
         localDataSource.upsertContactWithCards(*createdContactWithCards.toTypedArray())
     }
