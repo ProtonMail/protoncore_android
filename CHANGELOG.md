@@ -1,3 +1,19 @@
+## Human-Verification [1.15.x]
+
+### Changes
+
+- Removed `HumanVerificationActivity` — use `HumanVerificationOrchestrator` instead
+- Fix: In signup activity, the view-model's state is preserved if the activity is temporarily destroyed
+- Updated nullability of `HumanVerificationOrchestrator.setOnHumanVerificationResult` callback: 
+  `HumanVerificationResult` parameter is never null; check `token` property
+  to see if human verification was successful or not
+
+### Dependencies
+
+- Auth [1.15.x]
+- Presentation [1.15.x]
+- User-Settings [1.15.x]
+
 ## Human Verification [1.15.3], Network [1.15.5]
 
 Oct 6, 2021
