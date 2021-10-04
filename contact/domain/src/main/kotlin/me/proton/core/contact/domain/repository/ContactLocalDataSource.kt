@@ -20,18 +20,71 @@ package me.proton.core.contact.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.entity.UserId
 
 interface ContactLocalDataSource {
-    fun observeContact(contactId: ContactId): Flow<ContactWithCards>
+
+    /**
+     * Observe local [ContactWithCards] by [contactId].
+     */
+    fun observeContact(contactId: ContactId): Flow<ContactWithCards?>
+
+    /**
+     * Observe all [Contact] from [userId].
+     */
     fun observeAllContacts(userId: UserId): Flow<List<Contact>>
 
-    suspend fun deleteContact(contactId: ContactId)
+    /**
+     * Update or insert [ContactWithCards].
+     */
+    suspend fun upsertContactWithCards(contactWithCards: ContactWithCards)
+
+    /**
+     * Update or insert [Contact].
+     *
+     * @throws SQLiteConstraintException if corresponding user(s) doesn't exist.
+     */
+    suspend fun upsertContacts(vararg contacts: Contact)
+
+    /**
+     * Update or insert [ContactEmail].
+     *
+     * @throws SQLiteConstraintException if corresponding contact(s) doesn't exist.
+     */
+    suspend fun upsertContactEmails(vararg emails: ContactEmail)
+
+    /**
+     * Delete contact(s) by [contactIds].
+     */
+    suspend fun deleteContacts(vararg contactIds: ContactId)
+
+    /**
+     * Delete contact email(s) by [emailIds].
+     */
+    suspend fun deleteContactEmails(vararg emailIds: ContactEmailId)
+
+    /**
+     * Delete all contacts for [userId].
+     */
     suspend fun deleteAllContacts(userId: UserId)
+
+    /**
+     * Delete all contacts, for every user.
+     */
     suspend fun deleteAllContacts()
 
-    suspend fun mergeContacts(userId: UserId, contacts: List<Contact>)
-    suspend fun mergeContactWithCards(userId: UserId, contactWithCards: ContactWithCards)
+    /**
+     * Merge given [contacts] with local contacts.
+     * Merge is base on matches between given contact ids and local contact ids, using following strategy:
+     * - Not matched local contacts are deleted.
+     * - Matched local contacts are updated to given contacts.
+     * - Not matched given contacts are inserted locally.
+     *
+     * @throws SQLiteConstraintException if corresponding user(s) doesn't exist.
+     */
+    suspend fun mergeContacts(vararg contacts: Contact)
 }

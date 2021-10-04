@@ -27,6 +27,8 @@ import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
@@ -37,7 +39,6 @@ import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.mapSuccess
-import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 
 class ContactRepositoryImpl(
@@ -53,46 +54,71 @@ class ContactRepositoryImpl(
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { contactStoreKey -> localDataSource.observeContact(contactStoreKey.contactId) },
-            writer = { key, input -> localDataSource.mergeContactWithCards(key.userId, input) },
-            delete = { key -> localDataSource.deleteContact(key.contactId) },
+            writer = { _, contactWithCards -> localDataSource.upsertContactWithCards(contactWithCards) },
+            delete = { key -> localDataSource.deleteContacts(key.contactId) },
             deleteAll = localDataSource::deleteAllContacts
         )
     ).build()
 
+    private val allContactsFetchedOnce = mutableMapOf<UserId, Boolean>()
     private val allContactsStore: Store<UserId, List<Contact>> = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
-            remoteDataSource.getAllContacts(userId)
+            val contacts = remoteDataSource.getAllContacts(userId)
+            allContactsFetchedOnce[userId] = true
+            contacts
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = localDataSource::observeAllContacts,
-            writer = localDataSource::mergeContacts,
+            reader = { userId ->
+                localDataSource.observeAllContacts(userId).map { contacts ->
+                    val fetchedOnce = allContactsFetchedOnce[userId] ?: false
+                    contacts.takeIf { it.isNotEmpty() || fetchedOnce }
+                }
+            },
+            writer = { _, contacts -> localDataSource.mergeContacts(*contacts.toTypedArray()) },
             delete = { userId -> localDataSource.deleteAllContacts(userId) },
             deleteAll = localDataSource::deleteAllContacts
         )
     ).build()
 
+    override fun observeContactWithCards(
+        userId: UserId,
+        contactId: ContactId,
+        refresh: Boolean
+    ): Flow<DataResult<ContactWithCards>> {
+        val key = ContactStoreKey(userId, contactId)
+        return contactWithCardsStore.stream(StoreRequest.cached(key, refresh)).map { it.toDataResult() }
+    }
+
     override suspend fun getContactWithCards(
-        sessionUserId: SessionUserId,
+        userId: UserId,
         contactId: ContactId,
         refresh: Boolean
     ): ContactWithCards {
-        val key = ContactStoreKey(sessionUserId, contactId)
+        val key = ContactStoreKey(userId, contactId)
         return if (refresh) contactWithCardsStore.fresh(key) else contactWithCardsStore.get(key)
     }
 
-    override fun observeAllContacts(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
-        return allContactsStore.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+    override fun observeAllContacts(userId: UserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
+        return allContactsStore.stream(StoreRequest.cached(userId, refresh)).map { it.toDataResult() }
+    }
+
+    override suspend fun getAllContacts(userId: UserId, refresh: Boolean): List<Contact> {
+        return if (refresh) allContactsStore.fresh(userId) else allContactsStore.get(userId)
     }
 
     override fun observeAllContactEmails(
-        sessionUserId: SessionUserId,
+        userId: UserId,
         refresh: Boolean
     ): Flow<DataResult<List<ContactEmail>>> {
-        return observeAllContacts(sessionUserId, refresh).mapSuccess { contactsResult ->
+        return observeAllContacts(userId, refresh).mapSuccess { contactsResult ->
             DataResult.Success(
                 source = contactsResult.source,
                 value = contactsResult.value.flatMap { it.contactEmails }
             )
         }
+    }
+
+    override suspend fun getAllContactEmails(userId: UserId, refresh: Boolean): List<ContactEmail> {
+        return getAllContacts(userId, refresh).flatMap { it.contactEmails }
     }
 }

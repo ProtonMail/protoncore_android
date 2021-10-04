@@ -37,7 +37,9 @@ abstract class ContactDatabaseTests {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, TestDatabase::class.java).build()
         localDataSource = ContactLocalDataSourceImpl(db)
+    }
 
+    fun givenUser0InDb() {
         // Room does not support runBlockingTest (especially for transactions) so have to use runBlocking.
         // Assuming we have an user
         runBlocking {

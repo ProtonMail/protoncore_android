@@ -30,6 +30,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
 
     @Test
     fun `contact is deleted on foreign key deletion`() = runBlocking {
+        givenUser0InDb()
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() != null)
         db.userDao().delete(User0.userId)
@@ -38,6 +39,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
 
     @Test
     fun `contact card deleted on foreign key deletion`() = runBlocking {
+        givenUser0InDb()
         val hasContactCard = suspend {
             db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull()?.cards?.any {
                 it.data == User0.Contact0.ContactCard0.contactCardEntity.data
@@ -46,12 +48,13 @@ class ForeignKeyTests : ContactDatabaseTests() {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactCardDao().insertOrUpdate(User0.Contact0.ContactCard0.contactCardEntity)
         assert(hasContactCard())
-        db.contactDao().deleteContact(User0.Contact0.contactId)
+        db.contactDao().deleteContacts(User0.Contact0.contactId)
         assert(!hasContactCard())
     }
 
     @Test
     fun `contact email is deleted on foreign key deletion`() = runBlocking {
+        givenUser0InDb()
         val hasContactEmail = suspend {
             db.contactEmailDao().observeAllContactsEmails(User0.userId).first().any {
                 it.contactEmail.contactEmailId == User0.Contact0.ContactEmail0.contactEmailId
@@ -66,6 +69,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
 
     @Test
     fun `contact email label cross ref deleted on foreign key deletion`() = runBlocking {
+        givenUser0InDb()
         val testContactEmail = User0.Contact0.ContactEmail0
         val hasLabels = suspend {
             val dbLabels = db.contactEmailLabelDao().observeAllLabels(testContactEmail.contactEmailId).first()

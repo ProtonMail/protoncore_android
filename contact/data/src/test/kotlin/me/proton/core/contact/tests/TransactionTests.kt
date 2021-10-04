@@ -18,6 +18,7 @@
 
 package me.proton.core.contact.tests
 
+import android.database.sqlite.SQLiteConstraintException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
@@ -31,15 +32,17 @@ class TransactionTests: ContactDatabaseTests() {
 
     @Test
     fun `delete contact delete contact and emails`() = runBlocking {
+        givenUser0InDb()
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
-        db.contactDao().deleteContact(User0.Contact0.contactId)
+        db.contactDao().deleteContacts(User0.Contact0.contactId)
         assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() == null)
         assert(db.contactEmailDao().observeAllContactsEmails(User0.Contact0.contactId).first().isEmpty())
     }
 
     @Test
     fun `delete all contacts from user also delete all contacts and emails from user`() = runBlocking {
+        givenUser0InDb()
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
         db.contactDao().deleteAllContacts(User0.userId)
@@ -49,6 +52,7 @@ class TransactionTests: ContactDatabaseTests() {
 
     @Test
     fun `delete all contacts delete all contacts and emails`() = runBlocking {
+        givenUser0InDb()
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
         db.contactDao().deleteAllContacts()
@@ -58,19 +62,20 @@ class TransactionTests: ContactDatabaseTests() {
 
     @Test
     fun `merge contacts apply correct diff`() = runBlocking {
+        givenUser0InDb()
         val baseEmails = listOf(User0.Contact0.createContactEmail(ContactEmailId("a"), emptyList()))
         val updatedEmails = listOf(User0.Contact0.createContactEmail(ContactEmailId("b"), emptyList()))
         val baseContact = User0.Contact0.contact.copy(contactEmails = baseEmails)
         val updatedContact = User0.Contact0.contact.copy(contactEmails = updatedEmails)
-
-        localDataSource.mergeContacts(User0.userId, listOf(baseContact))
-        assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == baseContact)
-        localDataSource.mergeContacts(User0.userId, listOf(updatedContact))
-        assert(localDataSource.observeContact(User0.Contact0.contactId).first().contact == updatedContact)
+        localDataSource.mergeContacts(baseContact)
+        assert(localDataSource.observeContact(User0.Contact0.contactId).first()?.contact == baseContact)
+        localDataSource.mergeContacts(updatedContact)
+        assert(localDataSource.observeContact(User0.Contact0.contactId).first()?.contact == updatedContact)
     }
 
     @Test
     fun `merge contacts with cards apply correct diff`() = runBlocking {
+        givenUser0InDb()
         val baseCards = listOf(contactCard("card-a"))
         val updatedCards = listOf(contactCard("card-b"))
         val baseEmails = listOf(User0.Contact0.createContactEmail(ContactEmailId("a"), emptyList()))
@@ -83,10 +88,21 @@ class TransactionTests: ContactDatabaseTests() {
             contact = User0.Contact0.contactWithCards.contact.copy(contactEmails = updatedEmails),
             contactCards = updatedCards,
         )
-
-        localDataSource.mergeContactWithCards(User0.userId, baseContact)
+        localDataSource.upsertContactWithCards(baseContact)
         assert(localDataSource.observeContact(User0.Contact0.contactId).first() == baseContact)
-        localDataSource.mergeContactWithCards(User0.userId, updatedContact)
+        localDataSource.upsertContactWithCards(updatedContact)
         assert(localDataSource.observeContact(User0.Contact0.contactId).first() == updatedContact)
+    }
+
+    @Test(expected = SQLiteConstraintException::class)
+    fun `upsert contacts throws if user not present`() = runBlocking {
+        localDataSource.upsertContacts(User0.Contact0.contact)
+    }
+
+    @Test
+    fun `upsert contacts doesn't throws if user is present`() = runBlocking {
+        givenUser0InDb()
+        localDataSource.upsertContacts(User0.Contact0.contact)
+        assert(localDataSource.observeContact(User0.Contact0.contactId).first()?.contact == User0.Contact0.contact)
     }
 }

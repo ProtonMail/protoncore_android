@@ -24,16 +24,18 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.utils.prettyPrint
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.entity.ContactId
+import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.domain.arch.DataResult
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @HiltViewModel
@@ -54,13 +56,25 @@ class ContactDetailViewModel @Inject constructor(
 
     private suspend fun observeContact() {
         accountManager.getPrimaryUserId().filterNotNull()
-            .onEach { userId ->
-                val contactWithCards = contactRepository.getContactWithCards(userId, contactId, refresh = true)
-                mutableState.value = State.ContactDetails(contactWithCards.prettyPrint())
-            }.catch {
-                CoreLogger.e("contact", it)
-                mutableState.value = State.Error(it.message ?: "unknown error")
-            }.collect()
+            .flatMapLatest { contactRepository.observeContactWithCards(it, contactId) }
+            .collect { result -> handleResult(result) }
+    }
+
+    private fun handleResult(result: DataResult<ContactWithCards>) {
+        when (result) {
+            is DataResult.Error -> handleDataResultError(result)
+            is DataResult.Processing -> { /* no-op */ }
+            is DataResult.Success -> {
+                mutableState.value = State.ContactDetails(result.value.prettyPrint())
+            }
+        }.exhaustive
+    }
+
+    private fun handleDataResultError(error: DataResult.Error) {
+        val errorMessage = error.message ?: "Unknown error"
+        val errorCause = error.cause ?: Throwable(errorMessage)
+        CoreLogger.e("contact", errorCause, errorMessage)
+        mutableState.value = State.Error(errorMessage)
     }
 
     sealed class State {

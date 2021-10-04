@@ -33,5 +33,5 @@ abstract class ContactEmailLabelDao: BaseDao<ContactEmailLabelEntity>() {
     abstract fun observeAllLabels(contactEmailId: ContactEmailId): Flow<List<String>>
 
     @Query("DELETE FROM ContactEmailLabelEntity WHERE contactEmailId IN (:contactEmailIds)")
-    abstract suspend fun deleteAllLabels(contactEmailIds: List<ContactEmailId>)
+    abstract suspend fun deleteAllLabels(vararg contactEmailIds: ContactEmailId)
 }

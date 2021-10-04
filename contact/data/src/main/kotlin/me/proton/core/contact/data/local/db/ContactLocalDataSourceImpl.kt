@@ -29,6 +29,7 @@ import me.proton.core.contact.data.local.db.entity.toContactEmailLabel
 import me.proton.core.contact.data.local.db.entity.toContactEntity
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactLocalDataSource
@@ -38,8 +39,8 @@ class ContactLocalDataSourceImpl(
     private val contactDatabase: ContactDatabase
 ): ContactLocalDataSource {
 
-    override fun observeContact(contactId: ContactId): Flow<ContactWithCards> {
-        return contactDatabase.contactDao().observeContact(contactId).map { it.toContactWithCards() }
+    override fun observeContact(contactId: ContactId): Flow<ContactWithCards?> {
+        return contactDatabase.contactDao().observeContact(contactId).map { it?.toContactWithCards() }
     }
 
     override fun observeAllContacts(userId: UserId): Flow<List<Contact>> {
@@ -48,8 +49,43 @@ class ContactLocalDataSourceImpl(
         }.distinctUntilChanged()
     }
 
-    override suspend fun deleteContact(contactId: ContactId) {
-        contactDatabase.contactDao().deleteContact(contactId)
+    override suspend fun upsertContactWithCards(contactWithCards: ContactWithCards) {
+        contactDatabase.inTransaction {
+            upsertContacts(contactWithCards.contact)
+
+            contactDatabase.contactCardDao().deleteAllContactCards(contactWithCards.id)
+            val contactCardsEntities = contactWithCards.contactCards.map { it.toContactCardEntity(contactWithCards.id) }
+            contactDatabase.contactCardDao().insertOrUpdate(*contactCardsEntities.toTypedArray())
+        }
+    }
+
+    override suspend fun upsertContacts(vararg contacts: Contact) {
+        contactDatabase.inTransaction {
+            val contactEntities = contacts.map { it.toContactEntity() }
+            contactDatabase.contactDao().insertOrUpdate(*contactEntities.toTypedArray())
+
+            contactDatabase.contactEmailDao().deleteAllContactsEmails(*contacts.map { it.id }.toTypedArray())
+            upsertContactEmails(*contacts.flatMap { it.contactEmails }.toTypedArray())
+        }
+    }
+
+    override suspend fun upsertContactEmails(vararg emails: ContactEmail) {
+        contactDatabase.inTransaction {
+            val emailEntities = emails.map { it.toContactEmailEntity() }
+            contactDatabase.contactEmailDao().insertOrUpdate(*emailEntities.toTypedArray())
+
+            contactDatabase.contactEmailLabelDao().deleteAllLabels(*emails.map { it.id }.toTypedArray())
+            val labelEntities = emails.flatMap { it.toContactEmailLabel() }
+            contactDatabase.contactEmailLabelDao().insertOrUpdate(*labelEntities.toTypedArray())
+        }
+    }
+
+    override suspend fun deleteContacts(vararg contactIds: ContactId) {
+        contactDatabase.contactDao().deleteContacts(*contactIds)
+    }
+
+    override suspend fun deleteContactEmails(vararg emailIds: ContactEmailId) {
+        contactDatabase.contactEmailDao().deleteContactsEmails(*emailIds)
     }
 
     override suspend fun deleteAllContacts(userId: UserId) {
@@ -60,41 +96,10 @@ class ContactLocalDataSourceImpl(
         contactDatabase.contactDao().deleteAllContacts()
     }
 
-    private suspend fun mergeContact(userId: UserId, contact: Contact) {
+    override suspend fun mergeContacts(vararg contacts: Contact) {
         contactDatabase.inTransaction {
-            contactDatabase.contactDao().insertOrUpdate(contact.toContactEntity(userId))
-
-            contactDatabase.contactEmailDao().deleteAllContactsEmails(contact.id)
-            mergeContactEmails(userId, contact.contactEmails)
-        }
-    }
-
-    private suspend fun mergeContactEmails(userId: UserId, contactsEmails: List<ContactEmail>) {
-        contactDatabase.inTransaction {
-            contactDatabase.contactEmailLabelDao().deleteAllLabels(contactsEmails.map { it.id })
-
-            val mailEntities = contactsEmails.map { it.toContactEmailEntity(userId) }
-            contactDatabase.contactEmailDao().insertOrUpdate(*mailEntities.toTypedArray())
-
-            val mailLabelEntities = contactsEmails.flatMap { it.toContactEmailLabel() }
-            contactDatabase.contactEmailLabelDao().insertOrUpdate(*mailLabelEntities.toTypedArray())
-        }
-    }
-
-    override suspend fun mergeContacts(userId: UserId, contacts: List<Contact>) {
-        contactDatabase.inTransaction {
-            contactDatabase.contactDao().deleteAllContacts(userId)
-            contacts.forEach { mergeContact(userId, it) }
-        }
-    }
-
-    override suspend fun mergeContactWithCards(userId: UserId, contactWithCards: ContactWithCards) {
-        contactDatabase.inTransaction {
-            mergeContact(userId, contactWithCards.contact)
-
-            contactDatabase.contactCardDao().deleteAllContactCards(contactWithCards.id)
-            val contactCardsEntities = contactWithCards.contactCards.map { it.toContactCardEntity(contactWithCards.id) }
-            contactDatabase.contactCardDao().insertOrUpdate(*contactCardsEntities.toTypedArray())
+            contactDatabase.contactDao().deleteAllContacts(*contacts.map { it.userId }.toTypedArray())
+            upsertContacts(*contacts)
         }
     }
 }

@@ -59,7 +59,7 @@ data class ContactEmailEntity(
     val canonicalEmail: String?
 )
 
-fun ContactEmail.toContactEmailEntity(userId: UserId) = ContactEmailEntity(
+fun ContactEmail.toContactEmailEntity() = ContactEmailEntity(
     userId = userId,
     contactEmailId = id,
     name = name,

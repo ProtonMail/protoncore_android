@@ -46,7 +46,7 @@ data class ContactEntity (
     val name: String,
 )
 
-fun Contact.toContactEntity(userId: UserId) = ContactEntity(
+fun Contact.toContactEntity() = ContactEntity(
     userId = userId,
     contactId = id,
     name = name,
