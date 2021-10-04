@@ -19,7 +19,6 @@
 package me.proton.core.crypto.android.srp
 
 import android.util.Base64
-import com.proton.gopenpgp.crypto.ClearTextMessage
 import com.proton.gopenpgp.srp.Auth
 import com.proton.gopenpgp.srp.Proofs
 import com.proton.gopenpgp.srp.Srp
@@ -62,21 +61,19 @@ class GOpenPGPSrpCrypto : SrpCrypto {
     ): me.proton.core.crypto.common.srp.Auth {
         val salt = ByteArray(10)
         SecureRandom().nextBytes(salt)
-        val base64Modulus = Base64.decode(ClearTextMessage(modulus).data, Base64.DEFAULT)
-        val hashedPassword: ByteArray = Srp.hashPassword(
-            CURRENT_AUTH_VERSION.toLong(),
-            password,
-            username,
-            salt,
-            base64Modulus
+        // newAuthForVerifier has the version hardcoded internally
+        val auth = Srp.newAuthForVerifier(password, modulus, salt)
+        val verifier = auth.generateVerifier(SRP_BIT_LENGTH.toLong())
+        return me.proton.core.crypto.common.srp.Auth(
+            version = auth.version.toInt(),
+            modulusId = modulusId,
+            salt = Base64.encodeToString(salt, Base64.NO_WRAP),
+            verifier = Base64.encodeToString(verifier, Base64.NO_WRAP)
         )
-        val passwordVerifier = PasswordVerifier(version = CURRENT_AUTH_VERSION, modulusId = modulusId, salt = salt)
-        return passwordVerifier.generateAuth(SRP_BIT_LENGTH, base64Modulus, hashedPassword)
     }
 
     companion object {
         const val SRP_BIT_LENGTH: Int = 2048
-        const val CURRENT_AUTH_VERSION = 4
     }
 }
 
