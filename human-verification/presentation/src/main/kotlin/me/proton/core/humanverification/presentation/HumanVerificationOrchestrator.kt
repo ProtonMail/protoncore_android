@@ -111,7 +111,7 @@ class HumanVerificationOrchestrator {
         )
     }
 
-    internal fun startHumanVerificationWorkflow(humanVerificationInput: HumanVerificationInput) {
+    fun startHumanVerificationWorkflow(humanVerificationInput: HumanVerificationInput) {
         checkRegistered(humanWorkflowLauncher).show(humanVerificationInput)
     }
 
