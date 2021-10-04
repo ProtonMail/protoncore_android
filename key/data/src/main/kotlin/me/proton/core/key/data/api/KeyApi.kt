@@ -27,11 +27,13 @@ import me.proton.core.key.data.api.response.CreateAddressKeyResponse
 import me.proton.core.key.data.api.response.SetupInitialKeysResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
+import me.proton.core.network.domain.CacheOverride
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
+import retrofit2.http.Tag
 
 interface KeyApi : BaseRetrofitApi {
 
@@ -39,7 +41,10 @@ interface KeyApi : BaseRetrofitApi {
     suspend fun getSalts(): KeySaltsResponse
 
     @GET("keys")
-    suspend fun getPublicAddressKeys(@Query("Email") email: String): PublicAddressKeysResponse
+    suspend fun getPublicAddressKeys(
+        @Query("Email") email: String,
+        @Tag cacheOverride: CacheOverride? = null
+    ): PublicAddressKeysResponse
 
     @POST("keys/address")
     suspend fun createAddressKey(@Body request: CreateAddressKeyRequest): CreateAddressKeyResponse
