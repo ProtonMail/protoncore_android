@@ -36,6 +36,8 @@ import me.proton.core.network.data.ProtonErrorException
 import me.proton.core.network.data.ResponseCodes
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.onError
+import me.proton.core.network.domain.onSuccess
 import javax.inject.Inject
 
 class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: ApiProvider): ContactRemoteDataSource {
@@ -114,9 +116,19 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
     }
 
     override suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>) {
-        val apiResponse = apiProvider.get<ContactApi>(userId).invoke {
+        val apiResult = apiProvider.get<ContactApi>(userId).invoke {
             deleteContacts(DeleteContactsRequest.create(contactIds))
-        }.valueOrThrow
-        check(apiResponse.responses.all { it.response.code == ResponseCodes.OK })
+        }
+        apiResult.onError {
+            val cause = it.cause
+            if (cause !is ProtonErrorException || cause.protonData.code != ResponseCodes.NOT_EXISTS) {
+                apiResult.throwIfError()
+            }
+        }
+        apiResult.onSuccess { response ->
+            check(response.responses.all {
+                it.response.code == ResponseCodes.OK || it.response.code == ResponseCodes.NOT_EXISTS
+            })
+        }
     }
 }

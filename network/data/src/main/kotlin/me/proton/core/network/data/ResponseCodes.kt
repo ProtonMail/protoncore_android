@@ -25,4 +25,5 @@ package me.proton.core.network.data
  */
 object ResponseCodes {
     const val OK = 1000
+    const val NOT_EXISTS = 2501
 }
