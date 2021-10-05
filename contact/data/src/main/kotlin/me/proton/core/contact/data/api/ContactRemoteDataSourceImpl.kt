@@ -33,6 +33,7 @@ import me.proton.core.contact.domain.repository.ContactRemoteDataSource
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.ProtonErrorException
+import me.proton.core.network.data.ResponseCodes
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import javax.inject.Inject
@@ -106,12 +107,16 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
         val apiResponse = apiProvider.get<ContactApi>(userId).invoke {
             createContacts(request)
         }.valueOrThrow
-        return apiResponse.responses.map { it.response.contact.toContactWithCards(userId) }
+        check(apiResponse.responses.all { it.response.code == ResponseCodes.OK })
+        return apiResponse.responses.map {
+            it.response.contact.toContactWithCards(userId)
+        }
     }
 
     override suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>) {
-        apiProvider.get<ContactApi>(userId).invoke {
+        val apiResponse = apiProvider.get<ContactApi>(userId).invoke {
             deleteContacts(DeleteContactsRequest.create(contactIds))
         }.valueOrThrow
+        check(apiResponse.responses.all { it.response.code == ResponseCodes.OK })
     }
 }
