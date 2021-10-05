@@ -46,7 +46,6 @@ class UserSettingsViewModel @Inject constructor(
         userSettingsOrchestrator.unregister()
     }
 
-
     private fun getPrimaryAccount() = accountManager.getPrimaryAccount()
 
     fun onUpdateRecoveryEmailClicked(context: ComponentActivity) {
@@ -54,9 +53,7 @@ class UserSettingsViewModel @Inject constructor(
             getPrimaryAccount().first()?.let {
                 with(userSettingsOrchestrator) {
                     onUpdateRecoveryEmailResult {
-                        context.showToast(
-                            "Recovery email updated"
-                        )
+                        if (it?.result == true) context.showToast("Recovery email updated")
                     }
                     startUpdateRecoveryEmailWorkflow(userId = it.userId)
                 }
@@ -69,7 +66,7 @@ class UserSettingsViewModel @Inject constructor(
             getPrimaryAccount().first()?.let {
                 with(userSettingsOrchestrator) {
                     onPasswordManagementResult {
-                        context.showToast("Password updated")
+                        if (it?.result == true) context.showToast("Password updated")
                     }
                     startPasswordManagementWorkflow(userId = it.userId)
                 }
