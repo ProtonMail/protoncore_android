@@ -172,13 +172,13 @@ User Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Contact
 
-Contact: **1.16-build-10103** - _released on: Oct 04, 2021_
+Contact: **1.16-build-10104** - _released on: Oct 05, 2021_
 
-Contact Domain: **1.16-build-10103** - _released on: Oct 04, 2021_
+Contact Domain: **1.16-build-10104** - _released on: Oct 05, 2021_
 
-Contact Data: **1.16-build-10103** - _released on: Oct 04, 2021_
+Contact Data: **1.16-build-10104** - _released on: Oct 05, 2021_
 
-Contact Hilt: **0.0** - _released on: never_
+Contact Hilt: **1.16-build-10104** - _released on: Oct 05, 2021_
 
 ### Mail Message
 
