@@ -18,7 +18,9 @@
 
 package me.proton.core.network.data.interceptor
 
+import me.proton.core.network.data.LogTag
 import me.proton.core.network.domain.server.ServerTimeListener
+import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -30,7 +32,12 @@ class ServerTimeInterceptor(
         val request = chain.request()
         val response = chain.proceed(request)
         val serverUtc = response.headers.getDate("date")
-        serverUtc?.let { serverTimeListener.onServerTimeUpdated(it.time / 1000) }
+        if (serverUtc != null) {
+            serverTimeListener.onServerTimeUpdated(serverUtc.time / 1000)
+        } else {
+            CoreLogger.log(LogTag.SERVER_TIME_PARSE_ERROR, "Could not parse 'date' from response headers")
+        }
+
         return response
     }
 }

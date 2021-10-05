@@ -29,4 +29,7 @@ object LogTag {
 
     /** Tag for token refresh. */
     val REFRESH_TOKEN = LoggerLogTag("core.network.token.refresh")
+
+    /** Tag for Server time parse error. */
+    val SERVER_TIME_PARSE_ERROR = LoggerLogTag("core.network.server.time.error")
 }
