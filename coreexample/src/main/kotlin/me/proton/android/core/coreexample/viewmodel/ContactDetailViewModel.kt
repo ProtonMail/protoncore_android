@@ -31,14 +31,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.utils.createToBeEncryptedAndSignedVCard
 import me.proton.android.core.coreexample.utils.createToBeSignedVCard
 import me.proton.android.core.coreexample.utils.prettyPrint
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.contact.domain.decryptContactCardToVCard
 import me.proton.core.contact.domain.encryptAndSignContactCard
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactId
@@ -49,6 +54,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.mapSuccessValueOrNull
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -87,8 +93,12 @@ class ContactDetailViewModel @Inject constructor(
         cancelObserveContact()
         observeContactJob = viewModelScope.launch {
             accountManager.getPrimaryUserId().filterNotNull()
-                .flatMapLatest { contactRepository.observeContactWithCards(it, contactId) }
-                .collect { result -> handleResult(result) }
+                .flatMapLatest { userId ->
+                    val user = userManager.getUser(userId)
+                    contactRepository.observeContactWithCards(userId, contactId).map { dataResult ->
+                        handleResult(user, dataResult)
+                    }
+                }.collect()
         }
     }
 
@@ -97,13 +107,18 @@ class ContactDetailViewModel @Inject constructor(
         observeContactJob = null
     }
 
-    private fun handleResult(result: DataResult<ContactWithCards>) {
+    private fun handleResult(user: User, result: DataResult<ContactWithCards>) {
         when (result) {
             is DataResult.Error -> handleDataResultError(result)
             is DataResult.Processing -> { /* no-op */ }
             is DataResult.Success -> {
                 contact = result.value.contact
-                mutableViewState.value = ViewState(result.value.prettyPrint())
+                mutableViewState.value = ViewState(
+                    rawContact = result.value.prettyPrint(),
+                    vCardContact = result.value.contactCards.map {
+                        user.decryptContactCardToVCard(cryptoContext, it)
+                    }.prettyPrint()
+                )
             }
         }.exhaustive
     }
@@ -158,7 +173,7 @@ class ContactDetailViewModel @Inject constructor(
         }
     }
 
-    data class ViewState(val contact: String)
+    data class ViewState(val rawContact: String, val vCardContact: String)
 
     sealed class ViewEvent {
         data class Error(val reason: String) : ViewEvent()

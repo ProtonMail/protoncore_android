@@ -53,7 +53,8 @@ class ContactDetailActivity : ProtonActivity<ActivityContactDetailsBinding>() {
             viewModel.deleteContact()
         }
         viewModel.viewState.flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED).onEach { viewState ->
-            binding.contactDetails.text = viewState.contact
+            binding.rawContact.text = viewState.rawContact
+            binding.contactVCards.text = viewState.vCardContact
         }.launchIn(lifecycleScope)
         viewModel.loadingState
             .flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED)
