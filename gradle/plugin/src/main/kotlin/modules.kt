@@ -86,6 +86,7 @@ object Module {
     const val contact = ":contact"
     const val contactDomain = "$contact:contact-domain"
     const val contactData = "$contact:contact-data"
+    const val contactHilt = "$contact:contact-hilt"
 
     // User
     const val user = ":user"

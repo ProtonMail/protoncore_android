@@ -16,44 +16,29 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.contact.hilt
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.contact.data.api.ContactRemoteDataSourceImpl
-import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.data.local.db.ContactLocalDataSourceImpl
 import me.proton.core.contact.data.repository.ContactRepositoryImpl
 import me.proton.core.contact.domain.repository.ContactLocalDataSource
 import me.proton.core.contact.domain.repository.ContactRemoteDataSource
 import me.proton.core.contact.domain.repository.ContactRepository
-import me.proton.core.network.data.ApiProvider
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ContactsModule {
+abstract class ContactsModule {
 
-    @Provides
-    @Singleton
-    fun provideContactLocalDataSource(contactDatabase: ContactDatabase): ContactLocalDataSource {
-        return ContactLocalDataSourceImpl(contactDatabase)
-    }
+    @Binds
+    abstract fun bindContactLocalDataSource(impl: ContactLocalDataSourceImpl): ContactLocalDataSource
 
-    @Provides
-    @Singleton
-    fun provideContactRemoteDataSource(apiProvider: ApiProvider): ContactRemoteDataSource {
-        return ContactRemoteDataSourceImpl(apiProvider)
-    }
+    @Binds
+    abstract fun bindContactRemoteDataSource(impl: ContactRemoteDataSourceImpl): ContactRemoteDataSource
 
-    @Provides
-    @Singleton
-    fun provideContactsRepository(
-        remoteDataSource: ContactRemoteDataSource,
-        localDataSource: ContactLocalDataSource
-    ): ContactRepository {
-        return ContactRepositoryImpl(remoteDataSource, localDataSource)
-    }
+    @Binds
+    abstract fun provideContactsRepository(impl: ContactRepositoryImpl): ContactRepository
 }

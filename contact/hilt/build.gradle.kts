@@ -17,19 +17,23 @@
  */
 
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
-libVersion = Version(1, 16, channel = Version.Channel.Build, build = 4)
+libVersion = parent?.libVersion
 
 android()
 
 dependencies {
-    api(
-        project(Module.contactDomain),
-        project(Module.contactData)
+    implementation(
+        project(Module.contact),
+        `hilt-android`,
     )
+
+    kapt(`hilt-android-compiler`)
 }

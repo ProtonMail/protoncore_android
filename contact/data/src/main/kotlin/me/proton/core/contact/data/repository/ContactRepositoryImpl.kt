@@ -40,8 +40,11 @@ import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.mapSuccess
 import me.proton.core.domain.entity.UserId
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ContactRepositoryImpl(
+@Singleton
+class ContactRepositoryImpl @Inject constructor(
     private val remoteDataSource: ContactRemoteDataSource,
     private val localDataSource: ContactLocalDataSource
 ) : ContactRepository {
