@@ -32,6 +32,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.proton.android.core.coreexample.utils.createToBeEncryptedAndSignedVCard
+import me.proton.android.core.coreexample.utils.createToBeSignedVCard
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.encryptAndSignContactCard
 import me.proton.core.contact.domain.repository.ContactRepository
@@ -70,23 +72,6 @@ class CreateContactViewModel @Inject constructor(
                 mutableState.value = State.Error(throwable.message ?: "Unknown error")
             }
             mutableState.value = State.Idling
-        }
-    }
-
-    private fun createToBeSignedVCard(seedName: String): VCard {
-        return VCard().apply {
-            formattedName = FormattedName(seedName)
-            addEmail(Email("$seedName@testmail.com").apply {
-                group = "ITEM1"
-            })
-            uid = Uid.random()
-            version = VCardVersion.V4_0
-        }
-    }
-
-    private fun createToBeEncryptedAndSignedVCard(seedName: String): VCard {
-        return VCard().apply {
-            addNote("confidential note about $seedName")
         }
     }
 

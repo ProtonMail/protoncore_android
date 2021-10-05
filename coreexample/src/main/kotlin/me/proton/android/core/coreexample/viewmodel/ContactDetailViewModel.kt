@@ -35,12 +35,19 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
+import me.proton.android.core.coreexample.utils.createToBeEncryptedAndSignedVCard
+import me.proton.android.core.coreexample.utils.createToBeSignedVCard
 import me.proton.android.core.coreexample.utils.prettyPrint
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.contact.domain.encryptAndSignContactCard
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.contact.domain.signContactCard
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.arch.mapSuccessValueOrNull
+import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -50,6 +57,8 @@ class ContactDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val accountManager: AccountManager,
     private val contactRepository: ContactRepository,
+    private val userManager: UserManager,
+    private val cryptoContext: CryptoContext,
 ) : ViewModel() {
 
     private val mutableViewState = MutableStateFlow<ViewState?>(null)
@@ -119,6 +128,33 @@ class ContactDetailViewModel @Inject constructor(
             } catch (throwable: Throwable) {
                 if (throwable is CancellationException) throw throwable
                 handleError(throwable, "Error deleting contact $contactId")
+            }
+        }
+    }
+
+    fun updateContact() {
+        viewModelScope.launch(Dispatchers.Default) {
+            mutableLoadingState.value = true
+            try {
+                val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+                val user = userManager.getUser(userId)
+                val contactWithCards = contactRepository.observeContactWithCards(userId, contactId)
+                    .mapSuccessValueOrNull()
+                    .filterNotNull()
+                    .first()
+                contactWithCards.contactCards
+                val cards = listOf(
+                    user.signContactCard(cryptoContext, createToBeSignedVCard(contactWithCards.contact.name)),
+                    user.encryptAndSignContactCard(
+                        cryptoContext,
+                        createToBeEncryptedAndSignedVCard(contactWithCards.contact.name)
+                    )
+                )
+                contactRepository.updateContact(userId, contactId, cards)
+                mutableLoadingState.value = false
+            } catch (throwable: Throwable) {
+                if (throwable is CancellationException) throw throwable
+                handleError(throwable, "Error updating contact $contactId")
             }
         }
     }

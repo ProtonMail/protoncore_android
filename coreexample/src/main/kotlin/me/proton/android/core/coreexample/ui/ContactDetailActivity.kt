@@ -46,6 +46,9 @@ class ContactDetailActivity : ProtonActivity<ActivityContactDetailsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.updateButton.setOnClickListener {
+            viewModel.updateContact()
+        }
         binding.deleteButton.setOnClickListener {
             viewModel.deleteContact()
         }
