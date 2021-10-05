@@ -41,7 +41,6 @@ import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.viewmodel.AuthViewModel
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
@@ -101,12 +100,6 @@ internal class SignupViewModel @Inject constructor(
     var domain: String? by savedStateHandle.state(null)
     var externalEmail: String? by savedStateHandle.state(null)
 
-    var password: String?
-        get() = _password?.decrypt(keyStoreCrypto)
-        set(value) {
-            _password = value?.encrypt(keyStoreCrypto)
-        }
-
     override val recoveryEmailAddress: String?
         get() = if (_recoveryMethod?.type == RecoveryMethodType.EMAIL) _recoveryMethod?.destination else null
     // endregion
@@ -128,7 +121,7 @@ internal class SignupViewModel @Inject constructor(
         object Processing : State()
 
         @Parcelize
-        data class Success(val userId: String) : State()
+        data class Success(val userId: String, val loginUsername: String, val password: EncryptedString) : State()
 
         sealed class Error : State() {
             @Parcelize
@@ -144,11 +137,10 @@ internal class SignupViewModel @Inject constructor(
     // endregion
 
     // region public API
-    fun getLoginUsername() = when (currentAccountType) {
-        AccountType.Username,
-        AccountType.Internal -> username
-        AccountType.External -> externalEmail
-    }.exhaustive
+
+    fun setPassword(password: String?) {
+        _password = password?.encrypt(keyStoreCrypto)
+    }
 
     fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context)
         .onHumanVerificationNeeded {
@@ -248,7 +240,7 @@ internal class SignupViewModel @Inject constructor(
             username = username, password = encryptedPassword, recoveryEmail = verification.first,
             recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
         )
-        emit(State.Success(result.userId.id))
+        emit(State.Success(result.userId.id, username, encryptedPassword))
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {
@@ -264,7 +256,7 @@ internal class SignupViewModel @Inject constructor(
             password = encryptedPassword,
             referrer = null
         )
-        emit(State.Success(user.userId.id))
+        emit(State.Success(user.userId.id, externalEmail, encryptedPassword))
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {

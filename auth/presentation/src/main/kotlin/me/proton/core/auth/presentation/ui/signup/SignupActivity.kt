@@ -24,7 +24,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +36,7 @@ import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.ui.AuthActivity
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -96,7 +96,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
                 is SignupViewModel.State.Error.HumanVerification -> Unit
                 is SignupViewModel.State.Error.Message -> showError(it.message)
                 is SignupViewModel.State.Error.PlanChooserCancel -> Unit
-                is SignupViewModel.State.Success -> onSignUpSuccess()
+                is SignupViewModel.State.Success -> onSignUpSuccess(it.loginUsername, it.password)
             }.exhaustive
         }.launchIn(lifecycleScope)
 
@@ -130,16 +130,17 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         }
     }
 
-    private fun onSignUpSuccess() {
+    private fun onSignUpSuccess(loginUsername: String, encryptedPassword: EncryptedString) {
         with(supportFragmentManager) {
             for (i in 0..backStackEntryCount) {
                 popBackStackImmediate()
             }
         }
         binding.lottieProgress.visibility = View.VISIBLE
-        loginViewModel.startLoginWorkflow(
-            signUpViewModel.getLoginUsername()!!,
-            signUpViewModel.password!!,
+
+        loginViewModel.startLoginWorkflowWithEncryptedPassword(
+            loginUsername,
+            encryptedPassword,
             signUpViewModel.currentAccountType,
             signUpViewModel.subscriptionDetails
         )

@@ -151,7 +151,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `create Internal user no username set but password set`() = coroutinesTest {
         // GIVEN
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
 
         viewModel.userCreationState.test {
             // WHEN
@@ -205,7 +205,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     fun `create Internal user no recovery method set`() = coroutinesTest {
         // GIVEN
         viewModel.username = testUsername
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -234,7 +234,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val emailRecovery = RecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
         viewModel.username = testUsername
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.setRecoveryMethod(emailRecovery)
 
         viewModel.userCreationState.test {
@@ -265,7 +265,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val emailRecovery = RecoveryMethod(RecoveryMethodType.SMS, testPhone)
         viewModel.username = testUsername
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.setRecoveryMethod(emailRecovery)
         viewModel.userCreationState.test {
             // WHEN
@@ -313,7 +313,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             )
         )
         viewModel.username = testUsername
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -364,7 +364,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     fun `create External user no external email set but password set`() = coroutinesTest {
         // GIVEN
         viewModel.currentAccountType = AccountType.External
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -413,7 +413,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         viewModel.currentAccountType = AccountType.External
         viewModel.externalEmail = testEmail
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -456,7 +456,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
         viewModel.currentAccountType = AccountType.External
         viewModel.externalEmail = testEmail
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()

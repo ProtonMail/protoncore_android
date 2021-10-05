@@ -109,10 +109,18 @@ internal class LoginViewModel @Inject constructor(
         password: String,
         requiredAccountType: AccountType,
         subscriptionDetails: SubscriptionDetails? = null
+    ): Job {
+        val encryptedPassword = password.encrypt(keyStoreCrypto)
+        return startLoginWorkflowWithEncryptedPassword(username, encryptedPassword, requiredAccountType, subscriptionDetails)
+    }
+
+    fun startLoginWorkflowWithEncryptedPassword(
+        username: String,
+        encryptedPassword: EncryptedString,
+        requiredAccountType: AccountType,
+        subscriptionDetails: SubscriptionDetails? = null
     ) = flow<State> {
         emit(State.Processing)
-
-        val encryptedPassword = password.encrypt(keyStoreCrypto)
 
         val sessionInfo = performLogin.invoke(username, encryptedPassword)
         val userId = sessionInfo.userId
