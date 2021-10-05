@@ -74,11 +74,11 @@ internal class SignupViewModel @Inject constructor(
     // region private properties
     private var _currentAccountTypeOrdinal: Int by savedStateHandle.state(AccountType.Internal.ordinal)
     private val _inputState by savedStateHandle.flowState(
-        MutableSharedFlow<InputState>(replay = 1, extraBufferCapacity = 3),
+        MutableSharedFlow<InputState>(replay = 1),
         viewModelScope
     )
     private val _userCreationState by savedStateHandle.flowState(
-        MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3),
+        MutableSharedFlow<State>(replay = 1),
         viewModelScope,
         onStateRestored = this::onUserCreationStateRestored
     )
