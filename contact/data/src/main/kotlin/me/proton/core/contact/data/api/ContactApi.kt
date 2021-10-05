@@ -35,24 +35,24 @@ import retrofit2.http.Query
 
 interface ContactApi : BaseRetrofitApi {
 
-    @GET("contacts/{id}")
+    @GET("contacts/v4/contacts/{id}")
     suspend fun getContact(@Path("id") contactId: String): GetContactResponse
 
-    @POST("contacts")
+    @POST("contacts/v4/contacts")
     suspend fun createContacts(@Body request: CreateContactsRequest): CreateContactsResponse
 
-    @GET("contacts")
+    @GET("contacts/v4/contacts")
     suspend fun getContacts(
         @Query("Page") page: Int,
         @Query("PageSize") pageSize: Int,
     ): GetContactsResponse
 
-    @GET("contacts/emails")
+    @GET("contacts/v4/contacts/emails")
     suspend fun getContactEmails(
         @Query("Page") page: Int,
         @Query("PageSize") pageSize: Int,
     ): GetContactEmailsResponse
 
-    @PUT("contacts/delete")
+    @PUT("contacts/v4/contacts/delete")
     suspend fun deleteContacts(@Body request: DeleteContactsRequest): DeleteContactsResponse
 }
