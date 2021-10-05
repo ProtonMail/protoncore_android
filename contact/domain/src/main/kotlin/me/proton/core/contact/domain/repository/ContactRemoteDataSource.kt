@@ -29,4 +29,5 @@ interface ContactRemoteDataSource {
     suspend fun getAllContacts(userId: UserId): List<Contact>
     suspend fun createContacts(userId: UserId, contactCards: List<List<ContactCard>>): List<ContactWithCards>
     suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>)
+    suspend fun updateContact(userId: UserId, contactId: ContactId, contactCards: List<ContactCard>): ContactWithCards
 }

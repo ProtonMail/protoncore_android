@@ -20,6 +20,7 @@ package me.proton.core.contact.data.api
 
 import me.proton.core.contact.data.api.request.CreateContactsRequest
 import me.proton.core.contact.data.api.request.DeleteContactsRequest
+import me.proton.core.contact.data.api.resource.ContactCardsResource
 import me.proton.core.contact.data.api.response.CreateContactsResponse
 import me.proton.core.contact.data.api.response.DeleteContactsResponse
 import me.proton.core.contact.data.api.response.GetContactEmailsResponse
@@ -55,4 +56,10 @@ interface ContactApi : BaseRetrofitApi {
 
     @PUT("contacts/v4/contacts/delete")
     suspend fun deleteContacts(@Body request: DeleteContactsRequest): DeleteContactsResponse
+
+    @PUT("contacts/v4/contacts/{id}")
+    suspend fun updateContact(
+        @Path("id") contactId: String,
+        @Body request: ContactCardsResource
+    ): GetContactResponse
 }

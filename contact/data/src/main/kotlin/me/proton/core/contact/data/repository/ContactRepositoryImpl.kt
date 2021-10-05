@@ -145,4 +145,9 @@ class ContactRepositoryImpl @Inject constructor(
         remoteDataSource.deleteContacts(userId, contactIds)
         localDataSource.deleteContacts(*contactIds.toTypedArray())
     }
+
+    override suspend fun updateContact(userId: UserId, contactId: ContactId, contactCards: List<ContactCard>) {
+        val updatedContactWithCards = remoteDataSource.updateContact(userId, contactId, contactCards)
+        localDataSource.upsertContactWithCards(updatedContactWithCards)
+    }
 }

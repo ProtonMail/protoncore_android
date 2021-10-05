@@ -130,4 +130,15 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
             })
         }
     }
+
+    override suspend fun updateContact(
+        userId: UserId,
+        contactId: ContactId,
+        contactCards: List<ContactCard>
+    ): ContactWithCards {
+        val request = ContactCardsResource(contactCards.map { it.toContactCardResource() })
+        return apiProvider.get<ContactApi>(userId).invoke {
+            updateContact(contactId.id, request)
+        }.valueOrThrow.contact.toContactWithCards(userId)
+    }
 }
