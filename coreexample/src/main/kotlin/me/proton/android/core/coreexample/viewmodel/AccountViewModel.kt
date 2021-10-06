@@ -18,7 +18,7 @@
 
 package me.proton.android.core.coreexample.viewmodel
 
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
@@ -72,7 +72,7 @@ class AccountViewModel @Inject constructor(
 
     val state = _state.asStateFlow()
 
-    fun register(context: ComponentActivity) {
+    fun register(context: FragmentActivity) {
         authOrchestrator.register(context)
         humanVerificationOrchestrator.register(context)
 

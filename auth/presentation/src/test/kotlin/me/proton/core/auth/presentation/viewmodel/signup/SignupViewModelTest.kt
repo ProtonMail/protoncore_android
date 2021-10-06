@@ -59,6 +59,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     // endregion
 
+
     // region test data
     private val testUsername = "test-username"
     private val testPassword = "test-password"
@@ -97,7 +98,8 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             paymentsOrchestrator,
             clientIdProvider,
             humanVerificationManager,
-            humanVerificationOrchestrator
+            humanVerificationOrchestrator,
+            mockk(relaxed = true)
         )
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns "encrypted-$testPassword"
@@ -149,7 +151,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `create Internal user no username set but password set`() = coroutinesTest {
         // GIVEN
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
 
         viewModel.userCreationState.test {
             // WHEN
@@ -203,7 +205,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     fun `create Internal user no recovery method set`() = coroutinesTest {
         // GIVEN
         viewModel.username = testUsername
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -212,7 +214,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
             val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
-            assertEquals(testUsername, successItem.user.name)
+            assertEquals(testUser.userId.id, successItem.userId)
 
             coVerify(exactly = 1) {
                 performCreateUser(
@@ -232,7 +234,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val emailRecovery = RecoveryMethod(RecoveryMethodType.EMAIL, testEmail)
         viewModel.username = testUsername
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.setRecoveryMethod(emailRecovery)
 
         viewModel.userCreationState.test {
@@ -243,7 +245,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
             val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
-            assertEquals(testUsername, successItem.user.name)
+            assertEquals(testUser.userId.id, successItem.userId)
 
             coVerify(exactly = 1) {
                 performCreateUser(
@@ -263,7 +265,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val emailRecovery = RecoveryMethod(RecoveryMethodType.SMS, testPhone)
         viewModel.username = testUsername
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.setRecoveryMethod(emailRecovery)
         viewModel.userCreationState.test {
             // WHEN
@@ -273,7 +275,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
             val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
-            assertEquals(testUsername, successItem.user.name)
+            assertEquals(testUser.userId.id, successItem.userId)
 
             coVerify(exactly = 1) {
                 performCreateUser(
@@ -311,7 +313,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             )
         )
         viewModel.username = testUsername
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -362,7 +364,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     fun `create External user no external email set but password set`() = coroutinesTest {
         // GIVEN
         viewModel.currentAccountType = AccountType.External
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -411,7 +413,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         viewModel.currentAccountType = AccountType.External
         viewModel.externalEmail = testEmail
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()
@@ -420,7 +422,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
             val successItem = awaitItem()
             assertTrue(successItem is SignupViewModel.State.Success)
-            assertEquals(testUsername, successItem.user.name)
+            assertEquals(testUser.userId.id, successItem.userId)
 
             coVerify(exactly = 1) {
                 performCreateExternalUser(
@@ -454,7 +456,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
 
         viewModel.currentAccountType = AccountType.External
         viewModel.externalEmail = testEmail
-        viewModel.password = testPassword
+        viewModel.setPassword(testPassword)
         viewModel.userCreationState.test {
             // WHEN
             viewModel.startCreateUserWorkflow()

@@ -90,7 +90,7 @@ class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBindin
     }
 
     private fun onInputValidationSuccess() = with(binding) {
-        signupViewModel.password = confirmPasswordInput.text.toString()
+        signupViewModel.setPassword(confirmPasswordInput.text.toString())
         if (signupViewModel.currentAccountType == AccountType.External) {
             parentFragmentManager.showExternalAccountEnterCode(destination = signupViewModel.externalEmail!!)
         } else {

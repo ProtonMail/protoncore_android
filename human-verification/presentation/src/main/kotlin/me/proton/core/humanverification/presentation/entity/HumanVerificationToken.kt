@@ -16,20 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity.signup
+package me.proton.core.humanverification.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-enum class RecoveryMethodType {
-    EMAIL,
-    SMS
-}
-
+/**
+ * @param code The resulting token code
+ * @param type Corresponds to [me.proton.core.humanverification.domain.entity.TokenType.value]
+ */
 @Parcelize
-data class RecoveryMethod(
-    val type: RecoveryMethodType,
-    val destination: String
-): Parcelable {
-    val isSet = destination.isNotBlank()
-}
+data class HumanVerificationToken(
+    val code: String,
+    val type: String
+) : Parcelable

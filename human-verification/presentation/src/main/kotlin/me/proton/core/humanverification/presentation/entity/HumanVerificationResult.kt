@@ -23,12 +23,13 @@ import kotlinx.android.parcel.Parcelize
 
 /**
  * Human Verification result entity.
+ * @param clientId Represents [me.proton.core.network.domain.client.ClientId] value
+ * @param clientIdType Corresponds to the [me.proton.core.network.domain.client.ClientIdType.value] value
+ * @param token The resulting token; if null, human verification was cancelled or unsuccessful
  */
 @Parcelize
 data class HumanVerificationResult(
     val clientId: String,
     val clientIdType: String,
-    val tokenType: String?,
-    val tokenCode: String?,
-    val canceled: Boolean = false
+    val token: HumanVerificationToken?
 ) : Parcelable

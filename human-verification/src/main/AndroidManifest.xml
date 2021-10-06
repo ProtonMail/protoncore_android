@@ -4,8 +4,5 @@
     <application
         android:supportsRtl="true">
 
-        <activity android:name=".presentation.ui.HumanVerificationActivity"
-            android:launchMode="singleTop"/>
-
     </application>
 </manifest>

@@ -18,9 +18,13 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
+import android.os.Parcelable
 import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
@@ -37,17 +41,19 @@ import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.viewmodel.AuthViewModel
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
+import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
+import me.proton.core.humanverification.presentation.onHumanVerificationSucceeded
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.PlansOrchestrator
-import me.proton.core.user.domain.entity.User
+import me.proton.core.presentation.savedstate.flowState
+import me.proton.core.presentation.savedstate.state
 import me.proton.core.user.domain.entity.createUserType
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -61,61 +67,88 @@ internal class SignupViewModel @Inject constructor(
     private val paymentsOrchestrator: PaymentsOrchestrator,
     private val clientIdProvider: ClientIdProvider,
     private val humanVerificationManager: HumanVerificationManager,
-    humanVerificationOrchestrator: HumanVerificationOrchestrator
+    humanVerificationOrchestrator: HumanVerificationOrchestrator,
+    savedStateHandle: SavedStateHandle
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
 
     // region private properties
-    private val _inputState = MutableSharedFlow<InputState>(replay = 1, extraBufferCapacity = 3)
-    private val _userCreationState = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
-    private var _recoveryMethod: RecoveryMethod? = null
-    private lateinit var _password: EncryptedString
+    private var _currentAccountTypeOrdinal: Int by savedStateHandle.state(AccountType.Internal.ordinal)
+    private val _inputState by savedStateHandle.flowState(
+        MutableSharedFlow<InputState>(replay = 1),
+        viewModelScope
+    )
+    private val _userCreationState by savedStateHandle.flowState(
+        MutableSharedFlow<State>(replay = 1),
+        viewModelScope,
+        onStateRestored = this::onUserCreationStateRestored
+    )
+    private var _recoveryMethod: RecoveryMethod? by savedStateHandle.state(null)
+    private var _password: EncryptedString? by savedStateHandle.state(null)
 
     // endregion
     // region public properties
-    var subscriptionDetails: SubscriptionDetails? = null
-    val userCreationState = _userCreationState.asSharedFlow()
-    val inputState = _inputState.asSharedFlow()
+    var subscriptionDetails: SubscriptionDetails? by savedStateHandle.state(null)
+    val userCreationState by lazy { _userCreationState.asSharedFlow() }
+    val inputState by lazy { _inputState.asSharedFlow() }
 
-    var currentAccountType: AccountType = AccountType.Internal
-    var username: String? = null
-    var domain: String? = null
-    var externalEmail: String? = null
-
-    var password: String
-        get() = _password.decrypt(keyStoreCrypto)
+    var currentAccountType: AccountType
+        get() = AccountType.values()[_currentAccountTypeOrdinal]
         set(value) {
-            _password = value.encrypt(keyStoreCrypto)
+            _currentAccountTypeOrdinal = value.ordinal
         }
+    var username: String? by savedStateHandle.state(null)
+    var domain: String? by savedStateHandle.state(null)
+    var externalEmail: String? by savedStateHandle.state(null)
 
     override val recoveryEmailAddress: String?
         get() = if (_recoveryMethod?.type == RecoveryMethodType.EMAIL) _recoveryMethod?.destination else null
     // endregion
 
     // region state classes
-    sealed class InputState {
+    sealed class InputState : Parcelable {
+        @Parcelize
         object Ready : InputState()
     }
 
-    sealed class State {
+    sealed class State : Parcelable {
+        @Parcelize
         object Idle : State()
+
+        @Parcelize
+        object HumanVerificationNeeded : State()
+
+        @Parcelize
         object Processing : State()
-        data class Success(val user: User) : State()
+
+        @Parcelize
+        data class Success(val userId: String, val loginUsername: String, val password: EncryptedString) : State()
+
         sealed class Error : State() {
+            @Parcelize
             object HumanVerification : Error()
+
+            @Parcelize
             object PlanChooserCancel : Error()
+
+            @Parcelize
             data class Message(val message: String?) : Error()
         }
     }
     // endregion
 
     // region public API
-    fun getLoginUsername() = when (currentAccountType) {
-        AccountType.Username,
-        AccountType.Internal -> username
-        AccountType.External -> externalEmail
-    }.exhaustive
+
+    fun setPassword(password: String?) {
+        _password = password?.encrypt(keyStoreCrypto)
+    }
 
     fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context)
+        .onHumanVerificationNeeded {
+            _userCreationState.tryEmit(State.HumanVerificationNeeded)
+        }
+        .onHumanVerificationSucceeded {
+            _userCreationState.tryEmit(State.Processing)
+        }
         .onHumanVerificationFailed {
             _userCreationState.tryEmit(State.Error.HumanVerification)
         }
@@ -177,7 +210,7 @@ internal class SignupViewModel @Inject constructor(
         }
     }
 
-    override fun register(context: ComponentActivity) {
+    override fun register(context: FragmentActivity) {
         super.register(context)
         plansOrchestrator.register(context)
         paymentsOrchestrator.register(context)
@@ -188,7 +221,7 @@ internal class SignupViewModel @Inject constructor(
     // region private functions
     private suspend fun createUser() = flow {
         val username = requireNotNull(username) { "Username is not set." }
-        require(this@SignupViewModel::_password.isInitialized) { "Password is not set (initialized)." }
+        val encryptedPassword = requireNotNull(_password) { "Password is not set (initialized)." }
         emit(State.Processing)
 
         val verification = _recoveryMethod?.let {
@@ -204,10 +237,10 @@ internal class SignupViewModel @Inject constructor(
         }
 
         val result = performCreateUser(
-            username = username, password = _password, recoveryEmail = verification.first,
+            username = username, password = encryptedPassword, recoveryEmail = verification.first,
             recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
         )
-        emit(State.Success(result))
+        emit(State.Success(result.userId.id, username, encryptedPassword))
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {
@@ -216,19 +249,26 @@ internal class SignupViewModel @Inject constructor(
 
     private suspend fun createExternalUser() = flow {
         val externalEmail = requireNotNull(externalEmail) { "External email is not set." }
-        require(this@SignupViewModel::_password.isInitialized) { "Password is not set (initialized)." }
+        val encryptedPassword = requireNotNull(_password) { "Password is not set (initialized)." }
         emit(State.Processing)
         val user = performCreateExternalEmailUser(
             email = externalEmail,
-            password = _password,
+            password = encryptedPassword,
             referrer = null
         )
-        emit(State.Success(user))
+        emit(State.Success(user.userId.id, externalEmail, encryptedPassword))
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {
         _userCreationState.tryEmit(it)
     }.launchIn(viewModelScope)
+
+    private fun onUserCreationStateRestored(state: State) {
+        if (state == State.Processing) {
+            // The view model was destroyed while creating the account; try to resume the process:
+            startCreateUserWorkflow()
+        }
+    }
 
     // endregion
 }

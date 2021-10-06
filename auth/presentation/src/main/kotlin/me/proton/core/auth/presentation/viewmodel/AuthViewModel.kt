@@ -19,6 +19,7 @@
 package me.proton.core.auth.presentation.viewmodel
 
 import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
@@ -42,7 +43,7 @@ internal abstract class AuthViewModel(
                 )
             }
 
-    open fun register(context: ComponentActivity) {
+    open fun register(context: FragmentActivity) {
         humanVerificationOrchestrator.register(context)
     }
 }
