@@ -37,6 +37,7 @@ import me.proton.core.humanverification.presentation.databinding.FragmentHumanVe
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.humanverification.presentation.ui.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCaptchaViewModel
+import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -52,6 +53,9 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
     @Inject
     @CaptchaApiHost
     lateinit var captchaApiHost: String
+
+    @Inject
+    lateinit var extraHeaderProvider: ExtraHeaderProvider
 
     private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
 
@@ -99,7 +103,10 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
 
     private fun loadWebView() {
         binding.run {
-            captchaWebView.loadUrl("$captchaUrl?Token=${humanVerificationBase.urlToken}")
+            // At the moment, this is enough to properly load the Captcha with the extra headers.
+            // This behavior could change and we might need to implement a WebViewClient to act as an interceptor.
+            val extraHeaders = extraHeaderProvider.headers.associate { it }
+            captchaWebView.loadUrl("$captchaUrl?Token=${humanVerificationBase.urlToken}", extraHeaders)
         }
     }
 

@@ -1,3 +1,12 @@
+## Human Verification [1.15.3], Network [1.15.5]
+
+Oct 6, 2021
+
+### Changes
+
+- Add ExtraHeaderProvider to pass arbitrary headers to all API requests.
+- Allow captcha WebView to use ExtraHeaderProvider's headers.
+
 ## Network [1.15.4]
 
 5 Oct, 2021

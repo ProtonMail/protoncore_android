@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,21 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.network.domain.client
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+/**
+ * Allows clients to provide a list of headers to be included in all requests to the API.
+ */
+interface ExtraHeaderProvider {
 
-libVersion = Version(1, 15, 5)
+    /** List of headers in a (Key, Value) format. */
+    val headers: List<Pair<String, String>>
+    /** Adds the provided [headers] to the list of extra headers. */
+    fun addHeaders(vararg headers: Pair<String, String>)
+    /** Removes the first header from the list with this [key]. */
+    fun removeFirst(key: String)
+    /** Removes all headers that have this [key]. */
+    fun removeAll(key: String)
+    /** Removes all headers. */
+    fun clear()
 
-android()
-
-dependencies {
-
-    api(
-        project(Module.networkDomain),
-        project(Module.networkData)
-    )
 }
