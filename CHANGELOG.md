@@ -1,4 +1,4 @@
-## Human-Verification [1.15.x]
+## Human-Verification [1.15.4]
 
 ### Changes
 
@@ -10,9 +10,9 @@
 
 ### Dependencies
 
-- Auth [1.15.x]
-- Presentation [1.15.x]
-- User-Settings [1.15.x]
+- Auth [1.15.4]
+- Presentation [1.15.5]
+- User-Settings [1.15.3]
 
 ## Human Verification [1.15.3], Network [1.15.5]
 
