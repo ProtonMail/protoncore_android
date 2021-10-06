@@ -93,7 +93,7 @@ Test Android Instrumented: **1.15.1** - _released on: Sep 15, 2021_
 
 Domain: **1.15** - _released on: Sep 13, 2021_
 
-Presentation: **1.15.4** - _released on: Oct 01, 2021_
+Presentation: **1.15.5** - _released on: Oct 06, 2021_
 
 Data: **1.15** - _released on: Sep 13, 2021_
 
@@ -121,13 +121,13 @@ Crypto Android: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Auth
 
-Auth: **1.15.3** - _released on: Sep 28, 2021_
+Auth: **1.15.4** - _released on: Oct 06, 2021_
 
-Auth Domain: **1.15.2** - _released on: Sep 23, 2021_
+Auth Domain: **1.15.4** - _released on: Oct 06, 2021_
 
-Auth Presentation: **1.15.3** - _released on: Sep 28, 2021_
+Auth Presentation: **1.15.4** - _released on: Oct 06, 2021_
 
-Auth Data: **1.15.2** - _released on: Sep 23, 2021_
+Auth Data: **1.15.4** - _released on: Oct 06, 2021_
 
 ### Account
 
@@ -198,13 +198,13 @@ Mail Settings Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Human Verification
 
-Human Verification: **1.15.3** - _released on: Oct 06, 2021_
+Human Verification: **1.15.4** - _released on: Oct 06, 2021_
 
-Human Verification Domain: **1.15.3** - _released on: Oct 06, 2021_
+Human Verification Domain: **1.15.4** - _released on: Oct 06, 2021_
 
-Human Verification Presentation: **1.15.3** - _released on: Oct 06, 2021_
+Human Verification Presentation: **1.15.4** - _released on: Oct 06, 2021_
 
-Human Verification Data: **1.15.3** - _released on: Oct 06, 2021_
+Human Verification Data: **1.15.4** - _released on: Oct 06, 2021_
 
 ### Countries
 
@@ -238,10 +238,10 @@ Plan Presentation: **1.15** - _released on: Sep 13, 2021_
 
 ### User Settings
 
-User Settings: **1.15.2** - _released on: Sep 23, 2021_
+User Settings: **1.15.3** - _released on: Oct 06, 2021_
 
-User Settings Data: **1.15.2** - _released on: Sep 23, 2021_
+User Settings Data: **1.15.3** - _released on: Oct 06, 2021_
 
-User Settings Domain: **1.15.2** - _released on: Sep 23, 2021_
+User Settings Domain: **1.15.3** - _released on: Oct 06, 2021_
 
-User Settings Presentation: **1.15.2** - _released on: Sep 23, 2021_
+User Settings Presentation: **1.15.3** - _released on: Oct 06, 2021_
