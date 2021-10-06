@@ -21,6 +21,7 @@ package me.proton.core.contact.data.api.resource
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.contact.domain.entity.ContactCard
+import me.proton.core.contact.domain.entity.ContactCardType
 
 @Serializable
 data class ContactCardResource(
@@ -32,14 +33,19 @@ data class ContactCardResource(
     val signature: String? = null
 )
 
-fun ContactCardResource.toContactCard() = ContactCard(
-    type,
-    data,
-    signature
-)
+fun ContactCardResource.toContactCard(): ContactCard {
+    return when (ContactCardType.enumOf(type)?.enum) {
+        ContactCardType.ClearText -> ContactCard.ClearText(data)
+        ContactCardType.Signed -> ContactCard.Signed(data, signature!!)
+        ContactCardType.Encrypted -> ContactCard.Encrypted(data, signature!!)
+        null -> throw IllegalArgumentException("Unknown contact card type $this")
+    }
+}
 
-fun ContactCard.toContactCardResource() = ContactCardResource(
-    type,
-    data,
-    signature
-)
+fun ContactCard.toContactCardResource(): ContactCardResource {
+    return when (this) {
+        is ContactCard.ClearText -> ContactCardResource(ContactCardType.ClearText.value, data, null)
+        is ContactCard.Encrypted -> ContactCardResource(ContactCardType.Encrypted.value, data, signature)
+        is ContactCard.Signed -> ContactCardResource(ContactCardType.Signed.value, data, signature)
+    }
+}

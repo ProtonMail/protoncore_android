@@ -43,6 +43,6 @@ data class DetailedContactResource(
             name,
             contactEmails.map { it.toContactEmail(userId) },
         ),
-        contactCards = cards?.map { it.toContactCard() } ?: emptyList()
+        contactCards = cards?.map { it.toContactCard() }.orEmpty()
     )
 }

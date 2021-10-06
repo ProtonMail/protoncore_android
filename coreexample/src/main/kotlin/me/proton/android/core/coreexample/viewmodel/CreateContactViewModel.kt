@@ -85,7 +85,7 @@ class CreateContactViewModel @Inject constructor(
         }
         val vCardData = vCard.write()
         val vCardSignature = signText(vCardData)
-        return ContactCard(type = 2, data = vCardData, signature = vCardSignature)
+        return ContactCard.Signed(data = vCardData, signature = vCardSignature)
     }
 
     private fun KeyHolderContext.createEncryptedContactCard(seedName: String): ContactCard {
@@ -95,7 +95,7 @@ class CreateContactViewModel @Inject constructor(
         val vCardData = vCard.write()
         val encryptedVCardData = encryptText(vCardData)
         val vCardSignature = signText(vCardData)
-        return ContactCard(type = 3, data = encryptedVCardData, signature = vCardSignature)
+        return ContactCard.Encrypted(data = encryptedVCardData, signature = vCardSignature)
     }
 
     sealed class State {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,25 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.domain.entity
+package me.proton.core.contact.tests
 
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.pgp.Signature
-import me.proton.core.domain.type.IntEnum
+import me.proton.core.contact.domain.entity.ContactCardType
+import org.junit.Test
 
-sealed class ContactCard {
-    data class ClearText(val data: String): ContactCard()
-    data class Signed(val data: String, val signature: Signature): ContactCard()
-    data class Encrypted(val data: Armored, val signature: Signature): ContactCard()
-}
+class ConsistencyTests {
 
-enum class ContactCardType(val value: Int) {
-    ClearText(0),
-    Signed(2),
-    Encrypted(3);
-
-    companion object {
-        val map = values().associateBy { it.value }
-        fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
+    @Test
+    fun `contact card type is consistent`() {
+        assert(ContactCardType.ClearText.value == 0)
+        assert(ContactCardType.Signed.value == 2)
+        assert(ContactCardType.Encrypted.value == 3)
     }
 }

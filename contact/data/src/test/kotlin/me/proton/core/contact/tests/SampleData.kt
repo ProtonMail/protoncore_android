@@ -114,11 +114,7 @@ fun contactWithCards(
     contactCards = cards
 )
 
-fun contactCard(data: String) = ContactCard(
-    type = 0,
-    data = data,
-    signature = null
-)
+fun contactCard(data: String) = ContactCard.ClearText(data = data)
 
 fun contactEmail(
     userId: UserId,
