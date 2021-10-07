@@ -25,7 +25,7 @@ enum class PlanCurrency(val sign: String) {
     EUR("€"), USD("\$"), CHF("CHF");
 
     fun toSubscriptionCurrency(): Currency {
-        return when(this) {
+        return when (this) {
             EUR -> Currency.EUR
             USD -> Currency.USD
             CHF -> Currency.CHF

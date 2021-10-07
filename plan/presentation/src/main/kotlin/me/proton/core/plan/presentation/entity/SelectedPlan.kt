@@ -26,8 +26,8 @@ import me.proton.core.presentation.utils.Price
 
 @Parcelize
 data class SelectedPlan(
-    val planId: String,
     val planName: String,
+    val planDisplayName: String,
     val free: Boolean,
     val cycle: PlanCycle,
     val currency: PlanCurrency,

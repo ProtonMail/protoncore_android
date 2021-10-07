@@ -111,7 +111,12 @@ internal class LoginViewModel @Inject constructor(
         subscriptionDetails: SubscriptionDetails? = null
     ): Job {
         val encryptedPassword = password.encrypt(keyStoreCrypto)
-        return startLoginWorkflowWithEncryptedPassword(username, encryptedPassword, requiredAccountType, subscriptionDetails)
+        return startLoginWorkflowWithEncryptedPassword(
+            username,
+            encryptedPassword,
+            requiredAccountType,
+            subscriptionDetails
+        )
     }
 
     fun startLoginWorkflowWithEncryptedPassword(
@@ -136,7 +141,7 @@ internal class LoginViewModel @Inject constructor(
                 runCatching {
                     performSubscribe(
                         userId = userId, amount = billing.amount, currency = billing.currency,
-                        cycle = billing.cycle, plans = listOf(it.planId), paymentToken = billing.token
+                        cycle = billing.cycle, planNames = listOf(it.planName), paymentToken = billing.token
                     )
                 }
             }

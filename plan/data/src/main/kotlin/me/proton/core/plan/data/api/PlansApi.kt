@@ -28,6 +28,6 @@ internal interface PlansApi : BaseRetrofitApi {
     /**
      * Returns from the API all plans available for the user in the moment.
      */
-    @GET("payments/{api_version}/plans")
-    suspend fun getPlans(@Path("api_version") apiVersion: String): PlansResponse
+    @GET("payments/v4/plans")
+    suspend fun getPlans(): PlansResponse
 }

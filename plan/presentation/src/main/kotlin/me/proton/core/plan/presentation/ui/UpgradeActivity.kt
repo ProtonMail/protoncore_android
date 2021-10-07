@@ -59,7 +59,7 @@ class UpgradeActivity : ProtonActivity<ActivityUpgradeBinding>() {
                 finish()
             } else {
                 val intent = Intent()
-                    .putExtra(ARG_RESULT, UpgradeResult(plan.planId, billing))
+                    .putExtra(ARG_RESULT, UpgradeResult(plan.planName, billing))
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }

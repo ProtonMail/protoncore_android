@@ -38,7 +38,6 @@ dependencies {
 
         // Other
         `retrofit`,
-        `hilt-android`,
         `retrofit-kotlin-serialization`
     )
 

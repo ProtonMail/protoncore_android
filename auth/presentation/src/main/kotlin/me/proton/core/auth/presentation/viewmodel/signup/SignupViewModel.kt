@@ -184,16 +184,16 @@ internal class SignupViewModel @Inject constructor(
     }
 
     fun startCreatePaidUserWorkflow(
-        planId: String,
         planName: String,
+        planDisplayName: String,
         cycle: SubscriptionCycle,
         billingResult: BillingResult
     ) {
         val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
         subscriptionDetails = SubscriptionDetails(
             billingResult = billingResult,
-            planId = planId,
             planName = planName,
+            planDisplayName = planDisplayName,
             cycle = cycle
         )
         if (billingResult.paySuccess) {

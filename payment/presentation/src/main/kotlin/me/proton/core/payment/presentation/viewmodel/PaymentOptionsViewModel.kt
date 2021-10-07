@@ -145,34 +145,34 @@ class PaymentOptionsViewModel @Inject constructor(
 
     fun subscribe(
         userId: UserId?,
-        plan: String, // plan name
+        planName: String, // plan name
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle,
         paymentType: PaymentType
     ) = subscribe(
-        userId, currentPlans.plus(plan), codes, currency, cycle, paymentType
+        userId, currentPlans.plus(planName), codes, currency, cycle, paymentType
     )
 
     fun onThreeDSTokenApproved(
         userId: UserId?,
-        planId: String,
+        planName: String,
         codes: List<String>? = null,
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
         token: String
     ) = onThreeDSTokenApproved(
-        userId, currentPlans.plus(planId), codes, amount, currency, cycle, token
+        userId, currentPlans.plus(planName), codes, amount, currency, cycle, token
     )
 
     fun validatePlan(
         userId: UserId?,
-        planId: String,
+        planName: String,
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle
-    ) = validatePlan(userId, currentPlans.plus(planId).distinct(), codes, currency, cycle)
+    ) = validatePlan(userId, currentPlans.plus(planName).distinct(), codes, currency, cycle)
 
     companion object {
         const val NO_ACTIVE_SUBSCRIPTION = 22110

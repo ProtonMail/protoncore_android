@@ -33,7 +33,7 @@ dependencies {
         // Kotlin
         `kotlin-jdk7`,
         `coroutines-core`,
-        `dagger`
+        `javax-inject`
     )
 
     testImplementation(project(Module.kotlinTest))

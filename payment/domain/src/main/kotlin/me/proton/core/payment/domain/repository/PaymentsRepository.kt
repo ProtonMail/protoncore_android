@@ -29,6 +29,8 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 
+typealias PlanQuantity = Map<String, Int> // the plan name along with the quantity number
+
 interface PaymentsRepository {
 
     // region payment tokens
@@ -98,7 +100,7 @@ interface PaymentsRepository {
     suspend fun validateSubscription(
         sessionUserId: SessionUserId?,
         codes: List<String>? = null,
-        plans: Map<String, Int>,
+        plans: PlanQuantity,
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus
@@ -120,7 +122,7 @@ interface PaymentsRepository {
         currency: Currency,
         payment: PaymentBody?,
         codes: List<String>? = null,
-        planIds: Map<String, Int>,
+        plans: PlanQuantity,
         cycle: SubscriptionCycle
     ): Subscription
     // endregion

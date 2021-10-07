@@ -18,8 +18,6 @@
 
 package me.proton.core.payment.data.repository
 
-import me.proton.core.domain.ApiVersion
-import me.proton.core.domain.ApiVersionName
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.payment.data.api.PaymentsApi
@@ -41,10 +39,10 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.repository.PlanQuantity
 
 class PaymentsRepositoryImpl(
-    private val provider: ApiProvider,
-    @ApiVersion private val apiVersion: ApiVersionName
+    private val provider: ApiProvider
 ) : PaymentsRepository {
 
     /**
@@ -59,7 +57,7 @@ class PaymentsRepositoryImpl(
     ): PaymentToken.CreatePaymentTokenResult =
         provider.get<PaymentsApi>(sessionUserId).invoke {
             val request = CreatePaymentToken(amount, currency.name, PaymentTypeEntity.PayPal, null)
-            createPaymentToken(apiVersion.value, request).toCreatePaymentTokenResult()
+            createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
 
     /**
@@ -87,7 +85,7 @@ class PaymentsRepositoryImpl(
                 )
             )
             val request = CreatePaymentToken(amount, currency.name, payment, null)
-            createPaymentToken(apiVersion.value, request).toCreatePaymentTokenResult()
+            createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
 
     /**
@@ -102,7 +100,7 @@ class PaymentsRepositoryImpl(
     ): PaymentToken.CreatePaymentTokenResult =
         provider.get<PaymentsApi>(sessionUserId).invoke {
             val request = CreatePaymentToken(amount, currency.name, null, paymentMethodId)
-            createPaymentToken(apiVersion.value, request).toCreatePaymentTokenResult()
+            createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
 
     override suspend fun getPaymentTokenStatus(
@@ -110,12 +108,12 @@ class PaymentsRepositoryImpl(
         paymentToken: String
     ): PaymentToken.PaymentTokenStatusResult =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            getPaymentTokenStatus(apiVersion.value, paymentToken).toPaymentTokenStatusResult()
+            getPaymentTokenStatus(paymentToken).toPaymentTokenStatusResult()
         }.valueOrThrow
 
     override suspend fun getAvailablePaymentMethods(sessionUserId: SessionUserId): List<PaymentMethod> =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            getPaymentMethods(apiVersion.value).paymentMethods.map {
+            getPaymentMethods().paymentMethods.map {
                 PaymentMethod(it.id, PaymentMethodType.map[it.type] ?: PaymentMethodType.CARD, it.toDetails())
             }
         }.valueOrThrow
@@ -123,17 +121,19 @@ class PaymentsRepositoryImpl(
     override suspend fun validateSubscription(
         sessionUserId: SessionUserId?,
         codes: List<String>?,
-        plans: Map<String, Int>,
+        plans: PlanQuantity,
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            validateSubscription(apiVersion.value, CheckSubscription(codes, plans, currency.name, cycle.value)).toSubscriptionStatus()
+            validateSubscription(
+                CheckSubscription(codes, plans, currency.name, cycle.value)
+            ).toSubscriptionStatus()
         }.valueOrThrow
 
     override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription? =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            getCurrentSubscription(apiVersion.value).subscription.toSubscription()
+            getCurrentSubscription().subscription.toSubscription()
         }.valueOrThrow
 
     override suspend fun createOrUpdateSubscription(
@@ -142,7 +142,7 @@ class PaymentsRepositoryImpl(
         currency: Currency,
         payment: PaymentBody?,
         codes: List<String>?,
-        planIds: Map<String, Int>,
+        plans: PlanQuantity,
         cycle: SubscriptionCycle
     ): Subscription =
         provider.get<PaymentsApi>(sessionUserId).invoke {
@@ -150,13 +150,12 @@ class PaymentsRepositoryImpl(
                 TokenTypePaymentBody(tokenDetails = TokenDetails(payment.token))
             } else null
             createUpdateSubscription(
-                apiVersion.value,
                 CreateSubscription(
                     amount,
                     currency.name,
                     paymentBodyEntity,
                     codes,
-                    planIds,
+                    plans,
                     cycle.value
                 )
             ).subscription.toSubscription()

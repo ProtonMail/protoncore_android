@@ -56,8 +56,6 @@ internal data class PlanResponse(
     val features: Int,
     @SerialName("Quantity")
     val quantity: Int,
-    @SerialName("State")
-    val state: Int? = null,
     @SerialName("MaxTier")
     val maxTier: Int
 ) {
@@ -78,7 +76,6 @@ internal data class PlanResponse(
         services = services,
         features = features,
         quantity = quantity,
-        state = state,
         maxTier = maxTier
     )
 }

@@ -21,8 +21,8 @@ package me.proton.core.payment.data.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.payment.data.api.request.CheckSubscription
 import me.proton.core.payment.data.api.request.CreatePaymentToken
-import me.proton.core.payment.data.api.response.CheckSubscriptionResponse
 import me.proton.core.payment.data.api.request.CreateSubscription
+import me.proton.core.payment.data.api.response.CheckSubscriptionResponse
 import me.proton.core.payment.data.api.response.CreatePaymentTokenResponse
 import me.proton.core.payment.data.api.response.PaymentMethodsResponse
 import me.proton.core.payment.data.api.response.PaymentTokenStatusResponse
@@ -39,37 +39,37 @@ internal interface PaymentsApi : BaseRetrofitApi {
      * account creation as well as a regular Authenticated for plan upgrade for logged in users.
      * Unauthorized.
      */
-    @POST("payments/{api_version}/tokens")
-    suspend fun createPaymentToken(@Path("api_version") apiVersion: String, @Body body: CreatePaymentToken): CreatePaymentTokenResponse
+    @POST("payments/v4/tokens")
+    suspend fun createPaymentToken(@Body body: CreatePaymentToken): CreatePaymentTokenResponse
 
     /**
      * Could be used during account creation as well as a regular Authenticated for plan upgrade for logged in users.
      * Check payment token status (usually with polling).
      * Unauthorized.
      */
-    @GET("payments/{api_version}/tokens/{token}")
-    suspend fun getPaymentTokenStatus(@Path("api_version") apiVersion: String, @Path("token") token: String): PaymentTokenStatusResponse
+    @GET("payments/v4/tokens/{token}")
+    suspend fun getPaymentTokenStatus(@Path("token") token: String): PaymentTokenStatusResponse
 
     /**
      * Returns existing already saved payment methods.
      * Authorized.
      */
-    @GET("payments/{api_version}/methods")
-    suspend fun getPaymentMethods(@Path("api_version") apiVersion: String): PaymentMethodsResponse
+    @GET("payments/v4/methods")
+    suspend fun getPaymentMethods(): PaymentMethodsResponse
 
     /**
      * Returns current active subscription.
      * Authorized.
      */
-    @GET("payments/{api_version}/subscription")
-    suspend fun getCurrentSubscription(@Path("api_version") apiVersion: String): SubscriptionResponse
+    @GET("payments/v4/subscription")
+    suspend fun getCurrentSubscription(): SubscriptionResponse
 
     /**
      * Creates new or updates the current active subscription.
      * Authorized.
      */
-    @POST("payments/{api_version}/subscription")
-    suspend fun createUpdateSubscription(@Path("api_version") apiVersion: String, @Body body: CreateSubscription): SubscriptionResponse
+    @POST("payments/v4/subscription")
+    suspend fun createUpdateSubscription(@Body body: CreateSubscription): SubscriptionResponse
 
     /**
      * It checks given a particular plans and cycles how much a user should pay.
@@ -77,6 +77,6 @@ internal interface PaymentsApi : BaseRetrofitApi {
      * Should be called upon a user selected any plan, duration and entered a code.
      * Unauthorized.
      */
-    @POST("payments/{api_version}/subscription/check")
-    suspend fun validateSubscription(@Path("api_version") apiVersion: String, @Body body: CheckSubscription): CheckSubscriptionResponse
+    @POST("payments/v4/subscription/check")
+    suspend fun validateSubscription(@Body body: CheckSubscription): CheckSubscriptionResponse
 }

@@ -27,7 +27,7 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.PlanShortDetailsBinding
 import me.proton.core.payment.presentation.entity.PlanShortDetails
-import me.proton.core.presentation.utils.formatPriceDefaultLocale
+import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 
 internal class PlanShortDetailsView @JvmOverloads constructor(
     context: Context,
@@ -44,7 +44,7 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
     var plan: PlanShortDetails? = null
         set(value) = with(binding) {
             val notAvailable = context.getString(R.string.payments_info_not_available)
-            planNameText.text = value?.name ?: notAvailable
+            planNameText.text = value?.displayName ?: notAvailable
             billingPeriodText.text = when (value?.subscriptionCycle) {
                 SubscriptionCycle.MONTHLY -> context.getString(R.string.payments_billing_monthly)
                 SubscriptionCycle.YEARLY -> context.getString(R.string.payments_billing_yearly)
@@ -53,7 +53,7 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
             }
             value?.amount?.let {
                 amountProgress.visibility = View.GONE
-                amountText.text = (it.toDouble() / 100).formatPriceDefaultLocale(value.currency.name)
+                amountText.text = it.toDouble().formatCentsPriceDefaultLocale(value.currency.name)
             } ?: run {
                 amountProgress.visibility = View.VISIBLE
             }

@@ -25,8 +25,6 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
-import me.proton.core.domain.ApiVersion
-import me.proton.core.domain.ApiVersionName
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
 import javax.inject.Singleton
@@ -53,8 +51,4 @@ object ApplicationModule {
     @Singleton
     fun provideCoreExampleRepository(apiProvider: ApiProvider): CoreExampleRepository =
         CoreExampleRepository(apiProvider)
-
-    @Provides
-    @ApiVersion
-    fun provideApiVersion(): ApiVersionName = ApiVersionName.V4
 }

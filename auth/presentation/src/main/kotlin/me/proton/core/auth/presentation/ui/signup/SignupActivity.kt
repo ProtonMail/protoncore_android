@@ -127,7 +127,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
                 PlanCycle.YEARLY -> SubscriptionCycle.YEARLY
                 PlanCycle.TWO_YEARS -> SubscriptionCycle.TWO_YEARS
             }.exhaustive
-            signUpViewModel.startCreatePaidUserWorkflow(plan.planId, plan.planName, cycle, billingResult)
+            signUpViewModel.startCreatePaidUserWorkflow(plan.planName, plan.planDisplayName, cycle, billingResult)
         }
     }
 

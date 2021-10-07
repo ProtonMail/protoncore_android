@@ -19,6 +19,7 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
@@ -44,10 +45,9 @@ class ValidateSubscriptionPlan @Inject constructor(
         return paymentsRepository.validateSubscription(
             userId,
             codes,
-            plans.map { it.lowercase() to 1 }.toMap(),
+            plans.map { it to MAX_PLAN_QUANTITY }.toMap(),
             currency,
             cycle
         )
-
     }
 }

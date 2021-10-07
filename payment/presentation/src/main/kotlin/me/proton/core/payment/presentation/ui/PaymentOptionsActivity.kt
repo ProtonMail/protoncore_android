@@ -19,7 +19,6 @@
 package me.proton.core.payment.presentation.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -176,7 +175,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
             return
         }
         viewModel.onThreeDSTokenApproved(
-            user, input.plan.id, input.codes, amount, input.plan.currency, input.plan.subscriptionCycle, token
+            user, input.plan.name, input.codes, amount, input.plan.currency, input.plan.subscriptionCycle, token
         )
     }
 
@@ -186,7 +185,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
             finish()
             return
         }
-        viewModel.validatePlan(user, input.plan.id, input.codes, input.plan.currency, input.plan.subscriptionCycle)
+        viewModel.validatePlan(user, input.plan.name, input.codes, input.plan.currency, input.plan.subscriptionCycle)
         paymentOptionsAdapter.submitList(availablePaymentMethods)
         binding.apply {
             payButton.isEnabled = true

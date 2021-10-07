@@ -25,8 +25,8 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 
 @Parcelize
 data class PlanShortDetails(
-    val id: String,
     val name: String,
+    val displayName: String,
     val subscriptionCycle: SubscriptionCycle,
     val amount: Long? = null,
     val currency: Currency = Currency.EUR

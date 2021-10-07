@@ -16,10 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.domain
+package me.proton.core.payment.domain
 
-import javax.inject.Qualifier
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class ApiVersion
+// the maximum number of plan items that could be purchased from a mobile app
+const val MAX_PLAN_QUANTITY = 1

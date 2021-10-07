@@ -328,7 +328,7 @@ class PaymentsRepositoryImplTest {
         // WHEN
         val validationResult = repository.validateSubscription(
             sessionUserId = SessionUserId(testUserId),
-            plans = mapOf(Pair("test-plan-id", 1)),
+            plans = mapOf("test-plan-id" to 1),
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY
         )
@@ -346,7 +346,7 @@ class PaymentsRepositoryImplTest {
         val throwable = assertFailsWith(ApiException::class) {
             repository.validateSubscription(
                 sessionUserId = SessionUserId(testUserId),
-                plans = mapOf(Pair("test-plan-id", 1)),
+                plans = mapOf("test-plan-id" to 1),
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY
             )
@@ -379,7 +379,7 @@ class PaymentsRepositoryImplTest {
             amount = 1,
             currency = Currency.CHF,
             codes = null,
-            planIds = mapOf(Pair("test-plan-id", 1)),
+            plans = mapOf("test-plan-id" to 1),
             cycle = SubscriptionCycle.YEARLY,
             payment = PaymentBody.TokenPaymentBody("test-token-id")
         )
@@ -400,7 +400,7 @@ class PaymentsRepositoryImplTest {
                 amount = 1,
                 currency = Currency.CHF,
                 codes = null,
-                planIds = mapOf(Pair("test-plan-id", 1)),
+                plans = mapOf("test-plan-id" to 1),
                 cycle = SubscriptionCycle.YEARLY,
                 payment = PaymentBody.TokenPaymentBody("test-token-id")
             )

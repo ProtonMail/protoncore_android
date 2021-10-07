@@ -49,7 +49,7 @@ android(
             }
         }
         val proxyToken: String? = localProperties.getProperty("PROXY_TOKEN")
-        val host: String = localProperties.getProperty("HOST")?: "payments.proton.black"
+        val host: String = localProperties.getProperty("HOST")?: "proton.black"
 
         buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
         buildConfigField("String", "HOST", host.toBuildConfigValue())

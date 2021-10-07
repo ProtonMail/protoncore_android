@@ -36,17 +36,18 @@ class GetPlansTest {
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testDefaultSupportedPlanIds = listOf("plan-id-1", "plan-id-2")
+    private val testDefaultSupportedPlans = listOf("plan-name-1", "plan-name-2")
     private val testPlan = Plan(
-        id = "plan-id-1",
+        id = "plan-name-1",
         type = 1,
         cycle = 1,
-        name = "Plan 1",
+        name = "plan-name-1",
         title = "Plan Title 1",
         currency = "CHF",
         amount = 10,
         maxDomains = 1,
         maxAddresses = 1,
+        maxCalendars = 1,
         maxSpace = 1,
         maxMembers = 1,
         maxVPN = 1,
@@ -72,11 +73,11 @@ class GetPlansTest {
         // GIVEN
         coEvery { repository.getPlans(testUserId) } returns listOf(testPlan)
         // WHEN
-        val result = useCase.invoke(testDefaultSupportedPlanIds, testUserId)
+        val result = useCase.invoke(testDefaultSupportedPlans, testUserId)
         // THEN
         assertEquals(1, result.size)
         assertEquals(testPlan, result[0])
-        assertEquals("plan-id-1", result[0].id)
+        assertEquals("plan-name-1", result[0].id)
     }
 
     @Test
@@ -106,10 +107,10 @@ class GetPlansTest {
         // GIVEN
         coEvery { repository.getPlans(null) } returns listOf(testPlan)
         // WHEN
-        val result = useCase.invoke(testDefaultSupportedPlanIds, null)
+        val result = useCase.invoke(testDefaultSupportedPlans, null)
         // THEN
         assertEquals(1, result.size)
         assertEquals(testPlan, result[0])
-        assertEquals("plan-id-1", result[0].id)
+        assertEquals("plan-name-1", result[0].id)
     }
 }

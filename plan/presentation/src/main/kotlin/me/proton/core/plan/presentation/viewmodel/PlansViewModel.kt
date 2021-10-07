@@ -152,8 +152,8 @@ class PlansViewModel @Inject constructor(
             startBillingWorkFlow(
                 userId = userId,
                 selectedPlan = PlanShortDetails(
-                    id = selectedPlan.planId,
                     name = selectedPlan.planName,
+                    displayName = selectedPlan.planDisplayName,
                     subscriptionCycle = selectedPlan.cycle.toSubscriptionCycle(),
                     currency = selectedPlan.currency.toSubscriptionCurrency()
                 ),

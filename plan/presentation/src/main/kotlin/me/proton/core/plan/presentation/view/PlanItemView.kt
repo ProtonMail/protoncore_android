@@ -36,10 +36,9 @@ import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
 import me.proton.core.presentation.utils.PRICE_ZERO
-import me.proton.core.presentation.utils.formatPriceDefaultLocale
+import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
-import java.util.Locale
 
 class PlanItemView @JvmOverloads constructor(
     context: Context,
@@ -135,7 +134,7 @@ class PlanItemView @JvmOverloads constructor(
     }
 
     private fun bindPaidPlan(plan: PlanDetailsListItem.PaidPlanDetailsListItem) = with(binding) {
-        planDisplayName = plan.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+        planDisplayName = plan.displayName
         planNameText.text = planDisplayName
         plan.renewalDate?.let {
             planRenewalText.apply {
@@ -203,15 +202,15 @@ class PlanItemView @JvmOverloads constructor(
             }
         }.exhaustive.toDouble()
 
-        planPriceText.text = (monthlyPrice / 100).formatPriceDefaultLocale(selectedCurrency.name)
+        planPriceText.text = monthlyPrice.formatCentsPriceDefaultLocale(selectedCurrency.name)
         planPriceDescriptionText.text = String.format(
             context.getString(R.string.plans_billed_yearly),
-            (billableAmount / 100).formatPriceDefaultLocale(selectedCurrency.name, fractionDigits = 2)
+            billableAmount.formatCentsPriceDefaultLocale(selectedCurrency.name, fractionDigits = 2)
         )
     }
 
     private fun PlanCurrency.indexOrDefault(): Int {
-        val selectedIndex = resources.getStringArray(R.array.supported_currencies).indexOf(sign)
+        val selectedIndex = resources.getStringArray(R.array.supported_currencies).indexOf(name)
         return if (selectedIndex == -1) 0 else selectedIndex
     }
 }

@@ -22,8 +22,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.domain.ApiVersion
-import me.proton.core.domain.ApiVersionName
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
 import me.proton.core.payment.domain.repository.PaymentsRepository
@@ -37,10 +35,9 @@ object PaymentsModule {
     @Provides
     @Singleton
     fun providePaymentsRepository(
-        @ApiVersion apiVersionName: ApiVersionName,
         apiProvider: ApiProvider
     ): PaymentsRepository =
-        PaymentsRepositoryImpl(provider = apiProvider, apiVersion = apiVersionName)
+        PaymentsRepositoryImpl(provider = apiProvider)
 
     @Provides
     @Singleton

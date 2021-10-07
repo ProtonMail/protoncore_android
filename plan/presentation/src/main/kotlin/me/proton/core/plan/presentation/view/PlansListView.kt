@@ -42,8 +42,8 @@ internal class PlansListView @JvmOverloads constructor(
         getView = { parent, inflater -> PlanListViewItemBinding.inflate(inflater, parent, false) },
         onBind = { plan ->
             planDetails.planDetailsListItem = plan
-            planDetails.planSelectionListener = { planId, planName, cycle, currency, amount ->
-                selectPlanListener(SelectedPlan(planId, planName, amount == PRICE_ZERO, cycle, currency, amount))
+            planDetails.planSelectionListener = { planName, planDisplayName, cycle, currency, amount ->
+                selectPlanListener(SelectedPlan(planName, planDisplayName, amount == PRICE_ZERO, cycle, currency, amount))
             }
         },
         diffCallback = PlanDetailsListItem.DiffCallback

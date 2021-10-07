@@ -156,7 +156,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
 
     private fun findOutPlan() = with(input) {
         if (plan.amount == null) {
-            viewModel.validatePlan(user, listOf(plan.id), codes, plan.currency, plan.subscriptionCycle)
+            viewModel.validatePlan(user, listOf(plan.name), codes, plan.currency, plan.subscriptionCycle)
         }
         binding.selectedPlanDetailsLayout.plan = plan
     }
@@ -167,7 +167,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
             return
         }
         with(input) {
-            val plans = listOf(plan.id)
+            val plans = listOf(plan.name)
             viewModel.onThreeDSTokenApproved(
                 user, plans, codes, amount, plan.currency, plan.subscriptionCycle, token
             )
@@ -188,7 +188,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
 
         viewModel.subscribe(
             input.user,
-            input.existingPlans.plus(input.plan.name),
+            input.existingPlanNames.plus(input.plan.name),
             input.codes,
             input.plan.currency,
             input.plan.subscriptionCycle,
