@@ -98,7 +98,6 @@ internal class ProtonApiBackendTests {
     )
     private val cookieStore = mockk<ProtonCookieStore>()
 
-    private lateinit var logger: MockLogger
     private lateinit var client: MockApiClient
 
     private var isNetworkAvailable = true
@@ -133,7 +132,8 @@ internal class ProtonApiBackendTests {
             humanVerificationProvider,
             humanVerificationListener,
             cookieStore,
-            scope
+            scope,
+            cache = { null }
         )
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
@@ -168,7 +168,7 @@ internal class ProtonApiBackendTests {
             session.sessionId,
             sessionProvider,
             humanVerificationProvider,
-            apiManagerFactory.baseOkHttpClient,
+            { apiManagerFactory.baseOkHttpClient },
             listOf(
                 ScalarsConverterFactory.create(),
                 apiManagerFactory.jsonConverter

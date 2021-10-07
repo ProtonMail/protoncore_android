@@ -165,7 +165,8 @@ internal class HumanVerificationTests {
                 humanVerificationProvider,
                 humanVerificationListener,
                 cookieStore,
-                scope
+                scope,
+                cache = { null }
             )
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
 
@@ -186,7 +187,7 @@ internal class HumanVerificationTests {
             sessionId,
             sessionProvider,
             humanVerificationProvider,
-            apiManagerFactory.baseOkHttpClient,
+            { apiManagerFactory.baseOkHttpClient } ,
             listOf(
                 ScalarsConverterFactory.create(),
                 apiManagerFactory.jsonConverter
