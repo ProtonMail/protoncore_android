@@ -37,6 +37,7 @@ fun org.gradle.api.Project.android(
     minSdk: Int = ProtonCore.minSdk,
     targetSdk: Int = ProtonCore.targetSdk,
     useDataBinding: Boolean = false,
+    useViewBinding: Boolean = false,
     config: ExtraConfig = {}
 
 ) = (this as ExtensionAware).extensions.configure<TestedExtension> {
@@ -61,7 +62,7 @@ fun org.gradle.api.Project.android(
 
     // Data/View Binding turned off by default to prevent unneeded generation.
     // You must turn it on if you need it in your module:  android(useDataBinding = true).
-    buildFeatures.viewBinding = useDataBinding
+    buildFeatures.viewBinding = useDataBinding || useViewBinding
     dataBinding.isEnabled = useDataBinding
 
     testOptions {
