@@ -29,7 +29,13 @@ import java.security.SecureRandom
 /**
  * Implementation of the [SrpCrypto] interface which returns the generated proofs based on the SRP library.
  */
-class GOpenPGPSrpCrypto : SrpCrypto {
+class GOpenPGPSrpCrypto(
+    private val saltGenerator: () -> ByteArray = {
+        val salt = ByteArray(10)
+        SecureRandom().nextBytes(salt)
+        salt
+    }
+) : SrpCrypto {
 
     /**
      * Generates SRP Proofs for login.
@@ -59,8 +65,7 @@ class GOpenPGPSrpCrypto : SrpCrypto {
         modulusId: String,
         modulus: String
     ): me.proton.core.crypto.common.srp.Auth {
-        val salt = ByteArray(10)
-        SecureRandom().nextBytes(salt)
+        val salt = saltGenerator()
         // newAuthForVerifier has the version hardcoded internally
         val auth = Srp.newAuthForVerifier(password, modulus, salt)
         val verifier = auth.generateVerifier(SRP_BIT_LENGTH.toLong())
