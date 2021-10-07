@@ -1,3 +1,10 @@
+## Crypto [1.15.3]
+
+### Changes
+
+- Removed internal implementations `PasswordVerifier` and `BigIntegerCalculator`
+  and use `go-srp` to compute the password verifier instead.
+
 ## Network [1.15.6], Android Test [1.15.1]
 
 ### Changes
