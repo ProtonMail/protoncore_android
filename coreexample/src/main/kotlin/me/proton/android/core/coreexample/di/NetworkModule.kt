@@ -120,11 +120,13 @@ class NetworkModule {
         protonCookieStore,
         CoroutineScope(Job() + Dispatchers.Default),
         emptyArray(), emptyList(),
-        cache = Cache(
-            directory = File(context.cacheDir, "http_cache"),
-            maxSize = 10L * 1024L * 1024L // 10 MiB
-        ),
-        extraHeaderProvider
+        cache = {
+            Cache(
+                directory = File(context.cacheDir, "http_cache"),
+                maxSize = 10L * 1024L * 1024L // 10 MiB
+            )
+        },
+        extraHeaderProvider,
     )
 
     @Provides

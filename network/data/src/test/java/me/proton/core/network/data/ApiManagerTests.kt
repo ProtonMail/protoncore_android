@@ -139,7 +139,8 @@ internal class ApiManagerTests {
                 humanVerificationProvider,
                 humanVerificationListener,
                 mockk(),
-                scope
+                scope,
+                cache = { null },
             )
 
         coEvery { dohService.getAlternativeBaseUrls(any()) } returns listOf(proxy1url)

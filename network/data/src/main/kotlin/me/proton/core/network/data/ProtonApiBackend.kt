@@ -70,7 +70,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private val sessionId: SessionId?,
     private val sessionProvider: SessionProvider,
     private val humanVerificationProvider: HumanVerificationProvider,
-    baseOkHttpClient: OkHttpClient,
+    baseOkHttpClient: () -> OkHttpClient,
     converters: List<Converter.Factory>,
     interfaceClass: KClass<Api>,
     private val networkManager: NetworkManager,
@@ -81,8 +81,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
 
     private val api: Api
 
-    init {
-        val builder = baseOkHttpClient.newBuilder()
+    private val okClient by lazy {
+        baseOkHttpClient().newBuilder()
             .addInterceptor { orgChain ->
                 val chain = handleTimeoutTag(orgChain)
                 chain.proceed(prepareHeaders(chain.request()).build())
@@ -92,13 +92,15 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             .addInterceptor(ServerErrorInterceptor())
             .addInterceptor(TooManyRequestInterceptor(sessionId, wallClockMs))
             .addNetworkInterceptor(ServerTimeInterceptor(serverTimeListener))
-        securityStrategy(builder)
+            .apply(securityStrategy)
+            .build()
+    }
 
+    init {
         val baseUrlFixed = if (!baseUrl.endsWith('/')) "$baseUrl/" else baseUrl
-        val okClient = builder.build()
         val retrofitBuilder = Retrofit.Builder()
             .baseUrl(baseUrlFixed)
-            .client(okClient)
+            .callFactory { okClient.newCall(it) }
         converters.forEach(retrofitBuilder::addConverterFactory)
         api = retrofitBuilder
             .build()

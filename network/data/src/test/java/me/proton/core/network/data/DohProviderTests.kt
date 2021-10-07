@@ -66,7 +66,7 @@ internal class DohProviderTests {
         val okHttpClient = OkHttpClient.Builder().build()
         val client = MockApiClient()
         dohProvider = DnsOverHttpsProviderRFC8484(
-            okHttpClient,
+            { okHttpClient },
             webServer.url("/").toString(),
             client,
             networkManager

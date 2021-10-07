@@ -81,7 +81,7 @@ class ApiManagerFactory(
     scope: CoroutineScope,
     private val certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
     private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
-    private val cache: Cache? = null,
+    private val cache: () -> Cache? = { null },
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
 ) {
 
@@ -99,7 +99,7 @@ class ApiManagerFactory(
     @VisibleForTesting
     val baseOkHttpClient by lazy {
         val builder = OkHttpClient.Builder()
-            .cache(cache)
+            .cache(cache())
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
             .readTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)
@@ -117,7 +117,7 @@ class ApiManagerFactory(
 
     private val dohProvider by lazy {
         val dohServices = Constants.DOH_PROVIDERS_URLS.map { serviceUrl ->
-            DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, apiClient, networkManager)
+            DnsOverHttpsProviderRFC8484({ baseOkHttpClient }, serviceUrl, apiClient, networkManager)
         }
         DohProvider(baseUrl, apiClient, dohServices, mainScope, prefs, ::javaMonoClockMs)
     }
@@ -172,13 +172,13 @@ class ApiManagerFactory(
             sessionId,
             sessionProvider,
             humanVerificationProvider,
-            baseOkHttpClient,
+            { baseOkHttpClient },
             listOf(jsonConverter),
             interfaceClass,
             networkManager,
             pinningStrategy,
             ::javaWallClockMs,
-            extraHeaderProvider
+            extraHeaderProvider,
         )
 
         val errorHandlers = createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs) + clientErrorHandlers
@@ -202,13 +202,13 @@ class ApiManagerFactory(
                 sessionId,
                 sessionProvider,
                 humanVerificationProvider,
-                baseOkHttpClient,
+                { baseOkHttpClient },
                 listOf(jsonConverter),
                 interfaceClass,
                 networkManager,
                 alternativePinningStrategy,
                 ::javaWallClockMs,
-                extraHeaderProvider
+                extraHeaderProvider,
             )
         }
 

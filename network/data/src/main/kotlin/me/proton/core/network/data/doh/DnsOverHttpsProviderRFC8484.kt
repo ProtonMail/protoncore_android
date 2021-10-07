@@ -39,13 +39,22 @@ import java.net.URISyntaxException
 import java.util.concurrent.TimeUnit
 
 class DnsOverHttpsProviderRFC8484(
-    baseOkHttpClient: OkHttpClient,
+    baseOkHttpClient: () -> OkHttpClient,
     private val baseUrl: String,
     client: ApiClient,
     private val networkManager: NetworkManager
 ) : DohService {
 
     private val api: DnsOverHttpsRetrofitApi
+
+    private val okClient by lazy {
+        baseOkHttpClient().newBuilder()
+            .connectTimeout(TIMEOUT_S, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT_S, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT_S, TimeUnit.SECONDS)
+            .initLogging(client)
+            .build()
+    }
 
     init {
         require(baseUrl.endsWith('/'))
@@ -62,16 +71,9 @@ class DnsOverHttpsProviderRFC8484(
             }
         }
 
-        val httpClientBuilder = baseOkHttpClient.newBuilder()
-            .connectTimeout(TIMEOUT_S, TimeUnit.SECONDS)
-            .writeTimeout(TIMEOUT_S, TimeUnit.SECONDS)
-            .readTimeout(TIMEOUT_S, TimeUnit.SECONDS)
-            .initLogging(client)
-
-        val okClient = httpClientBuilder.build()
         api = Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(okClient)
+            .callFactory { okClient.newCall(it) }
             .addConverterFactory(converterFactory)
             .build()
             .create(DnsOverHttpsRetrofitApi::class.java)
