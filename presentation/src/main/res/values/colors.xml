@@ -50,6 +50,10 @@
     <color name="apple">#44BD32</color>
     <color name="sunglow">#FBC531</color>
 
+    <color name="port_gore">#1c223d</color>
+    <color name="pickled_bluewood">#29304d</color>
+    <color name="rhino">#353e60</color>
+
     <!-- design color aliases -->
 
     <color name="shade_100">@color/woodsmoke</color>
@@ -108,5 +112,16 @@
     <color name="nav_view_item_text">@color/white</color>
     <color name="nav_view_item_icon">@color/white</color>
     <color name="nav_view_divider">@color/tuna</color>
+
+    <!--  Sidebar navigation colors  -->
+    <color name="sidebar_background">@color/port_gore</color>
+    <color name="sidebar_interaction_weak_norm">@color/pickled_bluewood</color>
+    <color name="sidebar_interaction_weak_pressed">@color/rhino</color>
+    <color name="sidebar_separator">@color/pickled_bluewood</color>
+    <color name="sidebar_text_norm">@color/shade_0</color>
+    <color name="sidebar_text_weak">@color/shade_60</color>
+    <color name="sidebar_icon_norm">@color/shade_0</color>
+    <color name="sidebar_icon_weak">@color/shade_60</color>
+    <color name="sidebar_interaction_pressed">@color/san_marino</color>
 
 </resources>

@@ -1,3 +1,11 @@
+## Presentation [1.15.7]
+
+13 Oct, 2021
+
+### Changes
+
+- Add new colors to the taxonomy for the sidebar component.
+
 ## Auth [1.15.4], Human Verification [1.15.5], User settings [1.15.3], Presentation [1.15.6]
 
 13 Oct, 2021
