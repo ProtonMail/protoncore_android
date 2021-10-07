@@ -54,7 +54,6 @@ dependencies {
     )
 
     androidTestImplementation(
-        project(Module.androidTest).exclude(robolectric), `mockk-android`,
         project(Module.androidInstrumentedTest),
         project(Module.gopenpgp)
     )

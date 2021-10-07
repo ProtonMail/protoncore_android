@@ -52,7 +52,9 @@ dependencies {
         `okhttp-url-connection`,
         `retrofit`,
         `retrofit-kotlin-serialization`,
-        `trustKit`
+        `trustKit`,
+        preference /* trustKit depends on preference. Not having preference breaks processDebugAndroidTestResources
+        task on modules relying on network module. */
     )
 
     testImplementation(
