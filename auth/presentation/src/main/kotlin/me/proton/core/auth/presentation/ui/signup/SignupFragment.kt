@@ -20,7 +20,6 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
-import androidx.databinding.ViewDataBinding
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback

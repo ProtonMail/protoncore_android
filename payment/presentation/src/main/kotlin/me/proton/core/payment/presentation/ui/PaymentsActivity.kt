@@ -23,7 +23,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultLauncher
-import androidx.databinding.ViewDataBinding
 import androidx.viewbinding.ViewBinding
 import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.presentation.R
@@ -32,7 +31,6 @@ import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentOptionsResult
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
 import me.proton.core.payment.presentation.entity.PlanShortDetails
-import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.showToast

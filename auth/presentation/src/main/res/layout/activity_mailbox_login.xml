@@ -16,75 +16,72 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:windowBackground">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:windowBackground">
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            app:liftOnScroll="true">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:title="Title" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollContent"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            tools:title="Title" />
 
-            <LinearLayout
-                style="@style/AuthContent"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            style="@style/AuthContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/titleText"
+                style="@style/ProtonTextView.Title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gap_large"
+                android:text="@string/auth_mailbox_title" />
 
-                <TextView
-                    android:id="@+id/titleText"
-                    style="@style/ProtonTextView.Title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/gap_large"
-                    android:text="@string/auth_mailbox_title" />
+            <me.proton.core.presentation.ui.view.ProtonInput
+                android:id="@+id/mailboxPasswordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_content_top_margin"
+                android:inputType="textPassword"
+                app:actionMode="password_toggle"
+                app:label="@string/auth_mailbox_password_label" />
 
-                <me.proton.core.presentation.ui.view.ProtonInput
-                    android:id="@+id/mailboxPasswordInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/auth_content_top_margin"
-                    android:inputType="textPassword"
-                    app:actionMode="password_toggle"
-                    app:label="@string/auth_mailbox_password_label" />
+            <me.proton.core.presentation.ui.view.ProtonProgressButton
+                android:id="@+id/unlockButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_content_separator_top_margin"
+                android:text="@string/auth_mailbox_unlock_action" />
 
-                <me.proton.core.presentation.ui.view.ProtonProgressButton
-                    android:id="@+id/unlockButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/auth_content_separator_top_margin"
-                    android:text="@string/auth_mailbox_unlock_action" />
+            <me.proton.core.presentation.ui.view.ProtonButton
+                android:id="@+id/forgotPasswordButton"
+                style="@style/ProtonButton.Borderless.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_view_items_top_margin"
+                android:text="@string/auth_forgot_password" />
 
-                <me.proton.core.presentation.ui.view.ProtonButton
-                    android:id="@+id/forgotPasswordButton"
-                    style="@style/ProtonButton.Borderless.Text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/auth_view_items_top_margin"
-                    android:text="@string/auth_forgot_password" />
+        </LinearLayout>
 
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</layout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

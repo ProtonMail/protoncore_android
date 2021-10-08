@@ -29,7 +29,7 @@ plugins {
 
 libVersion = Version(1, 15, 0)
 
-android(useDataBinding = true, useViewBinding = true)
+android(useViewBinding = true)
 
 dependencies {
 
