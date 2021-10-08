@@ -44,13 +44,14 @@ import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.getId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 
 /**
  * Shows the dialog for the Human Verification options and option procedures.
  */
 @AndroidEntryPoint
-class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerificationMainBinding>() {
+class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_human_verification_main) {
 
     companion object {
         private const val ARG_CLIENT_ID = "arg.clientId"
@@ -94,6 +95,8 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
     }
 
     private val viewModel by viewModels<HumanVerificationViewModel>()
+    private val binding by viewBinding(DialogHumanVerificationMainBinding::bind)
+
 
     private val clientIdType: ClientIdType by lazy {
         ClientIdType.getByValue(requireArguments().getString(ARG_CLIENT_ID_TYPE, null))
@@ -196,8 +199,6 @@ class HumanVerificationDialogFragment : ProtonDialogFragment<DialogHumanVerifica
             }
         }
     }
-
-    override fun layoutId(): Int = R.layout.dialog_human_verification_main
 
     private fun setEnabledVerificationMethods(enabledMethods: List<String>) {
         binding.verificationOptions.apply {

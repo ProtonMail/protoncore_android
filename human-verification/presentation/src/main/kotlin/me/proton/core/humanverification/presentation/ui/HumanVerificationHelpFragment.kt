@@ -25,11 +25,11 @@ import me.proton.core.humanverification.presentation.databinding.FragmentHumanVe
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.openBrowserLink
+import me.proton.core.presentation.utils.viewBinding
 
-class HumanVerificationHelpFragment :
-    ProtonDialogFragment<FragmentHumanVerificationHelpBinding>() {
+class HumanVerificationHelpFragment : ProtonDialogFragment(R.layout.fragment_human_verification_help) {
 
-    override fun layoutId(): Int = R.layout.fragment_human_verification_help
+    private val binding by viewBinding(FragmentHumanVerificationHelpBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
