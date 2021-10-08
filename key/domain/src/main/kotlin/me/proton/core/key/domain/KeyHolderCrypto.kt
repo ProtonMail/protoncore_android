@@ -34,6 +34,7 @@ import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
+import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyFileOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
@@ -259,38 +260,49 @@ fun KeyHolderContext.signFile(file: File): Signature =
 /**
  * Verify [signature] of [text] is correctly signed using [PublicKeyRing].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
  * @see [KeyHolderContext.signText]
  */
-fun KeyHolderContext.verifyText(text: String, signature: Signature, validAtUtc: Long = 0): Boolean =
-    publicKeyRing.verifyText(context, text, signature, validAtUtc)
+fun KeyHolderContext.verifyText(
+    text: String,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = publicKeyRing.verifyText(context, text, signature, time)
 
 /**
  * Verify [signature] of [data] is correctly signed using [PublicKeyRing].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
  * @see [KeyHolderContext.signData]
  */
-fun KeyHolderContext.verifyData(data: ByteArray, signature: Signature, validAtUtc: Long = 0): Boolean =
-    publicKeyRing.verifyData(context, data, signature, validAtUtc)
+fun KeyHolderContext.verifyData(
+    data: ByteArray,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Boolean =
+    publicKeyRing.verifyData(context, data, signature, time)
 
 /**
  * Verify [signature] of [file] is correctly signed using [PublicKeyRing].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
  * @see [KeyHolderContext.signFile]
  */
-fun KeyHolderContext.verifyFile(file: DecryptedFile, signature: Signature, validAtUtc: Long = 0): Boolean =
-    publicKeyRing.verifyFile(context, file, signature, validAtUtc)
+fun KeyHolderContext.verifyFile(
+    file: DecryptedFile,
+    signature: Signature,
+    time: VerificationTime = VerificationTime.Now
+): Boolean =
+    publicKeyRing.verifyFile(context, file, signature, time)
 
 /**
  * Encrypt [text] using [PublicKeyRing].
@@ -457,7 +469,7 @@ fun KeyHolderContext.encryptAndSignHashKey(
  * Note: String canonicalization/standardization is applied.
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @throws [CryptoException] if [message] cannot be decrypted.
  *
@@ -466,20 +478,20 @@ fun KeyHolderContext.encryptAndSignHashKey(
 fun KeyHolderContext.decryptAndVerifyText(
     message: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    validAtUtc: Long = 0
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedText =
     context.pgpCrypto.decryptAndVerifyText(
         message,
         verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
-        validAtUtc
+        time
     )
 
 /**
  * Decrypt [message] as [ByteArray] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @throws [CryptoException] if [message] cannot be decrypted.
  *
@@ -488,19 +500,19 @@ fun KeyHolderContext.decryptAndVerifyText(
 fun KeyHolderContext.decryptAndVerifyData(
     message: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    validAtUtc: Long = 0
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedData =
     context.pgpCrypto.decryptAndVerifyData(
         message,
         verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
-        validAtUtc
+        time
     )
 
 /**
  * Decrypt [source] into [destination] using [keyPacket] and verify using [PublicKeyRing].
  *
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @throws [CryptoException] if [source] cannot be decrypted.
  *
@@ -510,14 +522,14 @@ fun KeyHolderContext.decryptAndVerifyFile(
     source: EncryptedFile,
     destination: File,
     keyPacket: KeyPacket,
-    validAtUtc: Long = 0
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedFile =
-    decryptSessionKey(keyPacket).use { key -> decryptAndVerifyFile(source, destination, key, validAtUtc) }
+    decryptSessionKey(keyPacket).use { key -> decryptAndVerifyFile(source, destination, key, time) }
 
 /**
  * Decrypt [source] into [destination] using [sessionKey] and verify using [PublicKeyRing].
  *
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @throws [CryptoException] if [source] cannot be decrypted.
  *
@@ -527,14 +539,14 @@ fun KeyHolderContext.decryptAndVerifyFile(
     source: EncryptedFile,
     destination: File,
     sessionKey: SessionKey,
-    validAtUtc: Long = 0
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedFile =
     context.pgpCrypto.decryptAndVerifyFile(
         source,
         destination,
         sessionKey,
         publicKeyRing.keys.map { it.key },
-        validAtUtc
+        time
     )
 
 /**
@@ -543,7 +555,7 @@ fun KeyHolderContext.decryptAndVerifyFile(
  * Note: String canonicalization/standardization is applied.
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return [DecryptedText], or `null` if [message] cannot be decrypted.
  *
@@ -552,20 +564,20 @@ fun KeyHolderContext.decryptAndVerifyFile(
 fun KeyHolderContext.decryptAndVerifyTextOrNull(
     message: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    validAtUtc: Long = 0
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedText? =
     context.pgpCrypto.decryptAndVerifyTextOrNull(
         message,
         verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
-        validAtUtc
+        time
     )
 
 /**
  * Decrypt [message] as [ByteArray] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return [DecryptedData], or `null` if [message] cannot be decrypted.
  *
@@ -574,19 +586,19 @@ fun KeyHolderContext.decryptAndVerifyTextOrNull(
 fun KeyHolderContext.decryptAndVerifyDataOrNull(
     message: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
-    validAtUtc: Long = 0
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedData? =
     context.pgpCrypto.decryptAndVerifyDataOrNull(
         message,
         verifyKeyRing.keys.map { it.key },
         privateKeyRing.unlockedKeys.map { it.unlockedKey.value },
-        validAtUtc
+        time
     )
 
 /**
  * Decrypt [source] into [destination] using [keyPacket] and verify using [PublicKeyRing].
  *
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *
@@ -596,14 +608,14 @@ fun KeyHolderContext.decryptAndVerifyFileOrNull(
     source: EncryptedFile,
     destination: File,
     keyPacket: KeyPacket,
-    validAtUtc: Long = 0
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedFile? =
-    decryptSessionKeyOrNull(keyPacket)?.use { key -> decryptAndVerifyFileOrNull(source, destination, key, validAtUtc) }
+    decryptSessionKeyOrNull(keyPacket)?.use { key -> decryptAndVerifyFileOrNull(source, destination, key, time) }
 
 /**
  * Decrypt [source] into [destination] using [sessionKey] and verify using [PublicKeyRing].
  *
- * @param validAtUtc UTC time for embedded signature validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *
@@ -613,14 +625,14 @@ fun KeyHolderContext.decryptAndVerifyFileOrNull(
     source: EncryptedFile,
     destination: File,
     sessionKey: SessionKey,
-    validAtUtc: Long = 0
+    time: VerificationTime = VerificationTime.Now
 ): DecryptedFile? =
     context.pgpCrypto.decryptAndVerifyFileOrNull(
         source,
         destination,
         sessionKey,
         publicKeyRing.keys.map { it.key },
-        validAtUtc
+        time
     )
 
 /**

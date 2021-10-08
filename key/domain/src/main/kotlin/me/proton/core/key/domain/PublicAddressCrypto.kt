@@ -23,6 +23,7 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicAddress
@@ -33,7 +34,7 @@ import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 /**
  * Verify [signature] of [text] is correctly signed using this [PublicAddress.publicKeyRing].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -43,13 +44,13 @@ fun PublicAddress.verifyText(
     context: CryptoContext,
     text: String,
     signature: Signature,
-    validAtUtc: Long = 0
-): Boolean = publicKeyRing().verifyText(context, text, signature, validAtUtc)
+    time: VerificationTime = VerificationTime.Now
+): Boolean = publicKeyRing().verifyText(context, text, signature, time)
 
 /**
  * Verify [signature] of [data] is correctly signed using this [PublicAddress.publicKeyRing].
  *
- * @param validAtUtc UTC time for [signature] validation, or 0 to ignore time.
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return true if at least one [PublicKey] verify [signature].
  *
@@ -59,8 +60,8 @@ fun PublicAddress.verifyData(
     context: CryptoContext,
     data: ByteArray,
     signature: Signature,
-    validAtUtc: Long = 0
-): Boolean = publicKeyRing().verifyData(context, data, signature, validAtUtc)
+    time: VerificationTime = VerificationTime.Now
+): Boolean = publicKeyRing().verifyData(context, data, signature, time)
 
 /**
  * Encrypt [text] using this [PublicAddress.primaryKey].

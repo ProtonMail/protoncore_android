@@ -51,6 +51,7 @@ import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationStatus
+import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.pgp.unlockOrNull
 import java.io.Closeable
@@ -104,6 +105,12 @@ class GOpenPGPCrypto : PGPCrypto {
 
     private fun newKeyRing(keys: List<Armored>) =
         Crypto.newKeyRing(null).apply { keys.map { Crypto.newKeyFromArmored(it) }.forEach { addKey(it) } }
+
+    private fun VerificationTime.toUtcSeconds(): Long = when (this) {
+        is VerificationTime.Ignore -> 0
+        is VerificationTime.Now -> Crypto.getUnixTime() // Value updated by updateTime.
+        is VerificationTime.Utc -> seconds
+    }
 
     private fun encrypt(
         plainMessage: PlainMessage,
@@ -400,9 +407,9 @@ class GOpenPGPCrypto : PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        validAtUtc: Long,
+        time: VerificationTime,
     ): DecryptedText = runCatching {
-        decryptAndVerify(message, publicKeys, unlockedKeys, validAtUtc) {
+        decryptAndVerify(message, publicKeys, unlockedKeys, time.toUtcSeconds()) {
             DecryptedText(
                 it.message.string,
                 it.signatureVerificationError.toVerificationStatus()
@@ -414,9 +421,9 @@ class GOpenPGPCrypto : PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
-        validAtUtc: Long,
+        time: VerificationTime,
     ): DecryptedData = runCatching {
-        decryptAndVerify(message, publicKeys, unlockedKeys, validAtUtc) {
+        decryptAndVerify(message, publicKeys, unlockedKeys, time.toUtcSeconds()) {
             DecryptedData(
                 it.message.binary,
                 it.signatureVerificationError.toVerificationStatus()
@@ -429,9 +436,9 @@ class GOpenPGPCrypto : PGPCrypto {
         destination: File,
         sessionKey: SessionKey,
         publicKeys: List<Armored>,
-        validAtUtc: Long
+        time: VerificationTime,
     ): DecryptedFile = runCatching {
-        decryptAndVerify(source, destination, sessionKey, publicKeys, validAtUtc)
+        decryptAndVerify(source, destination, sessionKey, publicKeys, time.toUtcSeconds())
     }.getOrElse { throw CryptoException("File cannot be decrypted.", it) }
 
     override fun decryptSessionKey(
@@ -485,22 +492,22 @@ class GOpenPGPCrypto : PGPCrypto {
         plainText: String,
         signature: Armored,
         publicKey: Armored,
-        validAtUtc: Long
-    ): Boolean = verify(PlainMessage(plainText), signature, publicKey, validAtUtc)
+        time: VerificationTime,
+    ): Boolean = verify(PlainMessage(plainText), signature, publicKey, time.toUtcSeconds())
 
     override fun verifyData(
         data: ByteArray,
         signature: Armored,
         publicKey: Armored,
-        validAtUtc: Long
-    ): Boolean = verify(PlainMessage(data), signature, publicKey, validAtUtc)
+        time: VerificationTime,
+    ): Boolean = verify(PlainMessage(data), signature, publicKey, time.toUtcSeconds())
 
     override fun verifyFile(
         file: DecryptedFile,
         signature: Armored,
         publicKey: Armored,
-        validAtUtc: Long
-    ): Boolean = verify(file.file, signature, publicKey, validAtUtc)
+        time: VerificationTime,
+    ): Boolean = verify(file.file, signature, publicKey, time.toUtcSeconds())
 
     // endregion
 
