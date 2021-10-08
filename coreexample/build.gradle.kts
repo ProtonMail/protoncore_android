@@ -30,7 +30,8 @@ plugins {
 
 android(
     version = Version(1, 16, 0),
-    useDataBinding = true
+    useDataBinding = true,
+    useViewBinding = true
 )
 {
     defaultConfig {

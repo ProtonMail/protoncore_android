@@ -53,7 +53,7 @@ import me.proton.core.util.kotlin.exhaustive
  * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
-class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
+class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(ActivityChooseAddressBinding::inflate) {
 
     private val input: ChooseAddressInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -66,8 +66,6 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>() {
     }
 
     private val viewModel by viewModels<ChooseAddressViewModel>()
-
-    override fun layoutId(): Int = R.layout.activity_choose_address
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

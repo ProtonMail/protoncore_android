@@ -49,7 +49,7 @@ import me.proton.core.plan.presentation.ui.showPlans
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class SignupActivity : AuthActivity<ActivitySignupBinding>() {
+class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate) {
 
     private val signUpViewModel by viewModels<SignupViewModel>()
     private val loginViewModel by viewModels<LoginViewModel>()
@@ -59,8 +59,6 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
         signUpViewModel.currentAccountType = value.requiredAccountType
         value
     }
-
-    override fun layoutId() = R.layout.activity_signup
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

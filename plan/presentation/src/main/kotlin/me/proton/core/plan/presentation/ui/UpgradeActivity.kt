@@ -29,11 +29,11 @@ import me.proton.core.plan.presentation.databinding.ActivityUpgradeBinding
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.UpgradeResult
-import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class UpgradeActivity : ProtonActivity<ActivityUpgradeBinding>() {
+class UpgradeActivity : ProtonViewBindingActivity<ActivityUpgradeBinding>(ActivityUpgradeBinding::inflate) {
 
     @Inject
     lateinit var paymentsOrchestrator: PaymentsOrchestrator
@@ -41,8 +41,6 @@ class UpgradeActivity : ProtonActivity<ActivityUpgradeBinding>() {
     private val input: PlanInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
-
-    override fun layoutId() = R.layout.activity_upgrade
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

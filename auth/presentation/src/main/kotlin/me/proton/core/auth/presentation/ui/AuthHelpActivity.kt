@@ -28,8 +28,7 @@ import me.proton.core.presentation.utils.openBrowserLink
  * Authentication help Activity which offers common authentication problems help.
  * @author Dino Kadrikj.
  */
-class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>() {
-    override fun layoutId(): Int = R.layout.activity_auth_help
+class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>(ActivityAuthHelpBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

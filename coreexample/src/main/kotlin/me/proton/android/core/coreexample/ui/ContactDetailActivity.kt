@@ -28,21 +28,19 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.android.core.coreexample.R
 import me.proton.android.core.coreexample.databinding.ActivityContactDetailsBinding
 import me.proton.android.core.coreexample.viewmodel.ContactDetailViewModel
 import me.proton.android.core.coreexample.viewmodel.ContactDetailViewModel.Companion.ARG_CONTACT_ID
 import me.proton.core.contact.domain.entity.ContactId
-import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class ContactDetailActivity : ProtonActivity<ActivityContactDetailsBinding>() {
+class ContactDetailActivity :
+    ProtonViewBindingActivity<ActivityContactDetailsBinding>(ActivityContactDetailsBinding::inflate) {
 
     private val viewModel: ContactDetailViewModel by viewModels()
-
-    override fun layoutId(): Int = R.layout.activity_contact_details
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

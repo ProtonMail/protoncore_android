@@ -43,7 +43,7 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>() {
+class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(ActivityPaymentOptionsBinding::inflate) {
 
     private val viewModel by viewModels<PaymentOptionsViewModel>()
 
@@ -81,8 +81,6 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
         onItemClick = ::onPaymentMethodClicked,
         diffCallback = PaymentOptionUIModel.DiffCallback
     )
-
-    override fun layoutId(): Int = R.layout.activity_payment_options
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

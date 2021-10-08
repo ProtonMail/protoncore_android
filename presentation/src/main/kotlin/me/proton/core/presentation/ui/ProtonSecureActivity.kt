@@ -19,10 +19,13 @@
 package me.proton.core.presentation.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.WindowManager
-import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 
-abstract class ProtonSecureActivity<DB: ViewDataBinding>: ProtonActivity<DB>() {
+abstract class ProtonSecureActivity<ViewBindingT: ViewBinding>(
+    bindingInflater: (LayoutInflater) -> ViewBindingT
+): ProtonViewBindingActivity<ViewBindingT>(bindingInflater) {
 
     /** Can be overridden to modify the protections applied to the extending activity */
     @Suppress("MemberVisibilityCanBePrivate")

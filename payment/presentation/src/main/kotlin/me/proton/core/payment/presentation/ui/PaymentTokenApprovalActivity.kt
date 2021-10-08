@@ -49,7 +49,8 @@ import me.proton.core.util.kotlin.exhaustive
  */
 @SuppressLint("SetJavaScriptEnabled")
 @AndroidEntryPoint
-class PaymentTokenApprovalActivity : PaymentsActivity<ActivityPaymentTokenApprovalBinding>() {
+class PaymentTokenApprovalActivity :
+    PaymentsActivity<ActivityPaymentTokenApprovalBinding>(ActivityPaymentTokenApprovalBinding::inflate) {
 
     private val viewModel by viewModels<PaymentTokenApprovalViewModel>()
 
@@ -78,8 +79,6 @@ class PaymentTokenApprovalActivity : PaymentsActivity<ActivityPaymentTokenApprov
             }
         }
     }
-
-    override fun layoutId(): Int = R.layout.activity_payment_token_approval
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

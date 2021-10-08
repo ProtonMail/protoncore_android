@@ -20,9 +20,8 @@ package me.proton.android.core.coreexample.ui
 
 import android.os.Bundle
 import android.text.InputType
-import me.proton.android.core.coreexample.R
 import me.proton.android.core.coreexample.databinding.ActivityCustomViewsBinding
-import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.view.ProtonProgressButton
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.forEach
@@ -31,9 +30,7 @@ import me.proton.core.util.kotlin.forEach
  * Demonstrates the custom views from presentation module.
  * @author Dino Kadrikj.
  */
-class CustomViewsActivity : ProtonActivity<ActivityCustomViewsBinding>() {
-    override fun layoutId(): Int = R.layout.activity_custom_views
-
+class CustomViewsActivity : ProtonViewBindingActivity<ActivityCustomViewsBinding>(ActivityCustomViewsBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -45,15 +45,13 @@ import me.proton.core.util.kotlin.exhaustive
  * Login Activity which allows users to Login to any Proton client application.
  */
 @AndroidEntryPoint
-class LoginActivity : AuthActivity<ActivityLoginBinding>() {
+class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
 
     private val viewModel by viewModels<LoginViewModel>()
 
     private val input: LoginInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
-
-    override fun layoutId(): Int = R.layout.activity_login
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
