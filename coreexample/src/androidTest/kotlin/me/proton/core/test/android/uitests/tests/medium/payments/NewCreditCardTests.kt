@@ -16,12 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.payments
+package me.proton.core.test.android.uitests.tests.medium.payments
 
 import me.proton.core.payment.presentation.R
-import me.proton.core.test.android.instrumented.builders.OnView
 import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
+import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
@@ -31,17 +31,17 @@ import org.junit.Before
 import org.junit.Test
 
 class NewCreditCardTests : BaseTest() {
-
-    private val user = users.getUser {
-        !it.isPaid && it.cards.isEmpty() && it.paypal.isEmpty() && it.isOnePasswordWithUsername
-    }
     private val newCreditCardRobot = AddCreditCardRobot()
+
+    companion object {
+        val userWithoutCard: User = quark.userCreate()
+    }
 
     @Before
     fun login() {
         AddAccountRobot()
             .signIn()
-            .loginUser<CoreexampleRobot>(user)
+            .loginUser<CoreexampleRobot>(userWithoutCard)
             .plansUpgrade()
             .selectPlan<AddCreditCardRobot>(Plan.Plus)
             .verify { billingDetailsDisplayed(Plan.Plus, "yearly", Currency.Euro.symbol, "48.00") }

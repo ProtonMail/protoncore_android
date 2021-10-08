@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.auth
+package me.proton.core.test.android.uitests.tests.medium.auth
 
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.test.android.robots.auth.AddAccountRobot

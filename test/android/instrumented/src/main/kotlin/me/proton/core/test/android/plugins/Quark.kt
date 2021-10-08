@@ -29,10 +29,9 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.TimeUnit
 
-object Quark {
+class Quark(private val host: String, private val proxyToken: String, internalApiJsonPath: String) {
     @Serializable
     data class InternalApi(
-        val baseUrl: String,
         val endpoints: LinkedHashMap<InternalApiEndpoint, String>,
         val constants: LinkedHashMap<String, String>
     )
@@ -51,8 +50,6 @@ object Quark {
         .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
-    private const val internalApiJsonPath: String = "sensitive/internal_apis.json"
-
     private val internalApi: InternalApi = InstrumentationRegistry
         .getInstrumentation()
         .context
@@ -64,8 +61,8 @@ object Quark {
 
     private fun quarkRequest(endpoint: String, args: Array<String> = emptyArray()): String {
         val argString = args.filter { it.isNotEmpty() }.joinToString("&")
-        val url = "https://${internalApi.baseUrl}$endpoint?$argString"
-        val req = Request.Builder().url(url).build()
+        val url = "https://${host}$endpoint?$argString"
+        val req = Request.Builder().url(url).header("x-atlas-secret", proxyToken).build()
 
         client.newCall(req).execute().use {
             Log.d(testTag, "\nSent request to endpoint : $endpoint; Response Code: ${it.code}")
@@ -103,8 +100,8 @@ object Quark {
         val args = arrayOf(
             "-u=${user.name}",
             "-p=${user.password}",
-            "-x=${Constants.PAYPAL_USERNAME.value}",
-            "-z=${Constants.PAYPAL_PASSWORD.value}",
+            "-x=${internalApi.constants["PAYPAL_USERNAME"]!!}",
+            "-z=${internalApi.constants["PAYPAL_PASSWORD"]!!}",
             "-t=paypal"
         )
         internalApi.endpoints[InternalApiEndpoint.PAYMENTS_SEED_PAYMENT_METHOD]?.let {
@@ -122,6 +119,7 @@ object Quark {
             if (user.name.isNotEmpty()) "-p=${user.password}" else "",
             if (createAddress) "-c=true" else "",
             if (user.passphrase.isNotEmpty()) "-m=${user.passphrase}" else "",
+            if (user.recoveryEmail.isNotEmpty()) "-r=${user.recoveryEmail}" else "",
             "-k=$keysEncryption"
         )
 
@@ -129,9 +127,5 @@ object Quark {
         return user
     }
 
-    enum class Constants(val value: String) {
-        DEFAULT_VERIFICATION_CODE(internalApi.constants["DEFAULT_VERIFICATION_CODE"]!!),
-        PAYPAL_USERNAME(internalApi.constants["PAYPAL_USERNAME"]!!),
-        PAYPAL_PASSWORD(internalApi.constants["PAYPAL_PASSWORD"]!!)
-    }
+    val defaultVerificationCode = internalApi.constants["DEFAULT_VERIFICATION_CODE"]!!
 }

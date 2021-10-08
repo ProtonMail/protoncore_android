@@ -16,9 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.auth.login
+package me.proton.core.test.android.uitests.tests.medium.auth.login
 
-import me.proton.core.test.android.plugins.Quark.jailUnban
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.auth.login.TwoFaRobot
@@ -38,7 +37,7 @@ class TwoFaTests : BaseTest() {
         AddAccountRobot()
             .signIn()
             .loginUser<TwoFaRobot>(user)
-        jailUnban()
+        quark.jailUnban()
     }
 
     @Test

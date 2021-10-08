@@ -16,49 +16,65 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.auth.signup
+package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
 import me.proton.android.core.coreexample.BuildConfig
-import me.proton.core.test.android.instrumented.utils.StringUtils
+import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.android.plugins.data.Plan.Free
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.humanverification.CodeVerificationRobot
+import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
-class UsernameSetupTests : BaseTest() {
+class ExternalSetupTests : BaseTest() {
 
-    private val chooseUsernameRobot = ChooseUsernameRobot()
+    private val chooseUsernameRobotExt = ChooseUsernameRobot()
 
     @Before
-    fun navigateToSignup() {
+    fun closeWelcomeScreen() {
+        quark.jailUnban()
         CoreRobot()
             .device
             .clickBackBtn()
 
         CoreexampleRobot()
-            .signup()
+            .signupExternal()
+            .verify { chooseUsernameElementsDisplayed() }
+    }
+
+    @Test
+    fun switchToInternalAndBack() {
+        chooseUsernameRobotExt
+            .switchSignupType()
             .verify {
                 chooseUsernameElementsDisplayed()
                 suffixDisplayed(BuildConfig.HOST)
+                switchToExternalDisplayed()
+            }
+
+        chooseUsernameRobotExt
+            .switchSignupType()
+            .verify {
+                chooseUsernameElementsDisplayed()
+                switchToSecureDisplayed()
             }
     }
 
     @Test
-    fun navigateToPasswordSetup() {
-        chooseUsernameRobot
-            .username(StringUtils.randomString())
-            .next()
-            .verify { passwordSetupElementsDisplayed() }
-    }
+    fun emailCodeVerification() {
+        val user = User(name = "proton@example.lt")
+        val defaultCode = quark.defaultVerificationCode
 
-    @Test
-    fun usernameAlreadyExists() {
-        val existentUsername = users.getUser().name
-        chooseUsernameRobot
-            .username(existentUsername)
+        chooseUsernameRobotExt
+            .username(user.name)
             .next()
-            .verify { errorSnackbarDisplayed("Username already used") }
+            .setAndConfirmPassword<CodeVerificationRobot>(user.password)
+            .setCode(defaultCode)
+            .verifyCode<SelectPlanRobot>()
+            .verify { canSelectPlan(Free) }
     }
 }

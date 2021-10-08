@@ -42,8 +42,8 @@ class AddAccountRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun addAccountElementsDisplayed() {
-            view.withId(R.id.sign_in).wait()
-            view.withId(R.id.sign_up).wait()
+            view.withId(R.id.sign_in).checkDisplayed()
+            view.withId(R.id.sign_up).checkDisplayed()
         }
     }
 

@@ -16,13 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.auth.login
+package me.proton.core.test.android.uitests.tests.medium.auth.login
 
 import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.plugins.Quark
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
@@ -30,7 +29,6 @@ import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Ignore
 import org.junit.Test
 

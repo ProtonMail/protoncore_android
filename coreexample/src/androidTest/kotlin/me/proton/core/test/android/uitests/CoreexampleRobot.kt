@@ -19,6 +19,7 @@
 package me.proton.core.test.android.uitests
 
 import android.view.ViewGroup
+import android.widget.ScrollView
 import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountState.Ready
@@ -53,22 +54,26 @@ open class CoreexampleRobot : CoreRobot() {
     fun settingsRecoveryEmail(): RecoveryEmailRobot = clickElement(R.id.settingsRecovery)
     fun settingsPasswordManagement(): PasswordManagementRobot = clickElement(R.id.settingsPassword)
 
-    fun accountSwitcher(): AccountSwitcherRobot = clickElement(R.id.accountPrimaryView, ViewGroup::class.java)
+    fun accountSwitcher(): AccountSwitcherRobot {
+        view.instanceOf(ScrollView::class.java).swipeDown()
+        return clickElement(R.id.accountPrimaryView, ViewGroup::class.java)
+    }
 
     class Verify : CoreVerify() {
 
         fun userStateIs(user: User, accountState: AccountState, sessionState: SessionState?) {
             val userState = getUserState(user, accountState, sessionState)
-            view.withText(userState).wait().checkDisplayed()
+            view.instanceOf(ScrollView::class.java).swipeUp()
+            view.withText(userState).checkDisplayed()
         }
 
         fun coreexampleElementsDisplayed() {
-            view.withId(R.id.trigger_human_ver).wait()
-            view.withId(R.id.signupExternal).wait()
+            view.withId(R.id.trigger_human_ver).checkDisplayed()
+            view.withId(R.id.signupExternal).checkDisplayed()
         }
 
         fun primaryUserIs(user: User) {
-            view.withId(R.id.account_email_textview).startsWith("${user.name}@").wait()
+            view.withId(R.id.account_email_textview).startsWith("${user.name}@").checkDisplayed()
         }
     }
 

@@ -16,28 +16,30 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.usersettings
+package me.proton.core.test.android.uitests.tests.medium.usersettings
 
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
-import me.proton.core.test.android.plugins.Quark
 import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.plugins.data.randomPaidPlan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.settings.PasswordManagementRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Test
-import me.proton.core.usersettings.R as UR
 
 class PasswordManagementTests : BaseTest() {
 
     private val passwordManagementRobot = PasswordManagementRobot()
-    private val user = users.getUser { !it.isPaid }
+
+    companion object {
+        val freeUser = quark.userCreate()
+        val paidUser = quark.seedSubscriber()
+    }
 
     private fun navigateToPasswordManagement(user: User) {
+        quark.jailUnban()
         AddAccountRobot()
             .signIn()
             .loginUser<CoreexampleRobot>(user)
@@ -47,17 +49,17 @@ class PasswordManagementTests : BaseTest() {
 
     @Test
     fun passwordMismatch() {
-        navigateToPasswordManagement(user)
+        navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
-            .changePassword<PasswordManagementRobot>(user.password, randomString(), randomString())
+            .changePassword<PasswordManagementRobot>(freeUser.password, randomString(), randomString())
             .verify { inputErrorDisplayed(R.string.auth_signup_error_passwords_do_not_match) }
     }
 
     @Test
     fun incorrectPassword() {
         val password = randomString()
-        navigateToPasswordManagement(user)
+        navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
             .changePassword<PasswordManagementRobot>(randomString(), password, password)
@@ -67,7 +69,7 @@ class PasswordManagementTests : BaseTest() {
     @Test
     fun incompletePassword() {
         val password = randomString(stringLength = 3)
-        navigateToPasswordManagement(user)
+        navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
             .save<PasswordManagementRobot>()
@@ -80,27 +82,22 @@ class PasswordManagementTests : BaseTest() {
 
     @Test
     fun updatePasswordFreeUser() {
-        val freeUser = Quark.userCreate()
-        val password = randomString()
         navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
-            .changePassword<CoreexampleRobot>(freeUser.password, password, password)
+            .changePassword<CoreexampleRobot>(freeUser.password, freeUser.password, freeUser.password)
             .verify {
                 coreexampleElementsDisplayed()
                 userStateIs(freeUser, AccountState.Ready, SessionState.Authenticated)
             }
     }
 
-
     @Test
     fun updatePasswordPaidUser() {
-        val paidUser = Quark.seedSubscriber()
-        val password = randomString()
         navigateToPasswordManagement(paidUser)
 
         passwordManagementRobot
-            .changePassword<CoreexampleRobot>(paidUser.password, password, password)
+            .changePassword<CoreexampleRobot>(paidUser.password, paidUser.password, paidUser.password)
             .verify {
                 coreexampleElementsDisplayed()
                 userStateIs(paidUser, AccountState.Ready, SessionState.Authenticated)
@@ -109,7 +106,7 @@ class PasswordManagementTests : BaseTest() {
 
     @Test
     fun backFromPasswordManagement() {
-        navigateToPasswordManagement(user)
+        navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
             .back<PasswordManagementRobot>()

@@ -21,141 +21,126 @@ package me.proton.core.test.android.instrumented.builders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.test.android.instrumented.ui.Actions.clickOnMatchedDescendant
-import me.proton.core.test.android.instrumented.waits.UIWaits.waitForView
-import me.proton.core.test.android.instrumented.waits.UIWaits.waitUntilRecyclerViewPopulated
-import me.proton.core.test.android.instrumented.waits.UIWaits.waitUntilViewIsGone
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf
 
 /**
  * Builder like class that simplifies syntax for actions and verifications on [RecyclerView.ViewHolder].
  */
-class OnRecyclerView {
-    private var id: Int? = null
+class OnRecyclerView : ConditionWatcher {
+    private var position: Int? = null
+    private val matchers: java.util.ArrayList<Matcher<View>> = arrayListOf()
+    private var viewHolderMatcher: Matcher<RecyclerView.ViewHolder>? = null
+    private var itemChildViewMatcher: Matcher<View>? = null
 
-    class Builder(private val id: Int) {
-        private var viewHolderMatcher: Matcher<RecyclerView.ViewHolder>? = null
-        private var position: Int? = null
-        private var itemChildViewMatcher: Matcher<View>? = null
-
-
-        /** [RecyclerViewActions] **/
-        fun click(): ViewInteraction {
-            viewAction =
-                /** When itemChildViewMatcher is null use [ViewActions.click]. **/
-                itemChildViewMatcher?.let { clickOnMatchedDescendant(itemChildViewMatcher!!) } ?: ViewActions.click()
-            return perform()
-        }
-
-        fun doubleClick(): ViewInteraction {
-            viewAction = ViewActions.doubleClick()
-            return perform()
-        }
-
-        fun longClick(): ViewInteraction {
-            viewAction = ViewActions.longClick()
-            return perform()
-        }
-
-        fun swipeDown(): ViewInteraction {
-            viewAction = ViewActions.swipeDown()
-            return perform()
-        }
-
-        fun swipeLeft(): ViewInteraction {
-            viewAction = ViewActions.swipeLeft()
-            return perform()
-        }
-
-        fun swipeRight(): ViewInteraction {
-            viewAction = ViewActions.swipeRight()
-            return perform()
-        }
-
-        fun swipeUp(): ViewInteraction {
-            viewAction = ViewActions.swipeUp()
-            return perform()
-        }
-
-
-        /** Wait functions. **/
-        fun wait() = apply { waitForView(viewInteraction()) }
-
-        fun waitUntilGone() = apply { waitUntilViewIsGone(viewInteraction()) }
-
-        fun waitUntilPopulated() = apply {
-            waitForView(viewInteraction())
-            waitUntilRecyclerViewPopulated(id)
-        }
-
-
-        /** Wrapper for [RecyclerViewActions.scrollToHolder]. **/
-        fun scrollToHolder(viewHolderMatcher: Matcher<RecyclerView.ViewHolder>): ViewInteraction =
-            Espresso.onView(viewMatcher()).perform(RecyclerViewActions.scrollToHolder(viewHolderMatcher))
-
-        /** Wrapper for [RecyclerViewActions.actionOnHolderItem]. **/
-        fun onHolderItem(viewHolderMatcher: Matcher<RecyclerView.ViewHolder>) =
-            apply { this.viewHolderMatcher = viewHolderMatcher }
-
-        /** Wrapper for [RecyclerViewActions.actionOnItemAtPosition]. **/
-        fun onItemAtPosition(position: Int) =
-            apply { this.position = position }
-
-        /** Points to perform an action on [RecyclerView.ViewHolder] child or descendant. **/
-        fun onItemChildView(view: OnView) = apply { itemChildViewMatcher = view.matcher() }
-
-        /** [ViewInteraction] for the [RecyclerView] instance. **/
-        private fun viewInteraction(): ViewInteraction = Espresso.onView(viewMatcher())
-
-        /** Performs action on [RecyclerView] based on action defined by [OnRecyclerView.Builder]. **/
-        private fun perform(): ViewInteraction {
-            when {
-                viewHolderMatcher != null -> {
-                    return waitForView(viewInteraction()).perform(actionOnHolderItem(viewHolderMatcher, viewAction))
-                }
-                position != null -> {
-                    return waitForView(viewInteraction())
-                        .perform(
-                            actionOnItemAtPosition<RecyclerView.ViewHolder?>(
-                                position!!,
-                                viewAction
-                            )
-                        )
-                }
-                else -> {
-                    throw PerformException
-                        .Builder()
-                        .withActionDescription(
-                            "Unable to perform RecyclerView action when " +
-                                "viewHolderMatcher and position values are null! viewHolderMatcher or position " +
-                                "must be provided."
-                        )
-                        .build()
-                }
-            }
-        }
-
-        /** [ViewMatchers] to locate [RecyclerView] element in hierarchy. **/
-        private fun viewMatcher(): Matcher<View> = AllOf.allOf(ViewMatchers.withId(id))
-
-        companion object {
-            /** Default [ViewAction] for [OnRecyclerView] instance. **/
-            private var viewAction: ViewAction? = ViewActions.click()
-        }
+    /** [ViewInteraction] for the [RecyclerView] instance. **/
+    private fun viewInteraction(
+        viewAssertion: ViewAssertion = ViewAssertions.matches(ViewMatchers.isDisplayed())
+    ): ViewInteraction {
+        waitForCondition({ onView(viewMatcher()).check(viewAssertion) })
+        return onView(viewMatcher())
     }
 
-    fun withId(id: Int): Builder {
-        this.id = id
-        return Builder(id)
+    /** Final matcher for the view. **/
+    private fun viewMatcher(): Matcher<View> = AllOf.allOf(matchers)
+
+    /** Matcher wrappers **/
+    fun withId(id: Int) = apply {
+        matchers.add(ViewMatchers.withId(id))
+    }
+
+    fun withText(text: String) = apply {
+        matchers.add(ViewMatchers.withText(text))
+    }
+
+    /** [RecyclerViewActions] **/
+    fun click() = apply {
+        perform(ViewActions.click())
+    }
+
+    fun doubleClick() = apply {
+        perform(ViewActions.doubleClick())
+    }
+
+    fun longClick() = apply {
+        perform(ViewActions.longClick())
+    }
+
+    fun swipeDown() = apply {
+        perform(ViewActions.swipeDown())
+    }
+
+    fun swipeLeft() = apply {
+        perform(ViewActions.swipeLeft())
+    }
+
+    fun swipeRight() = apply {
+        perform(ViewActions.swipeRight())
+    }
+
+    fun swipeUp() = apply {
+        perform(ViewActions.swipeUp())
+    }
+
+    fun waitUntilGone() = apply {
+        waitForCondition({ viewInteraction().check(ViewAssertions.doesNotExist()) })
+    }
+
+    fun scrollToHolder(viewHolderMatcher: Matcher<RecyclerView.ViewHolder>) = apply {
+        viewInteraction().perform(RecyclerViewActions.scrollToHolder(viewHolderMatcher))
+    }
+
+    /** Wrapper for [RecyclerViewActions.actionOnHolderItem]. **/
+    fun onHolderItem(viewHolderMatcher: Matcher<RecyclerView.ViewHolder>) = apply {
+        this.viewHolderMatcher = viewHolderMatcher
+    }
+
+    /** Wrapper for [RecyclerViewActions.actionOnItemAtPosition]. **/
+    fun onItemAtPosition(position: Int) = apply {
+        this.position = position
+    }
+
+    /** Points to perform an action on [RecyclerView.ViewHolder] child or descendant. **/
+    fun onItemChildView(view: OnView) = apply {
+        itemChildViewMatcher = view.viewMatcher()
+    }
+
+    /** Performs action on [RecyclerView] based on action defined by [OnRecyclerView.Builder]. **/
+    private fun perform(viewAction: ViewAction): ViewInteraction {
+        itemChildViewMatcher?.let {
+            return viewInteraction().perform(clickOnMatchedDescendant(itemChildViewMatcher!!))
+        }
+        viewHolderMatcher?.let {
+            return viewInteraction().perform(actionOnHolderItem(viewHolderMatcher, viewAction))
+        }
+        position?.let {
+            return viewInteraction()
+                .perform(
+                    actionOnItemAtPosition<RecyclerView.ViewHolder?>(
+                        position!!,
+                        viewAction
+                    )
+                )
+        }
+
+        throw PerformException
+            .Builder()
+            .withActionDescription(
+                "Unable to perform RecyclerView action when viewHolderMatcher, itemChildViewMatcher and " +
+                    "position values are null! viewHolderMatcher, itemChildViewMatcher or position must be provided."
+            )
+            .build()
     }
 }

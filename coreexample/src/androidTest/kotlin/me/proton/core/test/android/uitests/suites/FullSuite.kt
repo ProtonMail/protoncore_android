@@ -18,23 +18,23 @@
 
 package me.proton.core.test.android.uitests.suites
 
-import me.proton.core.test.android.uitests.tests.auth.AddAccountTests
-import me.proton.core.test.android.uitests.tests.auth.login.AccountSwitcherTests
-import me.proton.core.test.android.uitests.tests.auth.login.LoginTests
-import me.proton.core.test.android.uitests.tests.auth.login.MailboxTests
-import me.proton.core.test.android.uitests.tests.auth.login.TwoFaTests
-import me.proton.core.test.android.uitests.tests.auth.signup.ExternalSetupTests
-import me.proton.core.test.android.uitests.tests.auth.signup.PasswordSetupTests
-import me.proton.core.test.android.uitests.tests.auth.signup.RecoveryMethodsSetupTests
-import me.proton.core.test.android.uitests.tests.auth.signup.SelectPlanTests
-import me.proton.core.test.android.uitests.tests.auth.signup.UsernameSetupTests
-import me.proton.core.test.android.uitests.tests.humanverification.HumanVerificationTests
-import me.proton.core.test.android.uitests.tests.payments.ExistingPaymentMethodTests
-import me.proton.core.test.android.uitests.tests.payments.NewCreditCardTests
-import me.proton.core.test.android.uitests.tests.plans.CurrentPlanTests
-import me.proton.core.test.android.uitests.tests.plans.UpgradePlanTests
-import me.proton.core.test.android.uitests.tests.usersettings.PasswordManagementTests
-import me.proton.core.test.android.uitests.tests.usersettings.RecoveryEmailTests
+import me.proton.core.test.android.uitests.tests.medium.auth.AddAccountTests
+import me.proton.core.test.android.uitests.tests.medium.auth.login.AccountSwitcherTests
+import me.proton.core.test.android.uitests.tests.medium.auth.login.LoginTests
+import me.proton.core.test.android.uitests.tests.medium.auth.login.MailboxTests
+import me.proton.core.test.android.uitests.tests.medium.auth.login.TwoFaTests
+import me.proton.core.test.android.uitests.tests.medium.auth.signup.ExternalSetupTests
+import me.proton.core.test.android.uitests.tests.medium.auth.signup.PasswordSetupTests
+import me.proton.core.test.android.uitests.tests.medium.auth.signup.RecoveryMethodsSetupTests
+import me.proton.core.test.android.uitests.tests.medium.auth.signup.SelectPlanTests
+import me.proton.core.test.android.uitests.tests.medium.auth.signup.UsernameSetupTests
+import me.proton.core.test.android.uitests.tests.medium.humanverification.HumanVerificationTests
+import me.proton.core.test.android.uitests.tests.medium.payments.ExistingPaymentMethodTests
+import me.proton.core.test.android.uitests.tests.medium.payments.NewCreditCardTests
+import me.proton.core.test.android.uitests.tests.medium.plans.CurrentPlanTests
+import me.proton.core.test.android.uitests.tests.medium.plans.UpgradePlanTests
+import me.proton.core.test.android.uitests.tests.medium.usersettings.RecoveryEmailTests
+import me.proton.core.test.android.uitests.tests.medium.usersettings.PasswordManagementTests
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
@@ -47,18 +47,18 @@ import org.junit.runners.Suite
     MailboxTests::class,
     TwoFaTests::class,
     HumanVerificationTests::class,
-
-    // Payments
-    ExistingPaymentMethodTests::class,
-    NewCreditCardTests::class,
+    AccountSwitcherTests::class,
 
     // Signup
     UsernameSetupTests::class,
     PasswordSetupTests::class,
     RecoveryMethodsSetupTests::class,
-    AccountSwitcherTests::class,
     ExternalSetupTests::class,
     SelectPlanTests::class,
+
+    // Payments
+    ExistingPaymentMethodTests::class,
+    NewCreditCardTests::class,
 
     // Plans
     CurrentPlanTests::class,

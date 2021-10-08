@@ -44,6 +44,12 @@ class ChooseUsernameRobot : CoreRobot() {
     fun next(): PasswordSetupRobot = clickElement(R.id.nextButton)
 
     /**
+     * Sets the username and clicks 'next'
+     * @return [ChooseUsernameRobot]
+     */
+    fun setUsername(name: String): PasswordSetupRobot = username(name).next()
+
+    /**
      * Switches signup type between external and internal
      * @return [ChooseUsernameRobot]
      */
@@ -51,18 +57,18 @@ class ChooseUsernameRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun chooseUsernameElementsDisplayed() {
-            view.withId(R.id.usernameInput).instanceOf(EditText::class.java).wait().closeKeyboard()
-            view.withId(R.id.nextButton).wait()
+            view.withId(R.id.usernameInput).instanceOf(EditText::class.java).checkDisplayed().closeKeyboard()
+            view.withId(R.id.nextButton).checkDisplayed()
         }
 
         fun switchToSecureDisplayed() =
-            view.withText(R.string.auth_signup_create_secure_proton_address).wait()
+            view.withText(R.string.auth_signup_create_secure_proton_address).checkDisplayed()
 
         fun switchToExternalDisplayed() =
-            view.withText(R.string.auth_signup_create_account).wait()
+            view.withText(R.string.auth_signup_create_account).checkDisplayed()
 
         fun suffixDisplayed(suffix: String) =
-            view.withText("@$suffix").instanceOf(TextView::class.java).wait()
+            view.withText("@$suffix").instanceOf(TextView::class.java).checkDisplayed()
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

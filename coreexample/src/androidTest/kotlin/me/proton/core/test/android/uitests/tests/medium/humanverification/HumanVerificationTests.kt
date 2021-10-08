@@ -16,14 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.humanverification
+package me.proton.core.test.android.uitests.tests.medium.humanverification
 
-import androidx.test.filters.FlakyTest
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.android.plugins.Quark
-import me.proton.core.test.android.plugins.Quark.jailUnban
-import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -36,11 +32,11 @@ class HumanVerificationTests : BaseTest() {
 
     private val humanVerificationRobot = HumanVerificationRobot()
     private val user = users.getUser()
-    private val defaultCode = Quark.Constants.DEFAULT_VERIFICATION_CODE
+    private val defaultCode = quark.defaultVerificationCode
 
     @Before
     fun triggerHumanVerification() {
-        jailUnban()
+        quark.jailUnban()
         AddAccountRobot()
             .signIn()
             .loginUser<CoreexampleRobot>(user)
@@ -72,7 +68,7 @@ class HumanVerificationTests : BaseTest() {
             .email()
             .setEmail(testAddress)
             .getVerificationCode()
-            .setCode(defaultCode.value)
+            .setCode(defaultCode)
             .verifyCode<CoreexampleRobot>()
             .verify {
                 coreexampleElementsDisplayed()
@@ -93,7 +89,7 @@ class HumanVerificationTests : BaseTest() {
             .selectCountry<HumanVerificationRobot>(testCountry)
             .setPhone(testPhoneNo)
             .getVerificationCode()
-            .setCode(defaultCode.value)
+            .setCode(defaultCode)
             .verifyCode<CoreexampleRobot>()
             .verify {
                 coreexampleElementsDisplayed()

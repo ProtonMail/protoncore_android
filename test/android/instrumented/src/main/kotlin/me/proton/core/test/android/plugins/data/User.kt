@@ -60,9 +60,7 @@ data class User(
             .deserializeList<User>() as MutableList<User>
 
         fun getUser(usernameAndOnePass: Boolean = true, predicate: (User) -> Boolean = { true }): User {
-            userData
-                .filter { it.isOnePasswordWithUsername == usernameAndOnePass }
-                .filter(predicate)
+            getUsers(usernameAndOnePass, predicate)
                 .let {
                     try {
                         return it.random()
@@ -71,6 +69,12 @@ data class User(
                         throw e
                     }
                 }
+        }
+
+        fun getUsers(usernameAndOnePass: Boolean = true, predicate: (User) -> Boolean = { true }): List<User> {
+            return userData
+                .filter { it.isOnePasswordWithUsername == usernameAndOnePass }
+                .filter(predicate)
         }
     }
 }

@@ -79,7 +79,6 @@ open class CoreRobot : Robot {
             .instanceOf(clazz)
             .withId(id)
             .isEnabled()
-            .wait()
             .click()
         return T::class.java.newInstance()
     }
@@ -89,7 +88,7 @@ open class CoreRobot : Robot {
      * @param T next Robot to be returned
      */
     inline fun <reified T> clickElement(element: OnView): T {
-        element.wait().click()
+        element.click()
         return T::class.java.newInstance()
     }
 
@@ -103,7 +102,6 @@ open class CoreRobot : Robot {
             .withParent(
                 view.withId(R.id.toolbar)
             )
-            .wait()
             .click()
         return T::class.java.newInstance()
     }

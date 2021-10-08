@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -27,26 +27,38 @@ import me.proton.core.test.android.instrumented.utils.Shell.setupDevice
 import me.proton.core.test.android.plugins.Quark
 import me.proton.core.test.android.plugins.data.User.Users
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.BeforeClass
 
-open class BaseTest : ProtonTest(MainActivity::class.java, tries = 1) {
+open class BaseTest(
+    private val clearAppDatabaseOnTearDown: Boolean = true,
+    defaultTimeout: Long = 10_000L
+) : ProtonTest(MainActivity::class.java, defaultTimeout) {
 
     @After
     override fun tearDown() {
         super.tearDown()
-        appDatabase.clearAllTables()
+        if (clearAppDatabaseOnTearDown)
+            appDatabase.clearAllTables()
         Log.d(testTag, "Clearing AccountManager database tables")
     }
 
     companion object {
         val users = Users("sensitive/users.json")
+        val quark = Quark(BuildConfig.HOST, BuildConfig.PROXY_TOKEN, "sensitive/internal_apis.json")
         val appDatabase = AppDatabaseModule.provideAppDatabase(getTargetContext())
 
         @JvmStatic
         @BeforeClass
         fun prepare() {
             setupDevice(true)
-            Quark.jailUnban()
+            quark.jailUnban()
+            appDatabase.clearAllTables()
+        }
+
+        @JvmStatic
+        @AfterClass
+        fun cleanup() {
             appDatabase.clearAllTables()
         }
     }

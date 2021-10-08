@@ -72,14 +72,14 @@ class RecoveryEmailRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun recoveryEmailElementsDisplayed() {
-            view.withId(R.id.newEmailInput).instanceOf(EditText::class.java).wait().closeKeyboard()
-            view.withId(R.id.confirmNewEmailInput).instanceOf(EditText::class.java).wait()
-            view.withId(R.id.currentEmailInput).instanceOf(EditText::class.java).wait()
-            view.withId(R.id.saveButton).instanceOf(Button::class.java).wait()
+            view.withId(R.id.newEmailInput).instanceOf(EditText::class.java).checkDisplayed().closeKeyboard()
+            view.withId(R.id.confirmNewEmailInput).instanceOf(EditText::class.java).checkDisplayed()
+            view.withId(R.id.currentEmailInput).instanceOf(EditText::class.java).checkDisplayed()
+            view.withId(R.id.saveButton).instanceOf(Button::class.java).checkDisplayed()
         }
 
         fun currentRecoveryEmailIs(email: String) {
-            view.withId(R.id.currentEmailInput).withText(email).wait()
+            view.withId(R.id.currentEmailInput).instanceOf(EditText::class.java).checkContains(email)
         }
     }
 

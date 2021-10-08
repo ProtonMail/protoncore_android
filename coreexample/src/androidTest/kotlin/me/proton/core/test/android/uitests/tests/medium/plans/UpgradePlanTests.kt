@@ -16,10 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.plans
+package me.proton.core.test.android.uitests.tests.medium.plans
 
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.android.plugins.data.BillingCycle
+import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
+import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
@@ -28,7 +30,11 @@ import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
-class CurrentPlanTests: BaseTest() {
+class UpgradePlanTests: BaseTest() {
+
+    private val selectPlanRobot = SelectPlanRobot()
+    private val freeUser = users.getUser { !it.isPaid }
+    private val paidUser = users.getUser { it.isPaid }
 
     @Before
     fun login() {
@@ -39,23 +45,38 @@ class CurrentPlanTests: BaseTest() {
     private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot =
         LoginRobot()
             .loginUser<CoreexampleRobot>(user)
-            .plansCurrent()
+            .plansUpgrade()
 
     @Test
     fun userWithFreePlan() {
-        val freeUser = users.getUser { !it.isPaid }
         navigateUserToCurrentPlans(freeUser)
             .verify {
                 canSelectPlan(Plan.Plus)
                 planDetailsDisplayed(Plan.Plus)
-                planDetailsDisplayed(Plan.Free)
             }
+
+        selectPlanRobot
+            .close<CoreexampleRobot>()
+            .verify { coreexampleElementsDisplayed() }
     }
 
     @Test
     fun userWithPaidPlan() {
-        val paidUser = users.getUser { it.isPaid }
         navigateUserToCurrentPlans(paidUser)
             .verify { planDetailsDisplayed(paidUser.plan) }
+    }
+
+    @Test
+    fun changeBillingCycleAndCurrency() {
+        navigateUserToCurrentPlans(freeUser)
+
+        BillingCycle.values().forEach { cycle ->
+            selectPlanRobot.changeBillingCycle(cycle)
+            Currency.values().forEach { currency ->
+                selectPlanRobot
+                    .changeCurrency(currency)
+                    .verify { billingCycleIs(cycle, currency) }
+            }
+        }
     }
 }

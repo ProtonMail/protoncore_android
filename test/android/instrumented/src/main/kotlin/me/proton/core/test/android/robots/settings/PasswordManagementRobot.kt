@@ -66,10 +66,10 @@ class PasswordManagementRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun passwordManagementElementsDisplayed() {
-            view.withId(R.id.newLoginPasswordInput).instanceOf(EditText::class.java).wait()
-            view.withId(R.id.confirmNewLoginPasswordInput).instanceOf(EditText::class.java).wait()
-            view.withId(R.id.currentLoginPasswordInput).instanceOf(EditText::class.java).wait()
-            view.withId(R.id.saveLoginPasswordButton).instanceOf(Button::class.java).wait()
+            view.withId(R.id.newLoginPasswordInput).instanceOf(EditText::class.java).checkDisplayed()
+            view.withId(R.id.confirmNewLoginPasswordInput).instanceOf(EditText::class.java).checkDisplayed()
+            view.withId(R.id.currentLoginPasswordInput).instanceOf(EditText::class.java).checkDisplayed()
+            view.withId(R.id.saveLoginPasswordButton).instanceOf(Button::class.java).checkDisplayed()
         }
     }
 

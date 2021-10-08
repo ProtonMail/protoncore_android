@@ -43,14 +43,14 @@ open class PaymentRobot : CoreRobot() {
             currency: String,
             amount: String
         ) {
-            view.withId(R.id.planNameText).withText(plan.toString()).wait().checkDisplayed()
-            view.withId(R.id.billingPeriodText).withText("Billed $billingCycle").wait().checkDisplayed()
-            view.withId(R.id.amountText).withText("$currency$amount").wait().checkDisplayed()
+            view.withId(R.id.planNameText).withText(plan.toString()).checkDisplayed()
+            view.withId(R.id.billingPeriodText).withText("Billed $billingCycle").checkDisplayed()
+            view.withId(R.id.amountText).withText("$currency$amount").checkDisplayed()
         }
 
         fun paymentMethodDisplayed(title: String, details: String) {
-            view.withText(title).withId(R.id.paymentMethodTitleText).wait().checkDisplayed()
-            view.withText(details).withId(R.id.paymentMethodSubtitleText).wait().checkDisplayed()
+            view.withText(title).withId(R.id.paymentMethodTitleText).checkDisplayed()
+            view.withText(details).withId(R.id.paymentMethodSubtitleText).checkDisplayed()
         }
 
         fun addCreditCardElementsDisplayed() {
@@ -61,7 +61,7 @@ open class PaymentRobot : CoreRobot() {
                 R.id.expirationDateInput,
                 R.id.cvcInput
             ).forEach {
-                view.withId(it).instanceOf(EditText::class.java).wait().checkDisplayed()
+                view.withId(it).instanceOf(EditText::class.java).checkDisplayed()
             }
         }
     }
