@@ -111,11 +111,11 @@ Network Data: **1.15.6** - _released on: Oct 07, 2021_
 
 ### Crypto
 
-Crypto: **1.15.2** - _released on: Sep 23, 2021_
+Crypto: **1.15.3** - _released on: Oct 08, 2021_
 
-Crypto Common: **1.15.2** - _released on: Sep 23, 2021_
+Crypto Common: **1.15.3** - _released on: Oct 08, 2021_
 
-Crypto Android: **1.15.2** - _released on: Sep 23, 2021_
+Crypto Android: **1.15.3** - _released on: Oct 08, 2021_
 
 ## Features
 
