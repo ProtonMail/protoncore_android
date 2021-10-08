@@ -34,15 +34,15 @@ import me.proton.core.country.presentation.ui.CountryPickerFragment
 import me.proton.core.country.presentation.ui.showCountryPicker
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onTextChange
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.onSuccess
 
 @AndroidEntryPoint
-class RecoverySMSFragment : ProtonFragment<FragmentRecoverySmsBinding>() {
+class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {
 
     private val viewModel by viewModels<RecoverySMSViewModel>()
     private val recoveryMethodViewModel: RecoveryMethodViewModel by viewModels({ requireParentFragment() })
-
-    override fun layoutId() = R.layout.fragment_recovery_sms
+    private val binding by viewBinding(FragmentRecoverySmsBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

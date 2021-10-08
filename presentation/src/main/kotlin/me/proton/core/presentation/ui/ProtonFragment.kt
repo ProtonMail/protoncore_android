@@ -18,12 +18,7 @@
 
 package me.proton.core.presentation.ui
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 
 /**
@@ -31,28 +26,7 @@ import androidx.fragment.app.Fragment
  *
  * @author Dino Kadrikj.
  */
-abstract class ProtonFragment<DB : ViewDataBinding> : Fragment() {
-
-    private var internalBinding: DB? = null
-    protected val binding: DB
-        get() = internalBinding
-            ?: throw IllegalStateException("Accessing binding outside of lifecycle")
-
-    protected abstract fun layoutId(): Int
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        internalBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
-        binding.setLifecycleOwner { lifecycle }
-        super.onCreateView(inflater, container, savedInstanceState)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        internalBinding = null
-    }
+abstract class ProtonFragment : Fragment {
+    constructor(): super()
+    constructor(@LayoutRes contentLayoutId: Int): super(contentLayoutId)
 }

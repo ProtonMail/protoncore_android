@@ -40,6 +40,7 @@ import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validatePasswordMinLength
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.FragmentPasswordManagementBinding
 import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
@@ -48,8 +49,9 @@ import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementView
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBinding>() {
+class PasswordManagementFragment : ProtonFragment(R.layout.fragment_password_management) {
     private val viewModel by viewModels<PasswordManagementViewModel>()
+    private val binding by viewBinding(FragmentPasswordManagementBinding::bind)
 
     private lateinit var showLoginPasswordDialogResultLauncher: FragmentDialogResultLauncher<ShowPasswordInput>
     private lateinit var showMailboxPasswordDialogResultLauncher: FragmentDialogResultLauncher<ShowPasswordInput>
@@ -59,8 +61,6 @@ class PasswordManagementFragment : ProtonFragment<FragmentPasswordManagementBind
     }
 
     private val userId: UserId by lazy { input.user }
-
-    override fun layoutId() = R.layout.fragment_password_management
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

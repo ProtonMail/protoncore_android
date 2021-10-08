@@ -36,6 +36,7 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateEmail
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.FragmentUpdateRecoveryEmailBinding
 import me.proton.core.usersettings.presentation.entity.SettingsInput
@@ -44,9 +45,10 @@ import me.proton.core.usersettings.presentation.viewmodel.UpdateRecoveryEmailVie
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBinding>() {
+class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_recovery_email) {
 
     private val viewModel by viewModels<UpdateRecoveryEmailViewModel>()
+    private val binding by viewBinding(FragmentUpdateRecoveryEmailBinding::bind)
 
     private lateinit var showPasswordDialogResultLauncher: FragmentDialogResultLauncher<ShowPasswordInput>
 
@@ -55,8 +57,6 @@ class UpdateRecoveryEmailFragment : ProtonFragment<FragmentUpdateRecoveryEmailBi
     }
 
     private val userId: UserId by lazy { input.user }
-
-    override fun layoutId() = R.layout.fragment_update_recovery_email
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

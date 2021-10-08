@@ -32,13 +32,13 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validatePasswordMinLength
+import me.proton.core.presentation.utils.viewBinding
 
 @AndroidEntryPoint
-class ChoosePasswordFragment : SignupFragment<FragmentSignupChoosePasswordBinding>() {
+class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_password) {
 
     private val signupViewModel by activityViewModels<SignupViewModel>()
-
-    override fun layoutId() = R.layout.fragment_signup_choose_password
+    private val binding by viewBinding(FragmentSignupChoosePasswordBinding::bind)
 
     override fun onBackPressed() {
         parentFragmentManager.popBackStack()

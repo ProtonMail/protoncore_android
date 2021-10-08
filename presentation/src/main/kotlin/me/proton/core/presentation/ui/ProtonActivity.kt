@@ -21,12 +21,12 @@ package me.proton.core.presentation.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 
 /**
  * Base Proton Activity from which all project activities should extend.
  */
-abstract class ProtonActivity<DB : ViewDataBinding> : AppCompatActivity() {
+abstract class ProtonActivity<DB : ViewBinding> : AppCompatActivity() {
 
     lateinit var binding: DB
 
