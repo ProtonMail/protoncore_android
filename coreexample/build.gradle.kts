@@ -108,10 +108,7 @@ dependencies {
 
     // Test
     testImplementation(project(Module.androidTest))
-    androidTestImplementation(
-        project(Module.androidTest),
-        project(Module.androidInstrumentedTest)
-    )
+    androidTestImplementation(project(Module.androidInstrumentedTest))
 
     // Lint - off temporary
     // lintChecks(project(Module.lint))

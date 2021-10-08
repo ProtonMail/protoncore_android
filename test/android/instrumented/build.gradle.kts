@@ -36,20 +36,9 @@ android(
 }
 
 dependencies {
-    // Base dependencies
-    implementation(
-        // Kotlin
-        `kotlin-jdk7`,
-        `coroutines-android`,
-
-        // Android
-        `lifecycle-runtime`,
-        `lifecycle-liveData`,
-        `lifecycle-viewModel`
-    )
-
     // Test dependencies
     api(
+        project(Module.androidTest).exclude(robolectric, mockk), `mockk-android`,
         project(Module.humanVerification),
         project(Module.auth),
         project(Module.presentation),
@@ -79,6 +68,7 @@ dependencies {
         `android-ktx`,
         `junit-ktx`,
         `serialization-json`,
-        `okhttp-url-connection`
+        `okhttp-url-connection`,
+        `room-testing`,
     )
 }

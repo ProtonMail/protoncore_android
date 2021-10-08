@@ -24,7 +24,7 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(1, 15, 0)
+libVersion = Version(1, 15, 1)
 
 android()
 
@@ -48,7 +48,6 @@ dependencies {
         // Android
         `android-arch-testing`,
         `android-test-core`,
-        `room-testing`,
         robolectric
     )
 }

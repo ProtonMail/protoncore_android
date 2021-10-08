@@ -1,3 +1,9 @@
+## Network [1.15.6], Android Test [1.15.1]
+
+### Changes
+- Use mockk-android instead of mockk for android tests.
+- Fix network dependency declaration causing compilation of library module to fail.
+
 ## Human-Verification [1.15.4]
 
 ### Changes
