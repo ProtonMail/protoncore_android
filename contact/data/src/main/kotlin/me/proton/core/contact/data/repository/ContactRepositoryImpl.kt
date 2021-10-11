@@ -61,15 +61,12 @@ class ContactRepositoryImpl @Inject constructor(
             reader = { contactStoreKey ->
                 localDataSource.observeContact(contactStoreKey.contactId).map {
                     return@map it?.let { contactWithCards ->
-                        val fetchedOnce = contactDetailFetchedOnce[contactStoreKey.contactId] ?: false
-                        if (contactWithCards.contactCards.isNotEmpty() && fetchedOnce) {
-                            contactWithCards
-                        } else {
-                            null
+                        contactWithCards.takeIf {
+                            val fetchedOnce = contactDetailFetchedOnce[contactStoreKey.contactId] ?: false
+                            contactWithCards.contactCards.isNotEmpty() && fetchedOnce
                         }
                     }
                 }
-
             },
             writer = { _, contactWithCards -> localDataSource.upsertContactWithCards(contactWithCards) },
             delete = { key -> localDataSource.deleteContacts(key.contactId) },
