@@ -105,3 +105,7 @@ fun org.gradle.api.Project.android(
 }
 
 typealias ExtraConfig = TestedExtension.() -> Unit
+
+fun String?.toBuildConfigValue(): String {
+    return if (this != null) "\"$this\"" else "null"
+}

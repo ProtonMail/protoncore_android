@@ -45,16 +45,14 @@ android(
             try {
                 load(FileInputStream("local.properties"))
             } catch (e: java.io.FileNotFoundException) {
-                put("HOST", "proton.black")
-                put("PROXY_TOKEN", "null")
+                logger.warn("No local.properties found")
             }
         }
+        val proxyToken: String? = localProperties.getProperty("PROXY_TOKEN")
+        val host: String = localProperties.getProperty("HOST")?: "proton.black"
 
-        val proxyToken = localProperties["PROXY_TOKEN"]?.let { "\"$it\"" }!!
-        val host = localProperties["HOST"]?.let { "\"$it\"" }!!
-
-        buildConfigField("String", "PROXY_TOKEN", proxyToken)
-        buildConfigField("String", "HOST", host)
+        buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
+        buildConfigField("String", "HOST", host.toBuildConfigValue())
     }
     sourceSets.getByName("androidTest") {
         // Add schema for android tests
