@@ -24,7 +24,6 @@ import me.proton.core.contact.data.api.resource.ContactCardsResource
 import me.proton.core.contact.data.api.resource.ContactEmailResource
 import me.proton.core.contact.data.api.resource.ShortContactResource
 import me.proton.core.contact.data.api.resource.toContactCardResource
-import me.proton.core.contact.data.api.response.DeleteContactsResponse
 import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactId
@@ -34,8 +33,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.ProtonErrorException
 import me.proton.core.network.data.ResponseCodes
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.onError
 import me.proton.core.network.domain.onSuccess
 import javax.inject.Inject
@@ -109,7 +106,9 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
         val apiResponse = apiProvider.get<ContactApi>(userId).invoke {
             createContacts(request)
         }.valueOrThrow
-        check(apiResponse.responses.all { it.response.code == ResponseCodes.OK })
+        check(apiResponse.responses.all { it.response.code == ResponseCodes.OK }) {
+            "At least one response code is not ok (${ResponseCodes.OK}): $apiResponse"
+        }
         return apiResponse.responses.map {
             it.response.contact.toContactWithCards(userId)
         }
