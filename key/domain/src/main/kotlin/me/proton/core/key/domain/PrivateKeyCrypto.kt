@@ -20,10 +20,12 @@ package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.crypto.common.pgp.unlockOrNull
 import me.proton.core.key.domain.entity.key.PrivateKey
@@ -305,3 +307,114 @@ fun PrivateKeyRing.signData(data: ByteArray): Signature =
  */
 fun PrivateKeyRing.signFile(file: File): Signature =
     unlockedPrimaryKey.signFile(context, file)
+
+/**
+ * Sign [text] using this [UnlockedPrivateKey]
+ * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @throws [CryptoException] if [text] cannot be signed.
+ *
+ * @see [PrivateKeyRing.verifyTextEncrypted]
+ */
+fun PrivateKeyRing.signTextEncrypted(
+    context: CryptoContext,
+    text: String,
+    encryptionKeyRing: PublicKeyRing
+): Signature =
+    unlockedPrimaryKey.signTextEncrypted(context, text, encryptionKeyRing)
+
+/**
+ * Sign [data] using this [UnlockedPrivateKey]
+ * and then encrypt the signature with [encryptionKeys].
+ *
+ * @throws [CryptoException] if [data] cannot be signed.
+ *
+ * @see [PrivateKeyRing.verifyDataEncrypted]
+ */
+fun PrivateKeyRing.signDataEncrypted(
+    context: CryptoContext,
+    data: ByteArray,
+    encryptionKeyRing: PublicKeyRing
+): Signature =
+    unlockedPrimaryKey.signDataEncrypted(context, data, encryptionKeyRing)
+
+/**
+ * Sign [file] using this [UnlockedPrivateKey]
+ * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @throws [CryptoException] if [file] cannot be signed.
+ *
+ * @see [PrivateKeyRing.verifyFileEncrypted]
+ */
+fun PrivateKeyRing.signFileEncrypted(
+    context: CryptoContext,
+    file: File,
+    encryptionKeyRing: PublicKeyRing
+): Signature =
+    unlockedPrimaryKey.signFileEncrypted(context, file, encryptionKeyRing)
+
+/**
+ * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]
+ * and then verify it is a valid signature of [text] using [verificationKeyRing]
+ *
+ * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ *
+ * @see [PrivateKeyRing.signTextEncrypted]
+ */
+fun PrivateKeyRing.verifyTextEncrypted(
+    context: CryptoContext,
+    text: String,
+    encryptedSignature: Armored,
+    verificationKeyRing: PublicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = unlockedPrimaryKey.verifyTextEncrypted(
+    context,
+    text,
+    encryptedSignature,
+    verificationKeyRing,
+    time
+)
+
+/**
+ * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]
+ * and then verify it is a valid signature of [data] using [verificationKeyRing]
+ *
+ * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ *
+ * @see [PrivateKeyRing.signTextEncrypted]
+ */
+fun PrivateKeyRing.verifyDataEncrypted(
+    context: CryptoContext,
+    data: ByteArray,
+    encryptedSignature: Armored,
+    verificationKeyRing: PublicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = unlockedPrimaryKey.verifyDataEncrypted(
+    context,
+    data,
+    encryptedSignature,
+    verificationKeyRing,
+    time
+)
+
+/**
+ * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]
+ * and then verify it is a valid signature of [file] using [verificationKeyRing]
+ *
+ * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ *
+ * @see [PrivateKeyRing.signTextEncrypted]
+ */
+fun PrivateKeyRing.verifyFileEncrypted(
+    context: CryptoContext,
+    file: File,
+    encryptedSignature: Armored,
+    verificationKeyRing: PublicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = unlockedPrimaryKey.verifyFileEncrypted(
+    context,
+    file,
+    encryptedSignature,
+    verificationKeyRing,
+    time
+)

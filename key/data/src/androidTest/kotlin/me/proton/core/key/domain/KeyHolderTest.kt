@@ -32,6 +32,7 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.extension.primary
+import me.proton.core.key.domain.extension.publicKeyRing
 import org.junit.Test
 import java.io.File
 import java.nio.file.Files
@@ -39,6 +40,7 @@ import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -488,5 +490,102 @@ class KeyHolderTest {
 
         // Verify no more unlocked keys bits.
         assertTrue(unlockedPrivateKey.unlockedKey.value.allEqual(0))
+    }
+
+    @Test
+    fun useKeys_generate_and_verify_encrypted_signature_for_String() {
+        // Key holder 1 signs the message and encrypts the signature for Key Holder 2
+        val encryptedSignature = keyHolder1.useKeys(context) {
+            signTextEncrypted(message, keyHolder2.publicKeyRing(context))
+        }
+        // Key holder 2 decrypts the signature and verifies it with Key Holder 1's public keys.
+        val verified = keyHolder2.useKeys(context) {
+            verifyTextEncrypted(message, encryptedSignature, keyHolder1.publicKeyRing(context))
+        }
+        assertTrue(verified)
+    }
+
+    @Test
+    fun useKeys_generate_and_verify_encrypted_signature_for_String_corrupted() {
+        // Key holder 1 signs the message and encrypts the signature for Key Holder 2
+        val encryptedSignature = keyHolder1.useKeys(context) {
+            signTextEncrypted(message, keyHolder2.publicKeyRing(context))
+        }
+        // Key holder 2 decrypts the signature and verifies it with Key Holder 1's public keys.
+        val verified = keyHolder2.useKeys(context) {
+            verifyTextEncrypted(message + "corrupted", encryptedSignature, keyHolder1.publicKeyRing(context))
+        }
+        assertFalse(verified)
+    }
+
+    @Test
+    fun useKeys_generate_and_verify_encrypted_signature_for_String_wrong_key() {
+        // Key holder 1 signs the message and encrypts the signature for Key Holder 2
+        val encryptedSignature = keyHolder1.useKeys(context) {
+            signTextEncrypted(message, keyHolder2.publicKeyRing(context))
+        }
+        // Key holder 2 decrypts the signature and wrongly verifies it with its own public keys.
+        val verified = keyHolder2.useKeys(context) {
+            verifyTextEncrypted(message + "corrupted", encryptedSignature, keyHolder2.publicKeyRing(context))
+        }
+        assertFalse(verified)
+    }
+
+    @Test
+    fun useKeys_generate_and_verify_encrypted_signature_for_ByteArray() {
+        val data = message.toByteArray()
+        // Key holder 1 signs the message and encrypts the signature for Key Holder 2
+        val encryptedSignature = keyHolder1.useKeys(context) {
+            signDataEncrypted(data, keyHolder2.publicKeyRing(context))
+        }
+        // Key holder 2 decrypts the signature and verifies it with Key Holder 1's public keys.
+        val verified = keyHolder2.useKeys(context) {
+            verifyDataEncrypted(data, encryptedSignature, keyHolder1.publicKeyRing(context))
+        }
+        assertTrue(verified)
+    }
+
+    @Test
+    fun useKeys_generate_and_verify_encrypted_signature_for_ByteArray_corrupted () {
+        val data = message.toByteArray()
+        // Key holder 1 signs the message and encrypts the signature for Key Holder 2
+        val encryptedSignature = keyHolder1.useKeys(context) {
+            signDataEncrypted(data, keyHolder2.publicKeyRing(context))
+        }
+        // Key holder 2 decrypts the signature and verifies it with Key Holder 1's public keys.
+        val verified = keyHolder2.useKeys(context) {
+            verifyDataEncrypted(data+"corrupted".toByteArray(), encryptedSignature, keyHolder1.publicKeyRing(context))
+        }
+        assertFalse(verified)
+    }
+    @Test
+    fun useKeys_generate_and_verify_encrypted_signature_for_File() {
+        val data = message.toByteArray()
+        val file = data.getFile("file")
+        // Key holder 1 signs the message and encrypts the signature for Key Holder 2
+        val encryptedSignature = keyHolder1.useKeys(context) {
+            signFileEncrypted(file, keyHolder2.publicKeyRing(context))
+        }
+        // Key holder 2 decrypts the signature and verifies it with Key Holder 1's public keys.
+        val verified = keyHolder2.useKeys(context) {
+            verifyFileEncrypted(file, encryptedSignature, keyHolder1.publicKeyRing(context))
+        }
+        assertTrue(verified)
+        file.delete()
+    }
+    @Test
+    fun useKeys_generate_and_verify_encrypted_signature_for_File_corrupted() {
+        val data = message.toByteArray() + "corrupted".toByteArray()
+        val file = data.getFile("file")
+        // Key holder 1 signs the message and encrypts the signature for Key Holder 2
+        val encryptedSignature = keyHolder1.useKeys(context) {
+            signFileEncrypted(file, keyHolder2.publicKeyRing(context))
+        }
+        // Key holder 2 decrypts the signature and verifies it with Key Holder 1's public keys.
+        val verified = keyHolder2.useKeys(context) {
+            verifyFileEncrypted(file, encryptedSignature, keyHolder1.publicKeyRing(context))
+        }
+        assertTrue(verified)
+        file.delete()
     }
 }

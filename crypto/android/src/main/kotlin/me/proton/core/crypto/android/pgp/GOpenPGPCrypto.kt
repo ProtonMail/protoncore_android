@@ -42,6 +42,7 @@ import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.EncryptedPacket
+import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.pgp.HashKey
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.PGPCrypto
@@ -262,6 +263,33 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
+    private fun signEncrypted(
+        plainMessage: PlainMessage,
+        unlockedKey: Unarmored,
+        encryptionKeyRing: KeyRing,
+    ): EncryptedSignature {
+        newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                return keyRing.value.signDetachedEncrypted(plainMessage, encryptionKeyRing).armored
+            }
+        }
+    }
+
+    private fun signEncrypted(
+        source: File,
+        unlockedKey: Unarmored,
+        encryptionKeyRing: KeyRing,
+    ): EncryptedSignature {
+        source.inputStream().use { fileInputStream ->
+            val reader = Mobile2GoReader(fileInputStream.mobileReader())
+            newKey(unlockedKey).use { key ->
+                newKeyRing(key).use { keyRing ->
+                    return keyRing.value.signDetachedEncryptedStream(reader, encryptionKeyRing).armored
+                }
+            }
+        }
+    }
+
     private fun verify(
         plainMessage: PlainMessage,
         signature: Armored,
@@ -284,6 +312,41 @@ class GOpenPGPCrypto : PGPCrypto {
             val pgpSignature = PGPSignature(signature)
             val publicKeyRing = newKeyRing(publicKey)
             publicKeyRing.verifyDetachedStream(reader, pgpSignature, validAtUtc)
+        }
+    }.isSuccess
+
+    private fun verifyEncrypted(
+        plainMessage: PlainMessage,
+        encryptedSignature: EncryptedSignature,
+        decryptionKey: Unarmored,
+        publicKeys: List<Armored>,
+        validAtUtc: Long
+    ): Boolean = runCatching {
+        val pgpSignature = PGPMessage(encryptedSignature)
+        val publicKeyRing = newKeyRing(publicKeys)
+        newKey(decryptionKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                publicKeyRing.verifyDetachedEncrypted(plainMessage, pgpSignature, keyRing.value, validAtUtc)
+            }
+        }
+    }.isSuccess
+
+    private fun verifyEncrypted(
+        source: File,
+        encryptedSignature: EncryptedSignature,
+        decryptionKey: Unarmored,
+        publicKeys: List<Armored>,
+        validAtUtc: Long
+    ): Boolean = runCatching {
+        source.inputStream().use { fileInputStream ->
+            val reader = Mobile2GoReader(fileInputStream.mobileReader())
+            val pgpSignature = PGPMessage(encryptedSignature)
+            val publicKeyRing = newKeyRing(publicKeys)
+            newKey(decryptionKey).use { key ->
+                newKeyRing(key).use { keyRing ->
+                    publicKeyRing.verifyDetachedEncryptedStream(reader, pgpSignature, keyRing.value, validAtUtc)
+                }
+            }
         }
     }.isSuccess
 
@@ -484,6 +547,30 @@ class GOpenPGPCrypto : PGPCrypto {
         sign(file, unlockedKey)
     }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
 
+    override fun signTextEncrypted(
+        plainText: String,
+        unlockedKey: Unarmored,
+        encryptionKeys: List<Armored>,
+    ): EncryptedSignature = runCatching {
+        signEncrypted(PlainMessage(plainText), unlockedKey, newKeyRing(encryptionKeys))
+    }.getOrElse { throw CryptoException("PlainText cannot be signed.", it) }
+
+    override fun signDataEncrypted(
+        data: ByteArray,
+        unlockedKey: Unarmored,
+        encryptionKeys: List<Armored>,
+    ): EncryptedSignature = runCatching {
+        signEncrypted(PlainMessage(data), unlockedKey, newKeyRing(encryptionKeys))
+    }.getOrElse { throw CryptoException("Data cannot be signed.", it) }
+
+    override fun signFileEncrypted(
+        file: File,
+        unlockedKey: Unarmored,
+        encryptionKeys: List<Armored>,
+    ): EncryptedSignature = runCatching {
+        signEncrypted(file, unlockedKey, newKeyRing(encryptionKeys))
+    }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
+
     // endregion
 
     // region Verify
@@ -508,6 +595,33 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKey: Armored,
         time: VerificationTime,
     ): Boolean = verify(file.file, signature, publicKey, time.toUtcSeconds())
+
+    override fun verifyTextEncrypted(
+        plainText: String,
+        encryptedSignature: EncryptedSignature,
+        privateKey: Unarmored,
+        publicKeys: List<Armored>,
+        time: VerificationTime,
+    ): Boolean =
+        verifyEncrypted(PlainMessage(plainText), encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
+
+    override fun verifyDataEncrypted(
+        data: ByteArray,
+        encryptedSignature: EncryptedSignature,
+        privateKey: Unarmored,
+        publicKeys: List<Armored>,
+        time: VerificationTime,
+    ): Boolean =
+        verifyEncrypted(PlainMessage(data), encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
+
+    override fun verifyFileEncrypted(
+        file: File,
+        encryptedSignature: EncryptedSignature,
+        privateKey: Unarmored,
+        publicKeys: List<Armored>,
+        time: VerificationTime,
+    ): Boolean =
+        verifyEncrypted(file, encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
 
     // endregion
 

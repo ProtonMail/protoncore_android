@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
@@ -31,6 +32,7 @@ import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.EncryptedPacket
+import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.pgp.HashKey
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.PGPCrypto
@@ -109,6 +111,32 @@ class TestCryptoContext : CryptoContext {
         override fun signFile(file: File, unlockedKey: Unarmored): Signature =
             signData(file.readBytes(), unlockedKey)
 
+        override fun signTextEncrypted(
+            plainText: String,
+            unlockedKey: Unarmored,
+            encryptionKeys: List<Armored>
+        ): EncryptedSignature {
+            val signature = signText(plainText, unlockedKey)
+            return "encrypt([$signature], with=${encryptionKeys.joinToString(", ")})"
+                .encryptMessage(encryptionKeys.first())
+        }
+
+        override fun signDataEncrypted(
+            data: ByteArray,
+            unlockedKey: Unarmored,
+            encryptionKeys: List<Armored>
+        ): EncryptedSignature {
+            val signature = signData(data, unlockedKey)
+            return "encrypt([$signature], with=${encryptionKeys.joinToString(", ")})"
+                .encryptMessage(encryptionKeys.first())
+        }
+
+        override fun signFileEncrypted(
+            file: File,
+            unlockedKey: Unarmored,
+            encryptionKeys: List<Armored>
+        ): EncryptedSignature = signDataEncrypted(file.readBytes(), unlockedKey, encryptionKeys)
+
         override fun verifyText(
             plainText: String,
             signature: Signature,
@@ -139,6 +167,41 @@ class TestCryptoContext : CryptoContext {
             val data = file.file.readBytes()
             return data.fromByteArray() == decryptedSignature.extractMessage()
         }
+
+        override fun verifyTextEncrypted(
+            plainText: String,
+            encryptedSignature: EncryptedSignature,
+            privateKey: Unarmored,
+            publicKeys: List<Armored>,
+            time: VerificationTime
+        ): Boolean = runCatching {
+            val decryptedSignature = encryptedSignature.decryptMessage(privateKey)
+            val signature = decryptedSignature.extractMessage()
+            val decryptedData = signature.decryptMessage(publicKeys.first())
+            return plainText == decryptedData.extractMessage()
+        }.getOrElse { false }
+
+        override fun verifyDataEncrypted(
+            data: ByteArray,
+            encryptedSignature: EncryptedSignature,
+            privateKey: Unarmored,
+            publicKeys: List<Armored>,
+            time: VerificationTime
+        ): Boolean = runCatching {
+            val decryptedSignature = encryptedSignature.decryptMessage(privateKey)
+            val signature = decryptedSignature.extractMessage()
+            val decryptedData = signature.decryptMessage(publicKeys.first())
+            return data.fromByteArray() == decryptedData.extractMessage()
+        }.getOrElse { false }
+
+        override fun verifyFileEncrypted(
+            file: File,
+            encryptedSignature: EncryptedSignature,
+            privateKey: Unarmored,
+            publicKeys: List<Armored>,
+            time: VerificationTime
+        ): Boolean =
+            verifyDataEncrypted(file.readBytes(), encryptedSignature, privateKey, publicKeys, time)
 
         override fun getArmored(data: Unarmored): Armored = data.fromByteArray()
 

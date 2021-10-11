@@ -29,6 +29,7 @@ import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.EncryptedPacket
+import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.pgp.HashKey
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
@@ -44,6 +45,7 @@ import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
+import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import java.io.ByteArrayInputStream
@@ -256,6 +258,123 @@ fun KeyHolderContext.signData(data: ByteArray): Signature =
  */
 fun KeyHolderContext.signFile(file: File): Signature =
     privateKeyRing.signFile(file)
+
+/**
+ * Sign [text] using [PrivateKeyRing]
+ * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @throws [CryptoException] if [text] cannot be signed.
+ *
+ * @see [KeyHolderContext.verifyTextEncrypted]
+ */
+fun KeyHolderContext.signTextEncrypted(
+    text: String,
+    encryptionKeyRing: PublicKeyRing = publicKeyRing,
+): EncryptedSignature =
+    privateKeyRing.signTextEncrypted(
+        context,
+        text,
+        encryptionKeyRing
+    )
+
+/**
+ * Sign [data] using [PrivateKeyRing]
+ * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @throws [CryptoException] if [data] cannot be signed.
+ *
+ * @see [KeyHolderContext.verifyDataEncrypted]
+ */
+fun KeyHolderContext.signDataEncrypted(
+    data: ByteArray,
+    encryptionKeyRing: PublicKeyRing = publicKeyRing,
+): EncryptedSignature =
+    privateKeyRing.signDataEncrypted(
+        context,
+        data,
+        encryptionKeyRing
+    )
+
+/**
+ * Sign [file] using [PrivateKeyRing]
+ * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @throws [CryptoException] if [file] cannot be signed.
+ *
+ * @see [KeyHolderContext.verifyFileEncrypted]
+ */
+fun KeyHolderContext.signFileEncrypted(
+    file: File,
+    encryptionKeyRing: PublicKeyRing = publicKeyRing,
+): EncryptedSignature =
+    privateKeyRing.signFileEncrypted(
+        context,
+        file,
+        encryptionKeyRing
+    )
+
+/**
+ * Decrypt [encryptedSignature] using [PrivateKeyRing]
+ * and then verify it is a valid signature of [text] using [verificationKeyRing]
+ *
+ * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ *
+ * @see [KeyHolderContext.signTextEncrypted]
+ */
+fun KeyHolderContext.verifyTextEncrypted(
+    text: String,
+    encryptedSignature: EncryptedSignature,
+    verificationKeyRing: PublicKeyRing = publicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = privateKeyRing.verifyTextEncrypted(
+    context,
+    text,
+    encryptedSignature,
+    verificationKeyRing,
+    time
+)
+
+/**
+ * Decrypt [encryptedSignature] using [PrivateKeyRing]
+ * and then verify it is a valid signature of [data] using [verificationKeyRing]
+ *
+ * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ *
+ * @see [KeyHolderContext.signTextEncrypted]
+ */
+fun KeyHolderContext.verifyDataEncrypted(
+    data: ByteArray,
+    encryptedSignature: EncryptedSignature,
+    verificationKeyRing: PublicKeyRing = publicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = privateKeyRing.verifyDataEncrypted(
+    context,
+    data,
+    encryptedSignature,
+    verificationKeyRing,
+    time
+)
+
+/**
+ * Decrypt [encryptedSignature] using [PrivateKeyRing]
+ * and then verify it is a valid signature of [file] using [verificationKeyRing]
+ *
+ * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ *
+ * @see [KeyHolderContext.signTextEncrypted]
+ */
+fun KeyHolderContext.verifyFileEncrypted(
+    file: File,
+    encryptedSignature: EncryptedSignature,
+    verificationKeyRing: PublicKeyRing = publicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = privateKeyRing.verifyFileEncrypted(
+    context,
+    file,
+    encryptedSignature,
+    verificationKeyRing,
+    time
+)
 
 /**
  * Verify [signature] of [text] is correctly signed using [PublicKeyRing].
