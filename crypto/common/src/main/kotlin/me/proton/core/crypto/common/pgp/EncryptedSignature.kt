@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,20 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.crypto.common.pgp
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
-
-libVersion = Version(1, 15, 5)
-
-android()
-
-dependencies {
-    api(
-        project(Module.keyDomain),
-        project(Module.keyData)
-    )
-}
+/**
+ * PGP + Base64 encoded signature.
+ */
+typealias EncryptedSignature = Armored

@@ -1,3 +1,22 @@
+## Crypto and Key  [1.15.5]
+
+11 Oct, 2021
+
+### New features
+
+- Add support to generate and verify encrypted signatures, example:
+
+```
+  // Key holder 1 signs the message and encrypts the signature for Key Holder 2
+  val encryptedSignature = keyHolder1.useKeys(context) {
+      signDataEncrypted(data, keyHolder2PublicAddress.publicKeyRing())
+  }
+  // Key holder 2 decrypts the signature and verifies it with Key Holder 1's public keys.
+  val verified = keyHolder2.useKeys(context) {
+      verifyDataEncrypted(data, encryptedSignature, keyHolder1PublicAddress.publicKeyRing())
+  }
+```
+
 ## Crypto and Key  [1.15.4]
 
 8 Oct, 2021

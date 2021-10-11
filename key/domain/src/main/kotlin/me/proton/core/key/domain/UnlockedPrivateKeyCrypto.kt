@@ -21,10 +21,14 @@ package me.proton.core.key.domain
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
+import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.pgp.KeyPacket
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.decryptDataOrNull
 import me.proton.core.crypto.common.pgp.decryptSessionKeyOrNull
 import me.proton.core.crypto.common.pgp.decryptTextOrNull
@@ -32,6 +36,7 @@ import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 import java.io.File
 
@@ -196,6 +201,117 @@ fun UnlockedPrivateKey.signData(context: CryptoContext, data: ByteArray): Signat
  */
 fun UnlockedPrivateKey.signFile(context: CryptoContext, file: File): Signature =
     context.pgpCrypto.signFile(file, unlockedKey.value)
+
+/**
+ * Sign [text] using this [UnlockedPrivateKey]
+ * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @throws [CryptoException] if [text] cannot be signed.
+ *
+ * @see [UnlockedPrivateKey.verifyTextEncrypted]
+ */
+fun UnlockedPrivateKey.signTextEncrypted(
+    context: CryptoContext,
+    text: String,
+    encryptionKeyRing: PublicKeyRing
+): EncryptedSignature =
+    context.pgpCrypto.signTextEncrypted(text, unlockedKey.value, encryptionKeyRing.keys.map { it.key })
+
+/**
+ * Sign [data] using this [UnlockedPrivateKey]
+ * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @throws [CryptoException] if [data] cannot be signed.
+ *
+ * @see [UnlockedPrivateKey.verifyDataEncrypted]
+ */
+fun UnlockedPrivateKey.signDataEncrypted(
+    context: CryptoContext,
+    data: ByteArray,
+    encryptionKeyRing: PublicKeyRing
+): EncryptedSignature =
+    context.pgpCrypto.signDataEncrypted(data, unlockedKey.value, encryptionKeyRing.keys.map { it.key })
+
+/**
+ * Sign [file] using this [UnlockedPrivateKey]
+ * and then encrypt the signature with [encryptionKeyRing].
+ *
+ * @throws [CryptoException] if [file] cannot be signed.
+ *
+ * @see [UnlockedPrivateKey.verifyFileEncrypted]
+ */
+fun UnlockedPrivateKey.signFileEncrypted(
+    context: CryptoContext,
+    file: File,
+    encryptionKeyRing: PublicKeyRing
+): EncryptedSignature =
+    context.pgpCrypto.signFileEncrypted(file, unlockedKey.value, encryptionKeyRing.keys.map { it.key })
+
+/**
+ * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]
+ * and then verify it is a valid signature of [text] using [verificationKeyRing]
+ *
+ * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ *
+ * @see [UnlockedPrivateKey.signTextEncrypted]
+ */
+fun UnlockedPrivateKey.verifyTextEncrypted(
+    context: CryptoContext,
+    text: String,
+    encryptedSignature: EncryptedSignature,
+    verificationKeyRing: PublicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = context.pgpCrypto.verifyTextEncrypted(
+        text,
+        encryptedSignature,
+        unlockedKey.value,
+        verificationKeyRing.keys.map { it.key },
+        time
+    )
+
+/**
+ * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]
+ * and then verify it is a valid signature of [data] using [verificationKeyRing]
+ *
+ * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ *
+ * @see [UnlockedPrivateKey.signTextEncrypted]
+ */
+fun UnlockedPrivateKey.verifyDataEncrypted(
+    context: CryptoContext,
+    data: ByteArray,
+    encryptedSignature: EncryptedSignature,
+    verificationKeyRing: PublicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = context.pgpCrypto.verifyDataEncrypted(
+    data,
+    encryptedSignature,
+    unlockedKey.value,
+    verificationKeyRing.keys.map { it.key },
+    time
+)
+
+/**
+ * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]
+ * and then verify it is a valid signature of [file] using [verificationKeyRing]
+ *
+ * @param time time for [encryptedSignature] validation, default to [VerificationTime.Now].
+ *
+ * @see [UnlockedPrivateKey.signTextEncrypted]
+ */
+fun UnlockedPrivateKey.verifyFileEncrypted(
+    context: CryptoContext,
+    file: File,
+    encryptedSignature: EncryptedSignature,
+    verificationKeyRing: PublicKeyRing,
+    time: VerificationTime = VerificationTime.Now
+): Boolean = context.pgpCrypto.verifyFileEncrypted(
+    file,
+    encryptedSignature,
+    unlockedKey.value,
+    verificationKeyRing.keys.map { it.key },
+    time
+)
 
 /**
  * Lock this [UnlockedPrivateKey] using [passphrase].

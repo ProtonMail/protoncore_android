@@ -257,6 +257,45 @@ interface PGPCrypto {
     fun signFile(file: File, unlockedKey: Unarmored): Signature
 
     /**
+     * Sign [plainText] using [unlockedKey] and encrypt the signature using [encryptionKeys].
+     *
+     * @throws [CryptoException] if [plainText] cannot be signed.
+     *
+     * @see [verifyTextEncrypted]
+     */
+    fun signTextEncrypted(
+        plainText: String,
+        unlockedKey: Unarmored,
+        encryptionKeys: List<Armored>
+    ): EncryptedSignature
+
+    /**
+     * Sign [data] using [unlockedKey] and encrypt the signature using [encryptionKeys].
+     *
+     * @throws [CryptoException] if [data] cannot be signed.
+     *
+     * @see [verifyDataEncrypted]
+     */
+    fun signDataEncrypted(
+        data: ByteArray,
+        unlockedKey: Unarmored,
+        encryptionKeys: List<Armored>
+    ): EncryptedSignature
+
+    /**
+     * Sign [file] using [unlockedKey] and encrypt the signature using [encryptionKeys].
+     *
+     * @throws [CryptoException] if [file] cannot be signed.
+     *
+     * @see [verifyFileEncrypted]
+     */
+    fun signFileEncrypted(
+        file: File,
+        unlockedKey: Unarmored,
+        encryptionKeys: List<Armored>
+    ): EncryptedSignature
+
+    /**
      * Verify [signature] of [plainText] is correctly signed using [publicKey].
      *
      * @param time time for embedded signature validation, default to [VerificationTime.Now].
@@ -295,6 +334,54 @@ interface PGPCrypto {
         file: DecryptedFile,
         signature: Armored,
         publicKey: Armored,
+        time: VerificationTime = VerificationTime.Now
+    ): Boolean
+
+    /**
+     * Decrypt [encryptedSignature] with [privateKey]
+     * and then verify it is a valid signature of [plainText] using [publicKeys].
+     *
+     * @param time time for encrypted signature validation, default to [VerificationTime.Now].
+     *
+     * @see [signTextEncrypted]
+     */
+    fun verifyTextEncrypted(
+        plainText: String,
+        encryptedSignature: EncryptedSignature,
+        privateKey: Unarmored,
+        publicKeys: List<Armored>,
+        time: VerificationTime = VerificationTime.Now
+    ): Boolean
+
+    /**
+     * Decrypt [encryptedSignature] with [privateKey]
+     * and then verify it is a valid signature of [data] using [publicKeys].
+     *
+     * @param time time for encrypted signature validation, default to [VerificationTime.Now].
+     *
+     * @see [signDataEncrypted]
+     */
+    fun verifyDataEncrypted(
+        data: ByteArray,
+        encryptedSignature: EncryptedSignature,
+        privateKey: Unarmored,
+        publicKeys: List<Armored>,
+        time: VerificationTime = VerificationTime.Now
+    ): Boolean
+
+    /**
+     * Decrypt [encryptedSignature] with [privateKey]
+     * and then verify it is a valid signature of [file] using [publicKeys].
+     *
+     * @param time time for encrypted signature validation, default to [VerificationTime.Now].
+     *
+     * @see [signFileEncrypted]
+     */
+    fun verifyFileEncrypted(
+        file: File,
+        encryptedSignature: EncryptedSignature,
+        privateKey: Unarmored,
+        publicKeys: List<Armored>,
         time: VerificationTime = VerificationTime.Now
     ): Boolean
 

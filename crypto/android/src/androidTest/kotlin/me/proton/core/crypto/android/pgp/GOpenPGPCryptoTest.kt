@@ -410,4 +410,218 @@ internal class GOpenPGPCryptoTest {
             }
         }
     }
+
+    @Test
+    fun signTextEncrypted() {
+        // GIVEN
+        val text = "hello"
+        val encryptionKeys = listOf(crypto.getPublicKey(TestKey.privateKey2))
+
+        // WHEN
+        val encryptedSignature = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase).use { unlockedKey ->
+            crypto.signTextEncrypted(text, unlockedKey.value, encryptionKeys)
+        }
+
+        // THEN
+        val verificationKeys = listOf(crypto.getPublicKey(TestKey.privateKey))
+        crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase).use { unlockedKey ->
+            val verified = crypto.verifyTextEncrypted(
+                text,
+                encryptedSignature,
+                unlockedKey.value,
+                verificationKeys,
+                VerificationTime.Ignore
+            )
+            assertTrue(verified)
+        }
+    }
+
+    @Test
+    fun signDataEncrypted() {
+        // GIVEN
+        val data = "hello".toByteArray()
+        val encryptionKeys = listOf(crypto.getPublicKey(TestKey.privateKey2))
+
+        // WHEN
+        val encryptedSignature = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase).use { unlockedKey ->
+            crypto.signDataEncrypted(data, unlockedKey.value, encryptionKeys)
+        }
+
+        // THEN
+        val verificationKeys = listOf(crypto.getPublicKey(TestKey.privateKey))
+        crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase).use { unlockedKey ->
+            val verified = crypto.verifyDataEncrypted(
+                data,
+                encryptedSignature,
+                unlockedKey.value,
+                verificationKeys,
+                VerificationTime.Ignore
+            )
+            assertTrue(verified)
+        }
+    }
+
+    @Test
+    fun verifyTextEncrypted() {
+        // GIVEN
+        val text = "hello"
+        val verificationKeys = listOf(crypto.getPublicKey(TestKey.privateKey))
+        val encryptedSignature = """
+            -----BEGIN PGP MESSAGE-----
+            Version: GopenPGP 2.2.1
+            Comment: https://gopenpgp.org
+            
+            wcBMA7M4YhTWmh7GAQgAtqETMR6x+vJ3rz+JKz53pp8gylau0tY+tbpjhoZZIIVC
+            GL1HwjVBH0ERR7BmTvlyI7QhNqH88HQCBeFmEul6Jj+YBMz1XV8mU4Ve06YB6qF8
+            WKf6dUZBgZ44DA4aFKVx+buTKK6xwBcUtMg7RGZItGkHMsGHxLVlFh4DpKJ0R9K3
+            VmSxXGgPbejoRVye3VuYJgOcwdHzkykqJyMj16DJ7bqNINev/T4N21qnOSdHzP0b
+            RMDCEb2HAc+aKh9GrfP+UteYhQL9y42OcWuOgKNCtzEVcca0JhZEnCTgWpmCBsmM
+            SliWJNJfL6+fJOoD3eUJ7ATJgj7MGN2Jha1IQxf/oNLAqAFJ7jnXr+8MU6Heqf1d
+            t2gzaZ5aBB3atULpfG6tqzcBuVOe7MHOXet9NWQvueLyrC6+gtWyNsDPOSun0o3v
+            RXLa6G7KdW+kk74dEBv781nAor/QqyrUbxssROI49aRLzjPVAt+bwclKoy7JeIew
+            zYbx+cNBl9e63mAZ8rOsZPrhvl9gjTOcDRtiuPcQr4x437fomFuPOGpMzlxUCqre
+            o+Wy4JNlzygIxoWhVuwXOAEqQeUGriSOhW2gkcBoxtUhbfn9155HCJL3KBt8GeUs
+            rKK3/tiV1x4qPN5qayj5azntdBOyXdVL889nrioApgReG5dsHSvxYDOsWHA7GiEi
+            1RPocqZCk6V6rTvfxramoixL2d4onwpnH0QzznR8EsgKDHVQF3dlnBXwpgq6HQra
+            O4X4K2or8GdQHzXlva9F3hdEx5bqyHBg5Yibk2lKxoh2zxPNh/IRlleIkTfr8RmX
+            aocbgrspvQVQ+g==
+            =3FTq
+            -----END PGP MESSAGE-----
+        """.trimIndent()
+        // WHEN
+        val verified = crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase).use { unlockedKey ->
+            crypto.verifyTextEncrypted(
+                text,
+                encryptedSignature,
+                unlockedKey.value,
+                verificationKeys,
+                VerificationTime.Ignore
+            )
+        }
+        // THEN
+        assertTrue(verified)
+    }
+
+    @Test
+    fun verifyEncryptedSignatureWithWrongVerificationKey() {
+        // GIVEN
+        val text = "hello"
+        val wrongVerificationKeys = listOf(crypto.getPublicKey(TestKey.privateKey2))
+        val encryptedSignature = """
+            -----BEGIN PGP MESSAGE-----
+            Version: GopenPGP 2.2.1
+            Comment: https://gopenpgp.org
+            
+            wcBMA7M4YhTWmh7GAQgAtqETMR6x+vJ3rz+JKz53pp8gylau0tY+tbpjhoZZIIVC
+            GL1HwjVBH0ERR7BmTvlyI7QhNqH88HQCBeFmEul6Jj+YBMz1XV8mU4Ve06YB6qF8
+            WKf6dUZBgZ44DA4aFKVx+buTKK6xwBcUtMg7RGZItGkHMsGHxLVlFh4DpKJ0R9K3
+            VmSxXGgPbejoRVye3VuYJgOcwdHzkykqJyMj16DJ7bqNINev/T4N21qnOSdHzP0b
+            RMDCEb2HAc+aKh9GrfP+UteYhQL9y42OcWuOgKNCtzEVcca0JhZEnCTgWpmCBsmM
+            SliWJNJfL6+fJOoD3eUJ7ATJgj7MGN2Jha1IQxf/oNLAqAFJ7jnXr+8MU6Heqf1d
+            t2gzaZ5aBB3atULpfG6tqzcBuVOe7MHOXet9NWQvueLyrC6+gtWyNsDPOSun0o3v
+            RXLa6G7KdW+kk74dEBv781nAor/QqyrUbxssROI49aRLzjPVAt+bwclKoy7JeIew
+            zYbx+cNBl9e63mAZ8rOsZPrhvl9gjTOcDRtiuPcQr4x437fomFuPOGpMzlxUCqre
+            o+Wy4JNlzygIxoWhVuwXOAEqQeUGriSOhW2gkcBoxtUhbfn9155HCJL3KBt8GeUs
+            rKK3/tiV1x4qPN5qayj5azntdBOyXdVL889nrioApgReG5dsHSvxYDOsWHA7GiEi
+            1RPocqZCk6V6rTvfxramoixL2d4onwpnH0QzznR8EsgKDHVQF3dlnBXwpgq6HQra
+            O4X4K2or8GdQHzXlva9F3hdEx5bqyHBg5Yibk2lKxoh2zxPNh/IRlleIkTfr8RmX
+            aocbgrspvQVQ+g==
+            =3FTq
+            -----END PGP MESSAGE-----
+        """.trimIndent()
+        // WHEN
+        val verified = crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase).use { unlockedKey ->
+            crypto.verifyTextEncrypted(
+                text,
+                encryptedSignature,
+                unlockedKey.value,
+                wrongVerificationKeys,
+                VerificationTime.Ignore
+            )
+        }
+        // THEN
+        assertFalse(verified)
+    }
+
+    @Test
+    fun verifyEncryptedSignatureWithWrongDecryptionKey() {
+        // GIVEN
+        val text = "hello"
+        val wrongVerificationKeys = listOf(crypto.getPublicKey(TestKey.privateKey))
+        val encryptedSignature = """
+            -----BEGIN PGP MESSAGE-----
+            Version: GopenPGP 2.2.1
+            Comment: https://gopenpgp.org
+            
+            wcBMA7M4YhTWmh7GAQgAtqETMR6x+vJ3rz+JKz53pp8gylau0tY+tbpjhoZZIIVC
+            GL1HwjVBH0ERR7BmTvlyI7QhNqH88HQCBeFmEul6Jj+YBMz1XV8mU4Ve06YB6qF8
+            WKf6dUZBgZ44DA4aFKVx+buTKK6xwBcUtMg7RGZItGkHMsGHxLVlFh4DpKJ0R9K3
+            VmSxXGgPbejoRVye3VuYJgOcwdHzkykqJyMj16DJ7bqNINev/T4N21qnOSdHzP0b
+            RMDCEb2HAc+aKh9GrfP+UteYhQL9y42OcWuOgKNCtzEVcca0JhZEnCTgWpmCBsmM
+            SliWJNJfL6+fJOoD3eUJ7ATJgj7MGN2Jha1IQxf/oNLAqAFJ7jnXr+8MU6Heqf1d
+            t2gzaZ5aBB3atULpfG6tqzcBuVOe7MHOXet9NWQvueLyrC6+gtWyNsDPOSun0o3v
+            RXLa6G7KdW+kk74dEBv781nAor/QqyrUbxssROI49aRLzjPVAt+bwclKoy7JeIew
+            zYbx+cNBl9e63mAZ8rOsZPrhvl9gjTOcDRtiuPcQr4x437fomFuPOGpMzlxUCqre
+            o+Wy4JNlzygIxoWhVuwXOAEqQeUGriSOhW2gkcBoxtUhbfn9155HCJL3KBt8GeUs
+            rKK3/tiV1x4qPN5qayj5azntdBOyXdVL889nrioApgReG5dsHSvxYDOsWHA7GiEi
+            1RPocqZCk6V6rTvfxramoixL2d4onwpnH0QzznR8EsgKDHVQF3dlnBXwpgq6HQra
+            O4X4K2or8GdQHzXlva9F3hdEx5bqyHBg5Yibk2lKxoh2zxPNh/IRlleIkTfr8RmX
+            aocbgrspvQVQ+g==
+            =3FTq
+            -----END PGP MESSAGE-----
+        """.trimIndent()
+        // WHEN
+        val verified = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase).use { unlockedKey ->
+            crypto.verifyTextEncrypted(
+                text,
+                encryptedSignature,
+                unlockedKey.value,
+                wrongVerificationKeys,
+                VerificationTime.Ignore
+            )
+        }
+        // THEN
+        assertFalse(verified)
+    }
+
+    @Test
+    fun verifyEncryptedSignatureWithWrongData() {
+        // GIVEN
+        val text = "wrong data"
+        val wrongVerificationKeys = listOf(crypto.getPublicKey(TestKey.privateKey))
+        val encryptedSignature = """
+            -----BEGIN PGP MESSAGE-----
+            Version: GopenPGP 2.2.1
+            Comment: https://gopenpgp.org
+            
+            wcBMA7M4YhTWmh7GAQgAtqETMR6x+vJ3rz+JKz53pp8gylau0tY+tbpjhoZZIIVC
+            GL1HwjVBH0ERR7BmTvlyI7QhNqH88HQCBeFmEul6Jj+YBMz1XV8mU4Ve06YB6qF8
+            WKf6dUZBgZ44DA4aFKVx+buTKK6xwBcUtMg7RGZItGkHMsGHxLVlFh4DpKJ0R9K3
+            VmSxXGgPbejoRVye3VuYJgOcwdHzkykqJyMj16DJ7bqNINev/T4N21qnOSdHzP0b
+            RMDCEb2HAc+aKh9GrfP+UteYhQL9y42OcWuOgKNCtzEVcca0JhZEnCTgWpmCBsmM
+            SliWJNJfL6+fJOoD3eUJ7ATJgj7MGN2Jha1IQxf/oNLAqAFJ7jnXr+8MU6Heqf1d
+            t2gzaZ5aBB3atULpfG6tqzcBuVOe7MHOXet9NWQvueLyrC6+gtWyNsDPOSun0o3v
+            RXLa6G7KdW+kk74dEBv781nAor/QqyrUbxssROI49aRLzjPVAt+bwclKoy7JeIew
+            zYbx+cNBl9e63mAZ8rOsZPrhvl9gjTOcDRtiuPcQr4x437fomFuPOGpMzlxUCqre
+            o+Wy4JNlzygIxoWhVuwXOAEqQeUGriSOhW2gkcBoxtUhbfn9155HCJL3KBt8GeUs
+            rKK3/tiV1x4qPN5qayj5azntdBOyXdVL889nrioApgReG5dsHSvxYDOsWHA7GiEi
+            1RPocqZCk6V6rTvfxramoixL2d4onwpnH0QzznR8EsgKDHVQF3dlnBXwpgq6HQra
+            O4X4K2or8GdQHzXlva9F3hdEx5bqyHBg5Yibk2lKxoh2zxPNh/IRlleIkTfr8RmX
+            aocbgrspvQVQ+g==
+            =3FTq
+            -----END PGP MESSAGE-----
+        """.trimIndent()
+        // WHEN
+        val verified = crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase).use { unlockedKey ->
+            crypto.verifyTextEncrypted(
+                text,
+                encryptedSignature,
+                unlockedKey.value,
+                wrongVerificationKeys,
+                VerificationTime.Ignore
+            )
+        }
+        // THEN
+        assertFalse(verified)
+    }
 }
