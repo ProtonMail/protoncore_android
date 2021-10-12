@@ -18,8 +18,23 @@
 
 package me.proton.core.contact.domain.entity
 
-data class ContactCard(
-    val type: Int,
-    val data: String,
-    val signature: String?
-)
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.domain.type.IntEnum
+
+sealed class ContactCard {
+    data class ClearText(val data: String): ContactCard()
+    data class Signed(val data: String, val signature: Signature): ContactCard()
+    data class Encrypted(val data: Armored, val signature: Signature): ContactCard()
+}
+
+enum class ContactCardType(val value: Int) {
+    ClearText(0),
+    Signed(2),
+    Encrypted(3);
+
+    companion object {
+        val map = values().associateBy { it.value }
+        fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
+    }
+}

@@ -50,12 +50,14 @@ class ContactLocalDataSourceImpl @Inject constructor(
         }.distinctUntilChanged()
     }
 
-    override suspend fun upsertContactWithCards(contactWithCards: ContactWithCards) {
+    override suspend fun upsertContactWithCards(vararg contactWithCards: ContactWithCards) {
         contactDatabase.inTransaction {
-            upsertContacts(contactWithCards.contact)
+            upsertContacts(*contactWithCards.map { it.contact }.toTypedArray())
 
-            contactDatabase.contactCardDao().deleteAllContactCards(contactWithCards.id)
-            val contactCardsEntities = contactWithCards.contactCards.map { it.toContactCardEntity(contactWithCards.id) }
+            contactDatabase.contactCardDao().deleteAllContactCards(*contactWithCards.map { it.id }.toTypedArray())
+            val contactCardsEntities = contactWithCards.flatMap {
+                it.contactCards.map { card -> card.toContactCardEntity(it.id) }
+            }
             contactDatabase.contactCardDao().insertOrUpdate(*contactCardsEntities.toTypedArray())
         }
     }

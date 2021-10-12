@@ -23,6 +23,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import me.proton.core.contact.domain.entity.ContactCard
+import me.proton.core.contact.domain.entity.ContactCardType
 import me.proton.core.contact.domain.entity.ContactId
 
 @Entity(
@@ -48,11 +49,19 @@ data class ContactCardEntity(
     var cardId: Long = 0
 }
 
-fun ContactCard.toContactCardEntity(contactId: ContactId) = ContactCardEntity(
-    contactId = contactId,
-    type = type,
-    data = data,
-    signature = signature
-)
+fun ContactCard.toContactCardEntity(contactId: ContactId): ContactCardEntity {
+    return when (this) {
+        is ContactCard.ClearText -> ContactCardEntity(contactId, ContactCardType.ClearText.value, data, null)
+        is ContactCard.Encrypted -> ContactCardEntity(contactId, ContactCardType.Signed.value, data, signature)
+        is ContactCard.Signed -> ContactCardEntity(contactId, ContactCardType.Encrypted.value, data, signature)
+    }
+}
 
-fun ContactCardEntity.toContactCard() = ContactCard(type, data, signature)
+fun ContactCardEntity.toContactCard(): ContactCard {
+    return when (ContactCardType.enumOf(type)?.enum) {
+        ContactCardType.ClearText -> ContactCard.ClearText(data)
+        ContactCardType.Signed -> ContactCard.Signed(data, requireNotNull(signature))
+        ContactCardType.Encrypted -> ContactCard.Encrypted(data, requireNotNull(signature))
+        else -> throw IllegalStateException("Unsupported contact type $type")
+    }
+}

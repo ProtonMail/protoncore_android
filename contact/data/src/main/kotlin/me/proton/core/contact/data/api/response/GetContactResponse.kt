@@ -24,6 +24,8 @@ import me.proton.core.contact.data.api.resource.DetailedContactResource
 
 @Serializable
 data class GetContactResponse(
+    @SerialName("Code")
+    val code: Int,
     @SerialName("Contact")
     val contact: DetailedContactResource
 )

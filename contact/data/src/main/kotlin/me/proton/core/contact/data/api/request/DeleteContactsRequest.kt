@@ -16,17 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.domain.repository
+package me.proton.core.contact.data.api.request
 
-import me.proton.core.contact.domain.entity.Contact
-import me.proton.core.contact.domain.entity.ContactCard
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import me.proton.core.contact.domain.entity.ContactId
-import me.proton.core.contact.domain.entity.ContactWithCards
-import me.proton.core.domain.entity.UserId
 
-interface ContactRemoteDataSource {
-    suspend fun getContactWithCards(userId: UserId, contactId: ContactId): ContactWithCards
-    suspend fun getAllContacts(userId: UserId): List<Contact>
-    suspend fun createContacts(userId: UserId, contactCards: List<List<ContactCard>>): List<ContactWithCards>
-    suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>)
+@Serializable
+data class DeleteContactsRequest(
+    @SerialName("IDs")
+    val ids: List<String>
+) {
+    companion object {
+        fun create(contactIds: List<ContactId>) = DeleteContactsRequest(
+            ids = contactIds.map { it.id }
+        )
+    }
 }

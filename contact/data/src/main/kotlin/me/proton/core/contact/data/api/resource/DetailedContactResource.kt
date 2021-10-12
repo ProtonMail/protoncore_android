@@ -34,7 +34,7 @@ data class DetailedContactResource(
     @SerialName("ContactEmails")
     val contactEmails: List<ContactEmailResource>,
     @SerialName("Cards")
-    val cards: List<ContactCardResource>
+    val cards: List<ContactCardResource>? = null
 ) {
     fun toContactWithCards(userId: UserId) = ContactWithCards(
         contact = Contact(
@@ -43,6 +43,6 @@ data class DetailedContactResource(
             name,
             contactEmails.map { it.toContactEmail(userId) },
         ),
-        contactCards = cards.map { it.toContactCard() }
+        contactCards = cards?.map { it.toContactCard() }.orEmpty()
     )
 }

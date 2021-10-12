@@ -16,17 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.domain.repository
+package me.proton.core.contact.tests
 
-import me.proton.core.contact.domain.entity.Contact
-import me.proton.core.contact.domain.entity.ContactCard
-import me.proton.core.contact.domain.entity.ContactId
-import me.proton.core.contact.domain.entity.ContactWithCards
-import me.proton.core.domain.entity.UserId
+import me.proton.core.contact.domain.entity.ContactCardType
+import org.junit.Test
 
-interface ContactRemoteDataSource {
-    suspend fun getContactWithCards(userId: UserId, contactId: ContactId): ContactWithCards
-    suspend fun getAllContacts(userId: UserId): List<Contact>
-    suspend fun createContacts(userId: UserId, contactCards: List<List<ContactCard>>): List<ContactWithCards>
-    suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>)
+class ConsistencyTests {
+
+    @Test
+    fun `contact card type is consistent`() {
+        assert(ContactCardType.ClearText.value == 0)
+        assert(ContactCardType.Signed.value == 2)
+        assert(ContactCardType.Encrypted.value == 3)
+    }
 }

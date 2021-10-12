@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -45,10 +46,25 @@ class ContactDetailActivity : ProtonActivity<ActivityContactDetailsBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.state.flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED).onEach { state ->
-            when (state) {
-                is ContactDetailViewModel.State.ContactDetails -> binding.contactDetails.text = state.contact
-                is ContactDetailViewModel.State.Error -> showToast(state.reason)
+        binding.deleteButton.setOnClickListener {
+            viewModel.deleteContact()
+        }
+        viewModel.viewState.flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED).onEach { viewState ->
+            binding.contactDetails.text = viewState.contact
+        }.launchIn(lifecycleScope)
+        viewModel.loadingState
+            .flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED)
+            .onEach { loadingState ->
+                binding.progress.isVisible = loadingState
+                binding.deleteButton.isClickable = !loadingState
+        }.launchIn(lifecycleScope)
+        viewModel.viewEvent.flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED).onEach { viewEvent ->
+            when (viewEvent) {
+                is ContactDetailViewModel.ViewEvent.Error -> showToast(viewEvent.reason)
+                ContactDetailViewModel.ViewEvent.Success -> {
+                    showToast("success")
+                    finish()
+                }
             }.exhaustive
         }.launchIn(lifecycleScope)
     }

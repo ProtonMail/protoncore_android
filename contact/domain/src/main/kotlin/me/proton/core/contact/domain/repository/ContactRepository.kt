@@ -20,6 +20,7 @@ package me.proton.core.contact.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
@@ -61,4 +62,14 @@ interface ContactRepository {
      * Get all [ContactEmail] from [userId].
      */
     suspend fun getAllContactEmails(userId: UserId, refresh: Boolean = false): List<ContactEmail>
+
+    /**
+     * Create a [Contact] for [userId], using [contactCards].
+     */
+    suspend fun createContact(userId: UserId, contactCards: List<ContactCard>)
+
+    /**
+     * Delete contacts from [userId] by [contactIds].
+     */
+    suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>)
 }

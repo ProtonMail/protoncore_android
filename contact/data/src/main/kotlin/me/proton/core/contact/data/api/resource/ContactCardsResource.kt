@@ -16,16 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.contact.data.local.db.dao
+package me.proton.core.contact.data.api.resource
 
-import androidx.room.Dao
-import androidx.room.Query
-import me.proton.core.contact.data.local.db.entity.ContactCardEntity
-import me.proton.core.contact.domain.entity.ContactId
-import me.proton.core.data.room.db.BaseDao
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@Dao
-abstract class ContactCardDao: BaseDao<ContactCardEntity>() {
-    @Query("DELETE FROM ContactCardEntity WHERE contactId IN (:contactIds)")
-    abstract suspend fun deleteAllContactCards(vararg contactIds: ContactId)
-}
+@Serializable
+data class ContactCardsResource(
+    @SerialName("Cards")
+    val cards: List<ContactCardResource>
+)

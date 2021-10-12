@@ -18,14 +18,23 @@
 
 package me.proton.core.contact.data.api
 
+import me.proton.core.contact.data.api.request.CreateContactsRequest
+import me.proton.core.contact.data.api.request.DeleteContactsRequest
+import me.proton.core.contact.data.api.resource.ContactCardsResource
 import me.proton.core.contact.data.api.resource.ContactEmailResource
 import me.proton.core.contact.data.api.resource.ShortContactResource
+import me.proton.core.contact.data.api.resource.toContactCardResource
 import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRemoteDataSource
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.ProtonErrorException
+import me.proton.core.network.data.ResponseCodes
+import me.proton.core.network.domain.onError
+import me.proton.core.network.domain.onSuccess
 import javax.inject.Inject
 
 class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: ApiProvider): ContactRemoteDataSource {
@@ -82,5 +91,43 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
             }
             contactEmails
         }.valueOrThrow
+    }
+
+    override suspend fun createContacts(userId: UserId, contactCards: List<List<ContactCard>>): List<ContactWithCards> {
+        val contactCardsResources = contactCards.map {
+            ContactCardsResource(it.map { contactCard ->
+                contactCard.toContactCardResource()
+            })
+        }
+        val request = CreateContactsRequest.create(
+            contacts = contactCardsResources,
+            overwrite = false,
+        )
+        val apiResponse = apiProvider.get<ContactApi>(userId).invoke {
+            createContacts(request)
+        }.valueOrThrow
+        check(apiResponse.responses.all { it.response.code == ResponseCodes.OK }) {
+            "At least one response code is not ok (${ResponseCodes.OK}): $apiResponse"
+        }
+        return apiResponse.responses.map {
+            it.response.contact.toContactWithCards(userId)
+        }
+    }
+
+    override suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>) {
+        val apiResult = apiProvider.get<ContactApi>(userId).invoke {
+            deleteContacts(DeleteContactsRequest.create(contactIds))
+        }
+        apiResult.onError {
+            val cause = it.cause
+            if (cause !is ProtonErrorException || cause.protonData.code != ResponseCodes.NOT_EXISTS) {
+                apiResult.throwIfError()
+            }
+        }
+        apiResult.onSuccess { response ->
+            check(response.responses.all {
+                it.response.code == ResponseCodes.OK || it.response.code == ResponseCodes.NOT_EXISTS
+            })
+        }
     }
 }

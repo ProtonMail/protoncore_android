@@ -27,9 +27,8 @@ import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import me.proton.core.contact.domain.entity.Contact
+import me.proton.core.contact.domain.entity.ContactCard
 import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
@@ -51,12 +50,24 @@ class ContactRepositoryImpl @Inject constructor(
 
     private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)
 
+    private val contactDetailFetchedOnce = mutableMapOf<ContactId, Boolean>()
     private val contactWithCardsStore: Store<ContactStoreKey, ContactWithCards> = StoreBuilder.from(
         fetcher = Fetcher.of { key: ContactStoreKey ->
-            remoteDataSource.getContactWithCards(key.userId, key.contactId)
+            val contactWithCards = remoteDataSource.getContactWithCards(key.userId, key.contactId)
+            contactDetailFetchedOnce[key.contactId] = true
+            contactWithCards
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { contactStoreKey -> localDataSource.observeContact(contactStoreKey.contactId) },
+            reader = { contactStoreKey ->
+                localDataSource.observeContact(contactStoreKey.contactId).map {
+                    return@map it?.let { contactWithCards ->
+                        contactWithCards.takeIf {
+                            val fetchedOnce = contactDetailFetchedOnce[contactStoreKey.contactId] ?: false
+                            contactWithCards.contactCards.isNotEmpty() && fetchedOnce
+                        }
+                    }
+                }
+            },
             writer = { _, contactWithCards -> localDataSource.upsertContactWithCards(contactWithCards) },
             delete = { key -> localDataSource.deleteContacts(key.contactId) },
             deleteAll = localDataSource::deleteAllContacts
@@ -123,5 +134,15 @@ class ContactRepositoryImpl @Inject constructor(
 
     override suspend fun getAllContactEmails(userId: UserId, refresh: Boolean): List<ContactEmail> {
         return getAllContacts(userId, refresh).flatMap { it.contactEmails }
+    }
+
+    override suspend fun createContact(userId: UserId, contactCards: List<ContactCard>) {
+        val createdContactWithCards = remoteDataSource.createContacts(userId, listOf(contactCards))
+        localDataSource.upsertContactWithCards(*createdContactWithCards.toTypedArray())
+    }
+
+    override suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>) {
+        remoteDataSource.deleteContacts(userId, contactIds)
+        localDataSource.deleteContacts(*contactIds.toTypedArray())
     }
 }

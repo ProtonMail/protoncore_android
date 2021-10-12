@@ -18,7 +18,6 @@
 
 package me.proton.android.core.coreexample.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
@@ -28,41 +27,38 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.R
-import me.proton.android.core.coreexample.adapter.ContactsAdapter
-import me.proton.android.core.coreexample.databinding.ActivityContactsBinding
-import me.proton.android.core.coreexample.viewmodel.ContactsViewModel
-import me.proton.core.contact.domain.entity.ContactId
+import me.proton.android.core.coreexample.databinding.ActivityCreateContactBinding
+import me.proton.android.core.coreexample.viewmodel.CreateContactViewModel
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.showToast
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class ContactsActivity : ProtonActivity<ActivityContactsBinding>() {
-    override fun layoutId(): Int = R.layout.activity_contacts
+class CreateContactActivity : ProtonActivity<ActivityCreateContactBinding>() {
+    override fun layoutId(): Int = R.layout.activity_create_contact
 
-    private val viewModel: ContactsViewModel by viewModels()
-    private val contactsAdapter = ContactsAdapter(::onClickContact)
+    private val viewModel: CreateContactViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.contactsRecyclerView.adapter = contactsAdapter
-        binding.addButton.setOnClickListener {
-            startActivity(Intent(this, CreateContactActivity::class.java))
+        binding.createButton.setOnClickListener {
+            viewModel.createContact(binding.name.text.toString())
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     when (state) {
-                        is ContactsViewModel.State.Contacts -> contactsAdapter.submitList(state.contacts)
-                        is ContactsViewModel.State.Error -> showToast(state.reason)
-                        ContactsViewModel.State.Processing -> showToast("processing")
+                        is CreateContactViewModel.State.Error -> showToast(state.reason)
+                        CreateContactViewModel.State.Idling -> binding.createButton.setIdle()
+                        CreateContactViewModel.State.Processing -> binding.createButton.setLoading()
+                        CreateContactViewModel.State.Success -> {
+                            showToast("Success")
+                            finish()
+                        }
                     }.exhaustive
                 }
             }
         }
-    }
-
-    private fun onClickContact(contactId: ContactId) {
-        startActivity(ContactDetailActivity.createIntent(this, contactId))
     }
 }

@@ -40,8 +40,10 @@ interface ContactLocalDataSource {
 
     /**
      * Update or insert [ContactWithCards].
+     *
+     * @throws SQLiteConstraintException if corresponding user(s) doesn't exist.
      */
-    suspend fun upsertContactWithCards(contactWithCards: ContactWithCards)
+    suspend fun upsertContactWithCards(vararg contactWithCards: ContactWithCards)
 
     /**
      * Update or insert [Contact].

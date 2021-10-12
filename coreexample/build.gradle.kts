@@ -110,6 +110,7 @@ dependencies {
         `room-ktx`,
         `retrofit`,
         `timber`,
+        `ez-vcard`
     )
 
     kapt(
