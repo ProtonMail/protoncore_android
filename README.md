@@ -103,11 +103,11 @@ Data Room: **1.16** - _released on: Oct 04, 2021_
 
 ### Network
 
-Network: **1.15.6** - _released on: Oct 07, 2021_
+Network: **1.15.7** - _released on: Oct 12, 2021_
 
-Network Domain: **1.15.6** - _released on: Oct 07, 2021_
+Network Domain: **1.15.7** - _released on: Oct 12, 2021_
 
-Network Data: **1.15.6** - _released on: Oct 07, 2021_
+Network Data: **1.15.7** - _released on: Oct 12, 2021_
 
 ### Crypto
 
@@ -172,13 +172,13 @@ User Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Contact
 
-Contact: **1.16-build-10104** - _released on: Oct 05, 2021_
+Contact: **1.16-build-10105** - _released on: Oct 12, 2021_
 
-Contact Domain: **1.16-build-10104** - _released on: Oct 05, 2021_
+Contact Domain: **1.16-build-10105** - _released on: Oct 12, 2021_
 
-Contact Data: **1.16-build-10104** - _released on: Oct 05, 2021_
+Contact Data: **1.16-build-10105** - _released on: Oct 12, 2021_
 
-Contact Hilt: **1.16-build-10104** - _released on: Oct 05, 2021_
+Contact Hilt: **1.16-build-10105** - _released on: Oct 12, 2021_
 
 ### Mail Message
 
