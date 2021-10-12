@@ -21,57 +21,55 @@ package me.proton.core.contact.domain
 import ezvcard.Ezvcard
 import ezvcard.VCard
 import me.proton.core.contact.domain.entity.ContactCard
-import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.contact.domain.entity.DecryptedVCard
+import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.decryptText
 import me.proton.core.key.domain.encryptText
+import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.signText
-import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
-import me.proton.core.user.domain.entity.User
 
-fun User.signContactCard(cryptoContext: CryptoContext, vCard: VCard): ContactCard.Signed {
-    return useKeys(cryptoContext) {
-        val vCardData = vCard.write()
-        val vCardSignature = signText(vCardData)
-        ContactCard.Signed(vCardData, vCardSignature)
-    }
+fun KeyHolderContext.signContactCard(vCard: VCard): ContactCard.Signed {
+    val vCardData = vCard.write()
+    val vCardSignature = signText(vCardData)
+    return ContactCard.Signed(vCardData, vCardSignature)
 }
 
-fun User.encryptAndSignContactCard(cryptoContext: CryptoContext, vCard: VCard): ContactCard.Encrypted {
-    return useKeys(cryptoContext) {
-        val vCardData = vCard.write()
-        val encryptedVCardData = encryptText(vCardData)
-        val vCardSignature = signText(vCardData)
-        ContactCard.Encrypted(encryptedVCardData, vCardSignature)
-    }
+fun KeyHolderContext.encryptAndSignContactCard(vCard: VCard): ContactCard.Encrypted {
+    val vCardData = vCard.write()
+    val encryptedVCardData = encryptText(vCardData)
+    val vCardSignature = signText(vCardData)
+    return ContactCard.Encrypted(encryptedVCardData, vCardSignature)
 }
 
-fun User.decryptContactCardToVCard(cryptoContext: CryptoContext, contactCard: ContactCard): VCard {
+fun KeyHolderContext.decryptContactCard(contactCard: ContactCard): DecryptedVCard {
     return when (contactCard) {
-        is ContactCard.ClearText -> Ezvcard.parse(contactCard.data).first()
-        is ContactCard.Encrypted -> decryptEncryptedContactCardToVCard(cryptoContext, contactCard)
-        is ContactCard.Signed -> decryptSignedContactCardToVCard(cryptoContext, contactCard)
+        is ContactCard.ClearText -> decryptContactCardClearText(contactCard)
+        is ContactCard.Encrypted -> decryptContactCardEncrypted(contactCard)
+        is ContactCard.Signed -> decryptContactCardSigned(contactCard)
     }
 }
 
-private fun User.decryptSignedContactCardToVCard(
-    cryptoContext: CryptoContext,
-    contactCardSigned: ContactCard.Signed
-): VCard {
-    useKeys(cryptoContext) {
-        check(verifyText(contactCardSigned.data, contactCardSigned.signature))
-    }
-    return Ezvcard.parse(contactCardSigned.data).first()
+private fun KeyHolderContext.decryptContactCardClearText(contactCard: ContactCard.ClearText): DecryptedVCard {
+    return DecryptedVCard(
+        card = Ezvcard.parse(contactCard.data).first(),
+        status = VerificationStatus.NotSigned
+    )
 }
 
-private fun User.decryptEncryptedContactCardToVCard(
-    cryptoContext: CryptoContext,
-    contactCardEncrypted: ContactCard.Encrypted
-): VCard {
-    val decryptedText = useKeys(cryptoContext) {
-        val decryptedText = decryptText(contactCardEncrypted.data)
-        check(verifyText(decryptedText, contactCardEncrypted.signature))
-        decryptedText
-    }
-    return Ezvcard.parse(decryptedText).first()
+private fun KeyHolderContext.decryptContactCardSigned(contactCard: ContactCard.Signed): DecryptedVCard {
+    val verified = verifyText(contactCard.data, contactCard.signature)
+    return DecryptedVCard(
+        card = Ezvcard.parse(contactCard.data).first(),
+        status = VerificationStatus.Success.takeIf { verified } ?: VerificationStatus.Failure
+    )
+}
+
+private fun KeyHolderContext.decryptContactCardEncrypted(contactCard: ContactCard.Encrypted): DecryptedVCard {
+    val decryptedText = decryptText(contactCard.data)
+    val verified = verifyText(decryptedText, contactCard.signature)
+    return DecryptedVCard(
+        card = Ezvcard.parse(decryptedText).first(),
+        status = VerificationStatus.Success.takeIf { verified } ?: VerificationStatus.Failure
+    )
 }

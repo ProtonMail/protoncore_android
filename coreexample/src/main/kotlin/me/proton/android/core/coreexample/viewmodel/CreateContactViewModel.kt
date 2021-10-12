@@ -21,11 +21,6 @@ package me.proton.android.core.coreexample.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ezvcard.VCard
-import ezvcard.VCardVersion
-import ezvcard.property.Email
-import ezvcard.property.FormattedName
-import ezvcard.property.Uid
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,6 +34,7 @@ import me.proton.core.contact.domain.encryptAndSignContactCard
 import me.proton.core.contact.domain.repository.ContactRepository
 import me.proton.core.contact.domain.signContactCard
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
@@ -59,11 +55,12 @@ class CreateContactViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val userId = accountManager.getPrimaryUserId().filterNotNull().first()
-                val user = userManager.getUser(userId)
-                val cards = listOf(
-                    user.signContactCard(cryptoContext, createToBeSignedVCard(name)),
-                    user.encryptAndSignContactCard(cryptoContext, createToBeEncryptedAndSignedVCard(name))
-                )
+                val cards = userManager.getUser(userId).useKeys(cryptoContext) {
+                    listOf(
+                        signContactCard(createToBeSignedVCard(name)),
+                        encryptAndSignContactCard(createToBeEncryptedAndSignedVCard(name))
+                    )
+                }
                 contactRepository.createContact(userId, cards)
                 mutableState.value = State.Success
             } catch (throwable: Throwable) {
