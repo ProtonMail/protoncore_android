@@ -31,8 +31,8 @@ internal data class CreateSubscription(
     val payment: TokenTypePaymentBody? = null,
     @SerialName("Codes")
     val codes: List<String>? = null,
-    @SerialName("PlanIDs")
-    val planIds: Map<String, Int>,
+    @SerialName("Plans")
+    val plans: Map<String, Int>,
     @SerialName("Cycle")
     val cycle: Int
 )

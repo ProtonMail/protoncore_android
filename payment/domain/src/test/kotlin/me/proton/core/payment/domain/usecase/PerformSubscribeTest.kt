@@ -85,7 +85,7 @@ class PerformSubscribeTest {
                 amount = 1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
-                planIds = listOf(testPlanId),
+                plans = listOf(testPlanId),
                 codes = null,
                 paymentToken = null
             )
@@ -105,7 +105,7 @@ class PerformSubscribeTest {
                 amount = -1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
-                planIds = listOf(testPlanId),
+                plans = listOf(testPlanId),
                 codes = null,
                 paymentToken = null
             )
@@ -120,7 +120,7 @@ class PerformSubscribeTest {
                 amount = 1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
-                planIds = listOf(),
+                plans = listOf(),
                 codes = null,
                 paymentToken = null
             )
@@ -134,7 +134,7 @@ class PerformSubscribeTest {
             amount = 1,
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
-            planIds = listOf(testPlanId),
+            plans = listOf(testPlanId),
             codes = null,
             paymentToken = testPaymentToken
         )
@@ -159,7 +159,7 @@ class PerformSubscribeTest {
             amount = 0,
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
-            planIds = listOf(testPlanId),
+            plans = listOf(testPlanId),
             codes = null,
             paymentToken = null
         )
@@ -197,7 +197,7 @@ class PerformSubscribeTest {
                 amount = 1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
-                planIds = listOf(testPlanId),
+                plans = listOf(testPlanId),
                 codes = null,
                 paymentToken = testPaymentToken
             )

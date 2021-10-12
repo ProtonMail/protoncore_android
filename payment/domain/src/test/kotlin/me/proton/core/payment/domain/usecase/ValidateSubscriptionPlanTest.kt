@@ -73,7 +73,7 @@ class ValidateSubscriptionPlanTest {
         val result = useCase.invoke(
             userId = testUserId,
             codes = null,
-            planIds = listOf(testPlanId),
+            plans = listOf(testPlanId),
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY
         )
@@ -81,7 +81,7 @@ class ValidateSubscriptionPlanTest {
             repository.validateSubscription(
                 testUserId,
                 null,
-                listOf(testPlanId),
+                mapOf(Pair(testPlanId, 1)),
                 Currency.CHF,
                 SubscriptionCycle.YEARLY
             )
@@ -96,7 +96,7 @@ class ValidateSubscriptionPlanTest {
         val result = useCase.invoke(
             userId = user,
             codes = null,
-            planIds = listOf(testPlanId),
+            plans = listOf(testPlanId),
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY
         )
@@ -104,7 +104,7 @@ class ValidateSubscriptionPlanTest {
             repository.validateSubscription(
                 user,
                 null,
-                listOf(testPlanId),
+                mapOf(Pair(testPlanId, 1)),
                 Currency.CHF,
                 SubscriptionCycle.YEARLY
             )
@@ -120,7 +120,7 @@ class ValidateSubscriptionPlanTest {
             useCase.invoke(
                 userId = user,
                 codes = null,
-                planIds = listOf(),
+                plans = listOf(),
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY
             )

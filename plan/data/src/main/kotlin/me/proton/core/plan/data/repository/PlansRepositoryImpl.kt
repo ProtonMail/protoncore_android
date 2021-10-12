@@ -18,6 +18,8 @@
 
 package me.proton.core.plan.data.repository
 
+import me.proton.core.domain.ApiVersion
+import me.proton.core.domain.ApiVersionName
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.plan.data.api.PlansApi
@@ -25,7 +27,8 @@ import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.repository.PlansRepository
 
 class PlansRepositoryImpl(
-    private val provider: ApiProvider
+    private val provider: ApiProvider,
+    @ApiVersion private val apiVersion: ApiVersionName
 ) : PlansRepository {
 
     /**
@@ -33,7 +36,7 @@ class PlansRepositoryImpl(
      */
     override suspend fun getPlans(sessionUserId: SessionUserId?): List<Plan> =
         provider.get<PlansApi>(sessionUserId).invoke {
-            getPlans().plans.map {
+            getPlans(apiVersion.value).plans.map {
                 it.toPlan()
             }
         }.valueOrThrow

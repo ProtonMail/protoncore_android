@@ -16,18 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.presentation.entity
+package me.proton.core.domain
 
-import me.proton.core.presentation.utils.Price
-import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Qualifier
 
-enum class Cycle {
-    MONTHLY, YEARLY;
-
-    fun getPrice(pricing: PlanPricing): Price {
-        return when (this) {
-            MONTHLY -> pricing.monthly
-            YEARLY -> pricing.yearly
-        }.toDouble().exhaustive
-    }
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ApiVersion

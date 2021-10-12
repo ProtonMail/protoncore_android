@@ -36,11 +36,18 @@ class ValidateSubscriptionPlan @Inject constructor(
     suspend operator fun invoke(
         userId: UserId?,
         codes: List<String>? = null,
-        planIds: List<String>,
+        plans: List<String>,
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus {
-        require(planIds.isNotEmpty())
-        return paymentsRepository.validateSubscription(userId, codes, planIds, currency, cycle)
+        require(plans.isNotEmpty())
+        return paymentsRepository.validateSubscription(
+            userId,
+            codes,
+            plans.map { it.lowercase() to 1 }.toMap(),
+            currency,
+            cycle
+        )
+
     }
 }

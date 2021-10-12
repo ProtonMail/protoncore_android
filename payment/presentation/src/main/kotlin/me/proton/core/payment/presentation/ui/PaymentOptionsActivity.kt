@@ -105,7 +105,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>()
                 onClick {
                     viewModel.subscribe(
                         user,
-                        input.plan.id,
+                        input.plan.name,
                         input.codes,
                         input.plan.currency,
                         input.plan.subscriptionCycle,

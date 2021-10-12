@@ -125,7 +125,7 @@ open class BillingViewModel @Inject constructor(
      */
     fun subscribe(
         userId: UserId?,
-        planIds: List<String>,
+        plans: List<String>,
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle,
@@ -134,13 +134,13 @@ open class BillingViewModel @Inject constructor(
         emit(State.Processing)
         val signUp = userId == null
 
-        val subscription = validatePlanSubscription(userId, codes, planIds, currency, cycle)
+        val subscription = validatePlanSubscription(userId, codes, plans, currency, cycle)
         emit(State.Success.SubscriptionPlanValidated(subscription))
 
         if (!signUp && subscription.amountDue == 0L) {
             // directly create the subscription
             val subscriptionResult =
-                performSubscribe(userId!!, 0, currency, cycle, planIds, codes, paymentToken = null)
+                performSubscribe(userId!!, 0, currency, cycle, plans, codes, paymentToken = null)
             emit(State.Success.SubscriptionCreated(0, currency, cycle, subscriptionResult, null))
         } else {
             if (signUp && paymentType is PaymentType.PaymentMethod) {
@@ -180,7 +180,7 @@ open class BillingViewModel @Inject constructor(
             if (paymentTokenResult.status == PaymentTokenStatus.CHARGEABLE) {
                 val amount = subscription.amountDue
                 val token = paymentTokenResult.token
-                emit(onTokenApproved(userId, planIds, codes, amount, currency, cycle, token))
+                emit(onTokenApproved(userId, plans, codes, amount, currency, cycle, token))
             } else {
                 // should show 3DS approval URL WebView
                 emit(State.Incomplete.TokenApprovalNeeded(paymentTokenResult, subscription.amountDue))
@@ -219,13 +219,13 @@ open class BillingViewModel @Inject constructor(
      */
     fun validatePlan(
         userId: UserId?,
-        planIds: List<String>,
+        plans: List<String>,
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle
     ) = flow {
         emit(PlansValidationState.Processing)
-        emit(PlansValidationState.Success(validatePlanSubscription(userId, codes, planIds, currency, cycle)))
+        emit(PlansValidationState.Success(validatePlanSubscription(userId, codes, plans, currency, cycle)))
     }.catch { error ->
         _plansValidationState.tryEmit(PlansValidationState.Error.Message(error.message))
     }.onEach { subscriptionState ->

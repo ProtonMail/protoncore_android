@@ -16,26 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.presentation.entity
+package me.proton.core.domain
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.presentation.utils.PRICE_ZERO
-import me.proton.core.presentation.utils.Price
-
-@Parcelize
-data class SelectedPlan(
-    val planId: String,
-    val planName: String,
-    val free: Boolean,
-    val cycle: PlanCycle,
-    val currency: PlanCurrency,
-    val amount: Price
-) : Parcelable {
-    companion object {
-        const val FREE_PLAN_ID = "free"
-        fun free(freePlanName: String) =
-            SelectedPlan(FREE_PLAN_ID, freePlanName, true, PlanCycle.YEARLY, PlanCurrency.EUR, PRICE_ZERO)
-    }
+enum class ApiVersionName(val value: String) {
+    V3("v3"), V4("v4")
 }

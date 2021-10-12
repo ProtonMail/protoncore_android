@@ -32,7 +32,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansBinding
-import me.proton.core.plan.presentation.entity.Cycle
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.PlansViewModel
@@ -64,7 +64,7 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (viewModel.supportedPaidPlanIds.isNotEmpty()) {
+        if (viewModel.supportedPaidPlans.isNotEmpty()) {
             binding.apply {
                 toolbar.setNavigationOnClickListener { finish() }
 
@@ -93,11 +93,7 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
                                         KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to selectedPlan)
                                     )
                                 } else {
-                                    val cycle = when (selectedPlan.cycle) {
-                                        Cycle.MONTHLY -> SubscriptionCycle.MONTHLY
-                                        Cycle.YEARLY -> SubscriptionCycle.YEARLY
-                                    }.exhaustive
-                                    viewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
+                                    viewModel.startBillingForPaidPlan(userId, selectedPlan)
                                 }
                             }
                             plansView.plans = it.plans

@@ -98,7 +98,7 @@ interface PaymentsRepository {
     suspend fun validateSubscription(
         sessionUserId: SessionUserId?,
         codes: List<String>? = null,
-        planIds: List<String>,
+        plans: Map<String, Int>,
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus

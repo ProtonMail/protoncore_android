@@ -19,7 +19,6 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.Subscription
@@ -44,13 +43,13 @@ class PerformSubscribe @Inject constructor(
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
-        planIds: List<String>,
+        plans: List<String>,
         codes: List<String>? = null,
         paymentToken: String? = null
     ): Subscription {
 
         require(amount >= 0)
-        require(planIds.isNotEmpty())
+        require(plans.isNotEmpty())
         require(paymentToken != null || amount <= 0) { "Payment Token must be supplied when the amount is bigger than zero. Otherwise it should be null." }
 
         return paymentsRepository.createOrUpdateSubscription(
@@ -59,7 +58,7 @@ class PerformSubscribe @Inject constructor(
             currency = currency,
             payment = if (amount == 0L) null else PaymentBody.TokenPaymentBody(paymentToken!!),
             codes = codes,
-            planIds = planIds.map { it to 1 }.toMap(),
+            planIds = plans.map { it.lowercase() to 1 }.toMap(),
             cycle = cycle
         )
     }

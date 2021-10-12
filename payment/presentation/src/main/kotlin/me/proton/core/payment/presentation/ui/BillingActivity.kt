@@ -188,7 +188,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
 
         viewModel.subscribe(
             input.user,
-            input.existingPlanIds.plus(input.plan.id),
+            input.existingPlans.plus(input.plan.name),
             input.codes,
             input.plan.currency,
             input.plan.subscriptionCycle,

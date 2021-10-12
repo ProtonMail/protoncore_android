@@ -136,7 +136,7 @@ internal class LoginViewModel @Inject constructor(
                 runCatching {
                     performSubscribe(
                         userId = userId, amount = billing.amount, currency = billing.currency,
-                        cycle = billing.cycle, planIds = listOf(it.planId), paymentToken = billing.token
+                        cycle = billing.cycle, plans = listOf(it.planId), paymentToken = billing.token
                     )
                 }
             }

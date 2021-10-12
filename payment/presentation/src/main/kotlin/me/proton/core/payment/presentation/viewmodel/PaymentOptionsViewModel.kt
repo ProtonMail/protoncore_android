@@ -56,12 +56,12 @@ class PaymentOptionsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val availablePaymentMethods: GetAvailablePaymentMethods,
     private val getCurrentSubscription: GetCurrentSubscription,
-    private val validatePlanSubscription: ValidateSubscriptionPlan,
-    private val createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,
-    private val createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
-    private val createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
-    private val performSubscribe: PerformSubscribe,
-    private val getCountry: GetCountry
+    validatePlanSubscription: ValidateSubscriptionPlan,
+    createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,
+    createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
+    createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
+    performSubscribe: PerformSubscribe,
+    getCountry: GetCountry
 ) : BillingViewModel(
     validatePlanSubscription,
     createPaymentTokenWithNewCreditCard,
@@ -102,7 +102,7 @@ class PaymentOptionsViewModel @Inject constructor(
         val currentSubscription = getCurrentSubscription(userId)
         currentSubscription?.let {
             it.plans.forEach { plan ->
-                currentPlans.add(plan.id)
+                currentPlans.add(plan.name)
             }
         } ?: run {
             emit(State.Error.SubscriptionInRecoverableError)
@@ -145,13 +145,13 @@ class PaymentOptionsViewModel @Inject constructor(
 
     fun subscribe(
         userId: UserId?,
-        planId: String,
+        plan: String, // plan name
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle,
         paymentType: PaymentType
     ) = subscribe(
-        userId, currentPlans.plus(planId), codes, currency, cycle, paymentType
+        userId, currentPlans.plus(plan), codes, currency, cycle, paymentType
     )
 
     fun onThreeDSTokenApproved(

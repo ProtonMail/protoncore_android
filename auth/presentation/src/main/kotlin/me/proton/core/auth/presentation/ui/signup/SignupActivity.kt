@@ -40,7 +40,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.entity.BillingResult
-import me.proton.core.plan.presentation.entity.Cycle
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.ui.PlansFragment
@@ -123,8 +123,9 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>() {
             signUpViewModel.startCreateUserWorkflow()
         } else {
             val cycle = when (plan.cycle) {
-                Cycle.MONTHLY -> SubscriptionCycle.MONTHLY
-                Cycle.YEARLY -> SubscriptionCycle.YEARLY
+                PlanCycle.MONTHLY -> SubscriptionCycle.MONTHLY
+                PlanCycle.YEARLY -> SubscriptionCycle.YEARLY
+                PlanCycle.TWO_YEARS -> SubscriptionCycle.TWO_YEARS
             }.exhaustive
             signUpViewModel.startCreatePaidUserWorkflow(plan.planId, plan.planName, cycle, billingResult)
         }

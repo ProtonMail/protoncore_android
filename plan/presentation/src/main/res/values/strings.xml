@@ -16,6 +16,15 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
+<!DOCTYPE resources [
+    <!ENTITY plans_key_storage "#proton_storage#">
+    <!ENTITY plans_key_addresses "#proton_addresses#">
+    <!ENTITY plans_key_calendars "#proton_calendars#">
+    <!ENTITY plans_key_vpn "#proton_vpn#">
+    <!ENTITY plans_key_domains "#proton_domains#">
+    <!ENTITY plans_key_users "#proton_users#">
+    ]>
+
 <resources>
     <string name="plans_select_plan">Select Plan</string>
     <string name="plans_select_a_plan">Select a Plan</string>
@@ -32,37 +41,132 @@
     <string name="plans_save_20">Save 20% by switching to annual billing</string>
 
     <!-- plan details -->
+    <string name="plans_feature_free_item_storage">0.5GB storage</string>
+    <string name="plans_feature_free_item_address">1 address</string>
+    <string name="plans_feature_free_item_calendar">1 calendar</string>
+    <string name="plans_feature_free_item_vpn">1 VPN connection</string>
+
     <string-array name="free">
-        <item>1 user</item>
-        <item>0.5GB storage</item>
-        <item>1 address</item>
+        <item>@string/plans_feature_free_item_storage</item>
+        <item>@string/plans_feature_free_item_address</item>
+        <item>@string/plans_feature_free_item_calendar</item>
+        <item>@string/plans_feature_free_item_vpn</item>
     </string-array>
-    <string-array name="plus">
-        <item>1 user</item>
-        <item>5GB storage *</item>
-        <item>5 addresses</item>
-        <item>200 folders/labels</item>
-        <item>Custom email address</item>
+
+    <!-- new -->
+    <string-array name="plan_id_plus">; ProtonMail Plus - XXX - old plan
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; addresses</item>
+        <item>&plans_key_domains; custom domain</item>
     </string-array>
-    <string-array name="professional">
-        <item>1–5000 users *</item>
-        <item>5 GB storage / user</item>
-        <item>5 addresses / user</item>
-        <item>Unlimited folders / labels / filters</item>
-        <item>Custom email addresses</item>
+
+    <string-array name="plan_id_vpnbasic">; ProtonVPN Basic - XXX - old plan
+        <item>&plans_key_vpn; VPN connections</item>
+        <item>High speed</item>
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; address</item>
+        <item>&plans_key_calendars; calendar</item>
     </string-array>
-    <string-array name="visionary">
-        <item>6 users</item>
-        <item>20 GB storage</item>
-        <item>50 addresses</item>
-        <item>Unlimited folders / labels / filters</item>
-        <item>Custom email addresses</item>
+
+    <string-array name="plan_id_vpnplus">; ProtonVPN Plus - XXX - old plan
+        <item>&plans_key_vpn; VPN connections</item>
+        <item>Highest speed</item>
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; address</item>
+        <item>&plans_key_calendars; calendar</item>
+    </string-array>
+
+    <string-array name="plan_id_professional">; ProtonMail Professional - XXX - old plan
+        <item>&plans_key_storage; storage / user</item>
+        <item>&plans_key_addresses; addresses / user</item>
+        <item>&plans_key_domains; custom domains</item>
+        <item>Multi-user support</item>
+    </string-array>
+
+    <string-array name="plan_id_visionary">; Visionary - XXX - old plan
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; addresses</item>
+        <item>&plans_key_calendars; calendars</item>
+        <item>&plans_key_vpn; high-speed VPN connections</item>
+        <item>&plans_key_domains; custom domains</item>
+        <item>&plans_key_users; users</item>
+    </string-array>
+
+    <!-- new plans features -->
+    <string-array name="plan_id_mail2021">; Mail Plus 2021
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; addresses</item>
+        <item>&plans_key_calendars; calendars</item>
+        <item>&plans_key_vpn; VPN connection</item>
+        <item>&plans_key_domains; custom domain</item>
+    </string-array>
+
+    <string-array name="plan_id_vpn2021">; VPN Plus 2021
+        <item>&plans_key_vpn; high-speed VPN connections</item>
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; address</item>
+        <item>&plans_key_calendars; calendar</item>
+    </string-array>
+
+    <string-array name="plan_id_drive2021">; Drive Plus 2021
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; address</item>
+        <item>&plans_key_calendars; calendar</item>
+        <item>&plans_key_vpn; VPN connection</item>
+    </string-array>
+
+    <string-array name="plan_id_bundle2021">; Bundle 2021
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; addresses</item>
+        <item>&plans_key_calendars; calendars</item>
+        <item>&plans_key_vpn; VPN connections</item>
+        <item>&plans_key_domains; custom domains</item>
+    </string-array>
+
+    <string-array name="plan_id_family2021">; Family 2021
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; addresses</item>
+        <item>&plans_key_calendars; calendars</item>
+        <item>&plans_key_vpn; high-speed VPN connections</item>
+        <item>&plans_key_domains; custom domains</item>
+        <item>&plans_key_users; users</item>
+    </string-array>
+
+    <string-array name="plan_id_visionary2021">; Visionary 2021
+        <item>&plans_key_storage; storage</item>
+        <item>&plans_key_addresses; addresses</item>
+        <item>&plans_key_calendars; calendars</item>
+        <item>&plans_key_vpn; high-speed VPN connections</item>
+        <item>&plans_key_domains; custom domains</item>
+        <item>&plans_key_users; users</item>
+    </string-array>
+
+    <string-array name="plan_id_mailpro2021">; Mail Professional 2021
+        <item>&plans_key_storage; storage / user</item>
+        <item>&plans_key_addresses; addresses / user</item>
+        <item>&plans_key_calendars; calendars / user</item>
+        <item>&plans_key_domains; custom domains</item>
+        <item>Multi-user support</item>
+    </string-array>
+
+    <string-array name="plan_id_drivepro2021">; Drive Professional 2021 - ???
+        <item>&plans_key_storage; storage / user</item>
+        <item>Multi-user support</item>
+    </string-array>
+
+    <string-array name="plan_id_bundlepro2021">; Professional Bundle 2021
+        <item>&plans_key_storage; storage / user</item>
+        <item>&plans_key_addresses; addresses / user</item>
+        <item>&plans_key_calendars; calendars / user</item>
+        <item>&plans_key_vpn; high-speed VPN connections / user</item>
+        <item>&plans_key_domains; custom domains</item>
+        <item>Multi-user support</item>
     </string-array>
 
     <!-- supported plans -->
     <string-array name="supported_currencies">
-        <item>€ EUR</item>
-        <item>$ USD</item>
+        <item>EUR</item>
+        <item>USD</item>
         <item>CHF</item>
     </string-array>
     <string-array name="supported_billing_cycle">

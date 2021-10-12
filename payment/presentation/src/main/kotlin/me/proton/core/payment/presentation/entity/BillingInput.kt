@@ -37,7 +37,7 @@ import me.proton.core.domain.entity.UserId
 @Parcelize
 data class BillingInput(
     val userId: String?,
-    val existingPlanIds: List<String> = emptyList(),
+    val existingPlans: List<String> = emptyList(), // plan names
     val plan: PlanShortDetails,
     val codes: List<String>? = null,
     val paymentMethodId: String?,

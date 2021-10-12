@@ -18,6 +18,8 @@
 
 package me.proton.core.payment.data.repository
 
+import me.proton.core.domain.ApiVersion
+import me.proton.core.domain.ApiVersionName
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.payment.data.api.PaymentsApi
@@ -41,7 +43,8 @@ import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
 
 class PaymentsRepositoryImpl(
-    private val provider: ApiProvider
+    private val provider: ApiProvider,
+    @ApiVersion private val apiVersion: ApiVersionName
 ) : PaymentsRepository {
 
     /**
@@ -56,7 +59,7 @@ class PaymentsRepositoryImpl(
     ): PaymentToken.CreatePaymentTokenResult =
         provider.get<PaymentsApi>(sessionUserId).invoke {
             val request = CreatePaymentToken(amount, currency.name, PaymentTypeEntity.PayPal, null)
-            createPaymentToken(request).toCreatePaymentTokenResult()
+            createPaymentToken(apiVersion.value, request).toCreatePaymentTokenResult()
         }.valueOrThrow
 
     /**
@@ -84,7 +87,7 @@ class PaymentsRepositoryImpl(
                 )
             )
             val request = CreatePaymentToken(amount, currency.name, payment, null)
-            createPaymentToken(request).toCreatePaymentTokenResult()
+            createPaymentToken(apiVersion.value, request).toCreatePaymentTokenResult()
         }.valueOrThrow
 
     /**
@@ -99,7 +102,7 @@ class PaymentsRepositoryImpl(
     ): PaymentToken.CreatePaymentTokenResult =
         provider.get<PaymentsApi>(sessionUserId).invoke {
             val request = CreatePaymentToken(amount, currency.name, null, paymentMethodId)
-            createPaymentToken(request).toCreatePaymentTokenResult()
+            createPaymentToken(apiVersion.value, request).toCreatePaymentTokenResult()
         }.valueOrThrow
 
     override suspend fun getPaymentTokenStatus(
@@ -107,12 +110,12 @@ class PaymentsRepositoryImpl(
         paymentToken: String
     ): PaymentToken.PaymentTokenStatusResult =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            getPaymentTokenStatus(paymentToken).toPaymentTokenStatusResult()
+            getPaymentTokenStatus(apiVersion.value, paymentToken).toPaymentTokenStatusResult()
         }.valueOrThrow
 
     override suspend fun getAvailablePaymentMethods(sessionUserId: SessionUserId): List<PaymentMethod> =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            getPaymentMethods().paymentMethods.map {
+            getPaymentMethods(apiVersion.value).paymentMethods.map {
                 PaymentMethod(it.id, PaymentMethodType.map[it.type] ?: PaymentMethodType.CARD, it.toDetails())
             }
         }.valueOrThrow
@@ -120,17 +123,17 @@ class PaymentsRepositoryImpl(
     override suspend fun validateSubscription(
         sessionUserId: SessionUserId?,
         codes: List<String>?,
-        planIds: List<String>,
+        plans: Map<String, Int>,
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            validateSubscription(CheckSubscription(codes, planIds, currency.name, cycle.value)).toSubscriptionStatus()
+            validateSubscription(apiVersion.value, CheckSubscription(codes, plans, currency.name, cycle.value)).toSubscriptionStatus()
         }.valueOrThrow
 
     override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription? =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            getCurrentSubscription().subscription.toSubscription()
+            getCurrentSubscription(apiVersion.value).subscription.toSubscription()
         }.valueOrThrow
 
     override suspend fun createOrUpdateSubscription(
@@ -147,6 +150,7 @@ class PaymentsRepositoryImpl(
                 TokenTypePaymentBody(tokenDetails = TokenDetails(payment.token))
             } else null
             createUpdateSubscription(
+                apiVersion.value,
                 CreateSubscription(
                     amount,
                     currency.name,

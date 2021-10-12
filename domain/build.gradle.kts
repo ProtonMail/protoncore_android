@@ -16,6 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     `java-library`
@@ -31,7 +32,8 @@ dependencies {
 
         // Kotlin
         `kotlin-jdk7`,
-        `coroutines-core`
+        `coroutines-core`,
+        `dagger`
     )
 
     testImplementation(project(Module.kotlinTest))

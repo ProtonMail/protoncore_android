@@ -39,37 +39,37 @@ internal interface PaymentsApi : BaseRetrofitApi {
      * account creation as well as a regular Authenticated for plan upgrade for logged in users.
      * Unauthorized.
      */
-    @POST("payments/tokens")
-    suspend fun createPaymentToken(@Body body: CreatePaymentToken): CreatePaymentTokenResponse
+    @POST("payments/{api_version}/tokens")
+    suspend fun createPaymentToken(@Path("api_version") apiVersion: String, @Body body: CreatePaymentToken): CreatePaymentTokenResponse
 
     /**
      * Could be used during account creation as well as a regular Authenticated for plan upgrade for logged in users.
      * Check payment token status (usually with polling).
      * Unauthorized.
      */
-    @GET("payments/tokens/{token}")
-    suspend fun getPaymentTokenStatus(@Path("token") token: String): PaymentTokenStatusResponse
+    @GET("payments/{api_version}/tokens/{token}")
+    suspend fun getPaymentTokenStatus(@Path("api_version") apiVersion: String, @Path("token") token: String): PaymentTokenStatusResponse
 
     /**
      * Returns existing already saved payment methods.
      * Authorized.
      */
-    @GET("payments/methods")
-    suspend fun getPaymentMethods(): PaymentMethodsResponse
+    @GET("payments/{api_version}/methods")
+    suspend fun getPaymentMethods(@Path("api_version") apiVersion: String): PaymentMethodsResponse
 
     /**
      * Returns current active subscription.
      * Authorized.
      */
-    @GET("payments/subscription")
-    suspend fun getCurrentSubscription(): SubscriptionResponse
+    @GET("payments/{api_version}/subscription")
+    suspend fun getCurrentSubscription(@Path("api_version") apiVersion: String): SubscriptionResponse
 
     /**
      * Creates new or updates the current active subscription.
      * Authorized.
      */
-    @POST("payments/subscription")
-    suspend fun createUpdateSubscription(@Body body: CreateSubscription): SubscriptionResponse
+    @POST("payments/{api_version}/subscription")
+    suspend fun createUpdateSubscription(@Path("api_version") apiVersion: String, @Body body: CreateSubscription): SubscriptionResponse
 
     /**
      * It checks given a particular plans and cycles how much a user should pay.
@@ -77,6 +77,6 @@ internal interface PaymentsApi : BaseRetrofitApi {
      * Should be called upon a user selected any plan, duration and entered a code.
      * Unauthorized.
      */
-    @POST("payments/subscription/check")
-    suspend fun validateSubscription(@Body body: CheckSubscription): CheckSubscriptionResponse
+    @POST("payments/{api_version}/subscription/check")
+    suspend fun validateSubscription(@Path("api_version") apiVersion: String, @Body body: CheckSubscription): CheckSubscriptionResponse
 }
