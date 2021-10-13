@@ -56,6 +56,15 @@
         <attr name="proton_notification_success" format="reference" />
         <attr name="proton_notification_warning" format="reference" />
         <attr name="proton_blender_norm" format="reference" />
+        <attr name="proton_sidebar_background" format="reference" />
+        <attr name="proton_sidebar_interaction_weak_norm" format="reference" />
+        <attr name="proton_sidebar_interaction_weak_pressed" format="reference" />
+        <attr name="proton_sidebar_separator" format="reference" />
+        <attr name="proton_sidebar_text_norm" format="reference" />
+        <attr name="proton_sidebar_text_weak" format="reference" />
+        <attr name="proton_sidebar_icon_norm" format="reference" />
+        <attr name="proton_sidebar_icon_weak" format="reference" />
+        <attr name="proton_sidebar_interaction_pressed" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="ProtonProgressButton">

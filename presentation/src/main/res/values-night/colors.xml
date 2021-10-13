@@ -32,4 +32,15 @@
 
     <color name="blender_norm">#85000000</color>
 
+    <!--  Sidebar navigation colors  -->
+    <color name="sidebar_background">@color/background_norm</color>
+    <color name="sidebar_interaction_weak_norm">@color/interaction_weak</color>
+    <color name="sidebar_interaction_weak_pressed">@color/interaction_weak_pressed</color>
+    <color name="sidebar_separator">@color/separator_norm</color>
+    <color name="sidebar_text_norm">@color/text_norm</color>
+    <color name="sidebar_text_weak">@color/text_weak</color>
+    <color name="sidebar_icon_norm">@color/icon_norm</color>
+    <color name="sidebar_icon_weak">@color/icon_weak</color>
+    <color name="sidebar_interaction_pressed">@color/san_marino</color>
+
 </resources>

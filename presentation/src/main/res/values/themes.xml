@@ -111,6 +111,15 @@
         <item name="proton_notification_success">@color/notification_success</item>
         <item name="proton_notification_warning">@color/notification_warning</item>
         <item name="proton_blender_norm">@color/blender_norm</item>
+        <item name="proton_sidebar_background">@color/sidebar_background</item>
+        <item name="proton_sidebar_interaction_weak_norm">@color/sidebar_interaction_weak_norm</item>
+        <item name="proton_sidebar_interaction_weak_pressed">@color/sidebar_interaction_weak_pressed</item>
+        <item name="proton_sidebar_separator">@color/sidebar_separator</item>
+        <item name="proton_sidebar_text_norm">@color/sidebar_text_norm</item>
+        <item name="proton_sidebar_text_weak">@color/sidebar_text_weak</item>
+        <item name="proton_sidebar_icon_norm">@color/sidebar_icon_norm</item>
+        <item name="proton_sidebar_icon_weak">@color/sidebar_icon_weak</item>
+        <item name="proton_sidebar_interaction_pressed">@color/sidebar_interaction_pressed</item>
 
         <!-- Tell MIUI Dark Mode to stop breaking our theming. -->
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
