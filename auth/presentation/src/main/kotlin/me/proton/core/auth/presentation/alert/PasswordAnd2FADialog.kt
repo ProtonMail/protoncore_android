@@ -23,7 +23,6 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -31,6 +30,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
 import me.proton.core.auth.presentation.entity.PasswordAnd2FAInput
 import me.proton.core.presentation.R
+import me.proton.core.presentation.utils.ProtectScreenConfiguration
+import me.proton.core.presentation.utils.ScreenContentProtector
 import me.proton.core.presentation.utils.onClick
 
 class PasswordAnd2FADialog : DialogFragment() {
@@ -53,6 +54,8 @@ class PasswordAnd2FADialog : DialogFragment() {
         }
     }
 
+    private val screenProtector = ScreenContentProtector(ProtectScreenConfiguration())
+
     private val twoFAVisibility: Int by lazy {
         if (requireArguments().getBoolean(ARG_SHOW_TWO_FA)) View.VISIBLE else View.GONE
     }
@@ -63,7 +66,8 @@ class PasswordAnd2FADialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
-        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+
+        screenProtector.protect(requireActivity())
 
         val binding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(requireContext()))
         binding.twoFA.visibility = twoFAVisibility
@@ -109,6 +113,6 @@ class PasswordAnd2FADialog : DialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
 
-        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        screenProtector.unprotect(requireActivity())
     }
 }

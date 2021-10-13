@@ -47,9 +47,6 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Prevent screen capture etc. to record user password
-        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-
         binding.apply {
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
@@ -100,11 +97,5 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
         } else {
             parentFragmentManager.showRecoveryMethodChooser()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 }

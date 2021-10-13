@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.ui.ProtonSecureFragment
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.ui.view.ProtonProgressButton
@@ -49,7 +50,7 @@ import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementView
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class PasswordManagementFragment : ProtonFragment(R.layout.fragment_password_management) {
+class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_password_management) {
     private val viewModel by viewModels<PasswordManagementViewModel>()
     private val binding by viewBinding(FragmentPasswordManagementBinding::bind)
 
@@ -69,9 +70,6 @@ class PasswordManagementFragment : ProtonFragment(R.layout.fragment_password_man
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Prevent screen capture etc. to record user password
-        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
 
         showLoginPasswordDialogResultLauncher =
             childFragmentManager.registerShowPasswordDialogResultLauncher(this@PasswordManagementFragment) { result ->
@@ -273,12 +271,6 @@ class PasswordManagementFragment : ProtonFragment(R.layout.fragment_password_man
         binding.root.errorSnack(
             message = message ?: getString(R.string.settings_general_error)
         )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 
     companion object {
