@@ -26,23 +26,18 @@ import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.entity.UserId
 
 @Serializable
-data class DetailedContactResource(
+data class ContactResource(
     @SerialName("ID")
     val id: String,
     @SerialName("Name")
     val name: String,
     @SerialName("ContactEmails")
-    val contactEmails: List<ContactEmailResource>,
-    @SerialName("Cards")
-    val cards: List<ContactCardResource>? = null
+    val contactEmails: List<ContactEmailResource>
 ) {
-    fun toContactWithCards(userId: UserId) = ContactWithCards(
-        contact = Contact(
-            userId,
-            ContactId(id),
-            name,
-            contactEmails.map { it.toContactEmail(userId) },
-        ),
-        contactCards = cards?.map { it.toContactCard() }.orEmpty()
+    fun toContact(userId: UserId) = Contact(
+        userId,
+        ContactId(id),
+        name,
+        contactEmails.map { it.toContactEmail(userId) },
     )
 }

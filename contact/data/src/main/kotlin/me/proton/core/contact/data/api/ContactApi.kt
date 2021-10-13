@@ -26,6 +26,7 @@ import me.proton.core.contact.data.api.response.DeleteContactsResponse
 import me.proton.core.contact.data.api.response.GetContactEmailsResponse
 import me.proton.core.contact.data.api.response.GetContactResponse
 import me.proton.core.contact.data.api.response.GetContactsResponse
+import me.proton.core.contact.data.api.response.MutateContactResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -61,5 +62,5 @@ interface ContactApi : BaseRetrofitApi {
     suspend fun updateContact(
         @Path("id") contactId: String,
         @Body request: ContactCardsResource
-    ): GetContactResponse
+    ): MutateContactResponse
 }

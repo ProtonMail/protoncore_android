@@ -40,6 +40,7 @@ import me.proton.android.core.coreexample.utils.createToBeSignedVCard
 import me.proton.android.core.coreexample.utils.prettyPrint
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.encryptAndSignContactCard
+import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRepository
@@ -72,6 +73,7 @@ class ContactDetailViewModel @Inject constructor(
     val viewState = mutableViewState.asStateFlow().filterNotNull()
     val loadingState = mutableLoadingState.asStateFlow()
     val viewEvent = mutableViewEvent.asSharedFlow()
+    private var contact: Contact? = null
 
     private val contactId: ContactId = ContactId(savedStateHandle.get(ARG_CONTACT_ID)!!)
     private var observeContactJob: Job? = null
@@ -100,6 +102,7 @@ class ContactDetailViewModel @Inject constructor(
             is DataResult.Error -> handleDataResultError(result)
             is DataResult.Processing -> { /* no-op */ }
             is DataResult.Success -> {
+                contact = result.value.contact
                 mutableViewState.value = ViewState(result.value.prettyPrint())
             }
         }.exhaustive
@@ -138,16 +141,12 @@ class ContactDetailViewModel @Inject constructor(
             try {
                 val userId = accountManager.getPrimaryUserId().filterNotNull().first()
                 val user = userManager.getUser(userId)
-                val contactWithCards = contactRepository.observeContactWithCards(userId, contactId)
-                    .mapSuccessValueOrNull()
-                    .filterNotNull()
-                    .first()
-                contactWithCards.contactCards
+                val contactName = requireNotNull(contact).name
                 val cards = listOf(
-                    user.signContactCard(cryptoContext, createToBeSignedVCard(contactWithCards.contact.name)),
+                    user.signContactCard(cryptoContext, createToBeSignedVCard(contactName)),
                     user.encryptAndSignContactCard(
                         cryptoContext,
-                        createToBeEncryptedAndSignedVCard(contactWithCards.contact.name)
+                        createToBeEncryptedAndSignedVCard(contactName)
                     )
                 )
                 contactRepository.updateContact(userId, contactId, cards)

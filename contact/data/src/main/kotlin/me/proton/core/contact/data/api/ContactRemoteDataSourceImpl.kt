@@ -41,7 +41,7 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
 
     override suspend fun getContactWithCards(userId: UserId, contactId: ContactId): ContactWithCards {
         return apiProvider.get<ContactApi>(userId).invoke {
-            getContact(contactId.id).contact.toContactWithCards(userId)
+            getContact(contactId.id).contactWithCards.toContactWithCards(userId)
         }.valueOrThrow
     }
 
@@ -93,7 +93,7 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
         }.valueOrThrow
     }
 
-    override suspend fun createContacts(userId: UserId, contactCards: List<List<ContactCard>>): List<ContactWithCards> {
+    override suspend fun createContacts(userId: UserId, contactCards: List<List<ContactCard>>): List<Contact> {
         val contactCardsResources = contactCards.map {
             ContactCardsResource(it.map { contactCard ->
                 contactCard.toContactCardResource()
@@ -110,7 +110,7 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
             "At least one response code is not ok (${ResponseCodes.OK}): $apiResponse"
         }
         return apiResponse.responses.map {
-            it.response.contact.toContactWithCards(userId)
+            it.response.contact.toContact(userId)
         }
     }
 
@@ -135,10 +135,10 @@ class ContactRemoteDataSourceImpl @Inject constructor(private val apiProvider: A
         userId: UserId,
         contactId: ContactId,
         contactCards: List<ContactCard>
-    ): ContactWithCards {
+    ): Contact {
         val request = ContactCardsResource(contactCards.map { it.toContactCardResource() })
         return apiProvider.get<ContactApi>(userId).invoke {
             updateContact(contactId.id, request)
-        }.valueOrThrow.contact.toContactWithCards(userId)
+        }.valueOrThrow.contact.toContact(userId)
     }
 }
