@@ -31,7 +31,9 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.android.core.coreexample.databinding.ActivityContactDetailsBinding
 import me.proton.android.core.coreexample.viewmodel.ContactDetailViewModel
 import me.proton.android.core.coreexample.viewmodel.ContactDetailViewModel.Companion.ARG_CONTACT_ID
+import me.proton.android.core.coreexample.viewmodel.ContactDetailViewModel.Companion.ARG_USER_ID
 import me.proton.core.contact.domain.entity.ContactId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.util.kotlin.exhaustive
@@ -45,26 +47,30 @@ class ContactDetailActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.updateButton.setOnClickListener { viewModel.updateContact() }
-        binding.deleteButton.setOnClickListener { viewModel.deleteContact() }
+        binding.updateButton.setOnClickListener { viewModel.dispatch(ContactDetailViewModel.Action.Update) }
+        binding.deleteButton.setOnClickListener { viewModel.dispatch(ContactDetailViewModel.Action.Delete) }
 
-        viewModel.viewState.flowWithLifecycle(lifecycle).onEach { viewState ->
-            when (viewState) {
-                is ContactDetailViewModel.ViewState.Processing -> {
+        viewModel.state.flowWithLifecycle(lifecycle).onEach { state ->
+            when (state) {
+                is ContactDetailViewModel.State.Loading -> {
                     setLoading(true)
                 }
-                is ContactDetailViewModel.ViewState.Success -> {
+                is ContactDetailViewModel.State.Success -> {
                     setLoading(false)
-                    setContact(viewState.rawContact, viewState.vCardContact)
+                    setContact(state.rawContact, state.vCardContact)
                 }
-                is ContactDetailViewModel.ViewState.Error -> {
+                is ContactDetailViewModel.State.Error -> {
                     setLoading(false)
-                    showToast(viewState.reason)
+                    showToast(state.error ?: "An error occurred")
                 }
-                is ContactDetailViewModel.ViewState.Deleted -> {
+                is ContactDetailViewModel.State.Deleted -> {
                     setLoading(false)
                     showToast("Deleted!")
                     finish()
+                }
+                ContactDetailViewModel.State.Updated -> {
+                    setLoading(false)
+                    showToast("Updated!")
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -81,8 +87,9 @@ class ContactDetailActivity :
     }
 
     companion object {
-        fun createIntent(context: Context, contactId: ContactId) =
+        fun createIntent(context: Context, userId: UserId, contactId: ContactId) =
             Intent(context, ContactDetailActivity::class.java).apply {
+                putExtra(ARG_USER_ID, userId.id)
                 putExtra(ARG_CONTACT_ID, contactId.id)
             }
     }

@@ -26,14 +26,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.adapter.ContactsAdapter
 import me.proton.android.core.coreexample.databinding.ActivityContactsBinding
 import me.proton.android.core.coreexample.viewmodel.ContactsViewModel
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ContactsActivity :
@@ -42,12 +45,15 @@ class ContactsActivity :
     private val viewModel: ContactsViewModel by viewModels()
     private val contactsAdapter = ContactsAdapter(::onClickContact)
 
+    @Inject
+    lateinit var accountManager: AccountManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding.contactsRecyclerView.adapter = contactsAdapter
-        binding.addButton.setOnClickListener {
-            startActivity(Intent(this, CreateContactActivity::class.java))
-        }
+        binding.addButton.setOnClickListener { startActivity(Intent(this, CreateContactActivity::class.java)) }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
@@ -62,6 +68,9 @@ class ContactsActivity :
     }
 
     private fun onClickContact(contactId: ContactId) {
-        startActivity(ContactDetailActivity.createIntent(this, contactId))
+        lifecycleScope.launch {
+            val userId = requireNotNull(accountManager.getPrimaryUserId().first())
+            startActivity(ContactDetailActivity.createIntent(this@ContactsActivity, userId, contactId))
+        }
     }
 }
