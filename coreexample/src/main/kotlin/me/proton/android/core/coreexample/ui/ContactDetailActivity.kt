@@ -23,7 +23,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,33 +39,47 @@ import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
 class ContactDetailActivity : ProtonActivity<ActivityContactDetailsBinding>() {
-    override fun layoutId(): Int = R.layout.activity_contact_details
 
     private val viewModel: ContactDetailViewModel by viewModels()
 
+    override fun layoutId(): Int = R.layout.activity_contact_details
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.deleteButton.setOnClickListener {
-            viewModel.deleteContact()
-        }
-        viewModel.viewState.flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED).onEach { viewState ->
-            binding.contactDetails.text = viewState.contact
-        }.launchIn(lifecycleScope)
-        viewModel.loadingState
-            .flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED)
-            .onEach { loadingState ->
-                binding.progress.isVisible = loadingState
-                binding.deleteButton.isClickable = !loadingState
-        }.launchIn(lifecycleScope)
-        viewModel.viewEvent.flowWithLifecycle(lifecycle, minActiveState = Lifecycle.State.STARTED).onEach { viewEvent ->
-            when (viewEvent) {
-                is ContactDetailViewModel.ViewEvent.Error -> showToast(viewEvent.reason)
-                ContactDetailViewModel.ViewEvent.Success -> {
-                    showToast("success")
+
+        binding.updateButton.setOnClickListener { viewModel.updateContact() }
+        binding.deleteButton.setOnClickListener { viewModel.deleteContact() }
+
+        viewModel.viewState.flowWithLifecycle(lifecycle).onEach { viewState ->
+            when (viewState) {
+                is ContactDetailViewModel.ViewState.Processing -> {
+                    setLoading(true)
+                }
+                is ContactDetailViewModel.ViewState.Success -> {
+                    setLoading(false)
+                    setContact(viewState.rawContact, viewState.vCardContact)
+                }
+                is ContactDetailViewModel.ViewState.Error -> {
+                    setLoading(false)
+                    showToast(viewState.reason)
+                }
+                is ContactDetailViewModel.ViewState.Deleted -> {
+                    setLoading(false)
+                    showToast("Deleted!")
                     finish()
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
+    }
+
+    private fun setContact(rawContact: String, vCardContact: String) {
+        binding.rawContact.text = rawContact
+        binding.contactVCards.text = vCardContact
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        binding.progress.isVisible = isLoading
+        binding.deleteButton.isClickable = !isLoading
     }
 
     companion object {

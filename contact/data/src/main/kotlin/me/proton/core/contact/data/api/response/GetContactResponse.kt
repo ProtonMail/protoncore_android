@@ -20,12 +20,12 @@ package me.proton.core.contact.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.contact.data.api.resource.DetailedContactResource
+import me.proton.core.contact.data.api.resource.ContactWithCardsResource
 
 @Serializable
 data class GetContactResponse(
     @SerialName("Code")
     val code: Int,
     @SerialName("Contact")
-    val contact: DetailedContactResource
+    val contactWithCards: ContactWithCardsResource
 )

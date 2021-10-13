@@ -16,20 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.contact.domain.entity
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import ezvcard.VCard
+import me.proton.core.crypto.common.pgp.VerificationStatus
 
-libVersion = Version(1, 16, channel = Version.Channel.Build, build = 6)
-
-android()
-
-dependencies {
-    api(
-        project(Module.contactDomain),
-        project(Module.contactData)
-    )
-}
+data class DecryptedVCard(val card: VCard, val status: VerificationStatus)

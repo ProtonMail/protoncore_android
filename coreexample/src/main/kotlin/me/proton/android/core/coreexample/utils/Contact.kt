@@ -16,20 +16,28 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.android.core.coreexample.utils
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
+import ezvcard.VCard
+import ezvcard.VCardVersion
+import ezvcard.property.Email
+import ezvcard.property.FormattedName
+import ezvcard.property.Uid
+import java.util.Date
+
+fun createToBeSignedVCard(seedName: String): VCard {
+    return VCard().apply {
+        formattedName = FormattedName(seedName)
+        addEmail(Email("$seedName@testmail.com").apply {
+            group = "ITEM1"
+        })
+        uid = Uid.random()
+        version = VCardVersion.V4_0
+    }
 }
 
-libVersion = Version(1, 16, channel = Version.Channel.Build, build = 6)
-
-android()
-
-dependencies {
-    api(
-        project(Module.contactDomain),
-        project(Module.contactData)
-    )
+fun createToBeEncryptedAndSignedVCard(seedName: String): VCard {
+    return VCard().apply {
+        addNote("confidential note about $seedName from ${Date().toGMTString()}")
+    }
 }

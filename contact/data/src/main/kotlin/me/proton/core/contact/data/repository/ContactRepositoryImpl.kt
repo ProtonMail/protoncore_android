@@ -137,12 +137,19 @@ class ContactRepositoryImpl @Inject constructor(
     }
 
     override suspend fun createContact(userId: UserId, contactCards: List<ContactCard>) {
-        val createdContactWithCards = remoteDataSource.createContacts(userId, listOf(contactCards))
-        localDataSource.upsertContactWithCards(*createdContactWithCards.toTypedArray())
+        val createdContacts = remoteDataSource.createContacts(userId, listOf(contactCards))
+        check(createdContacts.count() == 1)
+        val createdContact = createdContacts.first()
+        localDataSource.upsertContactWithCards(ContactWithCards(contact = createdContact, contactCards = contactCards))
     }
 
     override suspend fun deleteContacts(userId: UserId, contactIds: List<ContactId>) {
         remoteDataSource.deleteContacts(userId, contactIds)
         localDataSource.deleteContacts(*contactIds.toTypedArray())
+    }
+
+    override suspend fun updateContact(userId: UserId, contactId: ContactId, contactCards: List<ContactCard>) {
+        val updatedContact = remoteDataSource.updateContact(userId, contactId, contactCards)
+        localDataSource.upsertContactWithCards(ContactWithCards(contact = updatedContact, contactCards = contactCards))
     }
 }

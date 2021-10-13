@@ -52,8 +52,8 @@ data class ContactCardEntity(
 fun ContactCard.toContactCardEntity(contactId: ContactId): ContactCardEntity {
     return when (this) {
         is ContactCard.ClearText -> ContactCardEntity(contactId, ContactCardType.ClearText.value, data, null)
-        is ContactCard.Encrypted -> ContactCardEntity(contactId, ContactCardType.Signed.value, data, signature)
-        is ContactCard.Signed -> ContactCardEntity(contactId, ContactCardType.Encrypted.value, data, signature)
+        is ContactCard.Encrypted -> ContactCardEntity(contactId, ContactCardType.Encrypted.value, data, signature)
+        is ContactCard.Signed -> ContactCardEntity(contactId, ContactCardType.Signed.value, data, signature)
     }
 }
 

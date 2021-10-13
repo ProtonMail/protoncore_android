@@ -25,22 +25,30 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import me.proton.android.core.coreexample.utils.createToBeEncryptedAndSignedVCard
+import me.proton.android.core.coreexample.utils.createToBeSignedVCard
 import me.proton.android.core.coreexample.utils.prettyPrint
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.contact.domain.decryptContactCard
+import me.proton.core.contact.domain.encryptAndSignContactCard
+import me.proton.core.contact.domain.entity.Contact
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.contact.domain.signContactCard
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.arch.DataResult
+import me.proton.core.key.domain.useKeys
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -50,20 +58,14 @@ class ContactDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val accountManager: AccountManager,
     private val contactRepository: ContactRepository,
+    private val userManager: UserManager,
+    private val cryptoContext: CryptoContext,
 ) : ViewModel() {
 
     private val mutableViewState = MutableStateFlow<ViewState?>(null)
-    private val mutableLoadingState = MutableStateFlow(false)
-    private val mutableViewEvent = MutableSharedFlow<ViewEvent>(
-        replay = 0,
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-
     val viewState = mutableViewState.asStateFlow().filterNotNull()
-    val loadingState = mutableLoadingState.asStateFlow()
-    val viewEvent = mutableViewEvent.asSharedFlow()
 
+    private var contact: Contact? = null
     private val contactId: ContactId = ContactId(savedStateHandle.get(ARG_CONTACT_ID)!!)
     private var observeContactJob: Job? = null
 
@@ -76,8 +78,12 @@ class ContactDetailViewModel @Inject constructor(
         cancelObserveContact()
         observeContactJob = viewModelScope.launch {
             accountManager.getPrimaryUserId().filterNotNull()
-                .flatMapLatest { contactRepository.observeContactWithCards(it, contactId) }
-                .collect { result -> handleResult(result) }
+                .flatMapLatest { userId ->
+                    val user = userManager.getUser(userId)
+                    contactRepository.observeContactWithCards(userId, contactId).map { dataResult ->
+                        handleResult(user, dataResult)
+                    }
+                }.collect()
         }
     }
 
@@ -86,36 +92,47 @@ class ContactDetailViewModel @Inject constructor(
         observeContactJob = null
     }
 
-    private fun handleResult(result: DataResult<ContactWithCards>) {
-        when (result) {
+    private fun handleResult(user: User, result: DataResult<ContactWithCards>) {
+        mutableViewState.value = when (result) {
+            is DataResult.Processing -> ViewState.Processing
             is DataResult.Error -> handleDataResultError(result)
-            is DataResult.Processing -> { /* no-op */ }
-            is DataResult.Success -> {
-                mutableViewState.value = ViewState(result.value.prettyPrint())
-            }
+            is DataResult.Success -> handleSuccess(user, result.value)
         }.exhaustive
     }
 
-    private fun handleDataResultError(error: DataResult.Error) {
-        val errorMessage = error.message ?: "Unknown error"
-        val errorCause = error.cause ?: Throwable(errorMessage)
-        handleError(errorCause, errorMessage)
+    private fun handleSuccess(
+        user: User,
+        contact: ContactWithCards
+    ): ViewState.Success {
+        this.contact = contact.contact
+        val decryptedCards = user.useKeys(cryptoContext) {
+            contact.contactCards.map { decryptContactCard(it) }
+        }
+        return ViewState.Success(
+            rawContact = contact.prettyPrint(),
+            vCardContact = decryptedCards.prettyPrint()
+        )
     }
 
-    private fun handleError(throwable: Throwable, errorMessage: String) {
+    private fun handleDataResultError(error: DataResult.Error): ViewState.Error {
+        val errorMessage = error.message ?: "Unknown error"
+        val errorCause = error.cause ?: Throwable(errorMessage)
+        return handleError(errorCause, errorMessage)
+    }
+
+    private fun handleError(throwable: Throwable, errorMessage: String): ViewState.Error {
         CoreLogger.e("contact", throwable, errorMessage)
-        mutableLoadingState.value = false
-        mutableViewEvent.tryEmit(ViewEvent.Error(errorMessage))
+        return ViewState.Error(errorMessage)
     }
 
     fun deleteContact() {
-        mutableLoadingState.value = true
+        mutableViewState.value = ViewState.Processing
         viewModelScope.launch(Dispatchers.Default) {
             try {
                 cancelObserveContact()
                 val userId = accountManager.getPrimaryUserId().filterNotNull().first()
                 contactRepository.deleteContacts(userId, listOf(contactId))
-                mutableViewEvent.tryEmit(ViewEvent.Success)
+                mutableViewState.value = ViewState.Deleted
             } catch (throwable: Throwable) {
                 if (throwable is CancellationException) throw throwable
                 handleError(throwable, "Error deleting contact $contactId")
@@ -123,11 +140,32 @@ class ContactDetailViewModel @Inject constructor(
         }
     }
 
-    data class ViewState(val contact: String)
+    fun updateContact() {
+        viewModelScope.launch(Dispatchers.Default) {
+            mutableViewState.value = ViewState.Processing
+            try {
+                val contactName = requireNotNull(contact).name
+                val userId = accountManager.getPrimaryUserId().filterNotNull().first()
+                val user = userManager.getUser(userId)
+                val cards = user.useKeys(cryptoContext) {
+                    listOf(
+                        signContactCard(createToBeSignedVCard(contactName)),
+                        encryptAndSignContactCard(createToBeEncryptedAndSignedVCard(contactName))
+                    )
+                }
+                contactRepository.updateContact(userId, contactId, cards)
+            } catch (throwable: Throwable) {
+                if (throwable is CancellationException) throw throwable
+                handleError(throwable, "Error updating contact $contactId")
+            }
+        }
+    }
 
-    sealed class ViewEvent {
-        data class Error(val reason: String) : ViewEvent()
-        object Success : ViewEvent()
+    sealed class ViewState {
+        object Processing : ViewState()
+        data class Error(val reason: String) : ViewState()
+        data class Success(val rawContact: String, val vCardContact: String) : ViewState()
+        object Deleted : ViewState()
     }
 
     companion object {

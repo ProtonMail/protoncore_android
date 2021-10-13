@@ -20,11 +20,13 @@ package me.proton.core.contact.data.api
 
 import me.proton.core.contact.data.api.request.CreateContactsRequest
 import me.proton.core.contact.data.api.request.DeleteContactsRequest
+import me.proton.core.contact.data.api.resource.ContactCardsResource
 import me.proton.core.contact.data.api.response.CreateContactsResponse
 import me.proton.core.contact.data.api.response.DeleteContactsResponse
 import me.proton.core.contact.data.api.response.GetContactEmailsResponse
 import me.proton.core.contact.data.api.response.GetContactResponse
 import me.proton.core.contact.data.api.response.GetContactsResponse
+import me.proton.core.contact.data.api.response.MutateContactResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -35,24 +37,30 @@ import retrofit2.http.Query
 
 interface ContactApi : BaseRetrofitApi {
 
-    @GET("contacts/{id}")
+    @GET("contacts/v4/contacts/{id}")
     suspend fun getContact(@Path("id") contactId: String): GetContactResponse
 
-    @POST("contacts")
+    @POST("contacts/v4/contacts")
     suspend fun createContacts(@Body request: CreateContactsRequest): CreateContactsResponse
 
-    @GET("contacts")
+    @GET("contacts/v4/contacts")
     suspend fun getContacts(
         @Query("Page") page: Int,
         @Query("PageSize") pageSize: Int,
     ): GetContactsResponse
 
-    @GET("contacts/emails")
+    @GET("contacts/v4/contacts/emails")
     suspend fun getContactEmails(
         @Query("Page") page: Int,
         @Query("PageSize") pageSize: Int,
     ): GetContactEmailsResponse
 
-    @PUT("contacts/delete")
+    @PUT("contacts/v4/contacts/delete")
     suspend fun deleteContacts(@Body request: DeleteContactsRequest): DeleteContactsResponse
+
+    @PUT("contacts/v4/contacts/{id}")
+    suspend fun updateContact(
+        @Path("id") contactId: String,
+        @Body request: ContactCardsResource
+    ): MutateContactResponse
 }
