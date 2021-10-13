@@ -20,6 +20,7 @@ package me.proton.core.humanverification.presentation.ui.verification
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -74,6 +75,8 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
 
         requestNewCodeDialogResultLauncher =
             parentFragmentManager.registerRequestNewCodeDialogResultLauncher(this@HumanVerificationEnterCodeFragment) {
@@ -158,6 +161,12 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
 
     override fun onBackPressed() {
         dismissAllowingStateLoss()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 
     companion object {

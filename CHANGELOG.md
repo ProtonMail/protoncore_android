@@ -1,3 +1,12 @@
+## Auth [1.15.4], Human Verification [1.15.5], User settings [1.15.3], Presentation [1.15.6]
+
+13 Oct, 2021
+
+### Changes
+
+- Protect screens with visible password fields using WindowManager's FLAG_SECURE.
+- Add `ProtonSecureActivity` that can be extended to apply security measures to any activity. At the moment, it's being extended by `AuthActivity`. 
+
 ## Crypto and Key  [1.15.5]
 
 11 Oct, 2021
@@ -44,7 +53,7 @@
 
 - Removed `HumanVerificationActivity` — use `HumanVerificationOrchestrator` instead
 - Fix: In signup activity, the view-model's state is preserved if the activity is temporarily destroyed
-- Updated nullability of `HumanVerificationOrchestrator.setOnHumanVerificationResult` callback: 
+- Updated nullability of `HumanVerificationOrchestrator.setOnHumanVerificationResult` callback:
   `HumanVerificationResult` parameter is never null; check `token` property
   to see if human verification was successful or not
 

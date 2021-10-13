@@ -19,9 +19,11 @@
 package me.proton.core.auth.presentation.alert
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -60,47 +62,53 @@ class PasswordAnd2FADialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
-            val binding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(requireContext()))
-            binding.twoFA.visibility = twoFAVisibility
-            binding.password.visibility = passwordVisibility
-            val builder = MaterialAlertDialogBuilder(requireContext())
-                .setTitle(R.string.presentation_authenticate)
-                // passing null to the listeners is a workaround to prevent the dialog to auto-dismiss on button click
-                .setPositiveButton(R.string.presentation_alert_enter, null)
-                .setNegativeButton(R.string.presentation_alert_cancel, null)
-                .setView(binding.root)
-            val alertDialog = builder.create()
+        super.onCreateDialog(savedInstanceState)
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
 
-            alertDialog.apply {
-                setOnShowListener {
-                    // workaround to prevent the dialog to auto-dismiss on button click
-                    getButton(AlertDialog.BUTTON_POSITIVE).apply {
-                        isAllCaps = false
-                        onClick {
-                            with(binding) {
-                                parentFragmentManager.setFragmentResult(
-                                    KEY_PASS_2FA_SET, bundleOf(
-                                        BUNDLE_KEY_PASS_2FA_DATA to PasswordAnd2FAInput(
-                                            password.text.toString(), twoFA.text.toString()
-                                        )
+        val binding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(requireContext()))
+        binding.twoFA.visibility = twoFAVisibility
+        binding.password.visibility = passwordVisibility
+        val builder = MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.presentation_authenticate)
+            // passing null to the listeners is a workaround to prevent the dialog to auto-dismiss on button click
+            .setPositiveButton(R.string.presentation_alert_enter, null)
+            .setNegativeButton(R.string.presentation_alert_cancel, null)
+            .setView(binding.root)
+        val alertDialog = builder.create()
+
+        return alertDialog.apply {
+            setOnShowListener {
+                // workaround to prevent the dialog to auto-dismiss on button click
+                getButton(AlertDialog.BUTTON_POSITIVE).apply {
+                    isAllCaps = false
+                    onClick {
+                        with(binding) {
+                            parentFragmentManager.setFragmentResult(
+                                KEY_PASS_2FA_SET, bundleOf(
+                                    BUNDLE_KEY_PASS_2FA_DATA to PasswordAnd2FAInput(
+                                        password.text.toString(), twoFA.text.toString()
                                     )
                                 )
+                            )
 
-                                dismissAllowingStateLoss()
-                            }
-                        }
-                    }
-                    getButton(AlertDialog.BUTTON_NEGATIVE).apply {
-                        isAllCaps = false
-                        onClick {
                             dismissAllowingStateLoss()
                         }
                     }
                 }
-                setCanceledOnTouchOutside(false)
+                getButton(AlertDialog.BUTTON_NEGATIVE).apply {
+                    isAllCaps = false
+                    onClick {
+                        dismissAllowingStateLoss()
+                    }
+                }
             }
-            alertDialog
-        } ?: throw IllegalStateException("Activity cannot be null")
+            setCanceledOnTouchOutside(false)
+        }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
     }
 }
