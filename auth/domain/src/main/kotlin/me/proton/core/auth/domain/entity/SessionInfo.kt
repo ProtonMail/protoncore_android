@@ -46,20 +46,9 @@ data class SessionInfo(
 
 data class SecondFactor(
     val enabled: Boolean,
-    val supportedMethods: Set<SecondFactorMethod>,
-    val universalTwoFactor: UniversalTwoFactor?
+    val supportedMethods: Set<SecondFactorMethod>
 )
 
 enum class SecondFactorMethod {
     Totp, Authenticator
 }
-
-data class UniversalTwoFactor(
-    val challenge: String,
-    val registeredKeys: List<UniversalTwoFactorKey>
-)
-
-data class UniversalTwoFactorKey(
-    val version: String,
-    val keyHandle: String
-)

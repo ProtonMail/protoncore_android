@@ -22,22 +22,17 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SecondFactorMethod
-import me.proton.core.auth.domain.entity.UniversalTwoFactor
-import me.proton.core.auth.domain.entity.UniversalTwoFactorKey
 import me.proton.core.util.kotlin.hasFlag
 import me.proton.core.util.kotlin.toBoolean
 
 @Serializable
 data class SecondFactorInfoResponse(
     @SerialName("Enabled")
-    val enabled: Int,
-    @SerialName("U2F")
-    val universalTwoFactor: UniversalTwoFactorInfo? = null
+    val enabled: Int
 ) {
     fun toSecondFactor() = SecondFactor(
         enabled = enabled.toBoolean(),
         supportedMethods = mapSupportedMethods(enabled),
-        universalTwoFactor = universalTwoFactor?.toUniversalTwoFactor()
     )
 
     private fun mapSupportedMethods(enabled: Int): Set<SecondFactorMethod> {
@@ -46,30 +41,4 @@ data class SecondFactorInfoResponse(
             if (enabled.hasFlag(0b10)) add(SecondFactorMethod.Authenticator)
         }.toSet()
     }
-}
-
-@Serializable
-data class UniversalTwoFactorInfo(
-    @SerialName("Challenge")
-    val challenge: String,
-    @SerialName("RegisteredKeys")
-    val registeredKeys: List<UniversalTwoFactorKeyInfo>
-) {
-    fun toUniversalTwoFactor() = UniversalTwoFactor(
-        challenge = challenge,
-        registeredKeys = registeredKeys.map { it.toUniversalTwoFactorKey() }
-    )
-}
-
-@Serializable
-data class UniversalTwoFactorKeyInfo(
-    @SerialName("Version")
-    val version: String,
-    @SerialName("KeyHandle")
-    val keyHandle: String
-) {
-    fun toUniversalTwoFactorKey() = UniversalTwoFactorKey(
-        version = version,
-        keyHandle = keyHandle
-    )
 }
