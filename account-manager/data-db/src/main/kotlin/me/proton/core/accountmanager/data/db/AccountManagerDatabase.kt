@@ -27,6 +27,12 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.contact.data.local.db.ContactConverters
+import me.proton.core.contact.data.local.db.ContactDatabase
+import me.proton.core.contact.data.local.db.entity.ContactCardEntity
+import me.proton.core.contact.data.local.db.entity.ContactEmailEntity
+import me.proton.core.contact.data.local.db.entity.ContactEmailLabelEntity
+import me.proton.core.contact.data.local.db.entity.ContactEntity
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.room.db.BaseDatabase
 import me.proton.core.data.room.db.CommonConverters
@@ -78,7 +84,12 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         UserSettingsEntity::class,
         // organization
         OrganizationEntity::class,
-        OrganizationKeysEntity::class
+        OrganizationKeysEntity::class,
+        // contact
+        ContactEntity::class,
+        ContactCardEntity::class,
+        ContactEmailEntity::class,
+        ContactEmailLabelEntity::class,
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -89,7 +100,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     UserConverters::class,
     CryptoConverters::class,
     HumanVerificationConverters::class,
-    UserSettingsConverters::class
+    UserSettingsConverters::class,
+    ContactConverters::class
 )
 abstract class AccountManagerDatabase :
     BaseDatabase(),
@@ -101,11 +113,12 @@ abstract class AccountManagerDatabase :
     PublicAddressDatabase,
     MailSettingsDatabase,
     UserSettingsDatabase,
-    OrganizationDatabase {
+    OrganizationDatabase,
+    ContactDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 8
+        const val version = 9
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -114,7 +127,8 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_4_5,
             AccountManagerDatabaseMigrations.MIGRATION_5_6,
             AccountManagerDatabaseMigrations.MIGRATION_6_7,
-            AccountManagerDatabaseMigrations.MIGRATION_7_8
+            AccountManagerDatabaseMigrations.MIGRATION_7_8,
+            AccountManagerDatabaseMigrations.MIGRATION_8_9
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =
