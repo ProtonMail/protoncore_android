@@ -255,6 +255,14 @@ class AuthOrchestrator {
         val twoPassModeEnabled = checkNotNull(account.details.session?.twoPassModeEnabled) {
             "TwoPassModeEnabled is null for startSecondFactorWorkflow."
         }
+        onSecondFactorResult {
+            if (it is SecondFactorResult.UnrecoverableError) {
+                startLoginWorkflow(
+                    requiredAccountType = requiredAccountType,
+                    username = account.username
+                )
+            }
+        }
         startSecondFactorWorkflow(
             userId = account.userId,
             requiredAccountType = requiredAccountType,

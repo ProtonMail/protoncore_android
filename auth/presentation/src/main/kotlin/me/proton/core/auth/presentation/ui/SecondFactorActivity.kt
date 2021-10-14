@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -94,7 +93,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
                 is SecondFactorViewModel.State.Error.Message -> onError(false, it.message)
                 is SecondFactorViewModel.State.Error.Unrecoverable -> {
                     showError(getString(R.string.auth_login_general_error))
-                    onBackPressed()
+                    setResultAndFinish(SecondFactorResult.UnrecoverableError)
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -131,13 +130,13 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
             .invokeOnCompletion { finish() }
     }
 
-    private fun onSuccess(
-        userId: UserId,
-        nextStep: NextStep
-    ) {
-        val intent = Intent()
-            .putExtra(ARG_RESULT, SecondFactorResult(userId = userId.id, nextStep = nextStep))
-        setResult(Activity.RESULT_OK, intent)
+    private fun onSuccess(userId: UserId, nextStep: NextStep) {
+        setResultAndFinish(SecondFactorResult.Success(userId = userId.id, nextStep = nextStep))
+    }
+
+    private fun setResultAndFinish(result: SecondFactorResult) {
+        val intent = Intent().putExtra(ARG_RESULT, result)
+        setResult(RESULT_OK, intent)
         finish()
     }
 
