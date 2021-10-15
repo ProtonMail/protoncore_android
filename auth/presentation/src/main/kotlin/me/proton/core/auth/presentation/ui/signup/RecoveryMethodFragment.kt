@@ -24,6 +24,7 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import androidx.core.text.getSpans
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -134,21 +135,27 @@ class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
     }
 
     private fun initTermsAndConditions() = with(binding.termsConditionsText) {
-        val clickableString = getString(R.string.auth_signup_terms_conditions)
-        val spannableString = SpannableString(getString(R.string.auth_signup_terms_conditions_full))
-        val startIndex = spannableString.indexOf(clickableString)
-
+        val spannableString = SpannableString(getText(R.string.auth_signup_terms_conditions_full))
+        val annotations = spannableString.getSpans<android.text.Annotation>()
+            .filter { it.key == "link" && it.value == "terms" }
+        val linkIndices = annotations.map { Pair(spannableString.getSpanStart(it), spannableString.getSpanEnd(it)) }
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 childFragmentManager.showTermsConditions()
             }
         }
-        spannableString.setSpan(
-            clickableSpan,
-            startIndex,
-            startIndex + clickableString.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        if (linkIndices.isNotEmpty()) {
+            linkIndices.forEach { (start, end) ->
+                spannableString.setSpan(
+                    clickableSpan,
+                    start,
+                    end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        } else {
+            spannableString.setSpan(clickableSpan, 0, spannableString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+        }
         text = spannableString
         movementMethod = LinkMovementMethod.getInstance()
     }

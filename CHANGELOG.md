@@ -1,3 +1,11 @@
+## Auth [1.15.5]
+
+15 Oct, 2021
+
+### Changes
+
+- Fixed: For some set of languages (e.g. Polish, Czech), app would crash during signup when choosing recovery method.
+
 ## Presentation [1.15.7]
 
 13 Oct, 2021
