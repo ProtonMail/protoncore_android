@@ -91,9 +91,9 @@ Test Android Instrumented: **1.15.1** - _released on: Sep 15, 2021_
 
 ## Shared
 
-Domain: **1.15** - _released on: Sep 13, 2021_
+Domain: **1.16** - _released on: Oct 15, 2021_
 
-Presentation: **1.15.7** - _released on: Oct 13, 2021_
+Presentation: **1.15.8** - _released on: Oct 15, 2021_
 
 Data: **1.15** - _released on: Sep 13, 2021_
 
@@ -121,13 +121,13 @@ Crypto Android: **1.15.5** - _released on: Oct 11, 2021_
 
 ### Auth
 
-Auth: **1.15.5** - _released on: Oct 15, 2021_
+Auth: **1.16** - _released on: Oct 15, 2021_
 
-Auth Domain: **1.15.5** - _released on: Oct 15, 2021_
+Auth Domain: **1.16** - _released on: Oct 15, 2021_
 
-Auth Presentation: **1.15.5** - _released on: Oct 15, 2021_
+Auth Presentation: **1.16** - _released on: Oct 15, 2021_
 
-Auth Data: **1.15.5** - _released on: Oct 15, 2021_
+Auth Data: **1.16** - _released on: Oct 15, 2021_
 
 ### Account
 
@@ -218,23 +218,23 @@ Country Presentation: **1.15** - _released on: Sep 13, 2021_
 
 ### Payment
 
-Payment: **1.15** - _released on: Sep 13, 2021_
+Payment: **1.16** - _released on: Oct 15, 2021_
 
-Payment Data: **1.15** - _released on: Sep 13, 2021_
+Payment Data: **1.16** - _released on: Oct 15, 2021_
 
-Payment Domain: **1.15** - _released on: Sep 13, 2021_
+Payment Domain: **1.16** - _released on: Oct 15, 2021_
 
-Payment Presentation: **1.15** - _released on: Sep 13, 2021_
+Payment Presentation: **1.16** - _released on: Oct 15, 2021_
 
 ### Plan
 
-Plan: **1.15** - _released on: Sep 13, 2021_
+Plan: **1.16** - _released on: Oct 15, 2021_
 
-Plan Data: **1.15** - _released on: Sep 13, 2021_
+Plan Data: **1.16** - _released on: Oct 15, 2021_
 
-Plan Domain: **1.15** - _released on: Sep 13, 2021_
+Plan Domain: **1.16** - _released on: Oct 15, 2021_
 
-Plan Presentation: **1.15** - _released on: Sep 13, 2021_
+Plan Presentation: **1.16** - _released on: Oct 15, 2021_
 
 ### User Settings
 
