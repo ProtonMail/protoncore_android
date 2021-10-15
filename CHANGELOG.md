@@ -1,3 +1,13 @@
+## Auth [1.16.1], User [1.16.1].
+
+15 Oct, 2021
+
+### Bug fixes
+
+- Fixed Login for AccountType Username (VPN).
+- Allow Login without full/keys scopes, without fetching addresses if not needed.
+- Return Success for UnlockUserPrimaryKey without keys.
+
 ## User [1.15.6], Key [1.15.6], Account-Manager [1.15.6]
 
 15 Oct, 2021

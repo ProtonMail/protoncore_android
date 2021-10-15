@@ -16,21 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.user.domain.extension
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.user.domain.entity.User
 
-libVersion = Version(1, 16, 1)
+/**
+ * @return true if the user have at least 1 key.
+ */
+fun User.hasKeys() = keys.isNotEmpty()
 
-android()
+/**
+ * @return true if the user have a username (not blank).
+ */
+fun User.hasUsername() = !name.isNullOrBlank()
 
-dependencies {
-    api(
-        project(Module.authPresentation),
-        project(Module.authDomain),
-        project(Module.authData)
-    )
-}
+/**
+ * @return true if the user is private, whether the user controls their own keys or not.
+ */
+fun User.isPrivate() = private

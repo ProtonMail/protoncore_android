@@ -19,10 +19,20 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.ChangePasswordNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.ChooseUsernameNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.NoSetupNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupInternalAddressNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupPrimaryKeysNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.TwoPassNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.UserCheckError
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.extension.firstInternalOrNull
+import me.proton.core.user.domain.extension.hasInternalAddressKey
+import me.proton.core.user.domain.extension.hasKeys
+import me.proton.core.user.domain.extension.hasOriginalAddress
+import me.proton.core.user.domain.extension.hasUsername
+import me.proton.core.user.domain.extension.isPrivate
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -52,7 +62,7 @@ class SetupAccountCheck @Inject constructor(
         /** User need to first enter 2nd password to proceed. */
         object TwoPassNeeded : Result()
 
-        /** User need to first change password to proceed. */
+        /** User need to first change password to proceed (currently, via Web). */
         object ChangePasswordNeeded : Result()
     }
 
@@ -61,34 +71,33 @@ class SetupAccountCheck @Inject constructor(
         isTwoPassModeNeeded: Boolean,
         requiredAccountType: AccountType
     ): Result {
+        // First get the User to invoke UserCheck.
         val user = userRepository.getUser(userId, refresh = true)
         val userCheckResult = userCheck.invoke(user)
-        if (userCheckResult is UserCheckResult.Error) return Result.UserCheckError(userCheckResult)
-
-        val hasUsername = !user.name.isNullOrBlank()
-        val hasKeys = user.keys.isNotEmpty()
-
-        val addresses = addressRepository.getAddresses(userId, refresh = true)
-        val hasInternalAddressKey = addresses.firstInternalOrNull()?.keys?.isNotEmpty() ?: false
-
-        // Force private OrganizationMember to change password for the first login.
-        // We assume, after changing password, user.keys will not be empty (added by web).
-        if (!hasKeys && user.role == Role.OrganizationMember && user.private) return Result.ChangePasswordNeeded
-
-        // API bug: TwoPassMode is not needed if user has no key!
-        if (isTwoPassModeNeeded && hasKeys) return Result.TwoPassNeeded
-
+        if (userCheckResult is UserCheckResult.Error) {
+            return UserCheckError(userCheckResult)
+        }
         return when (requiredAccountType) {
-            AccountType.Username -> Result.NoSetupNeeded
-            AccountType.External -> when {
-                !hasKeys -> Result.SetupPrimaryKeysNeeded
-                else -> Result.NoSetupNeeded
+            AccountType.Username -> {
+                NoSetupNeeded
             }
-            AccountType.Internal -> when {
-                !hasUsername -> Result.ChooseUsernameNeeded
-                !hasKeys -> Result.SetupPrimaryKeysNeeded
-                !hasInternalAddressKey -> Result.SetupInternalAddressNeeded
-                else -> Result.NoSetupNeeded
+            AccountType.External -> {
+                when {
+                    !user.hasKeys() -> SetupPrimaryKeysNeeded
+                    isTwoPassModeNeeded -> TwoPassNeeded
+                    else -> NoSetupNeeded
+                }
+            }
+            AccountType.Internal -> {
+                val addresses = addressRepository.getAddresses(userId, refresh = true)
+                when {
+                    !user.hasUsername() -> ChooseUsernameNeeded
+                    !user.hasKeys() && !addresses.hasOriginalAddress() && user.isPrivate() -> ChangePasswordNeeded
+                    !user.hasKeys() -> SetupPrimaryKeysNeeded
+                    !addresses.hasInternalAddressKey() -> SetupInternalAddressNeeded
+                    isTwoPassModeNeeded -> TwoPassNeeded
+                    else -> NoSetupNeeded
+                }
             }
         }
     }

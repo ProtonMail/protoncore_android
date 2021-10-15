@@ -91,8 +91,7 @@ class UserManagerImpl(
 
     override suspend fun unlockWithPassword(
         userId: UserId,
-        password: PlainByteArray,
-        refresh: Boolean
+        password: PlainByteArray
     ): UnlockResult {
         val user = userRepository.getUser(userId)
         val userPrimaryKey = user.keys.primary()
@@ -105,15 +104,14 @@ class UserManagerImpl(
         val passphrase = pgp.getPassphrase(password.array, primaryKeySalt).use {
             it.encrypt(keyStore)
         }
-        return unlockWithPassphrase(userId, passphrase, refresh = false)
+        return unlockWithPassphrase(userId, passphrase)
     }
 
     override suspend fun unlockWithPassphrase(
         userId: UserId,
-        passphrase: EncryptedByteArray,
-        refresh: Boolean
+        passphrase: EncryptedByteArray
     ): UnlockResult {
-        val user = userRepository.getUser(userId, refresh = refresh)
+        val user = userRepository.getUser(userId)
         val userPrimaryKey = user.keys.primary()
             ?: return UnlockResult.Error.NoPrimaryKey
 

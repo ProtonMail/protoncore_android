@@ -40,6 +40,13 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.ChangePasswordNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.ChooseUsernameNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.NoSetupNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupInternalAddressNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupPrimaryKeysNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.TwoPassNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.UserCheckError
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
@@ -109,15 +116,12 @@ internal class LoginViewModel @Inject constructor(
         password: String,
         requiredAccountType: AccountType,
         subscriptionDetails: SubscriptionDetails? = null
-    ): Job {
-        val encryptedPassword = password.encrypt(keyStoreCrypto)
-        return startLoginWorkflowWithEncryptedPassword(
-            username,
-            encryptedPassword,
-            requiredAccountType,
-            subscriptionDetails
-        )
-    }
+    ): Job = startLoginWorkflowWithEncryptedPassword(
+        username = username,
+        encryptedPassword = password.encrypt(keyStoreCrypto),
+        requiredAccountType = requiredAccountType,
+        subscriptionDetails = subscriptionDetails
+    )
 
     fun startLoginWorkflowWithEncryptedPassword(
         username: String,
@@ -135,15 +139,18 @@ internal class LoginViewModel @Inject constructor(
         // Storing the session is mandatory for executing subsequent requests.
         handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)
 
-        // perform subscribe
-        subscriptionDetails?.let {
-            it.billingResult?.also { billing ->
-                runCatching {
-                    performSubscribe(
-                        userId = userId, amount = billing.amount, currency = billing.currency,
-                        cycle = billing.cycle, planNames = listOf(it.planName), paymentToken = billing.token
-                    )
-                }
+        // Subscribe to any pending subscription/billing.
+        if (subscriptionDetails?.billingResult != null) {
+            val billing = subscriptionDetails.billingResult
+            runCatching {
+                performSubscribe(
+                    userId = userId,
+                    amount = billing.amount,
+                    currency = billing.currency,
+                    cycle = billing.cycle,
+                    planNames = listOf(subscriptionDetails.planName),
+                    paymentToken = billing.token
+                )
             }
         }
 
@@ -155,17 +162,13 @@ internal class LoginViewModel @Inject constructor(
 
         // Check if setup keys is needed and if it can be done directly.
         when (val result = setupAccountCheck.invoke(userId, sessionInfo.isTwoPassModeNeeded, requiredAccountType)) {
-            is SetupAccountCheck.Result.UserCheckError -> checkFailed(userId, result.error)
-            is SetupAccountCheck.Result.TwoPassNeeded -> twoPassMode(userId)
-            is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(userId)
-            is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, encryptedPassword)
-            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> setupPrimaryKeys(
-                userId,
-                encryptedPassword,
-                requiredAccountType
-            )
-            is SetupAccountCheck.Result.SetupInternalAddressNeeded -> setupInternalAddress(userId, encryptedPassword)
-            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId)
+            is UserCheckError -> checkFailed(userId, result.error)
+            is TwoPassNeeded -> twoPassMode(userId)
+            is ChangePasswordNeeded -> changePassword(userId)
+            is ChooseUsernameNeeded -> chooseUsername(userId)
+            is SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, encryptedPassword, requiredAccountType)
+            is SetupInternalAddressNeeded -> setupInternalAddress(userId, encryptedPassword)
+            is NoSetupNeeded -> unlockUserPrimaryKey(userId, encryptedPassword)
         }.let {
             emit(it)
         }
