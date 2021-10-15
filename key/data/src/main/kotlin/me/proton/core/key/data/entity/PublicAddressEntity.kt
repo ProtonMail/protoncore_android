@@ -18,6 +18,7 @@
 
 package me.proton.core.key.data.entity
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Index
 
@@ -30,5 +31,7 @@ import androidx.room.Index
 data class PublicAddressEntity(
     val email: String,
     val recipientType: Int,
-    val mimeType: String?
+    val mimeType: String?,
+    @Embedded(prefix = "signedKeyList_")
+    val signedKeyListEntity: SignedKeyListEntity?,
 )

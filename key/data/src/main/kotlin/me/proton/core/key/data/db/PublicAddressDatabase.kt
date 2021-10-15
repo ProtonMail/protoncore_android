@@ -20,6 +20,7 @@ package me.proton.core.key.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 
 interface PublicAddressDatabase : Database {
@@ -40,6 +41,24 @@ interface PublicAddressDatabase : Database {
                 // Create Table PublicAddressKeyEntity.
                 database.execSQL("CREATE TABLE IF NOT EXISTS `PublicAddressKeyEntity` (`email` TEXT NOT NULL, `flags` INTEGER NOT NULL, `publicKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, PRIMARY KEY(`email`, `publicKey`), FOREIGN KEY(`email`) REFERENCES `PublicAddressEntity`(`email`) ON UPDATE NO ACTION ON DELETE CASCADE )")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_PublicAddressKeyEntity_email` ON `PublicAddressKeyEntity` (`email`)")
+            }
+        }
+
+        /**
+         * - Added PublicAddressEntity.signedKeyList.
+         */
+        val MIGRATION_1 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "PublicAddressEntity",
+                    column = "signedKeyList_data",
+                    type = "TEXT"
+                )
+                database.addTableColumn(
+                    table = "PublicAddressEntity",
+                    column = "signedKeyList_signature",
+                    type = "TEXT"
+                )
             }
         }
     }

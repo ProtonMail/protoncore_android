@@ -38,7 +38,7 @@ interface PrivateKeyRepository {
     )
 
     /**
-     * Create a new [PrivateAddressKey] using [sessionUserId], remotely.
+     * Create a new address key with the info provided in [key] using [sessionUserId], remotely.
      */
     suspend fun createAddressKey(
         sessionUserId: SessionUserId,
