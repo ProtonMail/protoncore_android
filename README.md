@@ -142,7 +142,7 @@ Account Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Account Manager
 
-Account Manager: **1.15.1** - _released on: Oct 14, 2021_
+Account Manager: **1.15.6** - _released on: Oct 15, 2021_
 
 Account Manager Domain: **1.15.1** - _released on: Oct 14, 2021_
 
