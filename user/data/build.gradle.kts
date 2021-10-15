@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 15, 2)
+libVersion = parent?.libVersion
 
 android()
 
@@ -68,6 +68,7 @@ dependencies {
         project(Module.accountManagerDataDb),
         project(Module.cryptoAndroid),
         project(Module.gopenpgp),
-        project(Module.userSettings)
+        project(Module.userSettings),
+        project(Module.contact),
     )
 }

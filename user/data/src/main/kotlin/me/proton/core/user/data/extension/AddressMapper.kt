@@ -22,8 +22,11 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.AddressKeyResponse
 import me.proton.core.key.data.api.response.AddressResponse
+import me.proton.core.key.data.api.response.SignedKeyListResponse
+import me.proton.core.key.data.entity.SignedKeyListEntity
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.domain.entity.AddressId
@@ -51,6 +54,7 @@ internal fun AddressResponse.toAddress(userId: UserId, passphrase: EncryptedByte
         type = AddressType.map[type],
         order = order,
         keys = keys?.map { it.toUserAddressKey(addressId, passphrase) }.orEmpty(),
+        signedKeyList = signedKeyList?.toPublicSignedKeyList()
     )
 }
 
@@ -84,8 +88,13 @@ internal fun AddressResponse.toEntity(userId: UserId) = AddressEntity(
     canReceive = receive.toBooleanOrFalse(),
     enabled = status.toBooleanOrFalse(),
     type = type,
-    order = order
+    order = order,
+    signedKeyList = signedKeyList?.toEntity()
 )
+
+internal fun SignedKeyListResponse.toEntity() = SignedKeyListEntity(data, signature)
+
+internal fun SignedKeyListResponse.toPublicSignedKeyList() = PublicSignedKeyList(data, signature)
 
 internal fun AddressKeyResponse.toEntity(addressId: AddressId) = AddressKeyEntity(
     addressId = addressId,
@@ -102,6 +111,8 @@ internal fun AddressKeyResponse.toEntity(addressId: AddressId) = AddressKeyEntit
     active = active.toBooleanOrFalse()
 )
 
+internal fun SignedKeyListEntity.toPublicSignedKeyList() = PublicSignedKeyList(data, signature)
+
 internal fun AddressEntity.toUserAddress(keys: List<UserAddressKey>) = UserAddress(
     userId = userId,
     addressId = addressId,
@@ -114,7 +125,8 @@ internal fun AddressEntity.toUserAddress(keys: List<UserAddressKey>) = UserAddre
     enabled = enabled,
     type = AddressType.map[type],
     order = order,
-    keys = keys
+    keys = keys,
+    signedKeyList = signedKeyList?.toPublicSignedKeyList()
 )
 
 fun List<AddressKeyResponse>.toEntityList(addressId: AddressId) = map { it.toEntity(addressId) }
@@ -138,6 +150,8 @@ internal fun AddressKeyEntity.toUserAddressKey(passphrase: EncryptedByteArray?) 
     )
 )
 
+internal fun PublicSignedKeyList.toEntity() = SignedKeyListEntity(data = data, signature = signature)
+
 internal fun UserAddress.toEntity() = AddressEntity(
     userId = userId,
     addressId = addressId,
@@ -149,7 +163,8 @@ internal fun UserAddress.toEntity() = AddressEntity(
     canReceive = canReceive,
     enabled = enabled,
     type = type?.value,
-    order = order
+    order = order,
+    signedKeyList = signedKeyList?.toEntity()
 )
 
 internal fun UserAddressKey.toEntity() = AddressKeyEntity(

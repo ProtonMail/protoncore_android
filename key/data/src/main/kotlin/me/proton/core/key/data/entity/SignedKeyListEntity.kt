@@ -16,20 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.key.data.entity
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import androidx.room.Entity
 
-libVersion = Version(1, 15, 6)
-
-android()
-
-dependencies {
-    api(
-        project(Module.keyDomain),
-        project(Module.keyData)
-    )
-}
+@Entity
+data class SignedKeyListEntity(
+    val data: String,
+    val signature: String
+)

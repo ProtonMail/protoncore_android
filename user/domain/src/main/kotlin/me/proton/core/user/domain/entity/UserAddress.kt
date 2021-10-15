@@ -19,6 +19,7 @@
 package me.proton.core.user.domain.entity
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.extension.areAllLocked
 import me.proton.core.key.domain.useKeys
@@ -59,7 +60,8 @@ data class UserAddress(
      * @see [UserManager.unlockWithPassphrase]
      * @see [UserManager.lock]
      * */
-    override val keys: List<UserAddressKey>
+    override val keys: List<UserAddressKey>,
+    val signedKeyList: PublicSignedKeyList?
 ) : KeyHolder
 
 enum class AddressType(val value: Int) {

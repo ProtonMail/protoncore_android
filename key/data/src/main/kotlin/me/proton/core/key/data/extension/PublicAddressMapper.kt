@@ -20,16 +20,22 @@ package me.proton.core.key.data.extension
 
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
+import me.proton.core.key.data.entity.SignedKeyListEntity
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.entity.key.isCompromised
 import me.proton.core.key.domain.entity.key.isObsolete
+
+internal fun PublicSignedKeyList.toEntity() =
+    SignedKeyListEntity(data = data, signature = signature)
 
 internal fun PublicAddress.toEntity() = PublicAddressEntity(
     email = email,
     recipientType = recipientType,
-    mimeType = mimeType
+    mimeType = mimeType,
+    signedKeyListEntity = signedKeyList?.toEntity()
 )
 
 internal fun PublicAddressKey.toEntity() = PublicAddressKeyEntity(
@@ -41,11 +47,15 @@ internal fun PublicAddressKey.toEntity() = PublicAddressKeyEntity(
 
 internal fun List<PublicAddressKey>.toEntityList() = map { it.toEntity() }
 
+internal fun SignedKeyListEntity.toPublicSignedKeyList() =
+    PublicSignedKeyList(data = data, signature = signature)
+
 internal fun PublicAddressEntity.toPublicAddress(keys: List<PublicAddressKeyEntity>) = PublicAddress(
     email = email,
     recipientType = recipientType,
     mimeType = mimeType,
-    keys = keys.map { it.toPublicAddressKey() }
+    keys = keys.map { it.toPublicAddressKey() },
+    signedKeyList = signedKeyListEntity?.toPublicSignedKeyList()
 )
 
 internal fun PublicAddressKeyEntity.toPublicAddressKey() = PublicAddressKey(

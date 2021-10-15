@@ -67,14 +67,16 @@ class PublicAddressKeyCryptoTest {
         email = "email@example.com",
         recipientType = 1,
         mimeType = null,
-        keys = listOf(publicAddressKey1)
+        keys = listOf(publicAddressKey1),
+        signedKeyList = null
     )
 
     private val publicAddress2 = PublicAddress(
         email = "email@example.com",
         recipientType = 1,
         mimeType = null,
-        keys = listOf(publicAddressKey2)
+        keys = listOf(publicAddressKey2),
+        signedKeyList = null
     )
 
     private val context = TestCryptoContext().also {

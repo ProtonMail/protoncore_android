@@ -25,7 +25,6 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.repository.PrivateKeyRepository
-import me.proton.core.key.domain.signedKeyList
 import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
@@ -33,6 +32,7 @@ import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.user.domain.extension.hasMigratedKey
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.user.domain.signKeyList
 
 class UserAddressManagerImpl(
     private val userRepository: UserRepository,
@@ -102,15 +102,16 @@ class UserAddressManagerImpl(
             userPrivateKey = userPrimaryKey.privateKey,
             isPrimary = isPrimary
         )
+        val userAddressWithKeys = userAddress.copy(keys = userAddress.keys.plus(userAddressKey))
         // Create the new generated UserAddressKey, remotely.
         privateKeyRepository.createAddressKey(
             sessionUserId = sessionUserId,
             key = PrivateAddressKey(
                 addressId = addressId.id,
                 privateKey = userAddressKey.privateKey,
-                signedKeyList = userAddressKey.privateKey.signedKeyList(cryptoContext),
                 token = userAddressKey.token,
-                signature = userAddressKey.signature
+                signature = userAddressKey.signature,
+                signedKeyList = userAddressWithKeys.signKeyList(cryptoContext),
             )
         )
         return checkNotNull(userAddressRepository.getAddress(sessionUserId, addressId, refresh = true))

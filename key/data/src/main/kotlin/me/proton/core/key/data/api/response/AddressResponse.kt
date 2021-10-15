@@ -58,5 +58,7 @@ data class AddressResponse(
     @SerialName("HasKeys")
     val hasKeys: Int, // boolean (binary)
     @SerialName("Keys")
-    val keys: List<AddressKeyResponse>? = null
+    val keys: List<AddressKeyResponse>? = null,
+    @SerialName("SignedKeyList")
+    val signedKeyList: SignedKeyListResponse? = null
 )

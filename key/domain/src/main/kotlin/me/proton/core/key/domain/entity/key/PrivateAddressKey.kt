@@ -20,10 +20,15 @@ package me.proton.core.key.domain.entity.key
 
 import me.proton.core.crypto.common.pgp.Armored
 
+/**
+ * @property signedKeyList Updated signed key list of the address. Only needed for the backend calls,
+ * when a change to the address keys is made.
+ */
+
 data class PrivateAddressKey(
     val addressId: String,
     val privateKey: PrivateKey,
     val token: Armored?,
     val signature: Armored?,
-    val signedKeyList: PublicSignedKeyList,
+    val signedKeyList: PublicSignedKeyList? = null
 )

@@ -32,7 +32,6 @@ import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeyRing
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
-import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 import java.io.File
 
@@ -43,28 +42,6 @@ import java.io.File
  */
 fun PrivateKey.fingerprint(context: CryptoContext) =
     context.pgpCrypto.getFingerprint(key)
-
-/**
- * Get JSON SHA256 fingerprints from this [PrivateKey].
- *
- * @throws [CryptoException] if fingerprint cannot be extracted.
- */
-internal fun PrivateKey.jsonSHA256Fingerprints(context: CryptoContext) =
-    context.pgpCrypto.getJsonSHA256Fingerprints(key)
-
-/**
- * Get [PublicSignedKeyList] from this [PrivateKey].
- */
-@Suppress("MaxLineLength")
-fun PrivateKey.signedKeyList(context: CryptoContext): PublicSignedKeyList =
-    """
-    [{"Fingerprint": "${fingerprint(context)}","SHA256Fingerprints": ${jsonSHA256Fingerprints(context)},"Flags": 3,"Primary": 1}]
-    """.trimIndent().let { keyList ->
-        PublicSignedKeyList(
-            data = keyList,
-            signature = signText(context, keyList)
-        )
-    }
 
 /**
  * Get [PublicKey] from [PrivateKey].
@@ -325,7 +302,7 @@ fun PrivateKeyRing.signTextEncrypted(
 
 /**
  * Sign [data] using this [UnlockedPrivateKey]
- * and then encrypt the signature with [encryptionKeys].
+ * and then encrypt the signature with [encryptionKeyRing].
  *
  * @throws [CryptoException] if [data] cannot be signed.
  *

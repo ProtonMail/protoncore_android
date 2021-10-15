@@ -41,7 +41,6 @@ import me.proton.core.key.domain.extension.updatePrivateKeyPassphrase
 import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
-import me.proton.core.key.domain.signedKeyList
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.entity.User
@@ -50,6 +49,7 @@ import me.proton.core.user.domain.extension.hasMigratedKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.user.domain.signKeyList
 
 class UserManagerImpl(
     private val userRepository: UserRepository,
@@ -216,20 +216,21 @@ class UserManagerImpl(
             // If User have at least one migrated UserAddressKey (new key format), let's continue like this.
             val generateOldAddressKeyFormat = !userAddresses.hasMigratedKey()
 
-            // Generate new PrivateAddressKeys.
-            val privateAddressKeys = userAddressesWithoutKeys.map { address ->
+            // Generate new address keys.
+            val newAddressKeys = userAddressesWithoutKeys.map { address ->
                 userAddressKeySecretProvider.generateUserAddressKey(
                     generateOldFormat = generateOldAddressKeyFormat,
                     userAddress = address,
                     userPrivateKey = userPrivateKey,
                     isPrimary = true
                 ).let { key ->
+                    val userAddressWithKeys = address.copy(keys = address.keys.plus(key))
                     PrivateAddressKey(
                         addressId = address.addressId.id,
                         privateKey = key.privateKey,
                         token = key.token,
                         signature = key.signature,
-                        signedKeyList = key.privateKey.signedKeyList(cryptoContext)
+                        signedKeyList = userAddressWithKeys.signKeyList(cryptoContext)
                     )
                 }
             }
@@ -239,7 +240,7 @@ class UserManagerImpl(
                 sessionUserId = sessionUserId,
                 primaryKey = privateKey,
                 primaryKeySalt = primaryKeySalt,
-                addressKeys = privateAddressKeys,
+                addressKeys = newAddressKeys,
                 auth = auth
             )
 

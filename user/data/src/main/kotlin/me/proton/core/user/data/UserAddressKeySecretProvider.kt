@@ -34,6 +34,7 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
+import me.proton.core.user.domain.entity.UserAddressKeyFlags
 import me.proton.core.user.domain.entity.emailSplit
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -116,7 +117,7 @@ class UserAddressKeySecretProvider(
             return UserAddressKey(
                 addressId = userAddress.addressId,
                 version = 0,
-                flags = 0,
+                flags = 3,
                 token = secret.token,
                 signature = secret.signature,
                 active = true,

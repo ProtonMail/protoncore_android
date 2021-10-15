@@ -39,6 +39,22 @@ class PrivateKeyRepositoryImpl(
     private val provider: ApiProvider
 ) : PrivateKeyRepository {
 
+    private fun PrivateAddressKey.creationRequest(): CreateAddressKeyRequest {
+        val signedKeyList = checkNotNull(signedKeyList) { "Signed key list for key creation is null"}
+        return CreateAddressKeyRequest(
+            addressId = addressId,
+            privateKey = privateKey.key,
+            primary = privateKey.isPrimary.toInt(),
+            token = token,
+            signature = signature,
+            signedKeyList = SignedKeyListRequest(
+                signedKeyList.data,
+                signedKeyList.signature
+            )
+        )
+    }
+
+
     override suspend fun setupInitialKeys(
         sessionUserId: SessionUserId,
         primaryKey: Armored,
@@ -52,19 +68,7 @@ class PrivateKeyRepositoryImpl(
                     primaryKey = primaryKey,
                     keySalt = primaryKeySalt,
                     auth = AuthRequest.from(auth),
-                    addressKeys = addressKeys.map { key ->
-                        CreateAddressKeyRequest(
-                            addressId = key.addressId,
-                            privateKey = key.privateKey.key,
-                            primary = key.privateKey.isPrimary.toInt(),
-                            token = key.token,
-                            signature = key.signature,
-                            signedKeyList = SignedKeyListRequest(
-                                key.signedKeyList.data,
-                                key.signedKeyList.signature
-                            )
-                        )
-                    }
+                    addressKeys = addressKeys.map { key -> key.creationRequest() }
                 )
             )
         }.throwIfError()
@@ -75,21 +79,12 @@ class PrivateKeyRepositoryImpl(
         key: PrivateAddressKey
     ) {
         return provider.get<KeyApi>(sessionUserId).invoke {
-            val request = CreateAddressKeyRequest(
-                addressId = key.addressId,
-                privateKey = key.privateKey.key,
-                primary = key.privateKey.isPrimary.toInt(),
-                token = key.token,
-                signature = key.signature,
-                signedKeyList = SignedKeyListRequest(
-                    key.signedKeyList.data,
-                    key.signedKeyList.signature
-                )
-            )
-            if (key.token == null || key.signature == null)
+            val request = key.creationRequest()
+            if (key.token == null || key.signature == null) {
                 createAddressKeyOld(request)
-            else
+            } else {
                 createAddressKey(request)
+            }
         }.throwIfError()
     }
 

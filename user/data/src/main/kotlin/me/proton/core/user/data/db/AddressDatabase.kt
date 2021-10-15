@@ -56,5 +56,22 @@ interface AddressDatabase : Database, AddressKeyDatabase {
                 database.addTableColumn(table = "AddressEntity", column = "signature", type = "TEXT")
             }
         }
+        /**
+         * - Added AddressEntity.signedKeyList.
+         */
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "AddressEntity",
+                    column = "signedKeyList_data",
+                    type = "TEXT"
+                )
+                database.addTableColumn(
+                    table = "AddressEntity",
+                    column = "signedKeyList_signature",
+                    type = "TEXT"
+                )
+            }
+        }
     }
 }

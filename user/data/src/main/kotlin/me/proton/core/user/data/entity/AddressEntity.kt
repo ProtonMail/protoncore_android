@@ -18,10 +18,13 @@
 
 package me.proton.core.user.data.entity
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.data.entity.SignedKeyListEntity
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.user.domain.entity.AddressId
 
 @Entity(
@@ -50,5 +53,7 @@ data class AddressEntity(
     val canReceive: Boolean,
     val enabled: Boolean,
     val type: Int?,
-    val order: Int
+    val order: Int,
+    @Embedded(prefix = "signedKeyList_")
+    val signedKeyList: SignedKeyListEntity?
 )

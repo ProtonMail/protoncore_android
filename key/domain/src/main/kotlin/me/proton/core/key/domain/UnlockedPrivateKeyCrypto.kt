@@ -21,8 +21,6 @@ package me.proton.core.key.domain
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.pgp.KeyPacket

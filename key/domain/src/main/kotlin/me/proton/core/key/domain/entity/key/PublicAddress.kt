@@ -23,7 +23,7 @@ data class PublicAddress(
     val recipientType: Int,
     val mimeType: String?,
     val keys: List<PublicAddressKey>,
-    // TODO: val signedKeyList: PublicSignedKeyList
+    val signedKeyList: PublicSignedKeyList?
 ) {
     val primaryKey by lazy { keys.first { it.publicKey.isPrimary } }
 

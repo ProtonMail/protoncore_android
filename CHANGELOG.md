@@ -1,3 +1,14 @@
+## User [1.15.6], Key [1.15.6], Account-Manager [1.15.6]
+
+15 Oct, 2021
+
+### Changes
+- `AddressEntity` and `PublicAddressEntity` now store the signed key list of the address.
+- `PublicAddressDatabase` migration 1 and `AddressDatabase` migration 2 to reflect the model changes.
+- Updated db schema of `coreexample` to version 10 to reflect the model changes.
+- Updated db schema of `account-manager` to version 10 to reflect the model changes.
+- Removed `PrivateKey.signedKeyList()` to replace it with `UserAddress.signKeyList()`
+
 ## Plan and Payments [1.16.0]
 
 15 Oct, 2021
