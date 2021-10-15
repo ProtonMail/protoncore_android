@@ -18,15 +18,24 @@
 
 package me.proton.core.presentation.utils
 
+import java.lang.Long.numberOfLeadingZeros
 import java.text.NumberFormat
 import java.util.Locale
 
 typealias Price = Double
 const val PRICE_ZERO = 0.0
+const val BYTE_DIVIDER = 1024
 
-fun Price.formatPriceDefaultLocale(currency: String, fractionDigits: Int = 2): String {
+fun Price.formatCentsPriceDefaultLocale(currency: String, fractionDigits: Int = 2): String {
     val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
     numberFormat.maximumFractionDigits = fractionDigits
     numberFormat.currency = java.util.Currency.getInstance(currency)
-    return numberFormat.format(this)
+    return numberFormat.format(this / 100)
 }
+
+fun Long.formatByteToHumanReadable(): String {
+    if (this < BYTE_DIVIDER) return "$this B"
+    val z = (63 - numberOfLeadingZeros(this)) / 10
+    return String.format("%.0f %sB", toDouble() / (1L shl z * 10), " KMGTPE"[z])
+}
+

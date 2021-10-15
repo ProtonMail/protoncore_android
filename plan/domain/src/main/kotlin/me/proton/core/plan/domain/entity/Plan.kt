@@ -28,6 +28,7 @@ data class Plan(
     val amount: Int,
     val maxDomains: Int,
     val maxAddresses: Int,
+    val maxCalendars: Int,
     val maxSpace: Long,
     val maxMembers: Int,
     val maxVPN: Int,

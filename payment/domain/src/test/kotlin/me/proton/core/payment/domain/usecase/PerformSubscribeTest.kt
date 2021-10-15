@@ -43,7 +43,7 @@ class PerformSubscribeTest {
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testPlanId = "test-plan-id"
+    private val testPlanName = "test-plan-name"
     private val testPaymentToken = "test-payment-token"
     private val testSubscriptionId = "test-subscription-id"
     private val testSubscription = Subscription(
@@ -85,7 +85,7 @@ class PerformSubscribeTest {
                 amount = 1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
-                planIds = listOf(testPlanId),
+                planNames = listOf(testPlanName),
                 codes = null,
                 paymentToken = null
             )
@@ -105,7 +105,7 @@ class PerformSubscribeTest {
                 amount = -1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
-                planIds = listOf(testPlanId),
+                planNames = listOf(testPlanName),
                 codes = null,
                 paymentToken = null
             )
@@ -120,7 +120,7 @@ class PerformSubscribeTest {
                 amount = 1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
-                planIds = listOf(),
+                planNames = listOf(),
                 codes = null,
                 paymentToken = null
             )
@@ -134,7 +134,7 @@ class PerformSubscribeTest {
             amount = 1,
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
-            planIds = listOf(testPlanId),
+            planNames = listOf(testPlanName),
             codes = null,
             paymentToken = testPaymentToken
         )
@@ -145,7 +145,7 @@ class PerformSubscribeTest {
                 currency = Currency.CHF,
                 payment = PaymentBody.TokenPaymentBody(testPaymentToken),
                 codes = null,
-                planIds = listOf(testPlanId).map { it to 1 }.toMap(),
+                plans = listOf(testPlanName).map { it to 1 }.toMap(),
                 cycle = SubscriptionCycle.YEARLY
             )
         }
@@ -159,7 +159,7 @@ class PerformSubscribeTest {
             amount = 0,
             currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
-            planIds = listOf(testPlanId),
+            planNames = listOf(testPlanName),
             codes = null,
             paymentToken = null
         )
@@ -170,7 +170,7 @@ class PerformSubscribeTest {
                 currency = Currency.CHF,
                 payment = null,
                 codes = null,
-                planIds = listOf(testPlanId).map { it to 1 }.toMap(),
+                plans = listOf(testPlanName).map { it to 1 }.toMap(),
                 cycle = SubscriptionCycle.YEARLY
             )
         }
@@ -197,7 +197,7 @@ class PerformSubscribeTest {
                 amount = 1,
                 currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
-                planIds = listOf(testPlanId),
+                planNames = listOf(testPlanName),
                 codes = null,
                 paymentToken = testPaymentToken
             )

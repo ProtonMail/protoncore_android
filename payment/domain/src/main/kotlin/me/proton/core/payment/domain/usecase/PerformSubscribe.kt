@@ -19,7 +19,7 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentBody
 import me.proton.core.payment.domain.entity.Subscription
@@ -44,22 +44,22 @@ class PerformSubscribe @Inject constructor(
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
-        planIds: List<String>,
+        planNames: List<String>,
         codes: List<String>? = null,
         paymentToken: String? = null
     ): Subscription {
-
         require(amount >= 0)
-        require(planIds.isNotEmpty())
-        require(paymentToken != null || amount <= 0) { "Payment Token must be supplied when the amount is bigger than zero. Otherwise it should be null." }
-
+        require(planNames.isNotEmpty())
+        require(paymentToken != null || amount <= 0) {
+            "Payment Token must be supplied when the amount is bigger than zero. Otherwise it should be null."
+        }
         return paymentsRepository.createOrUpdateSubscription(
             sessionUserId = userId,
             amount = amount,
             currency = currency,
             payment = if (amount == 0L) null else PaymentBody.TokenPaymentBody(paymentToken!!),
             codes = codes,
-            planIds = planIds.map { it to 1 }.toMap(),
+            plans = planNames.map { it to MAX_PLAN_QUANTITY }.toMap(),
             cycle = cycle
         )
     }

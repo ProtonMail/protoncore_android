@@ -34,9 +34,10 @@ object PaymentsModule {
 
     @Provides
     @Singleton
-    fun providePaymentsRepository(apiProvider: ApiProvider): PaymentsRepository =
-        PaymentsRepositoryImpl(apiProvider)
-
+    fun providePaymentsRepository(
+        apiProvider: ApiProvider
+    ): PaymentsRepository =
+        PaymentsRepositoryImpl(provider = apiProvider)
 
     @Provides
     @Singleton

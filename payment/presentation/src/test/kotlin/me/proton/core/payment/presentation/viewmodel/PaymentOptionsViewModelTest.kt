@@ -90,7 +90,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         plans = listOf(
             Plan(
                 "test-plan-id", 1, 12, "test-plan", "test-plan", "EUR",
-                2, 1, 1, 1, 1, 1, 1,
+                2, 1, 1, 1, 1, 1, 1, 1,
                 1, 1, 1
             )
         )

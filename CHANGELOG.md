@@ -1,3 +1,13 @@
+## Plan and Payments [1.16.0]
+
+15 Oct, 2021
+
+### Changes
+
+- Plan and Payments now rely on the newest V4 API, including changes in the API response, requests and entities.
+
+### Breaking changes: Instead on plan id, now clients should rely and provide plan names for the paid plans they support.
+
 ## Auth [1.15.5]
 
 15 Oct, 2021

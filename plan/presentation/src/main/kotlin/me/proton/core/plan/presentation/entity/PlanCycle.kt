@@ -18,24 +18,31 @@
 
 package me.proton.core.plan.presentation.entity
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.presentation.utils.PRICE_ZERO
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.presentation.utils.Price
+import me.proton.core.util.kotlin.exhaustive
 
-@Parcelize
-data class SelectedPlan(
-    val planName: String,
-    val planDisplayName: String,
-    val free: Boolean,
-    val cycle: PlanCycle,
-    val currency: PlanCurrency,
-    val amount: Price
-) : Parcelable {
+enum class PlanCycle(val value: Int) {
+    MONTHLY(1), YEARLY(12), TWO_YEARS(24);
+
+    fun getPrice(pricing: PlanPricing): Price? {
+        return when (this) {
+            MONTHLY -> pricing.monthly
+            YEARLY -> pricing.yearly
+            TWO_YEARS -> pricing.twoYearly
+        }?.toDouble().exhaustive
+    }
+
+    fun toSubscriptionCycle(): SubscriptionCycle {
+        return when(this) {
+            MONTHLY -> SubscriptionCycle.MONTHLY
+            YEARLY -> SubscriptionCycle.YEARLY
+            TWO_YEARS -> SubscriptionCycle.TWO_YEARS
+        }.exhaustive
+    }
+
     companion object {
-        const val FREE_PLAN_ID = "free"
-        fun free(freePlanName: String) =
-            SelectedPlan(FREE_PLAN_ID, freePlanName, true, PlanCycle.YEARLY, PlanCurrency.EUR, PRICE_ZERO)
+        val map = values().associateBy { it.value }
     }
 }
+

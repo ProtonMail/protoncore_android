@@ -43,6 +43,8 @@ internal data class PlanResponse(
     val maxDomains: Int,
     @SerialName("MaxAddresses")
     val maxAddresses: Int,
+    @SerialName("MaxCalendars")
+    val maxCalendars: Int,
     @SerialName("MaxSpace")
     val maxSpace: Long,
     @SerialName("MaxMembers")
@@ -61,9 +63,23 @@ internal data class PlanResponse(
     val pricing: Pricing? = null
 ) {
     fun toPlan(): Plan = Plan(
-        id = id, type = type, cycle = cycle, name = name, title = title, currency = currency, amount = amount,
-        maxDomains = maxDomains, maxAddresses = maxAddresses, maxSpace = maxSpace, maxMembers = maxMembers,
-        maxVPN = maxVPN, services = services, features = features, quantity = quantity, maxTier = maxTier,
+        id = id,
+        type = type,
+        cycle = cycle,
+        name = name,
+        title = title,
+        currency = currency,
+        amount = amount,
+        maxDomains = maxDomains,
+        maxAddresses = maxAddresses,
+        maxCalendars = maxCalendars,
+        maxSpace = maxSpace,
+        maxMembers = maxMembers,
+        maxVPN = maxVPN,
+        services = services,
+        features = features,
+        quantity = quantity,
+        maxTier = maxTier,
         pricing = pricing?.toPlanPricing()
     )
 }

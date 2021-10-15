@@ -18,6 +18,17 @@
 
 package me.proton.core.plan.presentation.entity
 
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.util.kotlin.exhaustive
+
 enum class PlanCurrency(val sign: String) {
-    EUR("€"), USD("\$"), CHF("CHF")
+    EUR("€"), USD("\$"), CHF("CHF");
+
+    fun toSubscriptionCurrency(): Currency {
+        return when (this) {
+            EUR -> Currency.EUR
+            USD -> Currency.USD
+            CHF -> Currency.CHF
+        }.exhaustive
+    }
 }

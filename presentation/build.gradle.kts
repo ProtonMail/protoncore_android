@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 15, 7)
+libVersion = Version(1, 15, 8)
 
 android(useDataBinding = true)
 

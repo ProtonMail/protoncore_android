@@ -21,12 +21,13 @@ package me.proton.core.plan.data.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.plan.data.api.response.PlansResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 internal interface PlansApi : BaseRetrofitApi {
 
     /**
      * Returns from the API all plans available for the user in the moment.
      */
-    @GET("payments/plans")
+    @GET("payments/v4/plans")
     suspend fun getPlans(): PlansResponse
 }

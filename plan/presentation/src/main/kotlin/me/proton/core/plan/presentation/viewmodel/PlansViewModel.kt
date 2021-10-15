@@ -29,15 +29,15 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
-import me.proton.core.plan.domain.SupportedPaidPlanIds
+import me.proton.core.plan.domain.SupportedPaidPlans
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.usecase.GetPlans
+import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
 import me.proton.core.plan.presentation.entity.PlanPricing
 import me.proton.core.plan.presentation.entity.PlanSubscription
@@ -52,9 +52,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlansViewModel @Inject constructor(
-    private val getPlansUseCase: GetPlans,
+    private val getPlans: GetPlans,
     private val getCurrentSubscription: GetCurrentSubscription,
-    @SupportedPaidPlanIds val supportedPaidPlanIds: List<String>,
+    @SupportedPaidPlans val supportedPaidPlans: List<String>,
     private val paymentsOrchestrator: PaymentsOrchestrator
 ) : ProtonViewModel() {
 
@@ -92,13 +92,20 @@ class PlansViewModel @Inject constructor(
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = currentSubscription.periodEnd * 1000
             PlanDetailsListItem.PaidPlanDetailsListItem(
-                id = it.id,
                 name = it.name,
+                displayName = it.title,
                 price = PlanPricing.fromPlan(it),
                 selectable = false,
                 current = true,
                 upgrade = upgrade,
-                renewalDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(calendar.time)
+                renewalDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(calendar.time),
+                storage = it.maxSpace,
+                members = it.maxMembers,
+                addresses = it.maxAddresses,
+                calendars = it.maxCalendars,
+                domains = it.maxDomains,
+                connections = it.maxVPN,
+                currency = PlanCurrency.valueOf(it.currency)
             )
         }?.toMutableList() ?: mutableListOf()
 
@@ -108,8 +115,8 @@ class PlansViewModel @Inject constructor(
         } else subscribedPlans
 
         if (subscribedPlans.isEmpty()) {
-            plans.addAll(getPlansUseCase(supportedPaidPlanIds = supportedPaidPlanIds + subscribedPlans.map {
-                it.id
+            plans.addAll(getPlans(supportedPaidPlans = supportedPaidPlans + subscribedPlans.map {
+                it.name
             }, userId = userId)
                 .map { it.toPaidPlanDetailsItem(subscribedPlans, upgrade) }
             )
@@ -117,7 +124,7 @@ class PlansViewModel @Inject constructor(
 
         val planSubscription = PlanSubscription(currentSubscription,
             subscribedPlans.isEmpty() || subscribedPlans.find {
-                supportedPaidPlanIds.contains(it.id)
+                supportedPaidPlans.contains(it.name)
             } != null)
         emit(State.Success.Plans(plans = plans, subscription = planSubscription))
     }.catch { error ->
@@ -130,7 +137,7 @@ class PlansViewModel @Inject constructor(
         paymentsOrchestrator.register(context)
     }
 
-    fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan, cycle: SubscriptionCycle) {
+    fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan) {
         with(paymentsOrchestrator) {
             onPaymentResult { result ->
                 result.let { billingResult ->
@@ -145,9 +152,10 @@ class PlansViewModel @Inject constructor(
             startBillingWorkFlow(
                 userId = userId,
                 selectedPlan = PlanShortDetails(
-                    id = selectedPlan.planId,
                     name = selectedPlan.planName,
-                    subscriptionCycle = cycle
+                    displayName = selectedPlan.planDisplayName,
+                    subscriptionCycle = selectedPlan.cycle.toSubscriptionCycle(),
+                    currency = selectedPlan.currency.toSubscriptionCurrency()
                 ),
                 codes = null
             )
@@ -156,7 +164,8 @@ class PlansViewModel @Inject constructor(
 
     private fun createFreePlanAsCurrent(current: Boolean, selectable: Boolean): PlanDetailsListItem {
         return PlanDetailsListItem.FreePlanDetailsListItem(
-            id = FREE_PLAN_ID,
+            name = FREE_PLAN_ID,
+            displayName = FREE_PLAN_ID,
             current = current,
             selectable = selectable
         )
@@ -165,13 +174,20 @@ class PlansViewModel @Inject constructor(
 
 fun Plan.toPaidPlanDetailsItem(subscribedPlans: MutableList<PlanDetailsListItem>, upgrade: Boolean) =
     PlanDetailsListItem.PaidPlanDetailsListItem(
-        id = id,
         name = name,
+        displayName = title,
         price = PlanPricing.fromPlan(this),
-        selectable = subscribedPlans.isNullOrEmpty(),
+        selectable = if (upgrade) true else subscribedPlans.isNullOrEmpty(),
         current = subscribedPlans.find { currentPlan ->
-            currentPlan.id == id
+            currentPlan.name == id
         } != null,
         upgrade = upgrade,
-        renewalDate = null
+        renewalDate = null,
+        storage = maxSpace,
+        members = maxMembers,
+        addresses = maxAddresses,
+        calendars = maxCalendars,
+        domains = maxDomains,
+        connections = maxVPN,
+        currency = PlanCurrency.valueOf(currency)
     )

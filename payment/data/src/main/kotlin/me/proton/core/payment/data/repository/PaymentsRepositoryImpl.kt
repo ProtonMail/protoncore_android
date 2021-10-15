@@ -39,6 +39,7 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.repository.PlanQuantity
 
 class PaymentsRepositoryImpl(
     private val provider: ApiProvider
@@ -120,12 +121,14 @@ class PaymentsRepositoryImpl(
     override suspend fun validateSubscription(
         sessionUserId: SessionUserId?,
         codes: List<String>?,
-        planIds: List<String>,
+        plans: PlanQuantity,
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus =
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            validateSubscription(CheckSubscription(codes, planIds, currency.name, cycle.value)).toSubscriptionStatus()
+            validateSubscription(
+                CheckSubscription(codes, plans, currency.name, cycle.value)
+            ).toSubscriptionStatus()
         }.valueOrThrow
 
     override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription? =
@@ -139,7 +142,7 @@ class PaymentsRepositoryImpl(
         currency: Currency,
         payment: PaymentBody?,
         codes: List<String>?,
-        planIds: Map<String, Int>,
+        plans: PlanQuantity,
         cycle: SubscriptionCycle
     ): Subscription =
         provider.get<PaymentsApi>(sessionUserId).invoke {
@@ -152,7 +155,7 @@ class PaymentsRepositoryImpl(
                     currency.name,
                     paymentBodyEntity,
                     codes,
-                    planIds,
+                    plans,
                     cycle.value
                 )
             ).subscription.toSubscription()

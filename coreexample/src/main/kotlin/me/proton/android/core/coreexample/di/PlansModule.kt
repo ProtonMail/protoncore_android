@@ -24,7 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.plan.data.repository.PlansRepositoryImpl
-import me.proton.core.plan.domain.SupportedPaidPlanIds
+import me.proton.core.plan.domain.SupportedPaidPlans
 import me.proton.core.plan.domain.repository.PlansRepository
 import javax.inject.Singleton
 
@@ -33,12 +33,12 @@ import javax.inject.Singleton
 object PlansModule {
 
     @Provides
-    @SupportedPaidPlanIds
-    fun provideClientSupportedPaidPlanIds(): List<String> =
-        listOf("ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw==")
+    @SupportedPaidPlans
+    fun provideClientSupportedPaidPlanNames(): List<String> =
+        listOf("mail2021", "drive2021")
 
     @Provides
     @Singleton
     fun providePlansRepository(apiProvider: ApiProvider): PlansRepository =
-        PlansRepositoryImpl(apiProvider)
+        PlansRepositoryImpl(provider = apiProvider)
 }

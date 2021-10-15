@@ -46,17 +46,18 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
 
     // region test data
     private val testUserId = UserId("test-user-id")
-    private val testDefaultSupportedPlanIds = listOf("plan-id-1", "plan-id-2")
+    private val testDefaultSupportedPlans = listOf("plan-name-1", "plan-name-2")
     private val testPlan = Plan(
-        id = "plan-id-1",
+        id = "plan-name-1",
         type = 1,
         cycle = 1,
-        name = "Plan 1",
+        name = "plan-name-1",
         title = "Plan Title 1",
         currency = "CHF",
         amount = 10,
         maxDomains = 1,
         maxAddresses = 1,
+        maxCalendars = 1,
         maxSpace = 1,
         maxMembers = 1,
         maxVPN = 1,
@@ -88,14 +89,14 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         viewModel =
-            PlansViewModel(getPlansUseCase, getCurrentSubscription, testDefaultSupportedPlanIds, paymentOrchestrator)
+            PlansViewModel(getPlansUseCase, getCurrentSubscription, testDefaultSupportedPlans, paymentOrchestrator)
     }
 
     @Test
     fun `get plans for signup success handled correctly`() = coroutinesTest {
-        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlanIds, any()) } returns listOf(
+        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans, any()) } returns listOf(
             testPlan,
-            testPlan.copy(id = "plan-id-2")
+            testPlan.copy(id = "plan-name-2", name = "plan-name-2")
         )
         viewModel.availablePlansState.test {
             // WHEN
@@ -109,15 +110,15 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
             val planOne = plansStatus.plans[0]
             val planTwo = plansStatus.plans[1]
             val planThree = plansStatus.plans[2]
-            assertEquals("free", planOne.id)
-            assertEquals("plan-id-1", planTwo.id)
-            assertEquals("plan-id-2", planThree.id)
+            assertEquals("free", planOne.name)
+            assertEquals("plan-name-1", planTwo.name)
+            assertEquals("plan-name-2", planThree.name)
         }
     }
 
     @Test
     fun `get plans for upgrade success handled correctly`() = coroutinesTest {
-        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlanIds, testUserId) } returns listOf(
+        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans, testUserId) } returns listOf(
             testPlan
         )
         coEvery { getCurrentSubscription.invoke(testUserId) } returns testSubscription
@@ -131,13 +132,13 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
             assertEquals(1, plansStatus.plans.size)
             val planOne = plansStatus.plans[0]
-            assertEquals("plan-id-1", planOne.id)
+            assertEquals("plan-name-1", planOne.name)
         }
     }
 
     @Test
     fun `get plans for upgrade no active subscription handled correctly`() = coroutinesTest {
-        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlanIds, testUserId) } returns listOf(
+        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans, testUserId) } returns listOf(
             testPlan
         )
 
@@ -153,8 +154,8 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
             assertEquals(2, plansStatus.plans.size)
             val planFree = plansStatus.plans[0]
             val planPaid = plansStatus.plans[1]
-            assertEquals("free", planFree.id)
-            assertEquals("plan-id-1", planPaid.id)
+            assertEquals("free", planFree.name)
+            assertEquals("plan-name-1", planPaid.name)
         }
     }
 }

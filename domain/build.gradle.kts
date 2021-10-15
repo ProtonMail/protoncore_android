@@ -16,13 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     `java-library`
     kotlin("jvm")
 }
 
-libVersion = Version(1, 15, 0)
+libVersion = Version(1, 16, 0)
 
 dependencies {
 
@@ -31,7 +32,8 @@ dependencies {
 
         // Kotlin
         `kotlin-jdk7`,
-        `coroutines-core`
+        `coroutines-core`,
+        `javax-inject`
     )
 
     testImplementation(project(Module.kotlinTest))

@@ -22,35 +22,45 @@ import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import kotlinx.android.parcel.Parcelize
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 
 sealed class PlanDetailsListItem(
-    open val id: String,
+    open val name: String,
+    open val displayName: String,
     open val current: Boolean
 ) : Parcelable {
 
     @Parcelize
     data class FreePlanDetailsListItem(
-        override val id: String,
+        override val name: String,
+        override val displayName: String,
         override val current: Boolean,
         val selectable: Boolean = true
-    ) : PlanDetailsListItem(id, current)
+    ) : PlanDetailsListItem(name, displayName, current)
 
     @Parcelize
     data class PaidPlanDetailsListItem(
-        override val id: String,
-        val name: String,
-        val price: PlanPricing?,
+        override val name: String,
+        override val displayName: String,
         override val current: Boolean,
+        val price: PlanPricing?,
         val selectable: Boolean = true,
         val upgrade: Boolean,
-        val renewalDate: String?
-    ) : PlanDetailsListItem(id, current)
+        val renewalDate: String?,
+        val storage: Long,
+        val members: Int,
+        val addresses: Int,
+        val calendars: Int,
+        val domains: Int,
+        val connections: Int,
+        val currency: PlanCurrency
+    ) : PlanDetailsListItem(name, displayName, current)
 
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<PlanDetailsListItem>() {
             override fun areItemsTheSame(oldItem: PlanDetailsListItem, newItem: PlanDetailsListItem) =
-                oldItem.id == newItem.id
+                oldItem.name == newItem.name
 
             override fun areContentsTheSame(oldItem: PlanDetailsListItem, newItem: PlanDetailsListItem) =
                 oldItem == newItem
@@ -70,7 +80,12 @@ data class PlanPricing(
             plan.pricing?.let {
                 PlanPricing(it.monthly.toDouble(), it.yearly.toDouble(), it.twoYearly?.toDouble())
             } ?: run {
-                null
+                val cycle = PlanCycle.map[plan.cycle]
+                val monthly = if (cycle == PlanCycle.MONTHLY) plan.amount else PRICE_ZERO
+                val yearly = if (cycle == PlanCycle.YEARLY) plan.amount else PRICE_ZERO
+                val twoYears = if (cycle == PlanCycle.TWO_YEARS) plan.amount else PRICE_ZERO
+                PlanPricing(monthly.toDouble(), yearly.toDouble(), twoYears.toDouble())
             }
     }
 }
+

@@ -21,8 +21,8 @@ package me.proton.core.payment.data.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.payment.data.api.request.CheckSubscription
 import me.proton.core.payment.data.api.request.CreatePaymentToken
-import me.proton.core.payment.data.api.response.CheckSubscriptionResponse
 import me.proton.core.payment.data.api.request.CreateSubscription
+import me.proton.core.payment.data.api.response.CheckSubscriptionResponse
 import me.proton.core.payment.data.api.response.CreatePaymentTokenResponse
 import me.proton.core.payment.data.api.response.PaymentMethodsResponse
 import me.proton.core.payment.data.api.response.PaymentTokenStatusResponse
@@ -39,7 +39,7 @@ internal interface PaymentsApi : BaseRetrofitApi {
      * account creation as well as a regular Authenticated for plan upgrade for logged in users.
      * Unauthorized.
      */
-    @POST("payments/tokens")
+    @POST("payments/v4/tokens")
     suspend fun createPaymentToken(@Body body: CreatePaymentToken): CreatePaymentTokenResponse
 
     /**
@@ -47,28 +47,28 @@ internal interface PaymentsApi : BaseRetrofitApi {
      * Check payment token status (usually with polling).
      * Unauthorized.
      */
-    @GET("payments/tokens/{token}")
+    @GET("payments/v4/tokens/{token}")
     suspend fun getPaymentTokenStatus(@Path("token") token: String): PaymentTokenStatusResponse
 
     /**
      * Returns existing already saved payment methods.
      * Authorized.
      */
-    @GET("payments/methods")
+    @GET("payments/v4/methods")
     suspend fun getPaymentMethods(): PaymentMethodsResponse
 
     /**
      * Returns current active subscription.
      * Authorized.
      */
-    @GET("payments/subscription")
+    @GET("payments/v4/subscription")
     suspend fun getCurrentSubscription(): SubscriptionResponse
 
     /**
      * Creates new or updates the current active subscription.
      * Authorized.
      */
-    @POST("payments/subscription")
+    @POST("payments/v4/subscription")
     suspend fun createUpdateSubscription(@Body body: CreateSubscription): SubscriptionResponse
 
     /**
@@ -77,6 +77,6 @@ internal interface PaymentsApi : BaseRetrofitApi {
      * Should be called upon a user selected any plan, duration and entered a code.
      * Unauthorized.
      */
-    @POST("payments/subscription/check")
+    @POST("payments/v4/subscription/check")
     suspend fun validateSubscription(@Body body: CheckSubscription): CheckSubscriptionResponse
 }

@@ -25,8 +25,8 @@ import me.proton.core.payment.presentation.entity.BillingResult
 
 @Parcelize
 data class SubscriptionDetails(
-    val planId: String,
     val planName: String,
+    val planDisplayName: String,
     val cycle: SubscriptionCycle,
     val billingResult: BillingResult?
 ): Parcelable

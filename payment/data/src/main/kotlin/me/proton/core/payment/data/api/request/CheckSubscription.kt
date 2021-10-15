@@ -33,8 +33,8 @@ import kotlinx.serialization.Serializable
 internal data class CheckSubscription(
     @SerialName("Codes")
     val codes: List<String>? = null,
-    @SerialName("PlanIDs")
-    val planIds: List<String>? = null,
+    @SerialName("Plans")
+    val plans: Map<String, Int>? = null,
     @SerialName("Currency")
     val currency: String? = null,
     @SerialName("Cycle")
