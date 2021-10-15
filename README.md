@@ -144,31 +144,31 @@ Account Data: **1.15.2** - _released on: Sep 23, 2021_
 
 Account Manager: **1.15.6** - _released on: Oct 15, 2021_
 
-Account Manager Domain: **1.15.1** - _released on: Oct 14, 2021_
+Account Manager Domain: **1.15.6** - _released on: Oct 15, 2021_
 
-Account Manager Presentation: **1.15.1** - _released on: Oct 14, 2021_
+Account Manager Presentation: **1.15.6** - _released on: Oct 15, 2021_
 
-Account Manager Data: **1.15.1** - _released on: Oct 14, 2021_
+Account Manager Data: **1.15.6** - _released on: Oct 15, 2021_
 
-Account Manager Data Db: **1.15.1** - _released on: Oct 14, 2021_
+Account Manager Data Db: **1.15.6** - _released on: Oct 15, 2021_
 
-Account Manager Dagger: **1.15.1** - _released on: Oct 14, 2021_
+Account Manager Dagger: **1.15.6** - _released on: Oct 15, 2021_
 
 ### Key
 
-Key: **1.15.5** - _released on: Oct 11, 2021_
+Key: **1.15.6** - _released on: Oct 15, 2021_
 
-Key Domain: **1.15.5** - _released on: Oct 11, 2021_
+Key Domain: **1.15.6** - _released on: Oct 15, 2021_
 
-Key Data: **1.15.5** - _released on: Oct 11, 2021_
+Key Data: **1.15.6** - _released on: Oct 15, 2021_
 
 ### User
 
-User: **1.15.2** - _released on: Sep 23, 2021_
+User: **1.15.6** - _released on: Oct 15, 2021_
 
-User Domain: **1.15.2** - _released on: Sep 23, 2021_
+User Domain: **1.15.6** - _released on: Oct 15, 2021_
 
-User Data: **1.15.2** - _released on: Sep 23, 2021_
+User Data: **1.15.6** - _released on: Oct 15, 2021_
 
 ### Contact
 
