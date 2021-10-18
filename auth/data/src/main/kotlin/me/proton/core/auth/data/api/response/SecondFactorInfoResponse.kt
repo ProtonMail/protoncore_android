@@ -30,10 +30,13 @@ data class SecondFactorInfoResponse(
     @SerialName("Enabled")
     val enabled: Int
 ) {
-    fun toSecondFactor() = SecondFactor(
-        enabled = enabled.toBoolean(),
-        supportedMethods = mapSupportedMethods(enabled),
-    )
+    fun toSecondFactor(): SecondFactor {
+        return if (enabled.toBoolean()) {
+            SecondFactor.Enabled(mapSupportedMethods(enabled))
+        } else {
+            SecondFactor.Disabled
+        }
+    }
 
     private fun mapSupportedMethods(enabled: Int): Set<SecondFactorMethod> {
         return mutableSetOf<SecondFactorMethod>().apply {
