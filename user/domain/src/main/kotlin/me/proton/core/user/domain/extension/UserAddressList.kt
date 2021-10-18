@@ -40,3 +40,13 @@ fun List<UserAddress>.firstInternalOrNull() = filter { it.type != AddressType.Ex
  * @return true if at least one [UserAddress] is migrated into the new key format, false otherwise.
  */
 fun List<UserAddress>.hasMigratedKey() = any { it.keys.any { key -> key.token != null && key.signature != null } }
+
+/**
+ * @return true if at least one internal [UserAddress] exist, and have at least 1 key.
+ */
+fun List<UserAddress>.hasInternalAddressKey() = firstInternalOrNull()?.keys?.isNotEmpty() ?: false
+
+/**
+ * @return true if at least one [AddressType.Original] address exist.
+ */
+fun List<UserAddress>.hasOriginalAddress() = any { it.type == AddressType.Original }

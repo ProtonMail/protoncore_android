@@ -25,12 +25,14 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserKey
+import me.proton.core.user.domain.extension.hasKeys
 import javax.inject.Inject
 
 /**
  * Try to unlock the primary [UserKey] with the given password.
  *
- * On UnlockResult.Success, the passphrase, derived from password, is stored and the User keys ready to be used.
+ * - With keys: on UnlockResult.Success, the passphrase is stored and the User keys ready to be used.
+ * - Without keys: this function always return UnlockResult.Success.
  */
 class UnlockUserPrimaryKey @Inject constructor(
     private val userManager: UserManager,
@@ -42,7 +44,13 @@ class UnlockUserPrimaryKey @Inject constructor(
     suspend operator fun invoke(
         userId: UserId,
         password: EncryptedString
-    ): UserManager.UnlockResult = password.decrypt(keyStoreCrypto).toByteArray().use {
-        userManager.unlockWithPassword(userId, it)
+    ): UserManager.UnlockResult {
+        return if (!userManager.getUser(userId).hasKeys()) {
+            UserManager.UnlockResult.Success
+        } else {
+            password.decrypt(keyStoreCrypto).toByteArray().use {
+                userManager.unlockWithPassword(userId, it)
+            }
+        }
     }
 }

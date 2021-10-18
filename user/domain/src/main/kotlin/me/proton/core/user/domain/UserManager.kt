@@ -95,15 +95,13 @@ interface UserManager {
      *
      * @param userId [UserId] to unlock.
      * @param password [PlainByteArray] to use to unlock.
-     * @param refresh if false, use data from cache/disk, otherwise data are refreshed before proceeding.
      *
      * @see [User.keys]
      * @see [areAllLocked]
      */
     suspend fun unlockWithPassword(
         userId: UserId,
-        password: PlainByteArray,
-        refresh: Boolean = false
+        password: PlainByteArray
     ): UnlockResult
 
     /**
@@ -113,15 +111,13 @@ interface UserManager {
      *
      * @param userId [UserId] to unlock.
      * @param passphrase [EncryptedByteArray] to use to unlock.
-     * @param refresh if false, use data from cache/disk, otherwise data is refreshed before proceeding.
      *
      * @see [User.keys]
      * @see [areAllLocked]
      */
     suspend fun unlockWithPassphrase(
         userId: UserId,
-        passphrase: EncryptedByteArray,
-        refresh: Boolean = false
+        passphrase: EncryptedByteArray
     ): UnlockResult
 
     /**

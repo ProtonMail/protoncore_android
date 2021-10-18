@@ -32,6 +32,13 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.ChangePasswordNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.ChooseUsernameNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.NoSetupNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupInternalAddressNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupPrimaryKeysNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.TwoPassNeeded
+import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.UserCheckError
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
@@ -105,15 +112,13 @@ class SecondFactorViewModel @Inject constructor(
 
         // Check if setup keys is needed and if it can be done directly.
         when (val result = setupAccountCheck.invoke(userId, isTwoPassModeNeeded, requiredAccountType)) {
-            is SetupAccountCheck.Result.UserCheckError -> checkFailed(userId, result.error)
-            is SetupAccountCheck.Result.TwoPassNeeded -> twoPassMode(userId)
-            is SetupAccountCheck.Result.ChangePasswordNeeded -> changePassword(userId)
-            is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, password)
-            is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> {
-                setupPrimaryKeys(userId, password, requiredAccountType)
-            }
-            is SetupAccountCheck.Result.SetupInternalAddressNeeded -> setupInternalAddress(userId, password)
-            is SetupAccountCheck.Result.ChooseUsernameNeeded -> chooseUsername(userId)
+            is UserCheckError -> checkFailed(userId, result.error)
+            is TwoPassNeeded -> twoPassMode(userId)
+            is ChangePasswordNeeded -> changePassword(userId)
+            is ChooseUsernameNeeded -> chooseUsername(userId)
+            is SetupPrimaryKeysNeeded -> setupPrimaryKeys(userId, password, requiredAccountType)
+            is SetupInternalAddressNeeded -> setupInternalAddress(userId, password)
+            is NoSetupNeeded -> unlockUserPrimaryKey(userId, password)
         }.let {
             emit(it)
         }
