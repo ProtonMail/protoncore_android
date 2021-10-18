@@ -23,7 +23,6 @@ import kotlinx.serialization.Serializable
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SecondFactorMethod
 import me.proton.core.util.kotlin.hasFlag
-import me.proton.core.util.kotlin.toBoolean
 
 @Serializable
 data class SecondFactorInfoResponse(
@@ -31,7 +30,7 @@ data class SecondFactorInfoResponse(
     val enabled: Int
 ) {
     fun toSecondFactor(): SecondFactor {
-        return if (enabled.toBoolean()) {
+        return if (enabled != 0) {
             SecondFactor.Enabled(mapSupportedMethods(enabled))
         } else {
             SecondFactor.Disabled
