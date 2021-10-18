@@ -115,7 +115,6 @@ class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_sig
                 is SignupViewModel.State.Error.PlanChooserCancel,
                 is SignupViewModel.State.Error.Message -> showLoading(false)
                 is SignupViewModel.State.Idle,
-                is SignupViewModel.State.HumanVerificationNeeded,
                 is SignupViewModel.State.Processing,
                 is SignupViewModel.State.Success -> Unit
             }.exhaustive

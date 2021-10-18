@@ -112,9 +112,6 @@ internal class SignupViewModel @Inject constructor(
         object Idle : State()
 
         @Parcelize
-        object HumanVerificationNeeded : State()
-
-        @Parcelize
         object Processing : State()
 
         @Parcelize
@@ -140,9 +137,6 @@ internal class SignupViewModel @Inject constructor(
     }
 
     fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context)
-        .onHumanVerificationNeeded {
-            _userCreationState.tryEmit(State.HumanVerificationNeeded)
-        }
         .onHumanVerificationSucceeded {
             _userCreationState.tryEmit(State.Processing)
         }
