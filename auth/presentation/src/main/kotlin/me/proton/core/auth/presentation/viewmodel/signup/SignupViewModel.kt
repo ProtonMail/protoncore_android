@@ -137,9 +137,6 @@ internal class SignupViewModel @Inject constructor(
     }
 
     fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context)
-        .onHumanVerificationSucceeded {
-            _userCreationState.tryEmit(State.Processing)
-        }
         .onHumanVerificationFailed {
             _userCreationState.tryEmit(State.Error.HumanVerification)
         }
