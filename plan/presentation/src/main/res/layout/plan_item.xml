@@ -19,35 +19,37 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/planItemParent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/planNameText"
         style="@style/Proton.Text.Headline"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/gap_large_plus"
         android:maxLines="1"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ProtonMail PLUS" />
 
     <LinearLayout
         android:id="@+id/priceCycleLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:gravity="end"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/planNameText">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/planPriceText"
             style="@style/Proton.Text.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/gap_small"
             android:maxLines="1"
             android:textSize="22sp"
             android:textStyle="normal"
@@ -56,104 +58,91 @@
         <TextView
             android:id="@+id/planCycleText"
             style="@style/Proton.Text.Default.Weak"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/gap_small"
             android:maxLines="1"
             android:text="@string/plan_price_monthly"
             tools:text="/month" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/planPriceDescriptionText"
-        style="@style/Proton.Text.Default.Weak"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/priceCycleLayout"
-        tools:text="Billed as $48 per year" />
-
-    <LinearLayout
-        android:id="@+id/planContents"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_large"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/planPriceDescriptionText" />
-
-    <View
-        android:id="@+id/separator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/double_top_margin"
-        android:background="@color/separator_norm"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/planContents" />
-
-    <TextView
-        android:id="@+id/planRenewalText"
-        style="@style/PlanRenewalText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:maxLines="1"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/separator"
-        tools:text="Your plan will be automatically renewed on " />
-
-    <me.proton.core.presentation.ui.view.ProtonButton
-        android:id="@+id/selectPlan"
-        style="@style/ProtonButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/plans_select_plan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/planRenewalText" />
-
-    <Spinner
-        android:id="@+id/billingCycleSpinner"
-        style="@style/ProtonSpinnerStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_large_plus"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectPlan"
-        tools:listitem="@layout/plan_spinner_item" />
-
-    <TextView
-        android:id="@+id/billingCycleDescriptionText"
+        android:id="@+id/planDescriptionText"
         style="@style/Proton.Text.DefaultSmall.Weak"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/gap_medium"
+        android:maxLines="4"
+        app:layout_constraintEnd_toStartOf="@id/priceCycleLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/planNameText"
+        tools:text="The ultimate privacy pack with access to all premium Proton services." />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/expandablePlanGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_small"
-        android:maxLines="1"
-        android:text="@string/plans_save_20"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/billingCycleSpinner" />
+        app:layout_constraintTop_toBottomOf="@id/planDescriptionText">
 
-    <Spinner
-        android:id="@+id/currencySpinner"
-        style="@style/ProtonSpinnerStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_medium"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/billingCycleDescriptionText" />
+        <LinearLayout
+            android:id="@+id/planContents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_large"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/double_top_margin"
+            android:background="@color/separator_norm"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/planContents" />
+
+        <TextView
+            android:id="@+id/planRenewalText"
+            style="@style/Proton.Text.DefaultSmall.Weak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:maxLines="1"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            tools:text="Your plan will be automatically renewed on " />
+
+        <me.proton.core.presentation.ui.view.ProtonButton
+            android:id="@+id/selectPlan"
+            style="@style/ProtonButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/plans_select_plan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/planRenewalText" />
+
+        <TextView
+            android:id="@+id/planPriceDescriptionText"
+            style="@style/Proton.Text.Default.Weak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_gap"
+            android:gravity="center"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectPlan"
+            tools:text="Billed as $48 per year" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
