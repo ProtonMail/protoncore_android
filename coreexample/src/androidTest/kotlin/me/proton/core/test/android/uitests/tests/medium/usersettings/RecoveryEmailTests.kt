@@ -30,7 +30,7 @@ import me.proton.core.usersettings.R
 import org.junit.Before
 import org.junit.Test
 
-class RecoveryEmailTests: BaseTest() {
+class RecoveryEmailTests : BaseTest() {
 
     private val recoveryEmailRobot = RecoveryEmailRobot()
 

@@ -23,11 +23,12 @@ import me.proton.core.plan.presentation.R
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetContext
 
 @Serializable
-enum class Plan(val value: String) {
-    Free("free"),
-    Professional("pro"),
-    Visionary("visionary"),
-    Plus("plus")
+enum class Plan(var planName: String, var text: String) {
+    Free("free", "Free"),
+    Professional("pro", "Professional"),
+    Visionary("visionary", "Visionary"),
+    Plus("plus", "Plus"),
+    Dev("", "")
 }
 
 fun randomPaidPlan(): Plan = Plan.values().filter { it != Plan.Free }.random()
@@ -43,5 +44,5 @@ enum class BillingCycle(val value: String) {
 enum class Currency(val symbol: String, val code: String) {
     Euro("€", "EUR"),
     USD("$", "USD"),
-    CHF("CHF", "")
+    CHF("CHF", "CHF")
 }

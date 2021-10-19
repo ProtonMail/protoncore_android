@@ -19,6 +19,7 @@
 package me.proton.core.test.android.uitests.tests.medium.payments
 
 import me.proton.core.payment.presentation.R
+import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.plugins.data.User
@@ -43,16 +44,16 @@ class NewCreditCardTests : BaseTest() {
             .signIn()
             .loginUser<CoreexampleRobot>(userWithoutCard)
             .plansUpgrade()
-            .selectPlan<AddCreditCardRobot>(Plan.Plus)
-            .verify { billingDetailsDisplayed(Plan.Plus, "yearly", Currency.Euro.symbol, "48.00") }
+            .changeCurrency(Currency.CHF)
+            .selectPlan<AddCreditCardRobot>(Plan.Dev)
+            .verify { billingDetailsDisplayed(Plan.Dev, BillingCycle.Yearly, Currency.CHF.symbol, 47.88) }
     }
 
     @Test
     fun backToPlanSelection() {
         newCreditCardRobot
-            .back<AddCreditCardRobot>() // to close soft keyboard
-            .back<SelectPlanRobot>()
-            .verify { planDetailsDisplayed(Plan.Plus) }
+            .close<SelectPlanRobot>()
+            .verify { planDetailsDisplayed(Plan.Dev) }
     }
 
     @Test

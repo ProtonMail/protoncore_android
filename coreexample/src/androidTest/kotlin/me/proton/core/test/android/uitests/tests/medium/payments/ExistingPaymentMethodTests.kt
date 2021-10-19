@@ -45,7 +45,7 @@ class ExistingPaymentMethodTests : BaseTest() {
         AddAccountRobot().signIn()
     }
 
-    private fun upgradeUserToPlan(user: User, plan: Plan = Plan.Plus): ExistingPaymentMethodsRobot =
+    private fun upgradeUserToPlan(user: User, plan: Plan = Plan.Dev): ExistingPaymentMethodsRobot =
         loginRobot
             .loginUser<CoreexampleRobot>(user)
             .plansUpgrade()

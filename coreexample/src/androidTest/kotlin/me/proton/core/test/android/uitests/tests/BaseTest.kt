@@ -19,15 +19,17 @@
 package me.proton.core.test.android.uitests.tests
 
 import android.util.Log
+import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.android.core.coreexample.db.AppDatabase
 import me.proton.android.core.coreexample.di.AppDatabaseModule
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDevice
 import me.proton.core.test.android.plugins.Quark
+import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.plugins.data.User.Users
 import org.junit.After
-import org.junit.AfterClass
 import org.junit.BeforeClass
 
 open class BaseTest(
@@ -39,7 +41,7 @@ open class BaseTest(
     override fun tearDown() {
         super.tearDown()
         if (clearAppDatabaseOnTearDown)
-            appDatabase.clearAllTables()
+            clearUsers(appDatabase)
         Log.d(testTag, "Clearing AccountManager database tables")
     }
 
@@ -48,18 +50,20 @@ open class BaseTest(
         val quark = Quark(BuildConfig.HOST, BuildConfig.PROXY_TOKEN, "sensitive/internal_apis.json")
         val appDatabase = AppDatabaseModule.provideAppDatabase(getTargetContext())
 
+        private fun clearUsers(database: AppDatabase) {
+            runBlocking {
+                database.accountDao().deleteAll()
+                database.userDao().deleteAll()
+            }
+        }
+
         @JvmStatic
         @BeforeClass
         fun prepare() {
             setupDevice(true)
             quark.jailUnban()
-            appDatabase.clearAllTables()
-        }
-
-        @JvmStatic
-        @AfterClass
-        fun cleanup() {
-            appDatabase.clearAllTables()
+            Plan.Dev.text = quark.planDevText
+            Plan.Dev.planName = quark.planDevName
         }
     }
 }

@@ -109,8 +109,7 @@ class PasswordManagementTests : BaseTest() {
         navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
-            .back<PasswordManagementRobot>()
-            .back<CoreexampleRobot>()
+            .close<CoreexampleRobot>()
             .verify { coreexampleElementsDisplayed() }
     }
 }

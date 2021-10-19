@@ -76,5 +76,9 @@ class AddCreditCardRobot : PaymentRobot() {
      * Clicks country selection element
      * @return [CountryRobot]
      */
-    fun country(): CountryRobot = clickElement(R.id.countriesText, EditText::class.java)
+    fun country(): CountryRobot {
+        view.withId(R.id.scrollContent).swipeUp()
+        view.withId(R.id.countriesText).instanceOf(EditText::class.java).click()
+        return CountryRobot()
+    }
 }
