@@ -1,3 +1,11 @@
+## Auth [1.17.1], User [1.16.2].
+
+19 Oct, 2021
+
+### Bug fixes
+
+- Force Change password via Web only for private sub-user.
+
 ## Auth [1.16.1], User [1.16.1].
 
 15 Oct, 2021
