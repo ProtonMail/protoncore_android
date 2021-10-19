@@ -126,7 +126,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
             }.exhaustive
         }.launchIn(lifecycleScope)
 
-        viewModel.plansValidationState.onEach {
+        viewModel.billingViewModel.plansValidationState.onEach {
             when (it) {
                 is BillingViewModel.PlansValidationState.Success -> {
                     amountDue = it.subscription.amountDue
@@ -138,7 +138,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
             }.exhaustive
         }.launchIn(lifecycleScope)
 
-        viewModel.subscriptionResult.onEach {
+        viewModel.billingViewModel.subscriptionResult.onEach {
             when (it) {
                 is BillingViewModel.State.Processing -> showLoading(true)
                 is BillingViewModel.State.Success.SubscriptionCreated -> onPaymentResult(

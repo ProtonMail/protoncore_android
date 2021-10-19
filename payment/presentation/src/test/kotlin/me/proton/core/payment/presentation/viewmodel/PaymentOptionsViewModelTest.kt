@@ -39,6 +39,7 @@ import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
@@ -58,12 +59,13 @@ import kotlin.test.assertTrue
 class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
-    private val validateSubscription = mockk<ValidateSubscriptionPlan>()
-    private val createPaymentToken = mockk<CreatePaymentTokenWithNewCreditCard>()
-    private val createPaymentTokenWithExistingPaymentMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>()
-    private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>()
-    private val performSubscribe = mockk<PerformSubscribe>()
-    private val getCountryCode = mockk<GetCountry>()
+    private val validateSubscription = mockk<ValidateSubscriptionPlan>(relaxed = true)
+    private val billingViewModel = mockk<BillingViewModel>(relaxed = true)
+    private val createPaymentToken = mockk<CreatePaymentTokenWithNewCreditCard>(relaxed = true)
+    private val createPaymentTokenWithExistingPaymentMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>(relaxed = true)
+    private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>(relaxed = true)
+    private val performSubscribe = mockk<PerformSubscribe>(relaxed = true)
+    private val getCountryCode = mockk<GetCountry>(relaxed = true)
     private val getAvailablePaymentMethods = mockk<GetAvailablePaymentMethods>(relaxed = true)
     private val getCurrentSubscription = mockk<GetCurrentSubscription>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
@@ -96,35 +98,24 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         )
     )
     // endregion
-    private lateinit var billingViewModel: BillingViewModel
     private lateinit var viewModel: PaymentOptionsViewModel
-
+    private val subscriptionStatus = SubscriptionStatus(
+        1, 1, 1, 0, null, 0, Currency.EUR, SubscriptionCycle.MONTHLY, null
+    )
     @Before
     fun beforeEveryTest() {
         coEvery { getCountryCode.invoke(any()) } returns Country(testCCCountry, "test-code-1")
 
-        billingViewModel = BillingViewModel(
-            validateSubscription,
-            createPaymentToken,
-            createPaymentTokenWithNewPayPal,
-            createPaymentTokenWithExistingPaymentMethod,
-            performSubscribe,
-            getCountryCode
-        )
+        coEvery { validateSubscription.invoke(any(), any(), any(), any(), any()) } returns subscriptionStatus
 
         every { context.getString(any()) } returns "test-string"
         coEvery { getCurrentSubscription.invoke(testUserId) } returns testSubscription
         viewModel =
             PaymentOptionsViewModel(
                 context,
+                billingViewModel,
                 getAvailablePaymentMethods,
-                getCurrentSubscription,
-                validateSubscription,
-                createPaymentToken,
-                createPaymentTokenWithNewPayPal,
-                createPaymentTokenWithExistingPaymentMethod,
-                performSubscribe,
-                getCountryCode
+                getCurrentSubscription
             )
     }
 
