@@ -27,9 +27,9 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-libVersion = Version(1, 15, 0)
+libVersion = parent?.libVersion
 
-android(useDataBinding = true)
+android(useViewBinding = true)
 
 dependencies {
 

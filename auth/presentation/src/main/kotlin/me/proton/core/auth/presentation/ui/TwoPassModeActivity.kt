@@ -46,7 +46,7 @@ import me.proton.core.util.kotlin.exhaustive
  * mailbox).
  */
 @AndroidEntryPoint
-class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
+class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMailboxLoginBinding::inflate) {
 
     private val input: TwoPassModeInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -55,8 +55,6 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>() {
     private val userId by lazy { UserId(input.userId) }
 
     private val viewModel by viewModels<TwoPassModeViewModel>()
-
-    override fun layoutId(): Int = R.layout.activity_mailbox_login
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

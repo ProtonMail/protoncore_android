@@ -39,22 +39,22 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateUsername
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class ChooseUsernameFragment : SignupFragment<FragmentSignupChooseUsernameBinding>() {
+class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_username) {
 
     private val viewModel by viewModels<ChooseUsernameViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
+    private val binding by viewBinding(FragmentSignupChooseUsernameBinding::bind)
 
     private val input: SignUpInput by lazy {
         val requiredAccountType = AccountType.values()[requireArguments().getInt(ARG_INPUT)]
         viewModel.setClientAppRequiredAccountType(accountType = requiredAccountType)
         SignUpInput(requiredAccountType = requiredAccountType)
     }
-
-    override fun layoutId() = R.layout.fragment_signup_choose_username
 
     override fun onBackPressed() {
         activity?.finish()

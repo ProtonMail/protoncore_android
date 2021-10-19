@@ -47,14 +47,16 @@ import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.validate
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.onError
 import me.proton.core.presentation.viewmodel.onProcessing
 import me.proton.core.presentation.viewmodel.onSuccess
 
 @AndroidEntryPoint
-class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVerificationEnterCodeBinding>() {
+class HumanVerificationEnterCodeFragment : ProtonDialogFragment(R.layout.fragment_human_verification_enter_code) {
 
     private val viewModel by viewModels<HumanVerificationEnterCodeViewModel>()
+    private val binding by viewBinding(FragmentHumanVerificationEnterCodeBinding::bind)
 
     private lateinit var requestNewCodeDialogResultLauncher: FragmentDialogResultLauncher<String>
 
@@ -70,8 +72,6 @@ class HumanVerificationEnterCodeFragment : ProtonDialogFragment<FragmentHumanVer
         val type = requireArguments().getString(ARG_TOKEN_TYPE)
         TokenType.fromString(type)
     }
-
-    override fun layoutId(): Int = R.layout.fragment_human_verification_enter_code
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

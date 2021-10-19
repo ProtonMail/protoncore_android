@@ -30,7 +30,7 @@ plugins {
 
 libVersion = parent?.libVersion
 
-android(useDataBinding = true)
+android(useViewBinding = true)
 
 dependencies {
 

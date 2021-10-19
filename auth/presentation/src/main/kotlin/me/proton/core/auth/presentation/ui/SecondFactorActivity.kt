@@ -47,7 +47,7 @@ import me.proton.core.util.kotlin.exhaustive
  * Optional, only shown for accounts with 2FA login enabled.
  */
 @AndroidEntryPoint
-class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
+class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding::inflate) {
 
     private val input: SecondFactorInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -57,8 +57,6 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>() {
     private var mode = Mode.TWO_FACTOR
 
     private val viewModel by viewModels<SecondFactorViewModel>()
-
-    override fun layoutId(): Int = R.layout.activity_2fa
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

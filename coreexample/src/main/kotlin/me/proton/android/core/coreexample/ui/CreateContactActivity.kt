@@ -26,17 +26,16 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import me.proton.android.core.coreexample.R
 import me.proton.android.core.coreexample.databinding.ActivityCreateContactBinding
 import me.proton.android.core.coreexample.viewmodel.CreateContactViewModel
-import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.showToast
-import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class CreateContactActivity : ProtonActivity<ActivityCreateContactBinding>() {
-    override fun layoutId(): Int = R.layout.activity_create_contact
+class CreateContactActivity : ProtonViewBindingActivity<ActivityCreateContactBinding>(
+    ActivityCreateContactBinding::inflate
+) {
 
     private val viewModel: CreateContactViewModel by viewModels()
 

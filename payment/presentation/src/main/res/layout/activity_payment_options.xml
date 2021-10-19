@@ -16,114 +16,111 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:windowBackground">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_close"
+            tools:title="Title" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/BillingContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:windowBackground">
+        android:layout_marginTop="@dimen/gap_large"
+        android:paddingBottom="@dimen/default_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <me.proton.core.presentation.ui.view.ProtonProgressButton
+            android:id="@+id/payButton"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            app:liftOnScroll="true">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_gap"
+            android:layout_marginEnd="@dimen/default_gap"
+            android:text="@string/payments_pay"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paymentOptionsDetails" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
+        <LinearLayout
+            android:id="@+id/paymentOptionsDetails"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/payButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <me.proton.core.payment.presentation.view.PlanShortDetailsView
+                android:id="@+id/selectedPlanDetailsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:navigationIcon="@drawable/ic_close"
-                tools:title="Title" />
+                android:background="@drawable/background_list_item_rounded_corners"
+                android:padding="@dimen/default_margin" />
 
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/BillingContent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/gap_large"
-            android:paddingBottom="@dimen/default_margin"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <me.proton.core.presentation.ui.view.ProtonProgressButton
-                android:id="@+id/payButton"
+            <TextView
+                android:id="@+id/paymentOptionsTitle"
+                style="@style/Proton.Text.Headline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_gap"
-                android:layout_marginEnd="@dimen/default_gap"
-                android:text="@string/payments_pay"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/paymentOptionsDetails" />
+                android:layout_marginTop="@dimen/double_top_margin"
+                android:text="@string/payments_choose_payment_method" />
 
-            <LinearLayout
-                android:id="@+id/paymentOptionsDetails"
+            <me.proton.core.presentation.ui.view.ProtonButton
+                android:id="@+id/addCreditCardButton"
+                style="@style/ProtonButton.Borderless.Text.NoProgress"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@id/payButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_top_margin"
+                android:gravity="start|center_vertical"
+                android:text="@string/payments_add_credit_debit_card"
+                android:textColor="@color/text_norm_selector"
+                app:icon="@drawable/ic_plus"
+                app:iconGravity="start"
+                app:iconPadding="@dimen/double_top_margin"
+                app:iconTint="@color/icon_norm" />
 
-                <me.proton.core.payment.presentation.view.PlanShortDetailsView
-                    android:id="@+id/selectedPlanDetailsLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_list_item_rounded_corners"
-                    android:padding="@dimen/default_margin" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/paymentMethodsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:paddingBottom="@dimen/default_margin" />
 
-                <TextView
-                    android:id="@+id/paymentOptionsTitle"
-                    style="@style/Proton.Text.Headline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/double_top_margin"
-                    android:text="@string/payments_choose_payment_method" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <me.proton.core.presentation.ui.view.ProtonButton
-                    android:id="@+id/addCreditCardButton"
-                    style="@style/ProtonButton.Borderless.Text.NoProgress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/double_top_margin"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/payments_add_credit_debit_card"
-                    android:textColor="@color/text_norm_selector"
-                    app:icon="@drawable/ic_plus"
-                    app:iconGravity="start"
-                    app:iconPadding="@dimen/double_top_margin"
-                    app:iconTint="@color/icon_norm" />
+    <FrameLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:windowBackground"
+        android:elevation="3dp"
+        tools:visibility="gone">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/paymentMethodsList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/default_top_margin"
-                    android:paddingBottom="@dimen/default_margin" />
-
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <FrameLayout
-            android:id="@+id/progressLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:windowBackground"
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:elevation="3dp"
-            tools:visibility="gone">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:elevation="3dp"
-                android:indeterminate="true"
-                android:indeterminateTint="?attr/brand_norm" />
-        </FrameLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</layout>
+            android:indeterminate="true"
+            android:indeterminateTint="?attr/brand_norm" />
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

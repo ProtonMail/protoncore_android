@@ -32,13 +32,13 @@ import me.proton.core.auth.presentation.databinding.FragmentTermsConditionsBindi
 import me.proton.core.auth.presentation.viewmodel.signup.TermsConditionsViewModel
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.viewBinding
 
 @AndroidEntryPoint
-class TermsConditionsDialogFragment : ProtonDialogFragment<FragmentTermsConditionsBinding>() {
+class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_terms_conditions) {
 
     private val viewModel by viewModels<TermsConditionsViewModel>()
-
-    override fun layoutId() = R.layout.fragment_terms_conditions
+    private val binding by viewBinding(FragmentTermsConditionsBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

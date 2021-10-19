@@ -37,6 +37,7 @@ import me.proton.core.country.presentation.viewmodel.CountryPickerViewModel
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.ui.adapter.ProtonAdapter
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.containsNoCase
 import me.proton.core.util.kotlin.exhaustive
 import java.util.Locale
@@ -45,10 +46,10 @@ import java.util.Locale
  * Fragment that lists the available countries taken from the data local layer.
  */
 @AndroidEntryPoint
-class CountryPickerFragment :
-    ProtonDialogFragment<FragmentCountryPickerBinding>() {
+class CountryPickerFragment : ProtonDialogFragment(R.layout.fragment_country_picker) {
 
     private val viewModel by viewModels<CountryPickerViewModel>()
+    private val binding by viewBinding(FragmentCountryPickerBinding::bind)
 
     @SuppressLint("SetTextI18n")
     private val countriesAdapter = ProtonAdapter(
@@ -67,8 +68,6 @@ class CountryPickerFragment :
     private val withCallingCode: Int by lazy {
         if (requireArguments().get(ARG_CALLING_CODE) as Boolean? != false) View.VISIBLE else View.INVISIBLE
     }
-
-    override fun layoutId(): Int = R.layout.fragment_country_picker
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -36,14 +36,16 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validateEmail
+import me.proton.core.presentation.utils.viewBinding
 
 /**
  * Fragment that handles human verification with email address.
  */
 @AndroidEntryPoint
-internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVerificationEmailBinding>() {
+internal class HumanVerificationEmailFragment : ProtonFragment(R.layout.fragment_human_verification_email) {
 
     private val viewModel by viewModels<HumanVerificationEmailViewModel>()
+    private val binding by viewBinding(FragmentHumanVerificationEmailBinding::bind)
 
     private val humanVerificationBase by lazy {
         HumanVerificationMethodCommon(
@@ -60,8 +62,6 @@ internal class HumanVerificationEmailFragment : ProtonFragment<FragmentHumanVeri
     private val recoveryEmailAddress: String? by lazy {
         requireArguments().get(ARG_RECOVERY_EMAIL) as String?
     }
-
-    override fun layoutId(): Int = R.layout.fragment_human_verification_email
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

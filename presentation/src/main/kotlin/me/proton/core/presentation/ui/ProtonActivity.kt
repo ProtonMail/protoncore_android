@@ -18,23 +18,9 @@
 
 package me.proton.core.presentation.ui
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 
 /**
  * Base Proton Activity from which all project activities should extend.
  */
-abstract class ProtonActivity<DB : ViewDataBinding> : AppCompatActivity() {
-
-    lateinit var binding: DB
-
-    protected abstract fun layoutId(): Int
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.inflate(layoutInflater, layoutId(), null, false)
-        setContentView(binding.root)
-    }
-}
+abstract class ProtonActivity : AppCompatActivity()

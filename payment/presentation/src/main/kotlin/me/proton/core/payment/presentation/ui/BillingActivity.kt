@@ -43,6 +43,7 @@ import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onTextChange
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -51,7 +52,7 @@ import me.proton.core.util.kotlin.exhaustive
  * Note, that this one only works with a new Credit Card and is not responsible for displaying existing payment methods.
  */
 @AndroidEntryPoint
-class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
+class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBillingBinding::inflate) {
 
     private val viewModel by viewModels<BillingViewModel>()
 
@@ -59,11 +60,8 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>() {
         requireNotNull(intent?.extras?.getParcelable(ARG_BILLING_INPUT))
     }
 
-    override fun layoutId(): Int = R.layout.activity_billing
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding.apply {
             findOutPlan()
             toolbar.apply {

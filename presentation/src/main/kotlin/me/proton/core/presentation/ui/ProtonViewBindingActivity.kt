@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,12 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.ui
+package me.proton.core.presentation.ui
 
-import me.proton.android.core.coreexample.databinding.ActivityTextStylesBinding
-import me.proton.core.presentation.ui.ProtonViewBindingActivity
+import android.os.Bundle
+import android.view.LayoutInflater
+import androidx.viewbinding.ViewBinding
+import me.proton.core.presentation.utils.viewBinding
 
-/**
- * Demonstrates the available text styles
- */
-class TextStylesActivity : ProtonViewBindingActivity<ActivityTextStylesBinding>(ActivityTextStylesBinding::inflate)
+abstract class ProtonViewBindingActivity<ViewBindingT: ViewBinding>(
+    bindingInflater: (LayoutInflater) -> ViewBindingT
+) : ProtonActivity() {
+
+    val binding by viewBinding(bindingInflater)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+    }
+}

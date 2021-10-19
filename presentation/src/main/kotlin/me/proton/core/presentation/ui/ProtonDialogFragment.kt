@@ -20,28 +20,19 @@ package me.proton.core.presentation.ui
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.Window
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
-import me.proton.core.presentation.R
 
 /**
  * Base Proton Fragment from which all project fragments should extend.
  *
  * @author Dino Kadrikj.
  */
-abstract class ProtonDialogFragment<DB : ViewDataBinding> : DialogFragment() {
+abstract class ProtonDialogFragment : DialogFragment {
+    constructor(): super()
+    constructor(@LayoutRes contentLayoutId: Int): super(contentLayoutId)
 
-    private var internalBinding: DB? = null
-    protected val binding: DB
-        get() = internalBinding
-            ?: throw IllegalStateException("Accessing binding outside of lifecycle")
-
-    protected abstract fun layoutId(): Int
 
     /**
      * Provide fragment theme.
@@ -58,17 +49,6 @@ abstract class ProtonDialogFragment<DB : ViewDataBinding> : DialogFragment() {
         setStyle(STYLE_NO_FRAME, getStyleResource() ?: theme ?: 0)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        internalBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
-        binding.setLifecycleOwner { lifecycle }
-        super.onCreateView(inflater, container, savedInstanceState)
-        return binding.root
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = object : Dialog(requireContext(), theme) {
             override fun onBackPressed() {
@@ -78,10 +58,5 @@ abstract class ProtonDialogFragment<DB : ViewDataBinding> : DialogFragment() {
         // request a window without the title
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         return dialog
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        internalBinding = null
     }
 }

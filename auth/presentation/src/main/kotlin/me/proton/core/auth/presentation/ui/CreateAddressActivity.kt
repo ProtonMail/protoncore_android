@@ -42,15 +42,13 @@ import me.proton.core.util.kotlin.exhaustive
  * Displays the results from the username availability and triggers the business logic along with all API executions.
  */
 @AndroidEntryPoint
-class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>() {
+class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>(ActivityCreateAddressBinding::inflate) {
 
     private val input: CreateAddressInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
     private val viewModel by viewModels<CreateAddressViewModel>()
-
-    override fun layoutId(): Int = R.layout.activity_create_address
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

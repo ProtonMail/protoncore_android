@@ -46,7 +46,7 @@ import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.auth.presentation.ui.AddAccountActivity
-import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.alert.ForceUpdateActivity
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.showToast
@@ -54,7 +54,7 @@ import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : ProtonActivity<ActivityMainBinding>() {
+class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     @Inject
     lateinit var coreExampleRepository: CoreExampleRepository
@@ -68,8 +68,6 @@ class MainActivity : ProtonActivity<ActivityMainBinding>() {
     private val userAddressKeyViewModel: UserAddressKeyViewModel by viewModels()
     private val publicAddressViewModel: PublicAddressViewModel by viewModels()
     private val settingsViewModel: UserSettingsViewModel by viewModels()
-
-    override fun layoutId(): Int = R.layout.activity_main
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {

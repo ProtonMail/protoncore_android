@@ -25,18 +25,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.presentation.AuthOrchestrator
-import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityAddAccountBinding
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.onLoginResult
 import me.proton.core.auth.presentation.onOnSignUpResult
-import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.onClick
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddAccountActivity : ProtonActivity<ActivityAddAccountBinding>() {
+class AddAccountActivity : ProtonViewBindingActivity<ActivityAddAccountBinding>(ActivityAddAccountBinding::inflate) {
 
     @Inject
     lateinit var authOrchestrator: AuthOrchestrator
@@ -51,8 +50,6 @@ class AddAccountActivity : ProtonActivity<ActivityAddAccountBinding>() {
     private val requiredAccountType: AccountType by lazy {
         input?.requiredAccountType ?: AccountType.Internal
     }
-
-    override fun layoutId(): Int = R.layout.activity_add_account
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

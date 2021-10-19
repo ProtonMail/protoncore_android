@@ -40,6 +40,7 @@ import me.proton.core.humanverification.presentation.viewmodel.verification.Huma
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -48,7 +49,7 @@ import javax.inject.Inject
  * Fragment that handles human verification with Captcha.
  */
 @AndroidEntryPoint
-internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVerificationCaptchaBinding>() {
+internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragment_human_verification_captcha) {
 
     @Inject
     @CaptchaApiHost
@@ -58,6 +59,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
     lateinit var extraHeaderProvider: ExtraHeaderProvider
 
     private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
+    private val binding by viewBinding(FragmentHumanVerificationCaptchaBinding::bind)
 
     private val captchaUrl: String by lazy {
         requireArguments().get(ARG_CAPTCHA_URL) as String? ?: "https://$captchaApiHost/core/v4/captcha"
@@ -70,8 +72,6 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment<FragmentHumanVe
             tokenType = TokenType.CAPTCHA
         )
     }
-
-    override fun layoutId(): Int = R.layout.fragment_human_verification_captcha
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

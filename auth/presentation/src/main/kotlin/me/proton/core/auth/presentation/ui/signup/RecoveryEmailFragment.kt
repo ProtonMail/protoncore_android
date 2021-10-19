@@ -27,12 +27,12 @@ import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.viewmodel.signup.RecoveryMethodViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onTextChange
+import me.proton.core.presentation.utils.viewBinding
 
-class RecoveryEmailFragment : ProtonFragment<FragmentRecoveryEmailBinding>() {
+class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
 
     private val recoveryMethodViewModel: RecoveryMethodViewModel by viewModels({ requireParentFragment() })
-
-    override fun layoutId() = R.layout.fragment_recovery_email
+    private val binding by viewBinding(FragmentRecoveryEmailBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

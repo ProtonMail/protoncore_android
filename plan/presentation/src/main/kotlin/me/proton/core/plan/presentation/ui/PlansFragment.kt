@@ -39,12 +39,15 @@ import me.proton.core.plan.presentation.viewmodel.PlansViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
+class PlansFragment : ProtonFragment(R.layout.fragment_plans) {
 
     private val viewModel by viewModels<PlansViewModel>()
+
+    private val binding by viewBinding(FragmentPlansBinding::bind)
 
     private val input: PlanInput by lazy {
         requireArguments().get(ARG_INPUT) as PlanInput
@@ -53,8 +56,6 @@ class PlansFragment : ProtonFragment<FragmentPlansBinding>() {
     private val userId: UserId? by lazy {
         input.user
     }
-
-    override fun layoutId() = R.layout.fragment_plans
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

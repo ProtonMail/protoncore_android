@@ -16,161 +16,158 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/add_account_background">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/add_account_illustration"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/add_account_background">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:adjustViewBounds="true"
+        android:minHeight="@dimen/add_account_illustration_height"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?attr/add_account_illustration" />
 
-        <ImageView
-            android:adjustViewBounds="true"
-            android:id="@+id/add_account_illustration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/add_account_illustration_height"
-            android:layout_gravity="bottom"
-            android:scaleType="centerCrop"
-            app:srcCompat="?attr/add_account_illustration"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/gap_huge"
+        android:layout_marginStart="@dimen/default_horizontal_padding"
+        android:layout_marginEnd="@dimen/default_horizontal_padding"
+        android:layout_marginBottom="@dimen/gap_huge"
+        app:layout_constraintBottom_toTopOf="@id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="?attr/add_account_logo"
+        app:tint="@color/white" />
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/gap_huge"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            android:layout_marginBottom="@dimen/gap_huge"
-            app:srcCompat="?attr/add_account_logo"
-            app:layout_constraintBottom_toTopOf="@id/title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:tint="@color/white" />
+    <TextView
+        android:id="@+id/title"
+        style="@style/Proton.Text.Headline.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizontal_padding"
+        android:layout_marginTop="@dimen/gap_huge"
+        android:layout_marginEnd="@dimen/default_horizontal_padding"
+        android:layout_marginBottom="@dimen/gap_medium"
+        android:gravity="center"
+        android:text="?attr/add_account_title"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/subtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/Proton.Text.Headline.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginTop="@dimen/gap_huge"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            android:layout_marginBottom="@dimen/gap_medium"
-            android:gravity="center"
-            android:text="?attr/add_account_title"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/subtitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/subtitle"
+        style="@style/Proton.Text.DefaultSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizontal_padding"
+        android:layout_marginTop="@dimen/gap_medium"
+        android:layout_marginEnd="@dimen/default_horizontal_padding"
+        android:layout_marginBottom="@dimen/gap_large"
+        android:gravity="center"
+        android:text="?attr/add_account_subtitle"
+        android:textColor="@color/santas_gray"
+        app:layout_constraintBottom_toTopOf="@id/guide_center" />
 
-        <TextView
-            android:id="@+id/subtitle"
-            style="@style/Proton.Text.DefaultSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginTop="@dimen/gap_medium"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            android:layout_marginBottom="@dimen/gap_large"
-            android:gravity="center"
-            android:text="?attr/add_account_subtitle"
-            android:textColor="@color/santas_gray"
-            app:layout_constraintBottom_toTopOf="@id/guide_center" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+    <me.proton.core.presentation.ui.view.ProtonButton
+        android:id="@+id/sign_in"
+        style="@style/ProtonButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizontal_padding"
+        android:layout_marginTop="@dimen/gap_large"
+        android:layout_marginEnd="@dimen/default_horizontal_padding"
+        android:text="@string/auth_sign_in"
+        app:layout_constraintBottom_toTopOf="@id/sign_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guide_center" />
 
-        <me.proton.core.presentation.ui.view.ProtonButton
-            android:id="@+id/sign_in"
-            style="@style/ProtonButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginTop="@dimen/gap_large"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            android:text="@string/auth_sign_in"
-            app:layout_constraintBottom_toTopOf="@id/sign_up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guide_center" />
+    <me.proton.core.presentation.ui.view.ProtonButton
+        android:id="@+id/sign_up"
+        style="@style/ProtonButton.Borderless.Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizontal_padding"
+        android:layout_marginTop="@dimen/gap_medium"
+        android:layout_marginEnd="@dimen/default_horizontal_padding"
+        android:text="@string/auth_create_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sign_in" />
 
-        <me.proton.core.presentation.ui.view.ProtonButton
-            android:id="@+id/sign_up"
-            style="@style/ProtonButton.Borderless.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginTop="@dimen/gap_medium"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            android:text="@string/auth_create_account"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sign_in" />
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_horizontal_padding"
+        android:layout_marginTop="@dimen/gap_huge"
+        android:layout_marginEnd="@dimen/default_horizontal_padding"
+        android:layout_marginBottom="@dimen/gap_huge"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gap_large"
+            android:layout_marginBottom="@dimen/gap_medium"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/gap_large"
+                app:srcCompat="@drawable/ic_logo_calendar"
+                app:tint="@color/santas_gray" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/gap_large"
+                android:layout_marginEnd="@dimen/gap_large"
+                app:srcCompat="@drawable/ic_logo_vpn"
+                app:tint="@color/santas_gray" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/gap_large"
+                android:layout_marginEnd="@dimen/gap_large"
+                app:srcCompat="@drawable/ic_logo_drive"
+                app:tint="@color/santas_gray" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/gap_large"
+                app:srcCompat="@drawable/ic_logo_mail"
+                app:tint="@color/santas_gray" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/Proton.Text.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginTop="@dimen/gap_huge"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            android:layout_marginBottom="@dimen/gap_huge"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:gravity="center"
+            android:text="@string/auth_one_account_all_services"
+            android:textColor="@color/santas_gray" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/gap_large"
-                android:layout_marginBottom="@dimen/gap_medium"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/gap_large"
-                    app:srcCompat="@drawable/ic_logo_calendar"
-                    app:tint="@color/santas_gray" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/gap_large"
-                    android:layout_marginEnd="@dimen/gap_large"
-                    app:srcCompat="@drawable/ic_logo_vpn"
-                    app:tint="@color/santas_gray" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/gap_large"
-                    android:layout_marginEnd="@dimen/gap_large"
-                    app:srcCompat="@drawable/ic_logo_drive"
-                    app:tint="@color/santas_gray" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/gap_large"
-                    app:srcCompat="@drawable/ic_logo_mail"
-                    app:tint="@color/santas_gray" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/Proton.Text.Caption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/auth_one_account_all_services"
-                android:textColor="@color/santas_gray" />
-
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

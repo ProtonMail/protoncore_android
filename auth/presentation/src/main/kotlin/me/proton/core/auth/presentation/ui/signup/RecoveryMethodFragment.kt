@@ -40,18 +40,18 @@ import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class RecoveryMethodFragment : SignupFragment<FragmentSignupRecoveryBinding>() {
+class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery) {
 
     private val viewModel by viewModels<RecoveryMethodViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
+    private val binding by viewBinding(FragmentSignupRecoveryBinding::bind)
 
     private lateinit var skipRecoveryDialogResultLauncher: FragmentDialogResultLauncher<Unit>
-
-    override fun layoutId() = R.layout.fragment_signup_recovery
 
     override fun onBackPressed() {
         parentFragmentManager.popBackStack()

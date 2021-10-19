@@ -43,6 +43,7 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validate
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.onError
 import me.proton.core.presentation.viewmodel.onSuccess
 
@@ -52,9 +53,10 @@ import me.proton.core.presentation.viewmodel.onSuccess
  * @author Dino Kadrikj.
  */
 @AndroidEntryPoint
-internal class HumanVerificationSMSFragment : ProtonFragment<FragmentHumanVerificationSmsBinding>() {
+internal class HumanVerificationSMSFragment : ProtonFragment(R.layout.fragment_human_verification_sms) {
 
     private val viewModel by viewModels<HumanVerificationSMSViewModel>()
+    private val binding by viewBinding(FragmentHumanVerificationSmsBinding::bind)
 
     private val sessionId: SessionId? by lazy {
         requireArguments().getString(ARG_SESSION_ID)?.let { SessionId(it) }
@@ -67,8 +69,6 @@ internal class HumanVerificationSMSFragment : ProtonFragment<FragmentHumanVerifi
             tokenType = TokenType.SMS
         )
     }
-
-    override fun layoutId(): Int = R.layout.fragment_human_verification_sms
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

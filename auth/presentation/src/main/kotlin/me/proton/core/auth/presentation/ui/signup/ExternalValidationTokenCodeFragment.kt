@@ -38,20 +38,20 @@ import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validate
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class ExternalValidationTokenCodeFragment : SignupFragment<FragmentSignupValidationTokenCodeBinding>() {
+class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_signup_validation_token_code) {
 
     private val viewModel by viewModels<HumanVerificationEnterCodeViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
+    private val binding by viewBinding(FragmentSignupValidationTokenCodeBinding::bind)
 
     private val destination: String by lazy {
         requireArguments().get(ARG_DESTINATION) as String
     }
-
-    override fun layoutId() = R.layout.fragment_signup_validation_token_code
 
     override fun onBackPressed() {
         parentFragmentManager.popBackStack()

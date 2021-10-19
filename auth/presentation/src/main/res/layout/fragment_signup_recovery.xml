@@ -16,144 +16,141 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?android:windowBackground">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:fitsSystemWindows="true"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/recovery_menu"
+                tools:title="Title" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?android:windowBackground">
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.google.android.material.appbar.AppBarLayout
+            <LinearLayout
+                style="@style/AuthContent"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:fitsSystemWindows="true"
-                app:liftOnScroll="true">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
+                <TextView
+                    android:id="@+id/titleText"
+                    style="@style/ProtonTextView.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:menu="@menu/recovery_menu"
-                    tools:title="Title" />
+                    android:layout_marginTop="@dimen/gap_large"
+                    android:text="@string/auth_signup_recovery_method_title" />
 
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scrollContent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="none"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                <LinearLayout
-                    style="@style/AuthContent"
+                <TextView
+                    style="@style/ProtonTextView.Subtitle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/auth_signup_recovery_method_subtitle" />
 
-                    <TextView
-                        android:id="@+id/titleText"
-                        style="@style/ProtonTextView.Title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/gap_large"
-                        android:text="@string/auth_signup_recovery_method_title" />
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/recoveryOptions"
+                    style="@style/HumanVerificationTabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_top_margin"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center_horizontal"
+                    app:tabGravity="fill"
+                    app:tabMaxWidth="0dp"
+                    app:tabMode="fixed" />
 
-                    <TextView
-                        style="@style/ProtonTextView.Subtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_margin"
-                        android:text="@string/auth_signup_recovery_method_subtitle" />
+                <FrameLayout
+                    android:id="@+id/fragmentOptionsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/recoveryOptions"
-                        style="@style/HumanVerificationTabLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_top_margin"
-                        android:layout_marginBottom="0dp"
-                        android:gravity="center_horizontal"
-                        app:tabGravity="fill"
-                        app:tabMaxWidth="0dp"
-                        app:tabMode="fixed" />
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/nextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/auth_content_separator_top_margin"
+                    android:text="@string/auth_signup_next" />
 
-                    <FrameLayout
-                        android:id="@+id/fragmentOptionsContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/termsConditionsText"
+                    style="@style/ProtonTextView.Subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/auth_content_top_margin"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/auth_signup_terms_conditions" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-                    <me.proton.core.presentation.ui.view.ProtonProgressButton
-                        android:id="@+id/nextButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/auth_content_separator_top_margin"
-                        android:text="@string/auth_signup_next" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:windowBackground"
+        android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/termsConditionsText"
-                        style="@style/ProtonTextView.Subtitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/auth_content_top_margin"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:text="@string/auth_signup_terms_conditions" />
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieProgress"
+            android:layout_width="@dimen/auth_lottie_animation"
+            android:layout_height="@dimen/auth_lottie_animation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/proton_loading" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/progressLayout"
+        <TextView
+            android:id="@+id/lottieTitleText"
+            style="@style/ProtonTextView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:windowBackground"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_medium"
+            android:gravity="center"
+            android:text="@string/auth_signup_your_account_is_being_setup"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lottieProgress" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottieProgress"
-                android:layout_width="@dimen/auth_lottie_animation"
-                android:layout_height="@dimen/auth_lottie_animation"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/proton_loading" />
+        <TextView
+            android:id="@+id/subtitleText"
+            style="@style/ProtonTextView.Subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/auth_signup_please_wait"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lottieTitleText" />
 
-            <TextView
-                android:id="@+id/lottieTitleText"
-                style="@style/ProtonTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/gap_medium"
-                android:gravity="center"
-                android:text="@string/auth_signup_your_account_is_being_setup"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lottieProgress" />
-
-            <TextView
-                android:id="@+id/subtitleText"
-                style="@style/ProtonTextView.Subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/auth_signup_please_wait"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lottieTitleText" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
-</layout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
