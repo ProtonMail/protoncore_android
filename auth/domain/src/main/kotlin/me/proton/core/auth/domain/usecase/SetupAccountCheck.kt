@@ -30,9 +30,9 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasInternalAddressKey
 import me.proton.core.user.domain.extension.hasKeys
-import me.proton.core.user.domain.extension.hasOriginalAddress
 import me.proton.core.user.domain.extension.hasUsername
 import me.proton.core.user.domain.extension.isPrivate
+import me.proton.core.user.domain.extension.isSubUser
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -92,7 +92,7 @@ class SetupAccountCheck @Inject constructor(
                 val addresses = addressRepository.getAddresses(userId, refresh = true)
                 when {
                     !user.hasUsername() -> ChooseUsernameNeeded
-                    !user.hasKeys() && !addresses.hasOriginalAddress() && user.isPrivate() -> ChangePasswordNeeded
+                    !user.hasKeys() && user.isSubUser() && user.isPrivate() -> ChangePasswordNeeded
                     !user.hasKeys() -> SetupPrimaryKeysNeeded
                     !addresses.hasInternalAddressKey() -> SetupInternalAddressNeeded
                     isTwoPassModeNeeded -> TwoPassNeeded
