@@ -93,7 +93,7 @@ Test Android Instrumented: **1.15.1** - _released on: Sep 15, 2021_
 
 Domain: **1.16** - _released on: Oct 15, 2021_
 
-Presentation: **1.15.8** - _released on: Oct 15, 2021_
+Presentation: **1.16** - _released on: Oct 19, 2021_
 
 Data: **1.15** - _released on: Sep 13, 2021_
 
@@ -121,13 +121,13 @@ Crypto Android: **1.15.5** - _released on: Oct 11, 2021_
 
 ### Auth
 
-Auth: **1.16.1** - _released on: Oct 18, 2021_
+Auth: **1.17** - _released on: Oct 19, 2021_
 
-Auth Domain: **1.16.1** - _released on: Oct 18, 2021_
+Auth Domain: **1.17** - _released on: Oct 19, 2021_
 
-Auth Presentation: **1.16.1** - _released on: Oct 18, 2021_
+Auth Presentation: **1.17** - _released on: Oct 19, 2021_
 
-Auth Data: **1.16.1** - _released on: Oct 18, 2021_
+Auth Data: **1.17** - _released on: Oct 19, 2021_
 
 ### Account
 
@@ -142,17 +142,17 @@ Account Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Account Manager
 
-Account Manager: **1.15.6** - _released on: Oct 15, 2021_
+Account Manager: **1.16** - _released on: Oct 19, 2021_
 
-Account Manager Domain: **1.15.6** - _released on: Oct 15, 2021_
+Account Manager Domain: **1.16** - _released on: Oct 19, 2021_
 
-Account Manager Presentation: **1.15.6** - _released on: Oct 15, 2021_
+Account Manager Presentation: **1.16** - _released on: Oct 19, 2021_
 
-Account Manager Data: **1.15.6** - _released on: Oct 15, 2021_
+Account Manager Data: **1.16** - _released on: Oct 19, 2021_
 
-Account Manager Data Db: **1.15.6** - _released on: Oct 15, 2021_
+Account Manager Data Db: **1.16** - _released on: Oct 19, 2021_
 
-Account Manager Dagger: **1.15.6** - _released on: Oct 15, 2021_
+Account Manager Dagger: **1.16** - _released on: Oct 19, 2021_
 
 ### Key
 
@@ -208,40 +208,40 @@ Human Verification Data: **1.15.5** - _released on: Oct 13, 2021_
 
 ### Countries
 
-Country: **1.15** - _released on: Sep 13, 2021_
+Country: **1.16** - _released on: Oct 19, 2021_
 
-Country Domain: **1.15** - _released on: Sep 13, 2021_
+Country Domain: **1.16** - _released on: Oct 19, 2021_
 
-Country Data: **1.15** - _released on: Sep 13, 2021_
+Country Data: **1.16** - _released on: Oct 19, 2021_
 
-Country Presentation: **1.15** - _released on: Sep 13, 2021_
+Country Presentation: **1.16** - _released on: Oct 19, 2021_
 
 ### Payment
 
-Payment: **1.16** - _released on: Oct 15, 2021_
+Payment: **1.17** - _released on: Oct 19, 2021_
 
-Payment Data: **1.16** - _released on: Oct 15, 2021_
+Payment Data: **1.17** - _released on: Oct 19, 2021_
 
-Payment Domain: **1.16** - _released on: Oct 15, 2021_
+Payment Domain: **1.17** - _released on: Oct 19, 2021_
 
-Payment Presentation: **1.16** - _released on: Oct 15, 2021_
+Payment Presentation: **1.17** - _released on: Oct 19, 2021_
 
 ### Plan
 
-Plan: **1.16** - _released on: Oct 15, 2021_
+Plan: **1.17** - _released on: Oct 19, 2021_
 
-Plan Data: **1.16** - _released on: Oct 15, 2021_
+Plan Data: **1.17** - _released on: Oct 19, 2021_
 
-Plan Domain: **1.16** - _released on: Oct 15, 2021_
+Plan Domain: **1.17** - _released on: Oct 19, 2021_
 
-Plan Presentation: **1.16** - _released on: Oct 15, 2021_
+Plan Presentation: **1.17** - _released on: Oct 19, 2021_
 
 ### User Settings
 
-User Settings: **1.15.3** - _released on: Oct 06, 2021_
+User Settings: **1.16** - _released on: Oct 19, 2021_
 
-User Settings Data: **1.15.3** - _released on: Oct 06, 2021_
+User Settings Data: **1.16** - _released on: Oct 19, 2021_
 
-User Settings Domain: **1.15.3** - _released on: Oct 06, 2021_
+User Settings Domain: **1.16** - _released on: Oct 19, 2021_
 
-User Settings Presentation: **1.15.3** - _released on: Oct 06, 2021_
+User Settings Presentation: **1.16** - _released on: Oct 19, 2021_
