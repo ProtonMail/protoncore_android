@@ -30,7 +30,7 @@ import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
-class UpgradePlanTests: BaseTest() {
+class UpgradePlanTests : BaseTest() {
 
     private val selectPlanRobot = SelectPlanRobot()
     private val freeUser = users.getUser { !it.isPaid }

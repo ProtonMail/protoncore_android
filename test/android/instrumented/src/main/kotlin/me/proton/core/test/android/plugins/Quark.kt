@@ -76,7 +76,7 @@ class Quark(private val host: String, private val proxyToken: String, internalAp
         val args = arrayOf(
             "username=${user.name}",
             "password=${user.password}",
-            "plan=${user.plan.value}"
+            "plan=${user.plan.planName}"
         )
         internalApi.endpoints[InternalApiEndpoint.PAYMENTS_SEED_SUBSCRIBER]?.let {
             quarkRequest(it, args)
@@ -128,4 +128,6 @@ class Quark(private val host: String, private val proxyToken: String, internalAp
     }
 
     val defaultVerificationCode = internalApi.constants["DEFAULT_VERIFICATION_CODE"]!!
+    val planDevName: String = internalApi.constants["PLAN_DEV_NAME"]!!
+    val planDevText: String = internalApi.constants["PLAN_DEV_TEXT"]!!
 }

@@ -33,8 +33,7 @@ import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Test
 
-class SignupTests: BaseTest(defaultTimeout = 60_000L) {
-
+class SignupTests : BaseTest(defaultTimeout = 60_000L) {
     @Test
     fun signupFreeWithCaptchaAndRecoveryEmail() {
         val user = User(recoveryEmail = "${randomString()}@example.lt")
@@ -58,7 +57,7 @@ class SignupTests: BaseTest(defaultTimeout = 60_000L) {
 
     @Test
     fun signupPlusWithCreditCard() {
-        val user = User(plan = Plan.Plus)
+        val user = User(plan = Plan.Dev)
         AddAccountRobot()
             .createAccount()
             .setUsername(user.name)

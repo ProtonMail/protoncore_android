@@ -44,14 +44,6 @@ class LoginTests : BaseTest() {
     }
 
     @Test
-    fun logout() {
-        loginRobot
-            .loginUser<CoreexampleRobot>(user)
-            .logoutUser<CoreexampleRobot>(user)
-            .verify { userStateIs(user, Disabled, null) }
-    }
-
-    @Test
     fun missingPasswordAndUsername() {
         loginRobot
             .signIn<LoginRobot>()

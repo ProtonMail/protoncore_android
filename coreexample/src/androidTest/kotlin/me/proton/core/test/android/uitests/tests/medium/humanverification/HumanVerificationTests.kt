@@ -98,6 +98,7 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
+    @Ignore("CP-2784")
     fun captcha() {
         humanVerificationRobot
             .captcha()

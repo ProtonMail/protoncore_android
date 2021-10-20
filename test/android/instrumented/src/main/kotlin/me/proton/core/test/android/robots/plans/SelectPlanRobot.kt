@@ -37,7 +37,7 @@ class SelectPlanRobot : CoreRobot() {
         view
             .withId(R.id.selectPlan)
             .hasSibling(
-                view.withId(R.id.planNameText).withText(plan.name)
+                view.withId(R.id.planNameText).withText(plan.text)
             )
             .click()
         return T::class.java.newInstance()
@@ -56,9 +56,8 @@ class SelectPlanRobot : CoreRobot() {
      * Changes currency to provided [currency]
      */
     fun changeCurrency(currency: Currency): SelectPlanRobot {
-        val currencyString = "${currency.symbol} ${currency.code}".trim()
         view.withId(R.id.currencySpinner).click()
-        view.withText(currencyString).click()
+        view.withText(currency.code).click()
         return this
     }
 
@@ -81,13 +80,13 @@ class SelectPlanRobot : CoreRobot() {
         fun billingCycleIs(billingCycle: BillingCycle, currency: Currency = Currency.Euro) {
             when (billingCycle) {
                 BillingCycle.Monthly -> {
-                    view.withId(R.id.planPriceText).withText("${currency.symbol}5.00")
+                    view.withId(R.id.planPriceText).withText("${currency.symbol}4.99")
                 }
                 BillingCycle.Yearly -> {
                     val billedAsString =
-                        stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}48")
+                        stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}47.88")
                     view.withId(R.id.planPriceDescriptionText).checkContains(billedAsString)
-                    view.withId(R.id.planPriceText).checkContains("${currency.symbol}4.00")
+                    view.withId(R.id.planPriceText).checkContains("${currency.symbol}3.99")
                 }
             }
         }

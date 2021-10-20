@@ -20,6 +20,7 @@ package me.proton.core.test.android.robots.payments
 
 import android.widget.EditText
 import me.proton.core.payment.presentation.R
+import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
@@ -39,12 +40,12 @@ open class PaymentRobot : CoreRobot() {
     class Verify : CoreVerify() {
         fun billingDetailsDisplayed(
             plan: Plan,
-            billingCycle: String,
+            billingCycle: BillingCycle,
             currency: String,
-            amount: String
+            amount: Number
         ) {
-            view.withId(R.id.planNameText).withText(plan.toString()).checkDisplayed()
-            view.withId(R.id.billingPeriodText).withText("Billed $billingCycle").checkDisplayed()
+            view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
+            view.withId(R.id.billingPeriodText).withText("Billed ${billingCycle.toString().lowercase()}").checkDisplayed()
             view.withId(R.id.amountText).withText("$currency$amount").checkDisplayed()
         }
 

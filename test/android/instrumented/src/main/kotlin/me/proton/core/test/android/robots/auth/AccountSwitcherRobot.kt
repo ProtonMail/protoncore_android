@@ -23,7 +23,6 @@ import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.RootMatchers
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.proton.core.accountmanager.presentation.R
 import me.proton.core.test.android.instrumented.builders.OnView
@@ -31,7 +30,6 @@ import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.test.android.robots.auth.login.LoginRobot
-import org.hamcrest.CoreMatchers.startsWith
 
 /**
  * [AccountSwitcherRobot] class contains account switcher actions and verifications implementation
@@ -63,7 +61,7 @@ class AccountSwitcherRobot : CoreRobot() {
     inline fun <reified T> userAction(user: User, action: UserAction): T {
         userMore(user).click()
         Espresso
-            .onView(ViewMatchers.withText(action.resId))
+            .onView(withText(action.resId))
             .inRoot(RootMatchers.isPlatformPopup())
             .perform(ViewActions.click())
         return T::class.java.newInstance()

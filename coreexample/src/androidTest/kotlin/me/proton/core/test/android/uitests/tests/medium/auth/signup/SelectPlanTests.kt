@@ -18,8 +18,8 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
-import me.proton.core.test.android.plugins.data.Plan.Plus
 import me.proton.core.test.android.plugins.data.Plan.Free
+import me.proton.core.test.android.plugins.data.Plan.Dev
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
@@ -30,7 +30,7 @@ import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
-class SelectPlanTests: BaseTest() {
+class SelectPlanTests : BaseTest() {
 
     private val selectPlanRobot = SelectPlanRobot()
 
@@ -46,24 +46,35 @@ class SelectPlanTests: BaseTest() {
             .skipConfirm()
             .verify {
                 planDetailsDisplayed(Free)
-                canSelectPlan(Free)
+                canSelectPlan(Dev)
             }
     }
 
     @Test
-    fun selectFree() {
+    fun selectFreeAndCancelHumanVerification() {
         selectPlanRobot
             .selectPlan<HumanVerificationRobot>(Free)
             .verify {
                 hvElementsDisplayed()
                 captchaDisplayed()
             }
+
+        HumanVerificationRobot()
+            .close<SelectPlanRobot>()
+            .verify {
+                planDetailsDisplayed(Free)
+                errorSnackbarDisplayed("Human verification required")
+            }
     }
 
     @Test
-    fun selectPlus() {
+    fun selectPlusAndCancelPayment() {
         selectPlanRobot
-            .selectPlan<AddCreditCardRobot>(Plus)
+            .selectPlan<AddCreditCardRobot>(Dev)
             .verify { addCreditCardElementsDisplayed() }
+
+        AddCreditCardRobot()
+            .close<SelectPlanRobot>()
+            .verify { planDetailsDisplayed(Free) }
     }
 }

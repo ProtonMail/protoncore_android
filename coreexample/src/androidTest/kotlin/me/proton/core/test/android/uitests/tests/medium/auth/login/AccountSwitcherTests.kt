@@ -38,6 +38,9 @@ class AccountSwitcherTests : BaseTest() {
         AddAccountRobot()
             .signIn()
             .loginUser<CoreexampleRobot>(onePassUser)
+            .verify { coreexampleElementsDisplayed() }
+
+        CoreexampleRobot()
             .accountSwitcher()
             .verify { hasUser(onePassUser) }
     }

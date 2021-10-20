@@ -81,6 +81,6 @@ open class CoreexampleRobot : CoreRobot() {
 
     companion object {
         fun getUserState(user: User, accountState: AccountState, sessionState: SessionState?): String =
-            "${user.name} -> $accountState/$sessionState".toUpperCase()
+            "${user.name} -> $accountState/$sessionState".uppercase()
     }
 }
