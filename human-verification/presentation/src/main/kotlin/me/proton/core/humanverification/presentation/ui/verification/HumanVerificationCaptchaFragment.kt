@@ -81,6 +81,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
         }
 
         binding.captchaWebView.apply {
+            setBackgroundColor(Color.TRANSPARENT)
             settings.javaScriptEnabled = true // this is fine, required to load captcha
             addJavascriptInterface(WebAppInterface(), "AndroidInterface")
             webChromeClient = CaptchaWebChromeClient()
