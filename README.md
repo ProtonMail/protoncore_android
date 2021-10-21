@@ -121,13 +121,13 @@ Crypto Android: **1.15.5** - _released on: Oct 11, 2021_
 
 ### Auth
 
-Auth: **1.17.1** - _released on: Oct 19, 2021_
+Auth: **1.17.2** - _released on: Oct 21, 2021_
 
-Auth Domain: **1.17.1** - _released on: Oct 19, 2021_
+Auth Domain: **1.17.2** - _released on: Oct 21, 2021_
 
-Auth Presentation: **1.17.1** - _released on: Oct 19, 2021_
+Auth Presentation: **1.17.2** - _released on: Oct 21, 2021_
 
-Auth Data: **1.17.1** - _released on: Oct 19, 2021_
+Auth Data: **1.17.2** - _released on: Oct 21, 2021_
 
 ### Account
 
