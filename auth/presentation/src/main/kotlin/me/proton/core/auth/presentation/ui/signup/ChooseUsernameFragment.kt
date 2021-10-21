@@ -167,7 +167,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
         with(binding) {
             nextButton.isEnabled = true
             useCurrentEmailButton.isEnabled = true
-            if (accountType == AccountType.Internal) {
+            if (accountType == AccountType.Internal || accountType == AccountType.Username) {
                 usernameInput.suffixText = "@${domains.first()}"
             }
         }
