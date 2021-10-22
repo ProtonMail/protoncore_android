@@ -18,6 +18,7 @@
 
 package me.proton.core.humanverification.presentation.ui
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -104,6 +105,12 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
                     type = tokenType
                 )
             )
+        }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState).also {
+            it.window?.setWindowAnimations(android.R.style.Animation_Dialog)
         }
     }
 
