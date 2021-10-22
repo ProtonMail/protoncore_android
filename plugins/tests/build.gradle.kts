@@ -16,23 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.`java-gradle-plugin`
-import org.gradle.kotlin.dsl.`kotlin-dsl`
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.gradlePlugin
 import org.gradle.kotlin.dsl.implementation
 import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.repositories
 import studio.forface.easygradle.dsl.Version
 
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
     `java-gradle-plugin`
+    id("me.proton.publish-plugins")
 }
 
 val plugin = PluginConfig(
-    name = "Kotlin",
+    name = "Tests",
     version = Version(0, 1)
 )
 pluginConfig = plugin
@@ -44,7 +40,7 @@ gradlePlugin {
     plugins {
         create("${plugin.id}") {
             id = plugin.id
-            implementationClass = "ProtonKotlinPlugin"
+            implementationClass = "ProtonTestsPlugin"
             version = plugin.version
         }
     }

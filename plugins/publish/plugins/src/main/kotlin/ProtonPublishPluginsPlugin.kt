@@ -177,7 +177,7 @@ class ReleaseManager internal constructor(
     }
 
     private companion object {
-        val Project.README_FILE get() = File(rootDir.parentFile.parentFile, "README.md")
+        val Project.README_FILE get() = File(rootDir.parentFile, "README.md")
         val Project.README_VERSION_REGEX get() =
             readmeVersion("^$humanReadableName", "(.+)", "(.+)").toRegex(RegexOption.MULTILINE)
         val Project.NEW_RELEASES_FILE get() = File(rootDir.parentFile.parentFile, "new_releases.tmp")

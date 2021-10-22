@@ -16,9 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "Gradle"
+rootProject.name = "Publish gradle plugins"
 
-include("plugin")
+include(
+    "libraries",
+    "plugins"
+)
 
 pluginManagement {
     repositories {
@@ -33,8 +36,7 @@ enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
-            from(files("./libs.versions.toml"))
+            from(files("../../gradle/libs.versions.toml"))
         }
     }
 }
-
