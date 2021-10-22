@@ -49,7 +49,6 @@ import javax.inject.Inject
  * ViewModel to serve the billing activity or fragment.
  * It's responsibility is to provide payments functionality.
  */
-@HiltViewModel
 open class BillingViewModel @Inject constructor(
     private val validatePlanSubscription: ValidateSubscriptionPlan,
     private val createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,

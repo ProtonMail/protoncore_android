@@ -28,22 +28,17 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
-import me.proton.core.payment.domain.usecase.PerformSubscribe
-import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.PaymentOptionUIModel
+import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -54,22 +49,10 @@ import javax.inject.Inject
 @HiltViewModel
 class PaymentOptionsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
+    val billingViewModel: BillingViewModel,
     private val availablePaymentMethods: GetAvailablePaymentMethods,
-    private val getCurrentSubscription: GetCurrentSubscription,
-    validatePlanSubscription: ValidateSubscriptionPlan,
-    createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,
-    createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
-    createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
-    performSubscribe: PerformSubscribe,
-    getCountry: GetCountry
-) : BillingViewModel(
-    validatePlanSubscription,
-    createPaymentTokenWithNewCreditCard,
-    createPaymentTokenWithNewPayPal,
-    createPaymentTokenWithExistingPaymentMethod,
-    performSubscribe,
-    getCountry
-) {
+    private val getCurrentSubscription: GetCurrentSubscription
+) : ProtonViewModel() {
 
     // it should be private, but because of a bug in Mockk it was not able to mock a spy. and testing it is important!
     internal var currentPlans = mutableListOf<String>()
@@ -150,7 +133,7 @@ class PaymentOptionsViewModel @Inject constructor(
         currency: Currency,
         cycle: SubscriptionCycle,
         paymentType: PaymentType
-    ) = subscribe(
+    ) = billingViewModel.subscribe(
         userId, currentPlans.plus(planName), codes, currency, cycle, paymentType
     )
 
@@ -162,7 +145,7 @@ class PaymentOptionsViewModel @Inject constructor(
         currency: Currency,
         cycle: SubscriptionCycle,
         token: String
-    ) = onThreeDSTokenApproved(
+    ) = billingViewModel.onThreeDSTokenApproved(
         userId, currentPlans.plus(planName), codes, amount, currency, cycle, token
     )
 
@@ -172,7 +155,7 @@ class PaymentOptionsViewModel @Inject constructor(
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle
-    ) = validatePlan(userId, currentPlans.plus(planName).distinct(), codes, currency, cycle)
+    ) = billingViewModel.validatePlan(userId, currentPlans.plus(planName).distinct(), codes, currency, cycle)
 
     companion object {
         const val NO_ACTIVE_SUBSCRIPTION = 22110
