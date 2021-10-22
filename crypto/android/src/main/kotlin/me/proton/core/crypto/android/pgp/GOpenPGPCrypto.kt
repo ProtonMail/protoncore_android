@@ -36,6 +36,7 @@ import com.proton.gopenpgp.helper.Mobile2GoWriter
 import com.proton.gopenpgp.srp.Srp
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.DecryptedText
@@ -122,6 +123,13 @@ class GOpenPGPCrypto : PGPCrypto {
         return publicKeyRing.encrypt(plainMessage, signKeyRing).armored
     }
 
+    private fun encrypt(
+        plainMessage: PlainMessage,
+        sessionKey: SessionKey
+    ): DataPacket {
+        return sessionKey.toInternalSessionKey().encrypt(plainMessage)
+    }
+
     private fun encryptAndSign(
         plainMessage: PlainMessage,
         publicKey: Armored,
@@ -189,6 +197,13 @@ class GOpenPGPCrypto : PGPCrypto {
                 )
             }
         }
+    }
+
+    private fun decrypt(
+        data: DataPacket,
+        sessionKey: SessionKey,
+    ): PlainMessage {
+        return sessionKey.toInternalSessionKey().decrypt(data)
     }
 
     private fun decryptAndVerify(
@@ -390,6 +405,13 @@ class GOpenPGPCrypto : PGPCrypto {
         encrypt(PlainMessage(data), publicKey)
     }.getOrElse { throw CryptoException("Data cannot be encrypted.", it) }
 
+    override fun encryptData(
+        data: ByteArray,
+        sessionKey: SessionKey,
+    ): DataPacket = runCatching {
+        encrypt(PlainMessage(data), sessionKey)
+    }.getOrElse { throw CryptoException("Data cannot be encrypted.", it) }
+
     override fun encryptFile(
         source: File,
         destination: File,
@@ -457,6 +479,13 @@ class GOpenPGPCrypto : PGPCrypto {
     ): ByteArray = runCatching {
         decrypt(message, unlockedKey) { it.binary }
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
+
+    override fun decryptData(
+        data: DataPacket,
+        sessionKey: SessionKey
+    ): ByteArray = runCatching {
+        decrypt(data, sessionKey).binary
+    }.getOrElse { throw CryptoException("Data cannot be decrypted.", it) }
 
     override fun decryptFile(
         source: File,

@@ -19,12 +19,26 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.SessionKey
+import me.proton.core.crypto.common.pgp.decryptDataOrNull
 import me.proton.core.crypto.common.pgp.decryptFileOrNull
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import java.io.File
+
+/**
+ * Encrypt [byteArray] using this [SessionKey].
+ *
+ * @throws [CryptoException] if [byteArray] cannot be encrypted.
+ *
+ * @see [SessionKey.decryptData]
+ */
+fun SessionKey.encryptData(
+    context: CryptoContext,
+    byteArray: ByteArray,
+): DataPacket = context.pgpCrypto.encryptData(byteArray, this)
 
 /**
  * Encrypt [source] into [destination] using this [SessionKey].
@@ -38,6 +52,30 @@ fun SessionKey.encryptFile(
     source: File,
     destination: File,
 ): EncryptedFile = context.pgpCrypto.encryptFile(source, destination, this)
+
+/**
+ * Decrypt [data] using this [SessionKey].
+ *
+ * @throws [CryptoException] if [data] cannot be encrypted.
+ *
+ * @see [SessionKey.encryptData]
+ */
+fun SessionKey.decryptData(
+    context: CryptoContext,
+    data: DataPacket,
+): ByteArray = context.pgpCrypto.decryptData(data, this)
+
+/**
+ * Decrypt [data] using this [SessionKey].
+ *
+ * @return [ByteArray], or `null` if [data] cannot be decrypted.
+ *
+ * @see [SessionKey.decryptData]
+ */
+fun SessionKey.decryptDataOrNull(
+    context: CryptoContext,
+    data: DataPacket,
+): ByteArray? = context.pgpCrypto.decryptDataOrNull(data, this)
 
 /**
  * Decrypt [source] into [destination] using this [SessionKey].

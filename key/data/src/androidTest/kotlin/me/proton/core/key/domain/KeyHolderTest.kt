@@ -114,6 +114,36 @@ class KeyHolderTest {
     }
 
     @Test
+    fun useKeys_keyPacket_encrypt_decrypt_ByteArray() {
+        val data = message.toByteArray()
+
+        keyHolder1.useKeys(context) {
+            val keyPacket = generateNewKeyPacket()
+
+            val encryptedText = encryptData(data, keyPacket)
+
+            val decryptedText = decryptData(encryptedText, keyPacket)
+
+            assertEquals(data, decryptedText)
+        }
+    }
+
+    @Test
+    fun useKeys_sessionKey_encrypt_decrypt_ByteArray() {
+        val data = message.toByteArray()
+
+        keyHolder1.useKeys(context) {
+            val sessionKey = generateNewSessionKey()
+
+            val encryptedText = encryptData(data, sessionKey)
+
+            val decryptedText = decryptData(encryptedText, sessionKey)
+
+            assertEquals(data, decryptedText)
+        }
+    }
+
+    @Test
     fun useKeys_encrypt_sign_decrypt_verify_LargeByteArray() {
         val data = Random.nextBytes(10 * 1000 * 1000) // 10MB
 
@@ -352,7 +382,8 @@ class KeyHolderTest {
             val keyPacket = generateNewKeyPacket()
             val encryptedFile = encryptAndSignFile(file, getTempFile("encrypted"), keyPacket)
             val decryptedFile = decryptAndVerifyFile(encryptedFile, getTempFile("decrypted"), keyPacket)
-            val decryptedOrNullFile = decryptAndVerifyFileOrNull(encryptedFile, getTempFile("decryptedOrNull"), keyPacket)
+            val decryptedOrNullFile =
+                decryptAndVerifyFileOrNull(encryptedFile, getTempFile("decryptedOrNull"), keyPacket)
 
             assertNotNull(decryptedOrNullFile)
             assertEquals(VerificationStatus.Success, decryptedFile.status)
@@ -546,7 +577,7 @@ class KeyHolderTest {
     }
 
     @Test
-    fun useKeys_generate_and_verify_encrypted_signature_for_ByteArray_corrupted () {
+    fun useKeys_generate_and_verify_encrypted_signature_for_ByteArray_corrupted() {
         val data = message.toByteArray()
         // Key holder 1 signs the message and encrypts the signature for Key Holder 2
         val encryptedSignature = keyHolder1.useKeys(context) {
@@ -554,10 +585,11 @@ class KeyHolderTest {
         }
         // Key holder 2 decrypts the signature and verifies it with Key Holder 1's public keys.
         val verified = keyHolder2.useKeys(context) {
-            verifyDataEncrypted(data+"corrupted".toByteArray(), encryptedSignature, keyHolder1.publicKeyRing(context))
+            verifyDataEncrypted(data + "corrupted".toByteArray(), encryptedSignature, keyHolder1.publicKeyRing(context))
         }
         assertFalse(verified)
     }
+
     @Test
     fun useKeys_generate_and_verify_encrypted_signature_for_File() {
         val data = message.toByteArray()
@@ -573,6 +605,7 @@ class KeyHolderTest {
         assertTrue(verified)
         file.delete()
     }
+
     @Test
     fun useKeys_generate_and_verify_encrypted_signature_for_File_corrupted() {
         val data = message.toByteArray() + "corrupted".toByteArray()
