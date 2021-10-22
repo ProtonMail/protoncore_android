@@ -9,15 +9,30 @@ function main {
     exit 0
   fi
 
+  if [ -z "$GIT_CI_EMAIL" ] || [ -z "$GIT_CI_USERNAME" ] || [ -z "$PRIVATE_TOKEN_GITLAB_API_PROTON_CI" ]; then
+    echo "Error, you must set a few variables (Settings -> CI/CD -> Variables) to be able tot commit";
+    cat <<EOT
+    - GIT_CI_EMAIL $GIT_CI_EMAIL
+    - GIT_CI_USERNAME: $GIT_CI_USERNAME
+    - PRIVATE_TOKEN_GITLAB_API_PROTON_CI: $PRIVATE_TOKEN_GITLAB_API_PROTON_CI
+EOT
+    exit 1
+  fi
+
+  git config --global user.email "$GIT_CI_EMAIL"
+  git config --global user.name "$GIT_CI_USERNAME"
   git checkout --track origin/master
 
+  local user="https://${GIT_CI_USERNAME}:${PRIVATE_TOKEN_GITLAB_API_PROTON_CI}";
+  # Ensure we convert git@xxx:xxxx/a.git to a URL friendly format
+  local scope="$(awk -F '@' '{print $2}' <<< "$CI_REPOSITORY_URL" | tr ':' '/')";
+
   # Take https format and convert it to a SSH one so we can push from the CI
-  local APP_GIT_CI="$(echo "$CI_REPOSITORY_URL" | perl -pe 's#.*@(.+?(\:\d+)?)/#git@\1:#')";
+  local APP_GIT_CI="${user}@${scope}";
 
   # Gitlab default URL is https and the push doesn't work
   git remote set-url origin "$APP_GIT_CI"
 
-  echo "=> set new origin $APP_GIT_CI";
 
   # Force add hidden files from gitignore + updated README.md
   git add -f README.md;
