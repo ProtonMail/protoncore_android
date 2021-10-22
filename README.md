@@ -123,11 +123,11 @@ Crypto Android: **1.15.5** - _released on: Oct 11, 2021_
 
 Auth: **1.17.3** - _released on: Oct 22, 2021_
 
-Auth Domain: **1.17.2** - _released on: Oct 21, 2021_
+Auth Domain: **1.17.3** - _released on: Oct 22, 2021_
 
-Auth Presentation: **1.17.2** - _released on: Oct 21, 2021_
+Auth Presentation: **1.17.3** - _released on: Oct 22, 2021_
 
-Auth Data: **1.17.2** - _released on: Oct 21, 2021_
+Auth Data: **1.17.3** - _released on: Oct 22, 2021_
 
 ### Account
 
@@ -174,11 +174,11 @@ User Data: **1.16.2** - _released on: Oct 19, 2021_
 
 User Settings: **1.16.1** - _released on: Oct 22, 2021_
 
-User Settings Data: **1.16** - _released on: Oct 19, 2021_
+User Settings Data: **1.16.1** - _released on: Oct 22, 2021_
 
-User Settings Domain: **1.16** - _released on: Oct 19, 2021_
+User Settings Domain: **1.16.1** - _released on: Oct 22, 2021_
 
-User Settings Presentation: **1.16** - _released on: Oct 19, 2021_
+User Settings Presentation: **1.16.1** - _released on: Oct 22, 2021_
 
 ### Contact
 
@@ -210,11 +210,11 @@ Mail Settings Data: **1.15** - _released on: Sep 13, 2021_
 
 Human Verification: **1.16.1** - _released on: Oct 22, 2021_
 
-Human Verification Domain: **1.16** - _released on: Oct 20, 2021_
+Human Verification Domain: **1.16.1** - _released on: Oct 22, 2021_
 
-Human Verification Presentation: **1.16** - _released on: Oct 20, 2021_
+Human Verification Presentation: **1.16.1** - _released on: Oct 22, 2021_
 
-Human Verification Data: **1.16** - _released on: Oct 20, 2021_
+Human Verification Data: **1.16.1** - _released on: Oct 22, 2021_
 
 ### Countries
 
