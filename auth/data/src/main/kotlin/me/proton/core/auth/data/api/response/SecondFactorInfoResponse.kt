@@ -21,8 +21,10 @@ package me.proton.core.auth.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.auth.domain.entity.SecondFactor
+import me.proton.core.auth.domain.entity.SecondFactorMethod
 import me.proton.core.auth.domain.entity.UniversalTwoFactor
 import me.proton.core.auth.domain.entity.UniversalTwoFactorKey
+import me.proton.core.util.kotlin.hasFlag
 import me.proton.core.util.kotlin.toBoolean
 
 @Serializable
@@ -34,8 +36,16 @@ data class SecondFactorInfoResponse(
 ) {
     fun toSecondFactor() = SecondFactor(
         enabled = enabled.toBoolean(),
+        supportedMethods = mapSupportedMethods(enabled),
         universalTwoFactor = universalTwoFactor?.toUniversalTwoFactor()
     )
+
+    private fun mapSupportedMethods(enabled: Int): Set<SecondFactorMethod> {
+        return mutableSetOf<SecondFactorMethod>().apply {
+            if (enabled.hasFlag(0b01)) add(SecondFactorMethod.Totp)
+            if (enabled.hasFlag(0b10)) add(SecondFactorMethod.Authenticator)
+        }.toSet()
+    }
 }
 
 @Serializable
