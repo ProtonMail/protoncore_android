@@ -32,7 +32,7 @@
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
         <activity
-            android:name="me.proton.android.core.coreexample.MainActivity"
+            android:name=".MainActivity"
             android:theme="@style/ProtonTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

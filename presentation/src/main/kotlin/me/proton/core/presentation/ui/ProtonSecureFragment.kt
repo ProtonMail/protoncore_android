@@ -16,22 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.presentation.ui
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import androidx.annotation.LayoutRes
+import me.proton.core.presentation.utils.ProtectScreenConfiguration
+import me.proton.core.presentation.utils.protectScreen
 
-libVersion = Version(1, 16, 1)
+abstract class ProtonSecureFragment: ProtonFragment {
+    constructor(): super()
+    constructor(@LayoutRes contentLayoutId: Int): super(contentLayoutId)
 
-android()
+    /** Can be overridden to modify the protections applied to the extending activity */
+    @Suppress("MemberVisibilityCanBePrivate")
+    protected val configuration = ProtectScreenConfiguration()
 
-dependencies {
-
-    api(
-        project(Module.humanVerificationDomain),
-        project(Module.humanVerificationData),
-        project(Module.humanVerificationPresentation)
-    )
+    private val screenProtector by protectScreen(configuration)
 }

@@ -1,3 +1,15 @@
+## Auth [1.17.3], Human Verification [1.16.1], User settings [1.16.1], Presentation [1.16.1]
+
+22 Oct, 2021
+
+### Changes
+
+- Add missing versions for Auth and User settings modules.
+- Added `ScreenContentsProtector` with shared logic for both activities and fragments: it can be added to any component, inheritance is no longer mandatory but is encouraged.
+- Moved most of `ProtonSecureActivity`'s logic to `ScreenContentsProtector` added a `ProtonSecureFragment` counterpart to apply security measures to fragments automatically.
+- Fix a bug when several protected fragments were shown on screen.
+- Added a `by protectScreen(ProtectScreenConfiguration)` delegate to automatically protect and unprotect activities and fragments based on their lifecycles. You can either use this delegate, the `ProtonSecure` superclasses or use `ScreenContentsProtector` manually and carefully checking that all secure components are protected and then unprotected when no longer needed. 
+
 ## Auth [1.17.1], User [1.16.2].
 
 19 Oct, 2021
@@ -53,14 +65,14 @@
 
 - Add new colors to the taxonomy for the sidebar component.
 
-## Auth [1.15.4], Human Verification [1.15.5], User settings [1.15.3], Presentation [1.15.6]
+## Human Verification [1.15.5], Presentation [1.15.6]
 
 13 Oct, 2021
 
 ### Changes
 
 - Protect screens with visible password fields using WindowManager's FLAG_SECURE.
-- Add `ProtonSecureActivity` that can be extended to apply security measures to any activity. At the moment, it's being extended by `AuthActivity`. 
+- Add `ProtonSecureActivity` that can be extended to apply security measures to any activity. At the moment, it's being extended by `AuthActivity`.
 
 ## Crypto and Key  [1.15.5]
 

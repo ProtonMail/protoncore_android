@@ -21,14 +21,14 @@ package me.proton.core.auth.presentation.ui.signup
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import me.proton.core.auth.presentation.R
-import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.ui.ProtonSecureFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 
 /**
  * Base fragment for all signup steps in the flow.
  */
-abstract class SignupFragment : ProtonFragment {
+abstract class SignupFragment : ProtonSecureFragment {
     constructor(): super()
     constructor(@LayoutRes contentLayoutId: Int): super(contentLayoutId)
 
