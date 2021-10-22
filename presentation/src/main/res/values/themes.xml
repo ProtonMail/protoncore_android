@@ -122,6 +122,7 @@
         <item name="proton_sidebar_icon_weak">@color/sidebar_icon_weak</item>
         <item name="proton_sidebar_interaction_pressed">@color/sidebar_interaction_pressed</item>
 
+        <item name="outlinedButtonStyle">@style/ProtonButton.OutlinedButton</item>
         <!-- Tell MIUI Dark Mode to stop breaking our theming. -->
         <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
         <!-- used to programmatically set button style -->
