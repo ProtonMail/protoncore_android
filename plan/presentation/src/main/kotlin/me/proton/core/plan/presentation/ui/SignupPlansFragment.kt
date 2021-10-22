@@ -19,7 +19,6 @@
 package me.proton.core.plan.presentation.ui
 
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -35,17 +34,17 @@ import me.proton.core.plan.presentation.databinding.FragmentPlansBinding
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
-import me.proton.core.plan.presentation.viewmodel.PlansViewModel
-import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.plan.presentation.viewmodel.BasePlansViewModel
+import me.proton.core.plan.presentation.viewmodel.SignupPlansViewModel
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class PlansFragment : ProtonFragment(R.layout.fragment_plans) {
+class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
 
-    private val viewModel by viewModels<PlansViewModel>()
+    private val signupPlansViewModel by viewModels<SignupPlansViewModel>()
 
     private val binding by viewBinding(FragmentPlansBinding::bind)
 
@@ -59,16 +58,17 @@ class PlansFragment : ProtonFragment(R.layout.fragment_plans) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.register(this)
+        signupPlansViewModel.register(this)
         addOnBackPressedCallback { finish() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (viewModel.supportedPaidPlans.isNotEmpty()) {
+        if (signupPlansViewModel.supportedPaidPlanNames.isNotEmpty()) {
             binding.apply {
-                toolbar.setNavigationOnClickListener { finish() }
-
+                toolbar.setNavigationOnClickListener {
+                    close()
+                }
                 input.user?.let {
                     if (input.showCurrent) {
                         plansTitle.visibility = View.GONE
@@ -79,12 +79,12 @@ class PlansFragment : ProtonFragment(R.layout.fragment_plans) {
                     }
                 }
             }
-            viewModel.availablePlansState.onEach {
+            signupPlansViewModel.availablePlansState.onEach {
                 when (it) {
-                    is PlansViewModel.State.Error.Message -> onError(it.message)
-                    is PlansViewModel.State.Idle -> Unit
-                    is PlansViewModel.State.Processing -> showLoading(true)
-                    is PlansViewModel.State.Success.Plans -> {
+                    is BasePlansViewModel.PlanState.Error.Message -> onError(it.message)
+                    is BasePlansViewModel.PlanState.Idle -> Unit
+                    is BasePlansViewModel.PlanState.Processing -> showLoading(true)
+                    is BasePlansViewModel.PlanState.Success.Plans -> {
                         showLoading(false)
                         with(binding) {
                             plansView.selectPlanListener = { selectedPlan ->
@@ -94,21 +94,18 @@ class PlansFragment : ProtonFragment(R.layout.fragment_plans) {
                                         KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to selectedPlan)
                                     )
                                 } else {
-                                    viewModel.startBillingForPaidPlan(userId, selectedPlan)
+                                    val cycle = when (selectedPlan.cycle) {
+                                        PlanCycle.MONTHLY -> SubscriptionCycle.MONTHLY
+                                        PlanCycle.YEARLY -> SubscriptionCycle.YEARLY
+                                        PlanCycle.TWO_YEARS -> SubscriptionCycle.TWO_YEARS
+                                    }.exhaustive
+                                    signupPlansViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
                                 }
                             }
                             plansView.plans = it.plans
-
-                            with(customizableFeaturesText) {
-                                if (it.subscription != null && !it.subscription.subscriptionPlanSupportedFromCore) {
-                                    text = getString(R.string.plans_customizable_features_web)
-                                }
-                                movementMethod = LinkMovementMethod.getInstance()
-                            }
-                            customizableFeaturesLayout.visibility = View.VISIBLE
                         }
                     }
-                    is PlansViewModel.State.Success.PaidPlanPayment -> {
+                    is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
                         parentFragmentManager.setFragmentResult(
                             KEY_PLAN_SELECTED, bundleOf(
                                 BUNDLE_KEY_PLAN to it.selectedPlan,
@@ -119,8 +116,9 @@ class PlansFragment : ProtonFragment(R.layout.fragment_plans) {
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
-            viewModel.getCurrentPlanWithUpgradeOption(userId = input.user, input.showCurrent)
+            signupPlansViewModel.getAllPlansForSignup()
         } else {
+            // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
             parentFragmentManager.setFragmentResult(
                 KEY_PLAN_SELECTED, bundleOf(
                     BUNDLE_KEY_PLAN to
@@ -151,7 +149,7 @@ class PlansFragment : ProtonFragment(R.layout.fragment_plans) {
         const val BUNDLE_KEY_BILLING_DETAILS = "bundle.billing_details"
         const val ARG_INPUT = "arg.plansInput"
 
-        operator fun invoke(input: PlanInput) = PlansFragment().apply {
+        operator fun invoke(input: PlanInput) = SignupPlansFragment().apply {
             arguments = bundleOf(
                 ARG_INPUT to input
             )

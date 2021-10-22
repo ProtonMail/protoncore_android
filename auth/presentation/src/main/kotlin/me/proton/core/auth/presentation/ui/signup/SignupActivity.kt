@@ -43,9 +43,9 @@ import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
-import me.proton.core.plan.presentation.ui.PlansFragment
-import me.proton.core.plan.presentation.ui.removePlans
-import me.proton.core.plan.presentation.ui.showPlans
+import me.proton.core.plan.presentation.ui.SignupPlansFragment
+import me.proton.core.plan.presentation.ui.removePlansSignup
+import me.proton.core.plan.presentation.ui.showPlansSignup
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -69,13 +69,15 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         signUpViewModel.inputState.onEach {
             when (it) {
                 is SignupViewModel.InputState.Ready -> {
-                    supportFragmentManager.showPlans(planInput = PlanInput())
+                    supportFragmentManager.showPlansSignup(planInput = PlanInput())
                     supportFragmentManager.setFragmentResultListener(
-                        PlansFragment.KEY_PLAN_SELECTED, this
+                        SignupPlansFragment.KEY_PLAN_SELECTED, this
                     ) { _, bundle ->
-                        supportFragmentManager.removePlans()
-                        val plan = bundle.getParcelable<SelectedPlan>(PlansFragment.BUNDLE_KEY_PLAN)
-                        val billing = bundle.getParcelable<BillingResult>(PlansFragment.BUNDLE_KEY_BILLING_DETAILS)
+                        supportFragmentManager.removePlansSignup()
+                        val plan = bundle.getParcelable<SelectedPlan>(SignupPlansFragment.BUNDLE_KEY_PLAN)
+                        val billing = bundle.getParcelable<BillingResult>(
+                            SignupPlansFragment.BUNDLE_KEY_BILLING_DETAILS
+                        )
                         if (plan != null) {
                             onPlanSelected(plan, billing)
                         } else {

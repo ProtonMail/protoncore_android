@@ -35,7 +35,7 @@ object PlansModule {
     @Provides
     @SupportedPaidPlans
     fun provideClientSupportedPaidPlanNames(): List<String> =
-        listOf("mail2021", "drive2021")
+        listOf("plus")
 
     @Provides
     @Singleton

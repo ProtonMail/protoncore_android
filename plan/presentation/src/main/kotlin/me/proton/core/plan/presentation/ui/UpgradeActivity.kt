@@ -29,6 +29,9 @@ import me.proton.core.plan.presentation.databinding.ActivityUpgradeBinding
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.UpgradeResult
+import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KEY_BILLING_DETAILS
+import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KEY_PLAN
+import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.KEY_PLAN_SELECTED
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import javax.inject.Inject
 
@@ -46,13 +49,17 @@ class UpgradeActivity : ProtonViewBindingActivity<ActivityUpgradeBinding>(Activi
         super.onCreate(savedInstanceState)
         paymentsOrchestrator.register(this)
 
-        supportFragmentManager.showPlans(containerId = R.id.layoutContent, planInput = input)
+        if (input.user != null) {
+            supportFragmentManager.showPlansForUpgrade(containerId = R.id.layoutContent, planInput = input)
+        } else {
+            supportFragmentManager.showPlansSignup(containerId = R.id.layoutContent, planInput = input)
+        }
 
         supportFragmentManager.setFragmentResultListener(
-            PlansFragment.KEY_PLAN_SELECTED, this@UpgradeActivity
+            KEY_PLAN_SELECTED, this@UpgradeActivity
         ) { _, bundle ->
-            val plan = bundle.getParcelable<SelectedPlan>(PlansFragment.BUNDLE_KEY_PLAN)
-            val billing = bundle.getParcelable<BillingResult>(PlansFragment.BUNDLE_KEY_BILLING_DETAILS)
+            val plan = bundle.getParcelable<SelectedPlan>(BUNDLE_KEY_PLAN)
+            val billing = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
             if (plan == null || billing == null) {
                 finish()
             } else {
@@ -68,4 +75,5 @@ class UpgradeActivity : ProtonViewBindingActivity<ActivityUpgradeBinding>(Activi
         const val ARG_INPUT = "arg.plansInput"
         const val ARG_RESULT = "arg.plansResult"
     }
+
 }

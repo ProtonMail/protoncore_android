@@ -78,7 +78,7 @@
         tools:text="The ultimate privacy pack with access to all premium Proton services." />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/expandablePlanGroup"
+        android:id="@+id/planGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,17 +120,6 @@
             app:layout_constraintTop_toBottomOf="@id/separator"
             tools:text="Your plan will be automatically renewed on " />
 
-        <me.proton.core.presentation.ui.view.ProtonButton
-            android:id="@+id/selectPlan"
-            style="@style/ProtonButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:text="@string/plans_select_plan"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/planRenewalText" />
-
         <TextView
             android:id="@+id/planPriceDescriptionText"
             style="@style/Proton.Text.Default.Weak"
@@ -141,7 +130,7 @@
             android:maxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/selectPlan"
+            app:layout_constraintTop_toBottomOf="@id/planRenewalText"
             tools:text="Billed as $48 per year" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

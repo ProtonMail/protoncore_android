@@ -24,17 +24,20 @@ import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.text.bold
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanItemBinding
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
+import me.proton.core.presentation.ui.view.ProtonButton
 import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
@@ -47,12 +50,25 @@ class PlanItemView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val binding = PlanItemBinding.inflate(LayoutInflater.from(context), this, true)
+    private val selectBtn: ProtonButton = ProtonButton(context, null, R.attr.outlinedButtonStyle)
 
     init {
+        selectBtn.id = View.generateViewId()
+        selectBtn.text = "Select"
+        selectBtn.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+
         with(binding) {
             billableAmount = PRICE_ZERO
 
-            selectPlan.onClick {
+            planGroup.addView(selectBtn)
+            val set = ConstraintSet()
+            set.clone(planGroup)
+            set.connect(selectBtn.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+            set.connect(selectBtn.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+            set.connect(selectBtn.id, ConstraintSet.TOP, planRenewalText.id, ConstraintSet.BOTTOM)
+            set.connect(planPriceDescriptionText.id, ConstraintSet.TOP, selectBtn.id, ConstraintSet.BOTTOM)
+            set.applyTo(planGroup)
+            selectBtn.onClick {
                 planSelectionListener?.invoke(planName, planDisplayName, billableAmount)
             }
         }
@@ -93,6 +109,7 @@ class PlanItemView @JvmOverloads constructor(
 
         val features = resources.getStringArray(R.array.free)
         binding.planDescriptionText.text = features[0]
+        planContents.removeAllViews()
         features.drop(1).forEach { item ->
             planContents.addView(PlanContentItemView(context).apply {
                 planItem = item
@@ -100,15 +117,13 @@ class PlanItemView @JvmOverloads constructor(
         }
 
         if (!plan.selectable) {
-            selectPlan.visibility = GONE
+            selectBtn.visibility = GONE
         }
     }
 
     private fun bindPaidPlan(plan: PlanDetailsListItem.PaidPlanDetailsListItem) = with(binding) {
         planDisplayName = plan.displayName
         planNameText.text = planDisplayName
-
-        ////////
 
         plan.renewalDate?.let {
             planRenewalText.apply {
@@ -125,17 +140,21 @@ class PlanItemView @JvmOverloads constructor(
 
         billableAmount = plan.price?.yearly ?: PRICE_ZERO
 
-        val planContentsList = context.getStringArrayByName("plan_id_${plan.name}")
-        planContentsList?.forEach { item ->
-            planContents.addView(item.createPlanFeature(context, plan))
+        val planFeatures = context.getStringArrayByName("plan_id_${plan.name}")
+        planFeatures?.let {
+            binding.planDescriptionText.text = it[0]
+            planContents.removeAllViews()
+            it.drop(1).forEach { item ->
+                planContents.addView(item.createPlanFeature(context, plan))
+            }
         }
 
-        selectPlan.visibility = if (plan.selectable) VISIBLE else GONE
+        selectBtn.visibility = if (plan.selectable) VISIBLE else GONE
         if (!plan.selectable) {
-            selectPlan.visibility = GONE
+            selectBtn.visibility = GONE
         }
         if (plan.upgrade) {
-            selectPlan.text = context.getString(R.string.plans_upgrade_plan)
+            selectBtn.text = context.getString(R.string.plans_upgrade_plan)
         }
         calculateAndUpdatePriceUI()
     }

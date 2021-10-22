@@ -17,7 +17,8 @@
   -->
 
 <resources>
-
+    <attr name="outlinedButtonStyle" format="reference"/>
+    
     <declare-styleable name="AppTheme">
         <!-- Brand specific attributes -->
         <attr name="brand_norm" format="reference" />

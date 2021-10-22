@@ -22,22 +22,44 @@ import androidx.fragment.app.FragmentManager
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.presentation.utils.inTransaction
 
-private const val TAG_PLANS = "plans_fragment"
+private const val TAG_PLANS = "plans_signup_fragment"
+private const val TAG_PLANS_UPGRADE = "plans_upgrade_fragment"
 
-fun FragmentManager.showPlans(
+fun FragmentManager.showPlansSignup(
     containerId: Int = android.R.id.content,
     planInput: PlanInput
 ) = findFragmentByTag(TAG_PLANS) ?: run {
-        val chooserUsernameFragment = PlansFragment(planInput)
-        inTransaction {
-            setCustomAnimations(0, 0)
-            add(containerId, chooserUsernameFragment, TAG_PLANS)
-            addToBackStack(null)
-        }
-        chooserUsernameFragment
+    val plansFragment = SignupPlansFragment(planInput)
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(containerId, plansFragment, TAG_PLANS)
+        addToBackStack(null)
     }
+    plansFragment
+}
 
-fun FragmentManager.removePlans() = findFragmentByTag(TAG_PLANS)?.let { plans ->
+fun FragmentManager.removePlansSignup() = findFragmentByTag(TAG_PLANS)?.let { plans ->
+    inTransaction {
+        setCustomAnimations(0, 0)
+        remove(plans)
+    }
+    popBackStack()
+}
+
+fun FragmentManager.showPlansForUpgrade(
+    containerId: Int = android.R.id.content,
+    planInput: PlanInput
+) = findFragmentByTag(TAG_PLANS_UPGRADE) ?: run {
+    val plansFragment = UpgradePlansFragment(planInput)
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(containerId, plansFragment, TAG_PLANS_UPGRADE)
+        addToBackStack(null)
+    }
+    plansFragment
+}
+
+fun FragmentManager.removePlansForUpgrade() = findFragmentByTag(TAG_PLANS_UPGRADE)?.let { plans ->
     inTransaction {
         setCustomAnimations(0, 0)
         remove(plans)
