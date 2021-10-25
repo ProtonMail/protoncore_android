@@ -19,12 +19,14 @@ package me.proton.core.presentation.ui.view
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.os.Parcelable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
 import android.text.method.KeyListener
 import android.util.AttributeSet
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -35,11 +37,14 @@ import androidx.core.content.withStyledAttributes
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.parcelize.Parcelize
 import me.proton.core.presentation.R
 import me.proton.core.presentation.databinding.ProtonInputBinding
 import me.proton.core.presentation.ui.isInputTypePassword
 import me.proton.core.presentation.ui.setTextOrGoneIfNull
 import me.proton.core.presentation.utils.clearTextAndOverwriteMemory
+import me.proton.core.presentation.utils.restoreChildViewStates
+import me.proton.core.presentation.utils.saveChildViewStates
 
 /**
  * Custom Proton input (advanced complex [EditText]) view.
@@ -81,6 +86,8 @@ class ProtonInput : LinearLayout {
 
     private val binding = ProtonInputBinding.inflate(LayoutInflater.from(context), this)
 
+    private var lastEditTimeMillis: Long? = null
+
     private fun init(context: Context, attrs: AttributeSet? = null) {
         orientation = VERTICAL
 
@@ -113,13 +120,52 @@ class ProtonInput : LinearLayout {
             }
         }
 
-        // Set internal input id.
-        binding.input.id = id
-
         // Clear error on text changed.
         binding.input.addTextChangedListener { editable ->
             if (editable?.isNotEmpty() == true) clearInputError()
         }
+
+        binding.input.addTextChangedListener {
+            lastEditTimeMillis = System.currentTimeMillis()
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        resetInputIfNeeded()
+    }
+
+    private fun resetInputIfNeeded() {
+        val durationFromLastEdit = System.currentTimeMillis() - (lastEditTimeMillis ?: 0L)
+        if (isInputTypeTextPassword() && durationFromLastEdit >= RESET_DURATION_MILLIS) {
+            text = null
+        }
+    }
+
+    private fun isInputTypeTextPassword() =
+        inputType and InputType.TYPE_TEXT_VARIATION_PASSWORD == InputType.TYPE_TEXT_VARIATION_PASSWORD
+
+    override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>) {
+        dispatchFreezeSelfOnly(container)
+    }
+
+    override fun dispatchRestoreInstanceState(container: SparseArray<Parcelable>) {
+        dispatchThawSelfOnly(container)
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        return ProtonInputState(
+            superSavedState = super.onSaveInstanceState(),
+            lastEditTimeMillis = lastEditTimeMillis,
+            childSavedState = saveChildViewStates()
+        )
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable) {
+        val protonInputState = state as ProtonInputState
+        restoreChildViewStates(protonInputState.childSavedState)
+        lastEditTimeMillis = protonInputState.lastEditTimeMillis
+        super.onRestoreInstanceState(protonInputState.superSavedState)
     }
 
     // region Public API
@@ -372,4 +418,15 @@ class ProtonInput : LinearLayout {
         }
     }
     // endregion
+
+    @Parcelize
+    data class ProtonInputState(
+        val superSavedState: Parcelable?,
+        val lastEditTimeMillis: Long?,
+        val childSavedState: SparseArray<Parcelable>,
+    ) : BaseSavedState(superSavedState), Parcelable
+
+    companion object {
+        private const val RESET_DURATION_MILLIS = 1000L * 60L * 3L // 3 minutes
+    }
 }

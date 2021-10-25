@@ -1,3 +1,9 @@
+## Presentation [1.17.0]
+
+### Changes
+
+- `ProtonInput` password field (inputType TextPassword) is now cleared when returning from background if more than 3 min have passed.
+
 ## Auth [1.17.3], Human Verification [1.16.1], User settings [1.16.1], Presentation [1.16.1]
 
 22 Oct, 2021

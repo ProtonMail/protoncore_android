@@ -23,9 +23,10 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("plugin.serialization")
+    id("kotlin-parcelize")
 }
 
-libVersion = Version(1, 16, 1)
+libVersion = Version(1, 17, 0)
 
 android(useViewBinding = true)
 
