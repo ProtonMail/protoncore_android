@@ -210,6 +210,25 @@ internal class GOpenPGPCryptoTest {
     }
 
     @Test
+    fun encryptDecryptAByteArrayWithSessionKey() {
+        // GIVEN
+        val message = "message\r\nnewline"
+        val data = message.toByteArray()
+
+        val sessionKey = crypto.generateNewSessionKey()
+
+        // WHEN
+        val encrypted = crypto.encryptData(data, sessionKey)
+
+        // THEN
+        val decryptData = crypto.decryptData(encrypted, sessionKey)
+
+        decryptData.use {
+            assertTrue(data.contentEquals(it.array))
+        }
+    }
+
+    @Test
     fun decryptEncryptedMessageWithPrivateKey() {
         // GIVEN
         val encrypted =

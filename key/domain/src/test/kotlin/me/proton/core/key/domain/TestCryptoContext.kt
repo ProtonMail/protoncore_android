@@ -24,8 +24,8 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.DecryptedText
@@ -224,6 +224,12 @@ class TestCryptoContext : CryptoContext {
                 decrypted.extractMessage().toByteArray()
             }
 
+        override fun decryptData(data: DataPacket, sessionKey: SessionKey): ByteArray =
+            data.decrypt(sessionKey.key).let { decrypted ->
+                check(String(decrypted).startsWith("BINARY"))
+                decrypted
+            }
+
         override fun decryptFile(source: EncryptedFile, destination: File, sessionKey: SessionKey): DecryptedFile {
             val data = source.readBytes()
             return DecryptedFile(
@@ -241,6 +247,10 @@ class TestCryptoContext : CryptoContext {
         override fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage =
             "BINARY([${data.fromByteArray()}]+$publicKey)"
                 .encryptMessage(publicKey)
+
+        override fun encryptData(data: ByteArray, sessionKey: SessionKey): DataPacket =
+            "BINARY([${data.fromByteArray()}]+${sessionKey.key})"
+                .encryptMessage(sessionKey.key).toByteArray()
 
         override fun encryptFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile =
             destination.apply { appendBytes(source.readBytes()) }

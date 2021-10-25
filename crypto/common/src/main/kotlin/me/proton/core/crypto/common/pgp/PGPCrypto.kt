@@ -67,6 +67,15 @@ interface PGPCrypto {
     fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage
 
     /**
+     * Encrypt [data] using [sessionKey].
+     *
+     * @throws [CryptoException] if [data] cannot be encrypted.
+     *
+     * @see [decryptData].
+     */
+    fun encryptData(data: ByteArray, sessionKey: SessionKey): DataPacket
+
+    /**
      * Encrypt [source] into [destination] using [sessionKey].
      *
      * @throws [CryptoException] if [source] cannot be encrypted.
@@ -144,6 +153,15 @@ interface PGPCrypto {
      * @see [encryptData]
      */
     fun decryptData(message: EncryptedMessage, unlockedKey: Unarmored): ByteArray
+
+    /**
+     * Decrypt [data] as [ByteArray] using [sessionKey].
+     *
+     * @throws [CryptoException] if [data] cannot be decrypted.
+     *
+     * @see [encryptData]
+     */
+    fun decryptData(data: DataPacket, sessionKey: SessionKey): ByteArray
 
     /**
      * Decrypt [source] into [destination] using [sessionKey].

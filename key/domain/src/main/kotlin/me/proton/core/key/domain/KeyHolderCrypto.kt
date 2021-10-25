@@ -23,6 +23,7 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
 import me.proton.core.crypto.common.pgp.DecryptedText
@@ -39,6 +40,7 @@ import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyFileOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
+import me.proton.core.crypto.common.pgp.decryptDataOrNull
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.NestedPrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKey
@@ -108,9 +110,35 @@ fun KeyHolderContext.decryptData(message: EncryptedMessage): ByteArray =
     privateKeyRing.decryptData(message)
 
 /**
+ * Decrypt [data] as [ByteArray] using [keyPacket].
+ *
+ * @throws [CryptoException] if [data] cannot be decrypted.
+ *
+ * If several operations use the same keyPacket, prefer `decryptSessionKey(keyPacket).use {...}`.
+ *
+ * @see [KeyHolderContext.decryptDataOrNull]
+ * @see [KeyHolderContext.encryptData]
+ */
+fun KeyHolderContext.decryptData(data: DataPacket, keyPacket: KeyPacket): ByteArray =
+    decryptSessionKey(keyPacket).use { key -> key.decryptData(context, data) }
+
+/**
+ * Decrypt [data] as [ByteArray] using [sessionKey].
+ *
+ * @throws [CryptoException] if [data] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptDataOrNull]
+ * @see [KeyHolderContext.encryptData]
+ */
+fun KeyHolderContext.decryptData(data: DataPacket, sessionKey: SessionKey): ByteArray =
+    sessionKey.decryptData(context, data)
+
+/**
  * Decrypt [source] into [destination] as [DecryptedFile] using [keyPacket].
  *
  * @throws [CryptoException] if [source] cannot be decrypted.
+ *
+ * If several operations use the same keyPacket, prefer `decryptSessionKey(keyPacket).use {...}`.
  *
  * @see [KeyHolderContext.decryptFileOrNull]
  * @see [KeyHolderContext.encryptFile]
@@ -154,7 +182,7 @@ fun KeyHolderContext.decryptAndVerifyHashKey(
     hashKey: EncryptedMessage,
     verifyKeyRing: PublicKeyRing = publicKeyRing
 ): HashKey = decryptAndVerifyText(hashKey, verifyKeyRing).let {
-    HashKey(context.pgpCrypto.getBase64Decoded(it.text), it.status)
+    HashKey(getBase64Decoded(it.text), it.status)
 }
 
 /**
@@ -180,9 +208,21 @@ fun KeyHolderContext.decryptDataOrNull(message: EncryptedMessage): ByteArray? =
     privateKeyRing.decryptDataOrNull(message)
 
 /**
+ * Decrypt [data] as [ByteArray] using [PrivateKeyRing].
+ *
+ * @return [ByteArray], or `null` if [data] cannot be decrypted.
+ *
+ * @see [KeyHolderContext.decryptData]
+ */
+fun KeyHolderContext.decryptDataOrNull(data: DataPacket, sessionKey: SessionKey): ByteArray? =
+        context.pgpCrypto.decryptDataOrNull(data, sessionKey)
+
+/**
  * Decrypt [source] into [destination] as [DecryptedFile] using [keyPacket].
  *
  * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
+ *
+ * If several operations use the same keyPacket, prefer `decryptSessionKey(keyPacket).use {...}`.
  *
  * @see [KeyHolderContext.decryptFileOrNull]
  * @see [KeyHolderContext.encryptFile]
@@ -443,9 +483,33 @@ fun KeyHolderContext.encryptData(data: ByteArray): EncryptedMessage =
     publicKeyRing.encryptData(context, data)
 
 /**
+ * Encrypt [data] using [keyPacket].
+ *
+ * @throws [CryptoException] if [data] cannot be encrypted.
+ *
+ * If several operations use the same keyPacket, prefer `decryptSessionKey(keyPacket).use {...}`.
+ *
+ * @see [KeyHolderContext.decryptData]
+ */
+fun KeyHolderContext.encryptData(data: ByteArray, keyPacket: KeyPacket): DataPacket =
+    decryptSessionKey(keyPacket).use { key -> key.encryptData(context, data) }
+
+/**
+ * Encrypt [data] using [sessionKey].
+ *
+ * @throws [CryptoException] if [data] cannot be encrypted.
+ *
+ * @see [KeyHolderContext.decryptData]
+ */
+fun KeyHolderContext.encryptData(data: ByteArray, sessionKey: SessionKey): DataPacket =
+    sessionKey.encryptData(context, data)
+
+/**
  * Encrypt [source] into [destination] using [keyPacket].
  *
  * @throws [CryptoException] if [source] cannot be encrypted.
+ *
+ * If several operations use the same keyPacket, prefer `decryptSessionKey(keyPacket).use {...}`.
  *
  * @see [KeyHolderContext.decryptFile]
  */
@@ -537,6 +601,8 @@ fun KeyHolderContext.encryptAndSignData(
  *
  * @throws [CryptoException] if [source] cannot be encrypted or signed.
  *
+ * If several operations use the same keyPacket, prefer `decryptSessionKey(keyPacket).use {...}`.
+ *
  * @see [KeyHolderContext.decryptAndVerifyFile].
  */
 fun KeyHolderContext.encryptAndSignFile(source: File, destination: File, keyPacket: KeyPacket): EncryptedFile =
@@ -579,7 +645,7 @@ fun KeyHolderContext.encryptSessionKey(sessionKey: SessionKey): KeyPacket =
 fun KeyHolderContext.encryptAndSignHashKey(
     hashKey: HashKey,
     encryptKeyRing: PublicKeyRing = publicKeyRing
-): EncryptedMessage = encryptAndSignText(context.pgpCrypto.getBase64Encoded(hashKey.key), encryptKeyRing)
+): EncryptedMessage = encryptAndSignText(getBase64Encoded(hashKey.key), encryptKeyRing)
 
 /**
  * Decrypt [message] as [String] using [KeyHolderContext.privateKeyRing] and verify using [verifyKeyRing].
@@ -633,6 +699,8 @@ fun KeyHolderContext.decryptAndVerifyData(
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @throws [CryptoException] if [source] cannot be decrypted.
+ *
+ * If several operations use the same keyPacket, prefer `decryptSessionKey(keyPacket).use {...}`.
  *
  * @see [KeyHolderContext.encryptAndSignFile]
  */
@@ -874,3 +942,19 @@ fun KeyHolderContext.generateNewKeyPacket(): KeyPacket = generateNewSessionKey()
  * Note: Consider using [use] on returned [SessionKey], to clear memory after usage.
  */
 fun KeyHolderContext.generateNewHashKey(): HashKey = context.pgpCrypto.generateNewHashKey()
+
+/**
+ * Get Base64 encoded string from [array].
+ *
+ * @see getBase64Decoded
+ */
+fun KeyHolderContext.getBase64Encoded(array: ByteArray): EncryptedMessage =
+    context.pgpCrypto.getBase64Encoded(array)
+
+/**
+ * Get Base64 decoded array from [string].
+ *
+ * @see getBase64Encoded
+ */
+fun KeyHolderContext.getBase64Decoded(string: String): ByteArray =
+    context.pgpCrypto.getBase64Decoded(string)
