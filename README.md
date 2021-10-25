@@ -111,11 +111,11 @@ Network Data: **1.15.7** - _released on: Oct 12, 2021_
 
 ### Crypto
 
-Crypto: **1.15.5** - _released on: Oct 11, 2021_
+Crypto: **1.15.6** - _released on: Oct 25, 2021_
 
-Crypto Common: **1.15.5** - _released on: Oct 11, 2021_
+Crypto Common: **1.15.6** - _released on: Oct 25, 2021_
 
-Crypto Android: **1.15.5** - _released on: Oct 11, 2021_
+Crypto Android: **1.15.6** - _released on: Oct 25, 2021_
 
 ## Features
 
@@ -164,11 +164,11 @@ Event Manager Data: **1.18** - _released on: Oct 25, 2021_
 
 ### Key
 
-Key: **1.15.6** - _released on: Oct 15, 2021_
+Key: **1.15.7** - _released on: Oct 25, 2021_
 
-Key Domain: **1.15.6** - _released on: Oct 15, 2021_
+Key Domain: **1.15.7** - _released on: Oct 25, 2021_
 
-Key Data: **1.15.6** - _released on: Oct 15, 2021_
+Key Data: **1.15.7** - _released on: Oct 25, 2021_
 
 ### User
 
