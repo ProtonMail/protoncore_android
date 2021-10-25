@@ -42,9 +42,10 @@ interface ApiClient {
 
     /**
      * Timeout for internal api call attempt (due to error handling logic there might be internal
-     * calls in a single API call by the client.
+     * calls in a single API call by the client).
+     * The returned value must be greater than or equal to [MIN_TIMEOUT_SECONDS].
      */
-    val timeoutSeconds: Long get() = 10L
+    val timeoutSeconds: Long get() = MIN_TIMEOUT_SECONDS
 
     /**
      * Global timeout for DoH logic.
@@ -88,4 +89,8 @@ interface ApiClient {
      * @param errorMessage the localized error message the user should see.
      */
     fun forceUpdate(errorMessage: String)
+
+    companion object {
+        const val MIN_TIMEOUT_SECONDS = 30L
+    }
 }
