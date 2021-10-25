@@ -91,9 +91,9 @@ Test Android Instrumented: **1.15.1** - _released on: Sep 15, 2021_
 
 ## Shared
 
-Domain: **1.16** - _released on: Oct 15, 2021_
+Domain: **1.18** - _released on: Oct 25, 2021_
 
-Presentation: **1.17** - _released on: Oct 25, 2021_
+Presentation: **1.18** - _released on: Oct 25, 2021_
 
 Data: **1.15** - _released on: Sep 13, 2021_
 
@@ -156,11 +156,11 @@ Account Manager Dagger: **1.16** - _released on: Oct 19, 2021_
 
 ### Event Manager
 
-Event Manager: **0** - _released on: Jun 17, 2021_
+Event Manager: **1.18** - _released on: Oct 25, 2021_
 
-Event Manager Domain: **0** - _released on: Jun 17, 2021_
+Event Manager Domain: **1.18** - _released on: Oct 25, 2021_
 
-Event Manager Data: **0** - _released on: Jun 17, 2021_
+Event Manager Data: **1.18** - _released on: Oct 25, 2021_
 
 ### Key
 
@@ -172,31 +172,31 @@ Key Data: **1.15.6** - _released on: Oct 15, 2021_
 
 ### User
 
-User: **1.16.2** - _released on: Oct 19, 2021_
+User: **1.18** - _released on: Oct 25, 2021_
 
-User Domain: **1.16.2** - _released on: Oct 19, 2021_
+User Domain: **1.18** - _released on: Oct 25, 2021_
 
-User Data: **1.16.2** - _released on: Oct 19, 2021_
+User Data: **1.18** - _released on: Oct 25, 2021_
 
 ### User Settings
 
-User Settings: **1.16.1** - _released on: Oct 22, 2021_
+User Settings: **1.18** - _released on: Oct 25, 2021_
 
-User Settings Data: **1.16.1** - _released on: Oct 22, 2021_
+User Settings Data: **1.18** - _released on: Oct 25, 2021_
 
-User Settings Domain: **1.16.1** - _released on: Oct 22, 2021_
+User Settings Domain: **1.18** - _released on: Oct 25, 2021_
 
-User Settings Presentation: **1.16.1** - _released on: Oct 22, 2021_
+User Settings Presentation: **1.18** - _released on: Oct 25, 2021_
 
 ### Contact
 
-Contact: **1.16-build-10106** - _released on: Oct 13, 2021_
+Contact: **1.18** - _released on: Oct 25, 2021_
 
-Contact Domain: **1.16-build-10106** - _released on: Oct 13, 2021_
+Contact Domain: **1.18** - _released on: Oct 25, 2021_
 
-Contact Data: **1.16-build-10106** - _released on: Oct 13, 2021_
+Contact Data: **1.18** - _released on: Oct 25, 2021_
 
-Contact Hilt: **1.16-build-10106** - _released on: Oct 13, 2021_
+Contact Hilt: **1.18** - _released on: Oct 25, 2021_
 
 ### Mail Message
 
@@ -208,11 +208,11 @@ Mail Message Data: **1.15** - _released on: Sep 13, 2021_
 
 ### Mail Settings
 
-Mail Settings: **1.15** - _released on: Sep 13, 2021_
+Mail Settings: **1.18** - _released on: Oct 25, 2021_
 
-Mail Settings Domain: **1.15** - _released on: Sep 13, 2021_
+Mail Settings Domain: **1.18** - _released on: Oct 25, 2021_
 
-Mail Settings Data: **1.15** - _released on: Sep 13, 2021_
+Mail Settings Data: **1.18** - _released on: Oct 25, 2021_
 
 ### Human Verification
 
