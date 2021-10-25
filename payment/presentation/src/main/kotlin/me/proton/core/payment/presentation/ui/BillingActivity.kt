@@ -38,12 +38,12 @@ import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityBillingBinding
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onTextChange
-import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -100,10 +100,10 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
     private fun observeViewModel() {
         viewModel.plansValidationState.onEach {
             when (it) {
-                is BillingViewModel.PlansValidationState.Success -> {
+                is BillingCommonViewModel.PlansValidationState.Success -> {
                     binding.selectedPlanDetailsLayout.plan = input.plan.copy(amount = it.subscription.amountDue)
                 }
-                is BillingViewModel.PlansValidationState.Error.Message -> showError(it.message)
+                is BillingCommonViewModel.PlansValidationState.Error.Message -> showError(it.message)
                 else -> {
                 }
             }.exhaustive
@@ -111,22 +111,22 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
 
         viewModel.subscriptionResult.onEach {
             when (it) {
-                is BillingViewModel.State.Processing -> showLoading(true)
-                is BillingViewModel.State.Success.SignUpTokenReady -> onBillingSuccess(
+                is BillingCommonViewModel.State.Processing -> showLoading(true)
+                is BillingCommonViewModel.State.Success.SignUpTokenReady -> onBillingSuccess(
                     it.paymentToken,
                     it.amount,
                     it.currency,
                     it.cycle
                 )
-                is BillingViewModel.State.Success.SubscriptionCreated -> onBillingSuccess(
+                is BillingCommonViewModel.State.Success.SubscriptionCreated -> onBillingSuccess(
                     amount = it.amount,
                     currency = it.currency,
                     cycle = it.cycle
                 )
-                is BillingViewModel.State.Incomplete.TokenApprovalNeeded ->
+                is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
                     onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
-                is BillingViewModel.State.Error.Message -> showError(it.message)
-                is BillingViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
+                is BillingCommonViewModel.State.Error.Message -> showError(it.message)
+                is BillingCommonViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
                     showError(getString(R.string.payments_error_signup_paymentmethod))
                 else -> {
                     // no operation, not interested in other events

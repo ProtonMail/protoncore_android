@@ -60,7 +60,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
     private val validateSubscription = mockk<ValidateSubscriptionPlan>(relaxed = true)
-    private val billingViewModel = mockk<BillingViewModel>(relaxed = true)
+    private val billingViewModelHelper = mockk<BillingCommonViewModel>(relaxed = true)
     private val createPaymentToken = mockk<CreatePaymentTokenWithNewCreditCard>(relaxed = true)
     private val createPaymentTokenWithExistingPaymentMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>(relaxed = true)
     private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>(relaxed = true)
@@ -113,7 +113,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         viewModel =
             PaymentOptionsViewModel(
                 context,
-                billingViewModel,
+                billingViewModelHelper,
                 getAvailablePaymentMethods,
                 getCurrentSubscription
             )
@@ -202,7 +202,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         viewModelSpy.subscribe(testUserId, testPlanId, null, testCurrency, testSubscriptionCycle, paymentType)
         // THEN
         verify(exactly = 1) {
-            billingViewModel.subscribe(
+            billingViewModelHelper.subscribe(
                 testUserId,
                 listOf("current-plan-1", testPlanId),
                 any(),
@@ -222,7 +222,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         viewModel.subscribe(testUserId, testPlanId, null, testCurrency, testSubscriptionCycle, paymentType)
         // THEN
         verify(exactly = 1) {
-            billingViewModel.subscribe(
+            billingViewModelHelper.subscribe(
                 testUserId,
                 listOf("test-plan-id"),
                 null,
@@ -241,7 +241,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         viewModel.validatePlan(testUserId, testPlanId, null, testCurrency, testSubscriptionCycle)
         // THEN
         verify(exactly = 1) {
-            billingViewModel.validatePlan(
+            billingViewModelHelper.validatePlan(
                 testUserId,
                 listOf("test-plan-id"),
                 null,
@@ -269,7 +269,7 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
         )
         // THEN
         verify(exactly = 1) {
-            billingViewModel.onThreeDSTokenApproved(
+            billingViewModelHelper.onThreeDSTokenApproved(
                 testUserId,
                 listOf("test-plan-id"),
                 null,
