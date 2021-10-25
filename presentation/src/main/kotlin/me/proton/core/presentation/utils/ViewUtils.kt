@@ -20,8 +20,10 @@
 
 package me.proton.core.presentation.utils
 
+import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +37,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.children
 import androidx.core.view.marginBottom
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
@@ -253,3 +256,13 @@ data class InitialPadding(val start: Int, val top: Int, val end: Int, val bottom
 private fun recordInitialPaddingForView(view: View) = InitialPadding(
     view.paddingStart, view.paddingTop, view.paddingEnd, view.paddingBottom
 )
+
+fun ViewGroup.saveChildViewStates(): SparseArray<Parcelable> {
+    val childViewStates = SparseArray<Parcelable>()
+    children.forEach { child -> child.saveHierarchyState(childViewStates) }
+    return childViewStates
+}
+
+fun ViewGroup.restoreChildViewStates(childViewStates: SparseArray<Parcelable>) {
+    children.forEach { child -> child.restoreHierarchyState(childViewStates) }
+}
