@@ -1,0 +1,115 @@
+image: ${CI_REGISTRY}/protonvpn/android/android-app-new:branch-compose
+
+include:
+  - project: 'proton/devops/atlas-deploy'
+    ref: 'master'
+    file: '/deploy-to-atlas.gitlab-ci.yml'
+
+variables:
+  ATLAS_DEPLOY_SCOPE: 'android-core-qa'
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .gradle
+    - coreexample/src/androidTest/assets/sensitive
+    - 'coreexample/build/outputs/apk'
+    - deploy.env
+
+stages:
+  - review
+  - build
+  - test
+  - cleanup
+
+deploy:review:
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - deploy.env
+    policy: push
+  extends: .deploy:black
+  after_script:
+    - . ./deploy.env
+    - echo $DYNAMIC_DOMAIN
+
+cleanup:review:
+  cache: []
+  stage: cleanup
+  extends: .cleanup:black
+
+assemble:
+  stage: build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .gradle
+      - coreexample/src/androidTest/assets/sensitive
+      - '**/build'
+      - deploy.env
+  tags:
+    - large
+  script:
+    - . ./deploy.env
+    - echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
+    - echo HOST=$DYNAMIC_DOMAIN >> local.properties
+    - mkdir -p coreexample/src/androidTest/assets/sensitive
+    - cat $TEST_USERS > coreexample/src/androidTest/assets/sensitive/users.json
+    - cat $TEST_INTERNAL_API > coreexample/src/androidTest/assets/sensitive/internal_apis.json
+    - ./gradlew :coreexample:assemble
+    - ./gradlew :coreexample:assembleAndroidTest
+
+.firebase-tests-common:
+  stage: test
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - 'coreexample/build/outputs/apk'
+    policy: pull
+  tags:
+    - medium
+  script:
+    - wget --quiet --output-document=/tmp/google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.tar.gz
+    - mkdir -p opt
+    - tar zxf /tmp/google-cloud-sdk.tar.gz --directory opt
+    - opt/google-cloud-sdk/install.sh --quiet
+    - source opt/google-cloud-sdk/path.bash.inc
+    - gcloud config set project $CLOUD_PROJECT_ID_CORE
+    - gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT
+    - gcloud firebase test android run
+      --app coreexample/build/outputs/apk/debug/coreexample-debug.apk
+      --test coreexample/build/outputs/apk/androidTest/debug/coreexample-debug-androidTest.apk
+      --device model=Pixel2,version=28
+      --test-targets "$TEST_TARGET"
+      --use-orchestrator
+      --timeout 45m
+
+uitest:signup:
+  stage: test
+  before_script:
+    - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.auth.signup"
+  extends: .firebase-tests-common
+
+uitest:login:
+  stage: test
+  before_script:
+    - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.auth.login"
+  extends: .firebase-tests-common
+
+uitest:payments:
+  stage: test
+  before_script:
+    - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.payments"
+  extends: .firebase-tests-common
+
+uitest:plans:
+  stage: test
+  before_script:
+    - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.plans"
+  extends: .firebase-tests-common
+
+uitest:usersettings:
+  stage: test
+  before_script:
+    - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.usersettings"
+  extends: .firebase-tests-common

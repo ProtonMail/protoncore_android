@@ -46,7 +46,7 @@ import org.junit.runner.Description
 open class ProtonTest(
     private val activity: Class<out Activity>,
     defaultTimeout: Long = 10_000L,
-    tries: Int = 1,
+    tries: Int = 2,
     testWatcher: TestWatcher = TestExecutionWatcher(),
     activityScenarioRule: ActivityScenarioRule<out Activity> = ActivityScenarioRule(activity),
 ) {

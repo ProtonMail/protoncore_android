@@ -18,8 +18,6 @@
 
 package me.proton.core.test.android.robots.auth.login
 
-import android.widget.Button
-import android.widget.EditText
 import me.proton.core.auth.R
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
@@ -67,9 +65,9 @@ class LoginRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun loginElementsDisplayed() {
-            view.withId(R.id.usernameInput).instanceOf(EditText::class.java).closeKeyboard()
-            view.withId(R.id.passwordInput).instanceOf(EditText::class.java).checkDisplayed()
-            view.withId(R.id.signInButton).instanceOf(Button::class.java).checkDisplayed()
+            view.withId(R.id.usernameInput).closeKeyboard().checkDisplayed()
+            view.withId(R.id.passwordInput).checkDisplayed()
+            view.withId(R.id.signInButton).checkDisplayed()
         }
     }
 

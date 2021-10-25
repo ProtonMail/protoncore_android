@@ -18,8 +18,6 @@
 
 package me.proton.core.test.android.robots.settings
 
-import android.widget.Button
-import android.widget.EditText
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.usersettings.R
@@ -66,10 +64,10 @@ class PasswordManagementRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun passwordManagementElementsDisplayed() {
-            view.withId(R.id.newLoginPasswordInput).instanceOf(EditText::class.java).checkDisplayed()
-            view.withId(R.id.confirmNewLoginPasswordInput).instanceOf(EditText::class.java).checkDisplayed()
-            view.withId(R.id.currentLoginPasswordInput).instanceOf(EditText::class.java).checkDisplayed()
-            view.withId(R.id.saveLoginPasswordButton).instanceOf(Button::class.java).checkDisplayed()
+            view.withId(R.id.newLoginPasswordInput).checkDisplayed()
+            view.withId(R.id.confirmNewLoginPasswordInput).checkDisplayed()
+            view.withId(R.id.currentLoginPasswordInput).checkDisplayed()
+            view.withId(R.id.saveLoginPasswordButton).checkDisplayed()
         }
     }
 

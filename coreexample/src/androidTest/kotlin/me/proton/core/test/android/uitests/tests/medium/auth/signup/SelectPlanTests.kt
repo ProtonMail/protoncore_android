@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.Plan.Free
 import me.proton.core.test.android.plugins.data.Plan.Dev
 import me.proton.core.test.android.plugins.data.User
@@ -36,6 +37,7 @@ class SelectPlanTests : BaseTest() {
 
     @Before
     fun goToPlanSelection() {
+        quark.jailUnban()
         val user = User()
         AddAccountRobot()
             .createAccount()
@@ -51,6 +53,7 @@ class SelectPlanTests : BaseTest() {
     }
 
     @Test
+    @SmokeTest
     fun selectFreeAndCancelHumanVerification() {
         selectPlanRobot
             .selectPlan<HumanVerificationRobot>(Free)
@@ -68,6 +71,7 @@ class SelectPlanTests : BaseTest() {
     }
 
     @Test
+    @SmokeTest
     fun selectPlusAndCancelPayment() {
         selectPlanRobot
             .selectPlan<AddCreditCardRobot>(Dev)

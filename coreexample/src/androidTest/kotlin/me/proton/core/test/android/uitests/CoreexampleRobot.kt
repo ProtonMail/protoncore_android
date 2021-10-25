@@ -67,9 +67,8 @@ open class CoreexampleRobot : CoreRobot() {
             view.withText(userState).checkDisplayed()
         }
 
-        fun coreexampleElementsDisplayed() {
-            view.withId(R.id.trigger_human_ver).checkDisplayed()
-            view.withId(R.id.signupExternal).checkDisplayed()
+        fun accountSwitcherDisplayed() {
+            view.withId(R.id.account_email_textview).checkDisplayed()
         }
 
         fun primaryUserIs(user: User) {

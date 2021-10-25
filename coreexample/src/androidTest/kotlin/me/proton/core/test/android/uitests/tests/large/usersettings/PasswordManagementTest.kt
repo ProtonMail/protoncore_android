@@ -16,50 +16,32 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.uitests.tests.medium.plans
+package me.proton.core.test.android.uitests.tests.large.usersettings
 
-import me.proton.core.test.android.plugins.data.Plan
-import me.proton.core.test.android.plugins.data.User
+import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
-import me.proton.core.test.android.robots.auth.login.LoginRobot
-import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import org.junit.Before
 import org.junit.Test
 
-class CurrentPlanTests : BaseTest() {
+class PasswordManagementTest : BaseTest() {
 
-    @Before
-    fun login() {
+    val user = quark.userCreate()
+
+    @Test
+    fun changePasswordAndLogin() {
+        val newPassword = "newPassword"
         AddAccountRobot()
             .signIn()
-    }
-
-    private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
-        LoginRobot()
             .loginUser<CoreexampleRobot>(user)
+            .settingsPasswordManagement()
+            .changePassword<CoreexampleRobot>(user.password, newPassword)
+            .accountSwitcher()
+            .userAction<AddAccountRobot>(user, AccountSwitcherRobot.UserAction.Remove)
+            .signIn()
+            .username(user.name)
+            .password(newPassword)
+            .signIn<CoreexampleRobot>()
             .verify { primaryUserIs(user) }
-
-        return CoreexampleRobot()
-            .plansCurrent()
-    }
-
-    @Test
-    fun userWithFreePlan() {
-        val freeUser = users.getUser { !it.isPaid }
-        navigateUserToCurrentPlans(freeUser)
-            .verify {
-                canSelectPlan(Plan.Dev)
-                planDetailsDisplayed(Plan.Dev)
-                planDetailsDisplayed(Plan.Free)
-            }
-    }
-
-    @Test
-    fun userWithPaidPlan() {
-        val paidUser = users.getUser { it.isPaid }
-        navigateUserToCurrentPlans(paidUser)
-            .verify { planDetailsDisplayed(paidUser.plan) }
     }
 }

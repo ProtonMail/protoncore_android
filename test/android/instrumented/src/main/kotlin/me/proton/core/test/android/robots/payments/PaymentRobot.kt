@@ -62,7 +62,7 @@ open class PaymentRobot : CoreRobot() {
                 R.id.expirationDateInput,
                 R.id.cvcInput
             ).forEach {
-                view.withId(it).instanceOf(EditText::class.java).checkDisplayed()
+                view.withId(it).checkDisplayed()
             }
         }
     }

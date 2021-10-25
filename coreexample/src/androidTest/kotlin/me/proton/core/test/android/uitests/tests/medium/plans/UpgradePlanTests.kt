@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.plans
 
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
@@ -42,22 +43,28 @@ class UpgradePlanTests : BaseTest() {
             .signIn()
     }
 
-    private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot =
+    private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
         LoginRobot()
             .loginUser<CoreexampleRobot>(user)
+            .verify { primaryUserIs(user) }
+
+        CoreexampleRobot()
             .plansUpgrade()
+        return SelectPlanRobot()
+    }
 
     @Test
+    @SmokeTest
     fun userWithFreePlan() {
         navigateUserToCurrentPlans(freeUser)
             .verify {
-                canSelectPlan(Plan.Plus)
-                planDetailsDisplayed(Plan.Plus)
+                canSelectPlan(Plan.Dev)
+                planDetailsDisplayed(Plan.Dev)
             }
 
         selectPlanRobot
             .close<CoreexampleRobot>()
-            .verify { coreexampleElementsDisplayed() }
+            .verify { accountSwitcherDisplayed() }
     }
 
     @Test

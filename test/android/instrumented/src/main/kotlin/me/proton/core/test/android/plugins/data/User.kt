@@ -23,23 +23,24 @@ import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.serialization.Serializable
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 import me.proton.core.test.android.instrumented.utils.StringUtils
+import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.util.kotlin.deserializeList
 
 @Serializable
 data class User(
     val name: String = "proton_core_${StringUtils.randomString(stringLength = 6)}",
     val password: String = "11111111",
-    val email: String = "",
+    val email: String = EMPTY_STRING,
 
-    val passphrase: String = "",
-    val twoFa: String = "",
+    val passphrase: String = EMPTY_STRING,
+    val twoFa: String = EMPTY_STRING,
 
-    val phone: String = "",
-    val country: String = "",
+    val phone: String = EMPTY_STRING,
+    val country: String = EMPTY_STRING,
 
     val plan: Plan = Plan.Free,
     val cards: List<Card> = emptyList(),
-    val paypal: String = "",
+    val paypal: String = EMPTY_STRING,
 
     val recoveryEmail: String = ""
 ) {
@@ -78,3 +79,4 @@ data class User(
         }
     }
 }
+

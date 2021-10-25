@@ -21,6 +21,7 @@ package me.proton.core.test.android.uitests.tests.medium.usersettings
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.R
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
@@ -81,25 +82,27 @@ class PasswordManagementTests : BaseTest() {
     }
 
     @Test
+    @SmokeTest
     fun updatePasswordFreeUser() {
         navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
             .changePassword<CoreexampleRobot>(freeUser.password, freeUser.password, freeUser.password)
             .verify {
-                coreexampleElementsDisplayed()
+                accountSwitcherDisplayed()
                 userStateIs(freeUser, AccountState.Ready, SessionState.Authenticated)
             }
     }
 
     @Test
+    @SmokeTest
     fun updatePasswordPaidUser() {
         navigateToPasswordManagement(paidUser)
 
         passwordManagementRobot
             .changePassword<CoreexampleRobot>(paidUser.password, paidUser.password, paidUser.password)
             .verify {
-                coreexampleElementsDisplayed()
+                accountSwitcherDisplayed()
                 userStateIs(paidUser, AccountState.Ready, SessionState.Authenticated)
             }
     }
@@ -110,6 +113,6 @@ class PasswordManagementTests : BaseTest() {
 
         passwordManagementRobot
             .close<CoreexampleRobot>()
-            .verify { coreexampleElementsDisplayed() }
+            .verify { accountSwitcherDisplayed() }
     }
 }

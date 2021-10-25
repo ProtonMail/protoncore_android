@@ -31,18 +31,13 @@ import me.proton.core.test.android.instrumented.builders.OnView
  */
 open class CoreRobot : Robot {
 
-    enum class Scroll {
-        UP
-    }
-
     /**
      * Adds text to an element which has an [id] with [value]
      * @param T next Robot to be returned
      */
     inline fun <reified T> addText(@IdRes id: Int, value: String): T {
         view
-            .instanceOf(EditText::class.java)
-            .withId(id)
+            .isInputField(id)
             .typeText(value)
         return T::class.java.newInstance()
     }
@@ -53,8 +48,7 @@ open class CoreRobot : Robot {
      */
     inline fun <reified T> replaceText(@IdRes id: Int, value: String): T {
         view
-            .instanceOf(EditText::class.java)
-            .withId(id)
+            .isInputField(id)
             .clearText()
             .typeText(value)
         return T::class.java.newInstance()

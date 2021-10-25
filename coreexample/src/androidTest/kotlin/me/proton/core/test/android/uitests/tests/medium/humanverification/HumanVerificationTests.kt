@@ -20,6 +20,7 @@ package me.proton.core.test.android.uitests.tests.medium.humanverification
 
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -45,6 +46,7 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
+    @SmokeTest
     fun closeHvViews() {
         humanVerificationRobot
             .sms()
@@ -54,7 +56,7 @@ class HumanVerificationTests : BaseTest() {
             .close<HumanVerificationRobot>()
             .close<CoreexampleRobot>()
             .verify {
-                coreexampleElementsDisplayed()
+                accountSwitcherDisplayed()
                 userStateIs(user, Ready, Authenticated)
             }
     }
@@ -71,7 +73,7 @@ class HumanVerificationTests : BaseTest() {
             .setCode(defaultCode)
             .verifyCode<CoreexampleRobot>()
             .verify {
-                coreexampleElementsDisplayed()
+                accountSwitcherDisplayed()
                 userStateIs(user, Ready, Authenticated)
             }
     }
@@ -92,7 +94,7 @@ class HumanVerificationTests : BaseTest() {
             .setCode(defaultCode)
             .verifyCode<CoreexampleRobot>()
             .verify {
-                coreexampleElementsDisplayed()
+                accountSwitcherDisplayed()
                 userStateIs(user, Ready, Authenticated)
             }
     }
@@ -104,7 +106,7 @@ class HumanVerificationTests : BaseTest() {
             .captcha()
             .iAmHuman<CoreexampleRobot>()
             .verify {
-                coreexampleElementsDisplayed()
+                accountSwitcherDisplayed()
                 userStateIs(user, Ready, Authenticated)
             }
     }

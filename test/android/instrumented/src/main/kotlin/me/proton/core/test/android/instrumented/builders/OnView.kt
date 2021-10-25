@@ -23,13 +23,16 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Root
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
+import androidx.test.espresso.matcher.RootMatchers.DEFAULT
 import androidx.test.espresso.matcher.ViewMatchers
+import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import org.hamcrest.CoreMatchers
 import org.hamcrest.Matcher
@@ -41,11 +44,12 @@ import java.util.ArrayList
  */
 class OnView : ConditionWatcher {
     private val matchers: ArrayList<Matcher<View>> = arrayListOf()
+    private val rootMatchers: ArrayList<Matcher<Root>> = arrayListOf()
 
     /** [ViewInteraction] wait. **/
     private fun viewInteraction(viewAssertion: ViewAssertion = matches(ViewMatchers.isDisplayed())): ViewInteraction {
-        waitForCondition({ onView(viewMatcher()).check(viewAssertion) })
-        return onView(viewMatcher())
+        waitForCondition({ onView(viewMatcher()).inRoot(rootMatcher()).check(viewAssertion) })
+        return onView(viewMatcher()).inRoot(rootMatcher())
     }
 
     /** Matcher wrappers **/
@@ -111,6 +115,13 @@ class OnView : ConditionWatcher {
 
     fun isFocused() = apply {
         matchers.add(ViewMatchers.isFocused())
+    }
+
+    /**
+     * Match EditText with [id] or child EditText of ProtonInput with [id].
+     */
+    fun isInputField(@IdRes id: Int) = apply {
+        matchers.add(inputFieldMatcher(id))
     }
 
     fun isNotChecked() = apply {
@@ -221,8 +232,15 @@ class OnView : ConditionWatcher {
         matchers.add(matcher)
     }
 
+    fun withRootMatcher(matcher: Matcher<Root>) = apply {
+        rootMatchers.add(matcher)
+    }
+
     /** Final [Matcher] for the view. **/
     fun viewMatcher(): Matcher<View> = AllOf.allOf(matchers)
+
+    /** Final [Matcher] for the root. **/
+    private fun rootMatcher(): Matcher<Root> = if (rootMatchers.isEmpty()) DEFAULT else AllOf.allOf(rootMatchers)
 
     /** Action wrappers. **/
     fun click() = apply {

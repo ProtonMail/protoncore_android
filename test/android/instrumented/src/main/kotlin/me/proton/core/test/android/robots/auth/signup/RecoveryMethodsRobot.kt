@@ -96,9 +96,9 @@ class RecoveryMethodsRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun recoveryMethodsElementsDisplayed() {
-            view.withId(R.id.emailEditText).instanceOf(TextView::class.java).checkDisplayed()
-            view.withText(RecoveryMethodType.EMAIL.name).instanceOf(TextView::class.java).checkDisplayed()
-            view.withText(RecoveryMethodType.PHONE.name).instanceOf(TextView::class.java).checkDisplayed()
+            view.withId(R.id.emailEditText).checkDisplayed()
+            view.withText(RecoveryMethodType.EMAIL.name).checkDisplayed()
+            view.withText(RecoveryMethodType.PHONE.name).checkDisplayed()
         }
     }
 

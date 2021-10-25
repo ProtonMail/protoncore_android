@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.robots.auth.signup
 
-import android.widget.TextView
 import me.proton.core.auth.R
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
@@ -58,8 +57,8 @@ class PasswordSetupRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun passwordSetupElementsDisplayed() {
-            view.withId(R.id.confirmPasswordInput).instanceOf(TextView::class.java).checkDisplayed()
-            view.withId(R.id.passwordInput).instanceOf(TextView::class.java).checkDisplayed()
+            view.withId(R.id.confirmPasswordInput).checkDisplayed()
+            view.withId(R.id.passwordInput).checkDisplayed()
         }
     }
 

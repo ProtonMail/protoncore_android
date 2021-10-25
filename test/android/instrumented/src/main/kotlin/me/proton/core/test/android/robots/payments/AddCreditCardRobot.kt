@@ -78,7 +78,6 @@ class AddCreditCardRobot : PaymentRobot() {
      */
     fun country(): CountryRobot {
         view.withId(R.id.scrollContent).swipeUp()
-        view.withId(R.id.countriesText).instanceOf(EditText::class.java).click()
-        return CountryRobot()
+        return clickElement(R.id.countriesText, EditText::class.java)
     }
 }

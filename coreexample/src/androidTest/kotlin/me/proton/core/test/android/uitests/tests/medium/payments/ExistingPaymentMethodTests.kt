@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.payments
 
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.Card
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.plugins.data.Plan
@@ -62,6 +63,7 @@ class ExistingPaymentMethodTests : BaseTest() {
     }
 
     @Test
+    @SmokeTest
     fun existingCreditCardMethodDisplayed() {
         upgradeUserToPlan(userWithCard)
             .verify { paymentMethodDisplayed(Card.default.details, Card.default.name) }

@@ -18,8 +18,6 @@
 
 package me.proton.core.test.android.robots.auth
 
-import android.widget.EditText
-import android.widget.TextView
 import me.proton.core.auth.R
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
@@ -57,7 +55,7 @@ class ChooseUsernameRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun chooseUsernameElementsDisplayed() {
-            view.withId(R.id.usernameInput).instanceOf(EditText::class.java).checkDisplayed().closeKeyboard()
+            view.withId(R.id.usernameInput).closeKeyboard().checkDisplayed()
             view.withId(R.id.nextButton).checkDisplayed()
         }
 
@@ -68,7 +66,7 @@ class ChooseUsernameRobot : CoreRobot() {
             view.withText(R.string.auth_signup_create_account).checkDisplayed()
 
         fun suffixDisplayed(suffix: String) =
-            view.withText("@$suffix").instanceOf(TextView::class.java).checkDisplayed()
+            view.withText("@$suffix").checkDisplayed()
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
