@@ -66,6 +66,8 @@ dependencies {
         project(Module.userSettingsDomain),
         project(Module.contactData),
         project(Module.contactDomain),
+        project(Module.eventManagerData),
+        project(Module.eventManagerDomain),
 
         // Kotlin
         `kotlin-jdk8`,

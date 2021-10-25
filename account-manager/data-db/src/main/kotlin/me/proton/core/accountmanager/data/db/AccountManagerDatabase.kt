@@ -36,6 +36,9 @@ import me.proton.core.contact.data.local.db.entity.ContactEntity
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.room.db.BaseDatabase
 import me.proton.core.data.room.db.CommonConverters
+import me.proton.core.eventmanager.data.db.EventManagerConverters
+import me.proton.core.eventmanager.data.db.EventMetadataDatabase
+import me.proton.core.eventmanager.data.entity.EventMetadataEntity
 import me.proton.core.humanverification.data.db.HumanVerificationConverters
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.entity.HumanVerificationEntity
@@ -90,6 +93,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         ContactCardEntity::class,
         ContactEmailEntity::class,
         ContactEmailLabelEntity::class,
+        // event-manager
+        EventMetadataEntity::class,
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -101,7 +106,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     CryptoConverters::class,
     HumanVerificationConverters::class,
     UserSettingsConverters::class,
-    ContactConverters::class
+    ContactConverters::class,
+    EventManagerConverters::class,
 )
 abstract class AccountManagerDatabase :
     BaseDatabase(),
@@ -114,11 +120,12 @@ abstract class AccountManagerDatabase :
     MailSettingsDatabase,
     UserSettingsDatabase,
     OrganizationDatabase,
-    ContactDatabase {
+    ContactDatabase,
+    EventMetadataDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 10
+        const val version = 11
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -129,7 +136,8 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_6_7,
             AccountManagerDatabaseMigrations.MIGRATION_7_8,
             AccountManagerDatabaseMigrations.MIGRATION_8_9,
-            AccountManagerDatabaseMigrations.MIGRATION_9_10
+            AccountManagerDatabaseMigrations.MIGRATION_9_10,
+            AccountManagerDatabaseMigrations.MIGRATION_10_11,
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =

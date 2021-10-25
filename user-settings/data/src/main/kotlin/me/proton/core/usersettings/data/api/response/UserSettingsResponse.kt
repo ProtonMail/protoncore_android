@@ -20,11 +20,6 @@ package me.proton.core.usersettings.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.usersettings.domain.entity.Flags
-import me.proton.core.usersettings.domain.entity.PasswordSetting
-import me.proton.core.usersettings.domain.entity.TwoFASetting
-import me.proton.core.usersettings.domain.entity.U2FKeySetting
-import me.proton.core.util.kotlin.toBoolean
 
 @Serializable
 data class UserSettingsResponse(

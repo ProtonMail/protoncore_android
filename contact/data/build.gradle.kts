@@ -39,6 +39,7 @@ dependencies {
         project(Module.domain),
         project(Module.contactDomain),
         project(Module.userData),
+        project(Module.eventManagerDomain),
 
         // Kotlin
         `serialization-json`,

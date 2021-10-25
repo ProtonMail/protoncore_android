@@ -18,6 +18,9 @@
 
 package me.proton.core.domain.entity
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class UserId(val id: String)
 
 /**

@@ -31,6 +31,16 @@
         android:supportsRtl="true"
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
         <activity
             android:name=".MainActivity"
             android:theme="@style/ProtonTheme.Splash">

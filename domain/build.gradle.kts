@@ -21,9 +21,10 @@ import studio.forface.easygradle.dsl.android.*
 plugins {
     `java-library`
     kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 16, 0)
+libVersion = Version(1, 18, 0)
 
 dependencies {
 
@@ -33,7 +34,8 @@ dependencies {
         // Kotlin
         `kotlin-jdk7`,
         `coroutines-core`,
-        `javax-inject`
+        `javax-inject`,
+        `serialization-json`,
     )
 
     testImplementation(project(Module.kotlinTest))
