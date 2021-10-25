@@ -160,7 +160,7 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
     private fun onLoginPasswordConfirmed(confirmedPassword: String) = with(binding) {
         if (viewModel.secondFactorEnabled == true) {
             childFragmentManager.apply {
-                childFragmentManager.registerShowPasswordDialogResultLauncher(
+                registerShowPasswordDialogResultLauncher(
                     this@PasswordManagementFragment
                 ) { result ->
                     if (result != null) {
@@ -211,7 +211,7 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
     private fun onMailboxPasswordConfirmed(confirmedPassword: String) = with(binding) {
         if (viewModel.secondFactorEnabled == true) {
             childFragmentManager.apply {
-                childFragmentManager.registerShowPasswordDialogResultLauncher(
+                registerShowPasswordDialogResultLauncher(
                     this@PasswordManagementFragment,
                     onResultMailboxPassword = { result ->
                         if (result != null) {
