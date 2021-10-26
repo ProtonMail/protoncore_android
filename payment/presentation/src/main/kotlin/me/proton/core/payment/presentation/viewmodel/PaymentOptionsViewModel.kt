@@ -49,7 +49,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PaymentOptionsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    val billingViewModel: BillingViewModel,
+    val billingCommonViewModel: BillingCommonViewModel,
     private val availablePaymentMethods: GetAvailablePaymentMethods,
     private val getCurrentSubscription: GetCurrentSubscription
 ) : ProtonViewModel() {
@@ -133,7 +133,7 @@ class PaymentOptionsViewModel @Inject constructor(
         currency: Currency,
         cycle: SubscriptionCycle,
         paymentType: PaymentType
-    ) = billingViewModel.subscribe(
+    ) = billingCommonViewModel.subscribe(
         userId, currentPlans.plus(planName), codes, currency, cycle, paymentType
     )
 
@@ -145,7 +145,7 @@ class PaymentOptionsViewModel @Inject constructor(
         currency: Currency,
         cycle: SubscriptionCycle,
         token: String
-    ) = billingViewModel.onThreeDSTokenApproved(
+    ) = billingCommonViewModel.onThreeDSTokenApproved(
         userId, currentPlans.plus(planName), codes, amount, currency, cycle, token
     )
 
@@ -155,7 +155,7 @@ class PaymentOptionsViewModel @Inject constructor(
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle
-    ) = billingViewModel.validatePlan(userId, currentPlans.plus(planName).distinct(), codes, currency, cycle)
+    ) = billingCommonViewModel.validatePlan(userId, currentPlans.plus(planName).distinct(), codes, currency, cycle)
 
     companion object {
         const val NO_ACTIVE_SUBSCRIPTION = 22110
