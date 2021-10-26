@@ -26,7 +26,7 @@
     ]>
 
 <resources>
-    <string name="plans_select_plan">Select Plan</string>
+    <string name="plans_select_plan">Select</string>
     <string name="plans_select_a_plan">Select a Plan</string>
     <string name="plans_customizable_features">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to upgrade to Professional and Visionary plans, or to customize your plan.</string>
     <string name="plans_customizable_features_web">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to customize your plan.</string>

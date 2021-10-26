@@ -24,18 +24,15 @@ import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.AdapterView
 import android.widget.Spinner
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.text.bold
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanItemBinding
-import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanCurrency
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
 import me.proton.core.presentation.ui.view.ProtonButton
 import me.proton.core.presentation.utils.PRICE_ZERO
@@ -50,33 +47,11 @@ class PlanItemView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val binding = PlanItemBinding.inflate(LayoutInflater.from(context), this, true)
-    private val selectBtn: ProtonButton = ProtonButton(context, null, R.attr.outlinedButtonStyle)
-
-    init {
-        selectBtn.id = View.generateViewId()
-        selectBtn.text = "Select"
-        selectBtn.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-
-        with(binding) {
-            billableAmount = PRICE_ZERO
-
-            planGroup.addView(selectBtn)
-            val set = ConstraintSet()
-            set.clone(planGroup)
-            set.connect(selectBtn.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-            set.connect(selectBtn.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-            set.connect(selectBtn.id, ConstraintSet.TOP, planRenewalText.id, ConstraintSet.BOTTOM)
-            set.connect(planPriceDescriptionText.id, ConstraintSet.TOP, selectBtn.id, ConstraintSet.BOTTOM)
-            set.applyTo(planGroup)
-            selectBtn.onClick {
-                planSelectionListener?.invoke(planName, planDisplayName, billableAmount)
-            }
-        }
-    }
+    private lateinit var selectBtn: ProtonButton
 
     var planSelectionListener: ((String, String, Double) -> Unit)? = null
 
-    private var billableAmount: Double
+    private var billableAmount = PRICE_ZERO
     private lateinit var planName: String
     private lateinit var planDisplayName: String
 
@@ -89,11 +64,32 @@ class PlanItemView @JvmOverloads constructor(
                 field = value
                 planName = plan.name
                 when (plan) {
-                    is PlanDetailsListItem.FreePlanDetailsListItem -> bindFreePlan(plan)
-                    is PlanDetailsListItem.PaidPlanDetailsListItem -> bindPaidPlan(plan)
+                    is PlanDetailsListItem.FreePlanDetailsListItem -> {
+                        selectBtn = plan.selectButton(context)
+                        bindFreePlan(plan)
+                    }
+                    is PlanDetailsListItem.PaidPlanDetailsListItem -> {
+                        selectBtn = plan.selectButton(context)
+                        bindPaidPlan(plan)
+                    }
                 }.exhaustive
+                addSelectButtonToView()
             }
         }
+
+    private fun addSelectButtonToView() = with(binding) {
+        planGroup.addView(selectBtn)
+        val set = ConstraintSet()
+        set.clone(planGroup)
+        set.connect(selectBtn.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+        set.connect(selectBtn.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+        set.connect(selectBtn.id, ConstraintSet.TOP, planRenewalText.id, ConstraintSet.BOTTOM)
+        set.connect(planPriceDescriptionText.id, ConstraintSet.TOP, selectBtn.id, ConstraintSet.BOTTOM)
+        set.applyTo(planGroup)
+        selectBtn.onClick {
+            planSelectionListener?.invoke(planName, planDisplayName, billableAmount)
+        }
+    }
 
     private fun bindFreePlan(plan: PlanDetailsListItem.FreePlanDetailsListItem) = with(binding) {
         planDisplayName = context.getString(R.string.plans_free_name)
