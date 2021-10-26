@@ -29,7 +29,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.TimeUnit
 
-class Quark(private val host: String, private val proxyToken: String, internalApiJsonPath: String) {
+class Quark(private val host: String, private val proxyToken: String?, internalApiJsonPath: String) {
     @Serializable
     data class InternalApi(
         val endpoints: LinkedHashMap<InternalApiEndpoint, String>,
@@ -62,7 +62,7 @@ class Quark(private val host: String, private val proxyToken: String, internalAp
     private fun quarkRequest(endpoint: String, args: Array<String> = emptyArray()): String {
         val argString = args.filter { it.isNotEmpty() }.joinToString("&")
         val url = "https://${host}$endpoint?$argString"
-        val req = Request.Builder().url(url).header("x-atlas-secret", proxyToken).build()
+        val req = Request.Builder().url(url).apply { proxyToken?.let { header("x-atlas-secret", proxyToken) } }.build()
 
         client.newCall(req).execute().use {
             Log.d(testTag, "\nSent request to endpoint : $endpoint; Response Code: ${it.code}")
