@@ -30,7 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/gap_large_plus"
         android:maxLines="1"
-        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ProtonMail PLUS" />
@@ -51,13 +50,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/gap_small"
             android:maxLines="1"
-            android:textSize="22sp"
-            android:textStyle="normal"
             tools:text="€0.00" />
 
         <TextView
             android:id="@+id/planCycleText"
-            style="@style/Proton.Text.Default.Weak"
+            style="@style/Proton.Text.DefaultSmall.Weak"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -122,7 +119,7 @@
 
         <TextView
             android:id="@+id/planPriceDescriptionText"
-            style="@style/Proton.Text.Default.Weak"
+            style="@style/Proton.Text.DefaultSmall.Weak"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_gap"

@@ -94,17 +94,19 @@ class PlanItemView @JvmOverloads constructor(
     private fun bindFreePlan(plan: PlanDetailsListItem.FreePlanDetailsListItem) = with(binding) {
         planDisplayName = context.getString(R.string.plans_free_name)
         planNameText.text = planDisplayName
-        if (plan.current) {
-            planCycleText.text = context.getString(R.string.plans_current_plan)
-        } else {
-            planCycleText.visibility = View.GONE
-        }
+
+        planCycleText.visibility = View.GONE
         planPriceDescriptionText.visibility = View.GONE
         planPriceText.visibility = View.GONE
         billableAmount = PRICE_ZERO
 
         val features = resources.getStringArray(R.array.free)
-        binding.planDescriptionText.text = features[0]
+
+        if (plan.current) {
+            planDescriptionText.text = context.getString(R.string.plans_current_plan)
+        } else {
+            binding.planDescriptionText.text = features[0]
+        }
         planContents.removeAllViews()
         features.drop(1).forEach { item ->
             planContents.addView(PlanContentItemView(context).apply {
@@ -129,16 +131,18 @@ class PlanItemView @JvmOverloads constructor(
             }
             separator.visibility = View.VISIBLE
         }
+
+        val planFeatures = context.getStringArrayByName("plan_id_${plan.name}")
         if (plan.current) {
-            planCycleText.text = context.getString(R.string.plans_current_plan)
+            planDescriptionText.text = context.getString(R.string.plans_current_plan)
             planPriceText.visibility = View.GONE
         }
 
         billableAmount = plan.price?.yearly ?: PRICE_ZERO
-
-        val planFeatures = context.getStringArrayByName("plan_id_${plan.name}")
         planFeatures?.let {
-            binding.planDescriptionText.text = it[0]
+            if (!plan.current) {
+                binding.planDescriptionText.text = it[0]
+            }
             planContents.removeAllViews()
             it.drop(1).forEach { item ->
                 planContents.addView(item.createPlanFeature(context, plan))
@@ -152,11 +156,10 @@ class PlanItemView @JvmOverloads constructor(
         if (plan.upgrade) {
             selectBtn.text = context.getString(R.string.plans_upgrade_plan)
         }
-        calculateAndUpdatePriceUI()
+        calculateAndUpdatePriceUI(plan.current)
     }
 
-    private fun calculateAndUpdatePriceUI() = with(binding) {
-
+    private fun calculateAndUpdatePriceUI(current: Boolean) = with(binding) {
         planDetailsListItem.let {
             billableAmount = when (it) {
                 is PlanDetailsListItem.FreePlanDetailsListItem -> PRICE_ZERO
@@ -170,7 +173,6 @@ class PlanItemView @JvmOverloads constructor(
             }.exhaustive
         }
 
-        planCycleText.visibility = VISIBLE
         val monthlyPrice: Double = when (cycle) {
             PlanCycle.MONTHLY -> {
                 planPriceDescriptionText.visibility = GONE
@@ -178,19 +180,38 @@ class PlanItemView @JvmOverloads constructor(
             }
             PlanCycle.YEARLY -> {
                 planPriceDescriptionText.visibility = VISIBLE
-                billableAmount / 12
+                billableAmount / MONTHS_IN_YEAR
             }
             PlanCycle.TWO_YEARS -> {
                 planPriceDescriptionText.visibility = VISIBLE
-                billableAmount / 24
+                billableAmount / MONTHS_IN_2YEARS
             }
         }.exhaustive.toDouble()
 
-        planPriceText.text = monthlyPrice.formatCentsPriceDefaultLocale(currency.name)
-        planPriceDescriptionText.text = String.format(
-            context.getString(R.string.plans_billed_yearly),
-            billableAmount.formatCentsPriceDefaultLocale(currency.name, fractionDigits = 2)
-        )
+        val price = monthlyPrice.formatCentsPriceDefaultLocale(currency.name)
+        planPriceText.text = price
+        if (!current) {
+            planCycleText.visibility = VISIBLE
+            planPriceDescriptionText.text = String.format(
+                context.getString(R.string.plans_billed_yearly),
+                billableAmount.formatCentsPriceDefaultLocale(currency.name, fractionDigits = 2)
+            )
+        } else {
+            when (cycle) {
+                PlanCycle.MONTHLY -> planCycleText.text = context.getString(R.string.plans_billed_monthly)
+                PlanCycle.YEARLY -> planCycleText.text = context.getString(R.string.plans_billed_anually)
+                PlanCycle.TWO_YEARS -> planCycleText.text = context.getString(R.string.plans_billed_every_2years)
+            }.exhaustive
+            planCycleText.visibility = GONE
+            planPriceDescriptionText.visibility = GONE
+            planPriceText.visibility = VISIBLE
+            planCycleText.visibility = VISIBLE
+        }
+    }
+
+    companion object {
+        private const val MONTHS_IN_YEAR = 12
+        private const val MONTHS_IN_2YEARS = 24
     }
 }
 

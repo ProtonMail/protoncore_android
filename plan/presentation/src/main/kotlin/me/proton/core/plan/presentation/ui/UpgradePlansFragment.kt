@@ -20,6 +20,7 @@ package me.proton.core.plan.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -32,8 +33,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansUpgradeBinding
-import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanCurrency
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.BasePlansViewModel
@@ -118,6 +119,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                                     upgradePlanViewModel.startBillingForPaidPlan(userId, selectedPlan, cycle)
                                 }
                             }
+                            plansTitle.visibility = if (it.plans.isNotEmpty()) VISIBLE else GONE
                             plansView.plans = it.plans
                         }
                     }
@@ -145,7 +147,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
     }
 
     private fun showLoading(loading: Boolean) = with(binding) {
-        progress.visibility = if (loading) View.VISIBLE else View.GONE
+        progress.visibility = if (loading) VISIBLE else View.GONE
     }
 
     private fun onError(message: String?) {

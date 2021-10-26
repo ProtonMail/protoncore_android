@@ -114,7 +114,7 @@ internal class UpgradePlansViewModel @Inject constructor(
     private fun getAvailablePlansForUpgrade(userId: UserId) = flow {
         emit(PlanState.Processing)
         val availablePlans = getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it }, userId = userId)
-            .filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.id } }
+            .filter { availablePlan -> subscribedPlans.none { it.name == availablePlan.name } }
             .map { it.toPaidPlanDetailsItem(subscribedPlans, true) }
 
         emit(PlanState.Success.Plans(plans = availablePlans))

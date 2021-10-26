@@ -45,18 +45,19 @@ internal class SignupPlansViewModel @Inject constructor(
     fun getAllPlansForSignup() = flow {
         emit(PlanState.Processing)
 
-        val plans: MutableList<PlanDetailsListItem> =
-            mutableListOf(createFreePlanAsCurrent(current = false, selectable = true))
+        val plans: MutableList<PlanDetailsListItem> = mutableListOf()
 
-        plans.addAll(getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it }, userId = null)
-            .map {
-                it.toPaidPlanDetailsItem(
-                    subscribedPlans = null,
-                    upgrade = false
-                )
-            }
-        )
-
+        plans.apply {
+            addAll(getPlans(supportedPaidPlans = supportedPaidPlanNames.map { it }, userId = null)
+                .map {
+                    it.toPaidPlanDetailsItem(
+                        subscribedPlans = null,
+                        upgrade = false
+                    )
+                }
+            )
+            add(createFreePlanAsCurrent(current = false, selectable = true))
+        }
         emit(PlanState.Success.Plans(plans = plans))
     }.catch { error ->
         _availablePlansState.tryEmit(PlanState.Error.Message(error.message))
