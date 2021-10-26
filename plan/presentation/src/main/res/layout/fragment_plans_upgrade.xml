@@ -57,7 +57,7 @@
                 android:id="@+id/currentPlan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_plan_list_item"
+                android:background="@drawable/background_current_plan"
                 android:padding="@dimen/gap_large"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
