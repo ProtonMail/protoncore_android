@@ -236,13 +236,13 @@ Country Presentation: **1.16** - _released on: Oct 19, 2021_
 
 ### Payment
 
-Payment: **1.17.1** - _released on: Oct 22, 2021_
+Payment: **1.17.2** - _released on: Oct 26, 2021_
 
-Payment Data: **1.17.1** - _released on: Oct 22, 2021_
+Payment Data: **1.17.2** - _released on: Oct 26, 2021_
 
-Payment Domain: **1.17.1** - _released on: Oct 22, 2021_
+Payment Domain: **1.17.2** - _released on: Oct 26, 2021_
 
-Payment Presentation: **1.17.1** - _released on: Oct 22, 2021_
+Payment Presentation: **1.17.2** - _released on: Oct 26, 2021_
 
 ### Plan
 
