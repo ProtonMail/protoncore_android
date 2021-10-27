@@ -35,7 +35,8 @@ class SelectPlanRobot : CoreRobot() {
      */
     inline fun <reified T> selectPlan(plan: Plan): T {
         view
-            .withId(R.id.selectPlan)
+            // TODO: now select button is a dynamic component, probably should be used .withText()
+//            .withId(R.id.selectPlan)
             .hasSibling(
                 view.withId(R.id.planNameText).withText(plan.text)
             )
@@ -71,7 +72,8 @@ class SelectPlanRobot : CoreRobot() {
 
         fun canSelectPlan(plan: Plan) {
             view
-                .withId(R.id.selectPlan)
+                // TODO: now select button is a dynamic component, probably should be used .withText()
+//                .withId(R.id.selectPlan)
                 .hasSibling(
                     view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
                 )
