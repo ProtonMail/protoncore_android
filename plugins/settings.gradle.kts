@@ -16,11 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "Core Gradle plugins"
+rootProject.name = "Core gradle plugins"
 
 includeBuild("publish")
 
 include(
+    "core",
     "detekt",
     "kotlin",
     "tests"
@@ -39,7 +40,7 @@ enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
-            from(files("../../gradle/libs.versions.toml"))
+            from(files("../gradle/libs.versions.toml"))
         }
     }
 }

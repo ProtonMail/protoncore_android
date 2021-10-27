@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -17,18 +17,19 @@
  */
 
 import org.gradle.kotlin.dsl.implementation
+import org.gradle.kotlin.dsl.kotlin
 import studio.forface.easygradle.dsl.Version
 
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
-    kotlin("plugin.serialization")
     `java-gradle-plugin`
+    id("me.proton.publish-plugins")
 }
 
 val plugin = PluginConfig(
-    name = "Detekt",
-    version = Version(0, 4)
+    name = "Kotlin",
+    version = Version(0, 1)
 )
 pluginConfig = plugin
 
@@ -37,9 +38,9 @@ version = plugin.version
 
 gradlePlugin {
     plugins {
-        create(plugin.id) {
+        create("${plugin.id}") {
             id = plugin.id
-            implementationClass = "ProtonDetektPlugin"
+            implementationClass = "ProtonKotlinPlugin"
             version = plugin.version
         }
     }
@@ -52,7 +53,5 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
-    implementation(libs.easyGradle.dsl)
+    implementation(kotlin("gradle-plugin"))
 }

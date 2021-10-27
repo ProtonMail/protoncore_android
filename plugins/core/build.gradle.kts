@@ -16,36 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.kotlin.dsl.`java-gradle-plugin`
-import org.gradle.kotlin.dsl.`kotlin-dsl`
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.gradlePlugin
-import org.gradle.kotlin.dsl.implementation
-import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.repositories
-import studio.forface.easygradle.dsl.Version
-
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
     `java-gradle-plugin`
 }
 
-val plugin = PluginConfig(
-    name = "Tests",
-    version = Version(0, 1)
-)
-pluginConfig = plugin
-
-group = plugin.group
-version = plugin.version
+group = "me.proton"
+version = "1.0"
 
 gradlePlugin {
     plugins {
-        create("${plugin.id}") {
-            id = plugin.id
-            implementationClass = "ProtonTestsPlugin"
-            version = plugin.version
+        create("gradlePlugin") {
+            id = "core"
+            implementationClass = "ProtonCorePlugin"
         }
     }
 }
@@ -57,5 +41,6 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation(kotlin("gradle-plugin"))
+    compileOnly(libs.android.pluginGradle)
+    api(libs.easyGradle.androidDsl)
 }

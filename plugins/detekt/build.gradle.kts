@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,20 +16,32 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import org.gradle.kotlin.dsl.implementation
+import studio.forface.easygradle.dsl.Version
+
 plugins {
     `kotlin-dsl`
-    kotlin("jvm") version embeddedKotlinVersion
+    kotlin("jvm")
+    kotlin("plugin.serialization")
     `java-gradle-plugin`
+    id("me.proton.publish-plugins")
 }
 
-group = "me.proton"
-version = "1.0"
+val plugin = PluginConfig(
+    name = "Detekt",
+    version = Version(0, 4)
+)
+pluginConfig = plugin
+
+group = plugin.group
+version = plugin.version
 
 gradlePlugin {
     plugins {
-        create("gradlePlugin") {
-            id = "core"
-            implementationClass = "ProtonCorePlugin"
+        create(plugin.id) {
+            id = plugin.id
+            implementationClass = "ProtonDetektPlugin"
+            version = plugin.version
         }
     }
 }
@@ -41,6 +53,7 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    compileOnly(libs.android.pluginGradle)
-    api(libs.easyGradle.androidDsl)
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation(libs.easyGradle.dsl)
 }
