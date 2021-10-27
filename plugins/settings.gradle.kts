@@ -23,6 +23,7 @@ includeBuild("publish")
 include(
     "core",
     "detekt",
+    "jacoco",
     "kotlin",
     "tests"
 )
