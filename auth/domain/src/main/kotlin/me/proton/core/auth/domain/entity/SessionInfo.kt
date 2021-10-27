@@ -40,21 +40,15 @@ data class SessionInfo(
     val passwordMode: Int,
     val secondFactor: SecondFactor?
 ) {
-    val isSecondFactorNeeded = secondFactor?.enabled == true
+    val isSecondFactorNeeded = secondFactor is SecondFactor.Enabled
     val isTwoPassModeNeeded = passwordMode == 2
 }
 
-data class SecondFactor(
-    val enabled: Boolean,
-    val universalTwoFactor: UniversalTwoFactor?
-)
+sealed class SecondFactor {
+    data class Enabled(val supportedMethods: Set<SecondFactorMethod>) : SecondFactor()
+    object Disabled : SecondFactor()
+}
 
-data class UniversalTwoFactor(
-    val challenge: String,
-    val registeredKeys: List<UniversalTwoFactorKey>
-)
-
-data class UniversalTwoFactorKey(
-    val version: String,
-    val keyHandle: String
-)
+enum class SecondFactorMethod {
+    Totp, Authenticator
+}

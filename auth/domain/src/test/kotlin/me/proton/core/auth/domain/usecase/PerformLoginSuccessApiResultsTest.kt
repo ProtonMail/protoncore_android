@@ -129,7 +129,7 @@ class PerformLoginSuccessApiResultsTest {
     @Test
     fun `correct handling single password account second factor returned`() = runBlockingTest {
         coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
-            secondFactor = SecondFactor(true, null)
+            secondFactor = SecondFactor.Enabled(emptySet())
         )
 
         val sessionInfo = useCase.invoke(testUsername, testPassword)
@@ -140,7 +140,7 @@ class PerformLoginSuccessApiResultsTest {
     fun `correct handling two password account second factor returned`() = runBlockingTest {
         coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
             passwordMode = 2,
-            secondFactor = SecondFactor(true, null)
+            secondFactor = SecondFactor.Enabled(emptySet())
         )
         val sessionInfo = useCase.invoke(testUsername, testPassword)
         assertNotNull(sessionInfo)
