@@ -67,6 +67,8 @@ In order to use the all-in-one Detekt configuration, you have to:
 
 Detekt: **0.4** - _released on: Sep 13, 2021_
 
+Jacoco: **0.1** - _released on: Oct 26, 2021_
+
 Kotlin: **0.1** - _released on: Oct 09, 2020_
 
 Tests: **0.1** - _released on: Oct 09, 2020_

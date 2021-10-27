@@ -23,6 +23,7 @@ stages:
   - build
   - startReview
   - test
+  - report
   - publish
   - commit
   - slackRelease
@@ -32,8 +33,6 @@ cache:
   paths:
     - .gradle
     - '**/build'
-    - '**/**/build'
-    - '**/**/**/build'
 
 
 #####################
@@ -188,3 +187,20 @@ startReview:
 
 stopReview:
   extends: .stopReview
+
+coverage report:
+  stage: report
+  tags:
+    - large
+  script:
+    - ./gradlew coberturaCoverageReport
+  coverage: /Total.*?(\d{1,3}\.\d{0,2})%/
+  allow_failure: true
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - ./**/build/reports/*
+    reports:
+      cobertura:
+        - ./**/build/reports/cobertura-coverage.xml
+

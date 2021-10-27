@@ -27,6 +27,10 @@ abstract class BaseDatabase : RoomDatabase(), Database {
 
     override suspend fun <R> inTransaction(block: suspend () -> R): R = withTransaction(block)
 
+    fun newDummyFunction() {
+        println("This code is not covered")
+    }
+
     companion object {
         inline fun <reified DB : RoomDatabase> databaseBuilder(
             context: Context,
