@@ -107,6 +107,7 @@
         <item name="proton_background_norm">@color/background_norm</item>
         <item name="proton_background_secondary">@color/background_secondary</item>
         <item name="proton_separator_norm">@color/separator_norm</item>
+        <item name="proton_notification_norm">@color/notification_norm</item>
         <item name="proton_notification_error">@color/notification_error</item>
         <item name="proton_notification_success">@color/notification_success</item>
         <item name="proton_notification_warning">@color/notification_warning</item>

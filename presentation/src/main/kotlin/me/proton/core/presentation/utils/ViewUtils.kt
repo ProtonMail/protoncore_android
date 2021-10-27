@@ -30,11 +30,7 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.EditText
-import android.widget.TextView
-import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
-import androidx.annotation.StringRes
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
@@ -42,8 +38,6 @@ import androidx.core.view.marginBottom
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
-import com.google.android.material.snackbar.Snackbar
-import me.proton.core.presentation.R
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.util.kotlin.times
 
@@ -143,82 +137,6 @@ inline fun View.onClick(crossinline block: () -> Unit) {
  */
 fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
-
-/**
- * Shows red error snack bar. Usually as a general way to display various errors to the user.
- *
- * @param messageRes the String resource error message id
- */
-fun View.errorSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.background_error)
-}
-
-/**
- * Shows red error snack bar. Usually as a general way to display various errors to the user.
- */
-fun View.errorSnack(message: String) {
-    snack(message = message, color = R.drawable.background_error)
-}
-
-/**
- * Shows red error snack bar. Usually as a general way to display various errors to the user.
- */
-fun View.errorSnack(message: String, action: String?, actionOnClick: (() -> Unit)?) {
-    snack(message = message, color = R.drawable.background_error, action = action, actionOnClick = actionOnClick)
-}
-
-/**
- * Shows green success snack bar. Usually as a general way to display success result of an operation to the user.
- */
-fun View.successSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.background_success)
-}
-
-/**
- * General snack bar util function which takes message and color as config.
- * The default showing length is [Snackbar.LENGTH_LONG].
- *
- * @param messageRes the String resource message id
- */
-fun View.snack(
-    @StringRes messageRes: Int,
-    @DrawableRes color: Int
-) {
-    snack(message = resources.getString(messageRes), color = color)
-}
-
-/**
- * General snack bar util function which takes message, color and length as config.
- * The default showing length is [Snackbar.LENGTH_LONG].
- */
-fun View.snack(
-    message: String,
-    @DrawableRes color: Int,
-    action: String? = null,
-    actionOnClick: (() -> Unit)? = null,
-    length: Int = Snackbar.LENGTH_LONG
-) {
-    snack(message, color, length) {
-        if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
-    }
-}
-
-/**
- * General snack bar util function which takes message, color and length and a configuration block.
- * The default showing length is [Snackbar.LENGTH_LONG].
- */
-fun View.snack(
-    message: String,
-    @DrawableRes color: Int,
-    length: Int = Snackbar.LENGTH_LONG,
-    configBlock: (Snackbar.() -> Unit)? = null
-) {
-    Snackbar.make(this, message, length).apply {
-        view.background = ResourcesCompat.getDrawable(context.resources, color, null)
-        view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).apply { maxLines = 5 }
-        configBlock?.invoke(this)
-    }.show()
-}
 
 fun View.requestApplyInsetsWhenAttached() {
     if (isAttachedToWindow) {

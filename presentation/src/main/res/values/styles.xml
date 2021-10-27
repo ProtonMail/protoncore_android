@@ -299,12 +299,12 @@
 
     <style name="ProtonSnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
         <item name="android:textAppearance">@style/Proton.Text.DefaultSmall.Medium</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_inverted</item>
     </style>
 
     <style name="ProtonSnackbarText" parent="Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:textAppearance">@style/Proton.Text.DefaultSmall</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_inverted</item>
     </style>
     <!-- endregion -->
 

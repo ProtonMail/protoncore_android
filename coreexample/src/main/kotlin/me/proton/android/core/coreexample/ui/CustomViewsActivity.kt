@@ -23,7 +23,11 @@ import android.text.InputType
 import me.proton.android.core.coreexample.databinding.ActivityCustomViewsBinding
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.view.ProtonProgressButton
+import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.normSnack
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.successSnack
+import me.proton.core.presentation.utils.warningSnack
 import me.proton.core.util.kotlin.forEach
 
 /**
@@ -46,5 +50,10 @@ class CustomViewsActivity : ProtonViewBindingActivity<ActivityCustomViewsBinding
 
         binding.inputExample.inputType = InputType.TYPE_CLASS_PHONE
         binding.errorExample.setInputError("Error in your text")
+
+        binding.snackNorm.onClick { binding.snackNorm.normSnack("Norm snackbar, Light/Dark background") }
+        binding.snackWarn.onClick { binding.snackWarn.warningSnack("Warning snackbar, Yellow background.") }
+        binding.snackError.onClick { binding.snackError.errorSnack("Error snackbar, Red background") }
+        binding.snackSuccess.onClick { binding.snackSuccess.successSnack("Success snackbar, Green background") }
     }
 }
