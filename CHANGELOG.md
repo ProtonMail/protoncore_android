@@ -1,3 +1,11 @@
+## Auth [1.17.5]
+
+28 Oct, 2021
+
+### Bug fixes
+
+- Screen with Recovery Method is not shown sometimes
+
 ## User-Settings [1.16.1]
 
 20 Oct, 2021
