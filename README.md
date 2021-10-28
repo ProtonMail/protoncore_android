@@ -111,23 +111,23 @@ Network Data: **1.15.7** - _released on: Oct 12, 2021_
 
 ### Crypto
 
-Crypto: **1.15.6** - _released on: Oct 25, 2021_
+Crypto: **1.16** - _released on: Oct 28, 2021_
 
-Crypto Common: **1.15.6** - _released on: Oct 25, 2021_
+Crypto Common: **1.16** - _released on: Oct 28, 2021_
 
-Crypto Android: **1.15.6** - _released on: Oct 25, 2021_
+Crypto Android: **1.16** - _released on: Oct 28, 2021_
 
 ## Features
 
 ### Auth
 
-Auth: **1.17.4** - _released on: Oct 27, 2021_
+Auth: **1.17.5** - _released on: Oct 28, 2021_
 
-Auth Domain: **1.17.4** - _released on: Oct 27, 2021_
+Auth Domain: **1.17.5** - _released on: Oct 28, 2021_
 
-Auth Presentation: **1.17.4** - _released on: Oct 27, 2021_
+Auth Presentation: **1.17.5** - _released on: Oct 28, 2021_
 
-Auth Data: **1.17.4** - _released on: Oct 27, 2021_
+Auth Data: **1.17.5** - _released on: Oct 28, 2021_
 
 ### Account
 
@@ -164,11 +164,11 @@ Event Manager Data: **1.18** - _released on: Oct 25, 2021_
 
 ### Key
 
-Key: **1.15.7** - _released on: Oct 25, 2021_
+Key: **1.16** - _released on: Oct 28, 2021_
 
-Key Domain: **1.15.7** - _released on: Oct 25, 2021_
+Key Domain: **1.16** - _released on: Oct 28, 2021_
 
-Key Data: **1.15.7** - _released on: Oct 25, 2021_
+Key Data: **1.16** - _released on: Oct 28, 2021_
 
 ### User
 
@@ -180,13 +180,13 @@ User Data: **1.18** - _released on: Oct 25, 2021_
 
 ### User Settings
 
-User Settings: **1.18** - _released on: Oct 25, 2021_
+User Settings: **1.18.1** - _released on: Oct 28, 2021_
 
-User Settings Data: **1.18** - _released on: Oct 25, 2021_
+User Settings Data: **1.18.1** - _released on: Oct 28, 2021_
 
-User Settings Domain: **1.18** - _released on: Oct 25, 2021_
+User Settings Domain: **1.18.1** - _released on: Oct 28, 2021_
 
-User Settings Presentation: **1.18** - _released on: Oct 25, 2021_
+User Settings Presentation: **1.18.1** - _released on: Oct 28, 2021_
 
 ### Contact
 
