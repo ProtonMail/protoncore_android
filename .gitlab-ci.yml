@@ -104,7 +104,7 @@ publishGradlePortal:
   tags:
     - small
   script:
-    - ./gradlew -p util/gradle assemble && ./gradlew -p util/gradle publishAll
+    - ./gradlew -p plugins assemble && ./gradlew -p plugins publishAll
   only:
     - master
   artifacts:
