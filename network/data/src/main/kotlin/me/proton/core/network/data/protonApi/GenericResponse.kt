@@ -20,7 +20,7 @@ package me.proton.core.network.data.protonApi
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.network.data.ResponseCodes
+import me.proton.core.network.domain.ResponseCodes
 
 @Serializable
 data class GenericResponse(

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.data
+package me.proton.core.network.domain
 
 /**
  * Contains general constants response codes.
