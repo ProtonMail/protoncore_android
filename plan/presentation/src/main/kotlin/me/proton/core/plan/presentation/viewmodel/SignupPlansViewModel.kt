@@ -56,7 +56,7 @@ internal class SignupPlansViewModel @Inject constructor(
                     )
                 }
             )
-            add(createFreePlanAsCurrent(current = false, selectable = true))
+            add(createFreePlan(currentlySubscribed = false, selectable = true))
         }
         emit(PlanState.Success.Plans(plans = plans))
     }.catch { error ->

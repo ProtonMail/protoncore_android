@@ -61,11 +61,11 @@ internal abstract class BasePlansViewModel(
         paymentsOrchestrator.register(context)
     }
 
-    protected fun createFreePlanAsCurrent(current: Boolean, selectable: Boolean): PlanDetailsListItem {
+    protected fun createFreePlan(currentlySubscribed: Boolean, selectable: Boolean): PlanDetailsListItem {
         return PlanDetailsListItem.FreePlanDetailsListItem(
             name = SelectedPlan.FREE_PLAN_ID,
             displayName = SelectedPlan.FREE_PLAN_ID,
-            current = current,
+            currentlySubscribed = currentlySubscribed,
             selectable = selectable
         )
     }
@@ -79,7 +79,7 @@ internal abstract class BasePlansViewModel(
             displayName = title,
             price = PlanPricing.fromPlan(this),
             selectable = if (upgrade) true else subscribedPlans.isNullOrEmpty(),
-            current = subscribedPlans?.find { currentPlan ->
+            currentlySubscribed = subscribedPlans?.find { currentPlan ->
                 currentPlan.name == id
             } != null,
             upgrade = upgrade,

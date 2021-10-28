@@ -35,19 +35,19 @@ import me.proton.core.presentation.utils.Price
 sealed class PlanDetailsListItem(
     open val name: String,
     open val displayName: String,
-    open val current: Boolean
+    open val currentlySubscribed: Boolean
 ) : Parcelable {
 
-    abstract fun selectButton(context: Context): ProtonButton
+    abstract fun createSelectButton(context: Context): ProtonButton
 
     @Parcelize
     data class FreePlanDetailsListItem(
         override val name: String,
         override val displayName: String,
-        override val current: Boolean,
+        override val currentlySubscribed: Boolean,
         val selectable: Boolean = true
-    ) : PlanDetailsListItem(name, displayName, current) {
-        override fun selectButton(context: Context): ProtonButton {
+    ) : PlanDetailsListItem(name, displayName, currentlySubscribed) {
+        override fun createSelectButton(context: Context): ProtonButton {
             val selectButton = ProtonButton(context, null, R.attr.outlinedButtonStyle)
             selectButton.id = View.generateViewId()
             selectButton.text = context.getString(R.string.plans_select_plan)
@@ -67,7 +67,7 @@ sealed class PlanDetailsListItem(
     data class PaidPlanDetailsListItem(
         override val name: String,
         override val displayName: String,
-        override val current: Boolean,
+        override val currentlySubscribed: Boolean,
         val price: PlanPricing?,
         val selectable: Boolean = true,
         val upgrade: Boolean,
@@ -79,8 +79,8 @@ sealed class PlanDetailsListItem(
         val domains: Int,
         val connections: Int,
         val currency: PlanCurrency
-    ) : PlanDetailsListItem(name, displayName, current) {
-        override fun selectButton(context: Context): ProtonButton {
+    ) : PlanDetailsListItem(name, displayName, currentlySubscribed) {
+        override fun createSelectButton(context: Context): ProtonButton {
             val selectButton = ProtonButton(context)
             selectButton.id = View.generateViewId()
             selectButton.text = context.getString(R.string.plans_select_plan)

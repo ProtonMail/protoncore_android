@@ -65,11 +65,11 @@ class PlanItemView @JvmOverloads constructor(
                 planName = plan.name
                 when (plan) {
                     is PlanDetailsListItem.FreePlanDetailsListItem -> {
-                        selectBtn = plan.selectButton(context)
+                        selectBtn = plan.createSelectButton(context)
                         bindFreePlan(plan)
                     }
                     is PlanDetailsListItem.PaidPlanDetailsListItem -> {
-                        selectBtn = plan.selectButton(context)
+                        selectBtn = plan.createSelectButton(context)
                         bindPaidPlan(plan)
                     }
                 }.exhaustive
@@ -102,7 +102,7 @@ class PlanItemView @JvmOverloads constructor(
 
         val features = resources.getStringArray(R.array.free)
 
-        if (plan.current) {
+        if (plan.currentlySubscribed) {
             planDescriptionText.text = context.getString(R.string.plans_current_plan)
         } else {
             binding.planDescriptionText.text = features[0]
@@ -133,14 +133,14 @@ class PlanItemView @JvmOverloads constructor(
         }
 
         val planFeatures = context.getStringArrayByName("plan_id_${plan.name}")
-        if (plan.current) {
+        if (plan.currentlySubscribed) {
             planDescriptionText.text = context.getString(R.string.plans_current_plan)
             planPriceText.visibility = View.GONE
         }
 
         billableAmount = plan.price?.yearly ?: PRICE_ZERO
         planFeatures?.let {
-            if (!plan.current) {
+            if (!plan.currentlySubscribed) {
                 binding.planDescriptionText.text = it[0]
             }
             planContents.removeAllViews()
@@ -156,7 +156,7 @@ class PlanItemView @JvmOverloads constructor(
         if (plan.upgrade) {
             selectBtn.text = context.getString(R.string.plans_upgrade_plan)
         }
-        calculateAndUpdatePriceUI(plan.current)
+        calculateAndUpdatePriceUI(plan.currentlySubscribed)
     }
 
     private fun calculateAndUpdatePriceUI(current: Boolean) = with(binding) {

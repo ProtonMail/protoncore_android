@@ -86,7 +86,7 @@ internal class UpgradePlansViewModel @Inject constructor(
                 displayName = it.title,
                 price = PlanPricing.fromPlan(it),
                 selectable = false,
-                current = true,
+                currentlySubscribed = true,
                 upgrade = false,
                 renewalDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(calendar.time),
                 storage = it.maxSpace,
@@ -99,7 +99,7 @@ internal class UpgradePlansViewModel @Inject constructor(
             )
         }?.toMutableList() ?: mutableListOf()
         if (subscribedPlans.isEmpty()) {
-            subscribedPlans.add(createFreePlanAsCurrent(current = true, selectable = false))
+            subscribedPlans.add(createFreePlan(currentlySubscribed = true, selectable = false))
         }
 
         this@UpgradePlansViewModel.subscribedPlans = subscribedPlans
