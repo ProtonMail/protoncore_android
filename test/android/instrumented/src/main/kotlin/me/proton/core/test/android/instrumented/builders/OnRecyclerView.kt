@@ -134,13 +134,6 @@ class OnRecyclerView : ConditionWatcher {
                     )
                 )
         }
-
-        throw PerformException
-            .Builder()
-            .withActionDescription(
-                "Unable to perform RecyclerView action when viewHolderMatcher, itemChildViewMatcher and " +
-                    "position values are null! viewHolderMatcher, itemChildViewMatcher or position must be provided."
-            )
-            .build()
+        return viewInteraction().perform(viewAction)
     }
 }

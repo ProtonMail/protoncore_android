@@ -19,9 +19,9 @@
 package me.proton.core.test.android.uitests.tests.medium.auth.login
 
 import me.proton.android.core.coreexample.R
-import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
@@ -37,7 +37,7 @@ class LoginTests : BaseTest() {
     private val user: User = users.getUser { it.name == "pro" }
 
     @Before
-    fun unban() {
+    fun signIn() {
         AddAccountRobot()
             .signIn()
             .verify { loginElementsDisplayed() }
@@ -51,6 +51,7 @@ class LoginTests : BaseTest() {
     }
 
     @Test
+    @SmokeTest
     fun incorrectPassword() {
         loginRobot
             .username(user.name)
@@ -60,6 +61,7 @@ class LoginTests : BaseTest() {
     }
 
     @Test
+    @SmokeTest
     fun loginOnePassword() {
         loginRobot
             .loginUser<CoreexampleRobot>(user)

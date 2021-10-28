@@ -20,10 +20,7 @@ package me.proton.core.test.android.robots.auth
 
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.RootMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.proton.core.accountmanager.presentation.R
 import me.proton.core.test.android.instrumented.builders.OnView
 import me.proton.core.test.android.plugins.data.User
@@ -60,10 +57,10 @@ class AccountSwitcherRobot : CoreRobot() {
      */
     inline fun <reified T> userAction(user: User, action: UserAction): T {
         userMore(user).click()
-        Espresso
-            .onView(withText(action.resId))
-            .inRoot(RootMatchers.isPlatformPopup())
-            .perform(ViewActions.click())
+        view
+            .withText(action.resId)
+            .withRootMatcher(RootMatchers.isPlatformPopup())
+            .click()
         return T::class.java.newInstance()
     }
 

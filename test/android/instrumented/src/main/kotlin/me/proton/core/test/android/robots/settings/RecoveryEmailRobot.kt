@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.robots.settings
 
-import android.widget.Button
 import android.widget.EditText
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
@@ -72,14 +71,19 @@ class RecoveryEmailRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun recoveryEmailElementsDisplayed() {
-            view.withId(R.id.newEmailInput).instanceOf(EditText::class.java).checkDisplayed().closeKeyboard()
-            view.withId(R.id.confirmNewEmailInput).instanceOf(EditText::class.java).checkDisplayed()
-            view.withId(R.id.currentEmailInput).instanceOf(EditText::class.java).checkDisplayed()
-            view.withId(R.id.saveButton).instanceOf(Button::class.java).checkDisplayed()
+            view.withId(R.id.newEmailInput).closeKeyboard().checkDisplayed()
+            view.withId(R.id.confirmNewEmailInput).checkDisplayed()
+            view.withId(R.id.currentEmailInput).checkDisplayed()
+            view.withId(R.id.saveButton).checkDisplayed()
         }
 
         fun currentRecoveryEmailIs(email: String) {
-            view.withId(R.id.currentEmailInput).instanceOf(EditText::class.java).checkContains(email)
+            view
+                .instanceOf(EditText::class.java)
+                .isDescendantOf(
+                    view.withId(R.id.currentEmailInput)
+                )
+                .checkContains(email)
         }
     }
 

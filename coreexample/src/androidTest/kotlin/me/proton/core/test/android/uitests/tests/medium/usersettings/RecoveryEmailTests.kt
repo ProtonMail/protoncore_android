@@ -20,6 +20,7 @@ package me.proton.core.test.android.uitests.tests.medium.usersettings
 
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
@@ -104,8 +105,16 @@ class RecoveryEmailTests : BaseTest() {
             .password(user.password)
             .enter<CoreexampleRobot>()
             .verify {
-                coreexampleElementsDisplayed()
+                accountSwitcherDisplayed()
                 userStateIs(user, AccountState.Ready, SessionState.Authenticated)
             }
+    }
+
+    @Test
+    @SmokeTest
+    fun backFromRecoveryEmail() {
+        recoveryEmailRobot
+            .close<CoreexampleRobot>()
+            .verify { accountSwitcherDisplayed() }
     }
 }

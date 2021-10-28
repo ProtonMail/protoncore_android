@@ -19,6 +19,7 @@
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
 import me.proton.android.core.coreexample.BuildConfig
+import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.plugins.data.Plan.Free
 import me.proton.core.test.android.robots.CoreRobot
@@ -66,7 +67,7 @@ class ExternalSetupTests : BaseTest() {
 
     @Test
     fun emailCodeVerification() {
-        val user = User(name = "proton@example.lt")
+        val user = User(name = "${randomString()}@example.lt")
         val defaultCode = quark.defaultVerificationCode
 
         chooseUsernameRobotExt

@@ -22,6 +22,7 @@ import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
+import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.MailboxPasswordRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -31,8 +32,11 @@ import org.junit.Test
 
 class MailboxTests : BaseTest() {
 
-    private val twoPassUser = users.getUser(false) { it.passphrase.isNotEmpty() }
     private val mailboxPasswordRobot = MailboxPasswordRobot()
+
+    companion object {
+        private val twoPassUser = quark.userCreate(User(passphrase = "passphrase"))
+    }
 
     @Before
     fun goToMailbox() {
@@ -61,7 +65,7 @@ class MailboxTests : BaseTest() {
     fun closeMailbox() {
         mailboxPasswordRobot
             .close<CoreexampleRobot>()
-            .verify { coreexampleElementsDisplayed() }
+            .verify { accountSwitcherDisplayed() }
     }
 
     @Test
@@ -69,6 +73,9 @@ class MailboxTests : BaseTest() {
         mailboxPasswordRobot
             .mailboxPassword(twoPassUser.passphrase)
             .unlock<CoreexampleRobot>()
-            .verify { userStateIs(twoPassUser, Ready, Authenticated) }
+            .verify {
+                accountSwitcherDisplayed()
+                userStateIs(twoPassUser, Ready, Authenticated)
+            }
     }
 }

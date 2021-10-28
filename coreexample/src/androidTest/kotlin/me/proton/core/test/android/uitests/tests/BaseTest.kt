@@ -22,7 +22,6 @@ import android.util.Log
 import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.MainActivity
-import me.proton.android.core.coreexample.db.AppDatabase
 import me.proton.android.core.coreexample.di.AppDatabaseModule
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDevice
@@ -34,14 +33,17 @@ import org.junit.BeforeClass
 
 open class BaseTest(
     private val clearAppDatabaseOnTearDown: Boolean = true,
-    defaultTimeout: Long = 10_000L
+    defaultTimeout: Long = 20_000L
 ) : ProtonTest(MainActivity::class.java, defaultTimeout) {
 
     @After
     override fun tearDown() {
         super.tearDown()
-        if (clearAppDatabaseOnTearDown)
-            clearUsers(appDatabase)
+        if (clearAppDatabaseOnTearDown) {
+            runBlocking {
+                appDatabase.accountDao().deleteAll()
+            }
+        }
         Log.d(testTag, "Clearing AccountManager database tables")
     }
 
@@ -49,13 +51,6 @@ open class BaseTest(
         val users = Users("sensitive/users.json")
         val quark = Quark(BuildConfig.HOST, BuildConfig.PROXY_TOKEN, "sensitive/internal_apis.json")
         val appDatabase = AppDatabaseModule.provideAppDatabase(getTargetContext())
-
-        private fun clearUsers(database: AppDatabase) {
-            runBlocking {
-                database.accountDao().deleteAll()
-                database.userDao().deleteAll()
-            }
-        }
 
         @JvmStatic
         @BeforeClass

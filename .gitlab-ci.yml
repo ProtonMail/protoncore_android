@@ -50,16 +50,26 @@ assemble:
     - large
   script:
     - ./gradlew assemble
-  # artifacts:
-  #   paths:
-  #   - app/build/outputs/
+#   artifacts:
+#     paths:
+#     - app/build/outputs/
 
 debugTests:
+  cache:
+    policy: pull
   stage: test
   tags:
     - large
   script:
     - ./gradlew -Pci --console=plain allTest
+
+uiTests:
+  stage: test
+  when: manual
+  trigger:
+    strategy: depend
+    include:
+      - local: coreexample/ci/test.coreexample.uitests.yml
 
 release-publish-github:
   stage: publish

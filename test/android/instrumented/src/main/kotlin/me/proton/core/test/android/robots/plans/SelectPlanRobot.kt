@@ -62,10 +62,10 @@ class SelectPlanRobot : CoreRobot() {
     }
 
     class Verify : CoreVerify() {
-        fun planDetailsDisplayed(plan: Plan?) {
+        fun planDetailsDisplayed(plan: Plan) {
             view
                 .withId(R.id.planContents).hasSibling(
-                    view.withId(R.id.planNameText).withText(plan!!.name)
+                    view.withId(R.id.planNameText).withText(plan.text)
                 )
         }
 
@@ -73,7 +73,7 @@ class SelectPlanRobot : CoreRobot() {
             view
                 .withId(R.id.selectPlan)
                 .hasSibling(
-                    view.withId(R.id.planNameText).withText(plan.name)
+                    view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
                 )
         }
 

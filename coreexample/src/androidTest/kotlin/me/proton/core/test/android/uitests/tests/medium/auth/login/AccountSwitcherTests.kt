@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.login
 
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot.UserAction
 import me.proton.core.test.android.robots.auth.AddAccountRobot
@@ -31,56 +32,57 @@ import org.junit.Test
 class AccountSwitcherTests : BaseTest() {
 
     private val accountSwitcherRobot = AccountSwitcherRobot()
-    private val onePassUser = users.getUser { it.isPaid }
+    private val paidUsers = users.getUsers { it.isPaid }
+    private val firstUser = paidUsers[0]
+    private val secondUser = paidUsers[1]
 
     @Before
     fun loginOnePass() {
+        quark.jailUnban()
         AddAccountRobot()
             .signIn()
-            .loginUser<CoreexampleRobot>(onePassUser)
-            .verify { coreexampleElementsDisplayed() }
+            .loginUser<CoreexampleRobot>(firstUser)
+            .verify { accountSwitcherDisplayed() }
 
         CoreexampleRobot()
             .accountSwitcher()
-            .verify { hasUser(onePassUser) }
+            .verify { hasUser(firstUser) }
     }
 
     @Test
     fun removeUser() {
         accountSwitcherRobot
-            .userAction<AddAccountRobot>(onePassUser, UserAction.Remove)
+            .userAction<AddAccountRobot>(firstUser, UserAction.Remove)
             .verify { addAccountElementsDisplayed() }
     }
 
     @Test
-    fun loginDisabledUser() {
+    fun signOutAndLoginDisabledUser() {
         accountSwitcherRobot
-            .userAction<AccountSwitcherRobot>(onePassUser, UserAction.SignOut)
-            .userAction<LoginRobot>(onePassUser, UserAction.SignIn)
+            .userAction<AccountSwitcherRobot>(firstUser, UserAction.SignOut)
+            .userAction<LoginRobot>(firstUser, UserAction.SignIn)
             .verify { loginElementsDisplayed() }
     }
 
     @Test
+    @SmokeTest
     fun addAndRemoveSecondAccount() {
-        val twoPassUser = users.getUser(false) { it.passphrase.isNotEmpty() }
         accountSwitcherRobot
             .addAccount()
-            .loginUser<MailboxPasswordRobot>(twoPassUser)
-            .mailboxPassword(twoPassUser.passphrase)
-            .unlock<AccountSwitcherRobot>()
+            .loginUser<AccountSwitcherRobot>(secondUser)
             .verify {
-                userEnabled(twoPassUser)
-                userEnabled(onePassUser)
+                userEnabled(secondUser)
+                userEnabled(firstUser)
             }
 
         accountSwitcherRobot
             .back<CoreexampleRobot>()
-            .verify { primaryUserIs(twoPassUser) }
+            .verify { primaryUserIs(secondUser) }
 
         CoreexampleRobot()
             .accountSwitcher()
-            .userAction<AccountSwitcherRobot>(twoPassUser, UserAction.SignOut)
+            .userAction<AccountSwitcherRobot>(secondUser, UserAction.SignOut)
             .back<CoreexampleRobot>()
-            .verify { primaryUserIs(onePassUser) }
+            .verify { primaryUserIs(firstUser) }
     }
 }
