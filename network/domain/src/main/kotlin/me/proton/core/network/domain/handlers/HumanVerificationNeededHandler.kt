@@ -24,6 +24,7 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes.HUMAN_VERIFICATION_REQUIRED
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
@@ -52,7 +53,7 @@ class HumanVerificationNeededHandler<Api>(
         val clientId = clientIdProvider.getClientId(sessionId) ?: return error
 
         // Recoverable with human verification ?
-        if (error !is ApiResult.Error.Http || error.proton?.code != ERROR_CODE_HUMAN_VERIFICATION) return error
+        if (error !is ApiResult.Error.Http || error.proton?.code != HUMAN_VERIFICATION_REQUIRED) return error
 
         // Do we have details ?
         val details = error.proton.humanVerification ?: return error
@@ -78,8 +79,6 @@ class HumanVerificationNeededHandler<Api>(
     }
 
     companion object {
-        const val ERROR_CODE_HUMAN_VERIFICATION = 9001
-
         private val verificationDebounceMs = TimeUnit.SECONDS.toMillis(5)
         private val staticMutex: Mutex = Mutex()
         private val clientMutexMap: MutableMap<ClientId, Mutex> = HashMap()

@@ -22,6 +22,7 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.session.SessionId
@@ -44,15 +45,11 @@ class HumanVerificationInvalidHandler<Api>(
         val clientId = clientIdProvider.getClientId(sessionId) ?: return error
 
         // Invalid verification code ?
-        if (error is ApiResult.Error.Http && error.proton?.code == ERROR_CODE_HUMAN_VERIFICATION_INVALID_CODE) {
+        if (error is ApiResult.Error.Http && error.proton?.code == ResponseCodes.USER_CREATE_TOKEN_INVALID) {
             humanVerificationListener.onHumanVerificationInvalid(clientId)
             // Directly retry (could raise 9001, and then be handled by HumanVerificationNeededHandler).
             return backend(call)
         }
         return error
-    }
-
-    companion object {
-        const val ERROR_CODE_HUMAN_VERIFICATION_INVALID_CODE = 12087
     }
 }

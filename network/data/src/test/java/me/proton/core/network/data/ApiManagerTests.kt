@@ -45,6 +45,7 @@ import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.client.ClientId
@@ -297,7 +298,7 @@ internal class ApiManagerTests {
         coEvery { backend.invoke<TestResult>(any()) } returns
             ApiResult.Error.Http(
                 400, "",
-                ApiResult.Error.ProtonData(ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE_APP_TOO_OLD, "")
+                ApiResult.Error.ProtonData(ResponseCodes.APP_VERSION_BAD, "")
             )
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Error)
@@ -309,7 +310,7 @@ internal class ApiManagerTests {
         coEvery { backend.invoke<TestResult>(any()) } returns
             ApiResult.Error.Http(
                 400, "",
-                ApiResult.Error.ProtonData(ProtonForceUpdateHandler.ERROR_CODE_FORCE_UPDATE_API_TOO_OLD, "")
+                ApiResult.Error.ProtonData(ResponseCodes.API_VERSION_INVALID, "")
             )
         val result = apiManager.invoke { test() }
         assertTrue(result is ApiResult.Error)

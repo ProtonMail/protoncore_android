@@ -24,7 +24,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
@@ -99,7 +99,7 @@ class GetCurrentSubscriptionTest {
                 httpCode = 123,
                 "http error",
                 ApiResult.Error.ProtonData(
-                    code = GetCurrentSubscription.NO_ACTIVE_SUBSCRIPTION,
+                    code = ResponseCodes.PAYMENTS_SUBSCRIPTION_NOT_EXISTS,
                     error = "no active subscription"
                 )
             )

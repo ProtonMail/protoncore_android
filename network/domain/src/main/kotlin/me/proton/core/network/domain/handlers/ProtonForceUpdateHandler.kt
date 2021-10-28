@@ -22,6 +22,7 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes
 
 /**
  * Handles force update response.
@@ -44,11 +45,9 @@ class ProtonForceUpdateHandler<Api>(private val apiClient: ApiClient) :
     }
 
     companion object {
-        const val ERROR_CODE_FORCE_UPDATE_APP_TOO_OLD = 5003
-        const val ERROR_CODE_FORCE_UPDATE_API_TOO_OLD = 5005
         private val ERROR_CODE_FORCE_UPDATE = listOf(
-            ERROR_CODE_FORCE_UPDATE_APP_TOO_OLD,
-            ERROR_CODE_FORCE_UPDATE_API_TOO_OLD
+            ResponseCodes.APP_VERSION_BAD,
+            ResponseCodes.API_VERSION_INVALID
         )
     }
 }
