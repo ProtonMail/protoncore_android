@@ -1,3 +1,11 @@
+## User-Settings [1.16.1]
+
+20 Oct, 2021
+
+### Bug fixes
+
+- Cannot change password for legacy users with 2fa enabled.
+
 ## Version [1.18]
 
 25 Oct, 2021
@@ -158,7 +166,7 @@ Please refer to:
 - Added `ScreenContentsProtector` with shared logic for both activities and fragments: it can be added to any component, inheritance is no longer mandatory but is encouraged.
 - Moved most of `ProtonSecureActivity`'s logic to `ScreenContentsProtector` added a `ProtonSecureFragment` counterpart to apply security measures to fragments automatically.
 - Fix a bug when several protected fragments were shown on screen.
-- Added a `by protectScreen(ProtectScreenConfiguration)` delegate to automatically protect and unprotect activities and fragments based on their lifecycles. You can either use this delegate, the `ProtonSecure` superclasses or use `ScreenContentsProtector` manually and carefully checking that all secure components are protected and then unprotected when no longer needed. 
+- Added a `by protectScreen(ProtectScreenConfiguration)` delegate to automatically protect and unprotect activities and fragments based on their lifecycles. You can either use this delegate, the `ProtonSecure` superclasses or use `ScreenContentsProtector` manually and carefully checking that all secure components are protected and then unprotected when no longer needed.
 
 ## Auth [1.17.1], User [1.16.2].
 
