@@ -39,7 +39,7 @@ val supportedBillingCycles: Array<String> =
 enum class BillingCycle(val value: String, val monthlyPrice: Double, val yearlyPrice: Number) {
     Monthly(supportedBillingCycles[0], 5.00, 0.00),
     Yearly(supportedBillingCycles[1], 4.00, 48.00),
-    TwoYear(supportedBillingCycles[2], 3.29, 39.48)
+    TwoYear(supportedBillingCycles[2], 3.29, 39.50)
 }
 
 enum class Currency(val symbol: String, val code: String) {
