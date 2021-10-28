@@ -73,10 +73,7 @@ internal class SignupViewModel @Inject constructor(
 
     // region private properties
     private var _currentAccountTypeOrdinal: Int by savedStateHandle.state(AccountType.Internal.ordinal)
-    private val _inputState by savedStateHandle.flowState(
-        MutableSharedFlow<InputState>(replay = 1),
-        viewModelScope
-    )
+    private val _inputState = MutableSharedFlow<InputState>(replay = 1)
     private val _userCreationState by savedStateHandle.flowState(
         MutableSharedFlow<State>(replay = 1),
         viewModelScope,
@@ -115,9 +112,6 @@ internal class SignupViewModel @Inject constructor(
         object Idle : State()
 
         @Parcelize
-        object HumanVerificationNeeded : State()
-
-        @Parcelize
         object Processing : State()
 
         @Parcelize
@@ -143,12 +137,6 @@ internal class SignupViewModel @Inject constructor(
     }
 
     fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context)
-        .onHumanVerificationNeeded {
-            _userCreationState.tryEmit(State.HumanVerificationNeeded)
-        }
-        .onHumanVerificationSucceeded {
-            _userCreationState.tryEmit(State.Processing)
-        }
         .onHumanVerificationFailed {
             _userCreationState.tryEmit(State.Error.HumanVerification)
         }
