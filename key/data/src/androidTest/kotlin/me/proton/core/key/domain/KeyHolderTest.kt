@@ -120,11 +120,10 @@ class KeyHolderTest {
         keyHolder1.useKeys(context) {
             val keyPacket = generateNewKeyPacket()
 
-            val encryptedText = encryptData(data, keyPacket)
+            val encryptedData = encryptData(data, keyPacket)
+            val decryptedData = decryptData(encryptedData, keyPacket)
 
-            val decryptedText = decryptData(encryptedText, keyPacket)
-
-            assertEquals(data, decryptedText)
+            assertTrue(data.contentEquals(decryptedData))
         }
     }
 
@@ -135,11 +134,10 @@ class KeyHolderTest {
         keyHolder1.useKeys(context) {
             val sessionKey = generateNewSessionKey()
 
-            val encryptedText = encryptData(data, sessionKey)
+            val encryptedData = encryptData(data, sessionKey)
+            val decryptedData = decryptData(encryptedData, sessionKey)
 
-            val decryptedText = decryptData(encryptedText, sessionKey)
-
-            assertEquals(data, decryptedText)
+            assertTrue(data.contentEquals(decryptedData))
         }
     }
 

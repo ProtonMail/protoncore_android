@@ -85,7 +85,9 @@ interface PGPCrypto {
     fun encryptFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile
 
     /**
-     * Encrypt [plainText] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
+     * Encrypt [plainText] using [publicKey] and sign using [unlockedKey].
+     *
+     * @return [EncryptedMessage] with embedded signature.
      *
      * @throws [CryptoException] if [plainText] cannot be encrypted or signed.
      *
@@ -94,13 +96,26 @@ interface PGPCrypto {
     fun encryptAndSignText(plainText: String, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
 
     /**
-     * Encrypt [data] using [publicKey] and sign using [unlockedKey] in an embedded [EncryptedMessage].
+     * Encrypt [data] using [publicKey] and sign using [unlockedKey].
+     *
+     * @return [EncryptedMessage] with embedded signature.
      *
      * @throws [CryptoException] if [data] cannot be encrypted or signed.
      *
      * @see [decryptAndVerifyData].
      */
     fun encryptAndSignData(data: ByteArray, publicKey: Armored, unlockedKey: Unarmored): EncryptedMessage
+
+    /**
+     * Encrypt [data] using [sessionKey] and sign using [unlockedKey].
+     *
+     * @return [DataPacket] with embedded signature.
+     *
+     * @throws [CryptoException] if [data] cannot be encrypted or signed.
+     *
+     * @see [decryptAndVerifyData].
+     */
+    fun encryptAndSignData(data: ByteArray, sessionKey: SessionKey, unlockedKey: Unarmored): DataPacket
 
     /**
      * Encrypt [source] into [destination] using [sessionKey] and sign using [unlockedKey].
@@ -207,6 +222,24 @@ interface PGPCrypto {
         message: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
+        time: VerificationTime = VerificationTime.Now
+    ): DecryptedData
+
+    /**
+     * Decrypt [data] as [ByteArray] using [sessionKey] and verify using [publicKeys].
+     *
+     * @param time time for embedded signature validation, default to [VerificationTime.Now].
+     *
+     * @throws [CryptoException] if [data] cannot be decrypted.
+     *
+     * @see [DecryptedData]
+     * @see [VerificationStatus]
+     * @see [encryptAndSignData]
+     */
+    fun decryptAndVerifyData(
+        data: DataPacket,
+        sessionKey: SessionKey,
+        publicKeys: List<Armored>,
         time: VerificationTime = VerificationTime.Now
     ): DecryptedData
 
