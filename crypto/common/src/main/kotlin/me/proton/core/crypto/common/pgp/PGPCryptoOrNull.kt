@@ -175,6 +175,17 @@ fun PGPCrypto.encryptAndSignDataOrNull(
 ): EncryptedMessage? = runCatching { encryptAndSignData(data, publicKey, unlockedKey) }.getOrNull()
 
 /**
+ * @return [DataPacket], or `null` if [data] cannot be encrypted and signed.
+ *
+ * @see [PGPCrypto.encryptAndSignData]
+ */
+fun PGPCrypto.encryptAndSignDataOrNull(
+    data: ByteArray,
+    sessionKey: SessionKey,
+    publicKey: Unarmored,
+): DataPacket? = runCatching { encryptAndSignData(data, sessionKey, publicKey) }.getOrNull()
+
+/**
  * @param time time for embedded signature validation, default to [VerificationTime.Now].
  *
  * @return [DecryptedText], or `null` if [message] cannot be decrypted.
@@ -201,6 +212,20 @@ fun PGPCrypto.decryptAndVerifyDataOrNull(
     unlockedKeys: List<Unarmored>,
     time: VerificationTime = VerificationTime.Now
 ): DecryptedData? = runCatching { decryptAndVerifyData(message, publicKeys, unlockedKeys, time) }.getOrNull()
+
+/**
+ * @param time time for embedded signature validation, default to [VerificationTime.Now].
+ *
+ * @return [DecryptedData], or `null` if [data] cannot be decrypted.
+ *
+ * @see [PGPCrypto.decryptData]
+ */
+fun PGPCrypto.decryptAndVerifyDataOrNull(
+    data: DataPacket,
+    sessionKey: SessionKey,
+    publicKeys: List<Armored>,
+    time: VerificationTime = VerificationTime.Now,
+): DecryptedData? = runCatching { decryptAndVerifyData(data, sessionKey, publicKeys, time) }.getOrNull()
 
 /**
  * @param time time for embedded signature validation, default to [VerificationTime.Now].

@@ -65,10 +65,10 @@ import com.proton.gopenpgp.crypto.SessionKey as InternalSessionKey
 /**
  * [PGPCrypto] implementation based on GOpenPGP Android library.
  */
-@Suppress("TooManyFunctions")
+@Suppress("LargeClass", "TooManyFunctions", "MagicNumber")
 class GOpenPGPCrypto : PGPCrypto {
 
-    // region Private
+    // region Private Closable
 
     private class CloseableUnlockedKey(val value: Key) : Closeable {
         override fun close() {
@@ -90,6 +90,10 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
+    // endregion
+
+    // region Private Key
+
     private fun SessionKey.toInternalSessionKey() = InternalSessionKey(key, Constants.AES256)
 
     private fun newKey(key: Key) = CloseableUnlockedKey(key)
@@ -108,13 +112,21 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun newKeyRing(keys: List<Armored>) =
         Crypto.newKeyRing(null).apply { keys.map { Crypto.newKeyFromArmored(it) }.forEach { addKey(it) } }
 
+    // endregion
+
+    // region Private VerificationTime
+
     private fun VerificationTime.toUtcSeconds(): Long = when (this) {
         is VerificationTime.Ignore -> 0
         is VerificationTime.Now -> Crypto.getUnixTime() // Value updated by updateTime.
         is VerificationTime.Utc -> seconds
     }
 
-    private fun encrypt(
+    // endregion
+
+    // region Private Encrypt
+
+    private fun encryptMessage(
         plainMessage: PlainMessage,
         publicKey: Armored,
         signKeyRing: KeyRing? = null
@@ -123,26 +135,21 @@ class GOpenPGPCrypto : PGPCrypto {
         return publicKeyRing.encrypt(plainMessage, signKeyRing).armored
     }
 
-    private fun encrypt(
+    private fun encryptMessageSessionKey(
         plainMessage: PlainMessage,
-        sessionKey: SessionKey
+        sessionKey: SessionKey,
+        signKeyRing: KeyRing? = null,
     ): DataPacket {
-        return sessionKey.toInternalSessionKey().encrypt(plainMessage)
-    }
-
-    private fun encryptAndSign(
-        plainMessage: PlainMessage,
-        publicKey: Armored,
-        unlockedKey: Unarmored
-    ): EncryptedMessage {
-        newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                return encrypt(plainMessage, publicKey, keyRing.value)
+        return sessionKey.toInternalSessionKey().let { internalSessionKey ->
+            if (signKeyRing != null) {
+                internalSessionKey.encryptAndSign(plainMessage, signKeyRing)
+            } else {
+                internalSessionKey.encrypt(plainMessage)
             }
         }
     }
 
-    private fun encrypt(
+    private fun encryptFileSessionKey(
         source: File,
         destination: File,
         sessionKey: SessionKey,
@@ -161,7 +168,7 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
-    private fun encryptAndSign(
+    private fun encryptAndSignFileSessionKey(
         source: File,
         destination: File,
         sessionKey: SessionKey,
@@ -169,12 +176,69 @@ class GOpenPGPCrypto : PGPCrypto {
     ): EncryptedFile {
         newKey(unlockedKey).use { key ->
             newKeyRing(key).use { keyRing ->
-                return encrypt(source, destination, sessionKey, keyRing.value)
+                return encryptFileSessionKey(source, destination, sessionKey, keyRing.value)
             }
         }
     }
 
-    private fun decrypt(
+    private fun encryptAndSignMessage(
+        plainMessage: PlainMessage,
+        publicKey: Armored,
+        unlockedKey: Unarmored
+    ): EncryptedMessage {
+        newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                return encryptMessage(plainMessage, publicKey, keyRing.value)
+            }
+        }
+    }
+
+    private fun encryptAndSignMessageSessionKey(
+        plainMessage: PlainMessage,
+        sessionKey: SessionKey,
+        unlockedKey: Unarmored,
+    ): DataPacket {
+        newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                return encryptMessageSessionKey(plainMessage, sessionKey, keyRing.value)
+            }
+        }
+    }
+
+    // endregion
+
+    // region Private Decrypt
+
+    private inline fun <T> decryptMessage(
+        message: EncryptedMessage,
+        unlockedKey: Unarmored,
+        block: (PlainMessage) -> T
+    ): T {
+        val pgpMessage = Crypto.newPGPMessageFromArmored(message)
+        return decryptMessage(pgpMessage, unlockedKey, block)
+    }
+
+    private inline fun <T> decryptMessage(
+        pgpMessage: PGPMessage,
+        unlockedKey: Unarmored,
+        block: (PlainMessage) -> T
+    ): T {
+        newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                return block(keyRing.value.decrypt(pgpMessage, null, 0))
+            }
+        }
+    }
+
+    private fun decryptDataSessionKey(
+        data: DataPacket,
+        sessionKey: SessionKey,
+    ): PlainMessage {
+        val internalSessionKey = sessionKey.toInternalSessionKey()
+        return internalSessionKey.decrypt(data)
+    }
+
+    private fun decryptFileSessionKey(
         source: File,
         destination: File,
         sessionKey: SessionKey,
@@ -199,45 +263,7 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
-    private fun decrypt(
-        data: DataPacket,
-        sessionKey: SessionKey,
-    ): PlainMessage {
-        return sessionKey.toInternalSessionKey().decrypt(data)
-    }
-
-    private fun decryptAndVerify(
-        source: File,
-        destination: File,
-        sessionKey: SessionKey,
-        publicKeys: List<Armored>,
-        validAtUtc: Long
-    ): DecryptedFile {
-        return decrypt(source, destination, sessionKey, newKeyRing(publicKeys), validAtUtc)
-    }
-
-    private inline fun <T> decrypt(
-        message: EncryptedMessage,
-        unlockedKey: Unarmored,
-        block: (PlainMessage) -> T
-    ): T {
-        val pgpMessage = Crypto.newPGPMessageFromArmored(message)
-        return decrypt(pgpMessage, unlockedKey, block)
-    }
-
-    private inline fun <T> decrypt(
-        pgpMessage: PGPMessage,
-        unlockedKey: Unarmored,
-        block: (PlainMessage) -> T
-    ): T {
-        newKey(unlockedKey).use { key ->
-            newKeyRing(key).use { keyRing ->
-                return block(keyRing.value.decrypt(pgpMessage, null, 0))
-            }
-        }
-    }
-
-    private inline fun <T> decryptAndVerify(
+    private inline fun <T> decryptAndVerifyMessage(
         msg: EncryptedMessage,
         publicKeys: List<Armored>,
         unlockedKeys: List<Unarmored>,
@@ -253,7 +279,31 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
-    private fun sign(
+    private fun decryptAndVerifyDataSessionKey(
+        data: DataPacket,
+        sessionKey: SessionKey,
+        publicKeys: List<Armored>,
+        validAtUtc: Long = 0
+    ): ExplicitVerifyMessage {
+        val internalSessionKey = sessionKey.toInternalSessionKey()
+        return Helper.decryptSessionKeyExplicitVerify(data, internalSessionKey, newKeyRing(publicKeys), validAtUtc)
+    }
+
+    private fun decryptAndVerifyFileSessionKey(
+        source: File,
+        destination: File,
+        sessionKey: SessionKey,
+        publicKeys: List<Armored>,
+        validAtUtc: Long
+    ): DecryptedFile {
+        return decryptFileSessionKey(source, destination, sessionKey, newKeyRing(publicKeys), validAtUtc)
+    }
+
+    // endregion
+
+    // region Private Sign
+
+    private fun signMessageDetached(
         plainMessage: PlainMessage,
         unlockedKey: Unarmored
     ): Signature {
@@ -264,7 +314,7 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
-    private fun sign(
+    private fun signFileDetached(
         source: File,
         unlockedKey: Unarmored
     ): Signature {
@@ -278,7 +328,7 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
-    private fun signEncrypted(
+    private fun signMessageDetachedEncrypted(
         plainMessage: PlainMessage,
         unlockedKey: Unarmored,
         encryptionKeyRing: KeyRing,
@@ -290,7 +340,7 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
-    private fun signEncrypted(
+    private fun signFileDetachedEncrypted(
         source: File,
         unlockedKey: Unarmored,
         encryptionKeyRing: KeyRing,
@@ -305,7 +355,11 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
-    private fun verify(
+    // endregion
+
+    // region Private Verify
+
+    private fun verifyMessageDetached(
         plainMessage: PlainMessage,
         signature: Armored,
         publicKey: Armored,
@@ -316,21 +370,7 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKeyRing.verifyDetached(plainMessage, pgpSignature, validAtUtc)
     }.isSuccess
 
-    private fun verify(
-        source: File,
-        signature: Armored,
-        publicKey: Armored,
-        validAtUtc: Long
-    ): Boolean = runCatching {
-        source.inputStream().use { fileInputStream ->
-            val reader = Mobile2GoReader(fileInputStream.mobileReader())
-            val pgpSignature = PGPSignature(signature)
-            val publicKeyRing = newKeyRing(publicKey)
-            publicKeyRing.verifyDetachedStream(reader, pgpSignature, validAtUtc)
-        }
-    }.isSuccess
-
-    private fun verifyEncrypted(
+    private fun verifyMessageDetachedEncrypted(
         plainMessage: PlainMessage,
         encryptedSignature: EncryptedSignature,
         decryptionKey: Unarmored,
@@ -346,7 +386,21 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }.isSuccess
 
-    private fun verifyEncrypted(
+    private fun verifyFileDetached(
+        source: File,
+        signature: Armored,
+        publicKey: Armored,
+        validAtUtc: Long
+    ): Boolean = runCatching {
+        source.inputStream().use { fileInputStream ->
+            val reader = Mobile2GoReader(fileInputStream.mobileReader())
+            val pgpSignature = PGPSignature(signature)
+            val publicKeyRing = newKeyRing(publicKey)
+            publicKeyRing.verifyDetachedStream(reader, pgpSignature, validAtUtc)
+        }
+    }.isSuccess
+
+    private fun verifyFileDetachedEncrypted(
         source: File,
         encryptedSignature: EncryptedSignature,
         decryptionKey: Unarmored,
@@ -367,7 +421,7 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // endregion
 
-    // region Lock/Unlock
+    // region Public Lock/Unlock
 
     override fun lock(
         unlockedKey: Unarmored,
@@ -389,27 +443,27 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // endregion
 
-    // region Encrypt
+    // region Public Encrypt
 
     override fun encryptText(
         plainText: String,
         publicKey: Armored
     ): EncryptedMessage = runCatching {
-        encrypt(PlainMessage(plainText), publicKey)
+        encryptMessage(PlainMessage(plainText), publicKey)
     }.getOrElse { throw CryptoException("PlainText cannot be encrypted.", it) }
 
     override fun encryptData(
         data: ByteArray,
         publicKey: Armored
     ): EncryptedMessage = runCatching {
-        encrypt(PlainMessage(data), publicKey)
+        encryptMessage(PlainMessage(data), publicKey)
     }.getOrElse { throw CryptoException("Data cannot be encrypted.", it) }
 
     override fun encryptData(
         data: ByteArray,
         sessionKey: SessionKey,
     ): DataPacket = runCatching {
-        encrypt(PlainMessage(data), sessionKey)
+        encryptMessageSessionKey(PlainMessage(data), sessionKey)
     }.getOrElse { throw CryptoException("Data cannot be encrypted.", it) }
 
     override fun encryptFile(
@@ -417,7 +471,7 @@ class GOpenPGPCrypto : PGPCrypto {
         destination: File,
         sessionKey: SessionKey,
     ): EncryptedFile = runCatching {
-        encrypt(source, destination, sessionKey)
+        encryptFileSessionKey(source, destination, sessionKey)
     }.getOrElse { throw CryptoException("File cannot be encrypted.", it) }
 
     override fun encryptAndSignText(
@@ -425,7 +479,7 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKey: Armored,
         unlockedKey: Unarmored
     ): EncryptedMessage = runCatching {
-        encryptAndSign(PlainMessage(plainText), publicKey, unlockedKey)
+        encryptAndSignMessage(PlainMessage(plainText), publicKey, unlockedKey)
     }.getOrElse { throw CryptoException("PlainText cannot be encrypted or signed.", it) }
 
     override fun encryptAndSignData(
@@ -433,7 +487,15 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKey: Armored,
         unlockedKey: Unarmored
     ): EncryptedMessage = runCatching {
-        encryptAndSign(PlainMessage(data), publicKey, unlockedKey)
+        encryptAndSignMessage(PlainMessage(data), publicKey, unlockedKey)
+    }.getOrElse { throw CryptoException("Data cannot be encrypted or signed.", it) }
+
+    override fun encryptAndSignData(
+        data: ByteArray,
+        sessionKey: SessionKey,
+        unlockedKey: Unarmored
+    ): DataPacket = runCatching {
+        encryptAndSignMessageSessionKey(PlainMessage(data), sessionKey, unlockedKey)
     }.getOrElse { throw CryptoException("Data cannot be encrypted or signed.", it) }
 
     override fun encryptAndSignFile(
@@ -442,7 +504,7 @@ class GOpenPGPCrypto : PGPCrypto {
         sessionKey: SessionKey,
         unlockedKey: Unarmored
     ): EncryptedFile = runCatching {
-        encryptAndSign(source, destination, sessionKey, unlockedKey)
+        encryptAndSignFileSessionKey(source, destination, sessionKey, unlockedKey)
     }.getOrElse { throw CryptoException("File cannot be encrypted or signed.", it) }
 
     override fun encryptSessionKey(
@@ -464,27 +526,27 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // endregion
 
-    // region Decrypt
+    // region Public Decrypt
 
     override fun decryptText(
         message: EncryptedMessage,
         unlockedKey: Unarmored
     ): String = runCatching {
-        decrypt(message, unlockedKey) { it.string }
+        decryptMessage(message, unlockedKey) { it.string }
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
     override fun decryptData(
         message: EncryptedMessage,
         unlockedKey: Unarmored
     ): ByteArray = runCatching {
-        decrypt(message, unlockedKey) { it.binary }
+        decryptMessage(message, unlockedKey) { it.binary }
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
     override fun decryptData(
         data: DataPacket,
         sessionKey: SessionKey
     ): ByteArray = runCatching {
-        decrypt(data, sessionKey).binary
+        decryptDataSessionKey(data, sessionKey).binary
     }.getOrElse { throw CryptoException("Data cannot be decrypted.", it) }
 
     override fun decryptFile(
@@ -492,7 +554,7 @@ class GOpenPGPCrypto : PGPCrypto {
         destination: File,
         sessionKey: SessionKey
     ): DecryptedFile = runCatching {
-        decrypt(source, destination, sessionKey)
+        decryptFileSessionKey(source, destination, sessionKey)
     }.getOrElse { throw CryptoException("File cannot be decrypted.", it) }
 
     override fun decryptAndVerifyText(
@@ -501,7 +563,7 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKeys: List<Unarmored>,
         time: VerificationTime,
     ): DecryptedText = runCatching {
-        decryptAndVerify(message, publicKeys, unlockedKeys, time.toUtcSeconds()) {
+        decryptAndVerifyMessage(message, publicKeys, unlockedKeys, time.toUtcSeconds()) {
             DecryptedText(
                 it.message.string,
                 it.signatureVerificationError.toVerificationStatus()
@@ -515,7 +577,21 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKeys: List<Unarmored>,
         time: VerificationTime,
     ): DecryptedData = runCatching {
-        decryptAndVerify(message, publicKeys, unlockedKeys, time.toUtcSeconds()) {
+        decryptAndVerifyMessage(message, publicKeys, unlockedKeys, time.toUtcSeconds()) {
+            DecryptedData(
+                it.message.binary,
+                it.signatureVerificationError.toVerificationStatus()
+            )
+        }
+    }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
+
+    override fun decryptAndVerifyData(
+        data: DataPacket,
+        sessionKey: SessionKey,
+        publicKeys: List<Armored>,
+        time: VerificationTime,
+    ): DecryptedData = runCatching {
+        decryptAndVerifyDataSessionKey(data, sessionKey, publicKeys, time.toUtcSeconds()).let {
             DecryptedData(
                 it.message.binary,
                 it.signatureVerificationError.toVerificationStatus()
@@ -530,7 +606,7 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKeys: List<Armored>,
         time: VerificationTime,
     ): DecryptedFile = runCatching {
-        decryptAndVerify(source, destination, sessionKey, publicKeys, time.toUtcSeconds())
+        decryptAndVerifyFileSessionKey(source, destination, sessionKey, publicKeys, time.toUtcSeconds())
     }.getOrElse { throw CryptoException("File cannot be decrypted.", it) }
 
     override fun decryptSessionKey(
@@ -553,27 +629,27 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // endregion
 
-    // region Sign
+    // region Public Sign
 
     override fun signText(
         plainText: String,
         unlockedKey: Unarmored
     ): Signature = runCatching {
-        sign(PlainMessage(plainText), unlockedKey)
+        signMessageDetached(PlainMessage(plainText), unlockedKey)
     }.getOrElse { throw CryptoException("PlainText cannot be signed.", it) }
 
     override fun signData(
         data: ByteArray,
         unlockedKey: Unarmored
     ): Signature = runCatching {
-        sign(PlainMessage(data), unlockedKey)
+        signMessageDetached(PlainMessage(data), unlockedKey)
     }.getOrElse { throw CryptoException("Data cannot be signed.", it) }
 
     override fun signFile(
         file: File,
         unlockedKey: Unarmored
     ): Signature = runCatching {
-        sign(file, unlockedKey)
+        signFileDetached(file, unlockedKey)
     }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
 
     override fun signTextEncrypted(
@@ -581,7 +657,7 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
     ): EncryptedSignature = runCatching {
-        signEncrypted(PlainMessage(plainText), unlockedKey, newKeyRing(encryptionKeys))
+        signMessageDetachedEncrypted(PlainMessage(plainText), unlockedKey, newKeyRing(encryptionKeys))
     }.getOrElse { throw CryptoException("PlainText cannot be signed.", it) }
 
     override fun signDataEncrypted(
@@ -589,7 +665,7 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
     ): EncryptedSignature = runCatching {
-        signEncrypted(PlainMessage(data), unlockedKey, newKeyRing(encryptionKeys))
+        signMessageDetachedEncrypted(PlainMessage(data), unlockedKey, newKeyRing(encryptionKeys))
     }.getOrElse { throw CryptoException("Data cannot be signed.", it) }
 
     override fun signFileEncrypted(
@@ -597,33 +673,33 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
     ): EncryptedSignature = runCatching {
-        signEncrypted(file, unlockedKey, newKeyRing(encryptionKeys))
+        signFileDetachedEncrypted(file, unlockedKey, newKeyRing(encryptionKeys))
     }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
 
     // endregion
 
-    // region Verify
+    // region Public Verify
 
     override fun verifyText(
         plainText: String,
         signature: Armored,
         publicKey: Armored,
         time: VerificationTime,
-    ): Boolean = verify(PlainMessage(plainText), signature, publicKey, time.toUtcSeconds())
+    ): Boolean = verifyMessageDetached(PlainMessage(plainText), signature, publicKey, time.toUtcSeconds())
 
     override fun verifyData(
         data: ByteArray,
         signature: Armored,
         publicKey: Armored,
         time: VerificationTime,
-    ): Boolean = verify(PlainMessage(data), signature, publicKey, time.toUtcSeconds())
+    ): Boolean = verifyMessageDetached(PlainMessage(data), signature, publicKey, time.toUtcSeconds())
 
     override fun verifyFile(
         file: DecryptedFile,
         signature: Armored,
         publicKey: Armored,
         time: VerificationTime,
-    ): Boolean = verify(file.file, signature, publicKey, time.toUtcSeconds())
+    ): Boolean = verifyFileDetached(file.file, signature, publicKey, time.toUtcSeconds())
 
     override fun verifyTextEncrypted(
         plainText: String,
@@ -632,7 +708,13 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKeys: List<Armored>,
         time: VerificationTime,
     ): Boolean =
-        verifyEncrypted(PlainMessage(plainText), encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
+        verifyMessageDetachedEncrypted(
+            PlainMessage(plainText),
+            encryptedSignature,
+            privateKey,
+            publicKeys,
+            time.toUtcSeconds()
+        )
 
     override fun verifyDataEncrypted(
         data: ByteArray,
@@ -641,7 +723,13 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKeys: List<Armored>,
         time: VerificationTime,
     ): Boolean =
-        verifyEncrypted(PlainMessage(data), encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
+        verifyMessageDetachedEncrypted(
+            PlainMessage(data),
+            encryptedSignature,
+            privateKey,
+            publicKeys,
+            time.toUtcSeconds()
+        )
 
     override fun verifyFileEncrypted(
         file: File,
@@ -650,11 +738,11 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKeys: List<Armored>,
         time: VerificationTime,
     ): Boolean =
-        verifyEncrypted(file, encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
+        verifyFileDetachedEncrypted(file, encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
 
     // endregion
 
-    // region Get
+    // region Public Get
 
     override fun getArmored(
         data: Unarmored
@@ -717,7 +805,7 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // endregion
 
-    // region SessionKey/HashKey/PrivateKey/Token generation
+    // region Public SessionKey/HashKey/PrivateKey/Token generation
 
     override fun generateNewSessionKey(): SessionKey {
         return SessionKey(Crypto.generateSessionKey().key)
@@ -771,7 +859,7 @@ class GOpenPGPCrypto : PGPCrypto {
 
     // endregion
 
-    // region Time
+    // region Public Time
 
     override fun updateTime(epochSeconds: Long) {
         Crypto.updateTime(epochSeconds)

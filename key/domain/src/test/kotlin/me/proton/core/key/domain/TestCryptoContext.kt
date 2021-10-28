@@ -267,6 +267,10 @@ class TestCryptoContext : CryptoContext {
             "BINARY([${data.fromByteArray()}]+$publicKey+${unlockedKey.fromByteArray()})"
                 .encryptMessage(unlockedKey)
 
+        override fun encryptAndSignData(data: ByteArray, sessionKey: SessionKey,  unlockedKey: Unarmored): DataPacket =
+            "BINARY([${data.fromByteArray()}]+${sessionKey.key}+${unlockedKey.fromByteArray()})"
+                .encryptMessage(unlockedKey).toByteArray()
+
         override fun encryptAndSignFile(
             source: File,
             destination: File,
@@ -302,6 +306,19 @@ class TestCryptoContext : CryptoContext {
             message.decryptMessage(unlockedKeys.first()).let {
                 check(it.startsWith("BINARY"))
                 it.extractMessage().toByteArray()
+            },
+            VerificationStatus.Success
+        )
+
+        override fun decryptAndVerifyData(
+            data: DataPacket,
+            sessionKey: SessionKey,
+            publicKeys: List<Armored>,
+            time: VerificationTime,
+        ): DecryptedData = DecryptedData(
+            data.decrypt(sessionKey.key).let { decrypted ->
+                check(String(decrypted).startsWith("BINARY"))
+                decrypted
             },
             VerificationStatus.Success
         )
