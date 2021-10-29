@@ -1,3 +1,11 @@
+## Country [1.16.1], Human-Verification [1.16.2]
+
+29 Oct, 2021
+
+Bug fixes
+
+- Incorrect background in HV and country picker
+
 ## Presentation [1.18.1]
 
 28 Oct, 2021
