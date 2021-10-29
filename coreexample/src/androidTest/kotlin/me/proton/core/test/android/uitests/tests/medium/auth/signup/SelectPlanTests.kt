@@ -22,6 +22,7 @@ import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.Plan.Free
 import me.proton.core.test.android.plugins.data.Plan.Dev
 import me.proton.core.test.android.plugins.data.User
+import me.proton.core.plan.R
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
@@ -55,6 +56,12 @@ class SelectPlanTests : BaseTest() {
     @Test
     @SmokeTest
     fun selectFreeAndCancelHumanVerification() {
+        selectPlanRobot
+            .view.withId(R.id.scrollContent)
+            .hasDescendant(
+                selectPlanRobot.view.withId(R.id.plansView)
+            ).swipeUp()
+
         selectPlanRobot
             .selectPlan<HumanVerificationRobot>(Free)
             .verify {

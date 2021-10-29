@@ -215,15 +215,6 @@ class PlanItemView @JvmOverloads constructor(
     }
 }
 
-fun Spinner.selected(action: (Int) -> Unit) {
-    onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {}
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            action(position)
-        }
-    }
-}
-
 private fun Context.getStringArrayByName(aString: String) =
     try {
         resources.getStringArray(resources.getIdentifier(aString, "array", packageName))

@@ -22,7 +22,10 @@ import android.content.Context
 import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import me.proton.core.plan.presentation.R
@@ -46,6 +49,7 @@ internal class PlansListView @JvmOverloads constructor(
     private val plansAdapter = ProtonAdapter(
         getView = { parent, inflater -> PlanListViewItemBinding.inflate(inflater, parent, false) },
         onBind = { plan ->
+//            planDetails.removeAllViews()
             planDetails.apply {
                 cycle = selectedCycle
                 currency = selectedCurrency
@@ -55,7 +59,8 @@ internal class PlansListView @JvmOverloads constructor(
                 planDetailsListItem = plan
             }
         },
-        diffCallback = PlanDetailsListItem.DiffCallback
+        diffCallback = PlanDetailsListItem.DiffCallback,
+        recyclable = false
     )
 
     lateinit var selectPlanListener: (SelectedPlan) -> Unit
@@ -142,4 +147,13 @@ internal class PlansListView @JvmOverloads constructor(
                 }
             }
         }
+
+    private fun Spinner.selected(action: (Int) -> Unit) {
+        onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                action(position)
+            }
+        }
+    }
 }
