@@ -1,6 +1,4 @@
-def assign_reviewers
-	# Assign reviewers
-	reviewer_username_filter = ["jmartin", "marmatys", "dkadrikj", "nmarietta", "vbrison"]
+def assign_reviewers(reviewer_username_filter = [])
 	current_reviewers = gitlab.mr_json["reviewers"]
 	project_id = gitlab.mr_json["project_id"]
 	mr_id = gitlab.mr_json["iid"]
