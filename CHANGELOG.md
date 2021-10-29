@@ -1,3 +1,16 @@
+## Presentation [1.18.1]
+
+28 Oct, 2021
+
+### Changes
+
+- Added Snackbar proton_notification_norm to color taxonomy. 
+- Please use View extensions for Snackbar:
+  - View.normSnack
+  - View.warningSnack
+  - View.errorSnack
+  - View.successSnack
+
 ## Auth [1.17.5]
 
 28 Oct, 2021

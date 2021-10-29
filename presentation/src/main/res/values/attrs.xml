@@ -52,6 +52,7 @@
         <attr name="proton_background_norm" format="reference" />
         <attr name="proton_background_secondary" format="reference" />
         <attr name="proton_separator_norm" format="reference" />
+        <attr name="proton_notification_norm" format="reference" />
         <attr name="proton_notification_error" format="reference" />
         <attr name="proton_notification_success" format="reference" />
         <attr name="proton_notification_warning" format="reference" />
