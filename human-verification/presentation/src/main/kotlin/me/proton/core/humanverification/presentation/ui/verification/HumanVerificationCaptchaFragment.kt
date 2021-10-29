@@ -19,6 +19,7 @@
 package me.proton.core.humanverification.presentation.ui.verification
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.webkit.JavascriptInterface
@@ -62,7 +63,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
     private val binding by viewBinding(FragmentHumanVerificationCaptchaBinding::bind)
 
     private val captchaUrl: String by lazy {
-        requireArguments().get(ARG_CAPTCHA_URL) as String? ?: "https://$captchaApiHost/core/v4/captcha"
+        requireArguments().getString(ARG_CAPTCHA_URL) ?: "https://$captchaApiHost/core/v4/captcha"
     }
 
     private val humanVerificationBase by lazy {
@@ -81,6 +82,7 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
         }
 
         binding.captchaWebView.apply {
+            setBackgroundColor(Color.TRANSPARENT)
             settings.javaScriptEnabled = true // this is fine, required to load captcha
             addJavascriptInterface(WebAppInterface(), "AndroidInterface")
             webChromeClient = CaptchaWebChromeClient()

@@ -18,6 +18,7 @@
 
 package me.proton.core.humanverification.presentation.ui
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -52,51 +53,8 @@ import me.proton.core.util.kotlin.exhaustive
  */
 @AndroidEntryPoint
 class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_human_verification_main) {
-
-    companion object {
-        private const val ARG_CLIENT_ID = "arg.clientId"
-        private const val ARG_CLIENT_ID_TYPE = "arg.clientIdType"
-        private const val ARG_CAPTCHA_TOKEN = "arg.captcha-token"
-        private const val ARG_RECOVERY_EMAIL_ADDRESS = "arg.recoveryEmailAddress"
-        private const val ARG_CAPTCHA_URL = "arg.captchaUrl"
-        const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
-        const val ARG_DESTINATION = "arg.destination"
-        const val ARG_TOKEN_CODE = "arg.token-code"
-        const val ARG_TOKEN_TYPE = "arg.token-type"
-        const val KEY_PHASE_TWO = "key.phase_two"
-        const val KEY_VERIFICATION_DONE = "key.verification_done"
-        internal const val RESULT_HUMAN_VERIFICATION = "result.HumanVerificationResult"
-        internal const val REQUEST_KEY = "HumanVerificationDialogFragment.requestKey"
-
-        /**
-         * The only verification method (type) that is receiving aa token from the 9001 human
-         * verification response is [TokenType.CAPTCHA] and should be passed to the constructor.
-         *
-         * @param availableVerificationMethods all available verification methods, returned from the API
-         * @param captchaToken if the API returns it, otherwise null
-         */
-        operator fun invoke(
-            clientId: String,
-            captchaUrl: String? = null,
-            clientIdType: String,
-            availableVerificationMethods: List<String>,
-            captchaToken: String?,
-            recoveryEmailAddress: String?
-        ) = HumanVerificationDialogFragment().apply {
-            arguments = bundleOf(
-                ARG_CLIENT_ID to clientId,
-                ARG_CAPTCHA_URL to captchaUrl,
-                ARG_CLIENT_ID_TYPE to clientIdType,
-                ARG_VERIFICATION_OPTIONS to availableVerificationMethods,
-                ARG_CAPTCHA_TOKEN to captchaToken,
-                ARG_RECOVERY_EMAIL_ADDRESS to recoveryEmailAddress
-            )
-        }
-    }
-
     private val viewModel by viewModels<HumanVerificationViewModel>()
     private val binding by viewBinding(DialogHumanVerificationMainBinding::bind)
-
 
     private val clientIdType: ClientIdType by lazy {
         ClientIdType.getByValue(requireArguments().getString(ARG_CLIENT_ID_TYPE, null))
@@ -115,15 +73,15 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
     }
 
     private val captchaToken: String? by lazy {
-        requireArguments().get(ARG_CAPTCHA_TOKEN) as String?
+        requireArguments().getString(ARG_CAPTCHA_TOKEN)
     }
 
     private val captchaUrl: String? by lazy {
-        requireArguments().get(ARG_CAPTCHA_URL) as String?
+        requireArguments().getString(ARG_CAPTCHA_URL)
     }
 
     private val recoveryEmailAddress: String? by lazy {
-        requireArguments().get(ARG_RECOVERY_EMAIL_ADDRESS) as String?
+        requireArguments().getString(ARG_RECOVERY_EMAIL_ADDRESS)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -150,6 +108,12 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         }
     }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState).also {
+            it.window?.setWindowAnimations(android.R.style.Animation_Dialog)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.enabledMethods
@@ -165,18 +129,14 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
                 setResultAndDismiss(token = null)
             }
             setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.menu_help -> {
-                        childFragmentManager.showHelp()
-                        true
-                    }
-                    else -> false
-                }
+                if (it.itemId == R.id.menu_help) {
+                    childFragmentManager.showHelp()
+                    true
+                } else false
             }
         }
 
-        binding.verificationOptions.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
+        binding.verificationOptions.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -250,6 +210,49 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
             val resultBundle = Bundle().apply { putParcelable(RESULT_HUMAN_VERIFICATION, result) }
             setFragmentResult(REQUEST_KEY, resultBundle)
             dismissAllowingStateLoss()
+        }
+    }
+
+    companion object {
+        private const val ARG_CLIENT_ID = "arg.clientId"
+        private const val ARG_CLIENT_ID_TYPE = "arg.clientIdType"
+        private const val ARG_CAPTCHA_TOKEN = "arg.captcha-token"
+        private const val ARG_RECOVERY_EMAIL_ADDRESS = "arg.recoveryEmailAddress"
+        private const val ARG_CAPTCHA_URL = "arg.captchaUrl"
+        const val ARG_VERIFICATION_OPTIONS = "arg.verification-options"
+        const val ARG_DESTINATION = "arg.destination"
+        const val ARG_TOKEN_CODE = "arg.token-code"
+        const val ARG_TOKEN_TYPE = "arg.token-type"
+        const val KEY_PHASE_TWO = "key.phase_two"
+        const val KEY_VERIFICATION_DONE = "key.verification_done"
+        internal const val RESULT_HUMAN_VERIFICATION = "result.HumanVerificationResult"
+        internal const val REQUEST_KEY = "HumanVerificationDialogFragment.requestKey"
+
+        /**
+         * The only verification method (type) that is receiving aa token from the 9001 human
+         * verification response is [TokenType.CAPTCHA] and should be passed to the constructor.
+         *
+         * @param availableVerificationMethods all available verification methods, returned from the API
+         * @param captchaToken if the API returns it, otherwise null
+         */
+        operator fun invoke(
+            clientId: String,
+            captchaUrl: String? = null,
+            clientIdType: String,
+            availableVerificationMethods: List<String>,
+            captchaToken: String?,
+            recoveryEmailAddress: String?
+        ): HumanVerificationDialogFragment {
+            return HumanVerificationDialogFragment().apply {
+                arguments = bundleOf(
+                    ARG_CLIENT_ID to clientId,
+                    ARG_CAPTCHA_URL to captchaUrl,
+                    ARG_CLIENT_ID_TYPE to clientIdType,
+                    ARG_VERIFICATION_OPTIONS to availableVerificationMethods,
+                    ARG_CAPTCHA_TOKEN to captchaToken,
+                    ARG_RECOVERY_EMAIL_ADDRESS to recoveryEmailAddress
+                )
+            }
         }
     }
 }
