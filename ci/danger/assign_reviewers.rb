@@ -3,11 +3,9 @@ def assign_reviewers(reviewer_username_filter = [])
 	project_id = gitlab.mr_json["project_id"]
 	mr_id = gitlab.mr_json["iid"]
 	merge_request_approvals = gitlab.api.merge_request_approvals(project_id, mr_id)
-
-	#p gitlab.mr_json.to_hash
-	#p merge_request_approvals.to_hash
 	approvals_required = merge_request_approvals["approvals_required"]
 	reviewers_to_add_count = approvals_required - current_reviewers.length
+
 	if reviewers_to_add_count <= 0
 		p "No need to assign additional reviewer"
 		return
