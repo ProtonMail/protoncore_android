@@ -34,13 +34,12 @@ class SelectPlanRobot : CoreRobot() {
      * @return an instance of [T]
      */
     inline fun <reified T> selectPlan(plan: Plan): T {
-        view
-            // TODO: now select button is a dynamic component, probably should be used .withText()
-//            .withId(R.id.selectPlan)
-            .hasSibling(
-                view.withId(R.id.planNameText).withText(plan.text)
-            )
-            .click()
+        view.withText(R.string.plans_select_plan)
+            .isDescendantOf(
+                view.withId(R.id.planGroup).hasSibling(
+                    view.withText(plan.text)
+                )
+            ).click()
         return T::class.java.newInstance()
     }
 
@@ -64,22 +63,20 @@ class SelectPlanRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun planDetailsDisplayed(plan: Plan) {
-            view
-                .withId(R.id.planContents).hasSibling(
-                    view.withId(R.id.planNameText).withText(plan.text)
-                )
+            view.withText(plan.text).checkDisplayed()
         }
 
         fun canSelectPlan(plan: Plan) {
-            view
-                // TODO: now select button is a dynamic component, probably should be used .withText()
-//                .withId(R.id.selectPlan)
-                .hasSibling(
-                    view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
-                )
+            view.withText(R.string.plans_select_plan)
+                .isDescendantOf(
+                    view.withId(R.id.planGroup).hasSibling(
+                        view.withText(plan.text)
+                    )
+                ).checkDisplayed()
         }
 
         fun billingCycleIs(billingCycle: BillingCycle, currency: Currency = Currency.Euro) {
+            // TODO: re-work to reflect 4.5 design
             when (billingCycle) {
                 BillingCycle.Monthly -> {
                     view.withId(R.id.planPriceText).withText("${currency.symbol}4.99")

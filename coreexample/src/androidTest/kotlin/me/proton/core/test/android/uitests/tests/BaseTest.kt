@@ -57,8 +57,8 @@ open class BaseTest(
         fun prepare() {
             setupDevice(true)
             quark.jailUnban()
-            Plan.Dev.text = quark.planDevText
-            Plan.Dev.planName = quark.planDevName
+            Plan.Dev.text = Plan.Plus.text
+            Plan.Dev.planName = Plan.Plus.planName
         }
     }
 }

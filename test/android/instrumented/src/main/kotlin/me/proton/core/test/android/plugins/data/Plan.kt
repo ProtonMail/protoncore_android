@@ -27,7 +27,7 @@ enum class Plan(var planName: String, var text: String) {
     Free("free", "Free"),
     Professional("pro", "Professional"),
     Visionary("visionary", "Visionary"),
-    Plus("plus", "Plus"),
+    Plus("plus", "ProtonMail Plus"),
     Dev("", "")
 }
 
