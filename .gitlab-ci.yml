@@ -13,10 +13,15 @@ include:
     ref: master
     file: '/jobs/commit-locales.gitlab-ci.yml'
 
+  - project: 'ProtonVPN/android/android-app-new'
+    ref: development
+    file: '/appetize-integration.yml'
+
 stages:
   - bot
   - analyze
   - build
+  - startReview
   - test
   - publish
   - commit
@@ -49,10 +54,12 @@ assemble:
   tags:
     - large
   script:
+    - echo PROXY_TOKEN="$(curl -o - https://proxy.proton.black/token/get)" >> local.properties
+    - echo HOST="proton.black" >> local.properties
     - ./gradlew assemble
-#   artifacts:
-#     paths:
-#     - app/build/outputs/
+  artifacts:
+    paths:
+      - coreexample/build/outputs/
 
 debugTests:
   cache:
@@ -152,3 +159,11 @@ i18n-commit-locales:
     I18N_COMMIT_CROWDIN_PROJECT: 'android-core'
     I18N_COMMIT_BRANCH_PUSH: 'master'
     I18N_COMMIT_BRANCH_ALLOWED: 'master'
+
+startReview:
+  before_script:
+    - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/debug/coreexample-debug.apk"
+  extends: .startReview
+
+stopReview:
+  extends: .stopReview
