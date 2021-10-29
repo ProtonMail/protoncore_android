@@ -216,23 +216,23 @@ Mail Settings Data: **1.18** - _released on: Oct 25, 2021_
 
 ### Human Verification
 
-Human Verification: **1.16.1** - _released on: Oct 22, 2021_
+Human Verification: **1.16.2** - _released on: Oct 29, 2021_
 
-Human Verification Domain: **1.16.1** - _released on: Oct 22, 2021_
+Human Verification Domain: **1.16.2** - _released on: Oct 29, 2021_
 
-Human Verification Presentation: **1.16.1** - _released on: Oct 22, 2021_
+Human Verification Presentation: **1.16.2** - _released on: Oct 29, 2021_
 
-Human Verification Data: **1.16.1** - _released on: Oct 22, 2021_
+Human Verification Data: **1.16.2** - _released on: Oct 29, 2021_
 
 ### Countries
 
-Country: **1.16** - _released on: Oct 19, 2021_
+Country: **1.16.1** - _released on: Oct 29, 2021_
 
-Country Domain: **1.16** - _released on: Oct 19, 2021_
+Country Domain: **1.16.1** - _released on: Oct 29, 2021_
 
-Country Data: **1.16** - _released on: Oct 19, 2021_
+Country Data: **1.16.1** - _released on: Oct 29, 2021_
 
-Country Presentation: **1.16** - _released on: Oct 19, 2021_
+Country Presentation: **1.16.1** - _released on: Oct 29, 2021_
 
 ### Payment
 
