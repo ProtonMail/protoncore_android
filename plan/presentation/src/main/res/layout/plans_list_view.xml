@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/gap_small"
-        android:maxLines="1"
+        android:maxLines="2"
         android:text="@string/plans_save_20"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
