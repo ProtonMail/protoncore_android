@@ -1,3 +1,9 @@
+# Auto assign reviewer(s) to the current merge request based on:
+# - Match assigned reviewers number to and required approvals number
+# - Filter out non active eligible reviewers (based on their GitLab status)
+# - Filter out from eligible reviewers reviewers provided in parameter reviewer_username_filter
+#
+# @param reviewer_username_filter Additional reviewer(s) to filter out from eligible reviewer.
 def assign_reviewers(reviewer_username_filter = [])
 	current_reviewers = gitlab.mr_json["reviewers"]
 	project_id = gitlab.mr_json["project_id"]
