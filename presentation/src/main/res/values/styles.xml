@@ -269,7 +269,8 @@
         <item name="android:paddingBottom">8dp</item>
         <item name="android:textAppearance">@style/Proton.Text.Caption</item>
         <item name="android:textColor">@color/text_norm_selector</item>
-        <item name="backgroundTint">@color/interaction_weak_selector</item>
+        <item name="rippleColor">@color/ripple_norm</item>
+        <item name="backgroundTint">@color/btn_secondary_background_selector</item>
         <item name="progressDrawable">@drawable/ic_animated_loading_secondary</item>
     </style>
 
@@ -378,6 +379,7 @@
         <item name="tabIconTint">@color/text_selectable_selector</item>
         <item name="tabIndicatorColor">?attr/proton_interaction_strong</item>
         <item name="tabTextColor">@color/text_selectable_selector</item>
+        <item name="tabRippleColor">@color/ripple_norm_tab</item>
     </style>
     <!-- endregion -->
 

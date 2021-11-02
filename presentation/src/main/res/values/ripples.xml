@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- On Android API up to 27 the RippleDrawable halves the color alpha.
+         mtrl_low_ripple_*_alpha and mtrl_high_ripple_*_alpha are defined to work around this
+         and are used throughout the Material Components library.
+         There is one exception: TabLayout that uses RippleUtils.convertToRippleDrawableColor that
+         multiplies alpha by 2 also on API28+ leading to ripples that are too dark on newer devices.
+
+         ripple_tab_alpha is defined to work around this.
+
+         https://github.com/material-components/material-components-android/issues/1109 -->
+    <item format="float" name="ripple_tab_alpha" type="dimen">0.12</item>
+</resources>
