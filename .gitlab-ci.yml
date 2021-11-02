@@ -34,7 +34,7 @@ variables:
   # Output upload and download progress every 5 seconds
   TRANSFER_METER_FREQUENCY: "5s"
   # Use no compression for artifacts
-  ARTIFACT_COMPRESSION_LEVEL: "fastest"
+  ARTIFACT_COMPRESSION_LEVEL: "fast"
   # Use no compression for caches
   CACHE_COMPRESSION_LEVEL: "fastest"
 
@@ -43,9 +43,7 @@ cache:
   paths:
     - .gradle/caches/modules-*
     - .gradle/caches/jars-*
-    - .gradle/caches/build-cache-*
-    - './**/build'
-
+    - ./**/build
 
 #####################
 danger-review:
@@ -201,7 +199,7 @@ stopReview:
 coverage report:
   stage: report
   tags:
-    - small
+    - medium
   script:
     - ./gradlew coberturaCoverageReport
   coverage: /Total.*?(\d{1,3}\.\d{0,2})%/
@@ -209,7 +207,7 @@ coverage report:
   artifacts:
     expire_in: 1 week
     paths:
-      - ./**/build/reports/*
+      - ./build/reports/*
     reports:
       cobertura:
         - ./**/build/reports/cobertura-coverage.xml
