@@ -137,7 +137,7 @@ class ProtonJacocoPlugin : Plugin<Project> {
             if (!outputDir.exists()) {
                 outputDir.mkdirs()
             }
-            workingDir = File(rootDir, "util/gradle")
+            workingDir = rootDir
 
             val jacocoSubTasks = getReportTasks(tasks.named<JacocoReport>("jacocoMergeReport").get())
             val sources = jacocoSubTasks.flatMap { it.sourceDirectories }
@@ -147,7 +147,7 @@ class ProtonJacocoPlugin : Plugin<Project> {
 
             commandLine(
                 "python3",
-                "$rootDir/cover2cover.py",
+                "$rootDir/plugins/jacoco/scripts/cover2cover.py",
                 reportFile.absolutePath,
                 *(sources.toTypedArray()),
             )
