@@ -32,16 +32,15 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.CreateLoginSession
-import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
-import me.proton.core.payment.domain.usecase.PerformSubscribe
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,7 +49,6 @@ internal class LoginViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val createLoginSession: CreateLoginSession,
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val performSubscribe: PerformSubscribe,
     private val postLoginAccountSetup: PostLoginAccountSetup,
     humanVerificationManager: HumanVerificationManager,
     humanVerificationOrchestrator: HumanVerificationOrchestrator,
@@ -80,19 +78,19 @@ internal class LoginViewModel @Inject constructor(
         username: String,
         password: String,
         requiredAccountType: AccountType,
-        subscriptionDetails: SubscriptionDetails? = null
+        billingDetails: BillingDetails? = null
     ): Job = startLoginWorkflowWithEncryptedPassword(
         username = username,
         encryptedPassword = password.encrypt(keyStoreCrypto),
         requiredAccountType = requiredAccountType,
-        subscriptionDetails = subscriptionDetails
+        billingDetails = billingDetails
     )
 
     fun startLoginWorkflowWithEncryptedPassword(
         username: String,
         encryptedPassword: EncryptedString,
         requiredAccountType: AccountType,
-        subscriptionDetails: SubscriptionDetails? = null
+        billingDetails: BillingDetails? = null
     ) = flow<State> {
         emit(State.Processing)
 
@@ -101,22 +99,7 @@ internal class LoginViewModel @Inject constructor(
 
         savedStateHandle.set(STATE_USER_ID, userId.id)
 
-        // Subscribe to any pending subscription/billing.
-        if (subscriptionDetails?.billingResult != null) {
-            val billing = subscriptionDetails.billingResult
-            runCatching {
-                performSubscribe(
-                    userId = userId,
-                    amount = billing.amount,
-                    currency = billing.currency,
-                    cycle = billing.cycle,
-                    planNames = listOf(subscriptionDetails.planName),
-                    paymentToken = billing.token
-                )
-            }
-        }
-
-        val result = postLoginAccountSetup(sessionInfo, encryptedPassword, requiredAccountType)
+        val result = postLoginAccountSetup(sessionInfo, encryptedPassword, requiredAccountType, billingDetails)
         emit(State.AccountSetupResult(result))
     }.catch { error ->
         emit(State.ErrorMessage(error.message))

@@ -20,15 +20,18 @@ package me.proton.core.auth.domain.usecase
 
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 /** Performs the account check after logging in to determine what actions are needed. */
 class PostLoginAccountSetup @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
+    private val performSubscribe: PerformSubscribe,
     private val setupAccountCheck: SetupAccountCheck,
     private val setupInternalAddress: SetupInternalAddress,
     private val setupPrimaryKeys: SetupPrimaryKeys,
@@ -53,9 +56,24 @@ class PostLoginAccountSetup @Inject constructor(
     suspend operator fun invoke(
         sessionInfo: SessionInfo,
         encryptedPassword: EncryptedString,
-        requiredAccountType: AccountType
+        requiredAccountType: AccountType,
+        billingDetails: BillingDetails? = null
     ): Result {
         val userId = sessionInfo.userId
+
+        // Subscribe to any pending subscription/billing.
+        if (billingDetails != null) {
+            runCatching {
+                performSubscribe(
+                    userId = userId,
+                    amount = billingDetails.amount,
+                    currency = billingDetails.currency,
+                    cycle = billingDetails.cycle,
+                    planNames = listOf(billingDetails.planName),
+                    paymentToken = billingDetails.token
+                )
+            }
+        }
 
         // If SecondFactorNeeded, we cannot proceed without.
         if (sessionInfo.isSecondFactorNeeded) {

@@ -39,6 +39,7 @@ dependencies {
         project(Module.accountDomain),
         project(Module.userDomain),
         project(Module.keyDomain),
+        project(Module.paymentDomain),
 
         // Kotlin
         `kotlin-jdk8`,

@@ -77,6 +77,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     private val createLoginSession = CreateLoginSession(accountHandler, performLogin)
     private val postLoginAccountSetup = PostLoginAccountSetup(
         accountHandler,
+        performSubscribe,
         setupAccountCheck,
         setupInternalAddress,
         setupPrimaryKeys,
@@ -100,7 +101,6 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             accountHandler,
             createLoginSession,
             keyStoreCrypto,
-            performSubscribe,
             postLoginAccountSetup,
             humanVerificationManager,
             humanVerificationOrchestrator

@@ -29,6 +29,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivitySignupBinding
@@ -147,11 +148,22 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         }
         binding.lottieProgress.visibility = View.VISIBLE
 
+        val subscriptionDetails = signUpViewModel.subscriptionDetails
+        val billingDetails = subscriptionDetails?.billingResult?.let {
+            BillingDetails(
+                amount = it.amount,
+                currency = it.currency,
+                cycle = it.cycle,
+                planName = subscriptionDetails.planName,
+                token = it.token
+            )
+        }
+
         loginViewModel.startLoginWorkflowWithEncryptedPassword(
             loginUsername,
             encryptedPassword,
             signUpViewModel.currentAccountType,
-            signUpViewModel.subscriptionDetails
+            billingDetails
         )
     }
 
