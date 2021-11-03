@@ -18,7 +18,6 @@
 <resources>
 
     <style name="Proton.ThemeOverlay.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorOnSurface">?attr/proton_text_norm</item>
         <item name="alertDialogStyle">@style/Proton.MaterialAlertDialog</item>
     </style>
 

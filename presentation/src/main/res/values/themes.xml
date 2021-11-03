@@ -33,8 +33,8 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnPrimarySurface">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="colorOnSurface">?attr/brand_norm</item>
-        <item name="colorOnBackground">?attr/brand_norm</item>
+        <item name="colorOnSurface">@color/shade_100</item>
+        <item name="colorOnBackground">@color/shade_100</item>
 
         <!-- Text colors -->
         <item name="android:textColor">@color/text_norm</item>
