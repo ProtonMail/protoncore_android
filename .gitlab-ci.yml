@@ -37,6 +37,27 @@ cache:
 
 
 #####################
+danger-review:
+  image: ruby:2.7
+  stage: analyze
+  when: always
+  tags:
+    - small
+  script:
+    - bundle config set path 'vendor/ruby'
+    - bundle config set without 'production'
+    - bundle install
+    - bundle exec danger --fail-on-errors=true
+  cache:
+    key:
+      files:
+        - Gemfile.lock
+    paths:
+      - vendor/ruby
+  variables:
+    DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
+  interruptible: true
+
 detekt analysis:
   stage: analyze
   when: always
