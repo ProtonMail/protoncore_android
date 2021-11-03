@@ -26,6 +26,7 @@ import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupInternal
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupPrimaryKeysNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.TwoPassNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.UserCheckError
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasInternalAddressKey
@@ -38,6 +39,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 class SetupAccountCheck @Inject constructor(
+    private val product: Product,
     private val userRepository: UserRepository,
     private val addressRepository: UserAddressRepository,
     private val userCheck: UserCheck
@@ -83,6 +85,7 @@ class SetupAccountCheck @Inject constructor(
             }
             AccountType.External -> {
                 when {
+                    product == Product.Vpn -> NoSetupNeeded
                     !user.hasKeys() -> SetupPrimaryKeysNeeded
                     isTwoPassModeNeeded -> TwoPassNeeded
                     else -> NoSetupNeeded
