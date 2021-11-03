@@ -17,14 +17,13 @@
  */
 
 import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
 plugins {
     id("com.android.library")
     kotlin("android")
 }
 
-libVersion = Version(1, 15, 2)
+publishOption.shouldBePublishedAsLib = true
 
 android()
 

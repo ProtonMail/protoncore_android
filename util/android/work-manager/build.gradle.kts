@@ -25,7 +25,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 15, 0)
+publishOption.shouldBePublishedAsLib = true
 
 android()
 

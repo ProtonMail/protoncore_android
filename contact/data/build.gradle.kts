@@ -26,7 +26,7 @@ plugins {
     kotlin("kapt")
 }
 
-libVersion = parent?.libVersion
+publishOption.shouldBePublishedAsLib = true
 
 android()
 

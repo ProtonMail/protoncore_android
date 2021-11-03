@@ -1,5 +1,9 @@
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
+import javax.inject.Inject
+
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,10 +20,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.extra
-import studio.forface.easygradle.dsl.*
+open class PublishOptionExtension @Inject constructor (private val project: Project) {
 
-var Project.libVersion
-    get() = if (hasProperty("libVersion")) extra.properties["libVersion"] as? Version else null
-    set(value) { extra["libVersion"] = value }
+    var shouldBePublishedAsLib: Boolean
+        get() = project.extra.properties["shouldBePublishedAsLib"] == true
+        set(value) { project.extra["shouldBePublishedAsLib"] = value }
+
+    companion object {
+        fun Project.setupPublishOptionExtension(): PublishOptionExtension {
+            return extensions.create("publishOption", PublishOptionExtension::class.java)
+        }
+    }
+}

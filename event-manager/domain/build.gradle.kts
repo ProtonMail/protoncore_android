@@ -17,7 +17,6 @@
  */
 
 import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
 plugins {
     `java-library`
@@ -25,7 +24,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = parent?.libVersion
+publishOption.shouldBePublishedAsLib = true
 
 dependencies {
 

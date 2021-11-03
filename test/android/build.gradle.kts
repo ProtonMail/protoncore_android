@@ -24,7 +24,7 @@ plugins {
     kotlin("android")
 }
 
-libVersion = Version(1, 15, 1)
+publishOption.shouldBePublishedAsLib = true
 
 android()
 

@@ -16,16 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import PublishOptionExtension.Companion.setupPublishOptionExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.extra
-// import org.gradle.kotlin.dsl.named
-// import org.jetbrains.dokka.gradle.DokkaPlugin
-// import org.jetbrains.dokka.gradle.DokkaTask
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.publish.publish
-import studio.forface.easygradle.publish.version
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -38,7 +35,6 @@ import java.time.format.DateTimeFormatter
 abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        target.extensions.create(PublishLibrariesExtension.NAME, PublishLibrariesExtension::class.java, target)
         target.setupPublishing()
 
         target.subprojects {
@@ -48,15 +44,15 @@ abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 }
 
 private fun Project.setupPublishing() {
+    val publishOption = setupPublishOptionExtension()
     afterEvaluate {
-
-        if (libVersion != null) {
+        if (publishOption.shouldBePublishedAsLib) {
+            println("Setup publishing for $group:$name:$version")
             archivesBaseName = archiveName
 
             // Setup maven publish/signing config
             val mavenPassword = System.getenv()["MAVEN_PASSWORD"]
             publish {
-                version = libVersion!!
                 developers(applyDevelopers)
                 licenses(applyLicences)
                 baseUrl = System.getenv()["MAVEN_BASE_URL"] ?: "none"
@@ -133,9 +129,8 @@ class ReleaseManager internal constructor(
 
     private val prevVersion = README_VERSION_REGEX.find(README_FILE.readText())?.groupValues?.get(1)
         ?: throw IllegalArgumentException("Cannot find version for $name: $README_VERSION_REGEX")
-    private val versionName = libVersion!!.versionName
 
-    val isNewVersion = forceRefresh || prevVersion != versionName
+    val isNewVersion = forceRefresh || prevVersion != version
     private val shouldRefresh = forceRefresh || isNewVersion
 
     /** Move jar/aar archives into '/[folderName]/<libName>' */
@@ -150,7 +145,7 @@ class ReleaseManager internal constructor(
 
     private fun moveJars(into: File) {
         JAR_DIRECTORY.listFiles()?.forEach { file ->
-            val newFile = File(into, file.name.replace("-$versionName", ""))
+            val newFile = File(into, file.name.replace("-$version", ""))
             // If file is absent
             if (!newFile.exists()) {
                 file.copyTo(newFile)
@@ -166,7 +161,7 @@ class ReleaseManager internal constructor(
                     into,
                     file.name
                         .replace("-release", "")
-                        .replace("-$versionName", "")
+                        .replace("-$version", "")
                 )
                 // If file is absent
                 if (!newFile.exists()) {
@@ -184,7 +179,7 @@ class ReleaseManager internal constructor(
 
             README_FILE.writeText(
                 README_FILE.readText()
-                    .replace(README_VERSION_REGEX, readmeVersion(humanReadableName, versionName, timestamp))
+                    .replace(README_VERSION_REGEX, readmeVersion(humanReadableName, version as String, timestamp))
             )
         }
     }
@@ -193,7 +188,7 @@ class ReleaseManager internal constructor(
     fun printToNewReleasesFile() {
         if (shouldRefresh) {
             NEW_RELEASES_FILE.writeText(
-                "${NEW_RELEASES_FILE.readText()}$humanReadableName $versionName\n"
+                "${NEW_RELEASES_FILE.readText()}$humanReadableName $version\n"
             )
         }
     }

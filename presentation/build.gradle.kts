@@ -26,7 +26,7 @@ plugins {
     id("kotlin-parcelize")
 }
 
-libVersion = Version(1, 18, 3)
+publishOption.shouldBePublishedAsLib = true
 
 android(useViewBinding = true)
 

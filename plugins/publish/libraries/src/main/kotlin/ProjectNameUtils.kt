@@ -21,7 +21,7 @@ import java.util.Locale
 
 /** @return Name for archive ( e.g. `aar` ) for the given [Project] */
 internal val Project.archiveName get() =
-    "${fullQualifierName}_${libVersion?.versionName}".noWhiteSpaces
+    "${fullQualifierName}_$version".noWhiteSpaces
 
 /**
  * @return full human readable name of the receiver [Project]

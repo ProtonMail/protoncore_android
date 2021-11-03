@@ -16,7 +16,6 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
 plugins {
     `java-library`
@@ -24,7 +23,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-libVersion = Version(1, 18, 0)
+publishOption.shouldBePublishedAsLib = true
 
 dependencies {
 

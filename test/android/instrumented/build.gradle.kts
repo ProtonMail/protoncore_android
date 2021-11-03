@@ -19,7 +19,7 @@
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
-libVersion = Version(1, 15, 5)
+publishOption.shouldBePublishedAsLib = true
 
 plugins {
     id("com.android.library")

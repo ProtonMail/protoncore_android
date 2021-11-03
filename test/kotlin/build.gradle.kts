@@ -23,7 +23,7 @@ plugins {
     kotlin("jvm")
 }
 
-libVersion = Version(1, 15, 0)
+publishOption.shouldBePublishedAsLib = true
 
 dependencies {
 

@@ -25,7 +25,7 @@ plugins {
     kotlin("jvm")
 }
 
-libVersion = parent?.libVersion
+publishOption.shouldBePublishedAsLib = true
 
 dependencies {
 
