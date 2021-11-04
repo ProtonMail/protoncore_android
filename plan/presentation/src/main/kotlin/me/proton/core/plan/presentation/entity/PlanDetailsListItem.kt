@@ -38,7 +38,23 @@ sealed class PlanDetailsListItem(
     open val currentlySubscribed: Boolean
 ) : Parcelable {
 
-    abstract fun createSelectButton(context: Context): ProtonButton
+    protected abstract fun createButtonWithStyle(context: Context): ProtonButton
+
+    fun createSelectButton(context: Context): ProtonButton {
+        val selectButton = createButtonWithStyle(context)
+        selectButton.id = View.generateViewId()
+        selectButton.text = context.getString(R.string.plans_select_plan)
+        val params =
+            ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.topMargin = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            context.resources.getDimension(R.dimen.gap_medium),
+            context.resources.displayMetrics
+        ).toInt()
+        selectButton.layoutParams = params
+
+        return selectButton
+    }
 
     @Parcelize
     data class FreePlanDetailsListItem(
@@ -47,20 +63,8 @@ sealed class PlanDetailsListItem(
         override val currentlySubscribed: Boolean,
         val selectable: Boolean = true
     ) : PlanDetailsListItem(name, displayName, currentlySubscribed) {
-        override fun createSelectButton(context: Context): ProtonButton {
-            val selectButton = ProtonButton(context, null, R.attr.outlinedButtonStyle)
-            selectButton.id = View.generateViewId()
-            selectButton.text = context.getString(R.string.plans_select_plan)
-            val params =
-                ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            params.topMargin = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                context.resources.getDimension(R.dimen.gap_medium),
-                context.resources.displayMetrics
-            ).toInt()
-            selectButton.layoutParams = params
-            return selectButton
-        }
+        override fun createButtonWithStyle(context: Context): ProtonButton =
+            ProtonButton(context, null, R.attr.outlinedButtonStyle)
     }
 
     @Parcelize
@@ -80,20 +84,7 @@ sealed class PlanDetailsListItem(
         val connections: Int,
         val currency: PlanCurrency
     ) : PlanDetailsListItem(name, displayName, currentlySubscribed) {
-        override fun createSelectButton(context: Context): ProtonButton {
-            val selectButton = ProtonButton(context)
-            selectButton.id = View.generateViewId()
-            selectButton.text = context.getString(R.string.plans_select_plan)
-            val params =
-                ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            params.topMargin = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                context.resources.getDimension(R.dimen.gap_medium),
-                context.resources.displayMetrics
-            ).toInt()
-            selectButton.layoutParams = params
-            return selectButton
-        }
+        override fun createButtonWithStyle(context: Context): ProtonButton = ProtonButton(context)
     }
 
     companion object {

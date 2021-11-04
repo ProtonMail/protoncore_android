@@ -49,7 +49,6 @@ internal class PlansListView @JvmOverloads constructor(
     private val plansAdapter = ProtonAdapter(
         getView = { parent, inflater -> PlanListViewItemBinding.inflate(inflater, parent, false) },
         onBind = { plan ->
-//            planDetails.removeAllViews()
             planDetails.apply {
                 cycle = selectedCycle
                 currency = selectedCurrency

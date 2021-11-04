@@ -20,15 +20,20 @@ package me.proton.core.plan.presentation.ui
 
 import androidx.annotation.LayoutRes
 import androidx.core.os.bundleOf
+import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.presentation.ui.ProtonFragment
 
 abstract class BasePlansFragment : ProtonFragment {
     constructor() : super()
     constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId)
 
-    protected fun close() {
+    protected fun setResult(selectedPlan: SelectedPlan? = null, billing: BillingResult? = null) {
         parentFragmentManager.setFragmentResult(
-            KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to null)
+            KEY_PLAN_SELECTED, bundleOf(
+                BUNDLE_KEY_PLAN to selectedPlan,
+                BUNDLE_KEY_BILLING_DETAILS to billing
+            )
         )
     }
 

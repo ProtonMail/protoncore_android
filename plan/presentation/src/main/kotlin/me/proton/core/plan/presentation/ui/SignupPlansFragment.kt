@@ -67,7 +67,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
         if (signupPlansViewModel.supportedPaidPlanNames.isNotEmpty()) {
             binding.apply {
                 toolbar.setNavigationOnClickListener {
-                    close()
+                    setResult()
                 }
                 input.user?.let {
                     if (input.showCurrent) {
@@ -90,9 +90,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                             plansView.selectPlanListener = { selectedPlan ->
                                 if (selectedPlan.free) {
                                     // proceed with result return
-                                    parentFragmentManager.setFragmentResult(
-                                        KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to selectedPlan)
-                                    )
+                                    setResult(selectedPlan)
                                 } else {
                                     val cycle = when (selectedPlan.cycle) {
                                         PlanCycle.MONTHLY -> SubscriptionCycle.MONTHLY
@@ -105,26 +103,14 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                             plansView.plans = it.plans
                         }
                     }
-                    is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
-                        parentFragmentManager.setFragmentResult(
-                            KEY_PLAN_SELECTED, bundleOf(
-                                BUNDLE_KEY_PLAN to it.selectedPlan,
-                                BUNDLE_KEY_BILLING_DETAILS to it.billing
-                            )
-                        )
-                    }
+                    is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(it.selectedPlan, it.billing)
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
             signupPlansViewModel.getAllPlansForSignup()
         } else {
             // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
-            parentFragmentManager.setFragmentResult(
-                KEY_PLAN_SELECTED, bundleOf(
-                    BUNDLE_KEY_PLAN to
-                        SelectedPlan.free(getString(R.string.plans_free_name))
-                )
-            )
+            setResult(SelectedPlan.free(getString(R.string.plans_free_name)))
         }
     }
 
@@ -138,17 +124,10 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
     }
 
     private fun finish() {
-        parentFragmentManager.setFragmentResult(
-            KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to null)
-        )
+        setResult()
     }
 
     companion object {
-        const val KEY_PLAN_SELECTED = "key.plan_selected"
-        const val BUNDLE_KEY_PLAN = "bundle.plan"
-        const val BUNDLE_KEY_BILLING_DETAILS = "bundle.billing_details"
-        const val ARG_INPUT = "arg.plansInput"
-
         operator fun invoke(input: PlanInput) = SignupPlansFragment().apply {
             arguments = bundleOf(
                 ARG_INPUT to input

@@ -29,7 +29,7 @@ plugins {
 }
 
 android(
-    version = Version(1, 18, 0),
+    version = Version(1, 18, 1),
     useViewBinding = true
 )
 {

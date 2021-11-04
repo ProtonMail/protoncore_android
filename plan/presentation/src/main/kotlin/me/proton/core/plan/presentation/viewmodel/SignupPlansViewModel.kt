@@ -39,7 +39,7 @@ import javax.inject.Inject
 internal class SignupPlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
     @SupportedPaidPlans val supportedPaidPlanNames: List<String>,
-    private val paymentsOrchestrator: PaymentsOrchestrator
+    paymentsOrchestrator: PaymentsOrchestrator
 ) : BasePlansViewModel(paymentsOrchestrator) {
 
     fun getAllPlansForSignup() = flow {
@@ -64,19 +64,4 @@ internal class SignupPlansViewModel @Inject constructor(
     }.onEach { plans ->
         _availablePlansState.tryEmit(plans)
     }.launchIn(viewModelScope)
-
-    override fun startBillingForPaidPlan(userId: UserId?, selectedPlan: SelectedPlan, cycle: SubscriptionCycle) {
-        with(paymentsOrchestrator) {
-            onPaymentResult { result ->
-                result.let { billingResult ->
-                    if (billingResult?.paySuccess == true) {
-                        viewModelScope.launch {
-                            _availablePlansState.emit(PlanState.Success.PaidPlanPayment(selectedPlan, billingResult))
-                        }
-                    }
-                }
-            }
-        }
-        super.startBillingForPaidPlan(userId, selectedPlan, cycle)
-    }
 }

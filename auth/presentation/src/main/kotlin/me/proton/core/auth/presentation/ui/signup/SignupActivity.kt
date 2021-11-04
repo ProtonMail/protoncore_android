@@ -43,7 +43,9 @@ import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
-import me.proton.core.plan.presentation.ui.SignupPlansFragment
+import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KEY_PLAN
+import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KEY_BILLING_DETAILS
+import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.KEY_PLAN_SELECTED
 import me.proton.core.plan.presentation.ui.removePlansSignup
 import me.proton.core.plan.presentation.ui.showPlansSignup
 import me.proton.core.util.kotlin.exhaustive
@@ -71,13 +73,11 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                 is SignupViewModel.InputState.Ready -> {
                     supportFragmentManager.showPlansSignup(planInput = PlanInput())
                     supportFragmentManager.setFragmentResultListener(
-                        SignupPlansFragment.KEY_PLAN_SELECTED, this
+                        KEY_PLAN_SELECTED, this
                     ) { _, bundle ->
                         supportFragmentManager.removePlansSignup()
-                        val plan = bundle.getParcelable<SelectedPlan>(SignupPlansFragment.BUNDLE_KEY_PLAN)
-                        val billing = bundle.getParcelable<BillingResult>(
-                            SignupPlansFragment.BUNDLE_KEY_BILLING_DETAILS
-                        )
+                        val plan = bundle.getParcelable<SelectedPlan>(BUNDLE_KEY_PLAN)
+                        val billing = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
                         if (plan != null) {
                             onPlanSelected(plan, billing)
                         } else {

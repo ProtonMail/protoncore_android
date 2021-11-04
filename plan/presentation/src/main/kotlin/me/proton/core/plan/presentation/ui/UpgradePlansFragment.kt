@@ -61,7 +61,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         upgradePlanViewModel.register(this)
-        activity?.addOnBackPressedCallback { close() }
+        activity?.addOnBackPressedCallback { setResult() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +69,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
         if (upgradePlanViewModel.supportedPaidPlanNames.isNotEmpty()) {
             binding.apply {
                 toolbar.setNavigationOnClickListener {
-                    close()
+                    setResult()
                 }
                 toolbar.title = getString(R.string.plans_subscription)
                 toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_close)
@@ -86,9 +86,6 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                             visibility = VISIBLE
                             cycle = PlanCycle.YEARLY
                             currency = PlanCurrency.CHF
-                            planSelectionListener = { planId, planName, amount ->
-                                // todo
-                            }
                             planDetailsListItem = a[0]
                         }
                         Unit
@@ -107,9 +104,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                             plansView.selectPlanListener = { selectedPlan ->
                                 if (selectedPlan.free) {
                                     // proceed with result return
-                                    parentFragmentManager.setFragmentResult(
-                                        KEY_PLAN_SELECTED, bundleOf(BUNDLE_KEY_PLAN to selectedPlan)
-                                    )
+                                    setResult(selectedPlan)
                                 } else {
                                     val cycle = when (selectedPlan.cycle) {
                                         PlanCycle.MONTHLY -> SubscriptionCycle.MONTHLY
@@ -123,26 +118,14 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                             plansView.plans = it.plans
                         }
                     }
-                    is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
-                        parentFragmentManager.setFragmentResult(
-                            KEY_PLAN_SELECTED, bundleOf(
-                                BUNDLE_KEY_PLAN to it.selectedPlan,
-                                BUNDLE_KEY_BILLING_DETAILS to it.billing
-                            )
-                        )
-                    }
+                    is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(it.selectedPlan, it.billing)
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
             upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
         } else {
             // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
-            parentFragmentManager.setFragmentResult(
-                KEY_PLAN_SELECTED, bundleOf(
-                    BUNDLE_KEY_PLAN to
-                        SelectedPlan.free(getString(R.string.plans_free_name))
-                )
-            )
+            setResult(SelectedPlan.free(getString(R.string.plans_free_name)))
         }
     }
 
