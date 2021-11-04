@@ -37,7 +37,7 @@
     <string name="plans_upgrade_plan">Upgrade plan</string>
     <string name="plans_subscription">Subscription</string>
     <string name="plans_renewal_date">Your plan will automatically renew on</string>
-    <string name="plans_billed_yearly">*Billed as %s per year</string>
+    <string name="plans_billed_yearly">*Billed annually at %s</string>
     <string name="plans_billed_anually">Billed annually</string>
     <string name="plans_billed_monthly">Billed monthly</string>
     <string name="plans_billed_every_2years">Billed every 2 years</string>

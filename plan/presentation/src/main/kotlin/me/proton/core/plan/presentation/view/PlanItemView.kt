@@ -194,7 +194,7 @@ class PlanItemView @JvmOverloads constructor(
             planCycleText.visibility = VISIBLE
             planPriceDescriptionText.text = String.format(
                 context.getString(R.string.plans_billed_yearly),
-                billableAmount.formatCentsPriceDefaultLocale(currency.name, fractionDigits = 2)
+                (monthlyPrice * MONTHS_IN_YEAR).formatCentsPriceDefaultLocale(currency.name, fractionDigits = 2)
             )
         } else {
             when (cycle) {
