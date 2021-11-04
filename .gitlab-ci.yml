@@ -24,6 +24,7 @@ stages:
   - startReview
   - test
   - report
+  - post-build
   - publish
   - commit
   - slackRelease
@@ -48,7 +49,7 @@ cache:
 #####################
 danger-review:
   image: ruby:2.7
-  stage: analyze
+  stage: post-build
   when: always
   tags:
     - small
