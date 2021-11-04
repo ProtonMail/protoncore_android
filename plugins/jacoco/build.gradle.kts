@@ -53,6 +53,7 @@ gradlePlugin {
 
 repositories {
     google()
+    mavenCentral()
     jcenter()
 }
 

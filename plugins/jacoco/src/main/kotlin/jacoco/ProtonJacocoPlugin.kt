@@ -43,10 +43,8 @@ class ProtonJacocoPlugin : Plugin<Project> {
         const val JacocoVersion = "0.8.7"
     }
 
-    fun Project.getProjectList() = subprojects + this
-
     fun Project.getReportTasks(jacocoReport: JacocoReport): List<JacocoReport> {
-        return getProjectList().flatMap {
+        return allprojects.flatMap {
             it.tasks.withType<JacocoReport>().filter { it.name == "jacocoTestReport" }
                 .filter { report -> report != jacocoReport }
         }
@@ -104,8 +102,6 @@ class ProtonJacocoPlugin : Plugin<Project> {
         tasks.register("coverageReport") {
             dependsOn("jacocoMergeReport")
 
-            onlyIf { reportFile.exists() }
-
             doLast {
                 val slurper = groovy.xml.XmlSlurper()
                 slurper.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false)
@@ -131,7 +127,6 @@ class ProtonJacocoPlugin : Plugin<Project> {
 
         tasks.register<Exec>("coberturaCoverageReport") {
             dependsOn("coverageReport")
-            onlyIf { reportFile.exists() }
 
             val outputDir = File(buildDir, "reports")
             if (!outputDir.exists()) {
