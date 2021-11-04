@@ -112,7 +112,8 @@ internal abstract class BasePlansViewModel(
                 selectedPlan = PlanShortDetails(
                     name = selectedPlan.planName,
                     displayName = selectedPlan.planDisplayName,
-                    subscriptionCycle = cycle
+                    subscriptionCycle = cycle,
+                    currency = selectedPlan.currency.toSubscriptionCurrency()
                 ),
                 codes = null
             )
