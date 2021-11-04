@@ -1,3 +1,11 @@
+## Auth [1.17.6]
+
+03 Nov, 2021
+
+### Changes
+
+- Allow Login without keys for Product VPN with AccountType External.
+
 ## Country [1.16.1], Human-Verification [1.16.2]
 
 29 Oct, 2021
