@@ -50,8 +50,7 @@ class ExistingPaymentMethodTests : BaseTest() {
         loginRobot
             .loginUser<CoreexampleRobot>(user)
             .plansUpgrade()
-            .selectPlan(plan)
-
+            .upgradeToPlan(plan)
 
     @Test
     @Ignore("Requires user with paypal account linked")

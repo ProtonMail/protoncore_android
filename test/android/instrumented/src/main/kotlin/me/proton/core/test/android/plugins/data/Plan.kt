@@ -25,7 +25,7 @@ import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetCo
 @Serializable
 enum class Plan(var planName: String, var text: String) {
     Free("free", "Free"),
-    Professional("pro", "Professional"),
+    Professional("pro", "ProtonMail Professional"),
     Visionary("visionary", "Visionary"),
     Plus("plus", "ProtonMail Plus"),
     Dev("", "")
@@ -36,9 +36,10 @@ fun randomPaidPlan(): Plan = Plan.values().filter { it != Plan.Free }.random()
 val supportedBillingCycles: Array<String> =
     getTargetContext().resources.getStringArray(R.array.supported_billing_cycle)
 
-enum class BillingCycle(val value: String) {
-    Monthly(supportedBillingCycles[0]),
-    Yearly(supportedBillingCycles[1]),
+enum class BillingCycle(val value: String, val monthlyPrice: Double, val yearlyPrice: Number) {
+    Monthly(supportedBillingCycles[0], 5.00, 0.00),
+    Yearly(supportedBillingCycles[1], 4.00, 48.00),
+    TwoYear(supportedBillingCycles[2], 3.29, 39.48)
 }
 
 enum class Currency(val symbol: String, val code: String) {

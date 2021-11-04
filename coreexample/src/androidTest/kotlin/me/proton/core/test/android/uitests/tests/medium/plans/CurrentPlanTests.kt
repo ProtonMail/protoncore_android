@@ -49,10 +49,10 @@ class CurrentPlanTests : BaseTest() {
     fun userWithFreePlan() {
         val freeUser = users.getUser { !it.isPaid }
         navigateUserToCurrentPlans(freeUser)
+            .scrollToPlan(Plan.Dev)
             .verify {
-                canSelectPlan(Plan.Dev)
+                canUpgradeToPlan(Plan.Dev)
                 planDetailsDisplayed(Plan.Dev)
-                planDetailsDisplayed(Plan.Free)
             }
     }
 

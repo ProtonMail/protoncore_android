@@ -18,6 +18,8 @@
 
 package me.proton.core.test.android.robots.plans
 
+import androidx.annotation.StringRes
+import androidx.core.widget.NestedScrollView
 import me.proton.core.plan.presentation.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.plugins.data.BillingCycle
@@ -26,15 +28,51 @@ import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 
+
 class SelectPlanRobot : CoreRobot() {
+
+    /**
+     * Scrolls to a provided [plan]
+     * @return an instance of [SelectPlanRobot]
+     */
+    fun scrollToPlan(plan: Plan): SelectPlanRobot {
+        // Only one paid plan is currently implemented
+        val position = when (plan) {
+            Plan.Dev -> 0
+            Plan.Free -> 1
+            else -> -1
+        }
+
+        recyclerView.withId(R.id.planListRecyclerView)
+            .onItemAtPosition(position).scrollTo()
+        return this
+    }
 
     /**
      * Clicks 'Select' button on a provided [plan]
      * @param T next Robot in flow
      * @return an instance of [T]
      */
-    inline fun <reified T> selectPlan(plan: Plan): T {
-        view.withText(R.string.plans_select_plan)
+    inline fun <reified T> selectPlan(plan: Plan): T =
+        scrollToPlan(plan)
+            .clickPlanButtonWithText(plan, R.string.plans_select_plan)
+
+    /**
+     * Clicks 'Upgrade' button on a provided [plan]
+     * @param T next Robot in flow
+     * @return an instance of [T]
+     */
+    inline fun <reified T> upgradeToPlan(plan: Plan): T =
+        scrollToPlan(plan)
+            .clickPlanButtonWithText(plan, R.string.plans_upgrade_plan)
+
+    /**
+     * Clicks button with [textId] resource on a provided [plan]
+     * @param T next Robot in flow
+     * @return an instance of [T]
+     */
+    inline fun <reified T> clickPlanButtonWithText(plan: Plan, @StringRes textId: Int): T {
+        view.withText(textId)
             .isDescendantOf(
                 view.withId(R.id.planGroup).hasSibling(
                     view.withText(plan.text)
@@ -47,6 +85,7 @@ class SelectPlanRobot : CoreRobot() {
      * Changes billing cycle to provided [billingCycle]
      */
     fun changeBillingCycle(billingCycle: BillingCycle): SelectPlanRobot {
+        view.instanceOf(NestedScrollView::class.java).swipeDown()
         view.withId(R.id.billingCycleSpinner).click()
         view.withText(billingCycle.value).click()
         return this
@@ -56,12 +95,15 @@ class SelectPlanRobot : CoreRobot() {
      * Changes currency to provided [currency]
      */
     fun changeCurrency(currency: Currency): SelectPlanRobot {
+        view.withId(R.id.billingCycleSpinner).checkDisplayed()
+        view.instanceOf(NestedScrollView::class.java).swipeUp()
         view.withId(R.id.currencySpinner).click()
         view.withText(currency.code).click()
         return this
     }
 
     class Verify : CoreVerify() {
+
         fun planDetailsDisplayed(plan: Plan) {
             view.withText(plan.text).checkDisplayed()
         }
@@ -75,17 +117,27 @@ class SelectPlanRobot : CoreRobot() {
                 ).checkDisplayed()
         }
 
+        fun canUpgradeToPlan(plan: Plan) {
+            view.withText(R.string.plans_upgrade_plan)
+                .isDescendantOf(
+                    view.withId(R.id.planGroup).hasSibling(
+                        view.withText(plan.text)
+                    )
+                ).checkDisplayed()
+        }
+
         fun billingCycleIs(billingCycle: BillingCycle, currency: Currency = Currency.Euro) {
-            // TODO: re-work to reflect 4.5 design
+            view.withId(R.id.planPriceText).withText("${currency.symbol}${billingCycle.monthlyPrice}")
             when (billingCycle) {
                 BillingCycle.Monthly -> {
-                    view.withId(R.id.planPriceText).withText("${currency.symbol}4.99")
+                    view.withText(R.string.plans_save_20).checkDisplayed()
                 }
-                BillingCycle.Yearly -> {
+                else -> {
+                    val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
                     val billedAsString =
-                        stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}47.88")
-                    view.withId(R.id.planPriceDescriptionText).checkContains(billedAsString)
-                    view.withId(R.id.planPriceText).checkContains("${currency.symbol}3.99")
+                        stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}$yearlyPriceString")
+                    view.withId(R.id.planPriceDescriptionText).withText(billedAsString).checkDisplayed()
+                    view.withText(R.string.plans_renew_info).checkDisplayed()
                 }
             }
         }

@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.robots.payments
 
-import android.widget.EditText
 import me.proton.core.payment.presentation.R
 import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Plan
@@ -41,12 +40,12 @@ open class PaymentRobot : CoreRobot() {
         fun billingDetailsDisplayed(
             plan: Plan,
             billingCycle: BillingCycle,
-            currency: String,
-            amount: Number
+            currency: String
         ) {
+            val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
             view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
             view.withId(R.id.billingPeriodText).withText("Billed ${billingCycle.toString().lowercase()}").checkDisplayed()
-            view.withId(R.id.amountText).withText("$currency$amount").checkDisplayed()
+            view.withId(R.id.amountText).withText("$currency$yearlyPriceString").checkDisplayed()
         }
 
         fun paymentMethodDisplayed(title: String, details: String) {
