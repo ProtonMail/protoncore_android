@@ -29,6 +29,7 @@ import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 class SelectPlanTests : BaseTest() {
@@ -54,6 +55,7 @@ class SelectPlanTests : BaseTest() {
 
     @Test
     @SmokeTest
+    @Ignore("CP-2871")
     fun selectFreeAndCancelHumanVerification() {
         selectPlanRobot
             .selectPlan<HumanVerificationRobot>(Free)

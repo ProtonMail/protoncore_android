@@ -44,7 +44,6 @@ def assign_reviewers(reviewer_username_filter = [])
 	end
 
 	# Random pick reviewers to add
-	reviewers_to_add_count = merge_request_approvals["approvals_left"] - current_reviewers.length
 	if reviewers_to_add_count > eligible_reviewers.count
 		warn("Not enough eligible reviewers (#{eligible_reviewers.count}) to add (#{reviewers_to_add_count}) to match required approvals (#{approvals_required})")
 	end
