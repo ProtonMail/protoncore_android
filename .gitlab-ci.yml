@@ -47,7 +47,7 @@ danger-review:
     - bundle config set path 'vendor/ruby'
     - bundle config set without 'production'
     - bundle install
-    - bundle exec danger --fail-on-errors=true
+    - bundle exec danger --fail-on-errors=false
   cache:
     key:
       files:
