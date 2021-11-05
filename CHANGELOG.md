@@ -7,7 +7,7 @@
 - Plans now support the latest UI design changes.
 
 ### No Breaking changes, clients can just update to the latest versions.
-### Note: Clients should upgrade to Presentation v1.18.2
+### Note: Clients should upgrade to Presentation v1.18.3
 
 ## Auth [1.17.6]
 

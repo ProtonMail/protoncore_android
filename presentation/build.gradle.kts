@@ -26,7 +26,7 @@ plugins {
     id("kotlin-parcelize")
 }
 
-libVersion = Version(1, 18, 2)
+libVersion = Version(1, 18, 3)
 
 android(useViewBinding = true)
 
