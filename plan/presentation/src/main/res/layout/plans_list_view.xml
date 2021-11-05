@@ -18,16 +18,92 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_norm">
 
+    <Spinner
+        android:id="@+id/billingCycleSpinner"
+        style="@style/ProtonSpinnerStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_large_plus"
+        android:spinnerMode="dropdown"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/plan_spinner_item" />
+
+    <TextView
+        android:id="@+id/billingCycleDescriptionText"
+        style="@style/Proton.Text.DefaultSmall.Weak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_small"
+        android:maxLines="2"
+        android:text="@string/plans_save_20"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/billingCycleSpinner" />
+
+    <LinearLayout
+        android:id="@+id/customizableFeaturesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gap_large"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/currencySpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            style="@style/Proton.Text.Default.Weak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:autoLink="web"
+            android:maxLines="4"
+            android:text="*"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/customizableFeaturesText"
+            style="@style/Proton.Text.DefaultSmall.Weak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:maxLines="4"
+            android:text="@string/plans_customizable_features" />
+
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/currencySpinner"
+        style="@style/ProtonSpinnerStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_medium"
+        android:spinnerMode="dropdown"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/planListRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/customizableFeaturesLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/billingCycleDescriptionText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

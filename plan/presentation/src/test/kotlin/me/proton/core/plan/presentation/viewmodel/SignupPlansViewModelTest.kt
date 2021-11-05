@@ -36,7 +36,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class PlansViewModelTest : ArchTest, CoroutinesTest {
+class SignupPlansViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
     private val getPlansUseCase = mockk<GetPlans>()
@@ -84,12 +84,12 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
     )
     // endregion
 
-    private lateinit var viewModel: PlansViewModel
+    private lateinit var viewModel: SignupPlansViewModel
 
     @Before
     fun beforeEveryTest() {
         viewModel =
-            PlansViewModel(getPlansUseCase, getCurrentSubscription, testDefaultSupportedPlans, paymentOrchestrator)
+            SignupPlansViewModel(getPlansUseCase, testDefaultSupportedPlans, paymentOrchestrator)
     }
 
     @Test
@@ -100,62 +100,19 @@ class PlansViewModelTest : ArchTest, CoroutinesTest {
         )
         viewModel.availablePlansState.test {
             // WHEN
-            viewModel.getCurrentPlanWithUpgradeOption()
+            viewModel.getAllPlansForSignup()
             // THEN
-            assertIs<PlansViewModel.State.Idle>(awaitItem())
-            assertIs<PlansViewModel.State.Processing>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Idle>(awaitItem())
+            assertIs<BasePlansViewModel.PlanState.Processing>(awaitItem())
             val plansStatus = awaitItem()
-            assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
+            assertTrue(plansStatus is BasePlansViewModel.PlanState.Success.Plans)
             assertEquals(3, plansStatus.plans.size)
             val planOne = plansStatus.plans[0]
             val planTwo = plansStatus.plans[1]
             val planThree = plansStatus.plans[2]
-            assertEquals("free", planOne.name)
-            assertEquals("plan-name-1", planTwo.name)
-            assertEquals("plan-name-2", planThree.name)
-        }
-    }
-
-    @Test
-    fun `get plans for upgrade success handled correctly`() = coroutinesTest {
-        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans, testUserId) } returns listOf(
-            testPlan
-        )
-        coEvery { getCurrentSubscription.invoke(testUserId) } returns testSubscription
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getCurrentPlanWithUpgradeOption(testUserId)
-            // THEN
-            assertIs<PlansViewModel.State.Idle>(awaitItem())
-            assertIs<PlansViewModel.State.Processing>(awaitItem())
-            val plansStatus = awaitItem()
-            assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
-            assertEquals(1, plansStatus.plans.size)
-            val planOne = plansStatus.plans[0]
+            assertEquals("free", planThree.name)
             assertEquals("plan-name-1", planOne.name)
-        }
-    }
-
-    @Test
-    fun `get plans for upgrade no active subscription handled correctly`() = coroutinesTest {
-        coEvery { getPlansUseCase.invoke(testDefaultSupportedPlans, testUserId) } returns listOf(
-            testPlan
-        )
-
-        coEvery { getCurrentSubscription.invoke(testUserId) } returns null
-        viewModel.availablePlansState.test {
-            // WHEN
-            viewModel.getCurrentPlanWithUpgradeOption(testUserId)
-            // THEN
-            assertIs<PlansViewModel.State.Idle>(awaitItem())
-            assertIs<PlansViewModel.State.Processing>(awaitItem())
-            val plansStatus = awaitItem()
-            assertTrue(plansStatus is PlansViewModel.State.Success.Plans)
-            assertEquals(2, plansStatus.plans.size)
-            val planFree = plansStatus.plans[0]
-            val planPaid = plansStatus.plans[1]
-            assertEquals("free", planFree.name)
-            assertEquals("plan-name-1", planPaid.name)
+            assertEquals("plan-name-2", planTwo.name)
         }
     }
 }

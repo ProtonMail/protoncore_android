@@ -26,7 +26,7 @@ import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot.RecoveryMethodType
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import me.proton.core.test.android.plugins.data.Plan.Free
+import me.proton.core.test.android.plugins.data.Plan.Dev
 import org.junit.Before
 import org.junit.Test
 
@@ -74,8 +74,8 @@ class RecoveryMethodsSetupTests : BaseTest() {
             .skip()
             .skipConfirm()
             .verify {
-                planDetailsDisplayed(Free)
-                canSelectPlan(Free)
+                planDetailsDisplayed(Dev)
+                canSelectPlan(Dev)
             }
     }
 
@@ -85,8 +85,8 @@ class RecoveryMethodsSetupTests : BaseTest() {
             .next<RecoveryMethodsRobot.SkipRecoveryRobot>()
             .skipConfirm()
             .verify {
-                planDetailsDisplayed(Free)
-                canSelectPlan(Free)
+                planDetailsDisplayed(Dev)
+                canSelectPlan(Dev)
             }
     }
 }

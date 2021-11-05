@@ -18,32 +18,60 @@
 
 package me.proton.core.plan.presentation.entity
 
+import android.content.Context
 import android.os.Parcelable
+import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import kotlinx.android.parcel.Parcelize
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.presentation.R
+import me.proton.core.presentation.ui.view.ProtonButton
 import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 
 sealed class PlanDetailsListItem(
     open val name: String,
     open val displayName: String,
-    open val current: Boolean
+    open val currentlySubscribed: Boolean
 ) : Parcelable {
+
+    protected abstract fun createButtonWithStyle(context: Context): ProtonButton
+
+    fun createSelectButton(context: Context): ProtonButton {
+        val selectButton = createButtonWithStyle(context)
+        selectButton.id = View.generateViewId()
+        selectButton.text = context.getString(R.string.plans_select_plan)
+        val params =
+            ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.topMargin = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            context.resources.getDimension(R.dimen.gap_medium),
+            context.resources.displayMetrics
+        ).toInt()
+        selectButton.layoutParams = params
+
+        return selectButton
+    }
 
     @Parcelize
     data class FreePlanDetailsListItem(
         override val name: String,
         override val displayName: String,
-        override val current: Boolean,
+        override val currentlySubscribed: Boolean,
         val selectable: Boolean = true
-    ) : PlanDetailsListItem(name, displayName, current)
+    ) : PlanDetailsListItem(name, displayName, currentlySubscribed) {
+        override fun createButtonWithStyle(context: Context): ProtonButton =
+            ProtonButton(context, null, R.attr.outlinedButtonStyle)
+    }
 
     @Parcelize
     data class PaidPlanDetailsListItem(
         override val name: String,
         override val displayName: String,
-        override val current: Boolean,
+        override val currentlySubscribed: Boolean,
         val price: PlanPricing?,
         val selectable: Boolean = true,
         val upgrade: Boolean,
@@ -55,7 +83,9 @@ sealed class PlanDetailsListItem(
         val domains: Int,
         val connections: Int,
         val currency: PlanCurrency
-    ) : PlanDetailsListItem(name, displayName, current)
+    ) : PlanDetailsListItem(name, displayName, currentlySubscribed) {
+        override fun createButtonWithStyle(context: Context): ProtonButton = ProtonButton(context)
+    }
 
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<PlanDetailsListItem>() {

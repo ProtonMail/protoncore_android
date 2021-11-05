@@ -57,8 +57,9 @@ class UpgradePlanTests : BaseTest() {
     @SmokeTest
     fun userWithFreePlan() {
         navigateUserToCurrentPlans(freeUser)
+            .scrollToPlan(Plan.Dev)
             .verify {
-                canSelectPlan(Plan.Dev)
+                canUpgradeToPlan(Plan.Dev)
                 planDetailsDisplayed(Plan.Dev)
             }
 

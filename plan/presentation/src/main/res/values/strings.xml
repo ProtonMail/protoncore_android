@@ -26,19 +26,24 @@
     ]>
 
 <resources>
-    <string name="plans_select_plan">Select Plan</string>
+    <string name="plans_select_plan">Select</string>
     <string name="plans_select_a_plan">Select a Plan</string>
     <string name="plans_customizable_features">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to upgrade to Professional and Visionary plans, or to customize your plan.</string>
     <string name="plans_customizable_features_web">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to customize your plan.</string>
     <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
     <string name="plans_free_name">Free</string>
-    <string name="plan_price_monthly">/ month</string>
+    <string name="plan_price_monthly">per month*</string>
     <string name="plans_current_plan">Current Plan</string>
     <string name="plans_upgrade_plan">Upgrade plan</string>
     <string name="plans_subscription">Subscription</string>
     <string name="plans_renewal_date">Your plan will automatically renew on</string>
-    <string name="plans_billed_yearly">Billed as %s per year</string>
+    <string name="plans_billed_yearly">*Billed annually at %s</string>
+    <string name="plans_billed_anually">Billed annually</string>
+    <string name="plans_billed_monthly">Billed monthly</string>
+    <string name="plans_billed_every_2years">Billed every 2 years</string>
     <string name="plans_save_20">Save 20% by switching to annual billing</string>
+    <string name="plans_renew_info">Renews automatically. Cancel or change plan at any time.</string>
+    <string name="plans_upgrade_your_plan">Upgrade your plan</string>
 
     <!-- plan details -->
     <string name="plans_feature_free_item_storage">0.5GB storage</string>
@@ -47,6 +52,7 @@
     <string name="plans_feature_free_item_vpn">1 VPN connection</string>
 
     <string-array name="free">
+        <item>The basic for private and secure communications.</item>
         <item>@string/plans_feature_free_item_storage</item>
         <item>@string/plans_feature_free_item_address</item>
         <item>@string/plans_feature_free_item_calendar</item>
@@ -55,12 +61,14 @@
 
     <!-- new -->
     <string-array name="plan_id_plus">
+        <item>Full-featured mailbox with advanced protection.</item>
         <item>&plans_key_storage; storage</item>
         <item>&plans_key_addresses; addresses</item>
         <item>&plans_key_domains; custom domain</item>
     </string-array>
 
     <string-array name="plan_id_vpnbasic">
+        <item>VPN basic</item>
         <item>&plans_key_vpn; VPN connections</item>
         <item>High speed</item>
         <item>&plans_key_storage; storage</item>
@@ -69,6 +77,7 @@
     </string-array>
 
     <string-array name="plan_id_vpnplus">
+        <item>VPN plus</item>
         <item>&plans_key_vpn; VPN connections</item>
         <item>Highest speed</item>
         <item>&plans_key_storage; storage</item>
@@ -77,6 +86,7 @@
     </string-array>
 
     <string-array name="plan_id_professional">
+        <item>Professional</item>
         <item>&plans_key_storage; storage / user</item>
         <item>&plans_key_addresses; addresses / user</item>
         <item>&plans_key_domains; custom domains</item>
@@ -84,6 +94,7 @@
     </string-array>
 
     <string-array name="plan_id_visionary">
+        <item>Visionary</item>
         <item>&plans_key_storage; storage</item>
         <item>&plans_key_addresses; addresses</item>
         <item>&plans_key_calendars; calendars</item>
@@ -98,8 +109,10 @@
         <item>USD</item>
         <item>CHF</item>
     </string-array>
+
     <string-array name="supported_billing_cycle">
-        <item>Monthly billing</item>
-        <item>Annual billing - SAVE 20%</item>
+        <item>Pay monthly</item>
+        <item>Pay annual (save up to 20%)</item>
+        <item>Pay every 2 years (save 33%)</item>
     </string-array>
 </resources>

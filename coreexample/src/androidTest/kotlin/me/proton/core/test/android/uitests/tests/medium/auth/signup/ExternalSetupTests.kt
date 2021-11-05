@@ -21,7 +21,7 @@ package me.proton.core.test.android.uitests.tests.medium.auth.signup
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.plugins.data.Plan.Free
+import me.proton.core.test.android.plugins.data.Plan.Dev
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.humanverification.CodeVerificationRobot
@@ -76,6 +76,6 @@ class ExternalSetupTests : BaseTest() {
             .setAndConfirmPassword<CodeVerificationRobot>(user.password)
             .setCode(defaultCode)
             .verifyCode<SelectPlanRobot>()
-            .verify { canSelectPlan(Free) }
+            .verify { canSelectPlan(Dev) }
     }
 }

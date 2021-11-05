@@ -16,17 +16,13 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <me.proton.core.plan.presentation.view.PlanItemView
-        android:id="@+id/planDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/gap_large"
-        android:background="@drawable/background_plan_list_item"
-        android:padding="@dimen/gap_large" />
-
-</FrameLayout>
-
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <stroke
+        android:width="1dp"
+        android:color="@color/separator_norm" />
+    <corners android:radius="@dimen/corner_padding" />
+    <padding
+        android:left="@dimen/corner_padding"
+        android:right="@dimen/corner_padding" />
+</shape>

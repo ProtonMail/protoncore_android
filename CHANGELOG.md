@@ -1,3 +1,14 @@
+## Plan [1.18.0]
+
+04 Nov, 2021
+
+### Changes
+
+- Plans now support the latest UI design changes.
+
+### No Breaking changes, clients can just update to the latest versions.
+### Note: Clients should upgrade to Presentation v1.18.3
+
 ## Auth [1.17.6]
 
 03 Nov, 2021

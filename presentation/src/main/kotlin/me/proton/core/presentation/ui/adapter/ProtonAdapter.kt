@@ -29,6 +29,7 @@ import kotlin.properties.Delegates.observable
 abstract class ProtonAdapter<UiModel, ViewRef : Any, ViewHolder : ClickableAdapter.ViewHolder<UiModel, ViewRef>>(
     override val onItemClick: (UiModel) -> Unit = {},
     override val onItemLongClick: (UiModel) -> Unit = {},
+    private val recyclable: Boolean = true,
     diffCallback: DiffUtil.ItemCallback<UiModel>
 ) : ListAdapter<UiModel, ViewHolder>(
     AsyncDifferConfig.Builder<UiModel>(diffCallback).build()
@@ -41,6 +42,7 @@ abstract class ProtonAdapter<UiModel, ViewRef : Any, ViewHolder : ClickableAdapt
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+        holder.setIsRecyclable(recyclable)
         holder.onBind(item, position)
     }
 
@@ -80,9 +82,10 @@ fun <UiModel, ViewRef : Any> ProtonAdapter(
     onItemClick: (UiModel) -> Unit = {},
     onItemLongClick: (UiModel) -> Unit = {},
     diffCallback: DiffUtil.ItemCallback<UiModel>,
+    recyclable: Boolean = true,
     onFilter: (element: UiModel, constraint: CharSequence) -> Boolean = { _, _ -> true }
 ) = object : ProtonAdapter<UiModel, ViewRef, ClickableAdapter.ViewHolder<UiModel, ViewRef>>(
-    onItemClick, onItemLongClick, diffCallback
+    onItemClick, onItemLongClick, recyclable, diffCallback
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         object : ClickableAdapter.ViewHolder<UiModel, ViewRef>(
@@ -110,6 +113,7 @@ fun <UiModel, ViewRef : Any> ProtonAdapter(
     onItemClick: (UiModel) -> Unit = {},
     onItemLongClick: (UiModel) -> Unit = {},
     diffCallback: DiffUtil.ItemCallback<UiModel>,
+    recyclable: Boolean = true,
     onFilter: (element: UiModel, constraint: CharSequence) -> Boolean = { _, _ -> true }
 ) = ProtonAdapter(
     { parent, _ ->
@@ -120,6 +124,7 @@ fun <UiModel, ViewRef : Any> ProtonAdapter(
     onItemClick,
     onItemLongClick,
     diffCallback,
+    recyclable,
     onFilter
 )
 
@@ -141,10 +146,12 @@ fun <UiModel, ViewRef : Any> selectableProtonAdapter(
     onItemClick: (UiModel) -> Unit = {},
     onItemLongClick: (UiModel) -> Unit = {},
     diffCallback: DiffUtil.ItemCallback<UiModel>,
+    recyclable: Boolean = true,
     onFilter: (element: UiModel, constraint: CharSequence) -> Boolean = { _, _ -> true }
 ) = object : ProtonAdapter<UiModel, ViewRef, ClickableAdapter.ViewHolder<UiModel, ViewRef>>(
     onItemClick,
     onItemLongClick,
+    recyclable,
     diffCallback
 ) {
 

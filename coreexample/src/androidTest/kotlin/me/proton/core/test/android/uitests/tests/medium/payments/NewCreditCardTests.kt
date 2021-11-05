@@ -45,8 +45,8 @@ class NewCreditCardTests : BaseTest() {
             .loginUser<CoreexampleRobot>(userWithoutCard)
             .plansUpgrade()
             .changeCurrency(Currency.CHF)
-            .selectPlan<AddCreditCardRobot>(Plan.Dev)
-            .verify { billingDetailsDisplayed(Plan.Dev, BillingCycle.Yearly, Currency.CHF.symbol, 47.88) }
+            .upgradeToPlan<AddCreditCardRobot>(Plan.Dev)
+            .verify { billingDetailsDisplayed(Plan.Dev, BillingCycle.Yearly, Currency.CHF.symbol) }
     }
 
     @Test

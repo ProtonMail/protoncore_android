@@ -20,6 +20,7 @@
 package me.proton.core.test.android.instrumented.builders
 
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.PerformException
@@ -33,6 +34,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.test.android.instrumented.ui.Actions.clickOnMatchedDescendant
+import me.proton.core.test.android.instrumented.utils.StringUtils
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf
 
@@ -65,6 +67,10 @@ class OnRecyclerView : ConditionWatcher {
         matchers.add(ViewMatchers.withText(text))
     }
 
+    fun withText(@StringRes textId: Int) = apply {
+        matchers.add(ViewMatchers.withText(StringUtils.stringFromResource(textId)))
+    }
+
     /** [RecyclerViewActions] **/
     fun click() = apply {
         perform(ViewActions.click())
@@ -92,6 +98,10 @@ class OnRecyclerView : ConditionWatcher {
 
     fun swipeUp() = apply {
         perform(ViewActions.swipeUp())
+    }
+
+    fun scrollTo() = apply {
+        perform(ViewActions.scrollTo())
     }
 
     fun waitUntilGone() = apply {

@@ -19,12 +19,20 @@
 package me.proton.core.plan.presentation.view
 
 import android.content.Context
+import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.PlanListViewItemBinding
 import me.proton.core.plan.presentation.databinding.PlansListViewBinding
+import me.proton.core.plan.presentation.entity.PlanCurrency
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.presentation.ui.adapter.ProtonAdapter
@@ -41,29 +49,110 @@ internal class PlansListView @JvmOverloads constructor(
     private val plansAdapter = ProtonAdapter(
         getView = { parent, inflater -> PlanListViewItemBinding.inflate(inflater, parent, false) },
         onBind = { plan ->
-            planDetails.planDetailsListItem = plan
-            planDetails.planSelectionListener = { planName, planDisplayName, cycle, currency, amount ->
-                selectPlanListener(SelectedPlan(planName, planDisplayName, amount == PRICE_ZERO, cycle, currency, amount))
+            planDetails.apply {
+                cycle = selectedCycle
+                currency = selectedCurrency
+                planSelectionListener = { planId, planName, amount ->
+                    selectPlanListener(SelectedPlan(planId, planName, amount == PRICE_ZERO, cycle, currency, amount))
+                }
+                planDetailsListItem = plan
             }
         },
-        diffCallback = PlanDetailsListItem.DiffCallback
+        diffCallback = PlanDetailsListItem.DiffCallback,
+        recyclable = false
     )
 
     lateinit var selectPlanListener: (SelectedPlan) -> Unit
+    private var selectedCurrency: PlanCurrency
+    private var selectedCycle: PlanCycle
+    private var selectable: Boolean = false
 
     init {
-        binding.planListRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = plansAdapter
+        selectedCycle = PlanCycle.YEARLY
+        selectedCurrency = PlanCurrency.CHF
+
+        binding.apply {
+            planListRecyclerView.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = plansAdapter
+            }
+            currencySpinner.selected { currencyPosition ->
+                selectedCurrency = PlanCurrency.values()[currencyPosition]
+                plansAdapter.notifyDataSetChanged()
+            }
+
+            billingCycleSpinner.selected { cyclePosition ->
+                selectedCycle = PlanCycle.values()[cyclePosition]
+                plansAdapter.notifyDataSetChanged()
+
+                val renewInfoText = when (selectedCycle) {
+                    PlanCycle.MONTHLY -> {
+                        context.getString(R.string.plans_save_20)
+                    }
+                    PlanCycle.YEARLY -> {
+                        context.getString(R.string.plans_renew_info)
+                    }
+                    PlanCycle.TWO_YEARS -> {
+                        context.getString(R.string.plans_renew_info)
+                    }
+                }
+                billingCycleDescriptionText.text = renewInfoText
+            }
+            customizableFeaturesText.movementMethod = LinkMovementMethod.getInstance()
+        }
+
+        ArrayAdapter.createFromResource(
+            context,
+            R.array.supported_currencies,
+            R.layout.plan_spinner_item
+        ).also { adapter ->
+            binding.currencySpinner.adapter = adapter
+        }
+
+        ArrayAdapter.createFromResource(
+            context,
+            R.array.supported_billing_cycle,
+            R.layout.plan_spinner_item
+        ).also { adapter ->
+            binding.billingCycleSpinner.adapter = adapter
+            binding.billingCycleSpinner.setSelection(1)
         }
     }
 
     var plans: List<PlanDetailsListItem>? = null
         set(value) = with(binding) {
-            value?.let {
+            value?.let { it ->
+                selectable = it.any { plan ->
+                    plan is PlanDetailsListItem.PaidPlanDetailsListItem && plan.selectable
+                }
+                val paidPlan = it.firstOrNull { plan -> plan is PlanDetailsListItem.PaidPlanDetailsListItem }
+                selectedCurrency =
+                    (paidPlan as? PlanDetailsListItem.PaidPlanDetailsListItem)?.currency ?: PlanCurrency.CHF
+                currencySpinner.setSelection(PlanCurrency.values().indexOf(selectedCurrency))
                 plansAdapter.submitList(it)
+                binding.apply {
+                    currencySpinner.visibility = if (!selectable) GONE else VISIBLE
+                    billingCycleSpinner.visibility = if (!selectable) GONE else VISIBLE
+                    customizableFeaturesLayout.visibility = if (!selectable) GONE else VISIBLE
+                    billingCycleDescriptionText.visibility = if (!selectable) GONE else VISIBLE
+                }
             } ?: run {
                 plansAdapter.submitList(emptyList())
+                binding.apply {
+                    currencySpinner.visibility = GONE
+                    billingCycleSpinner.visibility = GONE
+                    customizableFeaturesLayout.visibility = GONE
+                    billingCycleDescriptionText.visibility = GONE
+                }
             }
         }
+
+    private fun Spinner.selected(action: (Int) -> Unit) {
+        onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                action(position)
+            }
+        }
+    }
 }
