@@ -40,7 +40,7 @@ class PrivateKeyRepositoryImpl(
 ) : PrivateKeyRepository {
 
     private fun PrivateAddressKey.creationRequest(): CreateAddressKeyRequest {
-        val signedKeyList = checkNotNull(signedKeyList) { "Signed key list for key creation is null"}
+        val signedKeyList = checkNotNull(signedKeyList) { "Signed key list for key creation is null" }
         return CreateAddressKeyRequest(
             addressId = addressId,
             privateKey = privateKey.key,
@@ -48,8 +48,8 @@ class PrivateKeyRepositoryImpl(
             token = token,
             signature = signature,
             signedKeyList = SignedKeyListRequest(
-                signedKeyList.data,
-                signedKeyList.signature
+                checkNotNull(signedKeyList.data) { "Signed key list's data of new key can't be null" },
+                checkNotNull(signedKeyList.signature) { "Signed key list's signature of new key can't be null" },
             )
         )
     }

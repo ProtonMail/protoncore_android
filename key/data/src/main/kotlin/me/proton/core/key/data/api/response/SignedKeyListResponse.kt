@@ -24,7 +24,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SignedKeyListResponse(
     @SerialName("Data")
-    val data: String,
+    val data: String?,
     @SerialName("Signature")
-    val signature: String
+    val signature: String?
 )
