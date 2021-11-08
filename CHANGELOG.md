@@ -1,3 +1,11 @@
+## Auth [1.18.1]
+
+12 Nov, 2021
+
+### Changes
+
+- Refactored login process (split `LoginViewModel` into multiple classes) - no functionality change
+
 ## Mail Message [1.15.1]
 
 ### Changes
