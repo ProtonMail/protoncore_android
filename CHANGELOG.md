@@ -1,3 +1,14 @@
+## Key [1.16.1]
+
+08 Nov, 2021
+
+### Changes
+Handle the case where the signed key list has a null signature.
+Modifies:
+- `SignedKeyListEntity` (embedded in  `PublicAddressEntity` and `AddressEntity`)
+- `PublicSignedKeyList`
+- `SignedKeyListResponse`
+
 ## Test Android Instrumented [1.15.3]
 
 05 Nov, 2021

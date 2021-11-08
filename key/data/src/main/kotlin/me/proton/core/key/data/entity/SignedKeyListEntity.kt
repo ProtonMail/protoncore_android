@@ -22,6 +22,6 @@ import androidx.room.Entity
 
 @Entity
 data class SignedKeyListEntity(
-    val data: String,
-    val signature: String
+    val data: String?,
+    val signature: String?
 )
