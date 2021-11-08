@@ -164,11 +164,11 @@ Event Manager Data: **1.18** - _released on: Oct 25, 2021_
 
 ### Key
 
-Key: **1.16** - _released on: Oct 28, 2021_
+Key: **1.16.1** - _released on: Nov 08, 2021_
 
-Key Domain: **1.16** - _released on: Oct 28, 2021_
+Key Domain: **1.16.1** - _released on: Nov 08, 2021_
 
-Key Data: **1.16** - _released on: Oct 28, 2021_
+Key Data: **1.16.1** - _released on: Nov 08, 2021_
 
 ### User
 
