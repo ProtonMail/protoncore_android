@@ -26,17 +26,21 @@ import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertTrue
 
 class PostLoginAccountSetupTest {
     private lateinit var accountWorkflowHandler: AccountWorkflowHandler
@@ -45,6 +49,12 @@ class PostLoginAccountSetupTest {
     private lateinit var setupInternalAddress: SetupInternalAddress
     private lateinit var setupPrimaryKeys: SetupPrimaryKeys
     private lateinit var unlockUserPrimaryKey: UnlockUserPrimaryKey
+    private lateinit var userCheck: PostLoginAccountSetup.UserCheck
+    private lateinit var userManager: UserManager
+    private lateinit var sessionManager: SessionManager
+    private lateinit var user: User
+    private lateinit var sessionId: SessionId
+
     private lateinit var tested: PostLoginAccountSetup
 
     private val testAccountType: AccountType = mockk()
@@ -59,13 +69,30 @@ class PostLoginAccountSetupTest {
         setupInternalAddress = mockk()
         setupPrimaryKeys = mockk()
         unlockUserPrimaryKey = mockk()
+
+        user = mockk()
+        sessionId = mockk()
+        userCheck = mockk {
+            coEvery { this@mockk.invoke(any()) } returns PostLoginAccountSetup.UserCheckResult.Success
+        }
+        userManager = mockk {
+            coEvery { getUser(any(), any()) } returns user
+        }
+        sessionManager = mockk {
+            coEvery { getSessionId(any()) } returns sessionId
+            coEvery { refreshScopes(any()) } returns emptyList()
+        }
+
         tested = PostLoginAccountSetup(
             accountWorkflowHandler,
             performSubscribe,
             setupAccountCheck,
             setupInternalAddress,
             setupPrimaryKeys,
-            unlockUserPrimaryKey
+            unlockUserPrimaryKey,
+            userCheck,
+            userManager,
+            sessionManager
         )
     }
 
@@ -77,7 +104,13 @@ class PostLoginAccountSetupTest {
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
-        val result = tested.invoke(sessionInfo, testEncryptedPassword, testAccountType)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
     }
@@ -91,7 +124,13 @@ class PostLoginAccountSetupTest {
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns unlockError
 
-        val result = tested.invoke(sessionInfo, testEncryptedPassword, testAccountType)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
 
         assertEquals(PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey(unlockError), result)
         coVerify { accountWorkflowHandler.handleUnlockFailed(testUserId) }
@@ -100,7 +139,13 @@ class PostLoginAccountSetupTest {
     @Test
     fun `needs second factor`() = runBlockingTest {
         val sessionInfo = mockSessionInfo(secondFactorNeeded = true)
-        val result = tested.invoke(sessionInfo, testEncryptedPassword, testAccountType)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
         assertEquals(PostLoginAccountSetup.Result.Need.SecondFactor(testUserId), result)
     }
 
@@ -120,7 +165,14 @@ class PostLoginAccountSetupTest {
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
-        tested.invoke(sessionInfo, testEncryptedPassword, testAccountType, billingDetails)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            billingDetails = billingDetails
+        )
 
         val userId = slot<UserId>()
         val amount = slot<Long>()
@@ -149,15 +201,22 @@ class PostLoginAccountSetupTest {
 
     @Test
     fun `user check error`() = runBlockingTest {
-        val userCheckError = mockk<SetupAccountCheck.UserCheckResult.Error>()
-        val setupError = SetupAccountCheck.Result.UserCheckError(userCheckError)
+        val setupError = mockk<PostLoginAccountSetup.UserCheckResult.Error>()
         val sessionInfo = mockSessionInfo()
 
         coJustRun { accountWorkflowHandler.handleAccountDisabled(any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns setupError
+        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
+        coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
+        coEvery { userCheck.invoke(any()) } returns setupError
 
-        val result = tested.invoke(sessionInfo, testEncryptedPassword, testAccountType)
-        assertEquals(PostLoginAccountSetup.Result.Error.UserCheckError(userCheckError), result)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
+        assertTrue(result is PostLoginAccountSetup.Result.Error.UserCheckError)
         coVerify { accountWorkflowHandler.handleAccountDisabled(testUserId) }
     }
 
@@ -169,7 +228,13 @@ class PostLoginAccountSetupTest {
         coJustRun { accountWorkflowHandler.handleTwoPassModeNeeded(any()) }
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns setupError
 
-        val result = tested.invoke(sessionInfo, testEncryptedPassword, testAccountType)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
         assertEquals(PostLoginAccountSetup.Result.Need.TwoPassMode(testUserId), result)
         coVerify { accountWorkflowHandler.handleTwoPassModeNeeded(testUserId) }
     }
@@ -182,7 +247,13 @@ class PostLoginAccountSetupTest {
         coJustRun { accountWorkflowHandler.handleAccountDisabled(any()) }
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns setupError
 
-        val result = tested.invoke(sessionInfo, testEncryptedPassword, testAccountType)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
         assertEquals(PostLoginAccountSetup.Result.Need.ChangePassword(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountDisabled(testUserId) }
     }
@@ -195,7 +266,13 @@ class PostLoginAccountSetupTest {
         coJustRun { accountWorkflowHandler.handleCreateAddressNeeded(any()) }
         coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns setupError
 
-        val result = tested.invoke(sessionInfo, testEncryptedPassword, testAccountType)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
         assertEquals(PostLoginAccountSetup.Result.Need.ChooseUsername(testUserId), result)
         coVerify { accountWorkflowHandler.handleCreateAddressNeeded(testUserId) }
     }
@@ -210,7 +287,13 @@ class PostLoginAccountSetupTest {
         coJustRun { setupPrimaryKeys.invoke(any(), any(), any()) }
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
-        val result = tested.invoke(sessionInfo, testEncryptedPassword, testAccountType)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
         coVerify { setupPrimaryKeys.invoke(testUserId, testEncryptedPassword, testAccountType) }
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
@@ -226,7 +309,13 @@ class PostLoginAccountSetupTest {
         coJustRun { setupInternalAddress.invoke(any(), any()) }
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
-        val result = tested.invoke(sessionInfo, testEncryptedPassword, testAccountType)
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
         coVerify { setupInternalAddress.invoke(testUserId) }

@@ -25,7 +25,8 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
-import me.proton.core.auth.domain.usecase.SetupAccountCheck
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Delinquent
 import me.proton.core.user.domain.entity.User
@@ -41,15 +42,15 @@ open class DefaultUserCheck @Inject constructor(
     private val context: Context,
     private val accountManager: AccountManager,
     private val userManager: UserManager
-) : SetupAccountCheck.UserCheck {
+) : PostLoginAccountSetup.UserCheck {
 
-    private fun errorMessage(@StringRes message: Int) = SetupAccountCheck.UserCheckResult.Error(
+    private fun errorMessage(@StringRes message: Int) = PostLoginAccountSetup.UserCheckResult.Error(
         localizedMessage = context.getString(message)
     )
 
-    private fun errorDelinquent() = SetupAccountCheck.UserCheckResult.Error(
+    private fun errorDelinquent() = PostLoginAccountSetup.UserCheckResult.Error(
         localizedMessage = context.getString(R.string.auth_user_check_delinquent_error),
-        action = SetupAccountCheck.Action.OpenUrl(
+        action = UserCheckAction.OpenUrl(
             name = context.getString(R.string.auth_user_check_delinquent_action),
             url = context.getString(R.string.login_link)
         )
@@ -60,13 +61,13 @@ open class DefaultUserCheck @Inject constructor(
             userManager.getUser(it).hasSubscription()
         }
 
-    override suspend fun invoke(user: User): SetupAccountCheck.UserCheckResult = when {
+    override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult = when {
         user.delinquent in listOf(Delinquent.InvoiceDelinquent, Delinquent.InvoiceMailDisabled) -> {
             errorDelinquent()
         }
         !user.hasSubscription() && !allReadyHaveSubscription() -> {
             errorMessage(R.string.auth_user_check_one_free_error)
         }
-        else -> SetupAccountCheck.UserCheckResult.Success
+        else -> PostLoginAccountSetup.UserCheckResult.Success
     }
 }

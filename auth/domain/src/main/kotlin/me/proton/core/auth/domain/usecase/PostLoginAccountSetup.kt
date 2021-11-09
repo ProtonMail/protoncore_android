@@ -19,28 +19,34 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
-import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
 import javax.inject.Inject
 
-/** Performs the account check after logging in to determine what actions are needed. */
+/**
+ * Performs the account check after logging in to determine what actions are needed.
+ */
 class PostLoginAccountSetup @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val performSubscribe: PerformSubscribe,
     private val setupAccountCheck: SetupAccountCheck,
     private val setupInternalAddress: SetupInternalAddress,
     private val setupPrimaryKeys: SetupPrimaryKeys,
-    private val unlockUserPrimaryKey: UnlockUserPrimaryKey
+    private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
+    private val userCheck: UserCheck,
+    private val userManager: UserManager,
+    private val sessionManager: SessionManager
 ) {
     sealed class Result {
         sealed class Error : Result() {
             data class CannotUnlockPrimaryKey(val error: UserManager.UnlockResult.Error) : Error()
-            data class UserCheckError(val error: SetupAccountCheck.UserCheckResult.Error) : Error()
+            data class UserCheckError(val error: UserCheckResult.Error) : Error()
         }
 
         sealed class Need : Result() {
@@ -53,14 +59,27 @@ class PostLoginAccountSetup @Inject constructor(
         data class UserUnlocked(val userId: UserId) : Result()
     }
 
+    sealed class UserCheckResult {
+        object Success : UserCheckResult()
+        data class Error(val localizedMessage: String, val action: UserCheckAction? = null) : UserCheckResult()
+    }
+
+    interface UserCheck {
+        /**
+         * Check if [User] match criteria to continue the setup account process.
+         */
+        suspend operator fun invoke(user: User): UserCheckResult
+    }
+
     suspend operator fun invoke(
-        sessionInfo: SessionInfo,
+        userId: UserId,
         encryptedPassword: EncryptedString,
         requiredAccountType: AccountType,
+        isSecondFactorNeeded: Boolean,
+        isTwoPassModeNeeded: Boolean,
+        onSetupSuccess: (suspend () -> Unit)? = null,
         billingDetails: BillingDetails? = null
     ): Result {
-        val userId = sessionInfo.userId
-
         // Subscribe to any pending subscription/billing.
         if (billingDetails != null) {
             runCatching {
@@ -76,15 +95,11 @@ class PostLoginAccountSetup @Inject constructor(
         }
 
         // If SecondFactorNeeded, we cannot proceed without.
-        if (sessionInfo.isSecondFactorNeeded) {
+        if (isSecondFactorNeeded) {
             return Result.Need.SecondFactor(userId)
         }
 
-        return when (val result = setupAccountCheck(userId, sessionInfo.isTwoPassModeNeeded, requiredAccountType)) {
-            is SetupAccountCheck.Result.UserCheckError -> {
-                accountWorkflow.handleAccountDisabled(userId)
-                Result.Error.UserCheckError(result.error)
-            }
+        return when (setupAccountCheck(userId, isTwoPassModeNeeded, requiredAccountType)) {
             is SetupAccountCheck.Result.TwoPassNeeded -> {
                 accountWorkflow.handleTwoPassModeNeeded(userId)
                 Result.Need.TwoPassMode(userId)
@@ -99,27 +114,47 @@ class PostLoginAccountSetup @Inject constructor(
             }
             is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> {
                 setupPrimaryKeys.invoke(userId, encryptedPassword, requiredAccountType)
-                unlockUserPrimaryKey(userId, encryptedPassword)
+                unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess)
             }
-            is SetupAccountCheck.Result.SetupInternalAddressNeeded -> unlockUserPrimaryKey(
-                userId,
-                encryptedPassword,
-                withInternalAddressSetup = true
-            )
-            is SetupAccountCheck.Result.NoSetupNeeded -> unlockUserPrimaryKey(userId, encryptedPassword)
+            is SetupAccountCheck.Result.SetupInternalAddressNeeded -> {
+                unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess) {
+                    setupInternalAddress.invoke(userId)
+                }
+            }
+            is SetupAccountCheck.Result.NoSetupNeeded -> {
+                unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess)
+            }
         }
     }
 
     private suspend fun unlockUserPrimaryKey(
         userId: UserId,
         password: EncryptedString,
-        withInternalAddressSetup: Boolean = false
+        onSetupSuccess: (suspend () -> Unit)?,
+        onUnlockSuccess: (suspend () -> Unit)? = null,
     ): Result {
         return when (val result = unlockUserPrimaryKey.invoke(userId, password)) {
             is UserManager.UnlockResult.Success -> {
-                if (withInternalAddressSetup) setupInternalAddress.invoke(userId)
-                accountWorkflow.handleAccountReady(userId)
-                Result.UserUnlocked(userId)
+                // Invoke unlock success action.
+                onUnlockSuccess?.invoke()
+                // Refresh scopes.
+                sessionManager.refreshScopes(checkNotNull(sessionManager.getSessionId(userId)))
+                // First get the User to invoke UserCheck.
+                val user = userManager.getUser(userId, refresh = true)
+                when (val userCheckResult = userCheck.invoke(user)) {
+                    is UserCheckResult.Error -> {
+                        // Disable account and prevent login.
+                        accountWorkflow.handleAccountDisabled(userId)
+                        return Result.Error.UserCheckError(userCheckResult)
+                    }
+                    is UserCheckResult.Success -> {
+                        // Invoke setup success action.
+                        onSetupSuccess?.invoke()
+                        // Last step, change account state to Ready.
+                        accountWorkflow.handleAccountReady(userId)
+                        Result.UserUnlocked(userId)
+                    }
+                }
             }
             is UserManager.UnlockResult.Error -> {
                 accountWorkflow.handleUnlockFailed(userId)

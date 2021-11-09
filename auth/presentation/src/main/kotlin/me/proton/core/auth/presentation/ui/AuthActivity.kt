@@ -20,7 +20,8 @@ package me.proton.core.auth.presentation.ui
 
 import android.view.LayoutInflater
 import androidx.viewbinding.ViewBinding
-import me.proton.core.auth.domain.usecase.SetupAccountCheck
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonSecureActivity
 import me.proton.core.presentation.utils.errorSnack
@@ -65,12 +66,12 @@ abstract class AuthActivity<ViewBindingT : ViewBinding>(
         }
     }
 
-    protected fun onUserCheckFailed(error: SetupAccountCheck.UserCheckResult.Error) {
+    protected fun onUserCheckFailed(error: PostLoginAccountSetup.UserCheckResult.Error) {
         when (val action = error.action) {
             null -> showError(
                 message = error.localizedMessage
             )
-            is SetupAccountCheck.Action.OpenUrl -> showError(
+            is UserCheckAction.OpenUrl -> showError(
                 message = error.localizedMessage,
                 action = action.name,
                 actionOnClick = { openBrowserLink(action.url) }

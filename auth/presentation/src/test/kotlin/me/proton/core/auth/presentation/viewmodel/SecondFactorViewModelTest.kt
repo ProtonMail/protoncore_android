@@ -28,6 +28,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
@@ -50,10 +51,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     private val accountManager = mockk<AccountWorkflowHandler>(relaxed = true)
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
     private val performSecondFactor = mockk<PerformSecondFactor>()
-    private val unlockUserPrimaryKey = mockk<UnlockUserPrimaryKey>()
-    private val setupAccountCheck = mockk<SetupAccountCheck>()
-    private val setupPrimaryKeys = mockk<SetupPrimaryKeys>(relaxed = true)
-    private val setupInternalAddress = mockk<SetupInternalAddress>(relaxed = true)
+    private val postLoginAccountSetup = mockk<PostLoginAccountSetup>(relaxed = true)
 
     private val testSessionResult = mockk<SessionResult>(relaxed = true)
     private val testScopeInfo = mockk<ScopeInfo>(relaxed = true)
@@ -64,6 +62,8 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
     private val testSessionId = SessionId("test-session-id")
     private val testSecondFactorCode = "123456"
     private val testLoginPassword = "123456"
+    private val success = PostLoginAccountSetup.Result.UserUnlocked(testUserId)
+    private val twoPassNeeded = PostLoginAccountSetup.Result.Need.TwoPassMode(testUserId)
     // endregion
 
     private lateinit var viewModel: SecondFactorViewModel
@@ -73,10 +73,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         viewModel = SecondFactorViewModel(
             accountManager,
             performSecondFactor,
-            unlockUserPrimaryKey,
-            setupAccountCheck,
-            setupPrimaryKeys,
-            setupInternalAddress,
+            postLoginAccountSetup,
             sessionProvider
         )
         coEvery { sessionProvider.getSessionId(any()) } returns testSessionId
@@ -89,8 +86,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val requiredAccountType = AccountType.Internal
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
-        coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
+        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any()) } returns success
         viewModel.state.test {
             // WHEN
             viewModel.startSecondFactorFlow(
@@ -103,7 +99,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
 
             // THEN
             assertIs<SecondFactorViewModel.State.Processing>(awaitItem())
-            assertIs<SecondFactorViewModel.State.Success.UserUnLocked>(awaitItem())
+            assertIs<SecondFactorViewModel.State.AccountSetupResult>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -115,7 +111,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         val requiredAccountType = AccountType.Internal
         every { testSessionResult.isTwoPassModeNeeded } returns true
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.TwoPassNeeded
+        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any()) } returns twoPassNeeded
         viewModel.state.test {
             // WHEN
             viewModel.startSecondFactorFlow(
@@ -133,7 +129,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 0) { accountManager.handleSecondFactorFailed(any()) }
 
             assertIs<SecondFactorViewModel.State.Processing>(awaitItem())
-            assertIs<SecondFactorViewModel.State.Need.TwoPassMode>(awaitItem())
+            assertIs<SecondFactorViewModel.State.AccountSetupResult>(awaitItem())
 
             assertEquals(testSessionId, accountManagerArguments.captured)
 
