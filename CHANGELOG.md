@@ -1,3 +1,8 @@
+## Test Android Instrumented [1.15.5]
+
+### Changes
+- Fix OnView.checkDoesNotExist()
+
 ## Test Android Instrumented [1.15.4]
 
 ### Changes
