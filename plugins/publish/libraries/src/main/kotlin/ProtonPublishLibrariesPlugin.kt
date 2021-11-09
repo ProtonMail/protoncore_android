@@ -26,6 +26,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.dokka.gradle.DokkaPlugin
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 /**
@@ -36,10 +37,31 @@ import java.io.File
 abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
+        val versionName = target.computeVersionName()
         target.subprojects {
-            setupPublishing(versionName = "2.0.0-alpha01-SNAPSHOT")
+            setupPublishing(versionName = versionName)
         }
     }
+}
+
+private fun Project.computeVersionName(): String {
+    val branchName = runCommand("git branch --show-current")
+    val versionName = if (branchName.startsWith("release/")) {
+        branchName.substringAfter("release/")
+    } else {
+        "$branchName-SNAPSHOT"
+    }
+    return versionName
+}
+
+private fun Project.runCommand(command: String, currentWorkingDir: File = file("./")): String {
+    val byteOut = ByteArrayOutputStream()
+    exec {
+        workingDir = currentWorkingDir
+        commandLine = command.split("\\s".toRegex())
+        standardOutput = byteOut
+    }
+    return String(byteOut.toByteArray()).trim()
 }
 
 private fun Project.setupPublishing(versionName: String) {
