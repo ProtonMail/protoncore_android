@@ -1,3 +1,8 @@
+## Test Android Instrumented [1.15.4]
+
+### Changes
+- Add missing customAction API
+
 ## Key [1.16.1]
 
 08 Nov, 2021

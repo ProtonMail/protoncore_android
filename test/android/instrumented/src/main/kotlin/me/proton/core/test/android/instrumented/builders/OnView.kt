@@ -24,6 +24,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Root
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions
@@ -249,6 +250,10 @@ class OnView : ConditionWatcher {
 
     fun clearText() = apply {
         viewInteraction().perform(ViewActions.clearText(), ViewActions.closeSoftKeyboard())
+    }
+
+    fun customAction(vararg customViewActions: ViewAction) = apply {
+        viewInteraction().perform(*customViewActions)
     }
 
     fun replaceText(text: String) = apply {
