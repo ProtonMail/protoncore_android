@@ -346,7 +346,7 @@ class OnView : ConditionWatcher {
     }
 
     fun checkDoesNotExist() = apply {
-        viewInteraction(matches(CoreMatchers.`is`(doesNotExist())))
+        viewInteraction(doesNotExist())
     }
 
     fun checkNotDisplayed() = apply {
