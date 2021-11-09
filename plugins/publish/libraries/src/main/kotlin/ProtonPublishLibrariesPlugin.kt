@@ -25,9 +25,8 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
+import org.jetbrains.dokka.gradle.DokkaPlugin
 import java.io.File
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 /**
  * Setup Publishing for whole Project.
@@ -37,33 +36,31 @@ import java.time.format.DateTimeFormatter
 abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        target.setupPublishing()
         target.subprojects {
-            apply<ProtonPublishLibrariesPlugin>()
+            setupPublishing(versionName = "2.0.0-alpha01-SNAPSHOT")
         }
     }
 }
 
-private fun Project.setupPublishing() {
+private fun Project.setupPublishing(versionName: String) {
     val publishOption = setupPublishOptionExtension()
     afterEvaluate {
         if (publishOption.shouldBePublishedAsLib) {
-            setupCoordinates()
+            setupCoordinates(versionName)
             setupReleaseTask()
         }
     }
 }
 
-private fun Project.setupCoordinates() {
+private fun Project.setupCoordinates(versionName: String, generateKdoc: Boolean = false) {
     group = "me.proton.core"
     val artifactId = name
-    val versionName = "2.0.0-alpha01-SNAPSHOT"
     version = versionName
 
     // Dokka disabled by default
     // Dokka is slow and consume a lot of resource for not much value in our case as the documentation is read in AS
     // from sources.
-    // apply<DokkaPlugin>()
+    if (generateKdoc) apply<DokkaPlugin>()
     apply<MavenPublishPlugin>()
     configure<MavenPublishPluginExtension> {
         sonatypeHost = SonatypeHost.S01
@@ -95,79 +92,21 @@ private fun Project.setupCoordinates() {
             }
         }
     }
+    ensureReleaseCoordinateDocumented()
+}
+
+private fun Project.ensureReleaseCoordinateDocumented() {
+    val readmeFile = File(rootDir, "README.md")
+    val readmeText = readmeFile.readText()
+    val projectCoordinates = "$group:$name"
+    val isCoordinatesDocumented = readmeText.contains(projectCoordinates)
+    check(isCoordinatesDocumented) {
+        "Artifact coordinates $projectCoordinates are missing in README.MD, please document it"
+    }
 }
 
 private fun Project.setupReleaseTask() {
-    val releaseManager = ReleaseManager(this)
-    tasks.register("publishNewRelease") {
-        if (releaseManager.isNewVersion) {
-            dependsOn(tasks.named("publish"))
-            doLast {
-                releaseManager.updateReadme()
-                releaseManager.printToNewReleasesFile()
-            }
-        }
+    tasks.register("publishLibrary") {
+        dependsOn(tasks.named("publish"))
     }
 }
-
-/**
- * This class will organize libraries release.
- *
- * It can:
- * * Update readme with new version
- * * Print update to new_releases.tmp
- *
- * @param forceRefresh Generally all the processes are executed only of [Project.libVersion] is different from the one
- *   in the readme. If this parameter is set to `true`, they will run in any case.
- *   Default is `false`
- *
- * @author Davide Farella
- */
-class ReleaseManager internal constructor(
-    project: Project,
-    forceRefresh: Boolean = false
-) : Project by project {
-
-    private val prevVersion = README_VERSION_REGEX.find(README_FILE.readText())?.groupValues?.get(1)
-        ?: throw IllegalArgumentException("Cannot find version for $name: $README_VERSION_REGEX")
-
-    val isNewVersion = forceRefresh || prevVersion != version
-    private val shouldRefresh = forceRefresh || isNewVersion
-
-    /** Update readme with new version */
-    fun updateReadme() {
-        if (shouldRefresh) {
-            val timestamp = LocalDate.now().format(DateTimeFormatter.ofPattern("MMM dd, yyyy"))
-
-            README_FILE.writeText(
-                README_FILE.readText()
-                    .replace(README_VERSION_REGEX, readmeVersion(humanReadableName, version as String, timestamp))
-            )
-        }
-    }
-
-    /** Print release to new_releases.tmp */
-    fun printToNewReleasesFile() {
-        if (shouldRefresh) {
-            NEW_RELEASES_FILE.writeText(
-                "${NEW_RELEASES_FILE.readText()}$humanReadableName $version\n"
-            )
-        }
-    }
-
-    private companion object {
-        val Project.README_FILE get() = File(rootDir, "README.md")
-        val Project.README_VERSION_REGEX get() =
-            readmeVersion("^$humanReadableName", "(.+)", "(.+)").toRegex(RegexOption.MULTILINE)
-        val Project.NEW_RELEASES_FILE get() = File(rootDir, "new_releases.tmp")
-            .also { file ->
-                // 10 min lifetime
-                if (file.lastModified() < System.currentTimeMillis() - 10 * 60 * 1000) file.delete()
-                if (!file.exists()) file.createNewFile()
-            }
-
-        fun readmeVersion(name: String, version: String, timestamp: String) =
-            """$name: \*\*$version\*\* - _released on: ${timestamp}_"""
-    }
-}
-

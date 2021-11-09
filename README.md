@@ -73,185 +73,72 @@ Kotlin: **0.1** - _released on: Oct 09, 2020_
 
 Tests: **0.1** - _released on: Oct 09, 2020_
 
-## Common
-
-### Utils
-
-Util Android Shared Preferences: **1.15** - _released on: Sep 13, 2021_
-
-Util Android Work Manager: **1.15** - _released on: Sep 13, 2021_
-
-Util Kotlin: **1.15.4** - _released on: Nov 22, 2021_
-
-### Test
-
-Test Kotlin: **1.15** - _released on: Sep 13, 2021_
-
-Test Android: **1.15.1** - _released on: Oct 08, 2021_
-
-Test Android Instrumented: **1.15.5** - _released on: Nov 09, 2021_
-
-## Shared
-
-Domain: **1.18** - _released on: Oct 25, 2021_
-
-Presentation: **1.18.3** - _released on: Nov 05, 2021_
-
-Data: **1.15** - _released on: Sep 13, 2021_
-
-Data Room: **1.16** - _released on: Oct 04, 2021_
-
-## Support
-
-### Network
-
-Network: **1.16** - _released on: Nov 22, 2021_
-
-Network Domain: **1.16** - _released on: Nov 22, 2021_
-
-Network Data: **1.16** - _released on: Nov 22, 2021_
-
-### Crypto
-
-Crypto: **1.16** - _released on: Oct 28, 2021_
-
-Crypto Common: **1.16** - _released on: Oct 28, 2021_
-
-Crypto Android: **1.16** - _released on: Oct 28, 2021_
-
-## Features
-
-### Auth
-
-Auth: **1.18.5** - _released on: Nov 22, 2021_
-
-Auth Domain: **1.18.5** - _released on: Nov 22, 2021_
-
-Auth Presentation: **1.18.5** - _released on: Nov 22, 2021_
-
-Auth Data: **1.18.5** - _released on: Nov 22, 2021_
-
-### Account
-
-Account: **1.15.2** - _released on: Sep 23, 2021_
-
-Account Domain: **1.15.2** - _released on: Sep 23, 2021_
-
-Account Presentation: **0** - _released on: ND_
-
-Account Data: **1.15.2** - _released on: Sep 23, 2021_
-
-
-### Account Manager
-
-Account Manager: **1.16.2** - _released on: Nov 16, 2021_
-
-Account Manager Domain: **1.16.2** - _released on: Nov 16, 2021_
-
-Account Manager Presentation: **1.16.2** - _released on: Nov 16, 2021_
-
-Account Manager Data: **1.16.2** - _released on: Nov 16, 2021_
-
-Account Manager Data Db: **1.16.2** - _released on: Nov 16, 2021_
-
-Account Manager Dagger: **1.16.2** - _released on: Nov 16, 2021_
-
-### Event Manager
-
-Event Manager: **1.19.2** - _released on: Nov 22, 2021_
-
-Event Manager Domain: **1.19.2** - _released on: Nov 22, 2021_
-
-Event Manager Data: **1.19.2** - _released on: Nov 22, 2021_
-
-### Key
-
-Key: **1.16.1** - _released on: Nov 08, 2021_
-
-Key Domain: **1.16.1** - _released on: Nov 08, 2021_
-
-Key Data: **1.16.1** - _released on: Nov 08, 2021_
-
-### User
-
-User: **1.19.1** - _released on: Nov 18, 2021_
-
-User Domain: **1.19.1** - _released on: Nov 18, 2021_
-
-User Data: **1.19.1** - _released on: Nov 18, 2021_
-
-### User Settings
-
-User Settings: **1.19.1** - _released on: Nov 18, 2021_
-
-User Settings Data: **1.19.1** - _released on: Nov 18, 2021_
-
-User Settings Domain: **1.19.1** - _released on: Nov 18, 2021_
-
-User Settings Presentation: **1.19.1** - _released on: Nov 18, 2021_
-
-### Contact
-
-Contact: **1.19.3** - _released on: Nov 22, 2021_
-
-Contact Domain: **1.19.3** - _released on: Nov 22, 2021_
-
-Contact Data: **1.19.3** - _released on: Nov 22, 2021_
-
-Contact Hilt: **1.19.3** - _released on: Nov 22, 2021_
-
-### Mail Message
-
-Mail Message: **1.15.1** - _released on: Nov 10, 2021_
-
-Mail Message Domain: **1.15.1** - _released on: Nov 10, 2021_
-
-Mail Message Data: **1.15.1** - _released on: Nov 10, 2021_
-
-### Mail Settings
-
-Mail Settings: **1.19.1** - _released on: Nov 18, 2021_
-
-Mail Settings Domain: **1.19.1** - _released on: Nov 18, 2021_
-
-Mail Settings Data: **1.19.1** - _released on: Nov 18, 2021_
-
-### Human Verification
-
-Human Verification: **1.16.4** - _released on: Nov 24, 2021_
-
-Human Verification Domain: **1.16.4** - _released on: Nov 24, 2021_
-
-Human Verification Presentation: **1.16.4** - _released on: Nov 24, 2021_
-
-Human Verification Data: **1.16.4** - _released on: Nov 24, 2021_
-
-### Countries
-
-Country: **1.16.2** - _released on: Nov 16, 2021_
-
-Country Domain: **1.16.2** - _released on: Nov 16, 2021_
-
-Country Data: **1.16.2** - _released on: Nov 16, 2021_
-
-Country Presentation: **1.16.2** - _released on: Nov 16, 2021_
-
-### Payment
-
-Payment: **1.17.5** - _released on: Nov 22, 2021_
-
-Payment Data: **1.17.5** - _released on: Nov 22, 2021_
-
-Payment Domain: **1.17.5** - _released on: Nov 22, 2021_
-
-Payment Presentation: **1.17.5** - _released on: Nov 22, 2021_
-
-### Plan
-
-Plan: **1.18.3** - _released on: Nov 23, 2021_
-
-Plan Data: **1.18.3** - _released on: Nov 23, 2021_
-
-Plan Domain: **1.18.3** - _released on: Nov 23, 2021_
-
-Plan Presentation: **1.18.3** - _released on: Nov 23, 2021_
+# Coordinates
+me.proton.core:account
+me.proton.core:account-data
+me.proton.core:account-domain
+me.proton.core:account-manager
+me.proton.core:account-manager-dagger
+me.proton.core:account-manager-data
+me.proton.core:account-manager-data-db
+me.proton.core:account-manager-domain
+me.proton.core:account-manager-presentation
+me.proton.core:auth
+me.proton.core:auth-data
+me.proton.core:auth-domain
+me.proton.core:auth-presentation
+me.proton.core:contact
+me.proton.core:contact-data
+me.proton.core:contact-domain
+me.proton.core:contact-hilt
+me.proton.core:country
+me.proton.core:country-data
+me.proton.core:country-domain
+me.proton.core:country-presentation
+me.proton.core:crypto
+me.proton.core:crypto-android
+me.proton.core:crypto-common
+me.proton.core:data
+me.proton.core:data-room
+me.proton.core:domain
+me.proton.core:event-manager
+me.proton.core:event-manager-data
+me.proton.core:event-manager-domain
+me.proton.core:human-verification
+me.proton.core:human-verification-data
+me.proton.core:human-verification-domain
+me.proton.core:human-verification-presentation
+me.proton.core:key
+me.proton.core:key-data
+me.proton.core:key-domain
+me.proton.core:mail-message
+me.proton.core:mail-message-data
+me.proton.core:mail-message-domain
+me.proton.core:mail-settings
+me.proton.core:mail-settings-data
+me.proton.core:mail-settings-domain
+me.proton.core:network
+me.proton.core:network-data
+me.proton.core:network-domain
+me.proton.core:payment
+me.proton.core:payment-data
+me.proton.core:payment-domain
+me.proton.core:payment-presentation
+me.proton.core:plan
+me.proton.core:plan-data
+me.proton.core:plan-domain
+me.proton.core:plan-presentation
+me.proton.core:presentation
+me.proton.core:test-android
+me.proton.core:test-android-instrumented
+me.proton.core:test-kotlin
+me.proton.core:user
+me.proton.core:user-data
+me.proton.core:user-domain
+me.proton.core:user-settings
+me.proton.core:user-settings-data
+me.proton.core:user-settings-domain
+me.proton.core:user-settings-presentation
+me.proton.core:util-android-shared-preferences
+me.proton.core:util-android-work-manager
+me.proton.core:util-kotlin
