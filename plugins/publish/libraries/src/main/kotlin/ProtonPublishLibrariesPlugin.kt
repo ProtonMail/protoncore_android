@@ -55,16 +55,6 @@ private fun Project.computeVersionName(): String {
     return versionName
 }
 
-private fun Project.runCommand(command: String, currentWorkingDir: File = file("./")): String {
-    val byteOut = ByteArrayOutputStream()
-    exec {
-        workingDir = currentWorkingDir
-        commandLine = command.split("\\s".toRegex())
-        standardOutput = byteOut
-    }
-    return String(byteOut.toByteArray()).trim()
-}
-
 private fun Project.setupPublishing(versionName: String) {
     val publishOption = setupPublishOptionExtension()
     afterEvaluate {
@@ -156,4 +146,37 @@ private fun generateReleaseNoteIfNeeded(versionName: String) {
     releaseNote.createNewFile()
     releaseNote.appendText(releaseHeader)
     releaseNote.appendText(releaseContent)
+}
+
+private fun Project.notifyRelease(releaseNote: String) {
+    val hook = ""
+    val result = runCommand(
+        command = "curl --silent --show-error --fail",
+        args = listOf(
+            "--header", "Content-type: application/json",
+            "--data", "{\"mrkdwn\": true, \"text\": \"$releaseNote\"}",
+            hook
+        )
+    )
+    println(result)
+}
+
+/**
+ * Execute a command line and return stdout. [command] is interpreted by being split using space, so if command
+ * parameters contain space, they should be passed using [args] instead.
+ */
+private fun Project.runCommand(
+    command: String,
+    args: List<String> = emptyList(),
+    currentWorkingDir: File = file("./")
+): String {
+    val byteOut = ByteArrayOutputStream()
+    val commandAsList = command.split("\\s".toRegex()).plus(args)
+    println("exec : ${commandAsList.joinToString(" ")}")
+    exec {
+        workingDir = currentWorkingDir
+        commandLine = commandAsList
+        standardOutput = byteOut
+    }
+    return String(byteOut.toByteArray()).trim()
 }
