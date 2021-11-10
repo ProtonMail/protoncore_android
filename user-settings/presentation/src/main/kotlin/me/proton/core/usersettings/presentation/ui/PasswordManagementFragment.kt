@@ -20,7 +20,6 @@ package me.proton.core.usersettings.presentation.ui
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -28,9 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.ui.ProtonSecureFragment
-import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.ui.view.ProtonProgressButton
 import me.proton.core.presentation.utils.addOnBackPressedCallback
@@ -62,7 +59,9 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.addOnBackPressedCallback { finish() }
+        activity?.addOnBackPressedCallback {
+            finish()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,7 +91,11 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
             when (it) {
                 is PasswordManagementViewModel.State.Idle -> Unit
                 is PasswordManagementViewModel.State.Mode -> {
-                    binding.mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
+                    with(binding) {
+                        progress.visibility = View.GONE
+                        loginPasswordGroup.visibility = View.VISIBLE
+                        mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
+                    }
                 }
                 is PasswordManagementViewModel.State.Error.Message -> showError(it.message)
                 is PasswordManagementViewModel.State.Error.UpdatingSinglePassModePassword,
@@ -222,7 +225,8 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
                                 secondFactorCode = result.twoFA
                             )
                         }
-                    }).show(ShowPasswordInput(showPassword = false, showTwoFA = true))
+                    }
+                ).show(ShowPasswordInput(showPassword = false, showTwoFA = true))
             }
         } else {
             viewModel.updateMailboxPassword(
