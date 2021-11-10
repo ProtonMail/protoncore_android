@@ -17,7 +17,7 @@ gen/
 releases/
 docs/
 config/detekt/reports/
-/new_releases.tmp
+/release-note.txt
 
 # Gradle files
 .gradle/

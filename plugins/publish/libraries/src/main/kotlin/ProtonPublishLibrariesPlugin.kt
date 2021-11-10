@@ -38,6 +38,7 @@ abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         val versionName = target.computeVersionName()
+        generateReleaseNoteIfNeeded(versionName)
         target.subprojects {
             setupPublishing(versionName = versionName)
         }
@@ -70,6 +71,9 @@ private fun Project.setupPublishing(versionName: String) {
         if (publishOption.shouldBePublishedAsLib) {
             setupCoordinates(versionName)
             setupReleaseTask()
+            println("Setup publishing for $group:$name:$versionName")
+        } else {
+            println("Ignoring publishing for $name")
         }
     }
 }
@@ -131,4 +135,25 @@ private fun Project.setupReleaseTask() {
     tasks.register("publishLibrary") {
         dependsOn(tasks.named("publish"))
     }
+}
+
+private fun generateReleaseNoteIfNeeded(versionName: String) {
+    if (versionName.contains("SNAPSHOT")) {
+        println("Ignoring release note generation due to snapshot release")
+        return
+    } else {
+        println("Generating release-note.txt for release $versionName")
+    }
+    val releaseNote = File("release-note.txt")
+    val changelog = File("CHANGELOG.md")
+    val changelogText = changelog.readText()
+    val releaseHeader = "## [$versionName]"
+    val releaseContent = changelogText.substringAfter(releaseHeader).substringBefore("##")
+    if (releaseContent.isEmpty()) {
+        println("Warning: No entry found in changelog for $versionName, release note will be empty")
+    }
+    releaseNote.delete()
+    releaseNote.createNewFile()
+    releaseNote.appendText(releaseHeader)
+    releaseNote.appendText(releaseContent)
 }
