@@ -1,3 +1,8 @@
+## Mail Message [1.15.1]
+
+### Changes
+- Incremented version for Mail Message module to fix a `NoSuchMethodError` crash
+
 ## Test Android Instrumented [1.15.5]
 
 ### Changes
