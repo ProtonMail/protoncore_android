@@ -202,11 +202,11 @@ Contact Hilt: **1.18** - _released on: Oct 25, 2021_
 
 ### Mail Message
 
-Mail Message: **1.15** - _released on: Sep 13, 2021_
+Mail Message: **1.15.1** - _released on: Nov 10, 2021_
 
-Mail Message Domain: **1.15** - _released on: Sep 13, 2021_
+Mail Message Domain: **1.15.1** - _released on: Nov 10, 2021_
 
-Mail Message Data: **1.15** - _released on: Sep 13, 2021_
+Mail Message Data: **1.15.1** - _released on: Nov 10, 2021_
 
 ### Mail Settings
 
