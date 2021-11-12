@@ -182,13 +182,13 @@ User Data: **1.18** - _released on: Oct 25, 2021_
 
 ### User Settings
 
-User Settings: **1.18.1** - _released on: Oct 28, 2021_
+User Settings: **1.18.2** - _released on: Nov 12, 2021_
 
-User Settings Data: **1.18.1** - _released on: Oct 28, 2021_
+User Settings Data: **1.18.2** - _released on: Nov 12, 2021_
 
-User Settings Domain: **1.18.1** - _released on: Oct 28, 2021_
+User Settings Domain: **1.18.2** - _released on: Nov 12, 2021_
 
-User Settings Presentation: **1.18.1** - _released on: Oct 28, 2021_
+User Settings Presentation: **1.18.2** - _released on: Nov 12, 2021_
 
 ### Contact
 
