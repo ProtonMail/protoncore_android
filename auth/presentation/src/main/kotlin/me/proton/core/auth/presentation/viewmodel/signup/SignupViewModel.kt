@@ -35,6 +35,8 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
+import me.proton.core.auth.domain.usecase.userAlreadyExists
+import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
@@ -45,8 +47,6 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
-import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
-import me.proton.core.humanverification.presentation.onHumanVerificationSucceeded
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
@@ -55,7 +55,9 @@ import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
 import me.proton.core.user.domain.entity.createUserType
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
 
 @HiltViewModel
@@ -228,7 +230,9 @@ internal class SignupViewModel @Inject constructor(
             username = username, password = encryptedPassword, recoveryEmail = verification.first,
             recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
         )
-        emit(State.Success(result.userId.id, username, encryptedPassword))
+        emit(State.Success(result.id, username, encryptedPassword))
+    }.retryOnceWhen(Throwable::userAlreadyExists) {
+        CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to create a user")
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {
@@ -239,12 +243,14 @@ internal class SignupViewModel @Inject constructor(
         val externalEmail = requireNotNull(externalEmail) { "External email is not set." }
         val encryptedPassword = requireNotNull(_password) { "Password is not set (initialized)." }
         emit(State.Processing)
-        val user = performCreateExternalEmailUser(
+        val userId = performCreateExternalEmailUser(
             email = externalEmail,
             password = encryptedPassword,
             referrer = null
         )
-        emit(State.Success(user.userId.id, externalEmail, encryptedPassword))
+        emit(State.Success(userId.id, externalEmail, encryptedPassword))
+    }.retryOnceWhen(Throwable::userAlreadyExists) {
+        CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to create an external user")
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {
