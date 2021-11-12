@@ -31,12 +31,16 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
+import me.proton.core.auth.domain.usecase.primaryKeyExists
+import me.proton.core.auth.presentation.LogTag
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.usersettings.domain.usecase.SetupUsername
+import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
 
 @HiltViewModel
@@ -90,6 +94,8 @@ class CreateAddressViewModel @Inject constructor(
         }.let {
             emit(it)
         }
+    }.retryOnceWhen(Throwable::primaryKeyExists) {
+        CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to upgrade an account")
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {

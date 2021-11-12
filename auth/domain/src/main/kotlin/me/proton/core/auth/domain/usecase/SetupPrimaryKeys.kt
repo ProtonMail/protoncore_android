@@ -51,53 +51,51 @@ class SetupPrimaryKeys @Inject constructor(
     suspend operator fun invoke(
         userId: UserId,
         password: EncryptedString,
-        accountType: AccountType
-    ) = with(userManager.getUser(userId)) {
-        if (keys.primary() == null) {
-            val username = when (accountType) {
-                AccountType.External -> {
-                    checkNotNull(emailSplit?.username) { "Email username is needed to setup primary keys." }
+        accountType: AccountType,
+    ) {
+        val user = userManager.getUser(userId, refresh = true)
+        if (user.keys.primary() != null) return
+
+        val username = if (accountType == AccountType.External) {
+            checkNotNull(user.emailSplit?.username) { "Email username is needed to setup primary keys." }
+        } else {
+            checkNotNull(user.name) { "Username is needed." }
+        }
+
+        val domain = if (accountType == AccountType.External) {
+            checkNotNull(user.emailSplit?.domain) { "Email domain is needed to setup primary keys." }
+        } else {
+            domainRepository.getAvailableDomains().first()
+        }
+
+        val email = if (accountType == AccountType.External) {
+            checkNotNull(user.email) { "Email is needed." }
+        } else {
+            "$username@$domain"
+        }
+        val modulus = authRepository.randomModulus()
+
+        password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
+            val auth = srpCrypto.calculatePasswordVerifier(
+                username = email,
+                password = decryptedPassword.array,
+                modulusId = modulus.modulusId,
+                modulus = modulus.modulus
+            )
+
+            if (accountType == AccountType.Internal) {
+                if (userAddressRepository.getAddresses(userId, refresh = true).firstInternalOrNull() == null) {
+                    userAddressRepository.createAddress(userId, username, domain)
                 }
-                else -> checkNotNull(name) { "Username is needed." }
             }
 
-            val domain = when (accountType) {
-                AccountType.External -> {
-                    checkNotNull(emailSplit?.domain) { "Email domain is needed to setup primary keys." }
-                }
-                else -> domainRepository.getAvailableDomains().first()
-            }
-
-            val email = when (accountType) {
-                AccountType.External -> checkNotNull(email) { "Email is needed." }
-                else -> "$username@$domain"
-            }
-            val modulus = authRepository.randomModulus()
-
-            password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
-                val auth = srpCrypto.calculatePasswordVerifier(
-                    username = email,
-                    password = decryptedPassword.array,
-                    modulusId = modulus.modulusId,
-                    modulus = modulus.modulus
-                )
-                if (accountType == AccountType.Internal) {
-                    if (userAddressRepository.getAddresses(userId).firstInternalOrNull() == null) {
-                        userAddressRepository.createAddress(
-                            sessionUserId = userId,
-                            displayName = username,
-                            domain = domain
-                        )
-                    }
-                }
-                userManager.setupPrimaryKeys(
-                    sessionUserId = userId,
-                    username = username,
-                    domain = domain,
-                    auth = auth,
-                    password = decryptedPassword.array
-                )
-            }
+            userManager.setupPrimaryKeys(
+                sessionUserId = userId,
+                username = username,
+                domain = domain,
+                auth = auth,
+                password = decryptedPassword.array
+            )
         }
     }
 }
