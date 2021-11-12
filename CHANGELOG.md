@@ -1,3 +1,13 @@
+12 Nov, 2021
+
+## User Settings [1.18.2]
+
+### Changes
+
+- Refactor password management mailbox form to be in sync with the login form when presented to the user.
+
+### No Breaking changes, clients can just update to the latest versions.
+
 ## Auth [1.18.1]
 
 12 Nov, 2021
