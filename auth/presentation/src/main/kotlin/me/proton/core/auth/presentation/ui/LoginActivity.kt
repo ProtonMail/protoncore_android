@@ -26,6 +26,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
 import me.proton.core.auth.presentation.entity.LoginInput
@@ -87,16 +88,22 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             when (it) {
                 is LoginViewModel.State.Idle -> showLoading(false)
                 is LoginViewModel.State.Processing -> showLoading(true)
-                is LoginViewModel.State.Success.UserUnLocked -> onSuccess(it.userId, NextStep.None)
-                is LoginViewModel.State.Need.SecondFactor -> onSuccess(it.userId, NextStep.SecondFactor)
-                is LoginViewModel.State.Need.TwoPassMode -> onSuccess(it.userId, NextStep.TwoPassMode)
-                is LoginViewModel.State.Need.ChooseUsername -> onSuccess(it.userId, NextStep.ChooseAddress)
-                is LoginViewModel.State.Need.ChangePassword -> onChangePassword()
-                is LoginViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
-                is LoginViewModel.State.Error.UserCheckError -> onUserCheckFailed(it.error)
-                is LoginViewModel.State.Error.Message -> onError(true, it.message)
+                is LoginViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
+                is LoginViewModel.State.ErrorMessage -> onError(true, it.message)
             }.exhaustive
         }.launchIn(lifecycleScope)
+    }
+
+    private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
+        when (result) {
+            is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result.error)
+            is PostLoginAccountSetup.Result.Need.ChangePassword -> onChangePassword()
+            is PostLoginAccountSetup.Result.Need.ChooseUsername -> onSuccess(result.userId, NextStep.ChooseAddress)
+            is PostLoginAccountSetup.Result.Need.SecondFactor -> onSuccess(result.userId, NextStep.SecondFactor)
+            is PostLoginAccountSetup.Result.Need.TwoPassMode -> onSuccess(result.userId, NextStep.TwoPassMode)
+            is PostLoginAccountSetup.Result.UserUnlocked -> onSuccess(result.userId, NextStep.None)
+        }.exhaustive
     }
 
     private fun onChangePassword() {

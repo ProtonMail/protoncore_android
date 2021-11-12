@@ -29,6 +29,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.entity.BillingDetails
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivitySignupBinding
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
@@ -103,18 +105,26 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             when (it) {
                 is LoginViewModel.State.Idle -> showLoading(false)
                 is LoginViewModel.State.Processing -> showLoading(true)
-                is LoginViewModel.State.Success.UserUnLocked -> onLoginSuccess(it.userId)
-                is LoginViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
-                is LoginViewModel.State.Error.UserCheckError -> onLoginError(it.error.localizedMessage)
-                is LoginViewModel.State.Error.Message -> onLoginError(it.message)
-                is LoginViewModel.State.Need.ChangePassword,
-                is LoginViewModel.State.Need.ChooseUsername,
-                is LoginViewModel.State.Need.SecondFactor,
-                is LoginViewModel.State.Need.TwoPassMode -> {
-                    // we are not interested in these events
-                }
+                is LoginViewModel.State.ErrorMessage -> onLoginError(it.message)
+                is LoginViewModel.State.AccountSetupResult -> onPostLoginAccountSetup(it.result)
             }.exhaustive
         }.launchIn(lifecycleScope)
+    }
+
+    private fun onPostLoginAccountSetup(result: PostLoginAccountSetup.Result) {
+        when (result) {
+            is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> onLoginError(result.error.localizedMessage)
+            is PostLoginAccountSetup.Result.UserUnlocked -> onLoginSuccess(result.userId)
+
+            // we are not interested in these events
+            is PostLoginAccountSetup.Result.Need.ChangePassword,
+            is PostLoginAccountSetup.Result.Need.ChooseUsername,
+            is PostLoginAccountSetup.Result.Need.SecondFactor,
+            is PostLoginAccountSetup.Result.Need.TwoPassMode -> {
+                // no-op
+            }
+        }.exhaustive
     }
 
     private fun onPlanSelected(plan: SelectedPlan, billingResult: BillingResult?) {
@@ -138,11 +148,22 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         }
         binding.lottieProgress.visibility = View.VISIBLE
 
+        val subscriptionDetails = signUpViewModel.subscriptionDetails
+        val billingDetails = subscriptionDetails?.billingResult?.let {
+            BillingDetails(
+                amount = it.amount,
+                currency = it.currency,
+                cycle = it.cycle,
+                planName = subscriptionDetails.planName,
+                token = it.token
+            )
+        }
+
         loginViewModel.startLoginWorkflowWithEncryptedPassword(
             loginUsername,
             encryptedPassword,
             signUpViewModel.currentAccountType,
-            signUpViewModel.subscriptionDetails
+            billingDetails
         )
     }
 

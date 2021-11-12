@@ -16,21 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.auth.domain.entity
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 
-libVersion = Version(1, 18, 1)
-
-android()
-
-dependencies {
-    api(
-        project(Module.authPresentation),
-        project(Module.authDomain),
-        project(Module.authData)
-    )
-}
+data class BillingDetails(
+    val amount: Long,
+    val currency: Currency,
+    val cycle: SubscriptionCycle,
+    val planName: String,
+    val token: String?
+)
