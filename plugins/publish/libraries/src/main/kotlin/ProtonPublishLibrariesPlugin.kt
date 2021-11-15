@@ -99,7 +99,7 @@ private fun Project.setupCoordinates() {
 
 private fun Project.setupReleaseTask() {
     val releaseManager = ReleaseManager(this)
-    tasks.register("publishLibrary") {
+    tasks.register("publishNewRelease") {
         if (releaseManager.isNewVersion) {
             dependsOn(tasks.named("publish"))
             doLast {

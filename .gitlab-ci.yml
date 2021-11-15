@@ -125,10 +125,17 @@ publishMaven:
   stage: publish
   tags:
     - large
+  variables:
+    ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
+    ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD_UNESCAPED
+    ORG_GRADLE_PROJECT_signingInMemoryKey: $MAVEN_SIGNING_KEY
+    ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD_UNESCAPED
   script:
-    - ./gradlew publishNewRelease --no-daemon --no-parallel
+    - ./gradlew publishNewRelease
+    # While not merged with master prevent automatic release as it could break master release
+    # - ./gradlew closeAndReleaseRepository
   only:
-    - master
+    - main
   artifacts:
       expire_in: 10 days
       paths:
@@ -163,7 +170,7 @@ commitRelease:
   script:
     - ./util/commitRelease
   only:
-    - master
+    - main
 
 postReleaseToSlack:
   stage: slackRelease
@@ -173,9 +180,10 @@ postReleaseToSlack:
       - job: publishMaven
         artifacts: true
   script:
-    - ./util/postReleaseToSlack
+    - echo "Should publish release on slack"
+    # - ./util/postReleaseToSlack
   only:
-    - master
+    - main
 
 i18n-sync-crowdin:
   extends: .i18n-sync-crowdin-common
