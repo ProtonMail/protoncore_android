@@ -27,16 +27,13 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -50,7 +47,6 @@ class PerformCreateUserTest {
     private val userRepository = mockk<UserRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
-    private val performLogin = mockk<PerformLogin>()
 
     // endregion
 
@@ -75,7 +71,7 @@ class PerformCreateUserTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
-        useCase = PerformCreateUser(authRepository, userRepository, srpCrypto, keyStoreCrypto, performLogin)
+        useCase = PerformCreateUser(authRepository, userRepository, srpCrypto, keyStoreCrypto)
         every {
             srpCrypto.calculatePasswordVerifier(testUsername, any(), any(), any())
         } returns testAuth
@@ -90,8 +86,6 @@ class PerformCreateUserTest {
 
     @Test
     fun `create user no recovery success`() = runBlockingTest {
-        coEvery { userRepository.isUsernameAvailable(testUsername) } returns true
-
         useCase.invoke(
             testUsername,
             keyStoreCrypto.encrypt(testPassword),
@@ -132,8 +126,6 @@ class PerformCreateUserTest {
 
     @Test
     fun `create user email recovery success`() = runBlockingTest {
-        coEvery { userRepository.isUsernameAvailable(testUsername) } returns true
-
         useCase.invoke(
             testUsername,
             keyStoreCrypto.encrypt(testPassword),
@@ -175,8 +167,6 @@ class PerformCreateUserTest {
 
     @Test
     fun `create user phone recovery success`() = runBlockingTest {
-        coEvery { userRepository.isUsernameAvailable(testUsername) } returns true
-
         useCase.invoke(
             testUsername,
             keyStoreCrypto.encrypt(testPassword),
@@ -236,29 +226,12 @@ class PerformCreateUserTest {
     }
 
     @Test
-    fun `user already exists but can log in`() = runBlockingTest {
-        val testUserId = UserId("user-id")
-        coEvery { userRepository.isUsernameAvailable(testEmail) } returns false
-        coEvery { performLogin.invoke(testEmail, testEncryptedPassword) } returns mockk {
-            every { userId } returns testUserId
-        }
-
-        val createdUserId = useCase.invoke(
-            testEmail,
-            keyStoreCrypto.encrypt(testPassword),
-            recoveryEmail = null,
-            recoveryPhone = null,
-            referrer = null,
-            type = CreateUserType.Normal
-        )
-        Assert.assertEquals(testUserId, createdUserId)
-    }
-
-    @Test
     fun `user already exists and cannot log in`() = runBlockingTest {
         val apiException = mockk<ApiException>()
-        coEvery { userRepository.isUsernameAvailable(testEmail) } returns false
-        coEvery { performLogin.invoke(testEmail, testEncryptedPassword) } throws apiException
+
+        coEvery {
+            userRepository.createUser(any(), any(), any(), any(), any(), any(), any())
+        } throws apiException
 
         val result = assertFailsWith(ApiException::class) {
             useCase.invoke(

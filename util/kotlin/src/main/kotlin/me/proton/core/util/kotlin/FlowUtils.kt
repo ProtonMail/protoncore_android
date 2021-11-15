@@ -19,7 +19,22 @@
 package me.proton.core.util.kotlin
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.retryWhen
+
+fun <T> Flow<T>.catchWhen(
+    predicate: suspend (Throwable) -> Boolean,
+    action: suspend FlowCollector<T>.() -> Unit
+): Flow<T> {
+    return catch { error ->
+        if (predicate(error)) {
+            action()
+        } else {
+            throw error
+        }
+    }
+}
 
 /**
  * Retries the collection of the flow, in case an exception occurred in upstream flow, and [predicate] returns `true`.

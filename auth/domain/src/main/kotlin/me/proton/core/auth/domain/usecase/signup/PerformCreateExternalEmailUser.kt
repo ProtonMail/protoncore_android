@@ -19,7 +19,6 @@
 package me.proton.core.auth.domain.usecase.signup
 
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
@@ -34,8 +33,7 @@ class PerformCreateExternalEmailUser @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
     private val srpCrypto: SrpCrypto,
-    private val keyStoreCrypto: KeyStoreCrypto,
-    private val performLogin: PerformLogin
+    private val keyStoreCrypto: KeyStoreCrypto
 ) {
 
     suspend operator fun invoke(
@@ -44,10 +42,6 @@ class PerformCreateExternalEmailUser @Inject constructor(
         referrer: String?
     ): UserId {
         require(email.isNotBlank()) { "Email must not be empty." }
-
-        if (!userRepository.isUsernameAvailable(email)) {
-            return performLogin.invoke(email, password).userId
-        }
 
         val modulus = authRepository.randomModulus()
 

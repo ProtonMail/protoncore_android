@@ -24,6 +24,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
@@ -58,6 +59,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     private val plansOrchestrator = mockk<PlansOrchestrator>(relaxed = true)
     private val paymentsOrchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
     private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
+    private val performLogin = mockk<PerformLogin>()
     // endregion
 
 
@@ -108,6 +110,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             paymentsOrchestrator,
             clientIdProvider,
             humanVerificationManager,
+            performLogin,
             humanVerificationOrchestrator,
             mockk(relaxed = true)
         )
@@ -488,7 +491,7 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `retries creating internal user`() = coroutinesTest {
+    fun `tries login if internal username taken`() = coroutinesTest {
         coEvery {
             performCreateUser.invoke(
                 username = testUsername,
@@ -500,6 +503,10 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             )
         } throws usernameTakenError
 
+        coEvery { performLogin.invoke(testUsername, any()) } returns mockk {
+            every { userId } returns testUser.userId
+        }
+
         // GIVEN
         viewModel.username = testUsername
         viewModel.setPassword(testPassword)
@@ -510,12 +517,11 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             assertTrue(awaitItem() is SignupViewModel.State.Idle)
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
-            assertTrue(awaitItem() is SignupViewModel.State.Processing) // retried
-            val errorItem = awaitItem()
-            assertTrue(errorItem is SignupViewModel.State.Error.Message)
-            assertEquals("Username taken", errorItem.message)
+            val successItem = awaitItem()
+            assertTrue(successItem is SignupViewModel.State.Success)
+            assertEquals(testUser.userId.id, successItem.userId)
 
-            coVerify(exactly = 2) {
+            coVerify(exactly = 1) {
                 performCreateUser(
                     username = testUsername,
                     password = "encrypted-$testPassword",
@@ -525,11 +531,18 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                     type = CreateUserType.Normal
                 )
             }
+
+            coVerify(exactly = 1) {
+                performLogin(
+                    username = testUsername,
+                    password = "encrypted-$testPassword"
+                )
+            }
         }
     }
 
     @Test
-    fun `retries creating External user`() = coroutinesTest {
+    fun `tries login if External username taken`() = coroutinesTest {
         coEvery {
             performCreateExternalUser.invoke(
                 email = testEmail,
@@ -537,6 +550,10 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                 referrer = null
             )
         } throws usernameTakenError
+
+        coEvery { performLogin.invoke(testEmail, any()) } returns mockk {
+            every { userId } returns testUser.userId
+        }
 
         // GIVEN
         viewModel.currentAccountType = AccountType.External
@@ -548,16 +565,22 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             assertTrue(awaitItem() is SignupViewModel.State.Idle)
             assertTrue(awaitItem() is SignupViewModel.State.Processing)
-            assertTrue(awaitItem() is SignupViewModel.State.Processing) // retried
-            val errorItem = awaitItem()
-            assertTrue(errorItem is SignupViewModel.State.Error.Message)
-            assertEquals("Username taken", errorItem.message)
+            val successItem = awaitItem()
+            assertTrue(successItem is SignupViewModel.State.Success)
+            assertEquals(testUser.userId.id, successItem.userId)
 
-            coVerify(exactly = 2) {
+            coVerify(exactly = 1) {
                 performCreateExternalUser(
                     email = testEmail,
                     password = "encrypted-$testPassword",
                     referrer = null
+                )
+            }
+
+            coVerify(exactly = 1) {
+                performLogin(
+                    username = testEmail,
+                    password = "encrypted-$testPassword"
                 )
             }
         }

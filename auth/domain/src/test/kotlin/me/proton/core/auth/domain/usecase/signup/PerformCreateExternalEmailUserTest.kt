@@ -27,12 +27,10 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
@@ -49,7 +47,6 @@ class PerformCreateExternalEmailUserTest {
     private val userRepository = mockk<UserRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
-    private val performLogin = mockk<PerformLogin>()
 
     // endregion
 
@@ -76,8 +73,7 @@ class PerformCreateExternalEmailUserTest {
             authRepository,
             userRepository,
             srpCrypto,
-            keyStoreCrypto,
-            performLogin
+            keyStoreCrypto
         )
         every {
             srpCrypto.calculatePasswordVerifier(testEmail, any(), any(), any())
@@ -94,8 +90,6 @@ class PerformCreateExternalEmailUserTest {
 
     @Test
     fun `create external user success`() = runBlockingTest {
-        coEvery { userRepository.isUsernameAvailable(eq(testEmail)) } returns true
-
         useCase.invoke(
             testEmail,
             keyStoreCrypto.encrypt(testPassword),
@@ -145,26 +139,11 @@ class PerformCreateExternalEmailUserTest {
     }
 
     @Test
-    fun `user already exists but can log in`() = runBlockingTest {
-        val testUserId = UserId("user-id")
-        coEvery { userRepository.isUsernameAvailable(testEmail) } returns false
-        coEvery { performLogin.invoke(testEmail, testEncryptedPassword) } returns mockk {
-            every { userId } returns testUserId
-        }
-
-        val createdUserId = useCase.invoke(
-            testEmail,
-            keyStoreCrypto.encrypt(testPassword),
-            referrer = null
-        )
-        assertEquals(testUserId, createdUserId)
-    }
-
-    @Test
-    fun `user already exists and cannot log in`() = runBlockingTest {
+    fun `user already exists`() = runBlockingTest {
         val apiException = mockk<ApiException>()
-        coEvery { userRepository.isUsernameAvailable(testEmail) } returns false
-        coEvery { performLogin.invoke(testEmail, testEncryptedPassword) } throws apiException
+        coEvery {
+            userRepository.createExternalEmailUser(any(), any(), any(), any(), any())
+        } throws apiException
 
         val result = assertFailsWith(ApiException::class) {
             useCase.invoke(

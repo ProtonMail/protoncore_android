@@ -19,12 +19,56 @@
 package me.proton.core.util.kotlin
 
 import app.cash.turbine.test
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class FlowUtilsTest {
+    @Test
+    fun `catches known error`() = runBlockingTest {
+        flow {
+            emit(1)
+            throw TestError
+        }.catchWhen({ it is TestError }) {
+            emit(2)
+        }.test {
+            assertEquals(1, awaitItem())
+            assertEquals(2, awaitItem())
+            awaitComplete()
+        }
+    }
+
+    @Test
+    fun `does not catch unknown error`() = runBlockingTest {
+        flow {
+            emit(1)
+            error("random error")
+        }.catchWhen({ it is TestError }) {
+            emit(2)
+        }.test {
+            assertEquals(1, awaitItem())
+            assertEquals("random error", awaitError().message)
+        }
+    }
+
+    @Test
+    fun `re-catches unknown error`() = runBlockingTest {
+        flow {
+            emit(1)
+            error("random error")
+        }.catchWhen({ it is TestError }) {
+            emit(2)
+        }.catch {
+            emit(3)
+        }.test {
+            assertEquals(1, awaitItem())
+            assertEquals(3, awaitItem())
+            awaitComplete()
+        }
+    }
+
     @Test
     fun `retries after detecting known error`() = runBlockingTest {
         var retryCount = 0
