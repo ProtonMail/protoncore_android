@@ -1,3 +1,10 @@
+15 Nov, 2021
+
+## Auth Presentation [1.18.2]
+
+### Changes
+- Switch between External and Username when External account type is required by the client.
+
 12 Nov, 2021
 
 ## User Settings [1.18.2]

@@ -143,7 +143,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
             AccountType.Internal -> AccountType.Internal
             AccountType.External -> {
                 if (currentAccountType == AccountType.External) {
-                    AccountType.Internal
+                    AccountType.Username
                 } else {
                     AccountType.External
                 }
