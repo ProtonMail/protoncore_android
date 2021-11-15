@@ -15,16 +15,6 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
-
-<!DOCTYPE resources [
-    <!ENTITY plans_key_storage "#proton_storage#">
-    <!ENTITY plans_key_addresses "#proton_addresses#">
-    <!ENTITY plans_key_calendars "#proton_calendars#">
-    <!ENTITY plans_key_vpn "#proton_vpn#">
-    <!ENTITY plans_key_domains "#proton_domains#">
-    <!ENTITY plans_key_users "#proton_users#">
-    ]>
-
 <resources>
     <string name="plans_select_plan">Select</string>
     <string name="plans_select_a_plan">Select a Plan</string>
@@ -60,47 +50,47 @@
     </string-array>
 
     <!-- new -->
-    <string-array name="plan_id_plus">
+    <string-array name="plan_id_plus" comment="Please do not modify the entities between # symbols as they will be replaced.">
         <item>Full-featured mailbox with advanced protection.</item>
-        <item>&plans_key_storage; storage</item>
-        <item>&plans_key_addresses; addresses</item>
-        <item>&plans_key_domains; custom domain</item>
+        <item>#proton_storage# storage</item>
+        <item>#proton_addresses# addresses</item>
+        <item>#proton_domains# custom domain</item>
     </string-array>
 
-    <string-array name="plan_id_vpnbasic">
+    <string-array name="plan_id_vpnbasic" comment="Please do not modify the entities between # symbols as they will be replaced.">
         <item>VPN basic</item>
-        <item>&plans_key_vpn; VPN connections</item>
+        <item>#proton_vpn# VPN connections</item>
         <item>High speed</item>
-        <item>&plans_key_storage; storage</item>
-        <item>&plans_key_addresses; address</item>
-        <item>&plans_key_calendars; calendar</item>
+        <item>#proton_storage# storage</item>
+        <item>#proton_addresses# address</item>
+        <item>#proton_calendars# calendar</item>
     </string-array>
 
-    <string-array name="plan_id_vpnplus">
+    <string-array name="plan_id_vpnplus" comment="Please do not modify the entities between # symbols as they will be replaced.">
         <item>VPN plus</item>
-        <item>&plans_key_vpn; VPN connections</item>
+        <item>#proton_vpn# VPN connections</item>
         <item>Highest speed</item>
-        <item>&plans_key_storage; storage</item>
-        <item>&plans_key_addresses; address</item>
-        <item>&plans_key_calendars; calendar</item>
+        <item>#proton_storage# storage</item>
+        <item>#proton_addresses# address</item>
+        <item>#proton_calendars# calendar</item>
     </string-array>
 
-    <string-array name="plan_id_professional">
+    <string-array name="plan_id_professional" comment="Please do not modify the entities between # symbols as they will be replaced.">
         <item>Professional</item>
-        <item>&plans_key_storage; storage / user</item>
-        <item>&plans_key_addresses; addresses / user</item>
-        <item>&plans_key_domains; custom domains</item>
+        <item>#proton_storage# storage / user</item>
+        <item>#proton_addresses# addresses / user</item>
+        <item>#proton_domains# custom domains</item>
         <item>Multi-user support</item>
     </string-array>
 
-    <string-array name="plan_id_visionary">
+    <string-array name="plan_id_visionary" comment="Please do not modify the entities between # symbols as they will be replaced.">
         <item>Visionary</item>
-        <item>&plans_key_storage; storage</item>
-        <item>&plans_key_addresses; addresses</item>
-        <item>&plans_key_calendars; calendars</item>
-        <item>&plans_key_vpn; high-speed VPN connections</item>
-        <item>&plans_key_domains; custom domains</item>
-        <item>&plans_key_users; users</item>
+        <item>#proton_storage# storage</item>
+        <item>#proton_addresses# addresses</item>
+        <item>#proton_calendars# calendars</item>
+        <item>#proton_vpn# high-speed VPN connections</item>
+        <item>#proton_domains# custom domains</item>
+        <item>#proton_users# users</item>
     </string-array>
 
     <!-- supported plans -->
