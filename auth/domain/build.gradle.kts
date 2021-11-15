@@ -17,6 +17,7 @@
  */
 
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 
 plugins {
@@ -28,6 +29,8 @@ libVersion = parent?.libVersion
 
 dependencies {
 
+    api(`android-annotation`)
+
     implementation(
 
         project(Module.kotlinUtil),
@@ -37,6 +40,7 @@ dependencies {
 
         // Features
         project(Module.accountDomain),
+        project(Module.accountManagerDomain),
         project(Module.userDomain),
         project(Module.keyDomain),
         project(Module.paymentDomain),
@@ -45,11 +49,9 @@ dependencies {
         `kotlin-jdk8`,
         `coroutines-core`,
 
-        // Android
-        `dagger`,
-
         // Other
-        `googleTink`
+        `googleTink`,
+        `javax-inject`
     )
 
     testImplementation(project(Module.kotlinTest))

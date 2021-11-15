@@ -1,3 +1,11 @@
+## Auth [1.18.3]
+
+15 Nov, 2021
+
+### Changes
+
+- Added `LoginTestHelper` that can be used in instrumented tests to login, without the need to perform any UI actions
+
 15 Nov, 2021
 
 ## Auth Presentation [1.18.2]
