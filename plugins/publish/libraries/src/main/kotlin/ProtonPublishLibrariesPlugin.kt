@@ -25,7 +25,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.dokka.gradle.DokkaPlugin
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -39,7 +38,6 @@ abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         target.setupPublishing()
-
         target.subprojects {
             apply<ProtonPublishLibrariesPlugin>()
         }
@@ -61,7 +59,11 @@ private fun Project.setupCoordinates() {
     val artifactId = name
     val versionName = "2.0.0-alpha01-SNAPSHOT"
     version = versionName
-    apply<DokkaPlugin>()
+
+    // Dokka disabled by default
+    // Dokka is slow and consume a lot of resource for not much value in our case as the documentation is read in AS
+    // from sources.
+    // apply<DokkaPlugin>()
     apply<MavenPublishPlugin>()
     configure<MavenPublishPluginExtension> {
         sonatypeHost = SonatypeHost.S01

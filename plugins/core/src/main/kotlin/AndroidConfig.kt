@@ -80,6 +80,11 @@ fun org.gradle.api.Project.android(
         textOutput("stdout")
     }
 
+    sourceSets {
+        // Mandatory for release to contain sources
+        getByName("main").java.srcDirs("src/main/kotlin")
+    }
+
     packagingOptions {
         resources.excludes.addAll(listOf(
             "go/*.java",
