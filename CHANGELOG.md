@@ -1,3 +1,10 @@
+## Human Verification [1.16.4]
+
+24 Nov, 2021
+
+### Changes
+- Fix the URLs in Human Verification Help screen.
+
 ## Plan [1.18.3]
 
 22 Nov, 2021
