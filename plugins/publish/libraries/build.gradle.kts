@@ -48,6 +48,6 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.4.10")
     implementation(libs.vanniktech.pluginGradleMavenPublish)
+    implementation(libs.dokka.pluginGradle)
 }

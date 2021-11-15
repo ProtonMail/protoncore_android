@@ -42,13 +42,12 @@ buildscript {
 
     dependencies {
         val kotlinVersion = "1.5.30" // Aug 23, 2021
-        val dokkaVersion = "1.4.10.2" // Oct 20, 2020
         val hiltVersion = "2.38.1" // Jul 27, 2021
         val jacocoVersion = "0.8.7" // May 5, 2021
 
         classpath(kotlin("gradle-plugin", kotlinVersion))
         classpath(kotlin("serialization", kotlinVersion))
-        classpath("org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion")
+        classpath(libs.dokka.pluginGradle)
         classpath(libs.android.pluginGradle)
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
         classpath("org.jacoco:org.jacoco.core:$jacocoVersion")
