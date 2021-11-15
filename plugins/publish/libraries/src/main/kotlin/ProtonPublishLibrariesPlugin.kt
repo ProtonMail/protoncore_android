@@ -17,12 +17,15 @@
  */
 
 import PublishOptionExtension.Companion.setupPublishOptionExtension
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.MavenPublishPlugin
+import com.vanniktech.maven.publish.MavenPublishPluginExtension
+import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.extra
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.publish.publish
+import org.gradle.kotlin.dsl.configure
+import org.jetbrains.dokka.gradle.DokkaPlugin
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -47,61 +50,59 @@ private fun Project.setupPublishing() {
     val publishOption = setupPublishOptionExtension()
     afterEvaluate {
         if (publishOption.shouldBePublishedAsLib) {
-            println("Setup publishing for $group:$name:$version")
-            archivesBaseName = archiveName
+            setupCoordinates()
+            setupReleaseTask()
+        }
+    }
+}
 
-            // Setup maven publish/signing config
-            val mavenPassword = System.getenv()["MAVEN_PASSWORD"]
-            publish {
-                developers(applyDevelopers)
-                licenses(applyLicences)
-                baseUrl = System.getenv()["MAVEN_BASE_URL"] ?: "none"
-                username = System.getenv()["MAVEN_USER"] ?: "none"
-                password = mavenPassword ?: "none"
-                signingEnabled = mavenPassword != null
-                signingAsciiKey = System.getenv()["MAVEN_SIGNING_KEY"] ?: "none"
-                signingPassword = System.getenv()["MAVEN_SIGNING_KEY_PASSWORD"] ?: "none"
-                // Workaround, waiting on EasyPublish & vanniktech plugin update.
-                stagingProfile = "me.proton"
-                extra["POM_URL"] = "https://github.com/ProtonMail/protoncore_android"
-                extra["SONATYPE_NEXUS_USERNAME"] = username
-                extra["SONATYPE_NEXUS_PASSWORD"] = password
-                extra["RELEASE_REPOSITORY_URL"] = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-                extra["SNAPSHOT_REPOSITORY_URL"] = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            }
-
-            with(ReleaseManager(this)) {
-                if (mavenPassword != null) {
-                    val uploadNewRelease = tasks.register("uploadNewRelease") {
-                        dependsOn(tasks.named("uploadArchives"))
-                    }
-                    val closeNewRelease = tasks.register("closeNewRelease") {
-                        mustRunAfter(uploadNewRelease)
-                        doFirst {
-                            project.rootProject.tasks.getByName("closeAndReleaseRepository") {
-                                actions.forEach { it.execute(this) }
-                            }
-                        }
-                    }
-                    val updateNewRelease = tasks.register("updateNewRelease") {
-                        mustRunAfter(closeNewRelease)
-                        doFirst {
-                            updateReadme()
-                            printToNewReleasesFile()
-                        }
-                    }
-                    tasks.register("publishNewRelease") {
-                        if (isNewVersion) {
-                            dependsOn(uploadNewRelease)
-                            dependsOn(closeNewRelease)
-                            dependsOn(updateNewRelease)
-                        }
-                    }
-                } else {
-                    tasks.register("updateReadme") {
-                        doFirst { updateReadme() }
-                    }
+private fun Project.setupCoordinates() {
+    group = "me.proton.core"
+    val artifactId = name
+    val versionName = "2.0.0-alpha01-SNAPSHOT"
+    version = versionName
+    apply<DokkaPlugin>()
+    apply<MavenPublishPlugin>()
+    configure<MavenPublishPluginExtension> {
+        sonatypeHost = SonatypeHost.S01
+        // Only sign non snapshot release
+        releaseSigningEnabled = !versionName.contains("SNAPSHOT")
+    }
+    configure<MavenPublishBaseExtension> {
+        pom {
+            name.set(artifactId)
+            description.set("Proton Core libraries for Android")
+            url.set("https://github.com/ProtonMail/protoncore_android")
+            licenses {
+                license {
+                    name.set("GNU GENERAL PUBLIC LICENSE, Version 3.0")
+                    url.set("https://www.gnu.org/licenses/gpl-3.0.en.html")
                 }
+            }
+            developers {
+                developer {
+                    name.set("Open Source Proton")
+                    email.set("opensource@proton.me")
+                    id.set(email)
+                }
+            }
+            scm {
+                url.set("https://gitlab.protontech.ch/proton/mobile/android/proton-libs")
+                connection.set("git@gitlab.protontech.ch:proton/mobile/android/proton-libs.git")
+                developerConnection.set("https://gitlab.protontech.ch/proton/mobile/android/proton-libs.git")
+            }
+        }
+    }
+}
+
+private fun Project.setupReleaseTask() {
+    val releaseManager = ReleaseManager(this)
+    tasks.register("publishLibrary") {
+        if (releaseManager.isNewVersion) {
+            dependsOn(tasks.named("publish"))
+            doLast {
+                releaseManager.updateReadme()
+                releaseManager.printToNewReleasesFile()
             }
         }
     }
@@ -111,8 +112,6 @@ private fun Project.setupPublishing() {
  * This class will organize libraries release.
  *
  * It can:
- * * Move jar/aar archives into '/folderName/<libName>'
- * * Generate KDoc if new library is available
  * * Update readme with new version
  * * Print update to new_releases.tmp
  *
@@ -132,45 +131,6 @@ class ReleaseManager internal constructor(
 
     val isNewVersion = forceRefresh || prevVersion != version
     private val shouldRefresh = forceRefresh || isNewVersion
-
-    /** Move jar/aar archives into '/[folderName]/<libName>' */
-    fun moveArchives(folderName: String) {
-        // Setup folder
-        val newDir = File(rootDir, folderName + File.separator + name)
-        if (!newDir.exists()) newDir.mkdirs()
-
-        moveJars(into = newDir)
-        moveAars(into = newDir)
-    }
-
-    private fun moveJars(into: File) {
-        JAR_DIRECTORY.listFiles()?.forEach { file ->
-            val newFile = File(into, file.name.replace("-$version", ""))
-            // If file is absent
-            if (!newFile.exists()) {
-                file.copyTo(newFile)
-            }
-            // DO NOT DELETE JAR FILE, IT'S REQUIRED BY JetifyTransform
-        }
-    }
-
-    private fun moveAars(into: File) {
-        AAR_DIRECTORY.listFiles()?.forEach { file ->
-            if ("release" in file.name) {
-                val newFile = File(
-                    into,
-                    file.name
-                        .replace("-release", "")
-                        .replace("-$version", "")
-                )
-                // If file is absent
-                if (!newFile.exists()) {
-                    file.copyTo(newFile)
-                }
-            }
-            file.delete()
-        }
-    }
 
     /** Update readme with new version */
     fun updateReadme() {
@@ -194,8 +154,6 @@ class ReleaseManager internal constructor(
     }
 
     private companion object {
-        val Project.JAR_DIRECTORY get() = File(buildDir, "libs")
-        val Project.AAR_DIRECTORY get() = File(buildDir, "outputs" + File.separator + "aar")
         val Project.README_FILE get() = File(rootDir, "README.md")
         val Project.README_VERSION_REGEX get() =
             readmeVersion("^$humanReadableName", "(.+)", "(.+)").toRegex(RegexOption.MULTILINE)
