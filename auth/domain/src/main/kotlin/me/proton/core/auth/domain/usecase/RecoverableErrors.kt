@@ -24,17 +24,14 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 
-private const val HTTP_BAD_REQUEST = 400
-private const val HTTP_CONFLICT = 409
-
 /** Error from [SetupPrimaryKeys]. */
 fun Throwable.primaryKeyExists(): Boolean {
     val httpError = (this as? ApiException)?.error as? ApiResult.Error.Http
-    return httpError?.httpCode == HTTP_BAD_REQUEST && httpError.proton?.code == ResponseCodes.NOT_ALLOWED
+    return httpError?.proton?.code == ResponseCodes.NOT_ALLOWED
 }
 
 /** Error from [PerformCreateUser] or [PerformCreateExternalEmailUser]. */
 fun Throwable.userAlreadyExists(): Boolean {
     val httpError = (this as? ApiException)?.error as? ApiResult.Error.Http
-    return httpError?.httpCode == HTTP_CONFLICT && httpError.proton?.code == ResponseCodes.USER_CREATE_NAME_INVALID
+    return httpError?.proton?.code == ResponseCodes.USER_CREATE_NAME_INVALID
 }
