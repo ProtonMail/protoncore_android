@@ -144,25 +144,25 @@ Account Data: **1.15.2** - _released on: Sep 23, 2021_
 
 ### Account Manager
 
-Account Manager: **1.16.1** - _released on: Oct 29, 2021_
+Account Manager: **1.16.2** - _released on: Nov 16, 2021_
 
-Account Manager Domain: **1.16.1** - _released on: Oct 29, 2021_
+Account Manager Domain: **1.16.2** - _released on: Nov 16, 2021_
 
-Account Manager Presentation: **1.16.1** - _released on: Oct 29, 2021_
+Account Manager Presentation: **1.16.2** - _released on: Nov 16, 2021_
 
-Account Manager Data: **1.16.1** - _released on: Oct 29, 2021_
+Account Manager Data: **1.16.2** - _released on: Nov 16, 2021_
 
-Account Manager Data Db: **1.16.1** - _released on: Oct 29, 2021_
+Account Manager Data Db: **1.16.2** - _released on: Nov 16, 2021_
 
-Account Manager Dagger: **1.16.1** - _released on: Oct 29, 2021_
+Account Manager Dagger: **1.16.2** - _released on: Nov 16, 2021_
 
 ### Event Manager
 
-Event Manager: **1.18** - _released on: Oct 25, 2021_
+Event Manager: **1.18.1** - _released on: Nov 16, 2021_
 
-Event Manager Domain: **1.18** - _released on: Oct 25, 2021_
+Event Manager Domain: **1.18.1** - _released on: Nov 16, 2021_
 
-Event Manager Data: **1.18** - _released on: Oct 25, 2021_
+Event Manager Data: **1.18.1** - _released on: Nov 16, 2021_
 
 ### Key
 
@@ -218,40 +218,40 @@ Mail Settings Data: **1.18** - _released on: Oct 25, 2021_
 
 ### Human Verification
 
-Human Verification: **1.16.2** - _released on: Oct 29, 2021_
+Human Verification: **1.16.3** - _released on: Nov 16, 2021_
 
-Human Verification Domain: **1.16.2** - _released on: Oct 29, 2021_
+Human Verification Domain: **1.16.3** - _released on: Nov 16, 2021_
 
-Human Verification Presentation: **1.16.2** - _released on: Oct 29, 2021_
+Human Verification Presentation: **1.16.3** - _released on: Nov 16, 2021_
 
-Human Verification Data: **1.16.2** - _released on: Oct 29, 2021_
+Human Verification Data: **1.16.3** - _released on: Nov 16, 2021_
 
 ### Countries
 
-Country: **1.16.1** - _released on: Oct 29, 2021_
+Country: **1.16.2** - _released on: Nov 16, 2021_
 
-Country Domain: **1.16.1** - _released on: Oct 29, 2021_
+Country Domain: **1.16.2** - _released on: Nov 16, 2021_
 
-Country Data: **1.16.1** - _released on: Oct 29, 2021_
+Country Data: **1.16.2** - _released on: Nov 16, 2021_
 
-Country Presentation: **1.16.1** - _released on: Oct 29, 2021_
+Country Presentation: **1.16.2** - _released on: Nov 16, 2021_
 
 ### Payment
 
-Payment: **1.17.2** - _released on: Oct 26, 2021_
+Payment: **1.17.3** - _released on: Nov 16, 2021_
 
-Payment Data: **1.17.2** - _released on: Oct 26, 2021_
+Payment Data: **1.17.3** - _released on: Nov 16, 2021_
 
-Payment Domain: **1.17.2** - _released on: Oct 26, 2021_
+Payment Domain: **1.17.3** - _released on: Nov 16, 2021_
 
-Payment Presentation: **1.17.2** - _released on: Oct 26, 2021_
+Payment Presentation: **1.17.3** - _released on: Nov 16, 2021_
 
 ### Plan
 
-Plan: **1.18** - _released on: Nov 05, 2021_
+Plan: **1.18.1** - _released on: Nov 16, 2021_
 
-Plan Data: **1.18** - _released on: Nov 05, 2021_
+Plan Data: **1.18.1** - _released on: Nov 16, 2021_
 
-Plan Domain: **1.18** - _released on: Nov 05, 2021_
+Plan Domain: **1.18.1** - _released on: Nov 16, 2021_
 
-Plan Presentation: **1.18** - _released on: Nov 05, 2021_
+Plan Presentation: **1.18.1** - _released on: Nov 16, 2021_
