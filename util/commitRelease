@@ -21,7 +21,7 @@ EOT
 
   git config --global user.email "$GIT_CI_EMAIL"
   git config --global user.name "$GIT_CI_USERNAME"
-  git checkout --track origin/master
+  git checkout --track origin/main
 
   local user="https://${GIT_CI_USERNAME}:${PRIVATE_TOKEN_GITLAB_API_PROTON_CI}";
   # Ensure we convert git@xxx:xxxx/a.git to a URL friendly format
@@ -40,7 +40,7 @@ EOT
   git status;
 
   git commit -m "[release] $(cat ./new_releases.tmp)"
-  git push origin master -o ci.skip;
+  git push origin main -o ci.skip;
 }
 
 main
