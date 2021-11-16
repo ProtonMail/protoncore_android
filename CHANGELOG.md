@@ -1,3 +1,19 @@
+## Binary incompatibility bump
+
+16 Nov, 2021
+
+### Changes
+- fix binary incompatibility — bump version for all libraries that use `presentation` module
+
+### Dependencies
+
+- AccountManager 1.16.2
+- Country 1.16.2
+- EventManager 1.18.1
+- HumanVerification 1.16.3
+- Payment 1.17.3
+- Plan 1.18.1
+
 ## Auth [1.18.3]
 
 15 Nov, 2021
