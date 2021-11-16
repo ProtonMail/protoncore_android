@@ -63,6 +63,13 @@ fun org.gradle.api.Project.android(
     // You must turn it on if you need it in your module:  android(useViewBinding = true).
     buildFeatures.viewBinding = useViewBinding
 
+    // Ensure sources are set for published artifacts
+    sourceSets {
+        getByName("main").java.srcDirs("src/main/kotlin")
+        getByName("test").java.srcDirs("src/test/kotlin")
+        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
+    }
+
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
