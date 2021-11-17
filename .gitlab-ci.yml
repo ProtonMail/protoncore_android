@@ -135,14 +135,21 @@ publishMaven:
     # While not merged with master prevent automatic release as it could break master release
     # - ./gradlew closeAndReleaseRepository
   only:
-    - main
-  artifacts:
-      expire_in: 10 days
-      paths:
-          - new_releases.tmp
-          - releases
-          - docs
-          - README.md
+    - release
+
+postReleaseToSlack:
+  stage: publish
+  tags:
+    - small
+  needs:
+    - job: publishMaven
+  variables:
+    ORG_GRADLE_PROJECT_androidDevChannelWebhook: $ANDROID_DEVS_CHANNEL_WEBHOOK
+  script:
+    - ./gradlew notifyNewRelease
+  only:
+    - release
+  when: manual # don't notify while testing
 
 publishGradlePortal:
   stage: publish
@@ -159,31 +166,6 @@ publishGradlePortal:
       - releases
       - docs
       - README.md
-
-commitRelease:
-  stage: commit
-  tags:
-    - small
-  needs:
-      - job: publishMaven
-        artifacts: true
-  script:
-    - ./util/commitRelease
-  only:
-    - main
-
-postReleaseToSlack:
-  stage: slackRelease
-  tags:
-    - small
-  needs:
-      - job: publishMaven
-        artifacts: true
-  script:
-    - echo "Should publish release on slack"
-    # - ./util/postReleaseToSlack
-  only:
-    - main
 
 i18n-sync-crowdin:
   extends: .i18n-sync-crowdin-common
