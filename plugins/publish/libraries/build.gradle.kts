@@ -19,6 +19,7 @@
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
+    kotlin("plugin.serialization")
     `java-gradle-plugin`
 }
 
@@ -50,4 +51,5 @@ dependencies {
     implementation(gradleApi())
     implementation(libs.vanniktech.pluginGradleMavenPublish)
     implementation(libs.dokka.pluginGradle)
+    implementation(libs.kotlinx.serialization.json)
 }

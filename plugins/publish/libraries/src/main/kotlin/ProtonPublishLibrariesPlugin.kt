@@ -16,20 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import PublishOptionExtension.Companion.setupPublishOptionExtension
-import com.vanniktech.maven.publish.MavenPublishBaseExtension
-import com.vanniktech.maven.publish.MavenPublishPlugin
-import com.vanniktech.maven.publish.MavenPublishPluginExtension
-import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.Task
-import org.gradle.api.tasks.TaskProvider
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.configure
-import org.jetbrains.dokka.gradle.DokkaPlugin
-import java.io.ByteArrayOutputStream
-import java.io.File
 
 /**
  * Setup Publishing for whole Project.
@@ -40,170 +28,10 @@ abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         val versionName = target.computeVersionName()
-        val publishTask = registerPublishTask(target, versionName)
+        target.registerNotifyNewReleaseTask(versionName)
+        val publishTask = target.registerPublishNewReleaseTask(versionName)
         target.subprojects {
-            setupPublishing(versionName = versionName, parentPublishTask = publishTask)
+            setupSubProjectPublishing(versionName = versionName, parentPublishTask = publishTask)
         }
     }
-
-    private fun registerPublishTask(target: Project, versionName: String): TaskProvider<Task> {
-        return target.tasks.register("publishLibraries") {
-            doLast {
-                println("Publish libraries done")
-                val releaseNote = generateReleaseNoteIfNeeded(versionName)
-                releaseNote?.let {
-                    target.notifyRelease(releaseNote)
-                }
-            }
-        }
-    }
-}
-
-private fun Project.computeVersionName(): String {
-    val branchName = runCommand("git branch --show-current")
-    val versionName = if (branchName.startsWith("release/")) {
-        branchName.substringAfter("release/")
-    } else {
-        "$branchName-SNAPSHOT"
-    }
-    return versionName
-}
-
-private fun Project.setupPublishing(versionName: String, parentPublishTask: TaskProvider<Task>) {
-    val publishOption = setupPublishOptionExtension()
-    afterEvaluate {
-        if (publishOption.shouldBePublishedAsLib) {
-            setupCoordinates(versionName)
-            setupPublishLibraryTask(parentPublishTask)
-            println("Setup publishing for $group:$name:$versionName")
-        } else {
-            println("Ignoring publishing for $name")
-        }
-    }
-}
-
-private fun Project.setupCoordinates(versionName: String, generateKdoc: Boolean = false) {
-    group = "me.proton.core"
-    val artifactId = name
-    version = versionName
-
-    // Dokka disabled by default
-    // Dokka is slow and consume a lot of resource for not much value in our case as the documentation is read in AS
-    // from sources.
-    if (generateKdoc) apply<DokkaPlugin>()
-    apply<MavenPublishPlugin>()
-    configure<MavenPublishPluginExtension> {
-        sonatypeHost = SonatypeHost.S01
-        // Only sign non snapshot release
-        releaseSigningEnabled = !versionName.contains("SNAPSHOT")
-    }
-    configure<MavenPublishBaseExtension> {
-        pom {
-            name.set(artifactId)
-            description.set("Proton Core libraries for Android")
-            url.set("https://github.com/ProtonMail/protoncore_android")
-            licenses {
-                license {
-                    name.set("GNU GENERAL PUBLIC LICENSE, Version 3.0")
-                    url.set("https://www.gnu.org/licenses/gpl-3.0.en.html")
-                }
-            }
-            developers {
-                developer {
-                    name.set("Open Source Proton")
-                    email.set("opensource@proton.me")
-                    id.set(email)
-                }
-            }
-            scm {
-                url.set("https://gitlab.protontech.ch/proton/mobile/android/proton-libs")
-                connection.set("git@gitlab.protontech.ch:proton/mobile/android/proton-libs.git")
-                developerConnection.set("https://gitlab.protontech.ch/proton/mobile/android/proton-libs.git")
-            }
-        }
-    }
-    ensureReleaseCoordinateDocumented()
-}
-
-private fun Project.ensureReleaseCoordinateDocumented() {
-    val readmeFile = File(rootDir, "README.md")
-    val readmeText = readmeFile.readText()
-    val projectCoordinates = "$group:$name"
-    val isCoordinatesDocumented = readmeText.contains(projectCoordinates)
-    check(isCoordinatesDocumented) {
-        "Artifact coordinates $projectCoordinates are missing in README.MD, please document it"
-    }
-}
-
-private fun Project.setupPublishLibraryTask(parentPublishTask: TaskProvider<Task>) {
-    val publishLibraryTask = tasks.register("publishLibrary") {
-        doLast { println("publish ${project.name}") }
-        //dependsOn(tasks.named("publish"))
-    }
-    parentPublishTask.get().dependsOn(publishLibraryTask)
-}
-
-private fun generateReleaseNoteIfNeeded(versionName: String): String? {
-    if (versionName.contains("SNAPSHOT")) {
-        println("Ignoring release note generation due to snapshot release")
-        return null
-    } else {
-        println("Generating release-note.txt for release $versionName")
-    }
-    val changelog = File("CHANGELOG.md")
-    val changelogText = changelog.readText()
-    val releaseHeader = "## [$versionName]"
-    val releaseContent = changelogText.substringAfter(releaseHeader).substringBefore("##")
-    if (releaseContent.isEmpty()) {
-        println("Warning: No entry found in changelog for $versionName, release note will be empty")
-    }
-    return StringBuilder().appendLine(releaseHeader).appendLine(releaseContent).toString()
-}
-
-private fun Project.notifyRelease(releaseNote: String) {
-    val hook = ""
-    val tempFile = File("release-note.txt")
-    tempFile.delete()
-    tempFile.createNewFile()
-    val escapedReleaseNote = escapeMarkdownForJson(releaseNote)
-    tempFile.writeText("{\"mrkdwn\": true, \"text\": \"${escapedReleaseNote}\"}")
-    val result = runCommand(
-        command = "curl --show-error --fail",
-        args = listOf(
-            "--header", "Content-type: application/json",
-            "--data-binary", "@${tempFile.path}",
-            hook
-        )
-    )
-    tempFile.delete()
-    println(result)
-}
-
-private fun escapeMarkdownForJson(releaseNote: String) = releaseNote
-    .replace("\\", "\\\\")
-    .replace("\"", "\\\"")
-    .replace("\b", "\\b")
-    .replace("\n", "\\n")
-    .replace("\r", "\\r")
-    .replace("\t", "\\t")
-    .replace("/", "\\/")
-
-/**
- * Execute a command line and return stdout. [command] is interpreted by being split using space, so if command
- * parameters contain space, they should be passed using [args] instead.
- */
-private fun Project.runCommand(
-    command: String,
-    args: List<String> = emptyList(),
-    currentWorkingDir: File = file("./")
-): String {
-    val byteOut = ByteArrayOutputStream()
-    val commandAsList = command.split("\\s".toRegex()).plus(args)
-    println("exec : ${commandAsList.joinToString(" ")}")
-    exec {
-        workingDir = currentWorkingDir
-        commandLine = commandAsList
-        standardOutput = byteOut
-    }
-    return String(byteOut.toByteArray()).trim()
 }

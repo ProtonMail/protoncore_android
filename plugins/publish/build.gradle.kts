@@ -17,7 +17,9 @@
  */
 
 plugins {
-    kotlin("jvm") version embeddedKotlinVersion
+    val kotlinVersion = embeddedKotlinVersion
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
 }
 
 repositories {
