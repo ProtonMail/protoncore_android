@@ -248,10 +248,10 @@ Payment Presentation: **1.17.3** - _released on: Nov 16, 2021_
 
 ### Plan
 
-Plan: **1.18.1** - _released on: Nov 16, 2021_
+Plan: **1.18.2** - _released on: Nov 17, 2021_
 
-Plan Data: **1.18.1** - _released on: Nov 16, 2021_
+Plan Data: **1.18.2** - _released on: Nov 17, 2021_
 
-Plan Domain: **1.18.1** - _released on: Nov 16, 2021_
+Plan Domain: **1.18.2** - _released on: Nov 17, 2021_
 
-Plan Presentation: **1.18.1** - _released on: Nov 16, 2021_
+Plan Presentation: **1.18.2** - _released on: Nov 17, 2021_
