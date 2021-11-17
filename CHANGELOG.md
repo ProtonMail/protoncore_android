@@ -1,3 +1,10 @@
+## Plan Presentation [1.18.1]
+
+17 Nov, 2021
+
+### Changes
+- Fixes base strings with replaceable placeholders for translations.
+
 ## Binary incompatibility bump
 
 16 Nov, 2021
