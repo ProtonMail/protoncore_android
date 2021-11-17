@@ -22,6 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.contact.data.api.resource.ContactWithCardsResource
 import me.proton.core.eventmanager.domain.EventListener
+import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
@@ -48,7 +49,10 @@ class ContactEventListener : EventListener<String, ContactWithCardsResource>() {
     override val type = Type.Core
     override val order = 1
 
-    override suspend fun deserializeEvents(response: EventsResponse): List<Event<String, ContactWithCardsResource>>? {
+    override suspend fun deserializeEvents(
+        config: EventManagerConfig,
+        response: EventsResponse
+    ): List<Event<String, ContactWithCardsResource>>? {
         return response.body.deserializeOrNull<ContactsEvents>()?.contacts?.map {
             Event(requireNotNull(Action.map[it.action]), it.id, it.contact)
         }

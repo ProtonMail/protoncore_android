@@ -78,7 +78,7 @@ class EventManagerImpl @AssistedInject constructor(
         response: EventsResponse
     ): Map<EventListener<*, *>, List<Event<*, *>>> {
         return eventListenersByOrder.values.flatten().associateWith { eventListener ->
-            eventListener.deserializeEvents(response).orEmpty()
+            eventListener.deserializeEvents(config, response).orEmpty()
         }
     }
 
@@ -160,7 +160,7 @@ class EventManagerImpl @AssistedInject constructor(
         ) {
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach {
-                it.notifyResetAll(metadata.userId)
+                it.notifyResetAll(config)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -181,11 +181,11 @@ class EventManagerImpl @AssistedInject constructor(
             // Set actions for all listeners.
             val eventsByListener = deserializeEventsByListener(requireNotNull(metadata.response))
             eventsByListener.forEach { (eventListener, list) ->
-                eventListener.setActionMap(metadata.userId, list as List<Nothing>)
+                eventListener.setActionMap(config, list as List<Nothing>)
             }
             // Notify prepare for all listeners.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifyPrepare(metadata.userId)
+                eventListener.notifyPrepare(config)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -205,7 +205,7 @@ class EventManagerImpl @AssistedInject constructor(
         ) {
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifyEvents(metadata.userId)
+                eventListener.notifyEvents(config)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -225,7 +225,7 @@ class EventManagerImpl @AssistedInject constructor(
         ) {
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifyComplete(metadata.userId)
+                eventListener.notifyComplete(config)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -336,7 +336,7 @@ class EventManagerImpl @AssistedInject constructor(
         eventMetadataRepository.getEvents(config.userId, eventId, deserializer.endpoint)
 
     override suspend fun deserializeEventMetadata(eventId: EventId, response: EventsResponse): EventMetadata =
-        deserializer.deserializeEventMetadata(config.userId, eventId, response)
+        deserializer.deserializeEventMetadata(eventId, response)
 
     companion object {
         // Constraint: retriesBeforeNotifyResetAll < retriesBeforeReset.

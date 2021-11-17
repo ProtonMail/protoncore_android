@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.data
+package me.proton.core.eventmanager.data.listener
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -25,47 +25,57 @@ import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
-import me.proton.core.key.data.api.response.UserResponse
-import me.proton.core.user.data.db.UserDatabase
-import me.proton.core.user.data.extension.toUser
-import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.deserializeOrNull
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Serializable
-data class UserEvents(
-    @SerialName("User")
-    val user: UserResponse
+data class CalendarsEvents(
+    @SerialName("Calendars")
+    val calendars: List<CalendarEvent>
 )
 
-@Singleton
-class UserEventListener @Inject constructor(
-    private val db: UserDatabase,
-    private val userRepository: UserRepository
-) : EventListener<String, UserResponse>() {
+@Serializable
+data class CalendarEvent(
+    @SerialName("ID")
+    val id: String,
+    @SerialName("Action")
+    val action: Int,
+    @SerialName("Calendar")
+    val calendar: CalendarResource? = null
+)
 
-    override val type = Type.Core
-    override val order = 0
+@Serializable
+data class CalendarResource(
+    @SerialName("ID")
+    val id: String
+)
+
+class CalendarEventListener : EventListener<String, CalendarResource>() {
+
+    override val type = Type.Calendar
+    override val order = 1
+
+    lateinit var config: EventManagerConfig
 
     override suspend fun deserializeEvents(
         config: EventManagerConfig,
         response: EventsResponse
-    ): List<Event<String, UserResponse>>? {
-        return response.body.deserializeOrNull<UserEvents>()?.let {
-            listOf(Event(Action.Update, it.user.id, it.user))
+    ): List<Event<String, CalendarResource>>? {
+        val events = response.body.deserializeOrNull<CalendarsEvents>()
+        return events?.calendars?.map {
+            Event(requireNotNull(Action.map[it.action]), it.id, it.calendar)
         }
     }
 
     override suspend fun <R> inTransaction(block: suspend () -> R): R {
-        return db.inTransaction(block)
+        // Db.inTransaction(block)
+        return block()
     }
 
-    override suspend fun onUpdate(config: EventManagerConfig, entities: List<UserResponse>) {
-        userRepository.updateUser(entities.first().toUser())
+    override suspend fun onPrepare(config: EventManagerConfig, entities: List<CalendarResource>) {
+        super.onPrepare(config, entities)
     }
 
-    override suspend fun onResetAll(config: EventManagerConfig) {
-        userRepository.getUser(config.userId, refresh = true)
+    override suspend fun onCreate(config: EventManagerConfig, entities: List<CalendarResource>) {
+        this.config = config
     }
 }

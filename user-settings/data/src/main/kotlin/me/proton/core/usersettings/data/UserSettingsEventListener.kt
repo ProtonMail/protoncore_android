@@ -20,8 +20,8 @@ package me.proton.core.usersettings.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventListener
+import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
@@ -48,7 +48,10 @@ class UserSettingsEventListener @Inject constructor(
     override val type = Type.Core
     override val order = 1
 
-    override suspend fun deserializeEvents(response: EventsResponse): List<Event<String, UserSettingsResponse>>? {
+    override suspend fun deserializeEvents(
+        config: EventManagerConfig,
+        response: EventsResponse
+    ): List<Event<String, UserSettingsResponse>>? {
         return response.body.deserializeOrNull<UserSettingsEvents>()?.let {
             listOf(Event(Action.Update, "null", it.settings))
         }
@@ -58,11 +61,11 @@ class UserSettingsEventListener @Inject constructor(
         return db.inTransaction(block)
     }
 
-    override suspend fun onUpdate(userId: UserId, entities: List<UserSettingsResponse>) {
-        repository.updateUserSettings(entities.first().toUserSettings(userId))
+    override suspend fun onUpdate(config: EventManagerConfig, entities: List<UserSettingsResponse>) {
+        repository.updateUserSettings(entities.first().toUserSettings(config.userId))
     }
 
-    override suspend fun onResetAll(userId: UserId) {
-        repository.getUserSettings(userId, refresh = true)
+    override suspend fun onResetAll(config: EventManagerConfig) {
+        repository.getUserSettings(config.userId, refresh = true)
     }
 }

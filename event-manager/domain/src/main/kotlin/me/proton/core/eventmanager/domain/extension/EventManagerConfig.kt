@@ -16,21 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.eventmanager.domain.extension
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.eventmanager.domain.EventManagerConfig
 
-libVersion = Version(1, 19, 1)
-
-android()
-
-dependencies {
-    api(
-        // project(Module.mailSettingsPresentation),
-        project(Module.mailSettingsDomain),
-        project(Module.mailSettingsData)
-    )
-}
+fun EventManagerConfig.asCalendar(): EventManagerConfig.Calendar = this as EventManagerConfig.Calendar
+fun EventManagerConfig.asDrive(): EventManagerConfig.Drive = this as EventManagerConfig.Drive

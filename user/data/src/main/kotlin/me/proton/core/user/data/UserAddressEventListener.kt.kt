@@ -20,8 +20,8 @@ package me.proton.core.user.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventListener
+import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
@@ -59,7 +59,10 @@ class UserAddressEventListener @Inject constructor(
     override val type = Type.Core
     override val order = 1
 
-    override suspend fun deserializeEvents(response: EventsResponse): List<Event<String, AddressResponse>>? {
+    override suspend fun deserializeEvents(
+        config: EventManagerConfig,
+        response: EventsResponse
+    ): List<Event<String, AddressResponse>>? {
         return response.body.deserializeOrNull<UserAddressEvents>()?.addresses?.map {
             Event(requireNotNull(Action.map[it.action]), it.address.id, it.address)
         }
@@ -69,20 +72,20 @@ class UserAddressEventListener @Inject constructor(
         return db.inTransaction(block)
     }
 
-    override suspend fun onCreate(userId: UserId, entities: List<AddressResponse>) {
-        userAddressRepository.updateAddresses(entities.map { it.toAddress(userId) })
+    override suspend fun onCreate(config: EventManagerConfig, entities: List<AddressResponse>) {
+        userAddressRepository.updateAddresses(entities.map { it.toAddress(config.userId) })
     }
 
-    override suspend fun onUpdate(userId: UserId, entities: List<AddressResponse>) {
-        userAddressRepository.updateAddresses(entities.map { it.toAddress(userId) })
+    override suspend fun onUpdate(config: EventManagerConfig, entities: List<AddressResponse>) {
+        userAddressRepository.updateAddresses(entities.map { it.toAddress(config.userId) })
     }
 
-    override suspend fun onDelete(userId: UserId, keys: List<String>) {
+    override suspend fun onDelete(config: EventManagerConfig, keys: List<String>) {
         userAddressRepository.deleteAddresses(keys.map { AddressId(it) })
     }
 
-    override suspend fun onResetAll(userId: UserId) {
-        userAddressRepository.deleteAllAddresses(userId)
-        userAddressRepository.getAddresses(userId, refresh = true)
+    override suspend fun onResetAll(config: EventManagerConfig) {
+        userAddressRepository.deleteAllAddresses(config.userId)
+        userAddressRepository.getAddresses(config.userId, refresh = true)
     }
 }

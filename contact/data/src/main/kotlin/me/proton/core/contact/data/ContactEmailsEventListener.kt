@@ -26,8 +26,8 @@ import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.repository.ContactLocalDataSource
 import me.proton.core.contact.domain.repository.ContactRepository
-import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventListener
+import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
@@ -62,7 +62,10 @@ class ContactEmailEventListener @Inject constructor(
     override val type = Type.Core
     override val order = 2
 
-    override suspend fun deserializeEvents(response: EventsResponse): List<Event<String, ContactEmailResource>>? {
+    override suspend fun deserializeEvents(
+        config: EventManagerConfig,
+        response: EventsResponse
+    ): List<Event<String, ContactEmailResource>>? {
         return response.body.deserializeOrNull<ContactEmailsEvents>()?.contactEmails?.map {
             Event(requireNotNull(Action.map[it.action]), it.id, it.contactEmail)
         }
@@ -72,31 +75,31 @@ class ContactEmailEventListener @Inject constructor(
         return db.inTransaction(block)
     }
 
-    override suspend fun onPrepare(userId: UserId, entities: List<ContactEmailResource>) {
+    override suspend fun onPrepare(config: EventManagerConfig, entities: List<ContactEmailResource>) {
         // Don't fetch Contacts that will be created in this set of modifications.
-        val contactActions = contactEventListener.getActionMap(userId)
+        val contactActions = contactEventListener.getActionMap(config)
         val createContactIds = contactActions[Action.Create].orEmpty().map { it.key }.toHashSet()
         // Make sure we'll fetch other Contacts.
         entities.filterNot { createContactIds.contains(it.contactId) }.forEach {
-            contactRepository.getContactWithCards(userId, ContactId(it.contactId), refresh = false)
+            contactRepository.getContactWithCards(config.userId, ContactId(it.contactId), refresh = false)
         }
     }
 
-    override suspend fun onCreate(userId: UserId, entities: List<ContactEmailResource>) {
-        entities.forEach { contactLocalDataSource.upsertContactEmails(it.toContactEmail(userId)) }
+    override suspend fun onCreate(config: EventManagerConfig, entities: List<ContactEmailResource>) {
+        entities.forEach { contactLocalDataSource.upsertContactEmails(it.toContactEmail(config.userId)) }
     }
 
-    override suspend fun onUpdate(userId: UserId, entities: List<ContactEmailResource>) {
-        entities.forEach { contactLocalDataSource.upsertContactEmails(it.toContactEmail(userId)) }
+    override suspend fun onUpdate(config: EventManagerConfig, entities: List<ContactEmailResource>) {
+        entities.forEach { contactLocalDataSource.upsertContactEmails(it.toContactEmail(config.userId)) }
     }
 
-    override suspend fun onDelete(userId: UserId, keys: List<String>) {
+    override suspend fun onDelete(config: EventManagerConfig, keys: List<String>) {
         contactLocalDataSource.deleteContactEmails(*keys.map { ContactEmailId(it) }.toTypedArray())
     }
 
-    override suspend fun onResetAll(userId: UserId) {
+    override suspend fun onResetAll(config: EventManagerConfig) {
         // Already handled in ContactEventListener:
-        // contactLocalDataSource.deleteAllContactEmails(userId)
+        // contactLocalDataSource.deleteAllContactEmails(config.userId)
         // contactRepository.getAllContactEmails(userId, refresh = true)
     }
 }

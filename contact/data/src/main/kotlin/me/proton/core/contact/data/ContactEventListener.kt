@@ -25,8 +25,8 @@ import me.proton.core.contact.data.local.db.ContactDatabase
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.repository.ContactLocalDataSource
 import me.proton.core.contact.domain.repository.ContactRepository
-import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventListener
+import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
@@ -60,7 +60,10 @@ class ContactEventListener @Inject constructor(
     override val type = Type.Core
     override val order = 1
 
-    override suspend fun deserializeEvents(response: EventsResponse): List<Event<String, ContactWithCardsResource>>? {
+    override suspend fun deserializeEvents(
+        config: EventManagerConfig,
+        response: EventsResponse
+    ): List<Event<String, ContactWithCardsResource>>? {
         return response.body.deserializeOrNull<ContactsEvents>()?.contacts?.map {
             Event(requireNotNull(Action.map[it.action]), it.id, it.contact)
         }
@@ -70,20 +73,20 @@ class ContactEventListener @Inject constructor(
         return db.inTransaction(block)
     }
 
-    override suspend fun onCreate(userId: UserId, entities: List<ContactWithCardsResource>) {
-        entities.forEach { contactLocalDataSource.upsertContactWithCards(it.toContactWithCards(userId)) }
+    override suspend fun onCreate(config: EventManagerConfig, entities: List<ContactWithCardsResource>) {
+        entities.forEach { contactLocalDataSource.upsertContactWithCards(it.toContactWithCards(config.userId)) }
     }
 
-    override suspend fun onUpdate(userId: UserId, entities: List<ContactWithCardsResource>) {
-        entities.forEach { contactLocalDataSource.upsertContactWithCards(it.toContactWithCards(userId)) }
+    override suspend fun onUpdate(config: EventManagerConfig, entities: List<ContactWithCardsResource>) {
+        entities.forEach { contactLocalDataSource.upsertContactWithCards(it.toContactWithCards(config.userId)) }
     }
 
-    override suspend fun onDelete(userId: UserId, keys: List<String>) {
+    override suspend fun onDelete(config: EventManagerConfig, keys: List<String>) {
         contactLocalDataSource.deleteContacts(*keys.map { ContactId(it) }.toTypedArray())
     }
 
-    override suspend fun onResetAll(userId: UserId) {
-        contactLocalDataSource.deleteAllContacts(userId)
-        contactRepository.getAllContacts(userId, refresh = true)
+    override suspend fun onResetAll(config: EventManagerConfig) {
+        contactLocalDataSource.deleteAllContacts(config.userId)
+        contactRepository.getAllContacts(config.userId, refresh = true)
     }
 }

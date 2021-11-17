@@ -1,3 +1,23 @@
+## EventManager Version [1.19.1]
+
+Nov 18, 2021
+
+### Dependencies
+
+- Contact 1.19.1.
+- EventManager 1.19.1.
+- Mail Settings 1.19.1.
+- User 1.19.1.
+- User Settings 1.19.1.
+
+### New Features
+
+- Added EventManagerConfig parameter to all EventListener functions.
+
+### Breaking Changes
+
+- EventListener functions signature changed (userId removed, added config).
+
 ## Plan Presentation [1.18.1]
 
 17 Nov, 2021
