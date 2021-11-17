@@ -27,7 +27,7 @@ import java.io.File
  */
 
 internal fun Project.computeVersionName(): String {
-    val branchName = runCommand("git branch --show-current")
+    val branchName = runCommand("git rev-parse --abbrev-ref HEAD")
     val versionName = if (branchName.startsWith("release/")) {
         branchName.substringAfter("release/")
     } else {
