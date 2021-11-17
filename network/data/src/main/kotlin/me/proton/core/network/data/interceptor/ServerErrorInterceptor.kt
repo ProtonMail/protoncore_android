@@ -35,7 +35,7 @@ class ServerErrorInterceptor : Interceptor {
             chain.proceed(request)
         } catch (e: IOException) {
             // every IO exception is possible potential blocking of the API
-            with (request.url) {
+            with(request.url) {
                 throw NetworkException(encodedPath, query, e)
             }
         }

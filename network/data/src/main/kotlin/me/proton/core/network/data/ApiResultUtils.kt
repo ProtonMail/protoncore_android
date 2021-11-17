@@ -46,14 +46,6 @@ internal suspend fun <Api, T> safeApiCall(
         ApiResult.Error.Parse(e)
     } catch (e: CertificateException) {
         ApiResult.Error.Certificate(e)
-    } catch (e: SSLHandshakeException) {
-        ApiResult.Error.Certificate(e)
-    } catch (e: SSLPeerUnverifiedException) {
-        ApiResult.Error.Certificate(e)
-    } catch (e: SocketTimeoutException) {
-        ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), e)
-    } catch (e: UnknownHostException) {
-        ApiResult.Error.NoInternet(e)
     } catch (e: NetworkException) {
         e.parse(networkManager)
     }
@@ -65,10 +57,12 @@ internal suspend fun <Api, T> safeApiCall(
 
 private fun NetworkException.parse(networkManager: NetworkManager): ApiResult.Error.Connection {
     // handle the exceptions that might indicate that the API is potentially blocked
-    return if (originalException is SocketTimeoutException) {
-        ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), originalException)
-    } else {
-        ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), originalException)
+    return when (originalException) {
+        is SSLHandshakeException -> ApiResult.Error.Certificate(originalException)
+        is SSLPeerUnverifiedException -> ApiResult.Error.Certificate(originalException)
+        is SocketTimeoutException -> ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), originalException)
+        is UnknownHostException -> ApiResult.Error.NoInternet(originalException)
+        else -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), originalException)
     }
 }
 
