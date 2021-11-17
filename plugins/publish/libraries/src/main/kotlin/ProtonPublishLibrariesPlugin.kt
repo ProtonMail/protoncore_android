@@ -23,6 +23,8 @@ import com.vanniktech.maven.publish.MavenPublishPluginExtension
 import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.dokka.gradle.DokkaPlugin
@@ -38,9 +40,21 @@ abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         val versionName = target.computeVersionName()
-        generateReleaseNoteIfNeeded(versionName)
+        val publishTask = registerPublishTask(target, versionName)
         target.subprojects {
-            setupPublishing(versionName = versionName)
+            setupPublishing(versionName = versionName, parentPublishTask = publishTask)
+        }
+    }
+
+    private fun registerPublishTask(target: Project, versionName: String): TaskProvider<Task> {
+        return target.tasks.register("publishLibraries") {
+            doLast {
+                println("Publish libraries done")
+                val releaseNote = generateReleaseNoteIfNeeded(versionName)
+                releaseNote?.let {
+                    target.notifyRelease(releaseNote)
+                }
+            }
         }
     }
 }
@@ -55,12 +69,12 @@ private fun Project.computeVersionName(): String {
     return versionName
 }
 
-private fun Project.setupPublishing(versionName: String) {
+private fun Project.setupPublishing(versionName: String, parentPublishTask: TaskProvider<Task>) {
     val publishOption = setupPublishOptionExtension()
     afterEvaluate {
         if (publishOption.shouldBePublishedAsLib) {
             setupCoordinates(versionName)
-            setupReleaseTask()
+            setupPublishLibraryTask(parentPublishTask)
             println("Setup publishing for $group:$name:$versionName")
         } else {
             println("Ignoring publishing for $name")
@@ -121,20 +135,21 @@ private fun Project.ensureReleaseCoordinateDocumented() {
     }
 }
 
-private fun Project.setupReleaseTask() {
-    tasks.register("publishLibrary") {
-        dependsOn(tasks.named("publish"))
+private fun Project.setupPublishLibraryTask(parentPublishTask: TaskProvider<Task>) {
+    val publishLibraryTask = tasks.register("publishLibrary") {
+        doLast { println("publish ${project.name}") }
+        //dependsOn(tasks.named("publish"))
     }
+    parentPublishTask.get().dependsOn(publishLibraryTask)
 }
 
-private fun generateReleaseNoteIfNeeded(versionName: String) {
+private fun generateReleaseNoteIfNeeded(versionName: String): String? {
     if (versionName.contains("SNAPSHOT")) {
         println("Ignoring release note generation due to snapshot release")
-        return
+        return null
     } else {
         println("Generating release-note.txt for release $versionName")
     }
-    val releaseNote = File("release-note.txt")
     val changelog = File("CHANGELOG.md")
     val changelogText = changelog.readText()
     val releaseHeader = "## [$versionName]"
@@ -142,24 +157,36 @@ private fun generateReleaseNoteIfNeeded(versionName: String) {
     if (releaseContent.isEmpty()) {
         println("Warning: No entry found in changelog for $versionName, release note will be empty")
     }
-    releaseNote.delete()
-    releaseNote.createNewFile()
-    releaseNote.appendText(releaseHeader)
-    releaseNote.appendText(releaseContent)
+    return StringBuilder().appendLine(releaseHeader).appendLine(releaseContent).toString()
 }
 
 private fun Project.notifyRelease(releaseNote: String) {
     val hook = ""
+    val tempFile = File("release-note.txt")
+    tempFile.delete()
+    tempFile.createNewFile()
+    val escapedReleaseNote = escapeMarkdownForJson(releaseNote)
+    tempFile.writeText("{\"mrkdwn\": true, \"text\": \"${escapedReleaseNote}\"}")
     val result = runCommand(
-        command = "curl --silent --show-error --fail",
+        command = "curl --show-error --fail",
         args = listOf(
             "--header", "Content-type: application/json",
-            "--data", "{\"mrkdwn\": true, \"text\": \"$releaseNote\"}",
+            "--data-binary", "@${tempFile.path}",
             hook
         )
     )
+    tempFile.delete()
     println(result)
 }
+
+private fun escapeMarkdownForJson(releaseNote: String) = releaseNote
+    .replace("\\", "\\\\")
+    .replace("\"", "\\\"")
+    .replace("\b", "\\b")
+    .replace("\n", "\\n")
+    .replace("\r", "\\r")
+    .replace("\t", "\\t")
+    .replace("/", "\\/")
 
 /**
  * Execute a command line and return stdout. [command] is interpreted by being split using space, so if command
