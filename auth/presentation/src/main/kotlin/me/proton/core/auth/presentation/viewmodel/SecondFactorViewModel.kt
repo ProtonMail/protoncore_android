@@ -20,14 +20,12 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
@@ -91,9 +89,7 @@ class SecondFactorViewModel @Inject constructor(
         }
     }
 
-    fun stopSecondFactorFlow(
-        userId: UserId
-    ): Job = viewModelScope.launch {
+    suspend fun stopSecondFactorFlow(userId: UserId) {
         val sessionId = sessionProvider.getSessionId(userId)
         checkNotNull(sessionId) { "No session id for this user." }
         accountWorkflow.handleSecondFactorFailed(sessionId)
@@ -130,6 +126,7 @@ class SecondFactorViewModel @Inject constructor(
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying second factor flow")
     }.catch { error ->
         if (error.isUnrecoverableError()) {
+            stopSecondFactorFlow(userId)
             emit(State.Error.Unrecoverable(error.message))
         } else {
             emit(State.Error.Message(error.message))
