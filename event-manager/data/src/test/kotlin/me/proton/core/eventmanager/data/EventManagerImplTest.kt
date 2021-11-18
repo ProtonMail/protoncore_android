@@ -33,6 +33,7 @@ import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import me.proton.core.eventmanager.data.listener.CalendarEventListener
 import me.proton.core.eventmanager.data.listener.ContactEventListener
 import me.proton.core.eventmanager.data.listener.UserEventListener
 import me.proton.core.eventmanager.domain.EventListener
@@ -44,11 +45,15 @@ import me.proton.core.eventmanager.domain.entity.EventIdResponse
 import me.proton.core.eventmanager.domain.entity.EventMetadata
 import me.proton.core.eventmanager.domain.entity.EventsResponse
 import me.proton.core.eventmanager.domain.entity.State
+import me.proton.core.eventmanager.domain.extension.asCalendar
+import me.proton.core.eventmanager.domain.extension.asDrive
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class EventManagerImplTest {
 
@@ -64,6 +69,7 @@ class EventManagerImplTest {
 
     private lateinit var userEventListener: UserEventListener
     private lateinit var contactEventListener: ContactEventListener
+    private lateinit var calendarEventListener: CalendarEventListener
     private lateinit var listeners: Set<EventListener<*, *>>
 
     private val user1 = Account(
@@ -89,17 +95,22 @@ class EventManagerImplTest {
     private val user1Config = EventManagerConfig.Core(user1.userId)
     private val user2Config = EventManagerConfig.Core(user2.userId)
 
+    private val calendarId = "calendarId"
+    private val calendarConfig = EventManagerConfig.Calendar(user1.userId, calendarId)
+
     private val eventId = "eventId"
     private val appState = MutableStateFlow(AppLifecycleProvider.State.Foreground)
 
     private lateinit var user1Manager: EventManager
     private lateinit var user2Manager: EventManager
+    private lateinit var calendarManager: EventManager
 
     @Before
     fun before() {
         userEventListener = spyk(UserEventListener())
         contactEventListener = spyk(ContactEventListener())
-        listeners = setOf<EventListener<*, *>>(userEventListener, contactEventListener)
+        calendarEventListener = spyk(CalendarEventListener())
+        listeners = setOf(userEventListener, contactEventListener, calendarEventListener)
 
         appLifecycleProvider = mockk {
             every { state } returns appState
@@ -129,6 +140,7 @@ class EventManagerImplTest {
         eventManagerProvider = EventManagerProviderImpl(eventManagerFactor, listeners)
         user1Manager = eventManagerProvider.get(user1Config)
         user2Manager = eventManagerProvider.get(user2Config)
+        calendarManager = eventManagerProvider.get(calendarConfig)
 
         coEvery { eventMetadataRepository.getLatestEventId(any(), any()) } returns
             EventIdResponse("{ \"EventID\": \"$eventId\" }")
@@ -145,6 +157,9 @@ class EventManagerImplTest {
 
         coEvery { eventMetadataRepository.get(user2Config) } returns
             listOf(EventMetadata(user2.userId, EventId(eventId), user2Config, createdAt = 1))
+
+        coEvery { eventMetadataRepository.get(calendarConfig) } returns
+            listOf(EventMetadata(user1.userId, EventId(eventId), calendarConfig, createdAt = 1))
     }
 
     @Test
@@ -156,34 +171,34 @@ class EventManagerImplTest {
         coVerify(exactly = 2) { userEventListener.inTransaction(any()) }
         coVerify(exactly = 2) { contactEventListener.inTransaction(any()) }
 
-        coVerify(exactly = 1) { userEventListener.onPrepare(user1.userId, any()) }
-        coVerify(exactly = 1) { userEventListener.onUpdate(user1.userId, any()) }
-        coVerify(exactly = 0) { userEventListener.onDelete(user1.userId, any()) }
-        coVerify(exactly = 0) { userEventListener.onCreate(user1.userId, any()) }
-        coVerify(exactly = 0) { userEventListener.onPartial(user1.userId, any()) }
+        coVerify(exactly = 1) { userEventListener.onPrepare(user1Config, any()) }
+        coVerify(exactly = 1) { userEventListener.onUpdate(user1Config, any()) }
+        coVerify(exactly = 0) { userEventListener.onDelete(user1Config, any()) }
+        coVerify(exactly = 0) { userEventListener.onCreate(user1Config, any()) }
+        coVerify(exactly = 0) { userEventListener.onPartial(user1Config, any()) }
 
-        coVerify(exactly = 1) { contactEventListener.onPrepare(user1.userId, any()) }
-        coVerify(exactly = 0) { contactEventListener.onUpdate(user1.userId, any()) }
-        coVerify(exactly = 0) { contactEventListener.onDelete(user1.userId, any()) }
-        coVerify(exactly = 1) { contactEventListener.onCreate(user1.userId, any()) }
-        coVerify(exactly = 0) { contactEventListener.onPartial(user1.userId, any()) }
+        coVerify(exactly = 1) { contactEventListener.onPrepare(user1Config, any()) }
+        coVerify(exactly = 0) { contactEventListener.onUpdate(user1Config, any()) }
+        coVerify(exactly = 0) { contactEventListener.onDelete(user1Config, any()) }
+        coVerify(exactly = 1) { contactEventListener.onCreate(user1Config, any()) }
+        coVerify(exactly = 0) { contactEventListener.onPartial(user1Config, any()) }
 
         coVerify(atLeast = 1) { eventMetadataRepository.updateState(user1Config, any(), State.NotifyPrepare) }
         coVerify(atLeast = 1) { eventMetadataRepository.updateState(user1Config, any(), State.NotifyEvents) }
         coVerify(atLeast = 1) { eventMetadataRepository.updateState(user1Config, any(), State.NotifyComplete) }
         coVerify(exactly = 1) { eventMetadataRepository.updateState(user1Config, any(), State.Completed) }
 
-        coVerify(exactly = 1) { userEventListener.onPrepare(user2.userId, any()) }
-        coVerify(exactly = 1) { userEventListener.onUpdate(user2.userId, any()) }
-        coVerify(exactly = 0) { userEventListener.onDelete(user2.userId, any()) }
-        coVerify(exactly = 0) { userEventListener.onCreate(user2.userId, any()) }
-        coVerify(exactly = 0) { userEventListener.onPartial(user2.userId, any()) }
+        coVerify(exactly = 1) { userEventListener.onPrepare(user2Config, any()) }
+        coVerify(exactly = 1) { userEventListener.onUpdate(user2Config, any()) }
+        coVerify(exactly = 0) { userEventListener.onDelete(user2Config, any()) }
+        coVerify(exactly = 0) { userEventListener.onCreate(user2Config, any()) }
+        coVerify(exactly = 0) { userEventListener.onPartial(user2Config, any()) }
 
-        coVerify(exactly = 1) { contactEventListener.onPrepare(user2.userId, any()) }
-        coVerify(exactly = 0) { contactEventListener.onUpdate(user2.userId, any()) }
-        coVerify(exactly = 0) { contactEventListener.onDelete(user2.userId, any()) }
-        coVerify(exactly = 1) { contactEventListener.onCreate(user2.userId, any()) }
-        coVerify(exactly = 0) { contactEventListener.onPartial(user2.userId, any()) }
+        coVerify(exactly = 1) { contactEventListener.onPrepare(user2Config, any()) }
+        coVerify(exactly = 0) { contactEventListener.onUpdate(user2Config, any()) }
+        coVerify(exactly = 0) { contactEventListener.onDelete(user2Config, any()) }
+        coVerify(exactly = 1) { contactEventListener.onCreate(user2Config, any()) }
+        coVerify(exactly = 0) { contactEventListener.onPartial(user2Config, any()) }
 
         coVerify(atLeast = 1) { eventMetadataRepository.updateState(user2Config, any(), State.NotifyPrepare) }
         coVerify(atLeast = 1) { eventMetadataRepository.updateState(user2Config, any(), State.NotifyEvents) }
@@ -194,25 +209,25 @@ class EventManagerImplTest {
     @Test
     fun callOnPrepareThrowException() = runBlocking {
         // GIVEN
-        coEvery { userEventListener.onPrepare(user1.userId, any()) } throws Exception("IOException")
+        coEvery { userEventListener.onPrepare(user1Config, any()) } throws Exception("IOException")
         // WHEN
         user1Manager.process()
         // THEN
         coVerify(exactly = 2) { eventMetadataRepository.updateState(any(), any(), State.NotifyPrepare) }
-        coVerify(exactly = 0) { userEventListener.onUpdate(user1.userId, any()) }
+        coVerify(exactly = 0) { userEventListener.onUpdate(user1Config, any()) }
         coVerify(exactly = 0) { userEventListener.inTransaction(any()) }
     }
 
     @Test
     fun callOnUpdateThrowException() = runBlocking {
         // GIVEN
-        coEvery { userEventListener.onUpdate(user1.userId, any()) } throws Exception("SqlForeignKeyException")
+        coEvery { userEventListener.onUpdate(user1Config, any()) } throws Exception("SqlForeignKeyException")
         // WHEN
         user1Manager.process()
         // THEN
         coVerify(exactly = 2) { eventMetadataRepository.updateState(any(), any(), State.NotifyPrepare) }
         coVerify(exactly = 2) { eventMetadataRepository.updateState(any(), any(), State.NotifyEvents) }
-        coVerify(exactly = 1) { userEventListener.onUpdate(user1.userId, any()) }
+        coVerify(exactly = 1) { userEventListener.onUpdate(user1Config, any()) }
         coVerify(exactly = 1) { userEventListener.inTransaction(any()) }
     }
 
@@ -225,11 +240,11 @@ class EventManagerImplTest {
         // WHEN
         user1Manager.process()
         // THEN
-        coVerify(exactly = 1) { userEventListener.onPrepare(user1.userId, any()) }
-        coVerify(exactly = 1) { userEventListener.onUpdate(user1.userId, any()) }
-        coVerify(exactly = 0) { userEventListener.onDelete(user1.userId, any()) }
-        coVerify(exactly = 0) { userEventListener.onCreate(user1.userId, any()) }
-        coVerify(exactly = 0) { userEventListener.onPartial(user1.userId, any()) }
+        coVerify(exactly = 1) { userEventListener.onPrepare(user1Config, any()) }
+        coVerify(exactly = 1) { userEventListener.onUpdate(user1Config, any()) }
+        coVerify(exactly = 0) { userEventListener.onDelete(user1Config, any()) }
+        coVerify(exactly = 0) { userEventListener.onCreate(user1Config, any()) }
+        coVerify(exactly = 0) { userEventListener.onPartial(user1Config, any()) }
     }
 
     @Test
@@ -244,5 +259,24 @@ class EventManagerImplTest {
         coVerify(exactly = 0) { userEventListener.onDelete(any(), any()) }
         coVerify(exactly = 0) { userEventListener.onCreate(any(), any()) }
         coVerify(exactly = 0) { userEventListener.onPartial(any(), any()) }
+    }
+
+    @Test
+    fun tryCastEventManagerConfig() = runBlocking {
+        // GIVEN
+        coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } returns
+            EventsResponse(TestEvents.calendarFullEventsResponse)
+        // WHEN
+        calendarManager.process()
+        // THEN
+        coVerify(exactly = 1) { calendarEventListener.onPrepare(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onUpdate(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onDelete(any(), any()) }
+        coVerify(exactly = 1) { calendarEventListener.onCreate(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onPartial(any(), any()) }
+        assertFailsWith(ClassCastException::class) {
+            calendarEventListener.config.asDrive()
+        }
+        assertEquals(calendarId, calendarEventListener.config.asCalendar().calendarId)
     }
 }

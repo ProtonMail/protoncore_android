@@ -21,6 +21,7 @@ package me.proton.core.eventmanager.data.listener
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.eventmanager.domain.EventListener
+import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
@@ -38,7 +39,10 @@ class UserEventListener : EventListener<String, UserResponse>() {
     override val type = Type.Core
     override val order = 0
 
-    override suspend fun deserializeEvents(response: EventsResponse): List<Event<String, UserResponse>>? {
+    override suspend fun deserializeEvents(
+        config: EventManagerConfig,
+        response: EventsResponse
+    ): List<Event<String, UserResponse>>? {
         return response.body.deserializeOrNull<UserEvents>()?.let {
             listOf(Event(Action.Update, it.user.id, it.user))
         }

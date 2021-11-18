@@ -244,4 +244,24 @@ object TestEvents {
           ]
         }
         """.trimIndent()
+
+    val calendarFullEventsResponse =
+        """
+        {
+          "Code": 1000,
+          "CalendarModelEventID": "ACXDmTaBub14w==",
+          "Refresh": 0,
+          "More": 0,
+
+          "Calendars": [
+            {
+              "ID": "afeaefaeTaBub14w==",
+              "Action": 1,
+              "Calendar": {
+                "ID": "a29olIjFv0rnXxBhSMw=="
+              }
+            }
+          ]
+        }
+        """.trimIndent()
 }

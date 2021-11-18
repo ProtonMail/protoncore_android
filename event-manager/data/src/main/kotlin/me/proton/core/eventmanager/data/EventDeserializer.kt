@@ -18,7 +18,6 @@
 
 package me.proton.core.eventmanager.data
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.data.api.response.GetCalendarEventsResponse
 import me.proton.core.eventmanager.data.api.response.GetCalendarLatestEventIdResponse
 import me.proton.core.eventmanager.data.api.response.GetCoreEventsResponse
@@ -37,7 +36,7 @@ interface EventDeserializer {
     val config: EventManagerConfig
     val endpoint: String
     fun deserializeLatestEventId(response: EventIdResponse): EventId
-    fun deserializeEventMetadata(userId: UserId, eventId: EventId, response: EventsResponse): EventMetadata
+    fun deserializeEventMetadata(eventId: EventId, response: EventsResponse): EventMetadata
 }
 
 internal data class CoreEventDeserializer(
@@ -49,10 +48,10 @@ internal data class CoreEventDeserializer(
     override fun deserializeLatestEventId(response: EventIdResponse): EventId =
         EventId(response.body.deserialize<GetCoreLatestEventIdResponse>().eventId)
 
-    override fun deserializeEventMetadata(userId: UserId, eventId: EventId, response: EventsResponse): EventMetadata =
+    override fun deserializeEventMetadata(eventId: EventId, response: EventsResponse): EventMetadata =
         response.body.deserialize<GetCoreEventsResponse>().let {
             EventMetadata(
-                userId = userId,
+                userId = config.userId,
                 eventId = eventId,
                 config = config,
                 nextEventId = EventId(it.eventId),
@@ -73,10 +72,10 @@ internal data class CalendarEventDeserializer(
     override fun deserializeLatestEventId(response: EventIdResponse): EventId =
         EventId(response.body.deserialize<GetCalendarLatestEventIdResponse>().eventId)
 
-    override fun deserializeEventMetadata(userId: UserId, eventId: EventId, response: EventsResponse): EventMetadata =
+    override fun deserializeEventMetadata(eventId: EventId, response: EventsResponse): EventMetadata =
         response.body.deserialize<GetCalendarEventsResponse>().let {
             EventMetadata(
-                userId = userId,
+                userId = config.userId,
                 eventId = eventId,
                 config = config,
                 nextEventId = EventId(it.eventId),
@@ -97,10 +96,10 @@ internal class DriveEventDeserializer(
     override fun deserializeLatestEventId(response: EventIdResponse): EventId =
         EventId(response.body.deserialize<GetDriveLatestEventIdResponse>().eventId)
 
-    override fun deserializeEventMetadata(userId: UserId, eventId: EventId, response: EventsResponse): EventMetadata =
+    override fun deserializeEventMetadata(eventId: EventId, response: EventsResponse): EventMetadata =
         response.body.deserialize<GetDriveEventsResponse>().let {
             EventMetadata(
-                userId = userId,
+                userId = config.userId,
                 eventId = eventId,
                 config = config,
                 nextEventId = EventId(it.eventId),

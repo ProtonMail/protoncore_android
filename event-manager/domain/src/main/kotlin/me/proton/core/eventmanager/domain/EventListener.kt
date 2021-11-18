@@ -18,16 +18,15 @@
 
 package me.proton.core.eventmanager.domain
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.entity.Action
 import me.proton.core.eventmanager.domain.entity.Event
 import me.proton.core.eventmanager.domain.entity.EventsResponse
 import me.proton.core.eventmanager.domain.extension.groupByAction
 import me.proton.core.util.kotlin.takeIfNotEmpty
 
-abstract class EventListener<K, T : Any> : TransactionHandler {
+abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
 
-    private val actionMapByUserId = mutableMapOf<UserId, Map<Action, List<Event<K, T>>>>()
+    private val actionMapByConfig = mutableMapOf<EventManagerConfig, Map<Action, List<Event<Key, Type>>>>()
 
     /**
      * Type of Event loop.
@@ -58,7 +57,7 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
     /**
      * Listener [type] to associate with this [EventListener].
      */
-    abstract val type: Type
+    abstract val type: EventListener.Type
 
     /**
      * The degrees of separation from this entity to the User entity.
@@ -76,8 +75,8 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * Note: The map is created just before [onPrepare], and cleared after [onComplete].
      */
-    fun getActionMap(userId: UserId): Map<Action, List<Event<K, T>>> {
-        return actionMapByUserId.getOrPut(userId) { emptyMap() }
+    fun getActionMap(config: EventManagerConfig): Map<Action, List<Event<Key, Type>>> {
+        return actionMapByConfig.getOrPut(config) { emptyMap() }
     }
 
     /**
@@ -85,8 +84,8 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * Note: Called before [notifyPrepare] and after [notifyComplete].
      */
-    fun setActionMap(userId: UserId, events: List<Event<K, T>>) {
-        actionMapByUserId[userId] = events.groupByAction()
+    fun setActionMap(config: EventManagerConfig, events: List<Event<Key, Type>>) {
+        actionMapByConfig[config] = events.groupByAction()
     }
 
     /**
@@ -94,10 +93,10 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyPrepare(userId: UserId) {
-        val actions = getActionMap(userId)
+    suspend fun notifyPrepare(config: EventManagerConfig) {
+        val actions = getActionMap(config)
         val entities = actions[Action.Create].orEmpty() + actions[Action.Update].orEmpty()
-        entities.takeIfNotEmpty()?.let { list -> onPrepare(userId, list.mapNotNull { it.entity }) }
+        entities.takeIfNotEmpty()?.let { list -> onPrepare(config, list.mapNotNull { it.entity }) }
     }
 
     /**
@@ -105,12 +104,12 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * Note: A transaction wraps this function.
      */
-    suspend fun notifyEvents(userId: UserId) {
-        val actions = getActionMap(userId)
-        actions[Action.Create]?.takeIfNotEmpty()?.let { list -> onCreate(userId, list.mapNotNull { it.entity }) }
-        actions[Action.Update]?.takeIfNotEmpty()?.let { list -> onUpdate(userId, list.mapNotNull { it.entity }) }
-        actions[Action.Partial]?.takeIfNotEmpty()?.let { list -> onPartial(userId, list.mapNotNull { it.entity }) }
-        actions[Action.Delete]?.takeIfNotEmpty()?.let { list -> onDelete(userId, list.map { it.key }) }
+    suspend fun notifyEvents(config: EventManagerConfig) {
+        val actions = getActionMap(config)
+        actions[Action.Create]?.takeIfNotEmpty()?.let { list -> onCreate(config, list.mapNotNull { it.entity }) }
+        actions[Action.Update]?.takeIfNotEmpty()?.let { list -> onUpdate(config, list.mapNotNull { it.entity }) }
+        actions[Action.Partial]?.takeIfNotEmpty()?.let { list -> onPartial(config, list.mapNotNull { it.entity }) }
+        actions[Action.Delete]?.takeIfNotEmpty()?.let { list -> onDelete(config, list.map { it.key }) }
     }
 
     /**
@@ -118,8 +117,8 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyResetAll(userId: UserId) {
-        onResetAll(userId)
+    suspend fun notifyResetAll(config: EventManagerConfig) {
+        onResetAll(config)
     }
 
     /**
@@ -127,15 +126,15 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyComplete(userId: UserId) {
-        onComplete(userId)
-        setActionMap(userId, emptyList())
+    suspend fun notifyComplete(config: EventManagerConfig) {
+        onComplete(config)
+        setActionMap(config, emptyList())
     }
 
     /**
      * Deserialize [response] into a typed list of [Event].
      */
-    abstract suspend fun deserializeEvents(response: EventsResponse): List<Event<K, T>>?
+    abstract suspend fun deserializeEvents(config: EventManagerConfig, response: EventsResponse): List<Event<Key, Type>>?
 
     /**
      * Called before applying a set of modifications to prepare any additional action (e.g. fetch foreign entities).
@@ -144,14 +143,14 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * @see onComplete
      */
-    open suspend fun onPrepare(userId: UserId, entities: List<T>) = Unit
+    open suspend fun onPrepare(config: EventManagerConfig, entities: List<Type>) = Unit
 
     /**
      * Called at the end of a set of modifications, whether it is successful or not.
      *
      * @see onPrepare
      */
-    open suspend fun onComplete(userId: UserId) = Unit
+    open suspend fun onComplete(config: EventManagerConfig) = Unit
 
     /**
      * Called to created entities in persistence.
@@ -162,7 +161,7 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * @see onPrepare
      */
-    open suspend fun onCreate(userId: UserId, entities: List<T>) = Unit
+    open suspend fun onCreate(config: EventManagerConfig, entities: List<Type>) = Unit
 
     /**
      * Called to update or insert entities in persistence.
@@ -173,7 +172,7 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * @see onPrepare
      */
-    open suspend fun onUpdate(userId: UserId, entities: List<T>) = Unit
+    open suspend fun onUpdate(config: EventManagerConfig, entities: List<Type>) = Unit
 
     /**
      * Called to partially update entities in persistence.
@@ -184,19 +183,19 @@ abstract class EventListener<K, T : Any> : TransactionHandler {
      *
      * @see onPrepare
      */
-    open suspend fun onPartial(userId: UserId, entities: List<T>) = Unit
+    open suspend fun onPartial(config: EventManagerConfig, entities: List<Type>) = Unit
 
     /**
      * Called to delete, if exist, entities in persistence.
      *
      * Note: A transaction wraps this function and must return as fast as possible.
      */
-    open suspend fun onDelete(userId: UserId, keys: List<K>) = Unit
+    open suspend fun onDelete(config: EventManagerConfig, keys: List<Key>) = Unit
 
     /**
      * Called to reset/delete all entities in persistence, for this type.
      *
      * Note: Usually a good time the fetch minimal data after deletion.
      */
-    open suspend fun onResetAll(userId: UserId) = Unit
+    open suspend fun onResetAll(config: EventManagerConfig) = Unit
 }
