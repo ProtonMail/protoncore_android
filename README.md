@@ -158,11 +158,11 @@ Account Manager Dagger: **1.16.2** - _released on: Nov 16, 2021_
 
 ### Event Manager
 
-Event Manager: **1.18.1** - _released on: Nov 16, 2021_
+Event Manager: **1.19.1** - _released on: Nov 18, 2021_
 
-Event Manager Domain: **1.18.1** - _released on: Nov 16, 2021_
+Event Manager Domain: **1.19.1** - _released on: Nov 18, 2021_
 
-Event Manager Data: **1.18.1** - _released on: Nov 16, 2021_
+Event Manager Data: **1.19.1** - _released on: Nov 18, 2021_
 
 ### Key
 
@@ -174,31 +174,31 @@ Key Data: **1.16.1** - _released on: Nov 08, 2021_
 
 ### User
 
-User: **1.18** - _released on: Oct 25, 2021_
+User: **1.19.1** - _released on: Nov 18, 2021_
 
-User Domain: **1.18** - _released on: Oct 25, 2021_
+User Domain: **1.19.1** - _released on: Nov 18, 2021_
 
-User Data: **1.18** - _released on: Oct 25, 2021_
+User Data: **1.19.1** - _released on: Nov 18, 2021_
 
 ### User Settings
 
-User Settings: **1.18.2** - _released on: Nov 12, 2021_
+User Settings: **1.19.1** - _released on: Nov 18, 2021_
 
-User Settings Data: **1.18.2** - _released on: Nov 12, 2021_
+User Settings Data: **1.19.1** - _released on: Nov 18, 2021_
 
-User Settings Domain: **1.18.2** - _released on: Nov 12, 2021_
+User Settings Domain: **1.19.1** - _released on: Nov 18, 2021_
 
-User Settings Presentation: **1.18.2** - _released on: Nov 12, 2021_
+User Settings Presentation: **1.19.1** - _released on: Nov 18, 2021_
 
 ### Contact
 
-Contact: **1.18** - _released on: Oct 25, 2021_
+Contact: **1.19.1** - _released on: Nov 18, 2021_
 
-Contact Domain: **1.18** - _released on: Oct 25, 2021_
+Contact Domain: **1.19.1** - _released on: Nov 18, 2021_
 
-Contact Data: **1.18** - _released on: Oct 25, 2021_
+Contact Data: **1.19.1** - _released on: Nov 18, 2021_
 
-Contact Hilt: **1.18** - _released on: Oct 25, 2021_
+Contact Hilt: **1.19.1** - _released on: Nov 18, 2021_
 
 ### Mail Message
 
@@ -210,11 +210,11 @@ Mail Message Data: **1.15.1** - _released on: Nov 10, 2021_
 
 ### Mail Settings
 
-Mail Settings: **1.18** - _released on: Oct 25, 2021_
+Mail Settings: **1.19.1** - _released on: Nov 18, 2021_
 
-Mail Settings Domain: **1.18** - _released on: Oct 25, 2021_
+Mail Settings Domain: **1.19.1** - _released on: Nov 18, 2021_
 
-Mail Settings Data: **1.18** - _released on: Oct 25, 2021_
+Mail Settings Data: **1.19.1** - _released on: Nov 18, 2021_
 
 ### Human Verification
 
