@@ -100,5 +100,7 @@ private fun Project.setupPublishLibraryTask(parentPublishTask: TaskProvider<Task
         dependsOn(tasks.named("publish"))
         doLast { println("${project.name} published") }
     }
-    parentPublishTask.get().dependsOn(publishLibraryTask)
+    parentPublishTask.configure {
+        dependsOn(publishLibraryTask)
+    }
 }
