@@ -25,7 +25,6 @@ import me.proton.core.util.kotlin.deserializeOrNull
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
-import java.net.SocketTimeoutException
 
 class ServerErrorInterceptor : Interceptor {
 

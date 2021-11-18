@@ -58,11 +58,11 @@ internal suspend fun <Api, T> safeApiCall(
 private fun NetworkException.parse(networkManager: NetworkManager): ApiResult.Error.Connection {
     // handle the exceptions that might indicate that the API is potentially blocked
     return when (originalException) {
-        is SSLHandshakeException -> ApiResult.Error.Certificate(originalException)
-        is SSLPeerUnverifiedException -> ApiResult.Error.Certificate(originalException)
-        is SocketTimeoutException -> ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), originalException)
-        is UnknownHostException -> ApiResult.Error.NoInternet(originalException)
-        else -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), originalException)
+        is SSLHandshakeException -> ApiResult.Error.Certificate(this)
+        is SSLPeerUnverifiedException -> ApiResult.Error.Certificate(this)
+        is SocketTimeoutException -> ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), this)
+        is UnknownHostException -> ApiResult.Error.NoInternet(this)
+        else -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), this)
     }
 }
 
