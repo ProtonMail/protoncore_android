@@ -242,7 +242,8 @@ class AuthOrchestrator {
 
     /**
      * Start a Second Factor workflow.
-     *
+     * In case the Second Factor fails with [SecondFactorResult.UnrecoverableError],
+     * you should likely show/go back to the login screen and show the error message there.
      * @see [onSecondFactorResult]
      */
     fun startSecondFactorWorkflow(account: Account) {
@@ -254,14 +255,6 @@ class AuthOrchestrator {
         }
         val twoPassModeEnabled = checkNotNull(account.details.session?.twoPassModeEnabled) {
             "TwoPassModeEnabled is null for startSecondFactorWorkflow."
-        }
-        onSecondFactorResult {
-            if (it is SecondFactorResult.UnrecoverableError) {
-                startLoginWorkflow(
-                    requiredAccountType = requiredAccountType,
-                    username = account.username
-                )
-            }
         }
         startSecondFactorWorkflow(
             userId = account.userId,
