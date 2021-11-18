@@ -59,9 +59,8 @@ private fun generateReleaseNoteIfNeeded(versionName: String): String? {
     if (versionName.contains("SNAPSHOT")) {
         println("Ignoring release note generation due to snapshot release")
         return null
-    } else {
-        println("Generating release-note.txt for release $versionName")
     }
+    println("Generating release note for release $versionName")
     val fullChangelog = File("CHANGELOG.md")
     val fullChangelogText = fullChangelog.readText()
     val releaseChangelogText = fullChangelogText
@@ -81,7 +80,7 @@ private fun Project.notifyRelease(releaseNote: String) {
         return
     }
     val hook = extra[extraHookName] as String
-    val slackPayloadFile = File("release-note.txt")
+    val slackPayloadFile = File("slack.tmp")
     slackPayloadFile.delete()
     slackPayloadFile.createNewFile()
     // https://api.slack.com/messaging/webhooks#advanced_message_formatting

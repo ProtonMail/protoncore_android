@@ -17,7 +17,7 @@ gen/
 releases/
 docs/
 config/detekt/reports/
-/release-note.txt
+slack.tmp
 
 # Gradle files
 .gradle/
