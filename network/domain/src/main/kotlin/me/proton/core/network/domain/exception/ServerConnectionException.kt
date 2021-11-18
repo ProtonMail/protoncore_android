@@ -16,17 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.guesthole
+package me.proton.core.network.domain.exception
 
-import me.proton.core.network.domain.ApiResult
+import java.io.IOException
 
-/**
- * Default [GuestHoleFallbackListener] implementation for clients that do not want to support it.
- */
-class DefaultGuestHoleFallbackListener : GuestHoleFallbackListener {
-    override suspend fun <T> fallbackCall(
-        path: String?,
-        query: String?,
-        blockToRetry: suspend () -> ApiResult<T>
-    ): ApiResult<T>? = null
-}
+class ServerConnectionException(
+    val path: String,
+    val query: String?,
+    val originalException: IOException
+) : IOException(originalException)

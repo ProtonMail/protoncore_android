@@ -24,11 +24,10 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.guesthole.DefaultGuestHoleFallbackListener
-import me.proton.core.network.domain.guesthole.GuestHoleFallbackListener
+import me.proton.core.network.domain.guesthole.ServerConnectionListener
 
-class GuestHoleHandler<Api>(
-    private val guestHoleFallbackListener: GuestHoleFallbackListener = DefaultGuestHoleFallbackListener()
+class ServerConnectionHandler<Api>(
+    private val serverConnectionListener: ServerConnectionListener?
 ) : ApiErrorHandler<Api> {
     override suspend fun <T> invoke(
         backend: ApiBackend<Api>,
@@ -36,12 +35,11 @@ class GuestHoleHandler<Api>(
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
         if (!error.isPotentialBlocking) return error
-        // it should suspend and ask the client to establish guest hole
         if (error !is ApiResult.Error.Connection) return error
+        // it should suspend and ask the client to establish guest hole
         val result =
             globalMutex.withLock {
-                // Don't attempt to fallback if we did recently.
-                guestHoleFallbackListener.fallbackCall(error.path, error.query) { backend(call) }
+                serverConnectionListener?.fallbackCall(error.path, error.query) { backend(call) }
             }
         return result ?: error
     }

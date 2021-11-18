@@ -20,7 +20,7 @@ package me.proton.core.network.domain.guesthole
 
 import me.proton.core.network.domain.ApiResult
 
-interface GuestHoleFallbackListener {
+interface ServerConnectionListener {
 
     suspend fun <T> fallbackCall(
         path: String?,

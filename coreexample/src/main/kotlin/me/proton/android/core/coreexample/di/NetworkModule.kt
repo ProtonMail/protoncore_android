@@ -41,13 +41,12 @@ import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.domain.ApiClient
-import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
-import me.proton.core.network.domain.guesthole.GuestHoleFallbackListener
+import me.proton.core.network.domain.guesthole.ServerConnectionListener
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener
@@ -110,7 +109,7 @@ class NetworkModule {
         humanVerificationProvider: HumanVerificationProvider,
         humanVerificationListener: HumanVerificationListener,
         extraHeaderProvider: ExtraHeaderProvider,
-        guestHoleFallbackListener: GuestHoleFallbackListener
+        serverConnectionListener: ServerConnectionListener
     ): ApiManagerFactory = ApiManagerFactory(
         Constants.BASE_URL,
         apiClient,
@@ -132,7 +131,7 @@ class NetworkModule {
             )
         },
         extraHeaderProvider,
-        guestHoleFallbackListener
+        serverConnectionListener
     )
 
     @Provides
@@ -142,7 +141,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGuestHoleFallbackListener(): GuestHoleFallbackListener = object: GuestHoleFallbackListener {
+    fun provideGuestHoleFallbackListener(): ServerConnectionListener = object: ServerConnectionListener {
         override suspend fun <T> fallbackCall(
             path: String?,
             query: String?,
