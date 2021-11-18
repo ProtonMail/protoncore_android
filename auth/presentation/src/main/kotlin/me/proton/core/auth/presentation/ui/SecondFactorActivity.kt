@@ -93,7 +93,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
                 is SecondFactorViewModel.State.Error.Message -> onError(false, it.message)
                 is SecondFactorViewModel.State.Error.Unrecoverable -> {
                     showError(getString(R.string.auth_login_general_error))
-                    setResultAndFinish(SecondFactorResult.UnrecoverableError)
+                    setResultAndFinish(SecondFactorResult.UnrecoverableError(it.message))
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)

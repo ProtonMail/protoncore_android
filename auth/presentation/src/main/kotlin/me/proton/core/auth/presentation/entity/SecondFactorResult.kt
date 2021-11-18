@@ -21,14 +21,14 @@ package me.proton.core.auth.presentation.entity
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-sealed class SecondFactorResult: Parcelable {
+sealed class SecondFactorResult : Parcelable {
 
     @Parcelize
     data class Success(
         val userId: String,
         val nextStep: NextStep,
-    ): SecondFactorResult()
+    ) : SecondFactorResult()
 
     @Parcelize
-    object UnrecoverableError: SecondFactorResult()
+    data class UnrecoverableError(val message: String?) : SecondFactorResult()
 }

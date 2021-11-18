@@ -87,7 +87,7 @@ class SecondFactorViewModel @Inject constructor(
             data class UserCheckError(val error: SetupAccountCheck.UserCheckResult.Error) : Error()
             data class CannotUnlockPrimaryKey(val error: UserManager.UnlockResult.Error) : Error()
             data class Message(val message: String?) : Error()
-            object Unrecoverable : Error()
+            data class Unrecoverable(val message: String?) : Error()
         }
     }
 
@@ -130,7 +130,7 @@ class SecondFactorViewModel @Inject constructor(
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying second factor flow")
     }.catch { error ->
         if (error.isUnrecoverableError()) {
-            emit(State.Error.Unrecoverable)
+            emit(State.Error.Unrecoverable(error.message))
         } else {
             emit(State.Error.Message(error.message))
         }
