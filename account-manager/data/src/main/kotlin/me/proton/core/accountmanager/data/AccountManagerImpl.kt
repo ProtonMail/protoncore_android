@@ -48,8 +48,9 @@ class AccountManagerImpl constructor(
     private suspend fun removeSession(sessionId: SessionId) {
         removeSessionLock.withLock {
             accountRepository.getAccountOrNull(sessionId)?.let { account ->
-                if (account.sessionState != SessionState.ForceLogout)
+                if (account.sessionState == SessionState.Authenticated) {
                     authRepository.revokeSession(sessionId)
+                }
             }
             accountRepository.deleteSession(sessionId)
         }
