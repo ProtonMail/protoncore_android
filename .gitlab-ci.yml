@@ -21,7 +21,6 @@ stages:
   - bot
   - analyze
   - build
-  - startReview
   - test
   - report
   - publish
@@ -34,11 +33,11 @@ variables:
   # Output upload and download progress every 5 seconds
   TRANSFER_METER_FREQUENCY: "5s"
   # Use no compression for artifacts
-  ARTIFACT_COMPRESSION_LEVEL: "fast"
-  # Use no compression for caches
-  CACHE_COMPRESSION_LEVEL: "fastest"
+  ARTIFACT_COMPRESSION_LEVEL: "fastest"
+  # Use low compression for caches
+  CACHE_COMPRESSION_LEVEL: "fast"
 
-cache:
+cache: &global_cache
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - .gradle/caches/modules-*
@@ -48,7 +47,7 @@ cache:
 #####################
 danger-review:
   image: ruby:2.7
-  stage: analyze
+  stage: .post
   when: always
   tags:
     - small
@@ -63,15 +62,17 @@ danger-review:
         - Gemfile.lock
     paths:
       - vendor/ruby
+  allow_failure: true
   variables:
     DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
   interruptible: true
 
-detekt analysis:
+detekt analyze:
   stage: analyze
   when: always
   tags:
     - medium
+  interruptible: true
   script:
     - ./gradlew multiModuleDetekt
   artifacts:
@@ -83,10 +84,11 @@ assemble:
   stage: build
   tags:
     - large
+  interruptible: true
   script:
     - echo PROXY_TOKEN="$(curl -o - https://proxy.proton.black/token/get)" >> local.properties
     - echo HOST="proton.black" >> local.properties
-    - ./gradlew assemble
+    - ./gradlew assembleDebug
   artifacts:
     paths:
       - coreexample/build/outputs/
@@ -95,6 +97,7 @@ debugTests:
   stage: test
   tags:
     - large
+  interruptible: true
   script:
     - ./gradlew -Pci --console=plain allTest
 
@@ -192,6 +195,7 @@ startReview:
   before_script:
     - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/debug/coreexample-debug.apk"
   extends: .startReview
+  stage: test
 
 stopReview:
   extends: .stopReview
@@ -204,11 +208,15 @@ coverage report:
     - ./gradlew coberturaCoverageReport
   coverage: /Total.*?(\d{1,3}\.\d{0,2})%/
   allow_failure: true
+  interruptible: true
+  cache:
+    <<: *global_cache
+    policy: pull
   artifacts:
     expire_in: 1 week
     paths:
       - ./build/reports/*
     reports:
       cobertura:
-        - ./**/build/reports/cobertura-coverage.xml
+        - ./build/reports/cobertura-coverage.xml
 
