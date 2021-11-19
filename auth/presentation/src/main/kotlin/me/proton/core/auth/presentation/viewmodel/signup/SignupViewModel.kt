@@ -164,12 +164,21 @@ internal class SignupViewModel @Inject constructor(
      * previously set [AccountType].
      * @see currentAccountType public property
      */
-    fun startCreateUserWorkflow() = viewModelScope.launch {
+    fun startCreateUserWorkflow() {
         _userCreationState.tryEmit(State.Idle)
+
+        val password by lazy { requireNotNull(_password) { "Password is not set (initialized)." } }
+
         when (currentAccountType) {
             AccountType.Username,
-            AccountType.Internal -> createUser()
-            AccountType.External -> createExternalUser()
+            AccountType.Internal -> {
+                val username = requireNotNull(username) { "Username is not set." }
+                createUser(username, password)
+            }
+            AccountType.External -> {
+                val email = requireNotNull(externalEmail) { "External email is not set." }
+                createExternalUser(email, password)
+            }
         }.exhaustive
     }
 
@@ -209,13 +218,8 @@ internal class SignupViewModel @Inject constructor(
     // endregion
 
     // region private functions
-    private suspend fun createUser() {
-        val username = username
-        val encryptedPassword = _password
-
+    private fun createUser(username: String, encryptedPassword: EncryptedString) {
         flow {
-            requireNotNull(username) { "Username is not set." }
-            requireNotNull(encryptedPassword) { "Password is not set (initialized)." }
             emit(State.Processing)
 
             val verification = _recoveryMethod?.let {
@@ -236,7 +240,7 @@ internal class SignupViewModel @Inject constructor(
             )
             emit(State.Success(result.id, username, encryptedPassword))
         }.catchWhen(Throwable::userAlreadyExists) {
-            val userId = performLogin.invoke(username!!, encryptedPassword!!).userId
+            val userId = performLogin.invoke(username, encryptedPassword).userId
             emit(State.Success(userId.id, username, encryptedPassword))
         }.catch { error ->
             emit(State.Error.Message(error.message))
@@ -245,13 +249,8 @@ internal class SignupViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private suspend fun createExternalUser() {
-        val externalEmail = externalEmail
-        val encryptedPassword = _password
-
+    private fun createExternalUser(externalEmail: String, encryptedPassword: EncryptedString) {
         flow {
-            requireNotNull(externalEmail) { "External email is not set." }
-            requireNotNull(encryptedPassword) { "Password is not set (initialized)." }
             emit(State.Processing)
             val userId = performCreateExternalEmailUser(
                 email = externalEmail,
@@ -260,7 +259,7 @@ internal class SignupViewModel @Inject constructor(
             )
             emit(State.Success(userId.id, externalEmail, encryptedPassword))
         }.catchWhen(Throwable::userAlreadyExists) {
-            val userId = performLogin.invoke(externalEmail!!, encryptedPassword!!).userId
+            val userId = performLogin.invoke(externalEmail, encryptedPassword).userId
             emit(State.Success(userId.id, externalEmail, encryptedPassword))
         }.catch { error ->
             emit(State.Error.Message(error.message))
