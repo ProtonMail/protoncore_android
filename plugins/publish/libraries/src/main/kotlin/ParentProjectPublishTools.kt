@@ -27,13 +27,7 @@ import java.io.File
  */
 
 internal fun Project.computeVersionName(): String {
-    val branchName = runCommand("git rev-parse --abbrev-ref HEAD")
-    val versionName = if (branchName.startsWith("release/")) {
-        branchName.substringAfter("release/")
-    } else {
-        "${branchName.replace('/', '-')}-SNAPSHOT"
-    }
-    return versionName
+    return runCommand("./ci/getVersion.sh")
 }
 
 internal fun Project.registerPublishNewReleaseTask(versionName: String): TaskProvider<Task> {
