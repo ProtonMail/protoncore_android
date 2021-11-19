@@ -1,11 +1,9 @@
+
 import PublishOptionExtension.Companion.setupPublishOptionExtension
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import com.vanniktech.maven.publish.MavenPublishPlugin
 import com.vanniktech.maven.publish.MavenPublishPluginExtension
-import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.Project
-import org.gradle.api.Task
-import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.dokka.gradle.DokkaPlugin
@@ -29,12 +27,11 @@ import java.io.File
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-internal fun Project.setupSubProjectPublishing(versionName: String, parentPublishTask: TaskProvider<Task>) {
+internal fun Project.setupSubProjectPublishing(groupName: String, versionName: String) {
     val publishOption = setupPublishOptionExtension()
     afterEvaluate {
         if (publishOption.shouldBePublishedAsLib) {
-            setupCoordinates(versionName)
-            setupPublishLibraryTask(parentPublishTask)
+            setupCoordinates(groupName, versionName)
             println("Setup publishing for $group:$name:$versionName")
         } else {
             println("Ignoring publishing for $name")
@@ -42,8 +39,8 @@ internal fun Project.setupSubProjectPublishing(versionName: String, parentPublis
     }
 }
 
-private fun Project.setupCoordinates(versionName: String, generateKdoc: Boolean = false) {
-    group = "me.proton.core"
+private fun Project.setupCoordinates(groupName: String, versionName: String, generateKdoc: Boolean = false) {
+    group = groupName
     val artifactId = name
     version = versionName
 
@@ -51,9 +48,9 @@ private fun Project.setupCoordinates(versionName: String, generateKdoc: Boolean 
     // Dokka is slow and consume a lot of resource for not much value in our case as the documentation is read in AS
     // from sources.
     if (generateKdoc) apply<DokkaPlugin>()
+
     apply<MavenPublishPlugin>()
     configure<MavenPublishPluginExtension> {
-        sonatypeHost = SonatypeHost.S01
         // Only sign non snapshot release
         releaseSigningEnabled = !versionName.contains("SNAPSHOT")
     }
@@ -92,15 +89,5 @@ private fun Project.ensureReleaseCoordinateDocumented() {
     val isCoordinatesDocumented = readmeText.contains(projectCoordinates)
     check(isCoordinatesDocumented) {
         "Artifact coordinates $projectCoordinates are missing in README.MD, please document it"
-    }
-}
-
-private fun Project.setupPublishLibraryTask(parentPublishTask: TaskProvider<Task>) {
-    val publishLibraryTask = tasks.register("publishLibrary") {
-        dependsOn(tasks.named("publish"))
-        doLast { println("${project.name} published") }
-    }
-    parentPublishTask.configure {
-        dependsOn(publishLibraryTask)
     }
 }

@@ -9,6 +9,8 @@ android-pluginGradle = "com.android.tools.build:gradle:7.0.2"
 
 vanniktech-pluginGradleMavenPublish = "com.vanniktech:gradle-maven-publish-plugin:0.18.0"
 
+publish-pluginGradle = "io.github.gradle-nexus:publish-plugin:1.1.0"
+
 dokka-pluginGradle = "org.jetbrains.dokka:dokka-gradle-plugin:1.5.30"
 
 easyGradle-dsl = { module = "studio.forface.easygradle:dsl", version.ref = "easyGradle" }

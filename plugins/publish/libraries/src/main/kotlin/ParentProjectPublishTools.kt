@@ -1,10 +1,12 @@
 
+import io.github.gradlenexus.publishplugin.NexusPublishExtension
+import io.github.gradlenexus.publishplugin.NexusPublishPlugin
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.gradle.api.Project
-import org.gradle.api.Task
-import org.gradle.api.tasks.TaskProvider
+import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.extra
 import java.io.File
 
@@ -30,15 +32,28 @@ internal fun Project.computeVersionName(): String {
     return runCommand("./ci/getVersion.sh")
 }
 
-internal fun Project.registerPublishNewReleaseTask(versionName: String): TaskProvider<Task> {
-    return tasks.register("publishNewRelease") {
-        doLast {
-            println("Publish artifacts for $versionName done")
+/**
+ * Fully support unique staging repository creation for multi project release
+ * See https://github.com/gradle-nexus/publish-plugin/ and
+ * https://github.com/gradle-nexus/publish-plugin/#behind-the-scenes
+ */
+internal fun Project.setupPublishingTasks(groupName: String, versionName: String) {
+    group = groupName
+    version = versionName
+    apply<NexusPublishPlugin>()
+    configure<NexusPublishExtension> {
+        repositories {
+            sonatype {
+                nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+                snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+                project.properties["mavenCentralUsername"]?.let { username.set(it as String) }
+                project.properties["mavenCentralPassword"]?.let { password.set(it as String) }
+            }
         }
     }
 }
 
-internal fun Project.registerNotifyNewReleaseTask(versionName: String) {
+internal fun Project.setupNotifyNewReleaseTask(versionName: String) {
     tasks.register("notifyNewRelease") {
         doLast {
             val releaseNote = generateReleaseNoteIfNeeded(versionName)

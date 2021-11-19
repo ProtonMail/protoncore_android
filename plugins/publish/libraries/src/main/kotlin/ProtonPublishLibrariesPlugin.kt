@@ -27,11 +27,12 @@ import org.gradle.api.Project
 abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
+        val groupName = "me.proton.core"
         val versionName = target.computeVersionName()
-        target.registerNotifyNewReleaseTask(versionName)
-        val publishTask = target.registerPublishNewReleaseTask(versionName)
+        target.setupPublishingTasks(groupName, versionName)
+        target.setupNotifyNewReleaseTask(versionName)
         target.subprojects {
-            setupSubProjectPublishing(versionName = versionName, parentPublishTask = publishTask)
+            setupSubProjectPublishing(groupName = groupName, versionName = versionName)
         }
     }
 }

@@ -52,4 +52,5 @@ dependencies {
     implementation(libs.vanniktech.pluginGradleMavenPublish)
     implementation(libs.dokka.pluginGradle)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.publish.pluginGradle)
 }
