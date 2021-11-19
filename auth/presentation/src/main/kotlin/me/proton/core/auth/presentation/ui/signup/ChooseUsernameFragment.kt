@@ -175,7 +175,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
 
     private fun onError(message: String?) {
         binding.nextButton.setIdle()
-        if (binding.usernameInput.suffixText.isNullOrEmpty()) {
+        if (viewModel.domains.isNullOrEmpty()) {
             binding.nextButton.isEnabled = false
         }
         showError(message)

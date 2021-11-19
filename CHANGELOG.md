@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - View.snack extension functions that accept a background drawable ID are deprecated. Use the snack functions that accept a SnackType instead.
 
+### Fixed
+
+- During signup, when choosing username, "Next" button would be sometimes disabled permanently
+
 ## [2.0.0]
 - Use a global version for all core artifacts
 
