@@ -121,7 +121,7 @@ release-publish-github:
     RELEASE_SYNC_FROM_BRANCH: 'master'
   extends: .release-sync-commit-shared
 
-publishMaven:
+publishNewRelease:
   stage: publish
   tags:
     - large
@@ -130,26 +130,14 @@ publishMaven:
     ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD_UNESCAPED
     ORG_GRADLE_PROJECT_signingInMemoryKey: $MAVEN_SIGNING_KEY
     ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD_UNESCAPED
+    ORG_GRADLE_PROJECT_androidDevChannelWebhook: $TEST_CHANNEL_WEBHOOK
   script:
-    - ./gradlew publishNewRelease
-    # While not merged with master prevent automatic release as it could break master release
-    # - ./gradlew closeAndReleaseRepository
-  only:
-    - release
-
-postReleaseToSlack:
-  stage: publish
-  tags:
-    - small
-  needs:
-    - job: publishMaven
-  variables:
-    ORG_GRADLE_PROJECT_androidDevChannelWebhook: $ANDROID_DEVS_CHANNEL_WEBHOOK
-  script:
+    - ./gradlew publishToSonatype
+    - ./gradlew closeSonatypeStagingRepository
     - ./gradlew notifyNewRelease
   only:
-    - release
-  when: manual # don't notify while testing
+    - /^release\/.*/
+  when: manual
 
 publishGradlePortal:
   stage: publish
