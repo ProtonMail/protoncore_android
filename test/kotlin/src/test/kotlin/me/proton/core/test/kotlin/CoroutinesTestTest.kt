@@ -38,7 +38,7 @@ internal class CoroutinesTestTest : CoroutinesTest {
             advanceUntilIdle()
             assertEquals(15, sut.result)
         }
-        assertTrue(time < 100)
+        assertTrue(time < 1000)
     }
 
     @Test
@@ -48,7 +48,7 @@ internal class CoroutinesTestTest : CoroutinesTest {
             advanceUntilIdle()
             assertEquals(15, sut.result)
         }
-        assertTrue(time < 100)
+        assertTrue(time < 1000)
     }
 }
 
