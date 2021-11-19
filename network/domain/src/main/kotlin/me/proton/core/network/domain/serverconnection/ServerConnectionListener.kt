@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.guesthole
+package me.proton.core.network.domain.serverconnection
 
 import me.proton.core.network.domain.ApiResult
 

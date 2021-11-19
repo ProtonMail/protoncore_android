@@ -24,7 +24,7 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.guesthole.ServerConnectionListener
+import me.proton.core.network.domain.serverconnection.ServerConnectionListener
 
 class ServerConnectionHandler<Api>(
     private val serverConnectionListener: ServerConnectionListener?

@@ -37,7 +37,7 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
-import me.proton.core.network.domain.guesthole.ServerConnectionListener
+import me.proton.core.network.domain.serverconnection.ServerConnectionListener
 import me.proton.core.network.domain.handlers.ServerConnectionHandler
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
