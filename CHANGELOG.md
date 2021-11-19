@@ -1,3 +1,18 @@
+## Auth [1.18.4], Network [1.15.8], Util Kotlin [1.15.3]
+
+22 Nov, 2021
+
+### Dependencies
+
+- Contact 1.19.2
+- Payment 1.17.4
+
+### Changes
+
+- Minimum (and the default) network timeout in `ApiClient` is 30 seconds
+- Recover from error when creating new accounts ("Username already taken or not allowed")
+- Recover from errors while setting up user keys after creating an account ("Primary key exists")
+
 ## EventManager Version [1.19.2]
 
 Nov 19, 2021
