@@ -23,9 +23,13 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.retryWhen
 
-fun <T> Flow<T>.catchWhen(
-    predicate: suspend (Throwable) -> Boolean,
-    action: suspend FlowCollector<T>.() -> Unit
+/**
+ * Catches an error that matches a given [predicate], and performs an [action] if such an error is caught.
+ * If an error from upstream doesn't match the [predicate], it's passed downstream.
+ */
+inline fun <T> Flow<T>.catchWhen(
+    crossinline predicate: suspend (Throwable) -> Boolean,
+    crossinline action: suspend FlowCollector<T>.() -> Unit
 ): Flow<T> {
     return catch { error ->
         if (predicate(error)) {
@@ -38,16 +42,16 @@ fun <T> Flow<T>.catchWhen(
 
 /**
  * Retries the collection of the flow, in case an exception occurred in upstream flow, and [predicate] returns `true`.
- * If the flow will be retried, [onRetryAction] will be called before, with a [Throwable] that caused the retry.
+ * If the flow will be retried, [onBeforeRetryAction] will be called before, with a [Throwable] that caused the retry.
  * @see retryWhen
  */
-fun <T> Flow<T>.retryOnceWhen(
-    predicate: suspend (Throwable) -> Boolean,
-    onRetryAction: suspend (cause: Throwable) -> Unit
+inline fun <T> Flow<T>.retryOnceWhen(
+    crossinline predicate: suspend (Throwable) -> Boolean,
+    crossinline onBeforeRetryAction: suspend (cause: Throwable) -> Unit
 ): Flow<T> {
     return retryWhen { cause, attempt ->
         val willRetry = predicate(cause) && attempt < 1
-        if (willRetry) onRetryAction.invoke(cause)
+        if (willRetry) onBeforeRetryAction.invoke(cause)
         willRetry
     }
 }
