@@ -42,6 +42,8 @@ import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.UserCheckErro
 import me.proton.core.auth.domain.usecase.SetupInternalAddress
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
+import me.proton.core.auth.domain.usecase.primaryKeyExists
+import me.proton.core.auth.presentation.LogTag
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
@@ -49,6 +51,8 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
+import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
 
 @HiltViewModel
@@ -122,6 +126,8 @@ class SecondFactorViewModel @Inject constructor(
         }.let {
             emit(it)
         }
+    }.retryOnceWhen(Throwable::primaryKeyExists) {
+        CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying second factor flow")
     }.catch { error ->
         if (error.isUnrecoverableError()) {
             emit(State.Error.Unrecoverable)

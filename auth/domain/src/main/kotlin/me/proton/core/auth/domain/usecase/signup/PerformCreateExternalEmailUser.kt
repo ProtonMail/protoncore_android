@@ -24,8 +24,8 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.CreateUserType
-import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -40,8 +40,9 @@ class PerformCreateExternalEmailUser @Inject constructor(
         email: String,
         password: EncryptedString,
         referrer: String?
-    ): User {
+    ): UserId {
         require(email.isNotBlank()) { "Email must not be empty." }
+
         val modulus = authRepository.randomModulus()
 
         password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
@@ -57,7 +58,7 @@ class PerformCreateExternalEmailUser @Inject constructor(
                 referrer = referrer,
                 type = CreateUserType.Normal,
                 auth = auth
-            )
+            ).userId
         }
     }
 }

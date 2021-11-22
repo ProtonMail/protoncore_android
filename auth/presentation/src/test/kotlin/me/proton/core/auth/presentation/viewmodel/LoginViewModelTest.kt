@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -35,6 +36,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -212,6 +214,39 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
 
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    @Test
+    fun `login is retried on Primary Key Exists error`() = coroutinesTest {
+        val sessionInfo = mockSessionInfo()
+        coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
+        coEvery {
+            postLoginAccountSetup.invoke(any(), any(), any(), any())
+        } throws ApiException(
+            ApiResult.Error.Http(
+                400,
+                "Bad request",
+                ApiResult.Error.ProtonData(ResponseCodes.NOT_ALLOWED, "Primary key exists")
+            )
+        )
+
+        viewModel.state.test {
+            // WHEN
+            viewModel.startLoginWorkflow(testUserName, testPassword, mockk())
+
+            // THEN
+            assertIs<LoginViewModel.State.Processing>(awaitItem())
+            assertIs<LoginViewModel.State.Processing>(awaitItem()) // retried
+
+            val errorState = awaitItem()
+            assertTrue(errorState is LoginViewModel.State.ErrorMessage)
+            assertEquals("Primary key exists", errorState.message)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        coVerify(exactly = 2) { createLoginSession.invoke(testUserName, testPassword, any()) }
+        coVerify(exactly = 2) { postLoginAccountSetup.invoke(any(), testPassword, any(), any()) }
     }
 
     private fun mockSessionInfo() = mockk<SessionInfo> {

@@ -98,6 +98,9 @@ class ApiManagerFactory(
 
     @VisibleForTesting
     val baseOkHttpClient by lazy {
+        require(apiClient.timeoutSeconds >= ApiClient.MIN_TIMEOUT_SECONDS) {
+            "Minimum timeout for ApiClient is ${ApiClient.MIN_TIMEOUT_SECONDS} seconds."
+        }
         val builder = OkHttpClient.Builder()
             .cache(cache())
             .connectTimeout(apiClient.timeoutSeconds, TimeUnit.SECONDS)

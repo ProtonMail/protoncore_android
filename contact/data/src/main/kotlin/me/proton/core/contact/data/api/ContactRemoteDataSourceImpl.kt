@@ -32,7 +32,7 @@ import me.proton.core.contact.domain.repository.ContactRemoteDataSource
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.ProtonErrorException
-import me.proton.core.network.data.ResponseCodes
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.onError
 import me.proton.core.network.domain.onSuccess
 import javax.inject.Inject

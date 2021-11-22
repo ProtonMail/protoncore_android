@@ -33,8 +33,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
+import me.proton.core.auth.domain.usecase.userAlreadyExists
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
@@ -45,8 +47,6 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.onHumanVerificationFailed
-import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
-import me.proton.core.humanverification.presentation.onHumanVerificationSucceeded
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
@@ -55,6 +55,7 @@ import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
 import me.proton.core.user.domain.entity.createUserType
+import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -67,6 +68,7 @@ internal class SignupViewModel @Inject constructor(
     private val paymentsOrchestrator: PaymentsOrchestrator,
     private val clientIdProvider: ClientIdProvider,
     private val humanVerificationManager: HumanVerificationManager,
+    private val performLogin: PerformLogin,
     humanVerificationOrchestrator: HumanVerificationOrchestrator,
     savedStateHandle: SavedStateHandle
 ) : AuthViewModel(humanVerificationManager, humanVerificationOrchestrator) {
@@ -162,12 +164,21 @@ internal class SignupViewModel @Inject constructor(
      * previously set [AccountType].
      * @see currentAccountType public property
      */
-    fun startCreateUserWorkflow() = viewModelScope.launch {
+    fun startCreateUserWorkflow() {
         _userCreationState.tryEmit(State.Idle)
+
+        val password by lazy { requireNotNull(_password) { "Password is not set (initialized)." } }
+
         when (currentAccountType) {
             AccountType.Username,
-            AccountType.Internal -> createUser()
-            AccountType.External -> createExternalUser()
+            AccountType.Internal -> {
+                val username = requireNotNull(username) { "Username is not set." }
+                createUser(username, password)
+            }
+            AccountType.External -> {
+                val email = requireNotNull(externalEmail) { "External email is not set." }
+                createExternalUser(email, password)
+            }
         }.exhaustive
     }
 
@@ -207,49 +218,55 @@ internal class SignupViewModel @Inject constructor(
     // endregion
 
     // region private functions
-    private suspend fun createUser() = flow {
-        val username = requireNotNull(username) { "Username is not set." }
-        val encryptedPassword = requireNotNull(_password) { "Password is not set (initialized)." }
-        emit(State.Processing)
+    private fun createUser(username: String, encryptedPassword: EncryptedString) {
+        flow {
+            emit(State.Processing)
 
-        val verification = _recoveryMethod?.let {
-            val email = if (it.type == RecoveryMethodType.EMAIL) {
-                it.destination
-            } else null
-            val phone = if (it.type == RecoveryMethodType.SMS) {
-                it.destination
-            } else null
-            Pair(email, phone)
-        } ?: run {
-            Pair(null, null)
-        }
+            val verification = _recoveryMethod?.let {
+                val email = if (it.type == RecoveryMethodType.EMAIL) {
+                    it.destination
+                } else null
+                val phone = if (it.type == RecoveryMethodType.SMS) {
+                    it.destination
+                } else null
+                Pair(email, phone)
+            } ?: run {
+                Pair(null, null)
+            }
 
-        val result = performCreateUser(
-            username = username, password = encryptedPassword, recoveryEmail = verification.first,
-            recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
-        )
-        emit(State.Success(result.userId.id, username, encryptedPassword))
-    }.catch { error ->
-        emit(State.Error.Message(error.message))
-    }.onEach {
-        _userCreationState.tryEmit(it)
-    }.launchIn(viewModelScope)
+            val result = performCreateUser(
+                username = username, password = encryptedPassword, recoveryEmail = verification.first,
+                recoveryPhone = verification.second, referrer = null, type = currentAccountType.createUserType()
+            )
+            emit(State.Success(result.id, username, encryptedPassword))
+        }.catchWhen(Throwable::userAlreadyExists) {
+            val userId = performLogin.invoke(username, encryptedPassword).userId
+            emit(State.Success(userId.id, username, encryptedPassword))
+        }.catch { error ->
+            emit(State.Error.Message(error.message))
+        }.onEach {
+            _userCreationState.tryEmit(it)
+        }.launchIn(viewModelScope)
+    }
 
-    private suspend fun createExternalUser() = flow {
-        val externalEmail = requireNotNull(externalEmail) { "External email is not set." }
-        val encryptedPassword = requireNotNull(_password) { "Password is not set (initialized)." }
-        emit(State.Processing)
-        val user = performCreateExternalEmailUser(
-            email = externalEmail,
-            password = encryptedPassword,
-            referrer = null
-        )
-        emit(State.Success(user.userId.id, externalEmail, encryptedPassword))
-    }.catch { error ->
-        emit(State.Error.Message(error.message))
-    }.onEach {
-        _userCreationState.tryEmit(it)
-    }.launchIn(viewModelScope)
+    private fun createExternalUser(externalEmail: String, encryptedPassword: EncryptedString) {
+        flow {
+            emit(State.Processing)
+            val userId = performCreateExternalEmailUser(
+                email = externalEmail,
+                password = encryptedPassword,
+                referrer = null
+            )
+            emit(State.Success(userId.id, externalEmail, encryptedPassword))
+        }.catchWhen(Throwable::userAlreadyExists) {
+            val userId = performLogin.invoke(externalEmail, encryptedPassword).userId
+            emit(State.Success(userId.id, externalEmail, encryptedPassword))
+        }.catch { error ->
+            emit(State.Error.Message(error.message))
+        }.onEach {
+            _userCreationState.tryEmit(it)
+        }.launchIn(viewModelScope)
+    }
 
     private fun onUserCreationStateRestored(state: State) {
         if (state == State.Processing) {

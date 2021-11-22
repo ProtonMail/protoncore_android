@@ -20,6 +20,7 @@ package me.proton.core.network.data.mapper
 
 import me.proton.core.network.data.protonApi.Details
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.humanverification.VerificationMethod
@@ -43,7 +44,7 @@ fun Details.toHumanVerificationEntity(): HumanVerificationAvailableMethods =
 
 fun ApiResult.Error.ProtonData.parseDetails(errorCode: Int, details: Details?): ApiResult.Error.ProtonData {
     when (errorCode) {
-        HumanVerificationNeededHandler.ERROR_CODE_HUMAN_VERIFICATION -> {
+        ResponseCodes.HUMAN_VERIFICATION_REQUIRED -> {
             humanVerification = details?.toHumanVerificationEntity()
         }
     }

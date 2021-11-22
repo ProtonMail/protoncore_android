@@ -21,9 +21,9 @@ package me.proton.core.payment.domain.usecase
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes.PAYMENTS_SUBSCRIPTION_NOT_EXISTS
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.repository.PaymentsRepository
-import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 /**
@@ -40,15 +40,11 @@ class GetCurrentSubscription @Inject constructor(
             paymentsRepository.getSubscription(userId)
         } catch (exception: ApiException) {
             val error = exception.error
-            if (error is ApiResult.Error.Http && error.proton?.code == NO_ACTIVE_SUBSCRIPTION) {
+            if (error is ApiResult.Error.Http && error.proton?.code == PAYMENTS_SUBSCRIPTION_NOT_EXISTS) {
                 return null
             } else {
                 throw exception
             }
         }
-    }
-
-    companion object {
-        const val NO_ACTIVE_SUBSCRIPTION = 22110
     }
 }

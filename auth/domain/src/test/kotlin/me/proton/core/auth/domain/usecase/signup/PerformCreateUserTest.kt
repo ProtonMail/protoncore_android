@@ -31,14 +31,15 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.network.domain.ApiException
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
 import org.junit.Test
-import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
+import kotlin.test.assertSame
 
 class PerformCreateUserTest {
     // region mocks
@@ -52,6 +53,7 @@ class PerformCreateUserTest {
     // region test data
     private val testUsername = "test-username"
     private val testPassword = "test-password"
+    private val testEncryptedPassword = "encrypted-$testPassword"
     private val testEmail = "test-email"
     private val testPhone = "test-phone"
     private val testModulus = Modulus(modulusId = "test-id", modulus = "test-modulus")
@@ -74,9 +76,12 @@ class PerformCreateUserTest {
             srpCrypto.calculatePasswordVerifier(testUsername, any(), any(), any())
         } returns testAuth
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
-        every { keyStoreCrypto.encrypt(any<String>()) } returns "encrypted-$testPassword"
+        every { keyStoreCrypto.encrypt(any<String>()) } returns testEncryptedPassword
 
         coEvery { authRepository.randomModulus() } returns testModulus
+        coEvery {
+            userRepository.createUser(any(), any(), any(), any(), any(), any(), any())
+        } returns mockk(relaxed = true)
     }
 
     @Test
@@ -218,5 +223,26 @@ class PerformCreateUserTest {
             "Recovery Email and Phone could not be set together",
             throwable.message
         )
+    }
+
+    @Test
+    fun `user already exists and cannot log in`() = runBlockingTest {
+        val apiException = mockk<ApiException>()
+
+        coEvery {
+            userRepository.createUser(any(), any(), any(), any(), any(), any(), any())
+        } throws apiException
+
+        val result = assertFailsWith(ApiException::class) {
+            useCase.invoke(
+                testEmail,
+                keyStoreCrypto.encrypt(testPassword),
+                recoveryEmail = null,
+                recoveryPhone = null,
+                referrer = null,
+                type = CreateUserType.Normal
+            )
+        }
+        assertSame(apiException, result)
     }
 }

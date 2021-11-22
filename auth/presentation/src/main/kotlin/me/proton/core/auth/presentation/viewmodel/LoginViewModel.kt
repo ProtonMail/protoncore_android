@@ -33,14 +33,18 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
-import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.CreateLoginSession
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.domain.usecase.primaryKeyExists
+import me.proton.core.auth.presentation.LogTag
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
+import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
 
 @HiltViewModel
@@ -101,6 +105,8 @@ internal class LoginViewModel @Inject constructor(
 
         val result = postLoginAccountSetup(sessionInfo, encryptedPassword, requiredAccountType, billingDetails)
         emit(State.AccountSetupResult(result))
+    }.retryOnceWhen(Throwable::primaryKeyExists) {
+        CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying login flow")
     }.catch { error ->
         emit(State.ErrorMessage(error.message))
     }.onEach { state ->

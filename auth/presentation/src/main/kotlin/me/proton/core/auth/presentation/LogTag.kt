@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,16 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.data.protonApi
+package me.proton.core.auth.presentation
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import me.proton.core.network.domain.ResponseCodes
-
-@Serializable
-data class GenericResponse(
-    @SerialName("Code")
-    val code: Int
-)
-
-fun GenericResponse.isSuccess(): Boolean = code == ResponseCodes.OK
+object LogTag {
+    /** Tag for marking when a flow has failed with an exception, but it will be retried. */
+    const val FLOW_ERROR_RETRY = "core.auth.presentation.flow.retry"
+}
