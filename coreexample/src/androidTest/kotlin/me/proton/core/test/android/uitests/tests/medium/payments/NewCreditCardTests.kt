@@ -23,7 +23,6 @@ import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
@@ -39,10 +38,11 @@ class NewCreditCardTests : BaseTest() {
     }
 
     @Before
-    fun login() {
-        AddAccountRobot()
-            .signIn()
-            .loginUser<CoreexampleRobot>(userWithoutCard)
+    fun goToPlanUpgrade() {
+
+        login(userWithoutCard)
+
+        CoreexampleRobot()
             .plansUpgrade()
             .changeCurrency(Currency.CHF)
             .upgradeToPlan<AddCreditCardRobot>(Plan.Dev)

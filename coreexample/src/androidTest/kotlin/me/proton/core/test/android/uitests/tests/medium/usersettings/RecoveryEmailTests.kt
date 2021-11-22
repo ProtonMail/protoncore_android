@@ -20,13 +20,12 @@ package me.proton.core.test.android.uitests.tests.medium.usersettings
 
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
-import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot.AuthenticationRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.usersettings.R
 import org.junit.Before
 import org.junit.Test
@@ -41,9 +40,10 @@ class RecoveryEmailTests : BaseTest() {
 
     @Before
     fun navigateToPasswordManagement() {
-        AddAccountRobot()
-            .signIn()
-            .loginUser<CoreexampleRobot>(user)
+
+        login(user)
+
+        CoreexampleRobot()
             .settingsRecoveryEmail()
             .verify {
                 recoveryEmailElementsDisplayed()

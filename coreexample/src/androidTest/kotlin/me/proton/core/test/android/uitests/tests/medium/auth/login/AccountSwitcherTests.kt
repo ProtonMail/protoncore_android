@@ -18,14 +18,13 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.login
 
-import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot.UserAction
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.LoginRobot
-import me.proton.core.test.android.robots.auth.login.MailboxPasswordRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Before
 import org.junit.Test
 
@@ -39,10 +38,7 @@ class AccountSwitcherTests : BaseTest() {
     @Before
     fun loginOnePass() {
         quark.jailUnban()
-        AddAccountRobot()
-            .signIn()
-            .loginUser<CoreexampleRobot>(firstUser)
-            .verify { accountSwitcherDisplayed() }
+        login(firstUser)
 
         CoreexampleRobot()
             .accountSwitcher()

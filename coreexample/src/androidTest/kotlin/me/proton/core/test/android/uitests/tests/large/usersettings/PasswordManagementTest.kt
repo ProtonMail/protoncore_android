@@ -31,9 +31,10 @@ class PasswordManagementTest : BaseTest() {
     @Test
     fun changePasswordAndLogin() {
         val newPassword = "newPassword"
-        AddAccountRobot()
-            .signIn()
-            .loginUser<CoreexampleRobot>(user)
+
+        login(user)
+
+        CoreexampleRobot()
             .settingsPasswordManagement()
             .changePassword<CoreexampleRobot>(user.password, newPassword)
             .accountSwitcher()

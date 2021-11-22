@@ -21,13 +21,12 @@ package me.proton.core.test.android.uitests.tests.medium.usersettings
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.R
-import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
 import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.settings.PasswordManagementRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Test
 
 class PasswordManagementTests : BaseTest() {
@@ -41,9 +40,9 @@ class PasswordManagementTests : BaseTest() {
 
     private fun navigateToPasswordManagement(user: User) {
         quark.jailUnban()
-        AddAccountRobot()
-            .signIn()
-            .loginUser<CoreexampleRobot>(user)
+        login(user)
+
+        CoreexampleRobot()
             .settingsPasswordManagement()
             .verify { passwordManagementElementsDisplayed() }
     }
