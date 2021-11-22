@@ -4,10 +4,10 @@
 
 ### Changes
 
-- Added Server Connection error support, that can be used by the clients to overcome potential blocked api.
+- Added Api Connection error support, that can be used by the clients to overcome potential blocked api.
 Mainly and initially this is supported now from VPN client for their guest hole feature.
-- Clients should provide a new dependency for `GuestHoleFallbackListener` or use the default one that
-Core provides `ServerConnectionListener` which does not do anything.
+- Clients should provide a new dependency for `ApiConnectionListener` or null if they do not want
+to support it.
 
 ## Auth [1.18.4], Network [1.15.8], Util Kotlin [1.15.3]
 ## Auth [1.18.5], Network [1.15.9], Util Kotlin [1.15.4]
