@@ -40,7 +40,7 @@ EOT
   git status;
 
   git commit -m "[release] $(cat ./new_releases.tmp)"
-  git push origin master;
+  git push origin master -o ci.skip;
 }
 
 main
