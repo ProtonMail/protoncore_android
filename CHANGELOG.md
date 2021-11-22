@@ -1,3 +1,15 @@
+## Network [1.16.0]
+
+22 Nov, 2021
+
+### Changes
+
+- Added GuestHole support, that can be used by the clients to overcome potential blocked api. Mainly
+this is supported now from VPN client.
+- Clients should provide a new dependency for `GuestHoleFallbackListener` or use the default one that
+Core provides `DefaultGustHoleFallbackListener` which does not do anything.
+
+## Auth [1.18.4], Network [1.15.8], Util Kotlin [1.15.3]
 ## Auth [1.18.5], Network [1.15.9], Util Kotlin [1.15.4]
 
 22 Nov, 2021
@@ -19,7 +31,7 @@ Nov 19, 2021
 
 ### New Features
 
-- Added two new callbacks to `EventListener`: 
+- Added two new callbacks to `EventListener`:
   - `onSuccess` will be called when the modifications are executed with no issues.
   - `onFailure` will be called after the modifications failed too many times and `resetAll` has run.
 
