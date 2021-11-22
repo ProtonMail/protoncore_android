@@ -18,16 +18,22 @@
 
 package me.proton.core.test.android.uitests.tests
 
+import android.app.Application
 import android.util.Log
+import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.di.AppDatabaseModule
+import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDevice
 import me.proton.core.test.android.plugins.Quark
 import me.proton.core.test.android.plugins.data.Plan
+import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.plugins.data.User.Users
+import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.uitests.CoreexampleRobot
 import org.junit.After
 import org.junit.BeforeClass
 
@@ -47,9 +53,15 @@ open class BaseTest(
         Log.d(testTag, "Clearing AccountManager database tables")
     }
 
+    fun login(user: User) {
+        authHelper.login(user.name, user.password)
+        AddAccountRobot().back<CoreexampleRobot>()
+    }
+
     companion object {
         val users = Users("sensitive/users.json")
         val quark = Quark(BuildConfig.HOST, BuildConfig.PROXY_TOKEN, "sensitive/internal_apis.json")
+        val authHelper = ProtonTestEntryPoint.provide(ApplicationProvider.getApplicationContext<Application>())
         val appDatabase = AppDatabaseModule.provideAppDatabase(getTargetContext())
 
         @JvmStatic

@@ -37,9 +37,8 @@ class CurrentPlanTests : BaseTest() {
     }
 
     private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
-        LoginRobot()
-            .loginUser<CoreexampleRobot>(user)
-            .verify { primaryUserIs(user) }
+
+        login(user)
 
         return CoreexampleRobot()
             .plansCurrent()

@@ -18,53 +18,45 @@
 
 package me.proton.core.test.android.uitests.tests.medium.payments
 
-import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.Card
-import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.plugins.data.Plan
-import me.proton.core.test.android.robots.auth.AddAccountRobot
-import me.proton.core.test.android.robots.auth.login.LoginRobot
+import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot.PaymentMethodElement.paymentMethod
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import org.junit.Before
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Ignore
 import org.junit.Test
 
 class ExistingPaymentMethodTests : BaseTest() {
 
-    private val loginRobot = LoginRobot()
-
     companion object {
         val userWithCard: User = quark.seedUserWithCreditCard()
     }
 
-    @Before
-    fun goToLogin() {
-        quark.jailUnban()
-        AddAccountRobot().signIn()
-    }
-
-    private fun upgradeUserToPlan(user: User, plan: Plan = Plan.Dev): ExistingPaymentMethodsRobot =
-        loginRobot
-            .loginUser<CoreexampleRobot>(user)
-            .plansUpgrade()
-            .upgradeToPlan(plan)
-
     @Test
     @Ignore("Requires user with paypal account linked")
     fun existingPaypalMethodDisplayed() {
-        val user = users.getUser { it.paypal.isNotEmpty() }
+        val userWithPaypal = users.getUser { it.paypal.isNotEmpty() }
 
-        upgradeUserToPlan(user)
-            .verify { paymentMethodDisplayed("PayPal", user.paypal) }
+        login(userWithPaypal)
+
+        CoreexampleRobot()
+            .plansUpgrade()
+            .upgradeToPlan<ExistingPaymentMethodsRobot>(Plan.Dev)
+            .verify { paymentMethodDisplayed("PayPal", userWithPaypal.paypal) }
     }
 
     @Test
     @SmokeTest
     fun existingCreditCardMethodDisplayed() {
-        upgradeUserToPlan(userWithCard)
+
+        login(userWithCard)
+
+        CoreexampleRobot()
+            .plansUpgrade()
+            .upgradeToPlan<ExistingPaymentMethodsRobot>(Plan.Dev)
             .verify { paymentMethodDisplayed(Card.default.details, Card.default.name) }
     }
 
@@ -74,7 +66,11 @@ class ExistingPaymentMethodTests : BaseTest() {
         val user = users.getUser { it.paypal.isNotEmpty() && it.cards.isNotEmpty() && !it.isPaid }
         val card = user.cards[0]
 
-        upgradeUserToPlan(user)
+        login(user)
+
+        CoreexampleRobot()
+            .plansUpgrade()
+            .upgradeToPlan<ExistingPaymentMethodsRobot>(Plan.Dev)
             .verify {
                 paymentMethodDisplayed(card.details, card.name)
                 paymentMethodDisplayed("PayPal", user.paypal)
@@ -86,8 +82,9 @@ class ExistingPaymentMethodTests : BaseTest() {
     fun switchPaymentMethod() {
         val user = users.getUser { it.paypal.isNotEmpty() && it.cards.isNotEmpty() && !it.isPaid }
 
-        upgradeUserToPlan(user)
-            .selectPaymentMethod(user.cards[0].details)
+        CoreexampleRobot()
+            .plansUpgrade()
+            .upgradeToPlan<ExistingPaymentMethodsRobot>(Plan.Dev)
             .verify {
                 paymentMethod(user.paypal).checkIsNotChecked()
                 paymentMethod(user.cards[0].details).checkIsChecked()

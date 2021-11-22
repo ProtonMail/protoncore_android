@@ -18,45 +18,30 @@
 
 package me.proton.core.test.android.uitests.tests.medium.plans
 
-import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.BillingCycle
 import me.proton.core.test.android.plugins.data.Currency
 import me.proton.core.test.android.plugins.data.Plan
-import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.robots.auth.AddAccountRobot
-import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import org.junit.Before
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Test
 
 class UpgradePlanTests : BaseTest() {
 
     private val selectPlanRobot = SelectPlanRobot()
+    private val coreExampleRobot = CoreexampleRobot()
     private val freeUser = users.getUser { !it.isPaid }
     private val paidUser = users.getUser { it.isPaid }
-
-    @Before
-    fun login() {
-        AddAccountRobot()
-            .signIn()
-    }
-
-    private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
-        LoginRobot()
-            .loginUser<CoreexampleRobot>(user)
-            .verify { primaryUserIs(user) }
-
-        CoreexampleRobot()
-            .plansUpgrade()
-        return SelectPlanRobot()
-    }
 
     @Test
     @SmokeTest
     fun userWithFreePlan() {
-        navigateUserToCurrentPlans(freeUser)
+
+        login(freeUser)
+
+        coreExampleRobot
+            .plansUpgrade()
             .scrollToPlan(Plan.Dev)
             .verify {
                 canUpgradeToPlan(Plan.Dev)
@@ -70,13 +55,22 @@ class UpgradePlanTests : BaseTest() {
 
     @Test
     fun userWithPaidPlan() {
-        navigateUserToCurrentPlans(paidUser)
+
+        login(paidUser)
+
+        coreExampleRobot
+            .plansUpgrade()
             .verify { planDetailsDisplayed(paidUser.plan) }
     }
 
     @Test
     fun changeBillingCycleAndCurrency() {
-        navigateUserToCurrentPlans(freeUser)
+
+        login(freeUser)
+
+        coreExampleRobot
+            .plansUpgrade()
+            .scrollToPlan(Plan.Dev)
 
         BillingCycle.values().forEach { cycle ->
             selectPlanRobot.changeBillingCycle(cycle)
