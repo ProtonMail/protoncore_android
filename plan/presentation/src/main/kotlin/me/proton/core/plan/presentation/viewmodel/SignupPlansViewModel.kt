@@ -24,21 +24,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.presentation.onPaymentResult
-import me.proton.core.plan.domain.SupportedPaidPlans
+import me.proton.core.plan.domain.SupportedSignupPaidPlans
 import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
-import me.proton.core.plan.presentation.entity.SelectedPlan
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SignupPlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
-    @SupportedPaidPlans val supportedPaidPlanNames: List<String>,
+    @SupportedSignupPaidPlans val supportedPaidPlanNames: List<String>,
     paymentsOrchestrator: PaymentsOrchestrator
 ) : BasePlansViewModel(paymentsOrchestrator) {
 
