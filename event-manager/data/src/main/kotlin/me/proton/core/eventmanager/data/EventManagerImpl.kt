@@ -100,7 +100,7 @@ class EventManagerImpl @AssistedInject constructor(
                 State.NotifyPrepare -> notifyPrepare(metadata)
                 State.NotifyEvents -> notifyPrepare(metadata)
                 State.NotifyResetAll -> notifyResetAll(metadata)
-                State.NotifyComplete -> notifyComplete(metadata)
+                State.NotifyComplete -> notifyComplete(metadata, true)
                 State.Completed -> Unit
             }
         }
@@ -166,7 +166,7 @@ class EventManagerImpl @AssistedInject constructor(
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
             enqueue(requireNotNull(metadata.eventId), immediately = true)
         }.onSuccess {
-            notifyComplete(metadata)
+            notifyComplete(metadata, success = false)
         }
     }
 
@@ -211,11 +211,11 @@ class EventManagerImpl @AssistedInject constructor(
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
             enqueue(metadata.eventId, immediately = true)
         }.onSuccess {
-            notifyComplete(metadata)
+            notifyComplete(metadata, success = true)
         }
     }
 
-    private suspend fun notifyComplete(metadata: EventMetadata) {
+    private suspend fun notifyComplete(metadata: EventMetadata, success: Boolean) {
         runCatching(
             config = config,
             eventId = requireNotNull(metadata.eventId),
@@ -225,6 +225,11 @@ class EventManagerImpl @AssistedInject constructor(
         ) {
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
+                if (success) {
+                    eventListener.notifySuccess(config)
+                } else {
+                    eventListener.notifyFailure(config)
+                }
                 eventListener.notifyComplete(config)
             }
         }.onFailure {
@@ -284,7 +289,7 @@ class EventManagerImpl @AssistedInject constructor(
         isStarted = true
     }
 
-    private suspend fun internalStop() {
+    private fun internalStop() {
         if (!isStarted) return
 
         observeAccountJob?.cancel()
