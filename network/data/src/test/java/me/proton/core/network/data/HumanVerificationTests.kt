@@ -166,7 +166,8 @@ internal class HumanVerificationTests {
                 humanVerificationListener,
                 cookieStore,
                 scope,
-                cache = { null }
+                cache = { null },
+                apiConnectionListener = null
             )
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
 

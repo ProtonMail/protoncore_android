@@ -16,15 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.serverconnection
+package me.proton.core.network.domain.exception
 
-import me.proton.core.network.domain.ApiResult
+import java.io.IOException
 
-interface ServerConnectionListener {
-
-    suspend fun <T> onPotentiallyBlocked(
-        path: String?,
-        query: String?,
-        backendCall: suspend () -> ApiResult<T>
-    ): ApiResult<T>?
-}
+class ApiConnectionException(
+    val path: String,
+    val query: String?,
+    val originalException: IOException
+) : IOException(originalException)

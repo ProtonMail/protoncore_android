@@ -46,7 +46,7 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
-import me.proton.core.network.domain.serverconnection.ServerConnectionListener
+import me.proton.core.network.domain.serverconnection.ApiConnectionListener
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener
@@ -109,7 +109,7 @@ class NetworkModule {
         humanVerificationProvider: HumanVerificationProvider,
         humanVerificationListener: HumanVerificationListener,
         extraHeaderProvider: ExtraHeaderProvider,
-        serverConnectionListener: ServerConnectionListener
+        apiConnectionListener: ApiConnectionListener
     ): ApiManagerFactory = ApiManagerFactory(
         Constants.BASE_URL,
         apiClient,
@@ -131,7 +131,7 @@ class NetworkModule {
             )
         },
         extraHeaderProvider,
-        serverConnectionListener
+        apiConnectionListener
     )
 
     @Provides
@@ -141,7 +141,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGuestHoleFallbackListener(): ServerConnectionListener = object: ServerConnectionListener {
+    fun provideGuestHoleFallbackListener(): ApiConnectionListener = object: ApiConnectionListener {
         override suspend fun <T> onPotentiallyBlocked(
             path: String?,
             query: String?,

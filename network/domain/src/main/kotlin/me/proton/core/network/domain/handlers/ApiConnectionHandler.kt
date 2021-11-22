@@ -24,10 +24,10 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.serverconnection.ServerConnectionListener
+import me.proton.core.network.domain.serverconnection.ApiConnectionListener
 
-class ServerConnectionHandler<Api>(
-    private val serverConnectionListener: ServerConnectionListener?
+class ApiConnectionHandler<Api>(
+    private val apiConnectionListener: ApiConnectionListener?
 ) : ApiErrorHandler<Api> {
     override suspend fun <T> invoke(
         backend: ApiBackend<Api>,
@@ -37,7 +37,7 @@ class ServerConnectionHandler<Api>(
         if (!error.isPotentialBlocking) return error
         if (error !is ApiResult.Error.Connection) return error
 
-        return serverConnectionListener?.let { listener ->
+        return apiConnectionListener?.let { listener ->
             globalMutex.withLock {
                 listener.onPotentiallyBlocked(error.path, error.query) { backend(call) }
             }

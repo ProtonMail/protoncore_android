@@ -20,7 +20,7 @@ package me.proton.core.network.data.interceptor
 
 import me.proton.core.network.data.ProtonErrorException
 import me.proton.core.network.data.protonApi.ProtonErrorData
-import me.proton.core.network.domain.exception.ServerConnectionException
+import me.proton.core.network.domain.exception.ApiConnectionException
 import me.proton.core.util.kotlin.deserializeOrNull
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -35,7 +35,7 @@ class ServerErrorInterceptor : Interceptor {
         } catch (e: IOException) {
             // every IO exception is possible potential blocking of the API
             with(request.url) {
-                throw ServerConnectionException(encodedPath, query, e)
+                throw ApiConnectionException(encodedPath, query, e)
             }
         }
         if (!response.isSuccessful) {
