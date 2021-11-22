@@ -158,11 +158,11 @@ Account Manager Dagger: **1.16.2** - _released on: Nov 16, 2021_
 
 ### Event Manager
 
-Event Manager: **1.19.1** - _released on: Nov 18, 2021_
+Event Manager: **1.19.2** - _released on: Nov 22, 2021_
 
-Event Manager Domain: **1.19.1** - _released on: Nov 18, 2021_
+Event Manager Domain: **1.19.2** - _released on: Nov 22, 2021_
 
-Event Manager Data: **1.19.1** - _released on: Nov 18, 2021_
+Event Manager Data: **1.19.2** - _released on: Nov 22, 2021_
 
 ### Key
 
