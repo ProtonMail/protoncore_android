@@ -50,7 +50,7 @@
   <string name="payments_country">Země</string>
   <string name="payments_paying_in_process">Platba</string>
   <string name="payments_choose_country">Zvolte zemi</string>
-  <string name="payments_info_not_available">n/a</string>
+  <string name="payments_info_not_available">není k dispozici</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->

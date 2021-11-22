@@ -17,56 +17,86 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">Vybrat plán</string>
+  <string name="plans_select_plan">Vybrat</string>
   <string name="plans_select_a_plan">Vyberte plán</string>
   <string name="plans_customizable_features">Visit <a href="https://protonmail.com/pricing">protonmail.com</a> to upgrade to Professional and Visionary plans, or to customize your plan.</string>
-  <string name="plans_customizable_features_web">  Navštivte  pro přizpůsobení Vašeho plánu.
-  <a href="https://protonmail.com/pricing">protonmail.com</a>
+  <string name="plans_customizable_features_web">    Navštivte  pro přizpůsobení Vašeho plánu.
+    <a href="https://protonmail.com/pricing">protonmail.com</a>
   </string>
   <string name="plans_fetching_general_error">Při načítání plánů došlo k chybě.</string>
   <string name="plans_free_name">Zdarma</string>
-  <string name="plan_price_monthly">/ month</string>
+  <string name="plan_price_monthly">per month*</string>
   <string name="plans_current_plan">Aktuální plán</string>
-  <string name="plans_upgrade_plan">Upgrade plan</string>
+  <string name="plans_upgrade_plan">Upgradovat plán</string>
   <string name="plans_subscription">Předplatné</string>
   <string name="plans_renewal_date">Váš plán se automaticky obnoví dne</string>
-  <string name="plans_billed_yearly">Účtováno jako %s za rok</string>
+  <string name="plans_billed_yearly">*Billed annually at %s</string>
+  <string name="plans_billed_anually">Billed annually</string>
+  <string name="plans_billed_monthly">Účtováno měsíčně</string>
+  <string name="plans_billed_every_2years">Billed every 2 years</string>
   <string name="plans_save_20">Ušetřete 20% přechodem na roční fakturaci</string>
+  <string name="plans_renew_info">Renews automatically. Cancel or change plan at any time.</string>
+  <string name="plans_upgrade_your_plan">Přejít na vyšší tarif</string>
   <!-- plan details -->
+  <string name="plans_feature_free_item_storage">0,5GB úložiště</string>
+  <string name="plans_feature_free_item_address">1 adresa</string>
+  <string name="plans_feature_free_item_calendar">1 calendar</string>
+  <string name="plans_feature_free_item_vpn">1 VPN připojení</string>
   <string-array name="free">
-    <item>1 uživatel</item>
-    <item>0,5GB úložiště</item>
-    <item>1 adresa</item>
+    <item>Základ pro soukromou a bezpečnou komunikaci.</item>
+    <item>@string/plans_feature_free_item_storage</item>
+    <item>@string/plans_feature_free_item_address</item>
+    <item>@string/plans_feature_free_item_calendar</item>
+    <item>@string/plans_feature_free_item_vpn</item>
   </string-array>
-  <string-array name="plus">
-    <item>1 uživatel</item>
-    <item>5GB úložiště*</item>
-    <item>5 adres</item>
-    <item>200 složek/štítků</item>
-    <item>Vlastní e-mailová adresa</item>
+  <!-- new -->
+  <string-array name="plan_id_plus" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>Plně vybavená emailová schránka s pokročilou ochranou.</item>
+    <item>#proton_storage# storage</item>
+    <item>#proton_addresses# addresses</item>
+    <item>#proton_domains# custom domain</item>
   </string-array>
-  <string-array name="professional">
-    <item>1–5000 uživatelů *</item>
-    <item>5 GB úložiště / uživatel</item>
-    <item>5 adres / uživatel</item>
-    <item>Neomezený počet složek / štítků / filtrů</item>
-    <item>Vlastní e-mailové adresy</item>
+  <string-array name="plan_id_vpnbasic" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>VPN basic</item>
+    <item>#proton_vpn# VPN connections</item>
+    <item>Vysoká rychlost</item>
+    <item>#proton_storage# storage</item>
+    <item>#proton_addresses# address</item>
+    <item>#proton_calendars# calendar</item>
   </string-array>
-  <string-array name="visionary">
-    <item>6 uživatelů</item>
-    <item>20 GB úložiště</item>
-    <item>50 adres</item>
-    <item>Neomezený počet složek / štítků / filtrů</item>
-    <item>Vlastní e-mailové adresy</item>
+  <string-array name="plan_id_vpnplus" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>VPN plus</item>
+    <item>#proton_vpn# VPN connections</item>
+    <item>Highest speed</item>
+    <item>#proton_storage# storage</item>
+    <item>#proton_addresses# address</item>
+    <item>#proton_calendars# calendar</item>
+  </string-array>
+  <string-array name="plan_id_professional" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>Profesionální</item>
+    <item>#proton_storage# storage / user</item>
+    <item>#proton_addresses# addresses / user</item>
+    <item>#proton_domains# custom domains</item>
+    <item>Podpora pro více uživatelů</item>
+  </string-array>
+  <string-array name="plan_id_visionary" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>Visionary</item>
+    <item>#proton_storage# storage</item>
+    <item>#proton_addresses# addresses</item>
+    <item>#proton_calendars# calendars</item>
+    <item>#proton_vpn# high-speed VPN connections</item>
+    <item>#proton_domains# custom domains</item>
+    <item>#proton_users# users</item>
   </string-array>
   <!-- supported plans -->
   <string-array name="supported_currencies">
-    <item>€ EUR</item>
-    <item>$ USD</item>
+    <item>EUR</item>
+    <item>USD</item>
     <item>CHF</item>
   </string-array>
   <string-array name="supported_billing_cycle">
-    <item>Měsíční fakturace</item>
-    <item>Roční fakturace - UŠETŘÍTE 20%</item>
+    <item>Platit měsíčně</item>
+    <item>Pay annual (save up to 20%)</item>
+    <item>Pay every 2 years (save 33%)</item>
   </string-array>
 </resources>

@@ -70,7 +70,8 @@
   <string name="auth_create_address_result_recovery_title">E-mailová adresa pro obnovení je:</string>
   <string name="auth_create_address_create">Vytvořit adresu</string>
   <string name="auth_create_address_creating">Vytváření adresy</string>
-  <string name="auth_create_address_terms">Kliknutím vytvořte adresu, souhlasíte s Protonovými <a href="https://protonmail.com/terms-and-conditions"> podmínkami a náležitostmi.</a></string>
+  <string name="auth_create_address_terms">Kliknutím vytvořte adresu, souhlasíte s Protonovými <a href="https://protonmail.com/terms-and-conditions"> podmínkami a náležitostmi.</a>
+  </string>
   <string name="auth_create_address_error_credentials">Pověřovací listiny by neměly být prázdné.</string>
   <string name="auth_create_address_error_no_available_domain">Žádná dostupná doména.</string>
   <string name="auth_create_address_error_private_key">Generování soukromého klíče se nezdařilo.</string>
@@ -104,7 +105,7 @@
   <string name="auth_signup_recovery_method_email_hint">Sekundární e-mail</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefonní číslo pro obnovení</string>
   <string name="auth_signup_terms_conditions">Obchodní podmínky</string>
-  <string name="auth_signup_terms_conditions_full">Klepnutím na tlačítko Další souhlasíte s obchodními podmínkami Proton.</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Přeskočit metodu obnovení?</string>
   <string name="auth_signup_skip_recovery_description">Metoda obnovení vám pomůže získat přístup k účtu v případě, že zapomenete heslo nebo se z účtu odhlásíte.</string>
   <string name="auth_signup_skip_recovery">Přeskočit</string>

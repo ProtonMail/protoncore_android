@@ -31,7 +31,7 @@
   <string name="human_verification_option_sms_subtitle">Numer telefonu zostanie użyty tylko do jednorazowej weryfikacji.</string>
   <string name="human_verification_get_verification_code">Otrzymaj kod weryfikacyjny</string>
   <string name="human_verification_already_have_code">Mam już kod</string>
-  <string name="human_verification_request_replacement_code">Nie otrzymałeś kodu?</string>
+  <string name="human_verification_request_replacement_code">Nie otrzymano kodu?</string>
   <string name="human_verification_verify">Zweryfikuj</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Potrzebujesz pomocy z weryfikacją antyspamową?</string>
