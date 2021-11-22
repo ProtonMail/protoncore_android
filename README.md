@@ -105,11 +105,11 @@ Data Room: **1.16** - _released on: Oct 04, 2021_
 
 ### Network
 
-Network: **1.15.9** - _released on: Nov 22, 2021_
+Network: **1.16** - _released on: Nov 22, 2021_
 
-Network Domain: **1.15.9** - _released on: Nov 22, 2021_
+Network Domain: **1.16** - _released on: Nov 22, 2021_
 
-Network Data: **1.15.9** - _released on: Nov 22, 2021_
+Network Data: **1.16** - _released on: Nov 22, 2021_
 
 ### Crypto
 
