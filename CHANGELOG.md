@@ -1,3 +1,13 @@
+## EventManager Version [1.19.2]
+
+Nov 19, 2021
+
+### New Features
+
+- Added two new callbacks to `EventListener`: 
+  - `onSuccess` will be called when the modifications are executed with no issues.
+  - `onFailure` will be called after the modifications failed too many times and `resetAll` has run.
+
 ## EventManager Version [1.19.1]
 
 Nov 18, 2021

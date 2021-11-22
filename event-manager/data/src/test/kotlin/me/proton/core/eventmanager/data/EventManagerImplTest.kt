@@ -279,4 +279,62 @@ class EventManagerImplTest {
         }
         assertEquals(calendarId, calendarEventListener.config.asCalendar().calendarId)
     }
+
+    @Test
+    fun notifyCompleteCallsOnSuccess() = runBlocking {
+        // GIVEN
+        coEvery { eventMetadataRepository.get(any()) } returns
+            listOf(
+                EventMetadata(
+                    UserId("userId"),
+                    EventId("eventId"),
+                    EventManagerConfig.Calendar(UserId("userId"), "calendarId"),
+                    state = State.NotifyComplete,
+                    createdAt = 0L,
+                )
+            )
+
+        // WHEN
+        calendarManager.process()
+
+        // THEN
+        coVerify(exactly = 1) { calendarEventListener.onSuccess(any()) }
+        coVerify(exactly = 1) { calendarEventListener.onComplete(any()) }
+
+        coVerify(exactly = 0) { calendarEventListener.onFailure(any()) }
+        coVerify(exactly = 0) { calendarEventListener.onResetAll(any()) }
+        coVerify(exactly = 0) { calendarEventListener.onPrepare(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onCreate(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onUpdate(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onDelete(any(), any()) }
+    }
+
+    @Test
+    fun notifyResetAllCallsOnFailure() = runBlocking {
+        // GIVEN
+        coEvery { eventMetadataRepository.get(any()) } returns
+            listOf(
+                EventMetadata(
+                    UserId("userId"),
+                    EventId("eventId"),
+                    EventManagerConfig.Calendar(UserId("userId"), "calendarId"),
+                    state = State.NotifyResetAll,
+                    createdAt = 0L,
+                )
+            )
+
+        // WHEN
+        calendarManager.process()
+
+        // THEN
+        coVerify(exactly = 1) { calendarEventListener.onResetAll(any()) }
+        coVerify(exactly = 1) { calendarEventListener.onFailure(any()) }
+        coVerify(exactly = 1) { calendarEventListener.onComplete(any()) }
+
+        coVerify(exactly = 0) { calendarEventListener.onPrepare(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onCreate(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onUpdate(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onDelete(any(), any()) }
+        coVerify(exactly = 0) { calendarEventListener.onSuccess(any()) }
+    }
 }

@@ -132,6 +132,20 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
     }
 
     /**
+     * Notify successful completion of the [EventListener]'s loop. Called before [onComplete].
+     *
+     * Note: No transaction wraps this function.
+     */
+    suspend fun notifySuccess(config: EventManagerConfig) = onSuccess(config)
+
+    /**
+     * Notify completion with failures of the [EventListener]'s loop. Called before [onComplete] and after [onResetAll].
+     *
+     * Note: No transaction wraps this function.
+     */
+    suspend fun notifyFailure(config: EventManagerConfig) = onFailure(config)
+
+    /**
      * Deserialize [response] into a typed list of [Event].
      */
     abstract suspend fun deserializeEvents(config: EventManagerConfig, response: EventsResponse): List<Event<Key, Type>>?
@@ -146,11 +160,30 @@ abstract class EventListener<Key : Any, Type : Any> : TransactionHandler {
     open suspend fun onPrepare(config: EventManagerConfig, entities: List<Type>) = Unit
 
     /**
-     * Called at the end of a set of modifications, whether it is successful or not.
+     * Called at the end of a set of modifications, whether it is successful or not. It can be used to clean up any
+     * resources that are no longer needed.
      *
      * @see onPrepare
      */
     open suspend fun onComplete(config: EventManagerConfig) = Unit
+
+    /**
+     * Called at the end of a set of modifications when it is successful.
+     *
+     * Note: [onComplete] will be called right after.
+     *
+     * @see onComplete
+     */
+    open suspend fun onSuccess(config: EventManagerConfig) = Unit
+
+    /**
+     * Called at the end of a set of modifications after it failed.
+     *
+     * Note: [onComplete] will be called right after.
+     *
+     * @see onComplete
+     */
+    open suspend fun onFailure(config: EventManagerConfig) = Unit
 
     /**
      * Called to created entities in persistence.
