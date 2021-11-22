@@ -81,7 +81,7 @@ Util Android Shared Preferences: **1.15** - _released on: Sep 13, 2021_
 
 Util Android Work Manager: **1.15** - _released on: Sep 13, 2021_
 
-Util Kotlin: **1.15.2** - _released on: Sep 23, 2021_
+Util Kotlin: **1.15.4** - _released on: Nov 22, 2021_
 
 ### Test
 
@@ -105,11 +105,11 @@ Data Room: **1.16** - _released on: Oct 04, 2021_
 
 ### Network
 
-Network: **1.15.7** - _released on: Oct 12, 2021_
+Network: **1.15.9** - _released on: Nov 22, 2021_
 
-Network Domain: **1.15.7** - _released on: Oct 12, 2021_
+Network Domain: **1.15.9** - _released on: Nov 22, 2021_
 
-Network Data: **1.15.7** - _released on: Oct 12, 2021_
+Network Data: **1.15.9** - _released on: Nov 22, 2021_
 
 ### Crypto
 
@@ -123,13 +123,13 @@ Crypto Android: **1.16** - _released on: Oct 28, 2021_
 
 ### Auth
 
-Auth: **1.18.3** - _released on: Nov 15, 2021_
+Auth: **1.18.5** - _released on: Nov 22, 2021_
 
-Auth Domain: **1.18.3** - _released on: Nov 15, 2021_
+Auth Domain: **1.18.5** - _released on: Nov 22, 2021_
 
-Auth Presentation: **1.18.3** - _released on: Nov 15, 2021_
+Auth Presentation: **1.18.5** - _released on: Nov 22, 2021_
 
-Auth Data: **1.18.3** - _released on: Nov 15, 2021_
+Auth Data: **1.18.5** - _released on: Nov 22, 2021_
 
 ### Account
 
@@ -192,13 +192,13 @@ User Settings Presentation: **1.19.1** - _released on: Nov 18, 2021_
 
 ### Contact
 
-Contact: **1.19.1** - _released on: Nov 18, 2021_
+Contact: **1.19.3** - _released on: Nov 22, 2021_
 
-Contact Domain: **1.19.1** - _released on: Nov 18, 2021_
+Contact Domain: **1.19.3** - _released on: Nov 22, 2021_
 
-Contact Data: **1.19.1** - _released on: Nov 18, 2021_
+Contact Data: **1.19.3** - _released on: Nov 22, 2021_
 
-Contact Hilt: **1.19.1** - _released on: Nov 18, 2021_
+Contact Hilt: **1.19.3** - _released on: Nov 22, 2021_
 
 ### Mail Message
 
@@ -238,13 +238,13 @@ Country Presentation: **1.16.2** - _released on: Nov 16, 2021_
 
 ### Payment
 
-Payment: **1.17.3** - _released on: Nov 16, 2021_
+Payment: **1.17.5** - _released on: Nov 22, 2021_
 
-Payment Data: **1.17.3** - _released on: Nov 16, 2021_
+Payment Data: **1.17.5** - _released on: Nov 22, 2021_
 
-Payment Domain: **1.17.3** - _released on: Nov 16, 2021_
+Payment Domain: **1.17.5** - _released on: Nov 22, 2021_
 
-Payment Presentation: **1.17.3** - _released on: Nov 16, 2021_
+Payment Presentation: **1.17.5** - _released on: Nov 22, 2021_
 
 ### Plan
 
