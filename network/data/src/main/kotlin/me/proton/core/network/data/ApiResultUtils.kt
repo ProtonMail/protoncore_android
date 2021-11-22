@@ -47,7 +47,7 @@ internal suspend fun <Api, T> safeApiCall(
     } catch (e: CertificateException) {
         ApiResult.Error.Certificate(e)
     } catch (e: ServerConnectionException) {
-        e.parse(networkManager)
+        e.toApiResult(networkManager)
     }
     if (result is ApiResult.Error) {
         result.cause?.let { CoreLogger.e(LogTag.DEFAULT, it) }
@@ -55,7 +55,7 @@ internal suspend fun <Api, T> safeApiCall(
     return result
 }
 
-private fun ServerConnectionException.parse(networkManager: NetworkManager): ApiResult.Error.Connection {
+private fun ServerConnectionException.toApiResult(networkManager: NetworkManager): ApiResult.Error.Connection {
     // handle the exceptions that might indicate that the API is potentially blocked
     return when (originalException) {
         is SSLHandshakeException -> ApiResult.Error.Certificate(this)

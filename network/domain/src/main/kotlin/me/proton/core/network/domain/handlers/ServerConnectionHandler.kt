@@ -36,12 +36,12 @@ class ServerConnectionHandler<Api>(
     ): ApiResult<T> {
         if (!error.isPotentialBlocking) return error
         if (error !is ApiResult.Error.Connection) return error
-        // it should suspend and ask the client to establish guest hole
-        val result =
+
+        return serverConnectionListener?.let { listener ->
             globalMutex.withLock {
-                serverConnectionListener?.fallbackCall(error.path, error.query) { backend(call) }
+                listener.onPotentiallyBlocked(error.path, error.query) { backend(call) }
             }
-        return result ?: error
+        } ?: error
     }
 
     companion object {

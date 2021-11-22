@@ -142,13 +142,13 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideGuestHoleFallbackListener(): ServerConnectionListener = object: ServerConnectionListener {
-        override suspend fun <T> fallbackCall(
+        override suspend fun <T> onPotentiallyBlocked(
             path: String?,
             query: String?,
-            blockToRetry: suspend () -> ApiResult<T>
+            backendCall: suspend () -> ApiResult<T>
         ): ApiResult<T>? {
             delay(1000)
-            return blockToRetry()
+            return backendCall()
         }
     }
 }

@@ -137,15 +137,15 @@ class ApiManagerFactory(
     ): List<ApiErrorHandler<Api>> {
         val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
-        val guestHoleHandler = ServerConnectionHandler<Api>(serverConnectionListener)
+        val serverConnectionHandler = ServerConnectionHandler<Api>(serverConnectionListener)
         val humanVerificationNeededHandler =
             HumanVerificationNeededHandler<Api>(sessionId, clientIdProvider, humanVerificationListener, monoClockMs)
         val humanVerificationInvalidHandler =
             HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
         return listOf(
+            serverConnectionHandler,
             refreshTokenHandler,
             forceUpdateHandler,
-            guestHoleHandler,
             humanVerificationInvalidHandler,
             humanVerificationNeededHandler
         )

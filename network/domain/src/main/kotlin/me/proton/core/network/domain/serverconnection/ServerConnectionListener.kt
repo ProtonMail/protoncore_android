@@ -22,9 +22,9 @@ import me.proton.core.network.domain.ApiResult
 
 interface ServerConnectionListener {
 
-    suspend fun <T> fallbackCall(
+    suspend fun <T> onPotentiallyBlocked(
         path: String?,
         query: String?,
-        blockToRetry: suspend () -> ApiResult<T>
+        backendCall: suspend () -> ApiResult<T>
     ): ApiResult<T>?
 }
