@@ -133,7 +133,8 @@ internal class ProtonApiBackendTests {
             humanVerificationListener,
             cookieStore,
             scope,
-            cache = { null }
+            cache = { null },
+            apiConnectionListener = null
         )
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable

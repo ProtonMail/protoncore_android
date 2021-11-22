@@ -20,6 +20,7 @@ package me.proton.core.network.data
 import kotlinx.serialization.SerializationException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.exception.ApiConnectionException
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.Response
 import retrofit2.HttpException
@@ -45,21 +46,24 @@ internal suspend fun <Api, T> safeApiCall(
         ApiResult.Error.Parse(e)
     } catch (e: CertificateException) {
         ApiResult.Error.Certificate(e)
-    } catch (e: SSLHandshakeException) {
-        ApiResult.Error.Certificate(e)
-    } catch (e: SSLPeerUnverifiedException) {
-        ApiResult.Error.Certificate(e)
-    } catch (e: SocketTimeoutException) {
-        ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), e)
-    } catch (e: UnknownHostException) {
-        ApiResult.Error.NoInternet(e)
-    } catch (e: IOException) {
-        ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
+    } catch (e: ApiConnectionException) {
+        e.toApiResult(networkManager)
     }
     if (result is ApiResult.Error) {
         result.cause?.let { CoreLogger.e(LogTag.DEFAULT, it) }
     }
     return result
+}
+
+private fun ApiConnectionException.toApiResult(networkManager: NetworkManager): ApiResult.Error.Connection {
+    // handle the exceptions that might indicate that the API is potentially blocked
+    return when (originalException) {
+        is SSLHandshakeException -> ApiResult.Error.Certificate(this)
+        is SSLPeerUnverifiedException -> ApiResult.Error.Certificate(this)
+        is SocketTimeoutException -> ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), this)
+        is UnknownHostException -> ApiResult.Error.NoInternet(this)
+        else -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), this)
+    }
 }
 
 private fun <T> parseHttpError(

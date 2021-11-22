@@ -37,6 +37,8 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.serverconnection.ApiConnectionListener
+import me.proton.core.network.domain.handlers.ApiConnectionHandler
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
@@ -83,6 +85,7 @@ class ApiManagerFactory(
     private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
     private val cache: () -> Cache? = { null },
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
+    private val apiConnectionListener: ApiConnectionListener?
 ) {
 
     @OptIn(ObsoleteCoroutinesApi::class)
@@ -134,11 +137,13 @@ class ApiManagerFactory(
     ): List<ApiErrorHandler<Api>> {
         val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
+        val serverConnectionHandler = ApiConnectionHandler<Api>(apiConnectionListener)
         val humanVerificationNeededHandler =
             HumanVerificationNeededHandler<Api>(sessionId, clientIdProvider, humanVerificationListener, monoClockMs)
         val humanVerificationInvalidHandler =
             HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
         return listOf(
+            serverConnectionHandler,
             refreshTokenHandler,
             forceUpdateHandler,
             humanVerificationInvalidHandler,

@@ -142,6 +142,7 @@ internal class ApiManagerTests {
                 mockk(),
                 scope,
                 cache = { null },
+                apiConnectionListener = null
             )
 
         coEvery { dohService.getAlternativeBaseUrls(any()) } returns listOf(proxy1url)
