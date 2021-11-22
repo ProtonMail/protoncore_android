@@ -1,11 +1,11 @@
-## Auth [1.18.4], Network [1.15.8], Util Kotlin [1.15.3]
+## Auth [1.18.5], Network [1.15.9], Util Kotlin [1.15.4]
 
 22 Nov, 2021
 
 ### Dependencies
 
-- Contact 1.19.2
-- Payment 1.17.4
+- Contact 1.19.3
+- Payment 1.17.5
 
 ### Changes
 
