@@ -20,6 +20,7 @@ package me.proton.core.network.data
 import kotlinx.serialization.SerializationException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.exception.NetworkException
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.Response
 import retrofit2.HttpException
@@ -53,13 +54,22 @@ internal suspend fun <Api, T> safeApiCall(
         ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), e)
     } catch (e: UnknownHostException) {
         ApiResult.Error.NoInternet(e)
-    } catch (e: IOException) {
-        ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
+    } catch (e: NetworkException) {
+        e.parse(networkManager)
     }
     if (result is ApiResult.Error) {
         result.cause?.let { CoreLogger.e(LogTag.DEFAULT, it) }
     }
     return result
+}
+
+private fun NetworkException.parse(networkManager: NetworkManager): ApiResult.Error.Connection {
+    // handle the exceptions that might indicate that the API is potentially blocked
+    return if (originalException is SocketTimeoutException) {
+        ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), originalException)
+    } else {
+        ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), originalException)
+    }
 }
 
 private fun <T> parseHttpError(

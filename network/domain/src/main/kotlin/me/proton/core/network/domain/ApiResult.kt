@@ -20,6 +20,7 @@ package me.proton.core.network.domain
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withTimeoutOrNull
+import me.proton.core.network.domain.exception.NetworkException
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 
 /**
@@ -93,8 +94,14 @@ sealed class ApiResult<out T> {
          *
          * @property potentialBlock [true] if our API might have been blocked.
          */
-        open class Connection(private val potentialBlock: Boolean = false, cause: Throwable? = null) : Error(cause) {
+        open class Connection(
+            private val potentialBlock: Boolean = false,
+            cause: Throwable? = null
+        ) : Error(cause) {
             override val isPotentialBlocking get() = potentialBlock
+
+            val path = if (cause is NetworkException) cause.path else null
+            val query = if (cause is NetworkException) cause.query else null
         }
 
         /**

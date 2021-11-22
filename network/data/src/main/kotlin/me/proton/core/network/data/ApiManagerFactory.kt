@@ -37,6 +37,9 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.guesthole.DefaultGuestHoleFallbackListener
+import me.proton.core.network.domain.guesthole.GuestHoleFallbackListener
+import me.proton.core.network.domain.handlers.GuestHoleHandler
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
@@ -83,6 +86,7 @@ class ApiManagerFactory(
     private val alternativeApiPins: List<String> = Constants.ALTERNATIVE_API_SPKI_PINS,
     private val cache: () -> Cache? = { null },
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
+    private val guestHoleFallbackListener: GuestHoleFallbackListener = DefaultGuestHoleFallbackListener()
 ) {
 
     @OptIn(ObsoleteCoroutinesApi::class)
@@ -138,11 +142,13 @@ class ApiManagerFactory(
             HumanVerificationNeededHandler<Api>(sessionId, clientIdProvider, humanVerificationListener, monoClockMs)
         val humanVerificationInvalidHandler =
             HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
+        val guestHoleHandler = GuestHoleHandler<Api>(guestHoleFallbackListener)
         return listOf(
             refreshTokenHandler,
             forceUpdateHandler,
             humanVerificationInvalidHandler,
-            humanVerificationNeededHandler
+            humanVerificationNeededHandler,
+            guestHoleHandler
         )
     }
 

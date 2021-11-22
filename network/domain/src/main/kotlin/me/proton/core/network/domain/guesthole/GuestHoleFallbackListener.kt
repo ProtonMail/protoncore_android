@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,21 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.network.domain.guesthole
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-}
+import me.proton.core.network.domain.ApiResult
 
-libVersion = Version(1, 16, 0)
+interface GuestHoleFallbackListener {
 
-android()
-
-dependencies {
-
-    api(
-        project(Module.networkDomain),
-        project(Module.networkData)
-    )
+    suspend fun <T> fallbackCall(
+        path: String?,
+        query: String?,
+        blockToRetry: suspend () -> ApiResult<T>
+    ): ApiResult<T>?
 }

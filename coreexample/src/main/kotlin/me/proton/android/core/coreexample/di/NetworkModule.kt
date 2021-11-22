@@ -28,6 +28,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
@@ -40,10 +41,13 @@ import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.ApiManager
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.guesthole.GuestHoleFallbackListener
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener
@@ -106,6 +110,7 @@ class NetworkModule {
         humanVerificationProvider: HumanVerificationProvider,
         humanVerificationListener: HumanVerificationListener,
         extraHeaderProvider: ExtraHeaderProvider,
+        guestHoleFallbackListener: GuestHoleFallbackListener
     ): ApiManagerFactory = ApiManagerFactory(
         Constants.BASE_URL,
         apiClient,
@@ -127,12 +132,26 @@ class NetworkModule {
             )
         },
         extraHeaderProvider,
+        guestHoleFallbackListener
     )
 
     @Provides
     @Singleton
     fun provideApiProvider(apiManagerFactory: ApiManagerFactory, sessionProvider: SessionProvider): ApiProvider =
         ApiProvider(apiManagerFactory, sessionProvider)
+
+    @Provides
+    @Singleton
+    fun provideGuestHoleFallbackListener(): GuestHoleFallbackListener = object: GuestHoleFallbackListener {
+        override suspend fun <T> fallbackCall(
+            path: String?,
+            query: String?,
+            blockToRetry: suspend () -> ApiResult<T>
+        ): ApiResult<T>? {
+            delay(1000)
+            return blockToRetry()
+        }
+    }
 }
 
 @Module
