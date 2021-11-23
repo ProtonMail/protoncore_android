@@ -134,19 +134,18 @@ publishNewRelease:
     ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD_UNESCAPED
     ORG_GRADLE_PROJECT_androidDevChannelWebhook: $TEST_CHANNEL_WEBHOOK
   script:
-    - ./gradlew publishToSonatype
-    - ./gradlew closeSonatypeStagingRepository
+    - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
     - ./gradlew notifyNewRelease
   only:
     - /^release\/.*/
-  when: manual
 
-tag-release:
+tagRelease:
   stage: publish
+  needs:
+    - job: publishNewRelease
   cache: []
   only:
     - /^release\/.*/
-  when: manual
   extends: .git
   tags:
     - small
