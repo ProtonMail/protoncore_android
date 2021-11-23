@@ -1,0 +1,7 @@
+# Authenticate job to perform git operations
+.git:
+  before_script:
+    - git config --global user.email "$GIT_CI_EMAIL"
+    - git config --global user.name "$GIT_CI_USERNAME"
+    - git checkout --track "origin/$CI_COMMIT_BRANCH"
+    - git remote set-url origin "https://${GIT_CI_USERNAME}:${PRIVATE_TOKEN_GITLAB_API_PROTON_CI}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"

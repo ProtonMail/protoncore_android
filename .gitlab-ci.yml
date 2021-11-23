@@ -17,6 +17,8 @@ include:
     ref: development
     file: '/appetize-integration.yml'
 
+  - local: '/ci/templates/.gitlab-ci-git.yml'
+
 stages:
   - bot
   - analyze
@@ -138,6 +140,18 @@ publishNewRelease:
   only:
     - /^release\/.*/
   when: manual
+
+tag-release:
+  stage: publish
+  cache: []
+  only:
+    - /^release\/.*/
+  when: manual
+  extends: .git
+  tags:
+    - small
+  script:
+    - ./ci/tagRelease.sh
 
 publishGradlePortal:
   stage: publish
