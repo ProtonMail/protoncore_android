@@ -20,6 +20,16 @@ package me.proton.core.plan.domain
 
 import javax.inject.Qualifier
 
+/**
+ * Plans supported in signup.
+ */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class SupportedPaidPlans
+annotation class SupportedSignupPaidPlans
+
+/**
+ * Plans supported in plan upgrade flow.
+ */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class SupportedUpgradePaidPlans

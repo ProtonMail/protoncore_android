@@ -26,19 +26,15 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.payment.presentation.onPaymentResult
-import me.proton.core.plan.domain.SupportedPaidPlans
+import me.proton.core.plan.domain.SupportedUpgradePaidPlans
 import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
 import me.proton.core.plan.presentation.entity.PlanPricing
 import me.proton.core.plan.presentation.entity.PlanType
-import me.proton.core.plan.presentation.entity.SelectedPlan
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -48,7 +44,7 @@ import javax.inject.Inject
 internal class UpgradePlansViewModel @Inject constructor(
     private val getPlans: GetPlans,
     private val getCurrentSubscription: GetCurrentSubscription,
-    @SupportedPaidPlans val supportedPaidPlanNames: List<String>,
+    @SupportedUpgradePaidPlans val supportedPaidPlanNames: List<String>,
     paymentsOrchestrator: PaymentsOrchestrator
 ) : BasePlansViewModel(paymentsOrchestrator) {
 
