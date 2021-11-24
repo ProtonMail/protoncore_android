@@ -1,3 +1,6 @@
+## [2.0.0]
+- Use a global version for all core artifacts
+
 ## Human Verification [1.16.4]
 
 24 Nov, 2021
