@@ -140,7 +140,7 @@ publishMaven:
 publishGradlePortal:
   stage: publish
   tags:
-    - small
+    - large
   script:
     - ./gradlew -p plugins assemble && ./gradlew -p plugins publishAll
   only:
