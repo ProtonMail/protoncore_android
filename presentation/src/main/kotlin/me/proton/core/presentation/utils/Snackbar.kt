@@ -26,46 +26,53 @@ import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.snackbar.Snackbar
 import me.proton.core.presentation.R
 
+enum class SnackType(@DrawableRes val background: Int) {
+    Success(R.drawable.snackbar_background_success),
+    Norm(R.drawable.snackbar_background_norm),
+    Warning(R.drawable.snackbar_background_warning),
+    Error(R.drawable.snackbar_background_error)
+}
+
 /**
  * Shows normal snack bar.
  */
 fun View.normSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.snackbar_background_norm)
+    snack(messageRes = messageRes, type = SnackType.Norm)
 }
 
 /**
  * Shows normal snack bar.
  */
 fun View.normSnack(message: String) {
-    snack(message = message, color = R.drawable.snackbar_background_norm)
+    snack(message = message, type = SnackType.Norm)
 }
 
 /**
  * Shows warning snack bar.
  */
 fun View.warningSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.snackbar_background_warning)
+    snack(messageRes = messageRes, type = SnackType.Warning)
 }
 
 /**
  * Shows warning snack bar.
  */
 fun View.warningSnack(message: String) {
-    snack(message = message, color = R.drawable.snackbar_background_warning)
+    snack(message = message, type = SnackType.Warning)
 }
 
 /**
  * Shows red error snack bar.
  */
 fun View.errorSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.snackbar_background_error)
+    snack(messageRes = messageRes, type = SnackType.Error)
 }
 
 /**
  * Shows red error snack bar.
  */
 fun View.errorSnack(message: String) {
-    snack(message = message, color = R.drawable.snackbar_background_error)
+    snack(message = message, type = SnackType.Error)
 }
 
 /**
@@ -74,7 +81,7 @@ fun View.errorSnack(message: String) {
 fun View.errorSnack(message: String, action: String?, actionOnClick: (() -> Unit)?) {
     snack(
         message = message,
-        color = R.drawable.snackbar_background_error,
+        type = SnackType.Error,
         action = action,
         actionOnClick = actionOnClick
     )
@@ -84,14 +91,27 @@ fun View.errorSnack(message: String, action: String?, actionOnClick: (() -> Unit
  * Shows green success snack bar.
  */
 fun View.successSnack(@StringRes messageRes: Int) {
-    snack(messageRes = messageRes, color = R.drawable.snackbar_background_success)
+    snack(messageRes = messageRes, type = SnackType.Success)
 }
 
 /**
  * Shows green success snack bar.
  */
 fun View.successSnack(message: String) {
-    snack(message = message, color = R.drawable.snackbar_background_success)
+    snack(message = message, type = SnackType.Success)
+}
+
+/**
+ * General snack bar util function which takes message and type as config.
+ * The default showing length is [Snackbar.LENGTH_LONG].
+ *
+ * @param messageRes the String resource message id
+ */
+fun View.snack(
+    @StringRes messageRes: Int,
+    type: SnackType
+) {
+    snack(message = resources.getString(messageRes), type = type)
 }
 
 /**
@@ -100,6 +120,8 @@ fun View.successSnack(message: String) {
  *
  * @param messageRes the String resource message id
  */
+@Deprecated("Use snack() with type instead of color", ReplaceWith("snack(messageRes, type)"))
+@Suppress("deprecation")
 fun View.snack(
     @StringRes messageRes: Int,
     @DrawableRes color: Int
@@ -113,6 +135,23 @@ fun View.snack(
  */
 fun View.snack(
     message: String,
+    type: SnackType,
+    action: String? = null,
+    actionOnClick: (() -> Unit)? = null,
+    length: Int = Snackbar.LENGTH_LONG
+) {
+    snack(message, type, length) {
+        if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
+    }
+}
+
+@Deprecated(
+    "Use snack() with type instead of color",
+    ReplaceWith("snack(message, type, action, actionOnClick, length")
+)
+@Suppress("deprecation")
+fun View.snack(
+    message: String,
     @DrawableRes color: Int,
     action: String? = null,
     actionOnClick: (() -> Unit)? = null,
@@ -124,9 +163,23 @@ fun View.snack(
 }
 
 /**
- * General snack bar util function which takes message, color and length and a configuration block.
+ * General snack bar util function which takes message, type and length and a configuration block.
  * The default showing length is [Snackbar.LENGTH_LONG].
  */
+@Suppress("deprecation")
+fun View.snack(
+    message: String,
+    type: SnackType,
+    length: Int = Snackbar.LENGTH_LONG,
+    configBlock: (Snackbar.() -> Unit)? = null
+) {
+    snack(message, type.background, length, configBlock)
+}
+
+@Deprecated(
+    "Use snack() with type instead of color",
+    ReplaceWith("snack(message, type, length, configBlock)")
+)
 fun View.snack(
     message: String,
     @DrawableRes color: Int,
