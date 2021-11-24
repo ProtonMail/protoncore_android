@@ -39,4 +39,9 @@ class CoreExampleRepository(
         provider.get<UserApi>().invoke {
             usernameAvailable("username")
         }.valueOrNull
+
+    suspend fun triggerConfirmPassword(userId: UserId) =
+        provider.get<CoreExampleApi>(userId).invoke {
+            triggerConfirmPassword()
+        }.valueOrThrow
 }

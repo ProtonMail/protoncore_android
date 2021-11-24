@@ -56,5 +56,7 @@ data class Details(
     @SerialName("HumanVerificationMethods")
     val verificationMethods: List<String>? = null,
     @SerialName("HumanVerificationToken")
-    val verificationToken: String? = null
+    val verificationToken: String? = null,
+    @SerialName("MissingScopes")
+    val missingScopes: List<String>? = null
 )

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,20 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.api
+package me.proton.core.auth.domain.usecase.scopes
 
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.GenericResponse
-import retrofit2.http.GET
+import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.repository.UserRepository
+import javax.inject.Inject
 
-/**
- * @author Dino Kadrikj.
- */
-interface CoreExampleApi : BaseRetrofitApi {
-
-    @GET("internal/tests/humanverification")
-    suspend fun triggerHumanVerification(): GenericResponse
-
-    @GET("keys/salts")
-    suspend fun triggerConfirmPassword(): GenericResponse
+class RemoveSecurityScopes @Inject constructor(
+    private val userRepository: UserRepository
+) {
+    suspend operator fun invoke(userId: UserId) {
+        userRepository.removeLockedAndPasswordScopes(userId)
+    }
 }

@@ -32,8 +32,17 @@ import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.crypto.android.srp.GOpenPGPSrpCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
+import me.proton.core.humanverification.data.HumanVerificationListenerImpl
+import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
+import me.proton.core.network.domain.scopes.MissingScopeListener
+import me.proton.core.network.domain.scopes.MissingScopes
+import me.proton.core.plan.presentation.ui.StartPlanChooser
 import me.proton.core.user.domain.UserManager
+import me.proton.core.usersettings.presentation.ui.ShowPasswordInput
+import me.proton.core.usersettings.presentation.ui.registerShowPasswordDialogResultLauncher
 import javax.inject.Singleton
 
 @Module
@@ -59,4 +68,15 @@ object AuthModule {
         accountManager: AccountManager,
         userManager: UserManager
     ): PostLoginAccountSetup.UserCheck = DefaultUserCheck(context, accountManager, userManager)
+
+    @Provides
+    @Singleton
+    fun provideMissingScopeListener(@ApplicationContext context: Context): MissingScopeListener = object : MissingScopeListener {
+        override suspend fun onScopeNeeded(
+            clientId: ClientId,
+            scopes: MissingScopes
+        ): MissingScopeListener.MissingScopeResult {
+            return MissingScopeListener.MissingScopeResult.Failure
+        }
+    }
 }

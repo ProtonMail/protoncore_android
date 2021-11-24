@@ -18,10 +18,16 @@
 
 package me.proton.core.auth.presentation.alert
 
+import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentManager
+import me.proton.core.auth.presentation.alert.confirmpass.ConfirmPasswordDialog
+import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
+import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
+import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.inTransaction
 
 private const val TAG_PASSWORD_ENTER_DIALOG = "password_enter_dialog"
+private const val TAG_CONFIRM_PASSWORD_DIALOG = "confirm_password_dialog"
 
 /**
  * Presents to the user a dialog to ask for a password (and 2FA code).
@@ -45,4 +51,60 @@ fun FragmentManager.showPasswordEnterDialog(
             }
         }
     }
+}
+
+/**
+ * Presents to the user a dialog to ask for a password (and 2FA code).
+ *
+ * @param largeLayout how to present the dialog (default false)
+ */
+fun FragmentManager.showConfirmPasswordDialog(
+    largeLayout: Boolean = false,
+    password: Boolean = true,
+    secondFactor: Boolean = false
+) {
+    findFragmentByTag(TAG_CONFIRM_PASSWORD_DIALOG) ?: run {
+        val fragment = ConfirmPasswordDialog(
+            ConfirmPasswordInput(
+                showPassword = password,
+                showTwoFA = secondFactor
+            )
+        )
+        if (largeLayout) {
+            // For large screens (tablets), we show the fragment as a dialog
+            fragment.show(this, TAG_CONFIRM_PASSWORD_DIALOG)
+        } else {
+            // The smaller screens (phones), we show the fragment fullscreen
+            inTransaction {
+                add(fragment, TAG_CONFIRM_PASSWORD_DIALOG)
+            }
+        }
+    }
+}
+
+fun FragmentManager.registerConfirmPasswordDialogResultLauncher(
+    context: ComponentActivity,
+    onResult: ((ConfirmPasswordResult?) -> Unit)? = null,
+): FragmentDialogResultLauncher<ConfirmPasswordInput> {
+
+    setFragmentResultListener(
+        ConfirmPasswordDialog.KEY_PASS_2FA_SET,
+        context
+    ) { _, bundle ->
+        val result =
+            bundle.getParcelable<ConfirmPasswordResult>(ConfirmPasswordDialog.BUNDLE_KEY_PASS_2FA_DATA)
+        if (onResult != null) {
+            onResult(result)
+        }
+    }
+
+    return FragmentDialogResultLauncher(
+        requestKey = ConfirmPasswordDialog.KEY_PASS_2FA_SET,
+        show = { input ->
+            showConfirmPasswordDialog(
+                password = input.showPassword,
+                secondFactor = input.showTwoFA
+            )
+        }
+    )
 }

@@ -23,9 +23,12 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
+import me.proton.core.user.data.api.request.UnlockPasswordRequest
+import me.proton.core.user.data.api.request.UnlockRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface UserApi : BaseRetrofitApi {
@@ -41,4 +44,13 @@ interface UserApi : BaseRetrofitApi {
 
     @POST("v4/users/external")
     suspend fun createExternalUser(@Body userRequest: CreateExternalUserRequest): UsersResponse
+
+    @PUT("core/v4/users/lock")
+    suspend fun removeLockedAndPasswordScopes(): GenericResponse
+
+    @PUT("core/v4/users/unlock")
+    suspend fun unlockUser(@Body unlockRequest: UnlockRequest): GenericResponse
+
+    @PUT("core/v4/user/password")
+    suspend fun unlockUser(@Body unlockRequest: UnlockPasswordRequest): GenericResponse
 }

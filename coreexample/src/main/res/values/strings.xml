@@ -37,6 +37,8 @@
     <string name="settings_recovery_email">Recovery Email</string>
     <string name="settings_password_management">Password Mng</string>
     <string name="contacts">Contacts</string>
+    <string name="confirm_password">Trig. Confirm Pass</string>
+    <string name="lock_scopes">Lock scopes</string>
 
     <string name="example_hint">Hint</string>
     <string name="example_hint_disabled">Hint Disabled input</string>

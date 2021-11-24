@@ -36,6 +36,7 @@ import me.proton.android.core.coreexample.ui.ContactsActivity
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
+import me.proton.android.core.coreexample.viewmodel.ConfirmPasswordViewModel
 import me.proton.android.core.coreexample.viewmodel.ReportsViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
@@ -71,6 +72,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
     private val userAddressKeyViewModel: UserAddressKeyViewModel by viewModels()
     private val publicAddressViewModel: PublicAddressViewModel by viewModels()
     private val settingsViewModel: UserSettingsViewModel by viewModels()
+    private val confirmPasswordViewModel: ConfirmPasswordViewModel by viewModels()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +83,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         reportsViewModel.register(this)
         plansViewModel.register(this)
         settingsViewModel.register(this)
+        confirmPasswordViewModel.register(this)
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
@@ -111,6 +114,14 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
 
             settingsRecovery.onClick { settingsViewModel.onUpdateRecoveryEmailClicked(this@MainActivity) }
             settingsPassword.onClick { settingsViewModel.onPasswordManagementClicked(this@MainActivity) }
+
+            triggerConfirmPassword.onClick {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    accountViewModel.getPrimaryUserId().first()?.let {
+                        coreExampleRepository.triggerConfirmPassword(it)
+                    }
+                }
+            }
 
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {

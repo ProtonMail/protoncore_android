@@ -25,6 +25,7 @@ import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.request.UniversalTwoFactorRequest
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
@@ -59,6 +60,11 @@ class AuthRepositoryImpl(
             getLoginInfo(request).toLoginInfo(username)
         }.valueOrThrow
 
+    override suspend fun getAuthInfo(username: String): AuthInfo =
+        provider.get<AuthenticationApi>().invoke {
+            getAuthInfo().toAuthInfo(username)
+        }.valueOrThrow
+
     /**
      * Returns new random modulus generated from the API.
      */
@@ -82,7 +88,7 @@ class AuthRepositoryImpl(
      * @param clientSecret client/app specific string.
      * @param clientEphemeral Base64 encoded SrpProof generated client ephemeral.
      * @param clientProof Base64 encoded SrpProof generated proof.
-     * @param srpSession the SRPSession returned from the [getLoginInfo] API result.
+     * @param srpSession the SRPSession returned from the [getAuthInfo] API result.
      *
      * @return [SessionInfo] login result containing the Access and Refresh tokens and additional meta-data.
      */

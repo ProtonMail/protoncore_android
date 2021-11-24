@@ -16,20 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.api
-
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.GenericResponse
-import retrofit2.http.GET
+package me.proton.core.auth.domain.entity
 
 /**
- * @author Dino Kadrikj.
+ * Holds Auth Info data.
  */
-interface CoreExampleApi : BaseRetrofitApi {
-
-    @GET("internal/tests/humanverification")
-    suspend fun triggerHumanVerification(): GenericResponse
-
-    @GET("keys/salts")
-    suspend fun triggerConfirmPassword(): GenericResponse
-}
+data class AuthInfo(
+    val username: String,
+    val modulus: String,
+    val serverEphemeral: String,
+    val version: Int,
+    val salt: String,
+    val srpSession: String,
+    val secondFactor: SecondFactor?
+)

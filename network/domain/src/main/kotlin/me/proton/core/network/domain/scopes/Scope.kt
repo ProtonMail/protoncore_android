@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,20 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.api
+package me.proton.core.network.domain.scopes
 
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.GenericResponse
-import retrofit2.http.GET
+import java.util.Locale
 
-/**
- * @author Dino Kadrikj.
- */
-interface CoreExampleApi : BaseRetrofitApi {
+enum class Scope(val value: String) {
+    PASSWORD("password"),
+    LOCKED("locked");
 
-    @GET("internal/tests/humanverification")
-    suspend fun triggerHumanVerification(): GenericResponse
-
-    @GET("keys/salts")
-    suspend fun triggerConfirmPassword(): GenericResponse
+    companion object {
+        val map = values().associateBy { it.value }
+        fun getByValue(value: String) = map[value.lowercase(Locale.ROOT)]
+    }
 }

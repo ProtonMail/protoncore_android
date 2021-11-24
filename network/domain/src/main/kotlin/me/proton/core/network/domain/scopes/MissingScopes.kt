@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,20 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.api
-
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.GenericResponse
-import retrofit2.http.GET
+package me.proton.core.network.domain.scopes
 
 /**
- * @author Dino Kadrikj.
+ * Holds the missing scopes.
  */
-interface CoreExampleApi : BaseRetrofitApi {
-
-    @GET("internal/tests/humanverification")
-    suspend fun triggerHumanVerification(): GenericResponse
-
-    @GET("keys/salts")
-    suspend fun triggerConfirmPassword(): GenericResponse
-}
+data class MissingScopes(
+    val value: List<Scope>? = null
+)

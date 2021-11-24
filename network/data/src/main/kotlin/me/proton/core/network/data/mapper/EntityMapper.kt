@@ -22,11 +22,12 @@ import me.proton.core.network.data.protonApi.Details
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
+import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.network.domain.scopes.MissingScopes
+import me.proton.core.network.domain.scopes.Scope
 
 /**
  * Convenient extensions for handling the optional and dynamic Details part of the [ApiResult.Error.ProtonData].
- *
- * @author Dino Kadrikj.
  */
 
 fun Details.toHumanVerificationEntity(): HumanVerificationAvailableMethods =
@@ -35,10 +36,20 @@ fun Details.toHumanVerificationEntity(): HumanVerificationAvailableMethods =
         verificationToken = verificationToken
     )
 
+fun Details.toMissingScopes(): MissingScopes =
+    MissingScopes(
+        value = missingScopes!!.mapNotNull {
+            Scope.getByValue(it)
+        }
+    )
+
 fun ApiResult.Error.ProtonData.parseDetails(errorCode: Int, details: Details?): ApiResult.Error.ProtonData {
     when (errorCode) {
         ResponseCodes.HUMAN_VERIFICATION_REQUIRED -> {
             humanVerification = details?.toHumanVerificationEntity()
+        }
+        ResponseCodes.MISSING_SCOPE -> {
+            missingScopes = details?.toMissingScopes()
         }
     }
     return this

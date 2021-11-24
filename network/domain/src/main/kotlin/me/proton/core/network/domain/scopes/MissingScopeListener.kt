@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,13 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity
+package me.proton.core.network.domain.scopes
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import me.proton.core.network.domain.client.ClientId
 
-@Parcelize
-data class ScopeResult(
-    val sessionId: String,
-    val scopes: List<String>
-) : Parcelable
+interface MissingScopeListener {
+
+    sealed class MissingScopeResult {
+        object Success : MissingScopeResult()
+        object Failure : MissingScopeResult()
+    }
+
+    /**
+     * Called when a Missing Scope is needed for a [ClientId].
+     * It should show a password entry dialog and obtain the scope from the API.
+     */
+    suspend fun onScopeNeeded(
+        clientId: ClientId,
+        scopes: MissingScopes
+    ): MissingScopeResult
+}
