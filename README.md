@@ -218,13 +218,13 @@ Mail Settings Data: **1.19.1** - _released on: Nov 18, 2021_
 
 ### Human Verification
 
-Human Verification: **1.16.3** - _released on: Nov 16, 2021_
+Human Verification: **1.16.4** - _released on: Nov 24, 2021_
 
-Human Verification Domain: **1.16.3** - _released on: Nov 16, 2021_
+Human Verification Domain: **1.16.4** - _released on: Nov 24, 2021_
 
-Human Verification Presentation: **1.16.3** - _released on: Nov 16, 2021_
+Human Verification Presentation: **1.16.4** - _released on: Nov 24, 2021_
 
-Human Verification Data: **1.16.3** - _released on: Nov 16, 2021_
+Human Verification Data: **1.16.4** - _released on: Nov 24, 2021_
 
 ### Countries
 
