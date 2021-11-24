@@ -109,7 +109,7 @@ class NetworkModule {
         humanVerificationProvider: HumanVerificationProvider,
         humanVerificationListener: HumanVerificationListener,
         extraHeaderProvider: ExtraHeaderProvider,
-        apiConnectionListener: ApiConnectionListener
+        apiConnectionListener: ApiConnectionListener? = null
     ): ApiManagerFactory = ApiManagerFactory(
         Constants.BASE_URL,
         apiClient,
@@ -141,16 +141,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGuestHoleFallbackListener(): ApiConnectionListener = object: ApiConnectionListener {
-        override suspend fun <T> onPotentiallyBlocked(
-            path: String?,
-            query: String?,
-            backendCall: suspend () -> ApiResult<T>
-        ): ApiResult<T>? {
-            delay(1000)
-            return backendCall()
-        }
-    }
+    fun provideApiConnectionListener(): ApiConnectionListener? = null
 }
 
 @Module
