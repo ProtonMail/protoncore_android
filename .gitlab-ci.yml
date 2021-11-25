@@ -116,11 +116,11 @@ release-publish-github:
   tags:
     - small
   only:
-    - master
+    - main
   variables:
     RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonMail/protoncore_android.git
-    RELEASE_SYNC_TO_BRANCH: 'master'
-    RELEASE_SYNC_FROM_BRANCH: 'master'
+    RELEASE_SYNC_TO_BRANCH: 'main'
+    RELEASE_SYNC_FROM_BRANCH: 'main'
   extends: .release-sync-commit-shared
 
 publishNewRelease:
@@ -172,15 +172,15 @@ i18n-sync-crowdin:
   extends: .i18n-sync-crowdin-common
   variables:
     I18N_SYNC_CROWDIN_PROJECT: 'android-core'
-    I18N_SYNC_BRANCH: 'master'
+    I18N_SYNC_BRANCH: 'main'
     I18N_FILTER_OUT_ITEMS: 'coreexample'
 
 i18n-commit-locales:
   extends: .i18n-commit-locales-shared
   variables:
     I18N_COMMIT_CROWDIN_PROJECT: 'android-core'
-    I18N_COMMIT_BRANCH_PUSH: 'master'
-    I18N_COMMIT_BRANCH_ALLOWED: 'master'
+    I18N_COMMIT_BRANCH_PUSH: 'main'
+    I18N_COMMIT_BRANCH_ALLOWED: 'main'
 
 startReview:
   before_script:
