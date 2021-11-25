@@ -22,6 +22,8 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("plugin.serialization")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 publishOption.shouldBePublishedAsLib = false
@@ -37,16 +39,37 @@ extensions.configure<com.android.build.gradle.LibraryExtension> {
 dependencies {
 
     implementation(
-        project(Module.reportsDomain),
-        project(Module.kotlinUtil),
-        project(Module.data),
         project(Module.domain),
+        project(Module.kotlinUtil),
         project(Module.network),
+        project(Module.reportsDomain),
 
-        // Other
-        `retrofit`,
-        `retrofit-kotlin-serialization`,
-        `coroutines-core`,
-        `javax-inject`
+        `android-work-runtime`,
+        `hilt-android`,
+        `hilt-androidx-workManager`,
+        `javax-inject`,
+        `lifecycle-liveData`,
+        serialization("core"),
+        retrofit
     )
+
+    kapt(
+        `hilt-android-compiler`,
+        `hilt-androidx-compiler`
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `android-arch-testing`,
+        `android-work-testing`,
+        `coroutines-test`,
+        `hilt-android-testing`,
+        `junit-ktx`,
+        `kotlin-test`,
+        mockk,
+        robolectric,
+        turbine
+    )
+
+    kaptTest(`hilt-android-compiler`)
 }
