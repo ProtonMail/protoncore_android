@@ -22,7 +22,7 @@
 
 set -eo pipefail
 
-if [[ -v CI_COMMIT_REF_NAME ]]
+if [[ -n "$CI_COMMIT_REF_NAME" ]]
 then
   # On the CI, using predefined var
   branch_name=$CI_COMMIT_REF_NAME
