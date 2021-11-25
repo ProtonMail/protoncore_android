@@ -59,7 +59,19 @@ In order to use the all-in-one Detekt configuration, you have to:
     ```
 
     
+# Release
 
+## Core libraries
+Release process is based on [trunk branch for release process](https://trunkbaseddevelopment.com/branch-for-release/).
+Release is done by the CI. To trigger a release for version `X.Y.Z`, just push a branch named `release/X.Y.Z`.
+When the release is successfully done:
+* A message is post on internal communication tool using the content of the [`CHANGELOG.MD`](./CHANGELOG.md) under the entry `## [X.Y.Z].
+* A tag `X.Y.Z` is created from the commit used to do the release.
+
+Before triggering a release (by pushing a release branch), `CHANGELOG.MD` should be updated by adding a entry `## [X.Y.Z]` with the content cut/paste from the entry `## [Unreleased]`.
+Release should be made from `main` branch.
+
+Core libraries coordinates can be found under [coordinates section](#coordinates)
 
 # Last versions
 
