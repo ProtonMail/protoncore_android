@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,27 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.reports.domain.repository
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-}
+import me.proton.core.domain.entity.UserId
+import me.proton.core.reports.domain.entity.BugReport
+import me.proton.core.reports.domain.entity.BugReportMeta
+import me.proton.core.reports.domain.entity.BugReportExtra
 
-publishOption.shouldBePublishedAsLib = false
-
-kotlin {
-    explicitApi()
-}
-
-dependencies {
-    implementation(
-        project(Module.domain),
-        `coroutines-core`,
-        `javax-inject`,
-        serialization("core")
+public interface ReportsRepository {
+    public suspend fun sendReport(
+        userId: UserId,
+        bugReport: BugReport,
+        meta: BugReportMeta,
+        extra: BugReportExtra? = null
     )
-
-    testImplementation(`kotlin-test`)
 }

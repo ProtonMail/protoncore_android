@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,27 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.reports.domain.entity
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-}
+import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.Product
 
-publishOption.shouldBePublishedAsLib = false
-
-kotlin {
-    explicitApi()
-}
-
-dependencies {
-    implementation(
-        project(Module.domain),
-        `coroutines-core`,
-        `javax-inject`,
-        serialization("core")
-    )
-
-    testImplementation(`kotlin-test`)
-}
+@Serializable
+public data class BugReportMeta(
+    val appVersionName: String,
+    val clientName: String,
+    val osName: String,
+    val osVersion: String,
+    val product: Product
+)
