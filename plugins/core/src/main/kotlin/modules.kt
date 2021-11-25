@@ -134,10 +134,18 @@ object Module {
     const val mailSettingsDomain = "$mailSettings:mail-settings-domain"
     const val mailSettingsPresentation = "$mailSettings:mail-settings-presentation"
     const val mailSettingsData = "$mailSettings:mail-settings-data"
+
     // Plan
     const val plan = ":plan"
     const val planDomain = "$plan:plan-domain"
     const val planData = "$plan:plan-data"
     const val planPresentation = "$plan:plan-presentation"
+
+    // Reports
+    const val reports = ":reports"
+    const val reportsDomain = ":reports:reports-domain"
+    const val reportsData = ":reports:reports-data"
+    const val reportsPresentation = ":reports:reports-presentation"
+    const val reportsHilt = ":reports:reports-hilt"
     // endregion
 }
