@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changes
 
 - Added SnackType to represent Snackbar types (success, error etc.).
+- After 2FA code fails for the third time, an error toast is displayed; clients should handle the error by registering `AccountManager.observe(..).onSessionSecondFactorFailed` callback and showing the login screen again.
 
 ### Deprecations
 
