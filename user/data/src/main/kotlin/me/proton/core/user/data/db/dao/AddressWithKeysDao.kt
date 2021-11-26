@@ -32,7 +32,7 @@ abstract class AddressWithKeysDao : BaseDao<AddressEntity>() {
 
     @Transaction
     @Query("SELECT * FROM AddressEntity WHERE userId = :userId")
-    abstract fun findByUserId(userId: UserId): Flow<List<AddressWithKeys>>
+    abstract fun observeByUserId(userId: UserId): Flow<List<AddressWithKeys>>
 
     @Transaction
     @Query("SELECT * FROM AddressEntity WHERE userId = :userId")

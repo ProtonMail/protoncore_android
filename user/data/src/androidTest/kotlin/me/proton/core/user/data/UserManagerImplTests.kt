@@ -47,7 +47,7 @@ import me.proton.core.key.data.repository.PrivateKeyRepositoryImpl
 import me.proton.core.key.domain.decryptText
 import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
-import me.proton.core.key.domain.extension.areAllLocked
+import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.useKeys
 import me.proton.core.network.data.ApiManagerFactory
@@ -121,7 +121,6 @@ class UserManagerImplTests {
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
             userRepository,
-            userRepository,
             cryptoContext
         )
 
@@ -130,7 +129,8 @@ class UserManagerImplTests {
             db,
             apiProvider,
             userRepository,
-            userAddressKeySecretProvider
+            userAddressKeySecretProvider,
+            cryptoContext
         )
 
         // Implementation we want to test.
@@ -180,7 +180,7 @@ class UserManagerImplTests {
         val user = userManager.getUserFlow(TestUsers.User1.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
-            .filterNot { it?.keys?.areAllLocked() ?: true }
+            .filterNot { it?.keys?.areAllInactive() ?: true }
             .firstOrNull()
 
         assertNotNull(user)
@@ -204,7 +204,7 @@ class UserManagerImplTests {
         val user = userManager.getUserFlow(TestUsers.User1.id)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
-            .filterNot { it?.keys?.areAllLocked() ?: true }
+            .filterNot { it?.keys?.areAllInactive() ?: true }
             .firstOrNull()
 
         // THEN

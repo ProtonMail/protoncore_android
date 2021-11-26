@@ -94,7 +94,11 @@ class UserAddressCryptoTests {
         // THEN
         assertEquals(expectedKeyListData, signedKeyList.data) { "Signed key list data didn't match" }
         val verified = userAddress.useKeys(cryptoContext) {
-            verifyText(signedKeyList.data, signedKeyList.signature, time = VerificationTime.Ignore)
+            verifyText(
+                text = requireNotNull(signedKeyList.data),
+                signature = requireNotNull(signedKeyList.signature),
+                time = VerificationTime.Ignore
+            )
         }
         assertTrue(verified) { "Couldn't verify the key list signature"}
     }

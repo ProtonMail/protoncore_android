@@ -27,12 +27,4 @@ fun List<KeyHolderPrivateKey>.primary(): KeyHolderPrivateKey? = firstOrNull { it
  *
  * False if at least one passphrase is associated, thereby public and private crypto functions are available.
  */
-@Deprecated("Please use areAllUnlockable instead.", ReplaceWith("all { it.privateKey.isUnlockable.not() }"))
-fun List<KeyHolderPrivateKey>.areAllLocked(): Boolean = all { it.privateKey.isUnlockable.not() }
-
-/**
- * False if no passphrase is associated with any keys, thereby only public crypto functions are available.
- *
- * True if at least one passphrase is associated, thereby public and private crypto functions are available.
- */
-fun List<KeyHolderPrivateKey>.areAllUnlockable(): Boolean = all { it.privateKey.isUnlockable }
+fun List<KeyHolderPrivateKey>.areAllInactive(): Boolean = all { it.privateKey.isActive.not() }

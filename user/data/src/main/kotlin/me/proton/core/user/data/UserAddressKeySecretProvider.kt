@@ -29,40 +29,38 @@ import me.proton.core.key.domain.decryptAndVerifyNestedKey
 import me.proton.core.key.domain.encryptData
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.signData
-import me.proton.core.key.domain.useKeys
-import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
-import me.proton.core.user.domain.entity.UserAddressKeyFlags
 import me.proton.core.user.domain.entity.emailSplit
 import me.proton.core.user.domain.repository.PassphraseRepository
-import me.proton.core.user.domain.repository.UserRepository
 
 /**
  * Provide User Address secret according old vs new format.
  */
 class UserAddressKeySecretProvider(
-    private val userRepository: UserRepository,
     private val passphraseRepository: PassphraseRepository,
     private val cryptoContext: CryptoContext,
 ) {
     private val keyStoreCrypto = cryptoContext.keyStoreCrypto
 
-    suspend fun getPassphrase(userId: UserId, key: AddressKeyEntity): EncryptedByteArray? {
-        return if (key.token == null || key.signature == null) {
+    suspend fun getPassphrase(
+        userId: UserId,
+        userContext: KeyHolderContext,
+        key: UserAddressKey
+    ): EncryptedByteArray? {
+        return when {
+            // Inactive don't need to be unlocked.
+            !key.active -> null
             // Old address key format -> user passphrase.
-            passphraseRepository.getPassphrase(userId)
-        } else {
+            key.token == null || key.signature == null -> passphraseRepository.getPassphrase(userId)
             // New address key format -> user keys encrypt token + signature -> address passphrase.
-            userRepository.getUser(userId).useKeys(cryptoContext) {
-                val decryptedKey = decryptAndVerifyNestedKey(
-                    key = key.privateKey,
-                    passphrase = key.token,
-                    signature = key.signature
-                )
-                decryptedKey.privateKey.passphrase
-            }
+            else -> userContext.decryptAndVerifyNestedKey(
+                key = key.privateKey.key,
+                passphrase = requireNotNull(key.token),
+                signature = requireNotNull(key.signature)
+            ).privateKey.passphrase
         }
     }
 
@@ -112,7 +110,8 @@ class UserAddressKeySecretProvider(
                     passphrase = decryptedPassphrase.array
                 ),
                 isPrimary = isPrimary,
-                passphrase = secret.passphrase
+                isActive = true,
+                passphrase = secret.passphrase,
             )
             return UserAddressKey(
                 addressId = userAddress.addressId,

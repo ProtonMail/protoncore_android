@@ -21,6 +21,7 @@ package me.proton.core.user.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.user.domain.entity.AddressId
@@ -47,7 +48,9 @@ data class AddressKeyEntity(
     val version: Int,
     val privateKey: Armored,
     val isPrimary: Boolean,
+    val isUnlockable: Boolean,
     val flags: UserAddressKeyFlags,
+    val passphrase: EncryptedByteArray? = null,
     val token: Armored? = null,
     val signature: Armored? = null,
     val fingerprint: String? = null,

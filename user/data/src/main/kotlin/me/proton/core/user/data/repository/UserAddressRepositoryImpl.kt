@@ -25,12 +25,16 @@ import com.dropbox.android.external.store4.StoreRequest
 import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.extension.updateIsActive
+import me.proton.core.key.domain.useKeysAs
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.UserAddressKeySecretProvider
 import me.proton.core.user.data.api.AddressApi
@@ -38,8 +42,7 @@ import me.proton.core.user.data.api.request.CreateAddressRequest
 import me.proton.core.user.data.api.request.UpdateAddressRequest
 import me.proton.core.user.data.api.request.UpdateOrderRequest
 import me.proton.core.user.data.db.AddressDatabase
-import me.proton.core.user.data.entity.AddressEntity
-import me.proton.core.user.data.entity.AddressKeyEntity
+import me.proton.core.user.data.extension.toAddress
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
 import me.proton.core.user.data.extension.toUserAddress
@@ -47,15 +50,19 @@ import me.proton.core.user.data.extension.toUserAddressKey
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
+import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import javax.inject.Singleton
 
+@Singleton
 class UserAddressRepositoryImpl(
     private val db: AddressDatabase,
     private val apiProvider: ApiProvider,
     private val userRepository: UserRepository,
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
-) : UserAddressRepository {
+    private val context: CryptoContext
+) : UserAddressRepository, PassphraseRepository.OnPassphraseChangedListener {
 
     private val addressDao = db.addressDao()
     private val addressKeyDao = db.addressKeyDao()
@@ -74,86 +81,101 @@ class UserAddressRepositoryImpl(
                     getAddresses().addresses
             }.valueOrThrow
             fetched = true
-            list.map { getAddressLocal(it.toEntity(key.userId), it.keys?.toEntityList(AddressId(it.id)).orEmpty()) }
+            list.map { it.toAddress(key.userId) }
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { key -> getAddressesLocal(key.userId).map { it.takeIf { it.isNotEmpty() || fetched } } },
-            writer = { _, input -> insertOrUpdate(*input.toTypedArray()) },
-            delete = { key -> delete(key.userId) },
-            deleteAll = { deleteAll() }
+            reader = { key -> observeAddressesLocal(key.userId).map { it.takeIf { it.isNotEmpty() || fetched } } },
+            writer = { _, input -> insertOrUpdate(input) },
+            delete = null, // Not used.
+            deleteAll = null // Not used.
         )
-    ).disableCache().build() // We don't want potential stale data from memory cache.
+    ).build()
 
-    private fun getAddressesLocal(userId: UserId): Flow<List<UserAddress>> =
-        userRepository.getUserFlow(userId)
-            .flatMapLatest {
-                // Resubscribe every time User flow emit a value (e.g. on [User.keys] locked/unlocked).
-                addressWithKeysDao.findByUserId(userId)
-                    .map { list -> list.map { getAddressLocal(it.entity, it.keys) } }
-            }
-
-    private suspend fun getAddressLocal(entity: AddressEntity, keys: List<AddressKeyEntity>): UserAddress {
-        val keyList = keys.map { key -> getAddressKeyLocal(entity.userId, key) }
-        return entity.toUserAddress(keyList)
+    init {
+        userRepository.addOnPassphraseChangedListener(this)
     }
 
-    private suspend fun getAddressKeyLocal(userId: UserId, key: AddressKeyEntity): UserAddressKey =
-        key.toUserAddressKey(passphrase = userAddressKeySecretProvider.getPassphrase(userId, key))
+    private suspend fun invalidateMemCache(userId: UserId? = null) =
+        if (userId != null) store.clear(StoreKey(userId)) else store.clearAll()
 
-    private suspend fun insertOrUpdate(vararg addresses: UserAddress) =
-        db.inTransaction {
-            addresses.forEach { insertOrUpdate(it.toEntity(), it.keys.toEntityList()) }
+    private suspend fun List<UserAddressKey>.updateIsActive(userId: UserId): List<UserAddressKey> =
+        userRepository.getUser(userId).useKeysAs(context) { userContext ->
+            map { key ->
+                val passphrase = userAddressKeySecretProvider.getPassphrase(userId, userContext, key)
+                key.copy(privateKey = key.privateKey.updateIsActive(context, passphrase))
+            }
         }
 
-    private suspend fun insertOrUpdate(address: AddressEntity, addressKeys: List<AddressKeyEntity>) =
+    private suspend fun getAddressesLocal(userId: UserId): List<UserAddress> =
+        addressWithKeysDao.getByUserId(userId).map { it.toUserAddress() }
+
+    private fun observeAddressesLocal(userId: UserId): Flow<List<UserAddress>> =
+        addressWithKeysDao.observeByUserId(userId).mapLatest { list -> list.map { it.toUserAddress() } }
+
+    private suspend fun insertOrUpdate(addresses: List<UserAddress>) =
         db.inTransaction {
-            addressDao.insertOrUpdate(address)
-            addressKeyDao.insertOrUpdate(*addressKeys.toTypedArray())
+            // Group UserAddresses by userId.
+            val addressesByUser = addresses.fold(mutableMapOf<UserId, MutableList<UserAddress>>()) { acc, address ->
+                acc.apply { getOrPut(address.userId) { mutableListOf() }.add(address) }
+            }
+            // For each List<UserAddress> by userId:
+            addressesByUser.entries.forEach { (userId, addresses) ->
+                // Update isActive and passphrase.
+                val addressKeys = addresses.flatMap { it.keys }.updateIsActive(userId)
+                // Insert in Database.
+                addressDao.insertOrUpdate(*addresses.map { it.toEntity() }.toTypedArray())
+                addressKeyDao.insertOrUpdate(*addressKeys.map { it.toEntity() }.toTypedArray())
+            }
         }
 
-    private suspend fun delete(vararg addressId: AddressId) =
-        db.inTransaction {
-            addressId.forEach { addressDao.delete(it) }
-        }
+    private suspend fun delete(addressIds: List<AddressId>) {
+        addressDao.delete(addressIds)
+        invalidateMemCache()
+    }
 
-    private suspend fun delete(userId: UserId) =
+    private suspend fun deleteAll(userId: UserId) {
         addressDao.deleteAll(userId)
+        invalidateMemCache(userId)
+    }
 
-    private suspend fun deleteAll(userId: UserId) =
-        addressDao.deleteAll(userId)
-
-    private suspend fun deleteAll() =
-        addressDao.deleteAll()
-
-    private suspend fun getAddressListBlocking(
+    private suspend fun getAddresses(
         sessionUserId: SessionUserId,
         addressId: AddressId?,
         refresh: Boolean
     ): List<UserAddress> = StoreKey(sessionUserId, addressId).let { if (refresh) store.fresh(it) else store.get(it) }
 
+    override suspend fun onPassphraseChanged(userId: UserId) {
+        db.inTransaction {
+            insertOrUpdate(getAddressesLocal(userId))
+        }
+        invalidateMemCache(userId)
+    }
+
     override suspend fun addAddresses(addresses: List<UserAddress>) =
-        insertOrUpdate(*addresses.toTypedArray())
+        insertOrUpdate(addresses)
 
     override suspend fun updateAddresses(addresses: List<UserAddress>) =
-        insertOrUpdate(*addresses.toTypedArray())
+        insertOrUpdate(addresses)
 
     override suspend fun deleteAddresses(addressIds: List<AddressId>) =
-        delete(*addressIds.toTypedArray())
+        delete(addressIds)
 
     override suspend fun deleteAllAddresses(userId: UserId) =
         deleteAll(userId)
 
     override fun getAddressesFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
-        store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh)).map { it.toDataResult() }
+        store.stream(StoreRequest.cached(StoreKey(sessionUserId), refresh = refresh))
+            .map { it.toDataResult() }
+            .distinctUntilChanged()
 
     override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> =
-        getAddressListBlocking(sessionUserId, null, refresh = refresh)
+        getAddresses(sessionUserId, addressId = null, refresh = refresh)
 
     override suspend fun getAddress(
         sessionUserId: SessionUserId,
         addressId: AddressId,
         refresh: Boolean
-    ): UserAddress? = getAddressListBlocking(sessionUserId, addressId, refresh).firstOrNull()
+    ): UserAddress? = getAddresses(sessionUserId, addressId, refresh).firstOrNull()
 
     override suspend fun createAddress(
         sessionUserId: SessionUserId,
@@ -165,7 +187,7 @@ class UserAddressRepositoryImpl(
             val address = response.address.toEntity(sessionUserId)
             val addressId = address.addressId
             val addressKeys = response.address.keys?.toEntityList(addressId).orEmpty()
-            insertOrUpdate(address, addressKeys)
+            insertOrUpdate(listOf(address.toUserAddress(addressKeys.map { it.toUserAddressKey() })))
             checkNotNull(getAddress(sessionUserId, addressId))
         }.valueOrThrow
     }

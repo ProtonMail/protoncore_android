@@ -34,7 +34,7 @@ object TestAccounts {
             state = AccountState.Ready,
             sessionId = sessionId,
             sessionState = SessionState.Authenticated,
-            details = AccountDetails(null)
+            details = AccountDetails(null, null)
         )
     }
 
@@ -46,7 +46,7 @@ object TestAccounts {
             state = AccountState.Ready,
             sessionId = sessionId,
             sessionState = SessionState.Authenticated,
-            details = AccountDetails(null)
+            details = AccountDetails(null, null)
         )
     }
 

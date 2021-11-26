@@ -34,5 +34,7 @@ data class UserKeyResponse(
     @SerialName("Activation")
     val activation: String? = null,
     @SerialName("Primary")
-    val primary: Int
+    val primary: Int,
+    @SerialName("Active")
+    val active: Int // Boolean
 )

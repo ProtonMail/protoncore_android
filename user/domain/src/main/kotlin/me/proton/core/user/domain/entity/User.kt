@@ -20,7 +20,7 @@ package me.proton.core.user.domain.entity
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
-import me.proton.core.key.domain.extension.areAllLocked
+import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.hasServiceForMail
@@ -87,7 +87,7 @@ data class User(
      * }
      * ```
      * @see [useKeys]
-     * @see [areAllLocked]
+     * @see [areAllInactive]
      * @see [UserManager.unlockWithPassword]
      * @see [UserManager.unlockWithPassphrase]
      * @see [UserManager.lock]

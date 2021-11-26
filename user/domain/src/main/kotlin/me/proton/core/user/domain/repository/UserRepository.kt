@@ -26,7 +26,7 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.User
 
-interface UserRepository {
+interface UserRepository : PassphraseRepository {
 
     suspend fun isUsernameAvailable(username: String): Boolean
 

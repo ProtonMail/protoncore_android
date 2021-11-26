@@ -46,6 +46,8 @@ data class UserKeyEntity(
     val version: Int,
     val privateKey: Armored,
     val isPrimary: Boolean,
+    val isUnlockable: Boolean,
     val fingerprint: String? = null,
-    val activation: Armored? = null
+    val activation: Armored? = null,
+    val active: Boolean? = null,
 )

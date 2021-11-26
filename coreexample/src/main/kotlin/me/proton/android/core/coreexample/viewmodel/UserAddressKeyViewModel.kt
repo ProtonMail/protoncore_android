@@ -30,7 +30,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
-import me.proton.core.key.domain.extension.areAllLocked
+import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
@@ -66,7 +66,7 @@ class UserAddressKeyViewModel @Inject constructor(
                 return@transformLatest
             }
             val user = result.value!!
-            if (user.keys.areAllLocked()) {
+            if (user.keys.areAllInactive()) {
                 emit(UserAddressKeyState.Error.KeyLocked)
                 return@transformLatest
             }

@@ -30,19 +30,19 @@ import me.proton.core.user.domain.entity.AddressId
 abstract class AddressDao : BaseDao<AddressEntity>() {
 
     @Query("SELECT * FROM AddressEntity WHERE addressId = :addressId")
-    abstract fun findByAddressId(addressId: AddressId): Flow<AddressEntity?>
+    abstract fun observeByAddressId(addressId: AddressId): Flow<AddressEntity?>
 
     @Query("SELECT * FROM AddressEntity WHERE userId = :userId")
-    abstract fun findAllByUserId(userId: UserId): Flow<List<AddressEntity>>
+    abstract fun observeAllByUserId(userId: UserId): Flow<List<AddressEntity>>
 
     @Query("SELECT * FROM AddressEntity WHERE addressId = :addressId")
     abstract suspend fun getByAddressId(addressId: AddressId): AddressEntity?
 
     @Query("SELECT * FROM AddressEntity WHERE userId = :userId")
-    abstract suspend fun getAllUserId(userId: UserId): List<AddressEntity>
+    abstract suspend fun getByUserId(userId: UserId): List<AddressEntity>
 
-    @Query("DELETE FROM AddressEntity WHERE addressId = :addressId")
-    abstract suspend fun delete(addressId: AddressId)
+    @Query("DELETE FROM AddressEntity WHERE addressId IN (:addressIds)")
+    abstract suspend fun delete(addressIds: List<AddressId>)
 
     @Query("DELETE FROM AddressEntity WHERE userId = :userId")
     abstract suspend fun deleteAll(userId: UserId)

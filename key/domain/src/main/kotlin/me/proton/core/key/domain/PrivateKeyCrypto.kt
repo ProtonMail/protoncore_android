@@ -19,6 +19,7 @@
 package me.proton.core.key.domain
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.EncryptedMessage
@@ -50,16 +51,10 @@ fun PrivateKey.fingerprint(context: CryptoContext) =
  */
 fun PrivateKey.publicKey(context: CryptoContext): PublicKey =
     context.pgpCrypto.getPublicKey(key).let {
-        fun canUnlockOrThrow(): Boolean {
-            runCatching { unlock(context) }.getOrElse { error ->
-                throw CryptoException("PrivateKey cannot be unlocked but is active (suspicious).", error)
-            }
-            return true
-        }
         PublicKey(
             key = it,
             isPrimary = isPrimary,
-            isActive = isActive && isUnlockable && canUnlockOrThrow(),
+            isActive = isActive,
             canEncrypt = canEncrypt,
             canVerify = canVerify
         )
@@ -189,6 +184,15 @@ fun PrivateKey.unlockOrNull(context: CryptoContext): UnlockedPrivateKey? =
  */
 fun PrivateKey.canUnlock(context: CryptoContext): Boolean =
     unlockOrNull(context) != null
+
+/**
+ * @return true if this [PrivateKey] can be unlocked using provided [passphrase].
+ *
+ * @see [PrivateKey.unlock]
+ * @see [PrivateKey.unlockOrNull]
+ */
+fun PrivateKey.canUnlock(context: CryptoContext, passphrase: EncryptedByteArray?): Boolean =
+    copy(passphrase = passphrase).canUnlock(context)
 
 /**
  * Decrypt [message] as [String] using this [PrivateKeyRing.keys].
