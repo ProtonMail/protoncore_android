@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changes
+
+- Added SnackType to represent Snackbar types (success, error etc.).
+
+### Deprecations
+
+- View.snack extension functions that accept a background drawable ID are deprecated. Use the snack functions that accept a SnackType instead.
+
 ## [2.0.0]
 - Use a global version for all core artifacts
 
