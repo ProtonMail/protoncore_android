@@ -42,6 +42,7 @@ import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionForceLogout
+import me.proton.core.accountmanager.presentation.onSessionSecondFactorFailed
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.domain.entity.Product
@@ -89,6 +90,7 @@ class AccountViewModel @Inject constructor(
             accountManager.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
                 .onSessionForceLogout { userManager.lock(it.userId) }
                 .onSessionSecondFactorNeeded { startSecondFactorWorkflow(it) }
+                .onSessionSecondFactorFailed { signIn(username = it.username) }
                 .onAccountTwoPassModeNeeded { startTwoPassModeWorkflow(it) }
                 .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
                 .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
@@ -110,7 +112,8 @@ class AccountViewModel @Inject constructor(
 
     fun getPrimaryUserId() = accountManager.getPrimaryUserId()
 
-    fun signIn(username: String? = null) = authOrchestrator.startLoginWorkflow(AccountType.Internal, username)
+    fun signIn(username: String? = null) =
+        authOrchestrator.startLoginWorkflow(AccountType.Internal, username = username)
 
     fun add() = authOrchestrator.startAddAccountWorkflow(AccountType.Internal, Product.Mail)
 

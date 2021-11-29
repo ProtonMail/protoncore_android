@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -27,6 +26,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.NextStep
@@ -34,6 +34,7 @@ import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -92,10 +93,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
                 is SecondFactorViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
                 is SecondFactorViewModel.State.Error.UserCheckError -> onUserCheckFailed(it.error)
                 is SecondFactorViewModel.State.Error.Message -> onError(false, it.message)
-                is SecondFactorViewModel.State.Error.Unrecoverable -> {
-                    showError(getString(R.string.auth_login_general_error))
-                    onBackPressed()
-                }
+                is SecondFactorViewModel.State.Error.Unrecoverable -> onUnrecoverableError(it.message)
             }.exhaustive
         }.launchIn(lifecycleScope)
     }
@@ -127,18 +125,10 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     }
 
     override fun onBackPressed() {
-        viewModel.stopSecondFactorFlow(UserId(input.userId))
-            .invokeOnCompletion { finish() }
-    }
-
-    private fun onSuccess(
-        userId: UserId,
-        nextStep: NextStep
-    ) {
-        val intent = Intent()
-            .putExtra(ARG_RESULT, SecondFactorResult(userId = userId.id, nextStep = nextStep))
-        setResult(Activity.RESULT_OK, intent)
-        finish()
+        lifecycleScope.launch {
+            viewModel.stopSecondFactorFlow(UserId(input.userId))
+            finish()
+        }
     }
 
     override fun onError(triggerValidation: Boolean, message: String?) {
@@ -146,6 +136,21 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
             binding.secondFactorInput.setInputError()
         }
         showError(message)
+    }
+
+    private fun onSuccess(userId: UserId, nextStep: NextStep) {
+        setResultAndFinish(SecondFactorResult.Success(userId = userId.id, nextStep = nextStep))
+    }
+
+    private fun onUnrecoverableError(message: String?) {
+        if (message != null) errorToast(message)
+        setResultAndFinish(SecondFactorResult.UnrecoverableError(message))
+    }
+
+    private fun setResultAndFinish(result: SecondFactorResult) {
+        val intent = Intent().putExtra(ARG_RESULT, result)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
     /**

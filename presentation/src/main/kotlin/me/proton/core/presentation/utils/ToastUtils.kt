@@ -20,10 +20,14 @@
 
 package me.proton.core.presentation.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.Gravity
+import android.view.LayoutInflater
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
+import me.proton.core.presentation.R
 
 /*
  * A file containing extensions for Text
@@ -71,4 +75,19 @@ fun Context.showToast(
             setGravity(gravity, 0, 0)
         }.show()
     }
+}
+
+@SuppressLint("InflateParams")
+fun Context?.errorToast(
+    message: String,
+    length: Int = DEFAULT_TOAST_LENGTH
+) {
+    val context = this ?: return
+
+    val customView = LayoutInflater.from(context).inflate(R.layout.proton_toast_error, null)
+    customView.findViewById<TextView>(R.id.textView).text = message
+
+    val toast = Toast.makeText(context, message, length)
+    toast.view = customView
+    toast.show()
 }
