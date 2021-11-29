@@ -25,7 +25,8 @@ include(
     "detekt",
     "jacoco",
     "kotlin",
-    "tests"
+    "tests",
+    "publish-core-libraries"
 )
 
 pluginManagement {
