@@ -83,13 +83,15 @@ class AccountRepositoryImplTest {
         sessionState = SessionState.Authenticated
     )
 
+    private val product = Product.Calendar
+
     private val session1 = SessionEntity(
         userId = account1.userId,
         sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",
-        scopes = "full,calendar,mail",
-        product = Product.Calendar
+        scopes = listOf("full", "calendar", "mail"),
+        product = product
     )
 
     private val sessionInvalid = SessionEntity(
@@ -97,11 +99,11 @@ class AccountRepositoryImplTest {
         sessionId = SessionId("sessionInvalid"),
         accessToken = "",
         refreshToken = "",
-        scopes = "full,calendar,mail",
-        product = Product.Calendar
+        scopes = listOf("full", "calendar", "mail"),
+        product = product
     )
 
-    private val ad = AccountDetails(null)
+    private val ad = AccountDetails(null, null)
 
     @Before
     fun beforeEveryTest() {
@@ -109,7 +111,7 @@ class AccountRepositoryImplTest {
 
         setupAccountDatabase()
 
-        accountRepository = AccountRepositoryImpl(Product.Calendar, db, simpleCrypto)
+        accountRepository = AccountRepositoryImpl(product, db, simpleCrypto)
     }
 
     private fun setupAccountDatabase() {
@@ -169,7 +171,7 @@ class AccountRepositoryImplTest {
         accountRepository.updateAccountState(account1.toAccount(ad).userId, AccountState.Removed)
 
         coVerify(exactly = 1) { accountDao.updateAccountState(any(), any()) }
-        coVerify(exactly = 1) { metadataDao.delete(account1.userId, any()) }
+        coVerify(exactly = 1) { metadataDao.delete(product, account1.userId) }
     }
 
     @Test
@@ -177,7 +179,7 @@ class AccountRepositoryImplTest {
         accountRepository.updateAccountState(account1.toAccount(ad).userId, AccountState.Disabled)
 
         coVerify(exactly = 1) { accountDao.updateAccountState(any(), any()) }
-        coVerify(exactly = 1) { metadataDao.delete(account1.userId, any()) }
+        coVerify(exactly = 1) { metadataDao.delete(product, account1.userId) }
     }
 
     @Test

@@ -20,6 +20,7 @@ package me.proton.core.account.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.extension.dropTable
 import me.proton.core.data.room.db.extension.dropTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
@@ -96,6 +97,23 @@ interface AccountDatabase : Database {
                 )
                 // Drop Table HumanVerificationDetailsEntity.
                 database.dropTable(table = "HumanVerificationDetailsEntity")
+            }
+        }
+
+        /**
+         * - Added AccountMetadataEntity.migrations (decryptPassphrase: see AccountMigrator).
+         */
+        val MIGRATION_4 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "AccountMetadataEntity",
+                    column = "migrations",
+                    type = "TEXT"
+                )
+                // Add 'decryptPassphrase' migration for all Ready account.
+                database.execSQL("UPDATE AccountMetadataEntity SET migrations = 'DecryptPassphrase'")
+                // Change all Ready account to MigrationNeeded.
+                database.execSQL("UPDATE AccountEntity SET state = 'MigrationNeeded' WHERE state = 'Ready'")
             }
         }
     }

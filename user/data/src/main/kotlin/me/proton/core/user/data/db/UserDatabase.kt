@@ -20,6 +20,7 @@ package me.proton.core.user.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.user.data.db.dao.UserDao
 import me.proton.core.user.data.db.dao.UserWithKeysDao
@@ -42,6 +43,27 @@ interface UserDatabase : Database, UserKeyDatabase {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `UserKeyEntity` (`userId` TEXT NOT NULL, `keyId` TEXT NOT NULL, `version` INTEGER NOT NULL, `privateKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, `fingerprint` TEXT, `activation` TEXT, PRIMARY KEY(`keyId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_UserKeyEntity_userId` ON `UserKeyEntity` (`userId`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_UserKeyEntity_keyId` ON `UserKeyEntity` (`keyId`)")
+            }
+        }
+
+        /**
+         * - Added UserKeyEntity.active.
+         * - Added UserKeyEntity.isUnlockable.
+         */
+        val MIGRATION_1 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "UserKeyEntity",
+                    column = "active",
+                    type = "INTEGER",
+                    defaultValue = null
+                )
+                database.addTableColumn(
+                    table = "UserKeyEntity",
+                    column = "isUnlockable",
+                    type = "INTEGER NOT NULL",
+                    defaultValue = "0"
+                )
             }
         }
     }

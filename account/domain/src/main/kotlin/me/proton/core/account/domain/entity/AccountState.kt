@@ -25,6 +25,11 @@ enum class AccountState {
     NotReady,
 
     /**
+     * State emitted if this [Account] need a migration to be [Ready] to use.
+     */
+    MigrationNeeded,
+
+    /**
      * A two pass mode is needed.
      *
      * Note: Usually followed by either [TwoPassModeSuccess] or [TwoPassModeFailed].
@@ -70,6 +75,16 @@ enum class AccountState {
      * Unlock User primary key has failed.
      */
     UnlockFailed,
+
+    /**
+     * User key check has failed.
+     */
+    UserKeyCheckFailed,
+
+    /**
+     * User Address key check has failed.
+     */
+    UserAddressKeyCheckFailed,
 
     /**
      * The [Account] is ready to use and contains a valid [Session].

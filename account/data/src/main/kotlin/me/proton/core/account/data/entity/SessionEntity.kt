@@ -24,7 +24,6 @@ import androidx.room.Index
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decryptOrElse
-import me.proton.core.data.room.db.CommonConverters
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
@@ -50,7 +49,7 @@ data class SessionEntity(
     val sessionId: SessionId,
     val accessToken: EncryptedString,
     val refreshToken: EncryptedString,
-    val scopes: String,
+    val scopes: List<String>,
     val product: Product
 ) {
     fun toSession(keyStoreCrypto: KeyStoreCrypto): Session = Session(
@@ -59,6 +58,6 @@ data class SessionEntity(
         // See RefreshTokenHandler and sessionListener.onSessionForceLogout.
         accessToken = requireNotNull(accessToken.decryptOrElse(keyStoreCrypto) { "invalid" }),
         refreshToken = requireNotNull(refreshToken.decryptOrElse(keyStoreCrypto) { "invalid" }),
-        scopes = CommonConverters.fromStringToListOfString(scopes).orEmpty()
+        scopes = scopes
     )
 }

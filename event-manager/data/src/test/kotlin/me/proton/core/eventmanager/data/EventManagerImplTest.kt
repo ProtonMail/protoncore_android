@@ -79,7 +79,7 @@ class EventManagerImplTest {
         state = AccountState.Ready,
         sessionId = null,
         sessionState = null,
-        details = AccountDetails(null)
+        details = AccountDetails(null, null)
     )
     private val user2 = Account(
         userId = UserId("user2"),
@@ -88,7 +88,7 @@ class EventManagerImplTest {
         state = AccountState.Ready,
         sessionId = null,
         sessionState = null,
-        details = AccountDetails(null)
+        details = AccountDetails(null, null)
     )
     private val accounts = listOf(user1, user2)
 

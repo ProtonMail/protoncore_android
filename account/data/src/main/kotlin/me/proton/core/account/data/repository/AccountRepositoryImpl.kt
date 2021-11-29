@@ -33,6 +33,7 @@ import me.proton.core.account.data.extension.toAccountEntity
 import me.proton.core.account.data.extension.toSessionEntity
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
+import me.proton.core.account.domain.entity.AccountMetadataDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
@@ -87,11 +88,15 @@ class AccountRepositoryImpl(
     }
 
     private suspend fun deleteAccountMetadata(userId: UserId) =
-        accountMetadataDao.delete(userId, product)
+        accountMetadataDao.delete(product, userId)
+
+    private suspend fun getAccountMetadataDetails(userId: UserId): AccountMetadataDetails? =
+        accountMetadataDao.getByUserId(product, userId)?.toAccountMetadataDetails()
 
     private suspend fun getAccountInfo(entity: AccountEntity): AccountDetails {
         val sessionId = entity.sessionId
         return AccountDetails(
+            account = getAccountMetadataDetails(entity.userId),
             session = sessionId?.let { getSessionDetails(it) }
         )
     }
@@ -191,7 +196,10 @@ class AccountRepositoryImpl(
                 AccountState.CreateAddressNeeded,
                 AccountState.CreateAddressSuccess,
                 AccountState.CreateAddressFailed,
-                AccountState.UnlockFailed -> deleteAccountMetadata(userId)
+                AccountState.UnlockFailed,
+                AccountState.UserKeyCheckFailed,
+                AccountState.UserAddressKeyCheckFailed -> deleteAccountMetadata(userId)
+                AccountState.MigrationNeeded -> Unit
             }.exhaustive
             accountDao.updateAccountState(userId, state)
         }
@@ -220,7 +228,8 @@ class AccountRepositoryImpl(
         )
 
     override fun getPrimaryUserId(): Flow<UserId?> =
-        accountMetadataDao.observeLatestPrimary(product).map { it?.userId }
+        accountMetadataDao.observeLatestPrimary(product)
+            .map { account -> account?.userId.takeIf { account?.migrations == null } }
             .distinctUntilChanged()
 
     override suspend fun getPreviousPrimaryUserId(): UserId? =
@@ -253,4 +262,32 @@ class AccountRepositoryImpl(
 
     override suspend fun clearSessionDetails(sessionId: SessionId) =
         sessionDetailsDao.clearPassword(sessionId = sessionId)
+
+    override suspend fun addMigration(userId: UserId, migration: String) =
+        db.inTransaction {
+            val metadata = accountMetadataDao.getByUserId(product, userId)
+            accountMetadataDao.updateMigrations(product, userId, metadata?.migrations.orEmpty() + migration)
+            accountDao.updateAccountState(userId, AccountState.MigrationNeeded)
+        }.also {
+            getAccountOrNull(userId)?.let { tryEmitAccountStateChanged(it) }
+        }
+
+    override suspend fun removeMigration(userId: UserId, migration: String) {
+        db.inTransaction {
+            // Get all migrations.
+            val migrations = accountMetadataDao.getByUserId(product, userId)?.migrations.orEmpty()
+            // If list is empty -> No state change.
+            if (migrations.isEmpty()) return@inTransaction false
+            // Remove given migration from the list.
+            val updatedList = migrations.minus(migration).takeIf { it.isNotEmpty() }
+            // Update migrations.
+            accountMetadataDao.updateMigrations(product, userId, updatedList)
+            // If migrations is null -> change AccountState to Ready.
+            val isMigratedAndReady = updatedList == null
+            if (isMigratedAndReady) accountDao.updateAccountState(userId, AccountState.Ready)
+            isMigratedAndReady
+        }.also { stateChanged ->
+            if (stateChanged) getAccountOrNull(userId)?.let { tryEmitAccountStateChanged(it) }
+        }
+    }
 }

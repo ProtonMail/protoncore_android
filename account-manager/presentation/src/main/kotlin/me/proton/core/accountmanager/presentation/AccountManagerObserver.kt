@@ -21,22 +21,19 @@ package me.proton.core.accountmanager.presentation
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.accountmanager.domain.onAccountState
 import me.proton.core.accountmanager.domain.onSessionState
 
 class AccountManagerObserver(
     internal val accountManager: AccountManager,
-    private val lifecycle: Lifecycle,
-    private val minActiveState: Lifecycle.State = Lifecycle.State.CREATED
+    internal val lifecycle: Lifecycle,
+    internal val minActiveState: Lifecycle.State = Lifecycle.State.CREATED
 ) {
 
     internal val scope = lifecycle.coroutineScope
@@ -61,16 +58,11 @@ fun AccountManager.observe(
     minActiveState: Lifecycle.State = Lifecycle.State.CREATED
 ) = AccountManagerObserver(this, lifecycle, minActiveState)
 
-fun AccountManagerObserver.disableInitialNotReadyAccounts(): AccountManagerObserver {
-    scope.launch {
-        // For all NotReady/Removed Accounts in the first/initial list.
-        accountManager.getAccounts(AccountState.NotReady, AccountState.Removed).first().forEach {
-            // Do not disable if SecondFactor is pending.
-            if (it.sessionState != SessionState.SecondFactorNeeded) {
-                accountManager.disableAccount(it.userId)
-            }
-        }
-    }
+fun AccountManagerObserver.onAccountMigrationNeeded(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.MigrationNeeded, initialState, block)
     return this
 }
 
@@ -159,5 +151,21 @@ fun AccountManagerObserver.onSessionForceLogout(
     block: suspend (Account) -> Unit
 ): AccountManagerObserver {
     addSessionStateListener(SessionState.ForceLogout, initialState, block)
+    return this
+}
+
+fun AccountManagerObserver.onUserKeyCheckFailed(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.UserKeyCheckFailed, initialState, block)
+    return this
+}
+
+fun AccountManagerObserver.onUserAddressKeyCheckFailed(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.UserAddressKeyCheckFailed, initialState, block)
     return this
 }

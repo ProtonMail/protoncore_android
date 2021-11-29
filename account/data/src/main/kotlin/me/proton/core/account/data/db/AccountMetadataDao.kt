@@ -35,6 +35,12 @@ abstract class AccountMetadataDao : BaseDao<AccountMetadataEntity>() {
     @Query("SELECT * FROM AccountMetadataEntity WHERE product = :product ORDER BY primaryAtUtc DESC")
     abstract suspend fun getAllDescending(product: Product): List<AccountMetadataEntity>
 
-    @Query("DELETE FROM AccountMetadataEntity WHERE userId = :userId AND product = :product")
-    abstract suspend fun delete(userId: UserId, product: Product)
+    @Query("SELECT * FROM AccountMetadataEntity WHERE product = :product AND userId = :userId")
+    abstract suspend fun getByUserId(product: Product, userId: UserId): AccountMetadataEntity?
+
+    @Query("UPDATE AccountMetadataEntity SET migrations = :migrations WHERE product = :product AND userId = :userId")
+    abstract suspend fun updateMigrations(product: Product, userId: UserId, migrations: List<String>?)
+
+    @Query("DELETE FROM AccountMetadataEntity WHERE product = :product AND userId = :userId")
+    abstract suspend fun delete(product: Product, userId: UserId)
 }

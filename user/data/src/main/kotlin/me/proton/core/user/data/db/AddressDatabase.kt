@@ -56,6 +56,7 @@ interface AddressDatabase : Database, AddressKeyDatabase {
                 database.addTableColumn(table = "AddressEntity", column = "signature", type = "TEXT")
             }
         }
+
         /**
          * - Added AddressEntity.signedKeyList.
          */
@@ -70,6 +71,27 @@ interface AddressDatabase : Database, AddressKeyDatabase {
                     table = "AddressEntity",
                     column = "signedKeyList_signature",
                     type = "TEXT"
+                )
+            }
+        }
+
+        /**
+         * - Added AddressKeyEntity.isUnlockable.
+         * - Added AddressKeyEntity.passphrase.
+         */
+        val MIGRATION_3 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "AddressKeyEntity",
+                    column = "isUnlockable",
+                    type = "INTEGER NOT NULL",
+                    defaultValue = "0"
+                )
+                database.addTableColumn(
+                    table = "AddressKeyEntity",
+                    column = "passphrase",
+                    type = "BLOB",
+                    defaultValue = null
                 )
             }
         }

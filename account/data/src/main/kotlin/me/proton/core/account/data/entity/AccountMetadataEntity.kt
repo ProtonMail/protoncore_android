@@ -21,6 +21,7 @@ package me.proton.core.account.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import me.proton.core.account.domain.entity.AccountMetadataDetails
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 
@@ -43,5 +44,11 @@ import me.proton.core.domain.entity.UserId
 data class AccountMetadataEntity(
     val userId: UserId,
     val product: Product,
-    val primaryAtUtc: Long
-)
+    val primaryAtUtc: Long,
+    val migrations: List<String>? = null
+) {
+    fun toAccountMetadataDetails() = AccountMetadataDetails(
+        primaryAtUtc = primaryAtUtc,
+        migrations = migrations.orEmpty()
+    )
+}

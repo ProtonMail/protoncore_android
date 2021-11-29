@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,30 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.accountmanager.data
 
-plugins {
-    `java-library`
-    kotlin("jvm")
-}
+import javax.inject.Qualifier
 
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-
-    implementation(
-
-        project(Module.kotlinUtil),
-        project(Module.domain),
-        project(Module.networkDomain),
-        project(Module.accountDomain),
-        project(Module.cryptoCommon),
-        project(Module.userDomain),
-
-        // Kotlin
-        `kotlin-jdk8`,
-        `coroutines-core`
-    )
-
-    testImplementation(project(Module.kotlinTest))
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AccountStateHandlerCoroutineScope
