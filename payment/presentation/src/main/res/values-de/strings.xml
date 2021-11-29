@@ -23,7 +23,7 @@
   <string name="payments_3ds_not_approved">Die 3DS-Freigabe wurde abgelehnt.</string>
   <string name="payments_error_card_name">Name des Karteninhabers erforderlich.</string>
   <string name="payments_error_card_number">Ungültige Kartennummer.</string>
-  <string name="payments_error_cvc">Bitte gültigen Sicherheitscode eingeben.</string>
+  <string name="payments_error_cvc">Bitte gültige Kartenprüfziffer eingeben.</string>
   <string name="payments_error_session">Eine gültige Sitzungs-ID wird benötigt, um einen angemeldeten Benutzer zu abonnieren.</string>
   <string name="payments_error_signup_paymentmethod">Anmeldung mit bestehender Zahlungsmethode nicht möglich.</string>
   <string name="payments_error_invalid_session">Ungültige Sitzung.</string>
@@ -42,7 +42,7 @@
   <string name="payments_card_name">Karteninhaber</string>
   <string name="payments_card_number">Kartennummer</string>
   <string name="payments_expiration_date">Gültig bis</string>
-  <string name="payments_security_code">Sicherheitsschlüssel</string>
+  <string name="payments_security_code">Kartenprüfziffer</string>
   <string name="payments_postal_code">PLZ</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
   <string name="payments_expiration_date_hint">00/00</string>

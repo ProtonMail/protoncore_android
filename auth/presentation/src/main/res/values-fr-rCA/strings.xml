@@ -104,7 +104,7 @@
   <string name="auth_signup_recovery_method_email_hint">Adresse courriel de récupération</string>
   <string name="auth_signup_recovery_method_phone_hint">Numéro de téléphone de récupération</string>
   <string name="auth_signup_terms_conditions">Conditions générales d’utilisation</string>
-  <string name="auth_signup_terms_conditions_full">En cliquant sur « Suivant », vous acceptez de respecter les conditions générales d\'utilisation de Proton.</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En cliquant sur « Suivant », vous acceptez les <annotation link="terms">conditions générales d\'utilisation</annotation> de Proton.</string>
   <string name="auth_signup_skip_recovery_title">Ne pas définir de méthode de récupération?</string>
   <string name="auth_signup_skip_recovery_description">Une méthode de récupération vous aidera à accéder à votre compte en cas d\'oubli de votre mot de passe ou si vous vous êtes bloqué à l’extérieur de votre compte.</string>
   <string name="auth_signup_skip_recovery">Passer</string>

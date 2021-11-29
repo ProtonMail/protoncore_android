@@ -17,54 +17,84 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">Wybierz plan</string>
+  <string name="plans_select_plan">Wybierz</string>
   <string name="plans_select_a_plan">Wybierz plan</string>
   <string name="plans_customizable_features">Odwiedź <a href="https://protonmail.com/pricing">protonmail.com</a>, aby dostosować plan lub ulepszyć go do wersji Professional lub Visionary.</string>
   <string name="plans_customizable_features_web">Odwiedź <a href="https://protonmail.com/pricing">protonmail.com</a>, aby dostosować plan.</string>
   <string name="plans_fetching_general_error">Wystąpił błąd podczas pobierania planów.</string>
   <string name="plans_free_name">Free</string>
-  <string name="plan_price_monthly">/ miesiąc</string>
+  <string name="plan_price_monthly">miesięcznie*</string>
   <string name="plans_current_plan">Obecny plan</string>
   <string name="plans_upgrade_plan">Ulepsz</string>
   <string name="plans_subscription">Subskrypcja</string>
   <string name="plans_renewal_date">Twój plan odnowi się automatycznie</string>
-  <string name="plans_billed_yearly">Płatne jako %s rocznie</string>
+  <string name="plans_billed_yearly">*Płatne rocznie jako %s</string>
+  <string name="plans_billed_anually">Płatne rocznie</string>
+  <string name="plans_billed_monthly">Płatne miesięcznie</string>
+  <string name="plans_billed_every_2years">Płatne co 2 lata</string>
   <string name="plans_save_20">Zaoszczędź 20% zmieniając na plan roczny</string>
+  <string name="plans_renew_info">Odnawia się automatycznie. Anuluj lub zmień plan w dowolnym momencie.</string>
+  <string name="plans_upgrade_your_plan">Ulepsz plan</string>
   <!-- plan details -->
+  <string name="plans_feature_free_item_storage">500 MB przestrzeni dyskowej</string>
+  <string name="plans_feature_free_item_address">1 adres</string>
+  <string name="plans_feature_free_item_calendar">1 kalendarz</string>
+  <string name="plans_feature_free_item_vpn">1 połączenie VPN</string>
   <string-array name="free">
-    <item>1 użytkownik</item>
-    <item>500 MB przestrzeni dyskowej</item>
-    <item>1 adres</item>
+    <item>Podstawowa ochrona prywatności i bezpieczna komunikacja.</item>
+    <item>@string/plans_feature_free_item_storage</item>
+    <item>@string/plans_feature_free_item_address</item>
+    <item>@string/plans_feature_free_item_calendar</item>
+    <item>@string/plans_feature_free_item_vpn</item>
   </string-array>
-  <string-array name="plus">
-    <item>1 użytkownik</item>
-    <item>5 GB przestrzeni dyskowej *</item>
-    <item>5 adresów</item>
-    <item>200 folderów / etykiet</item>
-    <item>Niestandardowy adres e-mail</item>
+  <!-- new -->
+  <string-array name="plan_id_plus" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>W pełni funkcjonalna skrzynka pocztowa z zaawansowaną ochroną.</item>
+    <item>#proton_storage# przestrzeni dyskowej</item>
+    <item>#proton_addresses# addresses</item>
+    <item>#proton_domains# niestandardowa domena</item>
   </string-array>
-  <string-array name="professional">
-    <item>1 - 5000 użytkowników *</item>
-    <item>5 GB przestrzeni dyskowej / użytkownika</item>
-    <item>5 adresów / użytkownika</item>
-    <item>Nieograniczona liczba folderów / etykiet / filtrów</item>
-    <item>Niestandardowe adresy e-mail</item>
+  <string-array name="plan_id_vpnbasic" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>VPN Basic</item>
+    <item>#proton_vpn# VPN connections</item>
+    <item>Wysoka prędkość</item>
+    <item>#proton_storage# przestrzeni dyskowej</item>
+    <item>#proton_addresses# adres</item>
+    <item>#proton_calendars# kalendarz</item>
   </string-array>
-  <string-array name="visionary">
-    <item>6 użytkowników</item>
-    <item>20 GB przestrzeni dyskowej</item>
-    <item>50 adresów</item>
-    <item>Nieograniczona liczba folderów / etykiet / filtrów</item>
-    <item>Niestandardowe adresy e-mail</item>
+  <string-array name="plan_id_vpnplus" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>VPN Plus</item>
+    <item>#proton_vpn# VPN connections</item>
+    <item>Najwyższa prędkość</item>
+    <item>#proton_storage# przestrzeni dyskowej</item>
+    <item>#proton_addresses# adres</item>
+    <item>#proton_calendars# kalendarz</item>
+  </string-array>
+  <string-array name="plan_id_professional" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>Professional</item>
+    <item>#proton_storage# przestrzeni dyskowej / użytkownika</item>
+    <item>#proton_addresses# addresses / user</item>
+    <item>#proton_domains# custom domains</item>
+    <item>Obsługa wielu użytkowników</item>
+  </string-array>
+  <string-array name="plan_id_visionary" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>Visionary</item>
+    <item>#proton_storage# przestrzeni dyskowej</item>
+    <item>#proton_addresses# addresses</item>
+    <item>#proton_calendars# calendars</item>
+    <item>#proton_vpn# high-speed VPN connections</item>
+    <item>#proton_domains# custom domains</item>
+    <item>#proton_users# użytkowników</item>
   </string-array>
   <!-- supported plans -->
   <string-array name="supported_currencies">
-    <item>€ EUR</item>
-    <item>$ USD</item>
+    <item>EUR</item>
+    <item>USD</item>
     <item>CHF</item>
   </string-array>
   <string-array name="supported_billing_cycle">
-    <item>Płatność miesięczna</item>
-    <item>Płatność roczna - ZAOSZCZĘDŹ 20%</item>
+    <item>Plan miesięczny</item>
+    <item>Plan roczny (zaoszczędź do 20%)</item>
+    <item>Płać co 2 lata (zaoszczędź 33%)</item>
   </string-array>
 </resources>

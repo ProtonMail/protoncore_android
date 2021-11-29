@@ -70,7 +70,8 @@
   <string name="auth_create_address_result_recovery_title">Su dirección de correo de recuperación es:</string>
   <string name="auth_create_address_create">Crear dirección</string>
   <string name="auth_create_address_creating">Creando dirección</string>
-  <string name="auth_create_address_terms">Al hacer clic en Crear dirección, acepta los <a href="https://protonmail.com/terms-and-conditions">términos y condiciones de Proton.</a></string>
+  <string name="auth_create_address_terms">Al hacer clic en Crear dirección, acepta los <a href="https://protonmail.com/terms-and-conditions">términos y condiciones de Proton.</a>
+  </string>
   <string name="auth_create_address_error_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_create_address_error_no_available_domain">No hay dominio disponible.</string>
   <string name="auth_create_address_error_private_key">Error al generar la clave privada.</string>
@@ -104,7 +105,7 @@
   <string name="auth_signup_recovery_method_email_hint">Correo de recuperación</string>
   <string name="auth_signup_recovery_method_phone_hint">Número de teléfono de recuperación</string>
   <string name="auth_signup_terms_conditions">Términos y Condiciones</string>
-  <string name="auth_signup_terms_conditions_full">Al hacer clic en Siguiente, acepta los Términos y Condiciones de Proton.</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Al hacer clic en Siguiente, acepta los <annotation link="terms">Términos y Condiciones</annotation> de Proton.</string>
   <string name="auth_signup_skip_recovery_title">¿Omitir método de recuperación?</string>
   <string name="auth_signup_skip_recovery_description">Un método de recuperación le ayudará a acceder a su cuenta en caso de que olvide su contraseña o no pueda entrar en su cuenta.</string>
   <string name="auth_signup_skip_recovery">Omitir</string>

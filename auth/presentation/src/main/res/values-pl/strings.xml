@@ -104,7 +104,7 @@
   <string name="auth_signup_recovery_method_email_hint">Adres pomocniczy</string>
   <string name="auth_signup_recovery_method_phone_hint">Numer pomocniczy</string>
   <string name="auth_signup_terms_conditions">Regulamin</string>
-  <string name="auth_signup_terms_conditions_full">Klikając przycisk Dalej, akceptujesz regulamin usługi Proton.</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Klikając przycisk Dalej, akceptujesz <annotation link="terms">regulamin</annotation> usługi Proton.</string>
   <string name="auth_signup_skip_recovery_title">Pominąć metodę odzyskiwania?</string>
   <string name="auth_signup_skip_recovery_description">Metoda odzyskiwania pomoże uzyskać dostęp do konta, w przypadku gdy zostanie ono zablokowane lub zapomnisz hasła.</string>
   <string name="auth_signup_skip_recovery">Pomiń</string>
@@ -116,7 +116,7 @@
   <string name="auth_signup_validation_password">Hasło nie może być puste.</string>
   <string name="auth_signup_your_account_is_being_setup">Tworzenie konta…</string>
   <string name="auth_signup_please_wait">Zazwyczaj nie trwa to dłużej niż minutę.</string>
-  <string name="auth_signup_replacement_code">Nie otrzymałeś kodu?</string>
+  <string name="auth_signup_replacement_code">Nie otrzymano kodu?</string>
   <string name="auth_signup_verify">Zweryfikuj</string>
   <string name="auth_signup_verification_code">Kod weryfikacyjny</string>
   <string name="auth_signup_enter_code_subtitle">Wpisz kod weryfikacyjny wysłany do %s:</string>

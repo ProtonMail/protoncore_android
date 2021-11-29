@@ -17,54 +17,84 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_plan">Sélectionnez une offre</string>
+  <string name="plans_select_plan">Sélectionner</string>
   <string name="plans_select_a_plan">Sélectionnez une offre</string>
   <string name="plans_customizable_features">Visitez <a href="https://protonmail.com/pricing">protonmail.com</a> pour passer aux forfaits Professional et Visionary ou pour personnaliser votre offre.</string>
   <string name="plans_customizable_features_web">Visitez <a href="https://protonmail.com/pricing">protonmail.com</a> pour personnaliser votre offre.</string>
   <string name="plans_fetching_general_error">Une erreur s\'est produite lors de la récupération des offres.</string>
   <string name="plans_free_name">FREE</string>
-  <string name="plan_price_monthly">/mois</string>
+  <string name="plan_price_monthly">par mois*</string>
   <string name="plans_current_plan">Offre actuelle</string>
   <string name="plans_upgrade_plan">Changer d\'offre</string>
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Votre offre sera automatiquement renouvelée le</string>
-  <string name="plans_billed_yearly">Facturé %s par an</string>
+  <string name="plans_billed_yearly">*Facturé annuellement à %s</string>
+  <string name="plans_billed_anually">Facturé annuellement</string>
+  <string name="plans_billed_monthly">Facturé mensuellement</string>
+  <string name="plans_billed_every_2years">Facturé tous les 2 ans</string>
   <string name="plans_save_20">Économisez 20 % en passant à la facturation annuelle</string>
+  <string name="plans_renew_info">Se renouvelle automatiquement. Annulez ou changez d\'abonnement à tout moment.</string>
+  <string name="plans_upgrade_your_plan">Changez d\'offre</string>
   <!-- plan details -->
+  <string name="plans_feature_free_item_storage">0,5 Go de stockage</string>
+  <string name="plans_feature_free_item_address">1 adresse</string>
+  <string name="plans_feature_free_item_calendar">1 calendrier</string>
+  <string name="plans_feature_free_item_vpn">1 connexion RPV</string>
   <string-array name="free">
-    <item>1 utilisateur</item>
-    <item>0,5 Go de stockage</item>
-    <item>1 adresse</item>
+    <item>La base pour des communications privées et sécurisées.</item>
+    <item>@string/plans_feature_free_item_storage</item>
+    <item>@string/plans_feature_free_item_address</item>
+    <item>@string/plans_feature_free_item_calendar</item>
+    <item>@string/plans_feature_free_item_vpn</item>
   </string-array>
-  <string-array name="plus">
-    <item>1 utilisateur</item>
-    <item>5 Go de stockage*</item>
-    <item>5 adresses</item>
-    <item>200 dossiers/labels</item>
-    <item>Adresse électronique personnalisée</item>
+  <!-- new -->
+  <string-array name="plan_id_plus" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>Messagerie complète avec une protection avancée.</item>
+    <item>#proton_storage# storage</item>
+    <item>#proton_addresses# addresses</item>
+    <item>#proton_domains# custom domain</item>
   </string-array>
-  <string-array name="professional">
-    <item>1 - 5000 utilisateurs*</item>
-    <item>5 Go de stockage/utilisateur</item>
-    <item>5 adresses/utilisateur</item>
-    <item>Nombre illimité de dossiers/labels/filtres</item>
-    <item>Adresses électroniques personnalisées</item>
+  <string-array name="plan_id_vpnbasic" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>RPV BASIC</item>
+    <item>#proton_vpn# VPN connections</item>
+    <item>Haute vitesse</item>
+    <item>#proton_storage# storage</item>
+    <item>#proton_addresses# address</item>
+    <item>#proton_calendars# calendar</item>
   </string-array>
-  <string-array name="visionary">
-    <item>6 utilisateurs</item>
-    <item>20 Go de stockage</item>
-    <item>50 adresses</item>
-    <item>Nombre illimité de dossiers/labels/filtres</item>
-    <item>Adresses électroniques personnalisées</item>
+  <string-array name="plan_id_vpnplus" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>RPV PLUS</item>
+    <item>#proton_vpn# VPN connections</item>
+    <item>Vitesse maximale</item>
+    <item>#proton_storage# storage</item>
+    <item>#proton_addresses# address</item>
+    <item>#proton_calendars# calendar</item>
+  </string-array>
+  <string-array name="plan_id_professional" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>PROFESSIONAL</item>
+    <item>#proton_storage# storage / user</item>
+    <item>#proton_addresses# addresses / user</item>
+    <item>#proton_domains# custom domains</item>
+    <item>Prise en charge du multiutilisateur·rice</item>
+  </string-array>
+  <string-array name="plan_id_visionary" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <item>VISIONARY</item>
+    <item>#proton_storage# storage</item>
+    <item>#proton_addresses# addresses</item>
+    <item>#proton_calendars# calendars</item>
+    <item>#proton_vpn# high-speed VPN connections</item>
+    <item>#proton_domains# custom domains</item>
+    <item>#proton_users# users</item>
   </string-array>
   <!-- supported plans -->
   <string-array name="supported_currencies">
-    <item>€ EUR</item>
-    <item>$ USD</item>
+    <item>EUR</item>
+    <item>USD</item>
     <item>CHF</item>
   </string-array>
   <string-array name="supported_billing_cycle">
-    <item>Facturation mensuelle</item>
-    <item>Facturation annuelle - ÉCONOMISEZ 20 %</item>
+    <item>Payez mensuellement</item>
+    <item>Payez annuellement (économisez jusqu\'à 20 %)</item>
+    <item>Payez tous les 2 ans (économisez 33 %)</item>
   </string-array>
 </resources>

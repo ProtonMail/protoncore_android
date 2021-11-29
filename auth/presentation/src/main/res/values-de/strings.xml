@@ -104,7 +104,7 @@
   <string name="auth_signup_recovery_method_email_hint">E-Mail-Adresse für die Wiederherstellung</string>
   <string name="auth_signup_recovery_method_phone_hint">Rufnummer für die Wiederherstellung</string>
   <string name="auth_signup_terms_conditions">Allgemeine Geschäftsbedingungen</string>
-  <string name="auth_signup_terms_conditions_full">Indem Sie auf „Weiter” klicken, erklären Sie sich mit den Allgemeinen Geschäftsbedingungen von Proton einverstanden.</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Indem Sie auf „Weiter” klicken, erklären Sie sich mit den <annotation link="terms">Nutzungsbedingungen</annotation> von Proton einverstanden.</string>
   <string name="auth_signup_skip_recovery_title">Wiederherstellungsmethode überspringen?</string>
   <string name="auth_signup_skip_recovery_description">Eine Wiederherstellungsmethode hilft Ihnen, auf Ihr Konto zuzugreifen, falls Sie Ihr Passwort vergessen haben oder aus Ihrem Konto ausgesperrt wurden.</string>
   <string name="auth_signup_skip_recovery">Überspringen</string>
