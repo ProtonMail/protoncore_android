@@ -20,21 +20,12 @@ package me.proton.core.test.android.uitests.tests.medium.plans
 
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.plugins.data.User
-import me.proton.core.test.android.robots.auth.AddAccountRobot
-import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import org.junit.Before
 import org.junit.Test
 
 class CurrentPlanTests : BaseTest() {
-
-    @Before
-    fun login() {
-        AddAccountRobot()
-            .signIn()
-    }
 
     private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
 
