@@ -74,12 +74,28 @@ class ApiManagerImpl<Api>(
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
         val backendResult = backend(call)
-        return errorHandlers.fold(backendResult) { currentResult, handler ->
+        val handlersToRetry = mutableListOf<ApiErrorHandler<Api>>()
+        var currentResult = backendResult
+
+        // all of the handlers should be asked to handle any possible error of the original api call
+        // but because some of the handlers will do an api call retry, some of the handlers should be applied to the
+        // result of the retried api call
+        for (handler in errorHandlers) {
             if (currentResult is ApiResult.Error) {
-                handler.invoke(backend, currentResult, call)
-            } else {
-                currentResult
+                val result = handler.invoke(backend, currentResult, call)
+                // add the handler in the retry list only if it produced a different error than the initial error it
+                // has been dealing with
+                if (result is ApiResult.Error && currentResult != result) {
+                    handlersToRetry.add(handler)
+                }
+                currentResult = result
             }
         }
+        for (handler in handlersToRetry) {
+            if (currentResult is ApiResult.Error) {
+                currentResult = handler.invoke(backend, currentResult, call)
+            }
+        }
+        return currentResult
     }
 }

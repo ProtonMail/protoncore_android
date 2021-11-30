@@ -61,7 +61,7 @@ private fun ApiConnectionException.toApiResult(networkManager: NetworkManager): 
         is SSLHandshakeException -> ApiResult.Error.Certificate(this)
         is SSLPeerUnverifiedException -> ApiResult.Error.Certificate(this)
         is SocketTimeoutException -> ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), this)
-        is UnknownHostException -> ApiResult.Error.NoInternet(this)
+        is UnknownHostException -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), this)
         else -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), this)
     }
 }
