@@ -84,31 +84,30 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <me.proton.core.presentation.ui.view.ProtonButton
-        android:id="@+id/sign_in"
+        android:id="@+id/sign_up"
         style="@style/ProtonButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_horizontal_padding"
         android:layout_marginTop="@dimen/gap_large"
         android:layout_marginEnd="@dimen/default_horizontal_padding"
-        android:text="@string/auth_sign_in"
-        app:layout_constraintBottom_toTopOf="@id/sign_up"
+        android:text="@string/auth_create_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guide_center" />
 
     <me.proton.core.presentation.ui.view.ProtonButton
-        android:id="@+id/sign_up"
-        style="@style/ProtonButton.Borderless.Text"
+        android:id="@+id/sign_in"
+        style="@style/ProtonButton.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_horizontal_padding"
         android:layout_marginTop="@dimen/gap_medium"
         android:layout_marginEnd="@dimen/default_horizontal_padding"
-        android:text="@string/auth_create_account"
+        android:text="@string/auth_sign_in"
+        app:layout_constraintTop_toBottomOf="@id/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_in" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/footer"
