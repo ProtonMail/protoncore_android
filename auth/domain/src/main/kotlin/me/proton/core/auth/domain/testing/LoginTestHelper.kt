@@ -19,14 +19,16 @@
 package me.proton.core.auth.domain.testing
 
 import androidx.annotation.RestrictTo
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.entity.SessionInfo
-import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.CreateLoginSession
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 
 @RestrictTo(RestrictTo.Scope.TESTS)
@@ -54,7 +56,18 @@ class LoginTestHelper @Inject constructor(
      * The user is logged out (remote server call) and the session is removed from local database.
      * This function blocks current thread.
      */
-    fun logout(sessionInfo: SessionInfo) = runBlocking {
-        accountManager.removeAccount(sessionInfo.userId)
+    fun logout(userId: UserId) = runBlocking {
+        accountManager.removeAccount(userId)
+    }
+
+    /** Clears all login sessions.
+     * Users are logged out (remote server call) and the sessions are removed from local database.
+     * This function blocks current thread.
+     */
+    fun logoutAll() = runBlocking {
+        accountManager.getAccounts().first().forEach {
+            accountManager.removeAccount(it.userId)
+        }
     }
 }
+

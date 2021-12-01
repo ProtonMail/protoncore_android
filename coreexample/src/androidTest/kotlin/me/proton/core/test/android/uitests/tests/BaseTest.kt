@@ -21,10 +21,8 @@ package me.proton.core.test.android.uitests.tests
 import android.app.Application
 import android.util.Log
 import androidx.test.core.app.ApplicationProvider
-import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.MainActivity
-import me.proton.android.core.coreexample.di.AppDatabaseModule
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDevice
@@ -38,19 +36,16 @@ import org.junit.After
 import org.junit.BeforeClass
 
 open class BaseTest(
-    private val clearAppDatabaseOnTearDown: Boolean = true,
-    defaultTimeout: Long = 20_000L
-) : ProtonTest(MainActivity::class.java, defaultTimeout) {
+    private val logoutAllAfterTest: Boolean = true,
+    defaultTimeout: Long = 20_000L,
+) : ProtonTest(MainActivity::class.java, defaultTimeout, 2) {
 
     @After
-    override fun tearDown() {
-        super.tearDown()
-        if (clearAppDatabaseOnTearDown) {
-            runBlocking {
-                appDatabase.accountDao().deleteAll()
-            }
+    fun logoutUsers() {
+        if (logoutAllAfterTest) {
+            Log.d(testTag, "Logging out users")
+            authHelper.logoutAll()
         }
-        Log.d(testTag, "Clearing AccountManager database tables")
     }
 
     fun login(user: User) {
@@ -62,12 +57,12 @@ open class BaseTest(
         val users = Users("sensitive/users.json")
         val quark = Quark(BuildConfig.HOST, BuildConfig.PROXY_TOKEN, "sensitive/internal_apis.json")
         val authHelper = ProtonTestEntryPoint.provide(ApplicationProvider.getApplicationContext<Application>())
-        val appDatabase = AppDatabaseModule.provideAppDatabase(getTargetContext())
 
         @JvmStatic
         @BeforeClass
         fun prepare() {
             setupDevice(true)
+            authHelper.logoutAll()
             quark.jailUnban()
             Plan.Dev.text = Plan.Plus.text
             Plan.Dev.planName = Plan.Plus.planName

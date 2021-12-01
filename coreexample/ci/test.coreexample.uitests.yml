@@ -81,7 +81,6 @@ assemble:
       --test coreexample/build/outputs/apk/androidTest/debug/coreexample-debug-androidTest.apk
       --device model=Pixel2,version=28
       --test-targets "$TEST_TARGET"
-      --use-orchestrator
       --timeout 45m
 
 uitest:signup:
