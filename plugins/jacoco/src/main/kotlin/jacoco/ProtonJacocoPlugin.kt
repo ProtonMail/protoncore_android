@@ -21,8 +21,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.testing.Test
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.include
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByName
@@ -43,7 +41,7 @@ class ProtonJacocoPlugin : Plugin<Project> {
         const val JacocoVersion = "0.8.7"
     }
 
-    fun Project.getReportTasks(jacocoReport: JacocoReport): List<JacocoReport> {
+    private fun Project.getReportTasks(jacocoReport: JacocoReport): List<JacocoReport> {
         return allprojects.flatMap {
             it.tasks.withType<JacocoReport>().filter { it.name == "jacocoTestReport" }
                 .filter { report -> report != jacocoReport }
@@ -184,6 +182,20 @@ class ProtonJacocoPlugin : Plugin<Project> {
                     "android/**/*.*",
                     "ch.protonmail.android.utils.nativelib",
                     "**/ch/protonmail/**",
+                    // DI code, doesn't need testing
+                    "**/*Module.class",
+                    "**/*Module$*",
+                    // androidTest code, shouldn't have coverage
+                    "**/me/proton/core/test/**",
+                    // Room Dao classes don't need testing
+                    "**/*Dao.class",
+                    // Migrations need to be done in instrumented tests which are currently not included in Jacoco reports
+                    "**/*MIGRATION*",
+                    // These components are tested using UI tests that are currently not included in Jacoco reports
+                    "**/*Activity.class",
+                    "**/*Activity$*",
+                    "**/*Fragment.class",
+                    "**/*Fragment$*",
                 )
 
                 val debugTree = fileTree("$buildDir/tmp/kotlin-classes/debug") { exclude(fileFilter) }
@@ -192,6 +204,8 @@ class ProtonJacocoPlugin : Plugin<Project> {
                 sourceDirectories.setFrom(mainSrc)
                 classDirectories.setFrom(debugTree)
                 executionData.setFrom(fileTree(buildDir) { include(listOf("**/*.exec", "**/*.ec")) })
+
+                dependsOn(tasks.getByName("allTest"))
             }
 
             tasks.withType<Test> {
