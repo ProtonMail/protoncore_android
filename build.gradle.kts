@@ -30,10 +30,10 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 plugins {
     id("core")
     id("me.proton.detekt")
-    id("me.proton.jacoco")
     id("me.proton.kotlin")
     id("me.proton.publish-libraries")
     id("me.proton.tests")
+    id("me.proton.jacoco")
     id("com.github.ben-manes.versions") version "0.39.0"
 }
 
