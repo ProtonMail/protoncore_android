@@ -28,6 +28,7 @@ import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.databinding.ActivityAddAccountBinding
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
+import me.proton.core.auth.presentation.entity.AddAccountWorkflow
 import me.proton.core.auth.presentation.onLoginResult
 import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
@@ -56,10 +57,10 @@ class AddAccountActivity : ProtonViewBindingActivity<ActivityAddAccountBinding>(
         authOrchestrator.register(this)
 
         binding.signIn.onClick { authOrchestrator.startLoginWorkflow(requiredAccountType) }
-        authOrchestrator.onLoginResult { if (it != null) onSuccess(it.userId) }
+        authOrchestrator.onLoginResult { if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignIn) }
 
         binding.signUp.onClick { authOrchestrator.startSignupWorkflow(requiredAccountType) }
-        authOrchestrator.onOnSignUpResult { if (it != null) onSuccess(it.userId) }
+        authOrchestrator.onOnSignUpResult { if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignUp) }
     }
 
     override fun onDestroy() {
@@ -71,8 +72,8 @@ class AddAccountActivity : ProtonViewBindingActivity<ActivityAddAccountBinding>(
         onClose()
     }
 
-    private fun onSuccess(userId: String) {
-        val intent = Intent().putExtra(ARG_RESULT, AddAccountResult(userId = userId))
+    private fun onSuccess(userId: String, workflow: AddAccountWorkflow) {
+        val intent = Intent().putExtra(ARG_RESULT, AddAccountResult(userId = userId, workflow = workflow))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

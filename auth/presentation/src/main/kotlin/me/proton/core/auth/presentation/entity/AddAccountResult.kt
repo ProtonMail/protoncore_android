@@ -21,7 +21,13 @@ package me.proton.core.auth.presentation.entity
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+enum class AddAccountWorkflow {
+    SignIn,
+    SignUp
+}
+
 @Parcelize
 data class AddAccountResult(
-    val userId: String
+    val userId: String,
+    val workflow: AddAccountWorkflow
 ) : Parcelable
