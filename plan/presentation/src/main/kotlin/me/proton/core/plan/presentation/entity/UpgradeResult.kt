@@ -25,5 +25,6 @@ import me.proton.core.payment.presentation.entity.BillingResult
 @Parcelize
 data class UpgradeResult(
     val planId: String,
+    val planDisplayName: String,
     val billingResult: BillingResult
 ) : Parcelable
