@@ -170,7 +170,7 @@ class ProtonJacocoPlugin : Plugin<Project> {
                 reports {
                     xml.required.set(true)
                     xml.outputLocation.set(reportFile)
-                    html.required.set(project.hasProperty("exportHtmlReports"))
+                    html.required.set(!project.hasProperty("ci"))
                     html.outputLocation.set(defaultReportsDir)
                 }
 
