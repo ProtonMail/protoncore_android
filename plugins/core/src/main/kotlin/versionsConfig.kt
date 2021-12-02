@@ -43,7 +43,7 @@ internal fun initVersions() {
     `android-room version` =                    "2.3.0"         // Released: Apr 21, 2021
 
     `android-test version` =                    "1.4.0"         // Released: Jun 30, 2021
-    `robolectric version` =                     "4.6.1"         // Released: Jul 04, 2021
+    `robolectric version` =                     "4.7.3"
     // endregion
 
     // region Others
