@@ -128,7 +128,8 @@ publishNewRelease:
     - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
     - ./gradlew notifyNewRelease
   only:
-    - /^release\/.*/
+    - /^release\/.*/ # stable release with notification
+    - main # main-snapshot release without notification
 
 tagRelease:
   stage: publish
