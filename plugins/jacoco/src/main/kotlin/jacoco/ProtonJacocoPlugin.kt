@@ -84,8 +84,8 @@ class ProtonJacocoPlugin : Plugin<Project> {
             val classDirs = jacocoSubTasks.flatMap { it.classDirectories }
             classDirectories.setFrom(files(classDirs))
 
-            val jacocoExecs = jacocoSubTasks.flatMap { it.executionData }
-            executionData.setFrom(files(jacocoExecs))
+            // If exec files are not included here the task will be skipped
+            executionData.setFrom(fileTree(rootDir) { include(listOf("**/*.exec", "**/*.ec")) })
 
             reports {
                 html.required.set(true)
@@ -170,7 +170,8 @@ class ProtonJacocoPlugin : Plugin<Project> {
                 reports {
                     xml.required.set(true)
                     xml.outputLocation.set(reportFile)
-                    html.required.set(false)
+                    html.required.set(project.hasProperty("exportHtmlReports"))
+                    html.outputLocation.set(defaultReportsDir)
                 }
 
                 val fileFilter = listOf(
