@@ -42,7 +42,7 @@ class AccountSwitcherTests : BaseTest() {
 
         CoreexampleRobot()
             .accountSwitcher()
-            .verify { hasUser(firstUser) }
+            .verify { userEnabled(firstUser) }
     }
 
     @Test

@@ -34,7 +34,7 @@ import org.junit.Test
 
 class LoginTests : BaseTest() {
     private val loginRobot = LoginRobot()
-    private val user: User = users.getUser { it.name == "pro" }
+    private val user: User = users.getUser { it.isPaid }
 
     @Before
     fun signIn() {
