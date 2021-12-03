@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added SnackType to represent Snackbar types (success, error etc.).
 - After 2FA code fails for the third time, an error toast is displayed; clients should handle the error by registering `AccountManager.observe(..).onSessionSecondFactorFailed` callback and showing the login screen again.
 - Updated golang build to gopenpgp v2.3.0 [Changelog](https://github.com/ProtonMail/gopenpgp/blob/master/CHANGELOG.md#230-2021-11-15)
-- Added info about workflow type (sign-in/up) to AddAccountResult
+- Added info about workflow type (sign-in/up) to AddAccountResult.
+- Reverse order of 'Sign in' and 'Create an account' buttons in the add account screen, also changed their styles.
 
 ### Deprecations
 
