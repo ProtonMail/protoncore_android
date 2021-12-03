@@ -18,9 +18,12 @@
 
 package me.proton.core.humanverification.presentation
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.HumanVerificationManager
@@ -31,19 +34,27 @@ import me.proton.core.network.domain.humanverification.HumanVerificationState
 class HumanVerificationManagerObserver(
     private val lifecycle: Lifecycle,
     private val minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
-    internal val humanVerificationManager: HumanVerificationManager
+    internal val humanVerificationManager: HumanVerificationManager,
+    internal val scope: CoroutineScope = lifecycle.coroutineScope,
 ) {
-    internal val scope = lifecycle.coroutineScope
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal val observerJobs = mutableListOf<Job>()
 
     internal fun addHumanVerificationStateListener(
         state: HumanVerificationState,
         initialState: Boolean,
         block: suspend (HumanVerificationDetails) -> Unit
     ) {
-        humanVerificationManager.onHumanVerificationState(state, initialState = initialState)
+        observerJobs += humanVerificationManager.onHumanVerificationState(state, initialState = initialState)
             .flowWithLifecycle(lifecycle, minActiveState)
             .onEach { block(it) }
             .launchIn(scope)
+    }
+
+    fun cancelAllObservers() {
+        observerJobs.forEach { it.cancel() }
+        observerJobs.clear()
     }
 }
 

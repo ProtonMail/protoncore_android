@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.viewmodel.signup
 import android.os.Parcelable
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -138,10 +139,19 @@ internal class SignupViewModel @Inject constructor(
         _password = password?.encrypt(keyStoreCrypto)
     }
 
-    fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context)
+    fun observeHumanVerification(lifecycle: Lifecycle) = handleHumanVerificationState(lifecycle)
         .onHumanVerificationFailed {
             _userCreationState.tryEmit(State.Error.HumanVerification)
         }
+
+    fun stopObservingHumanVerification(throwError: Boolean) {
+        if (throwError) {
+            _userCreationState.tryEmit(State.Error.HumanVerification)
+        } else {
+            _userCreationState.tryEmit(State.Idle)
+        }
+        humanVerificationObserver?.cancelAllObservers()
+    }
 
     fun skipRecoveryMethod() = setRecoveryMethod(null)
 

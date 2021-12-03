@@ -168,12 +168,9 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                 is SignupViewModel.State.Error.PlanChooserCancel,
                 is SignupViewModel.State.Error.Message -> {
                     showLoading(false)
-                    binding.progressLayout.visibility = View.GONE
                 }
                 is SignupViewModel.State.Success,
-                is SignupViewModel.State.Processing -> {
-                    binding.progressLayout.visibility = View.VISIBLE
-                }
+                is SignupViewModel.State.Processing -> { showLoading(true) }
             }.exhaustive
         }.launchIn(lifecycleScope)
     }

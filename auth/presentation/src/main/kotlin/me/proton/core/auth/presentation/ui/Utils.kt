@@ -21,11 +21,13 @@ package me.proton.core.auth.presentation.ui
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentManager
 import me.proton.core.auth.presentation.R
+import me.proton.core.auth.presentation.ui.signup.CreatingUserFragment
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
 import me.proton.core.presentation.utils.inTransaction
 import me.proton.core.presentation.utils.openBrowserLink
 
 private const val TAG_PASSWORD_CHOOSER_DIALOG = "password_chooser_dialog"
+private const val TAG_CREATING_USER = "creating_user_fragment"
 
 /**
  * Presents to the user a dialog to inform that it should update the password inn order to be able to login.
@@ -58,5 +60,27 @@ fun FragmentManager.showPasswordChangeDialog(
                 add(updateDialogFragment, TAG_PASSWORD_CHOOSER_DIALOG)
             }
         }
+    }
+}
+
+fun FragmentManager.showCreatingUser(
+    containerId: Int = android.R.id.content
+) = findFragmentByTag(TAG_CREATING_USER) ?: run {
+    val creatingUserFragment = CreatingUserFragment()
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(containerId, creatingUserFragment, TAG_CREATING_USER)
+        addToBackStack(null)
+    }
+    creatingUserFragment
+}
+
+fun FragmentManager.removeCreatingUser() {
+    findFragmentByTag(TAG_CREATING_USER)?.let {
+        inTransaction {
+            setCustomAnimations(0, 0)
+            remove(it)
+        }
+        popBackStack()
     }
 }
