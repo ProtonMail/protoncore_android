@@ -75,15 +75,21 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 
 # Last versions
 
-## Plugins
+# Plugins
+All plugin share the same version.
+Plugin version are documented by git tag `release/gradle-plugins/*`.
+Apply the plugin by using:
+```
+plugins {
+  id "$pluginId" version "$pluginVersion"
+}
+```
 
-Detekt: **0.4** - _released on: Sep 13, 2021_
-
-Jacoco: **0.1** - _released on: Nvo 10, 2021_
-
-Kotlin: **0.1** - _released on: Oct 09, 2020_
-
-Tests: **0.1** - _released on: Oct 09, 2020_
+## Core plugin
+`me.proton.gradle-plugins.detekt`
+`me.proton.gradle-plugins.jacoco`
+`me.proton.gradle-plugins.kotlin`
+`me.proton.gradle-plugins.tests`
 
 # Coordinates
 me.proton.core:account

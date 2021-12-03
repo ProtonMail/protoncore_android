@@ -23,21 +23,13 @@ plugins {
     `java-gradle-plugin`
 }
 
-object Plugin {
-    const val group = "me.proton"
-    const val id = "publish-libraries"
-    const val version = "0.2"
-}
-
-group = Plugin.group
-version = Plugin.version
+publishOption.shouldBePublishedAsPlugin = false
 
 gradlePlugin {
     plugins {
-        create("${Plugin.id}Plugin") {
-            id = "${Plugin.group}.${Plugin.id}"
+        create("plugin") {
+            id = "publish-core-libraries"
             implementationClass = "ProtonPublishLibrariesPlugin"
-            version = Plugin.version
         }
     }
 }

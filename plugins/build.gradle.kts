@@ -21,6 +21,8 @@ plugins {
 
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
+
+    id("me.proton.publish-plugins")
 }
 
 repositories {

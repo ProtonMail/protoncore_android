@@ -17,31 +17,23 @@
  */
 
 import org.gradle.kotlin.dsl.implementation
-import studio.forface.easygradle.dsl.Version
 
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
     kotlin("plugin.serialization")
     `java-gradle-plugin`
-    id("me.proton.publish-plugins")
 }
 
-val plugin = PluginConfig(
-    name = "Detekt",
-    version = Version(0, 4)
-)
-pluginConfig = plugin
-
-group = plugin.group
-version = plugin.version
+publishOption.shouldBePublishedAsPlugin = true
 
 gradlePlugin {
     plugins {
-        create(plugin.id) {
-            id = plugin.id
+        create("plugin") {
+            id = "me.proton.gradle-plugins.detekt"
+            displayName = "Proton detekt plugin"
+            description = "Plugin to apply Proton detekt configuration"
             implementationClass = "ProtonDetektPlugin"
-            version = plugin.version
         }
     }
 }

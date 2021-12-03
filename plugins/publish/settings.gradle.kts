@@ -19,7 +19,6 @@
 rootProject.name = "Publish gradle plugins"
 
 include(
-    "libraries",
     "plugins"
 )
 

@@ -16,178 +16,151 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import PublishPluginExtension.Companion.setupPublishOptionExtension
+import com.gradle.publish.MavenCoordinates
 import com.gradle.publish.PluginBundleExtension
+import io.github.gradlenexus.publishplugin.NexusPublishExtension
+import io.github.gradlenexus.publishplugin.NexusPublishPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.publish.PublishingExtension
+import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.extra
-import org.gradle.kotlin.dsl.named
-import org.jetbrains.dokka.gradle.DokkaPlugin
-import org.jetbrains.dokka.gradle.DokkaTask
+import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.withType
+import org.gradle.plugin.devel.GradlePluginDevelopmentExtension
+import org.gradle.plugin.devel.PluginDeclaration
+import org.gradle.plugins.signing.SigningExtension
 import studio.forface.easygradle.dsl.*
 import java.io.File
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 abstract class ProtonPublishPluginsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.subprojects { this@ProtonPublishPluginsPlugin.apply(this) }
-        target.setupModule()
+        val version = "1.0.0-alpha01-SNAPSHOT" // Todo evaluate against git state
+        val group = "me.proton.gradle-plugins"
+        target.setupParentPublishing(group, version)
+        target.subprojects {
+            setupChildPublishing(group, version)
+        }
     }
 }
 
-
-/**
- * Setup Publishing for whole Project.
- * It will setup publishing to sub-projects by generating KDoc, generating aar, updating readme and publish new versions
- * to Bintray
- *
- * @param filter filter [Project.subprojects] to attach Publishing to
- *
- *
- * @author Davide Farella
- */
-fun Project.setupPublishing(filter: (Project) -> Boolean = { true }) {
-
-    // Configure sub-projects
-    for (sub in subprojects.filter(filter)) sub.setupModule()
+private fun Project.setupParentPublishing(groupName: String, versionName: String) {
+    group = groupName
+    version = versionName
+    apply<NexusPublishPlugin>()
+    configure<NexusPublishExtension> {
+        repositories {
+            sonatype {
+                nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+                snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+                project.properties["mavenCentralUsername"]?.let { username.set(it as String) }
+                project.properties["mavenCentralPassword"]?.let { password.set(it as String) }
+            }
+        }
+    }
 }
 
-private fun Project.setupModule() {
+private fun Project.setupChildPublishing(groupName: String, versionName: String) {
+    group = groupName
+    version = versionName
+    val publishOption = setupPublishOptionExtension()
     afterEvaluate {
-
-        val key = extra.properties["gradle.publish.key"] ?: System.getenv()["GRADLE_PORTAL_KEY"]
-        val secret = extra.properties["gradle.publish.secret"] ?: System.getenv()["GRADLE_PORTAL_SECRET"]
-        extra["gradle.publish.key"] = key
-        extra["gradle.publish.secret"] = secret
-
-        if (pluginConfig != null) {
-            apply<DokkaPlugin>()
-
-            archivesBaseName = archiveName
-
-            // Setup Gradle publish config
-            apply(plugin = "com.gradle.plugin-publish")
-            configure<PluginBundleExtension> {
-                val url = "https://github.com/ProtonMail/protoncore_android"
-                website = url
-                vcsUrl = url
-                description = "Proton Gradle plugin"
-                tags = listOf(
-                    "Android",
-                    "plugin",
-                    "Proton",
-                    "ProtonTechnologies",
-                    "ProtonMail",
-                    "ProtonVpn",
-                    "ProtonCalendar",
-                    "ProtonDrive"
-                )
-
-                plugins.getByName(pluginConfig!!.id).displayName = pluginConfig!!.name
+        if (publishOption.shouldBePublishedAsPlugin) {
+            setupProtonPluginPublishingPlugin()
+            checkGradlePluginForPublishing()
+            val gradle = extensions.getByType<GradlePluginDevelopmentExtension>()
+            gradle.plugins.forEach { pluginDeclaration ->
+                println("Setup publishing for plugin id=\'${pluginDeclaration.id}\' version=\'$versionName\'")
             }
+        } else {
+            println("Ignoring publishing for plugin project $name")
+        }
+    }
+}
 
-            with(ReleaseManager(this)) {
-                if (key != null && secret != null) {
+private fun Project.setupProtonPluginPublishingPlugin() {
+    apply(plugin = "maven-publish")
 
-                    // Setup pre publish
-                    val prePublish = tasks.create("prePublish") {
-                        doFirst {
-                            generateKdocIfNeeded()
-                            updateReadme()
-                            printToNewReleasesFile()
-                        }
-                    }
+    configure<JavaPluginExtension> {
+        withSourcesJar()
+        withJavadocJar()
+    }
 
-                    // Setup publish
-                    tasks.register("publishAll") {
-                        dependsOn(prePublish)
-                        if (isNewVersion)
-                            dependsOn(tasks.getByName("publishPlugins"))
-                    }
-                } else {
-                    // Force Dokka update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
-                    tasks.create("forceDokka") {
-                        doLast { generateKdocIfNeeded() }
-                    }
-                    // Force Readme update BEING AWARE THAT IS NOT SUPPOSED TO BE COMMITTED
-                    tasks.create("forceUpdateReadme") {
-                        doLast { updateReadme() }
-                    }
+    extensions.getByType(PublishingExtension::class).publications.withType(MavenPublication::class).configureEach {
+        pom {
+            name.set(artifactId)
+            description.set("Proton gradle plugins for Android")
+            url.set("https://github.com/ProtonMail/protoncore_android")
+            licenses {
+                license {
+                    name.set("GNU GENERAL PUBLIC LICENSE, Version 3.0")
+                    url.set("https://www.gnu.org/licenses/gpl-3.0.en.html")
                 }
             }
+            developers {
+                developer {
+                    name.set("Open Source Proton")
+                    email.set("opensource@proton.me")
+                    id.set(email)
+                }
+            }
+            scm {
+                url.set("https://gitlab.protontech.ch/proton/mobile/android/proton-libs")
+                connection.set("git@gitlab.protontech.ch:proton/mobile/android/proton-libs.git")
+                developerConnection.set("https://gitlab.protontech.ch/proton/mobile/android/proton-libs.git")
+            }
+        }
+    }
+
+    configure<PublishingExtension> {}
+    apply(plugin = "signing")
+    configure<SigningExtension> {
+        if (!version.toString().contains("SNAPSHOT")) {
+            val signingKey: String? = project.properties["signingInMemoryKey"] as String?
+            val signingPassphrase: String? = project.properties["signingInMemoryKeyPassword"] as String?
+            if (signingKey.isNullOrBlank() || signingPassphrase.isNullOrBlank()) {
+                throw Error("Signing keys for release version $version are missing, " +
+                    "ensure signingInMemoryKey and signingInMemoryKeyPassword are set")
+            }
+            useInMemoryPgpKeys(signingKey, signingPassphrase)
+            val publishExtension = extensions.getByType(PublishingExtension::class)
+            sign(publishExtension.publications)
         }
     }
 }
 
-/**
- * This class will organize plugins release.
- *
- * It can:
- * * Generate KDoc if new plugin is available
- * * Update readme with new version
- * * Print update to new_releases.tmp
- *
- * @param forceRefresh Generally all the processes are executed only of [Project.pluginConfig] [PluginConfig.version]
- * is different from the one in the readme. If this parameter is set to `true`, they will run in any case.
- *   Default is `false`
- *
- * @author Davide Farella
- */
-class ReleaseManager internal constructor(
-    project: Project,
-    forceRefresh: Boolean = false
-) : Project by project {
-
-    private val prevVersion = README_VERSION_REGEX.find(README_FILE.readText())?.groupValues?.get(1)
-        ?: throw IllegalArgumentException("Cannot find version for $name: $README_VERSION_REGEX")
-    private val versionName = pluginConfig!!.version.versionName
-
-    val isNewVersion = forceRefresh || prevVersion != versionName
-    private val shouldRefresh = forceRefresh || isNewVersion
-
-    /** Generate KDoc if new library is available */
-    fun generateKdocIfNeeded() {
-        if (shouldRefresh) {
-            val task = tasks.named<DokkaTask>("dokkaHtml").orNull ?: return
-            task.taskActions.forEach { it.execute(task) }
-        }
+private fun Project.checkGradlePluginForPublishing() {
+    val gradle = extensions.getByType<GradlePluginDevelopmentExtension>()
+    gradle.plugins.forEach { pluginDeclaration ->
+        checkPluginDeclarationForPublishing(pluginDeclaration)
+        ensurePluginIdDocumented(pluginDeclaration)
     }
+}
 
-    /** Update readme with new version */
-    fun updateReadme() {
-        if (shouldRefresh) {
-            val timestamp = LocalDate.now().format(DateTimeFormatter.ofPattern("MMM dd, yyyy"))
-
-            README_FILE.writeText(
-                README_FILE.readText()
-                    .replace(README_VERSION_REGEX, readmeVersion(humanReadableName, versionName, timestamp))
-            )
-        }
+private fun checkPluginDeclarationForPublishing(pluginDeclaration: PluginDeclaration) {
+    try {
+        check(pluginDeclaration.id.startsWith("me.proton.gradle-plugins"))
+        check(!pluginDeclaration.displayName.isNullOrBlank())
+        check(!pluginDeclaration.description.isNullOrBlank())
+        check(!pluginDeclaration.implementationClass.isNullOrBlank())
+    } catch (exception: IllegalStateException) {
+        exception.printStackTrace()
+        println("Ensure you have a valid gradlePlugin block, see " +
+            "https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html#configure_the_plugin_publishing_plugin")
+        throw exception
     }
+}
 
-    /** Print release to new_releases.tmp */
-    fun printToNewReleasesFile() {
-        if (shouldRefresh) {
-            NEW_RELEASES_FILE.writeText(
-                "${NEW_RELEASES_FILE.readText()}$humanReadableName $versionName\n"
-            )
-        }
-    }
-
-    private companion object {
-        val Project.README_FILE get() = File(rootDir.parentFile, "README.md")
-        val Project.README_VERSION_REGEX get() =
-            readmeVersion("^$humanReadableName", "(.+)", "(.+)").toRegex(RegexOption.MULTILINE)
-        val Project.NEW_RELEASES_FILE get() = File(rootDir.parentFile.parentFile, "new_releases.tmp")
-            .also { file ->
-                // 10 min lifetime
-                if (file.lastModified() < System.currentTimeMillis() - 10 * 60 * 1000) file.delete()
-                if (!file.exists()) file.createNewFile()
-            }
-
-        fun readmeVersion(name: String, version: String, timestamp: String) =
-            """$name: \*\*$version\*\* - _released on: ${timestamp}_"""
+private fun Project.ensurePluginIdDocumented(pluginDeclaration: PluginDeclaration) {
+    val readmeFile = File(rootDir.parent, "README.md")
+    val readmeText = readmeFile.readText()
+    val isPluginDocumented = readmeText.contains(pluginDeclaration.id)
+    check(isPluginDocumented) {
+        "Plugin id ${pluginDeclaration.id} is missing from README.MD, please document it"
     }
 }

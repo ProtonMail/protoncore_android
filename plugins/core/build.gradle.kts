@@ -22,8 +22,7 @@ plugins {
     `java-gradle-plugin`
 }
 
-group = "me.proton"
-version = "1.0"
+publishOption.shouldBePublishedAsPlugin = false
 
 gradlePlugin {
     plugins {

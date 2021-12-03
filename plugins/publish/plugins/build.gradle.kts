@@ -71,6 +71,7 @@ repositories {
 dependencies {
     implementation(gradleApi())
     implementation(libs.dokka.pluginGradle)
-    implementation("com.gradle.publish:plugin-publish-plugin:0.12.0")
+    implementation("com.gradle.publish:plugin-publish-plugin:0.18.0")
     implementation(libs.easyGradle.dsl)
+    implementation(libs.publish.pluginGradle)
 }

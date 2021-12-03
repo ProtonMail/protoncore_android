@@ -29,11 +29,11 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
  */
 plugins {
     id("core")
-    id("me.proton.detekt")
-    id("me.proton.kotlin")
-    id("me.proton.publish-libraries")
-    id("me.proton.tests")
-    id("me.proton.jacoco")
+    id("me.proton.gradle-plugins.detekt")
+    id("me.proton.gradle-plugins.kotlin")
+    id("publish-core-libraries")
+    id("me.proton.gradle-plugins.tests")
+    id("me.proton.gradle-plugins.jacoco")
     id("com.github.ben-manes.versions") version "0.39.0"
 }
 
