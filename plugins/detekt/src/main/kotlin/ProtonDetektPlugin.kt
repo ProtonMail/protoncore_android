@@ -164,7 +164,6 @@ internal open class ConvertToGitlabFormat : DefaultTask() {
     @OptIn(ExperimentalSerializationApi::class)
     private fun Project.generateReport() {
         subprojects.forEach { project ->
-            println("Generating report for project $project")
             project.generateReport()
         }
         val report = File(reportsDir, "${project.name}.json")
@@ -190,7 +189,8 @@ internal open class ConvertToGitlabFormat : DefaultTask() {
                                 end = location.physicalLocation.region.startLine,
                             ),
                             path = location.physicalLocation.artifactLocation.uri
-                        )
+                        ),
+                        severity = result.level
                     )
                 }
             }?.takeIf { results ->
@@ -228,7 +228,6 @@ internal open class MergeDetektReports : DefaultTask() {
                 }
                 // Return if no file is found
                 ?.takeIf { it.isNotEmpty() } ?: return
-
 
             // Open array
             writer.append("[")

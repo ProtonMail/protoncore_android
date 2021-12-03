@@ -28,7 +28,9 @@ data class GitlabQualityReport(
     @SerialName("fingerprint")
     val fingerprint: String,
     @SerialName("location")
-    val location: Location
+    val location: Location,
+    @SerialName("severity")
+    val severity: String
 ) {
     @Serializable
     data class Location(
