@@ -82,7 +82,7 @@ abstract class ProtonDetektConfiguration {
  */
 private fun Project.setupDetekt(configuration: ProtonDetektConfiguration, filter: (Project) -> Boolean = { true }) {
 
-    `detekt version` = "1.17.1" // Released: May 15, 2021
+    `detekt version` = "1.19.0" // Released: May 15, 2021
 
     val reportsDirPath = "config/detekt/reports"
     val configFilePath = "config/detekt/config.yml"
