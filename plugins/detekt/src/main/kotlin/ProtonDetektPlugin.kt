@@ -36,7 +36,9 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.register
-import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.`detekt version`
+import studio.forface.easygradle.dsl.`detekt-cli`
+import studio.forface.easygradle.dsl.`detekt-formatting`
 import java.io.BufferedWriter
 import java.io.File
 import java.net.URL
@@ -162,6 +164,7 @@ internal open class ConvertToGitlabFormat : DefaultTask() {
     @OptIn(ExperimentalSerializationApi::class)
     private fun Project.generateReport() {
         subprojects.forEach { project ->
+            println("Generating report for project $project")
             project.generateReport()
         }
         val report = File(reportsDir, "${project.name}.json")
@@ -208,6 +211,7 @@ internal open class MergeDetektReports : DefaultTask() {
 
     @TaskAction
     fun run() {
+        println("Merging detekt reports starting...")
         val mergedReport = File(reportsDir, outputName)
             .apply { if (exists()) writeText("") }
 
@@ -230,8 +234,11 @@ internal open class MergeDetektReports : DefaultTask() {
             writer.append("[")
 
             // Write body
-            writer.handleFile(reportFiles.first())
-            reportFiles.drop(1).forEach {
+            println("Merging reports from files $reportFiles")
+            val nonEmptyReports = reportFiles.filter { it.length() != 0L }
+
+            writer.handleFile(nonEmptyReports.first())
+            nonEmptyReports.drop(1).forEach {
                 writer.append(",")
                 writer.handleFile(it)
             }
