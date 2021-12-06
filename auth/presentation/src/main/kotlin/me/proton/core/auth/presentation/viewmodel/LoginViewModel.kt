@@ -95,15 +95,21 @@ internal class LoginViewModel @Inject constructor(
         encryptedPassword: EncryptedString,
         requiredAccountType: AccountType,
         billingDetails: BillingDetails? = null
-    ) = flow<State> {
+    ) = flow {
         emit(State.Processing)
 
         val sessionInfo = createLoginSession(username, encryptedPassword, requiredAccountType)
-        val userId = sessionInfo.userId
 
-        savedStateHandle.set(STATE_USER_ID, userId.id)
+        savedStateHandle.set(STATE_USER_ID, sessionInfo.userId.id)
 
-        val result = postLoginAccountSetup(sessionInfo, encryptedPassword, requiredAccountType, billingDetails)
+        val result = postLoginAccountSetup(
+            userId = sessionInfo.userId,
+            encryptedPassword = encryptedPassword,
+            requiredAccountType = requiredAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            billingDetails = billingDetails
+        )
         emit(State.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying login flow")

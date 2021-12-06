@@ -26,6 +26,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityMailboxLoginBinding
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
@@ -53,6 +54,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
     }
 
     private val userId by lazy { UserId(input.userId) }
+    private val requiredAccountType by lazy { input.requiredAccountType }
 
     private val viewModel by viewModels<TwoPassModeViewModel>()
 
@@ -80,11 +82,22 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
             when (it) {
                 is TwoPassModeViewModel.State.Idle -> showLoading(false)
                 is TwoPassModeViewModel.State.Processing -> showLoading(true)
-                is TwoPassModeViewModel.State.Success.UserUnLocked -> onSuccess(it.userId)
-                is TwoPassModeViewModel.State.Error.Message -> onError(false, it.message)
-                is TwoPassModeViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
+                is TwoPassModeViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
+                is TwoPassModeViewModel.State.ErrorMessage -> onError(false, it.message)
             }.exhaustive
         }.launchIn(lifecycleScope)
+    }
+
+    private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
+        when (result) {
+            is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result.error)
+            is PostLoginAccountSetup.Result.Need.ChangePassword -> Unit // Ignored.
+            is PostLoginAccountSetup.Result.Need.ChooseUsername -> Unit // Ignored.
+            is PostLoginAccountSetup.Result.Need.SecondFactor -> Unit // Ignored.
+            is PostLoginAccountSetup.Result.Need.TwoPassMode -> Unit // Ignored.
+            is PostLoginAccountSetup.Result.UserUnlocked -> onSuccess(result.userId)
+        }.exhaustive
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {
@@ -120,7 +133,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
         with(binding) {
             mailboxPasswordInput.validatePassword()
                 .onFailure { mailboxPasswordInput.setInputError() }
-                .onSuccess { viewModel.tryUnlockUser(userId, it) }
+                .onSuccess { viewModel.tryUnlockUser(userId, it, requiredAccountType) }
         }
     }
 

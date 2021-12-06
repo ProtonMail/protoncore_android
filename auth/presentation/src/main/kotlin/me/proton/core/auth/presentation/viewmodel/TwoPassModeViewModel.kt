@@ -28,21 +28,20 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
-import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 @HiltViewModel
 class TwoPassModeViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
-    private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
-    private val keyStoreCrypto: KeyStoreCrypto
+    private val keyStoreCrypto: KeyStoreCrypto,
+    private val postLoginAccountSetup: PostLoginAccountSetup,
 ) : ProtonViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
@@ -52,14 +51,8 @@ class TwoPassModeViewModel @Inject constructor(
     sealed class State {
         object Idle : State()
         object Processing : State()
-        sealed class Success : State() {
-            data class UserUnLocked(val userId: UserId) : Success()
-        }
-
-        sealed class Error : State() {
-            data class CannotUnlockPrimaryKey(val error: UserManager.UnlockResult.Error) : Error()
-            data class Message(val message: String?) : Error()
-        }
+        data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
+        data class ErrorMessage(val message: String?) : State()
     }
 
     fun stopMailboxLoginFlow(
@@ -68,31 +61,25 @@ class TwoPassModeViewModel @Inject constructor(
 
     fun tryUnlockUser(
         userId: UserId,
-        password: String
+        password: String,
+        requiredAccountType: AccountType
     ) = flow {
         emit(State.Processing)
 
         val encryptedPassword = password.encrypt(keyStoreCrypto)
-        val state = unlockUserPrimaryKey(userId, encryptedPassword)
 
-        emit(state)
+        val result = postLoginAccountSetup(
+            userId = userId,
+            encryptedPassword = encryptedPassword,
+            requiredAccountType = requiredAccountType,
+            isSecondFactorNeeded = false,
+            isTwoPassModeNeeded = false,
+            onSetupSuccess = { accountWorkflow.handleTwoPassModeSuccess(userId) }
+        )
+        emit(State.AccountSetupResult(result))
     }.catch { error ->
-        emit(State.Error.Message(error.message))
+        emit(State.ErrorMessage(error.message))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
-
-    private suspend fun unlockUserPrimaryKey(
-        userId: UserId,
-        password: EncryptedString
-    ): State {
-        val result = unlockUserPrimaryKey.invoke(userId, password)
-        return if (result == UserManager.UnlockResult.Success) {
-            accountWorkflow.handleTwoPassModeSuccess(userId)
-            accountWorkflow.handleAccountReady(userId)
-            State.Success.UserUnLocked(userId)
-        } else {
-            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
-        }
-    }
 }

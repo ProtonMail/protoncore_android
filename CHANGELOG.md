@@ -8,11 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changes
 
-- Added SnackType to represent Snackbar types (success, error etc.).
-- After 2FA code fails for the third time, an error toast is displayed; clients should handle the error by registering `AccountManager.observe(..).onSessionSecondFactorFailed` callback and showing the login screen again.
-- Updated golang build to gopenpgp v2.3.0 [Changelog](https://github.com/ProtonMail/gopenpgp/blob/master/CHANGELOG.md#230-2021-11-15)
-- Added info about workflow type (sign-in/up) to AddAccountResult.
-- Reverse order of 'Sign in' and 'Create an account' buttons in the add account screen, also changed their styles.
+- Presentation: Added SnackType to represent Snackbar types (success, error etc.).
+- Auth: After 2FA code fails for the third time, an error toast is displayed; clients should handle the error by registering `AccountManager.observe(..).onSessionSecondFactorFailed` callback and showing the login screen again.
+- GOpenpgp: Updated golang build to gopenpgp v2.3.0 [Changelog](https://github.com/ProtonMail/gopenpgp/blob/master/CHANGELOG.md#230-2021-11-15)
+- Auth: Added info about workflow type (sign-in/up) to AddAccountResult.
+- Auth: Reverse order of 'Sign in' and 'Create an account' buttons in the add account screen, also changed their styles.
+- Auth: Moved UserCheck at the end of Account Setup.
 
 ### Deprecations
 
@@ -21,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - During signup, when choosing username, "Next" button would be sometimes disabled permanently
+
+### Breaking changes
+
+- `SetupAccountCheck.UserCheck` moved/renamed to `PostLoginAccountSetup.UserCheck`.
+- `SetupAccountCheck.Action` moved/renamed to `UserCheckAction`.
 
 ## [2.0.0]
 - Use a global version for all core artifacts

@@ -27,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.NextStep
@@ -86,16 +87,23 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
             when (it) {
                 is SecondFactorViewModel.State.Idle -> showLoading(false)
                 is SecondFactorViewModel.State.Processing -> showLoading(true)
-                is SecondFactorViewModel.State.Success.UserUnLocked -> onSuccess(it.userId, NextStep.None)
-                is SecondFactorViewModel.State.Need.TwoPassMode -> onSuccess(it.userId, NextStep.TwoPassMode)
-                is SecondFactorViewModel.State.Need.ChooseUsername -> onSuccess(it.userId, NextStep.ChooseAddress)
-                is SecondFactorViewModel.State.Need.ChangePassword -> onSuccess(it.userId, NextStep.None)
-                is SecondFactorViewModel.State.Error.CannotUnlockPrimaryKey -> onUnlockUserError(it.error)
-                is SecondFactorViewModel.State.Error.UserCheckError -> onUserCheckFailed(it.error)
+                is SecondFactorViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
                 is SecondFactorViewModel.State.Error.Message -> onError(false, it.message)
                 is SecondFactorViewModel.State.Error.Unrecoverable -> onUnrecoverableError(it.message)
             }.exhaustive
         }.launchIn(lifecycleScope)
+    }
+
+    private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
+        when (result) {
+            is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result.error)
+            is PostLoginAccountSetup.Result.Need.ChangePassword -> onSuccess(result.userId, NextStep.None)
+            is PostLoginAccountSetup.Result.Need.ChooseUsername -> onSuccess(result.userId, NextStep.ChooseAddress)
+            is PostLoginAccountSetup.Result.Need.SecondFactor -> onSuccess(result.userId, NextStep.SecondFactor)
+            is PostLoginAccountSetup.Result.Need.TwoPassMode -> onSuccess(result.userId, NextStep.TwoPassMode)
+            is PostLoginAccountSetup.Result.UserUnlocked -> onSuccess(result.userId, NextStep.None)
+        }.exhaustive
     }
 
     override fun showLoading(loading: Boolean) = with(binding) {
@@ -115,7 +123,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
                 .onSuccess { secondFactorCode ->
                     viewModel.startSecondFactorFlow(
                         userId = UserId(input.userId),
-                        password = input.password,
+                        encryptedPassword = input.password,
                         requiredAccountType = input.requiredAccountType,
                         isTwoPassModeNeeded = input.isTwoPassModeNeeded,
                         secondFactorCode = secondFactorCode

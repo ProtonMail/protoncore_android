@@ -45,7 +45,13 @@ class LoginTestHelper @Inject constructor(
     fun login(username: String, password: String): SessionInfo = runBlocking {
         val encryptedPassword = password.encrypt(keyStoreCrypto)
         val sessionInfo = createLoginSession(username, encryptedPassword, accountType)
-        val result = postLoginAccountSetup(sessionInfo, encryptedPassword, accountType)
+        val result = postLoginAccountSetup(
+            userId = sessionInfo.userId,
+            encryptedPassword = encryptedPassword,
+            requiredAccountType = accountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+        )
         check(result is PostLoginAccountSetup.Result.UserUnlocked) {
             "Unexpected login result: $result"
         }

@@ -25,10 +25,8 @@ import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.NoSetupNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupInternalAddressNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupPrimaryKeysNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.TwoPassNeeded
-import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.UserCheckError
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasInternalAddressKey
 import me.proton.core.user.domain.extension.hasKeys
 import me.proton.core.user.domain.extension.hasUsername
@@ -41,14 +39,10 @@ import javax.inject.Inject
 class SetupAccountCheck @Inject constructor(
     private val product: Product,
     private val userRepository: UserRepository,
-    private val addressRepository: UserAddressRepository,
-    private val userCheck: UserCheck
+    private val addressRepository: UserAddressRepository
 ) {
 
     sealed class Result {
-        /** User check failed, cannot proceed. */
-        data class UserCheckError(val error: UserCheckResult.Error) : Result()
-
         /** No setup needed. User can now be unlocked. */
         object NoSetupNeeded : Result()
 
@@ -73,12 +67,7 @@ class SetupAccountCheck @Inject constructor(
         isTwoPassModeNeeded: Boolean,
         requiredAccountType: AccountType
     ): Result {
-        // First get the User to invoke UserCheck.
         val user = userRepository.getUser(userId, refresh = true)
-        val userCheckResult = userCheck.invoke(user)
-        if (userCheckResult is UserCheckResult.Error) {
-            return UserCheckError(userCheckResult)
-        }
         return when (requiredAccountType) {
             AccountType.Username -> {
                 NoSetupNeeded
@@ -103,22 +92,5 @@ class SetupAccountCheck @Inject constructor(
                 }
             }
         }
-    }
-
-    sealed class Action(open val name: String) {
-        data class OpenUrl(override val name: String, val url: String) : Action(name)
-    }
-
-    sealed class UserCheckResult {
-        object Success : UserCheckResult()
-        data class Error(val localizedMessage: String, val action: Action? = null) : UserCheckResult()
-    }
-
-    interface UserCheck {
-
-        /**
-         * Check if [User] match criteria to continue the setup account process.
-         */
-        suspend operator fun invoke(user: User): UserCheckResult
     }
 }

@@ -84,10 +84,10 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `login 2FA flow is handled correctly`() = coroutinesTest {
         // GIVEN
-        val sessionInfo = mockSessionInfo()
+        val sessionInfo = mockSessionInfo(isSecondFactorNeeded = true)
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any())
         } returns PostLoginAccountSetup.Result.Need.SecondFactor(testUserId)
 
         viewModel.state.test {
@@ -115,7 +115,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any())
         } returns PostLoginAccountSetup.Result.UserUnlocked(testUserId)
 
         viewModel.state.test {
@@ -143,7 +143,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any())
         } throws ApiException(ApiResult.Error.NoInternet())
 
         viewModel.state.test {
@@ -197,7 +197,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any())
         } returns PostLoginAccountSetup.Result.Need.ChangePassword(testUserId)
 
         viewModel.state.test {
@@ -221,7 +221,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), any())
         } throws ApiException(
             ApiResult.Error.Http(
                 400,
@@ -246,10 +246,15 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         }
 
         coVerify(exactly = 2) { createLoginSession.invoke(testUserName, testPassword, any()) }
-        coVerify(exactly = 2) { postLoginAccountSetup.invoke(any(), testPassword, any(), any()) }
+        coVerify(exactly = 2) { postLoginAccountSetup.invoke(any(), testPassword, any(), any(), any(), any(), any()) }
     }
 
-    private fun mockSessionInfo() = mockk<SessionInfo> {
+    private fun mockSessionInfo(
+        isSecondFactorNeeded: Boolean = false,
+        isTwoPassModeNeeded: Boolean = false
+    ) = mockk<SessionInfo> {
         every { userId } returns testUserId
+        every { this@mockk.isSecondFactorNeeded } returns isSecondFactorNeeded
+        every { this@mockk.isTwoPassModeNeeded } returns isTwoPassModeNeeded
     }
 }
