@@ -18,25 +18,22 @@
 
 package me.proton.core.user.data.extension
 
-import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.UserKeyResponse
 import me.proton.core.key.data.api.response.UserResponse
-import me.proton.core.key.domain.canUnlock
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.entity.UserKeyEntity
+import me.proton.core.user.data.entity.UserWithKeys
 import me.proton.core.user.domain.entity.Delinquent
 import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.util.kotlin.toBooleanOrFalse
 
-fun UserResponse.toUser(): User = toUser(passphrase = null)
-
-internal fun UserResponse.toUser(passphrase: EncryptedByteArray?): User {
+fun UserResponse.toUser(): User {
     val userId = UserId(id)
     return User(
         userId = userId,
@@ -53,19 +50,21 @@ internal fun UserResponse.toUser(passphrase: EncryptedByteArray?): User {
         subscribed = subscribed,
         services = services,
         delinquent = Delinquent.map[delinquent],
-        keys = keys.map { it.toUserKey(userId, passphrase) },
+        keys = keys.map { it.toUserKey(userId) },
     )
 }
 
-internal fun UserKeyResponse.toUserKey(userId: UserId, passphrase: EncryptedByteArray?) = UserKey(
+internal fun UserKeyResponse.toUserKey(userId: UserId) = UserKey(
     userId = userId,
     version = version,
     activation = activation,
+    active = active.toBooleanOrFalse(),
     keyId = KeyId(id),
     privateKey = PrivateKey(
         key = privateKey,
         isPrimary = primary.toBooleanOrFalse(),
-        passphrase = passphrase
+        isActive = false,
+        passphrase = null,
     )
 )
 
@@ -93,7 +92,9 @@ internal fun UserKey.toEntity() = UserKeyEntity(
     version = version,
     privateKey = privateKey.key,
     isPrimary = privateKey.isPrimary,
-    activation = activation
+    isUnlockable = privateKey.isActive,
+    activation = activation,
+    active = active
 )
 
 internal fun List<UserKey>.toEntityList() = map { it.toEntity() }
@@ -116,19 +117,23 @@ internal fun UserEntity.toUser(keys: List<UserKey>) = User(
     keys = keys
 )
 
-internal fun UserKeyEntity.toUserKey(context: CryptoContext, passphrase: EncryptedByteArray?) = UserKey(
+@Suppress("UnnecessaryParentheses")
+internal fun UserKeyEntity.toUserKey(passphrase: EncryptedByteArray?) = UserKey(
     userId = userId,
     keyId = keyId,
     version = version,
     activation = activation,
+    active = active,
     privateKey = PrivateKey(
         key = privateKey,
         isPrimary = isPrimary,
+        // If active is null (unknown during offline migration), we rely on isUnlockable.
+        // active will be null until we refresh/update the UserKey from remote.
+        isActive = (active ?: true) && isUnlockable && passphrase != null,
         passphrase = passphrase
-    ).let {
-        it.copy(isActive = it.canUnlock(context))
-    }
+    )
 )
 
-internal fun List<UserKeyEntity>.toUserKeyList(context: CryptoContext, passphrase: EncryptedByteArray?) =
-    map { it.toUserKey(context, passphrase) }
+internal fun List<UserKeyEntity>.toUserKeyList(passphrase: EncryptedByteArray?) = map { it.toUserKey(passphrase) }
+
+internal fun UserWithKeys.toUser() = entity.toUser(keys.toUserKeyList(entity.passphrase))

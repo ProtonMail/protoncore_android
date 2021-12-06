@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,16 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.domain.entity.key
+package me.proton.core.accountmanager.data.job
 
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.accountmanager.data.AccountStateHandler
+import me.proton.core.accountmanager.domain.onAccountState
+import me.proton.core.domain.entity.UserId
 
-data class PrivateKey(
-    val key: Armored,
-    val isPrimary: Boolean,
-    val isActive: Boolean = true,
-    val canEncrypt: Boolean = true,
-    val canVerify: Boolean = true,
-    val passphrase: EncryptedByteArray?
-)
+fun AccountStateHandler.onMigrationNeeded(
+    block: suspend (UserId) -> Unit
+) = accountManager.onAccountState(AccountState.MigrationNeeded)
+    .onEach { account -> block(account.userId) }
+    .launchIn(scope)

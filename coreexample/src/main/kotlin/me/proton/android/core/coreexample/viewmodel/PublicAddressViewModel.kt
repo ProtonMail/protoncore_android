@@ -31,7 +31,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.key.domain.decryptTextOrNull
 import me.proton.core.key.domain.encryptText
-import me.proton.core.key.domain.extension.areAllLocked
+import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.getPublicAddressOrNull
 import me.proton.core.key.domain.useKeys
@@ -70,7 +70,7 @@ class PublicAddressViewModel @Inject constructor(
                 return@transformLatest
             }
             val user = result.value!!
-            if (user.keys.areAllLocked()) {
+            if (user.keys.areAllInactive()) {
                 emit(PublicAddressState.Error.KeyLocked)
                 return@transformLatest
             }

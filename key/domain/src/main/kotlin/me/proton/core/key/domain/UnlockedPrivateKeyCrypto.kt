@@ -212,8 +212,11 @@ fun UnlockedPrivateKey.signTextEncrypted(
     context: CryptoContext,
     text: String,
     encryptionKeyRing: PublicKeyRing
-): EncryptedSignature =
-    context.pgpCrypto.signTextEncrypted(text, unlockedKey.value, encryptionKeyRing.keys.map { it.key })
+): EncryptedSignature = context.pgpCrypto.signTextEncrypted(
+    text,
+    unlockedKey.value,
+    encryptionKeyRing.keys.map { it.key }
+)
 
 /**
  * Sign [data] using this [UnlockedPrivateKey]
@@ -227,8 +230,11 @@ fun UnlockedPrivateKey.signDataEncrypted(
     context: CryptoContext,
     data: ByteArray,
     encryptionKeyRing: PublicKeyRing
-): EncryptedSignature =
-    context.pgpCrypto.signDataEncrypted(data, unlockedKey.value, encryptionKeyRing.keys.map { it.key })
+): EncryptedSignature = context.pgpCrypto.signDataEncrypted(
+    data,
+    unlockedKey.value,
+    encryptionKeyRing.keys.map { it.key }
+)
 
 /**
  * Sign [file] using this [UnlockedPrivateKey]
@@ -242,8 +248,11 @@ fun UnlockedPrivateKey.signFileEncrypted(
     context: CryptoContext,
     file: File,
     encryptionKeyRing: PublicKeyRing
-): EncryptedSignature =
-    context.pgpCrypto.signFileEncrypted(file, unlockedKey.value, encryptionKeyRing.keys.map { it.key })
+): EncryptedSignature = context.pgpCrypto.signFileEncrypted(
+    file,
+    unlockedKey.value,
+    encryptionKeyRing.keys.map { it.key }
+)
 
 /**
  * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]
@@ -260,12 +269,12 @@ fun UnlockedPrivateKey.verifyTextEncrypted(
     verificationKeyRing: PublicKeyRing,
     time: VerificationTime = VerificationTime.Now
 ): Boolean = context.pgpCrypto.verifyTextEncrypted(
-        text,
-        encryptedSignature,
-        unlockedKey.value,
-        verificationKeyRing.keys.map { it.key },
-        time
-    )
+    text,
+    encryptedSignature,
+    unlockedKey.value,
+    verificationKeyRing.keys.map { it.key },
+    time
+)
 
 /**
  * Decrypt [encryptedSignature] using this [UnlockedPrivateKey]

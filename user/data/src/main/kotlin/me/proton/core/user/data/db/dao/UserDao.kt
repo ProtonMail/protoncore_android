@@ -31,16 +31,10 @@ import me.proton.core.user.data.entity.UserEntity
 abstract class UserDao : BaseDao<UserEntity>() {
 
     @Query("SELECT * FROM UserEntity WHERE userId = :userId")
-    abstract fun findByUserId(userId: UserId): Flow<UserEntity?>
+    abstract fun observeByUserId(userId: UserId): Flow<UserEntity?>
 
     @Query("SELECT * FROM UserEntity WHERE userId = :userId")
     abstract suspend fun getByUserId(userId: UserId): UserEntity?
-
-    @Query("DELETE FROM UserEntity WHERE userId = :userId")
-    abstract suspend fun delete(userId: UserId)
-
-    @Query("DELETE FROM UserEntity")
-    abstract suspend fun deleteAll()
 
     @Transaction
     @Query("SELECT passphrase FROM UserEntity WHERE userId = :userId")

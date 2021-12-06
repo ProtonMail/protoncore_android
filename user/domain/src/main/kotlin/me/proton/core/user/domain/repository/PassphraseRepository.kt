@@ -36,4 +36,20 @@ interface PassphraseRepository {
      * Clear passphrase for a [userId].
      */
     suspend fun clearPassphrase(userId: UserId)
+
+    /**
+     * Add a [listener] to [OnPassphraseChangedListener] list.
+     */
+    fun addOnPassphraseChangedListener(listener: OnPassphraseChangedListener)
+
+    /**
+     * Interface to implement to receive [onPassphraseChanged] event.
+     */
+    interface OnPassphraseChangedListener {
+
+        /**
+         * Called every time a passphrase change for a [userId].
+         */
+        suspend fun onPassphraseChanged(userId: UserId)
+    }
 }

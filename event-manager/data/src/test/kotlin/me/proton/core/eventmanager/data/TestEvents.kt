@@ -107,6 +107,7 @@ object TestEvents {
               "Fingerprint": "c93f767df53b0ca8395cfde90483475164ec6353",
               "Activation": null,
               "Primary": 1
+              "Active": 1
             }]
           },
           "UserSettings": {

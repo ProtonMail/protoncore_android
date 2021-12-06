@@ -100,4 +100,12 @@ object AppDatabaseMigrations {
             EventMetadataDatabase.MIGRATION_0.migrate(database)
         }
     }
+
+    val MIGRATION_11_12 = object : Migration(11, 12) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            AccountDatabase.MIGRATION_4.migrate(database)
+            AddressDatabase.MIGRATION_3.migrate(database)
+            UserDatabase.MIGRATION_1.migrate(database)
+        }
+    }
 }

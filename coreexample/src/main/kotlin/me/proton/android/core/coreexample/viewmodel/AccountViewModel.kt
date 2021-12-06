@@ -35,15 +35,17 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.presentation.disableInitialNotReadyAccounts
 import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
+import me.proton.core.accountmanager.presentation.onAccountMigrationNeeded
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionForceLogout
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorFailed
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
+import me.proton.core.accountmanager.presentation.onUserAddressKeyCheckFailed
+import me.proton.core.accountmanager.presentation.onUserKeyCheckFailed
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -51,6 +53,8 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
+import me.proton.core.presentation.utils.errorToast
+import me.proton.core.presentation.utils.showToast
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
@@ -95,7 +99,9 @@ class AccountViewModel @Inject constructor(
                 .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
                 .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
                 .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
-                .disableInitialNotReadyAccounts()
+                .onAccountMigrationNeeded { context.showToast("MigrationNeeded") }
+                .onUserKeyCheckFailed { context.errorToast("InvalidUserKey") }
+                .onUserAddressKeyCheckFailed { context.errorToast("InvalidUserAddressKey") }
         }
 
         with(humanVerificationOrchestrator) {

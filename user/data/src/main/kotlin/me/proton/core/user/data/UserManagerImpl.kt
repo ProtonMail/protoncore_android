@@ -174,12 +174,15 @@ class UserManagerImpl(
                     organizationKey = updatedOrgPrivateKey ?: ""
                 )
 
-                // We know we can unlock the key with this passphrase as we just generated from it.
-                passphraseRepository.setPassphrase(userId, newPassphrase.encrypt(keyStore))
+                // Lock, refresh and unlock.
+                lock(userId)
 
                 // Refresh User and Addresses.
                 userAddressRepository.getAddresses(userId, refresh = true)
                 userRepository.getUser(userId, refresh = true)
+
+                // Unlock.
+                unlockWithPassphrase(userId, newPassphrase.encrypt(keyStore))
                 return result
             }
         }
@@ -204,6 +207,7 @@ class UserManagerImpl(
             val userPrivateKey = PrivateKey(
                 key = privateKey,
                 isPrimary = true,
+                isActive = true,
                 passphrase = encryptedPassphrase
             )
 

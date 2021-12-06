@@ -28,7 +28,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.extension.areAllLocked
+import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
@@ -97,7 +97,7 @@ interface UserManager {
      * @param password [PlainByteArray] to use to unlock.
      *
      * @see [User.keys]
-     * @see [areAllLocked]
+     * @see [areAllInactive]
      */
     suspend fun unlockWithPassword(
         userId: UserId,
@@ -113,7 +113,7 @@ interface UserManager {
      * @param passphrase [EncryptedByteArray] to use to unlock.
      *
      * @see [User.keys]
-     * @see [areAllLocked]
+     * @see [areAllInactive]
      */
     suspend fun unlockWithPassphrase(
         userId: UserId,

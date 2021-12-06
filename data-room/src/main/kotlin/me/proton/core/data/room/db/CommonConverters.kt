@@ -57,6 +57,6 @@ class CommonConverters {
 
     companion object {
         fun fromListOfStringToString(value: List<String>?): String? = value?.joinToString(separator = ";")
-        fun fromStringToListOfString(value: String?): List<String>? = value?.split(";")?.toList()
+        fun fromStringToListOfString(value: String?): List<String>? = value?.split(";")?.filter { it.isNotBlank() }
     }
 }

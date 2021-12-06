@@ -51,7 +51,7 @@ class AccountManagerImplTest {
         state = AccountState.Ready,
         sessionId = session1.sessionId,
         sessionState = SessionState.Authenticated,
-        details = AccountDetails(null)
+        details = AccountDetails(null, null)
     )
 
     private val mocks = RepositoryMocks(session1, account1)

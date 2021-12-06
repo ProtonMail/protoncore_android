@@ -130,8 +130,8 @@ class NetworkModule {
                 maxSize = 10L * 1024L * 1024L // 10 MiB
             )
         },
-        extraHeaderProvider,
-        apiConnectionListener
+        extraHeaderProvider = extraHeaderProvider,
+        apiConnectionListener = apiConnectionListener
     )
 
     @Provides

@@ -39,7 +39,7 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.UsersResponse
-import me.proton.core.key.domain.extension.areAllLocked
+import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
@@ -132,7 +132,7 @@ class UserRepositoryImplTests {
         assertNotNull(user)
         assertEquals(TestUsers.User1.id, user.userId)
         assertEquals(TestUsers.User1.response.keys.size, user.keys.size)
-        assertTrue(user.keys.areAllLocked())
+        assertTrue(user.keys.areAllInactive())
     }
 
     @Test
@@ -173,14 +173,14 @@ class UserRepositoryImplTests {
         val user = userRepository.getUserFlow(userId)
             .mapLatest { it as? DataResult.Success }
             .mapLatest { it?.value }
-            .filterNot { it?.keys?.areAllLocked() ?: true }
+            .filterNot { it?.keys?.areAllInactive() ?: true }
             .firstOrNull()
 
         // THEN
         assertNotNull(user)
         assertEquals(TestUsers.User1.id, user.userId)
         assertEquals(TestUsers.User1.response.keys.size, user.keys.size)
-        assertFalse(user.keys.areAllLocked())
+        assertFalse(user.keys.areAllInactive())
         assertEquals(passphrase, userRepository.getPassphrase(userId))
     }
 
@@ -248,7 +248,7 @@ class UserRepositoryImplTests {
         assertNotNull(user)
         assertEquals(TestUsers.User1.id, user.userId)
         assertEquals(TestUsers.User1.response.keys.size, user.keys.size)
-        assertTrue(user.keys.areAllLocked())
+        assertTrue(user.keys.areAllInactive())
         assertNull(userRepository.getPassphrase(userId))
     }
 

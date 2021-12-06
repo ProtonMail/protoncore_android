@@ -29,7 +29,7 @@ import me.proton.core.user.domain.entity.AddressId
 abstract class AddressKeyDao : BaseDao<AddressKeyEntity>() {
 
     @Query("SELECT * FROM AddressKeyEntity WHERE addressId = :addressId")
-    abstract fun findAllByAddressId(addressId: AddressId): Flow<List<AddressKeyEntity>>
+    abstract fun observeAllByAddressId(addressId: AddressId): Flow<List<AddressKeyEntity>>
 
     @Query("SELECT * FROM AddressKeyEntity WHERE addressId = :addressId")
     abstract suspend fun getAllByAddressId(addressId: AddressId): List<AddressKeyEntity>

@@ -29,7 +29,7 @@ import me.proton.core.user.data.entity.UserKeyEntity
 abstract class UserKeyDao : BaseDao<UserKeyEntity>() {
 
     @Query("SELECT * FROM UserKeyEntity WHERE userId = :userId")
-    abstract fun findAllByUserId(userId: UserId): Flow<List<UserKeyEntity>>
+    abstract fun observeAllByUserId(userId: UserId): Flow<List<UserKeyEntity>>
 
     @Query("SELECT * FROM UserKeyEntity WHERE userId = :userId")
     abstract suspend fun getAllByUserId(userId: UserId): List<UserKeyEntity>

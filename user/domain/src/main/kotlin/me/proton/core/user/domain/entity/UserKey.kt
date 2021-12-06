@@ -28,6 +28,7 @@ data class UserKey(
     val userId: UserId,
     val version: Int,
     val activation: Armored? = null,
+    val active: Boolean? = null,
     override val keyId: KeyId,
     override val privateKey: PrivateKey,
 ) : KeyHolderPrivateKey

@@ -53,6 +53,9 @@ dependencies {
         project(Module.humanVerification),
         project(Module.mailSettings),
 
+        // Kotlin
+        `coroutines-core`,
+
         // Android
         `android-ktx`,
         `hilt-android`,

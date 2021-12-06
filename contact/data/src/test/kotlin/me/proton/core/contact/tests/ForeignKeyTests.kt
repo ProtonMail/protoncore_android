@@ -33,7 +33,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
         givenUser0InDb()
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() != null)
-        db.userDao().delete(User0.userId)
+        db.accountDao().delete(User0.userId)
         assert(db.contactDao().observeContact(User0.Contact0.contactId).firstOrNull() == null)
     }
 
@@ -63,7 +63,7 @@ class ForeignKeyTests : ContactDatabaseTests() {
         db.contactDao().insertOrUpdate(User0.Contact0.contactEntity)
         db.contactEmailDao().insertOrUpdate(User0.Contact0.ContactEmail0.contactEmailEntity)
         assert(hasContactEmail())
-        db.userDao().delete(User0.userId)
+        db.accountDao().delete(User0.userId)
         assert(!hasContactEmail())
     }
 

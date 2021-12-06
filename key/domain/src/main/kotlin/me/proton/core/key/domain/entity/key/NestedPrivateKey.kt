@@ -45,6 +45,7 @@ data class NestedPrivateKey(
             privateKey = PrivateKey(
                 key = key,
                 isPrimary = true,
+                isActive = false,
                 passphrase = null
             ),
             passphrase = passphrase,
@@ -69,6 +70,7 @@ data class NestedPrivateKey(
                 val keyHolderPrivateKey = PrivateKey(
                     key = privateKey,
                     isPrimary = true,
+                    isActive = true,
                     passphrase = encryptedPassphrase
                 )
                 NestedPrivateKey(

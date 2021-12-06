@@ -33,7 +33,13 @@ data class Account(
 )
 
 data class AccountDetails(
+    val account: AccountMetadataDetails? = null,
     val session: SessionDetails?
+)
+
+data class AccountMetadataDetails(
+    val primaryAtUtc: Long,
+    val migrations: List<String>
 )
 
 data class SessionDetails(
@@ -55,6 +61,7 @@ fun Account.isSecondFactorNeeded() = sessionState == SessionState.SecondFactorNe
 
 fun Account.isStepNeeded(): Boolean {
     val isAccountStateStepNeeded = when (state) {
+        AccountState.MigrationNeeded,
         AccountState.TwoPassModeNeeded,
         AccountState.CreateAddressNeeded -> true
         AccountState.NotReady,
@@ -65,6 +72,8 @@ fun Account.isStepNeeded(): Boolean {
         AccountState.Ready,
         AccountState.Disabled,
         AccountState.UnlockFailed,
+        AccountState.UserKeyCheckFailed,
+        AccountState.UserAddressKeyCheckFailed,
         AccountState.Removed -> false
     }
     val isSessionStateStepNeeded = when (sessionState) {

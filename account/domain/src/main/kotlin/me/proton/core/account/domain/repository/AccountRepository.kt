@@ -156,4 +156,24 @@ interface AccountRepository {
      * Clear [SessionDetails], by sessionId.
      */
     suspend fun clearSessionDetails(sessionId: SessionId)
+
+    /**
+     * Add [migration] to existing migrations, for [userId].
+     *
+     * [AccountState] is changed to [AccountState.MigrationNeeded].
+     *
+     * @see [removeMigration]
+     * @see [AccountState.MigrationNeeded]
+     */
+    suspend fun addMigration(userId: UserId, migration: String)
+
+    /**
+     * Remove a [migration] from all existing migrations, for [userId].
+     *
+     * If no more migrations exist for [userId], [AccountState] is changed to [AccountState.Ready].
+     *
+     * @see [addMigration]
+     * @see [AccountState.MigrationNeeded]
+     */
+    suspend fun removeMigration(userId: UserId, migration: String)
 }

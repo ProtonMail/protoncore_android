@@ -19,10 +19,13 @@
 package me.proton.core.key.domain.extension
 
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.updatePrivateKeyPassphraseOrNull
+import me.proton.core.key.domain.canUnlock
 import me.proton.core.key.domain.entity.key.Key
+import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
 
 fun KeyHolderPrivateKey.updatePrivateKeyPassphraseOrNull(
@@ -48,3 +51,11 @@ fun Armored.updatePrivateKeyPassphrase(
         newPassphrase = newPassphrase
     )
 }
+
+/**
+ * Copy instance and replace [PrivateKey.passphrase] and [PrivateKey.isActive] using [canUnlock].
+ */
+fun PrivateKey.updateIsActive(context: CryptoContext, passphrase: EncryptedByteArray?) = copy(
+    passphrase = passphrase,
+    isActive = canUnlock(context, passphrase)
+)

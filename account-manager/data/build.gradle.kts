@@ -41,6 +41,7 @@ dependencies {
         project(Module.accountManagerDomain),
         project(Module.authDomain),
         project(Module.accountDomain),
+        project(Module.cryptoCommon),
         project(Module.userDomain),
         project(Module.keyDomain),
         project(Module.humanVerificationDomain),
@@ -48,7 +49,10 @@ dependencies {
 
         // Kotlin
         `kotlin-jdk8`,
-        `coroutines-core`
+        `coroutines-core`,
+
+        // Java
+        `javax-inject`,
     )
 
     testImplementation(project(Module.androidTest))

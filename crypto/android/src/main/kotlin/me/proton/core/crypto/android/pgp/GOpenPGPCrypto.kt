@@ -18,6 +18,7 @@
 
 package me.proton.core.crypto.android.pgp
 
+import androidx.core.util.lruCache
 import com.google.crypto.tink.subtle.Base64
 import com.proton.gopenpgp.constants.Constants
 import com.proton.gopenpgp.crypto.Crypto
@@ -65,7 +66,7 @@ import com.proton.gopenpgp.crypto.SessionKey as InternalSessionKey
 /**
  * [PGPCrypto] implementation based on GOpenPGP Android library.
  */
-@Suppress("LargeClass", "TooManyFunctions", "MagicNumber")
+@Suppress("LargeClass", "TooManyFunctions", "MagicNumber", "ClassOrdering")
 class GOpenPGPCrypto : PGPCrypto {
 
     // region Private Closable
@@ -106,11 +107,17 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun newKeyRing(keys: List<CloseableUnlockedKey>) =
         CloseableUnlockedKeyRing(Crypto.newKeyRing(null).apply { keys.forEach { addKey(it.value) } })
 
-    private fun newKeyRing(key: Armored) =
-        Crypto.newKeyRing(Crypto.newKeyFromArmored(key))
+    // endregion
 
-    private fun newKeyRing(keys: List<Armored>) =
-        Crypto.newKeyRing(null).apply { keys.map { Crypto.newKeyFromArmored(it) }.forEach { addKey(it) } }
+    // region Public Key
+
+    private val cachedKeys = lruCache<Armored, Key>(
+        maxSize = KEY_CACHE_LRU_MAX_SIZE,
+        create = { armored -> Crypto.newKeyFromArmored(armored) }
+    )
+    private fun Armored.key() = cachedKeys.get(this)
+    private fun Armored.keyRing() = Crypto.newKeyRing(key())
+    private fun List<Armored>.keyRing() = Crypto.newKeyRing(null).apply { forEach { addKey(it.key()) } }
 
     // endregion
 
@@ -131,7 +138,7 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKey: Armored,
         signKeyRing: KeyRing? = null
     ): EncryptedMessage {
-        val publicKeyRing = newKeyRing(publicKey)
+        val publicKeyRing = publicKey.keyRing()
         return publicKeyRing.encrypt(plainMessage, signKeyRing).armored
     }
 
@@ -271,7 +278,7 @@ class GOpenPGPCrypto : PGPCrypto {
         crossinline block: (ExplicitVerifyMessage) -> T
     ): T {
         val pgpMessage = Crypto.newPGPMessageFromArmored(msg)
-        val publicKeyRing = newKeyRing(publicKeys)
+        val publicKeyRing = publicKeys.keyRing()
         return newKeys(unlockedKeys).use { keys ->
             newKeyRing(keys).use { keyRing ->
                 block(Helper.decryptExplicitVerify(pgpMessage, keyRing.value, publicKeyRing, validAtUtc))
@@ -286,7 +293,8 @@ class GOpenPGPCrypto : PGPCrypto {
         validAtUtc: Long = 0
     ): ExplicitVerifyMessage {
         val internalSessionKey = sessionKey.toInternalSessionKey()
-        return Helper.decryptSessionKeyExplicitVerify(data, internalSessionKey, newKeyRing(publicKeys), validAtUtc)
+        val publicKeyRing = publicKeys.keyRing()
+        return Helper.decryptSessionKeyExplicitVerify(data, internalSessionKey, publicKeyRing, validAtUtc)
     }
 
     private fun decryptAndVerifyFileSessionKey(
@@ -296,7 +304,8 @@ class GOpenPGPCrypto : PGPCrypto {
         publicKeys: List<Armored>,
         validAtUtc: Long
     ): DecryptedFile {
-        return decryptFileSessionKey(source, destination, sessionKey, newKeyRing(publicKeys), validAtUtc)
+        val publicKeyRing = publicKeys.keyRing()
+        return decryptFileSessionKey(source, destination, sessionKey, publicKeyRing, validAtUtc)
     }
 
     // endregion
@@ -366,7 +375,7 @@ class GOpenPGPCrypto : PGPCrypto {
         validAtUtc: Long
     ): Boolean = runCatching {
         val pgpSignature = PGPSignature(signature)
-        val publicKeyRing = newKeyRing(publicKey)
+        val publicKeyRing = publicKey.keyRing()
         publicKeyRing.verifyDetached(plainMessage, pgpSignature, validAtUtc)
     }.isSuccess
 
@@ -378,7 +387,7 @@ class GOpenPGPCrypto : PGPCrypto {
         validAtUtc: Long
     ): Boolean = runCatching {
         val pgpSignature = PGPMessage(encryptedSignature)
-        val publicKeyRing = newKeyRing(publicKeys)
+        val publicKeyRing = publicKeys.keyRing()
         newKey(decryptionKey).use { key ->
             newKeyRing(key).use { keyRing ->
                 publicKeyRing.verifyDetachedEncrypted(plainMessage, pgpSignature, keyRing.value, validAtUtc)
@@ -395,7 +404,7 @@ class GOpenPGPCrypto : PGPCrypto {
         source.inputStream().use { fileInputStream ->
             val reader = Mobile2GoReader(fileInputStream.mobileReader())
             val pgpSignature = PGPSignature(signature)
-            val publicKeyRing = newKeyRing(publicKey)
+            val publicKeyRing = publicKey.keyRing()
             publicKeyRing.verifyDetachedStream(reader, pgpSignature, validAtUtc)
         }
     }.isSuccess
@@ -410,7 +419,7 @@ class GOpenPGPCrypto : PGPCrypto {
         source.inputStream().use { fileInputStream ->
             val reader = Mobile2GoReader(fileInputStream.mobileReader())
             val pgpSignature = PGPMessage(encryptedSignature)
-            val publicKeyRing = newKeyRing(publicKeys)
+            val publicKeyRing = publicKeys.keyRing()
             newKey(decryptionKey).use { key ->
                 newKeyRing(key).use { keyRing ->
                     publicKeyRing.verifyDetachedEncryptedStream(reader, pgpSignature, keyRing.value, validAtUtc)
@@ -436,7 +445,7 @@ class GOpenPGPCrypto : PGPCrypto {
         privateKey: Armored,
         passphrase: ByteArray
     ): UnlockedKey = runCatching {
-        val key = Crypto.newKeyFromArmored(privateKey)
+        val key = privateKey.key()
         val unlockedKey = key.unlock(passphrase)
         return GOpenPGPUnlockedKey(unlockedKey)
     }.getOrElse { throw CryptoException("PrivateKey cannot be unlocked using passphrase.", it) }
@@ -511,7 +520,7 @@ class GOpenPGPCrypto : PGPCrypto {
         sessionKey: SessionKey,
         publicKey: Armored
     ): KeyPacket = runCatching {
-        val publicKeyRing = newKeyRing(publicKey)
+        val publicKeyRing = publicKey.keyRing()
         val internalSessionKey = sessionKey.toInternalSessionKey()
         return publicKeyRing.encryptSessionKey(internalSessionKey)
     }.getOrElse { throw CryptoException("SessionKey cannot be encrypted.", it) }
@@ -657,7 +666,7 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
     ): EncryptedSignature = runCatching {
-        signMessageDetachedEncrypted(PlainMessage(plainText), unlockedKey, newKeyRing(encryptionKeys))
+        signMessageDetachedEncrypted(PlainMessage(plainText), unlockedKey, encryptionKeys.keyRing())
     }.getOrElse { throw CryptoException("PlainText cannot be signed.", it) }
 
     override fun signDataEncrypted(
@@ -665,7 +674,7 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
     ): EncryptedSignature = runCatching {
-        signMessageDetachedEncrypted(PlainMessage(data), unlockedKey, newKeyRing(encryptionKeys))
+        signMessageDetachedEncrypted(PlainMessage(data), unlockedKey, encryptionKeys.keyRing())
     }.getOrElse { throw CryptoException("Data cannot be signed.", it) }
 
     override fun signFileEncrypted(
@@ -673,7 +682,7 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored,
         encryptionKeys: List<Armored>,
     ): EncryptedSignature = runCatching {
-        signFileDetachedEncrypted(file, unlockedKey, newKeyRing(encryptionKeys))
+        signFileDetachedEncrypted(file, unlockedKey, encryptionKeys.keyRing())
     }.getOrElse { throw CryptoException("InputStream cannot be signed.", it) }
 
     // endregion
@@ -707,14 +716,13 @@ class GOpenPGPCrypto : PGPCrypto {
         privateKey: Unarmored,
         publicKeys: List<Armored>,
         time: VerificationTime,
-    ): Boolean =
-        verifyMessageDetachedEncrypted(
-            PlainMessage(plainText),
-            encryptedSignature,
-            privateKey,
-            publicKeys,
-            time.toUtcSeconds()
-        )
+    ): Boolean = verifyMessageDetachedEncrypted(
+        PlainMessage(plainText),
+        encryptedSignature,
+        privateKey,
+        publicKeys,
+        time.toUtcSeconds()
+    )
 
     override fun verifyDataEncrypted(
         data: ByteArray,
@@ -722,14 +730,13 @@ class GOpenPGPCrypto : PGPCrypto {
         privateKey: Unarmored,
         publicKeys: List<Armored>,
         time: VerificationTime,
-    ): Boolean =
-        verifyMessageDetachedEncrypted(
-            PlainMessage(data),
-            encryptedSignature,
-            privateKey,
-            publicKeys,
-            time.toUtcSeconds()
-        )
+    ): Boolean = verifyMessageDetachedEncrypted(
+        PlainMessage(data),
+        encryptedSignature,
+        privateKey,
+        publicKeys,
+        time.toUtcSeconds()
+    )
 
     override fun verifyFileEncrypted(
         file: File,
@@ -737,8 +744,7 @@ class GOpenPGPCrypto : PGPCrypto {
         privateKey: Unarmored,
         publicKeys: List<Armored>,
         time: VerificationTime,
-    ): Boolean =
-        verifyFileDetachedEncrypted(file, encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
+    ): Boolean = verifyFileDetachedEncrypted(file, encryptedSignature, privateKey, publicKeys, time.toUtcSeconds())
 
     // endregion
 
@@ -769,13 +775,13 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun getPublicKey(
         privateKey: Armored
     ): Armored = runCatching {
-        Crypto.newKeyFromArmored(privateKey).armoredPublicKey
+        privateKey.key().armoredPublicKey
     }.getOrElse { throw CryptoException("Public key cannot be extracted from privateKey.", it) }
 
     override fun getFingerprint(
         key: Armored
     ): String = runCatching {
-        Crypto.newKeyFromArmored(key).fingerprint
+        key.key().fingerprint
     }.getOrElse { throw CryptoException("Fingerprint cannot be extracted from key.", it) }
 
     override fun getJsonSHA256Fingerprints(
@@ -870,5 +876,6 @@ class GOpenPGPCrypto : PGPCrypto {
     companion object {
         // 32K is usually not far from the optimal buffer size on Android devices.
         const val DEFAULT_BUFFER_SIZE = 32768
+        const val KEY_CACHE_LRU_MAX_SIZE = 100
     }
 }

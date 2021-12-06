@@ -39,6 +39,7 @@ dependencies {
         `coroutines-core`,
 
         // Android
+        `android-ktx`,
         `room-runtime`,
 
         // Other

@@ -49,6 +49,9 @@
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.EventManagerInitializer"
                 android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.android.core.coreexample.init.AccountStateHandlerInitializer"
+                android:value="androidx.startup" />
         </provider>
         <activity
             android:name=".MainActivity"

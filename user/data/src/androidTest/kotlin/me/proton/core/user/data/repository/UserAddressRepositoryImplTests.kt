@@ -18,19 +18,17 @@
 
 package me.proton.core.user.data.repository
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.runBlocking
 import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.android.context.AndroidCryptoContext
+import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -58,6 +56,7 @@ import me.proton.core.user.data.TestUsers
 import me.proton.core.user.data.UserAddressKeySecretProvider
 import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
+import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.canEncrypt
 import me.proton.core.user.domain.extension.canVerify
 import me.proton.core.user.domain.extension.primary
@@ -67,6 +66,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -85,7 +85,8 @@ class UserAddressRepositoryImplTests {
             override fun decrypt(value: EncryptedString): String = value
             override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array.copyOf())
             override fun decrypt(value: EncryptedByteArray): PlainByteArray = PlainByteArray(value.array.copyOf())
-        }
+        },
+        pgpCrypto = GOpenPGPCrypto(),
     )
 
     private lateinit var apiProvider: ApiProvider
@@ -112,7 +113,6 @@ class UserAddressRepositoryImplTests {
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
             userRepository,
-            userRepository,
             cryptoContext
         )
 
@@ -120,7 +120,8 @@ class UserAddressRepositoryImplTests {
             db,
             apiProvider,
             userRepository,
-            userAddressKeySecretProvider
+            userAddressKeySecretProvider,
+            cryptoContext
         )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
@@ -153,17 +154,21 @@ class UserAddressRepositoryImplTests {
             AddressesResponse(listOf(TestAddresses.User1.Address1.response))
         }
 
-        // WHEN
-        val addresses = userAddressRepository.getAddressesFlow(TestUsers.User1.id, refresh = true)
-            .mapLatest { it as? DataResult.Success }
-            .mapLatest { it?.value }
-            .filter { it?.isNotEmpty() ?: false }
-            .filterNotNull()
-            .firstOrNull()
+        // First we need the User in DB.
+        userRepository.getUser(TestUsers.User1.id, refresh = true)
 
-        // THEN
-        assertNotNull(addresses)
-        assertEquals(1, addresses.size)
+        // WHEN
+        userAddressRepository.getAddressesFlow(TestUsers.User1.id, refresh = true).test {
+            // THEN
+            val processing = awaitItem()
+            assertIs<DataResult.Processing>(processing)
+
+            val success = awaitItem()
+            assertIs<DataResult.Success<List<UserAddress>>>(success)
+            assertEquals(1, success.value.size)
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test
@@ -422,8 +427,8 @@ class UserAddressRepositoryImplTests {
         }
     }
 
-    @Test(expected = CryptoException::class)
-    fun assert_exception_on_suspicious_state() = runBlockingWithTimeout {
+    @Test
+    fun assert_not_unlockable_are_not_active_even_if_specified() = runBlockingWithTimeout {
         // GIVEN
         coEvery { userApi.getUsers() } answers {
             UsersResponse(TestUsers.User1.response)
@@ -442,8 +447,13 @@ class UserAddressRepositoryImplTests {
         val address = addresses.first()
 
         // THEN
-        address.useKeys(cryptoContext) {
-            // Throw CryptoException.
-        }
+        val key5 = address.keys.first { it.keyId.id == TestAddresses.User1.Address3.Key5Normal.response.id }
+        val key6 = address.keys.first { it.keyId.id == TestAddresses.User1.Address3.Key6Suspicious.response.id }
+
+        assertTrue(key5.active)
+        assertTrue(key5.privateKey.isActive)
+
+        assertTrue(key6.active)
+        assertFalse(key6.privateKey.isActive)
     }
 }

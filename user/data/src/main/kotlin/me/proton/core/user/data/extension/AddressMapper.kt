@@ -18,7 +18,6 @@
 
 package me.proton.core.user.data.extension
 
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.AddressKeyResponse
 import me.proton.core.key.data.api.response.AddressResponse
@@ -29,6 +28,7 @@ import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.AddressKeyEntity
+import me.proton.core.user.data.entity.AddressWithKeys
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.AddressType
 import me.proton.core.user.domain.entity.UserAddress
@@ -37,9 +37,7 @@ import me.proton.core.user.domain.extension.canEncrypt
 import me.proton.core.user.domain.extension.canVerify
 import me.proton.core.util.kotlin.toBooleanOrFalse
 
-fun AddressResponse.toAddress(userId: UserId) = toAddress(userId, passphrase = null)
-
-internal fun AddressResponse.toAddress(userId: UserId, passphrase: EncryptedByteArray?): UserAddress {
+fun AddressResponse.toAddress(userId: UserId): UserAddress {
     val addressId = AddressId(id)
     return UserAddress(
         userId = userId,
@@ -53,15 +51,12 @@ internal fun AddressResponse.toAddress(userId: UserId, passphrase: EncryptedByte
         enabled = status.toBooleanOrFalse(),
         type = AddressType.map[type],
         order = order,
-        keys = keys?.map { it.toUserAddressKey(addressId, passphrase) }.orEmpty(),
+        keys = keys?.map { it.toUserAddressKey(addressId) }.orEmpty(),
         signedKeyList = signedKeyList?.toPublicSignedKeyList()
     )
 }
 
-internal fun AddressKeyResponse.toUserAddressKey(
-    addressId: AddressId,
-    passphrase: EncryptedByteArray?
-) = UserAddressKey(
+internal fun AddressKeyResponse.toUserAddressKey(addressId: AddressId) = UserAddressKey(
     addressId = addressId,
     version = version,
     flags = flags,
@@ -73,7 +68,8 @@ internal fun AddressKeyResponse.toUserAddressKey(
     privateKey = PrivateKey(
         key = privateKey,
         isPrimary = primary.toBooleanOrFalse(),
-        passphrase = passphrase
+        isActive = false,
+        passphrase = null,
     )
 )
 
@@ -102,6 +98,8 @@ internal fun AddressKeyResponse.toEntity(addressId: AddressId) = AddressKeyEntit
     version = version,
     privateKey = privateKey,
     isPrimary = primary.toBooleanOrFalse(),
+    isUnlockable = false,
+    passphrase = null,
     flags = flags,
     token = token,
     signature = signature,
@@ -131,7 +129,7 @@ internal fun AddressEntity.toUserAddress(keys: List<UserAddressKey>) = UserAddre
 
 fun List<AddressKeyResponse>.toEntityList(addressId: AddressId) = map { it.toEntity(addressId) }
 
-internal fun AddressKeyEntity.toUserAddressKey(passphrase: EncryptedByteArray?) = UserAddressKey(
+internal fun AddressKeyEntity.toUserAddressKey() = UserAddressKey(
     addressId = addressId,
     version = version,
     flags = flags,
@@ -143,7 +141,7 @@ internal fun AddressKeyEntity.toUserAddressKey(passphrase: EncryptedByteArray?) 
     privateKey = PrivateKey(
         key = privateKey,
         isPrimary = isPrimary,
-        isActive = active,
+        isActive = active && isUnlockable && passphrase != null,
         canEncrypt = flags.canEncrypt(),
         canVerify = flags.canVerify(),
         passphrase = passphrase
@@ -172,7 +170,9 @@ internal fun UserAddressKey.toEntity() = AddressKeyEntity(
     keyId = keyId,
     version = version,
     privateKey = privateKey.key,
+    passphrase = privateKey.passphrase,
     isPrimary = privateKey.isPrimary,
+    isUnlockable = privateKey.isActive,
     flags = flags,
     token = token,
     signature = signature,
@@ -180,4 +180,4 @@ internal fun UserAddressKey.toEntity() = AddressKeyEntity(
     active = active
 )
 
-internal fun List<UserAddressKey>.toEntityList() = map { it.toEntity() }
+internal fun AddressWithKeys.toUserAddress() = entity.toUserAddress(keys.map { key -> key.toUserAddressKey() })

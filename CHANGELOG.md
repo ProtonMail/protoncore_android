@@ -25,8 +25,73 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking changes
 
-- `SetupAccountCheck.UserCheck` moved/renamed to `PostLoginAccountSetup.UserCheck`.
-- `SetupAccountCheck.Action` moved/renamed to `UserCheckAction`.
+- Auth: `SetupAccountCheck.UserCheck` moved/renamed to `PostLoginAccountSetup.UserCheck`.
+- Auth: `SetupAccountCheck.Action` moved/renamed to `UserCheckAction`.
+- Key: Renamed function: `List<KeyHolderPrivateKey>.areAllLocked()` -> `areAllInactive`.
+- Key: Replaced function: `PrivateKey.isUnlockable()` -> `isActive`.
+
+### Behavior changes
+
+- User/UserAddress Keys are considered active (PrivateKey.isActive) **only if they can be unlocked**, and vice-versa.
+
+### New Injection
+
+```kotlin
+@Provides
+@Singleton
+@AccountStateHandlerCoroutineScope
+fun provideAccountStateHandlerCoroutineScope(): CoroutineScope =
+   CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+@Provides
+@Singleton
+fun provideAccountMigrator(
+    accountManager: AccountManager,
+    accountRepository: AccountRepository,
+    userRepository: UserRepository
+): AccountMigrator = AccountMigratorImpl(accountManager, accountRepository, userRepository)
+
+@Provides
+@Singleton
+fun provideAccountStateHandler(
+    @AccountStateHandlerCoroutineScope
+    scope: CoroutineScope,
+    userManager: UserManager,
+    accountManager: AccountManager,
+    accountRepository: AccountRepository,
+    accountMigrator: AccountMigrator
+): AccountStateHandler = AccountStateHandler(scope, userManager, accountManager, accountRepository, accountMigrator)
+```
+
+### New Migration
+
+```kotlin
+val MIGRATION_XY_XZ = object : Migration(XY, XZ) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        AccountDatabase.MIGRATION_4.migrate(database)
+        AddressDatabase.MIGRATION_3.migrate(database)
+        UserDatabase.MIGRATION_1.migrate(database)
+    }
+}
+```
+
+### New Features
+
+New `AccountState`:
+- `MigrationNeeded`: State emitted if this [Account] need a migration to be [Ready] to use.
+- `UserKeyCheckFailed`: User key check has failed.
+- `UserAddressKeyCheckFailed`: User Address key check has failed.
+
+New `AccountManagerObserver` extensions:
+```kotlin
+.onAccountMigrationNeeded { context.showToast("MigrationNeeded") }
+.onUserKeyCheckFailed { context.errorToast("InvalidUserKey") }
+.onUserAddressKeyCheckFailed { context.errorToast("InvalidUserAddressKey") }
+```
+
+New `AccountStateHandler`:
+- Mandatory Account State handling that are not optional for Client.
+- Note: `AccountStateHandler.start()` **must** be called in Client side (consider using Initializer).
 
 ## [2.0.0]
 - Use a global version for all core artifacts
