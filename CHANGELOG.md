@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - During signup, when choosing username, "Next" button would be sometimes disabled permanently
+- Build process on Windows.
 
 ### Breaking changes
 

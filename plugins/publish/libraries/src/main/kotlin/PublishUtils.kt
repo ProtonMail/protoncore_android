@@ -1,6 +1,7 @@
 import org.gradle.api.Project
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.util.Locale
 
 /*
  * Copyright (c) 2021 Proton Technologies AG
@@ -31,10 +32,13 @@ internal fun Project.runCommand(
 ): String {
     val byteOut = ByteArrayOutputStream()
     val commandAsList = command.split("\\s".toRegex()).plus(args)
+    val commandListPrefix = if (isWindows()) listOf("cmd", "/c") else emptyList()
     exec {
         workingDir = currentWorkingDir
-        commandLine = commandAsList
+        commandLine = commandListPrefix + commandAsList
         standardOutput = byteOut
     }
     return String(byteOut.toByteArray()).trim()
 }
+
+internal fun isWindows() = System.getProperty("os.name").toLowerCase(Locale.US).contains("windows")
