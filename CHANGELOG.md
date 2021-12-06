@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auth: Added info about workflow type (sign-in/up) to AddAccountResult.
 - Auth: Reverse order of 'Sign in' and 'Create an account' buttons in the add account screen, also changed their styles.
 - Auth: Moved UserCheck at the end of Account Setup.
+- Add error handlers for the retried API calls.
 
 ### Deprecations
 
