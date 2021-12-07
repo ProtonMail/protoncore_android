@@ -19,7 +19,6 @@
 package me.proton.core.reports.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import me.proton.core.reports.domain.entity.BugReport
 import me.proton.core.reports.domain.entity.BugReportExtra
 
@@ -27,7 +26,6 @@ public interface SendBugReport {
     public suspend fun cancel(requestId: String)
 
     public operator fun invoke(
-        userId: UserId,
         bugReport: BugReport,
         extra: BugReportExtra? = null
     ): Flow<Result>

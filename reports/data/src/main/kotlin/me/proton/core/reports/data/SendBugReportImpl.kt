@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapNotNull
-import me.proton.core.domain.entity.UserId
 import me.proton.core.reports.data.work.BugReportWorker
 import me.proton.core.reports.domain.entity.BugReport
 import me.proton.core.reports.domain.entity.BugReportExtra
@@ -46,11 +45,10 @@ public class SendBugReportImpl @Inject constructor(
     }
 
     override fun invoke(
-        userId: UserId,
         bugReport: BugReport,
         extra: BugReportExtra?
     ): Flow<SendBugReport.Result> {
-        val request = BugReportWorker.makeWorkerRequest(userId, bugReport, bugReportMetaProvider.get(), extra)
+        val request = BugReportWorker.makeWorkerRequest(bugReport, bugReportMetaProvider.get(), extra)
         workManager.enqueue(request)
         return flow {
             emit(SendBugReport.Result.Initialized(request.id.toString()))

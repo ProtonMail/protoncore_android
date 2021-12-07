@@ -67,7 +67,7 @@ internal class SendBugReportImplTest : CoroutinesTest {
             mockedWorkInfo(WorkInfo.State.SUCCEEDED)
         )
 
-        tested.invoke(testUserId, testBugReport, testBugReportExtra).test {
+        tested.invoke(testBugReport, testBugReportExtra).test {
             assertIs<SendBugReport.Result.Initialized>(awaitItem())
             assertIs<SendBugReport.Result.Enqueued>(awaitItem())
             assertIs<SendBugReport.Result.Sent>(awaitItem())
@@ -87,7 +87,7 @@ internal class SendBugReportImplTest : CoroutinesTest {
             }
         )
 
-        tested.invoke(testUserId, testBugReport, extra = null).test {
+        tested.invoke(testBugReport, extra = null).test {
             assertIs<SendBugReport.Result.Initialized>(awaitItem())
             assertIs<SendBugReport.Result.Enqueued>(awaitItem())
             assertIs<SendBugReport.Result.Blocked>(awaitItem())

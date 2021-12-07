@@ -18,14 +18,12 @@
 
 package me.proton.core.reports.domain.repository
 
-import me.proton.core.domain.entity.UserId
 import me.proton.core.reports.domain.entity.BugReport
 import me.proton.core.reports.domain.entity.BugReportMeta
 import me.proton.core.reports.domain.entity.BugReportExtra
 
 public interface ReportsRepository {
     public suspend fun sendReport(
-        userId: UserId,
         bugReport: BugReport,
         meta: BugReportMeta,
         extra: BugReportExtra? = null
