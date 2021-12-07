@@ -33,6 +33,8 @@ public interface SendBugReport {
     public sealed class Result {
         public abstract val requestId: String
 
+        public fun isBlockedOrEnqueued(): Boolean = this is Blocked || this is Enqueued
+
         /** Request for sending bug report has been created but not yet enqueued. */
         public data class Initialized(override val requestId: String) : Result()
 
