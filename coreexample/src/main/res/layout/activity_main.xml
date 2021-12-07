@@ -216,6 +216,29 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/bug_reports_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:orientation="horizontal">
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/bugReport"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Bug Report" />
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/bugReportWaiting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_top_margin"
+                    android:layout_weight="1"
+                    android:text="Bug Report (Waiting)" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/accountsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
