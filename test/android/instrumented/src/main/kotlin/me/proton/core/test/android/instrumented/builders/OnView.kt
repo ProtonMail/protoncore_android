@@ -36,7 +36,9 @@ import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import org.hamcrest.CoreMatchers
+import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.AllOf
 import java.util.ArrayList
 
@@ -347,6 +349,20 @@ class OnView : ConditionWatcher {
 
     fun checkDoesNotExist() = apply {
         viewInteraction(doesNotExist())
+    }
+
+    fun checkLengthEquals(length: Int) = apply {
+        viewInteraction(
+            matches(
+                ViewMatchers.withText(object : TypeSafeMatcher<String>(String::class.java) {
+                    override fun describeTo(description: Description) {
+                        description.appendText("String length equals $length")
+                    }
+
+                    override fun matchesSafely(item: String?): Boolean = item?.length == length
+                })
+            )
+        )
     }
 
     fun checkNotDisplayed() = apply {

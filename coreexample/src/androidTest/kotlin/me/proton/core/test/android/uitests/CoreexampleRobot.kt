@@ -32,6 +32,7 @@ import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
+import me.proton.core.test.android.robots.reports.BugReportRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
 import me.proton.core.test.android.robots.settings.PasswordManagementRobot
 
@@ -39,6 +40,12 @@ import me.proton.core.test.android.robots.settings.PasswordManagementRobot
  * [CoreexampleRobot] class contains actions and verifications for Main screen functionality.
  */
 open class CoreexampleRobot : CoreRobot() {
+    fun bugReport(waitForServer: Boolean = false): BugReportRobot {
+        val buttonId = if (waitForServer) R.id.bugReportWaiting else R.id.bugReport
+        view.withId(buttonId).scrollTo()
+        return clickElement(buttonId)
+    }
+
     fun humanVerification(): HumanVerificationRobot = clickElement(R.id.trigger_human_ver)
     fun signup(): ChooseUsernameRobot = clickElement(R.id.signup)
     fun signupExternal(): ChooseUsernameRobot = clickElement(R.id.signupExternal)
