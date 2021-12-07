@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.kapt
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
-
 /*
  * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
@@ -20,34 +16,28 @@ import studio.forface.easygradle.dsl.android.*
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
-}
+package me.proton.core.reports.hilt
 
-publishOption.shouldBePublishedAsLib = false
+import androidx.test.core.app.ApplicationProvider
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
 
-android()
+internal class AppUtilsTest {
+    private lateinit var tested: AppUtils
 
-extensions.configure<com.android.build.gradle.LibraryExtension> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xexplicit-api=strict")
+    @Before
+    fun setUp() {
+        tested = AppUtils(ApplicationProvider.getApplicationContext())
     }
-}
 
-dependencies {
-    androidTestImplementation(
-        `android-test-core`,
-        `android-test-runner`,
-        `kotlin-test-junit`,
-    )
+    @Test
+    fun hasValidAppName() {
+        assertEquals("ReportsHiltTestApp", tested.appName())
+    }
 
-    implementation(
-        project(Module.domain),
-        project(Module.reports),
-        `hilt-android`,
-    )
-
-    kapt(`hilt-android-compiler`)
+    @Test
+    fun hasValidVersionName() {
+        assertEquals("1.2.3", tested.appVersionName())
+    }
 }
