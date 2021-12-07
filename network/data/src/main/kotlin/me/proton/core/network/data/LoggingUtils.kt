@@ -24,6 +24,28 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 internal fun OkHttpClient.Builder.initLogging(client: ApiClient): OkHttpClient.Builder {
+    // Generate log messages with our custom format.
+    addInterceptor { chain ->
+        val request = chain.request()
+        val auth = request.header("Authorization").formatToken(client)
+        CoreLogger.log(
+            LogTag.API_REQUEST,
+            with(request) { "$method $url (auth $auth)" },
+        )
+
+        val startMs = SystemClock.elapsedRealtime()
+        val response = chain.proceed(request)
+        val durationMs = SystemClock.elapsedRealtime() - startMs
+
+        // Unsuccessful responses are handled by ServerErrorInterceptor and later reported as errors.
+        if (response.isSuccessful) {
+            CoreLogger.log(
+                LogTag.API_RESPONSE,
+                with(response) { "$code $message ${request.method} ${request.url} (${durationMs}ms)" }
+            )
+        }
+        response
+    }
     if (client.enableDebugLogging) {
         // HttpLoggingInterceptor generate log messages and forward them into provided Logger.
         addInterceptor(
@@ -33,25 +55,6 @@ internal fun OkHttpClient.Builder.initLogging(client: ApiClient): OkHttpClient.B
                 }
             ).apply { level = HttpLoggingInterceptor.Level.BODY }
         )
-    } else {
-        // Generate log messages with our custom format.
-        addInterceptor { chain ->
-            val request = chain.request()
-            val auth = request.header("Authorization").formatToken(client)
-            CoreLogger.log(
-                LogTag.API_CALL,
-                with(request) { "--> $method $url (auth $auth)" },
-            )
-
-            val startMs = SystemClock.elapsedRealtime()
-            val response = chain.proceed(request)
-            val durationMs = SystemClock.elapsedRealtime() - startMs
-            CoreLogger.log(
-                LogTag.API_CALL,
-                with(response) { "<-- $code $message ${request.method} ${request.url} (${durationMs}ms)" }
-            )
-            response
-        }
     }
     return this
 }

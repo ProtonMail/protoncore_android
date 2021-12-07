@@ -50,7 +50,7 @@ internal suspend fun <Api, T> safeApiCall(
         e.toApiResult(networkManager)
     }
     if (result is ApiResult.Error) {
-        result.cause?.let { CoreLogger.e(LogTag.DEFAULT, it) }
+        CoreLogger.log(LogTag.API_ERROR, result.toString())
     }
     return result
 }

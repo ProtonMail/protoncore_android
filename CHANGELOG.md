@@ -20,6 +20,7 @@ Align plans screen padding.
 ### Breaking changes
 
 - Human Verification: `@CaptchaApiHost` annotation renamed to `@HumanVerificationApiHost`. 
+- Network: ```LogTag.API_CALL``` is removed. ```LogTag.API_REQUEST```, ```LogTag.API_RESPONSE``` and ```LogTag.API_ERROR``` are introduced to allow clients more control over logging API calls.
 
 ### New Injection
 

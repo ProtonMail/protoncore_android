@@ -24,8 +24,20 @@ object LogTag {
     /** Default tag for this module. */
     const val DEFAULT: String = "core.network"
 
-    /** Tag for Network API calls. */
-    val API_CALL = LoggerLogTag("core.network.api.call")
+    /** Tag for Network API requests.
+     *  Only one line with this tag should be logged per request.
+     */
+    val API_REQUEST = LoggerLogTag("core.network.api.request")
+
+    /** Tag for Network API results.
+     *  Only one line with this tag should be logged per request.
+     */
+    val API_RESPONSE = LoggerLogTag("core.network.api.response")
+
+    /** Tag for Network API failures.
+     *  Only one line with this tag should be logged per request.
+     */
+    val API_ERROR = LoggerLogTag("core.network.api.error")
 
     /** Tag for token refresh. */
     val REFRESH_TOKEN = LoggerLogTag("core.network.token.refresh")
