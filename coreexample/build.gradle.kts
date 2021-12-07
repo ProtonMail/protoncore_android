@@ -127,7 +127,7 @@ dependencies {
         project(Module.mailMessage),
         project(Module.mailSettings),
         project(Module.payment),
-        project(Module.reports),
+        project(Module.reportsPresentation),
         project(Module.reportsHilt),
         project(Module.country),
         project(Module.plan),

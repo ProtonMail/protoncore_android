@@ -31,10 +31,9 @@ kotlin {
 }
 
 dependencies {
-    implementation(
+    api(
         project(Module.domain),
         `coroutines-core`,
-        `javax-inject`,
         serialization("core")
     )
 

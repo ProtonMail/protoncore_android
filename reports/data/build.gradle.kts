@@ -37,17 +37,20 @@ extensions.configure<com.android.build.gradle.LibraryExtension> {
 }
 
 dependencies {
+    api(
+        project(Module.network),
+        project(Module.reportsDomain),
+        `android-work-runtime`,
+        `coroutines-core`,
+        `javax-inject`,
+    )
 
     implementation(
         project(Module.domain),
         project(Module.kotlinUtil),
-        project(Module.network),
-        project(Module.reportsDomain),
 
-        `android-work-runtime`,
         `hilt-android`,
         `hilt-androidx-workManager`,
-        `javax-inject`,
         `lifecycle-liveData`,
         serialization("core"),
         retrofit

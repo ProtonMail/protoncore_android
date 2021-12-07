@@ -43,9 +43,10 @@ dependencies {
         `kotlin-test-junit`,
     )
 
-    implementation(
+    api(
         project(Module.domain),
-        project(Module.reports),
+        project(Module.reportsDomain),
+        project(Module.reportsData),
         `hilt-android`,
     )
 
