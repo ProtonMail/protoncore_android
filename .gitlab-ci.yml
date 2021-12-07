@@ -135,14 +135,14 @@ tagRelease:
   stage: publish
   needs:
     - job: publishNewRelease
-  cache: []
   only:
     - /^release\/.*/
-  extends: .git
   tags:
-    - small
+    - large
+  before_script:
+    - !reference [.git, before_script]
   script:
-    - ./ci/tagRelease.sh
+    - ./gradlew tagRelease
 
 publishGradlePortal:
   stage: publish
