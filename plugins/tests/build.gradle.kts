@@ -18,7 +18,6 @@
 
 import org.gradle.kotlin.dsl.implementation
 import org.gradle.kotlin.dsl.kotlin
-import studio.forface.easygradle.dsl.Version
 
 plugins {
     `kotlin-dsl`

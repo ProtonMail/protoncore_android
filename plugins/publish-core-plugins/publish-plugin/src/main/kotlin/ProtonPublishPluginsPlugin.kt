@@ -31,7 +31,6 @@ import org.gradle.kotlin.dsl.withType
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension
 import org.gradle.plugin.devel.PluginDeclaration
 import org.gradle.plugins.signing.SigningExtension
-import studio.forface.easygradle.dsl.*
 import java.io.File
 
 abstract class ProtonPublishPluginsPlugin : Plugin<Project> {

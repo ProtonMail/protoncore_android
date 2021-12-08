@@ -18,7 +18,6 @@
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm")
     `java-gradle-plugin`
 }
 
@@ -32,8 +31,6 @@ gradlePlugin {
 }
 
 repositories {
-    google()
-    jcenter()
     gradlePluginPortal()
 }
 
@@ -42,9 +39,5 @@ java.sourceSets["main"].java {
 }
 
 dependencies {
-    implementation(gradleApi())
-    implementation(libs.dokka.pluginGradle)
-    implementation("com.gradle.publish:plugin-publish-plugin:0.18.0")
-    implementation(libs.easyGradle.dsl)
     implementation(libs.publish.pluginGradle)
 }
