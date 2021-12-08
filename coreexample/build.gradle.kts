@@ -134,7 +134,7 @@ dependencies {
         project(Module.mailSettings),
         project(Module.payment),
         project(Module.reportPresentation),
-        project(Module.reportHilt),
+        project(Module.reportDagger),
         project(Module.country),
         project(Module.plan),
         project(Module.userSettings),

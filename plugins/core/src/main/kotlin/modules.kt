@@ -148,6 +148,6 @@ object Module {
     const val reportDomain = ":report:report-domain"
     const val reportData = ":report:report-data"
     const val reportPresentation = ":report:report-presentation"
-    const val reportHilt = ":report:report-hilt"
+    const val reportDagger = ":report:report-dagger"
     // endregion
 }

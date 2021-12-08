@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.hilt
+package me.proton.core.report.dagger
 
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Assert.assertEquals
@@ -33,7 +33,7 @@ internal class AppUtilsTest {
 
     @Test
     fun hasValidAppName() {
-        assertEquals("ReportsHiltTestApp", tested.appName())
+        assertEquals("ReportDaggerTestApp", tested.appName())
     }
 
     @Test

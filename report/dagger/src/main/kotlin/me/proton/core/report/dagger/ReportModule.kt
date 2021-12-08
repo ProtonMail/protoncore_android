@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.hilt
+package me.proton.core.report.dagger
 
 import android.os.Build
 import dagger.Binds
@@ -33,7 +33,7 @@ import me.proton.core.report.domain.usecase.SendBugReport
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal class ReportsModule {
+internal class ReportModule {
     @Provides
     fun provideBugReportMeta(appUtils: AppUtils, product: Product): BugReportMeta {
         return BugReportMeta(
@@ -48,9 +48,9 @@ internal class ReportsModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface ReportsBindModule {
+internal interface ReportBindModule {
     @Binds
-    fun provideReportsRepository(repository: ReportRepositoryImpl): ReportRepository
+    fun provideReportRepository(repository: ReportRepositoryImpl): ReportRepository
 
     @Binds
     fun provideSendBugReportUseCase(useCase: SendBugReportImpl): SendBugReport

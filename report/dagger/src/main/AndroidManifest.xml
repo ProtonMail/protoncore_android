@@ -17,8 +17,6 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.proton.core.reports.hilt.test"
-    android:versionName="1.2.3">
+    package="me.proton.core.report.dagger">
 
-    <application android:label="ReportsHiltTestApp" />
 </manifest>

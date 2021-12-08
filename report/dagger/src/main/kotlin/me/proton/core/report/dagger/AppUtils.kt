@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.hilt
+package me.proton.core.report.dagger
 
 import android.content.Context
 import android.content.res.Configuration
