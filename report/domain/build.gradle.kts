@@ -24,7 +24,7 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-publishOption.shouldBePublishedAsLib = false
+publishOption.shouldBePublishedAsLib = true
 
 kotlin {
     explicitApi()

@@ -95,6 +95,11 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:plan-presentation|
 |me.proton.core:presentation|
 |me.proton.core:presentation-compose|
+|me.proton.core:report|
+|me.proton.core:report-dagger|
+|me.proton.core:report-data|
+|me.proton.core:report-domain|
+|me.proton.core:report-presentation|
 |me.proton.core:test-android|
 |me.proton.core:test-android-instrumented|
 |me.proton.core:test-kotlin|

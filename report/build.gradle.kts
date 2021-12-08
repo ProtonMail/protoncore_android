@@ -23,7 +23,7 @@ plugins {
     kotlin("android")
 }
 
-publishOption.shouldBePublishedAsLib = false
+publishOption.shouldBePublishedAsLib = true
 
 android()
 

@@ -26,7 +26,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-publishOption.shouldBePublishedAsLib = false
+publishOption.shouldBePublishedAsLib = true
 
 android()
 

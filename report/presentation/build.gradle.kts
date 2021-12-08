@@ -27,7 +27,7 @@ plugins {
     id("kotlin-parcelize")
 }
 
-publishOption.shouldBePublishedAsLib = false
+publishOption.shouldBePublishedAsLib = true
 
 android(useViewBinding = true)
 

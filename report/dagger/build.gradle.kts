@@ -26,7 +26,7 @@ plugins {
     kotlin("kapt")
 }
 
-publishOption.shouldBePublishedAsLib = false
+publishOption.shouldBePublishedAsLib = true
 
 android()
 
