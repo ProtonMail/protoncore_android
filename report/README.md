@@ -11,13 +11,14 @@ Once a report is written, and user submits it, it is enqueued into a WorkManager
 3. Add `BugReportActivity` to your `AndroidManifest.xml` file:
 
 ```xml
-<activity android:name="me.proton.core.reports.presentation.ui.BugReportActivity"
+
+<activity android:name="me.proton.core.report.presentation.ui.BugReportActivity"
     android:windowSoftInputMode="adjustResize" />
 ```
 
 4. Make sure WorkManager is configured:
     - add [WorkManager](https://developer.android.com/jetpack/androidx/releases/work) as your dependency
     - [configure `WorkManager` to be available in Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack#workmanager)
-5. Whenever you want to display a Bug Report screen, use [ReportsOrchestrator](presentation/src/main/kotlin/me/proton/core/reports/presentation/ReportsOrchestrator.kt).
+5. Whenever you want to display a Bug Report screen, use [ReportsOrchestrator](presentation/src/main/kotlin/me/proton/core/report/presentation/ReportOrchestrator.kt).
 6. Refer to [BugReportViewModel](../coreexample/src/main/kotlin/me/proton/android/core/coreexample/viewmodel/BugReportViewModel.kt) from CoreExample app for sample usage.
 

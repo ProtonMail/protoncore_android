@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.presentation.entity
+package me.proton.core.report.presentation.entity
 
 import me.proton.core.report.domain.entity.BugReportValidationError
 import me.proton.core.report.domain.usecase.SendBugReport

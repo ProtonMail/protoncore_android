@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.presentation.ui
+package me.proton.core.report.presentation.ui
 
 import android.content.Context
 import android.content.Intent
@@ -41,14 +41,14 @@ import me.proton.core.presentation.utils.showKeyboard
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportValidationError
 import me.proton.core.report.domain.usecase.SendBugReport
-import me.proton.core.reports.presentation.R
-import me.proton.core.reports.presentation.databinding.ActivityBugReportBinding
-import me.proton.core.reports.presentation.entity.BugReportFormState
-import me.proton.core.reports.presentation.entity.BugReportInput
-import me.proton.core.reports.presentation.entity.BugReportOutput
-import me.proton.core.reports.presentation.entity.ExitSignal
-import me.proton.core.reports.presentation.entity.ReportFormData
-import me.proton.core.reports.presentation.viewmodel.BugReportViewModel
+import me.proton.core.report.presentation.R
+import me.proton.core.report.presentation.databinding.ActivityBugReportBinding
+import me.proton.core.report.presentation.entity.BugReportFormState
+import me.proton.core.report.presentation.entity.BugReportInput
+import me.proton.core.report.presentation.entity.BugReportOutput
+import me.proton.core.report.presentation.entity.ExitSignal
+import me.proton.core.report.presentation.entity.ReportFormData
+import me.proton.core.report.presentation.viewmodel.BugReportViewModel
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint

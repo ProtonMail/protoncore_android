@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.presentation.entity
+package me.proton.core.report.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

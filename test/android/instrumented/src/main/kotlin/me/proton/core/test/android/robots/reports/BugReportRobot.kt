@@ -21,7 +21,7 @@ package me.proton.core.test.android.robots.reports
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.test.espresso.matcher.ViewMatchers
-import me.proton.core.reports.presentation.R
+import me.proton.core.report.presentation.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.pluralStringFromResource
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.robots.CoreRobot

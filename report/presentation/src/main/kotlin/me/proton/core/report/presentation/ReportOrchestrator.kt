@@ -16,16 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.presentation
+package me.proton.core.report.presentation
 
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
-import me.proton.core.reports.presentation.entity.BugReportInput
-import me.proton.core.reports.presentation.entity.BugReportOutput
-import me.proton.core.reports.presentation.ui.BugReportActivity
+import me.proton.core.report.presentation.entity.BugReportInput
+import me.proton.core.report.presentation.entity.BugReportOutput
+import me.proton.core.report.presentation.ui.BugReportActivity
 import javax.inject.Inject
 
-public class ReportsOrchestrator @Inject constructor() {
+public class ReportOrchestrator @Inject constructor() {
     private var bugReportLauncher: ActivityResultLauncher<BugReportInput>? = null
     private var bugReportResultCallback: ((BugReportOutput) -> Unit)? = null
 
@@ -50,5 +50,5 @@ public class ReportsOrchestrator @Inject constructor() {
     }
 
     private fun <T> checkRegistered(launcher: T?) =
-        checkNotNull(launcher) { "You must call reportsOrchestrator.register(context) before starting workflow!" }
+        checkNotNull(launcher) { "You must call reportOrchestrator.register(context) before starting workflow!" }
 }

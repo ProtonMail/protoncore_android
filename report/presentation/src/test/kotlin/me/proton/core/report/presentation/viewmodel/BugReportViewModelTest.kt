@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.presentation.viewmodel
+package me.proton.core.report.presentation.viewmodel
 
 import app.cash.turbine.test
 import io.mockk.every
@@ -27,9 +27,9 @@ import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.yield
 import me.proton.core.report.domain.entity.BugReportValidationError
 import me.proton.core.report.domain.usecase.SendBugReport
-import me.proton.core.reports.presentation.entity.BugReportFormState
-import me.proton.core.reports.presentation.entity.ExitSignal
-import me.proton.core.reports.presentation.entity.ReportFormData
+import me.proton.core.report.presentation.entity.BugReportFormState
+import me.proton.core.report.presentation.entity.ExitSignal
+import me.proton.core.report.presentation.entity.ReportFormData
 import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Before
 import org.junit.Test

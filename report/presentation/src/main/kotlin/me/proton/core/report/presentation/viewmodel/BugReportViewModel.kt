@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.presentation.viewmodel
+package me.proton.core.report.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,9 +33,9 @@ import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportExtra
 import me.proton.core.report.domain.entity.validate
 import me.proton.core.report.domain.usecase.SendBugReport
-import me.proton.core.reports.presentation.entity.BugReportFormState
-import me.proton.core.reports.presentation.entity.ExitSignal
-import me.proton.core.reports.presentation.entity.ReportFormData
+import me.proton.core.report.presentation.entity.BugReportFormState
+import me.proton.core.report.presentation.entity.ExitSignal
+import me.proton.core.report.presentation.entity.ReportFormData
 import javax.inject.Inject
 
 @HiltViewModel
