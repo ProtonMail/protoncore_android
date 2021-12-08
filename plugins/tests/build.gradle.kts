@@ -30,7 +30,7 @@ publishOption.shouldBePublishedAsPlugin = true
 gradlePlugin {
     plugins {
         create("plugin") {
-            id = "me.proton.gradle-plugins.tests"
+            id = "me.proton.core.gradle-plugins.tests"
             displayName = "Proton tests plugin"
             description = "Add global unit test task to project"
             implementationClass = "ProtonTestsPlugin"

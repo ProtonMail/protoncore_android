@@ -86,10 +86,10 @@ plugins {
 ```
 
 ## Core plugin
-`me.proton.gradle-plugins.detekt`
-`me.proton.gradle-plugins.jacoco`
-`me.proton.gradle-plugins.kotlin`
-`me.proton.gradle-plugins.tests`
+`me.proton.core.gradle-plugins.detekt`
+`me.proton.core.gradle-plugins.jacoco`
+`me.proton.core.gradle-plugins.kotlin`
+`me.proton.core.gradle-plugins.tests`
 
 # Coordinates
 me.proton.core:account

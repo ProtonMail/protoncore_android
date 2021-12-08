@@ -36,7 +36,7 @@ import java.io.File
 abstract class ProtonPublishPluginsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         val version = target.computeVersionNameFromBranchName("release/gradle-plugins")
-        val group = "me.proton.gradle-plugins"
+        val group = "me.proton.core.gradle-plugins"
         target.setupParentPublishing(group, version)
         target.subprojects {
             setupChildPublishing(group, version)
@@ -140,7 +140,7 @@ private fun Project.checkGradlePluginForPublishing() {
 
 private fun checkPluginDeclarationForPublishing(pluginDeclaration: PluginDeclaration) {
     try {
-        check(pluginDeclaration.id.startsWith("me.proton.gradle-plugins"))
+        check(pluginDeclaration.id.startsWith("me.proton.core.gradle-plugins"))
         check(!pluginDeclaration.displayName.isNullOrBlank())
         check(!pluginDeclaration.description.isNullOrBlank())
         check(!pluginDeclaration.implementationClass.isNullOrBlank())

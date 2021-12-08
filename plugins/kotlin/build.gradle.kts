@@ -30,7 +30,7 @@ publishOption.shouldBePublishedAsPlugin = true
 gradlePlugin {
     plugins {
         create("plugin") {
-            id = "me.proton.gradle-plugins.kotlin"
+            id = "me.proton.core.gradle-plugins.kotlin"
             displayName = "Proton kotlin plugin"
             description = "Plugin to apply kotlin setup"
             implementationClass = "ProtonKotlinPlugin"

@@ -30,7 +30,7 @@ publishOption.shouldBePublishedAsPlugin = true
 gradlePlugin {
     plugins {
         create("plugin") {
-            id = "me.proton.gradle-plugins.detekt"
+            id = "me.proton.core.gradle-plugins.detekt"
             displayName = "Proton detekt plugin"
             description = "Plugin to apply Proton detekt configuration"
             implementationClass = "ProtonDetektPlugin"

@@ -35,7 +35,7 @@ publishOption.shouldBePublishedAsPlugin = true
 gradlePlugin {
     plugins {
         create("plugin") {
-            id = "me.proton.gradle-plugins.jacoco"
+            id = "me.proton.core.gradle-plugins.jacoco"
             displayName = "Proton jacoco plugin"
             description = "Plugin to generate jacoco coverage report compatible with GitLab"
             implementationClass = "ProtonJacocoPlugin"
