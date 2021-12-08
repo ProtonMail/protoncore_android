@@ -17,8 +17,6 @@
  */
 
 import PublishPluginExtension.Companion.setupPublishOptionExtension
-import com.gradle.publish.MavenCoordinates
-import com.gradle.publish.PluginBundleExtension
 import io.github.gradlenexus.publishplugin.NexusPublishExtension
 import io.github.gradlenexus.publishplugin.NexusPublishPlugin
 import org.gradle.api.Plugin
@@ -28,8 +26,6 @@ import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension
@@ -40,12 +36,13 @@ import java.io.File
 
 abstract class ProtonPublishPluginsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val version = "1.0.0-alpha01-SNAPSHOT" // Todo evaluate against git state
+        val version = target.computeVersionNameFromBranchName("release/gradle-plugins")
         val group = "me.proton.gradle-plugins"
         target.setupParentPublishing(group, version)
         target.subprojects {
             setupChildPublishing(group, version)
         }
+        target.setupTagReleaseTask("release/gradle-plugins/$version")
     }
 }
 

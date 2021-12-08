@@ -68,6 +68,10 @@ repositories {
     gradlePluginPortal()
 }
 
+java.sourceSets["main"].java {
+    srcDir("../../shared/src/main/kotlin")
+}
+
 dependencies {
     implementation(gradleApi())
     implementation(libs.dokka.pluginGradle)

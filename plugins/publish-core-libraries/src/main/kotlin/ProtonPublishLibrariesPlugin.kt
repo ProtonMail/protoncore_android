@@ -28,7 +28,7 @@ abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         val groupName = "me.proton.core"
-        val versionName = target.computeVersionName()
+        val versionName = target.computeVersionNameFromBranchName("release/")
         target.setupPublishingTasks(groupName, versionName)
         target.setupNotifyNewReleaseTask(versionName)
         target.setupTagReleaseTask(versionName)

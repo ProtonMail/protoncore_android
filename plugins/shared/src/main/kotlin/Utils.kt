@@ -43,3 +43,31 @@ internal fun Project.runCommand(
 }
 
 internal fun isWindows() = System.getProperty("os.name").toLowerCase(Locale.US).contains("windows")
+
+internal fun Project.computeVersionNameFromBranchName(branchPrefix: String): String {
+    val ciCommitRefName = System.getenv("CI_COMMIT_REF_NAME")
+
+    val branchName = if (!ciCommitRefName.isNullOrEmpty()) {
+        // On the CI, using predefined var.
+        ciCommitRefName
+    } else {
+        // Fallback on local git state.
+        runCommand("git rev-parse --abbrev-ref HEAD")
+    }
+
+    val version = if (branchName.startsWith(branchPrefix)) {
+        branchName.substring(branchPrefix.length)
+    } else {
+        branchName.replace('/', '-') + "-SNAPSHOT"
+    }
+    return version
+}
+
+internal fun Project.setupTagReleaseTask(tag: String) {
+    tasks.register("tagRelease") {
+        doLast {
+            runCommand("git tag $tag")
+            runCommand("git push origin $tag -o ci.skip")
+        }
+    }
+}

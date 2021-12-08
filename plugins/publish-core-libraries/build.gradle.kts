@@ -34,6 +34,10 @@ gradlePlugin {
     }
 }
 
+java.sourceSets["main"].java {
+    srcDir("../shared/src/main/kotlin")
+}
+
 repositories {
     mavenCentral()
     gradlePluginPortal()
