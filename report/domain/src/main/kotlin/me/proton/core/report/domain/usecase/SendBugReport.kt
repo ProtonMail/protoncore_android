@@ -16,11 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.domain.usecase
+package me.proton.core.report.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.reports.domain.entity.BugReport
-import me.proton.core.reports.domain.entity.BugReportExtra
+import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.domain.entity.BugReportExtra
 
 public interface SendBugReport {
     public suspend fun cancel(requestId: String)

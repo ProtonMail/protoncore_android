@@ -16,16 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.domain.repository
+package me.proton.core.report.domain.entity
 
-import me.proton.core.reports.domain.entity.BugReport
-import me.proton.core.reports.domain.entity.BugReportMeta
-import me.proton.core.reports.domain.entity.BugReportExtra
+import kotlinx.serialization.Serializable
 
-public interface ReportRepository {
-    public suspend fun sendReport(
-        bugReport: BugReport,
-        meta: BugReportMeta,
-        extra: BugReportExtra? = null
-    )
-}
+@Serializable
+public data class BugReportExtra(
+    val country: String?,
+    val isp: String?
+)

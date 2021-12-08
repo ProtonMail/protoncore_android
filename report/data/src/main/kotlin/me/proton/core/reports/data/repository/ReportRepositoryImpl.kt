@@ -24,10 +24,10 @@ import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.onSuccess
 import me.proton.core.reports.data.api.ReportsApi
 import me.proton.core.reports.data.api.request.BugReportRequest
-import me.proton.core.reports.domain.entity.BugReport
-import me.proton.core.reports.domain.entity.BugReportExtra
-import me.proton.core.reports.domain.entity.BugReportMeta
-import me.proton.core.reports.domain.repository.ReportRepository
+import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.domain.entity.BugReportExtra
+import me.proton.core.report.domain.entity.BugReportMeta
+import me.proton.core.report.domain.repository.ReportRepository
 import javax.inject.Inject
 
 public class ReportRepositoryImpl @Inject constructor(private val apiProvider: ApiProvider) : ReportRepository {

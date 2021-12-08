@@ -25,8 +25,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.yield
-import me.proton.core.reports.domain.entity.BugReportValidationError
-import me.proton.core.reports.domain.usecase.SendBugReport
+import me.proton.core.report.domain.entity.BugReportValidationError
+import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.reports.presentation.entity.BugReportFormState
 import me.proton.core.reports.presentation.entity.ExitSignal
 import me.proton.core.reports.presentation.entity.ReportFormData

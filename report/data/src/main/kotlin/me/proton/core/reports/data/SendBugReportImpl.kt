@@ -28,10 +28,10 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapNotNull
 import me.proton.core.reports.data.work.BugReportWorker
-import me.proton.core.reports.domain.entity.BugReport
-import me.proton.core.reports.domain.entity.BugReportExtra
-import me.proton.core.reports.domain.entity.BugReportMeta
-import me.proton.core.reports.domain.usecase.SendBugReport
+import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.domain.entity.BugReportExtra
+import me.proton.core.report.domain.entity.BugReportMeta
+import me.proton.core.report.domain.usecase.SendBugReport
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Provider

@@ -18,8 +18,8 @@
 
 package me.proton.core.reports.presentation.entity
 
-import me.proton.core.reports.domain.entity.BugReportValidationError
-import me.proton.core.reports.domain.usecase.SendBugReport
+import me.proton.core.report.domain.entity.BugReportValidationError
+import me.proton.core.report.domain.usecase.SendBugReport
 
 internal sealed class BugReportFormState {
     object Idle : BugReportFormState()

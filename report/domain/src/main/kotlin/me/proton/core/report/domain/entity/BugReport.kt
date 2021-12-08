@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.domain.entity
+package me.proton.core.report.domain.entity
 
 import kotlinx.serialization.Serializable
 

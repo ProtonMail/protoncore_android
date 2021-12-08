@@ -35,7 +35,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.yield
 import me.proton.core.reports.data.work.BugReportWorker
-import me.proton.core.reports.domain.usecase.SendBugReport
+import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Before
 import org.junit.Rule

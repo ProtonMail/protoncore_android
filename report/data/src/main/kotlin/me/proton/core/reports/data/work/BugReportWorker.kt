@@ -33,10 +33,10 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
-import me.proton.core.reports.domain.entity.BugReport
-import me.proton.core.reports.domain.entity.BugReportExtra
-import me.proton.core.reports.domain.entity.BugReportMeta
-import me.proton.core.reports.domain.repository.ReportRepository
+import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.domain.entity.BugReportExtra
+import me.proton.core.report.domain.entity.BugReportMeta
+import me.proton.core.report.domain.repository.ReportRepository
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 

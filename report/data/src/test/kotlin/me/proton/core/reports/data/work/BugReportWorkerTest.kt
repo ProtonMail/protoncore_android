@@ -39,8 +39,8 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.reports.data.testBugReport
 import me.proton.core.reports.data.testBugReportExtra
 import me.proton.core.reports.data.testBugReportMeta
-import me.proton.core.reports.domain.entity.BugReportExtra
-import me.proton.core.reports.domain.repository.ReportRepository
+import me.proton.core.report.domain.entity.BugReportExtra
+import me.proton.core.report.domain.repository.ReportRepository
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before

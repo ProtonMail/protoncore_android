@@ -32,8 +32,8 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.reports.data.api.ReportsApi
-import me.proton.core.reports.domain.entity.BugReport
-import me.proton.core.reports.domain.entity.BugReportMeta
+import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.domain.entity.BugReportMeta
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

@@ -29,10 +29,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import me.proton.core.reports.domain.entity.BugReport
-import me.proton.core.reports.domain.entity.BugReportExtra
-import me.proton.core.reports.domain.entity.validate
-import me.proton.core.reports.domain.usecase.SendBugReport
+import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.domain.entity.BugReportExtra
+import me.proton.core.report.domain.entity.validate
+import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.reports.presentation.entity.BugReportFormState
 import me.proton.core.reports.presentation.entity.ExitSignal
 import me.proton.core.reports.presentation.entity.ReportFormData

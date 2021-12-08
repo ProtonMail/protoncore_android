@@ -38,9 +38,9 @@ import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.showKeyboard
-import me.proton.core.reports.domain.entity.BugReport
-import me.proton.core.reports.domain.entity.BugReportValidationError
-import me.proton.core.reports.domain.usecase.SendBugReport
+import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.domain.entity.BugReportValidationError
+import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.reports.presentation.R
 import me.proton.core.reports.presentation.databinding.ActivityBugReportBinding
 import me.proton.core.reports.presentation.entity.BugReportFormState
