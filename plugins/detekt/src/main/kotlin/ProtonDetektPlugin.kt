@@ -36,7 +36,9 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.register
-import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.`detekt version`
+import studio.forface.easygradle.dsl.`detekt-cli`
+import studio.forface.easygradle.dsl.`detekt-formatting`
 import java.io.BufferedWriter
 import java.io.File
 import java.net.URL
@@ -82,7 +84,7 @@ abstract class ProtonDetektConfiguration {
  */
 private fun Project.setupDetekt(configuration: ProtonDetektConfiguration, filter: (Project) -> Boolean = { true }) {
 
-    `detekt version` = "1.17.1" // Released: May 15, 2021
+    `detekt version` = "1.19.0" // Released: May 15, 2021
 
     val reportsDirPath = "config/detekt/reports"
     val configFilePath = "config/detekt/config.yml"
@@ -187,7 +189,8 @@ internal open class ConvertToGitlabFormat : DefaultTask() {
                                 end = location.physicalLocation.region.startLine,
                             ),
                             path = location.physicalLocation.artifactLocation.uri
-                        )
+                        ),
+                        severity = result.level
                     )
                 }
             }?.takeIf { results ->
@@ -208,6 +211,7 @@ internal open class MergeDetektReports : DefaultTask() {
 
     @TaskAction
     fun run() {
+        println("Merging detekt reports starting...")
         val mergedReport = File(reportsDir, outputName)
             .apply { if (exists()) writeText("") }
 
@@ -225,13 +229,15 @@ internal open class MergeDetektReports : DefaultTask() {
                 // Return if no file is found
                 ?.takeIf { it.isNotEmpty() } ?: return
 
-
             // Open array
             writer.append("[")
 
             // Write body
-            writer.handleFile(reportFiles.first())
-            reportFiles.drop(1).forEach {
+            println("Merging reports from files $reportFiles")
+            val nonEmptyReports = reportFiles.filter { it.length() != 0L }
+
+            writer.handleFile(nonEmptyReports.first())
+            nonEmptyReports.drop(1).forEach {
                 writer.append(",")
                 writer.handleFile(it)
             }
