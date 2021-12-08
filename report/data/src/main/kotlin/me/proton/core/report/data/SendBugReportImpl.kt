@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.data
+package me.proton.core.report.data
 
 import androidx.lifecycle.asFlow
 import androidx.work.WorkInfo
@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapNotNull
-import me.proton.core.reports.data.work.BugReportWorker
+import me.proton.core.report.data.work.BugReportWorker
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportExtra
 import me.proton.core.report.domain.entity.BugReportMeta

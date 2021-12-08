@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.data
+package me.proton.core.report.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
@@ -34,7 +34,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.yield
-import me.proton.core.reports.data.work.BugReportWorker
+import me.proton.core.report.data.work.BugReportWorker
 import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Before

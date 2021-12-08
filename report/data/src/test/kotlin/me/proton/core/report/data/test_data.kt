@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.data
+package me.proton.core.report.data
 
 import me.proton.core.domain.entity.Product
 import me.proton.core.report.domain.entity.BugReport

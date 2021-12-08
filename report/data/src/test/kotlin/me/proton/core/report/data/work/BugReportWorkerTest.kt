@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.data.work
+package me.proton.core.report.data.work
 
 import android.content.Context
 import androidx.hilt.work.HiltWorkerFactory
@@ -36,9 +36,9 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.reports.data.testBugReport
-import me.proton.core.reports.data.testBugReportExtra
-import me.proton.core.reports.data.testBugReportMeta
+import me.proton.core.report.data.testBugReport
+import me.proton.core.report.data.testBugReportExtra
+import me.proton.core.report.data.testBugReportMeta
 import me.proton.core.report.domain.entity.BugReportExtra
 import me.proton.core.report.domain.repository.ReportRepository
 import org.hamcrest.CoreMatchers

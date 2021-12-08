@@ -16,15 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.data.api
+package me.proton.core.report.data.api
 
-import me.proton.core.reports.data.api.request.BugReportRequest
+import me.proton.core.report.data.api.request.BugReportRequest
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-internal interface ReportsApi : BaseRetrofitApi {
+internal interface ReportApi : BaseRetrofitApi {
     @POST("reports/bug")
     suspend fun sendBugReport(@Body body: BugReportRequest): GenericResponse
 }

@@ -25,8 +25,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.domain.entity.Product
-import me.proton.core.reports.data.SendBugReportImpl
-import me.proton.core.reports.data.repository.ReportRepositoryImpl
+import me.proton.core.report.data.SendBugReportImpl
+import me.proton.core.report.data.repository.ReportRepositoryImpl
 import me.proton.core.report.domain.entity.BugReportMeta
 import me.proton.core.report.domain.repository.ReportRepository
 import me.proton.core.report.domain.usecase.SendBugReport

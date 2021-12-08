@@ -16,14 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.data.repository
+package me.proton.core.report.data.repository
 
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.onSuccess
-import me.proton.core.reports.data.api.ReportsApi
-import me.proton.core.reports.data.api.request.BugReportRequest
+import me.proton.core.report.data.api.ReportApi
+import me.proton.core.report.data.api.request.BugReportRequest
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportExtra
 import me.proton.core.report.domain.entity.BugReportMeta
@@ -57,7 +57,7 @@ public class ReportRepositoryImpl @Inject constructor(private val apiProvider: A
             isp = extra?.isp
         )
 
-        apiProvider.get<ReportsApi>()
+        apiProvider.get<ReportApi>()
             .invoke { sendBugReport(request) }
             .onSuccess { check(it.isSuccess()) }
             .valueOrThrow

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.data.work
+package me.proton.core.report.data.work
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.data.api.request
+package me.proton.core.report.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

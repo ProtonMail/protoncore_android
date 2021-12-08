@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.reports.data.repository
+package me.proton.core.report.data.repository
 
 import io.mockk.coEvery
 import io.mockk.every
@@ -31,7 +31,7 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.reports.data.api.ReportsApi
+import me.proton.core.report.data.api.ReportApi
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportMeta
 import org.junit.Assert.assertEquals
@@ -41,7 +41,7 @@ import kotlin.test.assertFailsWith
 
 internal class ReportRepositoryImplTest {
     private lateinit var mockApiManagerFactory: ApiManagerFactory
-    private lateinit var mockApiManager: ApiManager<ReportsApi>
+    private lateinit var mockApiManager: ApiManager<ReportApi>
     private lateinit var mockApiProvider: ApiProvider
     private lateinit var mockSessionProvider: SessionProvider
     private lateinit var tested: ReportRepositoryImpl
@@ -65,7 +65,7 @@ internal class ReportRepositoryImplTest {
         mockApiManager = mockk()
         mockSessionProvider = mockk()
         mockApiManagerFactory = mockk {
-            every { create(any(), ReportsApi::class) } returns mockApiManager
+            every { create(any(), ReportApi::class) } returns mockApiManager
         }
         mockApiProvider = ApiProvider(mockApiManagerFactory, mockSessionProvider)
         tested = ReportRepositoryImpl(mockApiProvider)
