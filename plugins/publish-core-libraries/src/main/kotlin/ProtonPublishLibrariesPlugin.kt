@@ -31,7 +31,7 @@ abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
         val versionName = target.computeVersionNameFromBranchName("release/")
         target.setupPublishingTasks(groupName, versionName)
         target.setupNotifyNewReleaseTask(versionName)
-        target.setupTagReleaseTask(versionName)
+        target.setupTagReleaseTask("release/$versionName")
         target.subprojects {
             setupSubProjectPublishing(groupName = groupName, versionName = versionName)
         }
