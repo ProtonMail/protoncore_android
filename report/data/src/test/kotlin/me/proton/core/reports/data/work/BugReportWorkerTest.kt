@@ -40,7 +40,7 @@ import me.proton.core.reports.data.testBugReport
 import me.proton.core.reports.data.testBugReportExtra
 import me.proton.core.reports.data.testBugReportMeta
 import me.proton.core.reports.domain.entity.BugReportExtra
-import me.proton.core.reports.domain.repository.ReportsRepository
+import me.proton.core.reports.domain.repository.ReportRepository
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
@@ -61,7 +61,7 @@ internal class BugReportWorkerTest {
 
     @BindValue
     @JvmField
-    internal val reportsRepository: ReportsRepository = mockk()
+    internal val reportRepository: ReportRepository = mockk()
 
     @Inject
     internal lateinit var hiltWorkerFactory: HiltWorkerFactory
@@ -88,7 +88,7 @@ internal class BugReportWorkerTest {
 
     @Test
     fun reportsWithNoInputData() {
-        coJustRun { reportsRepository.sendReport(any(), any(), any()) }
+        coJustRun { reportRepository.sendReport(any(), any(), any()) }
         val worker = TestListenableWorkerBuilder<BugReportWorker>(context, Data.EMPTY)
             .setWorkerFactory(hiltWorkerFactory)
             .build()
@@ -125,7 +125,7 @@ internal class BugReportWorkerTest {
         sendReportAnswer: MockKStubScope<Unit, Unit>.() -> Unit
     ): ListenableWorker.Result {
         coEvery {
-            reportsRepository.sendReport(
+            reportRepository.sendReport(
                 testBugReport,
                 testBugReportMeta,
                 extra

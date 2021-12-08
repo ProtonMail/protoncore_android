@@ -22,7 +22,7 @@ import me.proton.core.reports.domain.entity.BugReport
 import me.proton.core.reports.domain.entity.BugReportMeta
 import me.proton.core.reports.domain.entity.BugReportExtra
 
-public interface ReportsRepository {
+public interface ReportRepository {
     public suspend fun sendReport(
         bugReport: BugReport,
         meta: BugReportMeta,

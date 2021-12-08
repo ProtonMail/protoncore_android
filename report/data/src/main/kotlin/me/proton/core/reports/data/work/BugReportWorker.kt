@@ -36,7 +36,7 @@ import me.proton.core.network.domain.isRetryable
 import me.proton.core.reports.domain.entity.BugReport
 import me.proton.core.reports.domain.entity.BugReportExtra
 import me.proton.core.reports.domain.entity.BugReportMeta
-import me.proton.core.reports.domain.repository.ReportsRepository
+import me.proton.core.reports.domain.repository.ReportRepository
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
 
@@ -44,14 +44,14 @@ import me.proton.core.util.kotlin.serialize
 internal class BugReportWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
-    private val reportsRepository: ReportsRepository
+    private val reportRepository: ReportRepository
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         val bugReport = requireNotNull(inputData.getString(INPUT_BUG_REPORT)?.deserialize<BugReport>())
         val bugReportMeta = requireNotNull(inputData.getString(INPUT_BUG_REPORT_META)?.deserialize<BugReportMeta>())
         val bugReportExtra = inputData.getString(INPUT_BUG_REPORT_EXTRA)?.deserialize<BugReportExtra>()
 
-        return reportsRepository.runCatching {
+        return reportRepository.runCatching {
             sendReport(bugReport, bugReportMeta, bugReportExtra)
             Result.success()
         }.recover {

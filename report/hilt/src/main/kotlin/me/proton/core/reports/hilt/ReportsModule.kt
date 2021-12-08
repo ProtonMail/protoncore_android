@@ -26,9 +26,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.domain.entity.Product
 import me.proton.core.reports.data.SendBugReportImpl
-import me.proton.core.reports.data.repository.ReportsRepositoryImpl
+import me.proton.core.reports.data.repository.ReportRepositoryImpl
 import me.proton.core.reports.domain.entity.BugReportMeta
-import me.proton.core.reports.domain.repository.ReportsRepository
+import me.proton.core.reports.domain.repository.ReportRepository
 import me.proton.core.reports.domain.usecase.SendBugReport
 
 @Module
@@ -50,7 +50,7 @@ internal class ReportsModule {
 @InstallIn(SingletonComponent::class)
 internal interface ReportsBindModule {
     @Binds
-    fun provideReportsRepository(repository: ReportsRepositoryImpl): ReportsRepository
+    fun provideReportsRepository(repository: ReportRepositoryImpl): ReportRepository
 
     @Binds
     fun provideSendBugReportUseCase(useCase: SendBugReportImpl): SendBugReport

@@ -39,12 +39,12 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFailsWith
 
-internal class ReportsRepositoryImplTest {
+internal class ReportRepositoryImplTest {
     private lateinit var mockApiManagerFactory: ApiManagerFactory
     private lateinit var mockApiManager: ApiManager<ReportsApi>
     private lateinit var mockApiProvider: ApiProvider
     private lateinit var mockSessionProvider: SessionProvider
-    private lateinit var tested: ReportsRepositoryImpl
+    private lateinit var tested: ReportRepositoryImpl
 
     private val testBugReport = BugReport(
         title = "title",
@@ -68,7 +68,7 @@ internal class ReportsRepositoryImplTest {
             every { create(any(), ReportsApi::class) } returns mockApiManager
         }
         mockApiProvider = ApiProvider(mockApiManagerFactory, mockSessionProvider)
-        tested = ReportsRepositoryImpl(mockApiProvider)
+        tested = ReportRepositoryImpl(mockApiProvider)
     }
 
     @Test
