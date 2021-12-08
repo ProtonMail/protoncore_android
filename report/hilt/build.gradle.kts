@@ -1,3 +1,7 @@
+import org.gradle.kotlin.dsl.kapt
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
+
 /*
  * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
@@ -16,21 +20,35 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 publishOption.shouldBePublishedAsLib = false
 
 android()
 
+extensions.configure<com.android.build.gradle.LibraryExtension> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xexplicit-api=strict")
+    }
+}
+
 dependencies {
-    api(
-        project(Module.reportsDomain),
-        project(Module.reportsData),
-        project(Module.reportsPresentation)
+    androidTestImplementation(
+        `android-test-core`,
+        `android-test-runner`,
+        `kotlin-test-junit`,
     )
+
+    api(
+        project(Module.domain),
+        project(Module.reportDomain),
+        project(Module.reportData),
+        `hilt-android`,
+    )
+
+    kapt(`hilt-android-compiler`)
 }

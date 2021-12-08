@@ -51,7 +51,7 @@ dependencies {
 
         // Features
         project(Module.keyDomain),
-        project(Module.reportsDomain),
+        project(Module.reportDomain),
         project(Module.userDomain),
 
         // Android

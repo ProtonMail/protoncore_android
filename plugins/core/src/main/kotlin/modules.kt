@@ -144,10 +144,10 @@ object Module {
     const val planPresentation = "$plan:plan-presentation"
 
     // Reports
-    const val reports = ":reports"
-    const val reportsDomain = ":reports:reports-domain"
-    const val reportsData = ":reports:reports-data"
-    const val reportsPresentation = ":reports:reports-presentation"
-    const val reportsHilt = ":reports:reports-hilt"
+    const val report = ":report"
+    const val reportDomain = ":report:report-domain"
+    const val reportData = ":report:report-data"
+    const val reportPresentation = ":report:report-presentation"
+    const val reportHilt = ":report:report-hilt"
     // endregion
 }

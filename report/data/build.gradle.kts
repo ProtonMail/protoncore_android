@@ -39,7 +39,7 @@ extensions.configure<com.android.build.gradle.LibraryExtension> {
 dependencies {
     api(
         project(Module.network),
-        project(Module.reportsDomain),
+        project(Module.reportDomain),
         `android-work-runtime`,
         `coroutines-core`,
         `javax-inject`,
