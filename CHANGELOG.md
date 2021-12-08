@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changes
+
+- Report: New module for sending Bug Report (see [Report Readme](report/README.md) for more details).
+
 ## [4.0.0]
 
 ### Fixes
