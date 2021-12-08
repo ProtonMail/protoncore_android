@@ -18,7 +18,7 @@
 
 rootProject.name = "Core gradle plugins"
 
-includeBuild("publish")
+includeBuild("publish-core-plugins")
 
 include(
     "core",

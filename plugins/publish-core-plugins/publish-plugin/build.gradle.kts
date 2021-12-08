@@ -16,26 +16,35 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "Publish gradle plugins"
+plugins {
+    `kotlin-dsl`
+    kotlin("jvm")
+    `java-gradle-plugin`
+}
 
-include(
-    "plugins"
-)
-
-pluginManagement {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        maven("https://plugins.gradle.org/m2/")
+gradlePlugin {
+    plugins {
+        create("plugin") {
+            id = "publish-core-plugins"
+            implementationClass = "ProtonPublishPluginsPlugin"
+        }
     }
 }
 
-enableFeaturePreview("VERSION_CATALOGS")
+repositories {
+    google()
+    jcenter()
+    gradlePluginPortal()
+}
 
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs") {
-            from(files("../../gradle/libs.versions.toml"))
-        }
-    }
+java.sourceSets["main"].java {
+    srcDir("../../shared/src/main/kotlin")
+}
+
+dependencies {
+    implementation(gradleApi())
+    implementation(libs.dokka.pluginGradle)
+    implementation("com.gradle.publish:plugin-publish-plugin:0.18.0")
+    implementation(libs.easyGradle.dsl)
+    implementation(libs.publish.pluginGradle)
 }

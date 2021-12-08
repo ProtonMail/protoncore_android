@@ -16,15 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    val kotlinVersion = embeddedKotlinVersion
+rootProject.name = "Publish core gradle plugins"
 
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.serialization") version kotlinVersion
+include(
+    "publish-plugin"
+)
 
-    id("publish-core-plugins")
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://plugins.gradle.org/m2/")
+    }
 }
 
-repositories {
-    mavenCentral()
+enableFeaturePreview("VERSION_CATALOGS")
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("../../gradle/libs.versions.toml"))
+        }
+    }
 }
