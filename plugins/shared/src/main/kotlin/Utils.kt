@@ -67,7 +67,7 @@ internal fun Project.setupTagReleaseTask(tag: String) {
     tasks.register("tagRelease") {
         doLast {
             runCommand("git tag $tag")
-            runCommand("git push origin $tag -o ci.skip")
+            runCommand("git push origin tag $tag -o ci.skip")
         }
     }
 }
