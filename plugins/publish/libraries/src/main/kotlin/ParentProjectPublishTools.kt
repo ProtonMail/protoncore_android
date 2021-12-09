@@ -91,7 +91,7 @@ private fun generateReleaseNoteIfNeeded(versionName: String): String? {
     val fullChangelogText = fullChangelog.readText()
     val releaseChangelogText = fullChangelogText
         .substringAfter("## [$versionName]", "No changelog :cry:")
-        .substringBefore("##")
+        .substringBefore("## [")
     return StringBuilder()
         .appendLine("New Core release available `$versionName` :tada:")
         .appendLine(releaseChangelogText)
