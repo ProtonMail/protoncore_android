@@ -21,10 +21,10 @@ while the first one is suitable for multi-module projects, the latter is the sug
 
 ## Core libraries
 Release process is based on [trunk branch for release process](https://trunkbaseddevelopment.com/branch-for-release/).
-Release is done by the CI. To trigger a release for version `X.Y.Z`, just push a branch named `release/X.Y.Z`.
+Release is done by the CI. To trigger a release for version `X.Y.Z`, just push a branch named `release/libs/X.Y.Z`.
 When the release is successfully done:
 * A message is post on internal communication tool using the content of the [`CHANGELOG.MD`](./CHANGELOG.md) under the entry `## [X.Y.Z].
-* A tag `release/X.Y.Z` is created from the commit used to do the release.
+* A tag `release/libs/X.Y.Z` is created from the commit used to do the release.
 
 Before triggering a release (by pushing a release branch), `CHANGELOG.MD` should be updated by adding a entry `## [X.Y.Z]` with the content cut/paste from the entry `## [Unreleased]`.
 Release should be made from `main` branch.
