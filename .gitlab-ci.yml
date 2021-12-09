@@ -120,9 +120,9 @@ publishNewRelease:
     - large
   variables:
     ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
-    ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD_UNESCAPED
+    ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD
     ORG_GRADLE_PROJECT_signingInMemoryKey: $MAVEN_SIGNING_KEY
-    ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD_UNESCAPED
+    ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD
     ORG_GRADLE_PROJECT_androidDevChannelWebhook: $ANDROID_DEVS_CHANNEL_WEBHOOK
   script:
     - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
