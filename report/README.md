@@ -8,12 +8,13 @@ Once a report is written, and user submits it, it is enqueued into a WorkManager
 
 1. Add `me.proton.core:report-presentation` module.
 2. If you use Hilt, add `me.proton.core:report-dagger` module.
-3. Add `BugReportActivity` to your `AndroidManifest.xml` file (replace `_ProtonApp_` with `Calendar`, `Drive`, `Mail` or `Vpn`):
+3. Optionally, add `BugReportActivity` to your `AndroidManifest.xml` file, replacing `_ProtonApp_` with `Calendar`, `Drive`, `Mail` or `Vpn` (by default it uses `ProtonTheme`):
 
 ```xml
-<activity android:name="me.proton.core.report.presentation.ui.BugReportActivity"
+<activity
+    android:name="me.proton.core.report.presentation.ui.BugReportActivity"
     android:theme="@style/ProtonTheme._ProtonApp_"
-    android:windowSoftInputMode="adjustResize" />
+    tools:replace="android:theme" />
 ```
 
 4. Make sure WorkManager is configured:
