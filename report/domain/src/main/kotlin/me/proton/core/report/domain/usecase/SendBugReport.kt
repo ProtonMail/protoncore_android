@@ -33,7 +33,7 @@ public interface SendBugReport {
     public sealed class Result {
         public abstract val requestId: String
 
-        public fun isBlockedOrEnqueued(): Boolean = this is Blocked || this is Enqueued
+        public fun isPending(): Boolean = this is Blocked || this is Enqueued || this is InProgress
 
         /** Request for sending bug report has been created but not yet enqueued. */
         public data class Initialized(override val requestId: String) : Result()
@@ -43,6 +43,9 @@ public interface SendBugReport {
 
         /** Request is temporarily blocked, as network connection is not available. */
         public data class Blocked(override val requestId: String) : Result()
+
+        /** Request is currently in progress. */
+        public data class InProgress(override val requestId: String) : Result()
 
         /** Bug report has been successfully sent. */
         public data class Sent(override val requestId: String) : Result()

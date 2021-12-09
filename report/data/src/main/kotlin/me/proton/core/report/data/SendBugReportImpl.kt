@@ -49,9 +49,10 @@ public class SendBugReportImpl @Inject constructor(
         extra: BugReportExtra?
     ): Flow<SendBugReport.Result> {
         val request = BugReportWorker.makeWorkerRequest(bugReport, bugReportMetaProvider.get(), extra)
-        workManager.enqueue(request)
+        val operation = workManager.enqueue(request)
         return flow {
             emit(SendBugReport.Result.Initialized(request.id.toString()))
+            operation.await()
             emitAll(makeWorkInfoFlow(request))
         }
     }
@@ -65,12 +66,12 @@ public class SendBugReportImpl @Inject constructor(
                     WorkInfo.State.ENQUEUED -> SendBugReport.Result.Enqueued(requestId)
                     WorkInfo.State.BLOCKED -> SendBugReport.Result.Blocked(requestId)
                     WorkInfo.State.CANCELLED -> SendBugReport.Result.Cancelled(requestId)
+                    WorkInfo.State.RUNNING -> SendBugReport.Result.InProgress(requestId)
                     WorkInfo.State.SUCCEEDED -> SendBugReport.Result.Sent(requestId)
                     WorkInfo.State.FAILED -> {
                         val errorMessage = workInfo.outputData.getString(BugReportWorker.OUTPUT_ERROR_MESSAGE)
                         SendBugReport.Result.Failed(requestId, errorMessage)
                     }
-                    else -> null
                 }
             }
     }

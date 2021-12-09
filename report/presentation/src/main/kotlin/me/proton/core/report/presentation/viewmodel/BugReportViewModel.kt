@@ -50,7 +50,7 @@ internal class BugReportViewModel @Inject constructor(
 
     fun tryExit(data: ReportFormData? = null, force: Boolean = false) {
         val formState = _bugReportFormState.value
-        val signal = if (formState is BugReportFormState.SendingResult && formState.result.isBlockedOrEnqueued()) {
+        val signal = if (formState is BugReportFormState.SendingResult && formState.result.isPending()) {
             ExitSignal.BugReportEnqueued
         } else if (force || data?.subject.isNullOrBlank() && data?.description.isNullOrBlank()) {
             ExitSignal.ExitNow

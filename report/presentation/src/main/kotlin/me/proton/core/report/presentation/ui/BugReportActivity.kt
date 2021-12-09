@@ -179,7 +179,8 @@ internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBi
             }
 
             is SendBugReport.Result.Blocked,
-            is SendBugReport.Result.Enqueued -> {
+            is SendBugReport.Result.Enqueued,
+            is SendBugReport.Result.InProgress -> {
                 if (input.finishAfterReportIsEnqueued) {
                     reportSuccessfullyCompleted()
                 } else Unit

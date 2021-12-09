@@ -53,8 +53,15 @@ internal class SendBugReportImplTest : CoroutinesTest {
 
     @Before
     fun setUp() {
+        val resultMock = mockk<ListenableFuture<Operation.State.SUCCESS>> {
+            every { isDone } returns true
+            every { get() } returns Operation.SUCCESS
+        }
+        val operationMock = mockk<Operation> {
+            every { result } returns resultMock
+        }
         workManager = mockk {
-            every { enqueue(any<WorkRequest>()) } returns mockk()
+            every { enqueue(any<WorkRequest>()) } returns operationMock
         }
         tested = SendBugReportImpl({ testBugReportMeta }, workManager)
     }
@@ -70,6 +77,7 @@ internal class SendBugReportImplTest : CoroutinesTest {
         tested.invoke(testBugReport, testBugReportExtra).test {
             assertIs<SendBugReport.Result.Initialized>(awaitItem())
             assertIs<SendBugReport.Result.Enqueued>(awaitItem())
+            assertIs<SendBugReport.Result.InProgress>(awaitItem())
             assertIs<SendBugReport.Result.Sent>(awaitItem())
             expectNoEvents()
             cancel()
@@ -91,6 +99,7 @@ internal class SendBugReportImplTest : CoroutinesTest {
             assertIs<SendBugReport.Result.Initialized>(awaitItem())
             assertIs<SendBugReport.Result.Enqueued>(awaitItem())
             assertIs<SendBugReport.Result.Blocked>(awaitItem())
+            assertIs<SendBugReport.Result.InProgress>(awaitItem())
             val failedResult = assertIs<SendBugReport.Result.Failed>(awaitItem())
             assertEquals("Failed", failedResult.message)
             expectNoEvents()
