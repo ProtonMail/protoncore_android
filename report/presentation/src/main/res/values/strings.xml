@@ -17,25 +17,25 @@
   -->
 
 <resources>
-    <string name="bug_report_activity_title">Report bug</string>
-    <string name="bug_report_close">Close</string>
-    <string name="bug_report_subject_field_hint">Subject</string>
-    <string name="bug_report_description_field_hint">Description</string>
-    <string name="bug_report_description_field_placeholder">Please describe the problem and include any error messages.</string>
-    <string name="bug_report_discard_changes_title">Unsaved Changes</string>
-    <string name="bug_report_discard_changes_description">There are unsaved entries in the form. Are you sure you want to discard them?</string>
-    <string name="bug_report_discard_changes_cancel">Keep writing</string>
-    <string name="bug_report_discard_changes_confirm">Discard</string>
-    <string name="bug_report_form_field_required">This field is required</string>
-    <plurals name="bug_report_form_field_too_short">
+    <string name="report_bug_activity_title">Report bug</string>
+    <string name="report_bug_close">Close</string>
+    <string name="report_bug_subject_field_hint">Subject</string>
+    <string name="report_bug_description_field_hint">Description</string>
+    <string name="report_bug_description_field_placeholder">Please describe the problem and include any error messages.</string>
+    <string name="report_bug_discard_changes_title">Unsaved Changes</string>
+    <string name="report_bug_discard_changes_description">There are unsaved entries in the form. Are you sure you want to discard them?</string>
+    <string name="report_bug_discard_changes_cancel">Keep writing</string>
+    <string name="report_bug_discard_changes_confirm">Discard</string>
+    <string name="report_bug_form_field_required">This field is required</string>
+    <plurals name="report_bug_form_field_too_short">
         <item quantity="one">This field should have at least %d character</item>
         <item quantity="other">This field should have at least %d characters</item>
     </plurals>
-    <plurals name="bug_report_form_field_too_long">
+    <plurals name="report_bug_form_field_too_long">
         <item quantity="one">This field should have at most %d character</item>
         <item quantity="other">This field should have at most %d characters</item>
     </plurals>
-    <string name="bug_report_general_error">Error sending report, please try again later</string>
-    <string name="bug_report_send">Send</string>
-    <string name="bug_report_success">Thank you for your report</string>
+    <string name="report_bug_general_error">Error sending report, please try again later</string>
+    <string name="report_bug_send">Send</string>
+    <string name="report_bug_success">Thank you for your report</string>
 </resources>

@@ -32,10 +32,10 @@ class BugReportRobot : CoreRobot() {
         apply { view.withId(R.id.bug_report_description).replaceText(value) }
 
     inline fun <reified T> exitDialogDiscardBugReport(): T =
-        clickElement(view.withText(R.string.bug_report_discard_changes_confirm))
+        clickElement(view.withText(R.string.report_bug_discard_changes_confirm))
 
     inline fun <reified T> exitDialogKeepWriting(): T =
-        clickElement(view.withText(R.string.bug_report_discard_changes_cancel))
+        clickElement(view.withText(R.string.report_bug_discard_changes_cancel))
 
     fun subject(value: String): BugReportRobot = replaceText(R.id.bug_report_subject, value)
     inline fun <reified T> send(): T = clickElement(view.withId(R.id.bug_report_send))

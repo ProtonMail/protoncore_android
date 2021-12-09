@@ -25,8 +25,6 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -44,7 +42,7 @@ import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportValidationError
 import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.report.presentation.R
-import me.proton.core.report.presentation.databinding.ActivityBugReportBinding
+import me.proton.core.report.presentation.databinding.ReportActivityBugReportBinding
 import me.proton.core.report.presentation.entity.BugReportFormState
 import me.proton.core.report.presentation.entity.BugReportInput
 import me.proton.core.report.presentation.entity.BugReportOutput
@@ -54,15 +52,14 @@ import me.proton.core.report.presentation.viewmodel.BugReportViewModel
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBinding>(
-    ActivityBugReportBinding::inflate
+internal class BugReportActivity : ProtonViewBindingActivity<ReportActivityBugReportBinding>(
+    ReportActivityBugReportBinding::inflate
 ) {
     private var exitDialog: AlertDialog? = null
     private val input: BugReportInput by lazy {
         intent.getParcelableExtra<BugReportInput>(INPUT_BUG_REPORT) ?: error("Missing activity input")
     }
-    private var sendButton: MenuItem? = null
-    private var sendingLoader: MenuItem? = null
+
     private val viewModel by viewModels<BugReportViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,8 +75,14 @@ internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBi
 
         addOnBackPressedCallback { viewModel.tryExit(getReportFormData()) }
 
-        setSupportActionBar(binding.toolbar)
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.bug_report_send) {
+                viewModel.trySendingBugReport(getReportFormData(), email = input.email, username = input.username)
+                true
+            } else false
+        }
+
         binding.spacer.setOnClickListener {
             if (binding.bugReportDescription.hasFocus()) {
                 hideKeyboard(binding.bugReportDescription)
@@ -96,20 +99,6 @@ internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBi
         exitDialog?.dismiss()
         exitDialog = null
         super.onDestroy()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.bug_report_menu, menu)
-        sendButton = menu.findItem(R.id.bug_report_send)
-        sendingLoader = menu.findItem(R.id.bug_report_loader)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.bug_report_send) {
-            viewModel.trySendingBugReport(getReportFormData(), email = input.email, username = input.username)
-            true
-        } else super.onOptionsItemSelected(item)
     }
 
     private fun getReportFormData(): ReportFormData {
@@ -147,22 +136,22 @@ internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBi
     private fun handleFormError(validationError: BugReportValidationError) {
         val (textView, message) = when (validationError) {
             BugReportValidationError.DescriptionMissing ->
-                binding.bugReportDescriptionLayout to getString(R.string.bug_report_form_field_required)
+                binding.bugReportDescriptionLayout to getString(R.string.report_bug_form_field_required)
             BugReportValidationError.SubjectMissing ->
-                binding.bugReportSubjectLayout to getString(R.string.bug_report_form_field_required)
+                binding.bugReportSubjectLayout to getString(R.string.report_bug_form_field_required)
             BugReportValidationError.SubjectTooLong ->
                 binding.bugReportSubjectLayout to resources.getQuantityString(
-                    R.plurals.bug_report_form_field_too_long,
+                    R.plurals.report_bug_form_field_too_long,
                     BugReport.SubjectMaxLength, BugReport.SubjectMaxLength
                 )
             BugReportValidationError.DescriptionTooLong ->
                 binding.bugReportDescriptionLayout to resources.getQuantityString(
-                    R.plurals.bug_report_form_field_too_long,
+                    R.plurals.report_bug_form_field_too_long,
                     BugReport.DescriptionMaxLength, BugReport.DescriptionMaxLength
                 )
             BugReportValidationError.DescriptionTooShort ->
                 binding.bugReportDescriptionLayout to resources.getQuantityString(
-                    R.plurals.bug_report_form_field_too_short,
+                    R.plurals.report_bug_form_field_too_short,
                     BugReport.DescriptionMinLength, BugReport.DescriptionMinLength
                 )
         }.exhaustive
@@ -178,7 +167,7 @@ internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBi
 
             is SendBugReport.Result.Failed -> {
                 setFormState(isLoading = false)
-                binding.root.errorSnack(result.message ?: getString(R.string.bug_report_general_error))
+                binding.root.errorSnack(result.message ?: getString(R.string.report_bug_general_error))
             }
 
             is SendBugReport.Result.Blocked,
@@ -205,6 +194,9 @@ internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBi
     }
 
     private fun setFormState(isLoading: Boolean) {
+        val sendButton = binding.toolbar.menu.findItem(R.id.bug_report_send)
+        val sendingLoader = binding.toolbar.menu.findItem(R.id.bug_report_loader)
+
         sendButton?.isVisible = !isLoading
         sendingLoader?.isVisible = isLoading
         (sendingLoader?.icon as? AnimatedVectorDrawable)?.let {
@@ -223,16 +215,16 @@ internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBi
     private fun showExitDialog() {
         exitDialog?.dismiss()
         exitDialog = MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.bug_report_discard_changes_title)
-            .setMessage(R.string.bug_report_discard_changes_description)
-            .setPositiveButton(R.string.bug_report_discard_changes_confirm) { _, _ -> viewModel.tryExit(force = true) }
-            .setNegativeButton(R.string.bug_report_discard_changes_cancel, null)
+            .setTitle(R.string.report_bug_discard_changes_title)
+            .setMessage(R.string.report_bug_discard_changes_description)
+            .setPositiveButton(R.string.report_bug_discard_changes_confirm) { _, _ -> viewModel.tryExit(force = true) }
+            .setNegativeButton(R.string.report_bug_discard_changes_cancel, null)
             .show()
     }
 
     private fun setResultOk() {
         val data = Intent().apply {
-            putExtra(OUTPUT_SUCCESS_MESSAGE, getString(R.string.bug_report_success))
+            putExtra(OUTPUT_SUCCESS_MESSAGE, getString(R.string.report_bug_success))
         }
         setResult(RESULT_OK, data)
     }

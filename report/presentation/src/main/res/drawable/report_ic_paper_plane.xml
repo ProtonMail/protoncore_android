@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<!--
   ~ Copyright (c) 2021 Proton Technologies AG
   ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
@@ -16,17 +16,13 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/bug_report_send"
-        android:icon="@drawable/ic_paper_plane"
-        android:title="@string/bug_report_send"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/bug_report_loader"
-        android:enabled="false"
-        android:icon="@drawable/ic_animated_loading_secondary"
-        android:visible="false"
-        app:showAsAction="always" />
-</menu>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="?proton_icon_norm"
+        android:fillType="evenOdd"
+        android:pathData="M0.375,9.42L9.525,13.995L14.1,23.145L22.11,1.41L0.375,9.42ZM4.155,9.63L17.895,4.5L9.93,12.525L4.155,9.63ZM13.89,19.38L10.995,13.59L18.96,5.625L13.89,19.38Z" />
+</vector>

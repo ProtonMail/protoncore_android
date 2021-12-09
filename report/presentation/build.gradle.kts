@@ -29,7 +29,9 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
-android(useViewBinding = true)
+android(useViewBinding = true) {
+    resourcePrefix = "report_"
+}
 
 extensions.configure<com.android.build.gradle.LibraryExtension> {
     kotlinOptions {

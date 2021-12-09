@@ -31,9 +31,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationContentDescription="@string/bug_report_close"
+            app:menu="@menu/report_bug_menu"
+            app:navigationContentDescription="@string/report_bug_close"
             app:navigationIcon="@drawable/ic_close"
-            app:title="@string/bug_report_activity_title" />
+            app:title="@string/report_bug_activity_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -55,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:hint="@string/bug_report_subject_field_hint"
+                android:hint="@string/report_bug_subject_field_hint"
                 app:boxBackgroundColor="@color/transparent"
                 app:boxBackgroundMode="none"
                 app:expandedHintEnabled="true">
@@ -88,10 +89,10 @@
                 android:id="@+id/bug_report_description_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/bug_report_description_field_hint"
+                android:hint="@string/report_bug_description_field_hint"
                 app:boxBackgroundColor="@color/transparent"
                 app:boxBackgroundMode="none"
-                app:placeholderText="@string/bug_report_description_field_placeholder"
+                app:placeholderText="@string/report_bug_description_field_placeholder"
                 app:placeholderTextAppearance="@style/Proton.Text.Default">
 
                 <com.google.android.material.textfield.TextInputEditText
