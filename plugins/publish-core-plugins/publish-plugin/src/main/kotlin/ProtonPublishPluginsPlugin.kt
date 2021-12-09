@@ -150,7 +150,7 @@ private fun checkPluginDeclarationForPublishing(pluginDeclaration: PluginDeclara
 }
 
 private fun Project.ensurePluginIdDocumented(pluginDeclaration: PluginDeclaration) {
-    val readmeFile = File(rootDir.parent, "README.md")
+    val readmeFile = File(rootDir, "README.md")
     val readmeText = readmeFile.readText()
     val isPluginDocumented = readmeText.contains(pluginDeclaration.id)
     check(isPluginDocumented) {
