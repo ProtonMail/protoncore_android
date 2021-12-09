@@ -33,15 +33,19 @@ import org.gradle.plugin.devel.PluginDeclaration
 import org.gradle.plugins.signing.SigningExtension
 import java.io.File
 
+private const val GROUP = "me.proton.core.gradle-plugins"
+
 abstract class ProtonPublishPluginsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val version = target.computeVersionNameFromBranchName("release/gradle-plugins")
-        val group = "me.proton.core.gradle-plugins"
-        target.setupParentPublishing(group, version)
+        val branchPrefix = "release/gradle-plugins/"
+        val version = target.computeVersionNameFromBranchName(branchPrefix)
+        target.setupParentPublishing(GROUP, version)
         target.subprojects {
-            setupChildPublishing(group, version)
+            setupChildPublishing(GROUP, version)
         }
-        target.setupTagReleaseTask("release/gradle-plugins/$version")
+        if (!version.contains("SNAPSHOT")) {
+            target.setupTagReleaseTask("$branchPrefix$version")
+        }
     }
 }
 
@@ -113,16 +117,11 @@ private fun Project.setupProtonPluginPublishingPlugin() {
         }
     }
 
-    configure<PublishingExtension> {}
     apply(plugin = "signing")
     configure<SigningExtension> {
-        if (!version.toString().contains("SNAPSHOT")) {
-            val signingKey: String? = project.properties["signingInMemoryKey"] as String?
-            val signingPassphrase: String? = project.properties["signingInMemoryKeyPassword"] as String?
-            if (signingKey.isNullOrBlank() || signingPassphrase.isNullOrBlank()) {
-                throw Error("Signing keys for release version $version are missing, " +
-                    "ensure signingInMemoryKey and signingInMemoryKeyPassword are set")
-            }
+        val signingKey: String? = project.properties["signingInMemoryKey"] as String?
+        val signingPassphrase: String? = project.properties["signingInMemoryKeyPassword"] as String?
+        if (signingKey != null && signingPassphrase != null) {
             useInMemoryPgpKeys(signingKey, signingPassphrase)
             val publishExtension = extensions.getByType(PublishingExtension::class)
             sign(publishExtension.publications)
@@ -140,14 +139,12 @@ private fun Project.checkGradlePluginForPublishing() {
 
 private fun checkPluginDeclarationForPublishing(pluginDeclaration: PluginDeclaration) {
     try {
-        check(pluginDeclaration.id.startsWith("me.proton.core.gradle-plugins"))
-        check(!pluginDeclaration.displayName.isNullOrBlank())
-        check(!pluginDeclaration.description.isNullOrBlank())
-        check(!pluginDeclaration.implementationClass.isNullOrBlank())
+        check(pluginDeclaration.id.startsWith(GROUP))
+        check(pluginDeclaration.implementationClass.isNotBlank())
     } catch (exception: IllegalStateException) {
         exception.printStackTrace()
-        println("Ensure you have a valid gradlePlugin block, see " +
-            "https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html#configure_the_plugin_publishing_plugin")
+        println("Ensure you have a valid gradlePlugin block with at least an id starting by \'$GROUP\', and an " +
+                "\'implementationClass\', see https://docs.gradle.org/current/userguide/publishing_gradle_plugins.html#configure_the_plugin_publishing_plugin")
         throw exception
     }
 }
