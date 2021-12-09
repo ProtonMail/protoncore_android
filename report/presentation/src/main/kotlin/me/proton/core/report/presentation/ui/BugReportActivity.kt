@@ -20,9 +20,11 @@ package me.proton.core.report.presentation.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.text.InputFilter
+import android.view.View
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContract
@@ -166,6 +168,7 @@ internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBi
         }.exhaustive
 
         textView.error = message
+        scrollTo(textView)
     }
 
     private fun handleSendingResult(sendingResult: BugReportFormState.SendingResult) {
@@ -193,6 +196,12 @@ internal class BugReportActivity : ProtonViewBindingActivity<ActivityBugReportBi
     private fun reportSuccessfullyCompleted() {
         setResultOk()
         finish()
+    }
+
+    private fun scrollTo(view: View) {
+        val rect = Rect()
+        binding.scrollContent.offsetDescendantRectToMyCoords(view, rect)
+        binding.scrollContent.smoothScrollTo(0, rect.top)
     }
 
     private fun setFormState(isLoading: Boolean) {
