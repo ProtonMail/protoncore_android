@@ -65,6 +65,7 @@ dependencies {
         `android-test-rules`,
         `espresso-contrib`,
         `espresso-intents`,
+        `espresso-web`,
         `android-ktx`,
         `junit-ktx`,
         `serialization-json`,

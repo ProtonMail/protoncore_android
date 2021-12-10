@@ -18,20 +18,20 @@
 
 package me.proton.core.humanverification.presentation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
-import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
-import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
-import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.usersettings.domain.usecase.GetSettings
+import me.proton.core.util.kotlin.DispatcherProvider
 import javax.inject.Inject
 
 /**
@@ -40,42 +40,17 @@ import javax.inject.Inject
 @HiltViewModel
 class HumanVerificationViewModel @Inject constructor(
     private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
-    savedStateHandle: SavedStateHandle
+    private val accountRepository: AccountRepository,
+    private val getSettings: GetSettings,
 ) : ProtonViewModel() {
 
-    private lateinit var currentActiveVerificationMethod: TokenType
+    suspend fun getHumanVerificationExtraParams() = withContext(Dispatchers.IO) {
+        val userId = accountRepository.getPrimaryUserId()
+            .firstOrNull() ?: return@withContext null
 
-    private var availableVerificationMethods: List<String> =
-        savedStateHandle.get<List<String>>(HumanVerificationDialogFragment.ARG_VERIFICATION_OPTIONS)!!
-
-    private val _activeMethod = MutableStateFlow<String?>(null)
-    private val _enabledMethods = MutableStateFlow<List<String>>(emptyList())
-
-    val activeMethod = _activeMethod.asStateFlow()
-    val enabledMethods = _enabledMethods.asStateFlow()
-
-    init {
-        // A list of all available methods that the API is currently supporting for this particular user and device.
-        // The UI should present the verification methods for each one of them.
-        // It is safe to use !! here, guaranteed that there will be at least 1 verification method available
-        if (availableVerificationMethods.isEmpty()) {
-            throw NotEnoughVerificationOptions("Please provide at least 1 verification method")
-        }
-
-        _enabledMethods.tryEmit(availableVerificationMethods)
-        defineActiveVerificationMethod()
-    }
-
-    /**
-     * Sets the currently active verification method that the user chose.
-     */
-    fun defineActiveVerificationMethod(userSelectedMethod: TokenType? = null) {
-        userSelectedMethod?.let {
-            currentActiveVerificationMethod = it
-        } ?: run {
-            currentActiveVerificationMethod = TokenType.fromString(availableVerificationMethods[0])
-        }
-        _activeMethod.tryEmit(currentActiveVerificationMethod.value)
+        val settings = getSettings(userId)
+        val defaultCountry = settings.locale?.substringAfter("_")
+        HumanVerificationExtraParams(settings.phone?.value, settings.locale, defaultCountry)
     }
 
     fun onHumanVerificationResult(clientId: ClientId, token: HumanVerificationToken?): Job = viewModelScope.launch {
@@ -90,3 +65,9 @@ class HumanVerificationViewModel @Inject constructor(
         }
     }
 }
+
+data class HumanVerificationExtraParams(
+    val recoveryPhone: String?,
+    val locale: String?,
+    val defaultCountry: String?,
+)

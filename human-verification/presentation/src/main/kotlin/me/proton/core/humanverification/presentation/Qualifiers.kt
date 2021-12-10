@@ -22,4 +22,4 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class CaptchaApiHost
+annotation class HumanVerificationApiHost

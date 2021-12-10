@@ -16,22 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.utils
+package me.proton.core.humanverification.domain.utils
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
-import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
+import java.io.InputStream
 
-fun FragmentManager.registerRequestNewCodeDialogResultLauncher(
-    fragment: Fragment,
-    onResult: () -> Unit,
-): FragmentDialogResultLauncher<String> {
-    setFragmentResultListener(ProtonCancellableAlertDialog.KEY_ACTION_DONE, fragment) { _, _ ->
-        onResult()
-    }
-    return FragmentDialogResultLauncher(
-        requestKey = ProtonCancellableAlertDialog.KEY_ACTION_DONE,
-        show = { input -> showRequestNewCodeDialog(fragment.requireContext(), input) }
+interface NetworkRequestOverrider {
+    fun overrideRequest(
+        url: String,
+        method: String,
+        headers: List<Pair<String, String>>,
+        body: InputStream? = null,
+        bodyType: String? = null,
+    ): Result
+
+    data class Result(
+        val mimeType: String?,
+        val encoding: String?,
+        val contents: InputStream?,
     )
 }

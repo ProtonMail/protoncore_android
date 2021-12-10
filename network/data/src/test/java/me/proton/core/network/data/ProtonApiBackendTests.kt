@@ -29,7 +29,6 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import me.proton.core.network.data.interceptor.TooManyRequestInterceptor
 import me.proton.core.network.data.util.MockApiClient
 import me.proton.core.network.data.util.MockClientId
-import me.proton.core.network.data.util.MockLogger
 import me.proton.core.network.data.util.MockNetworkPrefs
 import me.proton.core.network.data.util.MockSession
 import me.proton.core.network.data.util.MockSessionListener
@@ -150,7 +149,7 @@ internal class ProtonApiBackendTests {
             HumanVerificationDetails(
                 clientId = clientId,
                 verificationMethods = mockk(),
-                captchaVerificationToken = null,
+                verificationToken = null,
                 state = HumanVerificationState.HumanVerificationSuccess,
                 tokenType = "captcha",
                 tokenCode = "captcha token"

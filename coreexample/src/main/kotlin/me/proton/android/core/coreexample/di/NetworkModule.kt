@@ -33,6 +33,8 @@ import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.humanverification.data.utils.NetworkRequestOverriderImpl
+import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.NetworkManager
@@ -54,6 +56,7 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.Cache
+import okhttp3.OkHttpClient
 import java.io.File
 import javax.inject.Singleton
 
@@ -93,6 +96,10 @@ class NetworkModule {
     fun provideExtraHeaderProvider(): ExtraHeaderProvider = ExtraHeaderProviderImpl().apply {
         BuildConfig.PROXY_TOKEN?.takeIfNotBlank()?.let { addHeaders("X-atlas-secret" to it) }
     }
+
+    @Provides
+    fun provideNetworkRequestOverrider(): NetworkRequestOverrider =
+        NetworkRequestOverriderImpl(OkHttpClient())
 
     @Provides
     @Singleton

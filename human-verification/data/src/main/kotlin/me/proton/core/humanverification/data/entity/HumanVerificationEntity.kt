@@ -48,7 +48,7 @@ data class HumanVerificationEntity(
             ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
         },
         verificationMethods = verificationMethods.map { VerificationMethod.getByValue(it) },
-        captchaVerificationToken = captchaVerificationToken,
+        verificationToken = captchaVerificationToken,
         state = state,
         // Fall back to an invalid captcha to force delete token on decryption failure.
         // See HumanVerificationInvalidHandler and HumanVerificationListener.onHumanVerificationInvalid.

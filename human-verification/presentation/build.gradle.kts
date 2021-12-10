@@ -25,6 +25,7 @@ plugins {
     kotlin("android.extensions")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    kotlin("plugin.serialization")
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -39,7 +40,9 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.userDomain),
+        project(Module.userSettingsDomain),
         project(Module.presentation),
+        project(Module.accountDomain),
 
         // Feature
         project(Module.humanVerificationDomain),
@@ -48,6 +51,7 @@ dependencies {
         // Kotlin
         `kotlin-jdk7`,
         `coroutines-android`,
+        `serialization-json`,
 
         // Android
         `android-ktx`,
@@ -68,4 +72,3 @@ dependencies {
     testImplementation(project(Module.androidTest))
     androidTestImplementation(project(Module.androidInstrumentedTest))
 }
-

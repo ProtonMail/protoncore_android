@@ -23,7 +23,7 @@ import me.proton.core.network.domain.client.ClientId
 data class HumanVerificationDetails(
     val clientId: ClientId,
     val verificationMethods: List<VerificationMethod>,
-    val captchaVerificationToken: String? = null,
+    val verificationToken: String? = null,
     val state: HumanVerificationState,
     val tokenType: String? = null,
     val tokenCode: String? = null

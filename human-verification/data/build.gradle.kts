@@ -55,6 +55,9 @@ dependencies {
         `room-ktx`
     )
 
-    testImplementation(project(Module.androidTest))
+    testImplementation(
+        project(Module.androidTest),
+        `mockWebServer`
+    )
     androidTestImplementation(project(Module.androidInstrumentedTest))
 }

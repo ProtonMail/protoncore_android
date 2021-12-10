@@ -75,7 +75,7 @@ class HumanVerificationManagerImplTest {
         val humanVerificationDetailsNeeded = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null,
+            verificationToken = null,
             state = HumanVerificationState.HumanVerificationNeeded,
             tokenType = null,
             tokenCode = null
@@ -123,7 +123,7 @@ class HumanVerificationManagerImplTest {
         val humanVerificationDetailsNeeded = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null,
+            verificationToken = null,
             state = HumanVerificationState.HumanVerificationNeeded,
             tokenType = null,
             tokenCode = null
