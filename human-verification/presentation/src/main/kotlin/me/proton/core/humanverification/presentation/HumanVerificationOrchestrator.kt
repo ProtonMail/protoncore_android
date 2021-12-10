@@ -55,9 +55,9 @@ class HumanVerificationOrchestrator {
             HumanVerificationDialogFragment.REQUEST_KEY,
             context,
             { _, bundle ->
-                val hvResult =
-                    bundle.getParcelable<HumanVerificationResult>(HumanVerificationDialogFragment.RESULT_HUMAN_VERIFICATION)
-                        ?: error("HumanVerificationDialogFragment did not return a result")
+                val hvResult = bundle.getParcelable<HumanVerificationResult>(
+                    HumanVerificationDialogFragment.RESULT_HUMAN_VERIFICATION
+                ) ?: error("HumanVerificationDialogFragment did not return a result")
                 onHumanVerificationResultListener?.invoke(hvResult)
             })
         humanWorkflowLauncher = FragmentDialogResultLauncher(HumanVerificationDialogFragment.REQUEST_KEY) { input ->
@@ -69,7 +69,7 @@ class HumanVerificationOrchestrator {
                 availableVerificationMethods = input.verificationMethods
                     ?.filter { defaultVerificationMethods.contains(it) }
                     ?: defaultVerificationMethods,
-                captchaToken = input.captchaToken,
+                verificationToken = input.verificationToken,
                 largeLayout = largeLayout,
                 recoveryEmailAddress = input.recoveryEmailAddress
             )
@@ -88,8 +88,8 @@ class HumanVerificationOrchestrator {
      * Start a Human Verification workflow.
      *
      * @param captchaUrl use this one if you want to provide per instance different captcha URL.
-     * Otherwise the one from the DI annotated with [CaptchaApiHost] will be used.
-     * [CaptchaApiHost] is only the host, Core is responsible to create the full URL.
+     * Otherwise the one from the DI annotated with [HumanVerificationApiHost] will be used.
+     * [HumanVerificationApiHost] is only the host, Core is responsible to create the full URL.
      * [captchaUrl] should not be only a base Url, but you are responsible to create it full, up to the
      * query params section.
      * If both provided, this parameter takes the precedence.
@@ -104,7 +104,7 @@ class HumanVerificationOrchestrator {
                 clientId = details.clientId.id,
                 clientIdType = details.clientId.getType().value,
                 verificationMethods = details.verificationMethods.map { it.value },
-                captchaToken = details.captchaVerificationToken,
+                verificationToken = requireNotNull(details.verificationToken),
                 captchaUrl = captchaUrl,
                 recoveryEmailAddress = recoveryEmailAddress
             )

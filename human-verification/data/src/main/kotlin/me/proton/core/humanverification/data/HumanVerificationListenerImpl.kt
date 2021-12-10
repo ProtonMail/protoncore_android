@@ -41,7 +41,7 @@ class HumanVerificationListenerImpl(
             HumanVerificationDetails(
                 clientId = clientId,
                 verificationMethods = methods.verificationMethods,
-                captchaVerificationToken = methods.captchaVerificationToken,
+                verificationToken = methods.verificationToken,
                 state = HumanVerificationState.HumanVerificationNeeded
             )
         )

@@ -27,6 +27,6 @@ data class HumanVerificationInput(
     val captchaUrl: String? = null,
     val clientIdType: String,
     val verificationMethods: List<String>?,
-    val captchaToken: String?,
+    val verificationToken: String,
     val recoveryEmailAddress: String? = null
 ) : Parcelable

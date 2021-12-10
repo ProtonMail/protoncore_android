@@ -51,7 +51,7 @@ class HumanVerificationTests : BaseTest() {
         humanVerificationRobot
             .sms()
             .countryCodeList()
-            .closeCountries<HumanVerificationRobot>()
+            .close<HumanVerificationRobot>()
             .help()
             .close<HumanVerificationRobot>()
             .close<CoreexampleRobot>()
@@ -62,7 +62,7 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
-    @Ignore("Backend issue")
+    @Ignore("WebView issue. A espresso bug that prevents modification of the value of input fields makes it impossible to actually test this.")
     fun email() {
         val testAddress = "testEmail@example.lt"
 
@@ -79,7 +79,7 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
-    @Ignore("Backend issue")
+    @Ignore("WebView issue. A espresso bug that prevents modification of the value of input fields makes it impossible to actually test this.")
     fun phone() {
         val testPhoneNo = "2087599036"
         val testCountry = "United Kingdom"

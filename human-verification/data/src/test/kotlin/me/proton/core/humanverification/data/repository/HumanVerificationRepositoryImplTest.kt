@@ -85,7 +85,7 @@ class HumanVerificationRepositoryImplTest {
         val humanVerificationDetails = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null,
+            verificationToken = null,
             state = HumanVerificationState.HumanVerificationNeeded,
             tokenType = null,
             tokenCode = null
@@ -116,7 +116,7 @@ class HumanVerificationRepositoryImplTest {
         val humanVerificationDetails = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null,
+            verificationToken = null,
             state = state,
             tokenType = null,
             tokenCode = null
@@ -146,7 +146,7 @@ class HumanVerificationRepositoryImplTest {
         val humanVerificationDetails = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = listOf(VerificationMethod.EMAIL),
-            captchaVerificationToken = null,
+            verificationToken = null,
             state = state,
             tokenType = tokenType,
             tokenCode = tokenCode

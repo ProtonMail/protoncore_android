@@ -24,7 +24,7 @@ import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.plugins.data.Plan.Dev
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
-import me.proton.core.test.android.robots.humanverification.CodeVerificationRobot
+import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
@@ -73,7 +73,7 @@ class ExternalSetupTests : BaseTest() {
         chooseUsernameRobotExt
             .username(user.name)
             .next()
-            .setAndConfirmPassword<CodeVerificationRobot>(user.password)
+            .setAndConfirmPassword<HumanVerificationRobot>(user.password)
             .setCode(defaultCode)
             .verifyCode<SelectPlanRobot>()
             .verify { canSelectPlan(Dev) }

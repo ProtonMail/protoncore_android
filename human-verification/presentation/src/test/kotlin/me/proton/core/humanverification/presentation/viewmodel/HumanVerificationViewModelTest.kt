@@ -19,14 +19,27 @@
 package me.proton.core.humanverification.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.SavedStateHandle
-import app.cash.turbine.test
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import junit.framework.Assert.assertNotNull
+import junit.framework.Assert.assertNull
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
+import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.presentation.exception.NotEnoughVerificationOptions
+import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.usersettings.domain.entity.RecoverySetting
+import me.proton.core.usersettings.domain.entity.UserSettings
+import me.proton.core.usersettings.domain.usecase.GetSettings
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -35,61 +48,67 @@ class HumanVerificationViewModelTest : CoroutinesTest {
 
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
-    private val savedStateHandle = mockk<SavedStateHandle>()
     private val humanVerificationWorkflowHandler = mockk<HumanVerificationWorkflowHandler>(relaxed = true)
+    private val accountRepository = mockk<AccountRepository>(relaxed = true)
+    private val getSettings = mockk<GetSettings>(relaxed = true)
 
-    @Test
-    fun `correct initialization`() = coroutinesTest {
-        val availableMethods = listOf(
-            TokenType.EMAIL.value,
-            TokenType.CAPTCHA.value
-        )
-        every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
+    lateinit var viewModel: HumanVerificationViewModel
 
-        val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
-        viewModel.enabledMethods.test {
-            assertEquals(availableMethods, awaitItem())
-            cancelAndIgnoreRemainingEvents()
-        }
+    private val clientId: ClientId by lazy {
+        val id = "client_id"
+        val sessionId = SessionId(id)
+        ClientId.newClientId(sessionId, null)!!
     }
 
-    @Test(expected = NotEnoughVerificationOptions::class)
-    fun `incorrect initialization throws exception`() {
-        val availableMethods = emptyList<String>()
-        every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
-
-        HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
+    @Before
+    fun setup() {
+        viewModel = HumanVerificationViewModel(
+            humanVerificationWorkflowHandler,
+            accountRepository,
+            getSettings,
+        )
     }
 
     @Test
-    fun `active method correctly set`() = coroutinesTest {
-        val availableMethods = listOf(
-            TokenType.EMAIL.value,
-            TokenType.CAPTCHA.value,
-            TokenType.SMS.value
-        )
-        every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
+    fun `onHumanVerificationResult with token calls success`() = coroutinesTest {
+        val token = HumanVerificationToken("1234", TokenType.SMS.value)
+        viewModel.onHumanVerificationResult(clientId, token)
 
-        val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
-
-        viewModel.activeMethod.test {
-            assertEquals(TokenType.EMAIL.value, awaitItem())
-            cancelAndIgnoreRemainingEvents()
+        coVerify {
+            humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
+                clientId,
+                TokenType.SMS.value,
+                "1234"
+            )
         }
     }
 
     @Test
-    fun `active method correctly set option 2`() = coroutinesTest {
-        val availableMethods = listOf(
-            TokenType.EMAIL.value,
-            TokenType.SMS.value
-        )
-        every { savedStateHandle.get<List<String>>(any()) } returns availableMethods
+    fun `onHumanVerificationResult with no token calls failure`() = coroutinesTest {
+        viewModel.onHumanVerificationResult(clientId, null)
 
-        val viewModel = HumanVerificationViewModel(humanVerificationWorkflowHandler, savedStateHandle)
-        viewModel.activeMethod.test {
-            assertEquals(TokenType.EMAIL.value, awaitItem())
-            cancelAndIgnoreRemainingEvents()
+        coVerify { humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId) }
+    }
+
+    @Test
+    fun `getHumanVerificationExtraParams with no primary user returns null`() = runBlocking {
+        every { accountRepository.getPrimaryUserId() } returns emptyFlow<UserId>()
+        val params = viewModel.getHumanVerificationExtraParams()
+        assertNull(params)
+    }
+
+    @Test
+    fun `getHumanVerificationExtraParams with primary user returns extra parameters`() = runBlocking {
+        every { accountRepository.getPrimaryUserId() } returns flowOf(UserId("some_user_id"))
+        val settingsMock = mockk<UserSettings>().apply {
+            every { locale } returns "en_US"
+            every { phone } returns RecoverySetting("123456789", 0, false, false)
         }
+        coEvery { getSettings.invoke(any()) } returns settingsMock
+        val params = viewModel.getHumanVerificationExtraParams()
+        assertNotNull(params)
+        assertEquals("US", params?.defaultCountry)
+        assertEquals("en_US", params?.locale)
+        assertEquals("123456789", params?.recoveryPhone)
     }
 }

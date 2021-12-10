@@ -214,7 +214,7 @@ internal class HumanVerificationTests {
             HumanVerificationDetails(
                 clientId = clientId,
                 verificationMethods = mockk(),
-                captchaVerificationToken = null,
+                verificationToken = null,
                 state = HumanVerificationState.HumanVerificationSuccess,
                 tokenType = "captcha",
                 tokenCode = "captcha token"
@@ -229,7 +229,7 @@ internal class HumanVerificationTests {
         assertNotNull(data)
         val humanVerification = data.humanVerification
         assertNotNull(humanVerification)
-        assertNotNull(humanVerification.captchaVerificationToken)
+        assertNotNull(humanVerification.verificationToken)
         assertEquals(3, humanVerification.verificationMethods.size)
         assertTrue("captcha".equalsNoCase(humanVerification.verificationMethods[0].name))
     }
@@ -252,7 +252,7 @@ internal class HumanVerificationTests {
             HumanVerificationDetails(
                 clientId = clientId,
                 verificationMethods = mockk(),
-                captchaVerificationToken = null,
+                verificationToken = null,
                 state = HumanVerificationState.HumanVerificationSuccess,
                 tokenType = "captcha",
                 tokenCode = "captcha token"
@@ -267,7 +267,7 @@ internal class HumanVerificationTests {
         assertNotNull(data)
         val humanVerification = data.humanVerification
         assertNotNull(humanVerification)
-        assertNotNull(humanVerification.captchaVerificationToken)
+        assertNotNull(humanVerification.verificationToken)
         assertEquals(3, humanVerification.verificationMethods.size)
         assertTrue("captcha".equalsNoCase(humanVerification.verificationMethods[0].name))
     }
@@ -282,7 +282,7 @@ internal class HumanVerificationTests {
             HumanVerificationDetails(
                 clientId = clientId,
                 verificationMethods = mockk(),
-                captchaVerificationToken = null,
+                verificationToken = null,
                 state = HumanVerificationState.HumanVerificationSuccess,
                 tokenType = "captcha",
                 tokenCode = "captcha token"
@@ -307,7 +307,7 @@ internal class HumanVerificationTests {
             HumanVerificationDetails(
                 clientId = clientId,
                 verificationMethods = mockk(),
-                captchaVerificationToken = null,
+                verificationToken = null,
                 state = HumanVerificationState.HumanVerificationSuccess,
                 tokenType = "captcha",
                 tokenCode = "captcha token"
@@ -346,7 +346,7 @@ internal class HumanVerificationTests {
             HumanVerificationDetails(
                 clientId = clientId,
                 verificationMethods = mockk(),
-                captchaVerificationToken = null,
+                verificationToken = null,
                 state = HumanVerificationState.HumanVerificationSuccess,
                 tokenType = "captcha",
                 tokenCode = "captcha token"

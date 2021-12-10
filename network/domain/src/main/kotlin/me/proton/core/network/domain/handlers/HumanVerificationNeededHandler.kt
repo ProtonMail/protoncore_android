@@ -24,7 +24,7 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.ResponseCodes.HUMAN_VERIFICATION_REQUIRED
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
@@ -53,7 +53,9 @@ class HumanVerificationNeededHandler<Api>(
         val clientId = clientIdProvider.getClientId(sessionId) ?: return error
 
         // Recoverable with human verification ?
-        if (error !is ApiResult.Error.Http || error.proton?.code != HUMAN_VERIFICATION_REQUIRED) return error
+        if (error !is ApiResult.Error.Http || error.proton?.code != ResponseCodes.HUMAN_VERIFICATION_REQUIRED) {
+            return error
+        }
 
         // Do we have details ?
         val details = error.proton.humanVerification ?: return error

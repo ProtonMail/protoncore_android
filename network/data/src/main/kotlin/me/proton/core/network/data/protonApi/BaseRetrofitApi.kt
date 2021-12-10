@@ -41,6 +41,8 @@ data class ProtonErrorData(
     val code: Int,
     @SerialName("Error")
     val error: String,
+    @SerialName("ErrorDescription")
+    val errorDescription: String? = null,
     @SerialName("Details")
     val details: Details? = null
 ) {

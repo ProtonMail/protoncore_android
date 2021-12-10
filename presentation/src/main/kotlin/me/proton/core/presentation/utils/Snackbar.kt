@@ -124,7 +124,7 @@ fun View.snack(
 @Suppress("deprecation")
 fun View.snack(
     @StringRes messageRes: Int,
-    @DrawableRes color: Int
+    @DrawableRes color: Int?
 ) {
     snack(message = resources.getString(messageRes), color = color)
 }
@@ -152,7 +152,7 @@ fun View.snack(
 @Suppress("deprecation")
 fun View.snack(
     message: String,
-    @DrawableRes color: Int,
+    @DrawableRes color: Int?,
     action: String? = null,
     actionOnClick: (() -> Unit)? = null,
     length: Int = Snackbar.LENGTH_LONG
@@ -182,12 +182,12 @@ fun View.snack(
 )
 fun View.snack(
     message: String,
-    @DrawableRes color: Int,
+    @DrawableRes color: Int?,
     length: Int = Snackbar.LENGTH_LONG,
     configBlock: (Snackbar.() -> Unit)? = null
 ) {
     Snackbar.make(this, message, length).apply {
-        view.background = ResourcesCompat.getDrawable(context.resources, color, null)
+        color?.let { view.background = ResourcesCompat.getDrawable(context.resources, it, null) }
         view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).apply { maxLines = 5 }
         configBlock?.invoke(this)
     }.show()

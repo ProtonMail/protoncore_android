@@ -42,7 +42,7 @@ data class BillingResult(
         fun paymentDetails(clientId: ClientId, token: String) = HumanVerificationDetails(
             clientId = clientId,
             verificationMethods = listOf(VerificationMethod.PAYMENT),
-            captchaVerificationToken = null,
+            verificationToken = null,
             state = HumanVerificationState.HumanVerificationSuccess,
             tokenType = TokenType.PAYMENT.value,
             tokenCode = token

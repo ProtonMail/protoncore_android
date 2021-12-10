@@ -39,7 +39,7 @@ fun Details.toHumanVerificationEntity(): HumanVerificationAvailableMethods =
         verificationMethods = verificationMethods!!.map {
             VerificationMethod.valueOf(it.name)
         },
-        captchaVerificationToken = verificationToken
+        verificationToken = verificationToken
     )
 
 fun ApiResult.Error.ProtonData.parseDetails(errorCode: Int, details: Details?): ApiResult.Error.ProtonData {

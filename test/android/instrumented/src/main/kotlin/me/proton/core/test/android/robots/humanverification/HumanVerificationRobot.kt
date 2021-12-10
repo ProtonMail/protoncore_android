@@ -19,8 +19,15 @@
 package me.proton.core.test.android.robots.humanverification
 
 import android.webkit.WebView
-import android.widget.EditText
 import android.widget.TextView
+import androidx.test.espresso.web.model.Atom
+import androidx.test.espresso.web.model.ElementReference
+import androidx.test.espresso.web.sugar.Web.onWebView
+import androidx.test.espresso.web.webdriver.DriverAtoms.clearElement
+import androidx.test.espresso.web.webdriver.DriverAtoms.findElement
+import androidx.test.espresso.web.webdriver.DriverAtoms.webClick
+import androidx.test.espresso.web.webdriver.DriverAtoms.webKeys
+import androidx.test.espresso.web.webdriver.Locator
 import me.proton.core.humanverification.R
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.domain.entity.TokenType.CAPTCHA
@@ -29,7 +36,6 @@ import me.proton.core.humanverification.domain.entity.TokenType.SMS
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.test.android.robots.other.CountryRobot
-import java.util.Locale
 
 /**
  * [HumanVerificationRobot] base class contains human verification actions and verifications implementation.
@@ -44,39 +50,50 @@ open class HumanVerificationRobot : CoreRobot() {
 
     /**
      * Selects 'email' human verification option
-     * @return [CodeVerificationRobot]
+     * @return [HumanVerificationRobot]
      */
     fun email(): HumanVerificationRobot = hvOption(EMAIL)
 
     /**
      * Selects 'sms' human verification option
-     * @return [CodeVerificationRobot]
+     * @return [HumanVerificationRobot]
      */
     fun sms(): HumanVerificationRobot = hvOption(SMS)
 
     /**
      * Sets the value of phone number input to [number]
-     * @return [CodeVerificationRobot]
+     * @return [HumanVerificationRobot]
      */
-    fun setPhone(number: String?): HumanVerificationRobot = setText(R.id.smsEditText, number!!)
+    fun setPhone(number: String?): HumanVerificationRobot = setWebText(findElement(Locator.ID, "phone"), number)
 
     /**
      * Clicks country code list button
      * @return [CountryRobot]
      */
-    fun countryCodeList(): CountryRobot = clickElement(R.id.callingCodeText, EditText::class.java)
+    fun countryCodeList(): CountryWebRobot {
+        onWebView()
+            .withElement(findElement(Locator.CSS_SELECTOR, "button[data-testid=\"dropdown-button\"]"))
+            .perform(webClick())
+        return CountryWebRobot()
+    }
 
     /**
      * Sets the value of email input to [email]
-     * @return [CodeVerificationRobot]
+     * @return [HumanVerificationRobot]
      */
-    fun setEmail(email: String): HumanVerificationRobot = setText(R.id.emailEditText, email)
+    fun setEmail(email: String): HumanVerificationRobot = setWebText(findElement(Locator.ID, "email"), email)
 
     /**
      * Clicks 'get verification code' button
-     * @return [CodeVerificationRobot]
+     * @return [HumanVerificationRobot]
      */
-    fun getVerificationCode(): CodeVerificationRobot = clickElement(R.id.getVerificationCodeButton)
+    fun getVerificationCode(): HumanVerificationRobot {
+        onWebView()
+            .withElement(findElement(Locator.CSS_SELECTOR, "button.button-large"))
+            .perform(webClick())
+        Thread.sleep(5000)
+        return HumanVerificationRobot()
+    }
 
     /**
      * Selects 'captcha' human verification option
@@ -84,12 +101,38 @@ open class HumanVerificationRobot : CoreRobot() {
      */
     fun captcha(): HumanVerificationRobot = hvOption(CAPTCHA)
 
+    fun setCode(code: String): HumanVerificationRobot {
+        onWebView()
+            .withElement(findElement(Locator.ID, "verification"))
+            .perform(webClick())
+            .perform(webKeys(code))
+        return HumanVerificationRobot()
+    }
+
+    inline fun <reified T> verifyCode(): T {
+        onWebView()
+            .withElement(findElement(Locator.CLASS_NAME, "button-solid-norm"))
+            .perform(webClick())
+            .reset()
+        return T::class.java.newInstance()
+    }
+
     /**
      * Checks "I'm not a robot" checkbox. Only works with development reCAPTCHA enabled
      * @param T next Robot to be returned
      * @return an instance of [T]
      */
-    inline fun <reified T> imNotARobot(): T = clickElement(R.id.captchaWebView, WebView::class.java)
+    inline fun <reified T> imNotARobot(): T = clickElement(R.id.humanVerificationWebView, WebView::class.java)
+
+    inline fun <reified T> setWebText(element: Atom<ElementReference>, text: String?): T {
+        onWebView()
+            .withElement(element)
+            .perform(clearElement())
+            .perform(webKeys(text))
+
+        Thread.sleep(1000)
+        return T::class.java.newInstance()
+    }
 
     /**
      * Checks "I am human" checkbox. Only works with development hCAPTCHA enabled
@@ -105,20 +148,64 @@ open class HumanVerificationRobot : CoreRobot() {
 
     /**
      * Clicks text view with [option] text
-     * @return [CodeVerificationRobot]
+     * @return [HumanVerificationRobot]
      */
-    private fun hvOption(option: TokenType): HumanVerificationRobot =
-        clickElement(option.value.uppercase(Locale.ROOT), TextView::class.java)
+    private fun hvOption(option: TokenType): HumanVerificationRobot {
+        val testId = when (option) {
+            CAPTCHA -> "tab-header-CAPTCHA-button"
+            SMS -> "tab-header-SMS-button"
+            EMAIL -> "tab-header-Email-button"
+            else -> throw IllegalArgumentException("Only Captcha, SMS and Email are supported")
+        }
+        onWebView()
+            .withElement(findElement(Locator.CSS_SELECTOR, "button[data-testid=\"$testId\"]"))
+            .perform(webClick())
+            .reset()
+
+        Thread.sleep(100L)
+
+        return HumanVerificationRobot()
+    }
 
     class Verify : CoreVerify() {
         fun hvElementsDisplayed() {
-            view.withText(EMAIL.value.uppercase(Locale.ROOT)).checkDisplayed()
-            view.withText(SMS.value.uppercase(Locale.ROOT)).checkDisplayed()
-            view.withText(CAPTCHA.value.uppercase(Locale.ROOT)).checkDisplayed()
+            view.withId(R.id.humanVerificationWebView).checkDisplayed()
         }
 
-        fun captchaDisplayed() = view.withId(R.id.captchaWebView)
+        fun captchaDisplayed() = onWebView()
+            .withElement(findElement(Locator.CSS_SELECTOR, "iframe"))
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
+}
+
+class CountryWebRobot {
+
+    fun dialog() = onWebView()
+        .withElement(findElement(Locator.CSS_SELECTOR, "div[role=\"dialog\"]"))
+
+    fun search(text: String?) : CountryWebRobot {
+        internalSearch(text)
+        return CountryWebRobot()
+    }
+
+    fun internalSearch(text: String?) = dialog()
+        .withContextualElement(findElement(Locator.ID, "search-keyword"))
+        .perform(webClick())
+        .perform(webKeys(text))
+
+    inline fun <reified T> selectCountry(country: String?): T {
+        internalSearch(country)
+            .withElement(findElement(Locator.CLASS_NAME, "dropdown-content"))
+            .withContextualElement(findElement(Locator.CLASS_NAME, "dropdown-item-button"))
+            .perform(webClick())
+        return T::class.java.newInstance()
+    }
+
+    inline fun <reified T> close(): T {
+        dialog()
+            .withContextualElement(findElement(Locator.CLASS_NAME, "dropdown-backdrop"))
+            .perform(webClick())
+        return T::class.java.newInstance()
+    }
 }
