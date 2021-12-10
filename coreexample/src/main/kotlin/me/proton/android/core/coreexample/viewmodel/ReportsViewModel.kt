@@ -44,7 +44,11 @@ class ReportsViewModel @Inject constructor(
     val bugReportSent: Flow<String> = _bugReportSent.asSharedFlow()
 
     fun register(caller: ActivityResultCaller) {
-        reportOrchestrator.register(caller)
+        reportOrchestrator.register(caller) {
+            if (it is BugReportOutput.SuccessfullySent) {
+                viewModelScope.launch { _bugReportSent.emit(it.successMessage) }
+            }
+        }
     }
 
     override fun onCleared() {
@@ -52,19 +56,12 @@ class ReportsViewModel @Inject constructor(
         super.onCleared()
     }
 
-    fun reportBugs(waitForServer: Boolean) {
-        reportOrchestrator.setOnBugReportResult {
-            if (it is BugReportOutput.SuccessfullySent) {
-                viewModelScope.launch { _bugReportSent.emit(it.successMessage) }
-            }
-        }
-        viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().first()
-            val user = userId?.let { userManager.getUser(it) }
-            val email = user?.email ?: "test-bug-report@proton.black"
-            val username = user?.name ?: "test-bug-report"
-            val input = BugReportInput(email = email, username = username, finishAfterReportIsEnqueued = !waitForServer)
-            reportOrchestrator.startBugReport(input)
-        }
+    fun reportBugs(waitForServer: Boolean) = viewModelScope.launch {
+        val userId = accountManager.getPrimaryUserId().first()
+        val user = userId?.let { userManager.getUser(it) }
+        val email = user?.email ?: "test-bug-report@proton.black"
+        val username = user?.name ?: "test-bug-report"
+        val input = BugReportInput(email = email, username = username, finishAfterReportIsEnqueued = !waitForServer)
+        reportOrchestrator.startBugReport(input)
     }
 }

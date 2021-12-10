@@ -27,28 +27,30 @@ import javax.inject.Inject
 
 public class ReportOrchestrator @Inject constructor() {
     private var bugReportLauncher: ActivityResultLauncher<BugReportInput>? = null
-    private var bugReportResultCallback: ((BugReportOutput) -> Unit)? = null
 
-    public fun register(caller: ActivityResultCaller) {
+    /** Registers a [caller] for launching report activities.
+     * If the [caller] is also a lifecycle owner, this method should be called before the [caller] is STARTED.
+     * @param caller A caller that will be able to launch report activities.
+     * @param bugReportCallback A callback to deliver a result, after the Bug Report activity has been closed.
+     */
+    public fun register(caller: ActivityResultCaller, bugReportCallback: ((BugReportOutput) -> Unit)? = null) {
+        bugReportLauncher?.unregister()
         bugReportLauncher = caller.registerForActivityResult(BugReportActivity.ResultContract()) {
-            bugReportResultCallback?.invoke(it)
+            bugReportCallback?.invoke(it)
         }
     }
 
     public fun unregister() {
         bugReportLauncher?.unregister()
         bugReportLauncher = null
-        bugReportResultCallback = null
     }
 
+    /** Starts a Bug Report screen with given [input].
+     * Make sure that [register] method has been called, before calling this method.
+     */
     public fun startBugReport(input: BugReportInput) {
-        checkRegistered(bugReportLauncher).launch(input)
+        checkNotNull(bugReportLauncher) {
+            "You must call reportOrchestrator.register(context, callback) before starting workflow!"
+        }.launch(input)
     }
-
-    public fun setOnBugReportResult(block: (BugReportOutput) -> Unit) {
-        bugReportResultCallback = block
-    }
-
-    private fun <T> checkRegistered(launcher: T?) =
-        checkNotNull(launcher) { "You must call reportOrchestrator.register(context) before starting workflow!" }
 }
