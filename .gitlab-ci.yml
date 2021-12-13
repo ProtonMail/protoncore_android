@@ -1,4 +1,4 @@
-image: ${CI_REGISTRY}/protonvpn/android/android-app-new:branch-compose
+image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0-alpha08
 
 include:
   - project: 'agarroux/publish-github'
@@ -37,6 +37,7 @@ variables:
   ARTIFACT_COMPRESSION_LEVEL: "fastest"
   # Use low compression for caches
   CACHE_COMPRESSION_LEVEL: "fast"
+  GRADLE_USER_HOME: '$CI_PROJECT_DIR/.gradle'
 
 cache: &global_cache
   key: ${CI_COMMIT_REF_SLUG}

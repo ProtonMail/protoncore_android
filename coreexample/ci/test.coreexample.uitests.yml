@@ -1,4 +1,4 @@
-image: ${CI_REGISTRY}/protonvpn/android/android-app-new:branch-compose
+image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0-alpha08
 
 include:
   - project: 'proton/devops/atlas-deploy'
@@ -69,11 +69,6 @@ assemble:
   tags:
     - medium
   script:
-    - wget --quiet --output-document=/tmp/google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.tar.gz
-    - mkdir -p opt
-    - tar zxf /tmp/google-cloud-sdk.tar.gz --directory opt
-    - opt/google-cloud-sdk/install.sh --quiet
-    - source opt/google-cloud-sdk/path.bash.inc
     - gcloud config set project $CLOUD_PROJECT_ID_CORE
     - gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT
     - gcloud firebase test android run
