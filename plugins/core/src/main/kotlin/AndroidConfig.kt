@@ -117,6 +117,11 @@ fun org.gradle.api.Project.android(
 
 typealias ExtraConfig = TestedExtension.() -> Unit
 
-fun String?.toBuildConfigValue(): String {
-    return if (this != null) "\"$this\"" else "null"
+fun Any?.toBuildConfigValue(): String {
+    return when (this) {
+        null -> "null"
+        is Boolean -> "$this"
+        is String -> "\"$this\""
+        else -> throw IllegalArgumentException("Unknown build field conversion for type ${this::class.java.simpleName}")
+    }
 }

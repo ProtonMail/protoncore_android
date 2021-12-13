@@ -56,8 +56,8 @@ assemble:
     - mkdir -p coreexample/src/androidTest/assets/sensitive
     - cat $TEST_USERS > coreexample/src/androidTest/assets/sensitive/users.json
     - cat $TEST_INTERNAL_API > coreexample/src/androidTest/assets/sensitive/internal_apis.json
-    - ./gradlew :coreexample:assemble
-    - ./gradlew :coreexample:assembleAndroidTest
+    - ./gradlew :coreexample:assembleLocalPropertiesDebug
+    - ./gradlew :coreexample:assembleLocalPropertiesDebugAndroidTest
 
 .firebase-tests-common:
   stage: test
