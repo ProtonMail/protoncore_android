@@ -19,6 +19,7 @@
 import ProtonTestsExtension.Companion.setupProtonTestsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.UnknownTaskException
 
 abstract class ProtonTestsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -46,9 +47,13 @@ fun Project.setupTests(filter: (Project) -> Boolean = { true }) {
                 if (isAndroid) {
                     val flavorOption = (options.unitTestFlavor ?: "").capitalize()
                     val androidTestTaskName = "test${flavorOption}DebugUnitTest"
-                    val androidTestTask = tasks.findByName(androidTestTaskName)
-                        ?: throw IllegalArgumentException("No android unit test task \'$androidTestTaskName\' found for project \'${sub.name}\'." +
-                            "If you are using flavor you can set the flavor to use with \'protonTestsOptions.unitTestFlavor\'.")
+                    val androidTestTask = try {
+                        tasks.named(androidTestTaskName)
+                    } catch (unknownTaskException: UnknownTaskException) {
+                        val message = "No android unit test task \'$androidTestTaskName\' found for project \'${sub.name}\'." +
+                            "If you are using flavor you can set the flavor to use with \'protonTestsOptions.unitTestFlavor\'."
+                        throw IllegalStateException(message, unknownTaskException)
+                    }
                     dependsOn(androidTestTask)
                 } else if (isJvm) dependsOn(tasks.getByName("test"))
             }
