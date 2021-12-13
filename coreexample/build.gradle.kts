@@ -30,6 +30,8 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
+protonTestsOptions.unitTestFlavor = "dev"
+
 android(
     version = Version(1, 18, 4),
     useViewBinding = true

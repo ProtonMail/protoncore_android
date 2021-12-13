@@ -16,6 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import ProtonTestsExtension.Companion.setupProtonTestsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -39,11 +40,17 @@ fun Project.setupTests(filter: (Project) -> Boolean = { true }) {
 
     // Configure sub-projects
     for (sub in subprojects.filter(filter)) {
+        val options = sub.setupProtonTestsExtension()
         sub.afterEvaluate {
             tasks.register("allTest") {
-                if (isAndroid) dependsOn(tasks.findByName("testDebugUnitTest")
-                    ?: tasks.getByName("testBetaDebugUnitTest"))
-                else if (isJvm) dependsOn(tasks.getByName("test"))
+                if (isAndroid) {
+                    val flavorOption = (options.unitTestFlavor ?: "").capitalize()
+                    val androidTestTaskName = "test${flavorOption}DebugUnitTest"
+                    val androidTestTask = tasks.findByName(androidTestTaskName)
+                        ?: throw IllegalArgumentException("No android unit test task \'$androidTestTaskName\' found for project \'${sub.name}\'." +
+                            "If you are using flavor you can set the flavor to use with \'protonTestsOptions.unitTestFlavor\'.")
+                    dependsOn(androidTestTask)
+                } else if (isJvm) dependsOn(tasks.getByName("test"))
             }
         }
     }
