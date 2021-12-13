@@ -56,6 +56,9 @@ class AccountSwitcherTests : BaseTest() {
     fun signOutAndLoginDisabledUser() {
         accountSwitcherRobot
             .userAction<AccountSwitcherRobot>(firstUser, UserAction.SignOut)
+            .verify { userDisabled(firstUser) }
+
+        accountSwitcherRobot
             .userAction<LoginRobot>(firstUser, UserAction.SignIn)
             .verify { loginElementsDisplayed() }
     }
