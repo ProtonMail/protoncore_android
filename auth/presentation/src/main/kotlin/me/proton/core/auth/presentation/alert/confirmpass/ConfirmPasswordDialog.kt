@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -42,7 +41,6 @@ import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.ProtectScreenConfiguration
 import me.proton.core.presentation.utils.ScreenContentProtector
 import me.proton.core.presentation.utils.onClick
-import me.proton.core.presentation.utils.showToast
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -71,24 +69,22 @@ class ConfirmPasswordDialog : ProtonDialogFragment(R.layout.dialog_enter_passwor
 
         val binding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(requireContext()))
         val builder = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.presentation_authenticate)
-            // passing null to the listeners is a workaround to prevent the dialog to auto-dismiss on button click
-            .setPositiveButton(R.string.presentation_alert_enter, null)
-            .setNegativeButton(R.string.presentation_alert_cancel, null)
+            .setTitle(R.string.presentation_signin_to_continue)
             .setView(binding.root)
         val alertDialog = builder.create()
 
         viewModel.state.onEach {
             when (it) {
-                is ConfirmPasswordDialogViewModel.State.Success ->
-                    setResultAndDismiss(confirmed = true)
+                is ConfirmPasswordDialogViewModel.State.Success -> setResultAndDismiss(confirmed = true)
                 is ConfirmPasswordDialogViewModel.State.ProcessingObtainScope ->
-                    requireContext().showToast("Processing")
+                    binding.enterButton.setLoading()
                 is ConfirmPasswordDialogViewModel.State.ProcessingSecondFactor -> {
                     // noop
                 }
-                is ConfirmPasswordDialogViewModel.State.Error.Message ->
+                is ConfirmPasswordDialogViewModel.State.Error.Message -> {
                     setResultAndDismiss(confirmed = false)
+                    binding.enterButton.setIdle()
+                }
                 is ConfirmPasswordDialogViewModel.State.Idle -> Unit
                 is ConfirmPasswordDialogViewModel.State.SecondFactorResult -> {
                     binding.twoFA.visibility = if (it.needed) VISIBLE else GONE
@@ -97,30 +93,23 @@ class ConfirmPasswordDialog : ProtonDialogFragment(R.layout.dialog_enter_passwor
         }.launchIn(lifecycleScope)
         viewModel.isSecondFactorNeeded(missingScope)
 
+        binding.enterButton.onClick {
+            val password = binding.password.text.toString()
+            val twoFactorCode = binding.twoFA.text.toString()
+            when (missingScope) {
+                Scope.PASSWORD -> viewModel.unlockPassword(
+                    password,
+                    if (twoFactorCode.isEmpty()) null else twoFactorCode
+                )
+                Scope.LOCKED -> viewModel.unlock(password)
+            }.exhaustive
+        }
+
+        binding.cancelButton.onClick {
+            setResultAndDismiss(null)
+        }
+
         return alertDialog.apply {
-            setOnShowListener {
-                // workaround to prevent the dialog to auto-dismiss on button click
-                getButton(AlertDialog.BUTTON_POSITIVE).apply {
-                    isAllCaps = false
-                    onClick {
-                        val password = binding.password.text.toString()
-                        val twoFactorCode = binding.twoFA.text.toString()
-                        when (missingScope) {
-                            Scope.PASSWORD -> viewModel.unlockPassword(
-                                password,
-                                if (twoFactorCode.isEmpty()) null else twoFactorCode
-                            )
-                            Scope.LOCKED -> viewModel.unlock(password)
-                        }.exhaustive
-                    }
-                }
-                getButton(AlertDialog.BUTTON_NEGATIVE).apply {
-                    isAllCaps = false
-                    onClick {
-                        setResultAndDismiss(null)
-                    }
-                }
-            }
             setCanceledOnTouchOutside(false)
         }
     }

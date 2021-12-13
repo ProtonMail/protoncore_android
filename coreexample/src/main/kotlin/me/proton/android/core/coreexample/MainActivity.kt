@@ -42,6 +42,7 @@ import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
 import me.proton.android.core.coreexample.viewmodel.PlansViewModel
 import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
+import me.proton.android.core.coreexample.viewmodel.RemoveScopeViewModel
 import me.proton.android.core.coreexample.viewmodel.UserAddressKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
@@ -74,6 +75,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
     private val publicAddressViewModel: PublicAddressViewModel by viewModels()
     private val settingsViewModel: UserSettingsViewModel by viewModels()
     private val confirmPasswordViewModel: ConfirmPasswordViewModel by viewModels()
+    private val removeScopeViewModel: RemoveScopeViewModel by viewModels()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,6 +134,10 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 }
             }
 
+            lockScope.onClick {
+                removeScopeViewModel.removeScopes()
+            }
+
             accountPrimaryView.setViewModel(accountSwitcherViewModel)
             accountSwitcherViewModel.onAction().onEach {
                 when (it) {
@@ -163,19 +169,27 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         mailMessageViewModel.getState().onEach { showToast("MailMessage: $it") }.launchIn(lifecycleScope)
 
         mailSettingsViewModel.getMailSettingsState().onEach {
-            if (it is MailSettingsViewModel.MailSettingsState.Error) { showToast("MailSettings: $it") }
+            if (it is MailSettingsViewModel.MailSettingsState.Error) {
+                showToast("MailSettings: $it")
+            }
         }.launchIn(lifecycleScope)
 
         userKeyViewModel.getUserKeyState().onEach {
-            if (it is UserKeyViewModel.UserKeyState.Error) { showToast("UserKey: $it") }
+            if (it is UserKeyViewModel.UserKeyState.Error) {
+                showToast("UserKey: $it")
+            }
         }.launchIn(lifecycleScope)
 
         userAddressKeyViewModel.getUserAddressKeyState().onEach {
-            if (it is UserAddressKeyViewModel.UserAddressKeyState.Error) { showToast("UserAddressKey: $it") }
+            if (it is UserAddressKeyViewModel.UserAddressKeyState.Error) {
+                showToast("UserAddressKey: $it")
+            }
         }.launchIn(lifecycleScope)
 
         publicAddressViewModel.getPublicAddressState().onEach {
-            if (it is PublicAddressViewModel.PublicAddressState.Error) { showToast("PublicAddress: $it") }
+            if (it is PublicAddressViewModel.PublicAddressState.Error) {
+                showToast("PublicAddress: $it")
+            }
         }.launchIn(lifecycleScope)
     }
 

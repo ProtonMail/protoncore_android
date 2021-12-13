@@ -20,7 +20,7 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -50,7 +50,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
     private val obtainPasswordScope: ObtainPasswordScope
 ) : ProtonViewModel() {
 
-    private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
+    private val _state = MutableStateFlow<State>(State.Idle)
     val state = _state.asSharedFlow()
 
     sealed class State {

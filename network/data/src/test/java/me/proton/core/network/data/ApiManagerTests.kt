@@ -46,10 +46,9 @@ import me.proton.core.network.domain.DohService
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
-import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.server.ServerTimeListener

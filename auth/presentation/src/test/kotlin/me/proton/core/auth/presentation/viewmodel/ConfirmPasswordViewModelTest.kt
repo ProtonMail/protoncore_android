@@ -60,6 +60,7 @@ class ConfirmPasswordViewModelTest : ArchTest, CoroutinesTest {
                 ConfirmPasswordResult(confirmed = true)
             )
         }
+        every { confirmPasswordOrchestratorSpy.register(any()) } answers { }
         val result = viewModel.confirmPassword(Scope.PASSWORD)
         verify { confirmPasswordOrchestratorSpy.startConfirmPasswordWorkflow(Scope.PASSWORD) }
         assertEquals(MissingScopeResult.Success, result)

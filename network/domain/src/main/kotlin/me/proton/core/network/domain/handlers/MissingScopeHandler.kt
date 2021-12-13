@@ -31,8 +31,7 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
-import org.jetbrains.annotations.TestOnly
-import java.util.concurrent.TimeUnit
+import me.proton.core.util.kotlin.CoreLogger
 
 /**
  * Handles the Missing one of the security scopes [LOCKED or PASSWORD] that is required for some of the operations
@@ -41,8 +40,7 @@ import java.util.concurrent.TimeUnit
 class MissingScopeHandler<Api>(
     private val sessionId: SessionId?,
     private val clientIdProvider: ClientIdProvider,
-    private val apiClient: ApiClient,
-    private val monoClockMs: () -> Long
+    private val apiClient: ApiClient
 ) : ApiErrorHandler<Api> {
 
     override suspend fun <T> invoke(
@@ -62,11 +60,9 @@ class MissingScopeHandler<Api>(
         // Only 1 coroutine at a time per clientId.
         val shouldRetry = clientMutex(clientId).withLock {
             // Don't attempt to verify if we did recently.
-            val lastVerificationTimeMs = clientLastVerificationMap[clientId] ?: Long.MIN_VALUE
-            val verifiedRecently = monoClockMs() <= lastVerificationTimeMs + verificationDebounceMs
-            val scopeResult = obtainMissingScope(clientId, details.value?.get(0))
-            verifiedRecently || scopeResult
+            obtainMissingScope(details.value?.get(0))
         }
+        CoreLogger.d("CONF_PASS", "retry: $shouldRetry")
         val finalResult = if (shouldRetry) {
             backend(call)
         } else {
@@ -76,26 +72,18 @@ class MissingScopeHandler<Api>(
     }
 
     // Must be called within sessionMutex.
-    private suspend fun obtainMissingScope(clientId: ClientId, details: Scope?): Boolean {
-        val result = when (apiClient.missingScope(details!!)) {
+    private suspend fun obtainMissingScope(details: Scope?): Boolean {
+        return when (apiClient.missingScope(details!!)) {
             MissingScopeResult.Success -> true
             MissingScopeResult.Failure -> false
         }
-        clientLastVerificationMap[clientId] = monoClockMs()
-        return result
     }
 
     companion object {
-        private val verificationDebounceMs = TimeUnit.SECONDS.toMillis(5)
         private val staticMutex: Mutex = Mutex()
         private val clientMutexMap: MutableMap<ClientId, Mutex> = HashMap()
-        private var clientLastVerificationMap: MutableMap<ClientId, Long> = HashMap()
 
         suspend fun clientMutex(clientId: ClientId) =
             staticMutex.withLock { clientMutexMap.getOrPut(clientId) { Mutex() } }
-
-        @TestOnly
-        suspend fun reset(clientId: ClientId) =
-            clientMutex(clientId).withLock { clientLastVerificationMap[clientId] = Long.MIN_VALUE }
     }
 }

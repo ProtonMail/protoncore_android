@@ -125,6 +125,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             viewModel.unlock(testPassword)
 
             // THEN
+            assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.Success>(awaitItem())
 
@@ -148,6 +149,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             viewModel.unlock(testPassword)
 
             // THEN
+            assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             val nextItem = awaitItem()
             assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.Message)
@@ -165,6 +167,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             viewModel.unlockPassword(testPassword, null)
 
             // THEN
+            assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.Success>(awaitItem())
 
@@ -194,6 +197,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             viewModel.unlockPassword(testPassword, null)
 
             // THEN
+            assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             val nextItem = awaitItem()
             assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.Message)
@@ -219,6 +223,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             viewModel.unlockPassword(testPassword, test2FACode)
 
             // THEN
+            assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.Success>(awaitItem())
 
@@ -248,6 +253,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             viewModel.unlockPassword(testPassword, test2FACode)
 
             // THEN
+            assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             val nextItem = awaitItem()
             assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.Message)
