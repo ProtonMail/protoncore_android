@@ -37,7 +37,7 @@ import org.junit.BeforeClass
 
 open class BaseTest(
     private val logoutAllAfterTest: Boolean = true,
-    defaultTimeout: Long = 20_000L,
+    defaultTimeout: Long = 30_000L,
 ) : ProtonTest(MainActivity::class.java, defaultTimeout, 2) {
 
     @After
@@ -49,7 +49,9 @@ open class BaseTest(
     }
 
     fun login(user: User) {
+        Log.d(testTag, "Login user: ${user.name}")
         authHelper.login(user.name, user.password)
+        Log.d(testTag, "Login done.")
         AddAccountRobot().back<CoreexampleRobot>()
     }
 

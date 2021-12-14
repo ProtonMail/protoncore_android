@@ -39,16 +39,9 @@ import me.proton.core.test.android.robots.settings.PasswordManagementRobot
  * [CoreexampleRobot] class contains actions and verifications for Main screen functionality.
  */
 open class CoreexampleRobot : CoreRobot() {
-
     fun humanVerification(): HumanVerificationRobot = clickElement(R.id.trigger_human_ver)
     fun signup(): ChooseUsernameRobot = clickElement(R.id.signup)
     fun signupExternal(): ChooseUsernameRobot = clickElement(R.id.signupExternal)
-    inline fun <reified T> logoutUser(user: User): T = clickUserButton(user)
-    inline fun <reified T> clickUserButton(
-        user: User,
-        accountState: AccountState = Ready,
-        sessionState: SessionState = Authenticated
-    ): T = clickElement(getUserState(user, accountState, sessionState))
     fun plansUpgrade(): SelectPlanRobot = clickElement(R.id.plansUpgrade)
     fun plansCurrent(): SelectPlanRobot = clickElement(R.id.plansCurrent)
     fun settingsRecoveryEmail(): RecoveryEmailRobot = clickElement(R.id.settingsRecovery)
