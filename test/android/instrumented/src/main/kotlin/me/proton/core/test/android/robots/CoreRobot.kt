@@ -19,12 +19,11 @@
 package me.proton.core.test.android.robots
 
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import androidx.annotation.IdRes
 import me.proton.core.auth.R
 import me.proton.core.test.android.instrumented.Robot
-import me.proton.core.test.android.instrumented.builders.OnView
+import me.proton.core.test.android.instrumented.ui.espresso.OnView
 
 /**
  * [CoreRobot] Contains common Core specific view actions implementation

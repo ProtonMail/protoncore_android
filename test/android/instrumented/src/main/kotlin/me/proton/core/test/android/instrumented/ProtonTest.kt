@@ -26,6 +26,7 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
+import me.proton.core.test.android.instrumented.rules.RetryRule
 import me.proton.core.test.android.instrumented.utils.FileUtils
 import me.proton.core.test.android.instrumented.utils.Shell
 import me.proton.core.test.android.instrumented.utils.Shell.clearLogcat

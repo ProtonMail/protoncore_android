@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.instrumented
+package me.proton.core.test.android.instrumented.rules
 
 import android.app.Activity
 import android.util.Log

@@ -20,7 +20,7 @@ package me.proton.core.test.android.instrumented.matchers
 
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.AppCompatImageView
-import me.proton.core.test.android.instrumented.builders.OnView
+import me.proton.core.test.android.instrumented.ui.espresso.OnView
 
 internal object SystemUI {
     val positiveDialogBtn = OnView().withId(android.R.id.button1)

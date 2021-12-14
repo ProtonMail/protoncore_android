@@ -26,7 +26,7 @@ class CodeVerificationRobot : CoreRobot() {
      * Sets the value of verification code input to [code]
      * @return [CodeVerificationRobot]
      */
-    fun setCode(code: String): CodeVerificationRobot = replaceText(R.id.input, code)
+    fun setCode(code: String): CodeVerificationRobot = replaceText(R.id.verificationCodeEditText, code)
 
     /**
      * Clicks 'Verify Code' button

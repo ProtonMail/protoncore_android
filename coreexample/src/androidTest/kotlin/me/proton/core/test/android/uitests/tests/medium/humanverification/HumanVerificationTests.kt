@@ -28,6 +28,7 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 
+@Ignore("WebView human verification does not support atlas proxy")
 class HumanVerificationTests : BaseTest() {
 
     private val humanVerificationRobot = HumanVerificationRobot()
@@ -46,7 +47,6 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
-    @SmokeTest
     fun closeHvViews() {
         humanVerificationRobot
             .sms()

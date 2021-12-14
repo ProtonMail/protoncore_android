@@ -22,7 +22,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.test.espresso.matcher.RootMatchers
 import me.proton.core.accountmanager.presentation.R
-import me.proton.core.test.android.instrumented.builders.OnView
+import me.proton.core.test.android.instrumented.ui.espresso.OnView
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.instrumented.builders
+package me.proton.core.test.android.instrumented.ui.espresso
 
 import android.app.Instrumentation
 import android.content.ComponentName
@@ -27,6 +27,7 @@ import androidx.test.espresso.intent.ActivityResultFunction
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers
+import me.proton.core.test.android.instrumented.ConditionWatcher
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf
 

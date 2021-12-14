@@ -24,6 +24,9 @@ import me.proton.core.util.kotlin.toInt
 import org.junit.runner.Description
 import java.io.File
 
+/**
+ * Contains device system actions, and additional helper functions.
+ */
 object Shell {
 
     private val automation = InstrumentationRegistry.getInstrumentation().uiAutomation!!
@@ -40,7 +43,7 @@ object Shell {
      * Sets up device in ready for automation mode.
      * Animations turned off, long press timeout is set to 2 seconds, notifications popups are disabled.
      */
-    fun setupDevice(shouldDisableNotifications: Boolean) {
+    fun setupDeviceForAutomation(shouldDisableNotifications: Boolean) {
         automation.executeShellCommand("settings put secure long_press_timeout 2000")
         automation.executeShellCommand("settings put global animator_duration_scale 0.0")
         automation.executeShellCommand("settings put global transition_animation_scale 0.0")
@@ -62,15 +65,16 @@ object Shell {
                     " --grant-read-uri-permission"
             )
     }
+
     /**
-     * Clears logcat
+     * Clears logcat.
      */
     fun clearLogcat() {
         automation.executeShellCommand("logcat -c")
     }
 
     /**
-     * Saves file with provided [Description]
+     * Saves file with given [Description].
      */
     fun saveToFile(description: Description?) {
         val logcatArtifactsPath = "${getTargetContext().filesDir.path}/artifacts/logcat"

@@ -19,7 +19,9 @@
 package me.proton.core.test.android.plugins
 
 import android.util.Log
+import androidx.test.platform.TestFrameworkException
 import androidx.test.platform.app.InstrumentationRegistry
+import junit.framework.Assert.assertTrue
 import kotlinx.serialization.Serializable
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 import me.proton.core.test.android.plugins.data.User

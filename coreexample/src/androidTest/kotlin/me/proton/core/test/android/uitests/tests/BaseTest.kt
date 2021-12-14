@@ -25,7 +25,7 @@ import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
 import me.proton.core.test.android.instrumented.ProtonTest
-import me.proton.core.test.android.instrumented.utils.Shell.setupDevice
+import me.proton.core.test.android.instrumented.utils.Shell.setupDeviceForAutomation
 import me.proton.core.test.android.plugins.Quark
 import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.plugins.data.User
@@ -63,9 +63,8 @@ open class BaseTest(
         @JvmStatic
         @BeforeClass
         fun prepare() {
-            setupDevice(true)
+            setupDeviceForAutomation(true)
             authHelper.logoutAll()
-            quark.jailUnban()
             Plan.Dev.text = Plan.Plus.text
             Plan.Dev.planName = Plan.Plus.planName
         }

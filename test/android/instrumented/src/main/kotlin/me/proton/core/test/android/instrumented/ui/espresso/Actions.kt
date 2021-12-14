@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.instrumented.ui
+package me.proton.core.test.android.instrumented.ui.espresso
 
 import android.view.View
 import android.view.ViewGroup

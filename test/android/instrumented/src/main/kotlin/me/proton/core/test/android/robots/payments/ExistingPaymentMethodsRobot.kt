@@ -19,7 +19,7 @@
 package me.proton.core.test.android.robots.payments
 
 import me.proton.core.payment.presentation.R
-import me.proton.core.test.android.instrumented.builders.OnView
+import me.proton.core.test.android.instrumented.ui.espresso.OnView
 import me.proton.core.test.android.robots.CoreRobot
 
 /**

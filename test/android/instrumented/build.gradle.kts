@@ -71,6 +71,6 @@ dependencies {
         `junit-ktx`,
         `serialization-json`,
         `okhttp-url-connection`,
-        `room-testing`,
+        `room-testing`
     )
 }
