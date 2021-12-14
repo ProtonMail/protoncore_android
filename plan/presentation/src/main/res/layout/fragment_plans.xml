@@ -48,8 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:windowBackground"
-            android:paddingStart="@dimen/double_top_margin"
-            android:paddingEnd="@dimen/double_top_margin"
+            android:paddingStart="@dimen/default_gap"
+            android:paddingEnd="@dimen/default_gap"
             android:paddingBottom="@dimen/double_top_margin">
 
             <TextView
