@@ -225,3 +225,13 @@ cleanup-atlas:
 # .startReview requires 'stopReview' job. See GitLab merged YAML.
 stopReview:
   extends: .stopReview
+
+integration-tests:
+  when: manual
+  inherit:
+    variables: false
+  variables:
+    CORE_COMMIT_SHA: $CI_COMMIT_SHA
+  trigger:
+    project: android/mail/proton-mail
+    branch: test/core-integration-test
