@@ -1,5 +1,9 @@
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
+import javax.inject.Inject
+
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,19 +20,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.extra
-import studio.forface.easygradle.dsl.*
-import java.util.Locale
+open class PublishPluginExtension @Inject constructor (private val project: Project) {
 
-var Project.pluginConfig
-    get() = if (hasProperty("pluginConfig")) extra["pluginConfig"] as? PluginConfig else null
-    set(value) { extra["pluginConfig"] = value }
+    var shouldBePublishedAsPlugin: Boolean = false
 
-data class PluginConfig(
-    val name: String,
-    val version: Version,
-    val group: String = "me.proton"
-) {
-    val id = "$group.$name".toLowerCase(Locale.US)
+    companion object {
+        fun Project.setupPublishOptionExtension(): PublishPluginExtension {
+            return extensions.create("publishOption", PublishPluginExtension::class.java)
+        }
+    }
 }

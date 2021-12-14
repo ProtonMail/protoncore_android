@@ -28,27 +28,6 @@ import java.io.File
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-private const val RELEASE_PREFIX = "release/"
-
-internal fun Project.computeVersionName(): String {
-    val ciCommitRefName = System.getenv("CI_COMMIT_REF_NAME")
-
-    val branchName = if (!ciCommitRefName.isNullOrEmpty()) {
-        // On the CI, using predefined var.
-        ciCommitRefName
-    } else {
-        // Fallback on local git state.
-        runCommand("git rev-parse --abbrev-ref HEAD")
-    }
-
-    val version = if (branchName.startsWith(RELEASE_PREFIX)) {
-        branchName.substring(RELEASE_PREFIX.length)
-    } else {
-        branchName.replace('/', '-') + "-SNAPSHOT"
-    }
-    return version
-}
-
 /**
  * Fully support unique staging repository creation for multi project release
  * See https://github.com/gradle-nexus/publish-plugin/ and

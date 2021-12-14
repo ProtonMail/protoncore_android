@@ -115,7 +115,7 @@ release-publish-github:
     RELEASE_SYNC_FROM_BRANCH: 'main'
   extends: .release-sync-commit-shared
 
-publishNewRelease:
+publish-libs:
   stage: publish
   tags:
     - large
@@ -129,15 +129,15 @@ publishNewRelease:
     - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
     - ./gradlew notifyNewRelease
   only:
-    - /^release\/.*/ # stable release with notification
+    - /^release\/libs\/.*/ # stable release with notification
     - main # main-snapshot release without notification
 
-tagRelease:
+tag-libs-release:
   stage: publish
   needs:
-    - job: publishNewRelease
+    - job: publish-libs
   only:
-    - /^release\/.*/
+    - /^release\/libs\/.*/
   tags:
     - large
   before_script:
@@ -145,21 +145,33 @@ tagRelease:
   script:
     - ./gradlew tagRelease
 
-publishGradlePortal:
+publish-gradle-plugins:
   stage: publish
   tags:
     - large
+  variables:
+    ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
+    ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD
+    ORG_GRADLE_PROJECT_signingInMemoryKey: $MAVEN_SIGNING_KEY
+    ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD
   script:
-    - ./gradlew -p plugins assemble && ./gradlew -p plugins publishAll
+    - ./gradlew -p plugins publishToSonatype closeAndReleaseSonatypeStagingRepository
   only:
-    - master
-  artifacts:
-    expire_in: 10 days
-    paths:
-      - new_releases.tmp
-      - releases
-      - docs
-      - README.md
+    - /^release\/gradle-plugins\/.*/ # stable release
+    - main # main-snapshot release
+
+tag-gradle-plugins-release:
+  stage: publish
+  needs:
+    - job: publish-gradle-plugins
+  only:
+    - /^release\/gradle-plugins\/.*/
+  tags:
+    - large
+  before_script:
+    - !reference [.git, before_script]
+  script:
+    - ./gradlew -p plugins tagRelease
 
 i18n-sync-crowdin:
   extends: .i18n-sync-crowdin-common

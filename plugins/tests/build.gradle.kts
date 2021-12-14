@@ -18,30 +18,22 @@
 
 import org.gradle.kotlin.dsl.implementation
 import org.gradle.kotlin.dsl.kotlin
-import studio.forface.easygradle.dsl.Version
 
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
     `java-gradle-plugin`
-    id("me.proton.publish-plugins")
 }
 
-val plugin = PluginConfig(
-    name = "Tests",
-    version = Version(0, 1)
-)
-pluginConfig = plugin
-
-group = plugin.group
-version = plugin.version
+publishOption.shouldBePublishedAsPlugin = true
 
 gradlePlugin {
     plugins {
-        create("${plugin.id}") {
-            id = plugin.id
+        create("plugin") {
+            id = "me.proton.core.gradle-plugins.tests"
+            displayName = "Proton tests plugin"
+            description = "Add global unit test task to project"
             implementationClass = "ProtonTestsPlugin"
-            version = plugin.version
         }
     }
 }

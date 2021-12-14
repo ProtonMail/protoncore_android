@@ -23,30 +23,22 @@ import org.gradle.kotlin.dsl.gradlePlugin
 import org.gradle.kotlin.dsl.implementation
 import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.repositories
-import studio.forface.easygradle.dsl.Version
 
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
     `java-gradle-plugin`
-    id("me.proton.publish-plugins")
 }
 
-val plugin = PluginConfig(
-    name = "Jacoco",
-    version = Version(0, 1)
-)
-pluginConfig = plugin
-
-group = plugin.group
-version = plugin.version
+publishOption.shouldBePublishedAsPlugin = true
 
 gradlePlugin {
     plugins {
-        create("${plugin.id}") {
-            id = plugin.id
+        create("plugin") {
+            id = "me.proton.core.gradle-plugins.jacoco"
+            displayName = "Proton jacoco plugin"
+            description = "Plugin to generate jacoco coverage report compatible with GitLab"
             implementationClass = "ProtonJacocoPlugin"
-            version = plugin.version
         }
     }
 }
@@ -63,5 +55,4 @@ dependencies {
     implementation(gradleApi())
     implementation(kotlin("gradle-plugin"))
     implementation("org.jacoco:org.jacoco.core:$jacocoVersion")
-    implementation(libs.easyGradle.dsl)
 }

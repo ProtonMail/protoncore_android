@@ -18,39 +18,26 @@
 
 plugins {
     `kotlin-dsl`
-    kotlin("jvm")
-    kotlin("plugin.serialization")
     `java-gradle-plugin`
 }
 
-object Plugin {
-    const val group = "me.proton"
-    const val id = "publish-libraries"
-    const val version = "0.2"
-}
-
-group = Plugin.group
-version = Plugin.version
-
 gradlePlugin {
     plugins {
-        create("${Plugin.id}Plugin") {
-            id = "${Plugin.group}.${Plugin.id}"
-            implementationClass = "ProtonPublishLibrariesPlugin"
-            version = Plugin.version
+        create("plugin") {
+            id = "publish-core-plugins"
+            implementationClass = "ProtonPublishPluginsPlugin"
         }
     }
 }
 
 repositories {
-    mavenCentral()
     gradlePluginPortal()
 }
 
+java.sourceSets["main"].java {
+    srcDir("../../shared/src/main/kotlin")
+}
+
 dependencies {
-    implementation(gradleApi())
-    implementation(libs.vanniktech.pluginGradleMavenPublish)
-    implementation(libs.dokka.pluginGradle)
-    implementation(libs.kotlinx.serialization.json)
     implementation(libs.publish.pluginGradle)
 }

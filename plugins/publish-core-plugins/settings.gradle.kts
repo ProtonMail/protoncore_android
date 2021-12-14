@@ -1,7 +1,5 @@
-import org.gradle.api.Project
-
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,11 +16,26 @@ import org.gradle.api.Project
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-internal fun Project.setupTagReleaseTask(versionName: String) {
-    tasks.register("tagRelease") {
-        doLast {
-            runCommand("git tag $versionName")
-            runCommand("git push origin $versionName -o ci.skip")
+rootProject.name = "Publish core gradle plugins"
+
+include(
+    "publish-plugin"
+)
+
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://plugins.gradle.org/m2/")
+    }
+}
+
+enableFeaturePreview("VERSION_CATALOGS")
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("../../gradle/libs.versions.toml"))
         }
     }
 }

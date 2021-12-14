@@ -19,58 +19,34 @@
 plugins {
     `kotlin-dsl`
     kotlin("jvm")
+    kotlin("plugin.serialization")
     `java-gradle-plugin`
-    id("com.gradle.plugin-publish") version "0.12.0"
 }
 
-object Plugin {
-    const val group = "me.proton"
-    const val name = "Publish-Plugins"
-    const val version = "0.7"
-    val id = "$group.$name".toLowerCase()
-}
-
-group = Plugin.group
-version = Plugin.version
+publishOption.shouldBePublishedAsPlugin = false
 
 gradlePlugin {
     plugins {
-        create(Plugin.id) {
-            id = Plugin.id
-            implementationClass = "ProtonPublishPluginsPlugin"
-            version = Plugin.version
+        create("plugin") {
+            id = "publish-core-libraries"
+            implementationClass = "ProtonPublishLibrariesPlugin"
         }
     }
 }
 
-pluginBundle {
-    val url = "https://github.com/ProtonMail/protoncore_android"
-    website = url
-    vcsUrl = url
-    description = "Proton Gradle plugin"
-    tags = listOf(
-        "Android",
-        "plugin",
-        "Proton",
-        "ProtonTechnologies",
-        "ProtonMail",
-        "ProtonVpn",
-        "ProtonCalendar",
-        "ProtonDrive"
-    )
-
-    plugins.getByName(Plugin.id).displayName = Plugin.name
+java.sourceSets["main"].java {
+    srcDir("../shared/src/main/kotlin")
 }
 
 repositories {
-    google()
-    jcenter()
+    mavenCentral()
     gradlePluginPortal()
 }
 
 dependencies {
     implementation(gradleApi())
+    implementation(libs.vanniktech.pluginGradleMavenPublish)
     implementation(libs.dokka.pluginGradle)
-    implementation("com.gradle.publish:plugin-publish-plugin:0.12.0")
-    implementation(libs.easyGradle.dsl)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.publish.pluginGradle)
 }
