@@ -27,13 +27,16 @@ import java.net.URI
 
 class ClientIdProviderImpl(
     private val baseUrl: String,
-    private val cookieStore: ProtonCookieStore
+    private val cookieStore: ProtonCookieStore,
 ) : ClientIdProvider {
 
     override fun getClientId(sessionId: SessionId?): ClientId? {
-        val cookieValue = cookieStore.get(URI.create(baseUrl))
-        return ClientId.newClientId(sessionId, cookieValue.cookieSessionId())
+        val cookieSessionId = cookieStore.get(URI.create(baseUrl)).cookieSessionId()
+        // When DoH is working, the Session-Id cookie might not be related to the current baseUrl
+        val fallbackSessionId = cookieStore.cookies.cookieSessionId()
+        return ClientId.newClientId(sessionId, cookieSessionId ?: fallbackSessionId)
     }
 
-    fun List<HttpCookie>.cookieSessionId(): String? = find { it.name == "Session-Id" }?.value
 }
+
+internal fun List<HttpCookie>.cookieSessionId(): String? = find { it.name == "Session-Id" }?.value

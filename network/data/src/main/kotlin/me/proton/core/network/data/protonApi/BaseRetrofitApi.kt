@@ -21,9 +21,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.network.data.mapper.parseDetails
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.TimeoutOverride
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Tag
 
 interface BaseRetrofitApi {
 
@@ -31,7 +33,7 @@ interface BaseRetrofitApi {
     suspend fun refreshToken(@Body body: RefreshTokenRequest): RefreshTokenResponse
 
     @GET("tests/ping")
-    suspend fun ping()
+    suspend fun ping(@Tag timeoutOverride: TimeoutOverride)
 }
 
 @Serializable

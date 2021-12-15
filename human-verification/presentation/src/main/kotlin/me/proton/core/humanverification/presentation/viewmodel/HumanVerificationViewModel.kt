@@ -28,10 +28,10 @@ import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.usecase.GetSettings
-import me.proton.core.util.kotlin.DispatcherProvider
 import javax.inject.Inject
 
 /**
@@ -42,7 +42,12 @@ class HumanVerificationViewModel @Inject constructor(
     private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
     private val accountRepository: AccountRepository,
     private val getSettings: GetSettings,
+    private val networkPrefs: NetworkPrefs,
 ) : ProtonViewModel() {
+
+    val activeAltUrlForDoH: String? get() = networkPrefs.activeAltBaseUrl?.let {
+        if (!it.endsWith("/")) "$it/" else it
+    }
 
     suspend fun getHumanVerificationExtraParams() = withContext(Dispatchers.IO) {
         val userId = accountRepository.getPrimaryUserId()

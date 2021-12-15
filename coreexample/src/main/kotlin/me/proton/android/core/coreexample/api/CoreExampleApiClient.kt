@@ -31,7 +31,7 @@ class CoreExampleApiClient @Inject constructor() : ApiClient {
      * VPN connection is active). Will be checked before  each API call.
      */
     override val shouldUseDoh: Boolean
-        get() = false
+        get() = true
 
     /**
      * Client's value for 'x-pm-appversion' header.

@@ -193,6 +193,8 @@ class ApiManagerFactory(
             networkManager,
             pinningStrategy,
             ::javaWallClockMs,
+            prefs,
+            cookieStore,
             extraHeaderProvider,
         )
 
@@ -223,6 +225,8 @@ class ApiManagerFactory(
                 networkManager,
                 alternativePinningStrategy,
                 ::javaWallClockMs,
+                prefs,
+                cookieStore,
                 extraHeaderProvider,
             )
         }
