@@ -1,0 +1,12 @@
+# For project using core as a git submodule in 'proton-libs' folder, this job allows to:
+# - Pull the submodule and checkout it where parent project defined it.
+# - (Optional) Override parent checkout and used $CORE_COMMIT_SHA instead. Useful for testing.
+.checkout-core:
+  before_script:
+    - |
+      git submodule sync ./proton-libs
+      git submodule update --init --remote ./proton-libs
+      if [ -n "$CORE_COMMIT_SHA" ]; then
+        echo "Using core at $CORE_COMMIT_SHA"
+        git -C ./proton-libs checkout "$CORE_COMMIT_SHA"
+      fi
