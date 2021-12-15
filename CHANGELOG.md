@@ -10,6 +10,7 @@ Align plans screen padding.
 ### Fixes
 
 - Auth & Human Verification: Closing Human Verification screen on sign up goes back to plans.
+- Added Presentation Compose module.
 
 ### Changes
 

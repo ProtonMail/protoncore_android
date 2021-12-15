@@ -38,6 +38,7 @@ object Module {
     // region Shared
     const val domain = ":domain"
     const val presentation = ":presentation"
+    const val presentationCompose = ":presentation-compose"
     const val data = ":data"
     const val dataRoom = ":data-room"
     const val gopenpgp = ":gopenpgp"

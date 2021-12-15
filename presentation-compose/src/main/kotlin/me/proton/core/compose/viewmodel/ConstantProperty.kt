@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,12 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.repositories
+package me.proton.core.compose.viewmodel
 
-internal fun Project.applyRepositories() {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
+import androidx.lifecycle.ViewModel
+
+/**
+ * Defines the default [stopTimeoutMillis] used by viewModel when using [stateIn] and [SharingStarted.WhileSubscribed].
+ * ```
+ * .stateIn(
+ *     scope = viewModelScope,
+ *     started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
+ *     initialValue = initialValue
+ * )
+ * ```
+ */
+val ViewModel.stopTimeoutMillis: Long
+    get() = 5000L
