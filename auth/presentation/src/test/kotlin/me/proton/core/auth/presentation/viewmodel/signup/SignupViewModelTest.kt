@@ -32,6 +32,7 @@ import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.humanverification.presentation.HumanVerificationManagerObserver
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -561,5 +562,36 @@ class SignupViewModelTest : ArchTest, CoroutinesTest {
                 )
             }
         }
+    }
+
+    @Test
+    fun `stopObservingHumanVerification emits Error if throwError is true`() = coroutinesTest {
+        // WHEN
+        viewModel.stopObservingHumanVerification(true)
+        // THEN
+        viewModel.userCreationState.test {
+            assertTrue(awaitItem() is SignupViewModel.State.Error.HumanVerification)
+        }
+    }
+
+    @Test
+    fun `stopObservingHumanVerification emits Idle if throwError is false`() = coroutinesTest {
+        // WHEN
+        viewModel.stopObservingHumanVerification(false)
+        // THEN
+        viewModel.userCreationState.test {
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+        }
+    }
+
+    @Test
+    fun `stopObservingHumanVerification cancels all observers of humanVerificationObserver`() = coroutinesTest {
+        // GIVEN
+        val observer = mockk<HumanVerificationManagerObserver>(relaxed = true)
+        viewModel.humanVerificationObserver = observer
+        // WHEN
+        viewModel.stopObservingHumanVerification(false)
+        // THEN
+        coVerify { observer.cancelAllObservers() }
     }
 }

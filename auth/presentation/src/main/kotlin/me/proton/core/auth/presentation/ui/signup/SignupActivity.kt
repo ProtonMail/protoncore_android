@@ -36,6 +36,7 @@ import me.proton.core.auth.presentation.databinding.ActivitySignupBinding
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.ui.AuthActivity
+import me.proton.core.auth.presentation.ui.showCreatingUser
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -67,7 +68,6 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         signUpViewModel.register(this)
-        signUpViewModel.observeHumanVerification(this)
         supportFragmentManager.showUsernameChooser(requiredAccountType = input.requiredAccountType)
 
         signUpViewModel.inputState.onEach {
@@ -77,12 +77,13 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     supportFragmentManager.setFragmentResultListener(
                         KEY_PLAN_SELECTED, this
                     ) { _, bundle ->
-                        supportFragmentManager.removePlansSignup()
                         val plan = bundle.getParcelable<SelectedPlan>(BUNDLE_KEY_PLAN)
                         val billing = bundle.getParcelable<BillingResult>(BUNDLE_KEY_BILLING_DETAILS)
                         if (plan != null) {
+                            supportFragmentManager.showCreatingUser()
                             onPlanSelected(plan, billing)
                         } else {
+                            supportFragmentManager.removePlansSignup()
                             signUpViewModel.onPlanChooserCancel()
                         }
                     }

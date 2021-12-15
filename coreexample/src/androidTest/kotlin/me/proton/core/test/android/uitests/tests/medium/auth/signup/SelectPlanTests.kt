@@ -55,7 +55,6 @@ class SelectPlanTests : BaseTest() {
 
     @Test
     @SmokeTest
-    @Ignore("CP-2871")
     fun selectFreeAndCancelHumanVerification() {
         selectPlanRobot
             .selectPlan<HumanVerificationRobot>(Free)

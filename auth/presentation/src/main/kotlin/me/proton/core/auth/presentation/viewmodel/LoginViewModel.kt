@@ -76,7 +76,7 @@ internal class LoginViewModel @Inject constructor(
         savedStateHandle.get<String>(STATE_USER_ID)?.let { accountWorkflow.handleAccountDisabled(UserId(it)) }
     }
 
-    fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context)
+    fun observeHumanVerification(context: ComponentActivity) = handleHumanVerificationState(context.lifecycle)
 
     fun startLoginWorkflow(
         username: String,

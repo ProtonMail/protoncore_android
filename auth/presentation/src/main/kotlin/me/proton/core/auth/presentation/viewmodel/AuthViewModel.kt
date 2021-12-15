@@ -18,10 +18,11 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import androidx.activity.ComponentActivity
+import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import me.proton.core.humanverification.domain.HumanVerificationManager
+import me.proton.core.humanverification.presentation.HumanVerificationManagerObserver
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
@@ -34,14 +35,23 @@ internal abstract class AuthViewModel(
 
     abstract val recoveryEmailAddress: String?
 
-    protected fun handleHumanVerificationState(context: ComponentActivity) =
-        humanVerificationManager.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
-            .onHumanVerificationNeeded {
-                humanVerificationOrchestrator.startHumanVerificationWorkflow(
-                    details = it,
-                    recoveryEmailAddress = recoveryEmailAddress
-                )
-            }
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal var humanVerificationObserver: HumanVerificationManagerObserver? = null
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    internal fun handleHumanVerificationState(lifecycle: Lifecycle): HumanVerificationManagerObserver {
+        val observer = humanVerificationObserver ?: humanVerificationManager.observe(
+            lifecycle,
+            minActiveState = Lifecycle.State.CREATED
+        ).also { humanVerificationObserver = it }
+
+        return observer.onHumanVerificationNeeded {
+            humanVerificationOrchestrator.startHumanVerificationWorkflow(
+                details = it,
+                recoveryEmailAddress = recoveryEmailAddress
+            )
+        }
+    }
 
     open fun register(context: FragmentActivity) {
         humanVerificationOrchestrator.register(context)
