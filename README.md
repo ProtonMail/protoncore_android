@@ -47,6 +47,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:account-manager-data-db|
 |me.proton.core:account-manager-domain|
 |me.proton.core:account-manager-presentation|
+|me.proton.core:account-manager-presentation-compose|
 |me.proton.core:auth|
 |me.proton.core:auth-data|
 |me.proton.core:auth-domain|

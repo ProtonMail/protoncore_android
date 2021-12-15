@@ -76,11 +76,9 @@
         android:id="@+id/account_expand_imageview"
         android:layout_width="@dimen/button_height"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_baseline_expand_more"
+        android:src="@drawable/ic_baseline_expand_more_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white"
-        tools:tint="@color/white" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
