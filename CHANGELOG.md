@@ -10,6 +10,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Auth & Human Verification: Closing Human Verification screen on sign up goes back to plans.
 
+### Changes
+
+- Human Verification, Network, Payment, Presentation: Added Human Verification v3.
+
+### Breaking changes
+
+- Human Verification: `@CaptchaApiHost` annotation renamed to `@HumanVerificationApiHost`. 
+
+### New Injection
+
+```kotlin
+@Provides
+fun provideNetworkRequestOverrider(): NetworkRequestOverrider =
+    NetworkRequestOverriderImpl(OkHttpClient()) // Or some other OkHttpClient dependency
+```
+
 ## [3.0.0]
 
 ### Changes
