@@ -28,7 +28,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
@@ -43,7 +42,6 @@ import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.domain.ApiClient
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
@@ -59,6 +57,7 @@ import okhttp3.Cache
 import okhttp3.OkHttpClient
 import java.io.File
 import javax.inject.Singleton
+import me.proton.core.network.data.di.Constants as NetWorkDataConstants
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -117,29 +116,42 @@ class NetworkModule {
         humanVerificationListener: HumanVerificationListener,
         extraHeaderProvider: ExtraHeaderProvider,
         apiConnectionListener: ApiConnectionListener? = null
-    ): ApiManagerFactory = ApiManagerFactory(
-        Constants.BASE_URL,
-        apiClient,
-        clientIdProvider,
-        serverTimeListener,
-        networkManager,
-        networkPrefs,
-        sessionProvider,
-        sessionListener,
-        humanVerificationProvider,
-        humanVerificationListener,
-        protonCookieStore,
-        CoroutineScope(Job() + Dispatchers.Default),
-        emptyArray(), emptyList(),
-        cache = {
-            Cache(
-                directory = File(context.cacheDir, "http_cache"),
-                maxSize = 10L * 1024L * 1024L // 10 MiB
-            )
-        },
-        extraHeaderProvider = extraHeaderProvider,
-        apiConnectionListener = apiConnectionListener
-    )
+    ): ApiManagerFactory {
+        val certificatePins = if (BuildConfig.USE_DEFAULT_PINS) {
+            NetWorkDataConstants.DEFAULT_SPKI_PINS
+        } else {
+            emptyArray()
+        }
+        val alternativeApiPins = if (BuildConfig.USE_DEFAULT_PINS) {
+            NetWorkDataConstants.ALTERNATIVE_API_SPKI_PINS
+        } else {
+            emptyList()
+        }
+        return ApiManagerFactory(
+            Constants.BASE_URL,
+            apiClient,
+            clientIdProvider,
+            serverTimeListener,
+            networkManager,
+            networkPrefs,
+            sessionProvider,
+            sessionListener,
+            humanVerificationProvider,
+            humanVerificationListener,
+            protonCookieStore,
+            CoroutineScope(Job() + Dispatchers.Default),
+            certificatePins,
+            alternativeApiPins,
+            cache = {
+                Cache(
+                    directory = File(context.cacheDir, "http_cache"),
+                    maxSize = 10L * 1024L * 1024L // 10 MiB
+                )
+            },
+            extraHeaderProvider = extraHeaderProvider,
+            apiConnectionListener = apiConnectionListener
+        )
+    }
 
     @Provides
     @Singleton

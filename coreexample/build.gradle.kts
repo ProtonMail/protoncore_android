@@ -16,9 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import com.android.build.gradle.TestedExtension
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.util.Properties
 
 plugins {
@@ -27,6 +29,8 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
 }
+
+protonTestsOptions.unitTestFlavor = "dev"
 
 android(
     version = Version(1, 18, 4),
@@ -40,23 +44,58 @@ android(
                 // arguments["room.incremental"] = "true"
             }
         }
-
-        val localProperties = Properties().apply {
-            try {
-                load(FileInputStream("local.properties"))
-            } catch (e: java.io.FileNotFoundException) {
-                logger.warn("No local.properties found")
-            }
-        }
-        val proxyToken: String? = localProperties.getProperty("PROXY_TOKEN")
-        val host: String = localProperties.getProperty("HOST")?: "proton.black"
-
-        buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
-        buildConfigField("String", "HOST", host.toBuildConfigValue())
     }
+    setupFlavors(this)
     sourceSets.getByName("androidTest") {
         // Add schema for android tests
         assets.srcDirs("$projectDir/schemas")
+    }
+}
+
+fun setupFlavors(testedExtension: TestedExtension) {
+    testedExtension.apply {
+        val buildConfigFieldKeys = object {
+            val PROXY_TOKEN = "PROXY_TOKEN"
+            val HOST = "HOST"
+            val USE_DEFAULT_PINS = "USE_DEFAULT_PINS"
+        }
+        val flavorDimensions = object {
+            val env = "env"
+        }
+
+        flavorDimensions(flavorDimensions.env)
+
+        defaultConfig {
+            buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, null.toBuildConfigValue())
+            buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, true.toBuildConfigValue())
+        }
+
+        productFlavors.register("dev") {
+            dimension = flavorDimensions.env
+            applicationIdSuffix = ".dev"
+            buildConfigField("String", buildConfigFieldKeys.HOST, "proton.black".toBuildConfigValue())
+            buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
+        }
+        productFlavors.register("prod") {
+            dimension = flavorDimensions.env
+            buildConfigField("String", buildConfigFieldKeys.HOST, "protonmail.ch".toBuildConfigValue())
+        }
+        productFlavors.register("localProperties") {
+            dimension = flavorDimensions.env
+            applicationIdSuffix = ".local.properties"
+            val localProperties = Properties().apply {
+                try {
+                    load(FileInputStream("local.properties"))
+                } catch (e: FileNotFoundException) {
+                    logger.warn("No local.properties found")
+                }
+            }
+            val proxyToken: String? = localProperties.getProperty("PROXY_TOKEN")
+            val host: String = localProperties.getProperty("HOST") ?: "proton.black"
+
+            buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
+            buildConfigField("String", "HOST", host.toBuildConfigValue())
+        }
     }
 }
 
