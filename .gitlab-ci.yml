@@ -226,12 +226,15 @@ cleanup-atlas:
 stopReview:
   extends: .stopReview
 
-integration-tests:
+.client-integration-tests:
   when: manual
   inherit:
     variables: false
   variables:
     CORE_COMMIT_SHA: $CI_COMMIT_SHA
+
+mail-v6-integration-tests:
+  extends: .client-integration-tests
   trigger:
     project: android/mail/proton-mail
     branch: test/core-integration-test
