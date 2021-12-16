@@ -19,7 +19,6 @@
 package me.proton.core.reports.data.repository
 
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.onSuccess
@@ -33,7 +32,6 @@ import javax.inject.Inject
 
 public class ReportsRepositoryImpl @Inject constructor(private val apiProvider: ApiProvider) : ReportsRepository {
     override suspend fun sendReport(
-        userId: UserId,
         bugReport: BugReport,
         meta: BugReportMeta,
         extra: BugReportExtra?
@@ -59,7 +57,7 @@ public class ReportsRepositoryImpl @Inject constructor(private val apiProvider: 
             isp = extra?.isp
         )
 
-        apiProvider.get<ReportsApi>(userId)
+        apiProvider.get<ReportsApi>()
             .invoke { sendBugReport(request) }
             .onSuccess { check(it.isSuccess()) }
             .valueOrThrow

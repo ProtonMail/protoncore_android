@@ -19,12 +19,10 @@
 package me.proton.core.reports.data
 
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.reports.domain.entity.BugReport
 import me.proton.core.reports.domain.entity.BugReportExtra
 import me.proton.core.reports.domain.entity.BugReportMeta
 
-internal val testUserId = UserId("user-id")
 internal val testBugReport = BugReport(
     title = "Title",
     description = "Bug report description",

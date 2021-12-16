@@ -36,6 +36,7 @@ import me.proton.android.core.coreexample.ui.ContactsActivity
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
+import me.proton.android.core.coreexample.viewmodel.ReportsViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
 import me.proton.android.core.coreexample.viewmodel.PlansViewModel
@@ -50,6 +51,7 @@ import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.alert.ForceUpdateActivity
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.showToast
+import me.proton.core.presentation.utils.successSnack
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -60,6 +62,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
     lateinit var coreExampleRepository: CoreExampleRepository
 
     private val accountViewModel: AccountViewModel by viewModels()
+    private val reportsViewModel: ReportsViewModel by viewModels()
     private val plansViewModel: PlansViewModel by viewModels()
     private val accountSwitcherViewModel: AccountSwitcherViewModel by viewModels()
     private val mailMessageViewModel: MailMessageViewModel by viewModels()
@@ -75,6 +78,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         super.onCreate(savedInstanceState)
 
         accountViewModel.register(this)
+        reportsViewModel.register(this)
         plansViewModel.register(this)
         settingsViewModel.register(this)
 
@@ -119,6 +123,8 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 }
             }.launchIn(lifecycleScope)
 
+            bugReport.onClick { reportsViewModel.reportBugs(waitForServer = false) }
+            bugReportWaiting.onClick { reportsViewModel.reportBugs(waitForServer = true) }
             contacts.onClick { startActivity(Intent(this@MainActivity, ContactsActivity::class.java)) }
         }
 
@@ -128,6 +134,10 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 is AccountViewModel.State.LoginNeeded -> accountViewModel.add()
                 is AccountViewModel.State.AccountList -> displayAccounts(state.accounts)
             }.exhaustive
+        }.launchIn(lifecycleScope)
+
+        reportsViewModel.bugReportSent.onEach {
+            binding.root.successSnack(it)
         }.launchIn(lifecycleScope)
 
         mailMessageViewModel.getState().onEach { showToast("MailMessage: $it") }.launchIn(lifecycleScope)

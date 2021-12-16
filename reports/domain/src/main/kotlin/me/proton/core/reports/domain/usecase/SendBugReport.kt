@@ -19,7 +19,6 @@
 package me.proton.core.reports.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
 import me.proton.core.reports.domain.entity.BugReport
 import me.proton.core.reports.domain.entity.BugReportExtra
 
@@ -27,13 +26,14 @@ public interface SendBugReport {
     public suspend fun cancel(requestId: String)
 
     public operator fun invoke(
-        userId: UserId,
         bugReport: BugReport,
         extra: BugReportExtra? = null
     ): Flow<Result>
 
     public sealed class Result {
         public abstract val requestId: String
+
+        public fun isBlockedOrEnqueued(): Boolean = this is Blocked || this is Enqueued
 
         /** Request for sending bug report has been created but not yet enqueued. */
         public data class Initialized(override val requestId: String) : Result()

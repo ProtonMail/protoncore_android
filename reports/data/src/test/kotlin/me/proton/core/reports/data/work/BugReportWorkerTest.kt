@@ -39,7 +39,6 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.reports.data.testBugReport
 import me.proton.core.reports.data.testBugReportExtra
 import me.proton.core.reports.data.testBugReportMeta
-import me.proton.core.reports.data.testUserId
 import me.proton.core.reports.domain.entity.BugReportExtra
 import me.proton.core.reports.domain.repository.ReportsRepository
 import org.hamcrest.CoreMatchers
@@ -89,7 +88,7 @@ internal class BugReportWorkerTest {
 
     @Test
     fun reportsWithNoInputData() {
-        coJustRun { reportsRepository.sendReport(any(), any(), any(), any()) }
+        coJustRun { reportsRepository.sendReport(any(), any(), any()) }
         val worker = TestListenableWorkerBuilder<BugReportWorker>(context, Data.EMPTY)
             .setWorkerFactory(hiltWorkerFactory)
             .build()
@@ -127,14 +126,13 @@ internal class BugReportWorkerTest {
     ): ListenableWorker.Result {
         coEvery {
             reportsRepository.sendReport(
-                testUserId,
                 testBugReport,
                 testBugReportMeta,
                 extra
             )
         }.apply { sendReportAnswer.invoke(this) }
 
-        val inputData = BugReportWorker.makeData(testUserId, testBugReport, testBugReportMeta, extra)
+        val inputData = BugReportWorker.makeData(testBugReport, testBugReportMeta, extra)
         val worker = TestListenableWorkerBuilder<BugReportWorker>(context, inputData)
             .setWorkerFactory(hiltWorkerFactory)
             .build()

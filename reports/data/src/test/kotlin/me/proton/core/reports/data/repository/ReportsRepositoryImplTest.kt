@@ -23,7 +23,6 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.GenericResponse
@@ -31,7 +30,6 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.reports.data.api.ReportsApi
 import me.proton.core.reports.domain.entity.BugReport
@@ -48,8 +46,6 @@ internal class ReportsRepositoryImplTest {
     private lateinit var mockSessionProvider: SessionProvider
     private lateinit var tested: ReportsRepositoryImpl
 
-    private val testSessionId = SessionId("session-id")
-    private val testUserId = UserId("user-id")
     private val testBugReport = BugReport(
         title = "title",
         description = "description",
@@ -67,9 +63,7 @@ internal class ReportsRepositoryImplTest {
     @Before
     fun setUp() {
         mockApiManager = mockk()
-        mockSessionProvider = mockk {
-            coEvery { getSessionId(testUserId) } returns testSessionId
-        }
+        mockSessionProvider = mockk()
         mockApiManagerFactory = mockk {
             every { create(any(), ReportsApi::class) } returns mockApiManager
         }
@@ -85,7 +79,7 @@ internal class ReportsRepositoryImplTest {
                 any()
             )
         } returns ApiResult.Success(GenericResponse(ResponseCodes.OK))
-        tested.sendReport(testUserId, testBugReport, testBugReportMeta)
+        tested.sendReport(testBugReport, testBugReportMeta)
     }
 
     @Test
@@ -98,7 +92,7 @@ internal class ReportsRepositoryImplTest {
         } returns ApiResult.Error.Http(400, "Bad request", ApiResult.Error.ProtonData(123, "Invalid data"))
 
         val throwable = assertFailsWith<ApiException> {
-            tested.sendReport(testUserId, testBugReport, testBugReportMeta)
+            tested.sendReport(testBugReport, testBugReportMeta)
         }
         assertEquals("Invalid data", throwable.message)
     }
@@ -113,7 +107,7 @@ internal class ReportsRepositoryImplTest {
         } returns ApiResult.Success(GenericResponse(ResponseCodes.NOT_ALLOWED))
 
         assertFailsWith<IllegalStateException> {
-            tested.sendReport(testUserId, testBugReport, testBugReportMeta)
+            tested.sendReport(testBugReport, testBugReportMeta)
         }
     }
 }

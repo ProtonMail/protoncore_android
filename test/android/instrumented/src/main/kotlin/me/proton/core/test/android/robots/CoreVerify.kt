@@ -45,4 +45,10 @@ open class CoreVerify : CoreRobot() {
             .withText(stringRes)
             .checkDisplayed()
     }
+
+    fun snackbarDisplayed(@StringRes stringRes: Int) {
+        view
+            .withId(R.id.snackbar_text)
+            .checkContains(stringRes)
+    }
 }

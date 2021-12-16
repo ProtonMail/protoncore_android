@@ -38,10 +38,14 @@ extensions.configure<com.android.build.gradle.LibraryExtension> {
 }
 
 dependencies {
+    api(
+        project(Module.presentation),
+        activity,
+        `javax-inject`,
+    )
 
     implementation(
         // Core
-        project(Module.presentation),
         project(Module.kotlinUtil),
         project(Module.domain),
 
@@ -52,12 +56,10 @@ dependencies {
 
         // Android
         `android-ktx`,
-        `appcompat`,
-        `constraint-layout`,
-        `fragment`,
+        appcompat,
         `hilt-android`,
         `lifecycle-viewModel`,
-        `material`
+        material
     )
 
     kapt(

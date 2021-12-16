@@ -53,6 +53,7 @@
                 android:name="me.proton.android.core.coreexample.init.AccountStateHandlerInitializer"
                 android:value="androidx.startup" />
         </provider>
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/ProtonTheme.Splash">
@@ -113,6 +114,9 @@
             android:name="me.proton.core.payment.presentation.ui.PaymentTokenApprovalActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name="me.proton.core.presentation.ui.alert.ForceUpdateActivity" />
+        <activity
+            android:name="me.proton.core.reports.presentation.ui.BugReportActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

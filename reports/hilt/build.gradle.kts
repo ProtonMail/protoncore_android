@@ -37,9 +37,16 @@ extensions.configure<com.android.build.gradle.LibraryExtension> {
 }
 
 dependencies {
-    implementation(
+    androidTestImplementation(
+        `android-test-core`,
+        `android-test-runner`,
+        `kotlin-test-junit`,
+    )
+
+    api(
         project(Module.domain),
-        project(Module.reports),
+        project(Module.reportsDomain),
+        project(Module.reportsData),
         `hilt-android`,
     )
 

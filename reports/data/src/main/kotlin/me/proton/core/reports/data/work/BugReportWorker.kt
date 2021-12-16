@@ -31,7 +31,6 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
 import me.proton.core.reports.domain.entity.BugReport
@@ -48,13 +47,12 @@ internal class BugReportWorker @AssistedInject constructor(
     private val reportsRepository: ReportsRepository
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
-        val userId = requireNotNull(inputData.getString(INPUT_USER_ID)?.deserialize<UserId>())
         val bugReport = requireNotNull(inputData.getString(INPUT_BUG_REPORT)?.deserialize<BugReport>())
         val bugReportMeta = requireNotNull(inputData.getString(INPUT_BUG_REPORT_META)?.deserialize<BugReportMeta>())
         val bugReportExtra = inputData.getString(INPUT_BUG_REPORT_EXTRA)?.deserialize<BugReportExtra>()
 
         return reportsRepository.runCatching {
-            sendReport(userId, bugReport, bugReportMeta, bugReportExtra)
+            sendReport(bugReport, bugReportMeta, bugReportExtra)
             Result.success()
         }.recover {
             if ((it as? ApiException)?.isRetryable() == true) {
@@ -71,18 +69,15 @@ internal class BugReportWorker @AssistedInject constructor(
         private const val INPUT_BUG_REPORT = "bugReport"
         private const val INPUT_BUG_REPORT_EXTRA = "bugReportExtra"
         private const val INPUT_BUG_REPORT_META = "bugReportMeta"
-        private const val INPUT_USER_ID = "userId"
         private const val WORKER_TAG = "bug-report-worker"
 
         @VisibleForTesting
         internal fun makeData(
-            userId: UserId,
             bugReport: BugReport,
             bugReportMeta: BugReportMeta,
             bugReportExtra: BugReportExtra?
         ): Data {
             return workDataOf(
-                INPUT_USER_ID to userId.serialize(),
                 INPUT_BUG_REPORT to bugReport.serialize(),
                 INPUT_BUG_REPORT_EXTRA to bugReportExtra?.serialize(),
                 INPUT_BUG_REPORT_META to bugReportMeta.serialize()
@@ -90,12 +85,11 @@ internal class BugReportWorker @AssistedInject constructor(
         }
 
         fun makeWorkerRequest(
-            userId: UserId,
             bugReport: BugReport,
             meta: BugReportMeta,
             extra: BugReportExtra?
         ): WorkRequest {
-            val inputData = makeData(userId, bugReport, meta, extra)
+            val inputData = makeData(bugReport, meta, extra)
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()

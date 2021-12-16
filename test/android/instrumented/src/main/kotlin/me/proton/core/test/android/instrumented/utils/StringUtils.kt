@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.instrumented.utils
 
+import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetContext
 
@@ -29,9 +30,11 @@ object StringUtils {
     private const val emailCharacters =
         "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#\$%&'*+-=?^_`{|}~"
 
-    fun stringFromResource(@StringRes id: Int): String = getTargetContext().resources.getString(id)
+    fun stringFromResource(@StringRes id: Int, vararg formatArgs: Any): String =
+        getTargetContext().resources.getString(id, *formatArgs)
 
-    fun stringFromResource(@StringRes id: Int, arg1: String): String = getTargetContext().getString(id, arg1)
+    fun pluralStringFromResource(@PluralsRes id: Int, quantity: Int, vararg formatArgs: Any): String =
+        getTargetContext().resources.getQuantityString(id, quantity, *formatArgs)
 
     fun getAlphaNumericStringWithSpecialCharacters(length: Long = 10): String =
         randomString(length, alphaNumericWithSpecialCharacters)
