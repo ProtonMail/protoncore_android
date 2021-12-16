@@ -18,14 +18,13 @@
 
 package me.proton.core.plan.presentation.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.text.SpannableStringBuilder
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
-import android.widget.Spinner
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.text.bold
@@ -132,7 +131,8 @@ class PlanItemView @JvmOverloads constructor(
             separator.visibility = View.VISIBLE
         }
 
-        val planFeatures = context.getStringArrayByName("plan_id_${plan.name}")
+        val planFeatures = context.getIntegerArrayByName("plan_id_${plan.name}")
+        val planFeaturesOrder = context.getStringArrayByName("plan_id_${plan.name}_order")
         if (plan.currentlySubscribed) {
             planDescriptionText.text = context.getString(R.string.plans_current_plan)
             planPriceText.visibility = View.GONE
@@ -141,12 +141,16 @@ class PlanItemView @JvmOverloads constructor(
         billableAmount = plan.price?.yearly ?: PRICE_ZERO
         planFeatures?.let {
             if (!plan.currentlySubscribed) {
-                binding.planDescriptionText.text = it[0]
+                val headerResId = it.getResourceId(0, 0)
+                binding.planDescriptionText.text = context.getString(headerResId)
             }
             planContents.removeAllViews()
-            it.drop(1).forEach { item ->
-                planContents.addView(item.createPlanFeature(context, plan))
+
+            val len = it.length() - 1
+            for (i in 1..len) {
+                planContents.addView(createPlanFeature(planFeaturesOrder!![i-1], it, i, context, plan))
             }
+            it.recycle()
         }
 
         selectBtn.visibility = if (plan.selectable) VISIBLE else GONE
@@ -218,6 +222,14 @@ class PlanItemView @JvmOverloads constructor(
 private fun Context.getStringArrayByName(aString: String) =
     try {
         resources.getStringArray(resources.getIdentifier(aString, "array", packageName))
+    } catch (notFound: Resources.NotFoundException) {
+        null
+    }
+
+@SuppressLint("Recycle")
+private fun Context.getIntegerArrayByName(aString: String) =
+    try {
+        resources.obtainTypedArray(resources.getIdentifier(aString, "array", packageName))
     } catch (notFound: Resources.NotFoundException) {
         null
     }

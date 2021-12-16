@@ -35,7 +35,7 @@
 
     <string name="auth_password_label">Password</string>
     <string name="auth_password_help">Password must contain at least 8 characters</string>
-    <string name="auth_current_login_password">Current Login Password</string>
+    <string name="auth_current_login_password">Current login Password</string>
     <string name="auth_enter_six_digit_code">Enter 6-digit code</string>
     <string name="auth_second_factor_code">Two-Factor code</string>
     <string name="auth_email_username">Email or username</string>
@@ -137,7 +137,7 @@
     <string name="auth_signup_verify">Verify</string>
     <string name="auth_signup_verification_code">Verification Code</string>
     <string name="auth_signup_enter_code_subtitle">Enter the verification code that was sent to %s:</string>
-    <string name="auth_signup_error_human_verification_failed">Human Verification failed.</string>
+    <string name="auth_signup_error_human_verification_failed">Human verification failed.</string>
     <string name="auth_signup_calling_code_template">@string/presentation_phone_calling_code_template</string>
     <string name="auth_signup_token_code_resent">Token code resent.</string>
     <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
