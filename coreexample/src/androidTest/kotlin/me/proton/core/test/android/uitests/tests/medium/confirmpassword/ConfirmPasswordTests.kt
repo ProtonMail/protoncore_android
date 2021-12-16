@@ -37,11 +37,18 @@ class ConfirmPasswordTests : BaseTest() {
         quark.jailUnban()
 
         login(user)
+
     }
 
     @Test
     @SmokeTest
     fun closeConfirmPassword() {
+        CoreexampleRobot().lockScopes()
+
+        CoreexampleRobot()
+            .confirmPasswordLocked()
+            .verify { confirmPasswordElementsDisplayed() }
+
         confirmPasswordRobot
             .cancel<CoreexampleRobot>()
             .verify {
@@ -51,6 +58,8 @@ class ConfirmPasswordTests : BaseTest() {
 
     @Test
     fun lockedScope() {
+        CoreexampleRobot().lockScopes()
+
         CoreexampleRobot()
             .confirmPasswordLocked()
             .verify { confirmPasswordElementsDisplayed() }
@@ -66,6 +75,8 @@ class ConfirmPasswordTests : BaseTest() {
 
     @Test
     fun passwordScope() {
+        CoreexampleRobot().lockScopes()
+
         CoreexampleRobot()
             .confirmPasswordPassword()
             .verify { confirmPasswordElementsDisplayed() }

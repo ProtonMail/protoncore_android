@@ -56,6 +56,7 @@ open class CoreexampleRobot : CoreRobot() {
     fun settingsPasswordManagement(): PasswordManagementRobot = clickElement(R.id.settingsPassword)
     fun confirmPasswordLocked(): ConfirmPasswordRobot = clickElement(R.id.trigger_confirm_password_locked)
     fun confirmPasswordPassword(): ConfirmPasswordRobot = clickElement(R.id.trigger_confirm_password_pass)
+    fun lockScopes(): ConfirmPasswordRobot = clickElement(R.id.lock_scope)
 
     fun accountSwitcher(): AccountSwitcherRobot {
         view.instanceOf(ScrollView::class.java).swipeDown()
