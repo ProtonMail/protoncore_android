@@ -35,7 +35,7 @@ import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 @HiltViewModel
-class BugReportViewModel @Inject constructor(
+class ReportsViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val reportsOrchestrator: ReportsOrchestrator,
     private val userManager: UserManager
