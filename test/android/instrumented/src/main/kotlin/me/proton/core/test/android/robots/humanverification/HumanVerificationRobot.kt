@@ -178,7 +178,7 @@ class CountryWebRobot {
     fun dialog() = onWebView()
         .withElement(findElement(Locator.CSS_SELECTOR, "div[role=\"dialog\"]"))
 
-    fun search(text: String?) : CountryWebRobot {
+    fun search(text: String?): CountryWebRobot {
         internalSearch(text)
         return CountryWebRobot()
     }

@@ -33,6 +33,9 @@ object StringUtils {
     fun stringFromResource(@StringRes id: Int, vararg formatArgs: Any): String =
         getTargetContext().resources.getString(id, *formatArgs)
 
+    fun stringFromResource(@StringRes id: Int): String =
+        getTargetContext().resources.getString(id)
+
     fun pluralStringFromResource(@PluralsRes id: Int, quantity: Int, vararg formatArgs: Any): String =
         getTargetContext().resources.getQuantityString(id, quantity, *formatArgs)
 

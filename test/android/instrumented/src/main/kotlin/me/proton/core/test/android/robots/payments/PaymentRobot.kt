@@ -44,7 +44,8 @@ open class PaymentRobot : CoreRobot() {
         ) {
             val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
             view.withId(R.id.planNameText).withText(plan.text).checkDisplayed()
-            view.withId(R.id.billingPeriodText).withText("Billed ${billingCycle.toString().lowercase()}").checkDisplayed()
+            view.withId(R.id.billingPeriodText).withText("Billed ${billingCycle.toString().lowercase()}")
+                .checkDisplayed()
             view.withId(R.id.amountText).withText("$currency$yearlyPriceString").checkDisplayed()
         }
 

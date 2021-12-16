@@ -70,6 +70,8 @@ class AccountSwitcherRobot : CoreRobot() {
      */
     fun addAccount(): LoginRobot = clickElement(R.id.account_action_textview, TextView::class.java)
 
+    inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
+
     companion object UserElement : CoreRobot() {
         fun userEmail(user: User): OnView =
             view
@@ -98,6 +100,4 @@ class AccountSwitcherRobot : CoreRobot() {
             userMore(user).checkEnabled()
         }
     }
-
-    inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
 }

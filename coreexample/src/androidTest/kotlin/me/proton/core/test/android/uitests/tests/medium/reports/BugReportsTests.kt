@@ -20,7 +20,7 @@ package me.proton.core.test.android.uitests.tests.medium.reports
 
 import me.proton.core.reports.domain.entity.BugReport
 import me.proton.core.reports.presentation.R
-import me.proton.core.test.android.instrumented.builders.OnView
+import me.proton.core.test.android.instrumented.ui.espresso.OnView
 import me.proton.core.test.android.robots.reports.BugReportRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest

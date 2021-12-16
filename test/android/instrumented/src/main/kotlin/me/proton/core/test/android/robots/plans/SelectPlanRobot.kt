@@ -28,7 +28,6 @@ import me.proton.core.test.android.plugins.data.Plan
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 
-
 class SelectPlanRobot : CoreRobot() {
 
     /**
@@ -128,17 +127,14 @@ class SelectPlanRobot : CoreRobot() {
 
         fun billingCycleIs(billingCycle: BillingCycle, currency: Currency = Currency.Euro) {
             view.withId(R.id.planPriceText).withText("${currency.symbol}${billingCycle.monthlyPrice}")
-            when (billingCycle) {
-                BillingCycle.Monthly -> {
-                    view.withText(R.string.plans_save_20).checkDisplayed()
-                }
-                else -> {
-                    val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
-                    val billedAsString =
-                        stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}$yearlyPriceString")
-                    view.withId(R.id.planPriceDescriptionText).withText(billedAsString).checkDisplayed()
-                    view.withText(R.string.plans_renew_info).checkDisplayed()
-                }
+            if (billingCycle == BillingCycle.Monthly) {
+                view.withText(R.string.plans_save_20).checkDisplayed()
+            } else {
+                val yearlyPriceString = String.format("%.2f", billingCycle.yearlyPrice)
+                val billedAsString =
+                    stringFromResource(R.string.plans_billed_yearly).format("${currency.symbol}$yearlyPriceString")
+                view.withId(R.id.planPriceDescriptionText).withText(billedAsString).checkDisplayed()
+                view.withText(R.string.plans_renew_info).checkDisplayed()
             }
         }
     }
