@@ -226,8 +226,17 @@ cleanup-atlas:
 stopReview:
   extends: .stopReview
 
-.client-integration-tests:
+trigger-client-integration-tests:
   when: manual
+  tags:
+    - small
+  cache: []
+  script:
+    - echo "Trigger all clients integration tests"
+
+.client-integration-tests:
+  needs:
+    - trigger-client-integration-tests
   inherit:
     variables: false
   variables:
