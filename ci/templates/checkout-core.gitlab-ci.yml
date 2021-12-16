@@ -7,6 +7,8 @@
       git submodule sync ./proton-libs
       git submodule update --init --remote ./proton-libs
       if [ -n "$CORE_COMMIT_SHA" ]; then
-        echo "Using core at $CORE_COMMIT_SHA"
+        echo "Checking out core at $CORE_COMMIT_SHA"
         git -C ./proton-libs checkout "$CORE_COMMIT_SHA"
+        echo "Set gradle property useCoreGitSubmodule to true"
+        export ORG_GRADLE_PROJECT_useCoreGitSubmodule=true
       fi
