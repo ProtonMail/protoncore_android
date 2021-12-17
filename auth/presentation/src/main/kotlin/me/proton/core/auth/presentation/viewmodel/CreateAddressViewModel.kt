@@ -28,16 +28,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.usecase.SetupInternalAddress
-import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
-import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.extension.firstInternalOrNull
 import me.proton.core.usersettings.domain.usecase.SetupUsername
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.retryOnceWhen
@@ -46,11 +42,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateAddressViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
-    private val userManager: UserManager,
-    private val setupUsername: SetupUsername,
-    private val setupPrimaryKeys: SetupPrimaryKeys,
-    private val setupInternalAddress: SetupInternalAddress,
-    private val unlockUserPrimaryKey: UnlockUserPrimaryKey
+    private val postLoginAccountSetup: PostLoginAccountSetup,
+    private val setupUsername: SetupUsername
 ) : ProtonViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
@@ -60,14 +53,8 @@ class CreateAddressViewModel @Inject constructor(
     sealed class State {
         object Idle : State()
         object Processing : State()
-        sealed class Success : State() {
-            data class UserUnLocked(val userId: UserId) : Success()
-        }
-
-        sealed class Error : State() {
-            data class Message(val message: String?) : Error()
-            data class CannotUnlockPrimaryKey(val error: UserManager.UnlockResult.Error) : Error()
-        }
+        data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
+        data class ErrorMessage(val message: String?) : State()
     }
 
     fun upgradeAccount(
@@ -80,66 +67,21 @@ class CreateAddressViewModel @Inject constructor(
 
         setupUsername.invoke(userId, username)
 
-        val user = userManager.getUser(userId, refresh = true)
-        val hasKeys = user.keys.isNotEmpty()
-
-        val addresses = userManager.getAddresses(userId, refresh = true)
-        val hasInternalAddressKey = addresses.firstInternalOrNull()?.keys?.isNotEmpty() ?: false
-
-        when {
-            // directly set Internal (only those Accounts support addresses). upgradeAccount is only valid for Internal
-            !hasKeys -> setupPrimaryKeys(userId, password, AccountType.Internal)
-            !hasInternalAddressKey -> setupInternalAddress(userId, password, domain)
-            else -> unlockUserPrimaryKey(userId, password)
-        }.let {
-            emit(it)
-        }
+        val result = postLoginAccountSetup(
+            userId = userId,
+            encryptedPassword = password,
+            requiredAccountType = AccountType.Internal,
+            isSecondFactorNeeded = false,
+            isTwoPassModeNeeded = false,
+            onSetupSuccess = { accountWorkflow.handleCreateAddressSuccess(userId) },
+            internalAddressDomain = domain
+        )
+        emit(State.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to upgrade an account")
     }.catch { error ->
-        emit(State.Error.Message(error.message))
+        emit(State.ErrorMessage(error.message))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
-
-    private suspend fun setupPrimaryKeys(
-        userId: UserId,
-        password: EncryptedString,
-        requiredAccountType: AccountType
-    ): State {
-        setupPrimaryKeys.invoke(userId, password, requiredAccountType)
-        accountWorkflow.handleCreateAddressSuccess(userId)
-        return unlockUserPrimaryKey(userId, password)
-    }
-
-    private suspend fun setupInternalAddress(
-        userId: UserId,
-        password: EncryptedString,
-        domain: String
-    ): State {
-        val result = unlockUserPrimaryKey.invoke(userId, password)
-        return if (result is UserManager.UnlockResult.Success) {
-            setupInternalAddress.invoke(userId, domain)
-            accountWorkflow.handleCreateAddressSuccess(userId)
-            accountWorkflow.handleAccountReady(userId)
-            State.Success.UserUnLocked(userId)
-        } else {
-            accountWorkflow.handleUnlockFailed(userId)
-            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
-        }
-    }
-
-    private suspend fun unlockUserPrimaryKey(
-        userId: UserId,
-        password: EncryptedString
-    ): State {
-        val result = unlockUserPrimaryKey.invoke(userId, password)
-        return if (result == UserManager.UnlockResult.Success) {
-            accountWorkflow.handleAccountReady(userId)
-            State.Success.UserUnLocked(userId)
-        } else {
-            accountWorkflow.handleUnlockFailed(userId)
-            State.Error.CannotUnlockPrimaryKey(result as UserManager.UnlockResult.Error)
-        }
-    }
 }
