@@ -31,6 +31,7 @@ import me.proton.core.auth.presentation.databinding.ActivityChooseAddressBinding
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.CreateAddressInput
+import me.proton.core.auth.presentation.entity.CreateAddressResult
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.hideKeyboard
@@ -61,7 +62,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
 
     private val startForResult = registerForActivityResult(StartCreateAddress()) { result ->
         if (result != null) {
-            onSuccess(result.success)
+            onCreateAddressResult(result)
         }
     }
 
@@ -141,8 +142,12 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(Activit
         showError(message)
     }
 
-    private fun onSuccess(success: Boolean) {
-        val intent = Intent().putExtra(ARG_RESULT, ChooseAddressResult(userId = input.userId, success = success))
+    private fun onCreateAddressResult(createAddressResult: CreateAddressResult) {
+        val result = when (createAddressResult) {
+            CreateAddressResult.Success -> ChooseAddressResult.Success(input.userId)
+            is CreateAddressResult.UserCheckError -> ChooseAddressResult.UserCheckError(createAddressResult.message)
+        }
+        val intent = Intent().putExtra(ARG_RESULT, result)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

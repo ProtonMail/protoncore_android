@@ -95,7 +95,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>(Activit
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
         when (result) {
             is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
-            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result.error)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckError(result.error)
 
             is PostLoginAccountSetup.Result.Need.ChangePassword,
             is PostLoginAccountSetup.Result.Need.ChooseUsername,
@@ -106,8 +106,16 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>(Activit
     }
 
     private fun onSuccess() {
-        val intent = Intent()
-            .putExtra(ARG_RESULT, CreateAddressResult(success = true))
+        setResultAndFinish(CreateAddressResult.Success)
+    }
+
+    private fun onUserCheckError(error: PostLoginAccountSetup.UserCheckResult.Error) {
+        onUserCheckFailed(error) // TODO pass activityFinishing = true
+        setResultAndFinish(CreateAddressResult.UserCheckError(error.localizedMessage))
+    }
+
+    private fun setResultAndFinish(result: CreateAddressResult) {
+        val intent = Intent().putExtra(ARG_RESULT, result)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

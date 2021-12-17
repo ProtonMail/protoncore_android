@@ -21,7 +21,10 @@ package me.proton.core.auth.presentation.entity
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
-data class CreateAddressResult(
-    val success: Boolean = true
-) : Parcelable
+sealed class CreateAddressResult : Parcelable {
+    @Parcelize
+    object Success : CreateAddressResult()
+
+    @Parcelize
+    class UserCheckError(val message: String) : CreateAddressResult()
+}
