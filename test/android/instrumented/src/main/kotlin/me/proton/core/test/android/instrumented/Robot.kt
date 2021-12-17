@@ -19,12 +19,12 @@
 
 package me.proton.core.test.android.instrumented
 
-import me.proton.core.test.android.instrumented.builders.OnDevice
-import me.proton.core.test.android.instrumented.builders.OnIntent
-import me.proton.core.test.android.instrumented.builders.OnListView
-import me.proton.core.test.android.instrumented.builders.OnRecyclerView
-import me.proton.core.test.android.instrumented.builders.OnRootView
-import me.proton.core.test.android.instrumented.builders.OnView
+import me.proton.core.test.android.instrumented.ui.espresso.OnDevice
+import me.proton.core.test.android.instrumented.ui.espresso.OnIntent
+import me.proton.core.test.android.instrumented.ui.espresso.OnListView
+import me.proton.core.test.android.instrumented.ui.espresso.OnRecyclerView
+import me.proton.core.test.android.instrumented.ui.espresso.OnRootView
+import me.proton.core.test.android.instrumented.ui.espresso.OnView
 
 interface Robot {
 

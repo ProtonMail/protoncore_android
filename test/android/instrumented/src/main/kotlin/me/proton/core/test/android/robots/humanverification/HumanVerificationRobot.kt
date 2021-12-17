@@ -91,7 +91,6 @@ open class HumanVerificationRobot : CoreRobot() {
         onWebView()
             .withElement(findElement(Locator.CSS_SELECTOR, "button.button-large"))
             .perform(webClick())
-        Thread.sleep(5000)
         return HumanVerificationRobot()
     }
 
@@ -129,8 +128,6 @@ open class HumanVerificationRobot : CoreRobot() {
             .withElement(element)
             .perform(clearElement())
             .perform(webKeys(text))
-
-        Thread.sleep(1000)
         return T::class.java.newInstance()
     }
 
@@ -161,9 +158,6 @@ open class HumanVerificationRobot : CoreRobot() {
             .withElement(findElement(Locator.CSS_SELECTOR, "button[data-testid=\"$testId\"]"))
             .perform(webClick())
             .reset()
-
-        Thread.sleep(100L)
-
         return HumanVerificationRobot()
     }
 
@@ -184,7 +178,7 @@ class CountryWebRobot {
     fun dialog() = onWebView()
         .withElement(findElement(Locator.CSS_SELECTOR, "div[role=\"dialog\"]"))
 
-    fun search(text: String?) : CountryWebRobot {
+    fun search(text: String?): CountryWebRobot {
         internalSearch(text)
         return CountryWebRobot()
     }

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.instrumented.builders
+package me.proton.core.test.android.instrumented
 
 import android.util.Log
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.commandTimeout

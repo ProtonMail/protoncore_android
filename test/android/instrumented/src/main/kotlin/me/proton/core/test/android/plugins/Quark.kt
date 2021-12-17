@@ -30,6 +30,7 @@ import okhttp3.Request
 import java.util.concurrent.TimeUnit
 
 class Quark(private val host: String, private val proxyToken: String?, internalApiJsonPath: String) {
+
     @Serializable
     data class InternalApi(
         val endpoints: LinkedHashMap<InternalApiEndpoint, String>,
@@ -58,6 +59,11 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         .bufferedReader()
         .use { it.readText() }
         .deserialize()
+
+
+    val defaultVerificationCode = internalApi.constants["DEFAULT_VERIFICATION_CODE"]!!
+    val planDevName: String = internalApi.constants["PLAN_DEV_NAME"]!!
+    val planDevText: String = internalApi.constants["PLAN_DEV_TEXT"]!!
 
     private fun quarkRequest(endpoint: String, args: Array<String> = emptyArray()): String {
         val argString = args.filter { it.isNotEmpty() }.joinToString("&")
@@ -126,8 +132,4 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
         quarkRequest(internalApi.endpoints[InternalApiEndpoint.USER_CREATE]!!, args)
         return user
     }
-
-    val defaultVerificationCode = internalApi.constants["DEFAULT_VERIFICATION_CODE"]!!
-    val planDevName: String = internalApi.constants["PLAN_DEV_NAME"]!!
-    val planDevText: String = internalApi.constants["PLAN_DEV_TEXT"]!!
 }

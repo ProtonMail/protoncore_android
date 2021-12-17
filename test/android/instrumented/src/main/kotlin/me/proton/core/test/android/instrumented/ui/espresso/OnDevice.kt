@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.instrumented.builders
+package me.proton.core.test.android.instrumented.ui.espresso
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -29,36 +29,36 @@ import androidx.test.uiautomator.Until
 class OnDevice {
 
     fun clickHomeBtn() = apply {
-        device.pressHome()
+        uiDevice.pressHome()
     }
 
     fun clickRecentAppsBtn() = apply {
-        device.pressRecentApps()
+        uiDevice.pressRecentApps()
     }
 
     fun clickBackBtn() = apply {
-        device.pressBack()
+        uiDevice.pressBack()
     }
 
     fun expandNotifications() = apply {
-        device.openNotification()
+        uiDevice.openNotification()
     }
 
     fun clickNotificationByText(text: String, timeout: Long = TIMEOUT_5S) = apply {
-        device.wait(Until.findObject(By.text(text)), timeout).click()
+        uiDevice.wait(Until.findObject(By.text(text)), timeout).click()
     }
 
     fun clickShareDialogJustOnceBtn(applicationName: String, timeout: Long = TIMEOUT_5S): OnDevice = apply {
-        device.wait(Until.findObject(By.textStartsWith(applicationName)), timeout)?.click()
-        device.wait(Until.findObject(By.res("android:id/button_once")), timeout).click()
+        uiDevice.wait(Until.findObject(By.textStartsWith(applicationName)), timeout)?.click()
+        uiDevice.wait(Until.findObject(By.res("android:id/button_once")), timeout).click()
     }
 
     fun waitForObjectByText(text: String, timeout: Long = TIMEOUT_5S) = apply {
-        device.wait(Until.hasObject(By.text(text)), timeout)
+        uiDevice.wait(Until.hasObject(By.text(text)), timeout)
     }
 
     companion object {
         private const val TIMEOUT_5S = 5000L
-        private val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        private val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     }
 }

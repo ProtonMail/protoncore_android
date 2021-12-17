@@ -34,7 +34,7 @@ deploy:review:
     - echo $DYNAMIC_DOMAIN
 
 cleanup:review:
-  cache: []
+  cache: [ ]
   stage: cleanup
   extends: .cleanup:black
 
@@ -72,8 +72,8 @@ assemble:
     - gcloud config set project $CLOUD_PROJECT_ID_CORE
     - gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT
     - gcloud firebase test android run
-      --app coreexample/build/outputs/apk/debug/coreexample-debug.apk
-      --test coreexample/build/outputs/apk/androidTest/debug/coreexample-debug-androidTest.apk
+      --app coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk
+      --test coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk
       --device model=Pixel2,version=28
       --test-targets "$TEST_TARGET"
       --timeout 45m

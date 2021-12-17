@@ -54,13 +54,11 @@ class SelectPlanTests : BaseTest() {
     }
 
     @Test
-    @SmokeTest
     fun selectFreeAndCancelHumanVerification() {
         selectPlanRobot
             .selectPlan<HumanVerificationRobot>(Free)
             .verify {
                 hvElementsDisplayed()
-                captchaDisplayed()
             }
 
         HumanVerificationRobot()

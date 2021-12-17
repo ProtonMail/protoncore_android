@@ -23,11 +23,11 @@ import me.proton.core.account.domain.entity.SessionState.Authenticated
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 
+@Ignore("WebView human verification does not support atlas proxy")
 class HumanVerificationTests : BaseTest() {
 
     private val humanVerificationRobot = HumanVerificationRobot()
@@ -46,7 +46,6 @@ class HumanVerificationTests : BaseTest() {
     }
 
     @Test
-    @SmokeTest
     fun closeHvViews() {
         humanVerificationRobot
             .sms()

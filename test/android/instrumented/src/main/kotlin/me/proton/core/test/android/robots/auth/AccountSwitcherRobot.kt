@@ -22,7 +22,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.test.espresso.matcher.RootMatchers
 import me.proton.core.accountmanager.presentation.R
-import me.proton.core.test.android.instrumented.builders.OnView
+import me.proton.core.test.android.instrumented.ui.espresso.OnView
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
@@ -70,6 +70,8 @@ class AccountSwitcherRobot : CoreRobot() {
      */
     fun addAccount(): LoginRobot = clickElement(R.id.account_action_textview, TextView::class.java)
 
+    inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
+
     companion object UserElement : CoreRobot() {
         fun userEmail(user: User): OnView =
             view
@@ -98,6 +100,4 @@ class AccountSwitcherRobot : CoreRobot() {
             userMore(user).checkEnabled()
         }
     }
-
-    inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)
 }

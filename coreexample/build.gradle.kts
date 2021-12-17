@@ -90,11 +90,17 @@ fun setupFlavors(testedExtension: TestedExtension) {
                     logger.warn("No local.properties found")
                 }
             }
-            val proxyToken: String? = localProperties.getProperty("PROXY_TOKEN")
-            val host: String = localProperties.getProperty("HOST") ?: "proton.black"
+            val proxyToken: String? = localProperties.getProperty(buildConfigFieldKeys.PROXY_TOKEN)
+            val host: String = localProperties.getProperty(buildConfigFieldKeys.HOST) ?: "proton.black"
+            val useDefaultPins: String = localProperties.getProperty(buildConfigFieldKeys.USE_DEFAULT_PINS) ?: "false"
 
-            buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
-            buildConfigField("String", "HOST", host.toBuildConfigValue())
+            buildConfigField(
+                "Boolean",
+                buildConfigFieldKeys.USE_DEFAULT_PINS,
+                useDefaultPins.toBoolean().toBuildConfigValue()
+            )
+            buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, proxyToken.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.HOST, host.toBuildConfigValue())
         }
     }
 }

@@ -31,10 +31,12 @@ import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import org.junit.Ignore
 import org.junit.Test
 
 class SignupTests : BaseTest(defaultTimeout = 60_000L) {
     @Test
+    @Ignore("Cannot verify captcha with espresso")
     fun signupFreeWithCaptchaAndRecoveryEmail() {
         val user = User(recoveryEmail = "${randomString()}@example.lt")
         AddAccountRobot()
