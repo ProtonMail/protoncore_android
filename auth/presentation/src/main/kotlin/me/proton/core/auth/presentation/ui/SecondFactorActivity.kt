@@ -97,7 +97,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
         when (result) {
             is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
-            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result.error)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result)
             is PostLoginAccountSetup.Result.Need.ChangePassword -> onSuccess(result.userId, NextStep.None)
             is PostLoginAccountSetup.Result.Need.ChooseUsername -> onSuccess(result.userId, NextStep.ChooseAddress)
             is PostLoginAccountSetup.Result.Need.SecondFactor -> onSuccess(result.userId, NextStep.SecondFactor)
@@ -148,6 +148,11 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
 
     private fun onSuccess(userId: UserId, nextStep: NextStep) {
         setResultAndFinish(SecondFactorResult.Success(userId = userId.id, nextStep = nextStep))
+    }
+
+    private fun onUserCheckFailed(result: PostLoginAccountSetup.Result.Error.UserCheckError) {
+        onUserCheckFailed(result.error, useToast = true)
+        finish()
     }
 
     private fun onUnrecoverableError(message: String?) {

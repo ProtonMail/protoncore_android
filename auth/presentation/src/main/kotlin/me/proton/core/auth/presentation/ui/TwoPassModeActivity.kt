@@ -91,7 +91,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
         when (result) {
             is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
-            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result.error)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result)
             is PostLoginAccountSetup.Result.Need.ChangePassword -> Unit // Ignored.
             is PostLoginAccountSetup.Result.Need.ChooseUsername -> Unit // Ignored.
             is PostLoginAccountSetup.Result.Need.SecondFactor -> Unit // Ignored.
@@ -126,6 +126,11 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
             binding.mailboxPasswordInput.setInputError()
         }
         showError(message)
+    }
+
+    private fun onUserCheckFailed(result: PostLoginAccountSetup.Result.Error.UserCheckError) {
+        onUserCheckFailed(result.error, useToast = true)
+        finish()
     }
 
     private fun onUnlockClicked() {
