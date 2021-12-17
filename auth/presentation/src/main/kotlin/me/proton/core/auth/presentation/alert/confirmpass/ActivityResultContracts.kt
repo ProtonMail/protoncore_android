@@ -24,6 +24,7 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
+import me.proton.core.auth.presentation.ui.ConfirmPasswordActivity
 
 class StartConfirmPassword : ActivityResultContract<ConfirmPasswordInput, ConfirmPasswordResult?>() {
     override fun createIntent(context: Context, input: ConfirmPasswordInput?): Intent =

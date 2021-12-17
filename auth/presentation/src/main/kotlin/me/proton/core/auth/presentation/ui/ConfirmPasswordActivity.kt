@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.alert.confirmpass
+package me.proton.core.auth.presentation.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -45,7 +45,7 @@ class ConfirmPasswordActivity :
             ) { result ->
                 val intent = Intent().putExtra(
                     ARG_RESULT,
-                    ConfirmPasswordResult(confirmed = result?.confirmed)
+                    ConfirmPasswordResult(result?.state)
                 )
                 setResult(Activity.RESULT_OK, intent)
                 finish()

@@ -22,8 +22,6 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.CookieSessionId
-import me.proton.core.network.domain.scopes.MissingScopeResult
-import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
@@ -77,10 +75,6 @@ class MockApiClient : ApiClient {
 
     override fun forceUpdate(errorMessage: String) {
         forceUpdated = true
-    }
-
-    override suspend fun missingScope(scope: Scope): MissingScopeResult {
-        return MissingScopeResult.Failure
     }
 }
 

@@ -16,19 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.data.db
+package me.proton.core.network.domain.scopes
 
-import androidx.room.TypeConverter
-import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.client.ClientIdType
+import kotlinx.coroutines.flow.MutableStateFlow
 
-class HumanVerificationConverters {
+interface MissingScopeListener {
 
-    @TypeConverter
-    fun fromHumanVerificationStateToString(value: HumanVerificationState?): String? = value?.name
+    val stateFlow: MutableStateFlow<MissingScopeState>
 
-    @TypeConverter
-    fun fromStringToHumanVerificationState(value: String?): HumanVerificationState? = value?.let {
-        HumanVerificationState.valueOf(value)
-    }
+    /**
+     * Called when a scope is missing for the user to complete an operation.
+     */
+    suspend fun onMissingScope(scope: Scope): MissingScopeResult
+
+    /**
+     * Called on a missing scope result success.
+     */
+    suspend fun onMissingScopeSuccess()
+
+    /**
+     * Called on a missing scope result failure.
+     */
+    suspend fun onMissingScopeFailure()
 }

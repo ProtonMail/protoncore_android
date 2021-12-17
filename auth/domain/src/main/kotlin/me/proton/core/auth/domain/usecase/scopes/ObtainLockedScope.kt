@@ -48,7 +48,7 @@ class ObtainLockedScope @Inject constructor(
         )
 
         password.decrypt(keyStoreCrypto).toByteArray().use {
-            val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
+            val clientProofs = srpCrypto.generateSrpProofs(
                 username = username,
                 password = it.array,
                 version = authInfo.version.toLong(),

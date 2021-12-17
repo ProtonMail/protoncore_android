@@ -51,6 +51,7 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionListener
@@ -88,6 +89,7 @@ internal class ApiManagerTests {
     )
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
+    private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
 
     private lateinit var apiManagerFactory: ApiManagerFactory
     private lateinit var apiManager: ApiManager<TestRetrofitApi>
@@ -138,6 +140,7 @@ internal class ApiManagerTests {
                 sessionListener,
                 humanVerificationProvider,
                 humanVerificationListener,
+                missingScopeListener,
                 mockk(),
                 scope,
                 cache = { null },

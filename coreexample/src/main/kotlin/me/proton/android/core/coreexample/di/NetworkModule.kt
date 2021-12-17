@@ -49,6 +49,7 @@ import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.serverconnection.ApiConnectionListener
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -114,6 +115,7 @@ class NetworkModule {
         sessionListener: SessionListener,
         humanVerificationProvider: HumanVerificationProvider,
         humanVerificationListener: HumanVerificationListener,
+        missingScopeListener: MissingScopeListener,
         extraHeaderProvider: ExtraHeaderProvider,
         apiConnectionListener: ApiConnectionListener? = null
     ): ApiManagerFactory {
@@ -138,6 +140,7 @@ class NetworkModule {
             sessionListener,
             humanVerificationProvider,
             humanVerificationListener,
+            missingScopeListener,
             protonCookieStore,
             CoroutineScope(Job() + Dispatchers.Default),
             certificatePins,

@@ -16,19 +16,40 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.data.db
+package me.proton.core.network.domain.scopes
 
-import androidx.room.TypeConverter
-import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.client.ClientIdType
+enum class MissingScopeState {
 
-class HumanVerificationConverters {
+    Default,
 
-    @TypeConverter
-    fun fromHumanVerificationStateToString(value: HumanVerificationState?): String? = value?.name
+    /**
+     * A scope is needed.
+     *
+     * Note: Usually followed by either [MissingScopeSuccess] or [MissingScopeFailed].
+     *
+     * @see [MissingScopeSuccess]
+     * @see [MissingScopeFailed].
+     */
+    MissingScopeNeeded,
 
-    @TypeConverter
-    fun fromStringToHumanVerificationState(value: String?): HumanVerificationState? = value?.let {
-        HumanVerificationState.valueOf(value)
+    /**
+     * The missing scope has been obtained successfully.
+     */
+    MissingScopeSuccess,
+
+    /**
+     * The user has not verified and the scope has not been granted.
+     */
+    MissingScopeFailed;
+
+    var missingScope: Scope? = null
+
+    constructor()
+
+    // custom constructors
+    constructor(
+        missingScope: Scope
+    ) {
+        this.missingScope = missingScope
     }
 }

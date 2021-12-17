@@ -38,7 +38,7 @@ fun Details.toHumanVerificationEntity(): HumanVerificationAvailableMethods =
 
 fun Details.toMissingScopes(): MissingScopes =
     MissingScopes(
-        value = missingScopes!!.mapNotNull {
+        scopes = missingScopes!!.mapNotNull {
             Scope.getByValue(it)
         }
     )

@@ -18,8 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.medium.confirmpassword
 
-import me.proton.core.account.domain.entity.AccountState.Ready
-import me.proton.core.account.domain.entity.SessionState.Authenticated
 import me.proton.core.test.android.robots.confirmpassword.ConfirmPasswordRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
@@ -28,65 +26,42 @@ import org.junit.Before
 import org.junit.Test
 
 class ConfirmPasswordTests : BaseTest() {
-
     private val confirmPasswordRobot = ConfirmPasswordRobot()
     private val user = users.getUser()
 
     @Before
     fun triggerConfirmPassword() {
         quark.jailUnban()
-
         login(user)
 
-    }
-
-    @Test
-    @SmokeTest
-    fun closeConfirmPassword() {
-        CoreexampleRobot().lockScopes()
-
-        CoreexampleRobot()
-            .confirmPasswordLocked()
-            .verify { confirmPasswordElementsDisplayed() }
-
-        confirmPasswordRobot
-            .cancel<CoreexampleRobot>()
-            .verify {
-                accountSwitcherDisplayed()
-            }
-    }
-
-    @Test
-    fun lockedScope() {
-        CoreexampleRobot().lockScopes()
-
-        CoreexampleRobot()
-            .confirmPasswordLocked()
-            .verify { confirmPasswordElementsDisplayed() }
-
-        confirmPasswordRobot
-            .setPassword(user.password)
-            .enter<CoreexampleRobot>()
-            .verify {
-                accountSwitcherDisplayed()
-                userStateIs(user, Ready, Authenticated)
-            }
-    }
-
-    @Test
-    fun passwordScope() {
         CoreexampleRobot().lockScopes()
 
         CoreexampleRobot()
             .confirmPasswordPassword()
             .verify { confirmPasswordElementsDisplayed() }
+    }
 
+    @Test
+    @SmokeTest
+    fun closeConfirmPassword() {
+        confirmPasswordRobot
+            .cancel<CoreexampleRobot>()
+            .verify { primaryUserIs(user) }
+    }
+
+    @Test
+    fun lockedScope() {
         confirmPasswordRobot
             .setPassword(user.password)
             .enter<CoreexampleRobot>()
-            .verify {
-                accountSwitcherDisplayed()
-                userStateIs(user, Ready, Authenticated)
-            }
+            .verify { primaryUserIs(user) }
+    }
+
+    @Test
+    fun passwordScope() {
+        confirmPasswordRobot
+            .setPassword(user.password)
+            .enter<CoreexampleRobot>()
+            .verify { primaryUserIs(user) }
     }
 }

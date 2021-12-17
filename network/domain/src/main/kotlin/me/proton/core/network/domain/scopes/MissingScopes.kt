@@ -18,9 +18,6 @@
 
 package me.proton.core.network.domain.scopes
 
-/**
- * Holds the missing scopes.
- */
 data class MissingScopes(
-    val value: List<Scope>? = null
+    val scopes: List<Scope>? = null
 )

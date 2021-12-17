@@ -25,12 +25,12 @@ import io.mockk.mockk
 import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.network.domain.ApiBackend
-import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes.MISSING_SCOPE
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.MissingScopes
 import me.proton.core.network.domain.scopes.Scope
@@ -45,7 +45,7 @@ class MissingScopeHandlerTest {
 
     private val clientIdProvider = mockk<ClientIdProvider>()
     private val apiBackend = mockk<ApiBackend<Any>>()
-    private val apiClient = mockk<ApiClient>(relaxed = true)
+    private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
 
     @BeforeTest
     fun beforeTest() {
@@ -64,11 +64,11 @@ class MissingScopeHandlerTest {
             )
         )
 
-        coEvery { apiClient.missingScope(any()) } returns MissingScopeResult.Success
+        coEvery { missingScopeListener.onMissingScope(any()) } returns MissingScopeResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
         val missingScopeHandler =
-            MissingScopeHandler<Any>(sessionId, clientIdProvider, apiClient)
+            MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = apiBackend,
@@ -77,7 +77,7 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 1) { apiClient.missingScope(Scope.LOCKED) }
+        coVerify(exactly = 1) { missingScopeListener.onMissingScope(Scope.LOCKED) }
     }
 
     @Test
@@ -92,10 +92,10 @@ class MissingScopeHandlerTest {
             )
         )
 
-        coEvery { apiClient.missingScope(any()) } returns MissingScopeResult.Success
+        coEvery { missingScopeListener.onMissingScope(any()) } returns MissingScopeResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, apiClient)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = apiBackend,
@@ -104,7 +104,7 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 1) { apiClient.missingScope(Scope.PASSWORD) }
+        coVerify(exactly = 1) { missingScopeListener.onMissingScope(Scope.PASSWORD) }
     }
 
     @Test
@@ -119,11 +119,11 @@ class MissingScopeHandlerTest {
             )
         )
 
-        coEvery { apiClient.missingScope(any()) } returns MissingScopeResult.Success
+        coEvery { missingScopeListener.onMissingScope(any()) } returns MissingScopeResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
         val missingScopeHandler =
-            MissingScopeHandler<Any>(sessionId, clientIdProvider, apiClient)
+            MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = apiBackend,
@@ -132,7 +132,7 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 1) { apiClient.missingScope(Scope.LOCKED) }
+        coVerify(exactly = 1) { missingScopeListener.onMissingScope(Scope.LOCKED) }
     }
 
     @Test
@@ -147,10 +147,10 @@ class MissingScopeHandlerTest {
             )
         )
 
-        coEvery { apiClient.missingScope(any()) } returns MissingScopeResult.Success
+        coEvery { missingScopeListener.onMissingScope(any()) } returns MissingScopeResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns apiResult
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, apiClient)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = apiBackend,
@@ -159,7 +159,7 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 1) { apiClient.missingScope(Scope.PASSWORD) }
+        coVerify(exactly = 1) { missingScopeListener.onMissingScope(Scope.PASSWORD) }
     }
 
     @Test
@@ -173,7 +173,7 @@ class MissingScopeHandlerTest {
             )
         )
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, apiClient)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = mockk(),
@@ -182,7 +182,7 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 0) { apiClient.missingScope(any()) }
+        coVerify(exactly = 0) { missingScopeListener.onMissingScope(any()) }
     }
 
     @Test
@@ -193,7 +193,7 @@ class MissingScopeHandlerTest {
             null
         )
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, apiClient)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = mockk(),
@@ -202,14 +202,14 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 0) { apiClient.missingScope(any()) }
+        coVerify(exactly = 0) { missingScopeListener.onMissingScope(any()) }
     }
 
     @Test
     fun `test connectivity error does not invoke missing scope handler`() = runBlockingTest {
         val apiResult = ApiResult.Error.Connection(false)
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, apiClient)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = mockk(),
@@ -218,6 +218,6 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 0) { apiClient.missingScope(any()) }
+        coVerify(exactly = 0) { missingScopeListener.onMissingScope(any()) }
     }
 }

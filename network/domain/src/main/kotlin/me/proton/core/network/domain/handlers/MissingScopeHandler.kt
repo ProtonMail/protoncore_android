@@ -21,17 +21,16 @@ package me.proton.core.network.domain.handlers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.network.domain.ApiBackend
-import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes.MISSING_SCOPE
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.util.kotlin.CoreLogger
 
 /**
  * Handles the Missing one of the security scopes [LOCKED or PASSWORD] that is required for some of the operations
@@ -40,7 +39,7 @@ import me.proton.core.util.kotlin.CoreLogger
 class MissingScopeHandler<Api>(
     private val sessionId: SessionId?,
     private val clientIdProvider: ClientIdProvider,
-    private val apiClient: ApiClient
+    private val missingScopeListener: MissingScopeListener
 ) : ApiErrorHandler<Api> {
 
     override suspend fun <T> invoke(
@@ -48,21 +47,18 @@ class MissingScopeHandler<Api>(
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
-        // Do we have a clientId ?
         val clientId = clientIdProvider.getClientId(sessionId) ?: return error
 
-        // Recoverable with human verification ?
         if (error !is ApiResult.Error.Http || error.proton?.code != MISSING_SCOPE) return error
 
-        // Do we have details ?
         val details = error.proton.missingScopes ?: return error
 
-        // Only 1 coroutine at a time per clientId.
+        val scopes = details.scopes
+        if (scopes.isNullOrEmpty()) return error
+
         val shouldRetry = clientMutex(clientId).withLock {
-            // Don't attempt to verify if we did recently.
-            obtainMissingScope(details.value?.get(0))
+            obtainMissingScope(scopes.first())
         }
-        CoreLogger.d("CONF_PASS", "retry: $shouldRetry")
         val finalResult = if (shouldRetry) {
             backend(call)
         } else {
@@ -71,9 +67,8 @@ class MissingScopeHandler<Api>(
         return finalResult
     }
 
-    // Must be called within sessionMutex.
     private suspend fun obtainMissingScope(details: Scope?): Boolean {
-        return when (apiClient.missingScope(details!!)) {
+        return when (missingScopeListener.onMissingScope(details!!)) {
             MissingScopeResult.Success -> true
             MissingScopeResult.Failure -> false
         }
@@ -83,7 +78,7 @@ class MissingScopeHandler<Api>(
         private val staticMutex: Mutex = Mutex()
         private val clientMutexMap: MutableMap<ClientId, Mutex> = HashMap()
 
-        suspend fun clientMutex(clientId: ClientId) =
+        suspend fun clientMutex(clientId: ClientId): Mutex =
             staticMutex.withLock { clientMutexMap.getOrPut(clientId) { Mutex() } }
     }
 }

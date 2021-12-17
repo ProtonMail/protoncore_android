@@ -36,6 +36,10 @@ import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
 import me.proton.core.auth.presentation.viewmodel.ConfirmPasswordDialogViewModel
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.client.ClientIdType
+import me.proton.core.network.domain.client.getId
+import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.ProtectScreenConfiguration
@@ -44,7 +48,7 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-class ConfirmPasswordDialog : ProtonDialogFragment(R.layout.dialog_enter_password) {
+class ConfirmPasswordDialog : ProtonDialogFragment() {
 
     private val viewModel by viewModels<ConfirmPasswordDialogViewModel>()
 
@@ -75,14 +79,14 @@ class ConfirmPasswordDialog : ProtonDialogFragment(R.layout.dialog_enter_passwor
 
         viewModel.state.onEach {
             when (it) {
-                is ConfirmPasswordDialogViewModel.State.Success -> setResultAndDismiss(confirmed = true)
+                is ConfirmPasswordDialogViewModel.State.Success -> setResultAndDismiss(it.state)
                 is ConfirmPasswordDialogViewModel.State.ProcessingObtainScope ->
                     binding.enterButton.setLoading()
                 is ConfirmPasswordDialogViewModel.State.ProcessingSecondFactor -> {
                     // noop
                 }
                 is ConfirmPasswordDialogViewModel.State.Error.Message -> {
-                    setResultAndDismiss(confirmed = false)
+                    setResultAndDismiss(MissingScopeState.MissingScopeFailed)
                     binding.enterButton.setIdle()
                 }
                 is ConfirmPasswordDialogViewModel.State.Idle -> Unit
@@ -91,17 +95,18 @@ class ConfirmPasswordDialog : ProtonDialogFragment(R.layout.dialog_enter_passwor
                 }
             }.exhaustive
         }.launchIn(lifecycleScope)
-        viewModel.isSecondFactorNeeded(missingScope)
+        viewModel.checkForSecondFactorInput(missingScope)
 
         binding.enterButton.onClick {
             val password = binding.password.text.toString()
             val twoFactorCode = binding.twoFA.text.toString()
             when (missingScope) {
-                Scope.PASSWORD -> viewModel.unlockPassword(
+                Scope.PASSWORD -> viewModel.unlock(
+                    missingScope,
                     password,
                     if (twoFactorCode.isEmpty()) null else twoFactorCode
                 )
-                Scope.LOCKED -> viewModel.unlock(password)
+                Scope.LOCKED -> viewModel.unlock(missingScope, password, null)
             }.exhaustive
         }
 
@@ -114,15 +119,16 @@ class ConfirmPasswordDialog : ProtonDialogFragment(R.layout.dialog_enter_passwor
         }
     }
 
-    private fun setResultAndDismiss(confirmed: Boolean?) {
-        parentFragmentManager.setFragmentResult(
-            KEY_PASS_2FA_SET,
-            bundleOf(
-                BUNDLE_KEY_PASS_2FA_DATA to ConfirmPasswordResult(confirmed)
+    private fun setResultAndDismiss(state: MissingScopeState?) {
+        viewModel.onConfirmPasswordResult(state).invokeOnCompletion {
+            parentFragmentManager.setFragmentResult(
+                KEY_PASS_2FA_SET,
+                bundleOf(
+                    BUNDLE_KEY_PASS_2FA_DATA to ConfirmPasswordResult(state?.name)
+                )
             )
-        )
-
-        dismissAllowingStateLoss()
+            dismissAllowingStateLoss()
+        }
     }
 
     override fun onDismiss(dialog: DialogInterface) {

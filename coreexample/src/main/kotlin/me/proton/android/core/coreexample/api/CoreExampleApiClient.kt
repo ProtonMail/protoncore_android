@@ -19,18 +19,13 @@
 package me.proton.android.core.coreexample.api
 
 import android.os.Build
-import me.proton.core.auth.presentation.viewmodel.ConfirmPasswordViewModel
 import me.proton.core.network.domain.ApiClient
-import me.proton.core.network.domain.scopes.MissingScopeResult
-import me.proton.core.network.domain.scopes.Scope
 import java.util.Locale
 import javax.inject.Inject
 
 const val VERSION_NAME = "1.14.0" // imitating ProtonMail version
 
-class CoreExampleApiClient @Inject constructor(
-    private val confirmPasswordViewModel: ConfirmPasswordViewModel
-) : ApiClient {
+class CoreExampleApiClient @Inject constructor() : ApiClient {
     /**
      * Tells the lib if DoH should be used in a given moment (based e.g. on user setting or whether
      * VPN connection is active). Will be checked before  each API call.
@@ -74,7 +69,4 @@ class CoreExampleApiClient @Inject constructor(
     override fun forceUpdate(errorMessage: String) {
         // dummy example, not implemented for now
     }
-
-    override suspend fun missingScope(scope: Scope): MissingScopeResult =
-        confirmPasswordViewModel.confirmPassword(missingScope = scope)
 }

@@ -29,7 +29,6 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.android.core.coreexample.api.CoreExampleRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
-import me.proton.core.auth.presentation.ConfirmPasswordOrchestrator
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.presentation.app.AppLifecycleObserver
@@ -68,9 +67,6 @@ object ApplicationModule {
     @Singleton
     fun provideWorkManager(@ApplicationContext context: Context): WorkManager =
         WorkManager.getInstance(context)
-
-    @Provides
-    fun provideConfirmPasswordOrchestrator(): ConfirmPasswordOrchestrator = ConfirmPasswordOrchestrator()
 }
 
 @Module

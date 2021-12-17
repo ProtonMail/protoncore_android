@@ -20,8 +20,9 @@ package me.proton.core.auth.presentation.entity.confirmpass
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import me.proton.core.network.domain.scopes.MissingScopeState
 
 @Parcelize
 data class ConfirmPasswordResult(
-    val confirmed: Boolean?
+    val state: String?
 ) : Parcelable

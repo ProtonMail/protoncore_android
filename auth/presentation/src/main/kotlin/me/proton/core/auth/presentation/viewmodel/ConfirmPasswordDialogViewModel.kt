@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
@@ -28,6 +29,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.auth.domain.entity.SecondFactor
@@ -36,6 +38,9 @@ import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.scopes.MissingScopeListener
+import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
@@ -47,7 +52,8 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val obtainAuthInfo: ObtainAuthInfo,
     private val obtainLockedScope: ObtainLockedScope,
-    private val obtainPasswordScope: ObtainPasswordScope
+    private val obtainPasswordScope: ObtainPasswordScope,
+    private val missingScopeListener: MissingScopeListener
 ) : ProtonViewModel() {
 
     private val _state = MutableStateFlow<State>(State.Idle)
@@ -57,7 +63,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         object Idle : State()
         object ProcessingSecondFactor : State()
         object ProcessingObtainScope : State()
-        object Success : State()
+        data class Success(val state: MissingScopeState) : State()
         data class SecondFactorResult(val needed: Boolean) : State()
 
         sealed class Error : State() {
@@ -65,7 +71,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         }
     }
 
-    fun isSecondFactorNeeded(missingScope: Scope) = flow {
+    fun checkForSecondFactorInput(missingScope: Scope) = flow {
         emit(State.ProcessingSecondFactor)
         accountManager.getPrimaryAccount().filterNotNull().collect { account ->
             val authInfo = obtainAuthInfo(account.userId, account.username)
@@ -83,12 +89,25 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    fun unlock(password: String) = flow {
+    fun unlock(missingScope: Scope, password: String, twoFactorCode: String?) = flow {
         emit(State.ProcessingObtainScope)
         accountManager.getPrimaryAccount().filterNotNull().collect { account ->
-            val result = obtainLockedScope(account.userId, account.username, password.encrypt(keyStoreCrypto))
+            val result = when (missingScope) {
+                Scope.PASSWORD -> obtainPasswordScope(
+                    account.userId,
+                    account.username,
+                    password.encrypt(keyStoreCrypto),
+                    twoFactorCode
+                )
+                Scope.LOCKED -> obtainLockedScope(account.userId, account.username, password.encrypt(keyStoreCrypto))
+            }.exhaustive
+
             if (result) {
-                emit(State.Success)
+                emit(
+                    State.Success(
+                        if (result) MissingScopeState.MissingScopeSuccess else MissingScopeState.MissingScopeFailed
+                    )
+                )
             } else {
                 emit(State.Error.Message(message = null))
             }
@@ -99,25 +118,10 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
 
-
-    fun unlockPassword(password: String, twoFactorCode: String?) = flow {
-        emit(State.ProcessingObtainScope)
-        accountManager.getPrimaryAccount().filterNotNull().collect { account ->
-            val result = obtainPasswordScope(
-                account.userId,
-                account.username,
-                password.encrypt(keyStoreCrypto),
-                twoFactorCode
-            )
-            if (result) {
-                emit(State.Success)
-            } else {
-                emit(State.Error.Message(message = null))
-            }
-        }
-    }.catch { error ->
-        emit(State.Error.Message(error.message))
-    }.onEach {
-        _state.tryEmit(it)
-    }.launchIn(viewModelScope)
+    fun onConfirmPasswordResult(state: MissingScopeState?): Job = viewModelScope.launch {
+        when (state) {
+            MissingScopeState.MissingScopeSuccess -> missingScopeListener.onMissingScopeSuccess()
+            else -> missingScopeListener.onMissingScopeFailure()
+        }.exhaustive
+    }
 }

@@ -36,7 +36,6 @@ import me.proton.android.core.coreexample.ui.ContactsActivity
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
-import me.proton.android.core.coreexample.viewmodel.ConfirmPasswordViewModel
 import me.proton.android.core.coreexample.viewmodel.ReportsViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
@@ -49,7 +48,6 @@ import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.auth.presentation.ui.AddAccountActivity
-import me.proton.core.auth.presentation.viewmodel.ConfirmPasswordViewModel
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.alert.ForceUpdateActivity
 import me.proton.core.presentation.utils.onClick
@@ -74,7 +72,6 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
     private val userAddressKeyViewModel: UserAddressKeyViewModel by viewModels()
     private val publicAddressViewModel: PublicAddressViewModel by viewModels()
     private val settingsViewModel: UserSettingsViewModel by viewModels()
-    private val confirmPasswordViewModel: ConfirmPasswordViewModel by viewModels()
     private val removeScopeViewModel: RemoveScopeViewModel by viewModels()
 
     @SuppressLint("SetTextI18n")
@@ -86,7 +83,6 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         reportsViewModel.register(this)
         plansViewModel.register(this)
         settingsViewModel.register(this)
-        confirmPasswordViewModel.register(this)
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
@@ -119,7 +115,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             settingsPassword.onClick { settingsViewModel.onPasswordManagementClicked(this@MainActivity) }
 
             triggerConfirmPasswordLocked.onClick {
-                lifecycleScope.launch(Dispatchers.IO) {
+                lifecycleScope.launch {
                     accountViewModel.getPrimaryUserId().first()?.let {
                         coreExampleRepository.triggerConfirmPasswordLockedScope(it)
                     }
@@ -127,7 +123,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             }
 
             triggerConfirmPasswordPass.onClick {
-                lifecycleScope.launch(Dispatchers.IO) {
+                lifecycleScope.launch {
                     accountViewModel.getPrimaryUserId().first()?.let {
                         coreExampleRepository.triggerConfirmPasswordPasswordScope(it)
                     }

@@ -40,6 +40,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.network.domain.scopes.MissingScopeListener
+import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -58,6 +60,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
     private val obtainAuthInfo = mockk<ObtainAuthInfo>(relaxed = true)
     private val obtainLockedScope = mockk<ObtainLockedScope>(relaxed = true)
     private val obtainPasswordScope = mockk<ObtainPasswordScope>(relaxed = true)
+    private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
     // endregion
 
     // region test data
@@ -107,7 +110,8 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             keyStoreCrypto,
             obtainAuthInfo,
             obtainLockedScope,
-            obtainPasswordScope
+            obtainPasswordScope,
+            missingScopeListener
         )
     }
 
@@ -122,7 +126,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
         coEvery { obtainLockedScope.invoke(testUserId, testUsername, testPasswordEncrypted) } returns true
         viewModel.state.test {
             // WHEN
-            viewModel.unlock(testPassword)
+            viewModel.unlock(Scope.LOCKED, testPassword, null)
 
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
@@ -146,7 +150,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
 
         viewModel.state.test {
             // WHEN
-            viewModel.unlock(testPassword)
+            viewModel.unlock(Scope.LOCKED, testPassword, null)
 
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
@@ -164,7 +168,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
         coEvery { obtainPasswordScope.invoke(testUserId, testUsername, testPasswordEncrypted, null) } returns true
         viewModel.state.test {
             // WHEN
-            viewModel.unlockPassword(testPassword, null)
+            viewModel.unlock(Scope.PASSWORD, testPassword, null)
 
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
@@ -194,7 +198,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
         )
         viewModel.state.test {
             // WHEN
-            viewModel.unlockPassword(testPassword, null)
+            viewModel.unlock(Scope.PASSWORD, testPassword, null)
 
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
@@ -220,7 +224,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
         } returns true
         viewModel.state.test {
             // WHEN
-            viewModel.unlockPassword(testPassword, test2FACode)
+            viewModel.unlock(Scope.PASSWORD, testPassword, test2FACode)
 
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
@@ -250,7 +254,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
         )
         viewModel.state.test {
             // WHEN
-            viewModel.unlockPassword(testPassword, test2FACode)
+            viewModel.unlock(Scope.PASSWORD, testPassword, test2FACode)
 
             // THEN
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())

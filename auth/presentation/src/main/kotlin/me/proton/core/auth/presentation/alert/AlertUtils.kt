@@ -96,6 +96,8 @@ fun FragmentManager.registerConfirmPasswordResultLauncher(
 
     return FragmentDialogResultLauncher(
         requestKey = ConfirmPasswordDialog.KEY_PASS_2FA_SET,
-        show = { input -> showConfirmPasswordDialog(missingScope = input.missingScope) }
+        show = { input ->
+            showConfirmPasswordDialog(missingScope = input.missingScope)
+        }
     )
 }
