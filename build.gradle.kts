@@ -114,9 +114,15 @@ protonCoverageMultiModuleOptions {
     )
 }
 
-apiValidation {
-    /**
-     * Sub-projects that are excluded from API validation
-     */
-    ignoredProjects.addAll(listOf("coreexample"))
+// Only evaluate binary api for to be published projects, see https://github.com/Kotlin/binary-compatibility-validator
+subprojects {
+    afterEvaluate {
+        val publishOption = extensions.findByType(PublishOptionExtension::class.java)
+        val shouldBePublishedAsLib = publishOption?.shouldBePublishedAsLib ?: false
+        if (!shouldBePublishedAsLib) {
+            rootProject.apiValidation {
+                ignoredProjects.add(name)
+            }
+        }
+    }
 }

@@ -1,0 +1,86 @@
+public final class me/proton/core/util/android/workmanager/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/util/android/workmanager/ObserveExtensionsKt {
+	public static final fun observe (Landroidx/work/WorkRequest;Landroidx/work/WorkManager;Landroidx/lifecycle/LifecycleOwner;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/proton/core/util/android/workmanager/WorkRequestObserver {
+	public fun <init> ()V
+	public final fun onFailure (Lkotlin/jvm/functions/Function0;)V
+	public final fun onStateChange (Lkotlin/jvm/functions/Function1;)V
+	public final fun onSuccess (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/proton/core/util/android/workmanager/activity/ExtensionsKt {
+	public static final fun doOnSuccess (Landroidx/work/WorkRequest;Landroidx/fragment/app/FragmentActivity;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public static synthetic fun doOnSuccess$default (Landroidx/work/WorkRequest;Landroidx/fragment/app/FragmentActivity;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroidx/work/WorkRequest;
+	public static final fun getWorkManager (Landroidx/fragment/app/FragmentActivity;)Landroidx/work/WorkManager;
+	public static final fun observe (Landroidx/work/WorkRequest;Landroidx/fragment/app/FragmentActivity;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;)V
+	public static final fun observe (Landroidx/work/WorkRequest;Landroidx/fragment/app/FragmentActivity;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun observe$default (Landroidx/work/WorkRequest;Landroidx/fragment/app/FragmentActivity;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun observe$default (Landroidx/work/WorkRequest;Landroidx/fragment/app/FragmentActivity;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun observeInfo (Landroidx/work/WorkRequest;Landroidx/fragment/app/FragmentActivity;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun observeInfo$default (Landroidx/work/WorkRequest;Landroidx/fragment/app/FragmentActivity;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public abstract interface class me/proton/core/util/android/workmanager/activity/WorkManagerActivity : androidx/lifecycle/LifecycleOwner {
+	public abstract fun doOnFailure (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function0;)Landroidx/work/WorkRequest;
+	public abstract fun doOnStateChange (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public abstract fun doOnSuccess (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public abstract fun getWorkManger ()Landroidx/work/WorkManager;
+	public abstract fun observe (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun observe (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun observeInfo (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/proton/core/util/android/workmanager/activity/WorkManagerActivity$DefaultImpls {
+	public static fun doOnFailure (Lme/proton/core/util/android/workmanager/activity/WorkManagerActivity;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function0;)Landroidx/work/WorkRequest;
+	public static fun doOnStateChange (Lme/proton/core/util/android/workmanager/activity/WorkManagerActivity;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public static fun doOnSuccess (Lme/proton/core/util/android/workmanager/activity/WorkManagerActivity;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public static fun getWorkManger (Lme/proton/core/util/android/workmanager/activity/WorkManagerActivity;)Landroidx/work/WorkManager;
+	public static fun observe (Lme/proton/core/util/android/workmanager/activity/WorkManagerActivity;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)V
+	public static fun observe (Lme/proton/core/util/android/workmanager/activity/WorkManagerActivity;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun observe$default (Lme/proton/core/util/android/workmanager/activity/WorkManagerActivity;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static fun observeInfo (Lme/proton/core/util/android/workmanager/activity/WorkManagerActivity;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/proton/core/util/android/workmanager/fragment/ExtensionsKt {
+	public static final fun doOnSuccess (Landroidx/work/WorkRequest;Landroidx/fragment/app/Fragment;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public static synthetic fun doOnSuccess$default (Landroidx/work/WorkRequest;Landroidx/fragment/app/Fragment;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Landroidx/work/WorkRequest;
+	public static final fun getWorkManager (Landroidx/fragment/app/Fragment;)Landroidx/work/WorkManager;
+	public static final fun observe (Landroidx/work/WorkRequest;Landroidx/fragment/app/Fragment;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;)V
+	public static final fun observe (Landroidx/work/WorkRequest;Landroidx/fragment/app/Fragment;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun observe$default (Landroidx/work/WorkRequest;Landroidx/fragment/app/Fragment;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun observe$default (Landroidx/work/WorkRequest;Landroidx/fragment/app/Fragment;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun observeInfo (Landroidx/work/WorkRequest;Landroidx/fragment/app/Fragment;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun observeInfo$default (Landroidx/work/WorkRequest;Landroidx/fragment/app/Fragment;Landroidx/work/WorkManager;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public abstract interface class me/proton/core/util/android/workmanager/fragment/WorkManagerFragment : androidx/lifecycle/LifecycleOwner {
+	public abstract fun doOnFailure (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function0;)Landroidx/work/WorkRequest;
+	public abstract fun doOnStateChange (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public abstract fun doOnSuccess (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public abstract fun getViewLifecycleOwner ()Landroidx/lifecycle/LifecycleOwner;
+	public abstract fun getWorkManger ()Landroidx/work/WorkManager;
+	public abstract fun observe (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun observe (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun observeInfo (Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun requireContext ()Landroid/content/Context;
+}
+
+public final class me/proton/core/util/android/workmanager/fragment/WorkManagerFragment$DefaultImpls {
+	public static fun doOnFailure (Lme/proton/core/util/android/workmanager/fragment/WorkManagerFragment;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function0;)Landroidx/work/WorkRequest;
+	public static fun doOnStateChange (Lme/proton/core/util/android/workmanager/fragment/WorkManagerFragment;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public static fun doOnSuccess (Lme/proton/core/util/android/workmanager/fragment/WorkManagerFragment;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)Landroidx/work/WorkRequest;
+	public static fun getWorkManger (Lme/proton/core/util/android/workmanager/fragment/WorkManagerFragment;)Landroidx/work/WorkManager;
+	public static fun observe (Lme/proton/core/util/android/workmanager/fragment/WorkManagerFragment;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)V
+	public static fun observe (Lme/proton/core/util/android/workmanager/fragment/WorkManagerFragment;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun observe$default (Lme/proton/core/util/android/workmanager/fragment/WorkManagerFragment;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static fun observeInfo (Lme/proton/core/util/android/workmanager/fragment/WorkManagerFragment;Landroidx/work/WorkRequest;Lkotlin/jvm/functions/Function1;)V
+}
+

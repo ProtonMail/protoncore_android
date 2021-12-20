@@ -1,0 +1,67 @@
+public final class me/proton/core/data/room/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract class me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/data/room/db/BaseDatabase : androidx/room/RoomDatabase, me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/data/room/db/BaseDatabase$Companion;
+	public fun <init> ()V
+	public fun inTransaction (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/data/room/db/BaseDatabase$Companion {
+}
+
+public final class me/proton/core/data/room/db/CommonConverters {
+	public static final field Companion Lme/proton/core/data/room/db/CommonConverters$Companion;
+	public fun <init> ()V
+	public final fun fromListOfStringToString (Ljava/util/List;)Ljava/lang/String;
+	public final fun fromProductToString (Lme/proton/core/domain/entity/Product;)Ljava/lang/String;
+	public final fun fromSessionIdToString (Lme/proton/core/network/domain/session/SessionId;)Ljava/lang/String;
+	public final fun fromStringToListOfString (Ljava/lang/String;)Ljava/util/List;
+	public final fun fromStringToProduct (Ljava/lang/String;)Lme/proton/core/domain/entity/Product;
+	public final fun fromStringToSessionId (Ljava/lang/String;)Lme/proton/core/network/domain/session/SessionId;
+	public final fun fromStringToUserId (Ljava/lang/String;)Lme/proton/core/domain/entity/UserId;
+	public final fun fromUserIdToString (Lme/proton/core/domain/entity/UserId;)Ljava/lang/String;
+}
+
+public final class me/proton/core/data/room/db/CommonConverters$Companion {
+	public final fun fromListOfStringToString (Ljava/util/List;)Ljava/lang/String;
+	public final fun fromStringToListOfString (Ljava/lang/String;)Ljava/util/List;
+}
+
+public abstract interface class me/proton/core/data/room/db/Database {
+	public abstract fun inTransaction (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/data/room/db/extension/RoomDatabaseKt {
+	public static final fun open (Landroidx/room/RoomDatabase;)Landroidx/sqlite/db/SupportSQLiteDatabase;
+	public static final fun openAndClose (Landroidx/room/RoomDatabase;)V
+}
+
+public final class me/proton/core/data/room/db/extension/SupportSQLiteDatabaseKt {
+	public static final fun addTableColumn (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public static synthetic fun addTableColumn$default (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
+	public static final fun dropTable (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;)V
+	public static final fun dropTableColumn (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/lang/String;)V
+	public static final fun dropTableColumn (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/util/List;)V
+	public static final fun dropTableContent (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;)V
+	public static final fun getTableColumns (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;)Ljava/util/List;
+	public static final fun recreateTable (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)V
+	public static final fun recreateTable (Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Ljava/util/List;)V
+}
+
+public abstract interface class me/proton/core/data/room/db/migration/DatabaseMigration {
+	public abstract fun migrate (Landroidx/sqlite/db/SupportSQLiteDatabase;)V
+}
+

@@ -1,0 +1,259 @@
+public final class me/proton/core/mailsettings/domain/entity/ComposerMode : java/lang/Enum {
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/ComposerMode$Companion;
+	public static final field Maximized Lme/proton/core/mailsettings/domain/entity/ComposerMode;
+	public static final field Normal Lme/proton/core/mailsettings/domain/entity/ComposerMode;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/ComposerMode;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/ComposerMode;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/ComposerMode$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/MailSettings {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Integer;Lme/proton/core/domain/type/StringEnum;Lme/proton/core/domain/type/StringEnum;Lme/proton/core/domain/type/StringEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component10 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component11 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component12 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component13 ()Ljava/lang/Boolean;
+	public final fun component14 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component15 ()Ljava/lang/Integer;
+	public final fun component16 ()Lme/proton/core/domain/type/StringEnum;
+	public final fun component17 ()Lme/proton/core/domain/type/StringEnum;
+	public final fun component18 ()Lme/proton/core/domain/type/StringEnum;
+	public final fun component19 ()Ljava/lang/Boolean;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component20 ()Ljava/lang/Boolean;
+	public final fun component21 ()Ljava/lang/Boolean;
+	public final fun component22 ()Ljava/lang/Boolean;
+	public final fun component23 ()Ljava/lang/Boolean;
+	public final fun component24 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component25 ()Ljava/lang/Boolean;
+	public final fun component26 ()Ljava/lang/Boolean;
+	public final fun component27 ()Ljava/lang/Boolean;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/Boolean;
+	public final fun component5 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component6 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component7 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component8 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun component9 ()Lme/proton/core/domain/type/IntEnum;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Integer;Lme/proton/core/domain/type/StringEnum;Lme/proton/core/domain/type/StringEnum;Lme/proton/core/domain/type/StringEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/mailsettings/domain/entity/MailSettings;
+	public static synthetic fun copy$default (Lme/proton/core/mailsettings/domain/entity/MailSettings;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Integer;Lme/proton/core/domain/type/StringEnum;Lme/proton/core/domain/type/StringEnum;Lme/proton/core/domain/type/StringEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/mailsettings/domain/entity/MailSettings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAttachPublicKey ()Ljava/lang/Boolean;
+	public final fun getAutoSaveContacts ()Ljava/lang/Boolean;
+	public final fun getComposerMode ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getConfirmLink ()Ljava/lang/Boolean;
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getDraftMimeType ()Lme/proton/core/domain/type/StringEnum;
+	public final fun getEnableFolderColor ()Ljava/lang/Boolean;
+	public final fun getInheritParentFolderColor ()Ljava/lang/Boolean;
+	public final fun getMessageButtons ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getNumMessagePerPage ()Ljava/lang/Integer;
+	public final fun getPgpScheme ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getPmSignature ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getPromptPin ()Ljava/lang/Boolean;
+	public final fun getReceiveMimeType ()Lme/proton/core/domain/type/StringEnum;
+	public final fun getRightToLeft ()Ljava/lang/Boolean;
+	public final fun getShortcuts ()Ljava/lang/Boolean;
+	public final fun getShowImages ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getShowMimeType ()Lme/proton/core/domain/type/StringEnum;
+	public final fun getShowMoved ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getSign ()Ljava/lang/Boolean;
+	public final fun getSignature ()Ljava/lang/String;
+	public final fun getStickyLabels ()Ljava/lang/Boolean;
+	public final fun getSwipeLeft ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getSwipeRight ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public final fun getViewLayout ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getViewMode ()Lme/proton/core/domain/type/IntEnum;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/MessageButtons : java/lang/Enum {
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/MessageButtons$Companion;
+	public static final field ReadFirst Lme/proton/core/mailsettings/domain/entity/MessageButtons;
+	public static final field UnreadFirst Lme/proton/core/mailsettings/domain/entity/MessageButtons;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/MessageButtons;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/MessageButtons;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/MessageButtons$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/MimeType : java/lang/Enum {
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/MimeType$Companion;
+	public static final field Html Lme/proton/core/mailsettings/domain/entity/MimeType;
+	public static final field Mixed Lme/proton/core/mailsettings/domain/entity/MimeType;
+	public static final field PlainText Lme/proton/core/mailsettings/domain/entity/MimeType;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/MimeType;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/MimeType;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/MimeType$Companion {
+	public final fun enumOf (Ljava/lang/String;)Lme/proton/core/domain/type/StringEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/PMSignature : java/lang/Enum {
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/PMSignature$Companion;
+	public static final field Disabled Lme/proton/core/mailsettings/domain/entity/PMSignature;
+	public static final field Enabled Lme/proton/core/mailsettings/domain/entity/PMSignature;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/PMSignature;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/PMSignature;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/PMSignature$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/PackageType : java/lang/Enum {
+	public static final field ClearMime Lme/proton/core/mailsettings/domain/entity/PackageType;
+	public static final field Cleartext Lme/proton/core/mailsettings/domain/entity/PackageType;
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/PackageType$Companion;
+	public static final field EncryptedOutside Lme/proton/core/mailsettings/domain/entity/PackageType;
+	public static final field PgpInline Lme/proton/core/mailsettings/domain/entity/PackageType;
+	public static final field PgpMime Lme/proton/core/mailsettings/domain/entity/PackageType;
+	public static final field ProtonMail Lme/proton/core/mailsettings/domain/entity/PackageType;
+	public final fun getType ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/PackageType;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/PackageType;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/PackageType$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/ShowImage : java/lang/Enum {
+	public static final field Both Lme/proton/core/mailsettings/domain/entity/ShowImage;
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/ShowImage$Companion;
+	public static final field Embedded Lme/proton/core/mailsettings/domain/entity/ShowImage;
+	public static final field None Lme/proton/core/mailsettings/domain/entity/ShowImage;
+	public static final field Remote Lme/proton/core/mailsettings/domain/entity/ShowImage;
+	public final fun getValue ()I
+	public final fun includesEmbedded ()Z
+	public final fun includesRemote ()Z
+	public final fun toggleEmbedded ()Lme/proton/core/mailsettings/domain/entity/ShowImage;
+	public final fun toggleRemote ()Lme/proton/core/mailsettings/domain/entity/ShowImage;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/ShowImage;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/ShowImage;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/ShowImage$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/ShowMoved : java/lang/Enum {
+	public static final field Both Lme/proton/core/mailsettings/domain/entity/ShowMoved;
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/ShowMoved$Companion;
+	public static final field Drafts Lme/proton/core/mailsettings/domain/entity/ShowMoved;
+	public static final field None Lme/proton/core/mailsettings/domain/entity/ShowMoved;
+	public static final field Sent Lme/proton/core/mailsettings/domain/entity/ShowMoved;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/ShowMoved;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/ShowMoved;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/ShowMoved$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/SwipeAction : java/lang/Enum {
+	public static final field Archive Lme/proton/core/mailsettings/domain/entity/SwipeAction;
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/SwipeAction$Companion;
+	public static final field MarkRead Lme/proton/core/mailsettings/domain/entity/SwipeAction;
+	public static final field Spam Lme/proton/core/mailsettings/domain/entity/SwipeAction;
+	public static final field Star Lme/proton/core/mailsettings/domain/entity/SwipeAction;
+	public static final field Trash Lme/proton/core/mailsettings/domain/entity/SwipeAction;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/SwipeAction;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/SwipeAction;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/SwipeAction$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/ViewLayout : java/lang/Enum {
+	public static final field Column Lme/proton/core/mailsettings/domain/entity/ViewLayout;
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/ViewLayout$Companion;
+	public static final field Row Lme/proton/core/mailsettings/domain/entity/ViewLayout;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/ViewLayout;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/ViewLayout;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/ViewLayout$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/ViewMode : java/lang/Enum {
+	public static final field Companion Lme/proton/core/mailsettings/domain/entity/ViewMode$Companion;
+	public static final field ConversationGrouping Lme/proton/core/mailsettings/domain/entity/ViewMode;
+	public static final field NoConversationGrouping Lme/proton/core/mailsettings/domain/entity/ViewMode;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/ViewMode;
+	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/ViewMode;
+}
+
+public final class me/proton/core/mailsettings/domain/entity/ViewMode$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public abstract interface class me/proton/core/mailsettings/domain/repository/MailSettingsRepository {
+	public abstract fun getMailSettings (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getMailSettingsFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun updateAttachPublicKey (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateAutoSaveContacts (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateComposerMode (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/ComposerMode;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateConfirmLink (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateDisplayName (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateDraftMimeType (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/MimeType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateEnableFolderColor (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateInheritFolderColor (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateMailSettings (Lme/proton/core/mailsettings/domain/entity/MailSettings;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateMessageButtons (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/MessageButtons;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updatePGPScheme (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/PackageType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updatePMSignature (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/PMSignature;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updatePromptPin (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateReceiveMimeType (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/MimeType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateRightToLeft (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateShowImages (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/ShowImage;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateShowMimeType (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/MimeType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateShowMoved (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/ShowMoved;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateSign (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateSignature (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateStickyLabels (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateSwipeLeft (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/SwipeAction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateSwipeRight (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/SwipeAction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateViewLayout (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/ViewLayout;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateViewMode (Lme/proton/core/domain/entity/UserId;Lme/proton/core/mailsettings/domain/entity/ViewMode;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/mailsettings/domain/repository/MailSettingsRepository$DefaultImpls {
+	public static synthetic fun getMailSettings$default (Lme/proton/core/mailsettings/domain/repository/MailSettingsRepository;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun getMailSettingsFlow$default (Lme/proton/core/mailsettings/domain/repository/MailSettingsRepository;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/mailsettings/domain/repository/MailSettingsRepositoryKt {
+	public static final fun getMailSettingsOrNull (Lme/proton/core/mailsettings/domain/repository/MailSettingsRepository;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getMailSettingsOrNull$default (Lme/proton/core/mailsettings/domain/repository/MailSettingsRepository;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+

@@ -1,0 +1,716 @@
+public final class me/proton/core/user/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface annotation class me/proton/core/user/data/DefaultDomainHost : java/lang/annotation/Annotation {
+}
+
+public final class me/proton/core/user/data/UserAddressEvent {
+	public static final field Companion Lme/proton/core/user/data/UserAddressEvent$Companion;
+	public synthetic fun <init> (ILjava/lang/String;ILme/proton/core/key/data/api/response/AddressResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;ILme/proton/core/key/data/api/response/AddressResponse;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()Lme/proton/core/key/data/api/response/AddressResponse;
+	public final fun copy (Ljava/lang/String;ILme/proton/core/key/data/api/response/AddressResponse;)Lme/proton/core/user/data/UserAddressEvent;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/UserAddressEvent;Ljava/lang/String;ILme/proton/core/key/data/api/response/AddressResponse;ILjava/lang/Object;)Lme/proton/core/user/data/UserAddressEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAction ()I
+	public final fun getAddress ()Lme/proton/core/key/data/api/response/AddressResponse;
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/UserAddressEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/UserAddressEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/UserAddressEvent$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/UserAddressEvent;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/UserAddressEvent;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/UserAddressEvent$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/UserAddressEventListener : me/proton/core/eventmanager/domain/EventListener {
+	public fun <init> (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/user/domain/repository/UserAddressRepository;)V
+	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOrder ()I
+	public fun getType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
+	public fun inTransaction (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onCreate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onDelete (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResetAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onUpdate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/UserAddressEvents {
+	public static final field Companion Lme/proton/core/user/data/UserAddressEvents$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/user/data/UserAddressEvents;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/UserAddressEvents;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/user/data/UserAddressEvents;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddresses ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/UserAddressEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/UserAddressEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/UserAddressEvents$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/UserAddressEvents;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/UserAddressEvents;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/UserAddressEvents$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/UserAddressKeySecretProvider {
+	public fun <init> (Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public final fun generateUserAddressKey (ZLme/proton/core/user/domain/entity/UserAddress;Lme/proton/core/key/domain/entity/key/PrivateKey;Z)Lme/proton/core/user/domain/entity/UserAddressKey;
+	public final fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Lme/proton/core/user/domain/entity/UserAddressKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/UserAddressKeySecretProvider$UserAddressKeySecret {
+	public fun <init> (Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/crypto/common/keystore/EncryptedByteArray;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/user/data/UserAddressKeySecretProvider$UserAddressKeySecret;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/UserAddressKeySecretProvider$UserAddressKeySecret;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/user/data/UserAddressKeySecretProvider$UserAddressKeySecret;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPassphrase ()Lme/proton/core/crypto/common/keystore/EncryptedByteArray;
+	public final fun getSignature ()Ljava/lang/String;
+	public final fun getToken ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/user/data/UserAddressManagerImpl : me/proton/core/user/domain/UserAddressManager {
+	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public fun getAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAddresses (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAddressesFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun setupInternalAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateOrder (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/UserEventListener : me/proton/core/eventmanager/domain/EventListener {
+	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/user/domain/repository/UserRepository;)V
+	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOrder ()I
+	public fun getType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
+	public fun inTransaction (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResetAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onUpdate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/UserEvents {
+	public static final field Companion Lme/proton/core/user/data/UserEvents$Companion;
+	public synthetic fun <init> (ILme/proton/core/key/data/api/response/UserResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/key/data/api/response/UserResponse;)V
+	public final fun component1 ()Lme/proton/core/key/data/api/response/UserResponse;
+	public final fun copy (Lme/proton/core/key/data/api/response/UserResponse;)Lme/proton/core/user/data/UserEvents;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/UserEvents;Lme/proton/core/key/data/api/response/UserResponse;ILjava/lang/Object;)Lme/proton/core/user/data/UserEvents;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUser ()Lme/proton/core/key/data/api/response/UserResponse;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/UserEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/UserEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/UserEvents$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/UserEvents;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/UserEvents;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/UserEvents$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/UserManagerImpl : me/proton/core/user/domain/UserManager {
+	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/key/domain/repository/KeySaltRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public fun addUser (Lme/proton/core/user/domain/entity/User;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun changePassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAddresses (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAddressesFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUserFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun lock (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun setupPrimaryKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun unlockWithPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun unlockWithPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/PlainByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/user/data/api/AddressApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
+	public abstract fun createAddress (Lme/proton/core/user/data/api/request/CreateAddressRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAddress (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAddresses (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateAddress (Ljava/lang/String;Lme/proton/core/user/data/api/request/UpdateAddressRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateOrder (Lme/proton/core/user/data/api/request/UpdateOrderRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/user/data/api/DomainApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
+	public abstract fun getAvailableDomains (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/user/data/api/UserApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
+	public abstract fun createExternalUser (Lme/proton/core/user/data/api/request/CreateExternalUserRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun createUser (Lme/proton/core/user/data/api/request/CreateUserRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getUsers (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun usernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/api/request/CreateAddressRequest {
+	public static final field Companion Lme/proton/core/user/data/api/request/CreateAddressRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/user/data/api/request/CreateAddressRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/CreateAddressRequest;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/CreateAddressRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getDomain ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/api/request/CreateAddressRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/api/request/CreateAddressRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/api/request/CreateAddressRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/CreateAddressRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/api/request/CreateAddressRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/CreateAddressRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/CreateExternalUserRequest {
+	public static final field Companion Lme/proton/core/user/data/api/request/CreateExternalUserRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()I
+	public final fun component4 ()Lme/proton/core/key/data/api/request/AuthRequest;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;)Lme/proton/core/user/data/api/request/CreateExternalUserRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/CreateExternalUserRequest;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/CreateExternalUserRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAuth ()Lme/proton/core/key/data/api/request/AuthRequest;
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getReferrer ()Ljava/lang/String;
+	public final fun getType ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/api/request/CreateExternalUserRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/api/request/CreateExternalUserRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/api/request/CreateExternalUserRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/CreateExternalUserRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/api/request/CreateExternalUserRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/CreateExternalUserRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/CreateUserRequest {
+	public static final field Companion Lme/proton/core/user/data/api/request/CreateUserRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()I
+	public final fun component6 ()Lme/proton/core/key/data/api/request/AuthRequest;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;)Lme/proton/core/user/data/api/request/CreateUserRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/CreateUserRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILme/proton/core/key/data/api/request/AuthRequest;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/CreateUserRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAuth ()Lme/proton/core/key/data/api/request/AuthRequest;
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getPhone ()Ljava/lang/String;
+	public final fun getReferrer ()Ljava/lang/String;
+	public final fun getType ()I
+	public final fun getUsername ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/api/request/CreateUserRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/api/request/CreateUserRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/api/request/CreateUserRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/CreateUserRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/api/request/CreateUserRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/CreateUserRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/UpdateAddressRequest {
+	public static final field Companion Lme/proton/core/user/data/api/request/UpdateAddressRequest$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/user/data/api/request/UpdateAddressRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UpdateAddressRequest;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UpdateAddressRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getSignature ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/api/request/UpdateAddressRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/api/request/UpdateAddressRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/api/request/UpdateAddressRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/UpdateAddressRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/api/request/UpdateAddressRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/UpdateAddressRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/UpdateOrderRequest {
+	public static final field Companion Lme/proton/core/user/data/api/request/UpdateOrderRequest$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/user/data/api/request/UpdateOrderRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UpdateOrderRequest;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UpdateOrderRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIds ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/api/request/UpdateOrderRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/api/request/UpdateOrderRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/api/request/UpdateOrderRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/UpdateOrderRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/api/request/UpdateOrderRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/UpdateOrderRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/response/AvailableDomainsResponse {
+	public static final field Companion Lme/proton/core/user/data/api/response/AvailableDomainsResponse$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/user/data/api/response/AvailableDomainsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/response/AvailableDomainsResponse;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/user/data/api/response/AvailableDomainsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDomains ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/api/response/AvailableDomainsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/api/response/AvailableDomainsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/api/response/AvailableDomainsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/response/AvailableDomainsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/api/response/AvailableDomainsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/response/AvailableDomainsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/response/CreateAddressResponse {
+	public static final field Companion Lme/proton/core/user/data/api/response/CreateAddressResponse$Companion;
+	public synthetic fun <init> (ILme/proton/core/key/data/api/response/AddressResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/key/data/api/response/AddressResponse;)V
+	public final fun component1 ()Lme/proton/core/key/data/api/response/AddressResponse;
+	public final fun copy (Lme/proton/core/key/data/api/response/AddressResponse;)Lme/proton/core/user/data/api/response/CreateAddressResponse;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/response/CreateAddressResponse;Lme/proton/core/key/data/api/response/AddressResponse;ILjava/lang/Object;)Lme/proton/core/user/data/api/response/CreateAddressResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddress ()Lme/proton/core/key/data/api/response/AddressResponse;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/api/response/CreateAddressResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/api/response/CreateAddressResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/api/response/CreateAddressResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/response/CreateAddressResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/api/response/CreateAddressResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/response/CreateAddressResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class me/proton/core/user/data/db/AddressDatabase : me/proton/core/data/room/db/Database, me/proton/core/user/data/db/AddressKeyDatabase {
+	public static final field Companion Lme/proton/core/user/data/db/AddressDatabase$Companion;
+	public abstract fun addressDao ()Lme/proton/core/user/data/db/dao/AddressDao;
+	public abstract fun addressWithKeysDao ()Lme/proton/core/user/data/db/dao/AddressWithKeysDao;
+}
+
+public final class me/proton/core/user/data/db/AddressDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_2 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_3 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public abstract interface class me/proton/core/user/data/db/AddressKeyDatabase : me/proton/core/data/room/db/Database {
+	public abstract fun addressKeyDao ()Lme/proton/core/user/data/db/dao/AddressKeyDao;
+}
+
+public final class me/proton/core/user/data/db/UserConverters {
+	public fun <init> ()V
+	public final fun fromAddressIdToString (Lme/proton/core/user/domain/entity/AddressId;)Ljava/lang/String;
+	public final fun fromKeyIdToString (Lme/proton/core/key/domain/entity/key/KeyId;)Ljava/lang/String;
+	public final fun fromStringToAddressId (Ljava/lang/String;)Lme/proton/core/user/domain/entity/AddressId;
+	public final fun fromStringToKeyId (Ljava/lang/String;)Lme/proton/core/key/domain/entity/key/KeyId;
+}
+
+public abstract interface class me/proton/core/user/data/db/UserDatabase : me/proton/core/data/room/db/Database, me/proton/core/user/data/db/UserKeyDatabase {
+	public static final field Companion Lme/proton/core/user/data/db/UserDatabase$Companion;
+	public abstract fun userDao ()Lme/proton/core/user/data/db/dao/UserDao;
+	public abstract fun userWithKeysDao ()Lme/proton/core/user/data/db/dao/UserWithKeysDao;
+}
+
+public final class me/proton/core/user/data/db/UserDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public abstract interface class me/proton/core/user/data/db/UserKeyDatabase : me/proton/core/data/room/db/Database {
+	public abstract fun userKeyDao ()Lme/proton/core/user/data/db/dao/UserKeyDao;
+}
+
+public abstract class me/proton/core/user/data/db/dao/AddressDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun delete (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getByAddressId (Lme/proton/core/user/domain/entity/AddressId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeAllByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun observeByAddressId (Lme/proton/core/user/domain/entity/AddressId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract class me/proton/core/user/data/db/dao/AddressKeyDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun getAllByAddressId (Lme/proton/core/user/domain/entity/AddressId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeAllByAddressId (Lme/proton/core/user/domain/entity/AddressId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract class me/proton/core/user/data/db/dao/AddressWithKeysDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract class me/proton/core/user/data/db/dao/UserDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun setPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/user/data/db/dao/UserKeyDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun getAllByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeAllByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract class me/proton/core/user/data/db/dao/UserWithKeysDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/user/data/entity/AddressEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZLjava/lang/Integer;ILme/proton/core/key/data/entity/SignedKeyListEntity;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZLjava/lang/Integer;ILme/proton/core/key/data/entity/SignedKeyListEntity;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component10 ()Ljava/lang/Integer;
+	public final fun component11 ()I
+	public final fun component12 ()Lme/proton/core/key/data/entity/SignedKeyListEntity;
+	public final fun component2 ()Lme/proton/core/user/domain/entity/AddressId;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Z
+	public final fun component8 ()Z
+	public final fun component9 ()Z
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZLjava/lang/Integer;ILme/proton/core/key/data/entity/SignedKeyListEntity;)Lme/proton/core/user/data/entity/AddressEntity;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/entity/AddressEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZLjava/lang/Integer;ILme/proton/core/key/data/entity/SignedKeyListEntity;ILjava/lang/Object;)Lme/proton/core/user/data/entity/AddressEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddressId ()Lme/proton/core/user/domain/entity/AddressId;
+	public final fun getCanReceive ()Z
+	public final fun getCanSend ()Z
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getDomainId ()Ljava/lang/String;
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getEnabled ()Z
+	public final fun getOrder ()I
+	public final fun getSignature ()Ljava/lang/String;
+	public final fun getSignedKeyList ()Lme/proton/core/key/data/entity/SignedKeyListEntity;
+	public final fun getType ()Ljava/lang/Integer;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/user/data/entity/AddressKeyEntity {
+	public fun <init> (Lme/proton/core/user/domain/entity/AddressId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZILme/proton/core/crypto/common/keystore/EncryptedByteArray;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Z)V
+	public synthetic fun <init> (Lme/proton/core/user/domain/entity/AddressId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZILme/proton/core/crypto/common/keystore/EncryptedByteArray;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/user/domain/entity/AddressId;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component12 ()Ljava/util/List;
+	public final fun component13 ()Ljava/lang/String;
+	public final fun component14 ()Z
+	public final fun component2 ()Lme/proton/core/key/domain/entity/key/KeyId;
+	public final fun component3 ()I
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()I
+	public final fun component8 ()Lme/proton/core/crypto/common/keystore/EncryptedByteArray;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/user/domain/entity/AddressId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZILme/proton/core/crypto/common/keystore/EncryptedByteArray;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Z)Lme/proton/core/user/data/entity/AddressKeyEntity;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/entity/AddressKeyEntity;Lme/proton/core/user/domain/entity/AddressId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZILme/proton/core/crypto/common/keystore/EncryptedByteArray;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/user/data/entity/AddressKeyEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActivation ()Ljava/lang/String;
+	public final fun getActive ()Z
+	public final fun getAddressId ()Lme/proton/core/user/domain/entity/AddressId;
+	public final fun getFingerprint ()Ljava/lang/String;
+	public final fun getFingerprints ()Ljava/util/List;
+	public final fun getFlags ()I
+	public final fun getKeyId ()Lme/proton/core/key/domain/entity/key/KeyId;
+	public final fun getPassphrase ()Lme/proton/core/crypto/common/keystore/EncryptedByteArray;
+	public final fun getPrivateKey ()Ljava/lang/String;
+	public final fun getSignature ()Ljava/lang/String;
+	public final fun getToken ()Ljava/lang/String;
+	public final fun getVersion ()I
+	public fun hashCode ()I
+	public final fun isPrimary ()Z
+	public final fun isUnlockable ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/user/data/entity/AddressWithKeys {
+	public fun <init> (Lme/proton/core/user/data/entity/AddressEntity;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/user/data/entity/AddressEntity;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/user/data/entity/AddressEntity;Ljava/util/List;)Lme/proton/core/user/data/entity/AddressWithKeys;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/entity/AddressWithKeys;Lme/proton/core/user/data/entity/AddressEntity;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/user/data/entity/AddressWithKeys;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntity ()Lme/proton/core/user/data/entity/AddressEntity;
+	public final fun getKeys ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/user/data/entity/UserEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IJJJLjava/lang/Integer;ZIILjava/lang/Integer;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component10 ()Ljava/lang/Integer;
+	public final fun component11 ()Z
+	public final fun component12 ()I
+	public final fun component13 ()I
+	public final fun component14 ()Ljava/lang/Integer;
+	public final fun component15 ()Lme/proton/core/crypto/common/keystore/EncryptedByteArray;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()I
+	public final fun component7 ()J
+	public final fun component8 ()J
+	public final fun component9 ()J
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IJJJLjava/lang/Integer;ZIILjava/lang/Integer;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;)Lme/proton/core/user/data/entity/UserEntity;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/entity/UserEntity;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IJJJLjava/lang/Integer;ZIILjava/lang/Integer;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;ILjava/lang/Object;)Lme/proton/core/user/data/entity/UserEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCredit ()I
+	public final fun getCurrency ()Ljava/lang/String;
+	public final fun getDelinquent ()Ljava/lang/Integer;
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getMaxSpace ()J
+	public final fun getMaxUpload ()J
+	public final fun getName ()Ljava/lang/String;
+	public final fun getPassphrase ()Lme/proton/core/crypto/common/keystore/EncryptedByteArray;
+	public final fun getPrivate ()Z
+	public final fun getRole ()Ljava/lang/Integer;
+	public final fun getServices ()I
+	public final fun getSubscribed ()I
+	public final fun getUsedSpace ()J
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/user/data/entity/UserKeyEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Lme/proton/core/key/domain/entity/key/KeyId;
+	public final fun component3 ()I
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/Boolean;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;)Lme/proton/core/user/data/entity/UserKeyEntity;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/entity/UserKeyEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/user/data/entity/UserKeyEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActivation ()Ljava/lang/String;
+	public final fun getActive ()Ljava/lang/Boolean;
+	public final fun getFingerprint ()Ljava/lang/String;
+	public final fun getKeyId ()Lme/proton/core/key/domain/entity/key/KeyId;
+	public final fun getPrivateKey ()Ljava/lang/String;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public final fun getVersion ()I
+	public fun hashCode ()I
+	public final fun isPrimary ()Z
+	public final fun isUnlockable ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/user/data/entity/UserWithKeys {
+	public fun <init> (Lme/proton/core/user/data/entity/UserEntity;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/user/data/entity/UserEntity;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/user/data/entity/UserEntity;Ljava/util/List;)Lme/proton/core/user/data/entity/UserWithKeys;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/entity/UserWithKeys;Lme/proton/core/user/data/entity/UserEntity;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/user/data/entity/UserWithKeys;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntity ()Lme/proton/core/user/data/entity/UserEntity;
+	public final fun getKeys ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/user/data/extension/AddressMapperKt {
+	public static final fun toAddress (Lme/proton/core/key/data/api/response/AddressResponse;Lme/proton/core/domain/entity/UserId;)Lme/proton/core/user/domain/entity/UserAddress;
+	public static final fun toEntityList (Ljava/util/List;Lme/proton/core/user/domain/entity/AddressId;)Ljava/util/List;
+}
+
+public final class me/proton/core/user/data/extension/UserMapperKt {
+	public static final fun toUser (Lme/proton/core/key/data/api/response/UserResponse;)Lme/proton/core/user/domain/entity/User;
+}
+
+public final class me/proton/core/user/data/repository/DomainRepositoryImpl : me/proton/core/user/domain/repository/DomainRepository {
+	public fun <init> (Ljava/lang/String;Lme/proton/core/network/data/ApiProvider;)V
+	public fun getAvailableDomains (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/repository/UserAddressRepositoryImpl : me/proton/core/user/domain/repository/PassphraseRepository$OnPassphraseChangedListener, me/proton/core/user/domain/repository/UserAddressRepository {
+	public fun <init> (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public fun addAddresses (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAddresses (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllAddresses (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAddresses (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAddressesFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun onPassphraseChanged (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateAddress (Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateAddresses (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateOrder (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/proton/core/user/domain/repository/UserRepository {
+	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public fun addOnPassphraseChangedListener (Lme/proton/core/user/domain/repository/PassphraseRepository$OnPassphraseChangedListener;)V
+	public fun addUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun clearPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createExternalEmailUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createUser (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUserFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun isUsernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun setPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

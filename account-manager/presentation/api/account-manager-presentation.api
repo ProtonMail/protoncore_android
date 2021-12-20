@@ -1,0 +1,357 @@
+public class hilt_aggregated_deps/_me_proton_core_accountmanager_presentation_viewmodel_AccountSwitcherViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_accountmanager_presentation_viewmodel_AccountSwitcherViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/accountmanager/presentation/AccountManagerObserver {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;)V
+	public synthetic fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class me/proton/core/accountmanager/presentation/AccountManagerObserverKt {
+	public static final fun observe (Lme/proton/core/accountmanager/domain/AccountManager;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun observe$default (Lme/proton/core/accountmanager/domain/AccountManager;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onAccountCreateAddressFailed (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onAccountCreateAddressFailed$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onAccountCreateAddressNeeded (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onAccountCreateAddressNeeded$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onAccountDisabled (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onAccountDisabled$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onAccountMigrationNeeded (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onAccountMigrationNeeded$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onAccountReady (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onAccountReady$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onAccountRemoved (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onAccountRemoved$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onAccountTwoPassModeFailed (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onAccountTwoPassModeFailed$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onAccountTwoPassModeNeeded (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onAccountTwoPassModeNeeded$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onSessionAuthenticated (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onSessionAuthenticated$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onSessionForceLogout (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onSessionForceLogout$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onSessionSecondFactorFailed (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onSessionSecondFactorFailed$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onSessionSecondFactorNeeded (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onSessionSecondFactorNeeded$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onUserAddressKeyCheckFailed (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onUserAddressKeyCheckFailed$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static final fun onUserKeyCheckFailed (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+	public static synthetic fun onUserKeyCheckFailed$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
+}
+
+public final class me/proton/core/accountmanager/presentation/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/accountmanager/presentation/adapter/AccountListItemAdapter : androidx/recyclerview/widget/ListAdapter {
+	public fun <init> ()V
+	public fun getItemId (I)J
+	public fun getItemViewType (I)I
+	public synthetic fun onBindViewHolder (Landroidx/recyclerview/widget/RecyclerView$ViewHolder;I)V
+	public fun onBindViewHolder (Lme/proton/core/accountmanager/presentation/adapter/AccountListItemAdapter$ViewHolder;I)V
+	public synthetic fun onCreateViewHolder (Landroid/view/ViewGroup;I)Landroidx/recyclerview/widget/RecyclerView$ViewHolder;
+	public fun onCreateViewHolder (Landroid/view/ViewGroup;I)Lme/proton/core/accountmanager/presentation/adapter/AccountListItemAdapter$ViewHolder;
+	public final fun setOnAccountMenuInflated (Lkotlin/jvm/functions/Function2;)V
+	public final fun setOnAccountMenuItemClicked (Lkotlin/jvm/functions/Function2;)V
+	public final fun setOnListItemClicked (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/proton/core/accountmanager/presentation/adapter/AccountListItemAdapter$ItemDecoration : androidx/recyclerview/widget/DividerItemDecoration {
+	public fun <init> (Lme/proton/core/accountmanager/presentation/adapter/AccountListItemAdapter;Landroid/content/Context;I)V
+	public fun getItemOffsets (Landroid/graphics/Rect;Landroid/view/View;Landroidx/recyclerview/widget/RecyclerView;Landroidx/recyclerview/widget/RecyclerView$State;)V
+}
+
+public final class me/proton/core/accountmanager/presentation/adapter/AccountListItemAdapter$ViewHolder : androidx/recyclerview/widget/RecyclerView$ViewHolder {
+	public fun <init> (Lme/proton/core/accountmanager/presentation/adapter/AccountListItemAdapter;Landroidx/viewbinding/ViewBinding;)V
+	public final fun bind (Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account;Lme/proton/core/accountmanager/presentation/databinding/AccountViewBinding;)V
+	public final fun bind (Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Action;Lme/proton/core/accountmanager/presentation/databinding/AccountActionBinding;)V
+	public final fun bind (Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Section;Lme/proton/core/accountmanager/presentation/databinding/AccountSectionBinding;)V
+	public final fun bind (Lme/proton/core/accountmanager/presentation/entity/AccountListItem;)V
+}
+
+public final class me/proton/core/accountmanager/presentation/databinding/AccountActionBinding : androidx/viewbinding/ViewBinding {
+	public final field accountActionIcon Landroid/widget/ImageView;
+	public final field accountActionTextview Landroidx/appcompat/widget/AppCompatTextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/accountmanager/presentation/databinding/AccountActionBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/accountmanager/presentation/databinding/AccountActionBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/accountmanager/presentation/databinding/AccountActionBinding;
+}
+
+public final class me/proton/core/accountmanager/presentation/databinding/AccountListViewBinding : androidx/viewbinding/ViewBinding {
+	public final field accountListRecyclerview Landroidx/recyclerview/widget/RecyclerView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/accountmanager/presentation/databinding/AccountListViewBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/accountmanager/presentation/databinding/AccountListViewBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/accountmanager/presentation/databinding/AccountListViewBinding;
+}
+
+public final class me/proton/core/accountmanager/presentation/databinding/AccountPrimaryViewBinding : androidx/viewbinding/ViewBinding {
+	public final field accountEmailTextview Landroid/widget/TextView;
+	public final field accountExpandImageview Landroid/widget/ImageView;
+	public final field accountInitialsTextview Landroid/widget/TextView;
+	public final field accountNameTextview Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/accountmanager/presentation/databinding/AccountPrimaryViewBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/accountmanager/presentation/databinding/AccountPrimaryViewBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/accountmanager/presentation/databinding/AccountPrimaryViewBinding;
+}
+
+public final class me/proton/core/accountmanager/presentation/databinding/AccountSectionBinding : androidx/viewbinding/ViewBinding {
+	public final field accountSectionTextview Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/accountmanager/presentation/databinding/AccountSectionBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/accountmanager/presentation/databinding/AccountSectionBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/accountmanager/presentation/databinding/AccountSectionBinding;
+}
+
+public final class me/proton/core/accountmanager/presentation/databinding/AccountViewBinding : androidx/viewbinding/ViewBinding {
+	public final field accountEmailTextview Landroid/widget/TextView;
+	public final field accountInitialsTextview Landroid/widget/TextView;
+	public final field accountMoreButton Landroid/widget/ImageButton;
+	public final field accountNameTextview Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/accountmanager/presentation/databinding/AccountViewBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/accountmanager/presentation/databinding/AccountViewBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/accountmanager/presentation/databinding/AccountViewBinding;
+}
+
+public final class me/proton/core/accountmanager/presentation/entity/AccountItem {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountState;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountState;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lme/proton/core/account/domain/entity/AccountState;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountState;)Lme/proton/core/accountmanager/presentation/entity/AccountItem;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/entity/AccountItem;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountState;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/entity/AccountItem;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getInitials ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getState ()Lme/proton/core/account/domain/entity/AccountState;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/accountmanager/presentation/entity/AccountListItem {
+	public static final field Companion Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Companion;
+	public synthetic fun <init> (Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getType ()Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
+}
+
+public abstract class me/proton/core/accountmanager/presentation/entity/AccountListItem$Account : me/proton/core/accountmanager/presentation/entity/AccountListItem {
+	public static final field Companion Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Companion;
+	public synthetic fun <init> (Lme/proton/core/accountmanager/presentation/entity/AccountItem;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getAccountItem ()Lme/proton/core/accountmanager/presentation/entity/AccountItem;
+}
+
+public final class me/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Companion {
+	public final fun getMenuResId ()I
+}
+
+public final class me/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Disabled : me/proton/core/accountmanager/presentation/entity/AccountListItem$Account {
+	public fun <init> (Lme/proton/core/accountmanager/presentation/entity/AccountItem;)V
+	public final fun component1 ()Lme/proton/core/accountmanager/presentation/entity/AccountItem;
+	public final fun copy (Lme/proton/core/accountmanager/presentation/entity/AccountItem;)Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Disabled;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Disabled;Lme/proton/core/accountmanager/presentation/entity/AccountItem;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Disabled;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getAccountItem ()Lme/proton/core/accountmanager/presentation/entity/AccountItem;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Primary : me/proton/core/accountmanager/presentation/entity/AccountListItem$Account {
+	public fun <init> (Lme/proton/core/accountmanager/presentation/entity/AccountItem;)V
+	public final fun component1 ()Lme/proton/core/accountmanager/presentation/entity/AccountItem;
+	public final fun copy (Lme/proton/core/accountmanager/presentation/entity/AccountItem;)Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Primary;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Primary;Lme/proton/core/accountmanager/presentation/entity/AccountItem;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Primary;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getAccountItem ()Lme/proton/core/accountmanager/presentation/entity/AccountItem;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Ready : me/proton/core/accountmanager/presentation/entity/AccountListItem$Account {
+	public fun <init> (Lme/proton/core/accountmanager/presentation/entity/AccountItem;)V
+	public final fun component1 ()Lme/proton/core/accountmanager/presentation/entity/AccountItem;
+	public final fun copy (Lme/proton/core/accountmanager/presentation/entity/AccountItem;)Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Ready;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Ready;Lme/proton/core/accountmanager/presentation/entity/AccountItem;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Account$Ready;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getAccountItem ()Lme/proton/core/accountmanager/presentation/entity/AccountItem;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/accountmanager/presentation/entity/AccountListItem$Action : me/proton/core/accountmanager/presentation/entity/AccountListItem {
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getIconResId ()I
+	public final fun getTextResId ()I
+}
+
+public final class me/proton/core/accountmanager/presentation/entity/AccountListItem$Action$AddAccount : me/proton/core/accountmanager/presentation/entity/AccountListItem$Action {
+	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Action$AddAccount;
+}
+
+public final class me/proton/core/accountmanager/presentation/entity/AccountListItem$Companion {
+	public final fun getDiffCallback ()Landroidx/recyclerview/widget/DiffUtil$ItemCallback;
+}
+
+public abstract class me/proton/core/accountmanager/presentation/entity/AccountListItem$Section : me/proton/core/accountmanager/presentation/entity/AccountListItem {
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getTextResId ()I
+}
+
+public final class me/proton/core/accountmanager/presentation/entity/AccountListItem$Section$SwitchTo : me/proton/core/accountmanager/presentation/entity/AccountListItem$Section {
+	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Section$SwitchTo;
+}
+
+public final class me/proton/core/accountmanager/presentation/entity/AccountListItem$Type : java/lang/Enum {
+	public static final field Account Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
+	public static final field Action Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
+	public static final field Section Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
+	public static fun values ()[Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
+}
+
+public final class me/proton/core/accountmanager/presentation/view/AccountListView : androidx/constraintlayout/widget/ConstraintLayout {
+	public static final field Companion Lme/proton/core/accountmanager/presentation/view/AccountListView$Companion;
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun _$_clearFindViewByIdCache ()V
+	public final fun setViewModel (Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;)V
+}
+
+public final class me/proton/core/accountmanager/presentation/view/AccountListView$Companion {
+	public final fun createDialog (Landroid/content/Context;Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;)Landroidx/appcompat/app/AlertDialog;
+}
+
+public final class me/proton/core/accountmanager/presentation/view/AccountPrimaryView : androidx/constraintlayout/widget/ConstraintLayout {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun _$_clearFindViewByIdCache ()V
+	public final fun dismissDialog ()V
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getInitials ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun isDialogEnabled ()Z
+	public final fun setDialogEnabled (Z)V
+	public final fun setEmail (Ljava/lang/String;)V
+	public final fun setInitials (Ljava/lang/String;)V
+	public final fun setName (Ljava/lang/String;)V
+	public final fun setViewModel (Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;)V
+	public final fun showDialog ()V
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel : androidx/lifecycle/ViewModel {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/account/domain/entity/AccountType;)V
+	public synthetic fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/account/domain/entity/AccountType;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun add ()Lkotlinx/coroutines/Job;
+	public final fun getAccounts ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun getPrimaryAccount ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun onAction ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun onDefaultAction (Lme/proton/core/auth/presentation/AuthOrchestrator;)Lkotlinx/coroutines/flow/Flow;
+	public final fun remove (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
+	public final fun signOut (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
+	public final fun switch (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
+}
+
+public abstract class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action {
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$Add : me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action {
+	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$Add;
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$Remove : me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action {
+	public fun <init> (Lme/proton/core/account/domain/entity/Account;)V
+	public final fun component1 ()Lme/proton/core/account/domain/entity/Account;
+	public final fun copy (Lme/proton/core/account/domain/entity/Account;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$Remove;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$Remove;Lme/proton/core/account/domain/entity/Account;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$Remove;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccount ()Lme/proton/core/account/domain/entity/Account;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SetPrimary : me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action {
+	public fun <init> (Lme/proton/core/account/domain/entity/Account;)V
+	public final fun component1 ()Lme/proton/core/account/domain/entity/Account;
+	public final fun copy (Lme/proton/core/account/domain/entity/Account;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SetPrimary;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SetPrimary;Lme/proton/core/account/domain/entity/Account;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SetPrimary;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccount ()Lme/proton/core/account/domain/entity/Account;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SignIn : me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action {
+	public fun <init> (Lme/proton/core/account/domain/entity/Account;)V
+	public final fun component1 ()Lme/proton/core/account/domain/entity/Account;
+	public final fun copy (Lme/proton/core/account/domain/entity/Account;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SignIn;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SignIn;Lme/proton/core/account/domain/entity/Account;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SignIn;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccount ()Lme/proton/core/account/domain/entity/Account;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SignOut : me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action {
+	public fun <init> (Lme/proton/core/account/domain/entity/Account;)V
+	public final fun component1 ()Lme/proton/core/account/domain/entity/Account;
+	public final fun copy (Lme/proton/core/account/domain/entity/Account;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SignOut;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SignOut;Lme/proton/core/account/domain/entity/Account;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel$Action$SignOut;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccount ()Lme/proton/core/account/domain/entity/Account;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/account/domain/entity/AccountType;)Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+

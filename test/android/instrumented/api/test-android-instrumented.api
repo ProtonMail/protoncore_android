@@ -1,0 +1,851 @@
+public final class me/proton/core/test/android/instrumented/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public class me/proton/core/test/android/instrumented/ProtonTest {
+	public static final field Companion Lme/proton/core/test/android/instrumented/ProtonTest$Companion;
+	public final field ruleChain Lorg/junit/rules/RuleChain;
+	public static final field testTag Ljava/lang/String;
+	public fun <init> (Ljava/lang/Class;JILorg/junit/rules/TestWatcher;Landroidx/test/ext/junit/rules/ActivityScenarioRule;)V
+	public synthetic fun <init> (Ljava/lang/Class;JILorg/junit/rules/TestWatcher;Landroidx/test/ext/junit/rules/ActivityScenarioRule;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun setUp ()V
+	public fun tearDown ()V
+}
+
+public final class me/proton/core/test/android/instrumented/ProtonTest$Companion {
+	public final fun getCommandTimeout ()J
+	public final fun getScreenshotPath ()Ljava/lang/String;
+	public final fun getTargetContext ()Landroid/content/Context;
+	public final fun getTestName ()Lorg/junit/rules/TestName;
+	public final fun setCommandTimeout (J)V
+}
+
+public final class me/proton/core/test/android/instrumented/ProtonTest$TestExecutionWatcher : org/junit/rules/TestWatcher {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/test/android/instrumented/RetryRule : org/junit/rules/TestRule {
+	public fun <init> (Ljava/lang/Class;I)V
+	public synthetic fun <init> (Ljava/lang/Class;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun apply (Lorg/junit/runners/model/Statement;Lorg/junit/runner/Description;)Lorg/junit/runners/model/Statement;
+}
+
+public abstract interface class me/proton/core/test/android/instrumented/Robot {
+	public abstract fun getDevice ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public abstract fun getIntent ()Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public abstract fun getListView ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public abstract fun getRecyclerView ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public abstract fun getRootView ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
+	public abstract fun getView ()Lme/proton/core/test/android/instrumented/builders/OnView;
+}
+
+public final class me/proton/core/test/android/instrumented/Robot$DefaultImpls {
+	public static fun getDevice (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public static fun getIntent (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public static fun getListView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public static fun getRecyclerView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public static fun getRootView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnRootView;
+	public static fun getView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnView;
+}
+
+public abstract interface class me/proton/core/test/android/instrumented/builders/ConditionWatcher {
+	public abstract fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+}
+
+public final class me/proton/core/test/android/instrumented/builders/ConditionWatcher$DefaultImpls {
+	public static fun waitForCondition (Lme/proton/core/test/android/instrumented/builders/ConditionWatcher;Lkotlin/jvm/functions/Function0;JJ)V
+	public static synthetic fun waitForCondition$default (Lme/proton/core/test/android/instrumented/builders/ConditionWatcher;Lkotlin/jvm/functions/Function0;JJILjava/lang/Object;)V
+}
+
+public final class me/proton/core/test/android/instrumented/builders/OnDevice {
+	public static final field Companion Lme/proton/core/test/android/instrumented/builders/OnDevice$Companion;
+	public fun <init> ()V
+	public final fun clickBackBtn ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public final fun clickHomeBtn ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public final fun clickNotificationByText (Ljava/lang/String;J)Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public static synthetic fun clickNotificationByText$default (Lme/proton/core/test/android/instrumented/builders/OnDevice;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public final fun clickRecentAppsBtn ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public final fun clickShareDialogJustOnceBtn (Ljava/lang/String;J)Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public static synthetic fun clickShareDialogJustOnceBtn$default (Lme/proton/core/test/android/instrumented/builders/OnDevice;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public final fun expandNotifications ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public final fun waitForObjectByText (Ljava/lang/String;J)Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public static synthetic fun waitForObjectByText$default (Lme/proton/core/test/android/instrumented/builders/OnDevice;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnDevice;
+}
+
+public final class me/proton/core/test/android/instrumented/builders/OnDevice$Companion {
+}
+
+public final class me/proton/core/test/android/instrumented/builders/OnIntent : me/proton/core/test/android/instrumented/builders/ConditionWatcher {
+	public fun <init> ()V
+	public final fun anyIntent ()Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun checkSent ()V
+	public final fun filterEquals (Landroid/content/Intent;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun getMatchers ()Ljava/util/List;
+	public final fun hasAction (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasAction (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasCategories (Ljava/util/Set;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasComponent (Landroid/content/ComponentName;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasComponent (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasComponent (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasData (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasDataString (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasDataUri (Landroid/net/Uri;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasDataUriMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasExtra (Ljava/lang/String;Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasExtra (Lorg/hamcrest/Matcher;Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasExtraWithKey (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasExtraWithKey (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasExtras (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasFlag (I)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasFlags (I)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasPackage (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasPackage (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasType (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun hasType (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun isInternal ()Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public final fun respondWith (Landroid/app/Instrumentation$ActivityResult;)V
+	public final fun respondWithFunction (Landroidx/test/espresso/intent/ActivityResultFunction;)V
+	public final fun toPackage (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+}
+
+public final class me/proton/core/test/android/instrumented/builders/OnListView : me/proton/core/test/android/instrumented/builders/ConditionWatcher {
+	public fun <init> ()V
+	public final fun atPosition (I)Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun checkContains (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun checkDisabled ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun checkDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun checkDoesNotExist ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun checkNotDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun click ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun inAdapterView (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun inRoot (Lme/proton/core/test/android/instrumented/builders/OnRootView;)Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun longClick ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun onChild (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun onListItem (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun replaceText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+}
+
+public final class me/proton/core/test/android/instrumented/builders/OnRecyclerView : me/proton/core/test/android/instrumented/builders/ConditionWatcher {
+	public fun <init> ()V
+	public final fun click ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun doubleClick ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun longClick ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun onHolderItem (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun onItemAtPosition (I)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun onItemChildView (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun scrollToHolder (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+	public final fun waitUntilGone ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun withId (I)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun withText (I)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public final fun withText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+}
+
+public final class me/proton/core/test/android/instrumented/builders/OnRootView {
+	public fun <init> ()V
+	public final fun isDialog ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
+	public final fun isFocusable ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
+	public final fun isPlatformPopUp ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
+	public final fun isSystemAlertWindow ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
+	public final fun isTouchable ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
+	public final fun withDecorView (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnRootView;
+	public final fun withNotCurrentActivityDecorView ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
+}
+
+public final class me/proton/core/test/android/instrumented/builders/OnView : me/proton/core/test/android/instrumented/builders/ConditionWatcher {
+	public fun <init> ()V
+	public final fun checkContains (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun checkContains (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun checkDisabled ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun checkDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun checkDoesNotExist ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun checkEnabled ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun checkIsChecked ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun checkIsNotChecked ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun checkNotDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun checkSelected ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun clearText ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun click ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun closeDrawer ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun closeKeyboard ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun customAction ([Landroidx/test/espresso/ViewAction;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun doubleClick ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun hasChildCount (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun hasContentDescription ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun hasDescendant (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun hasErrorText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun hasFocus ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun hasImeAction (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun hasLinks ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun hasSibling (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun instanceOf (Ljava/lang/Class;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isChecked ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isClickable ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isCompletelyDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isDescendantOf (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isDisabled ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isDisplayingAtLeast (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isEnabled ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isFocusable ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isFocused ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isInputField (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isNotChecked ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun isSelected ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun longClick ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun openDrawer ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun pressBack ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun pressImeActionBtn ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun replaceText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun startsWith (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun supportsInputMethods ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun viewMatcher ()Lorg/hamcrest/Matcher;
+	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+	public final fun withChild (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withClassName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withContentDesc (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withContentDesc (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withContentDesc (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withCustomMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withHint (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withHint (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withId (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withInputType (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withParent (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withParentIndex (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withResourceName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withRootMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withSpinnerText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withSubstring (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withTag (Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withTagKey (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withText (I)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun withVisibility (Landroidx/test/espresso/matcher/ViewMatchers$Visibility;)Lme/proton/core/test/android/instrumented/builders/OnView;
+}
+
+public final class me/proton/core/test/android/instrumented/matchers/InputFieldMatcherKt {
+	public static final fun inputFieldMatcher (I)Lorg/hamcrest/Matcher;
+}
+
+public final class me/proton/core/test/android/instrumented/ui/Actions {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/ui/Actions;
+	public final fun clickOnChildWithId (I)Landroidx/test/espresso/ViewAction;
+	public final fun clickOnMatchedDescendant (Lorg/hamcrest/Matcher;)Landroidx/test/espresso/ViewAction;
+	public final fun setNumberPickerValue (I)Landroidx/test/espresso/ViewAction;
+}
+
+public final class me/proton/core/test/android/instrumented/utils/ActivityProvider {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/utils/ActivityProvider;
+	public final fun getCurrentActivity ()Landroid/app/Activity;
+}
+
+public final class me/proton/core/test/android/instrumented/utils/FileUtils {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/utils/FileUtils;
+	public final fun clearIdlingResources ()V
+	public final fun copyAssetFileToInternalFilesStorage (Ljava/lang/String;)V
+	public final fun createFileResultFromAssets (Ljava/lang/String;)Landroid/app/Instrumentation$ActivityResult;
+	public final fun prepareArtifactsDir (Ljava/lang/String;)V
+	public final fun takeScreenshot (Ljava/lang/String;)V
+	public static synthetic fun takeScreenshot$default (Lme/proton/core/test/android/instrumented/utils/FileUtils;Ljava/lang/String;ILjava/lang/Object;)V
+}
+
+public final class me/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes;
+	public final fun getApplication ()Lme/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Application;
+	public final fun getImage ()Lme/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Image;
+	public final fun getText ()Lme/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Text;
+	public final fun getVideo ()Lme/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Video;
+}
+
+public final class me/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Application {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Application;
+	public static final field docx Ljava/lang/String;
+	public static final field pdf Ljava/lang/String;
+	public static final field zip Ljava/lang/String;
+}
+
+public final class me/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Image {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Image;
+	public static final field gif Ljava/lang/String;
+	public static final field jpeg Ljava/lang/String;
+	public static final field png Ljava/lang/String;
+}
+
+public final class me/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Text {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Text;
+	public static final field html Ljava/lang/String;
+	public static final field json Ljava/lang/String;
+	public static final field plain Ljava/lang/String;
+	public static final field rtf Ljava/lang/String;
+}
+
+public final class me/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Video {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes$Video;
+	public static final field jp3 Ljava/lang/String;
+	public static final field mp4 Ljava/lang/String;
+}
+
+public final class me/proton/core/test/android/instrumented/utils/Shell {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/utils/Shell;
+	public final fun clearLogcat ()V
+	public final fun deleteDownloadArtifactsFolder ()V
+	public final fun saveToFile (Lorg/junit/runner/Description;)V
+	public final fun sendShareFileIntent (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun setupDevice (Z)V
+}
+
+public final class me/proton/core/test/android/instrumented/utils/StringUtils {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/utils/StringUtils;
+	public final fun getAlphaNumericStringWithSpecialCharacters (J)Ljava/lang/String;
+	public static synthetic fun getAlphaNumericStringWithSpecialCharacters$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JILjava/lang/Object;)Ljava/lang/String;
+	public final fun getEmailString (J)Ljava/lang/String;
+	public static synthetic fun getEmailString$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JILjava/lang/Object;)Ljava/lang/String;
+	public final fun randomString (JLjava/lang/String;)Ljava/lang/String;
+	public static synthetic fun randomString$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JLjava/lang/String;ILjava/lang/Object;)Ljava/lang/String;
+	public final fun stringFromResource (I)Ljava/lang/String;
+	public final fun stringFromResource (ILjava/lang/String;)Ljava/lang/String;
+}
+
+public final class me/proton/core/test/android/plugins/Quark {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getDefaultVerificationCode ()Ljava/lang/String;
+	public final fun getPlanDevName ()Ljava/lang/String;
+	public final fun getPlanDevText ()Ljava/lang/String;
+	public final fun jailUnban ()Ljava/lang/String;
+	public final fun seedPaypalPaymentMethod (Lme/proton/core/test/android/plugins/data/User;)V
+	public final fun seedSubscriber (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
+	public static synthetic fun seedSubscriber$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
+	public final fun seedUserWithCreditCard (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/plugins/data/User;
+	public static synthetic fun seedUserWithCreditCard$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
+	public final fun userCreate (Lme/proton/core/test/android/plugins/data/User;ZLjava/lang/String;)Lme/proton/core/test/android/plugins/data/User;
+	public static synthetic fun userCreate$default (Lme/proton/core/test/android/plugins/Quark;Lme/proton/core/test/android/plugins/data/User;ZLjava/lang/String;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
+}
+
+public final class me/proton/core/test/android/plugins/Quark$InternalApi {
+	public static final field Companion Lme/proton/core/test/android/plugins/Quark$InternalApi$Companion;
+	public synthetic fun <init> (ILjava/util/LinkedHashMap;Ljava/util/LinkedHashMap;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/LinkedHashMap;Ljava/util/LinkedHashMap;)V
+	public final fun component1 ()Ljava/util/LinkedHashMap;
+	public final fun component2 ()Ljava/util/LinkedHashMap;
+	public final fun copy (Ljava/util/LinkedHashMap;Ljava/util/LinkedHashMap;)Lme/proton/core/test/android/plugins/Quark$InternalApi;
+	public static synthetic fun copy$default (Lme/proton/core/test/android/plugins/Quark$InternalApi;Ljava/util/LinkedHashMap;Ljava/util/LinkedHashMap;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/Quark$InternalApi;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getConstants ()Ljava/util/LinkedHashMap;
+	public final fun getEndpoints ()Ljava/util/LinkedHashMap;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/test/android/plugins/Quark$InternalApi;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/test/android/plugins/Quark$InternalApi$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/test/android/plugins/Quark$InternalApi$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/android/plugins/Quark$InternalApi;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/test/android/plugins/Quark$InternalApi;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/Quark$InternalApi$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/Quark$InternalApiEndpoint : java/lang/Enum {
+	public static final field JAIL_UNBAN Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
+	public static final field PAYMENTS_SEED_PAYMENT_METHOD Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
+	public static final field PAYMENTS_SEED_SUBSCRIBER Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
+	public static final field USER_CREATE Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
+	public static fun values ()[Lme/proton/core/test/android/plugins/Quark$InternalApiEndpoint;
+}
+
+public final class me/proton/core/test/android/plugins/data/BillingCycle : java/lang/Enum {
+	public static final field Monthly Lme/proton/core/test/android/plugins/data/BillingCycle;
+	public static final field TwoYear Lme/proton/core/test/android/plugins/data/BillingCycle;
+	public static final field Yearly Lme/proton/core/test/android/plugins/data/BillingCycle;
+	public final fun getMonthlyPrice ()D
+	public final fun getValue ()Ljava/lang/String;
+	public final fun getYearlyPrice ()Ljava/lang/Number;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/plugins/data/BillingCycle;
+	public static fun values ()[Lme/proton/core/test/android/plugins/data/BillingCycle;
+}
+
+public final class me/proton/core/test/android/plugins/data/Card {
+	public static final field Companion Lme/proton/core/test/android/plugins/data/Card$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Card$Brand;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/test/android/plugins/data/Card;
+	public static synthetic fun copy$default (Lme/proton/core/test/android/plugins/data/Card;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/Card;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBrand ()Lme/proton/core/test/android/plugins/data/Card$Brand;
+	public final fun getCountry ()Ljava/lang/String;
+	public final fun getCvc ()Ljava/lang/String;
+	public final fun getDetails ()Ljava/lang/String;
+	public final fun getExpMonth ()Ljava/lang/String;
+	public final fun getExpYear ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getNumber ()Ljava/lang/String;
+	public final fun getZip ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/test/android/plugins/data/Card;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/test/android/plugins/data/Card$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/test/android/plugins/data/Card$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/android/plugins/data/Card;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/test/android/plugins/data/Card;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/data/Card$Brand : java/lang/Enum {
+	public static final field AmericanExpress Lme/proton/core/test/android/plugins/data/Card$Brand;
+	public static final field Companion Lme/proton/core/test/android/plugins/data/Card$Brand$Companion;
+	public static final field Mastercard Lme/proton/core/test/android/plugins/data/Card$Brand;
+	public static final field Unknown Lme/proton/core/test/android/plugins/data/Card$Brand;
+	public static final field Visa Lme/proton/core/test/android/plugins/data/Card$Brand;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/plugins/data/Card$Brand;
+	public static fun values ()[Lme/proton/core/test/android/plugins/data/Card$Brand;
+}
+
+public final class me/proton/core/test/android/plugins/data/Card$Brand$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/test/android/plugins/data/Card$Brand$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/android/plugins/data/Card$Brand;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/test/android/plugins/data/Card$Brand;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/data/Card$Brand$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/data/Card$Companion {
+	public final fun getDefault ()Lme/proton/core/test/android/plugins/data/Card;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/data/Currency : java/lang/Enum {
+	public static final field CHF Lme/proton/core/test/android/plugins/data/Currency;
+	public static final field Euro Lme/proton/core/test/android/plugins/data/Currency;
+	public static final field USD Lme/proton/core/test/android/plugins/data/Currency;
+	public final fun getCode ()Ljava/lang/String;
+	public final fun getSymbol ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/plugins/data/Currency;
+	public static fun values ()[Lme/proton/core/test/android/plugins/data/Currency;
+}
+
+public final class me/proton/core/test/android/plugins/data/Plan : java/lang/Enum {
+	public static final field Companion Lme/proton/core/test/android/plugins/data/Plan$Companion;
+	public static final field Dev Lme/proton/core/test/android/plugins/data/Plan;
+	public static final field Free Lme/proton/core/test/android/plugins/data/Plan;
+	public static final field Plus Lme/proton/core/test/android/plugins/data/Plan;
+	public static final field Professional Lme/proton/core/test/android/plugins/data/Plan;
+	public static final field Visionary Lme/proton/core/test/android/plugins/data/Plan;
+	public final fun getPlanName ()Ljava/lang/String;
+	public final fun getText ()Ljava/lang/String;
+	public final fun setPlanName (Ljava/lang/String;)V
+	public final fun setText (Ljava/lang/String;)V
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/plugins/data/Plan;
+	public static fun values ()[Lme/proton/core/test/android/plugins/data/Plan;
+}
+
+public final class me/proton/core/test/android/plugins/data/Plan$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/test/android/plugins/data/Plan$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/android/plugins/data/Plan;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/test/android/plugins/data/Plan;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/data/Plan$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/data/PlanKt {
+	public static final fun getSupportedBillingCycles ()[Ljava/lang/String;
+	public static final fun randomPaidPlan ()Lme/proton/core/test/android/plugins/data/Plan;
+}
+
+public final class me/proton/core/test/android/plugins/data/User {
+	public static final field Companion Lme/proton/core/test/android/plugins/data/User$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Lme/proton/core/test/android/plugins/data/Plan;
+	public final fun component9 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/test/android/plugins/data/User;
+	public static synthetic fun copy$default (Lme/proton/core/test/android/plugins/data/User;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCards ()Ljava/util/List;
+	public final fun getCountry ()Ljava/lang/String;
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getPassphrase ()Ljava/lang/String;
+	public final fun getPassword ()Ljava/lang/String;
+	public final fun getPaypal ()Ljava/lang/String;
+	public final fun getPhone ()Ljava/lang/String;
+	public final fun getPlan ()Lme/proton/core/test/android/plugins/data/Plan;
+	public final fun getRecoveryEmail ()Ljava/lang/String;
+	public final fun getTwoFa ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isOnePasswordWithUsername ()Z
+	public final fun isPaid ()Z
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/test/android/plugins/data/User;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/test/android/plugins/data/User$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/test/android/plugins/data/User$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/android/plugins/data/User;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/test/android/plugins/data/User;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/data/User$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/test/android/plugins/data/User$Users {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getUser (ZLkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/plugins/data/User;
+	public static synthetic fun getUser$default (Lme/proton/core/test/android/plugins/data/User$Users;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/test/android/plugins/data/User;
+	public final fun getUsers (ZLkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public static synthetic fun getUsers$default (Lme/proton/core/test/android/plugins/data/User$Users;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/util/List;
+}
+
+public class me/proton/core/test/android/robots/CoreRobot : me/proton/core/test/android/instrumented/Robot {
+	public fun <init> ()V
+	public fun getDevice ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
+	public fun getIntent ()Lme/proton/core/test/android/instrumented/builders/OnIntent;
+	public fun getListView ()Lme/proton/core/test/android/instrumented/builders/OnListView;
+	public fun getRecyclerView ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
+	public fun getRootView ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
+	public fun getView ()Lme/proton/core/test/android/instrumented/builders/OnView;
+}
+
+public class me/proton/core/test/android/robots/CoreVerify : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun errorSnackbarDisplayed (I)V
+	public final fun errorSnackbarDisplayed (Ljava/lang/String;)V
+	public final fun inputErrorDisplayed (I)V
+}
+
+public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot : me/proton/core/test/android/robots/CoreRobot {
+	public static final field UserElement Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserElement;
+	public fun <init> ()V
+	public final fun addAccount ()Lme/proton/core/test/android/robots/auth/login/LoginRobot;
+	public final fun selectUser (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction : java/lang/Enum {
+	public static final field Remove Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
+	public static final field SignIn Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
+	public static final field SignOut Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
+	public final fun getResId ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
+	public static fun values ()[Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
+}
+
+public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserElement : me/proton/core/test/android/robots/CoreRobot {
+	public final fun userEmail (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun userMore (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/instrumented/builders/OnView;
+}
+
+public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun hasUser (Lme/proton/core/test/android/plugins/data/User;)V
+	public final fun userDisabled (Lme/proton/core/test/android/plugins/data/User;)V
+	public final fun userEnabled (Lme/proton/core/test/android/plugins/data/User;)V
+}
+
+public final class me/proton/core/test/android/robots/auth/AddAccountRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun createAccount ()Lme/proton/core/test/android/robots/auth/ChooseUsernameRobot;
+	public final fun signIn ()Lme/proton/core/test/android/robots/auth/login/LoginRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/AddAccountRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/AddAccountRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun addAccountElementsDisplayed ()V
+}
+
+public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun next ()Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun setUsername (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun switchSignupType ()Lme/proton/core/test/android/robots/auth/ChooseUsernameRobot;
+	public final fun username (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/ChooseUsernameRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/ChooseUsernameRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun chooseUsernameElementsDisplayed ()V
+	public final fun suffixDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun switchToExternalDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun switchToSecureDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
+}
+
+public final class me/proton/core/test/android/robots/auth/login/HelpRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/test/android/robots/auth/login/LoginRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun needHelp ()Lme/proton/core/test/android/robots/auth/login/HelpRobot;
+	public final fun password (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/login/LoginRobot;
+	public final fun username (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/login/LoginRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/login/LoginRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/login/LoginRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun loginElementsDisplayed ()V
+}
+
+public final class me/proton/core/test/android/robots/auth/login/MailboxPasswordRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun mailboxPassword (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/login/MailboxPasswordRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/login/MailboxPasswordRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/login/MailboxPasswordRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun mailboxPasswordElementsDisplayed ()V
+}
+
+public final class me/proton/core/test/android/robots/auth/login/TwoFaRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun setSecondFactorInput (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/login/TwoFaRobot;
+	public final fun switchTwoFactorMode ()Lme/proton/core/test/android/robots/auth/login/TwoFaRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/login/TwoFaRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/login/TwoFaRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/CodeVerificationRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/CodeVerificationRobot;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/PasswordSetupRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun confirmPassword (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun password (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/PasswordSetupRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun passwordSetupElementsDisplayed ()V
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun email (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot;
+	public final fun phone (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot;
+	public final fun phoneCode ()Lme/proton/core/test/android/robots/other/CountryRobot;
+	public final fun recoveryMethod (Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType;)Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot;
+	public final fun skip ()Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$SkipRecoveryRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType : java/lang/Enum {
+	public static final field EMAIL Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType;
+	public static final field PHONE Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType;
+	public static fun values ()[Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$SkipRecoveryRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun setRecoveryMethod ()Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot;
+	public final fun skipConfirm ()Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun recoveryMethodsElementsDisplayed ()V
+}
+
+public final class me/proton/core/test/android/robots/humanverification/CountryWebRobot {
+	public fun <init> ()V
+	public final fun dialog ()Landroidx/test/espresso/web/sugar/Web$WebInteraction;
+	public final fun internalSearch (Ljava/lang/String;)Landroidx/test/espresso/web/sugar/Web$WebInteraction;
+	public final fun search (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/CountryWebRobot;
+}
+
+public class me/proton/core/test/android/robots/humanverification/HumanVerificationRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun captcha ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
+	public final fun countryCodeList ()Lme/proton/core/test/android/robots/humanverification/CountryWebRobot;
+	public final fun email ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
+	public final fun getVerificationCode ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
+	public final fun help ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
+	public final fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
+	public final fun setEmail (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
+	public final fun setPhone (Ljava/lang/String;)Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
+	public final fun sms ()Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/humanverification/HumanVerificationRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/humanverification/HumanVerificationRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun captchaDisplayed ()Landroidx/test/espresso/web/sugar/Web$WebInteraction;
+	public final fun hvElementsDisplayed ()V
+}
+
+public final class me/proton/core/test/android/robots/other/CountryRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun search (Ljava/lang/String;)Lme/proton/core/test/android/robots/other/CountryRobot;
+}
+
+public final class me/proton/core/test/android/robots/payments/AddCreditCardRobot : me/proton/core/test/android/robots/payments/PaymentRobot {
+	public fun <init> ()V
+	public final fun ccname (Ljava/lang/String;)Lme/proton/core/test/android/robots/payments/AddCreditCardRobot;
+	public final fun ccnumber (Ljava/lang/String;)Lme/proton/core/test/android/robots/payments/AddCreditCardRobot;
+	public final fun country ()Lme/proton/core/test/android/robots/other/CountryRobot;
+	public final fun cvc (Ljava/lang/String;)Lme/proton/core/test/android/robots/payments/AddCreditCardRobot;
+	public final fun expirationDate (Ljava/lang/String;)Lme/proton/core/test/android/robots/payments/AddCreditCardRobot;
+	public final fun postalCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/payments/AddCreditCardRobot;
+}
+
+public final class me/proton/core/test/android/robots/payments/ExistingPaymentMethodsRobot : me/proton/core/test/android/robots/payments/PaymentRobot {
+	public static final field PaymentMethodElement Lme/proton/core/test/android/robots/payments/ExistingPaymentMethodsRobot$PaymentMethodElement;
+	public fun <init> ()V
+	public final fun addNewCard ()Lme/proton/core/test/android/robots/payments/AddCreditCardRobot;
+	public final fun selectPaymentMethod (Ljava/lang/String;)Lme/proton/core/test/android/robots/payments/ExistingPaymentMethodsRobot;
+}
+
+public final class me/proton/core/test/android/robots/payments/ExistingPaymentMethodsRobot$PaymentMethodElement : me/proton/core/test/android/robots/CoreRobot {
+	public final fun paymentMethod (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+}
+
+public class me/proton/core/test/android/robots/payments/PaymentRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/payments/PaymentRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/payments/PaymentRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun addCreditCardElementsDisplayed ()V
+	public final fun billingDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;Lme/proton/core/test/android/plugins/data/BillingCycle;Ljava/lang/String;)V
+	public final fun paymentMethodDisplayed (Ljava/lang/String;Ljava/lang/String;)V
+}
+
+public final class me/proton/core/test/android/robots/plans/SelectPlanRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun changeBillingCycle (Lme/proton/core/test/android/plugins/data/BillingCycle;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
+	public final fun changeCurrency (Lme/proton/core/test/android/plugins/data/Currency;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
+	public final fun scrollToPlan (Lme/proton/core/test/android/plugins/data/Plan;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/plans/SelectPlanRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/plans/SelectPlanRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun billingCycleIs (Lme/proton/core/test/android/plugins/data/BillingCycle;Lme/proton/core/test/android/plugins/data/Currency;)V
+	public static synthetic fun billingCycleIs$default (Lme/proton/core/test/android/robots/plans/SelectPlanRobot$Verify;Lme/proton/core/test/android/plugins/data/BillingCycle;Lme/proton/core/test/android/plugins/data/Currency;ILjava/lang/Object;)V
+	public final fun canSelectPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
+	public final fun canUpgradeToPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
+	public final fun planDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;)V
+}
+
+public final class me/proton/core/test/android/robots/settings/PasswordManagementRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun confirmNewPassword (Ljava/lang/String;)Lme/proton/core/test/android/robots/settings/PasswordManagementRobot;
+	public final fun currentPassword (Ljava/lang/String;)Lme/proton/core/test/android/robots/settings/PasswordManagementRobot;
+	public final fun newPassword (Ljava/lang/String;)Lme/proton/core/test/android/robots/settings/PasswordManagementRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/settings/PasswordManagementRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/settings/PasswordManagementRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun passwordManagementElementsDisplayed ()V
+}
+
+public final class me/proton/core/test/android/robots/settings/RecoveryEmailRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun confirmNewEmail (Ljava/lang/String;)Lme/proton/core/test/android/robots/settings/RecoveryEmailRobot;
+	public final fun newEmail (Ljava/lang/String;)Lme/proton/core/test/android/robots/settings/RecoveryEmailRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/settings/RecoveryEmailRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/settings/RecoveryEmailRobot$AuthenticationRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun cancel ()Lme/proton/core/test/android/robots/settings/RecoveryEmailRobot;
+	public final fun password (Ljava/lang/String;)Lme/proton/core/test/android/robots/settings/RecoveryEmailRobot$AuthenticationRobot;
+}
+
+public final class me/proton/core/test/android/robots/settings/RecoveryEmailRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun currentRecoveryEmailIs (Ljava/lang/String;)V
+	public final fun recoveryEmailElementsDisplayed ()V
+}
+

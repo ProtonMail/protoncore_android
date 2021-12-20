@@ -1,0 +1,97 @@
+public abstract interface class me/proton/core/humanverification/domain/HumanVerificationManager : me/proton/core/network/domain/humanverification/HumanVerificationListener, me/proton/core/network/domain/humanverification/HumanVerificationProvider {
+	public abstract fun addDetails (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onHumanVerificationStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/humanverification/domain/HumanVerificationManager$DefaultImpls {
+	public static synthetic fun onHumanVerificationStateChanged$default (Lme/proton/core/humanverification/domain/HumanVerificationManager;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/humanverification/domain/HumanVerificationManagerKt {
+	public static final fun onHumanVerificationState (Lme/proton/core/humanverification/domain/HumanVerificationManager;[Lme/proton/core/network/domain/humanverification/HumanVerificationState;Z)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun onHumanVerificationState$default (Lme/proton/core/humanverification/domain/HumanVerificationManager;[Lme/proton/core/network/domain/humanverification/HumanVerificationState;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract interface class me/proton/core/humanverification/domain/HumanVerificationWorkflowHandler {
+	public abstract fun handleHumanVerificationFailed (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun handleHumanVerificationSuccess (Lme/proton/core/network/domain/client/ClientId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/humanverification/domain/entity/TokenType : java/lang/Enum {
+	public static final field CAPTCHA Lme/proton/core/humanverification/domain/entity/TokenType;
+	public static final field Companion Lme/proton/core/humanverification/domain/entity/TokenType$Companion;
+	public static final field EMAIL Lme/proton/core/humanverification/domain/entity/TokenType;
+	public static final field PAYMENT Lme/proton/core/humanverification/domain/entity/TokenType;
+	public static final field SMS Lme/proton/core/humanverification/domain/entity/TokenType;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/humanverification/domain/entity/TokenType;
+	public static fun values ()[Lme/proton/core/humanverification/domain/entity/TokenType;
+}
+
+public final class me/proton/core/humanverification/domain/entity/TokenType$Companion {
+	public final fun fromString (Ljava/lang/String;)Lme/proton/core/humanverification/domain/entity/TokenType;
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public abstract interface class me/proton/core/humanverification/domain/repository/HumanVerificationRepository {
+	public abstract fun getAllHumanVerificationDetails (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getHumanVerificationDetails (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun insertHumanVerificationDetails (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onHumanVerificationStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun updateHumanVerificationState (Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/network/domain/humanverification/HumanVerificationState;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/humanverification/domain/repository/HumanVerificationRepository$DefaultImpls {
+	public static synthetic fun updateHumanVerificationState$default (Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/network/domain/humanverification/HumanVerificationState;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/humanverification/domain/repository/UserVerificationRepository {
+	public abstract fun checkCreationTokenValidity (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun sendVerificationCodeEmailAddress (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun sendVerificationCodePhoneNumber (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/humanverification/domain/usecase/CheckCreationTokenValidity {
+	public fun <init> (Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;Lme/proton/core/humanverification/domain/repository/HumanVerificationRepository;)V
+	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/humanverification/domain/usecase/ResendVerificationCodeToDestination {
+	public fun <init> (Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;)V
+	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lme/proton/core/humanverification/domain/entity/TokenType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/humanverification/domain/usecase/SendVerificationCodeToEmailDestination {
+	public fun <init> (Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;)V
+	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/humanverification/domain/usecase/SendVerificationCodeToEmailDestination;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/humanverification/domain/usecase/SendVerificationCodeToPhoneDestination {
+	public fun <init> (Lme/proton/core/humanverification/domain/repository/UserVerificationRepository;)V
+	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/humanverification/domain/utils/NetworkRequestOverrider {
+	public abstract fun overrideRequest (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/io/InputStream;Ljava/lang/String;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
+}
+
+public final class me/proton/core/humanverification/domain/utils/NetworkRequestOverrider$DefaultImpls {
+	public static synthetic fun overrideRequest$default (Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/io/InputStream;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
+}
+
+public final class me/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/io/InputStream;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/io/InputStream;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/io/InputStream;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
+	public static synthetic fun copy$default (Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;Ljava/lang/String;Ljava/lang/String;Ljava/io/InputStream;ILjava/lang/Object;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContents ()Ljava/io/InputStream;
+	public final fun getEncoding ()Ljava/lang/String;
+	public final fun getMimeType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+

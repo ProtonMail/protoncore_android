@@ -1,0 +1,176 @@
+public final class me/proton/core/util/kotlin/BitFlagsKt {
+	public static final fun hasFlag (II)Z
+}
+
+public final class me/proton/core/util/kotlin/CollectionUtils {
+	public static final fun changeFirst (Ljava/util/Collection;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Z
+	public static final fun filterFirst (Lkotlin/Pair;Lkotlin/jvm/functions/Function1;)Lkotlin/Pair;
+	public static final fun filterNotFirst (Lkotlin/Pair;Lkotlin/jvm/functions/Function1;)Lkotlin/Pair;
+	public static final fun filterNotIndexed (Lkotlin/sequences/Sequence;Lkotlin/jvm/functions/Function2;)Lkotlin/sequences/Sequence;
+	public static final fun filterNotSecond (Lkotlin/Pair;Lkotlin/jvm/functions/Function1;)Lkotlin/Pair;
+	public static final fun filterSecond (Lkotlin/Pair;Lkotlin/jvm/functions/Function1;)Lkotlin/Pair;
+	public static final fun forEachAsync (Ljava/lang/Iterable;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun mapAsync (Ljava/lang/Iterable;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun mapFirst (Ljava/util/Collection;Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public static final fun mapFirst (Lkotlin/Pair;Lkotlin/jvm/functions/Function1;)Lkotlin/Pair;
+	public static final fun mapNotNullAsync (Ljava/lang/Iterable;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun mapSecond (Ljava/util/Collection;Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public static final fun mapSecond (Lkotlin/Pair;Lkotlin/jvm/functions/Function1;)Lkotlin/Pair;
+	public static final fun removeFirst (Ljava/util/Collection;Lkotlin/jvm/functions/Function1;)Z
+	public static final fun replaceFirst (Ljava/util/Collection;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Z
+	public static final fun takeIfNotEmpty (Ljava/util/Collection;)Ljava/util/Collection;
+}
+
+public final class me/proton/core/util/kotlin/CoreLogger : me/proton/core/util/kotlin/Logger {
+	public static final field INSTANCE Lme/proton/core/util/kotlin/CoreLogger;
+	public fun d (Ljava/lang/String;Ljava/lang/String;)V
+	public fun d (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public fun e (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public fun e (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public fun i (Ljava/lang/String;Ljava/lang/String;)V
+	public fun i (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public fun log-KlBapMQ (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun set (Lme/proton/core/util/kotlin/Logger;)V
+	public fun v (Ljava/lang/String;Ljava/lang/String;)V
+	public fun v (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+}
+
+public abstract interface class me/proton/core/util/kotlin/DispatcherProvider {
+	public abstract fun getComp ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public abstract fun getIo ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public abstract fun getMain ()Lkotlinx/coroutines/CoroutineDispatcher;
+}
+
+public final class me/proton/core/util/kotlin/EntityMapperKt {
+	public static final fun invoke (Lme/proton/core/util/kotlin/UiModelMapper;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static final fun map (Ljava/util/Collection;Lme/proton/core/util/kotlin/UiModelMapper;Lkotlin/jvm/functions/Function2;)Ljava/util/List;
+}
+
+public final class me/proton/core/util/kotlin/FlowUtilsKt {
+	public static final fun catchWhen (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun retryOnceWhen (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/util/kotlin/HashUtils {
+	public static final field INSTANCE Lme/proton/core/util/kotlin/HashUtils;
+	public final fun hmacSha256 (Ljava/lang/String;[B)Ljava/lang/String;
+	public final fun hmacSha512 (Ljava/lang/String;[B)Ljava/lang/String;
+	public final fun sha256 (Ljava/io/File;)Ljava/lang/String;
+	public final fun sha256 (Ljava/lang/String;)Ljava/lang/String;
+	public final fun sha512 (Ljava/io/File;)Ljava/lang/String;
+	public final fun sha512 (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class me/proton/core/util/kotlin/HashUtilsKt {
+	public static final fun sha256 (Ljava/io/File;)Ljava/lang/String;
+	public static final fun sha512 (Ljava/io/File;)Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/util/kotlin/Invokable {
+}
+
+public final class me/proton/core/util/kotlin/InvokableKt {
+	public static final fun invoke (Lme/proton/core/util/kotlin/Invokable;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/util/kotlin/KotlinUtilsKt {
+	public static final fun all ([Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Z
+	public static final fun any ([Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Z
+	public static final fun await (Lkotlin/jvm/functions/Function0;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun forEach ([Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)V
+	public static final fun none ([Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Z
+	public static final fun safe (Ljava/lang/Object;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
+	public static final fun safe (Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/util/kotlin/Logger {
+	public abstract fun d (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun d (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public abstract fun e (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public abstract fun e (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public abstract fun i (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun i (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public abstract fun log-KlBapMQ (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun v (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun v (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+}
+
+public final class me/proton/core/util/kotlin/LoggerLogTag {
+	public static final synthetic fun box-impl (Ljava/lang/String;)Lme/proton/core/util/kotlin/LoggerLogTag;
+	public static fun constructor-impl (Ljava/lang/String;)Ljava/lang/String;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/lang/String;)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/lang/String;
+}
+
+public final class me/proton/core/util/kotlin/MapUtilsKt {
+	public static final fun filterNullValues (Ljava/util/Map;)Ljava/util/Map;
+	public static final fun filterValues (Ljava/util/Map;Ljava/lang/Class;)Ljava/util/Map;
+	public static final fun filterValues (Ljava/util/Map;Lkotlin/reflect/KClass;)Ljava/util/Map;
+}
+
+public abstract interface annotation class me/proton/core/util/kotlin/NeedSerializable : java/lang/annotation/Annotation {
+}
+
+public final class me/proton/core/util/kotlin/NumberUtilsKt {
+	public static final fun toBoolean (I)Z
+	public static final fun toBooleanOrFalse (I)Z
+	public static final fun toInt (Z)I
+}
+
+public final class me/proton/core/util/kotlin/ProtonCoreConfig : me/proton/core/util/kotlin/Invokable {
+	public static final field INSTANCE Lme/proton/core/util/kotlin/ProtonCoreConfig;
+	public final fun getDefaultJsonStringFormat ()Lkotlinx/serialization/StringFormat;
+	public final fun setDefaultJsonStringFormat (Lkotlinx/serialization/StringFormat;)V
+}
+
+public final class me/proton/core/util/kotlin/StringUtilsKt {
+	public static final field EMPTY_STRING Ljava/lang/String;
+	public static final fun containsNoCase (Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Z
+	public static final fun endsWith (Ljava/lang/String;Ljava/lang/String;)Z
+	public static final fun equalsNoCase (Ljava/lang/String;Ljava/lang/String;)Z
+	public static final fun get (Ljava/lang/CharSequence;II)Ljava/lang/CharSequence;
+	public static final fun get (Ljava/lang/String;II)Ljava/lang/String;
+	public static final fun nullIfBlank (Ljava/lang/CharSequence;)Ljava/lang/CharSequence;
+	public static final fun nullIfBlank (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun nullIfEmpty (Ljava/lang/CharSequence;)Ljava/lang/CharSequence;
+	public static final fun nullIfEmpty (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun startsWith (Ljava/lang/String;Ljava/lang/String;)Z
+	public static final fun stripEmptyLines (Ljava/lang/String;IZLkotlin/jvm/functions/Function1;)Ljava/lang/String;
+	public static synthetic fun stripEmptyLines$default (Ljava/lang/String;IZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun subsequence (Ljava/lang/CharSequence;Ljava/lang/String;Ljava/lang/String;IIZZZZZ)Ljava/lang/CharSequence;
+	public static synthetic fun subsequence$default (Ljava/lang/CharSequence;Ljava/lang/String;Ljava/lang/String;IIZZZZZILjava/lang/Object;)Ljava/lang/CharSequence;
+	public static final fun substring (Ljava/lang/CharSequence;Ljava/lang/String;Ljava/lang/String;IIZZZZZ)Ljava/lang/CharSequence;
+	public static final fun substring (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIZZZZZ)Ljava/lang/String;
+	public static synthetic fun substring$default (Ljava/lang/CharSequence;Ljava/lang/String;Ljava/lang/String;IIZZZZZILjava/lang/Object;)Ljava/lang/CharSequence;
+	public static synthetic fun substring$default (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIZZZZZILjava/lang/Object;)Ljava/lang/String;
+	public static final fun takeIfNotBlank (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun takeIfNotEmpty (Ljava/lang/String;)Ljava/lang/String;
+	public static final fun times (Ljava/lang/String;I)Ljava/lang/String;
+	public static final fun truncateToLength (Ljava/lang/CharSequence;I)Ljava/lang/CharSequence;
+}
+
+public abstract interface class me/proton/core/util/kotlin/UiModelMapper {
+	public abstract fun toEntity (Ljava/lang/Object;)Ljava/lang/Object;
+	public abstract fun toUiModel (Ljava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/util/kotlin/UiModelMapper$DefaultImpls {
+	public static fun toEntity (Lme/proton/core/util/kotlin/UiModelMapper;Ljava/lang/Object;)Ljava/lang/Object;
+	public static fun toUiModel (Lme/proton/core/util/kotlin/UiModelMapper;Ljava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/util/kotlin/UnsupportedKt {
+	public static final fun getUnsupported ()Ljava/lang/Void;
+}
+
+public final class me/proton/core/util/kotlin/WhenExensionsKt {
+	public static final fun getExhaustive (Ljava/lang/Object;)Ljava/lang/Object;
+}
+

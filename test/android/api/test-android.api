@@ -1,0 +1,69 @@
+public abstract interface class me/proton/core/test/android/ArchTest {
+	public abstract fun getArchRule ()Landroidx/arch/core/executor/testing/InstantTaskExecutorRule;
+}
+
+public final class me/proton/core/test/android/ArchTest$DefaultImpls {
+	public static fun getArchRule (Lme/proton/core/test/android/ArchTest;)Landroidx/arch/core/executor/testing/InstantTaskExecutorRule;
+}
+
+public final class me/proton/core/test/android/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/test/android/ExecutorsTest {
+	public abstract fun getExecutorService ()Ljava/util/concurrent/ExecutorService;
+	public abstract fun getExecutorsRule ()Lme/proton/core/test/android/ExecutorsTestRule;
+}
+
+public final class me/proton/core/test/android/ExecutorsTestKt {
+	public static final fun getExecutorsTest ()Lme/proton/core/test/android/ExecutorsTest;
+}
+
+public final class me/proton/core/test/android/ExecutorsTestRule : org/junit/rules/TestWatcher {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/test/android/MainThreadExecutorService : java/util/concurrent/ExecutorService {
+	public fun <init> ()V
+	public fun awaitTermination (JLjava/util/concurrent/TimeUnit;)Z
+	public fun execute (Ljava/lang/Runnable;)V
+	public fun invokeAll (Ljava/util/Collection;)Ljava/util/List;
+	public fun invokeAll (Ljava/util/Collection;JLjava/util/concurrent/TimeUnit;)Ljava/util/List;
+	public fun invokeAny (Ljava/util/Collection;)Ljava/lang/Object;
+	public fun invokeAny (Ljava/util/Collection;JLjava/util/concurrent/TimeUnit;)Ljava/lang/Object;
+	public fun isShutdown ()Z
+	public fun isTerminated ()Z
+	public fun shutdown ()V
+	public fun shutdownNow ()Ljava/util/List;
+	public fun submit (Ljava/lang/Runnable;)Ljava/util/concurrent/Future;
+	public fun submit (Ljava/lang/Runnable;Ljava/lang/Object;)Ljava/util/concurrent/Future;
+	public fun submit (Ljava/util/concurrent/Callable;)Ljava/util/concurrent/Future;
+}
+
+public final class me/proton/core/test/android/RunBlockingWithTimeoutKt {
+	public static final fun runBlockingWithTimeout (JLkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+	public static synthetic fun runBlockingWithTimeout$default (JLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/test/android/lifecycle/TestLifecycle : androidx/lifecycle/LifecycleOwner {
+	public fun <init> ()V
+	public final fun create ()Lme/proton/core/test/android/lifecycle/TestLifecycle;
+	public final fun destroy ()Lme/proton/core/test/android/lifecycle/TestLifecycle;
+	public final fun getCurrentState ()Landroidx/lifecycle/Lifecycle$State;
+	public synthetic fun getLifecycle ()Landroidx/lifecycle/Lifecycle;
+	public fun getLifecycle ()Landroidx/lifecycle/LifecycleRegistry;
+	public final fun invoke ([Landroidx/lifecycle/Lifecycle$Event;)V
+	public final fun pause ()Lme/proton/core/test/android/lifecycle/TestLifecycle;
+	public final fun resume ()Lme/proton/core/test/android/lifecycle/TestLifecycle;
+	public final fun start ()Lme/proton/core/test/android/lifecycle/TestLifecycle;
+	public final fun stop ()Lme/proton/core/test/android/lifecycle/TestLifecycle;
+}
+
+public final class me/proton/core/test/android/mocks/MockSharedPreferencesKt {
+	public static final fun getMockSharedPreferences ()Landroid/content/SharedPreferences;
+	public static final fun getNewMockSharedPreferences ()Landroid/content/SharedPreferences;
+}
+

@@ -1,0 +1,734 @@
+public final class me/proton/core/presentation/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public class me/proton/core/presentation/app/AppLifecycleObserver : androidx/lifecycle/LifecycleObserver, me/proton/core/presentation/app/AppLifecycleProvider {
+	public fun <init> ()V
+	public fun getLifecycle ()Landroidx/lifecycle/Lifecycle;
+	public fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun onEnterBackground ()V
+	public fun onEnterForeground ()V
+}
+
+public abstract interface class me/proton/core/presentation/app/AppLifecycleProvider {
+	public abstract fun getLifecycle ()Landroidx/lifecycle/Lifecycle;
+	public abstract fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+}
+
+public final class me/proton/core/presentation/app/AppLifecycleProvider$State : java/lang/Enum {
+	public static final field Background Lme/proton/core/presentation/app/AppLifecycleProvider$State;
+	public static final field Foreground Lme/proton/core/presentation/app/AppLifecycleProvider$State;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/app/AppLifecycleProvider$State;
+	public static fun values ()[Lme/proton/core/presentation/app/AppLifecycleProvider$State;
+}
+
+public final class me/proton/core/presentation/databinding/ProtonAutocompleteInputBinding : androidx/viewbinding/ViewBinding {
+	public final field input Landroid/widget/AutoCompleteTextView;
+	public final field inputLayout Lcom/google/android/material/textfield/TextInputLayout;
+	public final field label Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/presentation/databinding/ProtonAutocompleteInputBinding;
+	public fun getRoot ()Landroid/view/View;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/presentation/databinding/ProtonAutocompleteInputBinding;
+}
+
+public final class me/proton/core/presentation/databinding/ProtonInputBinding : androidx/viewbinding/ViewBinding {
+	public final field input Lcom/google/android/material/textfield/TextInputEditText;
+	public final field inputLayout Lcom/google/android/material/textfield/TextInputLayout;
+	public final field label Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/presentation/databinding/ProtonInputBinding;
+	public fun getRoot ()Landroid/view/View;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/presentation/databinding/ProtonInputBinding;
+}
+
+public final class me/proton/core/presentation/databinding/ProtonNavViewSectionHeaderBinding : androidx/viewbinding/ViewBinding {
+	public final field headerTitle Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/presentation/databinding/ProtonNavViewSectionHeaderBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/presentation/databinding/ProtonNavViewSectionHeaderBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/presentation/databinding/ProtonNavViewSectionHeaderBinding;
+}
+
+public final class me/proton/core/presentation/databinding/ProtonToastErrorBinding : androidx/viewbinding/ViewBinding {
+	public final field textView Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/presentation/databinding/ProtonToastErrorBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroid/widget/FrameLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/presentation/databinding/ProtonToastErrorBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/presentation/databinding/ProtonToastErrorBinding;
+}
+
+public abstract class me/proton/core/presentation/savedstate/BaseSavedState : kotlin/properties/ReadWriteProperty {
+	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Ljava/lang/String;)V
+	public abstract fun getCurrentValue ()Ljava/lang/Object;
+	public fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+	public abstract fun setCurrentValue (Ljava/lang/Object;)V
+	public fun setValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;Ljava/lang/Object;)V
+}
+
+public final class me/proton/core/presentation/savedstate/LateSavedState : me/proton/core/presentation/savedstate/BaseSavedState {
+	public field currentValue Ljava/lang/Object;
+	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Ljava/lang/String;)V
+	public fun getCurrentValue ()Ljava/lang/Object;
+	public final fun isInitialized ()Z
+	public fun setCurrentValue (Ljava/lang/Object;)V
+}
+
+public final class me/proton/core/presentation/savedstate/MutableSharedFlowSavedState : kotlin/properties/ReadOnlyProperty {
+	public fun <init> (Lkotlinx/coroutines/CoroutineScope;Lkotlinx/coroutines/flow/MutableSharedFlow;Lkotlin/jvm/functions/Function1;Landroidx/lifecycle/SavedStateHandle;Ljava/lang/String;)V
+	public synthetic fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+	public fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Lkotlinx/coroutines/flow/MutableSharedFlow;
+}
+
+public final class me/proton/core/presentation/savedstate/MutableSharedFlowSavedStateKt {
+	public static final fun flowState (Landroidx/lifecycle/SavedStateHandle;Lkotlinx/coroutines/flow/MutableSharedFlow;Lkotlinx/coroutines/CoroutineScope;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/savedstate/MutableSharedFlowSavedState;
+	public static synthetic fun flowState$default (Landroidx/lifecycle/SavedStateHandle;Lkotlinx/coroutines/flow/MutableSharedFlow;Lkotlinx/coroutines/CoroutineScope;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/presentation/savedstate/MutableSharedFlowSavedState;
+}
+
+public final class me/proton/core/presentation/savedstate/SavedState : me/proton/core/presentation/savedstate/BaseSavedState {
+	public fun <init> (Ljava/lang/Object;Landroidx/lifecycle/SavedStateHandle;Ljava/lang/String;)V
+	public fun getCurrentValue ()Ljava/lang/Object;
+	public fun setCurrentValue (Ljava/lang/Object;)V
+}
+
+public final class me/proton/core/presentation/savedstate/SavedStateKt {
+	public static final fun lateState (Landroidx/lifecycle/SavedStateHandle;Ljava/lang/String;)Lme/proton/core/presentation/savedstate/LateSavedState;
+	public static synthetic fun lateState$default (Landroidx/lifecycle/SavedStateHandle;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/presentation/savedstate/LateSavedState;
+	public static final fun state (Landroidx/lifecycle/SavedStateHandle;Ljava/lang/Object;Ljava/lang/String;)Lme/proton/core/presentation/savedstate/SavedState;
+	public static synthetic fun state$default (Landroidx/lifecycle/SavedStateHandle;Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/presentation/savedstate/SavedState;
+}
+
+public abstract class me/proton/core/presentation/ui/ProtonActivity : androidx/appcompat/app/AppCompatActivity {
+	public fun <init> ()V
+}
+
+public abstract class me/proton/core/presentation/ui/ProtonDialogFragment : androidx/fragment/app/DialogFragment {
+	public fun <init> ()V
+	public fun <init> (I)V
+	protected fun getStyleResource ()Ljava/lang/Integer;
+	protected abstract fun onBackPressed ()V
+	public fun onCreate (Landroid/os/Bundle;)V
+	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
+}
+
+public abstract class me/proton/core/presentation/ui/ProtonFragment : androidx/fragment/app/Fragment {
+	public fun <init> ()V
+	public fun <init> (I)V
+}
+
+public abstract class me/proton/core/presentation/ui/ProtonSecureActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	protected final fun getConfiguration ()Lme/proton/core/presentation/utils/ProtectScreenConfiguration;
+}
+
+public abstract class me/proton/core/presentation/ui/ProtonSecureFragment : me/proton/core/presentation/ui/ProtonFragment {
+	public fun <init> ()V
+	public fun <init> (I)V
+	protected final fun getConfiguration ()Lme/proton/core/presentation/utils/ProtectScreenConfiguration;
+}
+
+public abstract class me/proton/core/presentation/ui/ProtonViewBindingActivity : me/proton/core/presentation/ui/ProtonActivity {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final fun getBinding ()Landroidx/viewbinding/ViewBinding;
+	protected fun onCreate (Landroid/os/Bundle;)V
+}
+
+public abstract interface class me/proton/core/presentation/ui/adapter/ClickableAdapter {
+	public abstract fun getOnItemClick ()Lkotlin/jvm/functions/Function1;
+	public abstract fun getOnItemLongClick ()Lkotlin/jvm/functions/Function1;
+}
+
+public abstract class me/proton/core/presentation/ui/adapter/ClickableAdapter$ViewHolder : androidx/recyclerview/widget/RecyclerView$ViewHolder {
+	protected static final field Companion Lme/proton/core/presentation/ui/adapter/ClickableAdapter$ViewHolder$Companion;
+	public fun <init> (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)V
+	public synthetic fun <init> (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	protected final fun getClickListener ()Lkotlin/jvm/functions/Function1;
+	protected final fun getColor (I)I
+	protected final fun getContext ()Landroid/content/Context;
+	protected final fun getDrawable (I)Landroid/graphics/drawable/Drawable;
+	protected final fun getLongClickListener ()Lkotlin/jvm/functions/Function1;
+	protected final fun getString (I)Ljava/lang/CharSequence;
+	protected final fun getText (I)Ljava/lang/CharSequence;
+	protected final fun getViewRef ()Ljava/lang/Object;
+	public fun onBind (Ljava/lang/Object;I)V
+}
+
+protected final class me/proton/core/presentation/ui/adapter/ClickableAdapter$ViewHolder$Companion {
+	public final fun getView (Ljava/lang/Object;)Landroid/view/View;
+}
+
+public abstract interface class me/proton/core/presentation/ui/adapter/FilterableAdapter : android/widget/Filterable {
+	public abstract fun getFilter ()Landroid/widget/Filter;
+	public abstract fun getUnfilteredList ()Ljava/util/List;
+	public abstract fun onFilter (Ljava/lang/Object;Ljava/lang/CharSequence;)Z
+	public abstract fun setUnfilteredList (Ljava/util/List;)V
+	public abstract fun submitFilteredList (Ljava/util/List;)V
+}
+
+public final class me/proton/core/presentation/ui/adapter/FilterableAdapter$DefaultImpls {
+	public static fun getFilter (Lme/proton/core/presentation/ui/adapter/FilterableAdapter;)Landroid/widget/Filter;
+	public static fun onFilter (Lme/proton/core/presentation/ui/adapter/FilterableAdapter;Ljava/lang/Object;Ljava/lang/CharSequence;)Z
+}
+
+public abstract class me/proton/core/presentation/ui/adapter/ProtonAdapter : androidx/recyclerview/widget/ListAdapter, me/proton/core/presentation/ui/adapter/ClickableAdapter, me/proton/core/presentation/ui/adapter/FilterableAdapter {
+	public fun <init> (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ZLandroidx/recyclerview/widget/DiffUtil$ItemCallback;)V
+	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ZLandroidx/recyclerview/widget/DiffUtil$ItemCallback;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getFilter ()Landroid/widget/Filter;
+	public fun getOnItemClick ()Lkotlin/jvm/functions/Function1;
+	public fun getOnItemLongClick ()Lkotlin/jvm/functions/Function1;
+	public final fun getUnfilteredList ()Ljava/util/List;
+	public synthetic fun onBindViewHolder (Landroidx/recyclerview/widget/RecyclerView$ViewHolder;I)V
+	public fun onBindViewHolder (Lme/proton/core/presentation/ui/adapter/ClickableAdapter$ViewHolder;I)V
+	public fun onFilter (Ljava/lang/Object;Ljava/lang/CharSequence;)Z
+	public final fun setUnfilteredList (Ljava/util/List;)V
+	public final fun submitFilteredList (Ljava/util/List;)V
+	public final fun submitList (Ljava/util/List;)V
+}
+
+public final class me/proton/core/presentation/ui/adapter/ProtonAdapterKt {
+	public static final fun ProtonAdapter (ILkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/recyclerview/widget/DiffUtil$ItemCallback;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/presentation/ui/adapter/ProtonAdapter;
+	public static final fun ProtonAdapter (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/recyclerview/widget/DiffUtil$ItemCallback;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/presentation/ui/adapter/ProtonAdapter;
+	public static synthetic fun ProtonAdapter$default (ILkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/recyclerview/widget/DiffUtil$ItemCallback;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/presentation/ui/adapter/ProtonAdapter;
+	public static synthetic fun ProtonAdapter$default (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/recyclerview/widget/DiffUtil$ItemCallback;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/presentation/ui/adapter/ProtonAdapter;
+	public static final fun selectableProtonAdapter (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/recyclerview/widget/DiffUtil$ItemCallback;ZLkotlin/jvm/functions/Function2;)Lme/proton/core/presentation/ui/adapter/ProtonAdapter;
+	public static synthetic fun selectableProtonAdapter$default (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/recyclerview/widget/DiffUtil$ItemCallback;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/presentation/ui/adapter/ProtonAdapter;
+}
+
+public abstract interface class me/proton/core/presentation/ui/adapter/SelectableAdapter : me/proton/core/presentation/ui/adapter/ClickableAdapter {
+	public abstract fun getOnItemSelect ()Lkotlin/jvm/functions/Function2;
+}
+
+public abstract class me/proton/core/presentation/ui/adapter/SelectableAdapter$ViewHolder : me/proton/core/presentation/ui/adapter/ClickableAdapter$ViewHolder {
+	public fun <init> (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)V
+	public synthetic fun <init> (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	protected final fun getSelectListener ()Lkotlin/jvm/functions/Function2;
+	protected final fun setSelected (Ljava/lang/Object;Z)V
+}
+
+public final class me/proton/core/presentation/ui/alert/ForceUpdateActivity : androidx/appcompat/app/AppCompatActivity {
+	public static final field Companion Lme/proton/core/presentation/ui/alert/ForceUpdateActivity$Companion;
+	public fun <init> ()V
+	public fun onBackPressed ()V
+}
+
+public final class me/proton/core/presentation/ui/alert/ForceUpdateActivity$Companion {
+	public final fun invoke (Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+	public static synthetic fun invoke$default (Lme/proton/core/presentation/ui/alert/ForceUpdateActivity$Companion;Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Landroid/content/Intent;
+}
+
+public final class me/proton/core/presentation/ui/alert/ForceUpdateDialog : androidx/fragment/app/DialogFragment {
+	public static final field Companion Lme/proton/core/presentation/ui/alert/ForceUpdateDialog$Companion;
+	public fun <init> ()V
+	public fun onCreate (Landroid/os/Bundle;)V
+	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
+	public fun onResume ()V
+}
+
+public final class me/proton/core/presentation/ui/alert/ForceUpdateDialog$Companion {
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Z)Lme/proton/core/presentation/ui/alert/ForceUpdateDialog;
+	public static synthetic fun invoke$default (Lme/proton/core/presentation/ui/alert/ForceUpdateDialog$Companion;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/presentation/ui/alert/ForceUpdateDialog;
+}
+
+public final class me/proton/core/presentation/ui/alert/FragmentDialogResultLauncher {
+	public fun <init> (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRequestKey ()Ljava/lang/String;
+	public final fun getShow ()Lkotlin/jvm/functions/Function1;
+	public fun hashCode ()I
+	public final fun show (Ljava/lang/Object;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/ui/alert/ProtonCancellableAlertDialog : androidx/fragment/app/DialogFragment {
+	public static final field Companion Lme/proton/core/presentation/ui/alert/ProtonCancellableAlertDialog$Companion;
+	public static final field KEY_ACTION_DONE Ljava/lang/String;
+	public fun <init> ()V
+	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
+}
+
+public final class me/proton/core/presentation/ui/alert/ProtonCancellableAlertDialog$Companion {
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/presentation/ui/alert/ProtonCancellableAlertDialog;
+	public static synthetic fun invoke$default (Lme/proton/core/presentation/ui/alert/ProtonCancellableAlertDialog$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/presentation/ui/alert/ProtonCancellableAlertDialog;
+}
+
+public final class me/proton/core/presentation/ui/view/CompoundButtonPositionHelper {
+	public fun <init> (Landroid/widget/CompoundButton;)V
+	public final fun getWidthLeft ()I
+	public final fun getWidthRight ()I
+	public final fun jumpDrawablesToCurrentState ()V
+	public final fun onDraw (Landroid/graphics/Canvas;)V
+	public final fun onDrawableStateChanged ()V
+	public final fun verifyDrawable (Landroid/graphics/drawable/Drawable;)Z
+}
+
+public abstract interface class me/proton/core/presentation/ui/view/Loadable {
+	public abstract fun loadingComplete ()V
+}
+
+public class me/proton/core/presentation/ui/view/ProtonAutoCompleteInput : android/widget/LinearLayout {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
+	public final fun clearInputError ()V
+	public final fun getHelpText ()Ljava/lang/CharSequence;
+	public final fun getHintText ()Ljava/lang/CharSequence;
+	public final fun getInputType ()I
+	public final fun getLabelText ()Ljava/lang/CharSequence;
+	public final fun getPrefixText ()Ljava/lang/CharSequence;
+	public final fun getSuffixText ()Ljava/lang/CharSequence;
+	public final fun getText ()Ljava/lang/CharSequence;
+	public fun isEnabled ()Z
+	public final fun isPasswordInput ()Z
+	public final fun setAdapter (Landroid/widget/ListAdapter;)V
+	public fun setEnabled (Z)V
+	public final fun setHelpText (Ljava/lang/CharSequence;)V
+	public final fun setHintText (Ljava/lang/CharSequence;)V
+	public final fun setInputError (Ljava/lang/String;)V
+	public static synthetic fun setInputError$default (Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;Ljava/lang/String;ILjava/lang/Object;)V
+	public final fun setInputType (I)V
+	public final fun setLabelText (Ljava/lang/CharSequence;)V
+	public fun setOnClickListener (Landroid/view/View$OnClickListener;)V
+	public final fun setText (Ljava/lang/CharSequence;)V
+}
+
+public class me/proton/core/presentation/ui/view/ProtonButton : com/google/android/material/button/MaterialButton {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public class me/proton/core/presentation/ui/view/ProtonCheckbox : com/google/android/material/checkbox/MaterialCheckBox {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	protected fun drawableStateChanged ()V
+	public fun getCompoundPaddingLeft ()I
+	public fun getCompoundPaddingRight ()I
+	public fun jumpDrawablesToCurrentState ()V
+	protected fun onDraw (Landroid/graphics/Canvas;)V
+	protected fun verifyDrawable (Landroid/graphics/drawable/Drawable;)Z
+}
+
+public final class me/proton/core/presentation/ui/view/ProtonInput : android/widget/LinearLayout {
+	public static final field Companion Lme/proton/core/presentation/ui/view/ProtonInput$Companion;
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
+	public final fun addTextChangedListener (Landroid/text/TextWatcher;)V
+	public final fun clearInputError ()V
+	public final fun clearTextAndOverwriteMemory ()V
+	public final fun getEditTextAlignment ()I
+	public final fun getEditTextDirection ()I
+	public final fun getEndIconDrawable ()Landroid/graphics/drawable/Drawable;
+	public final fun getEndIconMode ()Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
+	public final fun getFilters ()[Landroid/text/InputFilter;
+	public final fun getHelpText ()Ljava/lang/CharSequence;
+	public final fun getHintText ()Ljava/lang/CharSequence;
+	public final fun getImeOptions ()I
+	public final fun getInputType ()I
+	public final fun getKeyListener ()Landroid/text/method/KeyListener;
+	public final fun getLabelText ()Ljava/lang/CharSequence;
+	public final fun getMinLines ()I
+	public final fun getPrefixText ()Ljava/lang/CharSequence;
+	public final fun getSuffixText ()Ljava/lang/CharSequence;
+	public final fun getText ()Ljava/lang/CharSequence;
+	public fun isEnabled ()Z
+	public final fun isPasswordInput ()Z
+	public final fun setEditTextAlignment (I)V
+	public final fun setEditTextDirection (I)V
+	public fun setEnabled (Z)V
+	public final fun setEndIconDrawable (Landroid/graphics/drawable/Drawable;)V
+	public final fun setEndIconMode (Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;)V
+	public final fun setFilters ([Landroid/text/InputFilter;)V
+	public final fun setHelpText (Ljava/lang/CharSequence;)V
+	public final fun setHintText (Ljava/lang/CharSequence;)V
+	public final fun setImeOptions (I)V
+	public final fun setInputError (Ljava/lang/String;)V
+	public static synthetic fun setInputError$default (Lme/proton/core/presentation/ui/view/ProtonInput;Ljava/lang/String;ILjava/lang/Object;)V
+	public final fun setInputType (I)V
+	public final fun setKeyListener (Landroid/text/method/KeyListener;)V
+	public final fun setLabelText (Ljava/lang/CharSequence;)V
+	public final fun setMinLines (I)V
+	public final fun setOnEditorActionListener (Landroid/widget/TextView$OnEditorActionListener;)V
+	public final fun setOnFocusLostListener (Landroid/view/View$OnFocusChangeListener;)V
+	public final fun setPrefixText (Ljava/lang/CharSequence;)V
+	public final fun setSuffixText (Ljava/lang/CharSequence;)V
+	public final fun setText (Ljava/lang/CharSequence;)V
+}
+
+public final class me/proton/core/presentation/ui/view/ProtonInput$Companion {
+}
+
+public final class me/proton/core/presentation/ui/view/ProtonInput$EndIconMode : java/lang/Enum {
+	public static final field CLEAR_TEXT Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
+	public static final field CUSTOM_ICON Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
+	public static final field Companion Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode$Companion;
+	public static final field NONE Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
+	public static final field PASSWORD_TOGGLE Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
+	public final fun getAction ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
+	public static fun values ()[Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
+}
+
+public final class me/proton/core/presentation/ui/view/ProtonInput$EndIconMode$Companion {
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/presentation/ui/view/ProtonInput$ProtonInputState : android/view/View$BaseSavedState, android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Landroid/os/Parcelable;Ljava/lang/Long;Landroid/util/SparseArray;)V
+	public final fun component1 ()Landroid/os/Parcelable;
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Landroid/util/SparseArray;
+	public final fun copy (Landroid/os/Parcelable;Ljava/lang/Long;Landroid/util/SparseArray;)Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;Landroid/os/Parcelable;Ljava/lang/Long;Landroid/util/SparseArray;ILjava/lang/Object;)Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChildSavedState ()Landroid/util/SparseArray;
+	public final fun getLastEditTimeMillis ()Ljava/lang/Long;
+	public final fun getSuperSavedState ()Landroid/os/Parcelable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/presentation/ui/view/ProtonNavigationButton : me/proton/core/presentation/ui/view/ProtonButton {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public class me/proton/core/presentation/ui/view/ProtonProgressButton : me/proton/core/presentation/ui/view/ProtonButton, me/proton/core/presentation/ui/view/Loadable {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAutoLoading ()Z
+	public final fun getCurrentState ()Lme/proton/core/presentation/ui/view/ProtonProgressButton$State;
+	public fun loadingComplete ()V
+	protected fun onDetachedFromWindow ()V
+	public final fun setAutoLoading (Z)V
+	public final fun setIdle ()V
+	public final fun setLoading ()V
+	public fun setOnClickListener (Landroid/view/View$OnClickListener;)V
+}
+
+public final class me/proton/core/presentation/ui/view/ProtonProgressButton$State : java/lang/Enum {
+	public static final field IDLE Lme/proton/core/presentation/ui/view/ProtonProgressButton$State;
+	public static final field LOADING Lme/proton/core/presentation/ui/view/ProtonProgressButton$State;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/ui/view/ProtonProgressButton$State;
+	public static fun values ()[Lme/proton/core/presentation/ui/view/ProtonProgressButton$State;
+}
+
+public class me/proton/core/presentation/ui/view/ProtonRadioButton : com/google/android/material/radiobutton/MaterialRadioButton {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	protected fun drawableStateChanged ()V
+	public fun getCompoundPaddingLeft ()I
+	public fun getCompoundPaddingRight ()I
+	public fun jumpDrawablesToCurrentState ()V
+	protected fun onDraw (Landroid/graphics/Canvas;)V
+	protected fun verifyDrawable (Landroid/graphics/drawable/Drawable;)Z
+}
+
+public final class me/proton/core/presentation/ui/webview/ProtonWebView : android/webkit/WebView {
+	public static final field Companion Lme/proton/core/presentation/ui/webview/ProtonWebView$Companion;
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
+}
+
+public final class me/proton/core/presentation/ui/webview/ProtonWebView$Companion {
+}
+
+public final class me/proton/core/presentation/utils/ActivityScreenContentProtectionDelegate : kotlin/properties/ReadOnlyProperty {
+	public fun <init> (Landroidx/activity/ComponentActivity;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;)V
+	public fun getValue (Landroidx/activity/ComponentActivity;Lkotlin/reflect/KProperty;)Lme/proton/core/presentation/utils/ScreenContentProtector;
+	public synthetic fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/presentation/utils/CardType : java/lang/Enum {
+	public static final field AMEX Lme/proton/core/presentation/utils/CardType;
+	public static final field DISCOVER Lme/proton/core/presentation/utils/CardType;
+	public static final field MASTERCARD Lme/proton/core/presentation/utils/CardType;
+	public static final field OTHER Lme/proton/core/presentation/utils/CardType;
+	public static final field VISA Lme/proton/core/presentation/utils/CardType;
+	public final fun getRegex ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/utils/CardType;
+	public static fun values ()[Lme/proton/core/presentation/utils/CardType;
+}
+
+public final class me/proton/core/presentation/utils/FragmentScreenContentProtectionDelegate : kotlin/properties/ReadOnlyProperty {
+	public fun <init> (Landroidx/fragment/app/Fragment;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;)V
+	public fun getValue (Landroidx/fragment/app/Fragment;Lkotlin/reflect/KProperty;)Lme/proton/core/presentation/utils/ScreenContentProtector;
+	public synthetic fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/presentation/utils/InitialMargin {
+	public fun <init> (IIII)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()I
+	public final fun copy (IIII)Lme/proton/core/presentation/utils/InitialMargin;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/utils/InitialMargin;IIIIILjava/lang/Object;)Lme/proton/core/presentation/utils/InitialMargin;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBottom ()I
+	public final fun getEnd ()I
+	public final fun getStart ()I
+	public final fun getTop ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/utils/InitialPadding {
+	public fun <init> (IIII)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()I
+	public final fun copy (IIII)Lme/proton/core/presentation/utils/InitialPadding;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/utils/InitialPadding;IIIIILjava/lang/Object;)Lme/proton/core/presentation/utils/InitialPadding;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBottom ()I
+	public final fun getEnd ()I
+	public final fun getStart ()I
+	public final fun getTop ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/utils/InputValidationResult {
+	public static final field Companion Lme/proton/core/presentation/utils/InputValidationResult$Companion;
+	public static final field EMAIL_VALIDATION_PATTERN Ljava/lang/String;
+	public static final field MAX_MONTH I
+	public static final field MAX_YEAR I
+	public static final field MIN_MONTH I
+	public static final field YEAR_2000 I
+	public fun <init> (Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;)V
+	public synthetic fun <init> (Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lme/proton/core/presentation/utils/ValidationType;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/utils/InputValidationResult;Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;ILjava/lang/Object;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCardType ()Lme/proton/core/presentation/utils/CardType;
+	public final fun getText ()Ljava/lang/String;
+	public final fun getValidationType ()Lme/proton/core/presentation/utils/ValidationType;
+	public fun hashCode ()I
+	public final fun isValid ()Z
+	public final fun setCardType (Lme/proton/core/presentation/utils/CardType;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/utils/InputValidationResult$Companion {
+}
+
+public final class me/proton/core/presentation/utils/NumberUtilsKt {
+	public static final field BYTE_DIVIDER I
+	public static final field PRICE_ZERO D
+	public static final fun formatByteToHumanReadable (J)Ljava/lang/String;
+	public static final fun formatCentsPriceDefaultLocale (DLjava/lang/String;I)Ljava/lang/String;
+	public static synthetic fun formatCentsPriceDefaultLocale$default (DLjava/lang/String;IILjava/lang/Object;)Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/utils/OnBackPressedCallbacksKt {
+	public static final fun addOnBackPressedCallback (Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function0;)Landroidx/activity/OnBackPressedCallback;
+	public static final fun addOnBackPressedCallback (Landroidx/fragment/app/FragmentActivity;Landroidx/lifecycle/LifecycleOwner;Lkotlin/jvm/functions/Function0;)Landroidx/activity/OnBackPressedCallback;
+	public static synthetic fun addOnBackPressedCallback$default (Landroidx/fragment/app/FragmentActivity;Landroidx/lifecycle/LifecycleOwner;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Landroidx/activity/OnBackPressedCallback;
+}
+
+public final class me/proton/core/presentation/utils/ProtectScreenConfiguration {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getPreventScreenRecording ()Z
+}
+
+public final class me/proton/core/presentation/utils/ScreenContentProtector {
+	public static final field Companion Lme/proton/core/presentation/utils/ScreenContentProtector$Companion;
+	public static final field TAG Ljava/lang/String;
+	public fun <init> ()V
+	public fun <init> (Lme/proton/core/presentation/utils/ProtectScreenConfiguration;)V
+	public synthetic fun <init> (Lme/proton/core/presentation/utils/ProtectScreenConfiguration;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun protect (Landroid/app/Activity;)V
+	public final fun unprotect (Landroid/app/Activity;)V
+}
+
+public final class me/proton/core/presentation/utils/ScreenContentProtector$Companion {
+}
+
+public final class me/proton/core/presentation/utils/ScreenContentProtectorKt {
+	public static final fun protectScreen (Landroidx/activity/ComponentActivity;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;)Lme/proton/core/presentation/utils/ActivityScreenContentProtectionDelegate;
+	public static final fun protectScreen (Landroidx/fragment/app/Fragment;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;)Lme/proton/core/presentation/utils/FragmentScreenContentProtectionDelegate;
+	public static synthetic fun protectScreen$default (Landroidx/activity/ComponentActivity;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;ILjava/lang/Object;)Lme/proton/core/presentation/utils/ActivityScreenContentProtectionDelegate;
+	public static synthetic fun protectScreen$default (Landroidx/fragment/app/Fragment;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;ILjava/lang/Object;)Lme/proton/core/presentation/utils/FragmentScreenContentProtectionDelegate;
+}
+
+public final class me/proton/core/presentation/utils/SnackType : java/lang/Enum {
+	public static final field Error Lme/proton/core/presentation/utils/SnackType;
+	public static final field Norm Lme/proton/core/presentation/utils/SnackType;
+	public static final field Success Lme/proton/core/presentation/utils/SnackType;
+	public static final field Warning Lme/proton/core/presentation/utils/SnackType;
+	public final fun getBackground ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/utils/SnackType;
+	public static fun values ()[Lme/proton/core/presentation/utils/SnackType;
+}
+
+public final class me/proton/core/presentation/utils/SnackbarKt {
+	public static final fun errorSnack (Landroid/view/View;I)V
+	public static final fun errorSnack (Landroid/view/View;Ljava/lang/String;)V
+	public static final fun errorSnack (Landroid/view/View;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
+	public static final fun normSnack (Landroid/view/View;I)V
+	public static final fun normSnack (Landroid/view/View;Ljava/lang/String;)V
+	public static final fun snack (Landroid/view/View;ILjava/lang/Integer;)V
+	public static final fun snack (Landroid/view/View;ILme/proton/core/presentation/utils/SnackType;)V
+	public static final fun snack (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/functions/Function1;)V
+	public static final fun snack (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Lkotlin/jvm/functions/Function0;I)V
+	public static final fun snack (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;ILkotlin/jvm/functions/Function1;)V
+	public static final fun snack (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;I)V
+	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Lkotlin/jvm/functions/Function0;IILjava/lang/Object;)V
+	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun snack$default (Landroid/view/View;Ljava/lang/String;Lme/proton/core/presentation/utils/SnackType;Ljava/lang/String;Lkotlin/jvm/functions/Function0;IILjava/lang/Object;)V
+	public static final fun successSnack (Landroid/view/View;I)V
+	public static final fun successSnack (Landroid/view/View;Ljava/lang/String;)V
+	public static final fun warningSnack (Landroid/view/View;I)V
+	public static final fun warningSnack (Landroid/view/View;Ljava/lang/String;)V
+}
+
+public final class me/proton/core/presentation/utils/TextUtils {
+	public static final fun errorToast (Landroid/content/Context;Ljava/lang/String;I)V
+	public static synthetic fun errorToast$default (Landroid/content/Context;Ljava/lang/String;IILjava/lang/Object;)V
+	public static final fun showToast (Landroid/content/Context;I)V
+	public static final fun showToast (Landroid/content/Context;II)V
+	public static final fun showToast (Landroid/content/Context;III)V
+	public static final fun showToast (Landroid/content/Context;Ljava/lang/CharSequence;)V
+	public static final fun showToast (Landroid/content/Context;Ljava/lang/CharSequence;I)V
+	public static final fun showToast (Landroid/content/Context;Ljava/lang/CharSequence;II)V
+	public static synthetic fun showToast$default (Landroid/content/Context;IIIILjava/lang/Object;)V
+	public static synthetic fun showToast$default (Landroid/content/Context;Ljava/lang/CharSequence;IIILjava/lang/Object;)V
+}
+
+public final class me/proton/core/presentation/utils/UiUtilsKt {
+	public static final fun hideKeyboard (Landroid/content/Context;Landroid/view/View;)V
+	public static final fun hideKeyboard (Landroidx/fragment/app/Fragment;)V
+	public static final fun hideKeyboard (Landroidx/fragment/app/FragmentActivity;)V
+	public static final fun inTransaction (Landroidx/fragment/app/FragmentManager;Lkotlin/jvm/functions/Function1;)V
+	public static final fun isNightMode (Landroidx/appcompat/app/AppCompatActivity;)Z
+	public static final fun openBrowserLink (Landroid/content/Context;Ljava/lang/String;)V
+	public static final fun openMarketLink (Landroid/content/Context;)V
+	public static final fun setDarkStatusBar (Landroidx/appcompat/app/AppCompatActivity;)V
+	public static final fun setLightStatusBar (Landroidx/appcompat/app/AppCompatActivity;)V
+}
+
+public final class me/proton/core/presentation/utils/ValidationType : java/lang/Enum {
+	public static final field CreditCard Lme/proton/core/presentation/utils/ValidationType;
+	public static final field CreditCardCVC Lme/proton/core/presentation/utils/ValidationType;
+	public static final field CreditCardExpirationDate Lme/proton/core/presentation/utils/ValidationType;
+	public static final field Email Lme/proton/core/presentation/utils/ValidationType;
+	public static final field NotBlank Lme/proton/core/presentation/utils/ValidationType;
+	public static final field Password Lme/proton/core/presentation/utils/ValidationType;
+	public static final field PasswordMinLength Lme/proton/core/presentation/utils/ValidationType;
+	public static final field Username Lme/proton/core/presentation/utils/ValidationType;
+	public final fun getMaxLong ()I
+	public final fun getMinLong ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/utils/ValidationType;
+	public static fun values ()[Lme/proton/core/presentation/utils/ValidationType;
+}
+
+public final class me/proton/core/presentation/utils/ValidationUtilsKt {
+	public static final fun onFailure (Lme/proton/core/presentation/utils/InputValidationResult;Lkotlin/jvm/functions/Function0;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun onSuccess (Lme/proton/core/presentation/utils/InputValidationResult;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validate (Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;Lme/proton/core/presentation/utils/ValidationType;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validate (Lme/proton/core/presentation/ui/view/ProtonInput;Lme/proton/core/presentation/utils/ValidationType;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static synthetic fun validate$default (Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;Lme/proton/core/presentation/utils/ValidationType;ILjava/lang/Object;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static synthetic fun validate$default (Lme/proton/core/presentation/ui/view/ProtonInput;Lme/proton/core/presentation/utils/ValidationType;ILjava/lang/Object;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validateCreditCard (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validateCreditCardCVC (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validateEmail (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validateExpirationDate (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validatePassword (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validatePasswordMinLength (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validateUsername (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
+}
+
+public final class me/proton/core/presentation/utils/ViewBindingUtilsKt {
+	public static final fun viewBinding (Landroid/app/Activity;Lkotlin/jvm/functions/Function1;)Lkotlin/Lazy;
+	public static final fun viewBinding (Lkotlin/jvm/functions/Function1;)Lkotlin/properties/ReadOnlyProperty;
+}
+
+public final class me/proton/core/presentation/utils/ViewUtilsKt {
+	public static final fun clearText (Landroid/widget/EditText;)V
+	public static final fun clearTextAndOverwriteMemory (Landroid/widget/EditText;)V
+	public static final fun doOnApplyWindowInsets (Landroid/view/View;Lkotlin/jvm/functions/Function4;)V
+	public static final fun inflate (Landroid/view/ViewGroup;IZ)Landroid/view/View;
+	public static synthetic fun inflate$default (Landroid/view/ViewGroup;IZILjava/lang/Object;)Landroid/view/View;
+	public static final fun onClick (Landroid/view/View;Lkotlin/jvm/functions/Function0;)V
+	public static final fun onItemSelected (Landroid/widget/AdapterView;Lkotlin/jvm/functions/Function1;)V
+	public static final fun onTextChange (Lme/proton/core/presentation/ui/view/ProtonInput;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Landroid/text/TextWatcher;
+	public static synthetic fun onTextChange$default (Lme/proton/core/presentation/ui/view/ProtonInput;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Landroid/text/TextWatcher;
+	public static final fun requestApplyInsetsWhenAttached (Landroid/view/View;)V
+	public static final fun restoreChildViewStates (Landroid/view/ViewGroup;Landroid/util/SparseArray;)V
+	public static final fun saveChildViewStates (Landroid/view/ViewGroup;)Landroid/util/SparseArray;
+}
+
+public abstract class me/proton/core/presentation/viewmodel/ProtonViewModel : androidx/lifecycle/ViewModel {
+	public fun <init> ()V
+}
+
+public abstract class me/proton/core/presentation/viewmodel/ViewModelResult {
+}
+
+public final class me/proton/core/presentation/viewmodel/ViewModelResult$Error : me/proton/core/presentation/viewmodel/ViewModelResult {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/presentation/viewmodel/ViewModelResult$Error;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/viewmodel/ViewModelResult$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/presentation/viewmodel/ViewModelResult$Error;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getThrowable ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/viewmodel/ViewModelResult$None : me/proton/core/presentation/viewmodel/ViewModelResult {
+	public static final field INSTANCE Lme/proton/core/presentation/viewmodel/ViewModelResult$None;
+}
+
+public final class me/proton/core/presentation/viewmodel/ViewModelResult$Processing : me/proton/core/presentation/viewmodel/ViewModelResult {
+	public static final field INSTANCE Lme/proton/core/presentation/viewmodel/ViewModelResult$Processing;
+}
+
+public final class me/proton/core/presentation/viewmodel/ViewModelResult$Success : me/proton/core/presentation/viewmodel/ViewModelResult {
+	public fun <init> (Ljava/lang/Object;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun copy (Ljava/lang/Object;)Lme/proton/core/presentation/viewmodel/ViewModelResult$Success;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/viewmodel/ViewModelResult$Success;Ljava/lang/Object;ILjava/lang/Object;)Lme/proton/core/presentation/viewmodel/ViewModelResult$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/presentation/viewmodel/ViewModelResultKt {
+	public static final fun onError (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun onError (Lme/proton/core/presentation/viewmodel/ViewModelResult;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/viewmodel/ViewModelResult;
+	public static final fun onProcessing (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function0;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun onProcessing (Lme/proton/core/presentation/viewmodel/ViewModelResult;Lkotlin/jvm/functions/Function0;)Lme/proton/core/presentation/viewmodel/ViewModelResult;
+	public static final fun onSuccess (Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun onSuccess (Lme/proton/core/presentation/viewmodel/ViewModelResult;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/viewmodel/ViewModelResult;
+}
+

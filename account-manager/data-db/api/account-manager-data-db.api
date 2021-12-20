@@ -1,0 +1,475 @@
+public final class me/proton/core/account/data/db/AccountDao_Impl : me/proton/core/account/data/db/AccountDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun addSession (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/account/data/entity/AccountEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun findAll ()Lkotlinx/coroutines/flow/Flow;
+	public fun findBySessionId (Lme/proton/core/network/domain/session/SessionId;)Lkotlinx/coroutines/flow/Flow;
+	public fun findByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public fun getBySessionId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/account/data/entity/AccountEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/account/data/entity/AccountEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun removeSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/account/data/entity/AccountEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateAccountState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/account/domain/entity/AccountState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateSessionState (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/account/domain/entity/SessionState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/account/data/db/AccountMetadataDao_Impl : me/proton/core/account/data/db/AccountMetadataDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Lme/proton/core/domain/entity/Product;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/account/data/entity/AccountMetadataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAllDescending (Lme/proton/core/domain/entity/Product;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/Product;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/account/data/entity/AccountMetadataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/account/data/entity/AccountMetadataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeLatestPrimary (Lme/proton/core/domain/entity/Product;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/account/data/entity/AccountMetadataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateMigrations (Lme/proton/core/domain/entity/Product;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/account/data/db/SessionDao_Impl : me/proton/core/account/data/db/SessionDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/account/data/entity/SessionEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun findAll (Lme/proton/core/domain/entity/Product;)Lkotlinx/coroutines/flow/Flow;
+	public fun findBySessionId (Lme/proton/core/network/domain/session/SessionId;)Lkotlinx/coroutines/flow/Flow;
+	public fun get (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public fun getSessionId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/account/data/entity/SessionEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/account/data/entity/SessionEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/account/data/entity/SessionEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateScopes (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateToken (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/account/data/db/SessionDetailsDao_Impl : me/proton/core/account/data/db/SessionDetailsDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun clearPassword (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/account/data/entity/SessionDetailsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun findBySessionId (Lme/proton/core/network/domain/session/SessionId;)Lkotlinx/coroutines/flow/Flow;
+	public fun getBySessionId (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/account/data/entity/SessionDetailsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/account/data/entity/SessionDetailsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/account/data/entity/SessionDetailsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/accountmanager/data/db/AccountManagerDatabase : me/proton/core/data/room/db/BaseDatabase, me/proton/core/account/data/db/AccountDatabase, me/proton/core/contact/data/local/db/ContactDatabase, me/proton/core/eventmanager/data/db/EventMetadataDatabase, me/proton/core/humanverification/data/db/HumanVerificationDatabase, me/proton/core/key/data/db/KeySaltDatabase, me/proton/core/key/data/db/PublicAddressDatabase, me/proton/core/mailsettings/data/db/MailSettingsDatabase, me/proton/core/user/data/db/AddressDatabase, me/proton/core/user/data/db/UserDatabase, me/proton/core/usersettings/data/db/OrganizationDatabase, me/proton/core/usersettings/data/db/UserSettingsDatabase {
+	public static final field Companion Lme/proton/core/accountmanager/data/db/AccountManagerDatabase$Companion;
+	public static final field name Ljava/lang/String;
+	public static final field version I
+	public fun <init> ()V
+}
+
+public final class me/proton/core/accountmanager/data/db/AccountManagerDatabase$Companion {
+	public final fun buildDatabase (Landroid/content/Context;)Lme/proton/core/accountmanager/data/db/AccountManagerDatabase;
+	public final fun databaseBuilder (Landroid/content/Context;)Landroidx/room/RoomDatabase$Builder;
+	public final fun getMigrations ()Ljava/util/List;
+}
+
+public final class me/proton/core/accountmanager/data/db/AccountManagerDatabaseMigrations {
+	public static final field INSTANCE Lme/proton/core/accountmanager/data/db/AccountManagerDatabaseMigrations;
+	public final fun getMIGRATION_10_11 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_11_12 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_1_2 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_2_3 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_3_4 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_4_5 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_5_6 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_6_7 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_7_8 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_8_9 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_9_10 ()Landroidx/room/migration/Migration;
+}
+
+public final class me/proton/core/accountmanager/data/db/AccountManagerDatabase_Impl : me/proton/core/accountmanager/data/db/AccountManagerDatabase {
+	public fun <init> ()V
+	public fun accountDao ()Lme/proton/core/account/data/db/AccountDao;
+	public fun accountMetadataDao ()Lme/proton/core/account/data/db/AccountMetadataDao;
+	public fun addressDao ()Lme/proton/core/user/data/db/dao/AddressDao;
+	public fun addressKeyDao ()Lme/proton/core/user/data/db/dao/AddressKeyDao;
+	public fun addressWithKeysDao ()Lme/proton/core/user/data/db/dao/AddressWithKeysDao;
+	public fun clearAllTables ()V
+	public fun contactCardDao ()Lme/proton/core/contact/data/local/db/dao/ContactCardDao;
+	public fun contactDao ()Lme/proton/core/contact/data/local/db/dao/ContactDao;
+	public fun contactEmailDao ()Lme/proton/core/contact/data/local/db/dao/ContactEmailDao;
+	public fun contactEmailLabelDao ()Lme/proton/core/contact/data/local/db/dao/ContactEmailLabelDao;
+	public fun eventMetadataDao ()Lme/proton/core/eventmanager/data/db/dao/EventMetadataDao;
+	public fun humanVerificationDetailsDao ()Lme/proton/core/humanverification/data/db/HumanVerificationDetailsDao;
+	public fun keySaltDao ()Lme/proton/core/key/data/db/KeySaltDao;
+	public fun mailSettingsDao ()Lme/proton/core/mailsettings/data/db/dao/MailSettingsDao;
+	public fun organizationDao ()Lme/proton/core/usersettings/data/db/dao/OrganizationDao;
+	public fun organizationKeysDao ()Lme/proton/core/usersettings/data/db/dao/OrganizationKeysDao;
+	public fun publicAddressDao ()Lme/proton/core/key/data/db/PublicAddressDao;
+	public fun publicAddressKeyDao ()Lme/proton/core/key/data/db/PublicAddressKeyDao;
+	public fun publicAddressWithKeysDao ()Lme/proton/core/key/data/db/PublicAddressWithKeysDao;
+	public fun sessionDao ()Lme/proton/core/account/data/db/SessionDao;
+	public fun sessionDetailsDao ()Lme/proton/core/account/data/db/SessionDetailsDao;
+	public fun userDao ()Lme/proton/core/user/data/db/dao/UserDao;
+	public fun userKeyDao ()Lme/proton/core/user/data/db/dao/UserKeyDao;
+	public fun userSettingsDao ()Lme/proton/core/usersettings/data/db/dao/UserSettingsDao;
+	public fun userWithKeysDao ()Lme/proton/core/user/data/db/dao/UserWithKeysDao;
+}
+
+public final class me/proton/core/accountmanager/data/db/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/contact/data/local/db/dao/ContactCardDao_Impl : me/proton/core/contact/data/local/db/dao/ContactCardDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/contact/data/local/db/entity/ContactCardEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContactCards ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/contact/data/local/db/entity/ContactCardEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/contact/data/local/db/entity/ContactCardEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/contact/data/local/db/entity/ContactCardEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/contact/data/local/db/dao/ContactDao_Impl : me/proton/core/contact/data/local/db/dao/ContactDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/contact/data/local/db/entity/ContactEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContacts (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContacts ([Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteContacts ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/contact/data/local/db/entity/ContactEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/contact/data/local/db/entity/ContactEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllContacts (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public fun observeContact (Lme/proton/core/contact/domain/entity/ContactId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/contact/data/local/db/entity/ContactEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/contact/data/local/db/dao/ContactEmailDao_Impl : me/proton/core/contact/data/local/db/dao/ContactEmailDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContactsEmails (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContactsEmails (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContactsEmails ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteContactsEmails ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllContactsEmails (Lme/proton/core/contact/domain/entity/ContactId;)Lkotlinx/coroutines/flow/Flow;
+	public fun observeAllContactsEmails (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/contact/data/local/db/dao/ContactEmailLabelDao_Impl : me/proton/core/contact/data/local/db/dao/ContactEmailLabelDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/contact/data/local/db/entity/ContactEmailLabelEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllLabels ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/contact/data/local/db/entity/ContactEmailLabelEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/contact/data/local/db/entity/ContactEmailLabelEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllLabels (Lme/proton/core/contact/domain/entity/ContactEmailId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/contact/data/local/db/entity/ContactEmailLabelEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/eventmanager/data/db/dao/EventMetadataDao_Impl : me/proton/core/eventmanager/data/db/dao/EventMetadataDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lkotlinx/coroutines/flow/Flow;
+	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/State;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/humanverification/data/db/HumanVerificationDetailsDao_Impl : me/proton/core/humanverification/data/db/HumanVerificationDetailsDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/humanverification/data/entity/HumanVerificationEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteByClientId (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll ()Lkotlinx/coroutines/flow/Flow;
+	public fun getByClientId (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/humanverification/data/entity/HumanVerificationEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/humanverification/data/entity/HumanVerificationEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/humanverification/data/entity/HumanVerificationEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateStateAndToken (Ljava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationState;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/key/data/db/KeySaltDao_Impl : me/proton/core/key/data/db/KeySaltDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/key/data/entity/KeySaltEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun findAllByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/key/data/entity/KeySaltEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/key/data/entity/KeySaltEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/key/data/entity/KeySaltEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/key/data/db/PublicAddressDao_Impl : me/proton/core/key/data/db/PublicAddressDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteByEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun findByEmail (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/key/data/db/PublicAddressKeyDao_Impl : me/proton/core/key/data/db/PublicAddressKeyDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/key/data/entity/PublicAddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteByEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun findAllByEmail (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/key/data/entity/PublicAddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/key/data/entity/PublicAddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/key/data/entity/PublicAddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/key/data/db/PublicAddressWithKeysDao_Impl : me/proton/core/key/data/db/PublicAddressWithKeysDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun findWithKeysByEmail (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public fun getWithKeysByEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/mailsettings/data/db/dao/MailSettingsDao_Impl : me/proton/core/mailsettings/data/db/dao/MailSettingsDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/mailsettings/data/entity/MailSettingsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/mailsettings/data/entity/MailSettingsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/mailsettings/data/entity/MailSettingsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/mailsettings/data/entity/MailSettingsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/db/dao/AddressDao_Impl : me/proton/core/user/data/db/dao/AddressDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/user/data/entity/AddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByAddressId (Lme/proton/core/user/domain/entity/AddressId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/user/data/entity/AddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/user/data/entity/AddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public fun observeByAddressId (Lme/proton/core/user/domain/entity/AddressId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/user/data/entity/AddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/db/dao/AddressKeyDao_Impl : me/proton/core/user/data/db/dao/AddressKeyDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/user/data/entity/AddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAllByAddressId (Lme/proton/core/user/domain/entity/AddressId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/user/data/entity/AddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/user/data/entity/AddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllByAddressId (Lme/proton/core/user/domain/entity/AddressId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/user/data/entity/AddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/db/dao/AddressWithKeysDao_Impl : me/proton/core/user/data/db/dao/AddressWithKeysDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/user/data/entity/AddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/user/data/entity/AddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/user/data/entity/AddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/user/data/entity/AddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/db/dao/UserDao_Impl : me/proton/core/user/data/db/dao/UserDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/user/data/entity/UserEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/user/data/entity/UserEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/user/data/entity/UserEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public fun setPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/user/data/entity/UserEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/db/dao/UserKeyDao_Impl : me/proton/core/user/data/db/dao/UserKeyDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/user/data/entity/UserKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAllByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/user/data/entity/UserKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/user/data/entity/UserKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/user/data/entity/UserKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/db/dao/UserWithKeysDao_Impl : me/proton/core/user/data/db/dao/UserWithKeysDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/user/data/entity/UserEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/user/data/entity/UserEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/user/data/entity/UserEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/user/data/entity/UserEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/usersettings/data/db/dao/OrganizationDao_Impl : me/proton/core/usersettings/data/db/dao/OrganizationDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/usersettings/data/entity/OrganizationEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/usersettings/data/entity/OrganizationEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/usersettings/data/entity/OrganizationEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/usersettings/data/entity/OrganizationEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/usersettings/data/db/dao/OrganizationKeysDao_Impl : me/proton/core/usersettings/data/db/dao/OrganizationKeysDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/usersettings/data/entity/OrganizationKeysEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/usersettings/data/entity/OrganizationKeysEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/usersettings/data/entity/OrganizationKeysEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/usersettings/data/entity/OrganizationKeysEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/usersettings/data/db/dao/UserSettingsDao_Impl : me/proton/core/usersettings/data/db/dao/UserSettingsDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/usersettings/data/entity/UserSettingsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getByUserId (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/usersettings/data/entity/UserSettingsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/usersettings/data/entity/UserSettingsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/usersettings/data/entity/UserSettingsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

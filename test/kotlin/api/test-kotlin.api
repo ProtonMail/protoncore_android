@@ -1,0 +1,37 @@
+public final class me/proton/core/test/kotlin/AssertionsKt {
+	public static final fun assertEquals (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/jvm/functions/Function0;)V
+	public static final fun assertTrue (ZLkotlin/jvm/functions/Function0;)V
+}
+
+public abstract interface class me/proton/core/test/kotlin/CoroutinesTest {
+	public abstract fun coroutinesTest (Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;)V
+	public abstract fun getCompDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public abstract fun getCoroutinesRule ()Lme/proton/core/test/kotlin/CoroutinesTestRule;
+	public abstract fun getDispatchers ()Lme/proton/core/util/kotlin/DispatcherProvider;
+	public abstract fun getIoDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public abstract fun getMainDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
+}
+
+public final class me/proton/core/test/kotlin/CoroutinesTest$DefaultImpls {
+	public static fun coroutinesTest (Lme/proton/core/test/kotlin/CoroutinesTest;Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun coroutinesTest$default (Lme/proton/core/test/kotlin/CoroutinesTest;Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static fun getCompDispatcher (Lme/proton/core/test/kotlin/CoroutinesTest;)Lkotlinx/coroutines/CoroutineDispatcher;
+	public static fun getCoroutinesRule (Lme/proton/core/test/kotlin/CoroutinesTest;)Lme/proton/core/test/kotlin/CoroutinesTestRule;
+	public static fun getDispatchers (Lme/proton/core/test/kotlin/CoroutinesTest;)Lme/proton/core/util/kotlin/DispatcherProvider;
+	public static fun getIoDispatcher (Lme/proton/core/test/kotlin/CoroutinesTest;)Lkotlinx/coroutines/CoroutineDispatcher;
+	public static fun getMainDispatcher (Lme/proton/core/test/kotlin/CoroutinesTest;)Lkotlinx/coroutines/CoroutineDispatcher;
+}
+
+public final class me/proton/core/test/kotlin/CoroutinesTestKt {
+	public static final fun getCoroutinesTest ()Lme/proton/core/test/kotlin/CoroutinesTest;
+}
+
+public final class me/proton/core/test/kotlin/CoroutinesTestRule : org/junit/rules/TestWatcher {
+	public fun <init> ()V
+	public final fun getDispatchers ()Lme/proton/core/util/kotlin/DispatcherProvider;
+}
+
+public final class me/proton/core/test/kotlin/TestDispatchersProviderKt {
+	public static final fun getTestDispatcherProvider ()Lme/proton/core/util/kotlin/DispatcherProvider;
+}
+

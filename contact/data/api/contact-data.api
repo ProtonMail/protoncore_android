@@ -1,0 +1,964 @@
+public final class me/proton/core/contact/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/contact/data/ContactEmailEvent {
+	public static final field Companion Lme/proton/core/contact/data/ContactEmailEvent$Companion;
+	public synthetic fun <init> (ILjava/lang/String;ILme/proton/core/contact/data/api/resource/ContactEmailResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;ILme/proton/core/contact/data/api/resource/ContactEmailResource;)V
+	public synthetic fun <init> (Ljava/lang/String;ILme/proton/core/contact/data/api/resource/ContactEmailResource;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()Lme/proton/core/contact/data/api/resource/ContactEmailResource;
+	public final fun copy (Ljava/lang/String;ILme/proton/core/contact/data/api/resource/ContactEmailResource;)Lme/proton/core/contact/data/ContactEmailEvent;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/ContactEmailEvent;Ljava/lang/String;ILme/proton/core/contact/data/api/resource/ContactEmailResource;ILjava/lang/Object;)Lme/proton/core/contact/data/ContactEmailEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAction ()I
+	public final fun getContactEmail ()Lme/proton/core/contact/data/api/resource/ContactEmailResource;
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/ContactEmailEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/ContactEmailEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/ContactEmailEvent$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/ContactEmailEvent;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/ContactEmailEvent;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/ContactEmailEvent$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/ContactEmailEventListener : me/proton/core/eventmanager/domain/EventListener {
+	public fun <init> (Lme/proton/core/contact/data/local/db/ContactDatabase;Lme/proton/core/contact/domain/repository/ContactLocalDataSource;Lme/proton/core/contact/domain/repository/ContactRepository;Lme/proton/core/contact/data/ContactEventListener;)V
+	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOrder ()I
+	public fun getType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
+	public fun inTransaction (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onCreate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onDelete (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onPrepare (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResetAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onUpdate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/contact/data/ContactEmailsEvents {
+	public static final field Companion Lme/proton/core/contact/data/ContactEmailsEvents$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/contact/data/ContactEmailsEvents;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/ContactEmailsEvents;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/ContactEmailsEvents;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContactEmails ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/ContactEmailsEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/ContactEmailsEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/ContactEmailsEvents$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/ContactEmailsEvents;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/ContactEmailsEvents;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/ContactEmailsEvents$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/ContactEvent {
+	public static final field Companion Lme/proton/core/contact/data/ContactEvent$Companion;
+	public synthetic fun <init> (ILjava/lang/String;ILme/proton/core/contact/data/api/resource/ContactWithCardsResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;ILme/proton/core/contact/data/api/resource/ContactWithCardsResource;)V
+	public synthetic fun <init> (Ljava/lang/String;ILme/proton/core/contact/data/api/resource/ContactWithCardsResource;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;
+	public final fun copy (Ljava/lang/String;ILme/proton/core/contact/data/api/resource/ContactWithCardsResource;)Lme/proton/core/contact/data/ContactEvent;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/ContactEvent;Ljava/lang/String;ILme/proton/core/contact/data/api/resource/ContactWithCardsResource;ILjava/lang/Object;)Lme/proton/core/contact/data/ContactEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAction ()I
+	public final fun getContact ()Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/ContactEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/ContactEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/ContactEvent$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/ContactEvent;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/ContactEvent;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/ContactEvent$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/ContactEventListener : me/proton/core/eventmanager/domain/EventListener {
+	public fun <init> (Lme/proton/core/contact/data/local/db/ContactDatabase;Lme/proton/core/contact/domain/repository/ContactLocalDataSource;Lme/proton/core/contact/domain/repository/ContactRepository;)V
+	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOrder ()I
+	public fun getType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
+	public fun inTransaction (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onCreate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onDelete (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResetAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onUpdate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/contact/data/ContactsEvents {
+	public static final field Companion Lme/proton/core/contact/data/ContactsEvents$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/contact/data/ContactsEvents;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/ContactsEvents;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/ContactsEvents;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContacts ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/ContactsEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/ContactsEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/ContactsEvents$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/ContactsEvents;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/ContactsEvents;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/ContactsEvents$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class me/proton/core/contact/data/api/ContactApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
+	public abstract fun createContacts (Lme/proton/core/contact/data/api/request/CreateContactsRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteContacts (Lme/proton/core/contact/data/api/request/DeleteContactsRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getContact (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getContactEmails (IILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getContacts (IILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateContact (Ljava/lang/String;Lme/proton/core/contact/data/api/resource/ContactCardsResource;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/contact/data/api/ContactRemoteDataSourceImpl : me/proton/core/contact/domain/repository/ContactRemoteDataSource {
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
+	public fun createContacts (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteContacts (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAllContacts (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getContactWithCards (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateContact (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/contact/data/api/request/CreateContactsRequest {
+	public static final field Companion Lme/proton/core/contact/data/api/request/CreateContactsRequest$Companion;
+	public synthetic fun <init> (ILjava/util/List;IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;II)V
+	public final fun getContacts ()Ljava/util/List;
+	public final fun getLabels ()I
+	public final fun getOverwrite ()I
+	public static final fun write$Self (Lme/proton/core/contact/data/api/request/CreateContactsRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/request/CreateContactsRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/request/CreateContactsRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/request/CreateContactsRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/request/CreateContactsRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/request/CreateContactsRequest$Companion {
+	public final fun create (Ljava/util/List;ZI)Lme/proton/core/contact/data/api/request/CreateContactsRequest;
+	public static synthetic fun create$default (Lme/proton/core/contact/data/api/request/CreateContactsRequest$Companion;Ljava/util/List;ZIILjava/lang/Object;)Lme/proton/core/contact/data/api/request/CreateContactsRequest;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/request/DeleteContactsRequest {
+	public static final field Companion Lme/proton/core/contact/data/api/request/DeleteContactsRequest$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/contact/data/api/request/DeleteContactsRequest;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/request/DeleteContactsRequest;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/api/request/DeleteContactsRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIds ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/request/DeleteContactsRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/request/DeleteContactsRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/request/DeleteContactsRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/request/DeleteContactsRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/request/DeleteContactsRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/request/DeleteContactsRequest$Companion {
+	public final fun create (Ljava/util/List;)Lme/proton/core/contact/data/api/request/DeleteContactsRequest;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactCardResource {
+	public static final field Companion Lme/proton/core/contact/data/api/resource/ContactCardResource$Companion;
+	public synthetic fun <init> (IILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILjava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (ILjava/lang/String;Ljava/lang/String;)Lme/proton/core/contact/data/api/resource/ContactCardResource;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/resource/ContactCardResource;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/contact/data/api/resource/ContactCardResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Ljava/lang/String;
+	public final fun getSignature ()Ljava/lang/String;
+	public final fun getType ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactCardResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactCardResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactCardResource$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactCardResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/resource/ContactCardResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactCardResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactCardResourceKt {
+	public static final fun toContactCard (Lme/proton/core/contact/data/api/resource/ContactCardResource;)Lme/proton/core/contact/domain/entity/ContactCard;
+	public static final fun toContactCardResource (Lme/proton/core/contact/domain/entity/ContactCard;)Lme/proton/core/contact/data/api/resource/ContactCardResource;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactCardsResource {
+	public static final field Companion Lme/proton/core/contact/data/api/resource/ContactCardsResource$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/contact/data/api/resource/ContactCardsResource;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/resource/ContactCardsResource;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/api/resource/ContactCardsResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCards ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactCardsResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactCardsResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactCardsResource$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactCardsResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/resource/ContactCardsResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactCardsResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactEmailResource {
+	public static final field Companion Lme/proton/core/contact/data/api/resource/ContactEmailResource$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()I
+	public final fun component5 ()I
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/util/List;)Lme/proton/core/contact/data/api/resource/ContactEmailResource;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/resource/ContactEmailResource;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/api/resource/ContactEmailResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCanonicalEmail ()Ljava/lang/String;
+	public final fun getContactId ()Ljava/lang/String;
+	public final fun getDefaults ()I
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getLabelIds ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOrder ()I
+	public fun hashCode ()I
+	public final fun toContactEmail (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/contact/domain/entity/ContactEmail;
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactEmailResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactEmailResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactEmailResource$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactEmailResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/resource/ContactEmailResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactEmailResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactResource {
+	public static final field Companion Lme/proton/core/contact/data/api/resource/ContactResource$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lme/proton/core/contact/data/api/resource/ContactResource;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/resource/ContactResource;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/api/resource/ContactResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContactEmails ()Ljava/util/List;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun toContact (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/contact/domain/entity/Contact;
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactResource$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/resource/ContactResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactWithCardsResource {
+	public static final field Companion Lme/proton/core/contact/data/api/resource/ContactWithCardsResource$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;)Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCards ()Ljava/util/List;
+	public final fun getContactEmails ()Ljava/util/List;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun toContactWithCards (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/contact/domain/entity/ContactWithCards;
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactWithCardsResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ContactWithCardsResource$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ContactWithCardsResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ShortContactResource {
+	public static final field Companion Lme/proton/core/contact/data/api/resource/ShortContactResource$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/contact/data/api/resource/ShortContactResource;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/resource/ShortContactResource;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/contact/data/api/resource/ShortContactResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ShortContactResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/resource/ShortContactResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/resource/ShortContactResource$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/resource/ShortContactResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/resource/ShortContactResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/resource/ShortContactResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/CreateContactResponse {
+	public static final field Companion Lme/proton/core/contact/data/api/response/CreateContactResponse$Companion;
+	public synthetic fun <init> (IILme/proton/core/contact/data/api/response/MutateContactResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILme/proton/core/contact/data/api/response/MutateContactResponse;)V
+	public final fun component1 ()I
+	public final fun component2 ()Lme/proton/core/contact/data/api/response/MutateContactResponse;
+	public final fun copy (ILme/proton/core/contact/data/api/response/MutateContactResponse;)Lme/proton/core/contact/data/api/response/CreateContactResponse;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/response/CreateContactResponse;ILme/proton/core/contact/data/api/response/MutateContactResponse;ILjava/lang/Object;)Lme/proton/core/contact/data/api/response/CreateContactResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIndex ()I
+	public final fun getResponse ()Lme/proton/core/contact/data/api/response/MutateContactResponse;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/response/CreateContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/response/CreateContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/response/CreateContactResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/CreateContactResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/response/CreateContactResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/CreateContactResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/CreateContactsResponse {
+	public static final field Companion Lme/proton/core/contact/data/api/response/CreateContactsResponse$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/contact/data/api/response/CreateContactsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/response/CreateContactsResponse;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/api/response/CreateContactsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getResponses ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/response/CreateContactsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/response/CreateContactsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/response/CreateContactsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/CreateContactsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/response/CreateContactsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/CreateContactsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/DeleteContactResponse {
+	public static final field Companion Lme/proton/core/contact/data/api/response/DeleteContactResponse$Companion;
+	public synthetic fun <init> (IILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILjava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (ILjava/lang/String;)Lme/proton/core/contact/data/api/response/DeleteContactResponse;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/response/DeleteContactResponse;ILjava/lang/String;ILjava/lang/Object;)Lme/proton/core/contact/data/api/response/DeleteContactResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
+	public final fun getError ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/response/DeleteContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/response/DeleteContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/response/DeleteContactResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/DeleteContactResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/response/DeleteContactResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/DeleteContactResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/DeleteContactResponseWrapper {
+	public static final field Companion Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/contact/data/api/response/DeleteContactResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Lme/proton/core/contact/data/api/response/DeleteContactResponse;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lme/proton/core/contact/data/api/response/DeleteContactResponse;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/contact/data/api/response/DeleteContactResponse;)Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper;Ljava/lang/String;Lme/proton/core/contact/data/api/response/DeleteContactResponse;ILjava/lang/Object;)Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public final fun getResponse ()Lme/proton/core/contact/data/api/response/DeleteContactResponse;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/response/DeleteContactResponseWrapper$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/DeleteContactResponseWrapper$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/DeleteContactsResponse {
+	public static final field Companion Lme/proton/core/contact/data/api/response/DeleteContactsResponse$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/contact/data/api/response/DeleteContactsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/response/DeleteContactsResponse;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/api/response/DeleteContactsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getResponses ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/response/DeleteContactsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/response/DeleteContactsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/response/DeleteContactsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/DeleteContactsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/response/DeleteContactsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/DeleteContactsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/GetContactEmailsResponse {
+	public static final field Companion Lme/proton/core/contact/data/api/response/GetContactEmailsResponse$Companion;
+	public synthetic fun <init> (IILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILjava/util/List;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (ILjava/util/List;)Lme/proton/core/contact/data/api/response/GetContactEmailsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/response/GetContactEmailsResponse;ILjava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/api/response/GetContactEmailsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContactEmails ()Ljava/util/List;
+	public final fun getTotal ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/response/GetContactEmailsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/response/GetContactEmailsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/response/GetContactEmailsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/GetContactEmailsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/response/GetContactEmailsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/GetContactEmailsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/GetContactResponse {
+	public static final field Companion Lme/proton/core/contact/data/api/response/GetContactResponse$Companion;
+	public synthetic fun <init> (IILme/proton/core/contact/data/api/resource/ContactWithCardsResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILme/proton/core/contact/data/api/resource/ContactWithCardsResource;)V
+	public final fun component1 ()I
+	public final fun component2 ()Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;
+	public final fun copy (ILme/proton/core/contact/data/api/resource/ContactWithCardsResource;)Lme/proton/core/contact/data/api/response/GetContactResponse;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/response/GetContactResponse;ILme/proton/core/contact/data/api/resource/ContactWithCardsResource;ILjava/lang/Object;)Lme/proton/core/contact/data/api/response/GetContactResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
+	public final fun getContactWithCards ()Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/response/GetContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/response/GetContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/response/GetContactResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/GetContactResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/response/GetContactResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/GetContactResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/GetContactsResponse {
+	public static final field Companion Lme/proton/core/contact/data/api/response/GetContactsResponse$Companion;
+	public synthetic fun <init> (IILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILjava/util/List;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (ILjava/util/List;)Lme/proton/core/contact/data/api/response/GetContactsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/response/GetContactsResponse;ILjava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/api/response/GetContactsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContacts ()Ljava/util/List;
+	public final fun getTotal ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/response/GetContactsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/response/GetContactsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/response/GetContactsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/GetContactsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/response/GetContactsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/GetContactsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/MutateContactResponse {
+	public static final field Companion Lme/proton/core/contact/data/api/response/MutateContactResponse$Companion;
+	public synthetic fun <init> (IILme/proton/core/contact/data/api/resource/ContactResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILme/proton/core/contact/data/api/resource/ContactResource;)V
+	public final fun component1 ()I
+	public final fun component2 ()Lme/proton/core/contact/data/api/resource/ContactResource;
+	public final fun copy (ILme/proton/core/contact/data/api/resource/ContactResource;)Lme/proton/core/contact/data/api/response/MutateContactResponse;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/api/response/MutateContactResponse;ILme/proton/core/contact/data/api/resource/ContactResource;ILjava/lang/Object;)Lme/proton/core/contact/data/api/response/MutateContactResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
+	public final fun getContact ()Lme/proton/core/contact/data/api/resource/ContactResource;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/contact/data/api/response/MutateContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/contact/data/api/response/MutateContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/contact/data/api/response/MutateContactResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/contact/data/api/response/MutateContactResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/contact/data/api/response/MutateContactResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/api/response/MutateContactResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/contact/data/local/db/ContactConverters {
+	public fun <init> ()V
+	public final fun fromContactEmailIdToString (Lme/proton/core/contact/domain/entity/ContactEmailId;)Ljava/lang/String;
+	public final fun fromContactIdToString (Lme/proton/core/contact/domain/entity/ContactId;)Ljava/lang/String;
+	public final fun fromStringToContactEmailId (Ljava/lang/String;)Lme/proton/core/contact/domain/entity/ContactEmailId;
+	public final fun fromStringToContactId (Ljava/lang/String;)Lme/proton/core/contact/domain/entity/ContactId;
+}
+
+public abstract interface class me/proton/core/contact/data/local/db/ContactDatabase : me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/contact/data/local/db/ContactDatabase$Companion;
+	public abstract fun contactCardDao ()Lme/proton/core/contact/data/local/db/dao/ContactCardDao;
+	public abstract fun contactDao ()Lme/proton/core/contact/data/local/db/dao/ContactDao;
+	public abstract fun contactEmailDao ()Lme/proton/core/contact/data/local/db/dao/ContactEmailDao;
+	public abstract fun contactEmailLabelDao ()Lme/proton/core/contact/data/local/db/dao/ContactEmailLabelDao;
+}
+
+public final class me/proton/core/contact/data/local/db/ContactDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public final class me/proton/core/contact/data/local/db/ContactLocalDataSourceImpl : me/proton/core/contact/domain/repository/ContactLocalDataSource {
+	public fun <init> (Lme/proton/core/contact/data/local/db/ContactDatabase;)V
+	public fun deleteAllContactEmails (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContacts (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllContacts (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteContactEmails ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteContacts ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun mergeContacts ([Lme/proton/core/contact/domain/entity/Contact;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllContacts (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public fun observeContact (Lme/proton/core/contact/domain/entity/ContactId;)Lkotlinx/coroutines/flow/Flow;
+	public fun upsertContactEmails ([Lme/proton/core/contact/domain/entity/ContactEmail;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun upsertContactWithCards ([Lme/proton/core/contact/domain/entity/ContactWithCards;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun upsertContacts ([Lme/proton/core/contact/domain/entity/Contact;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/contact/data/local/db/dao/ContactCardDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun deleteAllContactCards ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/contact/data/local/db/dao/ContactDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun deleteAllContacts (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteAllContacts ([Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteContacts ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeAllContacts (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun observeContact (Lme/proton/core/contact/domain/entity/ContactId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract class me/proton/core/contact/data/local/db/dao/ContactEmailDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun deleteAllContactsEmails (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteAllContactsEmails (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteAllContactsEmails ([Lme/proton/core/contact/domain/entity/ContactId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteContactsEmails ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeAllContactsEmails (Lme/proton/core/contact/domain/entity/ContactId;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun observeAllContactsEmails (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract class me/proton/core/contact/data/local/db/dao/ContactEmailLabelDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun deleteAllLabels ([Lme/proton/core/contact/domain/entity/ContactEmailId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeAllLabels (Lme/proton/core/contact/domain/entity/ContactEmailId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/ContactCardEntity {
+	public fun <init> (Lme/proton/core/contact/domain/entity/ContactId;ILjava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/contact/domain/entity/ContactId;
+	public final fun component2 ()I
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/contact/domain/entity/ContactId;ILjava/lang/String;Ljava/lang/String;)Lme/proton/core/contact/data/local/db/entity/ContactCardEntity;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/local/db/entity/ContactCardEntity;Lme/proton/core/contact/domain/entity/ContactId;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/contact/data/local/db/entity/ContactCardEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCardId ()J
+	public final fun getContactId ()Lme/proton/core/contact/domain/entity/ContactId;
+	public final fun getData ()Ljava/lang/String;
+	public final fun getSignature ()Ljava/lang/String;
+	public final fun getType ()I
+	public fun hashCode ()I
+	public final fun setCardId (J)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/ContactCardEntityKt {
+	public static final fun toContactCard (Lme/proton/core/contact/data/local/db/entity/ContactCardEntity;)Lme/proton/core/contact/domain/entity/ContactCard;
+	public static final fun toContactCardEntity (Lme/proton/core/contact/domain/entity/ContactCard;Lme/proton/core/contact/domain/entity/ContactId;)Lme/proton/core/contact/data/local/db/entity/ContactCardEntity;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/ContactEmailEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Lme/proton/core/contact/domain/entity/ContactEmailId;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()I
+	public final fun component6 ()I
+	public final fun component7 ()Lme/proton/core/contact/domain/entity/ContactId;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;)Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCanonicalEmail ()Ljava/lang/String;
+	public final fun getContactEmailId ()Lme/proton/core/contact/domain/entity/ContactEmailId;
+	public final fun getContactId ()Lme/proton/core/contact/domain/entity/ContactId;
+	public final fun getDefaults ()I
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOrder ()I
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/ContactEmailEntityKt {
+	public static final fun toContactEmailEntity (Lme/proton/core/contact/domain/entity/ContactEmail;)Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/ContactEmailLabelEntity {
+	public fun <init> (Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/contact/domain/entity/ContactEmailId;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;)Lme/proton/core/contact/data/local/db/entity/ContactEmailLabelEntity;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/local/db/entity/ContactEmailLabelEntity;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/contact/data/local/db/entity/ContactEmailLabelEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContactEmailId ()Lme/proton/core/contact/domain/entity/ContactEmailId;
+	public final fun getLabelId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/ContactEmailLabelEntityKt {
+	public static final fun toContactEmailLabel (Lme/proton/core/contact/domain/entity/ContactEmail;)Ljava/util/List;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/ContactEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Lme/proton/core/contact/domain/entity/ContactId;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;)Lme/proton/core/contact/data/local/db/entity/ContactEntity;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/local/db/entity/ContactEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/contact/data/local/db/entity/ContactEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContactId ()Lme/proton/core/contact/domain/entity/ContactId;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/ContactEntityKt {
+	public static final fun toContactEntity (Lme/proton/core/contact/domain/entity/Contact;)Lme/proton/core/contact/data/local/db/entity/ContactEntity;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/relation/ContactEmailWithLabelsRelation {
+	public fun <init> (Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;Ljava/util/List;)Lme/proton/core/contact/data/local/db/entity/relation/ContactEmailWithLabelsRelation;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/local/db/entity/relation/ContactEmailWithLabelsRelation;Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/local/db/entity/relation/ContactEmailWithLabelsRelation;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContactEmail ()Lme/proton/core/contact/data/local/db/entity/ContactEmailEntity;
+	public final fun getLabelIds ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/relation/ContactEmailWithLabelsRelationKt {
+	public static final fun toContactEmail (Lme/proton/core/contact/data/local/db/entity/relation/ContactEmailWithLabelsRelation;)Lme/proton/core/contact/domain/entity/ContactEmail;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/relation/ContactWithMailsAndCardsRelation {
+	public fun <init> (Lme/proton/core/contact/data/local/db/entity/ContactEntity;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/contact/data/local/db/entity/ContactEntity;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/contact/data/local/db/entity/ContactEntity;Ljava/util/List;Ljava/util/List;)Lme/proton/core/contact/data/local/db/entity/relation/ContactWithMailsAndCardsRelation;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/local/db/entity/relation/ContactWithMailsAndCardsRelation;Lme/proton/core/contact/data/local/db/entity/ContactEntity;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/local/db/entity/relation/ContactWithMailsAndCardsRelation;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCards ()Ljava/util/List;
+	public final fun getContact ()Lme/proton/core/contact/data/local/db/entity/ContactEntity;
+	public final fun getEmails ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/relation/ContactWithMailsAndCardsRelationKt {
+	public static final fun toContactWithCards (Lme/proton/core/contact/data/local/db/entity/relation/ContactWithMailsAndCardsRelation;)Lme/proton/core/contact/domain/entity/ContactWithCards;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/relation/ContactWithMailsRelation {
+	public fun <init> (Lme/proton/core/contact/data/local/db/entity/ContactEntity;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/contact/data/local/db/entity/ContactEntity;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/contact/data/local/db/entity/ContactEntity;Ljava/util/List;)Lme/proton/core/contact/data/local/db/entity/relation/ContactWithMailsRelation;
+	public static synthetic fun copy$default (Lme/proton/core/contact/data/local/db/entity/relation/ContactWithMailsRelation;Lme/proton/core/contact/data/local/db/entity/ContactEntity;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/data/local/db/entity/relation/ContactWithMailsRelation;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContact ()Lme/proton/core/contact/data/local/db/entity/ContactEntity;
+	public final fun getEmails ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/contact/data/local/db/entity/relation/ContactWithMailsRelationKt {
+	public static final fun toContact (Lme/proton/core/contact/data/local/db/entity/relation/ContactWithMailsRelation;)Lme/proton/core/contact/domain/entity/Contact;
+}
+
+public final class me/proton/core/contact/data/repository/ContactRepositoryImpl : me/proton/core/contact/domain/repository/ContactRepository {
+	public fun <init> (Lme/proton/core/contact/domain/repository/ContactRemoteDataSource;Lme/proton/core/contact/domain/repository/ContactLocalDataSource;)V
+	public fun createContact (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteContacts (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAllContactEmails (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAllContacts (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getContactWithCards (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAllContactEmails (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun observeAllContacts (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun observeContactWithCards (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun updateContact (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
