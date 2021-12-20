@@ -1,71 +1,10 @@
 image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0-alpha08
 
-include:
-  - project: 'proton/devops/atlas-deploy'
-    ref: 'master'
-    file: '/deploy-to-atlas.gitlab-ci.yml'
-
-variables:
-  ATLAS_DEPLOY_SCOPE: 'android-core-qa'
-
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .gradle
-    - coreexample/src/androidTest/assets/sensitive
-    - 'coreexample/build/outputs/apk'
-    - deploy.env
-
 stages:
-  - review
-  - build
-  - test
-  - cleanup
-
-deploy:review:
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - deploy.env
-    policy: push
-  extends: .deploy:black
-  after_script:
-    - . ./deploy.env
-    - echo $DYNAMIC_DOMAIN
-
-cleanup:review:
-  cache: [ ]
-  stage: cleanup
-  extends: .cleanup:black
-
-assemble:
-  stage: build
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - .gradle
-      - coreexample/src/androidTest/assets/sensitive
-      - '**/build'
-      - deploy.env
-  tags:
-    - large
-  script:
-    - . ./deploy.env
-    - echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
-    - echo HOST=$DYNAMIC_DOMAIN >> local.properties
-    - mkdir -p coreexample/src/androidTest/assets/sensitive
-    - cat $TEST_USERS > coreexample/src/androidTest/assets/sensitive/users.json
-    - cat $TEST_INTERNAL_API > coreexample/src/androidTest/assets/sensitive/internal_apis.json
-    - ./gradlew :coreexample:assembleLocalPropertiesDebug
-    - ./gradlew :coreexample:assembleLocalPropertiesDebugAndroidTest
+  - firebase
 
 .firebase-tests-common:
-  stage: test
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - 'coreexample/build/outputs/apk'
-    policy: pull
+  stage: firebase
   tags:
     - medium
   script:
@@ -76,34 +15,33 @@ assemble:
       --test coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk
       --device model=Pixel2,version=28
       --test-targets "$TEST_TARGET"
-      --timeout 45m
+      --timeout 25m
+  needs:
+    - pipeline: $PARENT_PIPELINE_ID
+      job: assemble
+      artifacts: true
 
 uitest:signup:
-  stage: test
   before_script:
     - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.auth.signup"
   extends: .firebase-tests-common
 
 uitest:login:
-  stage: test
   before_script:
     - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.auth.login"
   extends: .firebase-tests-common
 
 uitest:payments:
-  stage: test
   before_script:
     - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.payments"
   extends: .firebase-tests-common
 
 uitest:plans:
-  stage: test
   before_script:
     - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.plans"
   extends: .firebase-tests-common
 
 uitest:usersettings:
-  stage: test
   before_script:
     - TEST_TARGET="package me.proton.core.test.android.uitests.tests.medium.usersettings"
   extends: .firebase-tests-common
