@@ -234,6 +234,14 @@ trigger-client-integration-tests:
   script:
     - echo "Trigger all clients integration tests"
 
+binary-compatibility-check:
+  needs:
+    - trigger-client-integration-tests
+  tags:
+    - large
+  script:
+    - ./gradlew apiCheck
+
 .client-integration-tests:
   needs:
     - trigger-client-integration-tests
