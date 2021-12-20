@@ -148,7 +148,11 @@ class PlanItemView @JvmOverloads constructor(
 
             val len = it.length() - 1
             for (i in 1..len) {
-                planContents.addView(createPlanFeature(planFeaturesOrder!![i-1], it, i, context, plan))
+                planContents.addView(
+                    PlanContentItemView(context).apply {
+                        planItem = createPlanFeature(planFeaturesOrder!![i - 1], it, i, context, plan)
+                    }
+                )
             }
             it.recycle()
         }
