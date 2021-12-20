@@ -87,7 +87,10 @@ sealed class ApiResult<out T> {
         /**
          * Parsing error. Should not normally happen.
          */
-        class Parse(cause: Throwable?) : Error(cause)
+        class Parse(cause: Throwable?) : Error(cause) {
+
+            override fun toString() = "${this::class.simpleName} cause=$cause"
+        }
 
         /**
          * Base class for connection errors (no response available)
@@ -102,6 +105,9 @@ sealed class ApiResult<out T> {
 
             val path = if (cause is ApiConnectionException) cause.path else null
             val query = if (cause is ApiConnectionException) cause.query else null
+
+            override fun toString() =
+                "${this::class.simpleName} path=$path query=$query potentialBlock=$potentialBlock cause=$cause"
         }
 
         /**
