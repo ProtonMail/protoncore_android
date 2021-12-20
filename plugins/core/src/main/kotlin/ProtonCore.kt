@@ -23,7 +23,7 @@
 object ProtonCore {
 
     /** The Android API level as target of the App */
-    const val targetSdk = 30
+    const val targetSdk = 31
     /** The Android API level required for run the App */
     const val minSdk = 23
 }

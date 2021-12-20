@@ -5,7 +5,7 @@ easyGradle = "2.8"
 easyGradle = { id = "studio.forface.easygradle", version.ref="easyGradle" }
 
 [libraries]
-android-pluginGradle = "com.android.tools.build:gradle:7.0.2"
+android-pluginGradle = "com.android.tools.build:gradle:7.0.4"
 
 vanniktech-pluginGradleMavenPublish = "com.vanniktech:gradle-maven-publish-plugin:0.18.0"
 

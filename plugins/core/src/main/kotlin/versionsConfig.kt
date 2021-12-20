@@ -22,9 +22,9 @@ import studio.forface.easygradle.dsl.android.*
 internal fun initVersions() {
 
     // region Kotlin
-    `kotlin version` =                          "1.5.30"        // Released: Aug 23, 2021
+    `kotlin version` =                          "1.5.31"        // Released: Sep 20, 2021
     `coroutines version` =                      "1.5.2"         // Released: Sep 02, 2021
-    `serialization version` =                   "1.2.2"         // Released: Jul 8, 2021
+    `serialization version` =                   "1.2.2"         // Released: Jul 08, 2021
     // endregion
 
     // region Android
@@ -54,25 +54,28 @@ internal fun initVersions() {
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.8.0"         // Released: Oct 09, 2020
     `timber version` =                          "5.0.1"         // Released: Jun 28, 2018
-    `viewStateStore version` =                  "1.4-beta-4"    // Released: Oct 03, 2019
     // endregion
 }
 
 // region Android
-const val `android-tools version` =         "30.0.2"        // Updated: Jun, 2020
+const val `android-tools version` =             "30.0.2"        // Updated: Jun, 2020
+const val `compose version` =                   "1.0.5"         // Released: Nov 03, 2021
+const val `hilt-navigation-compose version` =   "1.0.0-beta01"  // Released: Nov 17, 2021
+const val `material3 version` =                 "1.0.0-alpha02" // Released: Dec 01, 2021
+const val `navigation version` =                "2.4.0-beta02"  // Released: Nov 03, 2021
 // endregion
 
 // region Other
 const val `apacheCommon-codec version` =    "1.15"
-const val `bcrypt version` =                "0.9.0"         // Released: Oct 29, 2019
+const val `bcrypt version` =                "0.9.0"             // Released: Oct 29, 2019
 const val `gotev-cookieStore version` =     "1.3.5"
-const val `googleTink version` =            "1.6.1"         // Released: Oct 15, 2020
-const val `miniDsn version` =               "1.0.0"         // Released: Jul 18, 2020
+const val `googleTink version` =            "1.6.1"             // Released: Oct 15, 2020
+const val `miniDsn version` =               "1.0.0"             // Released: Jul 18, 2020
 const val `okHttp version` =                "4.9.1"
 const val `okHttp-url-connection version` = "4.9.1"
 const val `trustKit version` =              "1.1.5"
-const val `store4 version` =                "4.0.2-KT15"    // Released: May 17, 2021
-const val `lifecycle-extensions version` =  "2.2.0"         // Released: Jan 00, 2020
+const val `store4 version` =                "4.0.3-KT15"        // Released: Nov 11, 2021
+const val `lifecycle-extensions version` =  "2.2.0"             // Released: Jan 00, 2020
 const val `lottie version` =                "4.1.0"
 const val `javax-inject version` =          "1"
 const val `ez-vcard_version` =              "0.11.3"

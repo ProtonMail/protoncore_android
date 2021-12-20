@@ -38,7 +38,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 
 | Coordinates            |
 |------------------------|
-| me.proton.core:account |
+|me.proton.core:account|
 |me.proton.core:account-data|
 |me.proton.core:account-domain|
 |me.proton.core:account-manager|
@@ -47,6 +47,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:account-manager-data-db|
 |me.proton.core:account-manager-domain|
 |me.proton.core:account-manager-presentation|
+|me.proton.core:account-manager-presentation-compose|
 |me.proton.core:auth|
 |me.proton.core:auth-data|
 |me.proton.core:auth-domain|
@@ -93,6 +94,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:plan-domain|
 |me.proton.core:plan-presentation|
 |me.proton.core:presentation|
+|me.proton.core:presentation-compose|
 |me.proton.core:test-android|
 |me.proton.core:test-android-instrumented|
 |me.proton.core:test-kotlin|

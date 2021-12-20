@@ -20,6 +20,28 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
+// region Compose
+val DependencyHandler.`activity-compose` get() = androidx("activity", moduleSuffix = "compose") version `activity version`
+val DependencyHandler.`navigation-compose` get() = androidx("navigation", moduleSuffix = "compose") version `navigation version`
+val DependencyHandler.`hilt-navigation-compose` get() = androidx("hilt", moduleSuffix = "navigation-compose") version `hilt-navigation-compose version`
+val DependencyHandler.`lifecycle-compose` get() = androidx("lifecycle", moduleSuffix = "compose") version `hilt-navigation-compose version`
+
+fun DependencyHandler.compose(module: String, moduleSuffix: String? = null, version: String = `compose version`) =
+    androidx("compose.$module", module, moduleSuffix, version = version)
+
+val DependencyHandler.`compose-animation` get() = compose("animation")
+val DependencyHandler.`compose-compiler` get() = compose("compiler")
+val DependencyHandler.`compose-foundation` get() = compose("foundation")
+val DependencyHandler.`compose-foundation-layout` get() = compose("foundation", "layout")
+val DependencyHandler.`compose-material` get() = compose("material")
+val DependencyHandler.`compose-material3` get() = compose("material3", version = `material3 version`)
+val DependencyHandler.`compose-runtime` get() = compose("runtime")
+val DependencyHandler.`compose-ui` get() = compose("ui")
+val DependencyHandler.`compose-ui-tooling` get() = compose("ui", "tooling")
+val DependencyHandler.`compose-ui-test` get() = compose("ui", "test")
+val DependencyHandler.`compose-ui-test-junit` get() = compose("ui", "test-junit4")
+// endregion
+
 // Network
 val DependencyHandler.`miniDsn` get() = dependency("org.minidns", module = "minidns-hla") version `miniDsn version`
 val DependencyHandler.`retrofit-scalars-converter` get() = squareup("retrofit2", "converter-scalars") version `retrofit version`

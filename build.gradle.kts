@@ -41,7 +41,7 @@ buildscript {
     repositories.google()
 
     dependencies {
-        val kotlinVersion = "1.5.30" // Aug 23, 2021
+        val kotlinVersion = "1.5.31" // Sep 20, 2021
         val hiltVersion = "2.38.1" // Jul 27, 2021
         val jacocoVersion = "0.8.7" // May 5, 2021
 

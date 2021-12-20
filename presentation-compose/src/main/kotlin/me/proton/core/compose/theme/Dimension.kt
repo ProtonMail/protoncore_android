@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -15,13 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
+package me.proton.core.compose.theme
 
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.repositories
+import androidx.compose.ui.unit.dp
 
-internal fun Project.applyRepositories() {
-    repositories {
-        google()
-        mavenCentral()
-    }
+object ProtonDimens {
+    val ExtraSmallSpacing = 4.dp
+    val SmallSpacing = 8.dp
+    val DefaultSpacing = 16.dp
+    val MediumSpacing = 24.dp
+    val LargeSpacing = 32.dp
+    val LargerSpacing = 40.dp
+
+    val DefaultCornerRadius = 4.dp
+    val LargeCornerRadius = 8.dp
+    val ExtraLargeCornerRadius = 12.dp
+
+    val DefaultButtonMinHeight = 48.dp
+    val SmallIconSize = 16.dp
+    val DefaultIconSize = 24.dp
+
+    val DefaultBottomSheetHeaderMinHeight = 56.dp
+
+    val ListItemHeight = 48.dp
+    val ListItemTextStartPadding = 12.dp
 }
