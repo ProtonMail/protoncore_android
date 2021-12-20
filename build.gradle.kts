@@ -35,6 +35,7 @@ plugins {
     id("me.proton.core.gradle-plugins.tests")
     id("me.proton.core.gradle-plugins.jacoco")
     id("com.github.ben-manes.versions") version "0.39.0"
+    alias(libs.plugins.kotlinx.binaryCompatibilityValidator)
 }
 
 buildscript {
@@ -111,4 +112,11 @@ protonCoverageMultiModuleOptions {
         "**/*Fragment.class",
         "**/*Fragment$*",
     )
+}
+
+apiValidation {
+    /**
+     * Sub-projects that are excluded from API validation
+     */
+    ignoredProjects.addAll(listOf("coreexample"))
 }
