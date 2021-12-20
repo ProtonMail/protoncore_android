@@ -985,11 +985,13 @@ fun KeyHolderContext.decryptAndVerifyNestedKey(
 ): NestedPrivateKey {
     checkNotNull(nestedPrivateKey.passphrase) { "Cannot decrypt key without encrypted passphrase." }
     checkNotNull(nestedPrivateKey.passphraseSignature) { "Cannot verify without passphrase signature." }
+    val passphrase = decryptDataOrNull(nestedPrivateKey.passphrase)
+        ?.takeIf { verifyKeyRing.verifyData(context, it, nestedPrivateKey.passphraseSignature) }
+        ?.let { plain -> plain.use { it.encrypt(context.keyStoreCrypto) } }
     return nestedPrivateKey.copy(
         privateKey = nestedPrivateKey.privateKey.copy(
-            passphrase = decryptDataOrNull(nestedPrivateKey.passphrase)
-                ?.takeIf { verifyKeyRing.verifyData(context, it, nestedPrivateKey.passphraseSignature) }
-                ?.let { plain -> plain.use { it.encrypt(context.keyStoreCrypto) } }
+            isActive = passphrase != null,
+            passphrase = passphrase
         )
     )
 }
@@ -1028,7 +1030,7 @@ fun KeyHolderContext.encryptAndSignNestedKey(
     checkNotNull(nestedPrivateKey.privateKey.passphrase) { "Cannot encrypt without passphrase." }
     return nestedPrivateKey.privateKey.passphrase.decrypt(context.keyStoreCrypto).use { passphrase ->
         nestedPrivateKey.copy(
-            privateKey = nestedPrivateKey.privateKey.copy(passphrase = null),
+            privateKey = nestedPrivateKey.privateKey.copy(isActive = false, passphrase = null),
             passphrase = encryptKeyRing.encryptData(context, passphrase.array),
             passphraseSignature = signData(passphrase.array)
         )
