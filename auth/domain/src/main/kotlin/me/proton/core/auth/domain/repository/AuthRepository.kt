@@ -24,6 +24,7 @@ import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.domain.session.SessionId
 
 interface AuthRepository {
@@ -40,6 +41,7 @@ interface AuthRepository {
      * Get Auth Info needed to obtain the security [Password and Locked] scopes.
      */
     suspend fun getAuthInfo(
+        userId: SessionUserId,
         username: String
     ): AuthInfo
 

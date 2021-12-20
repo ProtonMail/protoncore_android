@@ -46,7 +46,6 @@ import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
-import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener

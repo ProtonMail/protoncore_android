@@ -104,7 +104,7 @@ interface UserRepository : PassphraseRepository {
     /**
      * Adds unlock security scope for the user.
      */
-    suspend fun unlockUser(
+    suspend fun unlockUserForLockedScope(
         sessionUserId: SessionUserId,
         clientEphemeral: String,
         clientProof: String,
@@ -114,7 +114,7 @@ interface UserRepository : PassphraseRepository {
     /**
      * Adds unlock security scope for the user.
      */
-    suspend fun unlockUser(
+    suspend fun unlockUserForPasswordScope(
         sessionUserId: SessionUserId,
         clientEphemeral: String,
         clientProof: String,

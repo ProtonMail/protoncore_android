@@ -19,9 +19,9 @@
 package me.proton.android.core.coreexample.api
 
 import android.os.Build
-import me.proton.android.core.coreexample.viewmodel.ConfirmPasswordViewModel
+import me.proton.core.auth.presentation.viewmodel.ConfirmPasswordViewModel
 import me.proton.core.network.domain.ApiClient
-import me.proton.core.network.domain.scopes.MissingScopeListener
+import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.Scope
 import java.util.Locale
 import javax.inject.Inject
@@ -75,7 +75,6 @@ class CoreExampleApiClient @Inject constructor(
         // dummy example, not implemented for now
     }
 
-    override suspend fun missingScope(scope: Scope):
-        MissingScopeListener.MissingScopeResult =
-        confirmPasswordViewModel.confirmPassword(showSecondFactorCode = scope == Scope.PASSWORD)
+    override suspend fun missingScope(scope: Scope): MissingScopeResult =
+        confirmPasswordViewModel.confirmPassword(missingScope = scope)
 }

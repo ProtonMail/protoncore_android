@@ -23,6 +23,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ConfirmPasswordResult(
-    val password: String?,
-    val twoFA: String?
-): Parcelable
+    val confirmed: Boolean?
+) : Parcelable

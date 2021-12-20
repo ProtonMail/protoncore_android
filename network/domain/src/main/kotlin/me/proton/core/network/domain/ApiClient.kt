@@ -17,8 +17,7 @@
  */
 package me.proton.core.network.domain
 
-import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.scopes.MissingScopeListener
+import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.Scope
 import java.util.concurrent.TimeUnit
 
@@ -96,7 +95,7 @@ interface ApiClient {
     /**
      * Tells client that a confirm password is needed for the last operation that the user is doing.
      */
-    suspend fun missingScope(scope: Scope): MissingScopeListener.MissingScopeResult
+    suspend fun missingScope(scope: Scope): MissingScopeResult
 
     companion object {
         const val MIN_TIMEOUT_SECONDS = 30L

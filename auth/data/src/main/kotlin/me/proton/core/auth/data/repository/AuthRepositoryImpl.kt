@@ -32,6 +32,7 @@ import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.TimeoutOverride
@@ -60,8 +61,8 @@ class AuthRepositoryImpl(
             getLoginInfo(request).toLoginInfo(username)
         }.valueOrThrow
 
-    override suspend fun getAuthInfo(username: String): AuthInfo =
-        provider.get<AuthenticationApi>().invoke {
+    override suspend fun getAuthInfo(userId: SessionUserId, username: String): AuthInfo =
+        provider.get<AuthenticationApi>(userId).invoke {
             getAuthInfo().toAuthInfo(username)
         }.valueOrThrow
 

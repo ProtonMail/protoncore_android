@@ -21,7 +21,6 @@ package me.proton.core.auth.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.auth.domain.entity.AuthInfo
-import me.proton.core.auth.domain.entity.LoginInfo
 
 @Serializable
 data class AuthInfoResponse(

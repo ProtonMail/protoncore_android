@@ -18,82 +18,66 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import androidx.activity.ComponentActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
-import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
-import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.presentation.viewmodel.ProtonViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import me.proton.core.auth.presentation.ConfirmPasswordOrchestrator
+import me.proton.core.auth.presentation.onConfirmPasswordResult
+import me.proton.core.network.domain.scopes.MissingScopeResult
+import me.proton.core.network.domain.scopes.Scope
+import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @HiltViewModel
 class ConfirmPasswordViewModel @Inject constructor(
-    private val accountManager: AccountManager,
-    private val keyStoreCrypto: KeyStoreCrypto,
-    private val obtainLockedScope: ObtainLockedScope,
-    private val obtainPasswordScope: ObtainPasswordScope
-) : ProtonViewModel() {
+    private val confirmPasswordOrchestrator: ConfirmPasswordOrchestrator
+) : ViewModel() {
 
-    private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
-
-    val state = _state.asSharedFlow()
+    private val _confirmPassword = MutableStateFlow<State>(State.Idle)
 
     sealed class State {
         object Idle : State()
-        object Processing : State()
         object Success : State()
-
-        sealed class Error : State() {
-            data class Message(val message: String?) : Error()
-        }
+        object Error : State()
     }
 
-    fun unlock(password: String) = flow {
-        emit(State.Processing)
-        accountManager.getPrimaryAccount().filterNotNull().collect { account ->
-            val result = obtainLockedScope(account.userId, account.username, password.encrypt(keyStoreCrypto))
-            if (result) {
-                emit(State.Success)
-            } else {
-                emit(State.Error.Message(message = null))
-            }
-        }
-    }.catch { error ->
-        emit(State.Error.Message(error.message))
-    }.onEach {
-        _state.tryEmit(it)
-    }.launchIn(viewModelScope)
+    fun register(context: ComponentActivity) {
+        confirmPasswordOrchestrator.register(context)
+    }
 
-
-    fun unlockPassword(password: String, twoFactorCode: String?) = flow {
-        emit(State.Processing)
-        accountManager.getPrimaryAccount().filterNotNull().collect { account ->
-            val result = obtainPasswordScope(
-                account.userId,
-                account.username,
-                password.encrypt(keyStoreCrypto),
-                twoFactorCode
-            )
-            if (result) {
-                emit(State.Success)
-            } else {
-                emit(State.Error.Message(message = null))
+    /**
+     * Public interface that should trigger the confirm password workflow.
+     */
+    suspend fun confirmPassword(missingScope: Scope): MissingScopeResult {
+        with(confirmPasswordOrchestrator) {
+            onConfirmPasswordResult {
+                viewModelScope.launch {
+                    if (it?.confirmed == null || !it.confirmed) {
+                        _confirmPassword.tryEmit(State.Error)
+                    } else {
+                        _confirmPassword.tryEmit(State.Success)
+                    }
+                }
             }
+            startConfirmPasswordWorkflow(missingScope)
         }
-    }.catch { error ->
-        emit(State.Error.Message(error.message))
-    }.onEach {
-        _state.tryEmit(it)
-    }.launchIn(viewModelScope)
+
+        val state = _confirmPassword.filter {
+            it in listOf(State.Success, State.Error)
+        }.map {
+            when (it) {
+                is State.Error -> MissingScopeResult.Failure
+                is State.Success -> MissingScopeResult.Success
+                else -> MissingScopeResult.Failure
+            }.exhaustive
+        }.first()
+        return state
+    }
 }

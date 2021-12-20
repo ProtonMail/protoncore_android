@@ -21,15 +21,16 @@ package me.proton.android.core.coreexample.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import retrofit2.http.GET
+import retrofit2.http.PUT
 
-/**
- * @author Dino Kadrikj.
- */
 interface CoreExampleApi : BaseRetrofitApi {
 
     @GET("internal/tests/humanverification")
     suspend fun triggerHumanVerification(): GenericResponse
 
     @GET("keys/salts")
-    suspend fun triggerConfirmPassword(): GenericResponse
+    suspend fun triggerConfirmPasswordLockedScope(): GenericResponse
+
+    @PUT("settings/mnemonic")
+    suspend fun triggerConfirmPasswordForPasswordScope(): GenericResponse
 }

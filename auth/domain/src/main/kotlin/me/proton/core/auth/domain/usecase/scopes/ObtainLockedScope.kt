@@ -43,6 +43,7 @@ class ObtainLockedScope @Inject constructor(
     ): Boolean {
         // first we obtain auth info
         val authInfo = authRepository.getAuthInfo(
+            userId = userId,
             username = username
         )
 
@@ -55,7 +56,7 @@ class ObtainLockedScope @Inject constructor(
                 modulus = authInfo.modulus,
                 serverEphemeral = authInfo.serverEphemeral
             )
-            return userRepository.unlockUser(
+            return userRepository.unlockUserForLockedScope(
                 userId,
                 Base64.encode(clientProofs.clientEphemeral),
                 Base64.encode(clientProofs.clientProof),

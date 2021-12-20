@@ -166,7 +166,7 @@ class UserRepositoryImpl(
             removeLockedAndPasswordScopes().isSuccess()
         }.valueOrThrow
 
-    override suspend fun unlockUser(
+    override suspend fun unlockUserForLockedScope(
         sessionUserId: SessionUserId,
         clientEphemeral: String,
         clientProof: String,
@@ -177,7 +177,7 @@ class UserRepositoryImpl(
             unlockUser(request).isSuccess()
         }.valueOrThrow
 
-    override suspend fun unlockUser(
+    override suspend fun unlockUserForPasswordScope(
         sessionUserId: SessionUserId,
         clientEphemeral: String,
         clientProof: String,
@@ -186,7 +186,7 @@ class UserRepositoryImpl(
     ): Boolean =
         provider.get<UserApi>(sessionUserId).invoke {
             val request = UnlockPasswordRequest(clientEphemeral, clientProof, srpSession, twoFactorCode)
-            unlockUser(request).isSuccess()
+            unlockPasswordScope(request).isSuccess()
         }.valueOrThrow
 
     // region PassphraseRepository

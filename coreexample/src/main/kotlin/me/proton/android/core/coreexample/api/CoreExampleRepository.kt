@@ -22,10 +22,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.api.UserApi
 
-/**
- * Proton Core
- * @author Dino Kadrikj.
- */
 class CoreExampleRepository(
     private val provider: ApiProvider
 ) {
@@ -40,8 +36,13 @@ class CoreExampleRepository(
             usernameAvailable("username")
         }.valueOrNull
 
-    suspend fun triggerConfirmPassword(userId: UserId) =
+    suspend fun triggerConfirmPasswordLockedScope(userId: UserId) =
         provider.get<CoreExampleApi>(userId).invoke {
-            triggerConfirmPassword()
-        }.valueOrThrow
+            triggerConfirmPasswordLockedScope()
+        }.valueOrNull
+
+    suspend fun triggerConfirmPasswordPasswordScope(userId: UserId) =
+        provider.get<CoreExampleApi>(userId).invoke {
+            triggerConfirmPasswordForPasswordScope()
+        }.valueOrNull
 }

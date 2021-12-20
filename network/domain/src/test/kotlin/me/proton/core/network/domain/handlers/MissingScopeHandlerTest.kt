@@ -16,12 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity.confirmpass
+package me.proton.core.network.domain.handlers
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import org.junit.Assert.*
 
-@Parcelize
-data class ConfirmPasswordInput(
-    val missingScope: String
-) : Parcelable
+class MissingScopeHandlerTest

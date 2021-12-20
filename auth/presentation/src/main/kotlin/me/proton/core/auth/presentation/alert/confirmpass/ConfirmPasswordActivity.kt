@@ -22,7 +22,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.auth.presentation.alert.registerConfirmPasswordDialogResultLauncher
+import me.proton.core.auth.presentation.alert.registerConfirmPasswordResultLauncher
 import me.proton.core.auth.presentation.databinding.ActivityConfirmPasswordBinding
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
@@ -40,15 +40,12 @@ class ConfirmPasswordActivity :
         super.onCreate(savedInstanceState)
 
         supportFragmentManager.apply {
-            registerConfirmPasswordDialogResultLauncher(
+            registerConfirmPasswordResultLauncher(
                 this@ConfirmPasswordActivity
             ) { result ->
                 val intent = Intent().putExtra(
                     ARG_RESULT,
-                    ConfirmPasswordResult(
-                        password = result?.password,
-                        twoFA = result?.twoFA
-                    )
+                    ConfirmPasswordResult(confirmed = result?.confirmed)
                 )
                 setResult(Activity.RESULT_OK, intent)
                 finish()

@@ -16,12 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity.confirmpass
+package me.proton.core.auth.domain.usecase.scopes
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import me.proton.core.auth.domain.entity.AuthInfo
+import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.domain.entity.UserId
+import javax.inject.Inject
 
-@Parcelize
-data class ConfirmPasswordInput(
-    val missingScope: String
-) : Parcelable
+class ObtainAuthInfo @Inject constructor(
+    private val authRepository: AuthRepository
+) {
+    suspend operator fun invoke(userId: UserId, username: String): AuthInfo = authRepository.getAuthInfo(
+        userId = userId, username = username
+    )
+}

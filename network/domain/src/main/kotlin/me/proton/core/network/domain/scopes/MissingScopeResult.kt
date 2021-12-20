@@ -18,21 +18,7 @@
 
 package me.proton.core.network.domain.scopes
 
-import me.proton.core.network.domain.client.ClientId
-
-interface MissingScopeListener {
-
-    sealed class MissingScopeResult {
-        object Success : MissingScopeResult()
-        object Failure : MissingScopeResult()
-    }
-
-    /**
-     * Called when a Missing Scope is needed for a [ClientId].
-     * It should show a password entry dialog and obtain the scope from the API.
-     */
-    suspend fun onScopeNeeded(
-        clientId: ClientId,
-        scopes: MissingScopes
-    ): MissingScopeResult
+sealed class MissingScopeResult {
+    object Success : MissingScopeResult()
+    object Failure : MissingScopeResult()
 }

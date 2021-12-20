@@ -23,7 +23,7 @@ import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.auth.presentation.alert.confirmpass.StartConfirmPassword
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
-import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.scopes.Scope
 
 class ConfirmPasswordOrchestrator {
 
@@ -31,7 +31,7 @@ class ConfirmPasswordOrchestrator {
     private var confirmPasswordWorkflowLauncher: ActivityResultLauncher<ConfirmPasswordInput>? = null
     // endregion
 
-    private var onConfirmPasswordResultListener: ((result: ConfirmPasswordResult?) -> Unit)? = {}
+    internal var onConfirmPasswordResultListener: ((result: ConfirmPasswordResult?) -> Unit)? = {}
 
     // region public API
     /**
@@ -50,12 +50,9 @@ class ConfirmPasswordOrchestrator {
     /**
      * Starts the Confirm Password workflow.
      */
-    fun startConfirmPasswordWorkflow(showSecondFactor: Boolean = false) {
+    fun startConfirmPasswordWorkflow(missingScope: Scope) {
         checkRegistered(confirmPasswordWorkflowLauncher).launch(
-            ConfirmPasswordInput(
-                showPassword = true,
-                showTwoFA = showSecondFactor,
-            )
+            ConfirmPasswordInput(missingScope = missingScope.value)
         )
     }
     // endregion

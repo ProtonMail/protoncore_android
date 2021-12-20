@@ -28,8 +28,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes.MISSING_SCOPE
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
-import me.proton.core.network.domain.scopes.MissingScopeListener
-import me.proton.core.network.domain.scopes.MissingScopes
+import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
 import org.jetbrains.annotations.TestOnly
@@ -79,8 +78,8 @@ class MissingScopeHandler<Api>(
     // Must be called within sessionMutex.
     private suspend fun obtainMissingScope(clientId: ClientId, details: Scope?): Boolean {
         val result = when (apiClient.missingScope(details!!)) {
-            MissingScopeListener.MissingScopeResult.Success -> true
-            MissingScopeListener.MissingScopeResult.Failure -> false
+            MissingScopeResult.Success -> true
+            MissingScopeResult.Failure -> false
         }
         clientLastVerificationMap[clientId] = monoClockMs()
         return result

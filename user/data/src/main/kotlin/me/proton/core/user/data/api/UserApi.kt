@@ -52,5 +52,5 @@ interface UserApi : BaseRetrofitApi {
     suspend fun unlockUser(@Body unlockRequest: UnlockRequest): GenericResponse
 
     @PUT("core/v4/user/password")
-    suspend fun unlockUser(@Body unlockRequest: UnlockPasswordRequest): GenericResponse
+    suspend fun unlockPasswordScope(@Body unlockRequest: UnlockPasswordRequest): GenericResponse
 }
