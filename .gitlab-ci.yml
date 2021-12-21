@@ -90,7 +90,7 @@ assemble:
   script:
     - echo PROXY_TOKEN="$(curl -o - https://proxy.proton.black/token/get)" >> local.properties
     - echo HOST="proton.black" >> local.properties
-    - ./gradlew assembleDebug
+    - ./gradlew assembleDevDebug
   artifacts:
     paths:
       - coreexample/build/outputs/
@@ -189,7 +189,7 @@ i18n-commit-locales:
 
 startReview:
   before_script:
-    - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/debug/coreexample-debug.apk"
+    - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/dev/debug/coreexample-dev-debug.apk"
   extends: .startReview
   stage: test
 
