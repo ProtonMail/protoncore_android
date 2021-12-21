@@ -1,0 +1,17 @@
+.gradle-cache:
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ${GRADLE_USER_HOME}/wrapper
+      - ${GRADLE_USER_HOME}/caches
+    policy: pull-push
+
+.ruby-cache:
+  cache:
+    - key:
+        prefix: ruby-cache
+        files:
+          - Gemfile.lock
+      paths:
+        - ${BUNDLE_GEM_PATH}
+      policy: pull-push

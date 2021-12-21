@@ -23,6 +23,8 @@ include:
 
   - local: '/ci/templates/.gitlab-ci-git.yml'
 
+  - local: '/ci/templates/base-job.gitlab-ci.yml'
+
 stages:
   - bot
   - analyze
@@ -41,32 +43,14 @@ variables:
   ARTIFACT_COMPRESSION_LEVEL: "fastest"
   # Use low compression for caches
   CACHE_COMPRESSION_LEVEL: "fast"
-  GRADLE_USER_HOME: '$CI_PROJECT_DIR/.gradle'
-
-cache: &global_cache
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
 
 #####################
 danger-review:
-  image: ruby:2.7
+  extends: .ruby-job
   stage: .post
   when: always
-  tags:
-    - small
   script:
-    - bundle config set path 'vendor/ruby'
-    - bundle config set without 'production'
-    - bundle install
     - bundle exec danger --fail-on-errors=false
-  cache:
-    key:
-      files:
-        - Gemfile.lock
-    paths:
-      - vendor/ruby
   allow_failure: true
   variables:
     DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
@@ -104,10 +88,9 @@ cleanup atlas:
   when: manual
 
 detekt analyze:
+  extends: .gradle-job
   stage: analyze
   when: always
-  tags:
-    - medium
   interruptible: true
   script:
     - ./gradlew multiModuleDetekt
@@ -117,6 +100,7 @@ detekt analyze:
       codequality: config/detekt/reports/mergedReport.json
 
 assemble:
+  extends: .gradle-job
   stage: build
   tags:
     - large
@@ -152,6 +136,7 @@ release-publish-github:
   extends: .release-sync-commit-shared
 
 publish-libs:
+  extends: .gradle-job
   stage: publish
   tags:
     - large
@@ -169,6 +154,7 @@ publish-libs:
     - main # main-snapshot release without notification
 
 tag-libs-release:
+  extends: .gradle-job
   stage: publish
   needs:
     - job: publish-libs
@@ -182,6 +168,7 @@ tag-libs-release:
     - ./gradlew tagRelease
 
 publish-gradle-plugins:
+  extends: .gradle-job
   stage: publish
   tags:
     - large
@@ -197,6 +184,7 @@ publish-gradle-plugins:
     - main # main-snapshot release
 
 tag-gradle-plugins-release:
+  extends: .gradle-job
   stage: publish
   needs:
     - job: publish-gradle-plugins
@@ -233,6 +221,7 @@ stopReview:
   extends: .stopReview
 
 coverage report:
+  extends: .gradle-job
   stage: test
   tags:
     - large
@@ -240,9 +229,6 @@ coverage report:
     - ./gradlew -Pci --console=plain coberturaCoverageReport # This also runs allTest
   coverage: /Total.*?(\d{1,3}\.\d{0,2})%/
   interruptible: true
-  cache:
-    <<: *global_cache
-    policy: pull
   artifacts:
     expire_in: 1 week
     paths:
@@ -250,4 +236,3 @@ coverage report:
     reports:
       cobertura:
         - ./build/reports/cobertura-coverage.xml
-

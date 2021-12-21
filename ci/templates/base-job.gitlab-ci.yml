@@ -1,0 +1,24 @@
+include:
+  - local: '/ci/templates/cache.gitlab-ci.yml'
+
+.gradle-job:
+  image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0-alpha08
+  variables:
+    GRADLE_USER_HOME: '$CI_PROJECT_DIR/.gradle'
+  tags:
+    - large
+  cache:
+    - !reference [.gradle-cache, cache]
+
+.ruby-job:
+  image: ruby:2.7
+  variables:
+    BUNDLE_GEM_PATH: 'vendor/ruby'
+  tags:
+    - small
+  cache:
+    - !reference [.ruby-cache, cache]
+  before_script:
+    - bundle config set path ${BUNDLE_GEM_PATH}
+    - bundle config set without 'production'
+    - bundle install
