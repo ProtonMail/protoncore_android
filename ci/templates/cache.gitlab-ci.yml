@@ -1,13 +1,18 @@
 .gradle-cache:
   cache:
-    key:
-      files:
-        - gradle/wrapper/gradle-wrapper.properties
-    paths:
-      - ${GRADLE_USER_HOME}/wrapper
-      - ${GRADLE_USER_HOME}/caches
-      - ${GRADLE_USER_HOME}/notifications
-    policy: pull-push
+    - key:
+        files:
+          - gradle/wrapper/gradle-wrapper.properties
+      paths:
+        - ${GRADLE_USER_HOME}/wrapper
+        - ${GRADLE_USER_HOME}/caches
+        - ${GRADLE_USER_HOME}/notifications
+      policy: pull-push
+
+    - key: ${CI_COMMIT_REF_SLUG}
+      paths:
+        - ./**/build
+      policy: pull-push
 
 .ruby-cache:
   cache:
