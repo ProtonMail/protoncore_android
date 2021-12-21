@@ -5,17 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-Align plans screen padding.
 
 ### Fixes
 
 - Auth & Human Verification: Closing Human Verification screen on sign up goes back to plans.
 - Added Presentation Compose module.
 - Added AccountManager Presentation Compose module.
+- Auth: Fixed Auth UserCheck Error Message (Toast for 2pass & 2factor).
 
 ### Changes
 
 - Human Verification, Network, Payment, Presentation: Added Human Verification v3.
+- Align plans screen padding.
 
 ### Breaking changes
 

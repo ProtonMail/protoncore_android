@@ -25,6 +25,7 @@ import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonSecureActivity
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.user.domain.UserManager
 
@@ -40,13 +41,23 @@ abstract class AuthActivity<ViewBindingT : ViewBinding>(
         // default no op
     }
 
-    open fun showError(message: String?, action: String? = null, actionOnClick: (() -> Unit)? = null) {
+    open fun showError(
+        message: String?,
+        action: String? = null,
+        actionOnClick: (() -> Unit)? = null,
+        useToast: Boolean = false
+    ) {
         showLoading(false)
-        binding.root.errorSnack(
-            message = message ?: getString(R.string.auth_login_general_error),
-            action = action,
-            actionOnClick = actionOnClick
-        )
+        if (!useToast) {
+            binding.root.errorSnack(
+                message = message ?: getString(R.string.auth_login_general_error),
+                action = action,
+                actionOnClick = actionOnClick
+            )
+        } else {
+            // No action possible with Toast.
+            errorToast(message ?: getString(R.string.auth_login_general_error))
+        }
     }
 
     protected fun onUnlockUserError(error: UserManager.UnlockResult.Error) {
@@ -66,15 +77,20 @@ abstract class AuthActivity<ViewBindingT : ViewBinding>(
         }
     }
 
-    protected fun onUserCheckFailed(error: PostLoginAccountSetup.UserCheckResult.Error) {
+    protected fun onUserCheckFailed(
+        error: PostLoginAccountSetup.UserCheckResult.Error,
+        useToast: Boolean = false
+    ) {
         when (val action = error.action) {
             null -> showError(
-                message = error.localizedMessage
+                message = error.localizedMessage,
+                useToast = useToast
             )
             is UserCheckAction.OpenUrl -> showError(
                 message = error.localizedMessage,
                 action = action.name,
-                actionOnClick = { openBrowserLink(action.url) }
+                actionOnClick = { openBrowserLink(action.url) },
+                useToast = useToast
             )
         }
     }
