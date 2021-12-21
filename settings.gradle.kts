@@ -87,3 +87,9 @@ fun File.projectsAndModules(): Pair<Set<String>, Set<String>> {
 }
 
 enableFeaturePreview("VERSION_CATALOGS")
+
+buildCache {
+    local {
+        removeUnusedEntriesAfterDays = 3
+    }
+}
