@@ -110,7 +110,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>(Activit
     }
 
     private fun onUserCheckError(error: PostLoginAccountSetup.UserCheckResult.Error) {
-        onUserCheckFailed(error) // TODO pass activityFinishing = true
+        onUserCheckFailed(error, useToast = true)
         setResultAndFinish(CreateAddressResult.UserCheckError(error.localizedMessage))
     }
 
