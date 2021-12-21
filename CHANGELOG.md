@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0]
+
 ### Fixes
 
 - Auth & Human Verification: Closing Human Verification screen on sign up goes back to plans.
