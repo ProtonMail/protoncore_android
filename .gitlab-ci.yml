@@ -46,9 +46,8 @@ variables:
 cache: &global_cache
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - .gradle/caches/modules-*
-    - .gradle/caches/jars-*
-    - ./**/build
+    - .gradle/wrapper
+    - .gradle/caches
 
 #####################
 danger-review:
