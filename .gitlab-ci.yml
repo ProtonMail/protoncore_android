@@ -31,8 +31,6 @@ stages:
   - build
   - test
   - publish
-  - commit
-  - slackRelease
 
 variables:
   # Use fastzip to improve cache times
