@@ -6,10 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.1.0]
+
 ### Changes
 
 - Report: New module for sending Bug Report (see [Report Readme](report/README.md) for more details).
-- After login, when migrating from external to internal account type, `UserCheck` is also called
+- After login, when migrating from external to internal account type, `UserCheck` is also called.
 
 ## [4.0.0]
 
