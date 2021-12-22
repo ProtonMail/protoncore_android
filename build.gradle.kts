@@ -48,16 +48,6 @@ buildscript {
         classpath(libs.android.gradle)
         classpath(libs.dagger.hilt.android.gradle)
     }
-
-    // Room 2.3 use a jdbc not compatible with arm so use the updated one to support
-    // arm build. Room 2.4 should fix this issue (not stable yet)
-    allprojects {
-        configurations.all {
-            resolutionStrategy {
-                force("org.xerial:sqlite-jdbc:3.34.0")
-            }
-        }
-    }
 }
 
 kotlinCompilerArgs(

@@ -42,7 +42,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `material version` =                        "1.4.0"         // Released: Jul 02, 2021
     `android-paging version` =                  "3.0.1"         // Released: Jul 21, 2021
     `android-work version` =                    "2.7.1"
-    `android-room version` =                    "2.3.0"         // Released: Apr 21, 2021
+    `android-room version` =                    "2.4.1"
 
     `android-test version` =                    "1.4.0"         // Released: Jun 30, 2021
     `robolectric version` =                     "4.7.3"

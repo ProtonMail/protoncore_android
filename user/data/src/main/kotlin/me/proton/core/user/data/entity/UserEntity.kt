@@ -18,6 +18,7 @@
 
 package me.proton.core.user.data.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -50,7 +51,7 @@ data class UserEntity(
     val maxSpace: Long,
     val maxUpload: Long,
     val role: Int?,
-    val private: Boolean,
+    @ColumnInfo(name="private") val isPrivate: Boolean,
     val subscribed: Int,
     val services: Int,
     val delinquent: Int?,
