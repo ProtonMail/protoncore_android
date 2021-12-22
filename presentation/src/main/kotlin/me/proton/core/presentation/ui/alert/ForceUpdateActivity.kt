@@ -29,6 +29,23 @@ import androidx.appcompat.app.AppCompatActivity
  * Wraps [ForceUpdateDialog] inside a transparent activity.
  */
 class ForceUpdateActivity : AppCompatActivity() {
+    private val apiErrorMessage: String
+        get() = requireNotNull(intent.getStringExtra(ARG_API_ERROR_MESSAGE)) { "Missing `apiErrorMessage` argument" }
+
+    private val learnMoreURL: String? get() = intent.getStringExtra(ARG_LEARN_MORE_URL)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (supportFragmentManager.findFragmentByTag(TAG_FORCE_UPDATE_FRAGMENT) == null) {
+            val dialogFragment = ForceUpdateDialog(apiErrorMessage, learnMoreURL, finishActivityOnBackPress = false)
+            dialogFragment.show(supportFragmentManager, TAG_FORCE_UPDATE_FRAGMENT)
+        }
+    }
+
+    override fun onBackPressed() {
+        // back navigation is disabled
+    }
+
     companion object {
         private const val ARG_API_ERROR_MESSAGE = "arg.apiErrorMessage"
         private const val ARG_LEARN_MORE_URL = "arg.learnMoreUrl"
@@ -47,21 +64,5 @@ class ForceUpdateActivity : AppCompatActivity() {
                 putExtra(ARG_LEARN_MORE_URL, learnMoreURL)
             }
         }
-    }
-
-    private val apiErrorMessage: String
-        get() = requireNotNull(intent.getStringExtra(ARG_API_ERROR_MESSAGE)) { "Missing `apiErrorMessage` argument" }
-    private val learnMoreURL: String? get() = intent.getStringExtra(ARG_LEARN_MORE_URL)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (supportFragmentManager.findFragmentByTag(TAG_FORCE_UPDATE_FRAGMENT) == null) {
-            val dialogFragment = ForceUpdateDialog(apiErrorMessage, learnMoreURL, finishActivityOnBackPress = false)
-            dialogFragment.show(supportFragmentManager, TAG_FORCE_UPDATE_FRAGMENT)
-        }
-    }
-
-    override fun onBackPressed() {
-        // back navigation is disabled
     }
 }
