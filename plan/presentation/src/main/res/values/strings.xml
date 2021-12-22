@@ -41,48 +41,48 @@
     <string name="plans_feature_free_item_calendar">1 calendar</string>
     <string name="plans_feature_free_item_vpn">1 VPN connection</string>
 
-    <!-- region all possible plan item types -->
-    <plurals name="item_storage">
+    <!-- region all possible plan item types. this could be updated as per language requirements.-->
+    <plurals name="item_storage" comment="please do not modify the test between #">
         <item quantity="zero">#proton_storage# storage</item>
         <item quantity="one">#proton_storage# storage</item>
         <item quantity="other">#proton_storage# storage</item>
     </plurals>
-    <plurals name="item_storage_multiuser">
+    <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
         <item quantity="zero">#proton_storage# storage / user</item>
         <item quantity="one">#proton_storage# storage / user</item>
         <item quantity="other">#proton_storage# storage / user</item>
     </plurals>
-    <plurals name="item_address">
+    <plurals name="item_address" comment="please do not modify the test between #">
         <item quantity="zero">#proton_addresses# addresses</item>
         <item quantity="one">#proton_addresses# address</item>
         <item quantity="other">#proton_addresses# addresses</item>
     </plurals>
-    <plurals name="item_address_multiuser">
+    <plurals name="item_address_multiuser" comment="please do not modify the test between #">
         <item quantity="zero">#proton_addresses# addresses / user</item>
         <item quantity="one">#proton_addresses# address / user</item>
         <item quantity="other">#proton_addresses# addresses / user</item>
     </plurals>
-    <plurals name="item_domain">
+    <plurals name="item_domain" comment="please do not modify the test between #">
         <item quantity="zero">#proton_domains# custom domains</item>
         <item quantity="one">#proton_domains# custom domain</item>
         <item quantity="other">#proton_domains# custom domains</item>
     </plurals>
-    <plurals name="item_calendar">
+    <plurals name="item_calendar" comment="please do not modify the test between #">
         <item quantity="zero">#proton_calendars# calendars</item>
         <item quantity="one">#proton_calendars# calendar</item>
         <item quantity="other">#proton_calendars# calendars</item>
     </plurals>
-    <plurals name="item_connections">
+    <plurals name="item_connections" comment="please do not modify the test between #">
         <item quantity="zero">#proton_vpn# VPN connections</item>
         <item quantity="one">#proton_vpn# VPN connection</item>
         <item quantity="other">#proton_vpn# VPN connections</item>
     </plurals>
-    <plurals name="item_connections_highspeed">
+    <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
         <item quantity="zero">#proton_vpn# high-speed VPN connections</item>
         <item quantity="one">#proton_vpn# high-speed VPN connection</item>
         <item quantity="other">#proton_vpn# high-speed VPN connections</item>
     </plurals>
-    <plurals name="item_users">
+    <plurals name="item_users" comment="please do not modify the test between #">
         <item quantity="zero">#proton_users# users</item>
         <item quantity="one">#proton_users# user</item>
         <item quantity="other">#proton_users# users</item>
@@ -99,14 +99,14 @@
     </string-array>
     <!-- endregion -->
 
-    <!-- region plan plus -->
+    <!-- region plan plus. Note: the order array is affected by the change in the -->
     <string name="plan_id_plus_header">Full-featured mailbox with advanced protection.</string>
-    <string-array name="plan_id_plus_order">
+    <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
         <item>#proton_storage#</item>
         <item>#proton_addresses#</item>
         <item>#proton_domains#</item>
     </string-array>
-    <integer-array name="plan_id_plus" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <integer-array name="plan_id_plus">
         <item>@string/plan_id_plus_header</item>
         <item>@plurals/item_storage</item>
         <item>@plurals/item_address</item>
@@ -116,14 +116,14 @@
     <!-- region vpn basic -->
     <string name="plan_id_vpnbasic_header">VPN Basic</string>
     <string name="plan_id_vpnbasic_high_speed">High speed</string>
-    <string-array name="plan_id_vpnbasic_order">
+    <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
         <item>#proton_vpn#</item>
         <item>string</item>
         <item>#proton_storage#</item>
         <item>#proton_addresses#</item>
         <item>#proton_calendars#</item>
     </string-array>
-    <integer-array name="plan_id_vpnbasic" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <integer-array name="plan_id_vpnbasic">
         <item>@string/plan_id_vpnbasic_header</item>
         <item>@plurals/item_connections</item>
         <item>@string/plan_id_vpnbasic_high_speed</item>
@@ -135,14 +135,14 @@
     <!-- region plan vpn plus -->
     <string name="plan_id_vpnplus_header">VPN Plus</string>
     <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
-    <string-array name="plan_id_vpnplus_order">
+    <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
         <item>#proton_vpn#</item>
         <item>string</item>
         <item>#proton_storage#</item>
         <item>#proton_addresses#</item>
         <item>#proton_calendars#</item>
     </string-array>
-    <integer-array name="plan_id_vpnplus" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <integer-array name="plan_id_vpnplus">
         <item>@string/plan_id_vpnplus_header</item>
         <item>@plurals/item_connections</item>
         <item>@string/plan_id_vpnplus_highest_speed</item>
@@ -154,13 +154,13 @@
     <!-- region plan professional -->
     <string name="plan_id_professional_header">Professional</string>
     <string name="plan_id_professional_multiuser">Multi-user support</string>
-    <string-array name="plan_id_professional_order">
+    <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
         <item>#proton_storage#</item>
         <item>#proton_addresses#</item>
         <item>#proton_domains#</item>
         <item>string</item>
     </string-array>
-    <integer-array name="plan_id_professional" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <integer-array name="plan_id_professional">
         <item>@string/plan_id_professional_header</item>
         <item>@plurals/item_storage_multiuser</item>
         <item>@plurals/item_address_multiuser</item>
@@ -170,7 +170,7 @@
     <!-- endregion -->
     <!-- region plan visionary -->
     <string name="plan_id_visionary_header">Visionary</string>
-    <string-array name="plan_id_visionary_order">
+    <string-array name="plan_id_visionary_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
         <item>#proton_storage#</item>
         <item>#proton_addresses#</item>
         <item>#proton_calendars#</item>
@@ -178,7 +178,7 @@
         <item>#proton_domains#</item>
         <item>#proton_users#</item>
     </string-array>
-    <integer-array name="plan_id_visionary" comment="Please do not modify the entities between # symbols as they will be replaced.">
+    <integer-array name="plan_id_visionary">
         <item>@string/plan_id_visionary_header</item>
         <item>@plurals/item_storage</item>
         <item>@plurals/item_address</item>

@@ -121,7 +121,6 @@
   <string name="auth_signup_verification_code">Bestätigungscode</string>
   <string name="auth_signup_enter_code_subtitle">Geben Sie den an „%s” gesendeten Bestätigungscode ein:</string>
   <string name="auth_signup_error_human_verification_failed">Menschliche Bestätigung fehlgeschlagen.</string>
-  <string name="auth_signup_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="auth_signup_token_code_resent">Token-Code erneut gesendet.</string>
   <string name="auth_signup_error_validation_recovery_destination">Ungültiges Wiederherstellungsziel.</string>
 </resources>

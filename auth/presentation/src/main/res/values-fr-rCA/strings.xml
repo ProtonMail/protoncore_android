@@ -121,7 +121,6 @@
   <string name="auth_signup_verification_code">Code de vérification</string>
   <string name="auth_signup_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s:</string>
   <string name="auth_signup_error_human_verification_failed">La vérification humaine a échoué.</string>
-  <string name="auth_signup_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="auth_signup_token_code_resent">Code jeton renvoyé.</string>
   <string name="auth_signup_error_validation_recovery_destination">La destination de récupération n\'est pas valide.</string>
 </resources>

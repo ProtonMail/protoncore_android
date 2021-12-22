@@ -122,7 +122,6 @@
   <string name="auth_signup_verification_code">Ověřovací kód</string>
   <string name="auth_signup_enter_code_subtitle">Zadejte ověřovací kód, který byl odeslán na %s:</string>
   <string name="auth_signup_error_human_verification_failed">Ověření CAPTCHA se nezdařilo.</string>
-  <string name="auth_signup_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="auth_signup_token_code_resent">Kód tokenu byl znovu odeslán.</string>
   <string name="auth_signup_error_validation_recovery_destination">Cíl obnovení je neplatný.</string>
 </resources>

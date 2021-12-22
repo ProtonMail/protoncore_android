@@ -70,7 +70,7 @@ class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {
 
         viewModel.countryCallingCode.onSuccess {
             binding.callingCodeText.text =
-                String.format(getString(R.string.auth_signup_calling_code_template), it)
+                String.format(getString(R.string.presentation_phone_calling_code_template), it)
         }.launchIn(lifecycleScope)
     }
 }

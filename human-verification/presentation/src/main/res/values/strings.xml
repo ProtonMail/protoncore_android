@@ -57,6 +57,5 @@
     <string name="human_verification_resent_code">We have sent you another code.</string>
     <string name="human_verification_captcha_failed">CAPTCHA verification failed. Please try one more time or choose another verification option.</string>
 
-    <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
     <string name="human_verification_captcha_no_connectivity">No connectivity. Could not load CAPTCHA.</string>
 </resources>
