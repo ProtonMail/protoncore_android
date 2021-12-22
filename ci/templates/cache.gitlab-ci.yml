@@ -1,6 +1,7 @@
 .gradle-cache:
   cache:
     - key:
+        prefix: global-gradle-cache
         files:
           - gradle/wrapper/gradle-wrapper.properties
       paths:
@@ -9,7 +10,7 @@
         - ${GRADLE_USER_HOME}/notifications
       policy: pull-push
 
-    - key: ${CI_COMMIT_REF_SLUG}
+    - key: branch-build-cache-${CI_COMMIT_REF_SLUG}
       paths:
         - ./**/build
       policy: pull-push
