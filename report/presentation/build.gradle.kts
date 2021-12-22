@@ -30,7 +30,7 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 android(useViewBinding = true) {
-    resourcePrefix = "report_"
+    resourcePrefix = "core_report_"
 }
 
 extensions.configure<com.android.build.gradle.LibraryExtension> {

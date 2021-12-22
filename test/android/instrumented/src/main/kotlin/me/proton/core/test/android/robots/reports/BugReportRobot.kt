@@ -42,12 +42,12 @@ class BugReportRobot : CoreRobot() {
     /**
      * Clicks "Discard" button
      */
-    inline fun <reified T> discard(): T = clickElement(stringFromResource(R.string.report_bug_discard_changes_confirm))
+    inline fun <reified T> discard(): T = clickElement(stringFromResource(R.string.core_report_bug_discard_changes_confirm))
 
     /**
      * Clicks "Keep writing" button
      */
-    fun keepWriting(): BugReportRobot = clickElement(stringFromResource(R.string.report_bug_discard_changes_cancel))
+    fun keepWriting(): BugReportRobot = clickElement(stringFromResource(R.string.core_report_bug_discard_changes_cancel))
 
     /**
      * Clicks "Send" button

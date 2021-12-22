@@ -20,8 +20,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/bug_report_send"
-        android:icon="@drawable/report_ic_paper_plane"
-        android:title="@string/report_bug_send"
+        android:icon="@drawable/core_report_ic_paper_plane"
+        android:title="@string/core_report_bug_send"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/bug_report_loader"

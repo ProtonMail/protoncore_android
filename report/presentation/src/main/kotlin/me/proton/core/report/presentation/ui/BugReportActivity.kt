@@ -42,7 +42,7 @@ import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportValidationError
 import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.report.presentation.R
-import me.proton.core.report.presentation.databinding.ReportActivityBugReportBinding
+import me.proton.core.report.presentation.databinding.CoreReportActivityBugReportBinding
 import me.proton.core.report.presentation.entity.BugReportFormState
 import me.proton.core.report.presentation.entity.BugReportInput
 import me.proton.core.report.presentation.entity.BugReportOutput
@@ -52,8 +52,8 @@ import me.proton.core.report.presentation.viewmodel.BugReportViewModel
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
-internal class BugReportActivity : ProtonViewBindingActivity<ReportActivityBugReportBinding>(
-    ReportActivityBugReportBinding::inflate
+internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityBugReportBinding>(
+    CoreReportActivityBugReportBinding::inflate
 ) {
     private var exitDialog: AlertDialog? = null
     private val input: BugReportInput by lazy {
@@ -136,22 +136,22 @@ internal class BugReportActivity : ProtonViewBindingActivity<ReportActivityBugRe
     private fun handleFormError(validationError: BugReportValidationError) {
         val (textView, message) = when (validationError) {
             BugReportValidationError.DescriptionMissing ->
-                binding.bugReportDescriptionLayout to getString(R.string.report_bug_form_field_required)
+                binding.bugReportDescriptionLayout to getString(R.string.core_report_bug_form_field_required)
             BugReportValidationError.SubjectMissing ->
-                binding.bugReportSubjectLayout to getString(R.string.report_bug_form_field_required)
+                binding.bugReportSubjectLayout to getString(R.string.core_report_bug_form_field_required)
             BugReportValidationError.SubjectTooLong ->
                 binding.bugReportSubjectLayout to resources.getQuantityString(
-                    R.plurals.report_bug_form_field_too_long,
+                    R.plurals.core_report_bug_form_field_too_long,
                     BugReport.SubjectMaxLength, BugReport.SubjectMaxLength
                 )
             BugReportValidationError.DescriptionTooLong ->
                 binding.bugReportDescriptionLayout to resources.getQuantityString(
-                    R.plurals.report_bug_form_field_too_long,
+                    R.plurals.core_report_bug_form_field_too_long,
                     BugReport.DescriptionMaxLength, BugReport.DescriptionMaxLength
                 )
             BugReportValidationError.DescriptionTooShort ->
                 binding.bugReportDescriptionLayout to resources.getQuantityString(
-                    R.plurals.report_bug_form_field_too_short,
+                    R.plurals.core_report_bug_form_field_too_short,
                     BugReport.DescriptionMinLength, BugReport.DescriptionMinLength
                 )
         }.exhaustive
@@ -167,7 +167,7 @@ internal class BugReportActivity : ProtonViewBindingActivity<ReportActivityBugRe
 
             is SendBugReport.Result.Failed -> {
                 setFormState(isLoading = false)
-                binding.root.errorSnack(result.message ?: getString(R.string.report_bug_general_error))
+                binding.root.errorSnack(result.message ?: getString(R.string.core_report_bug_general_error))
             }
 
             is SendBugReport.Result.Blocked,
@@ -215,16 +215,16 @@ internal class BugReportActivity : ProtonViewBindingActivity<ReportActivityBugRe
     private fun showExitDialog() {
         exitDialog?.dismiss()
         exitDialog = MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.report_bug_discard_changes_title)
-            .setMessage(R.string.report_bug_discard_changes_description)
-            .setPositiveButton(R.string.report_bug_discard_changes_confirm) { _, _ -> viewModel.tryExit(force = true) }
-            .setNegativeButton(R.string.report_bug_discard_changes_cancel, null)
+            .setTitle(R.string.core_report_bug_discard_changes_title)
+            .setMessage(R.string.core_report_bug_discard_changes_description)
+            .setPositiveButton(R.string.core_report_bug_discard_changes_confirm) { _, _ -> viewModel.tryExit(force = true) }
+            .setNegativeButton(R.string.core_report_bug_discard_changes_cancel, null)
             .show()
     }
 
     private fun setResultOk() {
         val data = Intent().apply {
-            putExtra(OUTPUT_SUCCESS_MESSAGE, getString(R.string.report_bug_success))
+            putExtra(OUTPUT_SUCCESS_MESSAGE, getString(R.string.core_report_bug_success))
         }
         setResult(RESULT_OK, data)
     }

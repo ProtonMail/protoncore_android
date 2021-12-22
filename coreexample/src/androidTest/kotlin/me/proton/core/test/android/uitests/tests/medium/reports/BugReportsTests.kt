@@ -29,7 +29,7 @@ import org.junit.Test
 
 class BugReportsTests : BaseTest() {
     private val closeButton: OnView
-        get() = BugReportRobot().view.withContentDesc(R.string.report_bug_close)
+        get() = BugReportRobot().view.withContentDesc(R.string.core_report_bug_close)
 
     @Test
     fun showErrorsIfEmptyForm() {
@@ -38,8 +38,8 @@ class BugReportsTests : BaseTest() {
             .send<BugReportRobot>()
             .verify {
                 bugReportFormIsEditable()
-                subjectFieldHasError(R.string.report_bug_form_field_required)
-                descriptionFieldHasError(R.string.report_bug_form_field_required)
+                subjectFieldHasError(R.string.core_report_bug_form_field_required)
+                descriptionFieldHasError(R.string.core_report_bug_form_field_required)
             }
     }
 
@@ -51,8 +51,8 @@ class BugReportsTests : BaseTest() {
             .send<BugReportRobot>()
             .verify {
                 bugReportFormIsEditable()
-                subjectFieldHasError(R.string.report_bug_form_field_required)
-                descriptionFieldHasError(R.string.report_bug_form_field_required)
+                subjectFieldHasError(R.string.core_report_bug_form_field_required)
+                descriptionFieldHasError(R.string.core_report_bug_form_field_required)
             }
     }
 
@@ -65,7 +65,7 @@ class BugReportsTests : BaseTest() {
             .verify {
                 bugReportFormIsEditable()
                 descriptionFieldHasError(
-                    R.plurals.report_bug_form_field_too_short,
+                    R.plurals.core_report_bug_form_field_too_short,
                     BugReport.DescriptionMinLength,
                     BugReport.DescriptionMinLength
                 )
@@ -141,7 +141,7 @@ class BugReportsTests : BaseTest() {
             .send<CoreexampleRobot>()
             .verify {
                 accountSwitcherDisplayed()
-                snackbarDisplayed(R.string.report_bug_success)
+                snackbarDisplayed(R.string.core_report_bug_success)
             }
     }
 
@@ -160,7 +160,7 @@ class BugReportsTests : BaseTest() {
 
         CoreexampleRobot().verify {
             accountSwitcherDisplayed()
-            snackbarDisplayed(R.string.report_bug_success)
+            snackbarDisplayed(R.string.core_report_bug_success)
         }
     }
 

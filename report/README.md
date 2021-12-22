@@ -22,4 +22,4 @@ Once a report is written, and user submits it, it is enqueued into a WorkManager
     - [configure `WorkManager` to be available in Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack#workmanager) (i.e. your `Application` should implement `androidx.work.Configuration.Provider`)
     - provide a `WorkManager` instance from your dagger module
 5. Whenever you want to display a Bug Report screen, use [ReportOrchestrator](presentation/src/main/kotlin/me/proton/core/report/presentation/ReportOrchestrator.kt).
-6. Refer to [BugReportViewModel](../coreexample/src/main/kotlin/me/proton/android/core/coreexample/viewmodel/BugReportViewModel.kt) from CoreExample app for sample usage.
+6. Refer to [ReportsViewModel](../coreexample/src/main/kotlin/me/proton/android/core/coreexample/viewmodel/ReportsViewModel.kt) from CoreExample app for sample usage.
