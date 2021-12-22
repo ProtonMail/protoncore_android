@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.proton.core.report.presentation">
+
+    <application>
+        <activity
+            android:name=".ui.BugReportActivity"
+            android:theme="@style/ProtonTheme"
+            android:windowSoftInputMode="adjustResize" />
+    </application>
+</manifest>

@@ -21,26 +21,44 @@ package me.proton.core.test.android.robots.reports
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.test.espresso.matcher.ViewMatchers
-import me.proton.core.reports.presentation.R
+import me.proton.core.report.presentation.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.pluralStringFromResource
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 
 class BugReportRobot : CoreRobot() {
-    fun description(value: String): BugReportRobot =
-        apply { view.withId(R.id.bug_report_description).replaceText(value) }
 
-    inline fun <reified T> exitDialogDiscardBugReport(): T =
-        clickElement(view.withText(R.string.bug_report_discard_changes_confirm))
-
-    inline fun <reified T> exitDialogKeepWriting(): T =
-        clickElement(view.withText(R.string.bug_report_discard_changes_cancel))
-
+    /**
+     * Replaces bug report title with given [value]
+     */
     fun subject(value: String): BugReportRobot = replaceText(R.id.bug_report_subject, value)
+
+    /**
+     * Replaces bug report description with given [value]
+     */
+    fun description(value: String): BugReportRobot = replaceText(R.id.bug_report_description, value)
+
+    /**
+     * Clicks "Discard" button
+     */
+    inline fun <reified T> discard(): T = clickElement(stringFromResource(R.string.core_report_bug_discard_changes_confirm))
+
+    /**
+     * Clicks "Keep writing" button
+     */
+    fun keepWriting(): BugReportRobot = clickElement(stringFromResource(R.string.core_report_bug_discard_changes_cancel))
+
+    /**
+     * Clicks "Send" button
+     */
     inline fun <reified T> send(): T = clickElement(view.withId(R.id.bug_report_send))
 
     class Verify : CoreVerify() {
+        fun subjectFieldHasError(@StringRes stringId: Int) = view
+            .withId(R.id.bug_report_subject_layout)
+            .withCustomMatcher(ViewMatchers.hasErrorText(stringFromResource(stringId)))
+
         fun descriptionFieldHasError(@StringRes stringId: Int, vararg formatArgs: Any) = view
             .withId(R.id.bug_report_description_layout)
             .withCustomMatcher(ViewMatchers.hasErrorText(stringFromResource(stringId, *formatArgs)))
@@ -49,19 +67,21 @@ class BugReportRobot : CoreRobot() {
             .withId(R.id.bug_report_description_layout)
             .withCustomMatcher(ViewMatchers.hasErrorText(pluralStringFromResource(pluralsId, quantity, *formatArgs)))
 
-        fun descriptionFieldIsDisabled() = view.withId(R.id.bug_report_description).checkDisabled()
-        fun descriptionFieldIsEnabled() = view.withId(R.id.bug_report_description).checkEnabled()
-        fun descriptionLength(l: Int) = view.withId(R.id.bug_report_description).checkLengthEquals(l)
-        fun loaderIsDisplayed() = view.withId(R.id.bug_report_loader).checkDisabled()
-        fun loaderIsHidden() = view.withId(R.id.bug_report_loader).checkDoesNotExist()
-        fun sendButtonIsAvailable() = view.withId(R.id.bug_report_send).checkDisplayed().checkEnabled()
-        fun subjectFieldHasError(@StringRes stringId: Int) = view
-            .withId(R.id.bug_report_subject_layout)
-            .withCustomMatcher(ViewMatchers.hasErrorText(stringFromResource(stringId)))
+        fun bugReportIsSending() {
+            view.withId(R.id.bug_report_description).checkDisabled()
+            view.withId(R.id.bug_report_subject).checkDisabled()
+            view.withId(R.id.bug_report_loader).checkDisabled()
+            view.withId(R.id.bug_report_send).checkDoesNotExist()
+        }
 
-        fun sendButtonIsHidden() = view.withId(R.id.bug_report_send).checkDoesNotExist()
-        fun subjectFieldIsDisabled() = view.withId(R.id.bug_report_subject).checkDisabled()
-        fun subjectFieldIsEnabled() = view.withId(R.id.bug_report_subject).checkEnabled()
+        fun bugReportFormIsEditable() {
+            view.withId(R.id.bug_report_description).checkEnabled()
+            view.withId(R.id.bug_report_subject).checkEnabled()
+            view.withId(R.id.bug_report_send).checkDisplayed().checkEnabled()
+            view.withId(R.id.bug_report_loader).checkDoesNotExist()
+        }
+
+        fun descriptionLength(l: Int) = view.withId(R.id.bug_report_description).checkLengthEquals(l)
         fun subjectLength(l: Int) = view.withId(R.id.bug_report_subject).checkLengthEquals(l)
     }
 

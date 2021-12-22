@@ -28,43 +28,40 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.reports.presentation.ReportsOrchestrator
-import me.proton.core.reports.presentation.entity.BugReportInput
-import me.proton.core.reports.presentation.entity.BugReportOutput
+import me.proton.core.report.presentation.ReportOrchestrator
+import me.proton.core.report.presentation.entity.BugReportInput
+import me.proton.core.report.presentation.entity.BugReportOutput
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 @HiltViewModel
 class ReportsViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val reportsOrchestrator: ReportsOrchestrator,
+    private val reportOrchestrator: ReportOrchestrator,
     private val userManager: UserManager
 ) : ViewModel() {
     private val _bugReportSent = MutableSharedFlow<String>(extraBufferCapacity = 1)
     val bugReportSent: Flow<String> = _bugReportSent.asSharedFlow()
 
     fun register(caller: ActivityResultCaller) {
-        reportsOrchestrator.register(caller)
-    }
-
-    override fun onCleared() {
-        reportsOrchestrator.unregister()
-        super.onCleared()
-    }
-
-    fun reportBugs(waitForServer: Boolean) {
-        reportsOrchestrator.setOnBugReportResult {
+        reportOrchestrator.register(caller) {
             if (it is BugReportOutput.SuccessfullySent) {
                 viewModelScope.launch { _bugReportSent.emit(it.successMessage) }
             }
         }
-        viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId().first()
-            val user = userId?.let { userManager.getUser(it) }
-            val email = user?.email ?: "test-bug-report@proton.black"
-            val username = user?.name ?: "test-bug-report"
-            val input = BugReportInput(email = email, username = username, finishAfterReportIsEnqueued = !waitForServer)
-            reportsOrchestrator.startBugReport(input)
-        }
+    }
+
+    override fun onCleared() {
+        reportOrchestrator.unregister()
+        super.onCleared()
+    }
+
+    fun reportBugs(waitForServer: Boolean) = viewModelScope.launch {
+        val userId = accountManager.getPrimaryUserId().first()
+        val user = userId?.let { userManager.getUser(it) }
+        val email = user?.email ?: "test-bug-report@proton.black"
+        val username = user?.name ?: "test-bug-report"
+        val input = BugReportInput(email = email, username = username, finishAfterReportIsEnqueued = !waitForServer)
+        reportOrchestrator.startBugReport(input)
     }
 }

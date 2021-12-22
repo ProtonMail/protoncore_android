@@ -54,7 +54,7 @@ dependencies {
         project(Module.plan),
         project(Module.mailSettings),
         project(Module.userSettings),
-        project(Module.reports),
+        project(Module.report),
 
         // Android
         espresso,

@@ -116,7 +116,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name="me.proton.core.presentation.ui.alert.ForceUpdateActivity" />
         <activity
-            android:name="me.proton.core.reports.presentation.ui.BugReportActivity"
+            android:name="me.proton.core.report.presentation.ui.BugReportActivity"
             android:windowSoftInputMode="adjustResize" />
     </application>
 

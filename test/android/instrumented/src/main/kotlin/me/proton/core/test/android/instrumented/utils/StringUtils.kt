@@ -30,14 +30,21 @@ object StringUtils {
     private const val emailCharacters =
         "abcdefghijklmnopqrstuuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#\$%&'*+-=?^_`{|}~"
 
-    fun stringFromResource(@StringRes id: Int, vararg formatArgs: Any): String =
+    fun stringFromResource(@StringRes id: Int, vararg formatArgs: Any): String = if (formatArgs.isEmpty()) {
+        getTargetContext().resources.getString(id)
+    } else {
         getTargetContext().resources.getString(id, *formatArgs)
+    }
 
     fun stringFromResource(@StringRes id: Int): String =
         getTargetContext().resources.getString(id)
 
     fun pluralStringFromResource(@PluralsRes id: Int, quantity: Int, vararg formatArgs: Any): String =
-        getTargetContext().resources.getQuantityString(id, quantity, *formatArgs)
+        if (formatArgs.isEmpty()) {
+            getTargetContext().resources.getQuantityString(id, quantity)
+        } else {
+            getTargetContext().resources.getQuantityString(id, quantity, *formatArgs)
+        }
 
     fun getAlphaNumericStringWithSpecialCharacters(length: Long = 10): String =
         randomString(length, alphaNumericWithSpecialCharacters)

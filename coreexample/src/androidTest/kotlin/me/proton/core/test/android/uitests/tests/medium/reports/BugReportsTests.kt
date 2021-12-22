@@ -18,27 +18,28 @@
 
 package me.proton.core.test.android.uitests.tests.medium.reports
 
-import me.proton.core.reports.domain.entity.BugReport
-import me.proton.core.reports.presentation.R
+import me.proton.core.report.domain.entity.BugReport
+import me.proton.core.report.presentation.R
 import me.proton.core.test.android.instrumented.ui.espresso.OnView
 import me.proton.core.test.android.robots.reports.BugReportRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Test
 
 class BugReportsTests : BaseTest() {
     private val closeButton: OnView
-        get() = BugReportRobot().view.withContentDesc(R.string.bug_report_close)
+        get() = BugReportRobot().view.withContentDesc(R.string.core_report_bug_close)
 
     @Test
     fun showErrorsIfEmptyForm() {
         startBugReport()
-            .apply { verify { formIsEditable() } }
+            .apply { verify { bugReportFormIsEditable() } }
             .send<BugReportRobot>()
             .verify {
-                formIsEditable()
-                subjectFieldHasError(R.string.bug_report_form_field_required)
-                descriptionFieldHasError(R.string.bug_report_form_field_required)
+                bugReportFormIsEditable()
+                subjectFieldHasError(R.string.core_report_bug_form_field_required)
+                descriptionFieldHasError(R.string.core_report_bug_form_field_required)
             }
     }
 
@@ -49,9 +50,9 @@ class BugReportsTests : BaseTest() {
             .description("   ")
             .send<BugReportRobot>()
             .verify {
-                formIsEditable()
-                subjectFieldHasError(R.string.bug_report_form_field_required)
-                descriptionFieldHasError(R.string.bug_report_form_field_required)
+                bugReportFormIsEditable()
+                subjectFieldHasError(R.string.core_report_bug_form_field_required)
+                descriptionFieldHasError(R.string.core_report_bug_form_field_required)
             }
     }
 
@@ -62,9 +63,9 @@ class BugReportsTests : BaseTest() {
             .description("Too short")
             .send<BugReportRobot>()
             .verify {
-                formIsEditable()
+                bugReportFormIsEditable()
                 descriptionFieldHasError(
-                    R.plurals.bug_report_form_field_too_short,
+                    R.plurals.core_report_bug_form_field_too_short,
                     BugReport.DescriptionMinLength,
                     BugReport.DescriptionMinLength
                 )
@@ -94,9 +95,9 @@ class BugReportsTests : BaseTest() {
         startBugReport()
             .subject("Test subject")
             .clickElement<BugReportRobot>(closeButton)
-            .exitDialogKeepWriting<BugReportRobot>()
+            .keepWriting()
             .verify {
-                formIsEditable()
+                bugReportFormIsEditable()
             }
     }
 
@@ -124,14 +125,15 @@ class BugReportsTests : BaseTest() {
     fun discardNonEmptyForm() {
         startBugReport()
             .description("Description")
-            .clickElement<BugReportRobot>(closeButton)
-            .exitDialogDiscardBugReport<CoreexampleRobot>()
+            .close<BugReportRobot>()
+            .discard<CoreexampleRobot>()
             .verify {
                 accountSwitcherDisplayed()
             }
     }
 
     @Test
+    @SmokeTest
     fun bugReportSuccessfullySent() {
         startBugReport()
             .subject("Test subject")
@@ -139,11 +141,12 @@ class BugReportsTests : BaseTest() {
             .send<CoreexampleRobot>()
             .verify {
                 accountSwitcherDisplayed()
-                snackbarDisplayed(R.string.bug_report_success)
+                snackbarDisplayed(R.string.core_report_bug_success)
             }
     }
 
     @Test
+    @SmokeTest
     fun successfulBugReportWithLogin() {
         login(users.getUser())
         CoreexampleRobot()
@@ -152,23 +155,13 @@ class BugReportsTests : BaseTest() {
             .description("Test bug report")
             .send<BugReportRobot>()
             .verify {
-                descriptionFieldIsDisabled()
-                subjectFieldIsDisabled()
-                loaderIsDisplayed()
-                sendButtonIsHidden()
+                bugReportIsSending()
             }
 
         CoreexampleRobot().verify {
             accountSwitcherDisplayed()
-            snackbarDisplayed(R.string.bug_report_success)
+            snackbarDisplayed(R.string.core_report_bug_success)
         }
-    }
-
-    private fun BugReportRobot.Verify.formIsEditable() {
-        descriptionFieldIsEnabled()
-        subjectFieldIsEnabled()
-        sendButtonIsAvailable()
-        loaderIsHidden()
     }
 
     /** Starts the Bug Report form, without logging in. */
