@@ -18,7 +18,6 @@
 
 package me.proton.core.payment.presentation.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -138,7 +137,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
     private fun onBillingSuccess(token: String? = null, amount: Long, currency: Currency, cycle: SubscriptionCycle) {
         val intent = Intent()
             .putExtra(
-                ARG_RESULT,
+                ARG_BILLING_RESULT,
                 BillingResult(
                     paySuccess = true,
                     token = token,
@@ -148,7 +147,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                     cycle = cycle
                 )
             )
-        setResult(Activity.RESULT_OK, intent)
+        setResult(RESULT_OK, intent)
         finish()
     }
 
