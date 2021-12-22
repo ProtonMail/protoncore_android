@@ -18,11 +18,13 @@
 
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
+import org.gradle.api.artifacts.VersionCatalog
 
-internal fun initVersions() {
+
+internal fun initVersions(libs: VersionCatalog) {
 
     // region Kotlin
-    `kotlin version` =                          "1.5.31"        // Released: Sep 20, 2021
+    `kotlin version` =                          libs.findVersion("kotlin").get().toString()
     `coroutines version` =                      "1.5.2"         // Released: Sep 02, 2021
     `serialization version` =                   "1.2.2"         // Released: Jul 08, 2021
     // endregion

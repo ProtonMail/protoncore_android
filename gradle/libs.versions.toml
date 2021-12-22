@@ -1,9 +1,12 @@
 [versions]
 easyGradle = "2.8"
+kotlin = "1.5.31"
 
 [plugins]
 easyGradle = { id = "studio.forface.easygradle", version.ref="easyGradle" }
 kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version ="0.8.0" }
+kotlinGradle = { id = "org.jetbrains.kotlin.jvm", version.ref="kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref="kotlin" }
 
 [libraries]
 android-pluginGradle = "com.android.tools.build:gradle:7.0.4"

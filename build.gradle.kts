@@ -36,17 +36,16 @@ plugins {
     id("me.proton.core.gradle-plugins.jacoco")
     id("com.github.ben-manes.versions") version "0.39.0"
     alias(libs.plugins.kotlinx.binaryCompatibilityValidator)
+    alias(libs.plugins.kotlinGradle)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 buildscript {
     repositories.google()
 
     dependencies {
-        val kotlinVersion = "1.5.31" // Sep 20, 2021
         val hiltVersion = "2.38.1" // Jul 27, 2021
 
-        classpath(kotlin("gradle-plugin", kotlinVersion))
-        classpath(kotlin("serialization", kotlinVersion))
         classpath(libs.dokka.pluginGradle)
         classpath(libs.android.pluginGradle)
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
@@ -73,10 +72,6 @@ kotlinCompilerArgs(
     "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
     "-Xopt-in=kotlin.time.ExperimentalTime"
 )
-
-tasks.register("clean", Delete::class.java) {
-    delete(rootProject.buildDir)
-}
 
 fun isNonStable(version: String): Boolean {
     val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
