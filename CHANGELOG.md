@@ -5,7 +5,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-Fix payment refresh state after upgrading for logged in users.
 
 ## [4.1.0]
 
@@ -13,6 +12,7 @@ Fix payment refresh state after upgrading for logged in users.
 
 - Report: New module for sending Bug Report (see [Report Readme](report/README.md) for more details).
 - After login, when migrating from external to internal account type, `UserCheck` is also called.
+- Fix payment refresh state after upgrading for logged in users.
 
 ## [4.0.0]
 
