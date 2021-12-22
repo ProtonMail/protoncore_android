@@ -21,36 +21,25 @@ package me.proton.core.auth.presentation.viewmodel
 import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import me.proton.core.auth.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.usecase.SetupInternalAddress
-import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
-import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
+import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.test.kotlin.assertIs
-import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.AddressType
-import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.usersettings.domain.usecase.SetupUsername
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 @ExperimentalCoroutinesApi
 class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
-    private val accountHandler = mockk<AccountWorkflowHandler>(relaxed = true)
-    private val userManager = mockk<UserManager>(relaxed = true)
-    private val setupUsername = mockk<SetupUsername>(relaxed = true)
-    private val setupInternalAddress = mockk<SetupInternalAddress>(relaxed = true)
-    private val setupPrimaryKeys = mockk<SetupPrimaryKeys>(relaxed = true)
-    private val unlockUserPrimaryKey = mockk<UnlockUserPrimaryKey>(relaxed = true)
+    private val postLoginAccountSetup = mockk<PostLoginAccountSetup>()
+    private val setupUsername = mockk<SetupUsername>()
     // endregion
 
     // region test data
@@ -58,11 +47,6 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     private val testPassword = "test-password"
     private val testUsername = "test-username"
     private val testDomain = "test-domain"
-    private val testUser = mockk<User>()
-    private val testUserKey = mockk<UserKey>()
-    private val testAddressInternal = mockk<UserAddress>()
-    private val testAddressInternalWithoutKeys = mockk<UserAddress>()
-    private val testAddressExternal = mockk<UserAddress>()
     // endregion
 
     private lateinit var viewModel: CreateAddressViewModel
@@ -70,48 +54,38 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         viewModel = CreateAddressViewModel(
-            accountHandler,
-            userManager,
-            setupUsername,
-            setupPrimaryKeys,
-            setupInternalAddress,
-            unlockUserPrimaryKey
+            mockk(),
+            postLoginAccountSetup,
+            setupUsername
         )
-        coEvery { userManager.getUser(any(), any()) } returns testUser
 
         coEvery { setupUsername.invoke(any(), any()) } returns Unit
-        coEvery { setupPrimaryKeys.invoke(any(), any(), any()) } returns Unit
-        coEvery { setupInternalAddress.invoke(any(), any()) } returns Unit
-        coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
-
-        every { testAddressInternal.type } returns AddressType.Original
-        every { testAddressInternal.keys } returns listOf(mockk())
-
-        every { testAddressInternalWithoutKeys.type } returns AddressType.Original
-        every { testAddressInternalWithoutKeys.keys } returns emptyList()
-
-        every { testAddressExternal.type } returns AddressType.External
     }
 
     @Test
     fun `setup username and primary keys`() = coroutinesTest {
         // GIVEN
-        every { testUser.keys } returns emptyList()
-        coEvery { userManager.getAddresses(any(), any()) } returns emptyList()
+        mockPostLoginAccountSetup(PostLoginAccountSetup.Result.UserUnlocked(testUserId))
+
         viewModel.state.test {
             // WHEN
             viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
 
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
-            coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any(), any()) }
-            coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
-            coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
-            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-            coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
+            coVerify(exactly = 1) {
+                postLoginAccountSetup.invoke(
+                    testUserId, testPassword, AccountType.Internal,
+                    isSecondFactorNeeded = false,
+                    isTwoPassModeNeeded = false,
+                    onSetupSuccess = any(),
+                    internalAddressDomain = testDomain
+                )
+            }
 
             assertIs<CreateAddressViewModel.State.Processing>(awaitItem())
-            assertIs<CreateAddressViewModel.State.Success>(awaitItem())
+            val accountSetupResult = assertIs<CreateAddressViewModel.State.AccountSetupResult>(awaitItem())
+            assertIs<PostLoginAccountSetup.Result.UserUnlocked>(accountSetupResult.result)
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -120,8 +94,8 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `setup username and internal address`() = coroutinesTest {
         // GIVEN
-        every { testUser.keys } returns listOf(testUserKey)
-        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressExternal)
+        mockPostLoginAccountSetup(PostLoginAccountSetup.Result.UserUnlocked(testUserId))
+
         viewModel.state.test {
             // WHEN
             viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
@@ -129,15 +103,9 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any(), any()) }
-            coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
-            coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
-
-            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-            coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
-
             assertIs<CreateAddressViewModel.State.Processing>(awaitItem())
-            assertIs<CreateAddressViewModel.State.Success>(awaitItem())
+            val accountSetupResult = assertIs<CreateAddressViewModel.State.AccountSetupResult>(awaitItem())
+            assertIs<PostLoginAccountSetup.Result.UserUnlocked>(accountSetupResult.result)
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -146,8 +114,8 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `setup username and internal address because no keys`() = coroutinesTest {
         // GIVEN
-        every { testUser.keys } returns listOf(testUserKey)
-        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressInternalWithoutKeys)
+        mockPostLoginAccountSetup(PostLoginAccountSetup.Result.UserUnlocked(testUserId))
+
         viewModel.state.test {
             // WHEN
             viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
@@ -155,15 +123,9 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any(), any()) }
-            coVerify(exactly = 1) { setupInternalAddress.invoke(any(), any()) }
-            coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
-
-            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-            coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
-
             assertIs<CreateAddressViewModel.State.Processing>(awaitItem())
-            assertIs<CreateAddressViewModel.State.Success>(awaitItem())
+            val accountSetupResult = assertIs<CreateAddressViewModel.State.AccountSetupResult>(awaitItem())
+            assertIs<PostLoginAccountSetup.Result.UserUnlocked>(accountSetupResult.result)
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -172,8 +134,8 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `setup username and unlock`() = coroutinesTest {
         // GIVEN
-        every { testUser.keys } returns listOf(testUserKey)
-        coEvery { userManager.getAddresses(any(), any()) } returns listOf(testAddressInternal)
+        mockPostLoginAccountSetup(PostLoginAccountSetup.Result.UserUnlocked(testUserId))
+
         viewModel.state.test {
             // WHEN
             viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
@@ -181,15 +143,9 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-            coVerify(exactly = 0) { setupPrimaryKeys.invoke(any(), any(), any()) }
-            coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
-            coVerify(exactly = 0) { accountHandler.handleCreateAddressSuccess(any()) }
-
-            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-            coVerify(exactly = 1) { accountHandler.handleAccountReady(any()) }
-
             assertIs<CreateAddressViewModel.State.Processing>(awaitItem())
-            assertIs<CreateAddressViewModel.State.Success>(awaitItem())
+            val accountSetupResult = assertIs<CreateAddressViewModel.State.AccountSetupResult>(awaitItem())
+            assertIs<PostLoginAccountSetup.Result.UserUnlocked>(accountSetupResult.result)
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -198,14 +154,8 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `setup cannot unlock`() = coroutinesTest {
         // GIVEN
-        every { testUser.keys } returns emptyList()
-        coEvery { userManager.getAddresses(any(), any()) } returns emptyList()
-        coEvery {
-            unlockUserPrimaryKey.invoke(
-                any(),
-                any()
-            )
-        } returns UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase
+        mockPostLoginAccountSetup(PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey(mockk()))
+
         viewModel.state.test {
             // WHEN
             viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
@@ -213,18 +163,45 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
-            coVerify(exactly = 1) { setupPrimaryKeys.invoke(any(), any(), any()) }
-            coVerify(exactly = 0) { setupInternalAddress.invoke(any(), any()) }
-            coVerify(exactly = 1) { accountHandler.handleCreateAddressSuccess(any()) }
-
-            coVerify(exactly = 1) { unlockUserPrimaryKey.invoke(any(), any()) }
-            coVerify(exactly = 1) { accountHandler.handleUnlockFailed(any()) }
-            coVerify(exactly = 0) { accountHandler.handleAccountReady(any()) }
-
             assertIs<CreateAddressViewModel.State.Processing>(awaitItem())
-            assertIs<CreateAddressViewModel.State.Error.CannotUnlockPrimaryKey>(awaitItem())
+            val accountSetupResult = assertIs<CreateAddressViewModel.State.AccountSetupResult>(awaitItem())
+            assertIs<PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey>(accountSetupResult.result)
 
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    @Test
+    fun `handles exception`() = coroutinesTest {
+        // GIVEN
+        coEvery { setupUsername.invoke(any(), any()) } throws Throwable("Something went wrong")
+
+        viewModel.state.test {
+            // WHEN
+            viewModel.upgradeAccount(testUserId, testPassword, testUsername, testDomain)
+
+            // THEN
+            coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
+
+            assertIs<CreateAddressViewModel.State.Processing>(awaitItem())
+            val result = assertIs<CreateAddressViewModel.State.ErrorMessage>(awaitItem())
+            assertEquals("Something went wrong", result.message)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    private fun mockPostLoginAccountSetup(result: PostLoginAccountSetup.Result) {
+        coEvery {
+            postLoginAccountSetup.invoke(
+                testUserId,
+                testPassword,
+                AccountType.Internal,
+                isSecondFactorNeeded = false,
+                isTwoPassModeNeeded = false,
+                onSetupSuccess = any(),
+                billingDetails = null,
+                internalAddressDomain = testDomain
+            )
+        } returns result
     }
 }

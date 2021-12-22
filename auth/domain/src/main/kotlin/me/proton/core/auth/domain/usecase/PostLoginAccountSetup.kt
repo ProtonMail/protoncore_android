@@ -78,7 +78,8 @@ class PostLoginAccountSetup @Inject constructor(
         isSecondFactorNeeded: Boolean,
         isTwoPassModeNeeded: Boolean,
         onSetupSuccess: (suspend () -> Unit)? = null,
-        billingDetails: BillingDetails? = null
+        billingDetails: BillingDetails? = null,
+        internalAddressDomain: String? = null
     ): Result {
         // Subscribe to any pending subscription/billing.
         if (billingDetails != null) {
@@ -118,7 +119,7 @@ class PostLoginAccountSetup @Inject constructor(
             }
             is SetupAccountCheck.Result.SetupInternalAddressNeeded -> {
                 unlockUserPrimaryKey(userId, encryptedPassword, onSetupSuccess) {
-                    setupInternalAddress.invoke(userId)
+                    setupInternalAddress.invoke(userId, internalAddressDomain)
                 }
             }
             is SetupAccountCheck.Result.NoSetupNeeded -> {

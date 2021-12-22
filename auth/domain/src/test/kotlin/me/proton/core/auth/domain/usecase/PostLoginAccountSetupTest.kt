@@ -54,6 +54,7 @@ class PostLoginAccountSetupTest {
     private lateinit var sessionManager: SessionManager
     private lateinit var user: User
     private lateinit var sessionId: SessionId
+    private lateinit var onSetupSuccess: (suspend () -> Unit)
 
     private lateinit var tested: PostLoginAccountSetup
 
@@ -69,6 +70,7 @@ class PostLoginAccountSetupTest {
         setupInternalAddress = mockk()
         setupPrimaryKeys = mockk()
         unlockUserPrimaryKey = mockk()
+        onSetupSuccess = mockk { coJustRun { this@mockk.invoke() } }
 
         user = mockk()
         sessionId = mockk()
@@ -109,10 +111,12 @@ class PostLoginAccountSetupTest {
             testEncryptedPassword,
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
+        coVerify(exactly = 1) { onSetupSuccess() }
     }
 
     @Test
@@ -129,11 +133,13 @@ class PostLoginAccountSetupTest {
             testEncryptedPassword,
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            onSetupSuccess = onSetupSuccess
         )
 
         assertEquals(PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey(unlockError), result)
         coVerify { accountWorkflowHandler.handleUnlockFailed(testUserId) }
+        coVerify(exactly = 0) { onSetupSuccess() }
     }
 
     @Test
@@ -144,9 +150,11 @@ class PostLoginAccountSetupTest {
             testEncryptedPassword,
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.Need.SecondFactor(testUserId), result)
+        coVerify(exactly = 0) { onSetupSuccess() }
     }
 
     @Test
@@ -171,8 +179,12 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
-            billingDetails = billingDetails
+            billingDetails = billingDetails,
+            onSetupSuccess = onSetupSuccess
         )
+
+        assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
+        coVerify(exactly = 1) { onSetupSuccess() }
 
         val userId = slot<UserId>()
         val amount = slot<Long>()
@@ -214,10 +226,12 @@ class PostLoginAccountSetupTest {
             testEncryptedPassword,
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            onSetupSuccess = onSetupSuccess
         )
         assertTrue(result is PostLoginAccountSetup.Result.Error.UserCheckError)
         coVerify { accountWorkflowHandler.handleAccountDisabled(testUserId) }
+        coVerify(exactly = 0) { onSetupSuccess() }
     }
 
     @Test
@@ -233,10 +247,12 @@ class PostLoginAccountSetupTest {
             testEncryptedPassword,
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.Need.TwoPassMode(testUserId), result)
         coVerify { accountWorkflowHandler.handleTwoPassModeNeeded(testUserId) }
+        coVerify(exactly = 0) { onSetupSuccess() }
     }
 
     @Test
@@ -252,10 +268,12 @@ class PostLoginAccountSetupTest {
             testEncryptedPassword,
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.Need.ChangePassword(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountDisabled(testUserId) }
+        coVerify(exactly = 0) { onSetupSuccess() }
     }
 
     @Test
@@ -271,10 +289,12 @@ class PostLoginAccountSetupTest {
             testEncryptedPassword,
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.Need.ChooseUsername(testUserId), result)
         coVerify { accountWorkflowHandler.handleCreateAddressNeeded(testUserId) }
+        coVerify(exactly = 0) { onSetupSuccess() }
     }
 
     @Test
@@ -292,11 +312,13 @@ class PostLoginAccountSetupTest {
             testEncryptedPassword,
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
         coVerify { setupPrimaryKeys.invoke(testUserId, testEncryptedPassword, testAccountType) }
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
+        coVerify(exactly = 1) { onSetupSuccess() }
     }
 
     @Test
@@ -314,11 +336,13 @@ class PostLoginAccountSetupTest {
             testEncryptedPassword,
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
         coVerify { setupInternalAddress.invoke(testUserId) }
+        coVerify(exactly = 1) { onSetupSuccess() }
     }
 
     private fun mockSessionInfo(secondFactorNeeded: Boolean = false) = mockk<SessionInfo> {

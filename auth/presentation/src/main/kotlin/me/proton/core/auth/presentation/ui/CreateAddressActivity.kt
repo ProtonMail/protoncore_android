@@ -27,6 +27,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityCreateAddressBinding
 import me.proton.core.auth.presentation.entity.CreateAddressInput
@@ -75,9 +76,8 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>(Activit
             when (it) {
                 is CreateAddressViewModel.State.Idle -> showLoading(false)
                 is CreateAddressViewModel.State.Processing -> showLoading(true)
-                is CreateAddressViewModel.State.Success -> onSuccess()
-                is CreateAddressViewModel.State.Error.Message -> showError(it.message)
-                is CreateAddressViewModel.State.Error.CannotUnlockPrimaryKey -> showError(null)
+                is CreateAddressViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
+                is CreateAddressViewModel.State.ErrorMessage -> showError(it.message)
             }.exhaustive
         }.launchIn(lifecycleScope)
     }
@@ -92,9 +92,30 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>(Activit
         }
     }
 
+    private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
+        when (result) {
+            is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckError(result.error)
+
+            is PostLoginAccountSetup.Result.Need.ChangePassword,
+            is PostLoginAccountSetup.Result.Need.ChooseUsername,
+            is PostLoginAccountSetup.Result.Need.SecondFactor,
+            is PostLoginAccountSetup.Result.Need.TwoPassMode,
+            is PostLoginAccountSetup.Result.UserUnlocked -> onSuccess()
+        }
+    }
+
     private fun onSuccess() {
-        val intent = Intent()
-            .putExtra(ARG_RESULT, CreateAddressResult(success = true))
+        setResultAndFinish(CreateAddressResult.Success)
+    }
+
+    private fun onUserCheckError(error: PostLoginAccountSetup.UserCheckResult.Error) {
+        onUserCheckFailed(error, useToast = true)
+        setResultAndFinish(CreateAddressResult.UserCheckError(error.localizedMessage))
+    }
+
+    private fun setResultAndFinish(result: CreateAddressResult) {
+        val intent = Intent().putExtra(ARG_RESULT, result)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
