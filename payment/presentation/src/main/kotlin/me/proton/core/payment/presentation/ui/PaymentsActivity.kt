@@ -18,7 +18,6 @@
 
 package me.proton.core.payment.presentation.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,7 +34,7 @@ import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.showToast
 
-abstract class PaymentsActivity<ViewBindingT: ViewBinding>(
+abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
     bindingInflater: (LayoutInflater) -> ViewBindingT
 ) : ProtonViewBindingActivity<ViewBindingT>(bindingInflater) {
 
@@ -94,7 +93,10 @@ abstract class PaymentsActivity<ViewBindingT: ViewBinding>(
         if (billingResult != null) {
             val intent = Intent()
                 .putExtra(ARG_RESULT, PaymentOptionsResult(billingResult.paySuccess, billingResult))
-            setResult(Activity.RESULT_OK, intent)
+            setResult(RESULT_OK, intent)
+            finish()
+        } else {
+            setResult(RESULT_CANCELED)
             finish()
         }
     }

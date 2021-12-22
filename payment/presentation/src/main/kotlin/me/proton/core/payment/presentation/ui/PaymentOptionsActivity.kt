@@ -180,7 +180,6 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
     private fun onSuccess(availablePaymentMethods: List<PaymentOptionUIModel>) {
         if (availablePaymentMethods.isEmpty()) {
             startBilling(input.userId, viewModel.currentPlans, input.plan.copy(amount = amountDue), input.codes)
-            finish()
             return
         }
         viewModel.validatePlan(user, input.plan.name, input.codes, input.plan.currency, input.plan.subscriptionCycle)

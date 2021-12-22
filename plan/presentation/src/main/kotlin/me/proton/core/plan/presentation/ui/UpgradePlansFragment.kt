@@ -81,12 +81,12 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                     is UpgradePlansViewModel.SubscribedPlansState.Idle -> Unit
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
                     is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> {
-                        val a = it.subscribedPlans
+                        val subscribedPlans = it.subscribedPlans
                         binding.currentPlan.apply {
                             visibility = VISIBLE
                             cycle = PlanCycle.YEARLY
                             currency = PlanCurrency.CHF
-                            planDetailsListItem = a[0]
+                            planDetailsListItem = subscribedPlans[0]
                         }
                         Unit
                     }
@@ -118,7 +118,10 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                             plansView.plans = it.plans
                         }
                     }
-                    is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> setResult(it.selectedPlan, it.billing)
+                    is BasePlansViewModel.PlanState.Success.PaidPlanPayment -> {
+                        setResult(it.selectedPlan, it.billing)
+                        upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
+                    }
                 }.exhaustive
             }.launchIn(lifecycleScope)
 
