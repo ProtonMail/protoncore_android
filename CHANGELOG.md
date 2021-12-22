@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.0.0]
 
+### Behavior changes
+
+- Human Verification methods are no longer validated when they're received from the API. It's now HV3 who should validate them internally.
+
 ### Fixes
 
 - Auth & Human Verification: Closing Human Verification screen on sign up goes back to plans.

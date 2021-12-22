@@ -29,10 +29,10 @@ import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Assert.assertEquals

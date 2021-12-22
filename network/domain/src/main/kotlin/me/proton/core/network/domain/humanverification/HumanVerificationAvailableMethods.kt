@@ -23,6 +23,6 @@ package me.proton.core.network.domain.humanverification
  * captcha token also.
  */
 data class HumanVerificationAvailableMethods(
-    val verificationMethods: List<VerificationMethod>,
+    val verificationMethods: List<String>,
     val verificationToken: String? = null
 )

@@ -24,7 +24,6 @@ import me.proton.core.humanverification.domain.repository.UserVerificationReposi
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
@@ -45,14 +44,7 @@ class CheckCreationTokenValidity @Inject constructor(
         humanVerificationRepository.insertHumanVerificationDetails(
             details = HumanVerificationDetails(
                 clientId = clientId,
-                verificationMethods = listOf(
-                    when (tokenType) {
-                        TokenType.EMAIL -> VerificationMethod.EMAIL
-                        TokenType.SMS -> VerificationMethod.PHONE
-                        TokenType.CAPTCHA -> VerificationMethod.CAPTCHA
-                        TokenType.PAYMENT -> VerificationMethod.PAYMENT
-                    }
-                ),
+                verificationMethods = listOf(tokenType.value),
                 state = HumanVerificationState.HumanVerificationSuccess,
                 tokenType = tokenType.value,
                 tokenCode = token

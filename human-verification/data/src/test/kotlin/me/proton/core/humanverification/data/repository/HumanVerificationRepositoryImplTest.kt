@@ -35,9 +35,9 @@ import me.proton.core.humanverification.data.entity.HumanVerificationEntity
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
+import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import org.junit.Before
@@ -94,7 +94,7 @@ class HumanVerificationRepositoryImplTest {
         val humanVerificationEntity = HumanVerificationEntity(
             clientId = clientId.id,
             clientIdType = ClientIdType.SESSION,
-            verificationMethods = listOf(VerificationMethod.EMAIL.value),
+            verificationMethods = listOf(VerificationMethod.EMAIL),
             captchaVerificationToken = null,
             state = HumanVerificationState.HumanVerificationNeeded,
             humanHeaderTokenType = null,
@@ -124,7 +124,7 @@ class HumanVerificationRepositoryImplTest {
         val humanVerificationEntity = HumanVerificationEntity(
             clientId = clientId.id,
             clientIdType = ClientIdType.SESSION,
-            verificationMethods = listOf(VerificationMethod.EMAIL.value),
+            verificationMethods = listOf(VerificationMethod.EMAIL),
             captchaVerificationToken = null,
             state = state,
             humanHeaderTokenType = null,
@@ -154,7 +154,7 @@ class HumanVerificationRepositoryImplTest {
         val humanVerificationEntity = HumanVerificationEntity(
             clientId = clientId.id,
             clientIdType = ClientIdType.SESSION,
-            verificationMethods = listOf(VerificationMethod.EMAIL.value),
+            verificationMethods = listOf(VerificationMethod.EMAIL),
             captchaVerificationToken = null,
             state = state,
             humanHeaderTokenType = "encrypted-$tokenType",
@@ -177,7 +177,7 @@ class HumanVerificationRepositoryImplTest {
         val humanVerificationEntity = HumanVerificationEntity(
             clientId = clientId.id,
             clientIdType = ClientIdType.SESSION,
-            verificationMethods = listOf(VerificationMethod.EMAIL.value),
+            verificationMethods = listOf(VerificationMethod.EMAIL),
             captchaVerificationToken = null,
             state = state,
             humanHeaderTokenType = null,

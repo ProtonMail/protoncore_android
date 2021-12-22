@@ -18,21 +18,14 @@
 
 package me.proton.core.network.domain.humanverification
 
-import java.util.Locale
-
 /**
- * All possible verification methods enum.
+ * Verification methods constants.
  */
-enum class VerificationMethod(val value: String) {
-    PHONE("sms"), // the default one, should be always present
-    EMAIL("email"),
-    CAPTCHA("captcha"),
-    PAYMENT("payment"),
-    INVITE("invite"),
-    COUPON("coupon");
-
-    companion object {
-        val map = values().associateBy { it.value }
-        fun getByValue(value: String) = map[value.toLowerCase(Locale.ROOT)] ?: PHONE
-    }
+object VerificationMethod {
+    const val PHONE = "sms"
+    const val EMAIL = "email"
+    const val CAPTCHA = "captcha"
+    const val PAYMENT = "payment"
+    const val INVITE = "invite"
+    const val COUPON = "coupon"
 }

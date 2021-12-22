@@ -27,18 +27,12 @@ import me.proton.core.presentation.utils.inTransaction
 private const val TAG_HUMAN_VERIFICATION_DIALOG = "human_verification_dialog"
 const val TAG_HUMAN_VERIFICATION_HELP = "human_verification_help"
 
-val defaultVerificationMethods = listOf(
-    TokenType.CAPTCHA.value,
-    TokenType.EMAIL.value,
-    TokenType.SMS.value
-)
-
 /** Shows the human verification dialog. */
 fun FragmentManager.showHumanVerification(
     clientId: String,
     captchaUrl: String? = null,
     clientIdType: String,
-    availableVerificationMethods: List<String> = defaultVerificationMethods,
+    availableVerificationMethods: List<String> = emptyList(),
     verificationToken: String,
     recoveryEmailAddress: String? = null,
     largeLayout: Boolean

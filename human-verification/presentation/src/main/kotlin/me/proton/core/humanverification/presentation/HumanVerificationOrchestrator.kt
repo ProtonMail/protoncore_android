@@ -23,7 +23,6 @@ import androidx.fragment.app.FragmentActivity
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
-import me.proton.core.humanverification.presentation.utils.defaultVerificationMethods
 import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.network.domain.client.getType
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
@@ -65,10 +64,7 @@ class HumanVerificationOrchestrator {
                 clientId = input.clientId,
                 captchaUrl = input.captchaUrl,
                 clientIdType = input.clientIdType,
-                // filter only the app supported verification methods. (the API can send more of them).
-                availableVerificationMethods = input.verificationMethods
-                    ?.filter { defaultVerificationMethods.contains(it) }
-                    ?: defaultVerificationMethods,
+                availableVerificationMethods = input.verificationMethods.orEmpty(),
                 verificationToken = input.verificationToken,
                 largeLayout = largeLayout,
                 recoveryEmailAddress = input.recoveryEmailAddress
@@ -103,7 +99,7 @@ class HumanVerificationOrchestrator {
             HumanVerificationInput(
                 clientId = details.clientId.id,
                 clientIdType = details.clientId.getType().value,
-                verificationMethods = details.verificationMethods.map { it.value },
+                verificationMethods = details.verificationMethods,
                 verificationToken = requireNotNull(details.verificationToken),
                 captchaUrl = captchaUrl,
                 recoveryEmailAddress = recoveryEmailAddress
