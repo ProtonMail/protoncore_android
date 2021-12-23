@@ -27,7 +27,6 @@ import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.SessionId
 
 @Entity(
@@ -47,7 +46,7 @@ data class HumanVerificationEntity(
             ClientIdType.SESSION -> ClientId.AccountSession(SessionId(clientId))
             ClientIdType.COOKIE -> ClientId.CookieSession(CookieSessionId(clientId))
         },
-        verificationMethods = verificationMethods.map { VerificationMethod.getByValue(it) },
+        verificationMethods = verificationMethods,
         verificationToken = captchaVerificationToken,
         state = state,
         // Fall back to an invalid captcha to force delete token on decryption failure.

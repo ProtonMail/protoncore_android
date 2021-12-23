@@ -48,6 +48,7 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
@@ -231,7 +232,7 @@ internal class HumanVerificationTests {
         assertNotNull(humanVerification)
         assertNotNull(humanVerification.verificationToken)
         assertEquals(3, humanVerification.verificationMethods.size)
-        assertTrue("captcha".equalsNoCase(humanVerification.verificationMethods[0].name))
+        assertTrue(VerificationMethod.CAPTCHA.equalsNoCase(humanVerification.verificationMethods[0]))
     }
 
     @Test
@@ -269,7 +270,7 @@ internal class HumanVerificationTests {
         assertNotNull(humanVerification)
         assertNotNull(humanVerification.verificationToken)
         assertEquals(3, humanVerification.verificationMethods.size)
-        assertTrue("captcha".equalsNoCase(humanVerification.verificationMethods[0].name))
+        assertTrue(VerificationMethod.CAPTCHA.equalsNoCase(humanVerification.verificationMethods[0]))
     }
 
     @Test

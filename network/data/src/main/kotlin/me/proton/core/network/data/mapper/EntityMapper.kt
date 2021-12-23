@@ -21,9 +21,7 @@ package me.proton.core.network.data.mapper
 import me.proton.core.network.data.protonApi.Details
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
-import me.proton.core.network.domain.humanverification.VerificationMethod
 
 /**
  * Convenient extensions for handling the optional and dynamic Details part of the [ApiResult.Error.ProtonData].
@@ -32,13 +30,8 @@ import me.proton.core.network.domain.humanverification.VerificationMethod
  */
 
 fun Details.toHumanVerificationEntity(): HumanVerificationAvailableMethods =
-// it is safe to use !! here and the responsibility is to the call-site developer to make sure it is calling
-// this function at appropriate time, because together with error code 9001 API guarantees it will return at least
-    // 1 verification method.
     HumanVerificationAvailableMethods(
-        verificationMethods = verificationMethods!!.map {
-            VerificationMethod.valueOf(it.name)
-        },
+        verificationMethods = verificationMethods.orEmpty(),
         verificationToken = verificationToken
     )
 

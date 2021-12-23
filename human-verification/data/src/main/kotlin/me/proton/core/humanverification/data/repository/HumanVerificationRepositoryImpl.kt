@@ -64,7 +64,7 @@ class HumanVerificationRepositoryImpl(
                 HumanVerificationEntity(
                     clientId = clientId.id,
                     clientIdType = clientId.getType(),
-                    verificationMethods = details.verificationMethods.map { method -> method.value },
+                    verificationMethods = details.verificationMethods,
                     captchaVerificationToken = details.verificationToken,
                     state = details.state,
                     humanHeaderTokenType = details.tokenType?.encrypt(keyStoreCrypto),
