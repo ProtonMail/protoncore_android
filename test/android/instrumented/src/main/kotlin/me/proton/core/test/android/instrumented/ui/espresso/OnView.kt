@@ -239,6 +239,10 @@ class OnView : ConditionWatcher {
         rootMatchers.add(matcher)
     }
 
+    fun inRoot(root: OnRootView) = apply {
+        rootMatchers.add(root.matcher())
+    }
+
     /** Final [Matcher] for the view. **/
     fun viewMatcher(): Matcher<View> = AllOf.allOf(matchers)
 
