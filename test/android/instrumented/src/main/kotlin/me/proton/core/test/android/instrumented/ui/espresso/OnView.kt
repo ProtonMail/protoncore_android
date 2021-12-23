@@ -33,6 +33,7 @@ import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.matcher.RootMatchers.DEFAULT
 import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.test.android.instrumented.ConditionWatcher
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.commandTimeout
 import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import org.hamcrest.CoreMatchers
@@ -50,8 +51,11 @@ class OnView : ConditionWatcher {
     private val rootMatchers: ArrayList<Matcher<Root>> = arrayListOf()
 
     /** [ViewInteraction] wait. **/
-    private fun viewInteraction(viewAssertion: ViewAssertion = matches(ViewMatchers.isDisplayed())): ViewInteraction {
-        waitForCondition({ onView(viewMatcher()).inRoot(rootMatcher()).check(viewAssertion) })
+    private fun viewInteraction(
+        viewAssertion: ViewAssertion = matches(ViewMatchers.isDisplayed()),
+        timeout: Long = commandTimeout
+    ): ViewInteraction {
+        waitForCondition({ onView(viewMatcher()).inRoot(rootMatcher()).check(viewAssertion) }, timeout)
         return onView(viewMatcher()).inRoot(rootMatcher())
     }
 
@@ -241,6 +245,10 @@ class OnView : ConditionWatcher {
 
     fun inRoot(root: OnRootView) = apply {
         rootMatchers.add(root.matcher())
+    }
+    
+    fun withTimeout(milliseconds: Long) = apply {
+        viewInteraction(timeout = milliseconds)
     }
 
     /** Final [Matcher] for the view. **/
