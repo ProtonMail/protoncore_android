@@ -52,6 +52,5 @@
   <string name="human_verification_incorrect_code">Ungültiger Code. Bitte versuchen Sie es erneut.</string>
   <string name="human_verification_resent_code">Ein weiterer Code wurde Ihnen zugesandt.</string>
   <string name="human_verification_captcha_failed">Captcha-Überprüfung fehlgeschlagen. Bitte versuchen Sie es noch einmal oder wählen Sie eine andere Bestätigungsoption.</string>
-  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Keine Internetverbindung. Captcha konnte nicht geladen werden.</string>
 </resources>

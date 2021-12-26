@@ -38,4 +38,3 @@ fun Long.formatByteToHumanReadable(): String {
     val z = (63 - numberOfLeadingZeros(this)) / 10
     return String.format("%.0f %sB", toDouble() / (1L shl z * 10), " KMGTPE"[z])
 }
-

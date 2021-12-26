@@ -19,7 +19,7 @@
 package me.proton.core.plan.presentation.view
 
 import android.content.Context
-import me.proton.core.plan.presentation.R
+import android.content.res.TypedArray
 import me.proton.core.plan.presentation.entity.PlanDetailsListItem
 import me.proton.core.presentation.utils.formatByteToHumanReadable
 
@@ -30,53 +30,45 @@ private const val KEY_FEATURE_DOMAINS = "#proton_domains#"
 private const val KEY_FEATURE_USERS = "#proton_users#"
 private const val KEY_FEATURE_CALENDARS = "#proton_calendars#"
 
-internal fun String.createPlanFeature(
+internal fun createPlanFeature(
+    type: String,
+    resourceValuesArray: TypedArray,
+    index: Int,
     context: Context,
     plan: PlanDetailsListItem.PaidPlanDetailsListItem
-): PlanContentItemView {
-    if (contains(KEY_FEATURE_STORAGE)) {
-        return PlanContentItemView(context).apply {
-            planItem =
-                if (plan.storage > 0) {
-                    this@createPlanFeature.replace(KEY_FEATURE_STORAGE, plan.storage.formatByteToHumanReadable())
-                } else context.getString(R.string.plans_feature_free_item_storage)
-        }
+): String {
+    if (type.contains(KEY_FEATURE_STORAGE)) {
+        val quantity = plan.storage.formatByteToHumanReadable()
+        val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), 0)
+        return value.replace(KEY_FEATURE_STORAGE, quantity)
     }
-    if (contains(KEY_FEATURE_ADDRESSES)) {
-        return PlanContentItemView(context).apply {
-            planItem =
-                if (plan.addresses > 0) {
-                    this@createPlanFeature.replace(KEY_FEATURE_ADDRESSES, plan.addresses.toString())
-                } else context.getString(R.string.plans_feature_free_item_address)
-        }
+    if (type.contains(KEY_FEATURE_ADDRESSES)) {
+        val quantity = plan.addresses
+        val value =
+            context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
+        return value.replace(KEY_FEATURE_ADDRESSES, quantity.toString())
     }
-    if (contains(KEY_FEATURE_VPN)) {
-        return PlanContentItemView(context).apply {
-            planItem =
-                if (plan.connections > 0) {
-                    this@createPlanFeature.replace(KEY_FEATURE_VPN, plan.connections.toString())
-                } else context.getString(R.string.plans_feature_free_item_vpn)
-        }
+    if (type.contains(KEY_FEATURE_VPN)) {
+        val quantity = plan.connections
+        val value =
+            context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
+        return value.replace(KEY_FEATURE_VPN, quantity.toString())
     }
-    if (contains(KEY_FEATURE_DOMAINS)) {
-        return PlanContentItemView(context).apply {
-            planItem = this@createPlanFeature.replace(KEY_FEATURE_DOMAINS, plan.domains.toString())
-        }
+    if (type.contains(KEY_FEATURE_DOMAINS)) {
+        val quantity = plan.domains
+        val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), plan.domains)
+        return value.replace(KEY_FEATURE_DOMAINS, quantity.toString())
     }
-    if (contains(KEY_FEATURE_USERS)) {
-        return PlanContentItemView(context).apply {
-            planItem = this@createPlanFeature.replace(KEY_FEATURE_USERS, plan.members.toString())
-        }
+    if (type.contains(KEY_FEATURE_USERS)) {
+        val quantity = plan.members
+        val value = context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
+        return value.replace(KEY_FEATURE_USERS, quantity.toString())
     }
-    if (contains(KEY_FEATURE_CALENDARS)) {
-        return PlanContentItemView(context).apply {
-            planItem =
-                if (plan.calendars > 0) {
-                    this@createPlanFeature.replace(KEY_FEATURE_CALENDARS, plan.calendars.toString())
-                } else context.getString(R.string.plans_feature_free_item_calendar)
-        }
+    if (type.contains(KEY_FEATURE_CALENDARS)) {
+        val quantity = plan.calendars
+        val value =
+            context.resources.getQuantityString(resourceValuesArray.getResourceId(index, 0), quantity)
+        return value.replace(KEY_FEATURE_CALENDARS, quantity.toString())
     }
-    return PlanContentItemView(context).apply {
-        planItem = this@createPlanFeature
-    }
+    return context.getString(resourceValuesArray.getResourceId(index, 0))
 }
