@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Nahlásit chybu</string>
+  <string name="core_report_bug_close">Zavřít</string>
+  <string name="core_report_bug_subject_field_hint">Předmět</string>
+  <string name="core_report_bug_description_field_hint">Popis</string>
+  <string name="core_report_bug_description_field_placeholder">Popište prosím problém a přiložte všechny chybové zprávy.</string>
+  <string name="core_report_bug_discard_changes_title">Neuložené změny</string>
+  <string name="core_report_bug_discard_changes_description">Existují neuložené údaje ve formuláři. Opravdu chcete veškeré změny zahodit?</string>
+  <string name="core_report_bug_discard_changes_cancel">Pokračovat v psaní</string>
+  <string name="core_report_bug_discard_changes_confirm">Zahodit</string>
+  <string name="core_report_bug_form_field_required">Toto pole je povinné</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="one">Toto pole musí mít nejméně $%d znak</item>
+    <item quantity="few">Toto pole musí mít nejméně $%d znaky</item>
+    <item quantity="many">Toto pole musí mít nejméně $%d znaků</item>
+    <item quantity="other">Toto pole musí mít nejméně $%d znaků</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Toto pole musí mít nanejvýš $%d znak</item>
+    <item quantity="few">Toto pole musí mít nanejvýš $%d znaky</item>
+    <item quantity="many">Toto pole musí mít nanejvýš $%d znaků</item>
+    <item quantity="other">Toto pole musí mít nanejvýš $%d znaků</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Chyba zaslání reportu, prosím zkuste to znovu později</string>
+  <string name="core_report_bug_send">Odeslat</string>
+  <string name="core_report_bug_success">Děkujeme za Vaši zprávu</string>
+</resources>

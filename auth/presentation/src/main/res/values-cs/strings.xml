@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_vpn">Vysokorychlostní švýcarská VPN, která chrání Vaše soukromí šifrováním internetového připojení.</string>
   <string name="auth_password_label">Heslo</string>
   <string name="auth_password_help">Heslo musí obsahovat alespoň 8 znaků</string>
-  <string name="auth_current_login_password">Aktuální přihlašovací heslo</string>
+  <string name="auth_current_login_password">Current login Password</string>
   <string name="auth_enter_six_digit_code">Zadejte 6-místný kód</string>
   <string name="auth_second_factor_code">Kód pro dvoufaktorové ověření</string>
   <string name="auth_email_username">E-mail nebo uživatelské jméno</string>
@@ -105,7 +105,7 @@
   <string name="auth_signup_recovery_method_email_hint">Sekundární e-mail</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefonní číslo pro obnovení</string>
   <string name="auth_signup_terms_conditions">Obchodní podmínky</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Kliknutím na tlačítko Dále, souhlasíte s <annotation link="terms"> podmínkami a náležitostmi Proton.</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Přeskočit metodu obnovení?</string>
   <string name="auth_signup_skip_recovery_description">Metoda obnovení vám pomůže získat přístup k účtu v případě, že zapomenete heslo nebo se z účtu odhlásíte.</string>
   <string name="auth_signup_skip_recovery">Přeskočit</string>
@@ -121,7 +121,7 @@
   <string name="auth_signup_verify">Ověřit</string>
   <string name="auth_signup_verification_code">Ověřovací kód</string>
   <string name="auth_signup_enter_code_subtitle">Zadejte ověřovací kód, který byl odeslán na %s:</string>
-  <string name="auth_signup_error_human_verification_failed">Ověření CAPTCHA se nezdařilo.</string>
+  <string name="auth_signup_error_human_verification_failed">Human verification failed.</string>
   <string name="auth_signup_token_code_resent">Kód tokenu byl znovu odeslán.</string>
   <string name="auth_signup_error_validation_recovery_destination">Cíl obnovení je neplatný.</string>
 </resources>

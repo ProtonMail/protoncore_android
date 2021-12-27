@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Reportar error</string>
+  <string name="core_report_bug_close">Cerrar</string>
+  <string name="core_report_bug_subject_field_hint">Asunto</string>
+  <string name="core_report_bug_description_field_hint">Descripción</string>
+  <string name="core_report_bug_description_field_placeholder">Describa el problema e incluya cualquier mensaje de error.</string>
+  <string name="core_report_bug_discard_changes_title">Cambios sin guardar</string>
+  <string name="core_report_bug_discard_changes_description">Hay entradas sin guardar en el formulario. ¿Está seguro que desea descartarlas?</string>
+  <string name="core_report_bug_discard_changes_cancel">Continuar escribiendo</string>
+  <string name="core_report_bug_discard_changes_confirm">Descartar</string>
+  <string name="core_report_bug_form_field_required">Este campo es obligatorio</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="one">Este campo debe tener al menos %d caracter</item>
+    <item quantity="other">Este campo debe tener al menos %d caracteres</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Este campo debe tener como máximo %d caracter</item>
+    <item quantity="other">Este campo debe tener como máximo %d caracteres</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Error al enviar el reporte, intente de nuevo más tarde</string>
+  <string name="core_report_bug_send">Enviar</string>
+  <string name="core_report_bug_success">Gracias por su reporte</string>
+</resources>

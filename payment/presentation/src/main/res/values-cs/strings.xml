@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Jméno držitele karty je povinná položka.</string>
   <string name="payments_error_card_number">Neplatné číslo karty.</string>
   <string name="payments_error_cvc">Zadejte prosím platný bezpečnostní kód.</string>
-  <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
+  <string name="payments_error_session">Při odběru přihlášeného uživatele je vyžadováno platné ID relace.</string>
   <string name="payments_error_signup_paymentmethod">Nelze se zaregistrovat pomocí stávající platební metody.</string>
   <string name="payments_error_invalid_session">Neplatná relace.</string>
   <!-- endregion -->

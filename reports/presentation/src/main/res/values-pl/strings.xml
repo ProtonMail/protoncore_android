@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="bug_report_activity_title">Zgłoś błąd</string>
+  <string name="bug_report_close">Zamknij</string>
+  <string name="bug_report_subject_field_hint">Temat</string>
+  <string name="bug_report_description_field_hint">Opis</string>
+  <string name="bug_report_description_field_placeholder">Opisz problem i dołącz wszelkie informacje o błędach.</string>
+  <string name="bug_report_discard_changes_title">Niezapisane zmiany</string>
+  <string name="bug_report_discard_changes_description">W formularzu są niezapisane dane. Czy na pewno chcesz je odrzucić?</string>
+  <string name="bug_report_discard_changes_cancel">Edytuj dalej</string>
+  <string name="bug_report_discard_changes_confirm">Odrzuć</string>
+  <string name="bug_report_form_field_required">Pole jest wymagane</string>
+  <plurals name="bug_report_form_field_too_short">
+    <item quantity="one">Pole musi zawierać co najmniej %d znak</item>
+    <item quantity="few">Pole musi zawierać co najmniej %d znaki</item>
+    <item quantity="many">Pole musi zawierać co najmniej %d znaków</item>
+    <item quantity="other">Pole musi zawierać co najmniej %d znaków</item>
+  </plurals>
+  <plurals name="bug_report_form_field_too_long">
+    <item quantity="one">Pole może zawierać maksymalnie %d znak</item>
+    <item quantity="few">Pole może zawierać maksymalnie %d znaki</item>
+    <item quantity="many">Pole może zawierać maksymalnie %d znaków</item>
+    <item quantity="other">Pole może zawierać maksymalnie %d znaków</item>
+  </plurals>
+  <string name="bug_report_general_error">Wystąpił błąd podczas wysyłania raportu. Spróbuj ponownie później</string>
+  <string name="bug_report_send">Wyślij</string>
+  <string name="bug_report_success">Dziękujemy za przesłanie zgłoszenia</string>
+</resources>

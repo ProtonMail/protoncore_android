@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="bug_report_activity_title">Signaler une erreur</string>
+  <string name="bug_report_close">Fermer</string>
+  <string name="bug_report_subject_field_hint">Objet</string>
+  <string name="bug_report_description_field_hint">Description</string>
+  <string name="bug_report_description_field_placeholder">Veuillez décrire le problème et inclure tous les messages d\'erreur.</string>
+  <string name="bug_report_discard_changes_title">Modifications non enregistrées</string>
+  <string name="bug_report_discard_changes_description">Le formulaire contient des modifications non enregistrées. Êtes-vous sûr de ne pas vouloir les conserver ?</string>
+  <string name="bug_report_discard_changes_cancel">Continuer à écrire</string>
+  <string name="bug_report_discard_changes_confirm">Abandonner</string>
+  <string name="bug_report_form_field_required">Ce champ est requis</string>
+  <plurals name="bug_report_form_field_too_short">
+    <item quantity="one">Ce champ doit comporter au moins %d caractère</item>
+    <item quantity="other">Ce champ doit comporter au moins %d caractères</item>
+  </plurals>
+  <plurals name="bug_report_form_field_too_long">
+    <item quantity="one">Ce champ doit comporter au plus %d caractère</item>
+    <item quantity="other">Ce champ doit comporter au plus %d caractères</item>
+  </plurals>
+  <string name="bug_report_general_error">Erreur lors de l\'envoi du rapport, veuillez réessayer ultérieurement</string>
+  <string name="bug_report_send">Envoyer</string>
+  <string name="bug_report_success">Merci de votre signalement</string>
+</resources>
