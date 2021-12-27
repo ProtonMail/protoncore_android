@@ -49,7 +49,7 @@ data class CalendarResource(
     val id: String
 )
 
-class CalendarEventListener : EventListener<String, CalendarResource>() {
+open class CalendarEventListener : EventListener<String, CalendarResource>() {
 
     override val type = Type.Calendar
     override val order = 1
@@ -66,10 +66,7 @@ class CalendarEventListener : EventListener<String, CalendarResource>() {
         }
     }
 
-    override suspend fun <R> inTransaction(block: suspend () -> R): R {
-        // Db.inTransaction(block)
-        return block()
-    }
+    override suspend fun <R> inTransaction(block: suspend () -> R): R = block()
 
     override suspend fun onPrepare(config: EventManagerConfig, entities: List<CalendarResource>) {
         super.onPrepare(config, entities)

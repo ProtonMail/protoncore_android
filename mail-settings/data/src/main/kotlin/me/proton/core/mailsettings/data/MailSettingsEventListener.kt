@@ -40,7 +40,7 @@ data class MailSettingsEvents(
 )
 
 @Singleton
-class MailSettingsEventListener @Inject constructor(
+open class MailSettingsEventListener @Inject constructor(
     private val db: MailSettingsDatabase,
     private val repository: MailSettingsRepository
 ) : EventListener<String, MailSettingsResponse>() {
@@ -57,9 +57,7 @@ class MailSettingsEventListener @Inject constructor(
         }
     }
 
-    override suspend fun <R> inTransaction(block: suspend () -> R): R {
-        return db.inTransaction(block)
-    }
+    override suspend fun <R> inTransaction(block: suspend () -> R): R = db.inTransaction(block)
 
     override suspend fun onUpdate(config: EventManagerConfig, entities: List<MailSettingsResponse>) {
         repository.updateMailSettings(entities.first().toMailSettings(config.userId))

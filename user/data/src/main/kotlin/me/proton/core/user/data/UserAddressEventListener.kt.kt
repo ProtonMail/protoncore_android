@@ -51,7 +51,7 @@ data class UserAddressEvent(
 )
 
 @Singleton
-class UserAddressEventListener @Inject constructor(
+open class UserAddressEventListener @Inject constructor(
     private val db: AddressDatabase,
     private val userAddressRepository: UserAddressRepository
 ) : EventListener<String, AddressResponse>() {
@@ -68,9 +68,7 @@ class UserAddressEventListener @Inject constructor(
         }
     }
 
-    override suspend fun <R> inTransaction(block: suspend () -> R): R {
-        return db.inTransaction(block)
-    }
+    override suspend fun <R> inTransaction(block: suspend () -> R): R = db.inTransaction(block)
 
     override suspend fun onCreate(config: EventManagerConfig, entities: List<AddressResponse>) {
         userAddressRepository.updateAddresses(entities.map { it.toAddress(config.userId) })

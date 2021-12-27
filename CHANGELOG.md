@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for string plurals for plans features.
 - Bring back inRoot() function to UI tests.
 - Added withTimeout() function to UI tests.
+- Core EventListeners in EventManager are now open and can be extended. 
 
 ## [4.1.0]
 

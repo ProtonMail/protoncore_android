@@ -52,7 +52,7 @@ data class ContactEmailEvent(
 )
 
 @Singleton
-class ContactEmailEventListener @Inject constructor(
+open class ContactEmailEventListener @Inject constructor(
     private val db: ContactDatabase,
     private val contactLocalDataSource: ContactLocalDataSource,
     private val contactRepository: ContactRepository,
@@ -71,9 +71,7 @@ class ContactEmailEventListener @Inject constructor(
         }
     }
 
-    override suspend fun <R> inTransaction(block: suspend () -> R): R {
-        return db.inTransaction(block)
-    }
+    override suspend fun <R> inTransaction(block: suspend () -> R): R = db.inTransaction(block)
 
     override suspend fun onPrepare(config: EventManagerConfig, entities: List<ContactEmailResource>) {
         // Don't fetch Contacts that will be created in this set of modifications.

@@ -44,7 +44,7 @@ data class ContactEvent(
     val contact: ContactWithCardsResource? = null
 )
 
-class ContactEventListener : EventListener<String, ContactWithCardsResource>() {
+open class ContactEventListener : EventListener<String, ContactWithCardsResource>() {
 
     override val type = Type.Core
     override val order = 1

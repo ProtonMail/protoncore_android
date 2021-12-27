@@ -34,7 +34,7 @@ data class UserEvents(
     val user: UserResponse
 )
 
-class UserEventListener : EventListener<String, UserResponse>() {
+open class UserEventListener : EventListener<String, UserResponse>() {
 
     override val type = Type.Core
     override val order = 0

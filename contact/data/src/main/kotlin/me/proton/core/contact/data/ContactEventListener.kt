@@ -51,7 +51,7 @@ data class ContactEvent(
 )
 
 @Singleton
-class ContactEventListener @Inject constructor(
+open class ContactEventListener @Inject constructor(
     private val db: ContactDatabase,
     private val contactLocalDataSource: ContactLocalDataSource,
     private val contactRepository: ContactRepository
@@ -69,9 +69,7 @@ class ContactEventListener @Inject constructor(
         }
     }
 
-    override suspend fun <R> inTransaction(block: suspend () -> R): R {
-        return db.inTransaction(block)
-    }
+    override suspend fun <R> inTransaction(block: suspend () -> R): R = db.inTransaction(block)
 
     override suspend fun onCreate(config: EventManagerConfig, entities: List<ContactWithCardsResource>) {
         entities.forEach { contactLocalDataSource.upsertContactWithCards(it.toContactWithCards(config.userId)) }
