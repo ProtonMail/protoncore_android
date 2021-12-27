@@ -39,7 +39,7 @@ interface ConditionWatcher {
     ) {
         var throwable: Throwable = TimeoutException("Condition was not met in $watchTimeout ms. No exceptions caught.")
         var currentTimestamp = System.currentTimeMillis()
-        val timeoutTimestamp = currentTimestamp + commandTimeout
+        val timeoutTimestamp = currentTimestamp + watchTimeout
 
         while (currentTimestamp < timeoutTimestamp) {
             currentTimestamp = System.currentTimeMillis()
