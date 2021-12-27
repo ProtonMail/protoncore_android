@@ -47,7 +47,7 @@ import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.accountmanager.presentation.onUserAddressKeyCheckFailed
 import me.proton.core.accountmanager.presentation.onUserKeyCheckFailed
 import me.proton.core.auth.presentation.AuthOrchestrator
-import me.proton.core.auth.presentation.MissingScopeObserver
+import me.proton.core.auth.presentation.observe
 import me.proton.core.auth.presentation.onMissingScope
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -56,7 +56,6 @@ import me.proton.core.humanverification.presentation.HumanVerificationOrchestrat
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
 import me.proton.core.network.domain.scopes.MissingScopeListener
-import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.user.domain.UserManager
@@ -81,8 +80,6 @@ class AccountViewModel @Inject constructor(
     }
 
     val state = _state.asStateFlow()
-
-    private var missingScopeObserver: MissingScopeObserver? = null
 
     fun register(context: FragmentActivity) {
         authOrchestrator.register(context)
@@ -117,19 +114,8 @@ class AccountViewModel @Inject constructor(
         }
 
         with(authOrchestrator) {
-            missingScopeObserver?.cancelAllObservers()
-
-            val observer = missingScopeObserver ?: MissingScopeObserver(
-                lifecycle = context.lifecycle,
-                minActiveState = Lifecycle.State.CREATED,
-                missingScopeListener = missingScopeListener
-            ).also { missingScopeObserver = it }
-
-            observer.onMissingScope {
-                if (it == MissingScopeState.MissingScopeNeeded) {
-                    startConfirmPasswordWorkflow(missingScope = it.missingScope!!)
-                }
-            }
+            missingScopeListener.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
+                .onMissingScope { startConfirmPasswordWorkflow(missingScope = it.missingScope!!) }
         }
     }
 

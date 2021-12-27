@@ -27,23 +27,26 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeState
-import javax.inject.Singleton
 
-@Singleton
 class MissingScopeObserver(
     private val lifecycle: Lifecycle,
     private val minActiveState: Lifecycle.State = Lifecycle.State.CREATED,
-    private val missingScopeListener: MissingScopeListener,
-    private val scope: CoroutineScope = lifecycle.coroutineScope
+    private val missingScopeListener: MissingScopeListener
 ) {
+    private val scope: CoroutineScope = lifecycle.coroutineScope
     private val observerJobs = mutableListOf<Job>()
 
     internal fun addMissingScopeStateListener(
+        state: MissingScopeState,
         block: suspend (MissingScopeState) -> Unit
     ) {
         observerJobs += missingScopeListener.stateFlow
             .flowWithLifecycle(lifecycle, minActiveState)
-            .onEach { block(it) }
+            .onEach {
+                if (it == state) {
+                    block(it)
+                }
+            }
             .launchIn(scope)
     }
 
@@ -53,11 +56,28 @@ class MissingScopeObserver(
     }
 }
 
+fun MissingScopeListener.observe(
+    lifecycle: Lifecycle,
+    minActiveState: Lifecycle.State = Lifecycle.State.CREATED
+) = MissingScopeObserver(lifecycle, minActiveState, this)
+
 fun MissingScopeObserver.onMissingScope(
     block: suspend (MissingScopeState) -> Unit
 ): MissingScopeObserver {
-    addMissingScopeStateListener(
-        block = block
-    )
+    addMissingScopeStateListener(block = block, state = MissingScopeState.MissingScopeNeeded)
+    return this
+}
+
+fun MissingScopeObserver.onMissingScopeSuccess(
+    block: suspend (MissingScopeState) -> Unit
+): MissingScopeObserver {
+    addMissingScopeStateListener(block = block, state = MissingScopeState.MissingScopeSuccess)
+    return this
+}
+
+fun MissingScopeObserver.onMissingScopeFailed(
+    block: suspend (MissingScopeState) -> Unit
+): MissingScopeObserver {
+    addMissingScopeStateListener(block = block, state = MissingScopeState.MissingScopeFailed)
     return this
 }

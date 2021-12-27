@@ -25,7 +25,6 @@ import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes.MISSING_SCOPE
-import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeResult
@@ -47,7 +46,7 @@ class MissingScopeHandler<Api>(
         error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
-        val clientId = clientIdProvider.getClientId(sessionId) ?: return error
+        if (sessionId == null) return error
 
         if (error !is ApiResult.Error.Http || error.proton?.code != MISSING_SCOPE) return error
 
@@ -56,7 +55,7 @@ class MissingScopeHandler<Api>(
         val scopes = details.scopes
         if (scopes.isNullOrEmpty()) return error
 
-        val shouldRetry = clientMutex(clientId).withLock {
+        val shouldRetry = sessionMutex(sessionId).withLock {
             obtainMissingScope(scopes.first())
         }
         val finalResult = if (shouldRetry) {
@@ -76,9 +75,9 @@ class MissingScopeHandler<Api>(
 
     companion object {
         private val staticMutex: Mutex = Mutex()
-        private val clientMutexMap: MutableMap<ClientId, Mutex> = HashMap()
+        private val clientMutexMap: MutableMap<SessionId, Mutex> = HashMap()
 
-        suspend fun clientMutex(clientId: ClientId): Mutex =
-            staticMutex.withLock { clientMutexMap.getOrPut(clientId) { Mutex() } }
+        suspend fun sessionMutex(sessionId: SessionId): Mutex =
+            staticMutex.withLock { clientMutexMap.getOrPut(sessionId) { Mutex() } }
     }
 }

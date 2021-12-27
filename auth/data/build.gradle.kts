@@ -48,7 +48,8 @@ dependencies {
         `retrofit`,
         `retrofit-kotlin-serialization`,
         `room-ktx`,
-        `store4`
+        `store4`,
+        `javax-inject`
     )
 
     testImplementation(project(Module.androidTest))

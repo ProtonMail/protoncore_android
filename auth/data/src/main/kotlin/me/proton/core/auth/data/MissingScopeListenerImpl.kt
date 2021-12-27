@@ -27,7 +27,9 @@ import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Singleton
 
+@Singleton
 class MissingScopeListenerImpl : MissingScopeListener {
     private val _stateFlow = MutableStateFlow(MissingScopeState.Default)
 
