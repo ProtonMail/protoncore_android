@@ -19,6 +19,7 @@
 package me.proton.core.network.domain.scopes
 
 import kotlinx.coroutines.flow.SharedFlow
+import me.proton.core.domain.entity.UserId
 
 interface MissingScopeListener {
 
@@ -27,7 +28,7 @@ interface MissingScopeListener {
     /**
      * Called when a scope is missing for the user to complete an operation.
      */
-    suspend fun onMissingScope(scope: List<Scope>): MissingScopeResult
+    suspend fun onMissingScope(userId: UserId, scopes: List<Scope>): MissingScopeResult
 
     /**
      * Called on a missing scope result success.

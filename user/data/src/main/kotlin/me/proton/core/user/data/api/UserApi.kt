@@ -46,10 +46,10 @@ interface UserApi : BaseRetrofitApi {
     suspend fun createExternalUser(@Body userRequest: CreateExternalUserRequest): UsersResponse
 
     @PUT("core/v4/users/lock")
-    suspend fun removeLockedAndPasswordScopes(): GenericResponse
+    suspend fun lockPasswordAndLockedScopes(): GenericResponse
 
     @PUT("core/v4/users/unlock")
-    suspend fun unlockUser(@Body unlockRequest: UnlockRequest): GenericResponse
+    suspend fun unlockLockedScope(@Body unlockRequest: UnlockRequest): GenericResponse
 
     @PUT("core/v4/user/password")
     suspend fun unlockPasswordScope(@Body unlockRequest: UnlockPasswordRequest): GenericResponse

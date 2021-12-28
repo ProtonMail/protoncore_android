@@ -23,5 +23,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ConfirmPasswordInput(
-    val missingScope: String
+    val userId: String,
+    val missingScopes: List<String>
 ) : Parcelable

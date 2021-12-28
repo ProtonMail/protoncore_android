@@ -18,35 +18,27 @@
 
 package me.proton.core.network.domain.scopes
 
-enum class MissingScopeState {
+import me.proton.core.domain.entity.UserId
+
+sealed class MissingScopeState {
 
     /**
-     * A password scope is needed.
+     * One or more missing scope needed.
      *
      * Note: Usually followed by either [ScopeObtainSuccess] or [ScopeObtainFailed].
      *
      * @see [ScopeObtainSuccess]
      * @see [ScopeObtainFailed].
      */
-    PasswordScopeMissing,
-
-    /**
-     * A locked scope is needed.
-     *
-     * Note: Usually followed by either [ScopeObtainSuccess] or [ScopeObtainFailed].
-     *
-     * @see [ScopeObtainSuccess]
-     * @see [ScopeObtainFailed].
-     */
-    LockedScopeMissing,
+    data class ScopeMissing(val userId: UserId, val missingScopes: List<Scope>) : MissingScopeState()
 
     /**
      * The missing scope has been obtained successfully.
      */
-    ScopeObtainSuccess,
+    object ScopeObtainSuccess : MissingScopeState()
 
     /**
      * The user has not verified and the scope has not been granted.
      */
-    ScopeObtainFailed;
+    object ScopeObtainFailed : MissingScopeState()
 }

@@ -36,14 +36,13 @@ class MissingScopeObserver(
     private val scope: CoroutineScope = lifecycle.coroutineScope
     private val observerJobs = mutableListOf<Job>()
 
-    internal fun addMissingScopeStateListener(
-        state: MissingScopeState,
-        block: suspend (MissingScopeState) -> Unit
+    internal inline fun <reified T : MissingScopeState> addMissingScopeStateListener(
+        crossinline block: suspend (T) -> Unit
     ) {
         observerJobs += missingScopeListener.state
             .flowWithLifecycle(lifecycle, minActiveState)
             .onEach {
-                if (it == state) {
+                if (it is T) {
                     block(it)
                 }
             }
@@ -61,30 +60,23 @@ fun MissingScopeListener.observe(
     minActiveState: Lifecycle.State = Lifecycle.State.CREATED
 ) = MissingScopeObserver(lifecycle, minActiveState, this)
 
-fun MissingScopeObserver.onMissingLockedScope(
-    block: suspend (MissingScopeState) -> Unit
+fun MissingScopeObserver.onConfirmPasswordNeeded(
+    block: suspend (MissingScopeState.ScopeMissing) -> Unit
 ): MissingScopeObserver {
-    addMissingScopeStateListener(block = block, state = MissingScopeState.LockedScopeMissing)
-    return this
-}
-
-fun MissingScopeObserver.onMissingPasswordScope(
-    block: suspend (MissingScopeState) -> Unit
-): MissingScopeObserver {
-    addMissingScopeStateListener(block = block, state = MissingScopeState.PasswordScopeMissing)
+    addMissingScopeStateListener(block = block)
     return this
 }
 
 fun MissingScopeObserver.onMissingScopeSuccess(
-    block: suspend (MissingScopeState) -> Unit
+    block: suspend (MissingScopeState.ScopeObtainSuccess) -> Unit
 ): MissingScopeObserver {
-    addMissingScopeStateListener(block = block, state = MissingScopeState.ScopeObtainSuccess)
+    addMissingScopeStateListener(block = block)
     return this
 }
 
 fun MissingScopeObserver.onMissingScopeFailed(
-    block: suspend (MissingScopeState) -> Unit
+    block: suspend (MissingScopeState.ScopeObtainFailed) -> Unit
 ): MissingScopeObserver {
-    addMissingScopeStateListener(block = block, state = MissingScopeState.ScopeObtainFailed)
+    addMissingScopeStateListener(block = block)
     return this
 }

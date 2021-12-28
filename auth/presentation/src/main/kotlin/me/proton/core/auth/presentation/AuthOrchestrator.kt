@@ -46,7 +46,7 @@ import me.proton.core.auth.presentation.ui.StartTwoPassMode
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.scopes.Scope
+import me.proton.core.network.domain.scopes.MissingScopeState
 
 class AuthOrchestrator {
 
@@ -197,9 +197,11 @@ class AuthOrchestrator {
     /**
      * Starts the Confirm Password workflow.
      */
-    fun startConfirmPasswordWorkflow(missingScope: Scope) {
+    fun startConfirmPasswordWorkflow(scopeMissing: MissingScopeState.ScopeMissing) {
         checkRegistered(confirmPasswordWorkflowLauncher).launch(
-            ConfirmPasswordInput(missingScope = missingScope.value)
+            ConfirmPasswordInput(
+                userId = scopeMissing.userId.id,
+                missingScopes = scopeMissing.missingScopes.map { it.value })
         )
     }
 

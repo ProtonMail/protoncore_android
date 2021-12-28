@@ -24,5 +24,5 @@ import me.proton.core.network.domain.scopes.MissingScopeState
 
 @Parcelize
 data class ConfirmPasswordResult(
-    val state: String?
+    val obtained: Boolean
 ) : Parcelable

@@ -60,11 +60,12 @@ fun FragmentManager.showPasswordEnterDialog(
  */
 fun FragmentManager.showConfirmPasswordDialog(
     largeLayout: Boolean = false,
-    missingScope: String
+    userId: String,
+    missingScope: List<String>
 ) {
     findFragmentByTag(TAG_CONFIRM_PASSWORD_DIALOG) ?: run {
         val fragment = ConfirmPasswordDialog(
-            ConfirmPasswordInput(missingScope = missingScope)
+            ConfirmPasswordInput(userId = userId, missingScopes = missingScope)
         )
         if (largeLayout) {
             // For large screens (tablets), we show the fragment as a dialog
@@ -84,20 +85,20 @@ fun FragmentManager.registerConfirmPasswordResultLauncher(
 ): FragmentDialogResultLauncher<ConfirmPasswordInput> {
 
     setFragmentResultListener(
-        ConfirmPasswordDialog.KEY_PASS_2FA_SET,
+        ConfirmPasswordDialog.CONFIRM_PASS_SET,
         context
     ) { _, bundle ->
         val result =
-            bundle.getParcelable<ConfirmPasswordResult>(ConfirmPasswordDialog.BUNDLE_KEY_PASS_2FA_DATA)
+            bundle.getParcelable<ConfirmPasswordResult>(ConfirmPasswordDialog.BUNDLE_CONFIRM_PASS_DATA)
         if (onResult != null) {
             onResult(result)
         }
     }
 
     return FragmentDialogResultLauncher(
-        requestKey = ConfirmPasswordDialog.KEY_PASS_2FA_SET,
+        requestKey = ConfirmPasswordDialog.CONFIRM_PASS_SET,
         show = { input ->
-            showConfirmPasswordDialog(missingScope = input.missingScope)
+            showConfirmPasswordDialog(userId = input.userId, missingScope = input.missingScopes)
         }
     )
 }

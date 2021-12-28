@@ -89,7 +89,7 @@ class AuthRepositoryImpl(
      * @param clientSecret client/app specific string.
      * @param clientEphemeral Base64 encoded SrpProof generated client ephemeral.
      * @param clientProof Base64 encoded SrpProof generated proof.
-     * @param srpSession the SRPSession returned from the [getAuthInfo] API result.
+     * @param srpSession the SRPSession returned from the [getLoginInfo] API result.
      *
      * @return [SessionInfo] login result containing the Access and Refresh tokens and additional meta-data.
      */

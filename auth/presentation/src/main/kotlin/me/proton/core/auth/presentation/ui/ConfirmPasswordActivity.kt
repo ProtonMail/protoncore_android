@@ -45,7 +45,7 @@ class ConfirmPasswordActivity :
             ) { result ->
                 val intent = Intent().putExtra(
                     ARG_RESULT,
-                    ConfirmPasswordResult(result?.state)
+                    ConfirmPasswordResult(result?.obtained ?: false)
                 )
                 setResult(Activity.RESULT_OK, intent)
                 finish()

@@ -20,6 +20,7 @@ package me.proton.core.network.domain.handlers
 
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
@@ -28,6 +29,7 @@ import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import java.net.HttpURLConnection.HTTP_FORBIDDEN
 
 /**
@@ -36,6 +38,7 @@ import java.net.HttpURLConnection.HTTP_FORBIDDEN
  */
 class MissingScopeHandler<Api>(
     private val sessionId: SessionId?,
+    private val sessionProvider: SessionProvider,
     private val missingScopeListener: MissingScopeListener
 ) : ApiErrorHandler<Api> {
 
@@ -48,13 +51,15 @@ class MissingScopeHandler<Api>(
 
         if (error !is ApiResult.Error.Http || error.proton?.code != HTTP_FORBIDDEN) return error
 
+        val userId = sessionProvider.getUserId(sessionId) ?: return error
+
         val details = error.proton.missingScopes ?: return error
 
         val scopes = details.scopes
         if (scopes.isNullOrEmpty()) return error
 
         val shouldRetry = sessionMutex(sessionId).withLock {
-            obtainMissingScope(scopes)
+            obtainMissingScope(userId, scopes)
         }
         return if (shouldRetry) {
             backend(call)
@@ -63,8 +68,8 @@ class MissingScopeHandler<Api>(
         }
     }
 
-    private suspend fun obtainMissingScope(details: List<Scope>): Boolean {
-        return when (missingScopeListener.onMissingScope(details)) {
+    private suspend fun obtainMissingScope(userId: UserId, details: List<Scope>): Boolean {
+        return when (missingScopeListener.onMissingScope(userId, details)) {
             MissingScopeResult.Success -> true
             MissingScopeResult.Failure -> false
         }

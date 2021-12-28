@@ -36,7 +36,6 @@ dependencies {
         project(Module.domain),
         project(Module.network),
         project(Module.authDomain),
-        project(Module.dataRoom),
 
         // Kotlin
         `kotlin-jdk7`,
@@ -46,7 +45,6 @@ dependencies {
         // Other
         `okHttp-logging`,
         `retrofit`,
-        `retrofit-kotlin-serialization`,
         `javax-inject`
     )
 

@@ -56,14 +56,6 @@ class CommonConverters {
         SessionId(value)
     }
 
-    @TypeConverter
-    fun fromClientIdTypeToString(value: ClientIdType?): String? = value?.value
-
-    @TypeConverter
-    fun fromStringToClientIdType(value: String?): ClientIdType? = value?.let {
-        ClientIdType.map[value]
-    }
-
     companion object {
         fun fromListOfStringToString(value: List<String>?): String? = value?.joinToString(separator = ";")
         fun fromStringToListOfString(value: String?): List<String>? = value?.split(";")?.filter { it.isNotBlank() }

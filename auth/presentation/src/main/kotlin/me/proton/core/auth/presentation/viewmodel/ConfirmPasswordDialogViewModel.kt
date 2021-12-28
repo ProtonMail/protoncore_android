@@ -24,20 +24,19 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.usecase.scopes.GetAuthInfo
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
@@ -66,50 +65,57 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         data class SecondFactorResult(val needed: Boolean) : State()
 
         sealed class Error : State() {
+            object InvalidAccount : Error()
             data class Message(val message: String?) : Error()
         }
     }
 
-    fun checkForSecondFactorInput(missingScope: Scope) = flow {
+    fun checkForSecondFactorInput(userId: UserId, missingScope: Scope) = flow {
         emit(State.ProcessingSecondFactor)
-        accountManager.getPrimaryAccount().filterNotNull().collect { account ->
-            val authInfo = getAuthInfo(account.userId, account.username)
-            val isSecondFactorNeeded = when (missingScope) {
-                Scope.PASSWORD -> {
-                    authInfo.secondFactor is SecondFactor.Enabled
-                }
-                Scope.LOCKED -> false
-            }.exhaustive
-            emit(State.SecondFactorResult(isSecondFactorNeeded))
+        val account = accountManager.getAccount(userId).firstOrNull()
+        if (account == null) {
+            emit(State.Error.InvalidAccount)
+            return@flow
         }
+        val authInfo = getAuthInfo(account.userId, account.username)
+        val isSecondFactorNeeded = when (missingScope) {
+            Scope.PASSWORD -> {
+                authInfo.secondFactor is SecondFactor.Enabled
+            }
+            Scope.LOCKED -> false
+        }.exhaustive
+        emit(State.SecondFactorResult(isSecondFactorNeeded))
     }.catch { error ->
         emit(State.Error.Message(error.message))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    fun unlock(missingScope: Scope, password: String, twoFactorCode: String?) = flow {
+    fun unlock(userId: UserId, missingScope: Scope, password: String, twoFactorCode: String?) = flow {
         emit(State.ProcessingObtainScope)
-        accountManager.getPrimaryAccount().filterNotNull().collect { account ->
-            val result = when (missingScope) {
-                Scope.PASSWORD -> obtainPasswordScope(
-                    account.userId,
-                    account.username,
-                    password.encrypt(keyStoreCrypto),
-                    twoFactorCode
-                )
-                Scope.LOCKED -> obtainLockedScope(account.userId, account.username, password.encrypt(keyStoreCrypto))
-            }.exhaustive
+        val account = accountManager.getAccount(userId).firstOrNull()
+        if (account == null) {
+            emit(State.Error.InvalidAccount)
+            return@flow
+        }
+        val result = when (missingScope) {
+            Scope.PASSWORD -> obtainPasswordScope(
+                account.userId,
+                account.username,
+                password.encrypt(keyStoreCrypto),
+                twoFactorCode
+            )
+            Scope.LOCKED -> obtainLockedScope(account.userId, account.username, password.encrypt(keyStoreCrypto))
+        }.exhaustive
 
-            if (result) {
-                emit(
-                    State.Success(
-                        if (result) MissingScopeState.ScopeObtainSuccess else MissingScopeState.ScopeObtainFailed
-                    )
+        if (result) {
+            emit(
+                State.Success(
+                    if (result) MissingScopeState.ScopeObtainSuccess else MissingScopeState.ScopeObtainFailed
                 )
-            } else {
-                emit(State.Error.Message(message = null))
-            }
+            )
+        } else {
+            emit(State.Error.Message(message = null))
         }
     }.catch { error ->
         emit(State.Error.Message(error.message))

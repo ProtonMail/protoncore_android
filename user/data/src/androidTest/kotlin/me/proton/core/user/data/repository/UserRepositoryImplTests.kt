@@ -339,7 +339,7 @@ class UserRepositoryImplTests {
     @Test
     fun unlockUser_lockedScope() = runBlockingWithTimeout {
         // GIVEN
-        coEvery { userApi.unlockUser(any()) } answers { GenericResponse(1000) }
+        coEvery { userApi.unlockLockedScope(any()) } answers { GenericResponse(1000) }
 
         // WHEN
         val response = userRepository.unlockUserForLockedScope(

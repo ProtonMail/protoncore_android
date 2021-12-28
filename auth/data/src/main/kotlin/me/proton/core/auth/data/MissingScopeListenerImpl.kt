@@ -20,9 +20,11 @@ package me.proton.core.auth.data
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.MissingScopeState
@@ -34,16 +36,10 @@ import javax.inject.Singleton
 class MissingScopeListenerImpl : MissingScopeListener {
     private val _state = MutableSharedFlow<MissingScopeState>(extraBufferCapacity = 1)
 
-    override val state: SharedFlow<MissingScopeState>
-        get() = _state
+    override val state: SharedFlow<MissingScopeState> = _state.asSharedFlow()
 
-    override suspend fun onMissingScope(scopes: List<Scope>): MissingScopeResult {
-        scopes.forEach {
-            when (it) {
-                Scope.PASSWORD -> _state.tryEmit(MissingScopeState.PasswordScopeMissing)
-                Scope.LOCKED -> _state.tryEmit(MissingScopeState.LockedScopeMissing)
-            }.exhaustive
-        }
+    override suspend fun onMissingScope(userId: UserId, scopes: List<Scope>): MissingScopeResult {
+        _state.tryEmit(MissingScopeState.ScopeMissing(userId, scopes))
         val state = _state.filter {
             it in listOf(MissingScopeState.ScopeObtainSuccess, MissingScopeState.ScopeObtainFailed)
         }.map {

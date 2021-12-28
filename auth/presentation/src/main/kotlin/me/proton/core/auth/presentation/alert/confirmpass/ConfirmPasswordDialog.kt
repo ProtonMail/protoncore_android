@@ -36,14 +36,20 @@ import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
 import me.proton.core.auth.presentation.viewmodel.ConfirmPasswordDialogViewModel
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.ProtectScreenConfiguration
 import me.proton.core.presentation.utils.ScreenContentProtector
+import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
+import java.lang.IllegalArgumentException
 
+/**
+ * This dialog handles only [Scope.PASSWORD] or [Scope.LOCKED]. Any other scope will be ignored.
+ */
 @AndroidEntryPoint
 class ConfirmPasswordDialog : ProtonDialogFragment() {
 
@@ -55,8 +61,27 @@ class ConfirmPasswordDialog : ProtonDialogFragment() {
         requireNotNull(requireArguments().getParcelable(ARG_INPUT))
     }
 
+    private val missingScopes: List<Scope> by lazy {
+        input.missingScopes.mapNotNull {
+            Scope.getByValue(it)
+        }
+    }
+
     private val missingScope: Scope by lazy {
-        Scope.getByValue(input.missingScope) ?: Scope.LOCKED
+        // if we are required password scope we will try to obtain only that one
+        when {
+            missingScopes.firstOrNull { it == Scope.PASSWORD } != null -> {
+                Scope.PASSWORD
+            }
+            missingScopes.firstOrNull { it == Scope.LOCKED } != null -> {
+                Scope.LOCKED
+            }
+            else -> throw IllegalArgumentException("Unrecognized scope!")
+        }
+    }
+
+    private val userId: UserId by lazy {
+        UserId(input.userId)
     }
 
     override fun onBackPressed() {
@@ -90,20 +115,23 @@ class ConfirmPasswordDialog : ProtonDialogFragment() {
                 is ConfirmPasswordDialogViewModel.State.SecondFactorResult -> {
                     binding.twoFA.visibility = if (it.needed) VISIBLE else GONE
                 }
+                is ConfirmPasswordDialogViewModel.State.Error.InvalidAccount -> {
+                    context.errorToast(getString(R.string.auth_account_not_found_error))
+                }
             }.exhaustive
         }.launchIn(lifecycleScope)
-        viewModel.checkForSecondFactorInput(missingScope)
 
         binding.enterButton.onClick {
             val password = binding.password.text.toString()
             val twoFactorCode = binding.twoFA.text.toString()
             when (missingScope) {
                 Scope.PASSWORD -> viewModel.unlock(
+                    userId,
                     missingScope,
                     password,
                     if (twoFactorCode.isEmpty()) null else twoFactorCode
                 )
-                Scope.LOCKED -> viewModel.unlock(missingScope, password, null)
+                Scope.LOCKED -> viewModel.unlock(userId, missingScope, password, null)
             }.exhaustive
         }
 
@@ -111,17 +139,21 @@ class ConfirmPasswordDialog : ProtonDialogFragment() {
             setResultAndDismiss(null)
         }
 
+        viewModel.checkForSecondFactorInput(userId, missingScope)
+
         return alertDialog.apply {
             setCanceledOnTouchOutside(false)
         }
     }
 
     private fun setResultAndDismiss(state: MissingScopeState?) {
+        val obtained = state is MissingScopeState.ScopeObtainSuccess
+
         viewModel.onConfirmPasswordResult(state).invokeOnCompletion {
             parentFragmentManager.setFragmentResult(
-                KEY_PASS_2FA_SET,
+                CONFIRM_PASS_SET,
                 bundleOf(
-                    BUNDLE_KEY_PASS_2FA_DATA to ConfirmPasswordResult(state?.name)
+                    BUNDLE_CONFIRM_PASS_DATA to ConfirmPasswordResult(obtained)
                 )
             )
             dismissAllowingStateLoss()
@@ -136,8 +168,8 @@ class ConfirmPasswordDialog : ProtonDialogFragment() {
     companion object {
         private const val ARG_INPUT = "arg.confirmPasswordInput"
 
-        const val KEY_PASS_2FA_SET = "key.pass_2fa_set"
-        const val BUNDLE_KEY_PASS_2FA_DATA = "bundle.pass_2fa_data"
+        const val CONFIRM_PASS_SET = "key.confirm_pass_set"
+        const val BUNDLE_CONFIRM_PASS_DATA = "bundle.confirm_pass_data"
 
         operator fun invoke(
             input: ConfirmPasswordInput
