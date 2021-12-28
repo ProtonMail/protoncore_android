@@ -1,5 +1,3 @@
-image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0-alpha08
-
 include:
   - project: 'agarroux/publish-github'
     ref: master
@@ -21,7 +19,7 @@ include:
     ref: 'master'
     file: '/deploy-to-atlas.gitlab-ci.yml'
 
-  - local: '/ci/templates/.gitlab-ci-git.yml'
+  - local: '/ci/templates/git.gitlab-ci.yml'
 
   - local: '/ci/templates/base-job.gitlab-ci.yml'
 
@@ -42,34 +40,15 @@ variables:
   # Use low compression for caches
   CACHE_COMPRESSION_LEVEL: "fast"
 
-#####################
-danger-review:
-  extends: .ruby-job
-  stage: .post
+## pre stage #######################################################################################
+prepare-environment:
+  extends: .script-job
+  stage: .pre
   when: always
-  script:
-    - bundle exec danger --fail-on-errors=false
-  allow_failure: true
-  variables:
-    DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
-  interruptible: true
-
-deploy atlas:
-  stage: build
-  needs: [ "prepare environment" ]
-  extends: .deploy:black
-  allow_failure: true
-
-prepare environment:
-  stage: analyze
-  when: always
-  cache: [ ]
   variables:
     NAMESERVICE_URL: "https://nameservice.$ATLAS_BASE_DOMAIN/api/env"
     REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_NAME} --data tag=${CI_COMMIT_REF_SLUG}"
   script:
-    - apt-get -qq update
-    - apt-get install -y jq
     - echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
     - echo HOST="$(curl --request POST --url $NAMESERVICE_URL $REQUEST_DATA | jq -r '.envName')".$ATLAS_BASE_DOMAIN >> local.properties
     - mkdir -p coreexample/src/androidTest/assets/sensitive
@@ -80,14 +59,9 @@ prepare environment:
       - coreexample/src/androidTest/assets/sensitive
       - local.properties
 
-cleanup atlas:
-  stage: .post
-  extends: .cleanup:black
-  when: manual
-
-detekt analyze:
+detekt-analyze:
   extends: .gradle-job
-  stage: analyze
+  stage: .pre
   when: always
   interruptible: true
   script:
@@ -97,11 +71,30 @@ detekt analyze:
     reports:
       codequality: config/detekt/reports/mergedReport.json
 
+## bot stage #######################################################################################
+i18n-sync-crowdin:
+  extends: .i18n-sync-crowdin-common
+  variables:
+    I18N_SYNC_CROWDIN_PROJECT: 'android-core'
+    I18N_SYNC_BRANCH: 'main'
+    I18N_FILTER_OUT_ITEMS: 'coreexample'
+
+i18n-commit-locales:
+  extends: .i18n-commit-locales-shared
+  variables:
+    I18N_COMMIT_CROWDIN_PROJECT: 'android-core'
+    I18N_COMMIT_BRANCH_PUSH: 'main'
+    I18N_COMMIT_BRANCH_ALLOWED: 'main'
+
+## build stage #####################################################################################
+deploy-atlas:
+  stage: build
+  needs: [ "prepare-environment" ]
+  extends: .deploy:black
+
 assemble:
   extends: .gradle-job
   stage: build
-  tags:
-    - large
   interruptible: true
   script:
     - ./gradlew :coreexample:assembleLocalPropertiesDebug
@@ -110,7 +103,8 @@ assemble:
     paths:
       - coreexample/build/outputs/
 
-uiTests:
+## test stage ######################################################################################
+ui-tests:
   stage: test
   when: always
   allow_failure: true
@@ -121,6 +115,28 @@ uiTests:
   variables:
     PARENT_PIPELINE_ID: $CI_PIPELINE_ID
 
+unit-tests-and-coverage-report:
+  extends: .gradle-job
+  stage: test
+  script:
+    - ./gradlew -Pci --console=plain coberturaCoverageReport # This also runs allTest
+  coverage: /Total.*?(\d{1,3}\.\d{0,2})%/
+  interruptible: true
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - ./build/reports/*
+    reports:
+      cobertura:
+        - ./build/reports/cobertura-coverage.xml
+
+start-review:
+  before_script:
+    - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
+  extends: .startReview
+  stage: test
+
+## publish stage ###################################################################################
 release-publish-github:
   stage: publish
   tags:
@@ -136,8 +152,6 @@ release-publish-github:
 publish-libs:
   extends: .gradle-job
   stage: publish
-  tags:
-    - large
   variables:
     ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
     ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD
@@ -158,8 +172,6 @@ tag-libs-release:
     - job: publish-libs
   only:
     - /^release\/libs\/.*/
-  tags:
-    - large
   before_script:
     - !reference [ .git, before_script ]
   script:
@@ -168,8 +180,6 @@ tag-libs-release:
 publish-gradle-plugins:
   extends: .gradle-job
   stage: publish
-  tags:
-    - large
   variables:
     ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
     ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD
@@ -188,49 +198,28 @@ tag-gradle-plugins-release:
     - job: publish-gradle-plugins
   only:
     - /^release\/gradle-plugins\/.*/
-  tags:
-    - large
   before_script:
     - !reference [ .git, before_script ]
   script:
     - ./gradlew -p plugins tagRelease
 
-i18n-sync-crowdin:
-  extends: .i18n-sync-crowdin-common
+## post stage ######################################################################################
+danger-review:
+  extends: .ruby-job
+  stage: .post
+  when: always
+  script:
+    - bundle exec danger --fail-on-errors=false
+  allow_failure: true
   variables:
-    I18N_SYNC_CROWDIN_PROJECT: 'android-core'
-    I18N_SYNC_BRANCH: 'main'
-    I18N_FILTER_OUT_ITEMS: 'coreexample'
+    DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
+  interruptible: true
 
-i18n-commit-locales:
-  extends: .i18n-commit-locales-shared
-  variables:
-    I18N_COMMIT_CROWDIN_PROJECT: 'android-core'
-    I18N_COMMIT_BRANCH_PUSH: 'main'
-    I18N_COMMIT_BRANCH_ALLOWED: 'main'
+cleanup-atlas:
+  stage: .post
+  extends: .cleanup:black
+  when: manual
 
-startReview:
-  before_script:
-    - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
-  extends: .startReview
-  stage: test
-
+# .startReview requires 'stopReview' job. See GitLab merged YAML.
 stopReview:
   extends: .stopReview
-
-coverage report:
-  extends: .gradle-job
-  stage: test
-  tags:
-    - large
-  script:
-    - ./gradlew -Pci --console=plain coberturaCoverageReport # This also runs allTest
-  coverage: /Total.*?(\d{1,3}\.\d{0,2})%/
-  interruptible: true
-  artifacts:
-    expire_in: 1 week
-    paths:
-      - ./build/reports/*
-    reports:
-      cobertura:
-        - ./build/reports/cobertura-coverage.xml
