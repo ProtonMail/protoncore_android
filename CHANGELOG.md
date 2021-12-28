@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Add support for string plurals for plans features.
+- Bring back inRoot() function to UI tests.
+- Added withTimeout() function to UI tests.
 
 ## [4.1.0]
 
@@ -14,7 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Report: New module for sending Bug Report (see [Report Readme](report/README.md) for more details).
 - After login, when migrating from external to internal account type, `UserCheck` is also called.
 - Fix payment refresh state after upgrading for logged in users.
-- Bring back inRoot() function to UI tests.
 
 ## [4.0.0]
 
