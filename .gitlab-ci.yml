@@ -17,6 +17,10 @@ include:
     ref: development
     file: '/appetize-integration.yml'
 
+  - project: 'proton/devops/atlas-deploy'
+    ref: 'master'
+    file: '/deploy-to-atlas.gitlab-ci.yml'
+
   - local: '/ci/templates/.gitlab-ci-git.yml'
 
 stages:
@@ -69,6 +73,35 @@ danger-review:
     DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
   interruptible: true
 
+deploy atlas:
+  stage: build
+  needs: [ "prepare environment" ]
+  extends: .deploy:black
+
+prepare environment:
+  stage: analyze
+  when: always
+  cache: [ ]
+  variables:
+    NAMESERVICE_URL: "https://nameservice.$ATLAS_BASE_DOMAIN/api/env"
+    REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_NAME} --data tag=${CI_COMMIT_REF_SLUG}"
+  script:
+    - apt-get -qq update
+    - apt-get install -y jq
+    - echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
+    - echo HOST="$(curl --request POST --url $NAMESERVICE_URL $REQUEST_DATA | jq -r '.envName')".$ATLAS_BASE_DOMAIN >> local.properties
+    - mkdir -p coreexample/src/androidTest/assets/sensitive
+    - cat $TEST_USERS > coreexample/src/androidTest/assets/sensitive/users.json
+    - cat $TEST_INTERNAL_API > coreexample/src/androidTest/assets/sensitive/internal_apis.json
+  artifacts:
+    paths:
+      - coreexample/src/androidTest/assets/sensitive
+      - local.properties
+
+cleanup atlas:
+  stage: .post
+  extends: .cleanup:black
+
 detekt analyze:
   stage: analyze
   when: always
@@ -88,20 +121,22 @@ assemble:
     - large
   interruptible: true
   script:
-    - echo PROXY_TOKEN="$(curl -o - https://proxy.proton.black/token/get)" >> local.properties
-    - echo HOST="proton.black" >> local.properties
-    - ./gradlew assembleDevDebug
+    - ./gradlew :coreexample:assembleLocalPropertiesDebug
+    - ./gradlew :coreexample:assembleLocalPropertiesDebugAndroidTest
   artifacts:
     paths:
       - coreexample/build/outputs/
 
 uiTests:
   stage: test
-  when: manual
+  when: always
+  allow_failure: true
   trigger:
     strategy: depend
     include:
       - local: coreexample/ci/test.coreexample.uitests.yml
+  variables:
+    PARENT_PIPELINE_ID: $CI_PIPELINE_ID
 
 release-publish-github:
   stage: publish
@@ -141,7 +176,7 @@ tag-libs-release:
   tags:
     - large
   before_script:
-    - !reference [.git, before_script]
+    - !reference [ .git, before_script ]
   script:
     - ./gradlew tagRelease
 
@@ -169,7 +204,7 @@ tag-gradle-plugins-release:
   tags:
     - large
   before_script:
-    - !reference [.git, before_script]
+    - !reference [ .git, before_script ]
   script:
     - ./gradlew -p plugins tagRelease
 
@@ -189,7 +224,7 @@ i18n-commit-locales:
 
 startReview:
   before_script:
-    - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/dev/debug/coreexample-dev-debug.apk"
+    - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
   extends: .startReview
   stage: test
 
