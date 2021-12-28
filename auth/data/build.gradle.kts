@@ -47,8 +47,6 @@ dependencies {
         `okHttp-logging`,
         `retrofit`,
         `retrofit-kotlin-serialization`,
-        `room-ktx`,
-        `store4`,
         `javax-inject`
     )
 

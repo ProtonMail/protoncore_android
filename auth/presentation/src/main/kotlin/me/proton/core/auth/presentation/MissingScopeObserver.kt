@@ -40,7 +40,7 @@ class MissingScopeObserver(
         state: MissingScopeState,
         block: suspend (MissingScopeState) -> Unit
     ) {
-        observerJobs += missingScopeListener.stateFlow
+        observerJobs += missingScopeListener.state
             .flowWithLifecycle(lifecycle, minActiveState)
             .onEach {
                 if (it == state) {
@@ -61,23 +61,30 @@ fun MissingScopeListener.observe(
     minActiveState: Lifecycle.State = Lifecycle.State.CREATED
 ) = MissingScopeObserver(lifecycle, minActiveState, this)
 
-fun MissingScopeObserver.onMissingScope(
+fun MissingScopeObserver.onMissingLockedScope(
     block: suspend (MissingScopeState) -> Unit
 ): MissingScopeObserver {
-    addMissingScopeStateListener(block = block, state = MissingScopeState.MissingScopeNeeded)
+    addMissingScopeStateListener(block = block, state = MissingScopeState.LockedScopeMissing)
+    return this
+}
+
+fun MissingScopeObserver.onMissingPasswordScope(
+    block: suspend (MissingScopeState) -> Unit
+): MissingScopeObserver {
+    addMissingScopeStateListener(block = block, state = MissingScopeState.PasswordScopeMissing)
     return this
 }
 
 fun MissingScopeObserver.onMissingScopeSuccess(
     block: suspend (MissingScopeState) -> Unit
 ): MissingScopeObserver {
-    addMissingScopeStateListener(block = block, state = MissingScopeState.MissingScopeSuccess)
+    addMissingScopeStateListener(block = block, state = MissingScopeState.ScopeObtainSuccess)
     return this
 }
 
 fun MissingScopeObserver.onMissingScopeFailed(
     block: suspend (MissingScopeState) -> Unit
 ): MissingScopeObserver {
-    addMissingScopeStateListener(block = block, state = MissingScopeState.MissingScopeFailed)
+    addMissingScopeStateListener(block = block, state = MissingScopeState.ScopeObtainFailed)
     return this
 }

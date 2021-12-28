@@ -20,8 +20,6 @@ package me.proton.core.network.domain
 
 /**
  * Contains general constants response codes.
- *
- * @author Dino Kadrikj.
  */
 object ResponseCodes {
     const val OK = 1000
@@ -33,5 +31,4 @@ object ResponseCodes {
     const val USER_CREATE_NAME_INVALID = 12_081
     const val USER_CREATE_TOKEN_INVALID = 12_087
     const val PAYMENTS_SUBSCRIPTION_NOT_EXISTS = 22_110
-    const val MISSING_SCOPE = 403
 }

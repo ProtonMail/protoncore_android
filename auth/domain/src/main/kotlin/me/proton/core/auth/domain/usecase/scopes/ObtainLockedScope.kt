@@ -20,12 +20,10 @@ package me.proton.core.auth.domain.usecase.scopes
 
 import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
-import me.proton.core.crypto.common.srp.SrpCrypto
-import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -33,8 +31,7 @@ import javax.inject.Inject
 class ObtainLockedScope @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
-    private val srpCrypto: SrpCrypto,
-    private val keyStoreCrypto: KeyStoreCrypto
+    private val context: CryptoContext
 ) {
     suspend operator fun invoke(
         userId: UserId,
@@ -47,8 +44,8 @@ class ObtainLockedScope @Inject constructor(
             username = username
         )
 
-        password.decrypt(keyStoreCrypto).toByteArray().use {
-            val clientProofs = srpCrypto.generateSrpProofs(
+        password.decrypt(context.keyStoreCrypto).toByteArray().use {
+            val clientProofs = context.srpCrypto.generateSrpProofs(
                 username = username,
                 password = it.array,
                 version = authInfo.version.toLong(),

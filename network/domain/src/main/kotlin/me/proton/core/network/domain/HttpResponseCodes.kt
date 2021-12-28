@@ -16,26 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.scopes
+package me.proton.core.network.domain
 
-import kotlinx.coroutines.flow.SharedFlow
-
-interface MissingScopeListener {
-
-    val state: SharedFlow<MissingScopeState>
-
-    /**
-     * Called when a scope is missing for the user to complete an operation.
-     */
-    suspend fun onMissingScope(scope: List<Scope>): MissingScopeResult
-
-    /**
-     * Called on a missing scope result success.
-     */
-    suspend fun onMissingScopeSuccess()
-
-    /**
-     * Called on a missing scope result failure.
-     */
-    suspend fun onMissingScopeFailure()
+/**
+ * Contains general constants http response codes.
+ */
+object HttpResponseCodes {
+    const val HTTP_UNAUTHORIZED = 401
+    const val HTTP_BAD_REQUEST = 400
+    const val HTTP_UNPROCESSABLE = 422
+    const val HTTP_FORBIDDEN = 403
 }

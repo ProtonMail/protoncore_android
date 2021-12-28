@@ -20,6 +20,7 @@ package me.proton.core.network.data.mapper
 
 import me.proton.core.network.data.protonApi.Details
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.humanverification.VerificationMethod
@@ -48,7 +49,7 @@ fun ApiResult.Error.ProtonData.parseDetails(errorCode: Int, details: Details?): 
         ResponseCodes.HUMAN_VERIFICATION_REQUIRED -> {
             humanVerification = details?.toHumanVerificationEntity()
         }
-        ResponseCodes.MISSING_SCOPE -> {
+        HttpResponseCodes.HTTP_FORBIDDEN -> {
             missingScopes = details?.toMissingScopes()
         }
     }

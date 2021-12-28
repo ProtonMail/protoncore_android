@@ -33,12 +33,11 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.auth.domain.entity.SecondFactor
-import me.proton.core.auth.domain.usecase.scopes.ObtainAuthInfo
+import me.proton.core.auth.domain.usecase.scopes.GetAuthInfo
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
@@ -50,7 +49,7 @@ import javax.inject.Inject
 class ConfirmPasswordDialogViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val obtainAuthInfo: ObtainAuthInfo,
+    private val getAuthInfo: GetAuthInfo,
     private val obtainLockedScope: ObtainLockedScope,
     private val obtainPasswordScope: ObtainPasswordScope,
     private val missingScopeListener: MissingScopeListener
@@ -74,7 +73,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
     fun checkForSecondFactorInput(missingScope: Scope) = flow {
         emit(State.ProcessingSecondFactor)
         accountManager.getPrimaryAccount().filterNotNull().collect { account ->
-            val authInfo = obtainAuthInfo(account.userId, account.username)
+            val authInfo = getAuthInfo(account.userId, account.username)
             val isSecondFactorNeeded = when (missingScope) {
                 Scope.PASSWORD -> {
                     authInfo.secondFactor is SecondFactor.Enabled
@@ -105,7 +104,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
             if (result) {
                 emit(
                     State.Success(
-                        if (result) MissingScopeState.MissingScopeSuccess else MissingScopeState.MissingScopeFailed
+                        if (result) MissingScopeState.ScopeObtainSuccess else MissingScopeState.ScopeObtainFailed
                     )
                 )
             } else {
@@ -120,7 +119,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
 
     fun onConfirmPasswordResult(state: MissingScopeState?): Job = viewModelScope.launch {
         when (state) {
-            MissingScopeState.MissingScopeSuccess -> missingScopeListener.onMissingScopeSuccess()
+            MissingScopeState.ScopeObtainSuccess -> missingScopeListener.onMissingScopeSuccess()
             else -> missingScopeListener.onMissingScopeFailure()
         }.exhaustive
     }

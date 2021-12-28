@@ -32,7 +32,7 @@ import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.auth.domain.entity.AuthInfo
-import me.proton.core.auth.domain.usecase.scopes.ObtainAuthInfo
+import me.proton.core.auth.domain.usecase.scopes.GetAuthInfo
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -57,7 +57,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
     private val accountManager = mockk<AccountManager>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
-    private val obtainAuthInfo = mockk<ObtainAuthInfo>(relaxed = true)
+    private val obtainAuthInfo = mockk<GetAuthInfo>(relaxed = true)
     private val obtainLockedScope = mockk<ObtainLockedScope>(relaxed = true)
     private val obtainPasswordScope = mockk<ObtainPasswordScope>(relaxed = true)
     private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)

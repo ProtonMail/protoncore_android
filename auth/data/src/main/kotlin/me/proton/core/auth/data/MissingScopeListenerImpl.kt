@@ -18,7 +18,8 @@
 
 package me.proton.core.auth.data
 
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -31,21 +32,24 @@ import javax.inject.Singleton
 
 @Singleton
 class MissingScopeListenerImpl : MissingScopeListener {
-    private val _stateFlow = MutableStateFlow(MissingScopeState.Default)
+    private val _state = MutableSharedFlow<MissingScopeState>(extraBufferCapacity = 1)
 
-    override val stateFlow: MutableStateFlow<MissingScopeState>
-        get() = _stateFlow
+    override val state: SharedFlow<MissingScopeState>
+        get() = _state
 
-    override suspend fun onMissingScope(scope: Scope): MissingScopeResult {
-        val missingScope = MissingScopeState.MissingScopeNeeded
-        missingScope.missingScope = scope
-        _stateFlow.tryEmit(missingScope)
-        val state = _stateFlow.filter {
-            it in listOf(MissingScopeState.MissingScopeSuccess, MissingScopeState.MissingScopeFailed)
+    override suspend fun onMissingScope(scopes: List<Scope>): MissingScopeResult {
+        scopes.forEach {
+            when (it) {
+                Scope.PASSWORD -> _state.tryEmit(MissingScopeState.PasswordScopeMissing)
+                Scope.LOCKED -> _state.tryEmit(MissingScopeState.LockedScopeMissing)
+            }.exhaustive
+        }
+        val state = _state.filter {
+            it in listOf(MissingScopeState.ScopeObtainSuccess, MissingScopeState.ScopeObtainFailed)
         }.map {
             when (it) {
-                MissingScopeState.MissingScopeFailed -> MissingScopeResult.Failure
-                MissingScopeState.MissingScopeSuccess -> MissingScopeResult.Success
+                MissingScopeState.ScopeObtainFailed -> MissingScopeResult.Failure
+                MissingScopeState.ScopeObtainSuccess -> MissingScopeResult.Success
                 else -> MissingScopeResult.Failure
             }.exhaustive
         }.first()
@@ -53,10 +57,10 @@ class MissingScopeListenerImpl : MissingScopeListener {
     }
 
     override suspend fun onMissingScopeSuccess() {
-        _stateFlow.tryEmit(MissingScopeState.MissingScopeSuccess)
+        _state.tryEmit(MissingScopeState.ScopeObtainSuccess)
     }
 
     override suspend fun onMissingScopeFailure() {
-        _stateFlow.tryEmit(MissingScopeState.MissingScopeFailed)
+        _state.tryEmit(MissingScopeState.ScopeObtainFailed)
     }
 }

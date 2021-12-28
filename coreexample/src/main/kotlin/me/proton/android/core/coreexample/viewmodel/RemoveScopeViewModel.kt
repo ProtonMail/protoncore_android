@@ -21,7 +21,7 @@ package me.proton.android.core.coreexample.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.usecase.scopes.RemoveSecurityScopes
@@ -33,13 +33,11 @@ class RemoveScopeViewModel @Inject constructor(
     private val removeSecurityScopes: RemoveSecurityScopes
 ) : ViewModel() {
 
-    private fun getPrimaryUserId() = accountManager.getPrimaryUserId()
+    private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
 
     fun removeScopes() {
         viewModelScope.launch {
-            getPrimaryUserId().first()?.let {
-                removeSecurityScopes(it)
-            }
+            getPrimaryUserIdOrNull()?.let { removeSecurityScopes(it) }
         }
     }
 }

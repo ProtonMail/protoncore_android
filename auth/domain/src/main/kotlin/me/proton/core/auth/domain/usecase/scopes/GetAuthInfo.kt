@@ -23,7 +23,7 @@ import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 
-class ObtainAuthInfo @Inject constructor(
+class GetAuthInfo @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(userId: UserId, username: String): AuthInfo = authRepository.getAuthInfo(

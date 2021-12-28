@@ -36,9 +36,6 @@ import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
 import me.proton.core.auth.presentation.viewmodel.ConfirmPasswordDialogViewModel
-import me.proton.core.network.domain.client.ClientId
-import me.proton.core.network.domain.client.ClientIdType
-import me.proton.core.network.domain.client.getId
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.ui.ProtonDialogFragment
@@ -86,7 +83,7 @@ class ConfirmPasswordDialog : ProtonDialogFragment() {
                     // noop
                 }
                 is ConfirmPasswordDialogViewModel.State.Error.Message -> {
-                    setResultAndDismiss(MissingScopeState.MissingScopeFailed)
+                    setResultAndDismiss(MissingScopeState.ScopeObtainFailed)
                     binding.enterButton.setIdle()
                 }
                 is ConfirmPasswordDialogViewModel.State.Idle -> Unit

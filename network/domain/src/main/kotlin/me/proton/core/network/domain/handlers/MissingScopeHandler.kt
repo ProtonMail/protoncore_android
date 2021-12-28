@@ -24,12 +24,11 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.ResponseCodes.MISSING_SCOPE
-import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
+import java.net.HttpURLConnection.HTTP_FORBIDDEN
 
 /**
  * Handles the Missing one of the security scopes [LOCKED or PASSWORD] that is required for some of the operations
@@ -37,7 +36,6 @@ import me.proton.core.network.domain.session.SessionId
  */
 class MissingScopeHandler<Api>(
     private val sessionId: SessionId?,
-    private val clientIdProvider: ClientIdProvider,
     private val missingScopeListener: MissingScopeListener
 ) : ApiErrorHandler<Api> {
 
@@ -48,7 +46,7 @@ class MissingScopeHandler<Api>(
     ): ApiResult<T> {
         if (sessionId == null) return error
 
-        if (error !is ApiResult.Error.Http || error.proton?.code != MISSING_SCOPE) return error
+        if (error !is ApiResult.Error.Http || error.proton?.code != HTTP_FORBIDDEN) return error
 
         val details = error.proton.missingScopes ?: return error
 
@@ -56,18 +54,17 @@ class MissingScopeHandler<Api>(
         if (scopes.isNullOrEmpty()) return error
 
         val shouldRetry = sessionMutex(sessionId).withLock {
-            obtainMissingScope(scopes.first())
+            obtainMissingScope(scopes)
         }
-        val finalResult = if (shouldRetry) {
+        return if (shouldRetry) {
             backend(call)
         } else {
             error
         }
-        return finalResult
     }
 
-    private suspend fun obtainMissingScope(details: Scope?): Boolean {
-        return when (missingScopeListener.onMissingScope(details!!)) {
+    private suspend fun obtainMissingScope(details: List<Scope>): Boolean {
+        return when (missingScopeListener.onMissingScope(details)) {
             MissingScopeResult.Success -> true
             MissingScopeResult.Failure -> false
         }

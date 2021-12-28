@@ -20,36 +20,33 @@ package me.proton.core.network.domain.scopes
 
 enum class MissingScopeState {
 
-    Default,
+    /**
+     * A password scope is needed.
+     *
+     * Note: Usually followed by either [ScopeObtainSuccess] or [ScopeObtainFailed].
+     *
+     * @see [ScopeObtainSuccess]
+     * @see [ScopeObtainFailed].
+     */
+    PasswordScopeMissing,
 
     /**
-     * A scope is needed.
+     * A locked scope is needed.
      *
-     * Note: Usually followed by either [MissingScopeSuccess] or [MissingScopeFailed].
+     * Note: Usually followed by either [ScopeObtainSuccess] or [ScopeObtainFailed].
      *
-     * @see [MissingScopeSuccess]
-     * @see [MissingScopeFailed].
+     * @see [ScopeObtainSuccess]
+     * @see [ScopeObtainFailed].
      */
-    MissingScopeNeeded,
+    LockedScopeMissing,
 
     /**
      * The missing scope has been obtained successfully.
      */
-    MissingScopeSuccess,
+    ScopeObtainSuccess,
 
     /**
      * The user has not verified and the scope has not been granted.
      */
-    MissingScopeFailed;
-
-    var missingScope: Scope? = null
-
-    constructor()
-
-    // custom constructors
-    constructor(
-        missingScope: Scope
-    ) {
-        this.missingScope = missingScope
-    }
+    ScopeObtainFailed;
 }

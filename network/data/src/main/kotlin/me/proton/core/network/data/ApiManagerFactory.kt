@@ -140,7 +140,7 @@ class ApiManagerFactory(
     ): List<ApiErrorHandler<Api>> {
         val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
         val missingScopeHandler =
-            MissingScopeHandler<Api>(sessionId, clientIdProvider, missingScopeListener)
+            MissingScopeHandler<Api>(sessionId, missingScopeListener)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
         val serverConnectionHandler = ApiConnectionHandler<Api>(apiConnectionListener)
         val humanVerificationNeededHandler =
