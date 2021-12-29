@@ -29,7 +29,7 @@ sealed class EventManagerConfig {
 
     @Serializable
     data class Core(
-        override val userId: UserId
+        override val userId: UserId,
     ) : EventManagerConfig() {
         override val listenerType = EventListener.Type.Core
     }
@@ -38,7 +38,7 @@ sealed class EventManagerConfig {
     data class Calendar(
         override val userId: UserId,
         val calendarId: String,
-        val apiVersion: String = "v1"
+        val apiVersion: String = "v1",
     ) : EventManagerConfig() {
         override val listenerType = EventListener.Type.Calendar
     }
@@ -46,7 +46,7 @@ sealed class EventManagerConfig {
     @Serializable
     data class Drive(
         override val userId: UserId,
-        val shareId: String
+        val shareId: String,
     ) : EventManagerConfig() {
         override val listenerType = EventListener.Type.Drive
     }

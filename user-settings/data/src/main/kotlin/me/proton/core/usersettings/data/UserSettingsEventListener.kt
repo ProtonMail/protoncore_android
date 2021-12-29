@@ -40,7 +40,7 @@ data class UserSettingsEvents(
 )
 
 @Singleton
-class UserSettingsEventListener @Inject constructor(
+open class UserSettingsEventListener @Inject constructor(
     private val db: UserSettingsDatabase,
     private val repository: UserSettingsRepository
 ) : EventListener<String, UserSettingsResponse>() {
@@ -57,9 +57,7 @@ class UserSettingsEventListener @Inject constructor(
         }
     }
 
-    override suspend fun <R> inTransaction(block: suspend () -> R): R {
-        return db.inTransaction(block)
-    }
+    override suspend fun <R> inTransaction(block: suspend () -> R): R = db.inTransaction(block)
 
     override suspend fun onUpdate(config: EventManagerConfig, entities: List<UserSettingsResponse>) {
         repository.updateUserSettings(entities.first().toUserSettings(config.userId))
