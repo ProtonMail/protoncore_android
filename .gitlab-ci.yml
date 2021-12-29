@@ -101,6 +101,7 @@ prepare environment:
 cleanup atlas:
   stage: .post
   extends: .cleanup:black
+  when: manual
 
 detekt analyze:
   stage: analyze
