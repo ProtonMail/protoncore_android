@@ -34,14 +34,15 @@ import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.runBlockingWithTimeout
 import me.proton.core.user.data.TestAccountManagerDatabase
@@ -49,6 +50,7 @@ import me.proton.core.user.data.TestAccounts
 import me.proton.core.user.data.TestApiManager
 import me.proton.core.user.data.TestUsers
 import me.proton.core.user.data.api.UserApi
+import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -332,5 +334,64 @@ class UserRepositoryImplTests {
         assertNotNull(user)
         assertNotNull(userRepository.getPassphrase(userId))
         assertEquals(updatedCredit, user.credit)
+    }
+
+    @Test
+    fun unlockUser_lockedScope() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.unlockLockedScope(any()) } answers { GenericResponse(1000) }
+
+        // WHEN
+        val response = userRepository.unlockUserForLockedScope(
+            TestUsers.User1.id,
+            "test-client-ephemeral",
+            "test-client-proof",
+            "test-srp-session"
+        )
+        assertNotNull(response)
+        assertTrue(response)
+    }
+
+    @Test
+    fun unlockUser_no2fa_passwordScope() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.unlockPasswordScope(any()) } answers { GenericResponse(1000) }
+
+        // WHEN
+        val response = userRepository.unlockUserForPasswordScope(
+            TestUsers.User1.id,
+            "test-client-ephemeral",
+            "test-client-proof",
+            "test-srp-session",
+            null
+        )
+        assertNotNull(response)
+        assertTrue(response)
+    }
+
+    @Test
+    fun unlockUser_2fa_passwordScope() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery {
+            userApi.unlockPasswordScope(
+                UnlockPasswordRequest(
+                    "test-client-ephemeral",
+                    "test-client-proof",
+                    "test-srp-session",
+                    "test-2fa"
+                )
+            )
+        } answers { GenericResponse(1000) }
+
+        // WHEN
+        val response = userRepository.unlockUserForPasswordScope(
+            TestUsers.User1.id,
+            "test-client-ephemeral",
+            "test-client-proof",
+            "test-srp-session",
+            "test-2fa"
+        )
+        assertNotNull(response)
+        assertTrue(response)
     }
 }

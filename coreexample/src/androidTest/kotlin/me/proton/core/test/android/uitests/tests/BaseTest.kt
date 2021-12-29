@@ -52,7 +52,7 @@ open class BaseTest(
         Log.d(testTag, "Login user: ${user.name}")
         authHelper.login(user.name, user.password)
         Log.d(testTag, "Login done.")
-        AddAccountRobot().back<CoreexampleRobot>()
+        AddAccountRobot().back<CoreexampleRobot>().verify { accountSwitcherDisplayed() }
     }
 
     companion object {

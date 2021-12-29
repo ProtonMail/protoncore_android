@@ -20,8 +20,6 @@ package me.proton.core.network.domain
 
 /**
  * Contains general constants response codes.
- *
- * @author Dino Kadrikj.
  */
 object ResponseCodes {
     const val OK = 1000

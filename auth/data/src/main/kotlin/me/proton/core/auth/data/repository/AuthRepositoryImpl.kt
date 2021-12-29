@@ -25,12 +25,14 @@ import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.request.UniversalTwoFactorRequest
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.TimeoutOverride
@@ -57,6 +59,11 @@ class AuthRepositoryImpl(
         provider.get<AuthenticationApi>().invoke {
             val request = LoginInfoRequest(username, clientSecret)
             getLoginInfo(request).toLoginInfo(username)
+        }.valueOrThrow
+
+    override suspend fun getAuthInfo(userId: SessionUserId, username: String): AuthInfo =
+        provider.get<AuthenticationApi>(userId).invoke {
+            getAuthInfo().toAuthInfo(username)
         }.valueOrThrow
 
     /**

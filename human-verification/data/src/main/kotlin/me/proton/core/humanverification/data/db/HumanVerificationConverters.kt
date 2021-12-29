@@ -31,12 +31,4 @@ class HumanVerificationConverters {
     fun fromStringToHumanVerificationState(value: String?): HumanVerificationState? = value?.let {
         HumanVerificationState.valueOf(value)
     }
-
-    @TypeConverter
-    fun fromClientIdTypeToString(value: ClientIdType?): String? = value?.value
-
-    @TypeConverter
-    fun fromStringToClientIdType(value: String?): ClientIdType? = value?.let {
-        ClientIdType.map[value]
-    }
 }

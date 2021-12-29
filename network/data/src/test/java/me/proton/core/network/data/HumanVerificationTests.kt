@@ -49,6 +49,7 @@ import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
 import me.proton.core.network.domain.humanverification.VerificationMethod
+import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
@@ -126,6 +127,7 @@ internal class HumanVerificationTests {
     private var sessionProvider = mockk<SessionProvider>()
     private val humanVerificationProvider = mockk<HumanVerificationProvider>()
     private val humanVerificationListener = mockk<HumanVerificationListener>()
+    private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
 
     private var sessionListener: SessionListener = MockSessionListener(
         onTokenRefreshed = { session -> this.session = session }
@@ -165,6 +167,7 @@ internal class HumanVerificationTests {
                 sessionListener,
                 humanVerificationProvider,
                 humanVerificationListener,
+                missingScopeListener,
                 cookieStore,
                 scope,
                 cache = { null },

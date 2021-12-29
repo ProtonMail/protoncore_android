@@ -18,11 +18,13 @@
 
 package me.proton.core.auth.domain.repository
 
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.domain.session.SessionId
 
 interface AuthRepository {
@@ -34,6 +36,14 @@ interface AuthRepository {
         username: String,
         clientSecret: String
     ): LoginInfo
+
+    /**
+     * Get Auth Info needed to obtain the security [Password and Locked] scopes.
+     */
+    suspend fun getAuthInfo(
+        userId: SessionUserId,
+        username: String
+    ): AuthInfo
 
     /**
      * Perform Login to create a session (accessToken, refreshToken, sessionId, ...).

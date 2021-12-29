@@ -95,4 +95,30 @@ interface UserRepository : PassphraseRepository {
         type: CreateUserType,
         auth: Auth
     ): User
+
+    /**
+     * Removes both security scopes [LOCKED, PASSWORD] for the user.
+     */
+    suspend fun removeLockedAndPasswordScopes(sessionUserId: SessionUserId): Boolean
+
+    /**
+     * Adds unlock security scope for the user.
+     */
+    suspend fun unlockUserForLockedScope(
+        sessionUserId: SessionUserId,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String
+    ): Boolean
+
+    /**
+     * Adds unlock security scope for the user.
+     */
+    suspend fun unlockUserForPasswordScope(
+        sessionUserId: SessionUserId,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String,
+        twoFactorCode: String?
+    ): Boolean
 }

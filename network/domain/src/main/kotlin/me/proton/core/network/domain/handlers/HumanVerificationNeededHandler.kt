@@ -67,7 +67,11 @@ class HumanVerificationNeededHandler<Api>(
             val verifiedRecently = monoClockMs() <= lastVerificationTimeMs + verificationDebounceMs
             verifiedRecently || verifyHuman(clientId, details)
         }
-        return if (shouldRetry) backend(call) else error
+        return if (shouldRetry) {
+            backend(call)
+        } else {
+            error
+        }
     }
 
     // Must be called within sessionMutex.

@@ -47,12 +47,17 @@ import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.accountmanager.presentation.onUserAddressKeyCheckFailed
 import me.proton.core.accountmanager.presentation.onUserKeyCheckFailed
 import me.proton.core.auth.presentation.AuthOrchestrator
+import me.proton.core.auth.presentation.observe
+import me.proton.core.auth.presentation.onConfirmPasswordNeeded
+import me.proton.core.auth.presentation.onMissingScopeFailed
+import me.proton.core.auth.presentation.onMissingScopeSuccess
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
+import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.user.domain.UserManager
@@ -65,6 +70,7 @@ class AccountViewModel @Inject constructor(
     private val humanVerificationManager: HumanVerificationManager,
     private var authOrchestrator: AuthOrchestrator,
     private var humanVerificationOrchestrator: HumanVerificationOrchestrator,
+    private val missingScopeListener: MissingScopeListener
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(State.Processing as State)
@@ -107,6 +113,13 @@ class AccountViewModel @Inject constructor(
         with(humanVerificationOrchestrator) {
             humanVerificationManager.observe(context.lifecycle, minActiveState = Lifecycle.State.RESUMED)
                 .onHumanVerificationNeeded { startHumanVerificationWorkflow(it) }
+        }
+
+        with(authOrchestrator) {
+            missingScopeListener.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
+                .onConfirmPasswordNeeded { startConfirmPasswordWorkflow(it) }
+                .onMissingScopeSuccess { context.showToast("Success Test") }
+                .onMissingScopeFailed { context.showToast("Failed test") }
         }
     }
 

@@ -23,6 +23,9 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_BAD_REQUEST
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNAUTHORIZED
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNPROCESSABLE
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
@@ -87,8 +90,7 @@ class RefreshTokenHandler<Api>(
     }
 
     companion object {
-        const val HTTP_UNAUTHORIZED = 401
-        val FORCE_LOGOUT_HTTP_CODES = listOf(400, 422)
+        val FORCE_LOGOUT_HTTP_CODES = listOf(HTTP_BAD_REQUEST, HTTP_UNPROCESSABLE)
 
         private val refreshDebounceMs = TimeUnit.MINUTES.toMillis(1)
         private val staticMutex: Mutex = Mutex()

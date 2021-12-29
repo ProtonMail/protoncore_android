@@ -23,9 +23,6 @@ import me.proton.core.network.domain.ApiClient
 import java.util.Locale
 import javax.inject.Inject
 
-/**
- * @author Dino Kadrikj.
- */
 const val VERSION_NAME = "1.14.0" // imitating ProtonMail version
 
 class CoreExampleApiClient @Inject constructor() : ApiClient {

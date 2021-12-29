@@ -22,10 +22,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.api.UserApi
 
-/**
- * Proton Core
- * @author Dino Kadrikj.
- */
 class CoreExampleRepository(
     private val provider: ApiProvider
 ) {
@@ -38,5 +34,15 @@ class CoreExampleRepository(
     suspend fun usernameAvailable() =
         provider.get<UserApi>().invoke {
             usernameAvailable("username")
+        }.valueOrNull
+
+    suspend fun triggerConfirmPasswordLockedScope(userId: UserId) =
+        provider.get<CoreExampleApi>(userId).invoke {
+            triggerConfirmPasswordLockedScope()
+        }.valueOrNull
+
+    suspend fun triggerConfirmPasswordPasswordScope(userId: UserId) =
+        provider.get<CoreExampleApi>(userId).invoke {
+            triggerConfirmPasswordForPasswordScope()
         }.valueOrNull
 }

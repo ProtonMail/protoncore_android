@@ -8,8 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for string plurals for plans features.
 - Bring back inRoot() function to UI tests.
 - Added withTimeout() function to UI tests.
-- Core EventListeners in EventManager are now open and can be extended. 
+- Core EventListeners in EventManager are now open and can be extended.
 
+- Add support for Missing Scope on any route that requires. Currently there is support for password
+and locked scopes, whos resolution is to ask the user to provide it's password in order to obtain the
+scope. The request will be auto-retried after the scope has been obtained.
+How to use it:
+```kotlin
+with(authOrchestrator) {
+    missingScopeListener.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
+        .onConfirmPasswordNeeded { startConfirmPasswordWorkflow(it) }
+        .onMissingScopeSuccess { context.showToast("Success Test") }
+        .onMissingScopeFailed { context.showToast("Failed test") }
+    }
+```
 ## [4.1.0]
 
 ### Changes

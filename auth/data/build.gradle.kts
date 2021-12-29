@@ -45,7 +45,7 @@ dependencies {
         // Other
         `okHttp-logging`,
         `retrofit`,
-        `retrofit-kotlin-serialization`
+        `javax-inject`
     )
 
     testImplementation(project(Module.androidTest))

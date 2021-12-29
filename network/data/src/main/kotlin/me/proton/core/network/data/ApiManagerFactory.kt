@@ -37,15 +37,17 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
-import me.proton.core.network.domain.serverconnection.ApiConnectionListener
 import me.proton.core.network.domain.handlers.ApiConnectionHandler
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
+import me.proton.core.network.domain.handlers.MissingScopeHandler
 import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.RefreshTokenHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
+import me.proton.core.network.domain.serverconnection.ApiConnectionListener
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -79,6 +81,7 @@ class ApiManagerFactory(
     private val sessionListener: SessionListener,
     private val humanVerificationProvider: HumanVerificationProvider,
     private val humanVerificationListener: HumanVerificationListener,
+    private val missingScopeListener: MissingScopeListener,
     private val cookieStore: ProtonCookieStore?,
     scope: CoroutineScope,
     private val certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
@@ -136,14 +139,18 @@ class ApiManagerFactory(
         monoClockMs: () -> Long
     ): List<ApiErrorHandler<Api>> {
         val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
+        val missingScopeHandler =
+            MissingScopeHandler<Api>(sessionId, sessionProvider, missingScopeListener)
         val forceUpdateHandler = ProtonForceUpdateHandler<Api>(apiClient)
         val serverConnectionHandler = ApiConnectionHandler<Api>(apiConnectionListener)
         val humanVerificationNeededHandler =
             HumanVerificationNeededHandler<Api>(sessionId, clientIdProvider, humanVerificationListener, monoClockMs)
         val humanVerificationInvalidHandler =
             HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
+
         return listOf(
             serverConnectionHandler,
+            missingScopeHandler,
             refreshTokenHandler,
             forceUpdateHandler,
             humanVerificationInvalidHandler,

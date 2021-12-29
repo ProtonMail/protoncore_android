@@ -42,6 +42,8 @@ import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
+import me.proton.core.user.data.api.request.UnlockPasswordRequest
+import me.proton.core.user.data.api.request.UnlockRequest
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
@@ -158,6 +160,34 @@ class UserRepositoryImpl(
         val request = CreateExternalUserRequest(email, referrer, type.value, AuthRequest.from(auth))
         createExternalUser(request).user.toUser()
     }.valueOrThrow
+
+    override suspend fun removeLockedAndPasswordScopes(sessionUserId: SessionUserId): Boolean =
+        provider.get<UserApi>(sessionUserId).invoke {
+            lockPasswordAndLockedScopes().isSuccess()
+        }.valueOrThrow
+
+    override suspend fun unlockUserForLockedScope(
+        sessionUserId: SessionUserId,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String
+    ): Boolean =
+        provider.get<UserApi>(sessionUserId).invoke {
+            val request = UnlockRequest(clientEphemeral, clientProof, srpSession)
+            unlockLockedScope(request).isSuccess()
+        }.valueOrThrow
+
+    override suspend fun unlockUserForPasswordScope(
+        sessionUserId: SessionUserId,
+        clientEphemeral: String,
+        clientProof: String,
+        srpSession: String,
+        twoFactorCode: String?
+    ): Boolean =
+        provider.get<UserApi>(sessionUserId).invoke {
+            val request = UnlockPasswordRequest(clientEphemeral, clientProof, srpSession, twoFactorCode)
+            unlockPasswordScope(request).isSuccess()
+        }.valueOrThrow
 
     // region PassphraseRepository
 

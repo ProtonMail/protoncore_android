@@ -108,7 +108,7 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/signupExternal"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/signup_external" />
@@ -139,7 +139,7 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/usernameAvailable"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/username_available" />
@@ -213,6 +213,37 @@
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/settings_password_management" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/confirm_password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_top_margin"
+                android:orientation="horizontal">
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/trigger_confirm_password_locked"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/confirm_password_locked" />
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/trigger_confirm_password_pass"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/default_top_margin"
+                    android:layout_weight="1"
+                    android:text="@string/confirm_password" />
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/lock_scope"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_top_margin"
+                    android:layout_weight="1"
+                    android:text="@string/lock_scopes" />
             </LinearLayout>
 
             <LinearLayout

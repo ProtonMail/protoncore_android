@@ -77,6 +77,7 @@ deploy atlas:
   stage: build
   needs: [ "prepare environment" ]
   extends: .deploy:black
+  allow_failure: true
 
 prepare environment:
   stage: analyze

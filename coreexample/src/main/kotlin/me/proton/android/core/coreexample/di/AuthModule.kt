@@ -25,6 +25,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.auth.data.MissingScopeListenerImpl
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
@@ -33,6 +34,7 @@ import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.crypto.android.srp.GOpenPGPSrpCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.user.domain.UserManager
 import javax.inject.Singleton
 
@@ -59,4 +61,10 @@ object AuthModule {
         accountManager: AccountManager,
         userManager: UserManager
     ): PostLoginAccountSetup.UserCheck = DefaultUserCheck(context, accountManager, userManager)
+
+    // region missing scopes
+    @Provides
+    @Singleton
+    fun provideMissingScopeListener(): MissingScopeListener = MissingScopeListenerImpl()
+    // endregion
 }

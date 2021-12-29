@@ -94,6 +94,10 @@
             android:theme="@style/ProtonTheme.AddAccount"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name="me.proton.core.auth.presentation.ui.ConfirmPasswordActivity"
+            android:theme="@style/ProtonTheme.Transparent"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name="me.proton.core.auth.presentation.ui.LoginActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity

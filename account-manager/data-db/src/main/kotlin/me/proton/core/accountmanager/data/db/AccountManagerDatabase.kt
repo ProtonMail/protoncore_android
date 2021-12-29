@@ -138,7 +138,7 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_8_9,
             AccountManagerDatabaseMigrations.MIGRATION_9_10,
             AccountManagerDatabaseMigrations.MIGRATION_10_11,
-            AccountManagerDatabaseMigrations.MIGRATION_11_12,
+            AccountManagerDatabaseMigrations.MIGRATION_11_12
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =

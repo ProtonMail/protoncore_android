@@ -22,6 +22,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.presentation.alert.confirmpass.StartConfirmPassword
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
@@ -32,6 +33,8 @@ import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
 import me.proton.core.auth.presentation.entity.TwoPassModeResult
+import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
+import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.ui.StartAddAccount
@@ -43,6 +46,7 @@ import me.proton.core.auth.presentation.ui.StartTwoPassMode
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.scopes.MissingScopeState
 
 class AuthOrchestrator {
 
@@ -53,6 +57,7 @@ class AuthOrchestrator {
     private var twoPassModeWorkflowLauncher: ActivityResultLauncher<TwoPassModeInput>? = null
     private var chooseAddressLauncher: ActivityResultLauncher<ChooseAddressInput>? = null
     private var signUpWorkflowLauncher: ActivityResultLauncher<SignUpInput>? = null
+    private var confirmPasswordWorkflowLauncher: ActivityResultLauncher<ConfirmPasswordInput>? = null
     // endregion
 
     private var onAddAccountResultListener: ((result: AddAccountResult?) -> Unit)? = {}
@@ -61,6 +66,7 @@ class AuthOrchestrator {
     private var onSecondFactorResultListener: ((result: SecondFactorResult?) -> Unit)? = {}
     private var onChooseAddressResultListener: ((result: ChooseAddressResult?) -> Unit)? = {}
     private var onSignUpResultListener: ((result: SignUpResult?) -> Unit)? = {}
+    internal var onConfirmPasswordResultListener: ((result: ConfirmPasswordResult?) -> Unit)? = {}
 
     fun setOnAddAccountResult(block: (result: AddAccountResult?) -> Unit) {
         onAddAccountResultListener = block
@@ -84,6 +90,10 @@ class AuthOrchestrator {
 
     fun setOnSignUpResult(block: (result: SignUpResult?) -> Unit) {
         onSignUpResultListener = block
+    }
+
+    fun setOnConfirmPasswordResult(block: (result: ConfirmPasswordResult?) -> Unit) {
+        onConfirmPasswordResultListener = block
     }
 
     // region private module functions
@@ -142,6 +152,15 @@ class AuthOrchestrator {
             onSignUpResultListener?.invoke(it)
         }
 
+    private fun registerConfirmPasswordResult(
+        context: ComponentActivity
+    ): ActivityResultLauncher<ConfirmPasswordInput> =
+        context.registerForActivityResult(
+            StartConfirmPassword()
+        ) {
+            onConfirmPasswordResultListener?.invoke(it)
+        }
+
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
         checkNotNull(launcher) { "You must call authOrchestrator.register(context) before starting workflow!" }
 
@@ -175,6 +194,17 @@ class AuthOrchestrator {
         )
     }
 
+    /**
+     * Starts the Confirm Password workflow.
+     */
+    fun startConfirmPasswordWorkflow(scopeMissing: MissingScopeState.ScopeMissing) {
+        checkRegistered(confirmPasswordWorkflowLauncher).launch(
+            ConfirmPasswordInput(
+                userId = scopeMissing.userId.id,
+                missingScopes = scopeMissing.missingScopes.map { it.value })
+        )
+    }
+
     // endregion
 
     // region public API
@@ -190,6 +220,7 @@ class AuthOrchestrator {
         twoPassModeWorkflowLauncher = registerTwoPassModeResult(context)
         chooseAddressLauncher = registerChooseAddressResult(context)
         signUpWorkflowLauncher = registerSignUpResult(context)
+        confirmPasswordWorkflowLauncher = registerConfirmPasswordResult(context)
     }
 
     /**
@@ -341,5 +372,12 @@ fun AuthOrchestrator.onChooseAddressResult(
     block: (result: ChooseAddressResult?) -> Unit
 ): AuthOrchestrator {
     setOnChooseAddressResult { block(it) }
+    return this
+}
+
+fun AuthOrchestrator.onConfirmPasswordResult(
+    block: (result: ConfirmPasswordResult?) -> Unit
+): AuthOrchestrator {
+    setOnConfirmPasswordResult { block(it) }
     return this
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,13 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity
+package me.proton.core.user.data.api.request
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@Parcelize
-data class ScopeResult(
-    val sessionId: String,
-    val scopes: List<String>
-) : Parcelable
+@Serializable
+data class UnlockPasswordRequest(
+    @SerialName("ClientEphemeral")
+    val clientEphemeral: String,
+    @SerialName("ClientProof")
+    val clientProof: String,
+    @SerialName("SRPSession")
+    val srpSession: String,
+    @SerialName("TwoFactorCode")
+    val twoFactorCode: String? = null
+)

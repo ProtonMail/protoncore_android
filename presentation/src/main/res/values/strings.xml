@@ -26,11 +26,13 @@
     <string name="presentation_force_update_update">Update</string>
     <string name="presentation_market_missing">Can not find market application installed on the device. Please go to the store and update the application.</string>
     <string name="presentation_authenticate">Authenticate</string>
+    <string name="presentation_signin_to_continue">Sign in to continue</string>
 
     <string name="presentation_alert_title">Alert</string>
     <string name="presentation_alert_ok">OK</string>
     <string name="presentation_alert_enter">Enter</string>
     <string name="presentation_alert_cancel">Cancel</string>
+    <string name="presentation_alert_submit">Submit</string>
 
     <!-- Common menu items -->
     <string name="presentation_menu_item_title_report_a_bug">Report a bug</string>

@@ -30,6 +30,7 @@ import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.confirmpassword.ConfirmPasswordRobot
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.robots.reports.BugReportRobot
@@ -49,14 +50,29 @@ open class CoreexampleRobot : CoreRobot() {
     fun humanVerification(): HumanVerificationRobot = clickElement(R.id.trigger_human_ver)
     fun signup(): ChooseUsernameRobot = clickElement(R.id.signup)
     fun signupExternal(): ChooseUsernameRobot = clickElement(R.id.signupExternal)
+    inline fun <reified T> logoutUser(user: User): T = clickUserButton(user)
+    inline fun <reified T> clickUserButton(
+        user: User,
+        accountState: AccountState = Ready,
+        sessionState: SessionState = Authenticated
+    ): T = clickElement(getUserState(user, accountState, sessionState))
+
     fun plansUpgrade(): SelectPlanRobot = clickElement(R.id.plansUpgrade)
     fun plansCurrent(): SelectPlanRobot = clickElement(R.id.plansCurrent)
     fun settingsRecoveryEmail(): RecoveryEmailRobot = clickElement(R.id.settingsRecovery)
     fun settingsPasswordManagement(): PasswordManagementRobot = clickElement(R.id.settingsPassword)
+    fun confirmPasswordLocked(): ConfirmPasswordRobot = swipeUp().clickElement(R.id.trigger_confirm_password_locked)
+    fun confirmPasswordPassword(): ConfirmPasswordRobot = swipeUp().clickElement(R.id.trigger_confirm_password_pass)
+    fun lockScopes(): ConfirmPasswordRobot = swipeUp().clickElement(R.id.lock_scope)
+    fun accountSwitcher(): AccountSwitcherRobot =
+        swipeDown().clickElement(R.id.accountPrimaryView, ViewGroup::class.java)
 
-    fun accountSwitcher(): AccountSwitcherRobot {
+    private fun swipeDown() = apply {
         view.instanceOf(ScrollView::class.java).swipeDown()
-        return clickElement(R.id.accountPrimaryView, ViewGroup::class.java)
+    }
+
+    private fun swipeUp() = apply {
+        view.instanceOf(ScrollView::class.java).swipeUp()
     }
 
     class Verify : CoreVerify() {
@@ -68,10 +84,12 @@ open class CoreexampleRobot : CoreRobot() {
         }
 
         fun accountSwitcherDisplayed() {
+            view.instanceOf(ScrollView::class.java).swipeDown()
             view.withId(R.id.account_email_textview).checkDisplayed()
         }
 
         fun primaryUserIs(user: User) {
+            view.instanceOf(ScrollView::class.java).swipeDown()
             view.withId(R.id.account_email_textview).startsWith("${user.name}@").checkDisplayed()
         }
     }

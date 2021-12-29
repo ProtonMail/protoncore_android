@@ -21,6 +21,7 @@ package me.proton.core.data.room.db
 import androidx.room.TypeConverter
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.session.SessionId
 
 class CommonConverters {
