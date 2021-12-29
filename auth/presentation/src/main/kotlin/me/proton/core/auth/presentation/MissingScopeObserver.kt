@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeState
+import me.proton.core.network.domain.scopes.Scope
 
 class MissingScopeObserver(
     private val lifecycle: Lifecycle,
@@ -37,13 +38,20 @@ class MissingScopeObserver(
     private val observerJobs = mutableListOf<Job>()
 
     internal inline fun <reified T : MissingScopeState> addMissingScopeStateListener(
+        missingScopes: List<Scope> = emptyList(),
         crossinline block: suspend (T) -> Unit
     ) {
         observerJobs += missingScopeListener.state
             .flowWithLifecycle(lifecycle, minActiveState)
             .onEach {
-                if (it is T) {
-                    block(it)
+                when (it) {
+                    !is T -> Unit
+                    is MissingScopeState.ScopeMissing -> {
+                        if (it.missingScopes.any { scope -> scope in missingScopes }) {
+                            block(it)
+                        }
+                    }
+                    else -> block(it)
                 }
             }
             .launchIn(scope)
@@ -63,7 +71,7 @@ fun MissingScopeListener.observe(
 fun MissingScopeObserver.onConfirmPasswordNeeded(
     block: suspend (MissingScopeState.ScopeMissing) -> Unit
 ): MissingScopeObserver {
-    addMissingScopeStateListener(block = block)
+    addMissingScopeStateListener(missingScopes = listOf(Scope.LOCKED, Scope.PASSWORD), block = block)
     return this
 }
 

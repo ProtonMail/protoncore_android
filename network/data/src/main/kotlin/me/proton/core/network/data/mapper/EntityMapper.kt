@@ -23,7 +23,6 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.scopes.MissingScopes
 import me.proton.core.network.domain.scopes.Scope
 
@@ -39,7 +38,7 @@ fun Details.toHumanVerificationEntity(): HumanVerificationAvailableMethods =
 
 fun Details.toMissingScopes(): MissingScopes =
     MissingScopes(
-        scopes = missingScopes!!.mapNotNull {
+        scopes = missingScopes?.mapNotNull {
             Scope.getByValue(it)
         }
     )

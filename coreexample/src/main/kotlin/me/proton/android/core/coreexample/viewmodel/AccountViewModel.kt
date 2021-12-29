@@ -49,6 +49,8 @@ import me.proton.core.accountmanager.presentation.onUserKeyCheckFailed
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.observe
 import me.proton.core.auth.presentation.onConfirmPasswordNeeded
+import me.proton.core.auth.presentation.onMissingScopeFailed
+import me.proton.core.auth.presentation.onMissingScopeSuccess
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
@@ -116,6 +118,8 @@ class AccountViewModel @Inject constructor(
         with(authOrchestrator) {
             missingScopeListener.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
                 .onConfirmPasswordNeeded { startConfirmPasswordWorkflow(it) }
+                .onMissingScopeSuccess { context.showToast("Success Test") }
+                .onMissingScopeFailed { context.showToast("Failed test") }
         }
     }
 
