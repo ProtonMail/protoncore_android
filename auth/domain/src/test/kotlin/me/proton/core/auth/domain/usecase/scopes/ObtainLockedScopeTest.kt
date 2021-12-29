@@ -26,6 +26,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -45,6 +46,7 @@ class ObtainLockedScopeTest {
     // region mocks
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val userRepository = mockk<UserRepository>(relaxed = true)
+    private val cryptoContext = mockk<CryptoContext>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
     // endregion
@@ -83,6 +85,8 @@ class ObtainLockedScopeTest {
         // GIVEN
         every { keyStoreCrypto.decrypt(testPasswordEncrypted) } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns testPasswordEncrypted
+        every { cryptoContext.srpCrypto } returns srpCrypto
+        every { cryptoContext.keyStoreCrypto } returns keyStoreCrypto
 
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
@@ -101,7 +105,7 @@ class ObtainLockedScopeTest {
                 authInfoResult.srpSession
             )
         } returns true
-        useCase = ObtainLockedScope(authRepository, userRepository, srpCrypto, keyStoreCrypto)
+        useCase = ObtainLockedScope(authRepository, userRepository, cryptoContext)
     }
 
     @Test

@@ -32,7 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
-import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
+import me.proton.core.auth.presentation.databinding.DialogConfirmPasswordBinding
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
 import me.proton.core.auth.presentation.viewmodel.ConfirmPasswordDialogViewModel
@@ -70,12 +70,8 @@ class ConfirmPasswordDialog : ProtonDialogFragment() {
     private val missingScope: Scope by lazy {
         // if we are required password scope we will try to obtain only that one
         when {
-            missingScopes.firstOrNull { it == Scope.PASSWORD } != null -> {
-                Scope.PASSWORD
-            }
-            missingScopes.firstOrNull { it == Scope.LOCKED } != null -> {
-                Scope.LOCKED
-            }
+            missingScopes.contains(Scope.PASSWORD) -> Scope.PASSWORD
+            missingScopes.contains(Scope.LOCKED) -> Scope.LOCKED
             else -> throw IllegalArgumentException("Unrecognized scope!")
         }
     }
@@ -93,7 +89,7 @@ class ConfirmPasswordDialog : ProtonDialogFragment() {
 
         screenProtector.protect(requireActivity())
 
-        val binding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(requireContext()))
+        val binding = DialogConfirmPasswordBinding.inflate(LayoutInflater.from(requireContext()))
         val builder = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.presentation_signin_to_continue)
             .setView(binding.root)

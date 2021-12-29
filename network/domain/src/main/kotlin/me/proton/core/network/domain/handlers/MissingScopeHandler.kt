@@ -49,11 +49,11 @@ class MissingScopeHandler<Api>(
     ): ApiResult<T> {
         if (sessionId == null) return error
 
-        if (error !is ApiResult.Error.Http || error.proton?.code != HTTP_FORBIDDEN) return error
+        if (error !is ApiResult.Error.Http || error.httpCode != HTTP_FORBIDDEN) return error
 
         val userId = sessionProvider.getUserId(sessionId) ?: return error
 
-        val details = error.proton.missingScopes ?: return error
+        val details = error.proton?.missingScopes ?: return error
 
         val scopes = details.scopes
         if (scopes.isNullOrEmpty()) return error

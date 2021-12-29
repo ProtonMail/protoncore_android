@@ -20,55 +20,54 @@ package me.proton.core.network.domain.handlers
 
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.ResponseCodes.MISSING_SCOPE
-import me.proton.core.network.domain.client.ClientId
-import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_FORBIDDEN
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeResult
 import me.proton.core.network.domain.scopes.MissingScopes
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import org.junit.Test
 import kotlin.test.BeforeTest
 
 class MissingScopeHandlerTest {
 
     private val sessionId = mockk<SessionId>(relaxed = true)
-    private val clientId = mockk<ClientId>(relaxed = true)
+    private val userId = UserId("test-user-id")
 
-    private val clientIdProvider = mockk<ClientIdProvider>()
+    private val sessionProvider = mockk<SessionProvider>()
     private val apiBackend = mockk<ApiBackend<Any>>()
     private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
 
     @BeforeTest
     fun beforeTest() {
-        every { clientIdProvider.getClientId(any()) } returns clientId
+        coEvery { sessionProvider.getUserId(any()) } returns userId
     }
 
     @Test
     fun `test missing scope LOCKED called`() = runBlockingTest {
         val apiResult = ApiResult.Error.Http(
-            403,
+            HTTP_FORBIDDEN,
             "Missing Scope",
             ApiResult.Error.ProtonData(
-                MISSING_SCOPE,
+                HTTP_FORBIDDEN,
                 "Missing Scope",
                 missingScopes = MissingScopes(listOf(Scope.LOCKED))
             )
         )
 
-        coEvery { missingScopeListener.onMissingScope(any()) } returns MissingScopeResult.Success
+        coEvery { missingScopeListener.onMissingScope(userId, any()) } returns MissingScopeResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
         val missingScopeHandler =
-            MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
+            MissingScopeHandler<Any>(sessionId, sessionProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = apiBackend,
@@ -77,25 +76,25 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 1) { missingScopeListener.onMissingScope(Scope.LOCKED) }
+        coVerify(exactly = 1) { missingScopeListener.onMissingScope(userId, listOf(Scope.LOCKED)) }
     }
 
     @Test
     fun `test missing scope PASSWORD called`() = runBlockingTest {
         val apiResult = ApiResult.Error.Http(
-            403,
+            HTTP_FORBIDDEN,
             "Missing Scope",
             ApiResult.Error.ProtonData(
-                MISSING_SCOPE,
+                HTTP_FORBIDDEN,
                 "Missing Scope",
                 missingScopes = MissingScopes(listOf(Scope.PASSWORD))
             )
         )
 
-        coEvery { missingScopeListener.onMissingScope(any()) } returns MissingScopeResult.Success
+        coEvery { missingScopeListener.onMissingScope(userId, any()) } returns MissingScopeResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, sessionProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = apiBackend,
@@ -104,26 +103,26 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 1) { missingScopeListener.onMissingScope(Scope.PASSWORD) }
+        coVerify(exactly = 1) { missingScopeListener.onMissingScope(userId, listOf(Scope.PASSWORD)) }
     }
 
     @Test
     fun `test missing scope LOCKED and PASSWORD called handled properly`() = runBlockingTest {
         val apiResult = ApiResult.Error.Http(
-            403,
+            HTTP_FORBIDDEN,
             "Missing Scope",
             ApiResult.Error.ProtonData(
-                MISSING_SCOPE,
+                HTTP_FORBIDDEN,
                 "Missing Scope",
                 missingScopes = MissingScopes(listOf(Scope.LOCKED, Scope.PASSWORD))
             )
         )
 
-        coEvery { missingScopeListener.onMissingScope(any()) } returns MissingScopeResult.Success
+        coEvery { missingScopeListener.onMissingScope(userId, any()) } returns MissingScopeResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns ApiResult.Success("test")
 
         val missingScopeHandler =
-            MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
+            MissingScopeHandler<Any>(sessionId, sessionProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = apiBackend,
@@ -132,25 +131,25 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 1) { missingScopeListener.onMissingScope(Scope.LOCKED) }
+        coVerify(exactly = 1) { missingScopeListener.onMissingScope(userId, listOf(Scope.LOCKED, Scope.PASSWORD)) }
     }
 
     @Test
     fun `test missing scope called but retry api failed`() = runBlockingTest {
         val apiResult = ApiResult.Error.Http(
-            403,
+            HTTP_FORBIDDEN,
             "Missing Scope",
             ApiResult.Error.ProtonData(
-                MISSING_SCOPE,
+                HTTP_FORBIDDEN,
                 "Missing Scope",
                 missingScopes = MissingScopes(listOf(Scope.PASSWORD))
             )
         )
 
-        coEvery { missingScopeListener.onMissingScope(any()) } returns MissingScopeResult.Success
+        coEvery { missingScopeListener.onMissingScope(userId, any()) } returns MissingScopeResult.Success
         coEvery { apiBackend.invoke<Any>(any()) } returns apiResult
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, sessionProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = apiBackend,
@@ -159,7 +158,7 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 1) { missingScopeListener.onMissingScope(Scope.PASSWORD) }
+        coVerify(exactly = 1) { missingScopeListener.onMissingScope(userId, listOf(Scope.PASSWORD)) }
     }
 
     @Test
@@ -173,7 +172,7 @@ class MissingScopeHandlerTest {
             )
         )
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, sessionProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = mockk(),
@@ -182,7 +181,7 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 0) { missingScopeListener.onMissingScope(any()) }
+        coVerify(exactly = 0) { missingScopeListener.onMissingScope(userId, any()) }
     }
 
     @Test
@@ -193,7 +192,7 @@ class MissingScopeHandlerTest {
             null
         )
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, sessionProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = mockk(),
@@ -202,14 +201,14 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 0) { missingScopeListener.onMissingScope(any()) }
+        coVerify(exactly = 0) { missingScopeListener.onMissingScope(userId, any()) }
     }
 
     @Test
     fun `test connectivity error does not invoke missing scope handler`() = runBlockingTest {
         val apiResult = ApiResult.Error.Connection(false)
 
-        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, clientIdProvider, missingScopeListener)
+        val missingScopeHandler = MissingScopeHandler<Any>(sessionId, sessionProvider, missingScopeListener)
 
         val result = missingScopeHandler.invoke(
             backend = mockk(),
@@ -218,6 +217,6 @@ class MissingScopeHandlerTest {
         )
 
         assertNotNull(result)
-        coVerify(exactly = 0) { missingScopeListener.onMissingScope(any()) }
+        coVerify(exactly = 0) { missingScopeListener.onMissingScope(userId, any()) }
     }
 }
