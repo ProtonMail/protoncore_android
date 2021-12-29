@@ -1,0 +1,15 @@
+public final class me/proton/core/crypto/validator/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/crypto/validator/data/prefs/CryptoPrefsImpl : me/proton/core/crypto/validator/domain/prefs/CryptoPrefs, me/proton/core/util/android/sharedpreferences/PreferencesProvider {
+	public static final field PREFS_NAME Ljava/lang/String;
+	public fun <init> (Landroid/content/Context;)V
+	public fun getPreferences ()Landroid/content/SharedPreferences;
+	public fun getUseInsecureKeystore ()Ljava/lang/Boolean;
+	public fun setUseInsecureKeystore (Ljava/lang/Boolean;)V
+}
+

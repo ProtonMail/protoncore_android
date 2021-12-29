@@ -124,6 +124,7 @@ dependencies {
         project(Module.contact),
         project(Module.contactHilt),
         project(Module.crypto),
+        project(Module.cryptoValidator),
         project(Module.domain),
         project(Module.eventManager),
         project(Module.gopenpgp),
@@ -171,7 +172,10 @@ dependencies {
 
     // Test
     testImplementation(project(Module.androidTest))
-    androidTestImplementation(project(Module.androidInstrumentedTest))
+    androidTestImplementation(
+        project(Module.androidInstrumentedTest),
+        `hilt-android-testing`
+    )
 
     // Lint - off temporary
     // lintChecks(project(Module.lint))

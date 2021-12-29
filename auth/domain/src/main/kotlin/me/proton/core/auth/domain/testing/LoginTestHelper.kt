@@ -79,5 +79,12 @@ class LoginTestHelper @Inject constructor(
             accountManager.removeAccount(it.userId)
         }
     }
+
+    /**
+     * Checks if any accounts are registered
+     */
+    fun hasAccounts() = runBlocking {
+        accountManager.getAccounts().first().isNotEmpty()
+    }
 }
 

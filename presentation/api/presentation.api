@@ -471,6 +471,17 @@ public final class me/proton/core/presentation/utils/CardType : java/lang/Enum {
 	public static fun values ()[Lme/proton/core/presentation/utils/CardType;
 }
 
+public class me/proton/core/presentation/utils/EmptyActivityLifecycleCallbacks : android/app/Application$ActivityLifecycleCallbacks {
+	public fun <init> ()V
+	public fun onActivityCreated (Landroid/app/Activity;Landroid/os/Bundle;)V
+	public fun onActivityDestroyed (Landroid/app/Activity;)V
+	public fun onActivityPaused (Landroid/app/Activity;)V
+	public fun onActivityResumed (Landroid/app/Activity;)V
+	public fun onActivitySaveInstanceState (Landroid/app/Activity;Landroid/os/Bundle;)V
+	public fun onActivityStarted (Landroid/app/Activity;)V
+	public fun onActivityStopped (Landroid/app/Activity;)V
+}
+
 public final class me/proton/core/presentation/utils/FragmentScreenContentProtectionDelegate : kotlin/properties/ReadOnlyProperty {
 	public fun <init> (Landroidx/fragment/app/Fragment;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;)V
 	public fun getValue (Landroidx/fragment/app/Fragment;Lkotlin/reflect/KProperty;)Lme/proton/core/presentation/utils/ScreenContentProtector;
@@ -535,6 +546,10 @@ public final class me/proton/core/presentation/utils/InputValidationResult {
 }
 
 public final class me/proton/core/presentation/utils/InputValidationResult$Companion {
+}
+
+public final class me/proton/core/presentation/utils/LocaleUtilsKt {
+	public static final fun currentLocale (Landroid/content/res/Configuration;)Ljava/util/Locale;
 }
 
 public final class me/proton/core/presentation/utils/NumberUtilsKt {

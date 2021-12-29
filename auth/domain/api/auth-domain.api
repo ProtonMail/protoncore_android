@@ -229,6 +229,7 @@ public abstract interface class me/proton/core/auth/domain/repository/AuthReposi
 
 public final class me/proton/core/auth/domain/testing/LoginTestHelper {
 	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)V
+	public final fun hasAccounts ()Z
 	public final fun login (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/domain/entity/SessionInfo;
 	public final fun logout (Lme/proton/core/domain/entity/UserId;)V
 	public final fun logoutAll ()V

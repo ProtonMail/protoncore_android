@@ -63,6 +63,7 @@ const val `compose version` =                   "1.0.5"         // Released: Nov
 const val `hilt-navigation-compose version` =   "1.0.0-beta01"  // Released: Nov 17, 2021
 const val `material3 version` =                 "1.0.0-alpha02" // Released: Dec 01, 2021
 const val `navigation version` =                "2.4.0-beta02"  // Released: Nov 03, 2021
+const val `startup-runtime version` =           "1.1.0"         // Released: Aug 04, 2021
 // endregion
 
 // region Other

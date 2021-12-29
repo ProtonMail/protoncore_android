@@ -31,9 +31,9 @@ interface ConditionWatcher {
      * @throws Exception which was last caught during condition check after given [watchTimeout] ms
      */
     fun waitForCondition(
-        conditionBlock: () -> Unit,
         watchTimeout: Long = commandTimeout,
         watchInterval: Long = 250L,
+        conditionBlock: () -> Unit,
     ) {
         var throwable: Throwable = TimeoutException("Condition was not met in $watchTimeout ms. No exceptions caught.")
         var currentTimestamp = System.currentTimeMillis()

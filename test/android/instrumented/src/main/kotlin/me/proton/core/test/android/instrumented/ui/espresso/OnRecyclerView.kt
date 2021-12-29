@@ -50,7 +50,7 @@ class OnRecyclerView : ConditionWatcher {
     private fun viewInteraction(
         viewAssertion: ViewAssertion = ViewAssertions.matches(ViewMatchers.isDisplayed())
     ): ViewInteraction {
-        waitForCondition({ onView(viewMatcher()).check(viewAssertion) })
+        waitForCondition { onView(viewMatcher()).check(viewAssertion) }
         return onView(viewMatcher())
     }
 
@@ -104,7 +104,7 @@ class OnRecyclerView : ConditionWatcher {
     }
 
     fun waitUntilGone() = apply {
-        waitForCondition({ viewInteraction().check(ViewAssertions.doesNotExist()) })
+        waitForCondition { viewInteraction().check(ViewAssertions.doesNotExist()) }
     }
 
     fun scrollToHolder(viewHolderMatcher: Matcher<RecyclerView.ViewHolder>) = apply {

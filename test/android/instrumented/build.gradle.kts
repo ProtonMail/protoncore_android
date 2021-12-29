@@ -55,6 +55,7 @@ dependencies {
         project(Module.mailSettings),
         project(Module.userSettings),
         project(Module.report),
+        project(Module.cryptoValidatorPresentation),
 
         // Android
         espresso,
@@ -70,6 +71,7 @@ dependencies {
         `junit-ktx`,
         `serialization-json`,
         `okhttp-url-connection`,
-        `room-testing`
+        `room-testing`,
+        `android-test-core-ktx`,
     )
 }

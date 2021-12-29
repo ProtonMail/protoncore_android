@@ -36,12 +36,12 @@ import me.proton.android.core.coreexample.ui.ContactsActivity
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
 import me.proton.android.core.coreexample.viewmodel.AccountViewModel
-import me.proton.android.core.coreexample.viewmodel.ReportsViewModel
 import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
 import me.proton.android.core.coreexample.viewmodel.PlansViewModel
 import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
 import me.proton.android.core.coreexample.viewmodel.RemoveScopeViewModel
+import me.proton.android.core.coreexample.viewmodel.ReportsViewModel
 import me.proton.android.core.coreexample.viewmodel.UserAddressKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
