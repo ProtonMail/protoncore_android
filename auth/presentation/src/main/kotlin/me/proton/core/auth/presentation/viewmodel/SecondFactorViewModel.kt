@@ -91,7 +91,8 @@ class SecondFactorViewModel @Inject constructor(
             encryptedPassword = encryptedPassword,
             requiredAccountType = requiredAccountType,
             isSecondFactorNeeded = false,
-            isTwoPassModeNeeded = isTwoPassModeNeeded
+            isTwoPassModeNeeded = isTwoPassModeNeeded,
+            temporaryPassword = false
         )
         emit(State.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {

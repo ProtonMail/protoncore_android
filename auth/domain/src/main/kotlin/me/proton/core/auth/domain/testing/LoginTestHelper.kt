@@ -52,7 +52,8 @@ class LoginTestHelper @Inject constructor(
                 encryptedPassword = encryptedPassword,
                 requiredAccountType = accountType,
                 isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-                isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+                isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+                temporaryPassword = sessionInfo.temporaryPassword
             )
             check(result is PostLoginAccountSetup.Result.UserUnlocked) {
                 "Unexpected login result: $result"

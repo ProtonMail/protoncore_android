@@ -108,6 +108,7 @@ internal class LoginViewModel @Inject constructor(
             requiredAccountType = requiredAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             billingDetails = billingDetails
         )
         emit(State.AccountSetupResult(result))

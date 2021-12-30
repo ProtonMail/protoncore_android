@@ -65,7 +65,8 @@ class SetupAccountCheck @Inject constructor(
     suspend operator fun invoke(
         userId: UserId,
         isTwoPassModeNeeded: Boolean,
-        requiredAccountType: AccountType
+        requiredAccountType: AccountType,
+        temporaryPassword: Boolean
     ): Result {
         val user = userRepository.getUser(userId, refresh = true)
         return when (requiredAccountType) {
@@ -84,7 +85,7 @@ class SetupAccountCheck @Inject constructor(
                 val addresses = addressRepository.getAddresses(userId, refresh = true)
                 when {
                     !user.hasUsername() -> ChooseUsernameNeeded
-                    !user.hasKeys() && user.isSubUser() && user.isPrivate() -> ChangePasswordNeeded
+                    temporaryPassword -> ChangePasswordNeeded
                     !user.hasKeys() -> SetupPrimaryKeysNeeded
                     !addresses.hasInternalAddressKey() -> SetupInternalAddressNeeded
                     isTwoPassModeNeeded -> TwoPassNeeded
