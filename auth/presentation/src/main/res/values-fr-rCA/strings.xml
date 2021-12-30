@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_vpn">RPV suisse haute vitesse qui protège votre vie privée en chiffrant votre connexion Internet.</string>
   <string name="auth_password_label">Mot de passe</string>
   <string name="auth_password_help">Le mot de passe doit contenir au moins 8 caractères</string>
-  <string name="auth_current_login_password">Mot de passe de connexion actuel</string>
+  <string name="auth_current_login_password">Current login Password</string>
   <string name="auth_enter_six_digit_code">Saisissez le code à 6 chiffres</string>
   <string name="auth_second_factor_code">Code à deux facteurs</string>
   <string name="auth_email_username">Adresse électronique ou nom d\'utilisateur</string>
@@ -120,7 +120,7 @@
   <string name="auth_signup_verify">Vérifier </string>
   <string name="auth_signup_verification_code">Code de vérification</string>
   <string name="auth_signup_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s:</string>
-  <string name="auth_signup_error_human_verification_failed">La vérification humaine a échoué.</string>
+  <string name="auth_signup_error_human_verification_failed">Human verification failed.</string>
   <string name="auth_signup_token_code_resent">Code jeton renvoyé.</string>
   <string name="auth_signup_error_validation_recovery_destination">La destination de récupération n\'est pas valide.</string>
 </resources>
