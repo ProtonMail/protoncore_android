@@ -21,7 +21,7 @@ package me.proton.core.network.domain
  * Custom timeout to be applied on a per-call basis.
  */
 data class TimeoutOverride(
-    val connectionTimeoutSeconds: Int,
-    val readTimeoutSeconds: Int,
-    val writeTimeoutSeconds: Int
+    val connectionTimeoutSeconds: Int? = null,
+    val readTimeoutSeconds: Int? = null,
+    val writeTimeoutSeconds: Int? = null,
 )

@@ -50,7 +50,7 @@ interface ApiClient {
     /**
      * Global timeout for DoH logic.
      */
-    val dohTimeoutMs: Long get() = 60_000L
+    val dohTimeoutMs: Long get() = 80_000L
 
     /**
      * How long alternative API proxy will be used before primary API is attempted again.

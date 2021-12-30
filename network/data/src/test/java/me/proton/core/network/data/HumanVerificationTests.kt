@@ -200,7 +200,9 @@ internal class HumanVerificationTests {
             TestRetrofitApi::class,
             networkManager,
             pinningInit,
-            ::javaWallClockMs
+            ::javaWallClockMs,
+            prefs,
+            cookieStore
         )
 
     @After

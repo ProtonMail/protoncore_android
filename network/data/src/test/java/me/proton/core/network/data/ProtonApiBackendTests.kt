@@ -180,6 +180,8 @@ internal class ProtonApiBackendTests {
             networkManager,
             pinningInit,
             ::javaWallClockMs,
+            prefs,
+            cookieStore,
             extraHeaderProvider,
         )
 

@@ -27,10 +27,7 @@ import android.os.Parcelable
 import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -47,6 +44,7 @@ import me.proton.core.humanverification.presentation.entity.HumanVerificationRes
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
 import me.proton.core.humanverification.presentation.ui.VerificationResponseMessage.MessageType
 import me.proton.core.humanverification.presentation.ui.VerificationResponseMessage.Type
+import me.proton.core.humanverification.presentation.ui.webview.HumanVerificationWebViewClient
 import me.proton.core.humanverification.presentation.utils.showHelp
 import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationExtraParams
 import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel
@@ -56,10 +54,10 @@ import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.client.getId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
-import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.normSnack
 import me.proton.core.presentation.utils.successSnack
+import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.deserializeOrNull
 import me.proton.core.util.kotlin.exhaustive
 import java.net.URLEncoder
@@ -125,7 +123,11 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
             javaScriptEnabled = true
             domStorageEnabled = true
         }
-        if (BuildConfig.DEBUG) webView.webViewClient = HumanVerificationWebViewClient(extraHeaderProvider.headers)
+        webView.webViewClient = HumanVerificationWebViewClient(
+            extraHeaderProvider.headers,
+            viewModel.activeAltUrlForDoH,
+            networkRequestOverrider,
+        )
         webView.webChromeClient = HumanVerificationWebChromeClient()
         webView.addJavascriptInterface(VerificationJSInterface(), JS_INTERFACE_NAME)
         // Workaround to get transparent webview background
@@ -141,8 +143,9 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         // At the moment, this is enough to properly load the Captcha with the extra headers.
         // This behavior could change and we might need to implement a WebViewClient to act as an interceptor.
         WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
-        val extraHeaders = extraHeaderProvider.headers.associate { it }
-        val baseUrl = parsedArgs.baseUrl ?: humanVerificationApiHost
+        val extraHeaders = extraHeaderProvider.headers.toMap().toMutableMap()
+        val overriddenUrl = viewModel.activeAltUrlForDoH ?: parsedArgs.baseUrl
+        val baseUrl = overriddenUrl ?: humanVerificationApiHost
         val darkMode = context?.resources?.configuration?.isUsingDarkMode() ?: false
         val url = buildUrl(
             baseUrl,
@@ -150,7 +153,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
             parsedArgs.verificationMethods,
             parsedArgs.recoveryEmail,
             params,
-            darkMode
+            darkMode,
         )
         webView.loadUrl(url, extraHeaders)
     }
@@ -239,25 +242,6 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         }
     }
 
-    /** Used to override HTTP headers to access captcha iframe on debug from outside the VPN */
-    inner class HumanVerificationWebViewClient(
-        private val extraHeaders: List<Pair<String, String>>
-    ) : WebViewClient() {
-        override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-            val isCaptchaURL = request.url.path?.contains("captcha") == true
-            return if (extraHeaders.isNotEmpty() && request.method == "GET" && isCaptchaURL) {
-                runCatching {
-                    val response = networkRequestOverrider.overrideRequest(
-                        request.url.toString(),
-                        request.method,
-                        request.requestHeaders.toList() + extraHeaders
-                    )
-                    WebResourceResponse(response.mimeType, response.encoding, response.contents)
-                }.getOrNull()
-            } else null
-        }
-    }
-
     /** JS Interface used for communication between the WebView contents and the client. */
     inner class VerificationJSInterface {
         /** Used as callback by all verification methods once the challenge is solved. */
@@ -279,6 +263,8 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
     ) : Parcelable
 
     companion object {
+
+        private const val TAG = "HumanVerificationDialogFragment"
 
         private const val ARGS_KEY = "args"
         private const val MAX_PROGRESS = 100

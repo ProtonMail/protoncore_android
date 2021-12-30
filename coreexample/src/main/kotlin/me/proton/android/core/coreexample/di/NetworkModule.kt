@@ -46,11 +46,11 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
-import me.proton.core.network.domain.serverconnection.ApiConnectionListener
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
+import me.proton.core.network.domain.serverconnection.ApiConnectionListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.takeIfNotBlank
@@ -98,8 +98,8 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideNetworkRequestOverrider(): NetworkRequestOverrider =
-        NetworkRequestOverriderImpl(OkHttpClient())
+    fun provideNetworkRequestOverrider(@ApplicationContext context: Context): NetworkRequestOverrider =
+        NetworkRequestOverriderImpl(OkHttpClient(), context)
 
     @Provides
     @Singleton

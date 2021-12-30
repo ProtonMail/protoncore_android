@@ -25,6 +25,7 @@ interface NetworkRequestOverrider {
         url: String,
         method: String,
         headers: List<Pair<String, String>>,
+        acceptSelfSignedCertificates: Boolean = false,
         body: InputStream? = null,
         bodyType: String? = null,
     ): Result

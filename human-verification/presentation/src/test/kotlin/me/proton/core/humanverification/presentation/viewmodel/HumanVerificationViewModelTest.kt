@@ -33,6 +33,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -51,6 +52,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
     private val humanVerificationWorkflowHandler = mockk<HumanVerificationWorkflowHandler>(relaxed = true)
     private val accountRepository = mockk<AccountRepository>(relaxed = true)
     private val getSettings = mockk<GetSettings>(relaxed = true)
+    private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
 
     lateinit var viewModel: HumanVerificationViewModel
 
@@ -66,6 +68,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
             humanVerificationWorkflowHandler,
             accountRepository,
             getSettings,
+            networkPrefs,
         )
     }
 

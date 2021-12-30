@@ -19,6 +19,7 @@ package me.proton.core.network.data
 
 import kotlinx.coroutines.runBlocking
 import me.proton.core.network.data.interceptor.CacheOverrideInterceptor
+import me.proton.core.network.data.interceptor.DoHCookieInterceptor
 import me.proton.core.network.data.interceptor.ServerErrorInterceptor
 import me.proton.core.network.data.interceptor.ServerTimeInterceptor
 import me.proton.core.network.data.interceptor.TooManyRequestInterceptor
@@ -29,6 +30,7 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -76,6 +78,8 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private val networkManager: NetworkManager,
     securityStrategy: (OkHttpClient.Builder) -> Unit,
     wallClockMs: () -> Long,
+    private val networkPrefs: NetworkPrefs,
+    private val cookieStore: ProtonCookieStore?,
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
     ) : ApiBackend<Api> {
 
@@ -92,6 +96,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             .addInterceptor(ServerErrorInterceptor())
             .addInterceptor(TooManyRequestInterceptor(sessionId, wallClockMs))
             .addNetworkInterceptor(ServerTimeInterceptor(serverTimeListener))
+            .apply { cookieStore?.let { addInterceptor(DoHCookieInterceptor(networkPrefs, it)) } }
             .apply(securityStrategy)
             .build()
     }
@@ -108,13 +113,14 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     }
 
     private fun handleTimeoutTag(chain: Interceptor.Chain): Interceptor.Chain {
+        var chain = chain
         val tag = chain.request().tag(TimeoutOverride::class.java)
-        return tag?.let {
-            chain
-                .withConnectTimeout(tag.connectionTimeoutSeconds, TimeUnit.SECONDS)
-                .withReadTimeout(tag.readTimeoutSeconds, TimeUnit.SECONDS)
-                .withWriteTimeout(tag.writeTimeoutSeconds, TimeUnit.SECONDS)
-        } ?: chain
+        tag?.let { timeout ->
+            timeout.connectionTimeoutSeconds?.let { chain = chain.withConnectTimeout(it, TimeUnit.SECONDS) }
+            timeout.readTimeoutSeconds?.let { chain = chain.withReadTimeout(it, TimeUnit.SECONDS) }
+            timeout.writeTimeoutSeconds?.let { chain = chain.withWriteTimeout(it, TimeUnit.SECONDS) }
+        }
+        return chain
     }
 
     private fun prepareHeaders(original: Request): Request.Builder {
@@ -178,5 +184,5 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     }
 
     override suspend fun isPotentiallyBlocked(): Boolean =
-        invokeInternal { ping() }.isPotentialBlocking
+        invokeInternal { ping(TimeoutOverride(connectionTimeoutSeconds = 20)) }.isPotentialBlocking
 }

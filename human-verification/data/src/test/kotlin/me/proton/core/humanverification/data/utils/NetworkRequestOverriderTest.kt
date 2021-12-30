@@ -18,6 +18,10 @@
 
 package me.proton.core.humanverification.data.utils
 
+import android.content.Context
+import android.content.res.Resources
+import io.mockk.every
+import io.mockk.mockk
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -37,7 +41,13 @@ class NetworkRequestOverriderTest {
 
     @Before
     fun setup() {
-        overrider = NetworkRequestOverriderImpl(OkHttpClient())
+        val resources = mockk<Resources> {
+            every { openRawResource(any()) } returns "".byteInputStream()
+        }
+        val context = mockk<Context> {
+            every { getResources() } returns resources
+        }
+        overrider = NetworkRequestOverriderImpl(OkHttpClient(), context)
         mockWebServer = MockWebServer().apply {
             enqueue(
                 MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody("Some response")
