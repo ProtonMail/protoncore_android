@@ -38,7 +38,8 @@ data class SessionInfo(
     val serverProof: String,
     val localId: Int,
     val passwordMode: Int,
-    val secondFactor: SecondFactor?
+    val secondFactor: SecondFactor?,
+    val temporaryPassword: Boolean
 ) {
     val isSecondFactorNeeded = secondFactor is SecondFactor.Enabled
     val isTwoPassModeNeeded = passwordMode == 2
