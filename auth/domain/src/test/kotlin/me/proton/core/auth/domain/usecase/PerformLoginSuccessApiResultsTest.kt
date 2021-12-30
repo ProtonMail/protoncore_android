@@ -71,7 +71,8 @@ class PerformLoginSuccessApiResultsTest {
     private val sessionInfoResult = SessionInfo(
         username = testUsername, accessToken = "", expiresIn = 1, tokenType = "", scope = "", scopes = emptyList(),
         sessionId = SessionId(""), userId = UserId(""), refreshToken = "", eventId = "", serverProof = "", localId = 1, passwordMode = 1,
-        secondFactor = null
+        secondFactor = null,
+        temporaryPassword = false,
     )
 
     private lateinit var useCase: PerformLogin

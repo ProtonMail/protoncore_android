@@ -87,7 +87,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockSessionInfo(isSecondFactorNeeded = true)
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any())
         } returns PostLoginAccountSetup.Result.Need.SecondFactor(testUserId)
 
         viewModel.state.test {
@@ -115,7 +115,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any())
         } returns PostLoginAccountSetup.Result.UserUnlocked(testUserId)
 
         viewModel.state.test {
@@ -143,7 +143,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any())
         } throws ApiException(ApiResult.Error.NoInternet())
 
         viewModel.state.test {
@@ -197,7 +197,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         val sessionInfo = mockSessionInfo()
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
-            postLoginAccountSetup.invoke(any(), any(), any(), any(), any())
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any())
         } returns PostLoginAccountSetup.Result.Need.ChangePassword(testUserId)
 
         viewModel.state.test {
@@ -256,5 +256,6 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
         every { userId } returns testUserId
         every { this@mockk.isSecondFactorNeeded } returns isSecondFactorNeeded
         every { this@mockk.isTwoPassModeNeeded } returns isTwoPassModeNeeded
+        every { this@mockk.temporaryPassword } returns false
     }
 }

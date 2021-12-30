@@ -86,7 +86,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         // GIVEN
         val requiredAccountType = AccountType.Internal
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
-        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any()) } returns success
+        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns success
         viewModel.state.test {
             // WHEN
             viewModel.startSecondFactorFlow(
@@ -111,7 +111,7 @@ class SecondFactorViewModelTest : ArchTest, CoroutinesTest {
         val requiredAccountType = AccountType.Internal
         every { testSessionResult.isTwoPassModeNeeded } returns true
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
-        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any()) } returns twoPassNeeded
+        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns twoPassNeeded
         viewModel.state.test {
             // WHEN
             viewModel.startSecondFactorFlow(
