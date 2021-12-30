@@ -25,9 +25,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.platform.app.InstrumentationRegistry
-import com.jraska.falcon.Falcon
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetContext
-import me.proton.core.test.android.instrumented.ProtonTest.Companion.testName
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 import java.io.File
 import java.io.FileOutputStream
@@ -70,7 +68,6 @@ object FileUtils {
      * Creates or clears directory with provided [path]
      */
     fun prepareArtifactsDir(path: String) {
-
         val dir = File(path)
         if (!dir.exists()) {
             Log.v(testTag, "Path $path does not exist. Creating directories.")
@@ -78,25 +75,9 @@ object FileUtils {
             return
         }
 
-        Log.v(testTag, "Path $path is not empty. Removing contents.")
-        dir.list()!!.forEach {
+        dir.list()?.forEach {
             val message = if (File(it).delete()) "Deleted $it" else "Could not delete $it"
             Log.v(testTag, message)
-        }
-    }
-
-    /**
-     * Saves screenshot in provided [screenshotPath]
-     */
-    fun takeScreenshot(
-        screenshotPath: String = "${getTargetContext().filesDir.path}/artifacts/screenshots"
-    ) {
-        try {
-            val file = File(screenshotPath, "${testName.methodName}-screenshot.png")
-            Falcon.takeScreenshot(ActivityProvider.currentActivity, file)
-            Log.v(testTag, "Saved screenshot to ${file.absolutePath}")
-        } catch (e: Throwable) {
-            Log.e(testTag, "Could not take screenshot.\n ${e.message}")
         }
     }
 

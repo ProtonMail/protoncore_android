@@ -58,7 +58,6 @@ dependencies {
 
         // Android
         espresso,
-        falcon,
         uiautomator,
         jsonsimple,
         `android-work-testing`,

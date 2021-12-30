@@ -83,7 +83,6 @@ const val `ez-vcard_version` =              "0.11.3"
 // endregion
 
 // region Tests
-const val `falcon version` =                    "2.2.0"         // Released: Sep 24, 2018
 const val `uiautomator version` =               "2.2.0"         // Released: Oct 25, 2018
 const val `preference version` =                "1.1.1"         // Released: Apr 15, 2020
 const val `json-simple version` =               "1.1.1"         // Released: Mar 21, 2012

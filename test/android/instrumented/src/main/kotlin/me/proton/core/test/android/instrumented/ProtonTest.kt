@@ -29,7 +29,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import me.proton.core.test.android.instrumented.rules.RetryRule
 import me.proton.core.test.android.instrumented.utils.FileUtils
 import me.proton.core.test.android.instrumented.utils.Shell
-import me.proton.core.test.android.instrumented.utils.Shell.clearLogcat
 import org.hamcrest.CoreMatchers
 import org.junit.After
 import org.junit.Before
@@ -73,9 +72,7 @@ open class ProtonTest(
 
     @Before
     open fun setUp() {
-        FileUtils.prepareArtifactsDir(screenshotPath)
         Intents.init()
-        clearLogcat()
         Log.d(testTag, "Starting test execution: ${testName.methodName}")
         Intents.intending(CoreMatchers.not(IntentMatchers.isInternal()))
             .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, null))
@@ -91,7 +88,6 @@ open class ProtonTest(
     companion object {
         const val testTag = "ESPRESSO_TEST"
         var commandTimeout: Long = 10_000L
-        val screenshotPath = "${getTargetContext().filesDir.path}/artifacts/screenshots"
         val testName = TestName()
         fun getTargetContext() = InstrumentationRegistry.getInstrumentation().targetContext!!
     }

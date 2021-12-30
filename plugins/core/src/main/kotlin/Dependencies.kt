@@ -74,7 +74,6 @@ fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `andr
 val DependencyHandler.`espresso-contrib` get() = androidx("test.espresso", module = "espresso-contrib") version `espresso version`
 val DependencyHandler.`espresso-intents` get() = androidx("test.espresso", module = "espresso-intents") version `espresso version`
 val DependencyHandler.`espresso-web` get() = androidx("test.espresso", module = "espresso-web") version `espresso version`
-val DependencyHandler.falcon get() = dependency("com.jraska", module = "falcon") version `falcon version`
 val DependencyHandler.`orchestrator` get() = androidx("test", module = "orchestrator") version `android-test version`
 val DependencyHandler.uiautomator get() = androidx("test.uiautomator", module = "uiautomator") version `uiautomator version`
 val DependencyHandler.preference get() = androidx("preference", module = "preference") version `preference version`
