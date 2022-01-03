@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_vpn">Vysokorychlostní švýcarská VPN, která chrání Vaše soukromí šifrováním internetového připojení.</string>
   <string name="auth_password_label">Heslo</string>
   <string name="auth_password_help">Heslo musí obsahovat alespoň 8 znaků</string>
-  <string name="auth_current_login_password">Current login Password</string>
+  <string name="auth_current_login_password">Aktuální přihlašovací heslo</string>
   <string name="auth_enter_six_digit_code">Zadejte 6-místný kód</string>
   <string name="auth_second_factor_code">Kód pro dvoufaktorové ověření</string>
   <string name="auth_email_username">E-mail nebo uživatelské jméno</string>
@@ -87,6 +87,7 @@
   <string name="auth_user_check_one_free_error">Je povolen pouze jeden bezplatný Proton účet.</string>
   <string name="auth_user_check_delinquent_error">Váš účet je aktuálně pozastaven kvůli faktuře po splatnosti.</string>
   <string name="auth_user_check_delinquent_action">Zaplatit fakturu</string>
+  <string name="auth_account_not_found_error">Error with the account</string>
   <string name="auth_one_account_all_services">Jeden účet pro všechny Proton služby.</string>
   <string name="auth_create_account">Vytvořit účet</string>
   <!-- signup related strings -->
@@ -121,7 +122,7 @@
   <string name="auth_signup_verify">Ověřit</string>
   <string name="auth_signup_verification_code">Ověřovací kód</string>
   <string name="auth_signup_enter_code_subtitle">Zadejte ověřovací kód, který byl odeslán na %s:</string>
-  <string name="auth_signup_error_human_verification_failed">Human verification failed.</string>
+  <string name="auth_signup_error_human_verification_failed">Ověření CAPTCHA se nezdařilo.</string>
   <string name="auth_signup_token_code_resent">Kód tokenu byl znovu odeslán.</string>
   <string name="auth_signup_error_validation_recovery_destination">Cíl obnovení je neplatný.</string>
 </resources>

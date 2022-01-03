@@ -42,40 +42,40 @@
   <string name="plans_feature_free_item_vpn">1 connexion VPN</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the test between #">
-    <item quantity="one">#proton_storage# storage</item>
-    <item quantity="other">#proton_storage# storage</item>
+    <item quantity="one">#proton_storage# de stockage</item>
+    <item quantity="other">#proton_storage# de stockage</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_storage# storage / user</item>
-    <item quantity="other">#proton_storage# storage / user</item>
+    <item quantity="one">#proton_storage# de stockage/utilisateur</item>
+    <item quantity="other">#proton_storage# de stockage/utilisateur</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# address</item>
-    <item quantity="other">#proton_addresses# addresses</item>
+    <item quantity="one">#proton_addresses# adresse</item>
+    <item quantity="other">#proton_addresses# adresses</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# address / user</item>
-    <item quantity="other">#proton_addresses# addresses / user</item>
+    <item quantity="one">#proton_addresses# adresses/utilisateur</item>
+    <item quantity="other">#proton_addresses# adresses/utilisateur</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">#proton_domains# custom domain</item>
-    <item quantity="other">#proton_domains# custom domains</item>
+    <item quantity="one">#proton_domains# domaine personnalisé</item>
+    <item quantity="other">#proton_domains# domaines personnalisés</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# calendar</item>
-    <item quantity="other">#proton_calendars# calendars</item>
+    <item quantity="one">#proton_calendars# calendrier</item>
+    <item quantity="other">#proton_calendars# calendriers</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# VPN connection</item>
-    <item quantity="other">#proton_vpn# VPN connections</item>
+    <item quantity="one">#proton_vpn# connexion VPN</item>
+    <item quantity="other">#proton_vpn# connexions VPN</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# high-speed VPN connection</item>
-    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
+    <item quantity="one">#proton_vpn# connexions VPN à haute vitesse</item>
+    <item quantity="other">#proton_vpn# connexions VPN à haute vitesse</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
-    <item quantity="one">#proton_users# user</item>
-    <item quantity="other">#proton_users# users</item>
+    <item quantity="one">#proton_users# utilisateur</item>
+    <item quantity="other">#proton_users# utilisateurs</item>
   </plurals>
   <!-- endregion -->
   <!-- region plan free -->
@@ -88,7 +88,7 @@
   </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
-  <string name="plan_id_plus_header">Full-featured mailbox with advanced protection.</string>
+  <string name="plan_id_plus_header">Messagerie complète avec protection avancée.</string>
   <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>
@@ -97,7 +97,7 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
-  <string name="plan_id_vpnbasic_high_speed">High speed</string>
+  <string name="plan_id_vpnbasic_high_speed">Haute vitesse</string>
   <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_vpn#</item>
     <item>string</item>
@@ -108,7 +108,7 @@
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
-  <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
+  <string name="plan_id_vpnplus_highest_speed">Vitesse maximale</string>
   <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_vpn#</item>
     <item>string</item>
@@ -118,8 +118,8 @@
   </string-array>
   <!-- endregion -->
   <!-- region plan professional -->
-  <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Multi-user support</string>
+  <string name="plan_id_professional_header">Professionnel</string>
+  <string name="plan_id_professional_multiuser">Prise en charge du multiutilisateur</string>
   <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>

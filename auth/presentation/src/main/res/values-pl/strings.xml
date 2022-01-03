@@ -86,6 +86,7 @@
   <string name="auth_user_check_one_free_error">Możesz dodać tylko jedno darmowe konto Proton.</string>
   <string name="auth_user_check_delinquent_error">Twoje konto jest obecnie zawieszone z powodu zaległych faktur.</string>
   <string name="auth_user_check_delinquent_action">Zapłać fakturę</string>
+  <string name="auth_account_not_found_error">Wystąpił błąd konta</string>
   <string name="auth_one_account_all_services">Jedno konto do wszystkich usług Proton.</string>
   <string name="auth_create_account">Utwórz konto</string>
   <!-- signup related strings -->

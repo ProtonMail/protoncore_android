@@ -100,7 +100,7 @@
   <string name="plan_id_vpnbasic_high_speed">Velocidad alta</string>
   <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_vpn#</item>
-    <item>cadena</item>
+    <item>string</item>
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>
     <item>#proton_calendars#</item>
@@ -111,7 +111,7 @@
   <string name="plan_id_vpnplus_highest_speed">Velocidad máxima</string>
   <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_vpn#</item>
-    <item>cadena</item>
+    <item>string</item>
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>
     <item>#proton_calendars#</item>
@@ -124,7 +124,7 @@
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>
     <item>#proton_domains#</item>
-    <item>cadena</item>
+    <item>string</item>
   </string-array>
   <!-- endregion -->
   <!-- region plan visionary -->

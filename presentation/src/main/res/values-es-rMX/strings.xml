@@ -25,10 +25,12 @@
   <string name="presentation_force_update_update">Actualizar</string>
   <string name="presentation_market_missing">No se encuentra la tienda de aplicaciones instalada en el dispositivo. Vaya a la tienda y actualice la aplicación.</string>
   <string name="presentation_authenticate">Autenticar</string>
+  <string name="presentation_signin_to_continue">Iniciar sesión para continuar</string>
   <string name="presentation_alert_title">Alerta</string>
   <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Ingresar</string>
   <string name="presentation_alert_cancel">Cancelar</string>
+  <string name="presentation_alert_submit">Enviar</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">Notificar un error</string>
   <string name="presentation_menu_item_title_settings">Ajustes</string>
