@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changes
+
+- Fix crash due to missing Room converters for `ClientIdType`.
+
 ## [5.0.0]
 
 ### Changes
