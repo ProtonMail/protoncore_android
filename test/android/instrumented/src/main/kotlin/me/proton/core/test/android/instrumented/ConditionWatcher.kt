@@ -20,9 +20,8 @@ package me.proton.core.test.android.instrumented
 
 import android.util.Log
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.commandTimeout
-import me.proton.core.test.android.instrumented.ProtonTest.Companion.testName
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
-import me.proton.core.test.android.instrumented.utils.FileUtils
+import me.proton.core.test.android.instrumented.utils.Shell
 import java.util.concurrent.TimeoutException
 
 interface ConditionWatcher {
@@ -31,7 +30,6 @@ interface ConditionWatcher {
      * Waits until [conditionBlock] does not throw any exceptions
      * @throws Exception which was last caught during condition check after given [watchTimeout] ms
      */
-
     fun waitForCondition(
         conditionBlock: () -> Unit,
         watchTimeout: Long = commandTimeout,
@@ -47,13 +45,15 @@ interface ConditionWatcher {
                 return conditionBlock()
             } catch (e: Throwable) {
                 val firstLine = e.message?.split("\n")?.get(0)
-                Log.v(testTag, "Waiting for condition. ${timeoutTimestamp - currentTimestamp}ms remaining. Status: $firstLine")
+                Log.v(
+                    testTag,
+                    "Waiting for condition. ${timeoutTimestamp - currentTimestamp}ms remaining. Status: $firstLine"
+                )
                 throwable = e
             }
             Thread.sleep(watchInterval)
         }
-        Log.d(testTag, "Test \"${testName.methodName}\" failed. Saving screenshot")
-        FileUtils.takeScreenshot()
+        Shell.takeScreenshot()
         throw throwable
     }
 }

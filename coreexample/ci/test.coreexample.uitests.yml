@@ -16,6 +16,7 @@ stages:
       --device model=Pixel2,version=28
       --test-targets "$TEST_TARGET"
       --timeout 25m
+      --num-flaky-test-attempts=2
   needs:
     - pipeline: $PARENT_PIPELINE_ID
       job: assemble

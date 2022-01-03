@@ -18,8 +18,12 @@
 
 package me.proton.core.test.android.instrumented.utils
 
+import android.os.Environment
+import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.getTargetContext
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.testName
+import me.proton.core.test.android.instrumented.ProtonTest.Companion.testTag
 import me.proton.core.util.kotlin.toInt
 import org.junit.runner.Description
 import java.io.File
@@ -30,6 +34,17 @@ import java.io.File
 object Shell {
 
     private val automation = InstrumentationRegistry.getInstrumentation().uiAutomation!!
+    private val screenshotLocation = Environment.getExternalStorageDirectory().resolve("Screenshots")
+    private val artifactsLocation = Environment.getExternalStorageDirectory()
+        .resolve(getTargetContext().packageName)
+        .resolve("artifacts")
+
+    init {
+        // Prepare artifacts directory
+        automation.executeShellCommand("rm -rf $artifactsLocation")
+        automation.waitForIdle(500, 1000)
+        automation.executeShellCommand("mkdir -p $screenshotLocation")
+    }
 
     /**
      * Deletes artifacts folder from /sdcard/Download.
@@ -77,8 +92,17 @@ object Shell {
      * Saves file with given [Description].
      */
     fun saveToFile(description: Description?) {
-        val logcatArtifactsPath = "${getTargetContext().filesDir.path}/artifacts/logcat"
-        val logcatFile = File(logcatArtifactsPath, "${description?.methodName}-logcat.txt")
+        val logcatFile = File(artifactsLocation, "${description?.methodName}-logcat.txt")
         automation.executeShellCommand("run-as ${getTargetContext().packageName} -d -f $logcatFile")
+    }
+
+    /**
+     * Take screenshot and save to /sdcard/screenshots
+     */
+    fun takeScreenshot() {
+        val screenshotFileName =
+            "$screenshotLocation/${testName.methodName}_${System.currentTimeMillis()}.png"
+        Log.d(testTag, "Test \"${testName.methodName}\" failed. Saving screenshot to $screenshotFileName")
+        automation.executeShellCommand("screencap -p $screenshotFileName")
     }
 }

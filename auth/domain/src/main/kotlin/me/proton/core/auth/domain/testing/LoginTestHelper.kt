@@ -21,6 +21,7 @@ package me.proton.core.auth.domain.testing
 import androidx.annotation.RestrictTo
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -43,19 +44,21 @@ class LoginTestHelper @Inject constructor(
      * This function blocks current thread.
      */
     fun login(username: String, password: String): SessionInfo = runBlocking {
-        val encryptedPassword = password.encrypt(keyStoreCrypto)
-        val sessionInfo = createLoginSession(username, encryptedPassword, accountType)
-        val result = postLoginAccountSetup(
-            userId = sessionInfo.userId,
-            encryptedPassword = encryptedPassword,
-            requiredAccountType = accountType,
-            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
-        )
-        check(result is PostLoginAccountSetup.Result.UserUnlocked) {
-            "Unexpected login result: $result"
+        withTimeout(60_000) {
+            val encryptedPassword = password.encrypt(keyStoreCrypto)
+            val sessionInfo = createLoginSession(username, encryptedPassword, accountType)
+            val result = postLoginAccountSetup(
+                userId = sessionInfo.userId,
+                encryptedPassword = encryptedPassword,
+                requiredAccountType = accountType,
+                isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+                isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded
+            )
+            check(result is PostLoginAccountSetup.Result.UserUnlocked) {
+                "Unexpected login result: $result"
+            }
+            sessionInfo
         }
-        sessionInfo
     }
 
     /** Clears the given login session.

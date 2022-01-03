@@ -91,6 +91,8 @@ deploy-atlas:
   stage: build
   needs: [ "prepare-environment" ]
   extends: .deploy:black
+  allow_failure: true
+  retry: 1
 
 assemble:
   extends: .gradle-job
