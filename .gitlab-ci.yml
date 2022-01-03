@@ -1,5 +1,3 @@
-image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0-alpha08
-
 include:
   - project: 'agarroux/publish-github'
     ref: master
@@ -21,7 +19,9 @@ include:
     ref: 'master'
     file: '/deploy-to-atlas.gitlab-ci.yml'
 
-  - local: '/ci/templates/.gitlab-ci-git.yml'
+  - local: '/ci/templates/git.gitlab-ci.yml'
+
+  - local: '/ci/templates/base-job.gitlab-ci.yml'
 
 stages:
   - bot
@@ -29,8 +29,6 @@ stages:
   - build
   - test
   - publish
-  - commit
-  - slackRelease
 
 variables:
   # Use fastzip to improve cache times
@@ -41,54 +39,16 @@ variables:
   ARTIFACT_COMPRESSION_LEVEL: "fastest"
   # Use low compression for caches
   CACHE_COMPRESSION_LEVEL: "fast"
-  GRADLE_USER_HOME: '$CI_PROJECT_DIR/.gradle'
 
-cache: &global_cache
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .gradle/caches/modules-*
-    - .gradle/caches/jars-*
-    - ./**/build
-
-#####################
-danger-review:
-  image: ruby:2.7
-  stage: .post
+## pre stage #######################################################################################
+prepare-environment:
+  extends: .script-job
+  stage: .pre
   when: always
-  tags:
-    - small
-  script:
-    - bundle config set path 'vendor/ruby'
-    - bundle config set without 'production'
-    - bundle install
-    - bundle exec danger --fail-on-errors=false
-  cache:
-    key:
-      files:
-        - Gemfile.lock
-    paths:
-      - vendor/ruby
-  allow_failure: true
-  variables:
-    DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
-  interruptible: true
-
-deploy atlas:
-  stage: build
-  needs: [ "prepare environment" ]
-  extends: .deploy:black
-  allow_failure: true
-
-prepare environment:
-  stage: analyze
-  when: always
-  cache: [ ]
   variables:
     NAMESERVICE_URL: "https://nameservice.$ATLAS_BASE_DOMAIN/api/env"
     REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_NAME} --data tag=${CI_COMMIT_REF_SLUG}"
   script:
-    - apt-get -qq update
-    - apt-get install -y jq
     - echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
     - echo HOST="$(curl --request POST --url $NAMESERVICE_URL $REQUEST_DATA | jq -r '.envName')".$ATLAS_BASE_DOMAIN >> local.properties
     - mkdir -p coreexample/src/androidTest/assets/sensitive
@@ -99,16 +59,10 @@ prepare environment:
       - coreexample/src/androidTest/assets/sensitive
       - local.properties
 
-cleanup atlas:
-  stage: .post
-  extends: .cleanup:black
-  when: manual
-
-detekt analyze:
-  stage: analyze
+detekt-analyze:
+  extends: .gradle-job
+  stage: .pre
   when: always
-  tags:
-    - medium
   interruptible: true
   script:
     - ./gradlew multiModuleDetekt
@@ -117,99 +71,7 @@ detekt analyze:
     reports:
       codequality: config/detekt/reports/mergedReport.json
 
-assemble:
-  stage: build
-  tags:
-    - large
-  interruptible: true
-  script:
-    - ./gradlew :coreexample:assembleLocalPropertiesDebug
-    - ./gradlew :coreexample:assembleLocalPropertiesDebugAndroidTest
-  artifacts:
-    paths:
-      - coreexample/build/outputs/
-
-uiTests:
-  stage: test
-  when: always
-  allow_failure: true
-  trigger:
-    strategy: depend
-    include:
-      - local: coreexample/ci/test.coreexample.uitests.yml
-  variables:
-    PARENT_PIPELINE_ID: $CI_PIPELINE_ID
-
-release-publish-github:
-  stage: publish
-  tags:
-    - small
-  only:
-    - main
-  variables:
-    RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonMail/protoncore_android.git
-    RELEASE_SYNC_TO_BRANCH: 'main'
-    RELEASE_SYNC_FROM_BRANCH: 'main'
-  extends: .release-sync-commit-shared
-
-publish-libs:
-  stage: publish
-  tags:
-    - large
-  variables:
-    ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
-    ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD
-    ORG_GRADLE_PROJECT_signingInMemoryKey: $MAVEN_SIGNING_KEY
-    ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD
-    ORG_GRADLE_PROJECT_androidDevChannelWebhook: $ANDROID_DEVS_CHANNEL_WEBHOOK
-  script:
-    - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
-    - ./gradlew notifyNewRelease
-  only:
-    - /^release\/libs\/.*/ # stable release with notification
-    - main # main-snapshot release without notification
-
-tag-libs-release:
-  stage: publish
-  needs:
-    - job: publish-libs
-  only:
-    - /^release\/libs\/.*/
-  tags:
-    - large
-  before_script:
-    - !reference [ .git, before_script ]
-  script:
-    - ./gradlew tagRelease
-
-publish-gradle-plugins:
-  stage: publish
-  tags:
-    - large
-  variables:
-    ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
-    ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD
-    ORG_GRADLE_PROJECT_signingInMemoryKey: $MAVEN_SIGNING_KEY
-    ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD
-  script:
-    - ./gradlew -p plugins publishToSonatype closeAndReleaseSonatypeStagingRepository
-  only:
-    - /^release\/gradle-plugins\/.*/ # stable release
-    - main # main-snapshot release
-
-tag-gradle-plugins-release:
-  stage: publish
-  needs:
-    - job: publish-gradle-plugins
-  only:
-    - /^release\/gradle-plugins\/.*/
-  tags:
-    - large
-  before_script:
-    - !reference [ .git, before_script ]
-  script:
-    - ./gradlew -p plugins tagRelease
-
+## bot stage #######################################################################################
 i18n-sync-crowdin:
   extends: .i18n-sync-crowdin-common
   variables:
@@ -224,26 +86,42 @@ i18n-commit-locales:
     I18N_COMMIT_BRANCH_PUSH: 'main'
     I18N_COMMIT_BRANCH_ALLOWED: 'main'
 
-startReview:
-  before_script:
-    - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
-  extends: .startReview
-  stage: test
+## build stage #####################################################################################
+deploy-atlas:
+  stage: build
+  needs: [ "prepare-environment" ]
+  extends: .deploy:black
 
-stopReview:
-  extends: .stopReview
+assemble:
+  extends: .gradle-job
+  stage: build
+  interruptible: true
+  script:
+    - ./gradlew :coreexample:assembleLocalPropertiesDebug
+    - ./gradlew :coreexample:assembleLocalPropertiesDebugAndroidTest
+  artifacts:
+    paths:
+      - coreexample/build/outputs/
 
-coverage report:
+## test stage ######################################################################################
+ui-tests:
   stage: test
-  tags:
-    - large
+  when: always
+  allow_failure: true
+  trigger:
+    strategy: depend
+    include:
+      - local: coreexample/ci/test.coreexample.uitests.yml
+  variables:
+    PARENT_PIPELINE_ID: $CI_PIPELINE_ID
+
+unit-tests-and-coverage-report:
+  extends: .gradle-job
+  stage: test
   script:
     - ./gradlew -Pci --console=plain coberturaCoverageReport # This also runs allTest
   coverage: /Total.*?(\d{1,3}\.\d{0,2})%/
   interruptible: true
-  cache:
-    <<: *global_cache
-    policy: pull
   artifacts:
     expire_in: 1 week
     paths:
@@ -252,3 +130,96 @@ coverage report:
       cobertura:
         - ./build/reports/cobertura-coverage.xml
 
+start-review:
+  before_script:
+    - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
+  extends: .startReview
+  stage: test
+
+## publish stage ###################################################################################
+release-publish-github:
+  stage: publish
+  tags:
+    - small
+  only:
+    - main
+  variables:
+    RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonMail/protoncore_android.git
+    RELEASE_SYNC_TO_BRANCH: 'main'
+    RELEASE_SYNC_FROM_BRANCH: 'main'
+  extends: .release-sync-commit-shared
+
+publish-libs:
+  extends: .gradle-job
+  stage: publish
+  variables:
+    ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
+    ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD
+    ORG_GRADLE_PROJECT_signingInMemoryKey: $MAVEN_SIGNING_KEY
+    ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD
+    ORG_GRADLE_PROJECT_androidDevChannelWebhook: $ANDROID_DEVS_CHANNEL_WEBHOOK
+  script:
+    - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
+    - ./gradlew notifyNewRelease
+  only:
+    - /^release\/libs\/.*/ # stable release with notification
+    - main # main-snapshot release without notification
+
+tag-libs-release:
+  extends: .gradle-job
+  stage: publish
+  needs:
+    - job: publish-libs
+  only:
+    - /^release\/libs\/.*/
+  before_script:
+    - !reference [ .git, before_script ]
+  script:
+    - ./gradlew tagRelease
+
+publish-gradle-plugins:
+  extends: .gradle-job
+  stage: publish
+  variables:
+    ORG_GRADLE_PROJECT_mavenCentralUsername: $MAVEN_USER
+    ORG_GRADLE_PROJECT_mavenCentralPassword: $MAVEN_PASSWORD
+    ORG_GRADLE_PROJECT_signingInMemoryKey: $MAVEN_SIGNING_KEY
+    ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD
+  script:
+    - ./gradlew -p plugins publishToSonatype closeAndReleaseSonatypeStagingRepository
+  only:
+    - /^release\/gradle-plugins\/.*/ # stable release
+    - main # main-snapshot release
+
+tag-gradle-plugins-release:
+  extends: .gradle-job
+  stage: publish
+  needs:
+    - job: publish-gradle-plugins
+  only:
+    - /^release\/gradle-plugins\/.*/
+  before_script:
+    - !reference [ .git, before_script ]
+  script:
+    - ./gradlew -p plugins tagRelease
+
+## post stage ######################################################################################
+danger-review:
+  extends: .ruby-job
+  stage: .post
+  when: always
+  script:
+    - bundle exec danger --fail-on-errors=false
+  allow_failure: true
+  variables:
+    DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
+  interruptible: true
+
+cleanup-atlas:
+  stage: .post
+  extends: .cleanup:black
+  when: manual
+
+# .startReview requires 'stopReview' job. See GitLab merged YAML.
+stopReview:
+  extends: .stopReview

@@ -1,4 +1,4 @@
-image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0-alpha08
+image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0-alpha09
 
 stages:
   - firebase
