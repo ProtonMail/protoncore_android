@@ -70,6 +70,8 @@ data class LoginResponse(
         localId = localId,
         passwordMode = passwordMode,
         secondFactor = secondFactorInfo.toSecondFactor(),
-        temporaryPassword = temporaryPassword == 1
+        temporaryPassword = temporaryPassword.toBooleanOrFalse()
     )
 }
+
+private fun Int.toBooleanOrFalse(): Boolean = this == 1
