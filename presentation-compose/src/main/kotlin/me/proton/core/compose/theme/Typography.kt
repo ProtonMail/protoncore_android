@@ -193,7 +193,7 @@ data class ProtonTypography(
             fontWeight = FontWeight.W500
         ),
         captionRegular: TextStyle = TextStyle(
-            fontSize = 12.sp,
+            fontSize = 14.sp,
             fontWeight = FontWeight.W400,
             letterSpacing = 0.03.em,
             lineHeight = 16.sp

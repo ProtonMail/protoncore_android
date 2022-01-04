@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `ProtonTheme.Vpn.Transparent` theme for transparent activities (`ForceUpdateActivity`, `ConfirmPasswordActivity`), which includes VPNs colors
+- `ProtonSidebar` (Column) & `ProtonSidebarLazy` (LazyColumn) `Composables`.
+- `ProtonTheme.Vpn.Transparent` theme for transparent activities (`ForceUpdateActivity`, `ConfirmPasswordActivity`), which includes VPNs colors.
 
 ### Fixes
 
