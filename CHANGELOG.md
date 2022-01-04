@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixes
+
+- Update go-srp to v0.0.3, fixes an issue with sign-in for legacy accounts.
+- Update gopenpgp to v2.4.0, fixes an issue with PGP/MIME signature verification.
+
 ## [5.0.1]
 
 ### Fixes
