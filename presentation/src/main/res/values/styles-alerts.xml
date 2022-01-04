@@ -19,6 +19,7 @@
 
     <style name="Proton.ThemeOverlay.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="alertDialogStyle">@style/Proton.MaterialAlertDialog</item>
+        <item name="colorControlHighlight">@color/ripple_norm_workaround</item>
     </style>
 
     <style name="Proton.MaterialAlertDialog" parent="MaterialAlertDialog.MaterialComponents">

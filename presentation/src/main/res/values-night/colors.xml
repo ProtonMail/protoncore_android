@@ -43,4 +43,11 @@
     <color name="sidebar_icon_weak">@color/icon_weak</color>
     <color name="sidebar_interaction_pressed">@color/san_marino</color>
 
+    <!--
+      ripple_norm is defined as proton_text_norm with 12% alpha and this is implemented by using
+      a selector. Unfortunately using selectors in Material dialogs crashes the app, let's use a
+      hardcoded color value until the bug is fixed.
+      See: https://github.com/material-components/material-components-android/issues/2455
+    -->
+    <color name="ripple_norm_workaround">#1fffffff</color>
 </resources>
