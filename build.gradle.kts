@@ -43,14 +43,12 @@ buildscript {
     dependencies {
         val kotlinVersion = "1.5.31" // Sep 20, 2021
         val hiltVersion = "2.38.1" // Jul 27, 2021
-        val jacocoVersion = "0.8.7" // May 5, 2021
 
         classpath(kotlin("gradle-plugin", kotlinVersion))
         classpath(kotlin("serialization", kotlinVersion))
         classpath(libs.dokka.pluginGradle)
         classpath(libs.android.pluginGradle)
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
-        classpath("org.jacoco:org.jacoco.core:$jacocoVersion")
     }
 
     // Room 2.3 use a jdbc not compatible with arm so use the updated one to support
@@ -96,4 +94,21 @@ tasks.withType<DependencyUpdatesTask> {
     outputFormatter = "json, html, plain"
     outputDir = "build/dependencyUpdates"
     reportfileName = "report"
+}
+
+protonCoverageMultiModuleOptions {
+    generatesSubModuleHtmlReports = { !project.hasProperty("ci") }
+    sharedExcludes = listOf(
+        // androidTest code, shouldn't have coverage
+        "**/me/proton/core/test/**",
+        // Room Dao classes don't need testing
+        "**/*Dao.class",
+        // Migrations need to be done in instrumented tests which are currently not included in Jacoco reports
+        "**/*MIGRATION*",
+        // These components are tested using UI tests that are currently not included in Jacoco reports
+        "**/*Activity.class",
+        "**/*Activity$*",
+        "**/*Fragment.class",
+        "**/*Fragment$*",
+    )
 }

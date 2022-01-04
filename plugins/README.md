@@ -62,6 +62,8 @@ coverage report:
       cobertura:
         - ./build/reports/cobertura-coverage.xml
 ```
+
+It also allows for further customization. See the [plugin's README](./jacoco/README.md) for more info.
 ## Kotlin plugin
 - Plugin id: `me.proton.core.gradle-plugins.kotlin`
 - Published on MavenCentral.
