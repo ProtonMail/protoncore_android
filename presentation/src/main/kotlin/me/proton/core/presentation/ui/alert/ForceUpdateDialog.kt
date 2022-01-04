@@ -36,25 +36,6 @@ import me.proton.core.presentation.utils.openMarketLink
  * @see ForceUpdateActivity
  */
 class ForceUpdateDialog : DialogFragment() {
-    companion object {
-        private const val ARG_LEAR_MORE_URL = "arg.learnMoreUrl"
-        private const val ARG_API_ERROR_MESSAGE = "arg.apiErrorMessage"
-        private const val ARG_FINISH_ON_BACK_PRESS = "arg.finishOnBackPress"
-        private const val DEFAULT_FINISH_ON_BACK_PRESS = true
-
-        operator fun invoke(
-            apiErrorMessage: String,
-            learnMoreURL: String? = null,
-            finishActivityOnBackPress: Boolean = DEFAULT_FINISH_ON_BACK_PRESS
-        ) = ForceUpdateDialog().apply {
-            arguments = bundleOf(
-                ARG_LEAR_MORE_URL to learnMoreURL,
-                ARG_API_ERROR_MESSAGE to apiErrorMessage,
-                ARG_FINISH_ON_BACK_PRESS to finishActivityOnBackPress
-            )
-        }
-    }
-
     private val learnMoreURL: String by lazy {
         requireArguments().getString(ARG_LEAR_MORE_URL) ?: getString(R.string.force_update_link)
     }
@@ -111,6 +92,25 @@ class ForceUpdateDialog : DialogFragment() {
                     true
                 } else false
             }
+        }
+    }
+
+    companion object {
+        private const val ARG_LEAR_MORE_URL = "arg.learnMoreUrl"
+        private const val ARG_API_ERROR_MESSAGE = "arg.apiErrorMessage"
+        private const val ARG_FINISH_ON_BACK_PRESS = "arg.finishOnBackPress"
+        private const val DEFAULT_FINISH_ON_BACK_PRESS = true
+
+        operator fun invoke(
+            apiErrorMessage: String,
+            learnMoreURL: String? = null,
+            finishActivityOnBackPress: Boolean = DEFAULT_FINISH_ON_BACK_PRESS
+        ) = ForceUpdateDialog().apply {
+            arguments = bundleOf(
+                ARG_LEAR_MORE_URL to learnMoreURL,
+                ARG_API_ERROR_MESSAGE to apiErrorMessage,
+                ARG_FINISH_ON_BACK_PRESS to finishActivityOnBackPress
+            )
         }
     }
 }

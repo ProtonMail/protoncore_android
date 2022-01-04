@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `ProtonTheme.Vpn.Transparent` theme for transparent activities (`ForceUpdateActivity`, `ConfirmPasswordActivity`), which includes VPNs colors
+
 ### Fixes
 
 - Update go-srp to v0.0.3, fixes an issue with sign-in for legacy accounts.
