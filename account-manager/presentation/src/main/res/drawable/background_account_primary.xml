@@ -18,11 +18,11 @@
   -->
 
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/abbey">
+    android:color="@color/sidebar_interaction_weak_pressed">
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="8dp"/>
-            <solid android:color="@color/tuna" />
+            <solid android:color="@color/sidebar_interaction_weak_norm" />
         </shape>
     </item>
 </ripple>

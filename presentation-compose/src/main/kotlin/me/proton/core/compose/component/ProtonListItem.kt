@@ -19,82 +19,158 @@ package me.proton.core.compose.component
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import me.proton.core.compose.theme.ProtonColors
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.presentation.compose.R
 
 @Composable
 fun ProtonListItem(
-    @DrawableRes icon: Int,
-    @StringRes title: Int,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) = ProtonListItem(
-    icon = painterResource(icon),
-    title = stringResource(title),
-    onClick = onClick,
-    modifier = modifier
-)
-
-@Composable
-fun ProtonListItem(
-    icon: Painter,
-    title: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    isClickable: Boolean = true,
+    isSelected: Boolean = false,
+    onClick: () -> Unit = {},
+    content: (@Composable @ExtensionFunctionType RowScope.() -> Unit),
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(ProtonDimens.ListItemHeight)
-            .clickable(onClick = onClick)
-            .padding(all = ProtonDimens.SmallSpacing)
-            .semantics(mergeDescendants = true) {
-                contentDescription = title
-            },
-        verticalAlignment = Alignment.CenterVertically
+            .background(color = if (isSelected) ProtonTheme.colors.interactionPressed else Color.Transparent)
+            .height(height = ProtonDimens.ListItemHeight)
+            .clickable(enabled = isClickable, onClick = onClick)
+            .padding(horizontal = ProtonDimens.DefaultSpacing),
+        verticalAlignment = Alignment.CenterVertically,
+        content = content
+    )
+}
+
+@Composable
+fun ProtonListItem(
+    icon: @Composable @ExtensionFunctionType RowScope.(Modifier) -> Unit,
+    text: @Composable @ExtensionFunctionType RowScope.(Modifier) -> Unit,
+    count: @Composable @ExtensionFunctionType RowScope.(Modifier) -> Unit,
+    modifier: Modifier = Modifier,
+    isClickable: Boolean = true,
+    isSelected: Boolean = false,
+    onClick: () -> Unit = {},
+) {
+    ProtonListItem(
+        modifier = modifier,
+        onClick = onClick,
+        isClickable = isClickable,
+        isSelected = isSelected,
     ) {
-        Icon(
-            painter = icon,
-            contentDescription = null,
-        )
-        Text(
-            text = title,
-            modifier = Modifier.padding(start = ProtonDimens.ListItemTextStartPadding),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
+        icon(Modifier.padding(end = ProtonDimens.DefaultSpacing))
+        text(Modifier.weight(1f, fill = true))
+        count(Modifier.weight(1f))
     }
 }
+
+@Composable
+fun ProtonListItem(
+    icon: Painter,
+    text: String,
+    modifier: Modifier = Modifier,
+    isClickable: Boolean = true,
+    isSelected: Boolean = false,
+    textColor: Color = Color.Unspecified,
+    iconTint: Color = LocalContentColor.current,
+    count: Int? = null,
+    onClick: () -> Unit = {},
+) {
+    ProtonListItem(
+        modifier = modifier.semantics(mergeDescendants = true) { contentDescription = text },
+        onClick = onClick,
+        isClickable = isClickable,
+        isSelected = isSelected,
+        icon = { iconModifier ->
+            Icon(
+                painter = icon,
+                contentDescription = null,
+                modifier = iconModifier,
+                tint = iconTint
+            )
+        },
+        text = { titleModifier ->
+            Text(
+                text = text,
+                modifier = titleModifier,
+                color = textColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        count = {
+            if (count != null) {
+                Text(
+                    modifier = Modifier
+                        .defaultMinSize(ProtonDimens.CounterIconSize)
+                        .background(color = ProtonTheme.colors.interactionNorm, shape = CircleShape),
+                    text = "$count",
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    style = ProtonTheme.typography.captionRegular,
+                )
+            }
+        }
+    )
+}
+
+@Composable
+fun ProtonListItem(
+    @DrawableRes icon: Int,
+    @StringRes text: Int,
+    modifier: Modifier = Modifier,
+    isClickable: Boolean = true,
+    isSelected: Boolean = false,
+    textColor: Color = Color.Unspecified,
+    iconTint: Color = LocalContentColor.current,
+    count: Int? = null,
+    onClick: () -> Unit = {}
+) = ProtonListItem(
+    icon = painterResource(icon),
+    text = stringResource(text),
+    onClick = onClick,
+    isClickable = isClickable,
+    isSelected = isSelected,
+    modifier = modifier,
+    textColor = textColor,
+    iconTint = iconTint,
+    count = count
+)
 
 @Preview(
     showBackground = true,
     backgroundColor = android.graphics.Color.WHITE.toLong()
 )
 @Composable
-fun PreviewListItem() {
+fun PreviewProtonListItem() {
     ProtonListItem(
         icon = R.drawable.ic_sign_out,
-        title = R.string.presentation_menu_item_title_sign_out,
-        onClick = {},
+        text = R.string.presentation_menu_item_title_sign_out,
     )
 }
 
@@ -103,8 +179,34 @@ fun PreviewListItem() {
     backgroundColor = android.graphics.Color.BLACK.toLong()
 )
 @Composable
-fun PreviewListItemDark() {
-    ProtonTheme(colors = ProtonColors.Dark) {
-        PreviewListItem()
+fun PreviewProtonListItemDark() {
+    ProtonTheme(isDark = true) {
+        PreviewProtonListItem()
     }
+}
+
+@Preview(
+    showBackground = true,
+    backgroundColor = android.graphics.Color.WHITE.toLong()
+)
+@Composable
+fun PreviewProtonListItemSelected() {
+    ProtonListItem(
+        icon = R.drawable.ic_sign_out,
+        text = R.string.presentation_menu_item_title_sign_out,
+        isSelected = true
+    )
+}
+
+@Preview(
+    showBackground = true,
+    backgroundColor = android.graphics.Color.WHITE.toLong()
+)
+@Composable
+fun PreviewProtonListItemCount() {
+    ProtonListItem(
+        icon = R.drawable.ic_sign_out,
+        text = R.string.presentation_menu_item_title_sign_out,
+        count = 1
+    )
 }

@@ -27,8 +27,8 @@ import androidx.compose.runtime.remember
 
 @Composable
 fun ProtonTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    colors: ProtonColors = if (darkTheme) ProtonColors.Dark else ProtonColors.Light,
+    isDark: Boolean = isSystemInDarkTheme(),
+    colors: ProtonColors = if (isDark) ProtonColors.Dark else ProtonColors.Light,
     typography: ProtonTypography = ProtonTypography.Default,
     shapes: ProtonShapes = ProtonShapes(),
     content: @Composable () -> Unit

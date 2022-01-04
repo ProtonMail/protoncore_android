@@ -33,6 +33,7 @@ object ProtonDimens {
 
     val DefaultButtonMinHeight = 48.dp
     val SmallIconSize = 16.dp
+    val CounterIconSize = 20.dp
     val DefaultIconSize = 24.dp
 
     val DefaultBottomSheetHeaderMinHeight = 56.dp

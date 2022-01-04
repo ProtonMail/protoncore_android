@@ -368,7 +368,7 @@ class ProtonColors(
             shadowNorm = Color.Black.copy(alpha = 0.1f),
             shadowRaised = Color.Black.copy(alpha = 0.1f),
             shadowLifted = Color.Black.copy(alpha = 0.1f),
-            blenderNorm = Color(0XFF17181C).copy(alpha = 0.48f),
+            blenderNorm = ProtonPalette.Woodsmoke.copy(alpha = 0.48f),
         )
 
         private val BaseDark = ProtonColors(
@@ -400,22 +400,10 @@ class ProtonColors(
             interactionPressed = ProtonPalette.SanMarino,
         )
 
-        private val SidebarDark = BaseDark.copy(
-            backgroundNorm = ProtonPalette.PortGore,
-            backgroundSecondary = ProtonPalette.PortGore,
-            interactionWeakNorm = ProtonPalette.PickledBluewood,
-            interactionWeakPressed = ProtonPalette.Rhino,
-            separatorNorm = ProtonPalette.PickledBluewood,
-            textNorm = Color.White,
-            textWeak = ProtonPalette.SantasGray,
-            iconNorm = Color.White,
-            iconWeak = ProtonPalette.SantasGray,
-            interactionPressed = ProtonPalette.SanMarino,
-        )
+        private val SidebarDark = BaseDark
 
         val Light = BaseLight.copy(sidebarColors = SidebarLight)
         val Dark = BaseDark.copy(sidebarColors = SidebarDark)
-        val Sidebar = SidebarDark
     }
 }
 
