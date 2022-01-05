@@ -45,6 +45,17 @@ with(authOrchestrator) {
         .onMissingScopeFailed { context.showToast("Failed test") }
     }
 ```
+
+### Fixes
+
+- Human Verification: session cookie is now stored when DoH is enabled.
+- Human Verification: Human Verification v3 is now compatible with DoH.
+- Network: fixed a bug related to request timeouts that prevented DoH from working most of the time.
+
+### Breaking changes
+
+- `NetworkRequestOverriderImpl` now needs a `Context` parameter to be able to read the self-signed certificates.
+
 ## [4.1.0]
 
 ### Changes
@@ -52,26 +63,6 @@ with(authOrchestrator) {
 - Report: New module for sending Bug Report (see [Report Readme](report/README.md) for more details).
 - After login, when migrating from external to internal account type, `UserCheck` is also called.
 - Fix payment refresh state after upgrading for logged in users.
-
-### Fixes
-
-- Human Verification: session cookie is now stored when DoH is enabled.
-- Human Verification: Human Verification v3 is now compatible with DoH.
-- Network: fixed a bug related to request timeouts that prevented DoH from working most of the time.
-
-### Breaking changes
-
-- `NetworkRequestOverriderImpl` now needs a `Context` parameter to be able to read the self-signed certificates.
-
-### Fixes
-
-- Human Verification: session cookie is now stored when DoH is enabled.
-- Human Verification: Human Verification v3 is now compatible with DoH.
-- Network: fixed a bug related to request timeouts that prevented DoH from working most of the time.
-
-### Breaking changes
-
-- `NetworkRequestOverriderImpl` now needs a `Context` parameter to be able to read the self-signed certificates.
 
 ## [4.0.0]
 
