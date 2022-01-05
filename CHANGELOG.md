@@ -33,6 +33,11 @@ val MIGRATION_X_Y = object : Migration(X, Y) {
 - Added ProtonSidebarSubscriptionItem.
 - Ripple colors are updated to match the design spec.
 
+### Fixes
+
+- DNS over Http feature (DoH) shouldn't interfere with Guest Hole (VPN) anymore.
+- Fixed crashes in `safeApiCall` wrapped network requests when an unknown exception was thrown.
+
 ### Security Fixes
 
 - The client starts verifying that the SRP server proof is correct. `InvalidSRPServerProofException`

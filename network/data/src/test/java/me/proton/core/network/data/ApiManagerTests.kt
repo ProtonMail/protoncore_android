@@ -153,8 +153,8 @@ internal class ApiManagerTests {
             altBackend1
         }
         apiManager = ApiManagerImpl(
-            apiClient, backend, dohApiHandler,
-            apiManagerFactory.createBaseErrorHandlers(session.sessionId, ::time), ::time
+            apiClient, backend,
+            apiManagerFactory.createBaseErrorHandlers(session.sessionId, ::time, dohApiHandler), ::time
         )
 
         coEvery { backend.invoke<TestResult>(any()) } returns ApiResult.Success(TestResult(5, "foo"))

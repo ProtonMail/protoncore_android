@@ -136,7 +136,8 @@ class ApiManagerFactory(
 
     internal fun <Api> createBaseErrorHandlers(
         sessionId: SessionId?,
-        monoClockMs: () -> Long
+        monoClockMs: () -> Long,
+        dohApiHandler: DohApiHandler<Api>,
     ): List<ApiErrorHandler<Api>> {
         val refreshTokenHandler = RefreshTokenHandler<Api>(sessionId, sessionProvider, sessionListener, monoClockMs)
         val missingScopeHandler =
@@ -149,12 +150,14 @@ class ApiManagerFactory(
             HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
 
         return listOf(
+            dohApiHandler,
             serverConnectionHandler,
             missingScopeHandler,
             refreshTokenHandler,
             forceUpdateHandler,
             humanVerificationInvalidHandler,
-            humanVerificationNeededHandler
+            humanVerificationNeededHandler,
+
         )
     }
 
@@ -198,11 +201,10 @@ class ApiManagerFactory(
             extraHeaderProvider,
         )
 
-        val errorHandlers = createBaseErrorHandlers<Api>(sessionId, ::javaMonoClockMs) + clientErrorHandlers
-
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
             initSPKIleafPinning(builder, alternativeApiPins)
         }
+
         val dohApiHandler = DohApiHandler(
             apiClient,
             primaryBackend,
@@ -230,9 +232,10 @@ class ApiManagerFactory(
                 extraHeaderProvider,
             )
         }
+        val errorHandlers = createBaseErrorHandlers(sessionId, ::javaMonoClockMs, dohApiHandler) + clientErrorHandlers
 
         return ApiManagerImpl(
-            apiClient, primaryBackend, dohApiHandler, errorHandlers, ::javaMonoClockMs
+            apiClient, primaryBackend, errorHandlers, ::javaMonoClockMs
         )
     }
 }

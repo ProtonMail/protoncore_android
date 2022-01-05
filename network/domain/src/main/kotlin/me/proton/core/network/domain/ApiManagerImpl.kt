@@ -34,21 +34,19 @@ import kotlin.random.Random
 class ApiManagerImpl<Api>(
     private val client: ApiClient,
     private val primaryBackend: ApiBackend<Api>,
-    private val dohApiHandler: DohApiHandler<Api>,
     private val errorHandlers: List<ApiErrorHandler<Api>>,
     private val monoClockMs: () -> Long
 ) : ApiManager<Api> {
+
+    private val dohApiHandler = errorHandlers.firstNotNullOfOrNull { it as? DohApiHandler<Api> }
 
     override suspend operator fun <T> invoke(
         forceNoRetryOnConnectionErrors: Boolean,
         block: suspend (Api) -> T
     ): ApiResult<T> {
         val call = ApiManager.Call(monoClockMs(), block)
-        return when {
-            forceNoRetryOnConnectionErrors -> handledCall(primaryBackend, call)
-            client.shouldUseDoh -> dohApiHandler(::handledCall, call)
-            else -> callWithBackoff(call)
-        }
+        return if (forceNoRetryOnConnectionErrors) handledCall(primaryBackend, call)
+            else callWithBackoff(call)
     }
 
     private suspend fun <T> callWithBackoff(call: ApiManager.Call<Api, T>): ApiResult<T> {
@@ -73,7 +71,8 @@ class ApiManagerImpl<Api>(
         backend: ApiBackend<Api>,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
-        val backendResult = backend(call)
+        val alternativeBackend = dohApiHandler?.activeAltBackend
+        val backendResult = (alternativeBackend ?: backend).invoke(call)
         val handlersToRetry = mutableListOf<ApiErrorHandler<Api>>()
         var currentResult = backendResult
 

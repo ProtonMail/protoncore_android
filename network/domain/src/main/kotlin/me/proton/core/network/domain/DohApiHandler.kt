@@ -33,13 +33,13 @@ class DohApiHandler<Api>(
     private val prefs: NetworkPrefs,
     private val wallClockMs: () -> Long,
     private val monoClockMs: () -> Long,
-    private val createAltBackend: (baseUrl: String) -> ApiBackend<Api>
-) {
+    private val createAltBackend: (baseUrl: String) -> ApiBackend<Api>,
+) : ApiErrorHandler<Api> {
 
     // Active proxy backend or null if we should use our primary backend.
     var activeAltBackend: ApiBackend<Api>? = null
         get() {
-            // If alt backend is outdated reset it so that primary backend is attempted. 
+            // If alt backend is outdated reset it so that primary backend is attempted.
             if (wallClockMs() - prefs.lastPrimaryApiFail >= apiClient.proxyValidityPeriodMs) {
                 field = null
             } else if (field == null) {
@@ -54,51 +54,46 @@ class DohApiHandler<Api>(
             prefs.activeAltBaseUrl = value?.baseUrl
         }
 
-    /**
-     * Makes an API [call] according to DoH feature logic.
-     * @param callHandler Function that should be used to make a call with a reachable
-     *   backend.
-     */
-    suspend operator fun <T> invoke(
-        callHandler: suspend (ApiBackend<Api>, ApiManager.Call<Api, T>) -> ApiResult<T>,
+    override suspend fun <T> invoke(
+        backend: ApiBackend<Api>,
+        error: ApiResult.Error,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
-        val activeBackend = activeAltBackend ?: primaryBackend
-        val result = callHandler(activeBackend, call)
-        return if (!result.isPotentialBlocking)
-            result
-        else coroutineScope {
-            // Ping primary backend (to make sure failure wasn't a random network error rather than
-            // an actual block) parallel with refreshing proxy list
-            val isPotentiallyBlockedAsync = async {
-                primaryBackend.isPotentiallyBlocked()
-            }
-            val dohRefresh = async {
-                withTimeoutOrNull(apiClient.dohProxyRefreshTimeoutMs) {
-                    dohProvider.refreshAlternatives()
+        return if (!apiClient.shouldUseDoh || !error.isPotentialBlocking) {
+            error
+        } else {
+            coroutineScope {
+                // Ping primary backend (to make sure failure wasn't a random network error rather than
+                // an actual block) parallel with refreshing proxy list
+                val isPotentiallyBlockedAsync = async {
+                    primaryBackend.isPotentiallyBlocked()
                 }
-            }
-            // If ping on primary api succeeded don't fallback to proxy
-            val isPotentiallyBlocked = isPotentiallyBlockedAsync.await()
-            if (isPotentiallyBlocked) {
-                dohRefresh.await()
+                val dohRefresh = async {
+                    withTimeoutOrNull(apiClient.dohProxyRefreshTimeoutMs) {
+                        dohProvider.refreshAlternatives()
+                    }
+                }
+                // If ping on primary api succeeded don't fallback to proxy
+                val isPotentiallyBlocked = isPotentiallyBlockedAsync.await()
+                if (isPotentiallyBlocked) {
+                    dohRefresh.await()
 
-                if (activeBackend == primaryBackend)
-                    prefs.lastPrimaryApiFail = wallClockMs()
-                else
+                    if (activeAltBackend == null)
+                        prefs.lastPrimaryApiFail = wallClockMs()
+                    else
+                        activeAltBackend = null
+
+                    callWithAlternatives(call) ?: error
+                } else {
+                    dohRefresh.cancel()
                     activeAltBackend = null
-
-                callWithAlternatives(callHandler, call) ?: result
-            } else {
-                dohRefresh.cancel()
-                activeAltBackend = null
-                result
+                    error
+                }
             }
         }
     }
 
     private suspend fun <T> callWithAlternatives(
-        callHandler: suspend (ApiBackend<Api>, ApiManager.Call<Api, T>) -> ApiResult<T>,
         call: ApiManager.Call<Api, T>
     ): ApiResult<T>? {
         val alternatives = prefs.alternativeBaseUrls?.shuffled()
@@ -107,7 +102,7 @@ class DohApiHandler<Api>(
                 return ApiResult.Error.Timeout(true, null)
             }
             val backend = createAltBackend(baseUrl)
-            val result = callHandler(backend, call)
+            val result = backend.invoke(call)
             if (!result.isPotentialBlocking) {
                 activeAltBackend = backend
                 return result
