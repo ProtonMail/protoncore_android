@@ -5,7 +5,16 @@ public final class me/proton/core/auth/data/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/auth/data/MissingScopeListenerImpl : me/proton/core/network/domain/scopes/MissingScopeListener {
+	public fun <init> ()V
+	public fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public fun onMissingScope (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onMissingScopeFailure (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onMissingScopeSuccess (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class me/proton/core/auth/data/api/AuthenticationApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
+	public abstract fun getAuthInfo (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getLoginInfo (Lme/proton/core/auth/data/api/request/LoginInfoRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getRandomModulus (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScopes (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -214,6 +223,47 @@ public final class me/proton/core/auth/data/api/request/UniversalTwoFactorReques
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/auth/data/api/response/AuthInfoResponse {
+	public static final field Companion Lme/proton/core/auth/data/api/response/AuthInfoResponse$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()I
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;)Lme/proton/core/auth/data/api/response/AuthInfoResponse;
+	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/response/AuthInfoResponse;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;ILjava/lang/Object;)Lme/proton/core/auth/data/api/response/AuthInfoResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getModulus ()Ljava/lang/String;
+	public final fun getSalt ()Ljava/lang/String;
+	public final fun getSecondFactorInfo ()Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;
+	public final fun getServerEphemeral ()Ljava/lang/String;
+	public final fun getSrpSession ()Ljava/lang/String;
+	public final fun getVersion ()I
+	public fun hashCode ()I
+	public final fun toAuthInfo (Ljava/lang/String;)Lme/proton/core/auth/domain/entity/AuthInfo;
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/auth/data/api/response/AuthInfoResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/auth/data/api/response/AuthInfoResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/auth/data/api/response/AuthInfoResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/AuthInfoResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/response/AuthInfoResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/response/AuthInfoResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class me/proton/core/auth/data/api/response/LoginInfoResponse {
 	public static final field Companion Lme/proton/core/auth/data/api/response/LoginInfoResponse$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -255,13 +305,14 @@ public final class me/proton/core/auth/data/api/response/LoginInfoResponse$Compa
 
 public final class me/proton/core/auth/data/api/response/LoginResponse {
 	public static final field Companion Lme/proton/core/auth/data/api/response/LoginResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/data/api/response/SecondFactorInfoResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/data/api/response/SecondFactorInfoResponse;)V
+	public synthetic fun <init> (ILjava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/data/api/response/SecondFactorInfoResponse;ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/data/api/response/SecondFactorInfoResponse;I)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/lang/String;
 	public final fun component11 ()I
 	public final fun component12 ()I
 	public final fun component13 ()Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;
+	public final fun component14 ()I
 	public final fun component2 ()J
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
@@ -270,8 +321,8 @@ public final class me/proton/core/auth/data/api/response/LoginResponse {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/data/api/response/SecondFactorInfoResponse;)Lme/proton/core/auth/data/api/response/LoginResponse;
-	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/response/LoginResponse;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/data/api/response/SecondFactorInfoResponse;ILjava/lang/Object;)Lme/proton/core/auth/data/api/response/LoginResponse;
+	public final fun copy (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/data/api/response/SecondFactorInfoResponse;I)Lme/proton/core/auth/data/api/response/LoginResponse;
+	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/response/LoginResponse;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/data/api/response/SecondFactorInfoResponse;IILjava/lang/Object;)Lme/proton/core/auth/data/api/response/LoginResponse;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAccessToken ()Ljava/lang/String;
 	public final fun getEventId ()Ljava/lang/String;
@@ -284,6 +335,7 @@ public final class me/proton/core/auth/data/api/response/LoginResponse {
 	public final fun getSecondFactorInfo ()Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;
 	public final fun getServerProof ()Ljava/lang/String;
 	public final fun getSessionId ()Ljava/lang/String;
+	public final fun getTemporaryPassword ()I
 	public final fun getTokenType ()Ljava/lang/String;
 	public final fun getUserId ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -438,6 +490,7 @@ public final class me/proton/core/auth/data/api/response/SecondFactorResponse$Co
 
 public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/proton/core/auth/domain/repository/AuthRepository {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
+	public fun getAuthInfo (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getLoginInfo (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun performLogin (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

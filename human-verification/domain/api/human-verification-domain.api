@@ -73,11 +73,11 @@ public final class me/proton/core/humanverification/domain/usecase/SendVerificat
 }
 
 public abstract interface class me/proton/core/humanverification/domain/utils/NetworkRequestOverrider {
-	public abstract fun overrideRequest (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/io/InputStream;Ljava/lang/String;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
+	public abstract fun overrideRequest (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZLjava/io/InputStream;Ljava/lang/String;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
 }
 
 public final class me/proton/core/humanverification/domain/utils/NetworkRequestOverrider$DefaultImpls {
-	public static synthetic fun overrideRequest$default (Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/io/InputStream;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
+	public static synthetic fun overrideRequest$default (Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZLjava/io/InputStream;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result;
 }
 
 public final class me/proton/core/humanverification/domain/utils/NetworkRequestOverrider$Result {

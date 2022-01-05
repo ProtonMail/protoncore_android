@@ -17,6 +17,29 @@ public abstract interface class me/proton/core/auth/domain/AccountWorkflowHandle
 public abstract interface annotation class me/proton/core/auth/domain/ClientSecret : java/lang/annotation/Annotation {
 }
 
+public final class me/proton/core/auth/domain/entity/AuthInfo {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Lme/proton/core/auth/domain/entity/SecondFactor;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()I
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Lme/proton/core/auth/domain/entity/SecondFactor;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Lme/proton/core/auth/domain/entity/SecondFactor;)Lme/proton/core/auth/domain/entity/AuthInfo;
+	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/AuthInfo;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Lme/proton/core/auth/domain/entity/SecondFactor;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/AuthInfo;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getModulus ()Ljava/lang/String;
+	public final fun getSalt ()Ljava/lang/String;
+	public final fun getSecondFactor ()Lme/proton/core/auth/domain/entity/SecondFactor;
+	public final fun getServerEphemeral ()Ljava/lang/String;
+	public final fun getSrpSession ()Ljava/lang/String;
+	public final fun getUsername ()Ljava/lang/String;
+	public final fun getVersion ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/auth/domain/entity/BillingDetails {
 	public fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()J
@@ -139,13 +162,14 @@ public final class me/proton/core/auth/domain/entity/SecondFactorProof$SecondFac
 }
 
 public final class me/proton/core/auth/domain/entity/SessionInfo {
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/domain/entity/SecondFactor;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/domain/entity/SecondFactor;Z)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/lang/String;
 	public final fun component11 ()Ljava/lang/String;
 	public final fun component12 ()I
 	public final fun component13 ()I
 	public final fun component14 ()Lme/proton/core/auth/domain/entity/SecondFactor;
+	public final fun component15 ()Z
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()J
 	public final fun component4 ()Ljava/lang/String;
@@ -154,8 +178,8 @@ public final class me/proton/core/auth/domain/entity/SessionInfo {
 	public final fun component7 ()Lme/proton/core/network/domain/session/SessionId;
 	public final fun component8 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/domain/entity/SecondFactor;)Lme/proton/core/auth/domain/entity/SessionInfo;
-	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/SessionInfo;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/domain/entity/SecondFactor;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/SessionInfo;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/domain/entity/SecondFactor;Z)Lme/proton/core/auth/domain/entity/SessionInfo;
+	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/SessionInfo;Ljava/lang/String;Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/auth/domain/entity/SecondFactor;ZILjava/lang/Object;)Lme/proton/core/auth/domain/entity/SessionInfo;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAccessToken ()Ljava/lang/String;
 	public final fun getEventId ()Ljava/lang/String;
@@ -168,6 +192,7 @@ public final class me/proton/core/auth/domain/entity/SessionInfo {
 	public final fun getSecondFactor ()Lme/proton/core/auth/domain/entity/SecondFactor;
 	public final fun getServerProof ()Ljava/lang/String;
 	public final fun getSessionId ()Lme/proton/core/network/domain/session/SessionId;
+	public final fun getTemporaryPassword ()Z
 	public final fun getTokenType ()Ljava/lang/String;
 	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public final fun getUsername ()Ljava/lang/String;
@@ -178,6 +203,7 @@ public final class me/proton/core/auth/domain/entity/SessionInfo {
 }
 
 public abstract interface class me/proton/core/auth/domain/repository/AuthRepository {
+	public abstract fun getAuthInfo (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getLoginInfo (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performLogin (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -217,8 +243,8 @@ public final class me/proton/core/auth/domain/usecase/PerformSecondFactor {
 
 public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup {
 	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/auth/domain/usecase/SetupAccountCheck;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result {
@@ -339,7 +365,7 @@ public final class me/proton/core/auth/domain/usecase/RecoverableErrorsKt {
 
 public final class me/proton/core/auth/domain/usecase/SetupAccountCheck {
 	public fun <init> (Lme/proton/core/domain/entity/Product;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLme/proton/core/account/domain/entity/AccountType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLme/proton/core/account/domain/entity/AccountType;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/auth/domain/usecase/SetupAccountCheck$Result {
@@ -409,6 +435,26 @@ public final class me/proton/core/auth/domain/usecase/UsernameDomainAvailability
 	public final fun getUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun isUsernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun isUsernameAvailable (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/scopes/GetAuthInfo {
+	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/scopes/ObtainLockedScope {
+	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope {
+	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/scopes/RemoveSecurityScopes {
+	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/signup/PerformCreateExternalEmailUser {

@@ -5,6 +5,15 @@ public final class me/proton/core/test/android/instrumented/BuildConfig {
 	public fun <init> ()V
 }
 
+public abstract interface class me/proton/core/test/android/instrumented/ConditionWatcher {
+	public abstract fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+}
+
+public final class me/proton/core/test/android/instrumented/ConditionWatcher$DefaultImpls {
+	public static fun waitForCondition (Lme/proton/core/test/android/instrumented/ConditionWatcher;Lkotlin/jvm/functions/Function0;JJ)V
+	public static synthetic fun waitForCondition$default (Lme/proton/core/test/android/instrumented/ConditionWatcher;Lkotlin/jvm/functions/Function0;JJILjava/lang/Object;)V
+}
+
 public class me/proton/core/test/android/instrumented/ProtonTest {
 	public static final field Companion Lme/proton/core/test/android/instrumented/ProtonTest$Companion;
 	public final field ruleChain Lorg/junit/rules/RuleChain;
@@ -17,7 +26,6 @@ public class me/proton/core/test/android/instrumented/ProtonTest {
 
 public final class me/proton/core/test/android/instrumented/ProtonTest$Companion {
 	public final fun getCommandTimeout ()J
-	public final fun getScreenshotPath ()Ljava/lang/String;
 	public final fun getTargetContext ()Landroid/content/Context;
 	public final fun getTestName ()Lorg/junit/rules/TestName;
 	public final fun setCommandTimeout (J)V
@@ -27,233 +35,227 @@ public final class me/proton/core/test/android/instrumented/ProtonTest$TestExecu
 	public fun <init> ()V
 }
 
-public final class me/proton/core/test/android/instrumented/RetryRule : org/junit/rules/TestRule {
-	public fun <init> (Ljava/lang/Class;I)V
-	public synthetic fun <init> (Ljava/lang/Class;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun apply (Lorg/junit/runners/model/Statement;Lorg/junit/runner/Description;)Lorg/junit/runners/model/Statement;
-}
-
 public abstract interface class me/proton/core/test/android/instrumented/Robot {
-	public abstract fun getDevice ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public abstract fun getIntent ()Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public abstract fun getListView ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public abstract fun getRecyclerView ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public abstract fun getRootView ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
-	public abstract fun getView ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public abstract fun getDevice ()Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public abstract fun getIntent ()Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public abstract fun getListView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public abstract fun getRecyclerView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public abstract fun getRootView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+	public abstract fun getView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public final class me/proton/core/test/android/instrumented/Robot$DefaultImpls {
-	public static fun getDevice (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public static fun getIntent (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public static fun getListView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public static fun getRecyclerView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public static fun getRootView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnRootView;
-	public static fun getView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/builders/OnView;
-}
-
-public abstract interface class me/proton/core/test/android/instrumented/builders/ConditionWatcher {
-	public abstract fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
-}
-
-public final class me/proton/core/test/android/instrumented/builders/ConditionWatcher$DefaultImpls {
-	public static fun waitForCondition (Lme/proton/core/test/android/instrumented/builders/ConditionWatcher;Lkotlin/jvm/functions/Function0;JJ)V
-	public static synthetic fun waitForCondition$default (Lme/proton/core/test/android/instrumented/builders/ConditionWatcher;Lkotlin/jvm/functions/Function0;JJILjava/lang/Object;)V
-}
-
-public final class me/proton/core/test/android/instrumented/builders/OnDevice {
-	public static final field Companion Lme/proton/core/test/android/instrumented/builders/OnDevice$Companion;
-	public fun <init> ()V
-	public final fun clickBackBtn ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public final fun clickHomeBtn ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public final fun clickNotificationByText (Ljava/lang/String;J)Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public static synthetic fun clickNotificationByText$default (Lme/proton/core/test/android/instrumented/builders/OnDevice;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public final fun clickRecentAppsBtn ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public final fun clickShareDialogJustOnceBtn (Ljava/lang/String;J)Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public static synthetic fun clickShareDialogJustOnceBtn$default (Lme/proton/core/test/android/instrumented/builders/OnDevice;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public final fun expandNotifications ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public final fun waitForObjectByText (Ljava/lang/String;J)Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public static synthetic fun waitForObjectByText$default (Lme/proton/core/test/android/instrumented/builders/OnDevice;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnDevice;
-}
-
-public final class me/proton/core/test/android/instrumented/builders/OnDevice$Companion {
-}
-
-public final class me/proton/core/test/android/instrumented/builders/OnIntent : me/proton/core/test/android/instrumented/builders/ConditionWatcher {
-	public fun <init> ()V
-	public final fun anyIntent ()Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun checkSent ()V
-	public final fun filterEquals (Landroid/content/Intent;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun getMatchers ()Ljava/util/List;
-	public final fun hasAction (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasAction (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasCategories (Ljava/util/Set;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasComponent (Landroid/content/ComponentName;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasComponent (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasComponent (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasData (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasDataString (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasDataUri (Landroid/net/Uri;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasDataUriMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasExtra (Ljava/lang/String;Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasExtra (Lorg/hamcrest/Matcher;Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasExtraWithKey (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasExtraWithKey (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasExtras (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasFlag (I)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasFlags (I)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasPackage (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasPackage (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasType (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun hasType (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun isInternal ()Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public final fun respondWith (Landroid/app/Instrumentation$ActivityResult;)V
-	public final fun respondWithFunction (Landroidx/test/espresso/intent/ActivityResultFunction;)V
-	public final fun toPackage (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
-}
-
-public final class me/proton/core/test/android/instrumented/builders/OnListView : me/proton/core/test/android/instrumented/builders/ConditionWatcher {
-	public fun <init> ()V
-	public final fun atPosition (I)Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun checkContains (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun checkDisabled ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun checkDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun checkDoesNotExist ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun checkNotDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun click ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun inAdapterView (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun inRoot (Lme/proton/core/test/android/instrumented/builders/OnRootView;)Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun longClick ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun onChild (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun onListItem (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun replaceText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
-}
-
-public final class me/proton/core/test/android/instrumented/builders/OnRecyclerView : me/proton/core/test/android/instrumented/builders/ConditionWatcher {
-	public fun <init> ()V
-	public final fun click ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun doubleClick ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun longClick ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun onHolderItem (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun onItemAtPosition (I)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun onItemChildView (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun scrollToHolder (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
-	public final fun waitUntilGone ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun withId (I)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun withText (I)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public final fun withText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-}
-
-public final class me/proton/core/test/android/instrumented/builders/OnRootView {
-	public fun <init> ()V
-	public final fun isDialog ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
-	public final fun isFocusable ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
-	public final fun isPlatformPopUp ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
-	public final fun isSystemAlertWindow ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
-	public final fun isTouchable ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
-	public final fun withDecorView (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnRootView;
-	public final fun withNotCurrentActivityDecorView ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
-}
-
-public final class me/proton/core/test/android/instrumented/builders/OnView : me/proton/core/test/android/instrumented/builders/ConditionWatcher {
-	public fun <init> ()V
-	public final fun checkContains (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun checkContains (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun checkDisabled ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun checkDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun checkDoesNotExist ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun checkEnabled ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun checkIsChecked ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun checkIsNotChecked ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun checkNotDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun checkSelected ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun clearText ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun click ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun closeDrawer ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun closeKeyboard ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun customAction ([Landroidx/test/espresso/ViewAction;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun doubleClick ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun hasChildCount (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun hasContentDescription ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun hasDescendant (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun hasErrorText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun hasFocus ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun hasImeAction (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun hasLinks ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun hasSibling (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun instanceOf (Ljava/lang/Class;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isChecked ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isClickable ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isCompletelyDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isDescendantOf (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isDisabled ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isDisplayingAtLeast (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isEnabled ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isFocusable ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isFocused ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isInputField (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isNotChecked ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun isSelected ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun longClick ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun openDrawer ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun pressBack ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun pressImeActionBtn ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun replaceText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun startsWith (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun supportsInputMethods ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun viewMatcher ()Lorg/hamcrest/Matcher;
-	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
-	public final fun withChild (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withClassName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withContentDesc (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withContentDesc (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withContentDesc (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withCustomMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withHint (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withHint (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withId (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withInputType (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withParent (Lme/proton/core/test/android/instrumented/builders/OnView;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withParentIndex (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withResourceName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withRootMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withSpinnerText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withSubstring (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withTag (Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withTagKey (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withText (I)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun withVisibility (Landroidx/test/espresso/matcher/ViewMatchers$Visibility;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public static fun getDevice (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public static fun getIntent (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public static fun getListView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public static fun getRecyclerView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public static fun getRootView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+	public static fun getView (Lme/proton/core/test/android/instrumented/Robot;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public final class me/proton/core/test/android/instrumented/matchers/InputFieldMatcherKt {
 	public static final fun inputFieldMatcher (I)Lorg/hamcrest/Matcher;
 }
 
-public final class me/proton/core/test/android/instrumented/ui/Actions {
-	public static final field INSTANCE Lme/proton/core/test/android/instrumented/ui/Actions;
+public final class me/proton/core/test/android/instrumented/rules/RetryRule : org/junit/rules/TestRule {
+	public fun <init> (Ljava/lang/Class;I)V
+	public synthetic fun <init> (Ljava/lang/Class;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun apply (Lorg/junit/runners/model/Statement;Lorg/junit/runner/Description;)Lorg/junit/runners/model/Statement;
+}
+
+public final class me/proton/core/test/android/instrumented/ui/espresso/Actions {
+	public static final field INSTANCE Lme/proton/core/test/android/instrumented/ui/espresso/Actions;
 	public final fun clickOnChildWithId (I)Landroidx/test/espresso/ViewAction;
 	public final fun clickOnMatchedDescendant (Lorg/hamcrest/Matcher;)Landroidx/test/espresso/ViewAction;
 	public final fun setNumberPickerValue (I)Landroidx/test/espresso/ViewAction;
+}
+
+public final class me/proton/core/test/android/instrumented/ui/espresso/OnDevice {
+	public static final field Companion Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice$Companion;
+	public fun <init> ()V
+	public final fun clickBackBtn ()Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public final fun clickHomeBtn ()Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public final fun clickNotificationByText (Ljava/lang/String;J)Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public static synthetic fun clickNotificationByText$default (Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public final fun clickRecentAppsBtn ()Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public final fun clickShareDialogJustOnceBtn (Ljava/lang/String;J)Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public static synthetic fun clickShareDialogJustOnceBtn$default (Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public final fun expandNotifications ()Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public final fun waitForObjectByText (Ljava/lang/String;J)Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public static synthetic fun waitForObjectByText$default (Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;Ljava/lang/String;JILjava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+}
+
+public final class me/proton/core/test/android/instrumented/ui/espresso/OnDevice$Companion {
+}
+
+public final class me/proton/core/test/android/instrumented/ui/espresso/OnIntent : me/proton/core/test/android/instrumented/ConditionWatcher {
+	public fun <init> ()V
+	public final fun anyIntent ()Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun checkSent ()V
+	public final fun filterEquals (Landroid/content/Intent;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun getMatchers ()Ljava/util/List;
+	public final fun hasAction (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasAction (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasCategories (Ljava/util/Set;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasComponent (Landroid/content/ComponentName;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasComponent (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasComponent (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasData (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasDataString (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasDataUri (Landroid/net/Uri;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasDataUriMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasExtra (Ljava/lang/String;Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasExtra (Lorg/hamcrest/Matcher;Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasExtraWithKey (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasExtraWithKey (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasExtras (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasFlag (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasFlags (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasPackage (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasPackage (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasType (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun hasType (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun isInternal ()Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public final fun respondWith (Landroid/app/Instrumentation$ActivityResult;)V
+	public final fun respondWithFunction (Landroidx/test/espresso/intent/ActivityResultFunction;)V
+	public final fun toPackage (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+}
+
+public final class me/proton/core/test/android/instrumented/ui/espresso/OnListView : me/proton/core/test/android/instrumented/ConditionWatcher {
+	public fun <init> ()V
+	public final fun atPosition (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun checkContains (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun checkDisabled ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun checkDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun checkDoesNotExist ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun checkNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun click ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun inAdapterView (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun inRoot (Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun longClick ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun onChild (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun onListItem (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun replaceText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+}
+
+public final class me/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView : me/proton/core/test/android/instrumented/ConditionWatcher {
+	public fun <init> ()V
+	public final fun click ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun doubleClick ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun longClick ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun onHolderItem (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun onItemAtPosition (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun onItemChildView (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun scrollToHolder (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+	public final fun waitUntilGone ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun withId (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun withText (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public final fun withText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+}
+
+public final class me/proton/core/test/android/instrumented/ui/espresso/OnRootView {
+	public fun <init> ()V
+	public final fun isDialog ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+	public final fun isFocusable ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+	public final fun isPlatformPopUp ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+	public final fun isSystemAlertWindow ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+	public final fun isTouchable ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+	public final fun withDecorView (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+	public final fun withNotCurrentActivityDecorView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+}
+
+public final class me/proton/core/test/android/instrumented/ui/espresso/OnView : me/proton/core/test/android/instrumented/ConditionWatcher {
+	public fun <init> ()V
+	public final fun checkContains (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkContains (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkDisabled ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkDoesNotExist ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkEnabled ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkIsChecked ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkIsNotChecked ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkLengthEquals (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun checkSelected ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun clearText ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun click ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun closeDrawer ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun closeKeyboard ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun customAction ([Landroidx/test/espresso/ViewAction;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun doubleClick ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun hasChildCount (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun hasContentDescription ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun hasDescendant (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun hasErrorText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun hasFocus ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun hasImeAction (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun hasLinks ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun hasSibling (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun inRoot (Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun instanceOf (Ljava/lang/Class;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isChecked ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isClickable ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isCompletelyDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isDescendantOf (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isDisabled ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isDisplayingAtLeast (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isEnabled ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isFocusable ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isFocused ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isInputField (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isNotChecked ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun isSelected ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun longClick ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun openDrawer ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun pressBack ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun pressImeActionBtn ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun replaceText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun startsWith (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun supportsInputMethods ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun swipeDown ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun viewMatcher ()Lorg/hamcrest/Matcher;
+	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+	public final fun withChild (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withClassName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withContentDesc (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withContentDesc (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withContentDesc (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withCustomMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withHint (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withHint (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withId (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withInputType (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withParent (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withParentIndex (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withResourceName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withRootMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withSpinnerText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withSubstring (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withTag (Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withTagKey (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withText (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withTimeout (J)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withVisibility (Landroidx/test/espresso/matcher/ViewMatchers$Visibility;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public final class me/proton/core/test/android/instrumented/utils/ActivityProvider {
@@ -267,8 +269,6 @@ public final class me/proton/core/test/android/instrumented/utils/FileUtils {
 	public final fun copyAssetFileToInternalFilesStorage (Ljava/lang/String;)V
 	public final fun createFileResultFromAssets (Ljava/lang/String;)Landroid/app/Instrumentation$ActivityResult;
 	public final fun prepareArtifactsDir (Ljava/lang/String;)V
-	public final fun takeScreenshot (Ljava/lang/String;)V
-	public static synthetic fun takeScreenshot$default (Lme/proton/core/test/android/instrumented/utils/FileUtils;Ljava/lang/String;ILjava/lang/Object;)V
 }
 
 public final class me/proton/core/test/android/instrumented/utils/FileUtils$MimeTypes {
@@ -313,7 +313,8 @@ public final class me/proton/core/test/android/instrumented/utils/Shell {
 	public final fun deleteDownloadArtifactsFolder ()V
 	public final fun saveToFile (Lorg/junit/runner/Description;)V
 	public final fun sendShareFileIntent (Ljava/lang/String;Ljava/lang/String;)V
-	public final fun setupDevice (Z)V
+	public final fun setupDeviceForAutomation (Z)V
+	public final fun takeScreenshot ()V
 }
 
 public final class me/proton/core/test/android/instrumented/utils/StringUtils {
@@ -322,10 +323,11 @@ public final class me/proton/core/test/android/instrumented/utils/StringUtils {
 	public static synthetic fun getAlphaNumericStringWithSpecialCharacters$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JILjava/lang/Object;)Ljava/lang/String;
 	public final fun getEmailString (J)Ljava/lang/String;
 	public static synthetic fun getEmailString$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JILjava/lang/Object;)Ljava/lang/String;
+	public final fun pluralStringFromResource (II[Ljava/lang/Object;)Ljava/lang/String;
 	public final fun randomString (JLjava/lang/String;)Ljava/lang/String;
 	public static synthetic fun randomString$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JLjava/lang/String;ILjava/lang/Object;)Ljava/lang/String;
 	public final fun stringFromResource (I)Ljava/lang/String;
-	public final fun stringFromResource (ILjava/lang/String;)Ljava/lang/String;
+	public final fun stringFromResource (I[Ljava/lang/Object;)Ljava/lang/String;
 }
 
 public final class me/proton/core/test/android/plugins/Quark {
@@ -578,12 +580,12 @@ public final class me/proton/core/test/android/plugins/data/User$Users {
 
 public class me/proton/core/test/android/robots/CoreRobot : me/proton/core/test/android/instrumented/Robot {
 	public fun <init> ()V
-	public fun getDevice ()Lme/proton/core/test/android/instrumented/builders/OnDevice;
-	public fun getIntent ()Lme/proton/core/test/android/instrumented/builders/OnIntent;
-	public fun getListView ()Lme/proton/core/test/android/instrumented/builders/OnListView;
-	public fun getRecyclerView ()Lme/proton/core/test/android/instrumented/builders/OnRecyclerView;
-	public fun getRootView ()Lme/proton/core/test/android/instrumented/builders/OnRootView;
-	public fun getView ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public fun getDevice ()Lme/proton/core/test/android/instrumented/ui/espresso/OnDevice;
+	public fun getIntent ()Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
+	public fun getListView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
+	public fun getRecyclerView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
+	public fun getRootView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRootView;
+	public fun getView ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public class me/proton/core/test/android/robots/CoreVerify : me/proton/core/test/android/robots/CoreRobot {
@@ -591,6 +593,7 @@ public class me/proton/core/test/android/robots/CoreVerify : me/proton/core/test
 	public final fun errorSnackbarDisplayed (I)V
 	public final fun errorSnackbarDisplayed (Ljava/lang/String;)V
 	public final fun inputErrorDisplayed (I)V
+	public final fun snackbarDisplayed (I)V
 }
 
 public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot : me/proton/core/test/android/robots/CoreRobot {
@@ -611,8 +614,8 @@ public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot$
 }
 
 public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserElement : me/proton/core/test/android/robots/CoreRobot {
-	public final fun userEmail (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun userMore (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun userEmail (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun userMore (Lme/proton/core/test/android/plugins/data/User;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
@@ -646,9 +649,9 @@ public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot :
 public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
 	public final fun chooseUsernameElementsDisplayed ()V
-	public final fun suffixDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun switchToExternalDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
-	public final fun switchToSecureDisplayed ()Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun suffixDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun switchToExternalDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun switchToSecureDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public final class me/proton/core/test/android/robots/auth/login/HelpRobot : me/proton/core/test/android/robots/CoreRobot {
@@ -735,6 +738,18 @@ public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethod
 	public final fun recoveryMethodsElementsDisplayed ()V
 }
 
+public class me/proton/core/test/android/robots/confirmpassword/ConfirmPasswordRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun setPassword (Ljava/lang/String;)Lme/proton/core/test/android/robots/confirmpassword/ConfirmPasswordRobot;
+	public final fun setSecondFactor (Ljava/lang/String;)Lme/proton/core/test/android/robots/confirmpassword/ConfirmPasswordRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/confirmpassword/ConfirmPasswordRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/confirmpassword/ConfirmPasswordRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun confirmPasswordElementsDisplayed ()V
+}
+
 public final class me/proton/core/test/android/robots/humanverification/CountryWebRobot {
 	public fun <init> ()V
 	public final fun dialog ()Landroidx/test/espresso/web/sugar/Web$WebInteraction;
@@ -785,7 +800,7 @@ public final class me/proton/core/test/android/robots/payments/ExistingPaymentMe
 }
 
 public final class me/proton/core/test/android/robots/payments/ExistingPaymentMethodsRobot$PaymentMethodElement : me/proton/core/test/android/robots/CoreRobot {
-	public final fun paymentMethod (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/builders/OnView;
+	public final fun paymentMethod (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public class me/proton/core/test/android/robots/payments/PaymentRobot : me/proton/core/test/android/robots/CoreRobot {
@@ -815,6 +830,25 @@ public final class me/proton/core/test/android/robots/plans/SelectPlanRobot$Veri
 	public final fun canSelectPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun canUpgradeToPlan (Lme/proton/core/test/android/plugins/data/Plan;)V
 	public final fun planDetailsDisplayed (Lme/proton/core/test/android/plugins/data/Plan;)V
+}
+
+public final class me/proton/core/test/android/robots/reports/BugReportRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun description (Ljava/lang/String;)Lme/proton/core/test/android/robots/reports/BugReportRobot;
+	public final fun keepWriting ()Lme/proton/core/test/android/robots/reports/BugReportRobot;
+	public final fun subject (Ljava/lang/String;)Lme/proton/core/test/android/robots/reports/BugReportRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/reports/BugReportRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/reports/BugReportRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun bugReportFormIsEditable ()V
+	public final fun bugReportIsSending ()V
+	public final fun descriptionFieldHasError (II[Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun descriptionFieldHasError (I[Ljava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun descriptionLength (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun subjectFieldHasError (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun subjectLength (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public final class me/proton/core/test/android/robots/settings/PasswordManagementRobot : me/proton/core/test/android/robots/CoreRobot {

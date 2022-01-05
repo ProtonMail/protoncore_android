@@ -29,8 +29,9 @@ public abstract interface annotation class me/proton/core/humanverification/pres
 }
 
 public final class me/proton/core/humanverification/presentation/HumanVerificationManagerObserver {
-	public fun <init> (Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;Lme/proton/core/humanverification/domain/HumanVerificationManager;)V
-	public synthetic fun <init> (Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;Lme/proton/core/humanverification/domain/HumanVerificationManager;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun cancelAllObservers ()V
 }
 
 public final class me/proton/core/humanverification/presentation/HumanVerificationManagerObserverKt {
@@ -242,11 +243,6 @@ public final class me/proton/core/humanverification/presentation/ui/HumanVerific
 	public fun onProgressChanged (Landroid/webkit/WebView;I)V
 }
 
-public final class me/proton/core/humanverification/presentation/ui/HumanVerificationDialogFragment$HumanVerificationWebViewClient : android/webkit/WebViewClient {
-	public fun <init> (Lme/proton/core/humanverification/presentation/ui/HumanVerificationDialogFragment;Ljava/util/List;)V
-	public fun shouldInterceptRequest (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Landroid/webkit/WebResourceResponse;
-}
-
 public final class me/proton/core/humanverification/presentation/ui/HumanVerificationDialogFragment$VerificationJSInterface {
 	public fun <init> (Lme/proton/core/humanverification/presentation/ui/HumanVerificationDialogFragment;)V
 	public final fun dispatch (Ljava/lang/String;)V
@@ -381,9 +377,18 @@ public final class me/proton/core/humanverification/presentation/ui/Verification
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/humanverification/presentation/ui/VerificationResponseMessage$Type;)V
 }
 
+public final class me/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient : android/webkit/WebViewClient {
+	public static final field Companion Lme/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient$Companion;
+	public static final field TAG Ljava/lang/String;
+	public fun <init> (Ljava/util/List;Ljava/lang/String;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;)V
+	public fun shouldInterceptRequest (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;)Landroid/webkit/WebResourceResponse;
+}
+
+public final class me/proton/core/humanverification/presentation/ui/webview/HumanVerificationWebViewClient$Companion {
+}
+
 public final class me/proton/core/humanverification/presentation/utils/UiUtilsKt {
 	public static final field TAG_HUMAN_VERIFICATION_HELP Ljava/lang/String;
-	public static final fun getDefaultVerificationMethods ()Ljava/util/List;
 	public static final fun showHumanVerification (Landroidx/fragment/app/FragmentManager;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Z)V
 	public static synthetic fun showHumanVerification$default (Landroidx/fragment/app/FragmentManager;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)V
 }
@@ -404,17 +409,18 @@ public final class me/proton/core/humanverification/presentation/viewmodel/Human
 }
 
 public final class me/proton/core/humanverification/presentation/viewmodel/HumanVerificationViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/humanverification/domain/HumanVerificationWorkflowHandler;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/usersettings/domain/usecase/GetSettings;)V
+	public fun <init> (Lme/proton/core/humanverification/domain/HumanVerificationWorkflowHandler;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/usersettings/domain/usecase/GetSettings;Lme/proton/core/network/domain/NetworkPrefs;)V
+	public final fun getActiveAltUrlForDoH ()Ljava/lang/String;
 	public final fun getHumanVerificationExtraParams (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onHumanVerificationResult (Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/humanverification/presentation/entity/HumanVerificationToken;)Lkotlinx/coroutines/Job;
 }
 
 public final class me/proton/core/humanverification/presentation/viewmodel/HumanVerificationViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/HumanVerificationViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/HumanVerificationViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/HumanVerificationViewModel;
-	public static fun newInstance (Lme/proton/core/humanverification/domain/HumanVerificationWorkflowHandler;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/usersettings/domain/usecase/GetSettings;)Lme/proton/core/humanverification/presentation/viewmodel/HumanVerificationViewModel;
+	public static fun newInstance (Lme/proton/core/humanverification/domain/HumanVerificationWorkflowHandler;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/usersettings/domain/usecase/GetSettings;Lme/proton/core/network/domain/NetworkPrefs;)Lme/proton/core/humanverification/presentation/viewmodel/HumanVerificationViewModel;
 }
 
 public final class me/proton/core/humanverification/presentation/viewmodel/HumanVerificationViewModel_HiltModules {

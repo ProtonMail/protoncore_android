@@ -102,6 +102,7 @@ public class me/proton/core/network/domain/ApiResult$Error$Connection : me/proto
 	public final fun getPath ()Ljava/lang/String;
 	public final fun getQuery ()Ljava/lang/String;
 	public fun isPotentialBlocking ()Z
+	public fun toString ()Ljava/lang/String;
 }
 
 public class me/proton/core/network/domain/ApiResult$Error$Http : me/proton/core/network/domain/ApiResult$Error {
@@ -121,22 +122,26 @@ public final class me/proton/core/network/domain/ApiResult$Error$NoInternet : me
 
 public final class me/proton/core/network/domain/ApiResult$Error$Parse : me/proton/core/network/domain/ApiResult$Error {
 	public fun <init> (Ljava/lang/Throwable;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/network/domain/ApiResult$Error$ProtonData {
-	public fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;)V
-	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;)V
+	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;
-	public final fun copy (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;)Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
-	public static synthetic fun copy$default (Lme/proton/core/network/domain/ApiResult$Error$ProtonData;ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;ILjava/lang/Object;)Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
+	public final fun component4 ()Lme/proton/core/network/domain/scopes/MissingScopes;
+	public final fun copy (ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;)Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
+	public static synthetic fun copy$default (Lme/proton/core/network/domain/ApiResult$Error$ProtonData;ILjava/lang/String;Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;Lme/proton/core/network/domain/scopes/MissingScopes;ILjava/lang/Object;)Lme/proton/core/network/domain/ApiResult$Error$ProtonData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getError ()Ljava/lang/String;
 	public final fun getHumanVerification ()Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;
+	public final fun getMissingScopes ()Lme/proton/core/network/domain/scopes/MissingScopes;
 	public fun hashCode ()I
 	public final fun setHumanVerification (Lme/proton/core/network/domain/humanverification/HumanVerificationAvailableMethods;)V
+	public final fun setMissingScopes (Lme/proton/core/network/domain/scopes/MissingScopes;)V
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -201,6 +206,14 @@ public abstract interface class me/proton/core/network/domain/DohService {
 	public abstract fun getAlternativeBaseUrls (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/network/domain/HttpResponseCodes {
+	public static final field HTTP_BAD_REQUEST I
+	public static final field HTTP_FORBIDDEN I
+	public static final field HTTP_UNAUTHORIZED I
+	public static final field HTTP_UNPROCESSABLE I
+	public static final field INSTANCE Lme/proton/core/network/domain/HttpResponseCodes;
+}
+
 public abstract class me/proton/core/network/domain/NetworkManager {
 	public fun <init> ()V
 	public abstract fun getNetworkStatus ()Lme/proton/core/network/domain/NetworkStatus;
@@ -242,16 +255,18 @@ public final class me/proton/core/network/domain/ResponseCodes {
 }
 
 public final class me/proton/core/network/domain/TimeoutOverride {
-	public fun <init> (III)V
-	public final fun component1 ()I
-	public final fun component2 ()I
-	public final fun component3 ()I
-	public final fun copy (III)Lme/proton/core/network/domain/TimeoutOverride;
-	public static synthetic fun copy$default (Lme/proton/core/network/domain/TimeoutOverride;IIIILjava/lang/Object;)Lme/proton/core/network/domain/TimeoutOverride;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+	public synthetic fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/Integer;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)Lme/proton/core/network/domain/TimeoutOverride;
+	public static synthetic fun copy$default (Lme/proton/core/network/domain/TimeoutOverride;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/network/domain/TimeoutOverride;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getConnectionTimeoutSeconds ()I
-	public final fun getReadTimeoutSeconds ()I
-	public final fun getWriteTimeoutSeconds ()I
+	public final fun getConnectionTimeoutSeconds ()Ljava/lang/Integer;
+	public final fun getReadTimeoutSeconds ()Ljava/lang/Integer;
+	public final fun getWriteTimeoutSeconds ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -361,6 +376,16 @@ public final class me/proton/core/network/domain/handlers/HumanVerificationNeede
 	public final fun reset (Lme/proton/core/network/domain/client/ClientId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/network/domain/handlers/MissingScopeHandler : me/proton/core/network/domain/ApiErrorHandler {
+	public static final field Companion Lme/proton/core/network/domain/handlers/MissingScopeHandler$Companion;
+	public fun <init> (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
+	public fun invoke (Lme/proton/core/network/domain/ApiBackend;Lme/proton/core/network/domain/ApiResult$Error;Lme/proton/core/network/domain/ApiManager$Call;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/network/domain/handlers/MissingScopeHandler$Companion {
+	public final fun sessionMutex (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/network/domain/handlers/ProtonForceUpdateHandler : me/proton/core/network/domain/ApiErrorHandler {
 	public static final field Companion Lme/proton/core/network/domain/handlers/ProtonForceUpdateHandler$Companion;
 	public fun <init> (Lme/proton/core/network/domain/ApiClient;)V
@@ -372,7 +397,6 @@ public final class me/proton/core/network/domain/handlers/ProtonForceUpdateHandl
 
 public final class me/proton/core/network/domain/handlers/RefreshTokenHandler : me/proton/core/network/domain/ApiErrorHandler {
 	public static final field Companion Lme/proton/core/network/domain/handlers/RefreshTokenHandler$Companion;
-	public static final field HTTP_UNAUTHORIZED I
 	public fun <init> (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/session/SessionListener;Lkotlin/jvm/functions/Function0;)V
 	public fun invoke (Lme/proton/core/network/domain/ApiBackend;Lme/proton/core/network/domain/ApiResult$Error;Lme/proton/core/network/domain/ApiManager$Call;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -448,21 +472,82 @@ public final class me/proton/core/network/domain/humanverification/HumanVerifica
 	public static fun values ()[Lme/proton/core/network/domain/humanverification/HumanVerificationState;
 }
 
-public final class me/proton/core/network/domain/humanverification/VerificationMethod : java/lang/Enum {
-	public static final field CAPTCHA Lme/proton/core/network/domain/humanverification/VerificationMethod;
-	public static final field COUPON Lme/proton/core/network/domain/humanverification/VerificationMethod;
-	public static final field Companion Lme/proton/core/network/domain/humanverification/VerificationMethod$Companion;
-	public static final field EMAIL Lme/proton/core/network/domain/humanverification/VerificationMethod;
-	public static final field INVITE Lme/proton/core/network/domain/humanverification/VerificationMethod;
-	public static final field PAYMENT Lme/proton/core/network/domain/humanverification/VerificationMethod;
-	public static final field PHONE Lme/proton/core/network/domain/humanverification/VerificationMethod;
-	public final fun getValue ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/network/domain/humanverification/VerificationMethod;
-	public static fun values ()[Lme/proton/core/network/domain/humanverification/VerificationMethod;
+public final class me/proton/core/network/domain/humanverification/VerificationMethod {
+	public static final field CAPTCHA Ljava/lang/String;
+	public static final field COUPON Ljava/lang/String;
+	public static final field EMAIL Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/network/domain/humanverification/VerificationMethod;
+	public static final field INVITE Ljava/lang/String;
+	public static final field PAYMENT Ljava/lang/String;
+	public static final field PHONE Ljava/lang/String;
 }
 
-public final class me/proton/core/network/domain/humanverification/VerificationMethod$Companion {
-	public final fun getByValue (Ljava/lang/String;)Lme/proton/core/network/domain/humanverification/VerificationMethod;
+public abstract interface class me/proton/core/network/domain/scopes/MissingScopeListener {
+	public abstract fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public abstract fun onMissingScope (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onMissingScopeFailure (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onMissingScopeSuccess (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/network/domain/scopes/MissingScopeResult {
+}
+
+public final class me/proton/core/network/domain/scopes/MissingScopeResult$Failure : me/proton/core/network/domain/scopes/MissingScopeResult {
+	public static final field INSTANCE Lme/proton/core/network/domain/scopes/MissingScopeResult$Failure;
+}
+
+public final class me/proton/core/network/domain/scopes/MissingScopeResult$Success : me/proton/core/network/domain/scopes/MissingScopeResult {
+	public static final field INSTANCE Lme/proton/core/network/domain/scopes/MissingScopeResult$Success;
+}
+
+public abstract class me/proton/core/network/domain/scopes/MissingScopeState {
+}
+
+public final class me/proton/core/network/domain/scopes/MissingScopeState$ScopeMissing : me/proton/core/network/domain/scopes/MissingScopeState {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/util/List;)Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeMissing;
+	public static synthetic fun copy$default (Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeMissing;Lme/proton/core/domain/entity/UserId;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeMissing;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMissingScopes ()Ljava/util/List;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/network/domain/scopes/MissingScopeState$ScopeObtainFailed : me/proton/core/network/domain/scopes/MissingScopeState {
+	public static final field INSTANCE Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeObtainFailed;
+}
+
+public final class me/proton/core/network/domain/scopes/MissingScopeState$ScopeObtainSuccess : me/proton/core/network/domain/scopes/MissingScopeState {
+	public static final field INSTANCE Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeObtainSuccess;
+}
+
+public final class me/proton/core/network/domain/scopes/MissingScopes {
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/network/domain/scopes/MissingScopes;
+	public static synthetic fun copy$default (Lme/proton/core/network/domain/scopes/MissingScopes;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/network/domain/scopes/MissingScopes;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getScopes ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/network/domain/scopes/Scope : java/lang/Enum {
+	public static final field Companion Lme/proton/core/network/domain/scopes/Scope$Companion;
+	public static final field LOCKED Lme/proton/core/network/domain/scopes/Scope;
+	public static final field PASSWORD Lme/proton/core/network/domain/scopes/Scope;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/network/domain/scopes/Scope;
+	public static fun values ()[Lme/proton/core/network/domain/scopes/Scope;
+}
+
+public final class me/proton/core/network/domain/scopes/Scope$Companion {
+	public final fun getByValue (Ljava/lang/String;)Lme/proton/core/network/domain/scopes/Scope;
 	public final fun getMap ()Ljava/util/Map;
 }
 

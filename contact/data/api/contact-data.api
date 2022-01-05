@@ -40,7 +40,7 @@ public final class me/proton/core/contact/data/ContactEmailEvent$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/contact/data/ContactEmailEventListener : me/proton/core/eventmanager/domain/EventListener {
+public class me/proton/core/contact/data/ContactEmailEventListener : me/proton/core/eventmanager/domain/EventListener {
 	public fun <init> (Lme/proton/core/contact/data/local/db/ContactDatabase;Lme/proton/core/contact/domain/repository/ContactLocalDataSource;Lme/proton/core/contact/domain/repository/ContactRepository;Lme/proton/core/contact/data/ContactEventListener;)V
 	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOrder ()I
@@ -118,7 +118,7 @@ public final class me/proton/core/contact/data/ContactEvent$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/contact/data/ContactEventListener : me/proton/core/eventmanager/domain/EventListener {
+public class me/proton/core/contact/data/ContactEventListener : me/proton/core/eventmanager/domain/EventListener {
 	public fun <init> (Lme/proton/core/contact/data/local/db/ContactDatabase;Lme/proton/core/contact/domain/repository/ContactLocalDataSource;Lme/proton/core/contact/domain/repository/ContactRepository;)V
 	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOrder ()I

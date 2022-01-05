@@ -633,6 +633,7 @@ public final class me/proton/core/presentation/utils/UiUtilsKt {
 	public static final fun openMarketLink (Landroid/content/Context;)V
 	public static final fun setDarkStatusBar (Landroidx/appcompat/app/AppCompatActivity;)V
 	public static final fun setLightStatusBar (Landroidx/appcompat/app/AppCompatActivity;)V
+	public static final fun showKeyboard (Landroid/content/Context;Landroid/view/View;)V
 }
 
 public final class me/proton/core/presentation/utils/ValidationType : java/lang/Enum {

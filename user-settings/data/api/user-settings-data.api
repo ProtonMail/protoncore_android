@@ -5,7 +5,7 @@ public final class me/proton/core/usersettings/data/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/usersettings/data/UserSettingsEventListener : me/proton/core/eventmanager/domain/EventListener {
+public class me/proton/core/usersettings/data/UserSettingsEventListener : me/proton/core/eventmanager/domain/EventListener {
 	public fun <init> (Lme/proton/core/usersettings/data/db/UserSettingsDatabase;Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;)V
 	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOrder ()I

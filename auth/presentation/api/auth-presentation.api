@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_alert_confirmpass_ConfirmPasswordDialog_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_testing_ProtonTestEntryPoint {
 	public fun <init> ()V
 }
@@ -7,6 +11,10 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_AddAccoun
 }
 
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_ChooseAddressActivity_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_ConfirmPasswordActivity_GeneratedInjector {
 	public fun <init> ()V
 }
 
@@ -59,6 +67,14 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_Ch
 }
 
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_ChooseAddressViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_ConfirmPasswordDialogViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_ConfirmPasswordDialogViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
@@ -139,6 +155,7 @@ public final class me/proton/core/auth/presentation/AuthOrchestrator {
 	public final fun register (Landroidx/activity/ComponentActivity;)V
 	public final fun setOnAddAccountResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnChooseAddressResult (Lkotlin/jvm/functions/Function1;)V
+	public final fun setOnConfirmPasswordResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnLoginResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnSecondFactorResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnSignUpResult (Lkotlin/jvm/functions/Function1;)V
@@ -146,6 +163,7 @@ public final class me/proton/core/auth/presentation/AuthOrchestrator {
 	public final fun startAddAccountWorkflow (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;)V
 	public static synthetic fun startAddAccountWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;ILjava/lang/Object;)V
 	public final fun startChooseAddressWorkflow (Lme/proton/core/account/domain/entity/Account;)V
+	public final fun startConfirmPasswordWorkflow (Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeMissing;)V
 	public final fun startLoginWorkflow (Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Ljava/lang/String;)V
 	public static synthetic fun startLoginWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
 	public final fun startSecondFactorWorkflow (Lme/proton/core/account/domain/entity/Account;)V
@@ -158,6 +176,7 @@ public final class me/proton/core/auth/presentation/AuthOrchestrator {
 public final class me/proton/core/auth/presentation/AuthOrchestratorKt {
 	public static final fun onAddAccountResult (Lme/proton/core/auth/presentation/AuthOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/auth/presentation/AuthOrchestrator;
 	public static final fun onChooseAddressResult (Lme/proton/core/auth/presentation/AuthOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/auth/presentation/AuthOrchestrator;
+	public static final fun onConfirmPasswordResult (Lme/proton/core/auth/presentation/AuthOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/auth/presentation/AuthOrchestrator;
 	public static final fun onLoginResult (Lme/proton/core/auth/presentation/AuthOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/auth/presentation/AuthOrchestrator;
 	public static final fun onOnSignUpResult (Lme/proton/core/auth/presentation/AuthOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/auth/presentation/AuthOrchestrator;
 	public static final fun onSecondFactorResult (Lme/proton/core/auth/presentation/AuthOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/auth/presentation/AuthOrchestrator;
@@ -189,7 +208,25 @@ public final class me/proton/core/auth/presentation/LogTag {
 	public static final field INSTANCE Lme/proton/core/auth/presentation/LogTag;
 }
 
+public final class me/proton/core/auth/presentation/MissingScopeObserver {
+	public fun <init> (Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
+	public synthetic fun <init> (Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;Lme/proton/core/network/domain/scopes/MissingScopeListener;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun cancelAllObservers ()V
+}
+
+public final class me/proton/core/auth/presentation/MissingScopeObserverKt {
+	public static final fun observe (Lme/proton/core/network/domain/scopes/MissingScopeListener;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;)Lme/proton/core/auth/presentation/MissingScopeObserver;
+	public static synthetic fun observe$default (Lme/proton/core/network/domain/scopes/MissingScopeListener;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;ILjava/lang/Object;)Lme/proton/core/auth/presentation/MissingScopeObserver;
+	public static final fun onConfirmPasswordNeeded (Lme/proton/core/auth/presentation/MissingScopeObserver;Lkotlin/jvm/functions/Function2;)Lme/proton/core/auth/presentation/MissingScopeObserver;
+	public static final fun onMissingScopeFailed (Lme/proton/core/auth/presentation/MissingScopeObserver;Lkotlin/jvm/functions/Function2;)Lme/proton/core/auth/presentation/MissingScopeObserver;
+	public static final fun onMissingScopeSuccess (Lme/proton/core/auth/presentation/MissingScopeObserver;Lkotlin/jvm/functions/Function2;)Lme/proton/core/auth/presentation/MissingScopeObserver;
+}
+
 public final class me/proton/core/auth/presentation/alert/AlertUtilsKt {
+	public static final fun registerConfirmPasswordResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
+	public static synthetic fun registerConfirmPasswordResultLauncher$default (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
+	public static final fun showConfirmPasswordDialog (Landroidx/fragment/app/FragmentManager;ZLjava/lang/String;Ljava/util/List;)V
+	public static synthetic fun showConfirmPasswordDialog$default (Landroidx/fragment/app/FragmentManager;ZLjava/lang/String;Ljava/util/List;ILjava/lang/Object;)V
 	public static final fun showPasswordEnterDialog (Landroidx/fragment/app/FragmentManager;ZZZ)V
 	public static synthetic fun showPasswordEnterDialog$default (Landroidx/fragment/app/FragmentManager;ZZZILjava/lang/Object;)V
 }
@@ -206,6 +243,45 @@ public final class me/proton/core/auth/presentation/alert/PasswordAnd2FADialog :
 
 public final class me/proton/core/auth/presentation/alert/PasswordAnd2FADialog$Companion {
 	public final fun invoke (ZZ)Lme/proton/core/auth/presentation/alert/PasswordAnd2FADialog;
+}
+
+public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog : me/proton/core/presentation/ui/ProtonDialogFragment {
+	public static final field BUNDLE_CONFIRM_PASS_DATA Ljava/lang/String;
+	public static final field CONFIRM_PASS_SET Ljava/lang/String;
+	public static final field Companion Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog$Companion;
+	public fun <init> ()V
+	public fun _$_clearFindViewByIdCache ()V
+	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
+	public fun onDismiss (Landroid/content/DialogInterface;)V
+}
+
+public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog$Companion {
+	public final fun invoke (Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput;)Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog;
+}
+
+public abstract interface class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog_GeneratedInjector {
+	public abstract fun injectConfirmPasswordDialog (Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog;)V
+}
+
+public abstract class me/proton/core/auth/presentation/alert/confirmpass/Hilt_ConfirmPasswordDialog : me/proton/core/presentation/ui/ProtonDialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getContext ()Landroid/content/Context;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	public fun onAttach (Landroid/app/Activity;)V
+	public fun onAttach (Landroid/content/Context;)V
+	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
+}
+
+public final class me/proton/core/auth/presentation/alert/confirmpass/StartConfirmPassword : androidx/activity/result/contract/ActivityResultContract {
+	public fun <init> ()V
+	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
+	public fun createIntent (Landroid/content/Context;Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput;)Landroid/content/Intent;
+	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
+	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordResult;
 }
 
 public final class me/proton/core/auth/presentation/databinding/Activity2faBinding : androidx/viewbinding/ViewBinding {
@@ -264,6 +340,15 @@ public final class me/proton/core/auth/presentation/databinding/ActivityChooseAd
 	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/ActivityChooseAddressBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/ActivityChooseAddressBinding;
+}
+
+public final class me/proton/core/auth/presentation/databinding/ActivityConfirmPasswordBinding : androidx/viewbinding/ViewBinding {
+	public final field layoutContent Landroid/widget/FrameLayout;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/ActivityConfirmPasswordBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroid/widget/FrameLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/ActivityConfirmPasswordBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/ActivityConfirmPasswordBinding;
 }
 
 public final class me/proton/core/auth/presentation/databinding/ActivityCreateAddressBinding : androidx/viewbinding/ViewBinding {
@@ -359,6 +444,18 @@ public final class me/proton/core/auth/presentation/databinding/ContentHelpItemO
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/ContentHelpItemOtherIssuesBinding;
 }
 
+public final class me/proton/core/auth/presentation/databinding/DialogConfirmPasswordBinding : androidx/viewbinding/ViewBinding {
+	public final field cancelButton Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field enterButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field password Lme/proton/core/presentation/ui/view/ProtonInput;
+	public final field twoFA Lme/proton/core/presentation/ui/view/ProtonInput;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/DialogConfirmPasswordBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/DialogConfirmPasswordBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/DialogConfirmPasswordBinding;
+}
+
 public final class me/proton/core/auth/presentation/databinding/DialogEnterPasswordBinding : androidx/viewbinding/ViewBinding {
 	public final field password Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field twoFA Lme/proton/core/presentation/ui/view/ProtonInput;
@@ -367,6 +464,17 @@ public final class me/proton/core/auth/presentation/databinding/DialogEnterPassw
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/DialogEnterPasswordBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/DialogEnterPasswordBinding;
+}
+
+public final class me/proton/core/auth/presentation/databinding/FragmentCreatingUserBinding : androidx/viewbinding/ViewBinding {
+	public final field lottieProgress Lcom/airbnb/lottie/LottieAnimationView;
+	public final field lottieTitleText Landroid/widget/TextView;
+	public final field subtitleText Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentCreatingUserBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentCreatingUserBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentCreatingUserBinding;
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentRecoveryEmailBinding : androidx/viewbinding/ViewBinding {
@@ -420,13 +528,9 @@ public final class me/proton/core/auth/presentation/databinding/FragmentSignupCh
 
 public final class me/proton/core/auth/presentation/databinding/FragmentSignupRecoveryBinding : androidx/viewbinding/ViewBinding {
 	public final field fragmentOptionsContainer Landroid/widget/FrameLayout;
-	public final field lottieProgress Lcom/airbnb/lottie/LottieAnimationView;
-	public final field lottieTitleText Landroid/widget/TextView;
 	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
-	public final field progressLayout Landroidx/constraintlayout/widget/ConstraintLayout;
 	public final field recoveryOptions Lcom/google/android/material/tabs/TabLayout;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
-	public final field subtitleText Landroid/widget/TextView;
 	public final field termsConditionsText Landroid/widget/TextView;
 	public final field titleText Landroid/widget/TextView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
@@ -519,17 +623,32 @@ public final class me/proton/core/auth/presentation/entity/ChooseAddressInput : 
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class me/proton/core/auth/presentation/entity/ChooseAddressResult : android/os/Parcelable {
+public abstract class me/proton/core/auth/presentation/entity/ChooseAddressResult : android/os/Parcelable {
+}
+
+public final class me/proton/core/auth/presentation/entity/ChooseAddressResult$Success : me/proton/core/auth/presentation/entity/ChooseAddressResult {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Z)V
+	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Z
-	public final fun copy (Ljava/lang/String;Z)Lme/proton/core/auth/presentation/entity/ChooseAddressResult;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/ChooseAddressResult;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/ChooseAddressResult;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/ChooseAddressResult$Success;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/ChooseAddressResult$Success;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/ChooseAddressResult$Success;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getSuccess ()Z
 	public final fun getUserId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError : me/proton/core/auth/presentation/entity/ChooseAddressResult {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMessage ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -557,19 +676,21 @@ public final class me/proton/core/auth/presentation/entity/CreateAddressInput : 
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class me/proton/core/auth/presentation/entity/CreateAddressResult : android/os/Parcelable {
+public abstract class me/proton/core/auth/presentation/entity/CreateAddressResult : android/os/Parcelable {
+}
+
+public final class me/proton/core/auth/presentation/entity/CreateAddressResult$Success : me/proton/core/auth/presentation/entity/CreateAddressResult {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> ()V
-	public fun <init> (Z)V
-	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Z
-	public final fun copy (Z)Lme/proton/core/auth/presentation/entity/CreateAddressResult;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/CreateAddressResult;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/CreateAddressResult;
+	public static final field INSTANCE Lme/proton/core/auth/presentation/entity/CreateAddressResult$Success;
 	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getSuccess ()Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/CreateAddressResult$UserCheckError : me/proton/core/auth/presentation/entity/CreateAddressResult {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public fun describeContents ()I
+	public final fun getMessage ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
@@ -631,22 +752,6 @@ public final class me/proton/core/auth/presentation/entity/PasswordAnd2FAInput :
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getPassword ()Ljava/lang/String;
 	public final fun getTwoFA ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/auth/presentation/entity/ScopeResult : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/util/List;
-	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lme/proton/core/auth/presentation/entity/ScopeResult;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/ScopeResult;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/ScopeResult;
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getScopes ()Ljava/util/List;
-	public final fun getSessionId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -781,6 +886,36 @@ public final class me/proton/core/auth/presentation/entity/TwoPassModeResult : a
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class me/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordInput;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMissingScopes ()Ljava/util/List;
+	public final fun getUserId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordResult : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordResult;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordResult;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/confirmpass/ConfirmPasswordResult;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getObtained ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
 public final class me/proton/core/auth/presentation/entity/signup/RecoveryMethod : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Lme/proton/core/auth/presentation/entity/signup/RecoveryMethodType;Ljava/lang/String;)V
@@ -907,9 +1042,10 @@ public abstract class me/proton/core/auth/presentation/ui/AuthActivity : me/prot
 	public fun onError (ZLjava/lang/String;)V
 	public static synthetic fun onError$default (Lme/proton/core/auth/presentation/ui/AuthActivity;ZLjava/lang/String;ILjava/lang/Object;)V
 	protected final fun onUnlockUserError (Lme/proton/core/user/domain/UserManager$UnlockResult$Error;)V
-	protected final fun onUserCheckFailed (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Error;)V
-	public fun showError (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
-	public static synthetic fun showError$default (Lme/proton/core/auth/presentation/ui/AuthActivity;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
+	protected final fun onUserCheckFailed (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Error;Z)V
+	public static synthetic fun onUserCheckFailed$default (Lme/proton/core/auth/presentation/ui/AuthActivity;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Error;ZILjava/lang/Object;)V
+	public fun showError (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Z)V
+	public static synthetic fun showError$default (Lme/proton/core/auth/presentation/ui/AuthActivity;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ZILjava/lang/Object;)V
 	public fun showLoading (Z)V
 }
 
@@ -933,6 +1069,21 @@ public final class me/proton/core/auth/presentation/ui/ChooseAddressActivity$Com
 
 public abstract interface class me/proton/core/auth/presentation/ui/ChooseAddressActivity_GeneratedInjector {
 	public abstract fun injectChooseAddressActivity (Lme/proton/core/auth/presentation/ui/ChooseAddressActivity;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/ConfirmPasswordActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
+	public static final field ARG_INPUT Ljava/lang/String;
+	public static final field ARG_RESULT Ljava/lang/String;
+	public static final field Companion Lme/proton/core/auth/presentation/ui/ConfirmPasswordActivity$Companion;
+	public fun <init> ()V
+	public fun _$_clearFindViewByIdCache ()V
+}
+
+public final class me/proton/core/auth/presentation/ui/ConfirmPasswordActivity$Companion {
+}
+
+public abstract interface class me/proton/core/auth/presentation/ui/ConfirmPasswordActivity_GeneratedInjector {
+	public abstract fun injectConfirmPasswordActivity (Lme/proton/core/auth/presentation/ui/ConfirmPasswordActivity;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/CreateAddressActivity : me/proton/core/auth/presentation/ui/AuthActivity {
@@ -961,6 +1112,15 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_AddAccountActivit
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_ChooseAddressActivity : me/proton/core/auth/presentation/ui/AuthActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+}
+
+public abstract class me/proton/core/auth/presentation/ui/Hilt_ConfirmPasswordActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
@@ -1116,6 +1276,9 @@ public abstract interface class me/proton/core/auth/presentation/ui/TwoPassModeA
 }
 
 public final class me/proton/core/auth/presentation/ui/UtilsKt {
+	public static final fun removeCreatingUser (Landroidx/fragment/app/FragmentManager;)V
+	public static final fun showCreatingUser (Landroidx/fragment/app/FragmentManager;I)Landroidx/fragment/app/Fragment;
+	public static synthetic fun showCreatingUser$default (Landroidx/fragment/app/FragmentManager;IILjava/lang/Object;)Landroidx/fragment/app/Fragment;
 	public static final fun showPasswordChangeDialog (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;Z)V
 	public static synthetic fun showPasswordChangeDialog$default (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;ZILjava/lang/Object;)V
 }
@@ -1147,6 +1310,13 @@ public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFrag
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment_GeneratedInjector {
 	public abstract fun injectChooseUsernameFragment (Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/CreatingUserFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
+	public fun <init> ()V
+	public fun _$_clearFindViewByIdCache ()V
+	public fun onBackPressed ()V
+	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
@@ -1430,8 +1600,98 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 	public static fun provide ()Ljava/lang/String;
 }
 
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/scopes/GetAuthInfo;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
+	public final fun checkForSecondFactorInput (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;)Lkotlinx/coroutines/Job;
+	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun onConfirmPasswordResult (Lme/proton/core/network/domain/scopes/MissingScopeState;)Lkotlinx/coroutines/Job;
+	public final fun unlock (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$InvalidAccount : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$InvalidAccount;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Message : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Message;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Message;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMessage ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Idle : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Idle;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$ProcessingObtainScope : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$ProcessingObtainScope;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$ProcessingSecondFactor : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$ProcessingSecondFactor;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getNeeded ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Success : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
+	public fun <init> (Lme/proton/core/network/domain/scopes/MissingScopeState;)V
+	public final fun component1 ()Lme/proton/core/network/domain/scopes/MissingScopeState;
+	public final fun copy (Lme/proton/core/network/domain/scopes/MissingScopeState;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Success;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Success;Lme/proton/core/network/domain/scopes/MissingScopeState;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getState ()Lme/proton/core/network/domain/scopes/MissingScopeState;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/scopes/GetAuthInfo;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
 public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/user/domain/UserManager;Lme/proton/core/usersettings/domain/usecase/SetupUsername;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;)V
+	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)V
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun upgradeAccount (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
 }
@@ -1439,25 +1699,22 @@ public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewM
 public abstract class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State {
 }
 
-public abstract class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error : me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State {
-}
-
-public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error$CannotUnlockPrimaryKey : me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error {
-	public fun <init> (Lme/proton/core/user/domain/UserManager$UnlockResult$Error;)V
-	public final fun component1 ()Lme/proton/core/user/domain/UserManager$UnlockResult$Error;
-	public final fun copy (Lme/proton/core/user/domain/UserManager$UnlockResult$Error;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error$CannotUnlockPrimaryKey;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error$CannotUnlockPrimaryKey;Lme/proton/core/user/domain/UserManager$UnlockResult$Error;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error$CannotUnlockPrimaryKey;
+public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$AccountSetupResult : me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State {
+	public fun <init> (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;)V
+	public final fun component1 ()Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;
+	public final fun copy (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$AccountSetupResult;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$AccountSetupResult;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$AccountSetupResult;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getError ()Lme/proton/core/user/domain/UserManager$UnlockResult$Error;
+	public final fun getResult ()Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error$Message : me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error {
+public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$ErrorMessage : me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error$Message;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$ErrorMessage;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$ErrorMessage;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$ErrorMessage;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getMessage ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -1472,26 +1729,12 @@ public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewM
 	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Processing;
 }
 
-public abstract class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Success : me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State {
-}
-
-public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Success$UserUnLocked : me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Success {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
-	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Success$UserUnLocked;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Success$UserUnLocked;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Success$UserUnLocked;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/user/domain/UserManager;Lme/proton/core/usersettings/domain/usecase/SetupUsername;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel_HiltModules {

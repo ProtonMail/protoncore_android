@@ -5,7 +5,7 @@ public final class me/proton/core/mailsettings/data/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/mailsettings/data/MailSettingsEventListener : me/proton/core/eventmanager/domain/EventListener {
+public class me/proton/core/mailsettings/data/MailSettingsEventListener : me/proton/core/eventmanager/domain/EventListener {
 	public fun <init> (Lme/proton/core/mailsettings/data/db/MailSettingsDatabase;Lme/proton/core/mailsettings/domain/repository/MailSettingsRepository;)V
 	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOrder ()I

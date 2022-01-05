@@ -42,7 +42,7 @@ public final class me/proton/core/user/data/UserAddressEvent$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/user/data/UserAddressEventListener : me/proton/core/eventmanager/domain/EventListener {
+public class me/proton/core/user/data/UserAddressEventListener : me/proton/core/eventmanager/domain/EventListener {
 	public fun <init> (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/user/domain/repository/UserAddressRepository;)V
 	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOrder ()I
@@ -116,7 +116,7 @@ public final class me/proton/core/user/data/UserAddressManagerImpl : me/proton/c
 	public fun updateOrder (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/user/data/UserEventListener : me/proton/core/eventmanager/domain/EventListener {
+public class me/proton/core/user/data/UserEventListener : me/proton/core/eventmanager/domain/EventListener {
 	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/user/domain/repository/UserRepository;)V
 	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOrder ()I
@@ -186,6 +186,9 @@ public abstract interface class me/proton/core/user/data/api/UserApi : me/proton
 	public abstract fun createExternalUser (Lme/proton/core/user/data/api/request/CreateExternalUserRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun createUser (Lme/proton/core/user/data/api/request/CreateUserRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getUsers (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun lockPasswordAndLockedScopes (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun unlockLockedScope (Lme/proton/core/user/data/api/request/UnlockRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun unlockPasswordScope (Lme/proton/core/user/data/api/request/UnlockPasswordRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun usernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -295,6 +298,77 @@ public final class me/proton/core/user/data/api/request/CreateUserRequest$$seria
 }
 
 public final class me/proton/core/user/data/api/request/CreateUserRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/UnlockPasswordRequest {
+	public static final field Companion Lme/proton/core/user/data/api/request/UnlockPasswordRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/user/data/api/request/UnlockPasswordRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UnlockPasswordRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UnlockPasswordRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClientEphemeral ()Ljava/lang/String;
+	public final fun getClientProof ()Ljava/lang/String;
+	public final fun getSrpSession ()Ljava/lang/String;
+	public final fun getTwoFactorCode ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/api/request/UnlockPasswordRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/api/request/UnlockPasswordRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/api/request/UnlockPasswordRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/UnlockPasswordRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/api/request/UnlockPasswordRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/UnlockPasswordRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/UnlockRequest {
+	public static final field Companion Lme/proton/core/user/data/api/request/UnlockRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/user/data/api/request/UnlockRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UnlockRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UnlockRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClientEphemeral ()Ljava/lang/String;
+	public final fun getClientProof ()Ljava/lang/String;
+	public final fun getSrpSession ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/user/data/api/request/UnlockRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/user/data/api/request/UnlockRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/user/data/api/request/UnlockRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/user/data/api/request/UnlockRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/user/data/api/request/UnlockRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/user/data/api/request/UnlockRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -710,7 +784,10 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/p
 	public fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUserFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun isUsernameAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun removeLockedAndPasswordScopes (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun unlockUserForLockedScope (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun unlockUserForPasswordScope (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
