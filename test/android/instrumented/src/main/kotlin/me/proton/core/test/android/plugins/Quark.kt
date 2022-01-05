@@ -72,6 +72,9 @@ class Quark(private val host: String, private val proxyToken: String?, internalA
 
         client.newCall(req).execute().use {
             Log.d(testTag, "\nSent request to endpoint : $endpoint; Response Code: ${it.code}")
+            if (it.code > 201) {
+                throw Exception(it.body!!.string())
+            }
             return it.body!!.string()
         }
     }
