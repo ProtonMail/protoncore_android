@@ -6,7 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Force change password is now based on `TemporaryPassword` API flag.
+### Changes
+
+- Force change password is now based on `TemporaryPassword` API flag.
+- Improving AccountPrimaryItem (added AccountPrimaryState).
 
 ## [5.1.0]
 
