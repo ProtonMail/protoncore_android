@@ -74,6 +74,7 @@ class TwoPassModeViewModel @Inject constructor(
             requiredAccountType = requiredAccountType,
             isSecondFactorNeeded = false,
             isTwoPassModeNeeded = false,
+            temporaryPassword = false,
             onSetupSuccess = { accountWorkflow.handleTwoPassModeSuccess(userId) }
         )
         emit(State.AccountSetupResult(result))

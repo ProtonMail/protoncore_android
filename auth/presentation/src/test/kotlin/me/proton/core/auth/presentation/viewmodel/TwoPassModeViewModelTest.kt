@@ -67,7 +67,7 @@ class TwoPassModeViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `mailbox login happy path`() = coroutinesTest {
         // GIVEN
-        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any()) } returns success
+        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns success
         viewModel.state.test {
             // WHEN
             viewModel.tryUnlockUser(testUserId, testPassword, accountType)
@@ -84,7 +84,9 @@ class TwoPassModeViewModelTest : ArchTest, CoroutinesTest {
     fun `success mailbox login invokes success on account manager`() = coroutinesTest {
         // GIVEN
         val lambdaSlot = slot<(suspend () -> Unit)>()
-        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), capture(lambdaSlot)) } returns success
+        coEvery {
+            postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any(), capture(lambdaSlot))
+        } returns success
         // WHEN
         viewModel.tryUnlockUser(testUserId, testPassword, accountType)
         // THEN

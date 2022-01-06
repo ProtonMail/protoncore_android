@@ -103,7 +103,7 @@ class PostLoginAccountSetupTest {
         val sessionInfo = mockSessionInfo()
 
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
         val result = tested.invoke(
@@ -112,6 +112,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
@@ -125,7 +126,7 @@ class PostLoginAccountSetupTest {
         val unlockError = mockk<UserManager.UnlockResult.Error>()
 
         coJustRun { accountWorkflowHandler.handleUnlockFailed(any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns unlockError
 
         val result = tested.invoke(
@@ -134,6 +135,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
 
@@ -151,6 +153,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.Need.SecondFactor(testUserId), result)
@@ -170,7 +173,7 @@ class PostLoginAccountSetupTest {
 
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
         coJustRun { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
         val result = tested.invoke(
@@ -179,6 +182,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             billingDetails = billingDetails,
             onSetupSuccess = onSetupSuccess
         )
@@ -217,7 +221,7 @@ class PostLoginAccountSetupTest {
         val sessionInfo = mockSessionInfo()
 
         coJustRun { accountWorkflowHandler.handleAccountDisabled(any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
         coEvery { userCheck.invoke(any()) } returns setupError
 
@@ -227,6 +231,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
         assertTrue(result is PostLoginAccountSetup.Result.Error.UserCheckError)
@@ -240,7 +245,7 @@ class PostLoginAccountSetupTest {
         val sessionInfo = mockSessionInfo()
 
         coJustRun { accountWorkflowHandler.handleTwoPassModeNeeded(any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns setupError
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns setupError
 
         val result = tested.invoke(
             sessionInfo.userId,
@@ -248,6 +253,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.Need.TwoPassMode(testUserId), result)
@@ -258,10 +264,10 @@ class PostLoginAccountSetupTest {
     @Test
     fun `change pass needed`() = runBlockingTest {
         val setupError = SetupAccountCheck.Result.ChangePasswordNeeded
-        val sessionInfo = mockSessionInfo()
+        val sessionInfo = mockSessionInfo(temporaryPassword = true)
 
         coJustRun { accountWorkflowHandler.handleAccountDisabled(any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns setupError
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns setupError
 
         val result = tested.invoke(
             sessionInfo.userId,
@@ -269,6 +275,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.Need.ChangePassword(testUserId), result)
@@ -282,7 +289,7 @@ class PostLoginAccountSetupTest {
         val sessionInfo = mockSessionInfo()
 
         coJustRun { accountWorkflowHandler.handleCreateAddressNeeded(any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns setupError
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns setupError
 
         val result = tested.invoke(
             sessionInfo.userId,
@@ -290,6 +297,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.Need.ChooseUsername(testUserId), result)
@@ -303,7 +311,7 @@ class PostLoginAccountSetupTest {
         val sessionInfo = mockSessionInfo()
 
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns setupError
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns setupError
         coJustRun { setupPrimaryKeys.invoke(any(), any(), any()) }
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
@@ -313,6 +321,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
@@ -327,7 +336,7 @@ class PostLoginAccountSetupTest {
         val sessionInfo = mockSessionInfo()
 
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
-        coEvery { setupAccountCheck.invoke(any(), any(), any()) } returns setupError
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns setupError
         coJustRun { setupInternalAddress.invoke(any(), any()) }
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
@@ -337,6 +346,7 @@ class PostLoginAccountSetupTest {
             testAccountType,
             isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
         assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
@@ -345,9 +355,13 @@ class PostLoginAccountSetupTest {
         coVerify(exactly = 1) { onSetupSuccess() }
     }
 
-    private fun mockSessionInfo(secondFactorNeeded: Boolean = false) = mockk<SessionInfo> {
+    private fun mockSessionInfo(
+        secondFactorNeeded: Boolean = false,
+        temporaryPassword: Boolean = false
+    ) = mockk<SessionInfo> {
         every { userId } returns testUserId
         every { isSecondFactorNeeded } returns secondFactorNeeded
         every { isTwoPassModeNeeded } returns false
+        every { this@mockk.temporaryPassword } returns temporaryPassword
     }
 }

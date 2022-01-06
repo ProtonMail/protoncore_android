@@ -51,7 +51,9 @@ data class LoginResponse(
     @SerialName("PasswordMode")
     val passwordMode: Int,
     @SerialName("2FA")
-    val secondFactorInfo: SecondFactorInfoResponse
+    val secondFactorInfo: SecondFactorInfoResponse,
+    @SerialName("TemporaryPassword")
+    val temporaryPassword: Int,
 ) {
     fun toSessionInfo(username: String): SessionInfo = SessionInfo(
         username = username,
@@ -67,6 +69,9 @@ data class LoginResponse(
         serverProof = serverProof,
         localId = localId,
         passwordMode = passwordMode,
-        secondFactor = secondFactorInfo.toSecondFactor()
+        secondFactor = secondFactorInfo.toSecondFactor(),
+        temporaryPassword = temporaryPassword.toBooleanOrFalse()
     )
 }
+
+private fun Int.toBooleanOrFalse(): Boolean = this == 1

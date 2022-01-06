@@ -78,6 +78,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
                     testUserId, testPassword, AccountType.Internal,
                     isSecondFactorNeeded = false,
                     isTwoPassModeNeeded = false,
+                    temporaryPassword = false,
                     onSetupSuccess = any(),
                     internalAddressDomain = testDomain
                 )
@@ -198,6 +199,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
                 AccountType.Internal,
                 isSecondFactorNeeded = false,
                 isTwoPassModeNeeded = false,
+                temporaryPassword = false,
                 onSetupSuccess = any(),
                 billingDetails = null,
                 internalAddressDomain = testDomain

@@ -77,6 +77,7 @@ class PostLoginAccountSetup @Inject constructor(
         requiredAccountType: AccountType,
         isSecondFactorNeeded: Boolean,
         isTwoPassModeNeeded: Boolean,
+        temporaryPassword: Boolean,
         onSetupSuccess: (suspend () -> Unit)? = null,
         billingDetails: BillingDetails? = null,
         internalAddressDomain: String? = null
@@ -100,7 +101,7 @@ class PostLoginAccountSetup @Inject constructor(
             return Result.Need.SecondFactor(userId)
         }
 
-        return when (setupAccountCheck(userId, isTwoPassModeNeeded, requiredAccountType)) {
+        return when (setupAccountCheck(userId, isTwoPassModeNeeded, requiredAccountType, temporaryPassword)) {
             is SetupAccountCheck.Result.TwoPassNeeded -> {
                 accountWorkflow.handleTwoPassModeNeeded(userId)
                 Result.Need.TwoPassMode(userId)

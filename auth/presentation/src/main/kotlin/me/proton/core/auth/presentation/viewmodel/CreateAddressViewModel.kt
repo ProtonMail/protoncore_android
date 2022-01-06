@@ -73,6 +73,7 @@ class CreateAddressViewModel @Inject constructor(
             requiredAccountType = AccountType.Internal,
             isSecondFactorNeeded = false,
             isTwoPassModeNeeded = false,
+            temporaryPassword = false,
             onSetupSuccess = { accountWorkflow.handleCreateAddressSuccess(userId) },
             internalAddressDomain = domain
         )

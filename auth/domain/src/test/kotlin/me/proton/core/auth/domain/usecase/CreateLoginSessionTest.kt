@@ -112,7 +112,8 @@ class CreateLoginSessionTest {
                 "server-proof",
                 1,
                 0,
-                secondFactor
+                secondFactor,
+                false
             )
         }
 
