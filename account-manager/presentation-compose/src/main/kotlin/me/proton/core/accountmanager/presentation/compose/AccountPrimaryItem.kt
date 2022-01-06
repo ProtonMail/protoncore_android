@@ -20,12 +20,10 @@ package me.proton.core.accountmanager.presentation.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.presentation.view.AccountPrimaryView
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.domain.entity.UserId
@@ -37,21 +35,17 @@ fun AccountPrimaryItem(
     onRemove: (UserId) -> Unit,
     onSwitch: (UserId) -> Unit,
     modifier: Modifier = Modifier,
-    isDialogEnabled: Boolean = true,
+    viewState: AccountPrimaryState = rememberAccountPrimaryState(),
     viewModel: AccountSwitcherViewModel = hiltViewModel(),
 ) {
-    val scope = rememberCoroutineScope()
-
     LaunchedEffect(viewModel) {
-        scope.launch {
-            viewModel.onAction().collect {
-                when (it) {
-                    is AccountSwitcherViewModel.Action.Add -> onSignIn(null)
-                    is AccountSwitcherViewModel.Action.SignIn -> onSignIn(it.account.userId)
-                    is AccountSwitcherViewModel.Action.SignOut -> onSignOut(it.account.userId)
-                    is AccountSwitcherViewModel.Action.Remove -> onRemove(it.account.userId)
-                    is AccountSwitcherViewModel.Action.SetPrimary -> onSwitch(it.account.userId)
-                }
+        viewModel.onAction().collect {
+            when (it) {
+                is AccountSwitcherViewModel.Action.Add -> onSignIn(null)
+                is AccountSwitcherViewModel.Action.SignIn -> onSignIn(it.account.userId)
+                is AccountSwitcherViewModel.Action.SignOut -> onSignOut(it.account.userId)
+                is AccountSwitcherViewModel.Action.Remove -> onRemove(it.account.userId)
+                is AccountSwitcherViewModel.Action.SetPrimary -> onSwitch(it.account.userId)
             }
         }
     }
@@ -59,10 +53,25 @@ fun AccountPrimaryItem(
     AndroidView(
         factory = { context ->
             AccountPrimaryView(context).also { view ->
-                view.isDialogEnabled = isDialogEnabled
+                view.isDialogEnabled = viewState.isDialogEnabled
                 view.setViewModel(viewModel)
+                view.setOnViewClicked {
+                    if (viewState.isDialogEnabled) {
+                        viewState.showDialog()
+                    }
+                }
+                view.setOnDialogShown { viewState.isDialogShowing = true }
+                view.setOnDialogDismissed { viewState.isDialogShowing = false }
             }
         },
         modifier = modifier,
+        update = { view ->
+            view.isDialogEnabled = viewState.isDialogEnabled
+            if (viewState.isDialogShowing) {
+                view.showDialog()
+            } else {
+                view.dismissDialog()
+            }
+        }
     )
 }

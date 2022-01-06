@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.presentation.R
 import me.proton.core.accountmanager.presentation.databinding.AccountPrimaryViewBinding
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
-import me.proton.core.presentation.utils.onClick
 
 class AccountPrimaryView @JvmOverloads constructor(
     context: Context,
@@ -42,6 +41,10 @@ class AccountPrimaryView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     private val binding = AccountPrimaryViewBinding.inflate(LayoutInflater.from(context), this, true)
+
+    private var onViewClicked: (() -> Unit)? = null
+    private var onDialogShown: (() -> Unit)? = null
+    private var onDialogDismissed: (() -> Unit)? = null
 
     private var viewModel: AccountSwitcherViewModel? = null
 
@@ -79,11 +82,25 @@ class AccountPrimaryView @JvmOverloads constructor(
             isDialogEnabled = getBoolean(R.styleable.AccountPrimaryView_isDialogEnabled, true)
         }
 
-        binding.root.onClick {
-            if (isDialogEnabled) {
+        binding.root.setOnClickListener {
+            if (onViewClicked == null && isDialogEnabled) {
                 showDialog()
+            } else {
+                onViewClicked?.invoke()
             }
         }
+    }
+
+    fun setOnViewClicked(block: (() -> Unit)?) {
+        onViewClicked = block
+    }
+
+    fun setOnDialogShown(block: (() -> Unit)?) {
+        onDialogShown = block
+    }
+
+    fun setOnDialogDismissed(block: (() -> Unit)?) {
+        onDialogDismissed = block
     }
 
     fun setViewModel(viewModel: AccountSwitcherViewModel?) {
@@ -99,7 +116,11 @@ class AccountPrimaryView @JvmOverloads constructor(
     }
 
     fun showDialog() {
-        if (dialog == null) dialog = AccountListView.createDialog(context, viewModel)
+        if (dialog == null) {
+            dialog = AccountListView.createDialog(context, viewModel)
+            dialog?.setOnDismissListener { onDialogDismissed?.invoke() }
+            dialog?.setOnShowListener { onDialogShown?.invoke() }
+        }
         dialog?.show()
     }
 
