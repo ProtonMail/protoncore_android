@@ -1,0 +1,35 @@
+public class hilt_aggregated_deps/_me_proton_core_report_dagger_HiltWrapper_ReportBindModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_report_dagger_ReportModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/report/dagger/AppUtils_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/report/dagger/AppUtils_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/report/dagger/AppUtils;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/report/dagger/AppUtils;
+}
+
+public final class me/proton/core/report/dagger/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/report/dagger/HiltWrapper_ReportBindModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/report/dagger/ReportModule_ProvideBugReportMetaFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/report/dagger/ReportModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/report/dagger/ReportModule;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/report/dagger/ReportModule_ProvideBugReportMetaFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/report/domain/entity/BugReportMeta;
+	public static fun provideBugReportMeta (Lme/proton/core/report/dagger/ReportModule;Lme/proton/core/report/dagger/AppUtils;Lme/proton/core/domain/entity/Product;)Lme/proton/core/report/domain/entity/BugReportMeta;
+}
+

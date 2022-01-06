@@ -1,0 +1,36 @@
+public final class me/proton/core/country/domain/entity/Country {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)Lme/proton/core/country/domain/entity/Country;
+	public static synthetic fun copy$default (Lme/proton/core/country/domain/entity/Country;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/country/domain/entity/Country;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCallingCode ()Ljava/lang/Integer;
+	public final fun getCode ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/country/domain/repository/CountriesRepository {
+	public abstract fun getAllCountriesSorted (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getCountry (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/country/domain/usecase/DefaultCountry {
+	public fun <init> (Lme/proton/core/country/domain/repository/CountriesRepository;)V
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/country/domain/usecase/GetCountry {
+	public fun <init> (Lme/proton/core/country/domain/repository/CountriesRepository;)V
+	public final fun invoke (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/country/domain/usecase/LoadCountries {
+	public fun <init> (Lme/proton/core/country/domain/repository/CountriesRepository;)V
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

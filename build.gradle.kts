@@ -35,6 +35,7 @@ plugins {
     id("me.proton.core.gradle-plugins.tests")
     id("me.proton.core.gradle-plugins.jacoco")
     id("com.github.ben-manes.versions") version "0.39.0"
+    alias(libs.plugins.kotlinx.binaryCompatibilityValidator)
 }
 
 buildscript {
@@ -111,4 +112,17 @@ protonCoverageMultiModuleOptions {
         "**/*Fragment.class",
         "**/*Fragment$*",
     )
+}
+
+// Only evaluate binary api for to be published projects, see https://github.com/Kotlin/binary-compatibility-validator
+subprojects {
+    afterEvaluate {
+        val publishOption = extensions.findByType(PublishOptionExtension::class.java)
+        val shouldBePublishedAsLib = publishOption?.shouldBePublishedAsLib ?: false
+        if (!shouldBePublishedAsLib) {
+            rootProject.apiValidation {
+                ignoredProjects.add(name)
+            }
+        }
+    }
 }

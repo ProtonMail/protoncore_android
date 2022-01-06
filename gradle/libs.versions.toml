@@ -3,6 +3,7 @@ easyGradle = "2.8"
 
 [plugins]
 easyGradle = { id = "studio.forface.easygradle", version.ref="easyGradle" }
+kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version ="0.8.0" }
 
 [libraries]
 android-pluginGradle = "com.android.tools.build:gradle:7.0.4"

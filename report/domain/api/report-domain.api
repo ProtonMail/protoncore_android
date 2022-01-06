@@ -1,0 +1,224 @@
+public final class me/proton/core/report/domain/entity/BugReport {
+	public static final field Companion Lme/proton/core/report/domain/entity/BugReport$Companion;
+	public static final field DescriptionMaxLength I
+	public static final field DescriptionMinLength I
+	public static final field SubjectMaxLength I
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/report/domain/entity/BugReport;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/entity/BugReport;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/entity/BugReport;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getUsername ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/report/domain/entity/BugReport;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/report/domain/entity/BugReport$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/report/domain/entity/BugReport$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/report/domain/entity/BugReport;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/report/domain/entity/BugReport;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/report/domain/entity/BugReport$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/report/domain/entity/BugReportExtra {
+	public static final field Companion Lme/proton/core/report/domain/entity/BugReportExtra$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/report/domain/entity/BugReportExtra;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/entity/BugReportExtra;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/entity/BugReportExtra;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCountry ()Ljava/lang/String;
+	public final fun getIsp ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/report/domain/entity/BugReportExtra;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/report/domain/entity/BugReportExtra$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/report/domain/entity/BugReportExtra$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/report/domain/entity/BugReportExtra;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/report/domain/entity/BugReportExtra;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/report/domain/entity/BugReportExtra$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/report/domain/entity/BugReportKt {
+	public static final fun validate (Lme/proton/core/report/domain/entity/BugReport;)Ljava/util/List;
+}
+
+public final class me/proton/core/report/domain/entity/BugReportMeta {
+	public static final field Companion Lme/proton/core/report/domain/entity/BugReportMeta$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/domain/entity/Product;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/domain/entity/Product;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lme/proton/core/domain/entity/Product;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/domain/entity/Product;)Lme/proton/core/report/domain/entity/BugReportMeta;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/entity/BugReportMeta;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/domain/entity/Product;ILjava/lang/Object;)Lme/proton/core/report/domain/entity/BugReportMeta;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAppVersionName ()Ljava/lang/String;
+	public final fun getClientName ()Ljava/lang/String;
+	public final fun getOsName ()Ljava/lang/String;
+	public final fun getOsVersion ()Ljava/lang/String;
+	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/report/domain/entity/BugReportMeta;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/report/domain/entity/BugReportMeta$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/report/domain/entity/BugReportMeta$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/report/domain/entity/BugReportMeta;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/report/domain/entity/BugReportMeta;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/report/domain/entity/BugReportMeta$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/report/domain/entity/BugReportValidationError : java/lang/Enum {
+	public static final field DescriptionMissing Lme/proton/core/report/domain/entity/BugReportValidationError;
+	public static final field DescriptionTooLong Lme/proton/core/report/domain/entity/BugReportValidationError;
+	public static final field DescriptionTooShort Lme/proton/core/report/domain/entity/BugReportValidationError;
+	public static final field SubjectMissing Lme/proton/core/report/domain/entity/BugReportValidationError;
+	public static final field SubjectTooLong Lme/proton/core/report/domain/entity/BugReportValidationError;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/report/domain/entity/BugReportValidationError;
+	public static fun values ()[Lme/proton/core/report/domain/entity/BugReportValidationError;
+}
+
+public abstract interface class me/proton/core/report/domain/repository/ReportRepository {
+	public abstract fun sendReport (Lme/proton/core/report/domain/entity/BugReport;Lme/proton/core/report/domain/entity/BugReportMeta;Lme/proton/core/report/domain/entity/BugReportExtra;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/report/domain/repository/ReportRepository$DefaultImpls {
+	public static synthetic fun sendReport$default (Lme/proton/core/report/domain/repository/ReportRepository;Lme/proton/core/report/domain/entity/BugReport;Lme/proton/core/report/domain/entity/BugReportMeta;Lme/proton/core/report/domain/entity/BugReportExtra;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/report/domain/usecase/SendBugReport {
+	public abstract fun cancel (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun invoke (Lme/proton/core/report/domain/entity/BugReport;Lme/proton/core/report/domain/entity/BugReportExtra;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/report/domain/usecase/SendBugReport$DefaultImpls {
+	public static synthetic fun invoke$default (Lme/proton/core/report/domain/usecase/SendBugReport;Lme/proton/core/report/domain/entity/BugReport;Lme/proton/core/report/domain/entity/BugReportExtra;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract class me/proton/core/report/domain/usecase/SendBugReport$Result {
+	public abstract fun getRequestId ()Ljava/lang/String;
+	public final fun isPending ()Z
+}
+
+public final class me/proton/core/report/domain/usecase/SendBugReport$Result$Blocked : me/proton/core/report/domain/usecase/SendBugReport$Result {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Blocked;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/usecase/SendBugReport$Result$Blocked;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Blocked;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getRequestId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/report/domain/usecase/SendBugReport$Result$Cancelled : me/proton/core/report/domain/usecase/SendBugReport$Result {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Cancelled;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/usecase/SendBugReport$Result$Cancelled;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Cancelled;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getRequestId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/report/domain/usecase/SendBugReport$Result$Enqueued : me/proton/core/report/domain/usecase/SendBugReport$Result {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Enqueued;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/usecase/SendBugReport$Result$Enqueued;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Enqueued;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getRequestId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/report/domain/usecase/SendBugReport$Result$Failed : me/proton/core/report/domain/usecase/SendBugReport$Result {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Failed;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/usecase/SendBugReport$Result$Failed;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Failed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMessage ()Ljava/lang/String;
+	public fun getRequestId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/report/domain/usecase/SendBugReport$Result$InProgress : me/proton/core/report/domain/usecase/SendBugReport$Result {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$InProgress;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/usecase/SendBugReport$Result$InProgress;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$InProgress;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getRequestId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/report/domain/usecase/SendBugReport$Result$Initialized : me/proton/core/report/domain/usecase/SendBugReport$Result {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Initialized;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/usecase/SendBugReport$Result$Initialized;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Initialized;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getRequestId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/report/domain/usecase/SendBugReport$Result$Sent : me/proton/core/report/domain/usecase/SendBugReport$Result {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Sent;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/usecase/SendBugReport$Result$Sent;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/usecase/SendBugReport$Result$Sent;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getRequestId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+

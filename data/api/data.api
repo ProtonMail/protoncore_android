@@ -1,0 +1,19 @@
+public final class me/proton/core/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/data/arch/ApiResultMapperKt {
+	public static final fun toDataResult (Lme/proton/core/network/domain/ApiResult;)Lme/proton/core/domain/arch/DataResult;
+}
+
+public final class me/proton/core/data/arch/StoreResponseMapperKt {
+	public static final fun toDataResult (Lcom/dropbox/android/external/store4/StoreResponse;)Lme/proton/core/domain/arch/DataResult;
+}
+
+public final class me/proton/core/data/asset/AssetReaderKt {
+	public static final fun readFromAssets (Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;
+}
+

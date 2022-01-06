@@ -1,0 +1,27 @@
+public final class me/proton/core/accountmanager/presentation/compose/AccountPrimaryItemKt {
+	public static final fun AccountPrimaryItem (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Lme/proton/core/accountmanager/presentation/compose/AccountPrimaryState;Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/AccountPrimaryState {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun dismissDialog ()V
+	public final fun isDialogEnabled ()Z
+	public final fun isDialogShowing ()Z
+	public final fun setDialogEnabled (Z)V
+	public final fun setDialogShowing (Z)V
+	public final fun showDialog ()V
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/AccountPrimaryStateKt {
+	public static final fun rememberAccountPrimaryState (ZLandroidx/compose/runtime/Composer;II)Lme/proton/core/accountmanager/presentation/compose/AccountPrimaryState;
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+

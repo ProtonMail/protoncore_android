@@ -1,0 +1,41 @@
+public abstract class me/proton/core/accountmanager/domain/AccountManager {
+	public fun <init> (Lme/proton/core/domain/entity/Product;)V
+	public abstract fun addAccount (Lme/proton/core/account/domain/entity/Account;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun disableAccount (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAccount (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun getAccounts ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun getPreviousPrimaryUserId (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPrimaryUserId ()Lkotlinx/coroutines/flow/Flow;
+	protected final fun getProduct ()Lme/proton/core/domain/entity/Product;
+	public abstract fun getSessions ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun onAccountStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun onAccountStateChanged$default (Lme/proton/core/accountmanager/domain/AccountManager;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun onSessionStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun onSessionStateChanged$default (Lme/proton/core/accountmanager/domain/AccountManager;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun removeAccount (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun setAsPrimary (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/accountmanager/domain/AccountManagerExtensionsKt {
+	public static final fun getAccounts (Lme/proton/core/accountmanager/domain/AccountManager;[Lme/proton/core/account/domain/entity/AccountState;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun getPrimaryAccount (Lme/proton/core/accountmanager/domain/AccountManager;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun onAccountState (Lme/proton/core/accountmanager/domain/AccountManager;[Lme/proton/core/account/domain/entity/AccountState;Z)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun onAccountState$default (Lme/proton/core/accountmanager/domain/AccountManager;[Lme/proton/core/account/domain/entity/AccountState;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun onSessionState (Lme/proton/core/accountmanager/domain/AccountManager;[Lme/proton/core/account/domain/entity/SessionState;Z)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun onSessionState$default (Lme/proton/core/accountmanager/domain/AccountManager;[Lme/proton/core/account/domain/entity/SessionState;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract interface class me/proton/core/accountmanager/domain/SessionManager : me/proton/core/network/domain/session/SessionListener, me/proton/core/network/domain/session/SessionProvider {
+	public abstract fun refreshScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/accountmanager/domain/migrator/AccountMigrator {
+	public abstract fun migrate (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/accountmanager/domain/migrator/AccountMigrator$Migration : java/lang/Enum {
+	public static final field DecryptPassphrase Lme/proton/core/accountmanager/domain/migrator/AccountMigrator$Migration;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/accountmanager/domain/migrator/AccountMigrator$Migration;
+	public static fun values ()[Lme/proton/core/accountmanager/domain/migrator/AccountMigrator$Migration;
+}
+

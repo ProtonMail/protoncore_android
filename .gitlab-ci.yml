@@ -138,6 +138,38 @@ start-review:
   extends: .startReview
   stage: test
 
+binary-compatibility-check:
+  extends: .gradle-job
+  stage: test
+  tags:
+    - large
+  script:
+    - ./gradlew apiCheck
+
+trigger-client-integration-tests:
+  extends: .script-job
+  stage: test
+  when: manual
+  tags:
+    - small
+  cache: []
+  script:
+    - echo "Trigger all clients integration tests"
+
+.client-integration-tests:
+  needs:
+    - trigger-client-integration-tests
+  inherit:
+    variables: false
+  variables:
+    CORE_COMMIT_SHA: $CI_COMMIT_SHA
+
+mail-v6-integration-tests:
+  extends: .client-integration-tests
+  trigger:
+    project: android/mail/proton-mail
+    branch: test/core-integration-test
+
 ## publish stage ###################################################################################
 release-publish-github:
   stage: publish

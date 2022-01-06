@@ -1,0 +1,402 @@
+public class hilt_aggregated_deps/_me_proton_core_eventmanager_data_work_EventWorker_HiltModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/eventmanager/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/eventmanager/data/CoreEventManagerStarter {
+	public fun <init> (Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/EventManagerProvider;)V
+	public final fun start ()V
+}
+
+public final class me/proton/core/eventmanager/data/CoreEventManagerStarter_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/CoreEventManagerStarter_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/eventmanager/data/CoreEventManagerStarter;
+	public static fun newInstance (Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/EventManagerProvider;)Lme/proton/core/eventmanager/data/CoreEventManagerStarter;
+}
+
+public abstract interface class me/proton/core/eventmanager/data/EventDeserializer {
+	public abstract fun deserializeEventMetadata (Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventsResponse;)Lme/proton/core/eventmanager/domain/entity/EventMetadata;
+	public abstract fun deserializeLatestEventId (Lme/proton/core/eventmanager/domain/entity/EventIdResponse;)Lme/proton/core/eventmanager/domain/entity/EventId;
+	public abstract fun getConfig ()Lme/proton/core/eventmanager/domain/EventManagerConfig;
+	public abstract fun getEndpoint ()Ljava/lang/String;
+}
+
+public abstract interface annotation class me/proton/core/eventmanager/data/EventManagerCoroutineScope : java/lang/annotation/Annotation {
+}
+
+public abstract interface class me/proton/core/eventmanager/data/EventManagerFactory {
+	public abstract fun create (Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
+}
+
+public final class me/proton/core/eventmanager/data/EventManagerFactory_Impl : me/proton/core/eventmanager/data/EventManagerFactory {
+	public fun create (Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
+	public static fun create (Lme/proton/core/eventmanager/data/EventManagerImpl_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/eventmanager/data/EventManagerImpl : me/proton/core/eventmanager/domain/EventManager {
+	public static final field Companion Lme/proton/core/eventmanager/data/EventManagerImpl$Companion;
+	public static final field retriesBeforeNotifyResetAll I
+	public static final field retriesBeforeReset I
+	public fun <init> (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;)V
+	public fun deserializeEventMetadata (Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getConfig ()Lme/proton/core/eventmanager/domain/EventManagerConfig;
+	public final fun getDeserializer ()Lme/proton/core/eventmanager/data/EventDeserializer;
+	public fun getEventResponse (Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getLatestEventId (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun isStarted ()Z
+	public fun process (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun setStarted (Z)V
+	public fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun subscribe (Lme/proton/core/eventmanager/domain/EventListener;)V
+	public fun suspend (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/eventmanager/data/EventManagerImpl$Companion {
+}
+
+public final class me/proton/core/eventmanager/data/EventManagerImpl_Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/EventManagerImpl_Factory;
+	public fun get (Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
+	public static fun newInstance (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
+}
+
+public final class me/proton/core/eventmanager/data/EventManagerProviderImpl : me/proton/core/eventmanager/domain/EventManagerProvider {
+	public fun <init> (Lme/proton/core/eventmanager/data/EventManagerFactory;Ljava/util/Set;)V
+	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lme/proton/core/eventmanager/domain/EventManager;
+	public fun getAll ()Ljava/util/List;
+}
+
+public final class me/proton/core/eventmanager/data/LogTag {
+	public static final field INSTANCE Lme/proton/core/eventmanager/data/LogTag;
+	public static final field NOTIFY_ERROR Ljava/lang/String;
+	public static final field WORKER_ERROR Ljava/lang/String;
+	public final fun getREPORT_MAX_RETRY-WnFgrgw ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/eventmanager/data/api/EventApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
+	public abstract fun getEvents (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getLatestEventId (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse {
+	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse$Companion;
+	public synthetic fun <init> (ILjava/lang/String;IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;II)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (Ljava/lang/String;II)Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse;Ljava/lang/String;IIILjava/lang/Object;)Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEventId ()Ljava/lang/String;
+	public final fun getMore ()I
+	public final fun getRefresh ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse {
+	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEventId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCoreEventsResponse {
+	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse$Companion;
+	public synthetic fun <init> (ILjava/lang/String;IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;II)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (Ljava/lang/String;II)Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse;Ljava/lang/String;IIILjava/lang/Object;)Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEventId ()Ljava/lang/String;
+	public final fun getMore ()I
+	public final fun getRefresh ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCoreEventsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCoreEventsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse {
+	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEventId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsResponse {
+	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEventId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse {
+	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEventId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/eventmanager/data/db/EventManagerConverters {
+	public fun <init> ()V
+	public final fun fromEventManagerConfigToString (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Ljava/lang/String;
+	public final fun fromStringToEventManagerConfig (Ljava/lang/String;)Lme/proton/core/eventmanager/domain/EventManagerConfig;
+}
+
+public abstract interface class me/proton/core/eventmanager/data/db/EventMetadataDatabase : me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/eventmanager/data/db/EventMetadataDatabase$Companion;
+	public abstract fun eventMetadataDao ()Lme/proton/core/eventmanager/data/db/dao/EventMetadataDao;
+}
+
+public final class me/proton/core/eventmanager/data/db/EventMetadataDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public abstract class me/proton/core/eventmanager/data/db/dao/EventMetadataDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun delete (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteAll (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun updateState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/State;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/eventmanager/data/entity/EventMetadataEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/RefreshType;Ljava/lang/Boolean;Ljava/lang/String;ILme/proton/core/eventmanager/domain/entity/State;JLjava/lang/Long;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component10 ()J
+	public final fun component11 ()Ljava/lang/Long;
+	public final fun component2 ()Lme/proton/core/eventmanager/domain/EventManagerConfig;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lme/proton/core/eventmanager/domain/entity/RefreshType;
+	public final fun component6 ()Ljava/lang/Boolean;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()I
+	public final fun component9 ()Lme/proton/core/eventmanager/domain/entity/State;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/RefreshType;Ljava/lang/Boolean;Ljava/lang/String;ILme/proton/core/eventmanager/domain/entity/State;JLjava/lang/Long;)Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/RefreshType;Ljava/lang/Boolean;Ljava/lang/String;ILme/proton/core/eventmanager/domain/entity/State;JLjava/lang/Long;ILjava/lang/Object;)Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getConfig ()Lme/proton/core/eventmanager/domain/EventManagerConfig;
+	public final fun getCreatedAt ()J
+	public final fun getEventId ()Ljava/lang/String;
+	public final fun getMore ()Ljava/lang/Boolean;
+	public final fun getNextEventId ()Ljava/lang/String;
+	public final fun getRefresh ()Lme/proton/core/eventmanager/domain/entity/RefreshType;
+	public final fun getResponse ()Ljava/lang/String;
+	public final fun getRetry ()I
+	public final fun getState ()Lme/proton/core/eventmanager/domain/entity/State;
+	public final fun getUpdatedAt ()Ljava/lang/Long;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/eventmanager/data/extension/EventListenerKt {
+	public static final fun inTransaction (Ljava/util/Collection;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/eventmanager/data/extension/EventMetadataKt {
+	public static final fun fromEntity (Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;)Lme/proton/core/eventmanager/domain/entity/EventMetadata;
+	public static final fun toEntity (Lme/proton/core/eventmanager/domain/entity/EventMetadata;)Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;
+}
+
+public class me/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl : me/proton/core/eventmanager/domain/repository/EventMetadataRepository {
+	public fun <init> (Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/network/data/ApiProvider;)V
+	public fun delete (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getEvents (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/entity/EventId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getLatestEventId (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observe (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lkotlinx/coroutines/flow/Flow;
+	public fun observe (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;)Lkotlinx/coroutines/flow/Flow;
+	public fun update (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public class me/proton/core/eventmanager/data/work/EventWorker : androidx/work/CoroutineWorker {
+	public static final field Companion Lme/proton/core/eventmanager/data/work/EventWorker$Companion;
+	public fun <init> (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/eventmanager/domain/EventManagerProvider;)V
+	public fun doWork (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/eventmanager/data/work/EventWorker$Companion {
+	public final fun getRequestFor-HG0u8IE (Lme/proton/core/eventmanager/domain/EventManagerConfig;J)Landroidx/work/PeriodicWorkRequest;
+}
+
+public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl : me/proton/core/eventmanager/domain/work/EventWorkerManager {
+	public fun <init> (Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)V
+	public fun cancel (Lme/proton/core/eventmanager/domain/EventManagerConfig;)V
+	public fun enqueue (Lme/proton/core/eventmanager/domain/EventManagerConfig;Z)V
+}
+
+public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl;
+	public static fun newInstance (Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl;
+}
+
+public abstract interface class me/proton/core/eventmanager/data/work/EventWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/eventmanager/data/work/EventWorker_AssistedFactory_Impl : me/proton/core/eventmanager/data/work/EventWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/eventmanager/data/work/EventWorker;
+	public static fun create (Lme/proton/core/eventmanager/data/work/EventWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/eventmanager/data/work/EventWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/work/EventWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/eventmanager/data/work/EventWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/eventmanager/domain/EventManagerProvider;)Lme/proton/core/eventmanager/data/work/EventWorker;
+}
+
+public abstract interface class me/proton/core/eventmanager/data/work/EventWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/eventmanager/data/work/EventWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
