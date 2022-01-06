@@ -16,14 +16,14 @@ stages:
       --device model=Pixel2,version=28
       --test-targets "$TEST_TARGET"
       --timeout 25m
-      --results-dir=${CI_COMMIT_REF_NAME}/${CI_JOB_ID}
+      --results-dir=${CI_COMMIT_REF_NAME}/${CI_COMMIT_SHORT_SHA}
   after_script:
     - mkdir -p screenshots
     - mkdir -p logs
-    - gsutil -m cp -r $BUCKET_URL/${CI_COMMIT_REF_NAME}/${CI_JOB_ID}/Pixel2-28-en-portrait/test_cases ./logs
-    - gsutil cp $FIREBASE_BUCKET_URL/${CI_COMMIT_REF_NAME}/${CI_JOB_ID}/Pixel2-28-en-portrait/logcat logcat.txt
-    - gsutil cp $FIREBASE_BUCKET_URL/${CI_COMMIT_REF_NAME}/${CI_JOB_ID}/Pixel2-28-en-portrait/video.mp4 video.mp4
-    - gsutil -m cp -r $BUCKET_URL/${CI_COMMIT_REF_NAME}/${CI_JOB_ID}/Pixel2-28-en-portrait/artifacts/sdcard/screenshots ./screenshots 2> /dev/null || true
+    - gsutil -m cp -r $FIREBASE_BUCKET_URL/${CI_COMMIT_REF_NAME}/${CI_COMMIT_SHORT_SHA}/Pixel2-28-en-portrait/test_cases ./logs
+    - gsutil cp $FIREBASE_BUCKET_URL/${CI_COMMIT_REF_NAME}/${CI_COMMIT_SHORT_SHA}/Pixel2-28-en-portrait/logcat logcat.txt
+    - gsutil cp $FIREBASE_BUCKET_URL/${CI_COMMIT_REF_NAME}/${CI_COMMIT_SHORT_SHA}/Pixel2-28-en-portrait/video.mp4 video.mp4
+    - gsutil -m cp -r $FIREBASE_BUCKET_URL/${CI_COMMIT_REF_NAME}/${CI_COMMIT_SHORT_SHA}/Pixel2-28-en-portrait/artifacts/sdcard/screenshots ./screenshots 2> /dev/null || true
   needs:
     - pipeline: $PARENT_PIPELINE_ID
       job: assemble
