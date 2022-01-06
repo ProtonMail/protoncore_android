@@ -18,18 +18,19 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
+import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.android.plugins.data.Plan.Free
 import me.proton.core.test.android.plugins.data.Plan.Dev
 import me.proton.core.test.android.plugins.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
 class SelectPlanTests : BaseTest() {
@@ -42,6 +43,9 @@ class SelectPlanTests : BaseTest() {
         val user = User()
         AddAccountRobot()
             .createAccount()
+            .verify { suffixDisplayed(BuildConfig.HOST) }
+
+        ChooseUsernameRobot()
             .username(user.name)
             .next()
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
