@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.domain.usecase.scopes
 
-import com.google.crypto.tink.subtle.Base64
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -63,9 +62,11 @@ class ObtainPasswordScopeTest {
     private val testSrpSession = "test-srpSession"
     private val testVersion = 1
 
-    private val testClientEphemeral = "test-clientEphemeral"
-    private val testClientProof = "test-clientProof"
-    private val testExpectedServerProof = "test-expectedServerProof"
+    private val testSrpProofs = SrpProofs(
+        clientEphemeral = "test-clientEphemeral",
+        clientProof = "test-clientProof",
+        expectedServerProof = "test-expectedServerProof"
+    )
 
     private val authInfoResult = AuthInfo(
         username = testUsername,
@@ -90,18 +91,13 @@ class ObtainPasswordScopeTest {
 
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
-        } returns SrpProofs(
-            testClientEphemeral.toByteArray(),
-            testClientProof.toByteArray(),
-            testExpectedServerProof.toByteArray()
-        )
+        } returns testSrpProofs
 
         coEvery { authRepository.getAuthInfo(testUserId, testUsername) } returns authInfoResult
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,
-                Base64.encode(testClientEphemeral.toByteArray()),
-                Base64.encode(testClientProof.toByteArray()),
+                testSrpProofs,
                 authInfoResult.srpSession,
                 null
             )
@@ -122,8 +118,7 @@ class ObtainPasswordScopeTest {
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,
-                Base64.encode(testClientEphemeral.toByteArray()),
-                Base64.encode(testClientProof.toByteArray()),
+                testSrpProofs,
                 authInfoResult.srpSession,
                 test2FACode
             )
@@ -139,8 +134,7 @@ class ObtainPasswordScopeTest {
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,
-                Base64.encode(testClientEphemeral.toByteArray()),
-                Base64.encode(testClientProof.toByteArray()),
+                testSrpProofs,
                 authInfoResult.srpSession,
                 null
             )
@@ -156,8 +150,7 @@ class ObtainPasswordScopeTest {
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,
-                Base64.encode(testClientEphemeral.toByteArray()),
-                Base64.encode(testClientProof.toByteArray()),
+                testSrpProofs,
                 authInfoResult.srpSession,
                 test2FACode
             )
@@ -173,8 +166,7 @@ class ObtainPasswordScopeTest {
         coEvery {
             userRepository.unlockUserForPasswordScope(
                 testUserId,
-                Base64.encode(testClientEphemeral.toByteArray()),
-                Base64.encode(testClientProof.toByteArray()),
+                testSrpProofs,
                 authInfoResult.srpSession,
                 null
             )
