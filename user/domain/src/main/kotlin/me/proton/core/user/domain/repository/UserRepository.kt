@@ -21,6 +21,7 @@ package me.proton.core.user.domain.repository
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.user.domain.entity.CreateUserType
@@ -106,8 +107,7 @@ interface UserRepository : PassphraseRepository {
      */
     suspend fun unlockUserForLockedScope(
         sessionUserId: SessionUserId,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String
     ): Boolean
 
@@ -116,8 +116,7 @@ interface UserRepository : PassphraseRepository {
      */
     suspend fun unlockUserForPasswordScope(
         sessionUserId: SessionUserId,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String,
         twoFactorCode: String?
     ): Boolean

@@ -30,19 +30,21 @@ import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
+import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.runBlockingWithTimeout
 import me.proton.core.user.data.TestAccountManagerDatabase
@@ -55,6 +57,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -83,6 +86,12 @@ class UserRepositoryImplTests {
 
     private lateinit var db: AccountManagerDatabase
     private lateinit var userRepository: UserRepositoryImpl
+
+    private val testSrpProofs = SrpProofs(
+        clientEphemeral = "test-client-ephemeral",
+        clientProof = "test-client-proof",
+        expectedServerProof = "test-server-proof"
+    )
 
     @Before
     fun setup() {
@@ -339,13 +348,17 @@ class UserRepositoryImplTests {
     @Test
     fun unlockUser_lockedScope() = runBlockingWithTimeout {
         // GIVEN
-        coEvery { userApi.unlockLockedScope(any()) } answers { GenericResponse(1000) }
+        coEvery { userApi.unlockLockedScope(any()) } answers {
+            SRPAuthenticationResponse(
+                code = 1000,
+                serverProof = testSrpProofs.expectedServerProof,
+            )
+        }
 
         // WHEN
         val response = userRepository.unlockUserForLockedScope(
             TestUsers.User1.id,
-            "test-client-ephemeral",
-            "test-client-proof",
+            testSrpProofs,
             "test-srp-session"
         )
         assertNotNull(response)
@@ -355,13 +368,17 @@ class UserRepositoryImplTests {
     @Test
     fun unlockUser_no2fa_passwordScope() = runBlockingWithTimeout {
         // GIVEN
-        coEvery { userApi.unlockPasswordScope(any()) } answers { GenericResponse(1000) }
+        coEvery { userApi.unlockPasswordScope(any()) } answers {
+            SRPAuthenticationResponse(
+                code = 1000,
+                serverProof = testSrpProofs.expectedServerProof,
+            )
+        }
 
         // WHEN
         val response = userRepository.unlockUserForPasswordScope(
             TestUsers.User1.id,
-            "test-client-ephemeral",
-            "test-client-proof",
+            testSrpProofs,
             "test-srp-session",
             null
         )
@@ -375,23 +392,47 @@ class UserRepositoryImplTests {
         coEvery {
             userApi.unlockPasswordScope(
                 UnlockPasswordRequest(
-                    "test-client-ephemeral",
-                    "test-client-proof",
+                    testSrpProofs.clientEphemeral,
+                    testSrpProofs.clientProof,
                     "test-srp-session",
                     "test-2fa"
                 )
             )
-        } answers { GenericResponse(1000) }
+        } answers {
+            SRPAuthenticationResponse(
+                code = 1000,
+                serverProof = testSrpProofs.expectedServerProof,
+            )
+        }
 
         // WHEN
         val response = userRepository.unlockUserForPasswordScope(
             TestUsers.User1.id,
-            "test-client-ephemeral",
-            "test-client-proof",
+            testSrpProofs,
             "test-srp-session",
             "test-2fa"
         )
         assertNotNull(response)
         assertTrue(response)
+    }
+
+    @Test
+    fun unlockUser_wrong_server_proof() = runBlockingWithTimeout {
+        // GIVEN
+        coEvery { userApi.unlockLockedScope(any()) } answers {
+            SRPAuthenticationResponse(
+                code = 1000,
+                serverProof = testSrpProofs.expectedServerProof + "corrupted",
+            )
+        }
+
+        // WHEN
+        assertFailsWith<InvalidServerAuthenticationException> {
+            userRepository.unlockUserForLockedScope(
+                TestUsers.User1.id,
+                testSrpProofs,
+                "test-srp-session"
+            )
+        }
     }
 }

@@ -18,7 +18,6 @@
 
 package me.proton.core.user.data
 
-import com.google.crypto.tink.subtle.Base64
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -164,8 +163,7 @@ class UserManagerImpl(
                 val result = privateKeyRepository.updatePrivateKeys(
                     sessionUserId = userId,
                     keySalt = keySalt,
-                    clientEphemeral = Base64.encode(proofs.clientEphemeral),
-                    clientProof = Base64.encode(proofs.clientProof),
+                    srpProofs = proofs,
                     srpSession = srpSession,
                     secondFactorCode = secondFactorCode,
                     auth = auth,

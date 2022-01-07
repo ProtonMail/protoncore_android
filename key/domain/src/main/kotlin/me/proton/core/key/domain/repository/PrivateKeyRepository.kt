@@ -20,6 +20,7 @@ package me.proton.core.key.domain.repository
 
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
@@ -48,8 +49,7 @@ interface PrivateKeyRepository {
     suspend fun updatePrivateKeys(
         sessionUserId: SessionUserId,
         keySalt: String,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String,
         secondFactorCode: String,
         auth: Auth?,

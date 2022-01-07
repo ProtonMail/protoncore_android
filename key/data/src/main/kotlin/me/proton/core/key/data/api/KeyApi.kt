@@ -26,7 +26,7 @@ import me.proton.core.key.data.api.response.PublicAddressKeysResponse
 import me.proton.core.key.data.api.response.CreateAddressKeyResponse
 import me.proton.core.key.data.api.response.SetupInitialKeysResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.network.data.protonApi.GenericResponse
+import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.network.domain.CacheOverride
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -56,5 +56,5 @@ interface KeyApi : BaseRetrofitApi {
     suspend fun setupInitialKeys(@Body request: SetupInitialKeysRequest): SetupInitialKeysResponse
 
     @PUT("keys/private")
-    suspend fun updatePrivateKeys(@Body request: UpdateKeysForPasswordChangeRequest): GenericResponse
+    suspend fun updatePrivateKeys(@Body request: UpdateKeysForPasswordChangeRequest): SRPAuthenticationResponse
 }
