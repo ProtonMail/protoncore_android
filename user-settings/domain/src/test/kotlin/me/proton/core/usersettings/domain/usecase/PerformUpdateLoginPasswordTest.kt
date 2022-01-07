@@ -18,7 +18,6 @@
 
 package me.proton.core.usersettings.domain.usecase
 
-import com.google.crypto.tink.subtle.Base64
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -60,9 +59,11 @@ class PerformUpdateLoginPasswordTest {
     private val testUsername = "test-username"
     private val testPassword = "test-password"
     private val testSecondFactor = "123456"
-    private val testClientEphemeral = "test-client-ephemeral"
-    private val testClientProof = "test-client-proof"
-    private val testExpectedServerProof = "test-server-proof"
+    private val testSrpProofs = SrpProofs(
+        clientEphemeral = "test-client-ephemeral",
+        clientProof = "test-client-proof",
+        expectedServerProof = "test-server-proof"
+    )
     private val testSrpSession = "test-srp-session"
     private val testModulus = "test-modulus"
     private val testServerEphemeral = "test-server-ephemeral"
@@ -142,8 +143,7 @@ class PerformUpdateLoginPasswordTest {
         coEvery {
             repository.updateLoginPassword(
                 sessionUserId = testUserId,
-                clientEphemeral = any(),
-                clientProof = any(),
+                srpProofs = any(),
                 srpSession = any(),
                 secondFactorCode = any(),
                 auth = testAuth
@@ -177,12 +177,7 @@ class PerformUpdateLoginPasswordTest {
                 modulus = testModulus,
                 serverEphemeral = testServerEphemeral
             )
-        } returns
-            SrpProofs(
-                testClientEphemeral.toByteArray(),
-                testClientProof.toByteArray(),
-                testExpectedServerProof.toByteArray()
-            )
+        } returns testSrpProofs
         every {
             srpCrypto.calculatePasswordVerifier(testUsername, testNewPassword.toByteArray(), testModulusId, testModulus)
         } returns testAuth
@@ -198,8 +193,7 @@ class PerformUpdateLoginPasswordTest {
         coVerify(exactly = 1) {
             repository.updateLoginPassword(
                 sessionUserId = testUserId,
-                clientEphemeral = Base64.encode(testClientEphemeral.toByteArray()),
-                clientProof = Base64.encode(testClientProof.toByteArray()),
+                srpProofs = testSrpProofs,
                 srpSession = testSrpSession,
                 secondFactorCode = testSecondFactor,
                 auth = testAuth

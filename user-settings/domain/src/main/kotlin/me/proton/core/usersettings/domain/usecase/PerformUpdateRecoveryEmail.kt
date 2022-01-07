@@ -18,7 +18,6 @@
 
 package me.proton.core.usersettings.domain.usecase
 
-import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -62,8 +61,7 @@ class PerformUpdateRecoveryEmail @Inject constructor(
             return userSettingsRepository.updateRecoveryEmail(
                 sessionUserId = sessionUserId,
                 email = newRecoveryEmail,
-                clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
-                clientProof = Base64.encode(clientProofs.clientProof),
+                srpProofs = clientProofs,
                 srpSession = loginInfo.srpSession,
                 secondFactorCode = secondFactorCode
             )

@@ -26,7 +26,9 @@ import com.dropbox.android.external.store4.fresh
 import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.crypto.common.srp.Auth
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
@@ -97,8 +99,7 @@ class UserSettingsRepositoryImpl(
     override suspend fun updateRecoveryEmail(
         sessionUserId: SessionUserId,
         email: String,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String,
         secondFactorCode: String
     ): UserSettings {
@@ -107,11 +108,12 @@ class UserSettingsRepositoryImpl(
                 UpdateRecoveryEmailRequest(
                     email = email,
                     twoFactorCode = secondFactorCode,
-                    clientEphemeral = clientEphemeral,
-                    clientProof = clientProof,
+                    clientEphemeral = srpProofs.clientEphemeral,
+                    clientProof = srpProofs.clientProof,
                     srpSession = srpSession
                 )
             )
+            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "recovery email update failed" }
             insertOrUpdate(response.settings.fromResponse(sessionUserId))
             getUserSettings(sessionUserId)
         }.valueOrThrow
@@ -119,8 +121,7 @@ class UserSettingsRepositoryImpl(
 
     override suspend fun updateLoginPassword(
         sessionUserId: SessionUserId,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String,
         secondFactorCode: String,
         auth: Auth
@@ -129,12 +130,13 @@ class UserSettingsRepositoryImpl(
             val response = updateLoginPassword(
                 UpdateLoginPasswordRequest(
                     twoFactorCode = secondFactorCode,
-                    clientEphemeral = clientEphemeral,
-                    clientProof = clientProof,
+                    clientEphemeral = srpProofs.clientEphemeral,
+                    clientProof = srpProofs.clientProof,
                     srpSession = srpSession,
                     auth = AuthRequest.from(auth)
                 )
             )
+            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "password change failed" }
             insertOrUpdate(response.settings.fromResponse(sessionUserId))
             getUserSettings(sessionUserId)
         }.valueOrThrow
