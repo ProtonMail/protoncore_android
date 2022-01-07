@@ -85,9 +85,13 @@ public final class me/proton/core/user/data/UserAddressEvents$Companion {
 }
 
 public final class me/proton/core/user/data/UserAddressKeySecretProvider {
+	public static final field Companion Lme/proton/core/user/data/UserAddressKeySecretProvider$Companion;
 	public fun <init> (Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/crypto/common/context/CryptoContext;)V
 	public final fun generateUserAddressKey (ZLme/proton/core/user/domain/entity/UserAddress;Lme/proton/core/key/domain/entity/key/PrivateKey;Z)Lme/proton/core/user/domain/entity/UserAddressKey;
 	public final fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Lme/proton/core/user/domain/entity/UserAddressKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/UserAddressKeySecretProvider$Companion {
 }
 
 public final class me/proton/core/user/data/UserAddressKeySecretProvider$UserAddressKeySecret {

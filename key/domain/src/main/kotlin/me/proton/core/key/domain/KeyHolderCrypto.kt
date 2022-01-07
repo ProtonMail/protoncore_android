@@ -973,6 +973,9 @@ fun KeyHolderContext.getEncryptedPackets(message: EncryptedMessage): List<Encryp
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify. Default: [KeyHolderContext.publicKeyRing].
  *
+ * @param validTokenPredicate a predicate function to specify
+ * what format should a valid token have. Default: always true predicate.
+ *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  *
  * @throws [IllegalStateException] if there is no encrypted or signed data.
@@ -981,12 +984,14 @@ fun KeyHolderContext.getEncryptedPackets(message: EncryptedMessage): List<Encryp
  */
 fun KeyHolderContext.decryptAndVerifyNestedKey(
     nestedPrivateKey: NestedPrivateKey,
-    verifyKeyRing: PublicKeyRing = publicKeyRing
+    verifyKeyRing: PublicKeyRing = publicKeyRing,
+    validTokenPredicate: (ByteArray) -> Boolean = { true }
 ): NestedPrivateKey {
     checkNotNull(nestedPrivateKey.passphrase) { "Cannot decrypt key without encrypted passphrase." }
     checkNotNull(nestedPrivateKey.passphraseSignature) { "Cannot verify without passphrase signature." }
     val passphrase = decryptDataOrNull(nestedPrivateKey.passphrase)
         ?.takeIf { verifyKeyRing.verifyData(context, it, nestedPrivateKey.passphraseSignature) }
+        ?.takeIf { validTokenPredicate(it) }
         ?.let { plain -> plain.use { it.encrypt(context.keyStoreCrypto) } }
     return nestedPrivateKey.copy(
         privateKey = nestedPrivateKey.privateKey.copy(
@@ -1001,6 +1006,9 @@ fun KeyHolderContext.decryptAndVerifyNestedKey(
  *
  * @param verifyKeyRing [PublicKeyRing] used to verify the signature. Default: [KeyHolderContext.publicKeyRing].
  *
+ * @param validTokenPredicate a predicate function to specify
+ * what format should a valid token have. Default: always true predicate.
+ *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  *
  * @throws [IllegalStateException] if there is no encrypted or signed data.
@@ -1011,8 +1019,13 @@ fun KeyHolderContext.decryptAndVerifyNestedKey(
     key: Armored,
     passphrase: EncryptedMessage,
     signature: Signature,
-    verifyKeyRing: PublicKeyRing = publicKeyRing
-): NestedPrivateKey = decryptAndVerifyNestedKey(NestedPrivateKey.from(key, passphrase, signature), verifyKeyRing)
+    verifyKeyRing: PublicKeyRing = publicKeyRing,
+    validTokenPredicate: (ByteArray) -> Boolean = { true }
+): NestedPrivateKey = decryptAndVerifyNestedKey(
+    NestedPrivateKey.from(key, passphrase, signature),
+    verifyKeyRing,
+    validTokenPredicate
+)
 
 /**
  * Encrypt [PrivateKey.passphrase] using [encryptKeyRing] and sign using [KeyHolderContext.privateKeyRing].

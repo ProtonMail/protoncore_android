@@ -53,7 +53,8 @@ object TestUsers {
                 privateKey = TestKeys.Key1.privateKey,
                 fingerprint = null,
                 activation = null,
-                primary = 1
+                primary = 1,
+                active = 1
             )
         }
 
@@ -64,7 +65,8 @@ object TestUsers {
                 privateKey = TestKeys.Key2.privateKey,
                 fingerprint = null,
                 activation = null,
-                primary = 0
+                primary = 0,
+                active = 1
             )
         }
     }
@@ -97,7 +99,8 @@ object TestUsers {
                 privateKey = TestKeys.Key2.privateKey,
                 fingerprint = null,
                 activation = null,
-                primary = 1
+                primary = 1,
+                active = 1
             )
         }
     }
