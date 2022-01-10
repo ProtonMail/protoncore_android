@@ -63,7 +63,7 @@ class PlansOrchestrator @Inject constructor() {
     }
 
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
-        checkNotNull(launcher) { "You must call authOrchestrator.register(context) before starting workflow!" }
+        checkNotNull(launcher) { "You must call PlansOrchestrator.register(context) before starting workflow!" }
 
     /**
      * Starts the Plan Chooser workflow (sign up or upgrade).
