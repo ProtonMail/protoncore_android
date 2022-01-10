@@ -108,7 +108,7 @@ class CountryPickerFragment : ProtonDialogFragment(R.layout.fragment_country_pic
         countriesAdapter.submitList(
             countries.map { country ->
                 val id: Int = context.resources.getIdentifier(
-                    country.countryCode.lowercase(Locale.ROOT),
+                    "flag_${country.countryCode.lowercase(Locale.ROOT)}",
                     "drawable",
                     context.packageName
                 )

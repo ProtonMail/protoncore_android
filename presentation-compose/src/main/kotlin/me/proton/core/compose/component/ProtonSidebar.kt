@@ -97,6 +97,22 @@ fun ProtonSidebarSettingsItem(
 }
 
 @Composable
+fun ProtonSidebarSubscriptionItem(
+    modifier: Modifier = Modifier,
+    isClickable: Boolean = true,
+    onClick: () -> Unit = {},
+) {
+    ProtonSidebarItem(
+        text = R.string.presentation_menu_item_title_subscription,
+        icon = R.drawable.ic_pencil,
+        modifier = modifier,
+        onClick = onClick,
+        isClickable = isClickable,
+        isSelected = false
+    )
+}
+
+@Composable
 fun ProtonSidebarReportBugItem(
     modifier: Modifier = Modifier,
     isClickable: Boolean = true,
@@ -239,6 +255,7 @@ fun PreviewProtonSidebar() {
 
             ProtonSidebarItem { Text(text = "More", color = ProtonTheme.colors.textHint) }
             ProtonSidebarSettingsItem()
+            ProtonSidebarSubscriptionItem()
             ProtonSidebarReportBugItem()
             ProtonSidebarSignOutItem()
 

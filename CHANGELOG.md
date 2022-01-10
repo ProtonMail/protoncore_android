@@ -6,7 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## Security fix
+### Changes
+
+- Updated ProtonCore 2022 Copyright file.
+- Added Country keep_flags.xml (keep flags resources from shrink process).
+- Fixed PlansOrchestrator checkRegistered message.
+- Added ProtonSidebarSubscriptionItem.
+
+### Security Fixes
 
 - The client starts verifying that the SRP server proof is correct. `InvalidSRPServerProofException`
 is now thrown on invalid proofs by :
