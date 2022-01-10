@@ -183,6 +183,7 @@ public final class me/proton/core/compose/component/ProtonSidebarKt {
 	public static final fun ProtonSidebarReportBugItem (Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonSidebarSettingsItem (Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 	public static final fun ProtonSidebarSignOutItem (Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ProtonSidebarSubscriptionItem (Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class me/proton/core/compose/component/ProtonSidebarLazyKt {
