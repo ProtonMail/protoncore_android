@@ -57,12 +57,14 @@ class PerformUpdateUserPasswordTest {
     private val testUsername = "test-username"
     private val testSecondFactor = "123456"
     private val testKeySalt = "test-keysalt"
-    private val testClientEphemeral = "test-client-ephemeral"
-    private val testClientProof = "test-client-proof"
+    private val testSrpProofs = SrpProofs(
+        clientEphemeral = "test-client-ephemeral",
+        clientProof = "test-client-proof",
+        expectedServerProof = "test-server-proof"
+    )
     private val testSrpSession = "test-srp-session"
     private val testLoginPassword = "test-login-password"
     private val testNewMailboxPassword = "test-new-mailbox-password"
-    private val testExpectedServerProof = "test-server-proof"
     private val testModulusId = "test-modulus-id"
     private val testModulus = "test-modulus"
     private val testServerEphemeral = "test-server-ephemeral"
@@ -164,12 +166,7 @@ class PerformUpdateUserPasswordTest {
                 modulus = testModulus,
                 serverEphemeral = testServerEphemeral
             )
-        } returns
-            SrpProofs(
-                testClientEphemeral.toByteArray(),
-                testClientProof.toByteArray(),
-                testExpectedServerProof.toByteArray()
-            )
+        } returns testSrpProofs
     }
 
     @Test

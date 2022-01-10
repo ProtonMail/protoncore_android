@@ -24,6 +24,7 @@ import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.domain.session.SessionId
 
@@ -51,8 +52,7 @@ interface AuthRepository {
     suspend fun performLogin(
         username: String,
         clientSecret: String,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String
     ): SessionInfo
 

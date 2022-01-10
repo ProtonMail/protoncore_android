@@ -20,9 +20,12 @@ package me.proton.core.usersettings.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.extension.ServerProof
 
 @Serializable
-data class SingleUserSettingsResponse(
+data class UpdateUserSettingsResponse(
     @SerialName("UserSettings")
-    val settings: UserSettingsResponse
+    val settings: UserSettingsResponse,
+    @SerialName("ServerProof")
+    val serverProof: ServerProof
 )

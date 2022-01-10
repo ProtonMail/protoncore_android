@@ -31,7 +31,9 @@ import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
@@ -87,8 +89,7 @@ class AuthRepositoryImpl(
      *
      * @param username the account's username trying to make a login request.
      * @param clientSecret client/app specific string.
-     * @param clientEphemeral Base64 encoded SrpProof generated client ephemeral.
-     * @param clientProof Base64 encoded SrpProof generated proof.
+     * @param srpProofs Base64 encoded values needed for the SRP authentication protocol.
      * @param srpSession the SRPSession returned from the [getLoginInfo] API result.
      *
      * @return [SessionInfo] login result containing the Access and Refresh tokens and additional meta-data.
@@ -96,13 +97,20 @@ class AuthRepositoryImpl(
     override suspend fun performLogin(
         username: String,
         clientSecret: String,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String
     ): SessionInfo =
         provider.get<AuthenticationApi>().invoke {
-            val request = LoginRequest(username, clientSecret, clientEphemeral, clientProof, srpSession)
-            performLogin(request).toSessionInfo(username)
+            val request = LoginRequest(
+                username,
+                clientSecret,
+                srpProofs.clientEphemeral,
+                srpProofs.clientProof,
+                srpSession
+            )
+            val response = performLogin(request)
+            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "login failed" }
+            response.toSessionInfo(username)
         }.valueOrThrow
 
     /**

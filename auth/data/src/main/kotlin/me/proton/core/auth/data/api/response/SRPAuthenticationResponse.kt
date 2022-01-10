@@ -16,13 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.api.response
+package me.proton.core.auth.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.extension.ServerProof
+import me.proton.core.network.domain.ResponseCodes
 
 @Serializable
-data class SingleUserSettingsResponse(
-    @SerialName("UserSettings")
-    val settings: UserSettingsResponse
+data class SRPAuthenticationResponse(
+    @SerialName("Code")
+    val code: Int,
+    @SerialName("ServerProof")
+    val serverProof: ServerProof,
 )
+
+fun SRPAuthenticationResponse.isSuccess(): Boolean = code == ResponseCodes.OK

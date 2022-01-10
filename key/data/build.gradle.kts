@@ -39,6 +39,8 @@ dependencies {
         project(Module.keyDomain),
         project(Module.cryptoCommon),
         project(Module.cryptoAndroid),
+        project(Module.authData),
+        project(Module.authDomain),
 
         // Kotlin
         `kotlin-jdk7`,
@@ -57,4 +59,6 @@ dependencies {
         project(Module.androidInstrumentedTest),
         project(Module.gopenpgp)
     )
+
+    testImplementation(project(Module.kotlinTest))
 }

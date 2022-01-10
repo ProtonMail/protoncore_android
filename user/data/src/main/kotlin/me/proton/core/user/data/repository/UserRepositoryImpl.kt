@@ -27,6 +27,8 @@ import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import me.proton.core.auth.data.api.response.isSuccess
+import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -44,6 +46,7 @@ import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.api.request.UnlockRequest
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
@@ -168,25 +171,32 @@ class UserRepositoryImpl(
 
     override suspend fun unlockUserForLockedScope(
         sessionUserId: SessionUserId,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String
     ): Boolean =
         provider.get<UserApi>(sessionUserId).invoke {
-            val request = UnlockRequest(clientEphemeral, clientProof, srpSession)
-            unlockLockedScope(request).isSuccess()
+            val request = UnlockRequest(srpProofs.clientEphemeral, srpProofs.clientProof, srpSession)
+            val response = unlockLockedScope(request)
+            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "getting locked scope failed" }
+            response.isSuccess()
         }.valueOrThrow
 
     override suspend fun unlockUserForPasswordScope(
         sessionUserId: SessionUserId,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String,
         twoFactorCode: String?
     ): Boolean =
         provider.get<UserApi>(sessionUserId).invoke {
-            val request = UnlockPasswordRequest(clientEphemeral, clientProof, srpSession, twoFactorCode)
-            unlockPasswordScope(request).isSuccess()
+            val request = UnlockPasswordRequest(
+                srpProofs.clientEphemeral,
+                srpProofs.clientProof,
+                srpSession,
+                twoFactorCode
+            )
+            val response = unlockPasswordScope(request)
+            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "getting password scope failed" }
+            response.isSuccess()
         }.valueOrThrow
 
     // region PassphraseRepository

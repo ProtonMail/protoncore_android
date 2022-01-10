@@ -21,12 +21,15 @@ package me.proton.core.auth.data.repository
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.domain.entity.LoginInfo
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiException
@@ -57,8 +60,11 @@ class AuthRepositoryImplTest {
     private val testUsername = "test-username"
     private val testAccessToken = "test-access-token"
     private val testClientSecret = "test-client-secret"
-    private val testClientEphemeral = "test-client-ephemeral"
-    private val testClientProof = "test-client-proof"
+    private val testSrpProofs = SrpProofs(
+        clientEphemeral = "test-client-ephemeral",
+        clientProof = "test-client-proof",
+        expectedServerProof = "test-server-proof"
+    )
     private val testSrpSession = "test-srp-session"
 
     private val successLoginInfo = LoginInfo(
@@ -126,13 +132,13 @@ class AuthRepositoryImplTest {
         // GIVEN
         every { successSessionInfo.username } returns testUsername
         every { successSessionInfo.accessToken } returns testAccessToken
+        every { successSessionInfo.serverProof } returns testSrpProofs.expectedServerProof
         coEvery { apiManager.invoke<SessionInfo>(any(), any()) } returns ApiResult.Success(successSessionInfo)
         // WHEN
         val sessionInfoResponse = repository.performLogin(
             testUsername,
             testClientSecret,
-            testClientEphemeral,
-            testClientProof,
+            testSrpProofs,
             testSrpSession
         )
         // THEN
@@ -152,8 +158,7 @@ class AuthRepositoryImplTest {
             repository.performLogin(
                 testUsername,
                 testClientSecret,
-                testClientEphemeral,
-                testClientProof,
+                testSrpProofs,
                 testSrpSession
             )
         }
@@ -162,6 +167,30 @@ class AuthRepositoryImplTest {
         val error = throwable.error as? ApiResult.Error.Http
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
+    }
+
+    @Test
+    fun `login fails because server returns wrong SRP proof`() = runBlockingTest {
+        // GIVEN
+        val block = slot<suspend AuthenticationApi.() -> SessionInfo>()
+        coEvery { apiManager.invoke(any(), capture(block)) } coAnswers {
+            val mockedApiCall = mockk<AuthenticationApi> {
+                coEvery { performLogin(any()) } returns mockk {
+                    every { serverProof } returns testSrpProofs.expectedServerProof + "corrupted"
+                }
+            }
+            val sessionInfo = block.captured(mockedApiCall)
+            ApiResult.Success(sessionInfo)
+        }
+        // WHEN & THEN
+        assertFailsWith<InvalidServerAuthenticationException> {
+            repository.performLogin(
+                testUsername,
+                testClientSecret,
+                testSrpProofs,
+                testSrpSession
+            )
+        }
     }
 
     @Test

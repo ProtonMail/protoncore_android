@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Security fix
+
+- The client starts verifying that the SRP server proof is correct. `InvalidSRPServerProofException`
+is now thrown on invalid proofs by :
+  - `me.proton.core.auth.domain.usecase.PerformLogin`
+  - `me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword`
+  - `me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword`
+  - `me.proton.core.usersettings.domain.usecase.PerformUpdateRecoveryEmail`
+  - `me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope`
+  - `me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope`
+
 ## [5.1.1]
 
 ### Changes

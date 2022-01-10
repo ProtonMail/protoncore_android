@@ -40,6 +40,8 @@ dependencies {
         project(Module.userDomain),
         project(Module.eventManagerDomain),
         project(Module.cryptoCommon),
+        project(Module.authData),
+        project(Module.authDomain),
 
         // Features
         project(Module.key),

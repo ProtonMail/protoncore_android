@@ -50,7 +50,6 @@ dependencies {
         `coroutines-core`,
 
         // Other
-        `googleTink`,
         `javax-inject`
     )
 

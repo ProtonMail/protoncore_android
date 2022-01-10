@@ -16,13 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.api.response
+package me.proton.core.auth.domain.extension
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.LogTag
+import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
+import me.proton.core.util.kotlin.CoreLogger
 
-@Serializable
-data class SingleUserSettingsResponse(
-    @SerialName("UserSettings")
-    val settings: UserSettingsResponse
-)
+typealias ServerProof = String
+
+/**
+ * Throws an [InvalidServerAuthenticationException] with the result of calling [lazyMessage]
+ * if the [ServerProof] isn't the one expected.
+ */
+inline fun ServerProof.requireValidProof(expectedProof: String, lazyMessage: () -> Any) {
+    if (this != expectedProof) {
+        val message = "Server returned invalid srp proof, ${lazyMessage.invoke()}"
+        val exception = InvalidServerAuthenticationException(message)
+        CoreLogger.e(LogTag.INVALID_SRP_PROOF, exception)
+        throw exception
+    }
+}

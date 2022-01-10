@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.domain.usecase
 
-import com.google.crypto.tink.subtle.Base64
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -60,9 +59,11 @@ class PerformLoginSuccessApiResultsTest {
     private val testSrpSession = "test-srpSession"
     private val testVersion = 1
 
-    private val testClientEphemeral = "test-clientEphemeral"
-    private val testClientProof = "test-clientProof"
-    private val testExpectedServerProof = "test-expectedServerProof"
+    private val testSrpProofs = SrpProofs(
+        clientEphemeral = "test-clientEphemeral",
+        clientProof = "test-clientProof",
+        expectedServerProof = "test-expectedServerProof",
+    )
 
     private val loginInfoResult = LoginInfo(
         username = testUsername, modulus = testModulus, serverEphemeral = testEphemeral, version = testVersion,
@@ -76,6 +77,7 @@ class PerformLoginSuccessApiResultsTest {
     )
 
     private lateinit var useCase: PerformLogin
+
     // endregion
 
     @Before
@@ -84,15 +86,11 @@ class PerformLoginSuccessApiResultsTest {
         useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret)
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
-        } returns SrpProofs(
-            testClientEphemeral.toByteArray(),
-            testClientProof.toByteArray(),
-            testExpectedServerProof.toByteArray()
-        )
+        } returns testSrpProofs
         every { keyStoreCrypto.decrypt(any<String>()) } returns testPassword
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
         coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } returns loginInfoResult
-        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult
+        coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult
     }
 
     @Test
@@ -104,8 +102,7 @@ class PerformLoginSuccessApiResultsTest {
             authRepository.performLogin(
                 testUsername,
                 testClientSecret,
-                Base64.encode(testClientEphemeral.toByteArray()),
-                Base64.encode(testClientProof.toByteArray()),
+                testSrpProofs,
                 testSrpSession
             )
         }
@@ -129,7 +126,7 @@ class PerformLoginSuccessApiResultsTest {
 
     @Test
     fun `correct handling single password account second factor returned`() = runBlockingTest {
-        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
+        coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult.copy(
             secondFactor = SecondFactor.Enabled(emptySet())
         )
 
@@ -139,7 +136,7 @@ class PerformLoginSuccessApiResultsTest {
 
     @Test
     fun `correct handling two password account second factor returned`() = runBlockingTest {
-        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } returns sessionInfoResult.copy(
+        coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult.copy(
             passwordMode = 2,
             secondFactor = SecondFactor.Enabled(emptySet())
         )

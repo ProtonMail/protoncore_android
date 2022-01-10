@@ -339,16 +339,16 @@ public abstract interface class me/proton/core/crypto/common/srp/SrpCrypto {
 }
 
 public final class me/proton/core/crypto/common/srp/SrpProofs {
-	public fun <init> ([B[B[B)V
-	public final fun component1 ()[B
-	public final fun component2 ()[B
-	public final fun component3 ()[B
-	public final fun copy ([B[B[B)Lme/proton/core/crypto/common/srp/SrpProofs;
-	public static synthetic fun copy$default (Lme/proton/core/crypto/common/srp/SrpProofs;[B[B[BILjava/lang/Object;)Lme/proton/core/crypto/common/srp/SrpProofs;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/crypto/common/srp/SrpProofs;
+	public static synthetic fun copy$default (Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/crypto/common/srp/SrpProofs;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getClientEphemeral ()[B
-	public final fun getClientProof ()[B
-	public final fun getExpectedServerProof ()[B
+	public final fun getClientEphemeral ()Ljava/lang/String;
+	public final fun getClientProof ()Ljava/lang/String;
+	public final fun getExpectedServerProof ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

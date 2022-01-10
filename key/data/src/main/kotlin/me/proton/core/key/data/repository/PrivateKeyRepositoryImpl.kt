@@ -18,8 +18,11 @@
 
 package me.proton.core.key.data.repository
 
+import me.proton.core.auth.data.api.response.isSuccess
+import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.key.data.api.KeyApi
 import me.proton.core.key.data.api.request.AuthRequest
@@ -32,7 +35,6 @@ import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.util.kotlin.toInt
 
 class PrivateKeyRepositoryImpl(
@@ -91,8 +93,7 @@ class PrivateKeyRepositoryImpl(
     override suspend fun updatePrivateKeys(
         sessionUserId: SessionUserId,
         keySalt: String,
-        clientEphemeral: String,
-        clientProof: String,
+        srpProofs: SrpProofs,
         srpSession: String,
         secondFactorCode: String,
         auth: Auth?,
@@ -101,11 +102,11 @@ class PrivateKeyRepositoryImpl(
         organizationKey: String
     ): Boolean {
         return provider.get<KeyApi>(sessionUserId).invoke {
-            updatePrivateKeys(
+            val response = updatePrivateKeys(
                 UpdateKeysForPasswordChangeRequest(
                     keySalt = keySalt,
-                    clientEphemeral = clientEphemeral,
-                    clientProof = clientProof,
+                    clientEphemeral = srpProofs.clientEphemeral,
+                    clientProof = srpProofs.clientProof,
                     srpSession = srpSession,
                     twoFactorCode = secondFactorCode,
                     auth = if (auth != null) AuthRequest.from(auth) else null,
@@ -117,7 +118,9 @@ class PrivateKeyRepositoryImpl(
                     },
                     organizationKey = organizationKey
                 )
-            ).isSuccess()
+            )
+            response.serverProof.requireValidProof(srpProofs.expectedServerProof) { "key update failed" }
+            response.isSuccess()
         }.valueOrThrow
     }
 }

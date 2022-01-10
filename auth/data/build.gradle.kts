@@ -36,6 +36,7 @@ dependencies {
         project(Module.domain),
         project(Module.network),
         project(Module.authDomain),
+        project(Module.cryptoCommon),
 
         // Kotlin
         `kotlin-jdk7`,

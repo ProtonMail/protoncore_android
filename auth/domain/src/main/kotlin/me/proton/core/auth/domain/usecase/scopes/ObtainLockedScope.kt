@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.domain.usecase.scopes
 
-import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -55,8 +54,7 @@ class ObtainLockedScope @Inject constructor(
             )
             return userRepository.unlockUserForLockedScope(
                 userId,
-                Base64.encode(clientProofs.clientEphemeral),
-                Base64.encode(clientProofs.clientProof),
+                clientProofs,
                 authInfo.srpSession
             )
         }

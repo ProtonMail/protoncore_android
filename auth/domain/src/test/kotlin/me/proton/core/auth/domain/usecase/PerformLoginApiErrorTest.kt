@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.domain.usecase
 
-import com.google.crypto.tink.subtle.Base64
 import io.mockk.called
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -27,10 +26,10 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.auth.domain.entity.LoginInfo
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
-import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.kotlin.assertIs
@@ -60,9 +59,11 @@ class PerformLoginApiErrorTest {
     private val testSrpSession = "test-srpSession"
     private val testVersion = 1
 
-    private val testClientEphemeral = "test-clientEphemeral"
-    private val testClientProof = "test-clientProof"
-    private val testExpectedServerProof = "test-expectedServerProof"
+    private val testSrpProofs = SrpProofs(
+        clientEphemeral = "test-clientEphemeral",
+        clientProof = "test-clientProof",
+        expectedServerProof = "test-expectedServerProof",
+    )
 
     private val loginInfoResult = LoginInfo(
         username = testUsername,
@@ -82,11 +83,7 @@ class PerformLoginApiErrorTest {
         useCase = PerformLogin(authRepository, srpCrypto, keyStoreCrypto, testClientSecret)
         every {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
-        } returns SrpProofs(
-            testClientEphemeral.toByteArray(),
-            testClientProof.toByteArray(),
-            testExpectedServerProof.toByteArray()
-        )
+        } returns testSrpProofs
         coEvery { authRepository.getLoginInfo(testUsername, testClientSecret) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 401,
@@ -94,7 +91,7 @@ class PerformLoginApiErrorTest {
                 proton = ApiResult.Error.ProtonData(1234, "error")
             )
         )
-        coEvery { authRepository.performLogin(any(), any(), any(), any(), any()) } throws ApiException(
+        coEvery { authRepository.performLogin(any(), any(), any(), any()) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 401,
                 message = "auth-info error",
@@ -122,8 +119,7 @@ class PerformLoginApiErrorTest {
             authRepository.performLogin(
                 testUsername,
                 testClientSecret,
-                Base64.encode(testClientEphemeral.toByteArray()),
-                Base64.encode(testClientProof.toByteArray()),
+                testSrpProofs,
                 testSrpSession
             ) wasNot called
         }
@@ -151,8 +147,7 @@ class PerformLoginApiErrorTest {
             authRepository.performLogin(
                 testUsername,
                 testClientSecret,
-                Base64.encode(testClientEphemeral.toByteArray()),
-                Base64.encode(testClientProof.toByteArray()),
+                testSrpProofs,
                 testSrpSession
             )
         }

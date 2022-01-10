@@ -16,13 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.api.response
+package me.proton.core.auth.domain
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class SingleUserSettingsResponse(
-    @SerialName("UserSettings")
-    val settings: UserSettingsResponse
-)
+object LogTag {
+    const val INVALID_SRP_PROOF = "core.auth.domain.srp.invalid.server.proof"
+}

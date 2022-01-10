@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.domain.usecase
 
-import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -48,7 +47,7 @@ class PerformLogin @Inject constructor(
             clientSecret = clientSecret
         )
         password.decrypt(keyStoreCrypto).toByteArray().use {
-            val clientProofs: SrpProofs = srpCrypto.generateSrpProofs(
+            val srpProofs: SrpProofs = srpCrypto.generateSrpProofs(
                 username = username,
                 password = it.array,
                 version = loginInfo.version.toLong(),
@@ -59,8 +58,7 @@ class PerformLogin @Inject constructor(
             return authRepository.performLogin(
                 username = username,
                 clientSecret = clientSecret,
-                clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
-                clientProof = Base64.encode(clientProofs.clientProof),
+                srpProofs = srpProofs,
                 srpSession = loginInfo.srpSession
             )
         }

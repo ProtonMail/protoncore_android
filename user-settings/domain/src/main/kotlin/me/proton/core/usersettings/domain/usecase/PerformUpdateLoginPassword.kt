@@ -18,7 +18,6 @@
 
 package me.proton.core.usersettings.domain.usecase
 
-import com.google.crypto.tink.subtle.Base64
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
@@ -75,8 +74,7 @@ class PerformUpdateLoginPassword @Inject constructor(
                 )
                 return userSettingsRepository.updateLoginPassword(
                     sessionUserId = userId,
-                    clientEphemeral = Base64.encode(clientProofs.clientEphemeral),
-                    clientProof = Base64.encode(clientProofs.clientProof),
+                    srpProofs = clientProofs,
                     srpSession = loginInfo.srpSession,
                     secondFactorCode = secondFactorCode,
                     auth = auth

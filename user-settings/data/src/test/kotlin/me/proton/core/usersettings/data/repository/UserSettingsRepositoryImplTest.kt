@@ -25,7 +25,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
+import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.crypto.common.srp.Auth
+import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -36,6 +38,7 @@ import me.proton.core.usersettings.data.api.response.FlagsResponse
 import me.proton.core.usersettings.data.api.response.PasswordResponse
 import me.proton.core.usersettings.data.api.response.RecoverySettingResponse
 import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse
+import me.proton.core.usersettings.data.api.response.UpdateUserSettingsResponse
 import me.proton.core.usersettings.data.api.response.UserSettingsResponse
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.db.dao.UserSettingsDao
@@ -44,6 +47,7 @@ import me.proton.core.usersettings.data.extension.toEntity
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 class UserSettingsRepositoryImplTest {
@@ -63,6 +67,12 @@ class UserSettingsRepositoryImplTest {
     // region test data
     private val testSessionId = "test-session-id"
     private val testUserId = "test-user-id"
+    private val testSrpProofs = SrpProofs(
+        clientEphemeral = "test-client-ephemeral",
+        clientProof = "test-client-proof",
+        expectedServerProof = "test-server-proof"
+    )
+
     // endregion
 
     @Before
@@ -115,6 +125,41 @@ class UserSettingsRepositoryImplTest {
     @Test
     fun `update recovery email returns result success`() = runBlockingTest {
         // GIVEN
+        setUpRecoveryEmailUpdateTest(testSrpProofs.expectedServerProof)
+
+        // WHEN
+        val response = repository.updateRecoveryEmail(
+            sessionUserId = UserId(testUserId),
+            email = "test-email2",
+            srpProofs = testSrpProofs,
+            srpSession = "test-srp-session",
+            secondFactorCode = ""
+        )
+        // THEN
+        assertNotNull(response)
+        assertEquals("test-email2", response.email!!.value)
+        coVerify { userSettingsDao.insertOrUpdate(any()) }
+        verify { userSettingsDao.observeByUserId(any()) }
+    }
+
+    @Test
+    fun `update recovery email fails with wrong server proof`() = runBlockingTest {
+        // GIVEN
+        setUpRecoveryEmailUpdateTest(testSrpProofs.expectedServerProof + "corrupted")
+
+        // WHEN & THEN
+        assertFailsWith<InvalidServerAuthenticationException> {
+            repository.updateRecoveryEmail(
+                sessionUserId = UserId(testUserId),
+                email = "test-email2",
+                srpProofs = testSrpProofs,
+                srpSession = "test-srp-session",
+                secondFactorCode = ""
+            )
+        }
+    }
+
+    private fun setUpRecoveryEmailUpdateTest(srpServerProof: String) {
         val settingsResponse = UserSettingsResponse(
             email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
             phone = null,
@@ -134,19 +179,27 @@ class UserSettingsRepositoryImplTest {
             theme = "test-theme",
             flags = FlagsResponse(1)
         )
-        coEvery { userSettingsApi.updateRecoveryEmail(any()) } returns SingleUserSettingsResponse(settingsResponse)
+        coEvery { userSettingsApi.updateRecoveryEmail(any()) } returns UpdateUserSettingsResponse(
+            settings = settingsResponse,
+            serverProof = srpServerProof
+        )
         every { userSettingsDao.observeByUserId(any()) } returns flowOf(
             settingsResponse.fromResponse(UserId(testUserId)).toEntity()
         )
+    }
+
+    @Test
+    fun `update login password returns success`() = runBlockingTest {
+        // GIVEN
+        val testAuth = setUpUpdatePasswordTest(testSrpProofs.expectedServerProof)
 
         // WHEN
-        val response = repository.updateRecoveryEmail(
+        val response = repository.updateLoginPassword(
             sessionUserId = UserId(testUserId),
-            email = "test-email2",
-            clientEphemeral = "test-client-empheral",
-            clientProof = "test-client-proof",
+            srpProofs = testSrpProofs,
             srpSession = "test-srp-session",
-            secondFactorCode = ""
+            secondFactorCode = "",
+            auth = testAuth
         )
         // THEN
         assertNotNull(response)
@@ -156,8 +209,23 @@ class UserSettingsRepositoryImplTest {
     }
 
     @Test
-    fun `update login password returns success`() = runBlockingTest {
+    fun `update login password fails with wrong server proof`() = runBlockingTest {
         // GIVEN
+        val testAuth = setUpUpdatePasswordTest(testSrpProofs.expectedServerProof + "corrupted")
+
+        // WHEN & THEN
+        assertFailsWith<InvalidServerAuthenticationException> {
+            repository.updateLoginPassword(
+                sessionUserId = UserId(testUserId),
+                srpProofs = testSrpProofs,
+                srpSession = "test-srp-session",
+                secondFactorCode = "",
+                auth = testAuth
+            )
+        }
+    }
+
+    private fun setUpUpdatePasswordTest(srpServerProof: String): Auth {
         val settingsResponse = UserSettingsResponse(
             email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
             phone = null,
@@ -185,24 +253,13 @@ class UserSettingsRepositoryImplTest {
             salt = testSalt,
             verifier = "test-verifier"
         )
-        coEvery { userSettingsApi.updateLoginPassword(any()) } returns SingleUserSettingsResponse(settingsResponse)
+        coEvery { userSettingsApi.updateLoginPassword(any()) } returns UpdateUserSettingsResponse(
+            settings = settingsResponse,
+            serverProof = srpServerProof
+        )
         every { userSettingsDao.observeByUserId(any()) } returns flowOf(
             settingsResponse.fromResponse(UserId(testUserId)).toEntity()
         )
-
-        // WHEN
-        val response = repository.updateLoginPassword(
-            sessionUserId = UserId(testUserId),
-            clientEphemeral = "test-client-empheral",
-            clientProof = "test-client-proof",
-            srpSession = "test-srp-session",
-            secondFactorCode = "",
-            auth = testAuth
-        )
-        // THEN
-        assertNotNull(response)
-        assertEquals("test-email2", response.email!!.value)
-        coVerify { userSettingsDao.insertOrUpdate(any()) }
-        verify { userSettingsDao.observeByUserId(any()) }
+        return testAuth
     }
 }

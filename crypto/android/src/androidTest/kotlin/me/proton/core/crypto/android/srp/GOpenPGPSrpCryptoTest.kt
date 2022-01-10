@@ -27,6 +27,7 @@ import kotlin.test.fail
 internal class GOpenPGPSrpCryptoTest {
 
     private fun ByteArray.encodeBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)
+    private fun String.decodeBase64(): ByteArray = Base64.decode(this, Base64.NO_WRAP)
 
     private val crypto = GOpenPGPSrpCrypto(
         saltGenerator = { Base64.decode(testSalt, Base64.DEFAULT) }
@@ -96,13 +97,13 @@ internal class GOpenPGPSrpCryptoTest {
         )
         // THEN
         val serverProof = runCatching {
-            server.verifyProofs(proofs.clientEphemeral, proofs.clientProof)
+            server.verifyProofs(proofs.clientEphemeral.decodeBase64(), proofs.clientProof.decodeBase64())
         }.getOrElse {
             fail("Failed to verify the proof: $it")
         }
         assertEquals(
             serverProof.encodeBase64(),
-            proofs.expectedServerProof.encodeBase64()
+            proofs.expectedServerProof
         ) { "server proof didn't match" }
     }
 }

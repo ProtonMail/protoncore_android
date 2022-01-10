@@ -41,6 +41,7 @@ dependencies {
         project(Module.cryptoCommon),
         project(Module.key),
         project(Module.eventManagerDomain),
+        project(Module.authDomain),
 
         // Other
         `javax-inject`,

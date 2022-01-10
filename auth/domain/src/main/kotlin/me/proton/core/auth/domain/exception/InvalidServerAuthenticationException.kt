@@ -16,13 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.api.response
+package me.proton.core.auth.domain.exception
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import java.lang.IllegalArgumentException
 
-@Serializable
-data class SingleUserSettingsResponse(
-    @SerialName("UserSettings")
-    val settings: UserSettingsResponse
-)
+class InvalidServerAuthenticationException(message: String) : IllegalArgumentException(message)
