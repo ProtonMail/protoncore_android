@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,22 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.api.Plugin
+package me.proton.core.gradle.convention
+
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.apply
 
-@Deprecated("Replaced with build convention plugins")
-abstract class ProtonCorePlugin : Plugin<Project> {
-
-    override fun apply(target: Project) {
-
-        initVersions(target.rootProject.extensions.getByType(VersionCatalogsExtension::class.java).named("libs"))
-        target.applyRepositories()
-
-        // Recursively apply the plugin su sub-modules
-        target.subprojects {
-            apply<ProtonCorePlugin>()
-        }
-    }
+internal interface BuildConvention<S : Any> {
+    fun apply(target: Project, settings: S)
 }

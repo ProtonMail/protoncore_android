@@ -20,6 +20,7 @@
  * An object containing params for the Project
  * @author Davide Farella
  */
+@Deprecated("Replaced with build convention plugins")
 object ProtonCore {
 
     /** The Android API level as target of the App */

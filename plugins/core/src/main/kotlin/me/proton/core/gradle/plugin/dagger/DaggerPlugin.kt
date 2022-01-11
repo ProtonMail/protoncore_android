@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,22 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.apply
+package me.proton.core.gradle.plugin.dagger
 
-@Deprecated("Replaced with build convention plugins")
-abstract class ProtonCorePlugin : Plugin<Project> {
+import me.proton.core.gradle.plugin.BuildConventionPlugin
+import me.proton.core.gradle.plugin.DaggerExtension
+import me.proton.core.gradle.plugin.PluginIds
+import me.proton.core.gradle.plugin.applyDaggerConvention
+import me.proton.core.gradle.plugin.createProtonExt
+import org.gradle.api.Project
+
+public class DaggerPlugin : BuildConventionPlugin() {
 
     override fun apply(target: Project) {
+        super.apply(target)
+        val ext = target.createProtonExt<DaggerExtension>("protonDagger")
 
-        initVersions(target.rootProject.extensions.getByType(VersionCatalogsExtension::class.java).named("libs"))
-        target.applyRepositories()
+        target.pluginManager.apply(PluginIds.kapt)
+        target.pluginManager.apply(PluginIds.hilt)
 
-        // Recursively apply the plugin su sub-modules
-        target.subprojects {
-            apply<ProtonCorePlugin>()
-        }
+        target.applyDaggerConvention(ext)
     }
 }

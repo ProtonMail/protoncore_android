@@ -30,6 +30,7 @@ private val testVersion = Version(0, 0, 0)
  * @author Davide Farella
  */
 @Suppress("UnstableApiUsage")
+@Deprecated("Replaced with build convention plugins")
 fun org.gradle.api.Project.android(
 
     version: Version = testVersion,
