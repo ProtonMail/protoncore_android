@@ -19,13 +19,10 @@
 import studio.forface.easygradle.dsl.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    protonAndroidLibrary
 }
 
 publishOption.shouldBePublishedAsLib = true
-
-android()
 
 dependencies {
     api(

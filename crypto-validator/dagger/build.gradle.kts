@@ -20,21 +20,11 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    protonAndroidLibrary
+    protonDagger
 }
 
 publishOption.shouldBePublishedAsLib = true
-
-android()
-
-extensions.configure<com.android.build.gradle.LibraryExtension> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xexplicit-api=strict")
-    }
-}
 
 dependencies {
 
@@ -56,13 +46,8 @@ dependencies {
 
         // Android
         `android-ktx`,
-        `hilt-android`,
+        `lifecycle-extensions`,
         `lifecycle-runtime`,
         `room-runtime`,
-    )
-
-    kapt(
-        `hilt-android-compiler`,
-        `hilt-androidx-compiler`
     )
 }

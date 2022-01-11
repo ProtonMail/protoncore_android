@@ -21,8 +21,11 @@ import studio.forface.easygradle.dsl.android.*
 
 
 plugins {
-    `java-library`
-    kotlin("jvm")
+    protonKotlinLibrary
+}
+
+proton {
+    apiMode = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Disabled
 }
 
 publishOption.shouldBePublishedAsLib = true

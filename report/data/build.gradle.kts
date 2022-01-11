@@ -19,21 +19,15 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    protonAndroidLibrary
+    protonDagger
     kotlin("plugin.serialization")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
 }
 
 publishOption.shouldBePublishedAsLib = true
 
-android()
-
-extensions.configure<com.android.build.gradle.LibraryExtension> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xexplicit-api=strict")
-    }
+protonDagger {
+    workManagerHiltIntegration = true
 }
 
 dependencies {
@@ -49,16 +43,9 @@ dependencies {
         project(Module.domain),
         project(Module.kotlinUtil),
 
-        `hilt-android`,
-        `hilt-androidx-workManager`,
         `lifecycle-liveData`,
         serialization("core"),
         retrofit
-    )
-
-    kapt(
-        `hilt-android-compiler`,
-        `hilt-androidx-compiler`
     )
 
     testImplementation(

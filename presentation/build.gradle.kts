@@ -20,15 +20,16 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    protonAndroidUiLibrary
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
 }
 
-publishOption.shouldBePublishedAsLib = true
+proton {
+    apiMode = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Disabled
+}
 
-android(useViewBinding = true)
+publishOption.shouldBePublishedAsLib = true
 
 dependencies {
 

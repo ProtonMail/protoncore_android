@@ -16,27 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import org.gradle.kotlin.dsl.android
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    protonAndroidUiLibrary
+    protonDagger
     id("kotlin-parcelize")
 }
 
 publishOption.shouldBePublishedAsLib = true
 
-android(useViewBinding = true) {
+android {
     resourcePrefix = "core_report_"
-}
-
-extensions.configure<com.android.build.gradle.LibraryExtension> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xexplicit-api=strict")
-    }
 }
 
 dependencies {
@@ -59,14 +52,8 @@ dependencies {
         // Android
         `android-ktx`,
         appcompat,
-        `hilt-android`,
         `lifecycle-viewModel`,
         material
-    )
-
-    kapt(
-        `hilt-android-compiler`,
-        `hilt-androidx-compiler`
     )
 
     testImplementation(project(Module.androidTest))

@@ -19,8 +19,11 @@
 import studio.forface.easygradle.dsl.*
 
 plugins {
-    `java-library`
-    kotlin("jvm")
+    protonKotlinLibrary
+}
+
+proton {
+    apiMode = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Disabled
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -39,9 +42,6 @@ dependencies {
 
         // Kotlin
         `coroutines-core`,
-
-        // Android
-        `dagger`
     )
 
     testImplementation(project(Module.kotlinTest))

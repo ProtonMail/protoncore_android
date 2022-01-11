@@ -22,17 +22,12 @@ import studio.forface.easygradle.dsl.android.*
 publishOption.shouldBePublishedAsLib = true
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    protonAndroidLibrary
     kotlin("plugin.serialization")
 }
 
-android(
-    minSdk = ProtonCore.minSdk
-) {
-    defaultConfig {
-        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
-    }
+proton {
+    apiMode = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Disabled
 }
 
 dependencies {

@@ -20,19 +20,14 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    protonComposeUiLibrary
+}
+
+proton {
+    apiMode = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Disabled
 }
 
 publishOption.shouldBePublishedAsLib = true
-
-android {
-    buildFeatures.compose = true
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = `compose version`
-    }
-}
 
 dependencies {
 

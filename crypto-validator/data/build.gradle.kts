@@ -20,19 +20,10 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    protonAndroidLibrary
 }
 
 publishOption.shouldBePublishedAsLib = true
-
-android()
-
-extensions.configure<com.android.build.gradle.LibraryExtension> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xexplicit-api=strict")
-    }
-}
 
 dependencies {
 

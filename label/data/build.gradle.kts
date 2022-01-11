@@ -20,16 +20,20 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    protonAndroidLibrary
+    protonDagger
     kotlin("plugin.serialization")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+}
+
+proton {
+    apiMode = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Disabled
+}
+
+protonDagger {
+    workManagerHiltIntegration = true
 }
 
 publishOption.shouldBePublishedAsLib = true
-
-android()
 
 dependencies {
     implementation(
@@ -48,18 +52,11 @@ dependencies {
 
         // Other
         `android-work-runtime`,
-        `hilt-android`,
-        `hilt-androidx-workManager`,
         `okHttp-logging`,
         retrofit,
         `retrofit-kotlin-serialization`,
         `room-ktx`,
         store4,
-    )
-
-    kapt(
-        `hilt-android-compiler`,
-        `hilt-androidx-compiler`
     )
 
     kaptTest(`room-compiler`)

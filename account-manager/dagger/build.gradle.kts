@@ -20,15 +20,15 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    protonAndroidLibrary
+    protonDagger
+}
+
+proton {
+    apiMode = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Disabled
 }
 
 publishOption.shouldBePublishedAsLib = true
-
-android()
 
 dependencies {
 
@@ -57,12 +57,6 @@ dependencies {
 
         // Android
         `android-ktx`,
-        `hilt-android`,
         `room-runtime`
-    )
-
-    kapt(
-        `hilt-android-compiler`,
-        `hilt-androidx-compiler`
     )
 }
