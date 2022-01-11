@@ -86,7 +86,7 @@
   <string name="auth_user_check_one_free_error">Un seul compte Proton gratuit est autorisé.</string>
   <string name="auth_user_check_delinquent_error">Votre compte est actuellement suspendu en raison d\'une facture impayée.</string>
   <string name="auth_user_check_delinquent_action">Payer la facture</string>
-  <string name="auth_account_not_found_error">Error with the account</string>
+  <string name="auth_account_not_found_error">Erreur avec le compte</string>
   <string name="auth_one_account_all_services">Un seul compte pour tous les services Proton.</string>
   <string name="auth_create_account">Créer un compte</string>
   <!-- signup related strings -->

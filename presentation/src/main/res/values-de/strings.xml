@@ -34,6 +34,7 @@
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">Fehler melden</string>
   <string name="presentation_menu_item_title_settings">Einstellungen</string>
+  <string name="presentation_menu_item_title_subscription">Abonnement</string>
   <string name="presentation_menu_item_title_sign_out">Abmelden</string>
   <!-- Other -->
   <string name="presentation_close">Schließen</string>

@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_switcher_section_switch_to">Zostaniesz przełączony na konto</string>
+  <string name="account_switcher_section_switch_to">Przełącz na konto</string>
   <string name="account_switcher_action_add_account">Dodaj konto</string>
   <string name="account_switcher_action_sign_in">Zaloguj się</string>
   <string name="account_switcher_action_sign_out">Wyloguj</string>
