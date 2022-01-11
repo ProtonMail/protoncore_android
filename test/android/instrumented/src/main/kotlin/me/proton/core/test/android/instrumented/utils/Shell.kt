@@ -100,8 +100,7 @@ object Shell {
      * Take screenshot and save to /sdcard/screenshots
      */
     fun takeScreenshot() {
-        val screenshotFileName =
-            "$screenshotLocation/${testName.methodName}_${System.currentTimeMillis()}.png"
+        val screenshotFileName = "$screenshotLocation/${testName.methodName}.png"
         Log.d(testTag, "Test \"${testName.methodName}\" failed. Saving screenshot to $screenshotFileName")
         automation.executeShellCommand("screencap -p $screenshotFileName")
     }
