@@ -25,10 +25,12 @@
   <string name="presentation_force_update_update">Mettre à jour</string>
   <string name="presentation_market_missing">Impossible de trouver le magasin d’applications installé sur l\'appareil. Veuillez aller dans le magasin et mettre à jour l\'application.</string>
   <string name="presentation_authenticate">S\'authentifier</string>
+  <string name="presentation_signin_to_continue">Sign in to continue</string>
   <string name="presentation_alert_title">Alerte</string>
   <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Entrer</string>
   <string name="presentation_alert_cancel">Annuler</string>
+  <string name="presentation_alert_submit">Submit</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">Signaler une erreur</string>
   <string name="presentation_menu_item_title_settings">Paramètres</string>

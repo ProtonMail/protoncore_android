@@ -25,10 +25,12 @@
   <string name="presentation_force_update_update">Aktualizovat</string>
   <string name="presentation_market_missing">Obchod s aplikacemi nainstalovaný v zařízení nebyl nalezen. Aktualizujte aplikaci ručně.</string>
   <string name="presentation_authenticate">Ověřit</string>
+  <string name="presentation_signin_to_continue">Chcete-li pokračovat, přihlaste se</string>
   <string name="presentation_alert_title">Upozornění</string>
   <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Zadejte</string>
   <string name="presentation_alert_cancel">Zrušit</string>
+  <string name="presentation_alert_submit">Odeslat</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">Nahlásit chybu</string>
   <string name="presentation_menu_item_title_settings">Nastavení</string>
