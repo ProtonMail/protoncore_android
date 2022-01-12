@@ -16,22 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.apply
-
-@Deprecated("Replaced with build convention plugins")
-abstract class ProtonCorePlugin : Plugin<Project> {
-
-    override fun apply(target: Project) {
-
-        initVersions(target.rootProject.extensions.getByType(VersionCatalogsExtension::class.java).named("libs"))
-        target.applyRepositories()
-
-        // Recursively apply the plugin su sub-modules
-        target.subprojects {
-            apply<ProtonCorePlugin>()
-        }
+public fun Any?.toBuildConfigValue(): String {
+    return when (this) {
+        null -> "null"
+        is Boolean -> "$this"
+        is String -> "\"$this\""
+        else -> throw IllegalArgumentException("Unknown build field conversion for type ${this::class.java.simpleName}")
     }
 }

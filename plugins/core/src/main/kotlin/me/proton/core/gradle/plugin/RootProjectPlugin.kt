@@ -16,15 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * An object containing params for the Project
- * @author Davide Farella
- */
-@Deprecated("Replaced with build convention plugins")
-object ProtonCore {
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 
-    /** The Android API level as target of the App */
-    const val targetSdk = 31
-    /** The Android API level required for run the App */
-    const val minSdk = 23
+public class RootProjectPlugin : Plugin<Project> {
+    override fun apply(target: Project) {
+        // This plugin is currently empty.
+        // However, it should be applied to the root project,
+        // so that the public functions defined in this project can be used throughout the builds scripts
+        // (i.e. see PluginDependenciesSpecExt file, which defines Core convention plugins).
+    }
 }

@@ -26,9 +26,10 @@ publishOption.shouldBePublishedAsPlugin = false
 
 gradlePlugin {
     plugins {
-        create("gradlePlugin") {
-            id = "core"
-            implementationClass = "ProtonCorePlugin"
+        create("rootProjectPlugin") {
+            id = "me.proton.core.root"
+            displayName = "Proton build plugin for Core root project"
+            implementationClass = "me.proton.core.gradle.plugin.RootProjectPlugin"
         }
         create("androidAppConvention") {
             id = "me.proton.core.app.android"

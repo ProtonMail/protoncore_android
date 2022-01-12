@@ -24,19 +24,17 @@ import java.io.FileNotFoundException
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    protonAndroidApp
+    protonDagger
+}
+
+protonDagger {
+    workManagerHiltIntegration = true
 }
 
 protonTestsOptions.unitTestFlavor = "dev"
 
-android(
-    version = Version(1, 18, 4),
-    useViewBinding = true
-)
-{
+android {
     defaultConfig {
         javaCompileOptions {
             annotationProcessorOptions {
@@ -44,6 +42,7 @@ android(
                 arguments["room.incremental"] = "true"
             }
         }
+        version = Version(1, 18, 4)
     }
     setupFlavors(this)
     sourceSets.getByName("androidTest") {
@@ -150,8 +149,7 @@ dependencies {
         `constraint-layout`,
         `fragment`,
         `gotev-cookieStore`,
-        `hilt-android`,
-        `hilt-androidx-workManager`,
+        `lifecycle-extensions`,
         `lifecycle-viewModel`,
         `material`,
 
@@ -163,8 +161,6 @@ dependencies {
     )
 
     kapt(
-        `hilt-android-compiler`,
-        `hilt-androidx-compiler`,
         `room-compiler`,
     )
 

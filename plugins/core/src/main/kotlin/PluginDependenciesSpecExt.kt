@@ -19,6 +19,9 @@
 import org.gradle.plugin.use.PluginDependenciesSpec
 import org.gradle.plugin.use.PluginDependencySpec
 
+public inline val PluginDependenciesSpec.protonAndroidApp: PluginDependencySpec
+    get() = id("me.proton.core.app.android")
+
 public inline val PluginDependenciesSpec.protonAndroidLibrary: PluginDependencySpec
     get() = id("me.proton.core.library.android")
 
