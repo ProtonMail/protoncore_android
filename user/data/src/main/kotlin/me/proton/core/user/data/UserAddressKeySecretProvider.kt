@@ -59,10 +59,13 @@ class UserAddressKeySecretProvider(
             else -> userContext.decryptAndVerifyNestedKey(
                 key = key.privateKey.key,
                 passphrase = requireNotNull(key.token),
-                signature = requireNotNull(key.signature)
+                signature = requireNotNull(key.signature),
+                validTokenPredicate = UserAddressKeySecretProvider::tokenHasValidFormat,
             ).privateKey.passphrase
         }
     }
+
+
 
     data class UserAddressKeySecret(
         val passphrase: EncryptedByteArray,
@@ -123,6 +126,26 @@ class UserAddressKeySecretProvider(
                 keyId = KeyId("temp"),
                 privateKey = privateKey
             )
+        }
+    }
+
+    companion object {
+        private const val HEX_DIGITS = "0123456789abcdefABCDEF"
+        private const val EXPECTED_TOKEN_LENGTH = 64
+        /**
+         * Check the format of address key tokens.
+         * They must be 64 char long hexadecimal strings.
+         */
+        private fun tokenHasValidFormat(decryptedToken: ByteArray): Boolean {
+            if (decryptedToken.size != EXPECTED_TOKEN_LENGTH) {
+                return false
+            }
+            for (char in decryptedToken) {
+                if (!HEX_DIGITS.contains(char.toInt().toChar())) {
+                    return false
+                }
+            }
+            return true
         }
     }
 }

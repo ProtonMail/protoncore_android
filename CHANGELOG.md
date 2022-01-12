@@ -23,6 +23,7 @@ is now thrown on invalid proofs by :
   - `me.proton.core.usersettings.domain.usecase.PerformUpdateRecoveryEmail`
   - `me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope`
   - `me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope`
+- Check the format of migrated address keys token.
 
 ## [5.1.1]
 
