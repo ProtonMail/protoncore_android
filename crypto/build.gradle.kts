@@ -30,6 +30,6 @@ android()
 dependencies {
     api(
         project(Module.cryptoCommon),
-        project(Module.cryptoAndroid)
+        project(Module.cryptoAndroid),
     )
 }

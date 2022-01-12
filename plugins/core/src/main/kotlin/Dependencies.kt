@@ -64,6 +64,7 @@ val DependencyHandler.`lifecycle-extensions` get() = androidxLifecycle("extensio
 val DependencyHandler.`lottie` get() = dependency("com.airbnb.android", module = "lottie") version `lottie version`
 val DependencyHandler.`javax-inject` get() = dependency("javax.inject", module = "javax.inject") version `javax-inject version`
 val DependencyHandler.`ez-vcard` get() = dependency("com.googlecode.ez-vcard", module = "ez-vcard") version `ez-vcard_version`
+val DependencyHandler.`startup-runtime` get() = androidx("startup", moduleSuffix = "runtime") version `startup-runtime version`
 
 // region accessors
 fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =
@@ -71,13 +72,14 @@ fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `andr
 // endregion
 
 // region tests
+val DependencyHandler.`android-test-core-ktx` get() = dependency("androidx.test", module = "core-ktx") version `android-test version`
 val DependencyHandler.`espresso-contrib` get() = androidx("test.espresso", module = "espresso-contrib") version `espresso version`
 val DependencyHandler.`espresso-intents` get() = androidx("test.espresso", module = "espresso-intents") version `espresso version`
 val DependencyHandler.`espresso-web` get() = androidx("test.espresso", module = "espresso-web") version `espresso version`
-val DependencyHandler.`orchestrator` get() = androidx("test", module = "orchestrator") version `android-test version`
-val DependencyHandler.uiautomator get() = androidx("test.uiautomator", module = "uiautomator") version `uiautomator version`
-val DependencyHandler.preference get() = androidx("preference", module = "preference") version `preference version`
 val DependencyHandler.`jsonsimple` get() = dependency("com.googlecode.json-simple", module = "json-simple") version `json-simple version`
-val DependencyHandler.`turbine` get() = dependency("app.cash.turbine", module = "turbine") version `turbine version`
 val DependencyHandler.`junit-ktx` get() = dependency("androidx.test.ext", module = "junit-ktx") version `junit-ktx version`
+val DependencyHandler.`orchestrator` get() = androidx("test", module = "orchestrator") version `android-test version`
+val DependencyHandler.preference get() = androidx("preference", module = "preference") version `preference version`
+val DependencyHandler.`turbine` get() = dependency("app.cash.turbine", module = "turbine") version `turbine version`
+val DependencyHandler.uiautomator get() = androidx("test.uiautomator", module = "uiautomator") version `uiautomator version`
 // endregion

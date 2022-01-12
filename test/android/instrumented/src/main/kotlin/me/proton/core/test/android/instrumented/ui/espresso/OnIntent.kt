@@ -143,7 +143,7 @@ class OnIntent : ConditionWatcher {
 
     // Checks with wait that intent with given matchers is sent
     fun checkSent() {
-        waitForCondition({ intended(intentMatcher()) })
+        waitForCondition { intended(intentMatcher()) }
     }
 
     fun respondWith(result: Instrumentation.ActivityResult) {

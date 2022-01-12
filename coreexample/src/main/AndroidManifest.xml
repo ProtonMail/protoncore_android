@@ -52,6 +52,9 @@
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.AccountStateHandlerInitializer"
                 android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer"
+                android:value="androidx.startup" />
         </provider>
 
         <activity
@@ -122,6 +125,9 @@
         <activity
             android:name="me.proton.core.report.presentation.ui.BugReportActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="me.proton.core.crypto.validator.presentation.ui.CryptoValidatorErrorDialogActivity"
+            android:theme="@style/ProtonTheme.Transparent" />
     </application>
 
 </manifest>

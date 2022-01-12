@@ -63,6 +63,11 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:crypto|
 |me.proton.core:crypto-android|
 |me.proton.core:crypto-common|
+|me.proton.core:crypto-validator|
+|me.proton.core:crypto-validator-dagger|
+|me.proton.core:crypto-validator-data|
+|me.proton.core:crypto-validator-domain|
+|me.proton.core:crypto-validator-presentation|
 |me.proton.core:data|
 |me.proton.core:data-room|
 |me.proton.core:domain|

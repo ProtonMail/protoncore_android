@@ -117,7 +117,7 @@ class OnListView : ConditionWatcher {
 
     /** Builds [DataInteraction] based on parameters provided to [OnListView.Builder]. **/
     private fun dataInteraction(viewAssertion: ViewAssertion = matches(ViewMatchers.isDisplayed())): DataInteraction {
-        waitForCondition({ onData(dataMatcher).check(viewAssertion) })
+        waitForCondition { onData(dataMatcher).check(viewAssertion) }
         return onData(dataMatcher)
     }
 }

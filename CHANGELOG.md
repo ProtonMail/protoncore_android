@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- New crypto-validator module to check the integrity of the KeyStoreCrypto used. See [the README.md](crypto-validator/README.md) for more info.
+
 ### Changes
 
 - Updated ProtonCore 2022 Copyright file.

@@ -6,12 +6,12 @@ public final class me/proton/core/test/android/instrumented/BuildConfig {
 }
 
 public abstract interface class me/proton/core/test/android/instrumented/ConditionWatcher {
-	public abstract fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+	public abstract fun waitForCondition (JJLkotlin/jvm/functions/Function0;)V
 }
 
 public final class me/proton/core/test/android/instrumented/ConditionWatcher$DefaultImpls {
-	public static fun waitForCondition (Lme/proton/core/test/android/instrumented/ConditionWatcher;Lkotlin/jvm/functions/Function0;JJ)V
-	public static synthetic fun waitForCondition$default (Lme/proton/core/test/android/instrumented/ConditionWatcher;Lkotlin/jvm/functions/Function0;JJILjava/lang/Object;)V
+	public static fun waitForCondition (Lme/proton/core/test/android/instrumented/ConditionWatcher;JJLkotlin/jvm/functions/Function0;)V
+	public static synthetic fun waitForCondition$default (Lme/proton/core/test/android/instrumented/ConditionWatcher;JJLkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
 }
 
 public class me/proton/core/test/android/instrumented/ProtonTest {
@@ -119,7 +119,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnIntent
 	public final fun respondWith (Landroid/app/Instrumentation$ActivityResult;)V
 	public final fun respondWithFunction (Landroidx/test/espresso/intent/ActivityResultFunction;)V
 	public final fun toPackage (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnIntent;
-	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+	public fun waitForCondition (JJLkotlin/jvm/functions/Function0;)V
 }
 
 public final class me/proton/core/test/android/instrumented/ui/espresso/OnListView : me/proton/core/test/android/instrumented/ConditionWatcher {
@@ -143,7 +143,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnListVi
 	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
 	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
 	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnListView;
-	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+	public fun waitForCondition (JJLkotlin/jvm/functions/Function0;)V
 }
 
 public final class me/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView : me/proton/core/test/android/instrumented/ConditionWatcher {
@@ -160,7 +160,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnRecycl
 	public final fun swipeLeft ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
 	public final fun swipeRight ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
 	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
-	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+	public fun waitForCondition (JJLkotlin/jvm/functions/Function0;)V
 	public final fun waitUntilGone ()Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
 	public final fun withId (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
 	public final fun withText (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnRecyclerView;
@@ -233,7 +233,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnView :
 	public final fun swipeUp ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun viewMatcher ()Lorg/hamcrest/Matcher;
-	public fun waitForCondition (Lkotlin/jvm/functions/Function0;JJ)V
+	public fun waitForCondition (JJLkotlin/jvm/functions/Function0;)V
 	public final fun withChild (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withClassName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withContentDesc (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
@@ -328,6 +328,11 @@ public final class me/proton/core/test/android/instrumented/utils/StringUtils {
 	public static synthetic fun randomString$default (Lme/proton/core/test/android/instrumented/utils/StringUtils;JLjava/lang/String;ILjava/lang/Object;)Ljava/lang/String;
 	public final fun stringFromResource (I)Ljava/lang/String;
 	public final fun stringFromResource (I[Ljava/lang/Object;)Ljava/lang/String;
+}
+
+public final class me/proton/core/test/android/instrumented/utils/WaitUntilKt {
+	public static final fun waitUntil (JJLkotlin/jvm/functions/Function0;)Ljava/lang/Object;
+	public static synthetic fun waitUntil$default (JJLkotlin/jvm/functions/Function0;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/test/android/plugins/Quark {
@@ -780,6 +785,21 @@ public final class me/proton/core/test/android/robots/humanverification/HumanVer
 public final class me/proton/core/test/android/robots/other/CountryRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
 	public final fun search (Ljava/lang/String;)Lme/proton/core/test/android/robots/other/CountryRobot;
+}
+
+public final class me/proton/core/test/android/robots/other/KeyStoreErrorRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun tapContinue ()Lme/proton/core/test/android/robots/other/KeyStoreErrorRobot;
+	public final fun tapLogout ()Lme/proton/core/test/android/robots/other/KeyStoreErrorRobot;
+	public final fun tapMoreInfo ()Lme/proton/core/test/android/robots/other/KeyStoreErrorRobot;
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/other/KeyStoreErrorRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/other/KeyStoreErrorRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun dialogIsDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun exitButtonIsDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun logoutButtonIsDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
 
 public final class me/proton/core/test/android/robots/payments/AddCreditCardRobot : me/proton/core/test/android/robots/payments/PaymentRobot {

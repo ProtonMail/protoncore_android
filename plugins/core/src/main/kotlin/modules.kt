@@ -79,6 +79,13 @@ object Module {
     const val cryptoCommon = "$crypto:crypto-common"
     const val cryptoAndroid = "$crypto:crypto-android"
 
+    // CryptoValidator
+    const val cryptoValidator = ":crypto-validator"
+    const val cryptoValidatorDagger = "$cryptoValidator:crypto-validator-dagger"
+    const val cryptoValidatorData = "$cryptoValidator:crypto-validator-data"
+    const val cryptoValidatorDomain = "$cryptoValidator:crypto-validator-domain"
+    const val cryptoValidatorPresentation = "$cryptoValidator:crypto-validator-presentation"
+
     // Account
     const val eventManager = ":event-manager"
     const val eventManagerDomain = "$eventManager:event-manager-domain"

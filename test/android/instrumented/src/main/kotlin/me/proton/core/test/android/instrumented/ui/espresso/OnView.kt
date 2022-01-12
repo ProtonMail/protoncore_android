@@ -55,7 +55,7 @@ class OnView : ConditionWatcher {
         viewAssertion: ViewAssertion = matches(ViewMatchers.isDisplayed()),
         timeout: Long = commandTimeout
     ): ViewInteraction {
-        waitForCondition({ onView(viewMatcher()).inRoot(rootMatcher()).check(viewAssertion) }, timeout)
+        waitForCondition(timeout) { onView(viewMatcher()).inRoot(rootMatcher()).check(viewAssertion) }
         return onView(viewMatcher()).inRoot(rootMatcher())
     }
 
@@ -246,7 +246,7 @@ class OnView : ConditionWatcher {
     fun inRoot(root: OnRootView) = apply {
         rootMatchers.add(root.matcher())
     }
-    
+
     fun withTimeout(milliseconds: Long) = apply {
         viewInteraction(timeout = milliseconds)
     }
