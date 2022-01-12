@@ -29,7 +29,7 @@ import kotlinx.serialization.encoding.Encoder
 @Serializable
 data class VerificationResponseMessage(
     val type: Type,
-    val payload: Payload,
+    val payload: Payload? = null,
 ) {
 
     @Serializable
@@ -44,7 +44,8 @@ data class VerificationResponseMessage(
     enum class Type(val value: String) {
         Success("HUMAN_VERIFICATION_SUCCESS"),
         Notification("NOTIFICATION"),
-        Resize("RESIZE");
+        Resize("RESIZE"),
+        Loaded("LOADED");
 
         companion object {
             val map = values().associateBy { it.value }

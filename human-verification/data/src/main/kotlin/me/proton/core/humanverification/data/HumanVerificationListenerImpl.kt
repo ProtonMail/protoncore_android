@@ -18,6 +18,7 @@
 
 package me.proton.core.humanverification.data
 
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -32,6 +33,8 @@ import me.proton.core.network.domain.humanverification.HumanVerificationListener
 class HumanVerificationListenerImpl(
     private val humanVerificationRepository: HumanVerificationRepository
 ) : HumanVerificationListener {
+
+    private val verificationProcessObservers = mutableMapOf<ClientId, Channel<HumanVerificationResult>>()
 
     override suspend fun onHumanVerificationNeeded(
         clientId: ClientId,
@@ -55,10 +58,10 @@ class HumanVerificationListenerImpl(
                 )
             }
             .first()
-        return when (state) {
-            HumanVerificationState.HumanVerificationSuccess -> HumanVerificationResult.Success
-            else -> HumanVerificationResult.Failure
-        }
+        return if (state == HumanVerificationState.HumanVerificationSuccess)
+            HumanVerificationResult.Success
+        else
+            HumanVerificationResult.Failure
     }
 
     override suspend fun onHumanVerificationInvalid(clientId: ClientId) {
@@ -67,4 +70,20 @@ class HumanVerificationListenerImpl(
             state = HumanVerificationState.HumanVerificationInvalid
         )
     }
+
+    override suspend fun awaitHumanVerificationProcessFinished(clientId: ClientId): HumanVerificationResult =
+        ensureProcessObserver(clientId).receive()
+
+    override suspend fun notifyHumanVerificationProcessFinished(clientId: ClientId) {
+        val details = humanVerificationRepository.getHumanVerificationDetails(clientId)
+        if (details?.state == null) return
+        val result = if (details.state == HumanVerificationState.HumanVerificationSuccess)
+            HumanVerificationResult.Success
+        else
+            HumanVerificationResult.Failure
+        ensureProcessObserver(clientId).trySend(result)
+    }
+
+    private fun ensureProcessObserver(clientId: ClientId): Channel<HumanVerificationResult> =
+        verificationProcessObservers.getOrPut(clientId) { Channel(1) }
 }

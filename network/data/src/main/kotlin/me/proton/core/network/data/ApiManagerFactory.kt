@@ -148,7 +148,6 @@ class ApiManagerFactory(
             HumanVerificationNeededHandler<Api>(sessionId, clientIdProvider, humanVerificationListener, monoClockMs)
         val humanVerificationInvalidHandler =
             HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
-
         return listOf(
             dohApiHandler,
             serverConnectionHandler,

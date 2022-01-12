@@ -110,6 +110,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
             signupPlansViewModel.getAllPlansForSignup()
         } else {
             // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
+            parentFragmentManager.removePlansSignup()
             setResult(SelectedPlan.free(getString(R.string.plans_free_name)))
         }
     }

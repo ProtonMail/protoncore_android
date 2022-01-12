@@ -19,7 +19,6 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import android.os.Parcelable
-import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateHandle

@@ -48,7 +48,8 @@ internal abstract class AuthViewModel(
         return observer.onHumanVerificationNeeded {
             humanVerificationOrchestrator.startHumanVerificationWorkflow(
                 details = it,
-                recoveryEmailAddress = recoveryEmailAddress
+                recoveryEmailAddress = recoveryEmailAddress,
+                isPartOfFlow = true,
             )
         }
     }

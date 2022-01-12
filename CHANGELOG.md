@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixes
 
 - Fixed TwoPassModeActivity to let the User retry unlocking primary key.
+- Several bugfixes for Human Verification:
+  - Use VPN theme in VPN app.
+  - Don't show plans screen for VPN.
+  - Make navigating to and from the the HV screen look like part of the sign up or log in flows.
+  - Don't retry a past failed HV attempt by default when restarting the app.
 
 ## [6.0.0]
 

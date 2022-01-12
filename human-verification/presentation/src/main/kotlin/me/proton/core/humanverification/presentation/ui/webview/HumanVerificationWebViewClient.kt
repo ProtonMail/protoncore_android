@@ -19,6 +19,9 @@
 package me.proton.core.humanverification.presentation.ui.webview
 
 import android.net.Uri
+import android.net.http.SslError
+import android.webkit.SslErrorHandler
+import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -31,6 +34,7 @@ class HumanVerificationWebViewClient(
     private val extraHeaders: List<Pair<String, String>>,
     private val alternativeUrl: String?,
     private val networkRequestOverrider: NetworkRequestOverrider,
+    private val onResourceLoadingError: () -> Unit,
 ) : WebViewClient() {
 
     override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
@@ -41,6 +45,25 @@ class HumanVerificationWebViewClient(
             needsExtraHeaderForCaptcha -> overrideWithExtraHeaders(request, extraHeaders)
             else -> null
         }
+    }
+
+    override fun onReceivedHttpError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        errorResponse: WebResourceResponse?
+    ) {
+        super.onReceivedHttpError(view, request, errorResponse)
+        onResourceLoadingError()
+    }
+
+    override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+        super.onReceivedSslError(view, handler, error)
+        onResourceLoadingError()
+    }
+
+    override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+        super.onReceivedError(view, request, error)
+        onResourceLoadingError()
     }
 
     private fun overrideWithExtraHeaders(
@@ -74,7 +97,11 @@ class HumanVerificationWebViewClient(
             request.method,
             headers = request.requestHeaders.toList() + extraHeaders + listOfNotNull(dohHeader),
             acceptSelfSignedCertificates = true,
-        )
+        ).also {
+            if (it?.statusCode !in 200 until 400) {
+                onResourceLoadingError()
+            }
+        }
     }
 
     private fun overrideRequest(

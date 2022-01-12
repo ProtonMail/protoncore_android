@@ -19,9 +19,8 @@
 package me.proton.core.humanverification.presentation.utils
 
 import androidx.fragment.app.FragmentManager
-import me.proton.core.humanverification.domain.entity.TokenType
-import me.proton.core.humanverification.presentation.ui.HumanVerificationHelpFragment
 import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
+import me.proton.core.humanverification.presentation.ui.HumanVerificationHelpFragment
 import me.proton.core.presentation.utils.inTransaction
 
 private const val TAG_HUMAN_VERIFICATION_DIALOG = "human_verification_dialog"
@@ -35,7 +34,8 @@ fun FragmentManager.showHumanVerification(
     availableVerificationMethods: List<String> = emptyList(),
     verificationToken: String,
     recoveryEmailAddress: String? = null,
-    largeLayout: Boolean
+    largeLayout: Boolean,
+    isPartOfFlow: Boolean = false,
 ) {
     if (findFragmentByTag(TAG_HUMAN_VERIFICATION_DIALOG) != null) return
 
@@ -46,6 +46,7 @@ fun FragmentManager.showHumanVerification(
         verificationMethods = availableVerificationMethods,
         startToken = verificationToken,
         recoveryEmail = recoveryEmailAddress,
+        isPartOfFlow = isPartOfFlow,
     )
     if (largeLayout) {
         // For large screens (tablets), we show the fragment as a dialog
@@ -53,6 +54,7 @@ fun FragmentManager.showHumanVerification(
     } else {
         // The smaller screens (phones), we show the fragment fullscreen
         inTransaction {
+            setCustomAnimations(0, 0)
             add(newFragment, TAG_HUMAN_VERIFICATION_DIALOG)
         }
     }

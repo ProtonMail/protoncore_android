@@ -67,7 +67,8 @@ class HumanVerificationOrchestrator {
                 availableVerificationMethods = input.verificationMethods.orEmpty(),
                 verificationToken = input.verificationToken,
                 largeLayout = largeLayout,
-                recoveryEmailAddress = input.recoveryEmailAddress
+                recoveryEmailAddress = input.recoveryEmailAddress,
+                isPartOfFlow = input.isPartOfFlow,
             )
         }
     }
@@ -93,7 +94,8 @@ class HumanVerificationOrchestrator {
     fun startHumanVerificationWorkflow(
         details: HumanVerificationDetails,
         captchaUrl: String? = null,
-        recoveryEmailAddress: String? = null
+        recoveryEmailAddress: String? = null,
+        isPartOfFlow: Boolean = false,
     ) {
         startHumanVerificationWorkflow(
             HumanVerificationInput(
@@ -102,7 +104,8 @@ class HumanVerificationOrchestrator {
                 verificationMethods = details.verificationMethods,
                 verificationToken = requireNotNull(details.verificationToken),
                 captchaUrl = captchaUrl,
-                recoveryEmailAddress = recoveryEmailAddress
+                recoveryEmailAddress = recoveryEmailAddress,
+                isPartOfFlow = isPartOfFlow,
             )
         )
     }

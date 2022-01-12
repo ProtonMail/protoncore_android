@@ -23,18 +23,21 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertNull
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.usersettings.domain.entity.RecoverySetting
@@ -50,6 +53,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
     private val humanVerificationWorkflowHandler = mockk<HumanVerificationWorkflowHandler>(relaxed = true)
+    private val humanVerificationListener = mockk<HumanVerificationListener>(relaxed = true)
     private val accountRepository = mockk<AccountRepository>(relaxed = true)
     private val getSettings = mockk<GetSettings>(relaxed = true)
     private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
@@ -66,9 +70,11 @@ class HumanVerificationViewModelTest : CoroutinesTest {
     fun setup() {
         viewModel = HumanVerificationViewModel(
             humanVerificationWorkflowHandler,
+            humanVerificationListener,
             accountRepository,
             getSettings,
             networkPrefs,
+            Product.Mail,
         )
     }
 
@@ -94,10 +100,12 @@ class HumanVerificationViewModelTest : CoroutinesTest {
     }
 
     @Test
-    fun `getHumanVerificationExtraParams with no primary user returns null`() = runBlocking {
+    fun `getHumanVerificationExtraParams with no primary user returns empty extra params`() = runBlocking {
         every { accountRepository.getPrimaryUserId() } returns emptyFlow<UserId>()
         val params = viewModel.getHumanVerificationExtraParams()
-        assertNull(params)
+        assertNull(params.defaultCountry)
+        assertNull(params.locale)
+        assertNull(params.recoveryPhone)
     }
 
     @Test
@@ -113,5 +121,25 @@ class HumanVerificationViewModelTest : CoroutinesTest {
         assertEquals("US", params?.defaultCountry)
         assertEquals("en_US", params?.locale)
         assertEquals("123456789", params?.recoveryPhone)
+    }
+
+    @Test
+    fun `getHumanVerificationExtraParams returns useVPNTheme when product is Vpn`() = runBlocking {
+        viewModel = HumanVerificationViewModel(
+            humanVerificationWorkflowHandler,
+            humanVerificationListener,
+            accountRepository,
+            getSettings,
+            networkPrefs,
+            Product.Vpn,
+        )
+        every { accountRepository.getPrimaryUserId() } returns flowOf(UserId("some_user_id"))
+        val settingsMock = mockk<UserSettings>().apply {
+            every { locale } returns "en_US"
+            every { phone } returns RecoverySetting("123456789", 0, false, false)
+        }
+        coEvery { getSettings.invoke(any()) } returns settingsMock
+        val params = viewModel.getHumanVerificationExtraParams()
+        assertEquals(true, params?.useVPNTheme)
     }
 }
