@@ -202,7 +202,7 @@ open class NodeBuilder {
     }
 
     fun hasParent(parentNode: OnNode) = apply {
-        semanticsMatchers.add((parentNode.semanticMatcher()))
+        semanticsMatchers.add(parentNode.semanticMatcher())
     }
 
     fun hasChild(childNode: OnNode) = apply {

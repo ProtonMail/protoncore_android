@@ -19,8 +19,6 @@
 package me.proton.core.test.android.instrumented
 
 import androidx.compose.ui.test.junit4.ComposeTestRule
-import androidx.compose.ui.test.onRoot
-import androidx.compose.ui.test.printToLog
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.Configurator
 import androidx.test.uiautomator.StaleObjectException
@@ -46,12 +44,6 @@ object FusionConfig {
     object UiAutomator {
         private val config: Configurator = Configurator.getInstance()
 
-        fun boost() {
-            config.waitForIdleTimeout = 0
-            config.waitForSelectorTimeout = 0
-            config.actionAcknowledgmentTimeout = 50
-        }
-
         /**
          * Set it to true if you would like to declare once [ByObject] and use it multiple times.
          * In this case it will not trigger [StaleObjectException].
@@ -64,5 +56,11 @@ object FusionConfig {
          * This will slow down the test execution but not significantly.
          */
         var shouldSearchByObjectEachAction: Boolean = false
+
+        fun boost() {
+            config.waitForIdleTimeout = 0
+            config.waitForSelectorTimeout = 0
+            config.actionAcknowledgmentTimeout = 50
+        }
     }
 }

@@ -25,6 +25,7 @@ import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.test.GestureScope
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
+import androidx.compose.ui.test.SemanticsNodeInteractionCollection
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.assertContentDescriptionEquals
@@ -62,7 +63,9 @@ import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.printToLog
 import me.proton.core.test.android.instrumented.FusionConfig
 
-
+/**
+ * Contains identifiers, actions, and checks for Compose UI onNode element, i.e. [SemanticsNodeInteraction].
+ */
 class OnNode(
     private val interaction: SemanticsNodeInteraction? = null,
 ) : NodeBuilder() {
@@ -79,22 +82,22 @@ class OnNode(
     fun click() = apply { toNode { nodeInteraction().performScrollTo() } }
 
     fun performAction(action: SemanticsPropertyKey<AccessibilityAction<() -> Boolean>>) = apply {
-        toNode { nodeInteraction().apply{ performSemanticsAction(action) } }
+        toNode { nodeInteraction().apply { performSemanticsAction(action) } }
     }
 
     fun scrollTo() = apply { toNode { nodeInteraction().performScrollTo() } }
 
     fun sendGesture(block: GestureScope.() -> Unit) = apply { toNode { nodeInteraction().performGesture { block() } } }
 
-    fun clearText() = apply { toNode { nodeInteraction().apply{ performTextClearance() } } }
+    fun clearText() = apply { toNode { nodeInteraction().apply { performTextClearance() } } }
 
-    fun typeText(text: String) = apply { toNode { nodeInteraction().apply{ performTextInput(text) } } }
+    fun typeText(text: String) = apply { toNode { nodeInteraction().apply { performTextInput(text) } } }
 
-    fun replaceText(text: String) = apply { toNode { nodeInteraction().apply{ performTextReplacement(text) } } }
+    fun replaceText(text: String) = apply { toNode { nodeInteraction().apply { performTextReplacement(text) } } }
 
-    fun pressKey(keyEvent: KeyEvent) = apply { toNode { nodeInteraction().apply{ performKeyPress(keyEvent) } } }
+    fun pressKey(keyEvent: KeyEvent) = apply { toNode { nodeInteraction().apply { performKeyPress(keyEvent) } } }
 
-    fun sendImeAction() = apply { toNode { nodeInteraction().apply{ performImeAction() } } }
+    fun sendImeAction() = apply { toNode { nodeInteraction().apply { performImeAction() } } }
 
     /** Node checks **/
     fun checkExist() = apply { toNode { nodeInteraction().assertExists() } }
@@ -150,7 +153,7 @@ class OnNode(
             }
         }
 
-    fun checkTextEquals(value: String, includeEditableText: Boolean = true) = apply {
+    fun checkTextEquals(value: String) = apply {
         toNode { nodeInteraction().assertTextEquals(value) }
     }
 

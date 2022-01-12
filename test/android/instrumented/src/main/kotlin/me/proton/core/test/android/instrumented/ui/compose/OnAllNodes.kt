@@ -18,7 +18,16 @@
 
 package me.proton.core.test.android.instrumented.ui.compose
 
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.SemanticsNodeInteractionCollection
+import androidx.compose.ui.test.assertAll
+import androidx.compose.ui.test.assertAny
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.filter
+import androidx.compose.ui.test.filterToOne
+import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.onLast
+import androidx.compose.ui.test.printToLog
+import androidx.compose.ui.test.printToString
 import me.proton.core.test.android.instrumented.FusionConfig
 
 /**
@@ -26,7 +35,7 @@ import me.proton.core.test.android.instrumented.FusionConfig
  */
 class OnAllNodes(
     private val interaction: SemanticsNodeInteractionCollection? = null,
-): NodeBuilder() {
+) : NodeBuilder() {
 
     private fun toNodes(action: () -> SemanticsNodeInteractionCollection) =
         handlePrint {
@@ -51,7 +60,7 @@ class OnAllNodes(
 
     fun onFirst() = OnNode(nodeInteraction().onFirst())
 
-    fun onLast(text: String) = OnNode(nodeInteraction().onLast())
+    fun onLast() = OnNode(nodeInteraction().onLast())
 
     fun filter(node: OnNode) = apply { nodeInteraction().filter(node.semanticMatcher()) }
 
