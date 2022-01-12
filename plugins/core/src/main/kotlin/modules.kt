@@ -17,150 +17,150 @@
  */
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
-object Module {
+public object Module {
 
     // region Common
     // Utils
     private const val util = ":util"
-    const val kotlinUtil = "$util:util-kotlin"
+    public const val kotlinUtil: String = "$util:util-kotlin"
     private const val androidUtil = "$util:android"
-    const val sharedPreferencesUtil = "$androidUtil:util-android-shared-preferences"
-    const val workManagersUtil = "$androidUtil:util-android-work-manager"
-    const val gradleUtil = "$util:util-gradle"
+    public const val sharedPreferencesUtil: String = "$androidUtil:util-android-shared-preferences"
+    public const val workManagersUtil: String = "$androidUtil:util-android-work-manager"
+    public const val gradleUtil: String = "$util:util-gradle"
 
     // Test
     private const val test = ":test"
-    const val kotlinTest = "$test:test-kotlin"
-    const val androidTest = "$test:test-android"
-    const val androidInstrumentedTest = "$androidTest:test-android-instrumented"
+    public const val kotlinTest: String = "$test:test-kotlin"
+    public const val androidTest: String = "$test:test-android"
+    public const val androidInstrumentedTest: String = "$androidTest:test-android-instrumented"
     // endregion
 
     // region Shared
-    const val domain = ":domain"
-    const val presentation = ":presentation"
-    const val presentationCompose = ":presentation-compose"
-    const val data = ":data"
-    const val dataRoom = ":data-room"
-    const val gopenpgp = ":gopenpgp"
+    public const val domain: String = ":domain"
+    public const val presentation: String = ":presentation"
+    public const val presentationCompose: String = ":presentation-compose"
+    public const val data: String = ":data"
+    public const val dataRoom: String = ":data-room"
+    public const val gopenpgp: String = ":gopenpgp"
     // endregion
 
     // region Support
     // Network
-    const val network = ":network"
-    const val networkDomain = "$network:network-domain"
-    const val networkData = "$network:network-data"
+    public const val network: String = ":network"
+    public const val networkDomain: String = "$network:network-domain"
+    public const val networkData: String = "$network:network-data"
     // endregion
 
     // region Features
 
     // Authentication
-    const val auth = ":auth"
-    const val authDomain = "$auth:auth-domain"
-    const val authPresentation = "$auth:auth-presentation"
-    const val authData = "$auth:auth-data"
+    public const val auth: String = ":auth"
+    public const val authDomain: String = "$auth:auth-domain"
+    public const val authPresentation: String = "$auth:auth-presentation"
+    public const val authData: String = "$auth:auth-data"
 
     // Account
-    const val account = ":account"
-    const val accountDomain = "$account:account-domain"
-    const val accountPresentation = "$account:account-presentation"
-    const val accountData = "$account:account-data"
+    public const val account: String = ":account"
+    public const val accountDomain: String = "$account:account-domain"
+    public const val accountPresentation: String = "$account:account-presentation"
+    public const val accountData: String = "$account:account-data"
 
     // AccountManager
-    const val accountManager = ":account-manager"
-    const val accountManagerDomain = "$accountManager:account-manager-domain"
-    const val accountManagerPresentation = "$accountManager:account-manager-presentation"
-    const val accountManagerPresentationCompose = "$accountManager:account-manager-presentation-compose"
-    const val accountManagerData = "$accountManager:account-manager-data"
-    const val accountManagerDataDb = "$accountManager:account-manager-data-db"
-    const val accountManagerDagger = "$accountManager:account-manager-dagger"
+    public const val accountManager: String = ":account-manager"
+    public const val accountManagerDomain: String = "$accountManager:account-manager-domain"
+    public const val accountManagerPresentation: String = "$accountManager:account-manager-presentation"
+    public const val accountManagerPresentationCompose: String = "$accountManager:account-manager-presentation-compose"
+    public const val accountManagerData: String = "$accountManager:account-manager-data"
+    public const val accountManagerDataDb: String = "$accountManager:account-manager-data-db"
+    public const val accountManagerDagger: String = "$accountManager:account-manager-dagger"
 
     // Crypto
-    const val crypto = ":crypto"
-    const val cryptoCommon = "$crypto:crypto-common"
-    const val cryptoAndroid = "$crypto:crypto-android"
+    public const val crypto: String = ":crypto"
+    public const val cryptoCommon: String = "$crypto:crypto-common"
+    public const val cryptoAndroid: String = "$crypto:crypto-android"
 
     // CryptoValidator
-    const val cryptoValidator = ":crypto-validator"
-    const val cryptoValidatorDagger = "$cryptoValidator:crypto-validator-dagger"
-    const val cryptoValidatorData = "$cryptoValidator:crypto-validator-data"
-    const val cryptoValidatorDomain = "$cryptoValidator:crypto-validator-domain"
-    const val cryptoValidatorPresentation = "$cryptoValidator:crypto-validator-presentation"
+    public const val cryptoValidator: String = ":crypto-validator"
+    public const val cryptoValidatorDagger: String = "$cryptoValidator:crypto-validator-dagger"
+    public const val cryptoValidatorData: String = "$cryptoValidator:crypto-validator-data"
+    public const val cryptoValidatorDomain: String = "$cryptoValidator:crypto-validator-domain"
+    public const val cryptoValidatorPresentation: String = "$cryptoValidator:crypto-validator-presentation"
 
     // Account
-    const val eventManager = ":event-manager"
-    const val eventManagerDomain = "$eventManager:event-manager-domain"
-    const val eventManagerData = "$eventManager:event-manager-data"
+    public const val eventManager: String = ":event-manager"
+    public const val eventManagerDomain: String = "$eventManager:event-manager-domain"
+    public const val eventManagerData: String = "$eventManager:event-manager-data"
 
     // Key
-    const val key = ":key"
-    const val keyDomain = "$key:key-domain"
-    const val keyData = "$key:key-data"
+    public const val key: String = ":key"
+    public const val keyDomain: String = "$key:key-domain"
+    public const val keyData: String = "$key:key-data"
 
     // Label
-    const val label = ":label"
-    const val labelDomain = "$label:label-domain"
-    const val labelData = "$label:label-data"
-    const val labelDagger = "$label:label-dagger"
+    public const val label: String = ":label"
+    public const val labelDomain: String = "$label:label-domain"
+    public const val labelData: String = "$label:label-data"
+    public const val labelDagger: String = "$label:label-dagger"
 
     // Contact
-    const val contact = ":contact"
-    const val contactDomain = "$contact:contact-domain"
-    const val contactData = "$contact:contact-data"
-    const val contactHilt = "$contact:contact-hilt"
+    public const val contact: String = ":contact"
+    public const val contactDomain: String = "$contact:contact-domain"
+    public const val contactData: String = "$contact:contact-data"
+    public const val contactHilt: String = "$contact:contact-hilt"
 
     // User
-    const val user = ":user"
-    const val userDomain = "$user:user-domain"
-    const val userPresentation = "$user:user-presentation"
-    const val userData = "$user:user-data"
+    public const val user: String = ":user"
+    public const val userDomain: String = "$user:user-domain"
+    public const val userPresentation: String = "$user:user-presentation"
+    public const val userData: String = "$user:user-data"
 
     // Payment
-    const val payment = ":payment"
-    const val paymentDomain = "$payment:payment-domain"
-    const val paymentData = "$payment:payment-data"
-    const val paymentPresentation = "$payment:payment-presentation"
+    public const val payment: String = ":payment"
+    public const val paymentDomain: String = "$payment:payment-domain"
+    public const val paymentData: String = "$payment:payment-data"
+    public const val paymentPresentation: String = "$payment:payment-presentation"
 
     // Countries
-    const val country = ":country"
-    const val countryDomain = "$country:country-domain"
-    const val countryData = "$country:country-data"
-    const val countryPresentation = "$country:country-presentation"
+    public const val country: String = ":country"
+    public const val countryDomain: String = "$country:country-domain"
+    public const val countryData: String = "$country:country-data"
+    public const val countryPresentation: String = "$country:country-presentation"
 
     // Settings
-    const val userSettings = ":user-settings"
-    const val userSettingsDomain = "$userSettings:user-settings-domain"
-    const val userSettingsPresentation = "$userSettings:user-settings-presentation"
-    const val userSettingsData = "$userSettings:user-settings-data"
+    public const val userSettings: String = ":user-settings"
+    public const val userSettingsDomain: String = "$userSettings:user-settings-domain"
+    public const val userSettingsPresentation: String = "$userSettings:user-settings-presentation"
+    public const val userSettingsData: String = "$userSettings:user-settings-data"
 
     // Human Verification
-    const val humanVerification = ":human-verification"
-    const val humanVerificationDomain = "$humanVerification:human-verification-domain"
-    const val humanVerificationPresentation = "$humanVerification:human-verification-presentation"
-    const val humanVerificationData = "$humanVerification:human-verification-data"
+    public const val humanVerification: String = ":human-verification"
+    public const val humanVerificationDomain: String = "$humanVerification:human-verification-domain"
+    public const val humanVerificationPresentation: String = "$humanVerification:human-verification-presentation"
+    public const val humanVerificationData: String = "$humanVerification:human-verification-data"
 
     // Mail Message
-    const val mailMessage = ":mail-message"
-    const val mailMessageDomain = "$mailMessage:mail-message-domain"
-    const val mailMessagePresentation = "$mailMessage:mail-message-presentation"
-    const val mailMessageData = "$mailMessage:mail-message-data"
+    public const val mailMessage: String = ":mail-message"
+    public const val mailMessageDomain: String = "$mailMessage:mail-message-domain"
+    public const val mailMessagePresentation: String = "$mailMessage:mail-message-presentation"
+    public const val mailMessageData: String = "$mailMessage:mail-message-data"
 
     // Mail Settings
-    const val mailSettings = ":mail-settings"
-    const val mailSettingsDomain = "$mailSettings:mail-settings-domain"
-    const val mailSettingsPresentation = "$mailSettings:mail-settings-presentation"
-    const val mailSettingsData = "$mailSettings:mail-settings-data"
+    public const val mailSettings: String = ":mail-settings"
+    public const val mailSettingsDomain: String = "$mailSettings:mail-settings-domain"
+    public const val mailSettingsPresentation: String = "$mailSettings:mail-settings-presentation"
+    public const val mailSettingsData: String = "$mailSettings:mail-settings-data"
 
     // Plan
-    const val plan = ":plan"
-    const val planDomain = "$plan:plan-domain"
-    const val planData = "$plan:plan-data"
-    const val planPresentation = "$plan:plan-presentation"
+    public const val plan: String = ":plan"
+    public const val planDomain: String = "$plan:plan-domain"
+    public const val planData: String = "$plan:plan-data"
+    public const val planPresentation: String = "$plan:plan-presentation"
 
     // Reports
-    const val report = ":report"
-    const val reportDomain = ":report:report-domain"
-    const val reportData = ":report:report-data"
-    const val reportPresentation = ":report:report-presentation"
-    const val reportDagger = ":report:report-dagger"
+    public const val report: String = ":report"
+    public const val reportDomain: String = ":report:report-domain"
+    public const val reportData: String = ":report:report-data"
+    public const val reportPresentation: String = ":report:report-presentation"
+    public const val reportDagger: String = ":report:report-dagger"
     // endregion
 }

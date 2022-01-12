@@ -16,71 +16,124 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:Suppress("TopLevelPropertyNaming", "ObjectPropertyName")
+
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 // region Compose
-val DependencyHandler.`activity-compose` get() = androidx("activity", moduleSuffix = "compose") version `activity version`
-val DependencyHandler.`navigation-compose` get() = androidx("navigation", moduleSuffix = "compose") version `navigation version`
-val DependencyHandler.`hilt-navigation-compose` get() = androidx("hilt", moduleSuffix = "navigation-compose") version `hilt-navigation-compose version`
-val DependencyHandler.`lifecycle-compose` get() = androidx("lifecycle", moduleSuffix = "compose") version `hilt-navigation-compose version`
+public val DependencyHandler.`activity-compose`: Any
+    get() = androidx("activity", moduleSuffix = "compose") version `activity version`
+public val DependencyHandler.`navigation-compose`: Any
+    get() = androidx("navigation", moduleSuffix = "compose") version `navigation version`
+public val DependencyHandler.`hilt-navigation-compose`: Any
+    get() = androidx("hilt", moduleSuffix = "navigation-compose") version `hilt-navigation-compose version`
+public val DependencyHandler.`lifecycle-compose`: Any
+    get() = androidx("lifecycle", moduleSuffix = "compose") version `hilt-navigation-compose version`
 
-fun DependencyHandler.compose(module: String, moduleSuffix: String? = null, version: String = `compose version`) =
-    androidx("compose.$module", module, moduleSuffix, version = version)
+public fun DependencyHandler.compose(
+    module: String,
+    moduleSuffix: String? = null,
+    version: String = `compose version`
+): Any = androidx("compose.$module", module, moduleSuffix, version = version)
 
-val DependencyHandler.`compose-animation` get() = compose("animation")
-val DependencyHandler.`compose-compiler` get() = compose("compiler")
-val DependencyHandler.`compose-foundation` get() = compose("foundation")
-val DependencyHandler.`compose-foundation-layout` get() = compose("foundation", "layout")
-val DependencyHandler.`compose-material` get() = compose("material")
-val DependencyHandler.`compose-material3` get() = compose("material3", version = `material3 version`)
-val DependencyHandler.`compose-runtime` get() = compose("runtime")
-val DependencyHandler.`compose-ui` get() = compose("ui")
-val DependencyHandler.`compose-ui-tooling` get() = compose("ui", "tooling")
-val DependencyHandler.`compose-ui-test` get() = compose("ui", "test")
-val DependencyHandler.`compose-ui-test-junit` get() = compose("ui", "test-junit4")
+public val DependencyHandler.`compose-animation`: Any
+    get() = compose("animation")
+public val DependencyHandler.`compose-compiler`: Any
+    get() = compose("compiler")
+public val DependencyHandler.`compose-foundation`: Any
+    get() = compose("foundation")
+public val DependencyHandler.`compose-foundation-layout`: Any
+    get() = compose("foundation", "layout")
+public val DependencyHandler.`compose-material`: Any
+    get() = compose("material")
+public val DependencyHandler.`compose-material3`: Any
+    get() = compose("material3", version = `material3 version`)
+public val DependencyHandler.`compose-runtime`: Any
+    get() = compose("runtime")
+public val DependencyHandler.`compose-ui`: Any
+    get() = compose("ui")
+public val DependencyHandler.`compose-ui-tooling`: Any
+    get() = compose("ui", "tooling")
+public val DependencyHandler.`compose-ui-test`: Any
+    get() = compose("ui", "test")
+public val DependencyHandler.`compose-ui-test-junit`: Any
+    get() = compose("ui", "test-junit4")
 // endregion
 
 // Network
-val DependencyHandler.`miniDsn` get() = dependency("org.minidns", module = "minidns-hla") version `miniDsn version`
-val DependencyHandler.`retrofit-scalars-converter` get() = squareup("retrofit2", "converter-scalars") version `retrofit version`
-val DependencyHandler.`okhttp-url-connection` get() = squareup("okhttp3", "okhttp-urlconnection") version `okHttp-url-connection version`
-val DependencyHandler.`mockWebServer` get() = squareup("okhttp3", "mockwebserver") version `okHttp version`
-val DependencyHandler.`trustKit` get() = dependency("com.datatheorem.android.trustkit", module = "trustkit") version `trustKit version`
+public val DependencyHandler.miniDsn: Any
+    get() = dependency("org.minidns", module = "minidns-hla") version `miniDsn version`
+public val DependencyHandler.`retrofit-scalars-converter`: Any
+    get() = squareup("retrofit2", "converter-scalars") version `retrofit version`
+public val DependencyHandler.`okhttp-url-connection`: Any
+    get() = squareup("okhttp3", "okhttp-urlconnection") version `okHttp-url-connection version`
+public val DependencyHandler.mockWebServer: Any
+    get() = squareup("okhttp3", "mockwebserver") version `okHttp version`
+public val DependencyHandler.trustKit: Any
+    get() = dependency("com.datatheorem.android.trustkit", module = "trustkit") version `trustKit version`
 
 // Other
-val DependencyHandler.`apacheCommon-codec` get() = dependency("commons-codec", module = "commons-codec") version `apacheCommon-codec version`
-val DependencyHandler.`bcrypt` get() = dependency("at.favre.lib", module = "bcrypt") version `bcrypt version`
-val DependencyHandler.`googleTink` get() = google("crypto.tink", module = "tink-android") version `googleTink version`
-val DependencyHandler.`gotev-cookieStore` get() = dependency("net.gotev", module = "cookie-store") version `gotev-cookieStore version`
-val DependencyHandler.`lint-core` get() = lint()
-val DependencyHandler.`lint-api` get() = lint("api")
-val DependencyHandler.`lint-checks` get() = lint("checks")
-val DependencyHandler.`lint-tests` get() = lint("tests")
-val DependencyHandler.`okHttp-logging` get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp version`
-val DependencyHandler.`store4` get() = dependency("com.dropbox.mobile.store", module = "store4") version `store4 version`
-val DependencyHandler.`lifecycle-common` get() = androidxLifecycle("common") version `lifecycle version`
-val DependencyHandler.`lifecycle-process` get() = androidxLifecycle("process") version `lifecycle version`
-val DependencyHandler.`lottie` get() = dependency("com.airbnb.android", module = "lottie") version `lottie version`
-val DependencyHandler.`javax-inject` get() = dependency("javax.inject", module = "javax.inject") version `javax-inject version`
-val DependencyHandler.`ez-vcard` get() = dependency("com.googlecode.ez-vcard", module = "ez-vcard") version `ez-vcard_version`
-val DependencyHandler.`startup-runtime` get() = androidx("startup", moduleSuffix = "runtime") version `startup-runtime version`
+public val DependencyHandler.`apacheCommon-codec`: Any
+    get() = dependency("commons-codec", module = "commons-codec") version `apacheCommon-codec version`
+public val DependencyHandler.bcrypt: Any
+    get() = dependency("at.favre.lib", module = "bcrypt") version `bcrypt version`
+public val DependencyHandler.googleTink: Any
+    get() = google("crypto.tink", module = "tink-android") version `googleTink version`
+public val DependencyHandler.`gotev-cookieStore`: Any
+    get() = dependency("net.gotev", module = "cookie-store") version `gotev-cookieStore version`
+public val DependencyHandler.`lint-core`: Any
+    get() = lint()
+public val DependencyHandler.`lint-api`: Any
+    get() = lint("api")
+public val DependencyHandler.`lint-checks`: Any
+    get() = lint("checks")
+public val DependencyHandler.`lint-tests`: Any
+    get() = lint("tests")
+public val DependencyHandler.`okHttp-logging`: Any
+    get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp version`
+public val DependencyHandler.store4: Any
+    get() = dependency("com.dropbox.mobile.store", module = "store4") version `store4 version`
+public val DependencyHandler.`lifecycle-common`: Any
+    get() = androidxLifecycle("common") version `lifecycle version`
+public val DependencyHandler.`lifecycle-extensions`: Any
+    get() = androidxLifecycle("extensions") version `lifecycle-extensions version`
+public val DependencyHandler.`lifecycle-process`: Any
+    get() = androidxLifecycle("process") version `lifecycle version`
+public val DependencyHandler.lottie: Any
+    get() = dependency("com.airbnb.android", module = "lottie") version `lottie version`
+public val DependencyHandler.`javax-inject`: Any
+    get() = dependency("javax.inject", module = "javax.inject") version `javax-inject version`
+public val DependencyHandler.`ez-vcard`: Any
+    get() = dependency("com.googlecode.ez-vcard", module = "ez-vcard") version `ez-vcard_version`
+public val DependencyHandler.`startup-runtime`: Any
+    get() = androidx("startup", moduleSuffix = "runtime") version `startup-runtime version`
 
 // region accessors
-fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =
+public fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =
     dependency("android.tools.lint", "lint", moduleSuffix, version)
 // endregion
 
 // region tests
-val DependencyHandler.`android-test-core-ktx` get() = dependency("androidx.test", module = "core-ktx") version `android-test version`
-val DependencyHandler.`espresso-contrib` get() = androidx("test.espresso", module = "espresso-contrib") version `espresso version`
-val DependencyHandler.`espresso-intents` get() = androidx("test.espresso", module = "espresso-intents") version `espresso version`
-val DependencyHandler.`espresso-web` get() = androidx("test.espresso", module = "espresso-web") version `espresso version`
-val DependencyHandler.`jsonsimple` get() = dependency("com.googlecode.json-simple", module = "json-simple") version `json-simple version`
-val DependencyHandler.`junit-ktx` get() = dependency("androidx.test.ext", module = "junit-ktx") version `junit-ktx version`
-val DependencyHandler.`orchestrator` get() = androidx("test", module = "orchestrator") version `android-test version`
-val DependencyHandler.preference get() = androidx("preference", module = "preference") version `preference version`
-val DependencyHandler.`turbine` get() = dependency("app.cash.turbine", module = "turbine") version `turbine version`
-val DependencyHandler.uiautomator get() = androidx("test.uiautomator", module = "uiautomator") version `uiautomator version`
+public val DependencyHandler.`android-test-core-ktx`: Any
+    get() = dependency("androidx.test", module = "core-ktx") version `android-test version`
+public val DependencyHandler.`espresso-contrib`: Any
+    get() = androidx("test.espresso", module = "espresso-contrib") version `espresso version`
+public val DependencyHandler.`espresso-intents`: Any
+    get() = androidx("test.espresso", module = "espresso-intents") version `espresso version`
+public val DependencyHandler.`espresso-web`: Any
+    get() = androidx("test.espresso", module = "espresso-web") version `espresso version`
+public val DependencyHandler.jsonsimple: Any
+    get() = dependency("com.googlecode.json-simple", module = "json-simple") version `json-simple version`
+public val DependencyHandler.`junit-ktx`: Any
+    get() = dependency("androidx.test.ext", module = "junit-ktx") version `junit-ktx version`
+public val DependencyHandler.orchestrator: Any
+    get() = androidx("test", module = "orchestrator") version `android-test version`
+public val DependencyHandler.preference: Any
+    get() = androidx("preference", module = "preference") version `preference version`
+public val DependencyHandler.turbine: Any
+    get() = dependency("app.cash.turbine", module = "turbine") version `turbine version`
+public val DependencyHandler.uiautomator: Any
+    get() = androidx("test.uiautomator", module = "uiautomator") version `uiautomator version`
 // endregion
