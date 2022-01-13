@@ -73,5 +73,8 @@ dependencies {
         `okhttp-url-connection`,
         `room-testing`,
         `android-test-core-ktx`,
+        `compose-ui`,
+        `compose-ui-test`,
+        `compose-ui-test-junit`
     )
 }
