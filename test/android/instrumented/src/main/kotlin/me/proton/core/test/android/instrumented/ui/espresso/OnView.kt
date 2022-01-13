@@ -323,7 +323,7 @@ class OnView : ConditionWatcher {
     }
 
     fun scrollTo() = apply {
-        viewInteraction().perform(ViewActions.scrollTo())
+        viewInteraction(matches(CoreMatchers.anything())).perform(ViewActions.scrollTo())
     }
 
     /** Assertion wrappers **/
