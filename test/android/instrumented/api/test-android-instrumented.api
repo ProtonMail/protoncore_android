@@ -161,7 +161,7 @@ public final class me/proton/core/test/android/instrumented/ui/compose/OnAllNode
 	public final fun onAncestor (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun onChild (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun onFirst ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
-	public final fun onLast (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
+	public final fun onLast ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun onSibling (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun printToLog (Ljava/lang/String;I)Lme/proton/core/test/android/instrumented/ui/compose/OnAllNodes;
 	public final fun printToString (I)Lme/proton/core/test/android/instrumented/ui/compose/OnAllNodes;
@@ -192,8 +192,7 @@ public final class me/proton/core/test/android/instrumented/ui/compose/OnNode : 
 	public final fun checkProgressBar (Landroidx/compose/ui/semantics/ProgressBarRangeInfo;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun checkSelectable ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun checkSelected ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
-	public final fun checkTextEquals (Ljava/lang/String;Z)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
-	public static synthetic fun checkTextEquals$default (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
+	public final fun checkTextEquals (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun clearText ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun click ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun nodeInteraction ()Landroidx/compose/ui/test/SemanticsNodeInteraction;
