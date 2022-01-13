@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New crypto-validator module to check the integrity of the KeyStoreCrypto used. See [the README.md](crypto-validator/README.md) for more info.
+- Label modules (Dagger, Data, Domain).
+
+### New Migration
+
+- Please apply changes as follow to your AppDatabase:
+  - Add ```LabelEntity``` to your AppDatabase ```entities```.
+  - Extends ```LabelDatabase```.
+  - Add a migration to your AppDatabase (```addMigration```):
+```kotlin
+val MIGRATION_X_Y = object : Migration(X, Y) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+       LabelDatabase.MIGRATION_0.migrate(database)
+    }
+}
+```
 
 ### Changes
 

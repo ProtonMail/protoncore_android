@@ -47,6 +47,8 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.entity.KeySaltEntity
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
+import me.proton.core.label.data.local.LabelDatabase
+import me.proton.core.label.data.local.LabelEntity
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.entity.MailSettingsEntity
 import me.proton.core.user.data.db.AddressDatabase
@@ -95,6 +97,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         ContactEmailLabelEntity::class,
         // event-manager
         EventMetadataEntity::class,
+        // label
+        LabelEntity::class,
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -121,11 +125,12 @@ abstract class AccountManagerDatabase :
     UserSettingsDatabase,
     OrganizationDatabase,
     ContactDatabase,
-    EventMetadataDatabase {
+    EventMetadataDatabase,
+    LabelDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 12
+        const val version = 13
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -138,7 +143,8 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_8_9,
             AccountManagerDatabaseMigrations.MIGRATION_9_10,
             AccountManagerDatabaseMigrations.MIGRATION_10_11,
-            AccountManagerDatabaseMigrations.MIGRATION_11_12
+            AccountManagerDatabaseMigrations.MIGRATION_11_12,
+            AccountManagerDatabaseMigrations.MIGRATION_12_13,
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =

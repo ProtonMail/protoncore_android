@@ -96,6 +96,12 @@ object Module {
     const val keyDomain = "$key:key-domain"
     const val keyData = "$key:key-data"
 
+    // Label
+    const val label = ":label"
+    const val labelDomain = "$label:label-domain"
+    const val labelData = "$label:label-data"
+    const val labelDagger = "$label:label-dagger"
+
     // Contact
     const val contact = ":contact"
     const val contactDomain = "$contact:contact-domain"

@@ -81,6 +81,10 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:key|
 |me.proton.core:key-data|
 |me.proton.core:key-domain|
+|me.proton.core:label|
+|me.proton.core:label-dagger|
+|me.proton.core:label-data|
+|me.proton.core:label-domain|
 |me.proton.core:mail-message|
 |me.proton.core:mail-message-data|
 |me.proton.core:mail-message-domain|

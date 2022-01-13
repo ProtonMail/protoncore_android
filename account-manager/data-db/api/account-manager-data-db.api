@@ -77,7 +77,7 @@ public final class me/proton/core/account/data/db/SessionDetailsDao_Impl : me/pr
 	public fun update ([Lme/proton/core/account/data/entity/SessionDetailsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract class me/proton/core/accountmanager/data/db/AccountManagerDatabase : me/proton/core/data/room/db/BaseDatabase, me/proton/core/account/data/db/AccountDatabase, me/proton/core/contact/data/local/db/ContactDatabase, me/proton/core/eventmanager/data/db/EventMetadataDatabase, me/proton/core/humanverification/data/db/HumanVerificationDatabase, me/proton/core/key/data/db/KeySaltDatabase, me/proton/core/key/data/db/PublicAddressDatabase, me/proton/core/mailsettings/data/db/MailSettingsDatabase, me/proton/core/user/data/db/AddressDatabase, me/proton/core/user/data/db/UserDatabase, me/proton/core/usersettings/data/db/OrganizationDatabase, me/proton/core/usersettings/data/db/UserSettingsDatabase {
+public abstract class me/proton/core/accountmanager/data/db/AccountManagerDatabase : me/proton/core/data/room/db/BaseDatabase, me/proton/core/account/data/db/AccountDatabase, me/proton/core/contact/data/local/db/ContactDatabase, me/proton/core/eventmanager/data/db/EventMetadataDatabase, me/proton/core/humanverification/data/db/HumanVerificationDatabase, me/proton/core/key/data/db/KeySaltDatabase, me/proton/core/key/data/db/PublicAddressDatabase, me/proton/core/label/data/local/LabelDatabase, me/proton/core/mailsettings/data/db/MailSettingsDatabase, me/proton/core/user/data/db/AddressDatabase, me/proton/core/user/data/db/UserDatabase, me/proton/core/usersettings/data/db/OrganizationDatabase, me/proton/core/usersettings/data/db/UserSettingsDatabase {
 	public static final field Companion Lme/proton/core/accountmanager/data/db/AccountManagerDatabase$Companion;
 	public static final field name Ljava/lang/String;
 	public static final field version I
@@ -94,6 +94,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabaseM
 	public static final field INSTANCE Lme/proton/core/accountmanager/data/db/AccountManagerDatabaseMigrations;
 	public final fun getMIGRATION_10_11 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_11_12 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_12_13 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_1_2 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_2_3 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_3_4 ()Landroidx/room/migration/Migration;
@@ -120,6 +121,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabase_
 	public fun eventMetadataDao ()Lme/proton/core/eventmanager/data/db/dao/EventMetadataDao;
 	public fun humanVerificationDetailsDao ()Lme/proton/core/humanverification/data/db/HumanVerificationDetailsDao;
 	public fun keySaltDao ()Lme/proton/core/key/data/db/KeySaltDao;
+	public fun labelDao ()Lme/proton/core/label/data/local/LabelDao;
 	public fun mailSettingsDao ()Lme/proton/core/mailsettings/data/db/dao/MailSettingsDao;
 	public fun organizationDao ()Lme/proton/core/usersettings/data/db/dao/OrganizationDao;
 	public fun organizationKeysDao ()Lme/proton/core/usersettings/data/db/dao/OrganizationKeysDao;
@@ -306,6 +308,23 @@ public final class me/proton/core/key/data/db/PublicAddressWithKeysDao_Impl : me
 	public fun insertOrUpdate ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/label/data/local/LabelDao_Impl : me/proton/core/label/data/local/LabelDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/label/data/local/LabelEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll (Lme/proton/core/domain/entity/UserId;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/label/data/local/LabelEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/label/data/local/LabelEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeAll (Lme/proton/core/domain/entity/UserId;I)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/label/data/local/LabelEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/mailsettings/data/db/dao/MailSettingsDao_Impl : me/proton/core/mailsettings/data/db/dao/MailSettingsDao {
