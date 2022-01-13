@@ -153,13 +153,28 @@
                 android:layout_marginTop="@dimen/default_top_margin"
                 android:text="Send Direct" />
 
-            <me.proton.core.presentation.ui.view.ProtonProgressButton
-                android:id="@+id/contacts"
+            <LinearLayout
+                android:id="@+id/contacts_labels_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_top_margin"
-                android:layout_weight="1"
-                android:text="@string/contacts" />
+                android:orientation="horizontal">
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/contacts"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/contacts" />
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/labels"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/default_top_margin"
+                    android:layout_weight="1"
+                    android:text="Labels" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/plans_layout"
@@ -256,17 +271,17 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/bugReport"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Bug Report" />
+                    android:text="Asnyc Bug Report" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/bugReportWaiting"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
-                    android:text="Bug Report (Waiting)" />
+                    android:text="Sync Bug Report" />
             </LinearLayout>
 
             <LinearLayout
