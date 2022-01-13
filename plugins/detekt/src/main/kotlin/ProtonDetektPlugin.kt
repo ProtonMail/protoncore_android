@@ -104,7 +104,10 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration, filter
         return
     }
 
-    subprojects.filter(filter).forEach { sub -> sub.apply(plugin = "io.gitlab.arturbosch.detekt") }
+    subprojects.filter(filter).forEach { sub ->
+        sub.repositories.mavenCentral()
+        sub.apply(plugin = "io.gitlab.arturbosch.detekt")
+    }
 
     afterEvaluate {
 
