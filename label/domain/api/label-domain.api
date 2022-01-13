@@ -1,0 +1,147 @@
+public final class me/proton/core/label/domain/entity/Label {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Lme/proton/core/label/domain/entity/LabelType;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component10 ()Ljava/lang/Boolean;
+	public final fun component11 ()Ljava/lang/Boolean;
+	public final fun component2 ()Lme/proton/core/label/domain/entity/LabelId;
+	public final fun component3 ()Lme/proton/core/label/domain/entity/LabelId;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lme/proton/core/label/domain/entity/LabelType;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()I
+	public final fun component9 ()Ljava/lang/Boolean;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Lme/proton/core/label/domain/entity/LabelType;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/label/domain/entity/Label;
+	public static synthetic fun copy$default (Lme/proton/core/label/domain/entity/Label;Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Lme/proton/core/label/domain/entity/LabelType;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/label/domain/entity/Label;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getLabelId ()Lme/proton/core/label/domain/entity/LabelId;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOrder ()I
+	public final fun getParentId ()Lme/proton/core/label/domain/entity/LabelId;
+	public final fun getPath ()Ljava/lang/String;
+	public final fun getType ()Lme/proton/core/label/domain/entity/LabelType;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public final fun isExpanded ()Ljava/lang/Boolean;
+	public final fun isNotified ()Ljava/lang/Boolean;
+	public final fun isSticky ()Ljava/lang/Boolean;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/label/domain/entity/LabelId {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/label/domain/entity/LabelId;
+	public static synthetic fun copy$default (Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/label/domain/entity/LabelId;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/label/domain/entity/LabelKt {
+	public static final fun toUpdateLabel (Lme/proton/core/label/domain/entity/Label;)Lme/proton/core/label/domain/entity/UpdateLabel;
+}
+
+public final class me/proton/core/label/domain/entity/LabelType : java/lang/Enum {
+	public static final field Companion Lme/proton/core/label/domain/entity/LabelType$Companion;
+	public static final field ContactGroup Lme/proton/core/label/domain/entity/LabelType;
+	public static final field MessageFolder Lme/proton/core/label/domain/entity/LabelType;
+	public static final field MessageLabel Lme/proton/core/label/domain/entity/LabelType;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/label/domain/entity/LabelType;
+	public static fun values ()[Lme/proton/core/label/domain/entity/LabelType;
+}
+
+public final class me/proton/core/label/domain/entity/LabelType$Companion {
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/label/domain/entity/NewLabel {
+	public fun <init> (Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Lme/proton/core/label/domain/entity/LabelType;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public final fun component1 ()Lme/proton/core/label/domain/entity/LabelId;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lme/proton/core/label/domain/entity/LabelType;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/Boolean;
+	public final fun component6 ()Ljava/lang/Boolean;
+	public final fun component7 ()Ljava/lang/Boolean;
+	public final fun copy (Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Lme/proton/core/label/domain/entity/LabelType;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/label/domain/entity/NewLabel;
+	public static synthetic fun copy$default (Lme/proton/core/label/domain/entity/NewLabel;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Lme/proton/core/label/domain/entity/LabelType;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/label/domain/entity/NewLabel;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getParentId ()Lme/proton/core/label/domain/entity/LabelId;
+	public final fun getType ()Lme/proton/core/label/domain/entity/LabelType;
+	public fun hashCode ()I
+	public final fun isExpanded ()Ljava/lang/Boolean;
+	public final fun isNotified ()Ljava/lang/Boolean;
+	public final fun isSticky ()Ljava/lang/Boolean;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/label/domain/entity/UpdateLabel {
+	public fun <init> (Lme/proton/core/label/domain/entity/LabelId;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public final fun component1 ()Lme/proton/core/label/domain/entity/LabelId;
+	public final fun component2 ()Lme/proton/core/label/domain/entity/LabelId;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/Boolean;
+	public final fun component6 ()Ljava/lang/Boolean;
+	public final fun component7 ()Ljava/lang/Boolean;
+	public final fun copy (Lme/proton/core/label/domain/entity/LabelId;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/label/domain/entity/UpdateLabel;
+	public static synthetic fun copy$default (Lme/proton/core/label/domain/entity/UpdateLabel;Lme/proton/core/label/domain/entity/LabelId;Lme/proton/core/label/domain/entity/LabelId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/label/domain/entity/UpdateLabel;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getLabelId ()Lme/proton/core/label/domain/entity/LabelId;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getParentId ()Lme/proton/core/label/domain/entity/LabelId;
+	public fun hashCode ()I
+	public final fun isExpanded ()Ljava/lang/Boolean;
+	public final fun isNotified ()Ljava/lang/Boolean;
+	public final fun isSticky ()Ljava/lang/Boolean;
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/label/domain/repository/LabelLocalDataSource {
+	public abstract fun deleteAllLabels (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteLabel (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun upsertLabel (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/label/domain/repository/LabelRemoteDataSource {
+	public abstract fun createLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/NewLabel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/UpdateLabel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/label/domain/repository/LabelRepository {
+	public abstract fun createLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/NewLabel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun markAsStale (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Z)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun updateLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/Label;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/label/domain/repository/LabelRepository$DefaultImpls {
+	public static synthetic fun getLabel$default (Lme/proton/core/label/domain/repository/LabelRepository;Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun getLabels$default (Lme/proton/core/label/domain/repository/LabelRepository;Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun observeLabels$default (Lme/proton/core/label/domain/repository/LabelRepository;Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/label/domain/usecase/DeleteLabelRemote {
+	public fun <init> (Lme/proton/core/label/domain/repository/LabelRemoteDataSource;Lme/proton/core/eventmanager/domain/EventManagerProvider;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/label/domain/usecase/UpdateLabelRemote {
+	public fun <init> (Lme/proton/core/label/domain/repository/LabelRemoteDataSource;Lme/proton/core/eventmanager/domain/EventManagerProvider;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/UpdateLabel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

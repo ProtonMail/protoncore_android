@@ -58,6 +58,8 @@ dependencies {
         project(Module.userDomain),
         project(Module.keyData),
         project(Module.keyDomain),
+        project(Module.labelData),
+        project(Module.labelDomain),
         project(Module.humanVerificationData),
         project(Module.humanVerificationDomain),
         project(Module.mailSettingsData),

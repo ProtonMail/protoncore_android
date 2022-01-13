@@ -130,6 +130,7 @@ dependencies {
         project(Module.gopenpgp),
         project(Module.humanVerification),
         project(Module.key),
+        project(Module.label),
         project(Module.user),
         project(Module.mailMessage),
         project(Module.mailSettings),

@@ -1,0 +1,456 @@
+public class hilt_aggregated_deps/_me_proton_core_label_data_remote_worker_DeleteLabelWorker_HiltModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_label_data_remote_worker_UpdateLabelWorker_HiltModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/label/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/label/data/LabelEvent {
+	public static final field Companion Lme/proton/core/label/data/LabelEvent$Companion;
+	public synthetic fun <init> (ILjava/lang/String;ILme/proton/core/label/data/remote/resource/LabelResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;ILme/proton/core/label/data/remote/resource/LabelResource;)V
+	public synthetic fun <init> (Ljava/lang/String;ILme/proton/core/label/data/remote/resource/LabelResource;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()Lme/proton/core/label/data/remote/resource/LabelResource;
+	public final fun copy (Ljava/lang/String;ILme/proton/core/label/data/remote/resource/LabelResource;)Lme/proton/core/label/data/LabelEvent;
+	public static synthetic fun copy$default (Lme/proton/core/label/data/LabelEvent;Ljava/lang/String;ILme/proton/core/label/data/remote/resource/LabelResource;ILjava/lang/Object;)Lme/proton/core/label/data/LabelEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAction ()I
+	public final fun getId ()Ljava/lang/String;
+	public final fun getLabel ()Lme/proton/core/label/data/remote/resource/LabelResource;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/label/data/LabelEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/label/data/LabelEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/label/data/LabelEvent$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/label/data/LabelEvent;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/label/data/LabelEvent;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/LabelEvent$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public class me/proton/core/label/data/LabelEventListener : me/proton/core/eventmanager/domain/EventListener {
+	public fun <init> (Lme/proton/core/label/data/local/LabelDatabase;Lme/proton/core/label/domain/repository/LabelLocalDataSource;Lme/proton/core/label/domain/repository/LabelRepository;)V
+	public fun deserializeEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOrder ()I
+	public fun getType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
+	public fun inTransaction (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onCreate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onDelete (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResetAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onUpdate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/label/data/LabelEventListener_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/label/data/LabelEventListener_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/label/data/LabelEventListener;
+	public static fun newInstance (Lme/proton/core/label/data/local/LabelDatabase;Lme/proton/core/label/domain/repository/LabelLocalDataSource;Lme/proton/core/label/domain/repository/LabelRepository;)Lme/proton/core/label/data/LabelEventListener;
+}
+
+public final class me/proton/core/label/data/LabelsEvents {
+	public static final field Companion Lme/proton/core/label/data/LabelsEvents$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/label/data/LabelsEvents;
+	public static synthetic fun copy$default (Lme/proton/core/label/data/LabelsEvents;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/label/data/LabelsEvents;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLabels ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/label/data/LabelsEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/label/data/LabelsEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/label/data/LabelsEvents$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/label/data/LabelsEvents;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/label/data/LabelsEvents;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/LabelsEvents$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract class me/proton/core/label/data/local/LabelDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun delete (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAll (Lme/proton/core/domain/entity/UserId;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeAll (Lme/proton/core/domain/entity/UserId;I)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract interface class me/proton/core/label/data/local/LabelDatabase : me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/label/data/local/LabelDatabase$Companion;
+	public abstract fun labelDao ()Lme/proton/core/label/data/local/LabelDao;
+}
+
+public final class me/proton/core/label/data/local/LabelDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public final class me/proton/core/label/data/local/LabelEntity {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component10 ()Ljava/lang/Boolean;
+	public final fun component11 ()Ljava/lang/Boolean;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()I
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()I
+	public final fun component9 ()Ljava/lang/Boolean;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/label/data/local/LabelEntity;
+	public static synthetic fun copy$default (Lme/proton/core/label/data/local/LabelEntity;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/label/data/local/LabelEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getLabelId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOrder ()I
+	public final fun getParentId ()Ljava/lang/String;
+	public final fun getPath ()Ljava/lang/String;
+	public final fun getType ()I
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public final fun isExpanded ()Ljava/lang/Boolean;
+	public final fun isNotified ()Ljava/lang/Boolean;
+	public final fun isSticky ()Ljava/lang/Boolean;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/label/data/local/LabelLocalDataSourceImpl : me/proton/core/label/domain/repository/LabelLocalDataSource {
+	public fun <init> (Lme/proton/core/label/data/local/LabelDatabase;)V
+	public fun deleteAllLabels (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteLabel (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;)Lkotlinx/coroutines/flow/Flow;
+	public fun upsertLabel (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/label/data/local/LabelLocalDataSourceImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/label/data/local/LabelLocalDataSourceImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/label/data/local/LabelLocalDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/label/data/local/LabelDatabase;)Lme/proton/core/label/data/local/LabelLocalDataSourceImpl;
+}
+
+public final class me/proton/core/label/data/local/LabelMapperKt {
+	public static final fun toEntity (Lme/proton/core/label/domain/entity/Label;)Lme/proton/core/label/data/local/LabelEntity;
+	public static final fun toLabel (Lme/proton/core/label/data/local/LabelEntity;)Lme/proton/core/label/domain/entity/Label;
+}
+
+public abstract interface class me/proton/core/label/data/remote/LabelApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
+	public abstract fun createLabel (Lme/proton/core/label/data/remote/request/CreateLabelRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteLabel (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getLabels (Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateLabel (Ljava/lang/String;Lme/proton/core/label/data/remote/request/UpdateLabelRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/label/data/remote/LabelRemoteDataSourceImpl : me/proton/core/label/domain/repository/LabelRemoteDataSource {
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
+	public fun createLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/NewLabel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/UpdateLabel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/label/data/remote/LabelRemoteDataSourceImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/label/data/remote/LabelRemoteDataSourceImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/label/data/remote/LabelRemoteDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/label/data/remote/LabelRemoteDataSourceImpl;
+}
+
+public final class me/proton/core/label/data/remote/request/CreateLabelRequest {
+	public static final field Companion Lme/proton/core/label/data/remote/request/CreateLabelRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()I
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun component6 ()Ljava/lang/Integer;
+	public final fun component7 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)Lme/proton/core/label/data/remote/request/CreateLabelRequest;
+	public static synthetic fun copy$default (Lme/proton/core/label/data/remote/request/CreateLabelRequest;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/label/data/remote/request/CreateLabelRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getExpanded ()Ljava/lang/Integer;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getNotify ()Ljava/lang/Integer;
+	public final fun getParentId ()Ljava/lang/String;
+	public final fun getSticky ()Ljava/lang/Integer;
+	public final fun getType ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/label/data/remote/request/CreateLabelRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/label/data/remote/request/CreateLabelRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/label/data/remote/request/CreateLabelRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/label/data/remote/request/CreateLabelRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/label/data/remote/request/CreateLabelRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/remote/request/CreateLabelRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/remote/request/CreateLabelRequestKt {
+	public static final fun toCreateLabelRequest (Lme/proton/core/label/domain/entity/NewLabel;)Lme/proton/core/label/data/remote/request/CreateLabelRequest;
+}
+
+public final class me/proton/core/label/data/remote/request/UpdateLabelRequest {
+	public static final field Companion Lme/proton/core/label/data/remote/request/UpdateLabelRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/Integer;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun component6 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)Lme/proton/core/label/data/remote/request/UpdateLabelRequest;
+	public static synthetic fun copy$default (Lme/proton/core/label/data/remote/request/UpdateLabelRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/label/data/remote/request/UpdateLabelRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getExpanded ()Ljava/lang/Integer;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getNotify ()Ljava/lang/Integer;
+	public final fun getParentId ()Ljava/lang/String;
+	public final fun getSticky ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/label/data/remote/request/UpdateLabelRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/label/data/remote/request/UpdateLabelRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/label/data/remote/request/UpdateLabelRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/label/data/remote/request/UpdateLabelRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/label/data/remote/request/UpdateLabelRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/remote/request/UpdateLabelRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/remote/request/UpdateLabelRequestKt {
+	public static final fun toUpdateLabelRequest (Lme/proton/core/label/domain/entity/UpdateLabel;)Lme/proton/core/label/data/remote/request/UpdateLabelRequest;
+}
+
+public final class me/proton/core/label/data/remote/resource/LabelResource {
+	public static final field Companion Lme/proton/core/label/data/remote/resource/LabelResource$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;ILjava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;ILjava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;ILjava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/Integer;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()I
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()I
+	public final fun component8 ()Ljava/lang/Integer;
+	public final fun component9 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;ILjava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)Lme/proton/core/label/data/remote/resource/LabelResource;
+	public static synthetic fun copy$default (Lme/proton/core/label/data/remote/resource/LabelResource;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;ILjava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/label/data/remote/resource/LabelResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getExpanded ()Ljava/lang/Integer;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getNotify ()Ljava/lang/Integer;
+	public final fun getOrder ()I
+	public final fun getParentId ()Ljava/lang/String;
+	public final fun getPath ()Ljava/lang/String;
+	public final fun getSticky ()Ljava/lang/Integer;
+	public final fun getType ()I
+	public fun hashCode ()I
+	public final fun toLabel (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/label/domain/entity/Label;
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/label/data/remote/resource/LabelResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/label/data/remote/resource/LabelResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/label/data/remote/resource/LabelResource$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/label/data/remote/resource/LabelResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/label/data/remote/resource/LabelResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/remote/resource/LabelResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/remote/response/GetLabelsResponse {
+	public static final field Companion Lme/proton/core/label/data/remote/response/GetLabelsResponse$Companion;
+	public synthetic fun <init> (IILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILjava/util/List;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (ILjava/util/List;)Lme/proton/core/label/data/remote/response/GetLabelsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/label/data/remote/response/GetLabelsResponse;ILjava/util/List;ILjava/lang/Object;)Lme/proton/core/label/data/remote/response/GetLabelsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
+	public final fun getLabels ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/label/data/remote/response/GetLabelsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/label/data/remote/response/GetLabelsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/label/data/remote/response/GetLabelsResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/label/data/remote/response/GetLabelsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/label/data/remote/response/GetLabelsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/remote/response/GetLabelsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/remote/response/SingleLabelResponse {
+	public static final field Companion Lme/proton/core/label/data/remote/response/SingleLabelResponse$Companion;
+	public synthetic fun <init> (IILme/proton/core/label/data/remote/resource/LabelResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILme/proton/core/label/data/remote/resource/LabelResource;)V
+	public final fun component1 ()I
+	public final fun component2 ()Lme/proton/core/label/data/remote/resource/LabelResource;
+	public final fun copy (ILme/proton/core/label/data/remote/resource/LabelResource;)Lme/proton/core/label/data/remote/response/SingleLabelResponse;
+	public static synthetic fun copy$default (Lme/proton/core/label/data/remote/response/SingleLabelResponse;ILme/proton/core/label/data/remote/resource/LabelResource;ILjava/lang/Object;)Lme/proton/core/label/data/remote/response/SingleLabelResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
+	public final fun getLabel ()Lme/proton/core/label/data/remote/resource/LabelResource;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/label/data/remote/response/SingleLabelResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/label/data/remote/response/SingleLabelResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/label/data/remote/response/SingleLabelResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/label/data/remote/response/SingleLabelResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/label/data/remote/response/SingleLabelResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/label/data/remote/response/SingleLabelResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class me/proton/core/label/data/remote/worker/DeleteLabelWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/label/data/remote/worker/DeleteLabelWorker_AssistedFactory_Impl : me/proton/core/label/data/remote/worker/DeleteLabelWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/label/data/remote/worker/DeleteLabelWorker;
+	public static fun create (Lme/proton/core/label/data/remote/worker/DeleteLabelWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/label/data/remote/worker/DeleteLabelWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/label/data/remote/worker/DeleteLabelWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/label/data/remote/worker/DeleteLabelWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/label/domain/repository/LabelRepository;Lme/proton/core/label/domain/usecase/DeleteLabelRemote;)Lme/proton/core/label/data/remote/worker/DeleteLabelWorker;
+}
+
+public abstract interface class me/proton/core/label/data/remote/worker/DeleteLabelWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/label/data/remote/worker/DeleteLabelWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
+public abstract interface class me/proton/core/label/data/remote/worker/UpdateLabelWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/label/data/remote/worker/UpdateLabelWorker_AssistedFactory_Impl : me/proton/core/label/data/remote/worker/UpdateLabelWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/label/data/remote/worker/UpdateLabelWorker;
+	public static fun create (Lme/proton/core/label/data/remote/worker/UpdateLabelWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/label/data/remote/worker/UpdateLabelWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/label/data/remote/worker/UpdateLabelWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/label/data/remote/worker/UpdateLabelWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/label/domain/repository/LabelRepository;Lme/proton/core/label/domain/usecase/UpdateLabelRemote;)Lme/proton/core/label/data/remote/worker/UpdateLabelWorker;
+}
+
+public abstract interface class me/proton/core/label/data/remote/worker/UpdateLabelWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/label/data/remote/worker/UpdateLabelWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
+public final class me/proton/core/label/data/repository/LabelRepositoryImpl : me/proton/core/label/domain/repository/LabelRepository {
+	public fun <init> (Lme/proton/core/label/domain/repository/LabelRemoteDataSource;Lme/proton/core/label/domain/repository/LabelLocalDataSource;Landroidx/work/WorkManager;)V
+	public fun createLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/NewLabel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun markAsStale (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun updateLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/Label;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/label/data/repository/LabelRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/label/data/repository/LabelRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/label/data/repository/LabelRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/label/domain/repository/LabelRemoteDataSource;Lme/proton/core/label/domain/repository/LabelLocalDataSource;Landroidx/work/WorkManager;)Lme/proton/core/label/data/repository/LabelRepositoryImpl;
+}
+
