@@ -16,8 +16,15 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:color="?proton_interaction_weak_pressed" />
-    <item android:state_enabled="false" android:color="?proton_interaction_weak_disabled" />
-    <item android:color="?proton_interaction_weak" />
-</selector>
+<resources>
+    <!-- On Android API up to 27 the RippleDrawable halves the color alpha.
+         mtrl_low_ripple_*_alpha and mtrl_high_ripple_*_alpha are defined to work around this
+         and are used throughout the Material Components library.
+         There is one exception: TabLayout that uses RippleUtils.convertToRippleDrawableColor and
+         multiplies alpha by 2, also on API28+ leading to ripples that are too dark.
+
+         ripple_tab_alpha is defined to work around this.
+
+         https://github.com/material-components/material-components-android/issues/1109 -->
+    <item format="float" name="ripple_tab_alpha" type="dimen">0.06</item>
+</resources>

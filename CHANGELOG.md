@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Country keep_flags.xml (keep flags resources from shrink process).
 - Fixed PlansOrchestrator checkRegistered message.
 - Added ProtonSidebarSubscriptionItem.
+- Ripple colors are updated to match the design spec.
 
 ### Security Fixes
 

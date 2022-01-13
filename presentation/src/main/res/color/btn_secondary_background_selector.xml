@@ -15,19 +15,8 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
-<resources>
 
-    <style name="Proton.ThemeOverlay.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="alertDialogStyle">@style/Proton.MaterialAlertDialog</item>
-        <item name="colorControlHighlight">@color/ripple_norm_workaround</item>
-    </style>
-
-    <style name="Proton.MaterialAlertDialog" parent="MaterialAlertDialog.MaterialComponents">
-        <item name="shapeAppearance">@style/Proton.ShapeAppearance.MediumComponent</item>
-    </style>
-
-    <style name="Proton.ShapeAppearance.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerSize">8dp</item>
-    </style>
-
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:color="?proton_interaction_weak_disabled" />
+    <item android:color="?proton_interaction_weak" />
+</selector>
