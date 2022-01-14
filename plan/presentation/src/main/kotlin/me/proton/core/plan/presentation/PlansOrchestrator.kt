@@ -19,6 +19,7 @@
 package me.proton.core.plan.presentation
 
 import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.entity.PlanInput
@@ -37,9 +38,9 @@ class PlansOrchestrator @Inject constructor() {
     }
 
     private fun registerPlanResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<PlanInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartPlanChooser()
         ) {
             onUpgradeResultListener?.invoke(it)
@@ -50,8 +51,8 @@ class PlansOrchestrator @Inject constructor() {
      *
      * Note: This function have to be called [ComponentActivity.onCreate]] before [ComponentActivity.onResume].
      */
-    fun register(context: ComponentActivity) {
-        plansLauncher = registerPlanResult(context)
+    fun register(caller: ActivityResultCaller) {
+        plansLauncher = registerPlanResult(caller)
     }
 
     /**

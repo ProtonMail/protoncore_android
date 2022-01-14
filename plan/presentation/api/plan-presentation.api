@@ -35,7 +35,7 @@ public final class me/proton/core/plan/presentation/BuildConfig {
 
 public final class me/proton/core/plan/presentation/PlansOrchestrator {
 	public fun <init> ()V
-	public final fun register (Landroidx/activity/ComponentActivity;)V
+	public final fun register (Landroidx/activity/result/ActivityResultCaller;)V
 	public final fun setOnUpgradeResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun showCurrentPlanWorkflow (Lme/proton/core/domain/entity/UserId;)V
 	public final fun startSignUpPlanChooserWorkflow ()V
