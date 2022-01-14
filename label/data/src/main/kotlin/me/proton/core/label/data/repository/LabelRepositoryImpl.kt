@@ -18,6 +18,7 @@
 
 package me.proton.core.label.data.repository
 
+import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
@@ -97,11 +98,27 @@ class LabelRepositoryImpl @Inject constructor(
 
     override suspend fun updateLabel(userId: UserId, label: Label) {
         localDataSource.upsertLabel(listOf(label))
-        workManager.enqueue(UpdateLabelWorker.getRequest(userId, label.type, label.toUpdateLabel()))
+        // Replace any existing [Update|Delete]LabelWorker.
+        workManager.enqueueUniqueWork(
+            getUniqueWorkName(userId, label.labelId),
+            ExistingWorkPolicy.REPLACE,
+            UpdateLabelWorker.getRequest(userId, label.type, label.toUpdateLabel())
+        )
     }
 
     override suspend fun deleteLabel(userId: UserId, type: LabelType, labelId: LabelId) {
         localDataSource.deleteLabel(userId, listOf(labelId))
-        workManager.enqueue(DeleteLabelWorker.getRequest(userId, type, labelId))
+        // Replace any existing [Update|Delete]LabelWorker.
+        workManager.enqueueUniqueWork(
+            getUniqueWorkName(userId, labelId),
+            ExistingWorkPolicy.REPLACE,
+            DeleteLabelWorker.getRequest(userId, type, labelId),
+        )
+    }
+
+    private companion object {
+        // Currently for: [Update|Delete]LabelWorker (ExistingWorkPolicy.REPLACE).
+        private fun getUniqueWorkName(userId: UserId, labelId: LabelId) =
+            "${LabelRepositoryImpl::class.simpleName}-$userId-$labelId"
     }
 }

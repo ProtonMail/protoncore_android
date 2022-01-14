@@ -24,8 +24,8 @@ import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
@@ -99,7 +99,7 @@ internal class UpdateLabelWorker @AssistedInject constructor(
             )
         }
 
-        fun getRequest(userId: UserId, type: LabelType, label: UpdateLabel): WorkRequest {
+        fun getRequest(userId: UserId, type: LabelType, label: UpdateLabel): OneTimeWorkRequest {
             val inputData = makeInputData(userId, type, label)
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)

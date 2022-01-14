@@ -24,8 +24,8 @@ import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
@@ -76,7 +76,7 @@ internal class DeleteLabelWorker @AssistedInject constructor(
             )
         }
 
-        fun getRequest(userId: UserId, type: LabelType, labelId: LabelId): WorkRequest {
+        fun getRequest(userId: UserId, type: LabelType, labelId: LabelId): OneTimeWorkRequest {
             val inputData = makeInputData(userId, type, labelId)
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
