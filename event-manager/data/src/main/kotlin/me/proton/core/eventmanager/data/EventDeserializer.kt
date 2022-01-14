@@ -43,7 +43,7 @@ internal data class CoreEventDeserializer(
     override val config: EventManagerConfig.Core
 ) : EventDeserializer {
 
-    override val endpoint = "events"
+    override val endpoint = "core/v4/events"
 
     override fun deserializeLatestEventId(response: EventIdResponse): EventId =
         EventId(response.body.deserialize<GetCoreLatestEventIdResponse>().eventId)
