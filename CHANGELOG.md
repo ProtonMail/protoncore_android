@@ -35,6 +35,7 @@ val MIGRATION_X_Y = object : Migration(X, Y) {
 - Added ProtonSidebarSubscriptionItem.
 - Ripple colors are updated to match the design spec.
 - Replace ComponentActivity with ActivityResultCaller in Auth and Plans orchestrator.
+- Changed Events endpoint for Core Entities loop ("core/v4/events", fix label issue).
 
 ### Fixes
 
