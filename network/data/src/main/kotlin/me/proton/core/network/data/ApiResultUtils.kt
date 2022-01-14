@@ -17,6 +17,7 @@
  */
 package me.proton.core.network.data
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.SerializationException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.NetworkManager
@@ -36,18 +37,17 @@ internal suspend fun <Api, T> safeApiCall(
     api: Api,
     block: suspend (Api) -> T
 ): ApiResult<T> {
-    val result = try {
+    val result = runCatching {
         ApiResult.Success(block(api))
-    } catch (e: ProtonErrorException) {
-        parseHttpError(e.response, e.protonData, e)
-    } catch (e: HttpException) {
-        parseHttpError(e.response()!!.raw(), null, e)
-    } catch (e: SerializationException) {
-        ApiResult.Error.Parse(e)
-    } catch (e: CertificateException) {
-        ApiResult.Error.Certificate(e)
-    } catch (e: ApiConnectionException) {
-        e.toApiResult(networkManager)
+    }.getOrElse { e ->
+        when (e) {
+            is CancellationException -> throw e
+            is ProtonErrorException -> parseHttpError(e.response, e.protonData, e)
+            is HttpException -> parseHttpError(e.response()!!.raw(), null, e)
+            is SerializationException -> ApiResult.Error.Parse(e)
+            is CertificateException -> ApiResult.Error.Certificate(e)
+            else -> e.toApiResult(networkManager)
+        }
     }
     if (result is ApiResult.Error) {
         CoreLogger.log(LogTag.API_ERROR, result.toString())
@@ -55,9 +55,10 @@ internal suspend fun <Api, T> safeApiCall(
     return result
 }
 
-private fun ApiConnectionException.toApiResult(networkManager: NetworkManager): ApiResult.Error.Connection {
+private fun Throwable.toApiResult(networkManager: NetworkManager): ApiResult.Error.Connection {
     // handle the exceptions that might indicate that the API is potentially blocked
-    return when (originalException) {
+    return when (this) {
+        is ApiConnectionException -> originalException.toApiResult(networkManager)
         is SSLHandshakeException -> ApiResult.Error.Certificate(this)
         is SSLPeerUnverifiedException -> ApiResult.Error.Certificate(this)
         is SocketTimeoutException -> ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), this)
