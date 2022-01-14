@@ -32,6 +32,7 @@ val MIGRATION_X_Y = object : Migration(X, Y) {
 - Fixed PlansOrchestrator checkRegistered message.
 - Added ProtonSidebarSubscriptionItem.
 - Ripple colors are updated to match the design spec.
+- Replace ComponentActivity with ActivityResultCaller in Auth and Plans orchestrator.
 
 ### Fixes
 

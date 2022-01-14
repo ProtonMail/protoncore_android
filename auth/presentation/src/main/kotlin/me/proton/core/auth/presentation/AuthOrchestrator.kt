@@ -19,6 +19,7 @@
 package me.proton.core.auth.presentation
 
 import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
@@ -99,63 +100,63 @@ class AuthOrchestrator {
     // region private module functions
 
     private fun registerAddAccountResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<AddAccountInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartAddAccount()
         ) {
             onAddAccountResultListener?.invoke(it)
         }
 
     private fun registerLoginResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<LoginInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartLogin()
         ) {
             onLoginResultListener?.invoke(it)
         }
 
     private fun registerTwoPassModeResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<TwoPassModeInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartTwoPassMode()
         ) {
             onTwoPassModeResultListener?.invoke(it)
         }
 
     private fun registerSecondFactorResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<SecondFactorInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartSecondFactor()
         ) {
             onSecondFactorResultListener?.invoke(it)
         }
 
     private fun registerChooseAddressResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<ChooseAddressInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartChooseAddress()
         ) {
             onChooseAddressResultListener?.invoke(it)
         }
 
     private fun registerSignUpResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<SignUpInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartSignup()
         ) {
             onSignUpResultListener?.invoke(it)
         }
 
     private fun registerConfirmPasswordResult(
-        context: ComponentActivity
+        caller: ActivityResultCaller
     ): ActivityResultLauncher<ConfirmPasswordInput> =
-        context.registerForActivityResult(
+        caller.registerForActivityResult(
             StartConfirmPassword()
         ) {
             onConfirmPasswordResultListener?.invoke(it)
@@ -213,14 +214,14 @@ class AuthOrchestrator {
      *
      * Note: This function have to be called [ComponentActivity.onCreate]] before [ComponentActivity.onResume].
      */
-    fun register(context: ComponentActivity) {
-        addAccountWorkflowLauncher = registerAddAccountResult(context)
-        loginWorkflowLauncher = registerLoginResult(context)
-        secondFactorWorkflowLauncher = registerSecondFactorResult(context)
-        twoPassModeWorkflowLauncher = registerTwoPassModeResult(context)
-        chooseAddressLauncher = registerChooseAddressResult(context)
-        signUpWorkflowLauncher = registerSignUpResult(context)
-        confirmPasswordWorkflowLauncher = registerConfirmPasswordResult(context)
+    fun register(caller: ActivityResultCaller) {
+        addAccountWorkflowLauncher = registerAddAccountResult(caller)
+        loginWorkflowLauncher = registerLoginResult(caller)
+        secondFactorWorkflowLauncher = registerSecondFactorResult(caller)
+        twoPassModeWorkflowLauncher = registerTwoPassModeResult(caller)
+        chooseAddressLauncher = registerChooseAddressResult(caller)
+        signUpWorkflowLauncher = registerSignUpResult(caller)
+        confirmPasswordWorkflowLauncher = registerConfirmPasswordResult(caller)
     }
 
     /**
