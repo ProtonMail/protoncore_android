@@ -1,14 +1,15 @@
 [versions]
 androidGradle = "7.0.4"
-arturboschDetektGradle = "1.17.1"
-benManesVersions = "0.39.0"
-daggerHiltAndroid = "2.38.1"
+arturboschDetektGradle = "1.19.0"
+benManesVersions = "0.41.0"
+daggerHiltAndroid = "2.40.5"
 easyGradle = "2.8"
-kotlin = "1.5.31"
-kotlinSerialization = "1.3.1"
+gradleNexusPublish = "1.1.0"
+kotlin = "1.6.10"
+kotlinCoroutines = "1.6.0"
+kotlinSerialization = "1.3.2"
 kotlinBinaryCompatibilityValidator = "0.8.0"
 vanniktechPublish = "0.18.0"
-gradleNexusPublish = "1.1.0"
 
 [plugins]
 benManes-versions-gradle = { id = "com.github.ben-manes.versions", version.ref = "benManesVersions" }
@@ -24,6 +25,6 @@ dagger-hilt-android-gradle = { module = "com.google.dagger:hilt-android-gradle-p
 dokka-gradle = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlin" }
 easyGradle-dsl = { module = "studio.forface.easygradle:dsl", version.ref = "easyGradle" }
 easyGradle-androidDsl = { module = "studio.forface.easygradle:dsl-android", version.ref = "easyGradle" }
-kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 gradleNexus-publish = { module = "io.github.gradle-nexus:publish-plugin", version.ref = "gradleNexusPublish" }
+kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 vanniktech-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktechPublish" }

@@ -25,8 +25,8 @@ internal fun initVersions(libs: VersionCatalog) {
 
     // region Kotlin
     `kotlin version` =                          libs.findVersion("kotlin").get().toString()
-    `coroutines version` =                      "1.5.2"         // Released: Sep 02, 2021
-    `serialization version` =                   "1.2.2"         // Released: Jul 08, 2021
+    `coroutines version` =                      libs.findVersion("kotlinCoroutines").get().toString()
+    `serialization version` =                   libs.findVersion("kotlinSerialization").get().toString()
     // endregion
 
     // region Android
@@ -37,10 +37,10 @@ internal fun initVersions(libs: VersionCatalog) {
     `constraint-layout version` =               "2.1.0"         // Released: Jul 22, 2021
     `espresso version` =                        "3.4.0"         // Released: Jul 04, 2021
     `fragment version` =                        "1.3.6"         // Released: Sep 01, 2021
-    `ktx version` =                             "1.6.0"         // Released: Jun 30, 2021
-    `lifecycle version` =                       "2.4.0-alpha03" // Released: Aug 04, 2021
-    `material version` =                        "1.4.0"         // Released: Jul 02, 2021
-    `android-paging version` =                  "3.0.1"         // Released: Jul 21, 2021
+    `ktx version` =                             "1.7.0"
+    `lifecycle version` =                       "2.4.0"
+    `material version` =                        "1.5.0"
+    `android-paging version` =                  "3.1.0"
     `android-work version` =                    "2.7.1"
     `android-room version` =                    "2.4.1"
 
@@ -49,10 +49,10 @@ internal fun initVersions(libs: VersionCatalog) {
     // endregion
 
     // region Others
-    `dagger version` =                          "2.38.1"        // Released: Jul 27, 2021
-    `hilt-android version` =                    "2.38.1"        // Released: Jul 27, 2021
+    `dagger version` =                          libs.findVersion("daggerHiltAndroid").get().toString()
+    `hilt-android version` =                    libs.findVersion("daggerHiltAndroid").get().toString()
     `hilt-androidx version` =                   "1.0.0"         // Released: May 05, 2021
-    `mockK version` =                           "1.12.0"        // Released: Jan 13, 2021
+    `mockK version` =                           "1.12.2"
     `retrofit version` =                        "2.9.0"         // Released: May 20, 2020
     `retrofit-kotlin-serialization version` =   "0.8.0"         // Released: Oct 09, 2020
     `timber version` =                          "5.0.1"         // Released: Jun 28, 2018
@@ -61,17 +61,17 @@ internal fun initVersions(libs: VersionCatalog) {
 
 // region Android
 const val `android-tools version` =             "30.0.2"        // Updated: Jun, 2020
-const val `compose version` =                   "1.0.5"         // Released: Nov 03, 2021
-const val `hilt-navigation-compose version` =   "1.0.0-beta01"  // Released: Nov 17, 2021
-const val `material3 version` =                 "1.0.0-alpha02" // Released: Dec 01, 2021
-const val `navigation version` =                "2.4.0-beta02"  // Released: Nov 03, 2021
+const val `compose version` =                   "1.2.0-alpha01"
+const val `hilt-navigation-compose version` =   "1.0.0-rc01"
+const val `material3 version` =                 "1.0.0-alpha03"
+const val `navigation version` =                "2.4.0-rc01"
 const val `startup-runtime version` =           "1.1.0"         // Released: Aug 04, 2021
 // endregion
 
 // region Other
 const val `apacheCommon-codec version` =    "1.15"
 const val `bcrypt version` =                "0.9.0"             // Released: Oct 29, 2019
-const val `gotev-cookieStore version` =     "1.3.5"
+const val `gotev-cookieStore version` =     "1.4.0"
 const val `googleTink version` =            "1.6.1"             // Released: Oct 15, 2020
 const val `miniDsn version` =               "1.0.0"             // Released: Jul 18, 2020
 const val `okHttp version` =                "4.9.1"
@@ -89,6 +89,6 @@ const val `ez-vcard_version` =              "0.11.3"
 const val `uiautomator version` =               "2.2.0"         // Released: Oct 25, 2018
 const val `preference version` =                "1.1.1"         // Released: Apr 15, 2020
 const val `json-simple version` =               "1.1.1"         // Released: Mar 21, 2012
-const val `turbine version` =                   "0.6.1"
+const val `turbine version` =                   "0.7.0"
 const val `junit-ktx version` =                 "1.1.3"
 // endregion
