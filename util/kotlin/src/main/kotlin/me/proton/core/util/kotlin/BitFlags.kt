@@ -22,4 +22,4 @@ package me.proton.core.util.kotlin
  * Determines using bitwise operator if the binary representation of this int contains all the bits of the binary
  * representation of [flag].
  */
-inline fun Int.hasFlag(flag: Int): Boolean = flag and this == flag
+fun Int.hasFlag(flag: Int): Boolean = flag and this == flag
