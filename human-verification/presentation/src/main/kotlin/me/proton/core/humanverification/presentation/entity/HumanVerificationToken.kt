@@ -19,7 +19,7 @@
 package me.proton.core.humanverification.presentation.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * @param code The resulting token code

@@ -19,7 +19,7 @@
 package me.proton.core.plan.presentation.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price

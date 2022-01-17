@@ -19,7 +19,7 @@
 package me.proton.core.payment.presentation.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails

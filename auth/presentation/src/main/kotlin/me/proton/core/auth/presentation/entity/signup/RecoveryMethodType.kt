@@ -19,7 +19,8 @@
 package me.proton.core.auth.presentation.entity.signup
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 enum class RecoveryMethodType {
     EMAIL,
@@ -30,6 +31,7 @@ enum class RecoveryMethodType {
 data class RecoveryMethod(
     val type: RecoveryMethodType,
     val destination: String
-): Parcelable {
+) : Parcelable {
+    @IgnoredOnParcel
     val isSet = destination.isNotBlank()
 }

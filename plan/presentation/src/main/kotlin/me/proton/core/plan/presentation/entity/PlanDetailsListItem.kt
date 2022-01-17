@@ -25,7 +25,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.presentation.R
 import me.proton.core.presentation.ui.view.ProtonButton
