@@ -244,7 +244,7 @@ public final class me/proton/core/auth/presentation/alert/PasswordAnd2FADialog$C
 	public final fun invoke (ZZ)Lme/proton/core/auth/presentation/alert/PasswordAnd2FADialog;
 }
 
-public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog : me/proton/core/presentation/ui/ProtonDialogFragment {
+public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog : androidx/fragment/app/DialogFragment {
 	public static final field BUNDLE_CONFIRM_PASS_DATA Ljava/lang/String;
 	public static final field CONFIRM_PASS_SET Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog$Companion;
@@ -261,7 +261,7 @@ public abstract interface class me/proton/core/auth/presentation/alert/confirmpa
 	public abstract fun injectConfirmPasswordDialog (Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog;)V
 }
 
-public abstract class me/proton/core/auth/presentation/alert/confirmpass/Hilt_ConfirmPasswordDialog : me/proton/core/presentation/ui/ProtonDialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+public abstract class me/proton/core/auth/presentation/alert/confirmpass/Hilt_ConfirmPasswordDialog : androidx/fragment/app/DialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;

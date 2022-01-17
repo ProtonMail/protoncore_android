@@ -26,13 +26,10 @@ import androidx.fragment.app.DialogFragment
 
 /**
  * Base Proton Fragment from which all project fragments should extend.
- *
- * @author Dino Kadrikj.
  */
 abstract class ProtonDialogFragment : DialogFragment {
-    constructor(): super()
-    constructor(@LayoutRes contentLayoutId: Int): super(contentLayoutId)
-
+    constructor() : super()
+    constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId)
 
     /**
      * Provide fragment theme.

@@ -18,13 +18,16 @@
 
 package me.proton.core.auth.presentation.alert.confirmpass
 
+
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.os.bundleOf
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -39,19 +42,17 @@ import me.proton.core.auth.presentation.viewmodel.ConfirmPasswordDialogViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
-import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.ProtectScreenConfiguration
 import me.proton.core.presentation.utils.ScreenContentProtector
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
-import java.lang.IllegalArgumentException
 
 /**
  * This dialog handles only [Scope.PASSWORD] or [Scope.LOCKED]. Any other scope will be ignored.
  */
 @AndroidEntryPoint
-class ConfirmPasswordDialog : ProtonDialogFragment() {
+class ConfirmPasswordDialog : DialogFragment() {
 
     private val viewModel by viewModels<ConfirmPasswordDialogViewModel>()
 
@@ -80,18 +81,19 @@ class ConfirmPasswordDialog : ProtonDialogFragment() {
         UserId(input.userId)
     }
 
-    override fun onBackPressed() {
-        setResultAndDismiss(null)
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
-
         screenProtector.protect(requireActivity())
 
         val binding = DialogConfirmPasswordBinding.inflate(LayoutInflater.from(requireContext()))
         val builder = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.presentation_signin_to_continue)
+            .setOnKeyListener { _, keyCode, keyEvent ->
+                if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.action == KeyEvent.ACTION_UP && !keyEvent.isCanceled) {
+                    setResultAndDismiss(null)
+                    true
+                } else false
+            }
             .setView(binding.root)
         val alertDialog = builder.create()
 
