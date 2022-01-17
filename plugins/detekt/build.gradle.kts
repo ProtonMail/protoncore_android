@@ -45,7 +45,7 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation(libs.arturbosch.detekt)
+    implementation(libs.kotlin.serialization.json)
     implementation(libs.easyGradle.dsl)
 }

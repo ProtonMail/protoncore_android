@@ -34,21 +34,19 @@ plugins {
     id("publish-core-libraries")
     id("me.proton.core.gradle-plugins.tests")
     id("me.proton.core.gradle-plugins.jacoco")
-    id("com.github.ben-manes.versions") version "0.39.0"
-    alias(libs.plugins.kotlinx.binaryCompatibilityValidator)
-    alias(libs.plugins.kotlinGradle)
-    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.benManes.versions.gradle)
+    alias(libs.plugins.kotlin.binaryCompatibilityValidator)
+    alias(libs.plugins.kotlin.gradle)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 buildscript {
     repositories.google()
 
     dependencies {
-        val hiltVersion = "2.38.1" // Jul 27, 2021
-
-        classpath(libs.dokka.pluginGradle)
-        classpath(libs.android.pluginGradle)
-        classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
+        classpath(libs.dokka.gradle)
+        classpath(libs.android.gradle)
+        classpath(libs.dagger.hilt.android.gradle)
     }
 
     // Room 2.3 use a jdbc not compatible with arm so use the updated one to support

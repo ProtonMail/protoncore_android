@@ -39,5 +39,5 @@ java.sourceSets["main"].java {
 }
 
 dependencies {
-    implementation(libs.publish.pluginGradle)
+    implementation(libs.gradleNexus.publish)
 }
