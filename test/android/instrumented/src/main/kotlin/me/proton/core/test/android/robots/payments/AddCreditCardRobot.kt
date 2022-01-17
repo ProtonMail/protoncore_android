@@ -33,25 +33,25 @@ class AddCreditCardRobot : PaymentRobot() {
      * Fills in credit card holder name
      * @return [AddCreditCardRobot]
      */
-    fun ccname(name: String): AddCreditCardRobot = setText(R.id.cardNameInput, name)
+    fun ccname(name: String): AddCreditCardRobot = addText(R.id.cardNameInput, name)
 
     /**
      * Fills in credit card number
      * @return [AddCreditCardRobot]
      */
-    fun ccnumber(number: String): AddCreditCardRobot = setText(R.id.cardNumberInput, number)
+    fun ccnumber(number: String): AddCreditCardRobot = addText(R.id.cardNumberInput, number)
 
     /**
      * Fills in credit card expiry date
      * @return [AddCreditCardRobot]
      */
-    fun expirationDate(date: String): AddCreditCardRobot = setText(R.id.expirationDateInput, date)
+    fun expirationDate(date: String): AddCreditCardRobot = addText(R.id.expirationDateInput, date)
 
     /**
      * Fills in credit card security number
      * @return [AddCreditCardRobot]
      */
-    fun cvc(securityCode: String): AddCreditCardRobot = setText(R.id.cvcInput, securityCode)
+    fun cvc(securityCode: String): AddCreditCardRobot = addText(R.id.cvcInput, securityCode)
 
     /**
      * Fills in credit card holder postal code
@@ -59,7 +59,7 @@ class AddCreditCardRobot : PaymentRobot() {
      */
     fun postalCode(number: String): AddCreditCardRobot {
         view.withId(R.id.scrollContent).swipeUp()
-        return setText(R.id.postalCodeInput, number)
+        return addText(R.id.postalCodeInput, number)
     }
 
     inline fun <reified T> payWithCreditCard(card: Card) =

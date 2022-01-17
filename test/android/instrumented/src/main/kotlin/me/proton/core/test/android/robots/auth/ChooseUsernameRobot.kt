@@ -33,7 +33,7 @@ class ChooseUsernameRobot : CoreRobot() {
      * Sets the value of username input to [name]
      * @return [ChooseUsernameRobot]
      */
-    fun username(name: String): ChooseUsernameRobot = setText(R.id.usernameInput, name)
+    fun username(name: String): ChooseUsernameRobot = addText(R.id.usernameInput, name)
 
     /**
      * Clicks 'next' button

@@ -31,7 +31,7 @@ class CountryRobot : CoreRobot() {
      * Sets the text of a country search field
      * @return [CountryRobot]
      */
-    fun search(text: String): CountryRobot = setText(R.id.search_src_text, text)
+    fun search(text: String): CountryRobot = addText(R.id.search_src_text, text)
 
     /**
      * Clicks a text view element with text [country]
