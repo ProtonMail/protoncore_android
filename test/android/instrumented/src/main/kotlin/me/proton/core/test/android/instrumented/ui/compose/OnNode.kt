@@ -22,10 +22,9 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.semantics.AccessibilityAction
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.SemanticsPropertyKey
-import androidx.compose.ui.test.GestureScope
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
-import androidx.compose.ui.test.SemanticsNodeInteractionCollection
+import androidx.compose.ui.test.TouchInjectionScope
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertContentDescriptionContains
 import androidx.compose.ui.test.assertContentDescriptionEquals
@@ -52,7 +51,6 @@ import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onParent
 import androidx.compose.ui.test.onSibling
 import androidx.compose.ui.test.onSiblings
-import androidx.compose.ui.test.performGesture
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performKeyPress
 import androidx.compose.ui.test.performScrollTo
@@ -60,6 +58,7 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextReplacement
+import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.printToLog
 import me.proton.core.test.android.instrumented.FusionConfig
 
@@ -87,7 +86,7 @@ class OnNode(
 
     fun scrollTo() = apply { toNode { nodeInteraction().performScrollTo() } }
 
-    fun sendGesture(block: GestureScope.() -> Unit) = apply { toNode { nodeInteraction().performGesture { block() } } }
+    fun sendTouchInput(block: TouchInjectionScope.() -> Unit) = apply { toNode { nodeInteraction().performTouchInput(block) } }
 
     fun clearText() = apply { toNode { nodeInteraction().apply { performTextClearance() } } }
 
