@@ -51,11 +51,6 @@ buildscript {
 }
 
 kotlinCompilerArgs(
-    "-XXLanguage:+NewInference",
-    "-Xuse-experimental=kotlin.Experimental",
-    // Enables inline classes
-    "-XXLanguage:+InlineClasses",
-    // Enables experimental Coroutines from coroutines-test artifact, like `runBlockingTest`
     "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
     "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
     "-Xopt-in=kotlin.time.ExperimentalTime"
