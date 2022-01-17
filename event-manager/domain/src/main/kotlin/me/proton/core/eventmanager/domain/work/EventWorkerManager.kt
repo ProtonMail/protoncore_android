@@ -19,7 +19,8 @@
 package me.proton.core.eventmanager.domain.work
 
 import me.proton.core.eventmanager.domain.EventManagerConfig
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 interface EventWorkerManager {
 
@@ -36,8 +37,8 @@ interface EventWorkerManager {
     fun cancel(config: EventManagerConfig)
 
     companion object {
-        val REPEAT_INTERVAL_FOREGROUND = Duration.seconds(30)
-        val REPEAT_INTERVAL_BACKGROUND = Duration.minutes(30)
+        val REPEAT_INTERVAL_FOREGROUND = 30.seconds
+        val REPEAT_INTERVAL_BACKGROUND = 30.minutes
         val BACKOFF_DELAY = REPEAT_INTERVAL_FOREGROUND
     }
 }
