@@ -40,7 +40,6 @@ dependencies {
         project(Module.authDomain),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`,
 
         // Android

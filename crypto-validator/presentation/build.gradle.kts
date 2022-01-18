@@ -49,7 +49,6 @@ dependencies {
         project(Module.presentation),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-android`,
 
         // Android

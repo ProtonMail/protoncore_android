@@ -48,7 +48,6 @@ dependencies {
         project(Module.mailSettingsDomain),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`,
 
         // Java

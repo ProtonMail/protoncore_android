@@ -36,7 +36,6 @@ dependencies {
         project(Module.networkDomain),
 
         // Kotlin
-        `kotlin-jdk8`,
         `serialization-json`,
         `coroutines-core`
     )

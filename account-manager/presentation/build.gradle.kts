@@ -46,7 +46,6 @@ dependencies {
         project(Module.keyDomain),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-android`,
 
         // Android

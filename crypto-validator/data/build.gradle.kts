@@ -40,7 +40,6 @@ dependencies {
         project(Module.kotlinUtil),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`,
 
         // Android

@@ -37,7 +37,6 @@ dependencies {
         project(Module.userDomain),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`
     )
 
