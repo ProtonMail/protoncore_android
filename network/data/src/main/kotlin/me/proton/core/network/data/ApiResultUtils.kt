@@ -46,7 +46,8 @@ internal suspend fun <Api, T> safeApiCall(
             is HttpException -> parseHttpError(e.response()!!.raw(), null, e)
             is SerializationException -> ApiResult.Error.Parse(e)
             is CertificateException -> ApiResult.Error.Certificate(e)
-            else -> e.toApiResult(networkManager)
+            is ApiConnectionException -> e.toApiResult(networkManager)
+            else -> ApiResult.Error.Connection(networkManager.isConnectedToNetwork(), e)
         }
     }
     if (result is ApiResult.Error) {
@@ -55,10 +56,9 @@ internal suspend fun <Api, T> safeApiCall(
     return result
 }
 
-private fun Throwable.toApiResult(networkManager: NetworkManager): ApiResult.Error.Connection {
+private fun ApiConnectionException.toApiResult(networkManager: NetworkManager): ApiResult.Error.Connection {
     // handle the exceptions that might indicate that the API is potentially blocked
-    return when (this) {
-        is ApiConnectionException -> originalException.toApiResult(networkManager)
+    return when (originalException) {
         is SSLHandshakeException -> ApiResult.Error.Certificate(this)
         is SSLPeerUnverifiedException -> ApiResult.Error.Certificate(this)
         is SocketTimeoutException -> ApiResult.Error.Timeout(networkManager.isConnectedToNetwork(), this)

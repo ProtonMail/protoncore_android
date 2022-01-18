@@ -6,9 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.2.1]
+
 ### Changes
 
 - Bump Store4 to 4.0.4-KT15 (compatible with Kotlin 1.5 & 1.6, Duration).
+
+### Fixes
+
+- Fix ApiConnectionException parsing on ApiResultUtils, which was breaking GuestHole implementation.
 
 ## [5.2.0]
 
