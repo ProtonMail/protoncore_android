@@ -96,7 +96,7 @@ class ProtonJacocoPlugin : Plugin<Project> {
             sourceDirectories.setFrom(source)
 
             classDirectories.setFrom(jacocoSubTasks.map { it.classDirectories })
-            executionData.setFrom(jacocoSubTasks.map { it.executionData })
+            executionData.setFrom(jacocoSubTasks.map { it.executionData.asFileTree })
 
             reports {
                 xml.required.set(generateXmlReport)
