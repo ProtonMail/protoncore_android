@@ -157,7 +157,6 @@ class ApiManagerFactory(
             forceUpdateHandler,
             humanVerificationInvalidHandler,
             humanVerificationNeededHandler,
-
         )
     }
 
