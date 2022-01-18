@@ -58,7 +58,6 @@ dependencies {
         project(Module.paymentPresentation),
 
         // Kotlin
-        `kotlin-jdk7`,
         `coroutines-android`,
 
         // Android

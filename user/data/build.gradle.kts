@@ -48,7 +48,6 @@ dependencies {
         project(Module.account),
 
         // Kotlin
-        `kotlin-jdk7`,
         `serialization-json`,
         `coroutines-core`,
 

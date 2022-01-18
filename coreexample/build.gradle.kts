@@ -141,7 +141,6 @@ dependencies {
         project(Module.plan),
         project(Module.userSettings),
 
-        `kotlin-jdk7`,
         `coroutines-android`,
 
         // Android

@@ -38,7 +38,6 @@ dependencies {
         project(Module.domain),
 
         // Kotlin
-        `kotlin-jdk7`,
         `kotlin-reflect`,
         `coroutines-android`,
 

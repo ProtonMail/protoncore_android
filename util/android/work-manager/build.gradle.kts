@@ -36,7 +36,6 @@ dependencies {
         project(Module.kotlinUtil),
 
         // Kotlin
-        `kotlin-jdk7`,
         `serialization-json`,
 
         // Android

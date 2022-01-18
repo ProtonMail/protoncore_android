@@ -29,7 +29,6 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
 
     implementation(
-        `kotlin-jdk7`,
         `coroutines-core`,
         `serialization-json`
     )

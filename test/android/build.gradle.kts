@@ -32,7 +32,6 @@ dependencies {
     // Base dependencies
     implementation(
         // Kotlin
-        `kotlin-jdk7`,
         `coroutines-android`,
 
         // Android

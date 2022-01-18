@@ -49,7 +49,6 @@ dependencies {
         project(Module.country),
 
         // Kotlin
-        `kotlin-jdk7`,
         `coroutines-android`,
         `serialization-json`,
 

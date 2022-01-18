@@ -48,7 +48,6 @@ dependencies {
         `android-work-runtime`,
         `hilt-android`,
         `hilt-androidx-workManager`,
-        `kotlin-jdk7`,
         `serialization-json`,
         `coroutines-core`,
         `retrofit`,

@@ -31,7 +31,6 @@ dependencies {
         project(Module.kotlinUtil),
 
         // Kotlin
-        `kotlin-jdk7`,
         `coroutines-core`,
         `javax-inject`,
         `serialization-json`,

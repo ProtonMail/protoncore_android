@@ -39,7 +39,6 @@ dependencies {
         project(Module.accountDomain),
 
         // Kotlin
-        `kotlin-jdk7`,
         `coroutines-core`,
 
         // Other
