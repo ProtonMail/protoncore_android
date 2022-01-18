@@ -145,6 +145,7 @@ dependencies {
         project(Module.country),
         project(Module.plan),
         project(Module.userSettings),
+        project(Module.challengePresentation),
 
         `coroutines-android`,
 
