@@ -376,7 +376,6 @@ public abstract class me/proton/core/plan/presentation/ui/BasePlansFragment : me
 	public static final field KEY_PLAN_SELECTED Ljava/lang/String;
 	public fun <init> ()V
 	public fun <init> (I)V
-	public fun _$_clearFindViewByIdCache ()V
 	protected final fun setResult (Lme/proton/core/plan/presentation/entity/SelectedPlan;Lme/proton/core/payment/presentation/entity/BillingResult;)V
 	public static synthetic fun setResult$default (Lme/proton/core/plan/presentation/ui/BasePlansFragment;Lme/proton/core/plan/presentation/entity/SelectedPlan;Lme/proton/core/payment/presentation/entity/BillingResult;ILjava/lang/Object;)V
 }
@@ -431,7 +430,6 @@ public abstract class me/proton/core/plan/presentation/ui/Hilt_UpgradePlansFragm
 public final class me/proton/core/plan/presentation/ui/SignupPlansFragment : me/proton/core/plan/presentation/ui/BasePlansFragment {
 	public static final field Companion Lme/proton/core/plan/presentation/ui/SignupPlansFragment$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
@@ -458,7 +456,6 @@ public final class me/proton/core/plan/presentation/ui/UpgradeActivity : me/prot
 	public static final field Companion Lme/proton/core/plan/presentation/ui/UpgradeActivity$Companion;
 	public field paymentsOrchestrator Lme/proton/core/payment/presentation/PaymentsOrchestrator;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public final fun getPaymentsOrchestrator ()Lme/proton/core/payment/presentation/PaymentsOrchestrator;
 	public final fun setPaymentsOrchestrator (Lme/proton/core/payment/presentation/PaymentsOrchestrator;)V
 }
@@ -481,7 +478,6 @@ public final class me/proton/core/plan/presentation/ui/UpgradeActivity_MembersIn
 public final class me/proton/core/plan/presentation/ui/UpgradePlansFragment : me/proton/core/plan/presentation/ui/BasePlansFragment {
 	public static final field Companion Lme/proton/core/plan/presentation/ui/UpgradePlansFragment$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
@@ -502,7 +498,6 @@ public final class me/proton/core/plan/presentation/view/PlanItemView : androidx
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun _$_clearFindViewByIdCache ()V
 	public final fun getCurrency ()Lme/proton/core/plan/presentation/entity/PlanCurrency;
 	public final fun getCycle ()Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public final fun getPlanDetailsListItem ()Lme/proton/core/plan/presentation/entity/PlanDetailsListItem;

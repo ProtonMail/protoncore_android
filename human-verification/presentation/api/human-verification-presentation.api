@@ -199,7 +199,6 @@ public final class me/proton/core/humanverification/presentation/ui/HumanVerific
 	public field humanVerificationApiHost Ljava/lang/String;
 	public field networkRequestOverrider Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public final fun getExtraHeaderProvider ()Lme/proton/core/network/domain/client/ExtraHeaderProvider;
 	public final fun getHumanVerificationApiHost ()Ljava/lang/String;
 	public final fun getNetworkRequestOverrider ()Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;
@@ -264,7 +263,6 @@ public final class me/proton/core/humanverification/presentation/ui/HumanVerific
 
 public final class me/proton/core/humanverification/presentation/ui/HumanVerificationHelpFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 

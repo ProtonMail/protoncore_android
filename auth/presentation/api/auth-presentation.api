@@ -236,7 +236,6 @@ public final class me/proton/core/auth/presentation/alert/PasswordAnd2FADialog :
 	public static final field Companion Lme/proton/core/auth/presentation/alert/PasswordAnd2FADialog$Companion;
 	public static final field KEY_PASS_2FA_SET Ljava/lang/String;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
 	public fun onDismiss (Landroid/content/DialogInterface;)V
 }
@@ -250,7 +249,6 @@ public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPas
 	public static final field CONFIRM_PASS_SET Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
 	public fun onDismiss (Landroid/content/DialogInterface;)V
 }
@@ -1012,7 +1010,6 @@ public final class me/proton/core/auth/presentation/ui/AddAccountActivity : me/p
 	public field accountManager Lme/proton/core/accountmanager/domain/AccountManager;
 	public field authOrchestrator Lme/proton/core/auth/presentation/AuthOrchestrator;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public final fun getAccountManager ()Lme/proton/core/accountmanager/domain/AccountManager;
 	public final fun getAuthOrchestrator ()Lme/proton/core/auth/presentation/AuthOrchestrator;
 	public fun onBackPressed ()V
@@ -1038,7 +1035,6 @@ public final class me/proton/core/auth/presentation/ui/AddAccountActivity_Member
 
 public abstract class me/proton/core/auth/presentation/ui/AuthActivity : me/proton/core/presentation/ui/ProtonSecureActivity {
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onError (ZLjava/lang/String;)V
 	public static synthetic fun onError$default (Lme/proton/core/auth/presentation/ui/AuthActivity;ZLjava/lang/String;ILjava/lang/Object;)V
 	protected final fun onUnlockUserError (Lme/proton/core/user/domain/UserManager$UnlockResult$Error;)V
@@ -1051,7 +1047,6 @@ public abstract class me/proton/core/auth/presentation/ui/AuthActivity : me/prot
 
 public final class me/proton/core/auth/presentation/ui/AuthHelpActivity : me/proton/core/auth/presentation/ui/AuthActivity {
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 }
 
 public final class me/proton/core/auth/presentation/ui/ChooseAddressActivity : me/proton/core/auth/presentation/ui/AuthActivity {
@@ -1059,7 +1054,6 @@ public final class me/proton/core/auth/presentation/ui/ChooseAddressActivity : m
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/ChooseAddressActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onBackPressed ()V
 	public fun showLoading (Z)V
 }
@@ -1076,7 +1070,6 @@ public final class me/proton/core/auth/presentation/ui/ConfirmPasswordActivity :
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/ConfirmPasswordActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 }
 
 public final class me/proton/core/auth/presentation/ui/ConfirmPasswordActivity$Companion {
@@ -1091,7 +1084,6 @@ public final class me/proton/core/auth/presentation/ui/CreateAddressActivity : m
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/CreateAddressActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun showLoading (Z)V
 }
 
@@ -1170,7 +1162,6 @@ public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/LoginActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onBackPressed ()V
 	public fun onError (ZLjava/lang/String;)V
 	public fun showLoading (Z)V
@@ -1188,7 +1179,6 @@ public final class me/proton/core/auth/presentation/ui/SecondFactorActivity : me
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/SecondFactorActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onBackPressed ()V
 	public fun onError (ZLjava/lang/String;)V
 	public fun showLoading (Z)V
@@ -1262,7 +1252,6 @@ public final class me/proton/core/auth/presentation/ui/TwoPassModeActivity : me/
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/TwoPassModeActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onBackPressed ()V
 	public fun onError (ZLjava/lang/String;)V
 	public fun showLoading (Z)V
@@ -1285,7 +1274,6 @@ public final class me/proton/core/auth/presentation/ui/UtilsKt {
 
 public final class me/proton/core/auth/presentation/ui/signup/ChoosePasswordFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
@@ -1298,7 +1286,6 @@ public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFrag
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public fun showLoading (Z)V
@@ -1314,7 +1301,6 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Choos
 
 public final class me/proton/core/auth/presentation/ui/signup/CreatingUserFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
@@ -1322,7 +1308,6 @@ public final class me/proton/core/auth/presentation/ui/signup/CreatingUserFragme
 public final class me/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ExternalValidationTokenCodeFragment$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public fun showLoading (Z)V
@@ -1429,14 +1414,12 @@ public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_TermsCondi
 
 public final class me/proton/core/auth/presentation/ui/signup/RecoveryEmailFragment : me/proton/core/presentation/ui/ProtonFragment {
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/RecoveryMethodFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/RecoveryMethodFragment$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public fun showLoading (Z)V
@@ -1452,7 +1435,6 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Recov
 
 public final class me/proton/core/auth/presentation/ui/signup/RecoverySMSFragment : me/proton/core/presentation/ui/ProtonFragment {
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
@@ -1465,7 +1447,6 @@ public final class me/proton/core/auth/presentation/ui/signup/SignupActivity : m
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/SignupActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/SignupActivity$Companion {
@@ -1478,7 +1459,6 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Signu
 public abstract class me/proton/core/auth/presentation/ui/signup/SignupFragment : me/proton/core/presentation/ui/ProtonSecureFragment {
 	public fun <init> ()V
 	public fun <init> (I)V
-	public fun _$_clearFindViewByIdCache ()V
 	public abstract fun onBackPressed ()V
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun showError (Ljava/lang/String;)V
@@ -1490,7 +1470,6 @@ public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDia
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$Companion;
 	public static final field TERMS_CONDITIONS_URL Ljava/lang/String;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 

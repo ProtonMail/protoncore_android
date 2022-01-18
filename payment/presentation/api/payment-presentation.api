@@ -323,7 +323,6 @@ public final class me/proton/core/payment/presentation/ui/BillingActivity : me/p
 	public static final field Companion Lme/proton/core/payment/presentation/ui/BillingActivity$Companion;
 	public static final field EXP_DATE_SEPARATOR Ljava/lang/String;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onThreeDSApprovalResult (JLjava/lang/String;Z)V
 	public fun showLoading (Z)V
 }
@@ -384,7 +383,6 @@ public final class me/proton/core/payment/presentation/ui/PaymentOptionsActivity
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentOptionsActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onThreeDSApprovalResult (JLjava/lang/String;Z)V
 	public fun showLoading (Z)V
 }
@@ -402,7 +400,6 @@ public final class me/proton/core/payment/presentation/ui/PaymentTokenApprovalAc
 	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentTokenApprovalActivity$Companion;
 	public static final field MAX_PROGRESS I
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onError (Ljava/lang/String;)V
 }
 
@@ -422,7 +419,6 @@ public abstract class me/proton/core/payment/presentation/ui/PaymentsActivity : 
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/payment/presentation/ui/PaymentsActivity$Companion;
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public fun _$_clearFindViewByIdCache ()V
 	protected fun onCreate (Landroid/os/Bundle;)V
 	public fun onError (Ljava/lang/String;)V
 	public static synthetic fun onError$default (Lme/proton/core/payment/presentation/ui/PaymentsActivity;Ljava/lang/String;ILjava/lang/Object;)V
