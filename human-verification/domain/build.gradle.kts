@@ -35,7 +35,6 @@ dependencies {
         project(Module.networkDomain),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`,
 
         // Android

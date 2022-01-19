@@ -210,7 +210,6 @@ public final class me/proton/core/usersettings/presentation/ui/PasswordManagemen
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/usersettings/presentation/ui/PasswordManagementActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 }
 
 public final class me/proton/core/usersettings/presentation/ui/PasswordManagementActivity$Companion {
@@ -226,7 +225,6 @@ public final class me/proton/core/usersettings/presentation/ui/PasswordManagemen
 	public static final field Companion Lme/proton/core/usersettings/presentation/ui/PasswordManagementFragment$Companion;
 	public static final field KEY_UPDATE_RESULT Ljava/lang/String;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
@@ -278,7 +276,6 @@ public final class me/proton/core/usersettings/presentation/ui/UpdateRecoveryEma
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/usersettings/presentation/ui/UpdateRecoveryEmailActivity$Companion;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 }
 
 public final class me/proton/core/usersettings/presentation/ui/UpdateRecoveryEmailActivity$Companion {
@@ -294,7 +291,6 @@ public final class me/proton/core/usersettings/presentation/ui/UpdateRecoveryEma
 	public static final field Companion Lme/proton/core/usersettings/presentation/ui/UpdateRecoveryEmailFragment$Companion;
 	public static final field KEY_UPDATE_RESULT Ljava/lang/String;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }

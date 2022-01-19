@@ -41,7 +41,6 @@ dependencies {
         project(Module.eventManagerDomain),
 
         // Kotlin
-        `kotlin-jdk7`,
         `serialization-json`,
         `coroutines-core`,
 

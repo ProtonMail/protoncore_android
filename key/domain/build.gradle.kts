@@ -33,7 +33,6 @@ dependencies {
         project(Module.cryptoCommon),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`
     )
 

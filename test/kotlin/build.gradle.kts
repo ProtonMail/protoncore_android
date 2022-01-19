@@ -29,7 +29,6 @@ dependencies {
 
     // Base dependencies
     implementation(
-        `kotlin-jdk7`,
         `coroutines-core`
     )
     compileOnly(project(Module.kotlinUtil))

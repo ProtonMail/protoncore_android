@@ -72,7 +72,6 @@ dependencies {
         project(Module.eventManagerDomain),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`,
 
         // Other

@@ -40,7 +40,6 @@ dependencies {
         project(Module.mailSettingsDomain),
 
         // Kotlin
-        `kotlin-jdk7`,
         `serialization-json`,
         `coroutines-core`,
 

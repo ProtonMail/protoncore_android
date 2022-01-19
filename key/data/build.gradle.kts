@@ -43,7 +43,6 @@ dependencies {
         project(Module.authDomain),
 
         // Kotlin
-        `kotlin-jdk7`,
         `serialization-json`,
         `coroutines-core`,
 

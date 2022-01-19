@@ -37,12 +37,10 @@ class LoggerInitializer : Initializer<Unit> {
         CoreLogger.set(CoreExampleLogger())
     }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> {
-        return emptyList()
-    }
+    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 
     private class CrashReportingTree : Timber.Tree() {
-        override fun log(priority: Int, tag: String?, message: String, e: Throwable?) {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
             if (priority == Log.VERBOSE || priority == Log.DEBUG) return
             /*when (priority) {
                 Log.VERBOSE,

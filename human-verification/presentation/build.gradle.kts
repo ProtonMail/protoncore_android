@@ -21,10 +21,10 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
+    kotlin("android")
+    kotlin("kapt")
     kotlin("plugin.serialization")
 }
 
@@ -49,7 +49,6 @@ dependencies {
         project(Module.country),
 
         // Kotlin
-        `kotlin-jdk7`,
         `coroutines-android`,
         `serialization-json`,
 

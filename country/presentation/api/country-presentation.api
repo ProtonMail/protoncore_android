@@ -71,7 +71,6 @@ public final class me/proton/core/country/presentation/ui/CountryPickerFragment 
 	public static final field Companion Lme/proton/core/country/presentation/ui/CountryPickerFragment$Companion;
 	public static final field KEY_COUNTRY_SELECTED Ljava/lang/String;
 	public fun <init> ()V
-	public fun _$_clearFindViewByIdCache ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 

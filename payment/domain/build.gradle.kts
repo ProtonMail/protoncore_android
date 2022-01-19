@@ -37,7 +37,6 @@ dependencies {
         project(Module.accountDomain),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`,
 
         // Android

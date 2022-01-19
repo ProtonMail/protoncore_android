@@ -34,49 +34,27 @@ plugins {
     id("publish-core-libraries")
     id("me.proton.core.gradle-plugins.tests")
     id("me.proton.core.gradle-plugins.jacoco")
-    id("com.github.ben-manes.versions") version "0.39.0"
-    alias(libs.plugins.kotlinx.binaryCompatibilityValidator)
+    alias(libs.plugins.benManes.versions.gradle)
+    alias(libs.plugins.kotlin.binaryCompatibilityValidator)
+    alias(libs.plugins.kotlin.gradle)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 buildscript {
     repositories.google()
 
     dependencies {
-        val kotlinVersion = "1.5.31" // Sep 20, 2021
-        val hiltVersion = "2.38.1" // Jul 27, 2021
-
-        classpath(kotlin("gradle-plugin", kotlinVersion))
-        classpath(kotlin("serialization", kotlinVersion))
-        classpath(libs.dokka.pluginGradle)
-        classpath(libs.android.pluginGradle)
-        classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltVersion")
-    }
-
-    // Room 2.3 use a jdbc not compatible with arm so use the updated one to support
-    // arm build. Room 2.4 should fix this issue (not stable yet)
-    allprojects {
-        configurations.all {
-            resolutionStrategy {
-                force("org.xerial:sqlite-jdbc:3.34.0")
-            }
-        }
+        classpath(libs.dokka.gradle)
+        classpath(libs.android.gradle)
+        classpath(libs.dagger.hilt.android.gradle)
     }
 }
 
 kotlinCompilerArgs(
-    "-XXLanguage:+NewInference",
-    "-Xuse-experimental=kotlin.Experimental",
-    // Enables inline classes
-    "-XXLanguage:+InlineClasses",
-    // Enables experimental Coroutines from coroutines-test artifact, like `runBlockingTest`
     "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
     "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
     "-Xopt-in=kotlin.time.ExperimentalTime"
 )
-
-tasks.register("clean", Delete::class.java) {
-    delete(rootProject.buildDir)
-}
 
 fun isNonStable(version: String): Boolean {
     val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }

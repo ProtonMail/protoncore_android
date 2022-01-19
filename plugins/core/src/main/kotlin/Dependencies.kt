@@ -68,7 +68,7 @@ val DependencyHandler.`startup-runtime` get() = androidx("startup", moduleSuffix
 
 // region accessors
 fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`) =
-    android("tools.lint", "lint", moduleSuffix, version)
+    dependency("android.tools.lint", "lint", moduleSuffix, version)
 // endregion
 
 // region tests

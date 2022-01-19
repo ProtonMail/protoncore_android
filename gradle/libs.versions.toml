@@ -1,20 +1,30 @@
 [versions]
+androidGradle = "7.0.4"
+arturboschDetektGradle = "1.19.0"
+benManesVersions = "0.41.0"
+daggerHiltAndroid = "2.40.5"
 easyGradle = "2.8"
+gradleNexusPublish = "1.1.0"
+kotlin = "1.6.10"
+kotlinCoroutines = "1.5.2"
+kotlinSerialization = "1.3.2"
+kotlinBinaryCompatibilityValidator = "0.8.0"
+vanniktechPublish = "0.18.0"
 
 [plugins]
-easyGradle = { id = "studio.forface.easygradle", version.ref="easyGradle" }
-kotlinx-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version ="0.8.0" }
+benManes-versions-gradle = { id = "com.github.ben-manes.versions", version.ref = "benManesVersions" }
+easyGradle = { id = "studio.forface.easygradle", version.ref = "easyGradle" }
+kotlin-binaryCompatibilityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinBinaryCompatibilityValidator" }
+kotlin-gradle = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [libraries]
-android-pluginGradle = "com.android.tools.build:gradle:7.0.4"
-
-vanniktech-pluginGradleMavenPublish = "com.vanniktech:gradle-maven-publish-plugin:0.18.0"
-
-publish-pluginGradle = "io.github.gradle-nexus:publish-plugin:1.1.0"
-
-dokka-pluginGradle = "org.jetbrains.dokka:dokka-gradle-plugin:1.5.30"
-
+android-gradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradle" }
+arturbosch-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "arturboschDetektGradle" }
+dagger-hilt-android-gradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHiltAndroid" }
+dokka-gradle = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlin" }
 easyGradle-dsl = { module = "studio.forface.easygradle:dsl", version.ref = "easyGradle" }
 easyGradle-androidDsl = { module = "studio.forface.easygradle:dsl-android", version.ref = "easyGradle" }
-
-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1"
+gradleNexus-publish = { module = "io.github.gradle-nexus:publish-plugin", version.ref = "gradleNexusPublish" }
+kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
+vanniktech-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktechPublish" }

@@ -40,7 +40,7 @@ gradlePlugin {
 
 repositories {
     google()
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {

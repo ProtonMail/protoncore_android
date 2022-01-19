@@ -41,7 +41,6 @@ dependencies {
         `googleTink`,
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`
     )
 

@@ -33,7 +33,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.BuildConfig

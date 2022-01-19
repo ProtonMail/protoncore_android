@@ -31,13 +31,13 @@ class PasswordSetupRobot : CoreRobot() {
      * Sets the value of password input to [password]
      * @return [PasswordSetupRobot]
      */
-    fun password(pwd: String): PasswordSetupRobot = setText(R.id.passwordInput, pwd)
+    fun password(pwd: String): PasswordSetupRobot = addText(R.id.passwordInput, pwd)
 
     /**
      * Sets the value of password confirmation input to [password]
      * @return [PasswordSetupRobot]
      */
-    fun confirmPassword(pwd: String): PasswordSetupRobot = setText(R.id.confirmPasswordInput, pwd)
+    fun confirmPassword(pwd: String): PasswordSetupRobot = addText(R.id.confirmPasswordInput, pwd)
 
     /**
      * Clicks 'next' button

@@ -22,10 +22,10 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     id("com.android.library")
-    kotlin("android")
-    kotlin("android.extensions")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -58,7 +58,6 @@ dependencies {
         project(Module.paymentPresentation),
 
         // Kotlin
-        `kotlin-jdk7`,
         `coroutines-android`,
 
         // Android

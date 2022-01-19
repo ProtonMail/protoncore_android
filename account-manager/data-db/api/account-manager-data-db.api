@@ -119,6 +119,8 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabase_
 	public fun contactEmailDao ()Lme/proton/core/contact/data/local/db/dao/ContactEmailDao;
 	public fun contactEmailLabelDao ()Lme/proton/core/contact/data/local/db/dao/ContactEmailLabelDao;
 	public fun eventMetadataDao ()Lme/proton/core/eventmanager/data/db/dao/EventMetadataDao;
+	public fun getAutoMigrations (Ljava/util/Map;)Ljava/util/List;
+	public fun getRequiredAutoMigrationSpecs ()Ljava/util/Set;
 	public fun humanVerificationDetailsDao ()Lme/proton/core/humanverification/data/db/HumanVerificationDetailsDao;
 	public fun keySaltDao ()Lme/proton/core/key/data/db/KeySaltDao;
 	public fun labelDao ()Lme/proton/core/label/data/local/LabelDao;

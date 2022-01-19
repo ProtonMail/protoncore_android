@@ -23,7 +23,6 @@ import ezvcard.VCardVersion
 import ezvcard.property.Email
 import ezvcard.property.FormattedName
 import ezvcard.property.Uid
-import java.util.Date
 
 fun createToBeSignedVCard(seedName: String): VCard {
     return VCard().apply {
@@ -38,6 +37,6 @@ fun createToBeSignedVCard(seedName: String): VCard {
 
 fun createToBeEncryptedAndSignedVCard(seedName: String): VCard {
     return VCard().apply {
-        addNote("confidential note about $seedName from ${Date().toGMTString()}")
+        addNote("confidential note about $seedName from UtcMillis: ${System.currentTimeMillis()}")
     }
 }

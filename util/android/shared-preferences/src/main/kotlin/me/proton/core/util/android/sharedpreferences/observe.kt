@@ -34,7 +34,7 @@ fun SharedPreferences.observe(): Flow<SharedPreferencesChangeValue> = callbackFl
     send(SharedPreferencesChangeValue(this@observe, null))
 
     val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-        offer(SharedPreferencesChangeValue(sharedPreferences, key))
+        trySend(SharedPreferencesChangeValue(sharedPreferences, key))
     }
     registerOnSharedPreferenceChangeListener(listener)
     awaitClose { unregisterOnSharedPreferenceChangeListener(listener) }

@@ -31,7 +31,7 @@ class TwoFaRobot : CoreRobot() {
      * Fills in second factor input (recovery or code) with given [value]
      * @return [TwoFaRobot]
      */
-    fun setSecondFactorInput(value: String): TwoFaRobot = setText(R.id.secondFactorInput, value)
+    fun setSecondFactorInput(value: String): TwoFaRobot = addText(R.id.secondFactorInput, value)
 
     /**
      * Clicks the recovery code button. Switches between second factor code and second factor recovery code

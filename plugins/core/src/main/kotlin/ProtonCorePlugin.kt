@@ -18,12 +18,14 @@
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.apply
 
 abstract class ProtonCorePlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        initVersions()
+
+        initVersions(target.rootProject.extensions.getByType(VersionCatalogsExtension::class.java).named("libs"))
         target.applyRepositories()
 
         // Recursively apply the plugin su sub-modules

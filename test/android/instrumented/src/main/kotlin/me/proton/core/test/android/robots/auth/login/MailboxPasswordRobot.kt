@@ -32,7 +32,7 @@ class MailboxPasswordRobot : CoreRobot() {
      * Fills in mailbox password input with [password] and clicks unlock button
      * @return [MailboxPasswordRobot]
      */
-    fun mailboxPassword(password: String): MailboxPasswordRobot = setText(R.id.mailboxPasswordInput, password)
+    fun mailboxPassword(password: String): MailboxPasswordRobot = addText(R.id.mailboxPasswordInput, password)
 
     /**
      * Clicks unlock button

@@ -19,7 +19,7 @@
 package me.proton.core.plan.presentation.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import me.proton.core.payment.presentation.entity.BillingResult
 
 @Parcelize

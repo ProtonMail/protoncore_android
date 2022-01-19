@@ -98,7 +98,7 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
         viewModel.validateToken(sessionId, token, tokenType)
         // then
         viewModel.validationState.test {
-            assertIs<ViewModelResult.Success<String>>(expectItem())
+            assertIs<ViewModelResult.Success<String>>(awaitItem())
         }
     }
 
@@ -115,7 +115,7 @@ class HumanVerificationEnterCodeViewModelTest : CoroutinesTest {
         viewModel.validateToken(sessionId, token, tokenType)
         // then
         viewModel.validationState.test {
-            assertIs<ViewModelResult.Error>(expectItem())
+            assertIs<ViewModelResult.Error>(awaitItem())
         }
     }
 }

@@ -46,7 +46,6 @@ dependencies {
         project(Module.paymentDomain),
 
         // Kotlin
-        `kotlin-jdk8`,
         `coroutines-core`,
 
         // Other

@@ -42,8 +42,8 @@ abstract class NetworkManager {
      * @return [Flow] of [NetworkStatus] - current state and changes
      */
     fun observe() = callbackFlow {
-        val observer: NetworkCallback = { offer(it) }
-        offer(networkStatus)
+        val observer: NetworkCallback = { trySend(it) }
+        trySend(networkStatus)
         addObserver(observer)
         awaitClose { removeObserver(observer) }
     }

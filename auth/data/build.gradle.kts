@@ -39,7 +39,6 @@ dependencies {
         project(Module.cryptoCommon),
 
         // Kotlin
-        `kotlin-jdk7`,
         `serialization-json`,
         `coroutines-core`,
 

@@ -31,13 +31,13 @@ class LoginRobot : CoreRobot() {
      * Sets the value of username input to [name]
      * @return [LoginRobot]
      */
-    fun username(name: String?): LoginRobot = setText(R.id.usernameInput, name!!)
+    fun username(name: String?): LoginRobot = addText(R.id.usernameInput, name!!)
 
     /**
      * Sets the value of password input to [password]
      * @return [LoginRobot]
      */
-    fun password(password: String): LoginRobot = setText(R.id.passwordInput, password)
+    fun password(password: String): LoginRobot = addText(R.id.passwordInput, password)
 
     /**
      * Clicks help button

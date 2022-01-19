@@ -697,13 +697,13 @@ public final class me/proton/core/user/data/entity/UserEntity {
 	public final fun getMaxUpload ()J
 	public final fun getName ()Ljava/lang/String;
 	public final fun getPassphrase ()Lme/proton/core/crypto/common/keystore/EncryptedByteArray;
-	public final fun getPrivate ()Z
 	public final fun getRole ()Ljava/lang/Integer;
 	public final fun getServices ()I
 	public final fun getSubscribed ()I
 	public final fun getUsedSpace ()J
 	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
+	public final fun isPrivate ()Z
 	public fun toString ()Ljava/lang/String;
 }
 

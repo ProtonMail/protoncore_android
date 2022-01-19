@@ -61,13 +61,13 @@ class RecoveryMethodsRobot : CoreRobot() {
      * Sets email input value to given [email]
      * @return [RecoveryMethodsRobot]
      */
-    fun email(email: String): RecoveryMethodsRobot = setText(R.id.emailEditText, email)
+    fun email(email: String): RecoveryMethodsRobot = addText(R.id.emailEditText, email)
 
     /**
      * Sets phone number input value to given [phoneNo]
      * @return [RecoveryMethodsRobot]
      */
-    fun phone(phoneNo: String): RecoveryMethodsRobot = setText(R.id.smsEditText, phoneNo)
+    fun phone(phoneNo: String): RecoveryMethodsRobot = addText(R.id.smsEditText, phoneNo)
 
     /**
      * Clicks country code element

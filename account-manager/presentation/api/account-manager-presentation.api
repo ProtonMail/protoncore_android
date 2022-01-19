@@ -236,7 +236,6 @@ public final class me/proton/core/accountmanager/presentation/view/AccountListVi
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun _$_clearFindViewByIdCache ()V
 	public final fun setViewModel (Lme/proton/core/accountmanager/presentation/viewmodel/AccountSwitcherViewModel;)V
 }
 
@@ -250,7 +249,6 @@ public final class me/proton/core/accountmanager/presentation/view/AccountPrimar
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun _$_clearFindViewByIdCache ()V
 	public final fun dismissDialog ()V
 	public final fun getEmail ()Ljava/lang/String;
 	public final fun getInitials ()Ljava/lang/String;

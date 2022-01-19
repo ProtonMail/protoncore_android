@@ -123,8 +123,8 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.init(testUserId)
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(expectItem())
-            val result = expectItem()
+            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is PasswordManagementViewModel.State.Mode)
             assertTrue(result.twoPasswordMode)
         }
@@ -140,8 +140,8 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.init(testUserId)
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(expectItem())
-            val result = expectItem()
+            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is PasswordManagementViewModel.State.Mode)
             assertFalse(result.twoPasswordMode)
         }
@@ -165,9 +165,9 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
             // WHEN
             viewModel.updateLoginPassword(testUserId, testPassword, testNewPassword)
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(expectItem())
-            assertIs<PasswordManagementViewModel.State.UpdatingLoginPassword>(expectItem())
-            val result = expectItem()
+            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
+            assertIs<PasswordManagementViewModel.State.UpdatingLoginPassword>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is PasswordManagementViewModel.State.Success.UpdatingLoginPassword)
             assertNotNull(result.settings)
 
@@ -204,10 +204,10 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
             viewModel.init(testUserId)
             viewModel.updateMailboxPassword(testUserId, testLoginPassword, testNewMailboxPassword)
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(expectItem())
-            assertIs<PasswordManagementViewModel.State.Mode>(expectItem())
-            assertIs<PasswordManagementViewModel.State.UpdatingMailboxPassword>(expectItem())
-            val result = expectItem()
+            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
+            assertIs<PasswordManagementViewModel.State.Mode>(awaitItem())
+            assertIs<PasswordManagementViewModel.State.UpdatingMailboxPassword>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword)
 
             coVerify(exactly = 1) {
@@ -244,10 +244,10 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
             viewModel.init(testUserId)
             viewModel.updateMailboxPassword(testUserId, testLoginPassword, testNewMailboxPassword)
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(expectItem())
-            assertIs<PasswordManagementViewModel.State.Mode>(expectItem())
-            assertIs<PasswordManagementViewModel.State.UpdatingSinglePassModePassword>(expectItem())
-            val result = expectItem()
+            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
+            assertIs<PasswordManagementViewModel.State.Mode>(awaitItem())
+            assertIs<PasswordManagementViewModel.State.UpdatingSinglePassModePassword>(awaitItem())
+            val result = awaitItem()
             assertTrue(result is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword)
 
             coVerify(exactly = 1) {

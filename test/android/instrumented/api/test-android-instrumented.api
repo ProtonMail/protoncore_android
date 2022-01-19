@@ -207,8 +207,8 @@ public final class me/proton/core/test/android/instrumented/ui/compose/OnNode : 
 	public final fun pressKey-ZmokQxo (Landroid/view/KeyEvent;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun replaceText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun scrollTo ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
-	public final fun sendGesture (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun sendImeAction ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
+	public final fun sendTouchInput (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 }
 

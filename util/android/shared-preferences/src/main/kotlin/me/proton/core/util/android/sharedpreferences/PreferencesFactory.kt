@@ -57,4 +57,5 @@ abstract class UsernamePreferencesFactory private constructor(
 }
 
 /** [ParametrizedPreferencesFactory.Params] for [UsernamePreferencesFactory] */
-inline class UsernameParam(val s: String) : ParametrizedPreferencesFactory.Params
+@JvmInline
+value class UsernameParam(val s: String) : ParametrizedPreferencesFactory.Params

@@ -19,7 +19,7 @@
 package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import me.proton.core.account.domain.entity.AccountType
 
 @Parcelize

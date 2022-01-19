@@ -6,6 +6,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0]
+
+### Dependency Updates
+
+- Now depends on Kotlin 1.6.10.
+- Now mandatory target Android Sdk 31.
+- Updated dependencies version:
+  - Kotlin: 1.6.10.
+  - Kotlin Coroutines: 1.5.2.
+  - Kotlin Serialization: 1.3.2.
+  - Store4: 4.0.4-KT15.
+  - Room: 2.4.1.
+  - Dagger: 2.40.5.
+  - Core KTX: 1.7.0.
+  - Lifecycle: 2.4.0.
+  - Material: 1.5.0.
+  - Paging: 3.1.0.
+  - Compose: 1.2.0-alpha01.
+  - Hilt Navigation Compose: 1.0.0-rc01.
+  - Navigation: 2.4.0-rc01.
+  - Gotev CookieStore: 1.4.0.
+  - Mockk: 1.12.2.
+  - Turbine: 0.7.0.
+- Fixed ProtonJacocoPlugins.
+- Removed Turbine expectItem (no more existing). Replaced by awaitItem.
+- Removed Kotlin Android Extensions (replaced by Kotlin Parcelize).
+- Removed GestureScope. Replaced by TouchInjectionScope.
+- Removed Date toGMTString.
+- Removed unneeded Kotlin compiler arguments.
+- Removed unneeded inline keyword.
+- Removed 'inline' modifier. Replaced by 'value' instead.
+- Removed Duration.seconds/minutes. Replaced by 'Int.seconds' extension property.
+- Replaced CoreRobot setText by addText.
+- Removed JCenter from all repositories.
+- Removed unneeded `kotlin-jdk7` dependency.
+- Removed unneeded `kotlin-jdk8` dependency.
+- Updated Binary Compatibility Dump.
+
 ## [5.2.1]
 
 ### Changes
