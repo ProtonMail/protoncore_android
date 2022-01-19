@@ -45,7 +45,7 @@ class PostLoginAccountSetup @Inject constructor(
 ) {
     sealed class Result {
         sealed class Error : Result() {
-            data class CannotUnlockPrimaryKey(val error: UserManager.UnlockResult.Error) : Error()
+            data class UnlockPrimaryKeyError(val error: UserManager.UnlockResult.Error) : Error()
             data class UserCheckError(val error: UserCheckResult.Error) : Error()
         }
 
@@ -158,9 +158,15 @@ class PostLoginAccountSetup @Inject constructor(
                     }
                 }
             }
-            is UserManager.UnlockResult.Error -> {
+            is UserManager.UnlockResult.Error.NoPrimaryKey,
+            is UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey -> {
+                // Unrecoverable -> Disable account.
                 accountWorkflow.handleUnlockFailed(userId)
-                Result.Error.CannotUnlockPrimaryKey(result)
+                Result.Error.UnlockPrimaryKeyError(result as UserManager.UnlockResult.Error)
+            }
+            is UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase -> {
+                // Recoverable -> Let the User retry.
+                Result.Error.UnlockPrimaryKeyError(result)
             }
         }
     }

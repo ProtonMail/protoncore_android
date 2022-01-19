@@ -114,17 +114,14 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
 
     private fun onPostLoginAccountSetup(result: PostLoginAccountSetup.Result) {
         when (result) {
-            is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockUserError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onLoginError(result.error.localizedMessage)
             is PostLoginAccountSetup.Result.UserUnlocked -> onLoginSuccess(result.userId)
 
-            // we are not interested in these events
             is PostLoginAccountSetup.Result.Need.ChangePassword,
             is PostLoginAccountSetup.Result.Need.ChooseUsername,
             is PostLoginAccountSetup.Result.Need.SecondFactor,
-            is PostLoginAccountSetup.Result.Need.TwoPassMode -> {
-                // no-op
-            }
+            is PostLoginAccountSetup.Result.Need.TwoPassMode -> Unit // Ignored.
         }.exhaustive
     }
 

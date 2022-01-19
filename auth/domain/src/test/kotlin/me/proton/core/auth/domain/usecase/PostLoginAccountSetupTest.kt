@@ -121,9 +121,9 @@ class PostLoginAccountSetupTest {
     }
 
     @Test
-    fun `user unlock failed`() = runBlockingTest {
+    fun `user unlock failed, recoverable`() = runBlockingTest {
         val sessionInfo = mockSessionInfo()
-        val unlockError = mockk<UserManager.UnlockResult.Error>()
+        val unlockError = mockk<UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase>()
 
         coJustRun { accountWorkflowHandler.handleUnlockFailed(any()) }
         coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
@@ -139,7 +139,30 @@ class PostLoginAccountSetupTest {
             onSetupSuccess = onSetupSuccess
         )
 
-        assertEquals(PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey(unlockError), result)
+        assertEquals(PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError(unlockError), result)
+        coVerify(exactly = 0) { onSetupSuccess() }
+    }
+
+    @Test
+    fun `user unlock failed, non-recoverable `() = runBlockingTest {
+        val sessionInfo = mockSessionInfo()
+        val unlockError = mockk<UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey>()
+
+        coJustRun { accountWorkflowHandler.handleUnlockFailed(any()) }
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
+        coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns unlockError
+
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
+            onSetupSuccess = onSetupSuccess
+        )
+
+        assertEquals(PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError(unlockError), result)
         coVerify { accountWorkflowHandler.handleUnlockFailed(testUserId) }
         coVerify(exactly = 0) { onSetupSuccess() }
     }

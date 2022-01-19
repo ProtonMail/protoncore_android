@@ -267,11 +267,11 @@ public abstract class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$R
 public abstract class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error : me/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result {
 }
 
-public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error$CannotUnlockPrimaryKey : me/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error {
+public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error$UnlockPrimaryKeyError : me/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error {
 	public fun <init> (Lme/proton/core/user/domain/UserManager$UnlockResult$Error;)V
 	public final fun component1 ()Lme/proton/core/user/domain/UserManager$UnlockResult$Error;
-	public final fun copy (Lme/proton/core/user/domain/UserManager$UnlockResult$Error;)Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error$CannotUnlockPrimaryKey;
-	public static synthetic fun copy$default (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error$CannotUnlockPrimaryKey;Lme/proton/core/user/domain/UserManager$UnlockResult$Error;ILjava/lang/Object;)Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error$CannotUnlockPrimaryKey;
+	public final fun copy (Lme/proton/core/user/domain/UserManager$UnlockResult$Error;)Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error$UnlockPrimaryKeyError;
+	public static synthetic fun copy$default (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error$UnlockPrimaryKeyError;Lme/proton/core/user/domain/UserManager$UnlockResult$Error;ILjava/lang/Object;)Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result$Error$UnlockPrimaryKeyError;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getError ()Lme/proton/core/user/domain/UserManager$UnlockResult$Error;
 	public fun hashCode ()I

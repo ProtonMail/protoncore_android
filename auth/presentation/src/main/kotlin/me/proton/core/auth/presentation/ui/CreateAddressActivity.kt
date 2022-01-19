@@ -94,7 +94,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>(Activit
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
         when (result) {
-            is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockUserError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckError(result.error)
 
             is PostLoginAccountSetup.Result.Need.ChangePassword,
