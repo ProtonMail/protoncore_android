@@ -25,7 +25,6 @@ import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.NoSetupNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupInternalAddressNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupPrimaryKeysNeeded
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.TwoPassNeeded
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.extension.hasInternalAddressKey
 import me.proton.core.user.domain.extension.hasKeys
@@ -35,7 +34,6 @@ import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 class SetupAccountCheck @Inject constructor(
-    private val product: Product,
     private val userRepository: UserRepository,
     private val addressRepository: UserAddressRepository
 ) {
@@ -72,12 +70,8 @@ class SetupAccountCheck @Inject constructor(
                 NoSetupNeeded
             }
             AccountType.External -> {
-                when {
-                    product == Product.Vpn -> NoSetupNeeded
-                    !user.hasKeys() -> SetupPrimaryKeysNeeded
-                    isTwoPassModeNeeded -> TwoPassNeeded
-                    else -> NoSetupNeeded
-                }
+                // API bug: TwoPassMode is not needed if user has no key!
+                if (isTwoPassModeNeeded && user.hasKeys()) TwoPassNeeded else NoSetupNeeded
             }
             AccountType.Internal -> {
                 val addresses = addressRepository.getAddresses(userId, refresh = true)
