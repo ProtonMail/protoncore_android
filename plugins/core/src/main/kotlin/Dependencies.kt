@@ -60,7 +60,8 @@ val DependencyHandler.`lint-checks` get() = lint("checks")
 val DependencyHandler.`lint-tests` get() = lint("tests")
 val DependencyHandler.`okHttp-logging` get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp version`
 val DependencyHandler.`store4` get() = dependency("com.dropbox.mobile.store", module = "store4") version `store4 version`
-val DependencyHandler.`lifecycle-extensions` get() = androidxLifecycle("extensions") version `lifecycle-extensions version`
+val DependencyHandler.`lifecycle-common` get() = androidxLifecycle("common") version `lifecycle version`
+val DependencyHandler.`lifecycle-process` get() = androidxLifecycle("process") version `lifecycle version`
 val DependencyHandler.`lottie` get() = dependency("com.airbnb.android", module = "lottie") version `lottie version`
 val DependencyHandler.`javax-inject` get() = dependency("javax.inject", module = "javax.inject") version `javax-inject version`
 val DependencyHandler.`ez-vcard` get() = dependency("com.googlecode.ez-vcard", module = "ez-vcard") version `ez-vcard_version`

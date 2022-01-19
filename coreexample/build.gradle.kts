@@ -152,7 +152,6 @@ dependencies {
         `gotev-cookieStore`,
         `hilt-android`,
         `hilt-androidx-workManager`,
-        `lifecycle-extensions`,
         `lifecycle-viewModel`,
         `material`,
 
@@ -167,7 +166,6 @@ dependencies {
         `hilt-android-compiler`,
         `hilt-androidx-compiler`,
         `room-compiler`,
-        `lifecycle-compiler`
     )
 
     // Test

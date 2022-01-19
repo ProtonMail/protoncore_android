@@ -57,7 +57,6 @@ dependencies {
         // Android
         `android-ktx`,
         `hilt-android`,
-        `lifecycle-extensions`,
         `lifecycle-runtime`,
         `room-runtime`,
     )

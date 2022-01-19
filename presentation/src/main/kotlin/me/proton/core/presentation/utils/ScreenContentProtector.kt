@@ -22,8 +22,10 @@ import android.app.Activity
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import me.proton.core.presentation.BuildConfig
 import me.proton.core.util.kotlin.CoreLogger
@@ -92,18 +94,18 @@ class ProtectScreenConfiguration(
 class ActivityScreenContentProtectionDelegate(
     private val activity: ComponentActivity,
     configuration: ProtectScreenConfiguration,
-): ReadOnlyProperty<ComponentActivity, ScreenContentProtector> {
+) : ReadOnlyProperty<ComponentActivity, ScreenContentProtector> {
 
     private val screenProtector = ScreenContentProtector(configuration)
 
-    private val lifecycleObserver = object: LifecycleObserver {
-        @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-        fun onCreate() {
+    private val lifecycleObserver = object : DefaultLifecycleObserver {
+        override fun onCreate(owner: LifecycleOwner) {
+            super.onCreate(owner)
             screenProtector.protect(activity)
         }
 
-        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        fun onDestroy() {
+        override fun onDestroy(owner: LifecycleOwner) {
+            super.onDestroy(owner)
             screenProtector.unprotect(activity)
         }
     }
@@ -121,7 +123,7 @@ class ActivityScreenContentProtectionDelegate(
 class FragmentScreenContentProtectionDelegate(
     private val fragment: Fragment,
     configuration: ProtectScreenConfiguration,
-): ReadOnlyProperty<Fragment, ScreenContentProtector> {
+) : ReadOnlyProperty<Fragment, ScreenContentProtector> {
 
     private val screenProtector = ScreenContentProtector(configuration)
 

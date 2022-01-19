@@ -47,7 +47,8 @@ dependencies {
         `appcompat`,
         `constraint-layout`,
         `fragment`,
-        `lifecycle-extensions`,
+        `lifecycle-common`,
+        `lifecycle-process`,
         `material`
     )
 
