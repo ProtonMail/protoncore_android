@@ -18,9 +18,9 @@
 
 package me.proton.core.presentation.app
 
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.coroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,22 +32,12 @@ import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 
-open class AppLifecycleObserver : AppLifecycleProvider, LifecycleObserver {
+open class AppLifecycleObserver : AppLifecycleProvider, DefaultLifecycleObserver {
 
     private val mutableSharedState = MutableSharedFlow<AppLifecycleProvider.State>(
         replay = 1,
         onBufferOverflow = BufferOverflow.SUSPEND
     )
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    open fun onEnterForeground() {
-        mutableSharedState.tryEmit(AppLifecycleProvider.State.Foreground)
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    open fun onEnterBackground() {
-        mutableSharedState.tryEmit(AppLifecycleProvider.State.Background)
-    }
 
     override val lifecycle: Lifecycle by lazy {
         ProcessLifecycleOwner.get().lifecycle
@@ -57,5 +47,15 @@ open class AppLifecycleObserver : AppLifecycleProvider, LifecycleObserver {
         mutableSharedState
             .onSubscription { withContext(Dispatchers.Main) { lifecycle.addObserver(this@AppLifecycleObserver) } }
             .stateIn(lifecycle.coroutineScope, SharingStarted.Lazily, AppLifecycleProvider.State.Background)
+    }
+
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
+        mutableSharedState.tryEmit(AppLifecycleProvider.State.Foreground)
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
+        mutableSharedState.tryEmit(AppLifecycleProvider.State.Background)
     }
 }

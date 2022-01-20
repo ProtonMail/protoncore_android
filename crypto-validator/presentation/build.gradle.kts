@@ -56,7 +56,6 @@ dependencies {
         `activity`,
         `hilt-android`,
         `hilt-androidx-annotations`,
-        `lifecycle-extensions`,
         `lifecycle-runtime`,
         `lifecycle-viewModel`,
         `material`,

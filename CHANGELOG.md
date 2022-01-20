@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking changes
+
+- `AppLifecycleObserver` now inherits from `DefaultLifecycleObserver`, and the custom methods `onEnterForeground` and `onEnterBackground` have been removed 
+
+### Changes
+
+- Removed lifecycle-extensions which has been deprecated; removed lifecycle-compiler; using lifecycle-common instead
+
 ### Fixes
 
 - Fixed TwoPassModeActivity to let the User retry unlocking primary key.
