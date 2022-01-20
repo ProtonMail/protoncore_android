@@ -21,15 +21,15 @@ package me.proton.core.humanverification.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.domain.entity.Product
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.usecase.GetSettings
 import javax.inject.Inject
@@ -40,25 +40,37 @@ import javax.inject.Inject
 @HiltViewModel
 class HumanVerificationViewModel @Inject constructor(
     private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
+    private val humanVerificationListener: HumanVerificationListener,
     private val accountRepository: AccountRepository,
     private val getSettings: GetSettings,
     private val networkPrefs: NetworkPrefs,
+    private val product: Product,
 ) : ProtonViewModel() {
+
+    private val backgroundContext = Dispatchers.IO + viewModelScope.coroutineContext
 
     val activeAltUrlForDoH: String? get() = networkPrefs.activeAltBaseUrl?.let {
         if (!it.endsWith("/")) "$it/" else it
     }
 
-    suspend fun getHumanVerificationExtraParams() = withContext(Dispatchers.IO) {
+    suspend fun getHumanVerificationExtraParams() = withContext(backgroundContext) {
         val userId = accountRepository.getPrimaryUserId()
-            .firstOrNull() ?: return@withContext null
+            .firstOrNull()
 
-        val settings = getSettings(userId)
-        val defaultCountry = settings.locale?.substringAfter("_")
-        HumanVerificationExtraParams(settings.phone?.value, settings.locale, defaultCountry)
+        val settings = userId?.let { getSettings(it) }
+        val defaultCountry = settings?.locale?.substringAfter("_")
+        HumanVerificationExtraParams(
+            settings?.phone?.value,
+            settings?.locale,
+            defaultCountry,
+            product == Product.Vpn
+        )
     }
 
-    fun onHumanVerificationResult(clientId: ClientId, token: HumanVerificationToken?): Job = viewModelScope.launch {
+    suspend fun onHumanVerificationResult(
+        clientId: ClientId,
+        token: HumanVerificationToken?
+    ): HumanVerificationListener.HumanVerificationResult = withContext(backgroundContext) {
         if (token != null) {
             humanVerificationWorkflowHandler.handleHumanVerificationSuccess(
                 clientId = clientId,
@@ -68,6 +80,7 @@ class HumanVerificationViewModel @Inject constructor(
         } else {
             humanVerificationWorkflowHandler.handleHumanVerificationFailed(clientId = clientId)
         }
+        humanVerificationListener.awaitHumanVerificationProcessFinished(clientId)
     }
 }
 
@@ -75,4 +88,5 @@ data class HumanVerificationExtraParams(
     val recoveryPhone: String?,
     val locale: String?,
     val defaultCountry: String?,
+    val useVPNTheme: Boolean,
 )

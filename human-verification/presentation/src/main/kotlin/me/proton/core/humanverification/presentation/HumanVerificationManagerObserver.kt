@@ -64,7 +64,7 @@ fun HumanVerificationManager.observe(
 ) = HumanVerificationManagerObserver(lifecycle, minActiveState, this)
 
 fun HumanVerificationManagerObserver.onHumanVerificationNeeded(
-    initialState: Boolean = true,
+    initialState: Boolean = false,
     block: suspend (HumanVerificationDetails) -> Unit
 ): HumanVerificationManagerObserver {
     addHumanVerificationStateListener(

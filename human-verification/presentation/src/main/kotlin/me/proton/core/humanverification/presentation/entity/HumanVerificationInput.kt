@@ -28,5 +28,6 @@ data class HumanVerificationInput(
     val clientIdType: String,
     val verificationMethods: List<String>?,
     val verificationToken: String,
-    val recoveryEmailAddress: String? = null
+    val recoveryEmailAddress: String? = null,
+    val isPartOfFlow: Boolean = false,
 ) : Parcelable

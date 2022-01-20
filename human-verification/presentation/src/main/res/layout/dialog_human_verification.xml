@@ -24,15 +24,15 @@
     android:background="?proton_background_norm">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:fitsSystemWindows="true"
-        app:liftOnScroll="true">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?actionBarSize"
             app:menu="@menu/help_menu"
             app:navigationIcon="@drawable/ic_close"
             app:title="@string/human_verification_title"
@@ -40,27 +40,31 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:nestedScrollingEnabled="true"
+        android:background="?proton_background_norm"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <me.proton.core.presentation.ui.webview.ProtonWebView
             android:id="@+id/humanVerificationWebView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:nestedScrollingEnabled="true"/>
-
-        <!-- this should be replaced with a Proton loader animation -->
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:elevation="3dp"
-            android:indeterminate="true"
-            android:indeterminateTint="?attr/brand_norm" />
+            android:visibility="invisible" />
 
-    </FrameLayout>
+    </ScrollView>
+
+    <!-- this should be replaced with a Proton loader animation -->
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="3dp"
+        android:indeterminate="true"
+        android:indeterminateTint="?attr/brand_norm" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -18,22 +18,25 @@
 
 package me.proton.core.humanverification.presentation.ui
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import android.webkit.JavascriptInterface
-import android.webkit.WebChromeClient
 import android.webkit.WebView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.animation.AnimationUtils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.BuildConfig
@@ -52,6 +55,7 @@ import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.client.getId
+import me.proton.core.network.domain.humanverification.HumanVerificationListener.HumanVerificationResult.*
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.errorSnack
@@ -90,16 +94,12 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
     @Inject
     lateinit var networkRequestOverrider: NetworkRequestOverrider
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState).also {
-            it.window?.setWindowAnimations(android.R.style.Animation_Dialog)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val navigationIconId = if (parsedArgs.isPartOfFlow) R.drawable.ic_arrow_back else R.drawable.ic_close
         with(binding) {
             toolbar.apply {
+                navigationIcon = AppCompatResources.getDrawable(requireContext(), navigationIconId)
                 setNavigationOnClickListener {
                     setResultAndDismiss(token = null)
                 }
@@ -115,6 +115,8 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
             }
             setupWebView(humanVerificationWebView)
         }
+
+        observeNestedScroll()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -127,8 +129,8 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
             extraHeaderProvider.headers,
             viewModel.activeAltUrlForDoH,
             networkRequestOverrider,
+            onResourceLoadingError = { setLoading(false) }
         )
-        webView.webChromeClient = HumanVerificationWebChromeClient()
         webView.addJavascriptInterface(VerificationJSInterface(), JS_INTERFACE_NAME)
         // Workaround to get transparent webview background
         webView.setBackgroundColor(Color.argb(1, 255, 255, 255))
@@ -178,7 +180,8 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
             recoveryPhone,
             locale,
             defaultCountry,
-            "theme" to if (useDarkMode) "1" else "2"
+            "theme" to if (useDarkMode) "1" else "2",
+            if (params?.useVPNTheme == true) "vpn" to "true" else null
         ).joinToString("&") { (key, value) ->
             "$key=${URLEncoder.encode(value, Charsets.UTF_8.name())}"
         }
@@ -188,16 +191,24 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
     private fun handleVerificationResponse(response: VerificationResponseMessage) {
         when (response.type) {
             Type.Success -> {
-                val token = requireNotNull(response.payload.token)
-                val tokenType = requireNotNull(response.payload.type)
+                val token = requireNotNull(response.payload?.token)
+                val tokenType = requireNotNull(response.payload?.type)
                 setResultAndDismiss(HumanVerificationToken(token, tokenType))
             }
             Type.Notification -> {
-                val message = requireNotNull(response.payload.text)
-                val messageType = requireNotNull(response.payload.type?.let { MessageType.map[it] })
+                val message = requireNotNull(response.payload?.text)
+                val messageType = requireNotNull(response.payload?.type?.let { MessageType.map[it] })
                 handleNotification(message, messageType)
             }
+            Type.Loaded -> setLoading(false)
             Type.Resize -> {} // No action needed
+        }
+    }
+
+    private fun setLoading(loading: Boolean) {
+        with(binding) {
+            humanVerificationWebView.isVisible = !loading
+            progress.isVisible = loading
         }
     }
 
@@ -211,34 +222,56 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
     }
 
     override fun onBackPressed() {
-        setResultAndDismiss(token = null)
+        with (binding.humanVerificationWebView) {
+            if (canGoBack()) goBack()
+            else setResultAndDismiss(token = null)
+        }
     }
 
-    private fun setResultAndDismiss(token: HumanVerificationToken?) = viewLifecycleOwner.lifecycleScope.launch {
-        viewModel.onHumanVerificationResult(clientId, token).invokeOnCompletion {
-            val result = HumanVerificationResult(
-                clientId = clientId.id,
-                clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
-                token = token
-            )
-            val resultBundle = Bundle().apply {
-                putParcelable(RESULT_HUMAN_VERIFICATION, result)
-            }
-            setFragmentResult(REQUEST_KEY, resultBundle)
+    private fun setResultAndDismiss(token: HumanVerificationToken?) {
+        val result = HumanVerificationResult(
+            clientId = clientId.id,
+            clientIdType = sessionId?.let { ClientIdType.SESSION.value } ?: ClientIdType.COOKIE.value,
+            token = token
+        )
+        val resultBundle = Bundle().apply {
+            putParcelable(RESULT_HUMAN_VERIFICATION, result)
+        }
+        setFragmentResult(REQUEST_KEY, resultBundle)
+
+        lifecycleScope.launch {
+            viewModel.onHumanVerificationResult(clientId, token)
+            // Extra delay for better UX while replacing underlying fragments
+            delay(100)
             dismissAllowingStateLoss()
         }
     }
 
-    /** Automatically shows or hides the progress view according to loading status of the WebView. */
-    inner class HumanVerificationWebChromeClient : WebChromeClient() {
-        override fun onProgressChanged(view: WebView, newProgress: Int) {
-            if (isAdded) {
-                if (newProgress == MAX_PROGRESS && isAdded) {
-                    binding.progress.visibility = View.GONE
-                } else {
-                    binding.progress.visibility = View.VISIBLE
+    private fun observeNestedScroll() {
+        // Since liftOnScroll doesn't seem to work properly with WebViews, we'll animate it manually
+        var previousAnimator: ValueAnimator? = null
+        binding.scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            val context = this.context ?: return@setOnScrollChangeListener
+            val valueAnimator = when {
+                scrollY <= 0 && oldScrollY > 0 -> ValueAnimator.ofFloat(v.elevation, 0f)
+                scrollY > 0 && oldScrollY <= 0 -> {
+                    val toValue = context.resources.getDimension(com.google.android.material.R.dimen.design_appbar_elevation)
+                    ValueAnimator.ofFloat(v.elevation, toValue)
+                }
+                else -> return@setOnScrollChangeListener
+            }.also {
+                it.duration = context.resources.getInteger(
+                    com.google.android.material.R.integer.app_bar_elevation_anim_duration
+                ).toLong()
+                it.interpolator = AnimationUtils.LINEAR_INTERPOLATOR
+                it.addUpdateListener {
+                    binding.appbar.elevation = it.animatedValue as Float
+                    binding.humanVerificationWebView.postInvalidateOnAnimation()
                 }
             }
+            previousAnimator?.cancel()
+            valueAnimator.start()
+            previousAnimator = valueAnimator
         }
     }
 
@@ -248,7 +281,11 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         @JavascriptInterface
         fun dispatch(response: String) {
             val verificationResponse = response.deserializeOrNull<VerificationResponseMessage>()
-            verificationResponse?.let { handleVerificationResponse(it) }
+            verificationResponse?.let {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    handleVerificationResponse(it)
+                }
+            }
         }
     }
 
@@ -260,14 +297,12 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         val startToken: String,
         val verificationMethods: List<String>,
         val recoveryEmail: String?,
+        val isPartOfFlow: Boolean,
     ) : Parcelable
 
     companion object {
 
-        private const val TAG = "HumanVerificationDialogFragment"
-
         private const val ARGS_KEY = "args"
-        private const val MAX_PROGRESS = 100
 
         private const val JS_INTERFACE_NAME = "AndroidInterface"
         internal const val RESULT_HUMAN_VERIFICATION = "result.HumanVerificationResult"
@@ -280,9 +315,18 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
             startToken: String,
             verificationMethods: List<String>,
             recoveryEmail: String?,
+            isPartOfFlow: Boolean,
         ) = HumanVerificationDialogFragment().apply {
             arguments = bundleOf(
-                ARGS_KEY to Args(clientId, clientIdType, baseUrl, startToken, verificationMethods, recoveryEmail)
+                ARGS_KEY to Args(
+                    clientId,
+                    clientIdType,
+                    baseUrl,
+                    startToken,
+                    verificationMethods,
+                    recoveryEmail,
+                    isPartOfFlow,
+                )
             )
         }
     }

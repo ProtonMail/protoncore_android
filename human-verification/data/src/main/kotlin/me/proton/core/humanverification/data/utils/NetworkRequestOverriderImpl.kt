@@ -79,7 +79,14 @@ class NetworkRequestOverriderImpl constructor(
         val mimeType = response.header("content-type", responseBody?.contentType()?.type)
             ?.substringBefore(";")
         val encoding = response.header("content-encoding", "utf-8")
-        return NetworkRequestOverrider.Result(mimeType, encoding, responseBody?.byteStream())
+        return NetworkRequestOverrider.Result(
+            mimeType = mimeType,
+            encoding = encoding,
+            contents = responseBody?.byteStream(),
+            httpStatusCode = response.code,
+            reasonPhrase = response.message,
+            responseHeaders = response.headers.toMap(),
+        )
     }
 
     @VisibleForTesting
