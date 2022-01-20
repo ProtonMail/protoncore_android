@@ -27,7 +27,7 @@ plugins {
 }
 
 proton {
-    apiMode = org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode.Disabled
+    apiModeDisabled()
 }
 
 dependencies {

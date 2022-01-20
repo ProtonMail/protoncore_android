@@ -21,5 +21,17 @@ package me.proton.core.gradle.convention.kotlin
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 public interface KotlinConventionSettings {
-    public val apiMode: ExplicitApiMode
+    public var apiMode: ExplicitApiMode
+
+    public fun apiModeDisabled() {
+        apiMode = ExplicitApiMode.Disabled
+    }
+
+    public fun apiModeStrict() {
+        apiMode = ExplicitApiMode.Strict
+    }
+
+    public fun apiModeWarning() {
+        apiMode = ExplicitApiMode.Warning
+    }
 }
