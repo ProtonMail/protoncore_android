@@ -28,10 +28,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 internal class KotlinConvention : BuildConvention<KotlinConventionSettings> {
     private val defaultCompilerArgs: List<String>
         get() = listOf(
-            "-XXLanguage:+NewInference",
-            // Enables inline classes
-            "-XXLanguage:+InlineClasses",
-            // Enables experimental Coroutines from coroutines-test artifact, like `runBlockingTest`
             "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
             "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
             "-Xopt-in=kotlin.time.ExperimentalTime"

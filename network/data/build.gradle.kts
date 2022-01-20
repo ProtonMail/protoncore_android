@@ -47,7 +47,7 @@ dependencies {
         `android-annotation`,
         `apacheCommon-codec`,
         `gotev-cookieStore`,
-        `miniDsn`,
+        `miniDns`,
         `okHttp-logging`,
         `okhttp-url-connection`,
         `retrofit`,

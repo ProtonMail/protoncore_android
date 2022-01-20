@@ -16,6 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+package me.proton.core.gradle.plugin
+
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

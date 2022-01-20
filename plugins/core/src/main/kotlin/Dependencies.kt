@@ -63,8 +63,8 @@ public val DependencyHandler.`compose-ui-test-junit`: Any
 // endregion
 
 // Network
-public val DependencyHandler.miniDsn: Any
-    get() = dependency("org.minidns", module = "minidns-hla") version `miniDsn version`
+public val DependencyHandler.miniDns: Any
+    get() = dependency("org.minidns", module = "minidns-hla") version `miniDns version`
 public val DependencyHandler.`retrofit-scalars-converter`: Any
     get() = squareup("retrofit2", "converter-scalars") version `retrofit version`
 public val DependencyHandler.`okhttp-url-connection`: Any

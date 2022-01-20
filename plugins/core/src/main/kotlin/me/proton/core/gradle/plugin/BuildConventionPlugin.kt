@@ -22,12 +22,14 @@ import applyRepositories
 import initVersions
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.kotlin.dsl.getByType
 import javax.annotation.OverridingMethodsMustInvokeSuper
 
 public abstract class BuildConventionPlugin : Plugin<Project> {
     @OverridingMethodsMustInvokeSuper
     override fun apply(target: Project) {
-        initVersions()
+        initVersions(target.rootProject.extensions.getByType<VersionCatalogsExtension>().named("libs"))
         target.applyRepositories()
     }
 }
