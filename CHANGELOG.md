@@ -66,6 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changes
 
 - Bump Store4 to 4.0.4-KT15 (compatible with Kotlin 1.5 & 1.6, Duration).
+- Update gopenpgp to v2.4.2: fixes related to the new AEAD feature of openPGP keys.
 
 ### Fixes
 
