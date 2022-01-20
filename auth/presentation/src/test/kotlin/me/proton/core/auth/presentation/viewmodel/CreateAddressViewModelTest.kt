@@ -155,7 +155,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
     @Test
     fun `setup cannot unlock`() = coroutinesTest {
         // GIVEN
-        mockPostLoginAccountSetup(PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey(mockk()))
+        mockPostLoginAccountSetup(PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError(mockk()))
 
         viewModel.state.test {
             // WHEN
@@ -166,7 +166,7 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
 
             assertIs<CreateAddressViewModel.State.Processing>(awaitItem())
             val accountSetupResult = assertIs<CreateAddressViewModel.State.AccountSetupResult>(awaitItem())
-            assertIs<PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey>(accountSetupResult.result)
+            assertIs<PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError>(accountSetupResult.result)
 
             cancelAndIgnoreRemainingEvents()
         }

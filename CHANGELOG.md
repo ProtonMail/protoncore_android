@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixes
+
+- Fixed TwoPassModeActivity to let the User retry unlocking primary key.
+
 ## [6.0.0]
 
 ### Dependency Updates

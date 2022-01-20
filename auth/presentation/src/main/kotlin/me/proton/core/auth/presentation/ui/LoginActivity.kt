@@ -96,7 +96,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
         when (result) {
-            is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockUserError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result.error)
             is PostLoginAccountSetup.Result.Need.ChangePassword -> onChangePassword()
             is PostLoginAccountSetup.Result.Need.ChooseUsername -> onSuccess(result.userId, NextStep.ChooseAddress)

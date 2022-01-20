@@ -39,6 +39,7 @@ import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.presentation.utils.validatePassword
+import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.exhaustive
 
 /**
@@ -90,13 +91,14 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
         when (result) {
-            is PostLoginAccountSetup.Result.Error.CannotUnlockPrimaryKey -> onUnlockUserError(result.error)
+            is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockPrimaryKeyError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result)
-            is PostLoginAccountSetup.Result.Need.ChangePassword -> Unit // Ignored.
-            is PostLoginAccountSetup.Result.Need.ChooseUsername -> Unit // Ignored.
-            is PostLoginAccountSetup.Result.Need.SecondFactor -> Unit // Ignored.
-            is PostLoginAccountSetup.Result.Need.TwoPassMode -> Unit // Ignored.
             is PostLoginAccountSetup.Result.UserUnlocked -> onSuccess(result.userId)
+
+            is PostLoginAccountSetup.Result.Need.ChangePassword,
+            is PostLoginAccountSetup.Result.Need.ChooseUsername,
+            is PostLoginAccountSetup.Result.Need.SecondFactor,
+            is PostLoginAccountSetup.Result.Need.TwoPassMode -> Unit // Ignored.
         }.exhaustive
     }
 
@@ -119,6 +121,14 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
             .putExtra(ARG_RESULT, TwoPassModeResult(userId.id))
         setResult(Activity.RESULT_OK, intent)
         finish()
+    }
+
+    private fun onUnlockPrimaryKeyError(error: UserManager.UnlockResult.Error) {
+        onUnlockUserError(error)
+        // If not recoverable -> finish.
+        if (error !is UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase) {
+            finish()
+        }
     }
 
     override fun onError(triggerValidation: Boolean, message: String?) {
