@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Don't show plans screen for VPN.
   - Make navigating to and from the the HV screen look like part of the sign up or log in flows.
   - Don't retry a past failed HV attempt by default when restarting the app.
+- Fix ConfirmPassword dialog crash on API 23
 
 ## [6.0.0]
 
