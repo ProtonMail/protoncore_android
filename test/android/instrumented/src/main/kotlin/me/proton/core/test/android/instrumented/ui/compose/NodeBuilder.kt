@@ -35,15 +35,33 @@ import androidx.compose.ui.test.printToLog
 import androidx.compose.ui.text.input.ImeAction
 import me.proton.core.test.android.instrumented.FusionConfig
 import me.proton.core.test.android.instrumented.utils.StringUtils
-import java.util.ArrayList
 
-open class NodeBuilder {
+open class NodeBuilder<T> {
     var shouldUseUnmergedTree: Boolean = false
+    var timeoutMillis: Long = 10_000L
+
     private val semanticsMatchers = ArrayList<SemanticsMatcher>()
 
-    /**
-     * Final semantic matcher
-     */
+    @Suppress("UNCHECKED_CAST")
+    private fun addSemanticMatcher(matcher: SemanticsMatcher): T {
+        semanticsMatchers.add(matcher)
+        return this as T
+    }
+
+    /** Settings wrappers **/
+    @Suppress("UNCHECKED_CAST")
+    fun withUnmergedTree(): T {
+        shouldUseUnmergedTree = true
+        return this as T
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun withTimeout(timeout: Long): T {
+        timeoutMillis = timeout
+        return this as T
+    }
+
+    /** Final semantic matcher */
     fun semanticMatcher(): SemanticsMatcher {
         try {
             var finalSemanticMatcher = semanticsMatchers.first()
@@ -57,165 +75,103 @@ open class NodeBuilder {
     }
 
     /** Node filters **/
-    fun withText(@StringRes textId: Int, substring: Boolean = false, ignoreCase: Boolean = true) = apply {
-        withText(StringUtils.stringFromResource(textId, substring, ignoreCase))
-    }
 
-    fun withText(text: String, substring: Boolean = false, ignoreCase: Boolean = true) = apply {
-        semanticsMatchers.add(hasText(text, substring, ignoreCase))
-    }
-
-    fun containsText(@StringRes textId: Int) = apply {
-        withText(StringUtils.stringFromResource(textId), substring = true, ignoreCase = false)
-    }
-
-    fun containsText(text: String) = apply {
-        withText(text, substring = true, ignoreCase = false)
-    }
+    fun withText(text: String, substring: Boolean = false, ignoreCase: Boolean = true) =
+        addSemanticMatcher(hasText(text, substring, ignoreCase))
 
     fun withContentDesc(contentDescriptionText: String, substring: Boolean = false, ignoreCase: Boolean = true) =
-        apply {
-            semanticsMatchers.add(hasContentDescription(contentDescriptionText, substring, ignoreCase))
-        }
+        addSemanticMatcher(hasContentDescription(contentDescriptionText, substring, ignoreCase))
 
+    /** withText filters **/
+
+    fun withText(@StringRes textId: Int, substring: Boolean = false, ignoreCase: Boolean = true): T =
+        withText(StringUtils.stringFromResource(textId, substring, ignoreCase))
+
+    fun containsText(@StringRes textId: Int): T =
+        withText(StringUtils.stringFromResource(textId), substring = true, ignoreCase = false)
+
+    fun containsText(text: String): T =
+        withText(text, substring = true, ignoreCase = false)
+
+    /** withContentDesc filters **/
     fun withContentDesc(
         @StringRes contentDescriptionTextId: Int,
         substring: Boolean = false,
         ignoreCase: Boolean = true
-    ) = apply {
-        withContentDesc(StringUtils.stringFromResource(contentDescriptionTextId, substring, ignoreCase))
-    }
+    ): T = withContentDesc(StringUtils.stringFromResource(contentDescriptionTextId, substring, ignoreCase))
 
-    fun withContentDescContains(@StringRes textId: Int) = apply {
+    fun withContentDescContains(@StringRes textId: Int): T =
         withContentDesc(StringUtils.stringFromResource(textId), substring = true, ignoreCase = false)
-    }
 
-    fun withContentDescContains(contentDescriptionText: String) = apply {
+    fun withContentDescContains(contentDescriptionText: String): T =
         withContentDesc(contentDescriptionText, substring = true, ignoreCase = false)
-    }
 
-    fun withUnmergedTree() = apply {
-        shouldUseUnmergedTree = true
-    }
+    fun withTag(tag: String): T = addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.TestTag, tag))
 
-    fun withTag(tag: String) = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.TestTag, tag))
-    }
+    fun withProgressBarRangeInfo(rangeInfo: ProgressBarRangeInfo) =
+        addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.ProgressBarRangeInfo, rangeInfo))
 
-    fun isClickable() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
-    }
+    fun isClickable(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsActions.OnClick))
 
-    fun isNotClickable() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyNotDefined(SemanticsActions.OnClick))
-    }
+    fun isNotClickable(): T = addSemanticMatcher(SemanticsMatcher.keyNotDefined(SemanticsActions.OnClick))
 
-    fun isChecked() = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.On))
-    }
+    fun isChecked(): T =
+        addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.On))
 
-    fun isNotChecked() = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.Off))
-    }
+    fun isNotChecked(): T =
+        addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.ToggleableState, ToggleableState.Off))
 
-    fun isCheckable() =
-        apply { semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsProperties.ToggleableState)) }
+    fun isCheckable(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsProperties.ToggleableState))
 
-    fun isEnabled() = apply {
-        semanticsMatchers.add(!SemanticsMatcher.keyIsDefined(SemanticsProperties.Disabled))
-    }
+    fun isEnabled(): T = addSemanticMatcher(!SemanticsMatcher.keyIsDefined(SemanticsProperties.Disabled))
 
-    fun isDisabled() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsProperties.Disabled))
-    }
+    fun isDisabled(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsProperties.Disabled))
 
-    fun isFocusable() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsProperties.Focused))
-    }
+    fun isFocusable(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsProperties.Focused))
 
-    fun isNotFocusable() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyNotDefined(SemanticsProperties.Focused))
-    }
+    fun isNotFocusable(): T = addSemanticMatcher(SemanticsMatcher.keyNotDefined(SemanticsProperties.Focused))
 
-    fun isFocused() = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.Focused, true))
-    }
+    fun isFocused(): T = addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.Focused, true))
 
-    fun isNotFocused() = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.Focused, false))
-    }
+    fun isNotFocused(): T = addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.Focused, false))
 
-    fun isSelected() = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.Selected, true))
-    }
+    fun isSelected(): T = addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.Selected, true))
 
-    fun isNotSelected() = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.Selected, false))
-    }
+    fun isNotSelected(): T = addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.Selected, false))
 
-    fun isSelectable() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsProperties.Selected))
-    }
+    fun isSelectable(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsProperties.Selected))
 
-    fun isScrollable() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsActions.ScrollBy))
-    }
+    fun isScrollable(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsActions.ScrollBy))
 
-    fun isNotScrollable() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyNotDefined(SemanticsActions.ScrollBy))
-    }
+    fun isNotScrollable(): T = addSemanticMatcher(SemanticsMatcher.keyNotDefined(SemanticsActions.ScrollBy))
 
-    fun isHeading() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
-    }
+    fun isHeading(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsProperties.Heading))
 
-    fun isDialog() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsProperties.IsDialog))
-    }
+    fun isDialog(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsProperties.IsDialog))
 
-    fun isPopup() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsProperties.IsPopup))
-    }
+    fun isPopup(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsProperties.IsPopup))
 
-    fun isRoot() = apply {
-        semanticsMatchers.add(SemanticsMatcher("isRoot") { it.isRoot })
-    }
+    fun isRoot(): T = addSemanticMatcher(SemanticsMatcher("isRoot") { it.isRoot })
 
-    fun withProgressBarRangeInfo(rangeInfo: ProgressBarRangeInfo) = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.ProgressBarRangeInfo, rangeInfo))
-    }
+    fun hasStateDescription(stateDescription: String) =
+        addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, stateDescription))
 
-    fun hasStateDescription(stateDescription: String) = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, stateDescription))
-    }
+    fun hasImeAction(imeAction: ImeAction) =
+        addSemanticMatcher(SemanticsMatcher.expectValue(SemanticsProperties.ImeAction, imeAction))
 
-    fun hasImeAction(imeAction: ImeAction) = apply {
-        semanticsMatchers.add(SemanticsMatcher.expectValue(SemanticsProperties.ImeAction, imeAction))
-    }
+    fun hasSetTextAction(): T = addSemanticMatcher(SemanticsMatcher.keyIsDefined(SemanticsActions.SetText))
 
-    fun hasSetTextAction() = apply {
-        semanticsMatchers.add(SemanticsMatcher.keyIsDefined(SemanticsActions.SetText))
-    }
+    fun isDescendantOf(ancestorNode: OnNode) = addSemanticMatcher(hasAnyAncestor(ancestorNode.semanticMatcher()))
 
-    fun isDescendantOf(ancestorNode: OnNode) = apply {
-        semanticsMatchers.add(hasAnyAncestor(ancestorNode.semanticMatcher()))
-    }
+    fun hasParent(parentNode: OnNode) = addSemanticMatcher(parentNode.semanticMatcher())
 
-    fun hasParent(parentNode: OnNode) = apply {
-        semanticsMatchers.add(parentNode.semanticMatcher())
-    }
+    fun hasChild(childNode: OnNode) = addSemanticMatcher(hasAnyChild(childNode.semanticMatcher()))
 
-    fun hasChild(childNode: OnNode) = apply {
-        semanticsMatchers.add(hasAnyChild(childNode.semanticMatcher()))
-    }
+    fun hasSibling(siblingNode: OnNode) = addSemanticMatcher(hasAnySibling(siblingNode.semanticMatcher()))
 
-    fun hasSibling(siblingNode: OnNode) = apply {
-        semanticsMatchers.add(hasAnySibling(siblingNode.semanticMatcher()))
-    }
+    fun hasDescendant(descendantNode: OnNode) = addSemanticMatcher(hasAnyDescendant(descendantNode.semanticMatcher()))
 
-    fun hasDescendant(descendantNode: OnNode) = apply {
-        semanticsMatchers.add(hasAnyDescendant(descendantNode.semanticMatcher()))
-    }
+    /** Helpers **/
 
     fun handlePrint(action: () -> Any) {
         try {
@@ -224,6 +180,7 @@ open class NodeBuilder {
             if (FusionConfig.compose.shouldPrintHierarchyOnFailure) {
                 FusionConfig.compose.testRule.onRoot().printToLog(FusionConfig.fusionTag)
             }
+            throw e
         }
     }
 }
