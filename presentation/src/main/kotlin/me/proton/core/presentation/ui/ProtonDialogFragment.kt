@@ -46,7 +46,7 @@ abstract class ProtonDialogFragment : DialogFragment {
         setStyle(STYLE_NO_FRAME, getStyleResource() ?: theme ?: 0)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+    final override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = object : Dialog(requireContext(), theme) {
             override fun onBackPressed() {
                 this@ProtonDialogFragment.onBackPressed()

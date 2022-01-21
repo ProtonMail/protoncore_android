@@ -111,7 +111,7 @@ public abstract class me/proton/core/presentation/ui/ProtonDialogFragment : andr
 	protected fun getStyleResource ()Ljava/lang/Integer;
 	protected abstract fun onBackPressed ()V
 	public fun onCreate (Landroid/os/Bundle;)V
-	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
+	public final fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
 }
 
 public abstract class me/proton/core/presentation/ui/ProtonFragment : androidx/fragment/app/Fragment {
