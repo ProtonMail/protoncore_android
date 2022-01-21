@@ -99,53 +99,56 @@ public final class me/proton/core/test/android/instrumented/rules/RetryRule : or
 
 public class me/proton/core/test/android/instrumented/ui/compose/NodeBuilder {
 	public fun <init> ()V
-	public final fun containsText (I)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun containsText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
+	public final fun containsText (I)Ljava/lang/Object;
+	public final fun containsText (Ljava/lang/String;)Ljava/lang/Object;
 	public final fun getShouldUseUnmergedTree ()Z
+	public final fun getTimeoutMillis ()J
 	public final fun handlePrint (Lkotlin/jvm/functions/Function0;)V
-	public final fun hasChild (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun hasDescendant (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun hasImeAction-KlQnJC8 (I)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun hasParent (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun hasSetTextAction ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun hasSibling (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun hasStateDescription (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isCheckable ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isChecked ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isClickable ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isDescendantOf (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isDialog ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isDisabled ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isEnabled ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isFocusable ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isFocused ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isHeading ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isNotChecked ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isNotClickable ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isNotFocusable ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isNotFocused ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isNotScrollable ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isNotSelected ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isPopup ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isRoot ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isScrollable ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isSelectable ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun isSelected ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
+	public final fun hasChild (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Ljava/lang/Object;
+	public final fun hasDescendant (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Ljava/lang/Object;
+	public final fun hasImeAction-KlQnJC8 (I)Ljava/lang/Object;
+	public final fun hasParent (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Ljava/lang/Object;
+	public final fun hasSetTextAction ()Ljava/lang/Object;
+	public final fun hasSibling (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Ljava/lang/Object;
+	public final fun hasStateDescription (Ljava/lang/String;)Ljava/lang/Object;
+	public final fun isCheckable ()Ljava/lang/Object;
+	public final fun isChecked ()Ljava/lang/Object;
+	public final fun isClickable ()Ljava/lang/Object;
+	public final fun isDescendantOf (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;)Ljava/lang/Object;
+	public final fun isDialog ()Ljava/lang/Object;
+	public final fun isDisabled ()Ljava/lang/Object;
+	public final fun isEnabled ()Ljava/lang/Object;
+	public final fun isFocusable ()Ljava/lang/Object;
+	public final fun isFocused ()Ljava/lang/Object;
+	public final fun isHeading ()Ljava/lang/Object;
+	public final fun isNotChecked ()Ljava/lang/Object;
+	public final fun isNotClickable ()Ljava/lang/Object;
+	public final fun isNotFocusable ()Ljava/lang/Object;
+	public final fun isNotFocused ()Ljava/lang/Object;
+	public final fun isNotScrollable ()Ljava/lang/Object;
+	public final fun isNotSelected ()Ljava/lang/Object;
+	public final fun isPopup ()Ljava/lang/Object;
+	public final fun isRoot ()Ljava/lang/Object;
+	public final fun isScrollable ()Ljava/lang/Object;
+	public final fun isSelectable ()Ljava/lang/Object;
+	public final fun isSelected ()Ljava/lang/Object;
 	public final fun semanticMatcher ()Landroidx/compose/ui/test/SemanticsMatcher;
 	public final fun setShouldUseUnmergedTree (Z)V
-	public final fun withContentDesc (IZZ)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun withContentDesc (Ljava/lang/String;ZZ)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public static synthetic fun withContentDesc$default (Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;IZZILjava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public static synthetic fun withContentDesc$default (Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;Ljava/lang/String;ZZILjava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun withContentDescContains (I)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun withContentDescContains (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun withProgressBarRangeInfo (Landroidx/compose/ui/semantics/ProgressBarRangeInfo;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun withTag (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun withText (IZZ)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun withText (Ljava/lang/String;ZZ)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public static synthetic fun withText$default (Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;IZZILjava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public static synthetic fun withText$default (Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;Ljava/lang/String;ZZILjava/lang/Object;)Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
-	public final fun withUnmergedTree ()Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;
+	public final fun setTimeoutMillis (J)V
+	public final fun withContentDesc (IZZ)Ljava/lang/Object;
+	public final fun withContentDesc (Ljava/lang/String;ZZ)Ljava/lang/Object;
+	public static synthetic fun withContentDesc$default (Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;IZZILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun withContentDesc$default (Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;Ljava/lang/String;ZZILjava/lang/Object;)Ljava/lang/Object;
+	public final fun withContentDescContains (I)Ljava/lang/Object;
+	public final fun withContentDescContains (Ljava/lang/String;)Ljava/lang/Object;
+	public final fun withProgressBarRangeInfo (Landroidx/compose/ui/semantics/ProgressBarRangeInfo;)Ljava/lang/Object;
+	public final fun withTag (Ljava/lang/String;)Ljava/lang/Object;
+	public final fun withText (IZZ)Ljava/lang/Object;
+	public final fun withText (Ljava/lang/String;ZZ)Ljava/lang/Object;
+	public static synthetic fun withText$default (Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;IZZILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun withText$default (Lme/proton/core/test/android/instrumented/ui/compose/NodeBuilder;Ljava/lang/String;ZZILjava/lang/Object;)Ljava/lang/Object;
+	public final fun withTimeout (J)Ljava/lang/Object;
+	public final fun withUnmergedTree ()Ljava/lang/Object;
 }
 
 public final class me/proton/core/test/android/instrumented/ui/compose/OnAllNodes : me/proton/core/test/android/instrumented/ui/compose/NodeBuilder {
@@ -186,7 +189,7 @@ public final class me/proton/core/test/android/instrumented/ui/compose/OnNode : 
 	public final fun checkNotClickable ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun checkNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun checkNotEnabled ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
-	public final fun checkNotExist ()V
+	public final fun checkNotExist ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun checkNotFocused ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun checkNotSelected ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun checkProgressBar (Landroidx/compose/ui/semantics/ProgressBarRangeInfo;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
@@ -195,7 +198,9 @@ public final class me/proton/core/test/android/instrumented/ui/compose/OnNode : 
 	public final fun checkTextEquals (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun clearText ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
 	public final fun click ()Lme/proton/core/test/android/instrumented/ui/compose/OnNode;
-	public final fun nodeInteraction ()Landroidx/compose/ui/test/SemanticsNodeInteraction;
+	public final fun exists ()Z
+	public final fun nodeInteraction (ZJ)Landroidx/compose/ui/test/SemanticsNodeInteraction;
+	public static synthetic fun nodeInteraction$default (Lme/proton/core/test/android/instrumented/ui/compose/OnNode;ZJILjava/lang/Object;)Landroidx/compose/ui/test/SemanticsNodeInteraction;
 	public final fun onAncestors ()Lme/proton/core/test/android/instrumented/ui/compose/OnAllNodes;
 	public final fun onChild ()Landroidx/compose/ui/test/SemanticsNodeInteraction;
 	public final fun onChildAt (I)Landroidx/compose/ui/test/SemanticsNodeInteraction;

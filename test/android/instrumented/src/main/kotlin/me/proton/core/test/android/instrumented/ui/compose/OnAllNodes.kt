@@ -35,15 +35,29 @@ import me.proton.core.test.android.instrumented.FusionConfig
  */
 class OnAllNodes(
     private val interaction: SemanticsNodeInteractionCollection? = null,
-) : NodeBuilder() {
+) : NodeBuilder<OnAllNodes>() {
 
     private fun toNodes(action: () -> SemanticsNodeInteractionCollection) =
         handlePrint {
-            if (FusionConfig.compose.shouldPrintToLog) action().printToLog(FusionConfig.fusionTag) else action()
+            if (FusionConfig.compose.shouldPrintToLog)
+                action().printToLog(FusionConfig.fusionTag)
+            else
+                action()
         }
 
-    private fun nodeInteraction(): SemanticsNodeInteractionCollection =
-        interaction ?: FusionConfig.compose.testRule.onAllNodes(semanticMatcher(), shouldUseUnmergedTree)
+    private fun nodeInteraction(doesNotExist: Boolean = false): SemanticsNodeInteractionCollection {
+        if (interaction == null) {
+            val newInteraction = FusionConfig.compose.testRule.onAllNodes(
+                semanticMatcher(),
+                shouldUseUnmergedTree
+            )
+            if (!doesNotExist) {
+                FusionConfig.compose.testRule.waitUntil(timeoutMillis) { this.onFirst().exists() }
+            }
+            return newInteraction
+        }
+        return interaction
+    }
 
     /** Node selectors **/
 

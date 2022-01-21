@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.instrumented.ui.compose
 
+import android.util.Log
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.semantics.AccessibilityAction
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
@@ -61,16 +62,28 @@ import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.printToLog
 import me.proton.core.test.android.instrumented.FusionConfig
+import me.proton.core.test.android.instrumented.ProtonTest
 
 /**
  * Contains identifiers, actions, and checks for Compose UI onNode element, i.e. [SemanticsNodeInteraction].
  */
 class OnNode(
     private val interaction: SemanticsNodeInteraction? = null,
-) : NodeBuilder() {
+) : NodeBuilder<OnNode>() {
 
-    fun nodeInteraction(): SemanticsNodeInteraction =
-        interaction ?: FusionConfig.compose.testRule.onNode(semanticMatcher(), shouldUseUnmergedTree)
+    fun nodeInteraction(doesNotExist: Boolean = false, timeout: Long = 10_000L): SemanticsNodeInteraction {
+        if (interaction == null) {
+            val newInteraction = FusionConfig.compose.testRule.onNode(
+                semanticMatcher(),
+                shouldUseUnmergedTree
+            )
+            if (!doesNotExist) {
+                FusionConfig.compose.testRule.waitUntil(timeout) { exists() }
+            }
+            return newInteraction
+        }
+        return interaction
+    }
 
     private fun toNode(action: () -> SemanticsNodeInteraction) =
         handlePrint {
@@ -101,7 +114,7 @@ class OnNode(
     /** Node checks **/
     fun checkExist() = apply { toNode { nodeInteraction().assertExists() } }
 
-    fun checkNotExist() = nodeInteraction().assertDoesNotExist()
+    fun checkNotExist() = apply { nodeInteraction(doesNotExist = true).assertDoesNotExist() }
 
     fun checkDisplayed() = apply { toNode { nodeInteraction().assertIsDisplayed() } }
 
@@ -182,4 +195,16 @@ class OnNode(
     fun onSiblings() = OnAllNodes(nodeInteraction().onSiblings())
 
     fun onAncestors() = OnAllNodes(nodeInteraction().onAncestors())
+
+    /** Helpers **/
+    fun exists(): Boolean {
+        try {
+            checkExist()
+        } catch (e: Exception) {
+            val firstLine = e.message?.split("\n")?.get(0)
+            Log.v(ProtonTest.testTag,"Waiting for condition. Status: $firstLine")
+            return false
+        }
+        return true
+    }
 }
