@@ -22,13 +22,12 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.data.arch.ProtonStore
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.UserId
@@ -57,7 +56,7 @@ class LabelRepositoryImpl @Inject constructor(
 
     private data class StoreKey(val userId: UserId, val type: LabelType)
 
-    private val store: Store<StoreKey, List<Label>> = StoreBuilder.from(
+    private val store: ProtonStore<StoreKey, List<Label>> = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey ->
             remoteDataSource.getLabels(key.userId, key.type).also { fresh[key] = true }
         },
@@ -69,7 +68,7 @@ class LabelRepositoryImpl @Inject constructor(
             },
             writer = { _, labels -> localDataSource.upsertLabel(labels) },
         )
-    ).build()
+    ).buildProtonStore()
 
     override fun observeLabels(userId: UserId, type: LabelType, refresh: Boolean): Flow<DataResult<List<Label>>> =
         StoreKey(userId = userId, type = type).let { key ->

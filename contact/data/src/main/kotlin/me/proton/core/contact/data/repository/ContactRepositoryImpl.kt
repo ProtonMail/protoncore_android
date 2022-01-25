@@ -20,11 +20,8 @@ package me.proton.core.contact.data.repository
 
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.Store
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.contact.domain.entity.Contact
@@ -35,6 +32,8 @@ import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.contact.domain.repository.ContactLocalDataSource
 import me.proton.core.contact.domain.repository.ContactRemoteDataSource
 import me.proton.core.contact.domain.repository.ContactRepository
+import me.proton.core.data.arch.ProtonStore
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.mapSuccess
@@ -51,7 +50,7 @@ class ContactRepositoryImpl @Inject constructor(
     private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)
 
     private val contactDetailFetchedOnce = mutableMapOf<ContactId, Boolean>()
-    private val contactWithCardsStore: Store<ContactStoreKey, ContactWithCards> = StoreBuilder.from(
+    private val contactWithCardsStore: ProtonStore<ContactStoreKey, ContactWithCards> = StoreBuilder.from(
         fetcher = Fetcher.of { key: ContactStoreKey ->
             val contactWithCards = remoteDataSource.getContactWithCards(key.userId, key.contactId)
             contactDetailFetchedOnce[key.contactId] = true
@@ -72,10 +71,10 @@ class ContactRepositoryImpl @Inject constructor(
             delete = { key -> localDataSource.deleteContacts(key.contactId) },
             deleteAll = localDataSource::deleteAllContacts
         )
-    ).build()
+    ).buildProtonStore()
 
     private val allContactsFetchedOnce = mutableMapOf<UserId, Boolean>()
-    private val allContactsStore: Store<UserId, List<Contact>> = StoreBuilder.from(
+    private val allContactsStore: ProtonStore<UserId, List<Contact>> = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
             val contacts = remoteDataSource.getAllContacts(userId)
             allContactsFetchedOnce[userId] = true
@@ -92,7 +91,7 @@ class ContactRepositoryImpl @Inject constructor(
             delete = { userId -> localDataSource.deleteAllContacts(userId) },
             deleteAll = localDataSource::deleteAllContacts
         )
-    ).build()
+    ).buildProtonStore()
 
     override fun observeContactWithCards(
         userId: UserId,

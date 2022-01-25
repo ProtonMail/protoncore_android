@@ -9,6 +9,23 @@ public final class me/proton/core/data/arch/ApiResultMapperKt {
 	public static final fun toDataResult (Lme/proton/core/network/domain/ApiResult;)Lme/proton/core/domain/arch/DataResult;
 }
 
+public final class me/proton/core/data/arch/ProtonStore : com/dropbox/android/external/store4/Store {
+	public fun <init> (Lcom/dropbox/android/external/store4/Store;)V
+	public fun clear (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun clearAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun fresh (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun get (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun stream (Lcom/dropbox/android/external/store4/StoreRequest;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/data/arch/StoreException : java/io/IOException {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/data/arch/StoreExtensionsKt {
+	public static final fun buildProtonStore (Lcom/dropbox/android/external/store4/StoreBuilder;)Lme/proton/core/data/arch/ProtonStore;
+}
+
 public final class me/proton/core/data/arch/StoreResponseMapperKt {
 	public static final fun toDataResult (Lcom/dropbox/android/external/store4/StoreResponse;)Lme/proton/core/domain/arch/DataResult;
 }

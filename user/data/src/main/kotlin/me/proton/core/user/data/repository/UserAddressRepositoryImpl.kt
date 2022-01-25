@@ -22,14 +22,13 @@ import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.data.arch.toDataResult
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
@@ -89,7 +88,7 @@ class UserAddressRepositoryImpl(
             delete = null, // Not used.
             deleteAll = null // Not used.
         )
-    ).build()
+    ).buildProtonStore()
 
     init {
         userRepository.addOnPassphraseChangedListener(this)

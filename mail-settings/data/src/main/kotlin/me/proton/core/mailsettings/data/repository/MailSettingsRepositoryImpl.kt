@@ -22,10 +22,9 @@ import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.UserId
@@ -91,7 +90,7 @@ class MailSettingsRepositoryImpl(
             delete = { key -> delete(key) },
             deleteAll = { deleteAll() }
         )
-    ).build()
+    ).buildProtonStore()
 
     private fun observeByUserId(userId: UserId): Flow<MailSettings?> =
         mailSettingsDao.observeByUserId(userId).map { it?.fromEntity() }
