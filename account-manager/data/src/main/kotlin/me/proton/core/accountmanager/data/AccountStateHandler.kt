@@ -27,6 +27,7 @@ import me.proton.core.accountmanager.data.job.onInvalidUserKey
 import me.proton.core.accountmanager.data.job.onMigrationNeeded
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.migrator.AccountMigrator
+import me.proton.core.domain.entity.Product
 import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
@@ -39,22 +40,25 @@ class AccountStateHandler @Inject constructor(
     internal val userManager: UserManager,
     internal val accountManager: AccountManager,
     private val accountRepository: AccountRepository,
-    private val accountMigrator: AccountMigrator
+    private val accountMigrator: AccountMigrator,
+    private val product: Product,
 ) {
     fun start() {
         disableInitialNotReadyAccounts()
         onMigrationNeeded { userId ->
             accountMigrator.migrate(userId)
         }
-        onInvalidUserKey { userId ->
-            CoreLogger.i(LogTag.INVALID_USER_KEY, "$userId")
-            accountRepository.updateAccountState(userId, AccountState.UserKeyCheckFailed)
-            accountManager.disableAccount(userId)
-        }
-        onInvalidUserAddressKey { userId ->
-            CoreLogger.i(LogTag.INVALID_USER_ADDRESS_KEY, "$userId")
-            accountRepository.updateAccountState(userId, AccountState.UserAddressKeyCheckFailed)
-            accountManager.disableAccount(userId)
+        if (product != Product.Vpn) {
+            onInvalidUserKey { userId ->
+                CoreLogger.i(LogTag.INVALID_USER_KEY, "$userId")
+                accountRepository.updateAccountState(userId, AccountState.UserKeyCheckFailed)
+                accountManager.disableAccount(userId)
+            }
+            onInvalidUserAddressKey { userId ->
+                CoreLogger.i(LogTag.INVALID_USER_ADDRESS_KEY, "$userId")
+                accountRepository.updateAccountState(userId, AccountState.UserAddressKeyCheckFailed)
+                accountManager.disableAccount(userId)
+            }
         }
     }
 }
@@ -65,4 +69,7 @@ object LogTag {
 
     /** Tag for Invalid UserAddress Key. */
     const val INVALID_USER_ADDRESS_KEY = "core.accountmanager.invalid.useraddress.key"
+
+    /** Default tag for any other issue we need to log */
+    const val DEFAULT = "core.accountmanager.default"
 }

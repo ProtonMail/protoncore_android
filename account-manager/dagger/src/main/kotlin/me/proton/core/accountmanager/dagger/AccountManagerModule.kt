@@ -110,9 +110,10 @@ object AccountManagerModule {
         userManager: UserManager,
         accountManager: AccountManager,
         accountRepository: AccountRepository,
-        accountMigrator: AccountMigrator
+        accountMigrator: AccountMigrator,
+        product: Product,
     ): AccountStateHandler =
-        AccountStateHandler(scope, userManager, accountManager, accountRepository, accountMigrator)
+        AccountStateHandler(scope, userManager, accountManager, accountRepository, accountMigrator, product)
 
     @Provides
     @Singleton

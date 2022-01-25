@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
@@ -58,4 +58,4 @@ fun AccountManager.getPrimaryAccount(): Flow<Account?> =
  * Flow of [List] of Accounts filtered by [Account.state].
  */
 fun AccountManager.getAccounts(vararg state: AccountState): Flow<List<Account>> =
-    getAccounts().map { list -> list.filter { it.state in state } }.distinctUntilChanged()
+    getAccounts().mapLatest { list -> list.filter { it.state in state } }.distinctUntilChanged()

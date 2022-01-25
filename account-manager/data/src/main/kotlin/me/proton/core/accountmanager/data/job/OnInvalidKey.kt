@@ -18,6 +18,7 @@
 
 package me.proton.core.accountmanager.data.job
 
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
@@ -25,11 +26,13 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.data.AccountStateHandler
+import me.proton.core.accountmanager.data.LogTag
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.arch.mapSuccessValueOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.user.domain.extension.hasMigratedKey
+import me.proton.core.util.kotlin.CoreLogger
 
 fun AccountStateHandler.onInvalidUserKey(
     block: suspend (UserId) -> Unit
@@ -45,6 +48,7 @@ fun AccountStateHandler.onInvalidUserKey(
             block(user.userId)
         }
     }
+    .catch { CoreLogger.e(LogTag.DEFAULT, it) }
     .launchIn(scope)
 
 fun AccountStateHandler.onInvalidUserAddressKey(
@@ -62,5 +66,6 @@ fun AccountStateHandler.onInvalidUserAddressKey(
             block(requireNotNull(userId))
         }
     }
+    .catch { CoreLogger.e(LogTag.DEFAULT, it) }
     .launchIn(scope)
 
