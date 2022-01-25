@@ -56,7 +56,7 @@ class AddAccountActivity : ProtonViewBindingActivity<ActivityAddAccountBinding>(
         super.onCreate(savedInstanceState)
         authOrchestrator.register(this)
 
-        binding.signIn.onClick { authOrchestrator.startLoginWorkflow(requiredAccountType) }
+        binding.signIn.onClick { authOrchestrator.startLoginWorkflow(requiredAccountType, input?.loginUsername) }
         authOrchestrator.onLoginResult { if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignIn) }
 
         binding.signUp.onClick { authOrchestrator.startSignupWorkflow(requiredAccountType) }

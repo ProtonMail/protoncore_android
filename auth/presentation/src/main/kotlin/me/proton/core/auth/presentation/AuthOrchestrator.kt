@@ -255,9 +255,13 @@ class AuthOrchestrator {
      *
      * @see [onAddAccountResult]
      */
-    fun startAddAccountWorkflow(requiredAccountType: AccountType, product: Product? = null) {
+    fun startAddAccountWorkflow(
+        requiredAccountType: AccountType,
+        product: Product? = null,
+        loginUsername: String? = null
+    ) {
         checkRegistered(addAccountWorkflowLauncher).launch(
-            AddAccountInput(requiredAccountType, product)
+            AddAccountInput(requiredAccountType, product, loginUsername)
         )
     }
 

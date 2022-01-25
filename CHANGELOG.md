@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changes
 
 - Removed lifecycle-extensions which has been deprecated; removed lifecycle-compiler; using lifecycle-common instead
+- Support prefilling login username for add account workflow
 
 ### Fixes
 

@@ -160,8 +160,8 @@ public final class me/proton/core/auth/presentation/AuthOrchestrator {
 	public final fun setOnSecondFactorResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnSignUpResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnTwoPassModeResult (Lkotlin/jvm/functions/Function1;)V
-	public final fun startAddAccountWorkflow (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;)V
-	public static synthetic fun startAddAccountWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;ILjava/lang/Object;)V
+	public final fun startAddAccountWorkflow (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;)V
+	public static synthetic fun startAddAccountWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;ILjava/lang/Object;)V
 	public final fun startChooseAddressWorkflow (Lme/proton/core/account/domain/entity/Account;)V
 	public final fun startConfirmPasswordWorkflow (Lme/proton/core/network/domain/scopes/MissingScopeState$ScopeMissing;)V
 	public final fun startLoginWorkflow (Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Ljava/lang/String;)V
@@ -566,13 +566,15 @@ public final class me/proton/core/auth/presentation/databinding/FragmentTermsCon
 
 public final class me/proton/core/auth/presentation/entity/AddAccountInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;)V
+	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;)V
 	public final fun component1 ()Lme/proton/core/account/domain/entity/AccountType;
 	public final fun component2 ()Lme/proton/core/domain/entity/Product;
-	public final fun copy (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;)Lme/proton/core/auth/presentation/entity/AddAccountInput;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/AddAccountInput;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/AddAccountInput;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/AddAccountInput;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/AddAccountInput;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/domain/entity/Product;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/AddAccountInput;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLoginUsername ()Ljava/lang/String;
 	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
 	public final fun getRequiredAccountType ()Lme/proton/core/account/domain/entity/AccountType;
 	public fun hashCode ()I

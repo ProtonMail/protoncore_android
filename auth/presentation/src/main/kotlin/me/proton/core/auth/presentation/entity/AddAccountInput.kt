@@ -26,5 +26,6 @@ import me.proton.core.domain.entity.Product
 @Parcelize
 data class AddAccountInput(
     val requiredAccountType: AccountType,
-    val product: Product?
+    val product: Product?,
+    val loginUsername: String?
 ) : Parcelable
