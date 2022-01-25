@@ -168,7 +168,7 @@ mail-v6-integration-tests:
   extends: .client-integration-tests
   trigger:
     project: android/mail/proton-mail
-    branch: test/core-integration-test
+    branch: master
 
 ## publish stage ###################################################################################
 release-publish-github:
