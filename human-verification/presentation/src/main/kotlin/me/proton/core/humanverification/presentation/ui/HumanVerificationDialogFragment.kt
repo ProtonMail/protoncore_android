@@ -36,6 +36,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.animation.AnimationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.parcel.Parcelize
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
@@ -97,6 +98,11 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navigationIconId = if (parsedArgs.isPartOfFlow) R.drawable.ic_arrow_back else R.drawable.ic_close
+
+        if (savedInstanceState == null) {
+            setLoading(true)
+        }
+
         with(binding) {
             toolbar.apply {
                 navigationIcon = AppCompatResources.getDrawable(requireContext(), navigationIconId)
@@ -129,7 +135,9 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
             extraHeaderProvider.headers,
             viewModel.activeAltUrlForDoH,
             networkRequestOverrider,
-            onResourceLoadingError = { setLoading(false) }
+            onResourceLoadingError = {
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) { setLoading(false) }
+            }
         )
         webView.addJavascriptInterface(VerificationJSInterface(), JS_INTERFACE_NAME)
         // Workaround to get transparent webview background
@@ -282,7 +290,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         fun dispatch(response: String) {
             val verificationResponse = response.deserializeOrNull<VerificationResponseMessage>()
             verificationResponse?.let {
-                viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                     handleVerificationResponse(it)
                 }
             }
