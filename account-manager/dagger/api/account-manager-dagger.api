@@ -16,7 +16,7 @@ public final class me/proton/core/accountmanager/dagger/AccountManagerModule {
 	public final fun provideAccountManagerImpl (Lme/proton/core/domain/entity/Product;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/accountmanager/data/AccountManagerImpl;
 	public final fun provideAccountMigrator (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/user/domain/repository/UserRepository;)Lme/proton/core/accountmanager/domain/migrator/AccountMigrator;
 	public final fun provideAccountRepository (Lme/proton/core/domain/entity/Product;Lme/proton/core/account/data/db/AccountDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/account/domain/repository/AccountRepository;
-	public final fun provideAccountStateHandler (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/accountmanager/domain/migrator/AccountMigrator;)Lme/proton/core/accountmanager/data/AccountStateHandler;
+	public final fun provideAccountStateHandler (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/accountmanager/domain/migrator/AccountMigrator;Lme/proton/core/domain/entity/Product;)Lme/proton/core/accountmanager/data/AccountStateHandler;
 	public final fun provideAccountStateHandlerCoroutineScope ()Lkotlinx/coroutines/CoroutineScope;
 	public final fun provideCryptoContext (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/crypto/common/context/CryptoContext;
 	public final fun provideKeyStoreCrypto ()Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;
@@ -58,11 +58,11 @@ public final class me/proton/core/accountmanager/dagger/AccountManagerModule_Pro
 }
 
 public final class me/proton/core/accountmanager/dagger/AccountManagerModule_ProvideAccountStateHandlerFactory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountmanager/dagger/AccountManagerModule_ProvideAccountStateHandlerFactory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountmanager/dagger/AccountManagerModule_ProvideAccountStateHandlerFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/accountmanager/data/AccountStateHandler;
-	public static fun provideAccountStateHandler (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/accountmanager/domain/migrator/AccountMigrator;)Lme/proton/core/accountmanager/data/AccountStateHandler;
+	public static fun provideAccountStateHandler (Lkotlinx/coroutines/CoroutineScope;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/accountmanager/domain/migrator/AccountMigrator;Lme/proton/core/domain/entity/Product;)Lme/proton/core/accountmanager/data/AccountStateHandler;
 }
 
 public final class me/proton/core/accountmanager/dagger/AccountManagerModule_ProvideCryptoContextFactory : dagger/internal/Factory {
