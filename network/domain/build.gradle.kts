@@ -19,9 +19,12 @@
 import studio.forface.easygradle.dsl.*
 
 plugins {
-    `java-library`
-    kotlin("jvm")
+    protonKotlinLibrary
     kotlin("plugin.serialization")
+}
+
+proton {
+    apiModeDisabled()
 }
 
 publishOption.shouldBePublishedAsLib = true

@@ -20,18 +20,13 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    protonComposeUiLibrary
 }
 
 publishOption.shouldBePublishedAsLib = true
 
-android {
-    buildFeatures.compose = true
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = `compose version`
-    }
+proton {
+    apiModeDisabled()
 }
 
 dependencies {
@@ -41,7 +36,6 @@ dependencies {
         project(Module.account),
         project(Module.accountManagerPresentation),
         project(Module.domain),
-        project(Module.presentationCompose),
 
         // Android
         `constraint-layout`,
@@ -51,7 +45,6 @@ dependencies {
         `compose-foundation`,
         `compose-foundation-layout`,
         `compose-material`,
-        `compose-runtime`,
         `compose-ui`,
         `compose-ui-tooling`,
         `hilt-navigation-compose`,

@@ -20,14 +20,15 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
+    protonAndroidLibrary
     kotlin("plugin.serialization")
 }
 
-publishOption.shouldBePublishedAsLib = true
+proton {
+    apiModeDisabled()
+}
 
-android()
+publishOption.shouldBePublishedAsLib = true
 
 dependencies {
 
@@ -46,7 +47,7 @@ dependencies {
         `android-annotation`,
         `apacheCommon-codec`,
         `gotev-cookieStore`,
-        `miniDsn`,
+        `miniDns`,
         `okHttp-logging`,
         `okhttp-url-connection`,
         `retrofit`,

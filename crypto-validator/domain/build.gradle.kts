@@ -19,15 +19,10 @@
 import studio.forface.easygradle.dsl.*
 
 plugins {
-    `java-library`
-    kotlin("jvm")
+    protonKotlinLibrary
 }
 
 publishOption.shouldBePublishedAsLib = true
-
-kotlin {
-    explicitApi()
-}
 
 dependencies {
 

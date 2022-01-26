@@ -19,8 +19,11 @@
 import studio.forface.easygradle.dsl.*
 
 plugins {
-    `java-library`
-    kotlin("jvm")
+    protonKotlinLibrary
+}
+
+proton {
+    apiModeDisabled()
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -33,9 +36,6 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.userDomain),
-
-        // Android
-        `dagger`,
 
         // Other
         `googleTink`,

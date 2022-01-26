@@ -20,21 +20,19 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
+    protonAndroidLibrary
+    protonDagger
+}
+
+proton {
+    apiModeDisabled()
 }
 
 publishOption.shouldBePublishedAsLib = true
 
-android()
-
 dependencies {
     implementation(
         project(Module.labelData),
-        project(Module.labelDomain),
-        `hilt-android`,
+        project(Module.labelDomain)
     )
-
-    kapt(`hilt-android-compiler`)
 }

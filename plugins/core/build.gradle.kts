@@ -26,11 +26,46 @@ publishOption.shouldBePublishedAsPlugin = false
 
 gradlePlugin {
     plugins {
-        create("gradlePlugin") {
-            id = "core"
-            implementationClass = "ProtonCorePlugin"
+        create("rootProjectPlugin") {
+            id = "me.proton.core.root"
+            displayName = "Proton build plugin for Core root project"
+            implementationClass = "me.proton.core.gradle.plugin.RootProjectPlugin"
+        }
+        create("androidAppConvention") {
+            id = "me.proton.core.app.android"
+            displayName = "Proton build convention plugin for Android app modules"
+            implementationClass = "me.proton.core.gradle.plugin.android.AndroidAppPlugin"
+        }
+        create("androidLibraryConvention") {
+            id = "me.proton.core.library.android"
+            displayName = "Proton build convention plugin for Android library modules"
+            implementationClass = "me.proton.core.gradle.plugin.android.AndroidLibraryPlugin"
+        }
+        create("androidUiLibraryConvention") {
+            id = "me.proton.core.library.android.ui"
+            displayName = "Proton build convention plugin for Android UI library modules"
+            implementationClass = "me.proton.core.gradle.plugin.android.AndroidUiLibraryPlugin"
+        }
+        create("composeUiLibraryConvention") {
+            id = "me.proton.core.library.android.ui.compose"
+            displayName = "Proton build convention plugin for Compose UI library modules"
+            implementationClass = "me.proton.core.gradle.plugin.android.ComposeUiLibraryPlugin"
+        }
+        create("daggerConvention") {
+            id = "me.proton.core.dagger"
+            displayName = "Proton build convention plugin for dagger modules"
+            implementationClass = "me.proton.core.gradle.plugin.dagger.DaggerPlugin"
+        }
+        create("kotlinLibraryConvention") {
+            id = "me.proton.core.library.kotlin"
+            displayName = "Proton build convention plugin for Kotlin library modules"
+            implementationClass = "me.proton.core.gradle.plugin.kotlin.KotlinLibraryPlugin"
         }
     }
+}
+
+kotlin {
+    explicitApiWarning()
 }
 
 repositories {
@@ -41,6 +76,7 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
     compileOnly(libs.android.gradle)
     api(libs.easyGradle.androidDsl)
 }

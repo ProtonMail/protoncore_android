@@ -28,9 +28,8 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
  * * `dependencyUpdates`
  */
 plugins {
-    id("core")
+    id("me.proton.core.root")
     id("me.proton.core.gradle-plugins.detekt")
-    id("me.proton.core.gradle-plugins.kotlin")
     id("publish-core-libraries")
     id("me.proton.core.gradle-plugins.tests")
     id("me.proton.core.gradle-plugins.jacoco")
@@ -49,12 +48,6 @@ buildscript {
         classpath(libs.dagger.hilt.android.gradle)
     }
 }
-
-kotlinCompilerArgs(
-    "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-    "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
-    "-Xopt-in=kotlin.time.ExperimentalTime"
-)
 
 fun isNonStable(version: String): Boolean {
     val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }

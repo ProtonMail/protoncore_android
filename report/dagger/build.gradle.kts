@@ -1,4 +1,3 @@
-import org.gradle.kotlin.dsl.kapt
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
@@ -21,20 +20,11 @@ import studio.forface.easygradle.dsl.android.*
  */
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
+    protonAndroidLibrary
+    protonDagger
 }
 
 publishOption.shouldBePublishedAsLib = true
-
-android()
-
-extensions.configure<com.android.build.gradle.LibraryExtension> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xexplicit-api=strict")
-    }
-}
 
 dependencies {
     androidTestImplementation(
@@ -46,9 +36,6 @@ dependencies {
     api(
         project(Module.domain),
         project(Module.reportDomain),
-        project(Module.reportData),
-        `hilt-android`,
+        project(Module.reportData)
     )
-
-    kapt(`hilt-android-compiler`)
 }

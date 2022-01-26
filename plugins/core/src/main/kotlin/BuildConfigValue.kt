@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,14 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * An object containing params for the Project
- * @author Davide Farella
- */
-object ProtonCore {
-
-    /** The Android API level as target of the App */
-    const val targetSdk = 31
-    /** The Android API level required for run the App */
-    const val minSdk = 23
+public fun Any?.toBuildConfigValue(): String {
+    return when (this) {
+        null -> "null"
+        is Boolean -> "$this"
+        is String -> "\"$this\""
+        else -> throw IllegalArgumentException("Unknown build field conversion for type ${this::class.java.simpleName}")
+    }
 }

@@ -69,6 +69,7 @@ class ProtonJacocoPlugin : Plugin<Project> {
     }
 
     private fun Project.applyJacocoPlugin() {
+        repositories.mavenCentral()
         plugins.apply(JacocoPlugin::class)
         configure<JacocoPluginExtension> {
             toolVersion = JacocoVersion

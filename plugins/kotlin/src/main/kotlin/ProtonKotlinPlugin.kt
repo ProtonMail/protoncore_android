@@ -34,6 +34,7 @@ abstract class ProtonKotlinPlugin : Plugin<Project> {
  *
  * @author Davide Farella
  */
+@Deprecated("Replaced with kotlin convention plugin")
 fun Project.kotlinCompilerArgs(vararg extraCompilerArgs: String) {
 
     // Configure sub-projects

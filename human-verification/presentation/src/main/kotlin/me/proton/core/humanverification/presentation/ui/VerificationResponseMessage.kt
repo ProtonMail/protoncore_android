@@ -18,6 +18,7 @@
 
 package me.proton.core.humanverification.presentation.ui
 
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.Serializer
@@ -64,7 +65,7 @@ data class VerificationResponseMessage(
     }
 
     @Serializer(forClass = Type::class)
-    object VerificationMessageTypeSerializer {
+    object VerificationMessageTypeSerializer : KSerializer<Type> {
         override val descriptor = PrimitiveSerialDescriptor(
             "VerificationMessageTypeDescriptor",
             PrimitiveKind.STRING

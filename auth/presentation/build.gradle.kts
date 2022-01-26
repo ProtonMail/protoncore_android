@@ -21,16 +21,16 @@ import studio.forface.easygradle.dsl.android.*
 
 
 plugins {
-    id("com.android.library")
-    id("dagger.hilt.android.plugin")
+    protonAndroidUiLibrary
+    protonDagger
     id("kotlin-parcelize")
-    kotlin("android")
-    kotlin("kapt")
+}
+
+proton {
+    apiModeDisabled()
 }
 
 publishOption.shouldBePublishedAsLib = true
-
-android(useViewBinding = true)
 
 dependencies {
 
@@ -65,17 +65,11 @@ dependencies {
         `appcompat`,
         `constraint-layout`,
         `fragment`,
-        `hilt-android`,
         `lifecycle-viewModel`,
         `material`,
 
         // Other
         `lottie`
-    )
-
-    kapt(
-        `hilt-android-compiler`,
-        `hilt-androidx-compiler`
     )
 
     testImplementation(project(Module.androidTest))

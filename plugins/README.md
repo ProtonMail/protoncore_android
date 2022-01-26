@@ -22,11 +22,14 @@ plugins {
 ```
 More info about setup, like groovy variant or legacy setup can be found at https://docs.gradle.org/current/userguide/plugins.html.
 # Plugins
-## Core plugin
-- Plugin id: `me.proton.core.gradle-plugins.core`
+## Core plugins
+
+- Plugins can be applied via extension functions (inside the `plugins`
+  block): `protonAndroidLibrary`, `protonAndroidUiLibrary`, `protonComposeUiLibrary`, `protonDagger`
+  , `protonKotlinLibrary`
 - Not published on MavenCentral.
 
-Use internally in core project to orchestrate dependencies and apply core android config. 
+Use internally in core project to orchestrate dependencies and apply android/kotlin/dagger convention config. 
 
 ## Detekt plugin
 - Plugin id: `me.proton.core.gradle-plugins.detekt`
