@@ -22,10 +22,9 @@ import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
@@ -60,7 +59,7 @@ class OrganizationRepositoryImpl(
             delete = { key -> deleteOrganization(key) },
             deleteAll = { deleteAllOrganizations() }
         )
-    ).disableCache().build() // We don't want potential stale data from memory cache
+    ).disableCache().buildProtonStore() // We don't want potential stale data from memory cache
 
     private val storeOrganizationKeys = StoreBuilder.from(
         fetcher = Fetcher.of { key: UserId ->
@@ -74,7 +73,7 @@ class OrganizationRepositoryImpl(
             delete = { key -> deleteOrganizationKeys(key) },
             deleteAll = { deleteAllOrganizationKeys() }
         )
-    ).disableCache().build() // We don't want potential stale data from memory cache
+    ).disableCache().buildProtonStore() // We don't want potential stale data from memory cache
 
     private fun observeOrganizationByUserId(userId: UserId): Flow<Organization?> =
         organizationDao.observeByUserId(userId).map { it?.fromEntity() }

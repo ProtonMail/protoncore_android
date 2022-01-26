@@ -22,13 +22,12 @@ import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.extension.requireValidProof
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
@@ -66,7 +65,7 @@ class UserSettingsRepositoryImpl(
             delete = { key -> delete(key) },
             deleteAll = { deleteAll() }
         )
-    ).disableCache().build() // We don't want potential stale data from memory cache
+    ).disableCache().buildProtonStore() // We don't want potential stale data from memory cache
 
     private fun observeByUserId(userId: UserId): Flow<UserSettings?> =
         userSettingsDao.observeByUserId(userId).map { it?.fromEntity() }

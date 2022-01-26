@@ -22,8 +22,6 @@ import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -33,6 +31,8 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
+import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
@@ -46,7 +46,6 @@ import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.api.request.UnlockRequest
-import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
@@ -83,7 +82,7 @@ class UserRepositoryImpl(
             delete = null, // Not used.
             deleteAll = null // Not used.
         )
-    ).build()
+    ).buildProtonStore()
 
     private suspend fun invalidateMemCache(userId: UserId) =
         store.clear(userId)

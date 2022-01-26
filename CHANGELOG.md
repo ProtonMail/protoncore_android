@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix ConfirmPassword dialog crash on API 23.
 - Fix AccountStateHandler for accounts without keys. This prevents a crash by unhandled exceptions.
 - Fix crash on HumanVerificationWebViewClient.onResourceLoadingError when it was called from a background thread.
+- Add ProtonStore to get the calling stack trace of Store operations.
 
 ## [6.0.0]
 

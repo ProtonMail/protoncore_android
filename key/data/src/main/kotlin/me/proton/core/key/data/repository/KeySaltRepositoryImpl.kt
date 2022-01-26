@@ -21,9 +21,8 @@ package me.proton.core.key.data.repository
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.map
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.KeyApi
@@ -53,7 +52,7 @@ class KeySaltRepositoryImpl(
             delete = { userId -> keySaltDao.deleteByUserId(userId) },
             deleteAll = { keySaltDao.deleteAll() }
         )
-    ).build()
+    ).buildProtonStore()
 
     override suspend fun getKeySalts(sessionUserId: SessionUserId, refresh: Boolean): List<PrivateKeySalt> =
         (if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)).toPrivateKeySaltList()

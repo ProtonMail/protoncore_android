@@ -21,10 +21,9 @@ package me.proton.core.key.data.repository
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.KeyApi
@@ -52,10 +51,10 @@ class PublicAddressRepositoryImpl(
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey ->
             provider.get<KeyApi>(key.userId).invoke {
-                    getPublicAddressKeys(
-                        key.email,
-                        if (key.forceNoCache) CacheOverride().noCache() else null
-                    ).toPublicAddress(key.email)
+                getPublicAddressKeys(
+                    key.email,
+                    if (key.forceNoCache) CacheOverride().noCache() else null
+                ).toPublicAddress(key.email)
             }.valueOrThrow
         },
         sourceOfTruth = SourceOfTruth.of(
@@ -64,7 +63,7 @@ class PublicAddressRepositoryImpl(
             delete = { key -> delete(key.email) },
             deleteAll = { deleteAll() }
         )
-    ).build()
+    ).buildProtonStore()
 
     private fun getPublicAddressLocal(email: String): Flow<PublicAddress?> =
         publicAddressWithKeysDao.findWithKeysByEmail(email)
