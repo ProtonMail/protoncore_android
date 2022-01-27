@@ -33,13 +33,6 @@ interface LabelRepository {
     fun observeLabels(userId: UserId, type: LabelType, refresh: Boolean = false): Flow<DataResult<List<Label>>>
 
     /**
-     * Mark local data as stale for [userId], by [type].
-     *
-     * Note: Next call to [getLabels] or [observeLabels] will use the fetcher for fresh data.
-     */
-    suspend fun markAsStale(userId: UserId, type: LabelType)
-
-    /**
      * Get all [Label] for [userId], by [type].
      */
     suspend fun getLabels(userId: UserId, type: LabelType, refresh: Boolean = false): List<Label>
@@ -63,4 +56,11 @@ interface LabelRepository {
      * Delete label for [userId] by [labelId], locally, then remotely in background.
      */
     suspend fun deleteLabel(userId: UserId, type: LabelType, labelId: LabelId)
+
+    /**
+     * Mark local data as stale for [userId], by [type].
+     *
+     * Note: Repository will refresh data asap.
+     */
+    fun markAsStale(userId: UserId, type: LabelType)
 }
