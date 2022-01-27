@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix AccountStateHandler for accounts without keys. This prevents a crash by unhandled exceptions.
 - Fix crash on HumanVerificationWebViewClient.onResourceLoadingError when it was called from a background thread.
 - Add ProtonStore to get the calling stack trace of Store operations.
+- We don't generate keys for external accounts anymore. This means they can only be used in VPN or converted into internal accounts on login.
 
 ## [6.0.0]
 
