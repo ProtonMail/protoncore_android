@@ -69,6 +69,18 @@ class LoginRobot : CoreRobot() {
             view.withId(R.id.passwordInput).checkDisplayed()
             view.withId(R.id.signInButton).checkDisplayed()
         }
+
+        fun passwordInputHasError() {
+            view.withId(me.proton.core.presentation.R.id.textinput_error)
+                .withAncestor(view.withId(R.id.passwordInput))
+                .checkDisplayed()
+        }
+
+        fun usernameInputHasError() {
+            view.withId(me.proton.core.presentation.R.id.textinput_error)
+                .withAncestor(view.withId(R.id.usernameInput))
+                .checkDisplayed()
+        }
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

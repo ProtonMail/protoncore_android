@@ -72,6 +72,10 @@ class OnView : ConditionWatcher {
         matchers.add(ViewMatchers.hasSibling(siblingView.viewMatcher()))
     }
 
+    fun withAncestor(ancestor: OnView) = apply {
+        matchers.add(ViewMatchers.isDescendantOfA(ancestor.viewMatcher()))
+    }
+
     fun withId(@IdRes id: Int) = apply {
         matchers.add(ViewMatchers.withId(id))
     }

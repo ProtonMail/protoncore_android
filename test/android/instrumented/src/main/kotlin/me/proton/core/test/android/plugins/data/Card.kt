@@ -20,6 +20,7 @@ package me.proton.core.test.android.plugins.data
 
 import kotlinx.serialization.Serializable
 import me.proton.core.test.android.instrumented.utils.StringUtils.randomString
+import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import java.util.Calendar
 import java.util.Locale
 
@@ -39,7 +40,15 @@ data class Card(
         5 -> Brand.Mastercard
         else -> Brand.Unknown
     }
-    val details: String = "${brand.name} - ${number.takeLast(4)} (Exp $expMonth/$expYear)"
+
+    val details: String
+        get() = stringFromResource(
+            me.proton.core.payment.presentation.R.string.payment_cc_list_item,
+            brand.name,
+            number.takeLast(4),
+            expMonth,
+            expYear
+        )
 
     @Serializable
     enum class Brand(name: String) {
