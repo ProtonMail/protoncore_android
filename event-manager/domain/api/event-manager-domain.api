@@ -275,6 +275,7 @@ public final class me/proton/core/eventmanager/domain/entity/RefreshType$Compani
 }
 
 public final class me/proton/core/eventmanager/domain/entity/State : java/lang/Enum {
+	public static final field Cancelled Lme/proton/core/eventmanager/domain/entity/State;
 	public static final field Completed Lme/proton/core/eventmanager/domain/entity/State;
 	public static final field Enqueued Lme/proton/core/eventmanager/domain/entity/State;
 	public static final field Fetching Lme/proton/core/eventmanager/domain/entity/State;
@@ -312,6 +313,7 @@ public abstract interface class me/proton/core/eventmanager/domain/repository/Ev
 	public abstract fun observe (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun update (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/eventmanager/domain/work/EventWorkerManager {

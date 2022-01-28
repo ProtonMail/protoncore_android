@@ -47,6 +47,7 @@ enum class RefreshType(val value: Int) {
 }
 
 enum class State(val value: Int) {
+    Cancelled(-1),
     Enqueued(0),
     Fetching(1),
     Persisted(2),

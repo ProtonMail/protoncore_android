@@ -45,6 +45,9 @@ abstract class EventMetadataDao : BaseDao<EventMetadataEntity>() {
     @Query("UPDATE EventMetadataEntity SET state = :state, updatedAt = :updatedAt WHERE config = :config AND userId = :userId AND eventId = :eventId")
     abstract suspend fun updateState(userId: UserId, config: EventManagerConfig, eventId: String, state: State, updatedAt: Long)
 
+    @Query("UPDATE EventMetadataEntity SET state = :state, updatedAt = :updatedAt WHERE config = :config AND userId = :userId")
+    abstract suspend fun updateState(userId: UserId, config: EventManagerConfig, state: State, updatedAt: Long)
+
     @Query("DELETE FROM EventMetadataEntity WHERE config = :config AND userId = :userId AND eventId = :eventId")
     abstract suspend fun delete(userId: UserId, config: EventManagerConfig, eventId: String)
 

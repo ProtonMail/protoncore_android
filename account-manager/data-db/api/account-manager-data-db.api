@@ -229,6 +229,7 @@ public final class me/proton/core/eventmanager/data/db/dao/EventMetadataDao_Impl
 	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update ([Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/State;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateState (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/State;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/humanverification/data/db/HumanVerificationDetailsDao_Impl : me/proton/core/humanverification/data/db/HumanVerificationDetailsDao {

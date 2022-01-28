@@ -23,6 +23,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 
 ### Changes
 
+- Keep cancelled EventMetadata/EventManagerConfig, to start syncing from previous eventId.
 - Removed lifecycle-extensions which has been deprecated; removed lifecycle-compiler; using lifecycle-common instead
 - Support prefilling login username for add account workflow
 - Added possibility to show additional help button when login fails with potential blocking.
