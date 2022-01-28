@@ -30,6 +30,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 
 ### Fixes
 
+- Fixed ContactRepository usage while offline.
 - Fixed LabelRepository usage while offline.
 - Fixed EventManager to retry fetching on Force Update error.
 - Fixed AppLifecycleObserver State Flow (add LifecycleObserver as soon as AppLifecycleObserver is initialized).

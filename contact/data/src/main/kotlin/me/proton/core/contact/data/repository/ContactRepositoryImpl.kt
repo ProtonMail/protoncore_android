@@ -49,45 +49,41 @@ class ContactRepositoryImpl @Inject constructor(
 
     private data class ContactStoreKey(val userId: UserId, val contactId: ContactId)
 
-    private val contactDetailFetchedOnce = mutableMapOf<ContactId, Boolean>()
     private val contactWithCardsStore: ProtonStore<ContactStoreKey, ContactWithCards> = StoreBuilder.from(
         fetcher = Fetcher.of { key: ContactStoreKey ->
-            val contactWithCards = remoteDataSource.getContactWithCards(key.userId, key.contactId)
-            contactDetailFetchedOnce[key.contactId] = true
-            contactWithCards
+            remoteDataSource.getContactWithCards(key.userId, key.contactId)
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { contactStoreKey ->
-                localDataSource.observeContact(contactStoreKey.contactId).map {
-                    return@map it?.let { contactWithCards ->
-                        contactWithCards.takeIf {
-                            val fetchedOnce = contactDetailFetchedOnce[contactStoreKey.contactId] ?: false
-                            contactWithCards.contactCards.isNotEmpty() && fetchedOnce
-                        }
-                    }
+            reader = { key ->
+                localDataSource.observeContact(key.contactId).map { contact ->
+                    contact.takeIf { it?.contactCards?.isNotEmpty() ?: false }?.copy(
+                        contactCards = contact?.contactCards?.minus(key.getFetchedTagCard()).orEmpty()
+                    )
                 }
             },
-            writer = { _, contactWithCards -> localDataSource.upsertContactWithCards(contactWithCards) },
+            writer = { key, contact ->
+                val cardsPlusTag = contact.contactCards.plus(key.getFetchedTagCard())
+                val taggedContact = contact.copy(contactCards = cardsPlusTag)
+                localDataSource.upsertContactWithCards(taggedContact)
+            },
             delete = { key -> localDataSource.deleteContacts(key.contactId) },
             deleteAll = localDataSource::deleteAllContacts
         )
     ).buildProtonStore()
 
-    private val allContactsFetchedOnce = mutableMapOf<UserId, Boolean>()
-    private val allContactsStore: ProtonStore<UserId, List<Contact>> = StoreBuilder.from(
+    private val contactsStore: ProtonStore<UserId, List<Contact>> = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
-            val contacts = remoteDataSource.getAllContacts(userId)
-            allContactsFetchedOnce[userId] = true
-            contacts
+            remoteDataSource.getAllContacts(userId)
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { userId ->
                 localDataSource.observeAllContacts(userId).map { contacts ->
-                    val fetchedOnce = allContactsFetchedOnce[userId] ?: false
-                    contacts.takeIf { it.isNotEmpty() || fetchedOnce }
+                    contacts.takeIf { it.isNotEmpty() }?.minus(userId.getFetchedTagContact())
                 }
             },
-            writer = { _, contacts -> localDataSource.mergeContacts(*contacts.toTypedArray()) },
+            writer = { userId, contacts ->
+                localDataSource.mergeContacts(*contacts.plus(userId.getFetchedTagContact()).toTypedArray())
+            },
             delete = { userId -> localDataSource.deleteAllContacts(userId) },
             deleteAll = localDataSource::deleteAllContacts
         )
@@ -112,11 +108,11 @@ class ContactRepositoryImpl @Inject constructor(
     }
 
     override fun observeAllContacts(userId: UserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
-        return allContactsStore.stream(StoreRequest.cached(userId, refresh)).map { it.toDataResult() }
+        return contactsStore.stream(StoreRequest.cached(userId, refresh)).map { it.toDataResult() }
     }
 
     override suspend fun getAllContacts(userId: UserId, refresh: Boolean): List<Contact> {
-        return if (refresh) allContactsStore.fresh(userId) else allContactsStore.get(userId)
+        return if (refresh) contactsStore.fresh(userId) else contactsStore.get(userId)
     }
 
     override fun observeAllContactEmails(
@@ -150,5 +146,20 @@ class ContactRepositoryImpl @Inject constructor(
     override suspend fun updateContact(userId: UserId, contactId: ContactId, contactCards: List<ContactCard>) {
         val updatedContact = remoteDataSource.updateContact(userId, contactId, contactCards)
         localDataSource.upsertContactWithCards(ContactWithCards(contact = updatedContact, contactCards = contactCards))
+    }
+
+    private companion object {
+        // Fake ContactCard tagging the repo they have been fetched once, for this contact.
+        private fun ContactStoreKey.getFetchedTagCard() = ContactCard.ClearText(
+            data = "fetched-${userId.id}-${contactId.id}"
+        )
+
+        // Fake Contact tagging the repo they have been fetched once (getAllContacts).
+        private fun UserId.getFetchedTagContact() = Contact(
+            userId = this,
+            id = ContactId("fetched"),
+            name = "fetched-$id",
+            contactEmails = emptyList()
+        )
     }
 }
