@@ -139,7 +139,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         }
     }
 
-    override fun onError(triggerValidation: Boolean, message: String?) {
+    override fun onError(triggerValidation: Boolean, message: String?, isPotentialBlocking: Boolean) {
         if (triggerValidation) {
             binding.secondFactorInput.setInputError()
         }

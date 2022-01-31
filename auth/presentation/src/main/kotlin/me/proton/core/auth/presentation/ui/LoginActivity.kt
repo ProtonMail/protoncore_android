@@ -19,9 +19,12 @@
 package me.proton.core.auth.presentation.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -41,12 +44,21 @@ import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 /**
  * Login Activity which allows users to Login to any Proton client application.
  */
 @AndroidEntryPoint
 class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
+
+    // Additional button appearing when login fails and it's potentially caused by blocking.
+    // When product injects null no dedicated button will appear.
+    data class BlockingHelp(@StringRes val label: Int, val action: (Context) -> Unit)
+
+    @Inject
+    @JvmField
+    var blockingHelp: BlockingHelp? = null
 
     private val viewModel by viewModels<LoginViewModel>()
 
@@ -82,6 +94,11 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             }
 
             if (input.password != null) onSignInClicked()
+
+            blockingHelp?.let { blockingHelp ->
+                blockingHelpButton.onClick { blockingHelp.action(this@LoginActivity) }
+                blockingHelpButton.setText(blockingHelp.label)
+            }
         }
 
         viewModel.state.onEach {
@@ -89,7 +106,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 is LoginViewModel.State.Idle -> showLoading(false)
                 is LoginViewModel.State.Processing -> showLoading(true)
                 is LoginViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
-                is LoginViewModel.State.ErrorMessage -> onError(true, it.message)
+                is LoginViewModel.State.ErrorMessage -> onError(true, it.message, it.isPotentialBlocking)
             }.exhaustive
         }.launchIn(lifecycleScope)
     }
@@ -127,13 +144,15 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         finish()
     }
 
-    override fun onError(triggerValidation: Boolean, message: String?) {
+    override fun onError(triggerValidation: Boolean, message: String?, isPotentialBlocking: Boolean) {
         if (triggerValidation) {
             binding.apply {
                 usernameInput.setInputError()
                 passwordInput.setInputError()
             }
         }
+        if (isPotentialBlocking && blockingHelp != null)
+            binding.blockingHelpButton.isVisible = true
         showError(message)
     }
 
@@ -150,6 +169,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     private fun onSignInClicked() {
         with(binding) {
             hideKeyboard()
+            blockingHelpButton.isVisible = false
             usernameInput.validateUsername()
                 .onFailure { usernameInput.setInputError(getString(R.string.auth_login_assistive_text)) }
                 .onSuccess(::onUsernameValidationSuccess)

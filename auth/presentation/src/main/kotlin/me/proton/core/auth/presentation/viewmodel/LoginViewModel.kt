@@ -43,6 +43,7 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
+import me.proton.core.network.domain.isPotentialBlocking
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
@@ -66,7 +67,7 @@ internal class LoginViewModel @Inject constructor(
         object Idle : State()
         object Processing : State()
         data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
-        data class ErrorMessage(val message: String?) : State()
+        data class ErrorMessage(val message: String?, val isPotentialBlocking: Boolean) : State()
     }
 
     override val recoveryEmailAddress: String?
@@ -115,7 +116,7 @@ internal class LoginViewModel @Inject constructor(
     }.retryOnceWhen(Throwable::primaryKeyExists) {
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying login flow")
     }.catch { error ->
-        emit(State.ErrorMessage(error.message))
+        emit(State.ErrorMessage(error.message, error.isPotentialBlocking()))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)

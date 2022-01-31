@@ -188,6 +188,12 @@ open class ApiException(val error: ApiResult.Error) : Exception(
 )
 
 /**
+ * Returns true if exception was thrown after network fail potentially caused by blocking.
+ */
+fun Throwable.isPotentialBlocking() =
+    (this as? ApiException)?.error?.isPotentialBlocking == true
+
+/**
  * Return true if [ApiException.error] is retryable (e.g. connection issue or http error 5XX).
  *
  * @see ApiResult.isRetryable

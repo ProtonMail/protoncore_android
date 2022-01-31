@@ -25,6 +25,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 
 - Removed lifecycle-extensions which has been deprecated; removed lifecycle-compiler; using lifecycle-common instead
 - Support prefilling login username for add account workflow
+- Added possibility to show additional help button when login fails with potential blocking.
 
 ### Fixes
 
@@ -39,6 +40,15 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 - Fix crash on HumanVerificationWebViewClient.onResourceLoadingError when it was called from a background thread.
 - Add ProtonStore to get the calling stack trace of Store operations.
 - We don't generate keys for external accounts anymore. This means they can only be used in VPN or converted into internal accounts on login.
+
+### New Injection
+
+```kotlin
+// If not-null additional help button appears after login fails with blocking. Used only by VPN.
+@Provides
+@Singleton
+fun provideLoginBlockingHelp() : BlockingHelp? = null
+```
 
 ## [6.0.0]
 

@@ -131,7 +131,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
         }
     }
 
-    override fun onError(triggerValidation: Boolean, message: String?) {
+    override fun onError(triggerValidation: Boolean, message: String?, isPotentialBlocking: Boolean) {
         if (triggerValidation) {
             binding.mailboxPasswordInput.setInputError()
         }

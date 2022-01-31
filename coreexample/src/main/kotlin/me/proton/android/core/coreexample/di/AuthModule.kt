@@ -31,6 +31,7 @@ import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.DefaultUserCheck
+import me.proton.core.auth.presentation.ui.LoginActivity
 import me.proton.core.crypto.android.srp.GOpenPGPSrpCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.network.data.ApiProvider
@@ -61,6 +62,11 @@ object AuthModule {
         accountManager: AccountManager,
         userManager: UserManager
     ): PostLoginAccountSetup.UserCheck = DefaultUserCheck(context, accountManager, userManager)
+
+    // If not-null additional help button appears after login fails with blocking. Used only by VPN.
+    @Provides
+    @Singleton
+    fun provideLoginBlockingHelp(): LoginActivity.BlockingHelp? = null
 
     // region missing scopes
     @Provides

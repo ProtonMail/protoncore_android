@@ -366,6 +366,7 @@ public final class me/proton/core/auth/presentation/databinding/ActivityCreateAd
 }
 
 public final class me/proton/core/auth/presentation/databinding/ActivityLoginBinding : androidx/viewbinding/ViewBinding {
+	public final field blockingHelpButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field helpButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field passwordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
@@ -1037,8 +1038,8 @@ public final class me/proton/core/auth/presentation/ui/AddAccountActivity_Member
 
 public abstract class me/proton/core/auth/presentation/ui/AuthActivity : me/proton/core/presentation/ui/ProtonSecureActivity {
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public fun onError (ZLjava/lang/String;)V
-	public static synthetic fun onError$default (Lme/proton/core/auth/presentation/ui/AuthActivity;ZLjava/lang/String;ILjava/lang/Object;)V
+	public fun onError (ZLjava/lang/String;Z)V
+	public static synthetic fun onError$default (Lme/proton/core/auth/presentation/ui/AuthActivity;ZLjava/lang/String;ZILjava/lang/Object;)V
 	protected final fun onUnlockUserError (Lme/proton/core/user/domain/UserManager$UnlockResult$Error;)V
 	protected final fun onUserCheckFailed (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Error;Z)V
 	public static synthetic fun onUserCheckFailed$default (Lme/proton/core/auth/presentation/ui/AuthActivity;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Error;ZILjava/lang/Object;)V
@@ -1163,10 +1164,24 @@ public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/LoginActivity$Companion;
+	public field blockingHelp Lme/proton/core/auth/presentation/ui/LoginActivity$BlockingHelp;
 	public fun <init> ()V
 	public fun onBackPressed ()V
-	public fun onError (ZLjava/lang/String;)V
+	public fun onError (ZLjava/lang/String;Z)V
 	public fun showLoading (Z)V
+}
+
+public final class me/proton/core/auth/presentation/ui/LoginActivity$BlockingHelp {
+	public fun <init> (ILkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()I
+	public final fun component2 ()Lkotlin/jvm/functions/Function1;
+	public final fun copy (ILkotlin/jvm/functions/Function1;)Lme/proton/core/auth/presentation/ui/LoginActivity$BlockingHelp;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/ui/LoginActivity$BlockingHelp;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/auth/presentation/ui/LoginActivity$BlockingHelp;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAction ()Lkotlin/jvm/functions/Function1;
+	public final fun getLabel ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/auth/presentation/ui/LoginActivity$Companion {
@@ -1176,13 +1191,21 @@ public abstract interface class me/proton/core/auth/presentation/ui/LoginActivit
 	public abstract fun injectLoginActivity (Lme/proton/core/auth/presentation/ui/LoginActivity;)V
 }
 
+public final class me/proton/core/auth/presentation/ui/LoginActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectBlockingHelp (Lme/proton/core/auth/presentation/ui/LoginActivity;Lme/proton/core/auth/presentation/ui/LoginActivity$BlockingHelp;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/LoginActivity;)V
+}
+
 public final class me/proton/core/auth/presentation/ui/SecondFactorActivity : me/proton/core/auth/presentation/ui/AuthActivity {
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/SecondFactorActivity$Companion;
 	public fun <init> ()V
 	public fun onBackPressed ()V
-	public fun onError (ZLjava/lang/String;)V
+	public fun onError (ZLjava/lang/String;Z)V
 	public fun showLoading (Z)V
 }
 
@@ -1255,7 +1278,7 @@ public final class me/proton/core/auth/presentation/ui/TwoPassModeActivity : me/
 	public static final field Companion Lme/proton/core/auth/presentation/ui/TwoPassModeActivity$Companion;
 	public fun <init> ()V
 	public fun onBackPressed ()V
-	public fun onError (ZLjava/lang/String;)V
+	public fun onError (ZLjava/lang/String;Z)V
 	public fun showLoading (Z)V
 }
 
