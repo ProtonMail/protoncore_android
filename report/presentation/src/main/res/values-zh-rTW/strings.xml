@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">回報臭蟲</string>
+  <string name="core_report_bug_close">關閉</string>
+  <string name="core_report_bug_subject_field_hint">主旨</string>
+  <string name="core_report_bug_description_field_hint">描述</string>
+  <string name="core_report_bug_description_field_placeholder">請描述問題並附上相關的錯誤訊息。</string>
+  <string name="core_report_bug_discard_changes_title">未儲存的變更</string>
+  <string name="core_report_bug_discard_changes_description">表單中有未儲存的項目。您確定要捨棄嗎？</string>
+  <string name="core_report_bug_discard_changes_cancel">繼續撰寫</string>
+  <string name="core_report_bug_discard_changes_confirm">捨棄</string>
+  <string name="core_report_bug_form_field_required">此欄位必填</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="other">密碼必須至少 %d 個字元</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="other">密碼最多 %d 個字元</item>
+  </plurals>
+  <string name="core_report_bug_general_error">傳送報告時發生錯誤，請稍後再試</string>
+  <string name="core_report_bug_send">送出</string>
+  <string name="core_report_bug_success">感謝您的回報</string>
+</resources>

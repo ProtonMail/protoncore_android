@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Informeu d\'un error</string>
+  <string name="core_report_bug_close">Tancar</string>
+  <string name="core_report_bug_subject_field_hint">Assumpte</string>
+  <string name="core_report_bug_description_field_hint">Descripció</string>
+  <string name="core_report_bug_description_field_placeholder">Descriviu el problema i incloeu qualsevol missatge d\'error.</string>
+  <string name="core_report_bug_discard_changes_title">Canvis sense desar</string>
+  <string name="core_report_bug_discard_changes_description">Hi ha entrades sense desar al formulari. Esteu segur que voleu descartar-les?</string>
+  <string name="core_report_bug_discard_changes_cancel">Continuar escrivint</string>
+  <string name="core_report_bug_discard_changes_confirm">Descartar</string>
+  <string name="core_report_bug_form_field_required">Aquest camp és obligatori</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="one">Aquest camp hauria de tenir almenys %d caràcter</item>
+    <item quantity="other">Aquest camp hauria de tenir almenys %d caràcters</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Aquest camp hauria de tenir com a molt %d caràcter</item>
+    <item quantity="other">Aquest camp hauria de tenir com a molt %d caràcters</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Error enviant l\'informe, torneu-ho a provar més tard</string>
+  <string name="core_report_bug_send">Enviar</string>
+  <string name="core_report_bug_success">Gràcies pel vostre informe d\'errors</string>
+</resources>

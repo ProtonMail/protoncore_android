@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- region payment errors -->
+  <string name="payments_general_error">Si è verificato un errore.</string>
+  <string name="payments_no_connectivity">Nessuna connessione per visualizzare la pagina di conferma del 3DS.</string>
+  <string name="payments_3ds_not_approved">L\'approvazione 3DS è stata rifiutata.</string>
+  <string name="payments_error_card_name">Nome sulla carta richiesto.</string>
+  <string name="payments_error_card_number">Numero carta di credito non valido.</string>
+  <string name="payments_error_cvc">Inserisci un codice di sicurezza valido.</string>
+  <string name="payments_error_session">È necessario un Id di sessione valido quando si iscrive un utente che ha effettuato l\'accesso.</string>
+  <string name="payments_error_signup_paymentmethod">Impossibile registrarsi con il metodo di pagamento esistente.</string>
+  <string name="payments_error_invalid_session">Sessione non valida.</string>
+  <!-- endregion -->
+  <!-- region payment options -->
+  <string name="payments_choose_payment_method">Scegli il tuo metodo di pagamento</string>
+  <string name="payments_add_credit_debit_card">Aggiungi nuova carta di credito/debito</string>
+  <string name="payments_billing_monthly">Fatturato mensilmente</string>
+  <string name="payments_billing_yearly">Fatturato annualmente</string>
+  <string name="payments_billing_two_years">Fatturato ogni 2 anni</string>
+  <string name="payments_pay">Paga</string>
+  <string name="payments_method_icon">Icona del metodo di pagamento.</string>
+  <!-- endregion -->
+  <!-- region billing -->
+  <string name="payments_payment_details">Dettagli del pagamento</string>
+  <string name="payments_card_name">Nome sulla carta</string>
+  <string name="payments_card_number">Numero carta</string>
+  <string name="payments_expiration_date">Data di scadenza</string>
+  <string name="payments_security_code">Codice di sicurezza</string>
+  <string name="payments_postal_code">CAP</string>
+  <string name="payments_card_number_hint">0000 0000 0000 0000</string>
+  <string name="payments_expiration_date_hint">MM/YY</string>
+  <string name="payments_security_code_hint">123</string>
+  <string name="payments_country">Paese</string>
+  <string name="payments_paying_in_process">Pagamento</string>
+  <string name="payments_choose_country">Scegli paese</string>
+  <string name="payments_info_not_available">n/a</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (Scade %3$s/%4$s)</string>
+  <string name="payment_paypal_list_item">PayPal</string>
+  <!-- endregion -->
+</resources>

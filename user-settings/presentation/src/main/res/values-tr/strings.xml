@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">Kurtarma e-postası</string>
+  <string name="settings_recovery_email_current">Geçerli sıfırlama ve bildirim e-posta adresi</string>
+  <string name="settings_recovery_email_new">Yeni sıfırlama ve bildirim e-posta adresi</string>
+  <string name="settings_recovery_email_confirm">Sıfırlama ve bildirim e-posta adresi onayı</string>
+  <string name="settings_recovery_email_new_hint">E-posta adresini yazın</string>
+  <string name="settings_recovery_email_confirm_hint">E-posta adresini yeniden yazın</string>
+  <string name="settings_save">Kaydet</string>
+  <string name="settings_password_required">Oturum açma parolanızı yazın</string>
+  <string name="settings_password_required_ok">Tamam</string>
+  <string name="settings_not_set">Ayarlanmamış</string>
+  <string name="settings_recovery_email_error_no_match">Kurtarma e-posta adresi ile onayı aynı değil.</string>
+  <string name="settings_validation_email">E-posta geçersiz.</string>
+  <string name="settings_general_error">Bir sorun çıktı.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">Parolayı değiştir</string>
+  <string name="settings_password_management_change_mailbox_password">Posta kutusunun parolasını değiştir</string>
+  <string name="settings_password_management_header">Parola yönetimi</string>
+  <string name="settings_login_password_hint_current">Geçerli oturum açma parolası</string>
+  <string name="settings_login_password_hint_new">Yeni oturum açma parolası</string>
+  <string name="settings_login_password_hint_new_confirm">Yeni oturum açma parolası onayı</string>
+  <string name="settings_mailbox_password_hint_new">Yeni posta kutusu parolası</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Yeni posta kutusu parolası onayı</string>
+  <string name="settings_change_password_error">Parola değiştirilirken bir sorun çıktı.</string>
+  <string name="settings_recovery_email_success">Kurtarma e-postası güncellendi</string>
+  <string name="settings_password_management_success">Parola güncellendi</string>
+  <string name="settings_password_management_login_password_success">Oturum açma parolası güncellendi</string>
+  <string name="settings_password_management_mailbox_password_success">Posta kutusu parolası güncellendi</string>
+</resources>

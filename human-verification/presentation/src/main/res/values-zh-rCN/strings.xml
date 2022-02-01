@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common strings -->
+  <string name="human_verification_help">帮助</string>
+  <string name="human_verification_title">人机验证</string>
+  <string name="human_verification_main_subtitle">为了防止滥用，请使用以下选项之一进行人机验证</string>
+  <string name="human_verification_enter_code_subtitle">请输入发送到 %s 的验证码。</string>
+  <string name="human_verification_enter_code_subtitle_email">请输入发送到 %s 的验证码。如果您在收件箱中找不到该电子邮件，请检查垃圾邮件文件夹。</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">请输入您已有的验证码：</string>
+  <string name="human_verification_option_captcha">验证码</string>
+  <string name="human_verification_option_email">电子邮件</string>
+  <string name="human_verification_option_email_subtitle">您的邮箱地址仅用于本次验证，如果该邮件未出现在收件箱中，请检查是否被归为垃圾邮件。</string>
+  <string name="human_verification_option_sms">电话号码</string>
+  <string name="human_verification_option_sms_subtitle">您的电话号码仅用于本次验证。</string>
+  <string name="human_verification_get_verification_code">获取验证码</string>
+  <string name="human_verification_already_have_code">已收到验证码</string>
+  <string name="human_verification_request_replacement_code">未收到验证码？</string>
+  <string name="human_verification_verify">验证</string>
+  <!-- To verify the entered code - action -->
+  <string name="human_verification_help_title">需要人机验证方面的帮助吗？</string>
+  <string name="human_verification_code">验证码</string>
+  <string name="human_verification_code_request_new_code_title">重新发送验证码？</string>
+  <string name="human_verification_code_request_new_code_action">重新发送验证码</string>
+  <string name="human_verification_code_request_new_code">向 %s 重新发送验证码。</string>
+  <string name="email">电子邮件</string>
+  <string name="email_hint">email@example.com</string>
+  <string name="sms_hint">XXX XXXX XXXX</string>
+  <string name="verification_code_hint">XXXXXX</string>
+  <!-- TODO: update correct strings below -->
+  <string name="human_verification_help_manual_title">申请注册</string>
+  <string name="human_verification_help_manual">若您在创建账户中遇到困难，请提交注册申请，我们将在一个工作日内回复您。</string>
+  <string name="human_verification_help_website_title">访问我们的帮助中心</string>
+  <string name="human_verification_help_website">了解更多有关人机验证的信息，以及我们为什么要求人机验证。</string>
+  <string name="human_verification_sending_failed">验证码发送失败，请重试。</string>
+  <string name="human_verification_incorrect_code">验证码错误，请重试。</string>
+  <string name="human_verification_resent_code">新验证码已发送。</string>
+  <string name="human_verification_captcha_failed">验证失败，请重试或选择其他验证方式。</string>
+  <string name="human_verification_captcha_no_connectivity">网络未连接，无法加载验证码。</string>
+</resources>

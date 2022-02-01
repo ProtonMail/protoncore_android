@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common strings -->
+  <string name="human_verification_help">Ajuda</string>
+  <string name="human_verification_title">Verificació humana</string>
+  <string name="human_verification_main_subtitle">Per evitar abusos, verifiqueu que sou humà utilitzant una de les opcions següents</string>
+  <string name="human_verification_enter_code_subtitle">Introduïu el codi de verificació que s’ha enviat a %s.</string>
+  <string name="human_verification_enter_code_subtitle_email">Introduïu el codi de verificació que s\'ha enviat a $%s. Si no trobeu el missatge a la vostra safata d\'entrada, comproveu la carpeta de correu brossa.</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Introduïu el codi de verificació que ja teniu:</string>
+  <string name="human_verification_option_captcha">CAPTCHA</string>
+  <string name="human_verification_option_email">Correu electrònic</string>
+  <string name="human_verification_option_email_subtitle">El vostre correu electrònic s\'utilitzarà per a aquesta verificació única. Si no trobeu el correu electrònic a la vostra safata d\'entrada, comproveu la carpeta de correu brossa.</string>
+  <string name="human_verification_option_sms">Número de telèfon</string>
+  <string name="human_verification_option_sms_subtitle">El vostre número de telèfon només s’utilitzarà per a aquesta única verificació.</string>
+  <string name="human_verification_get_verification_code">Obtenir codi de verificació</string>
+  <string name="human_verification_already_have_code">Ja tinc un codi</string>
+  <string name="human_verification_request_replacement_code">No heu rebut el codi?</string>
+  <string name="human_verification_verify">Verificar</string>
+  <!-- To verify the entered code - action -->
+  <string name="human_verification_help_title">Necessiteu ajuda amb la verificació humana?</string>
+  <string name="human_verification_code">Codi de verificació</string>
+  <string name="human_verification_code_request_new_code_title">Demanar un codi nou?</string>
+  <string name="human_verification_code_request_new_code_action">Demanar un codi nou</string>
+  <string name="human_verification_code_request_new_code">Obtenir un codi de reemplaçament a %s.</string>
+  <string name="email">Correu electrònic</string>
+  <string name="email_hint">correu@exemple.cat</string>
+  <string name="sms_hint">XX XXX XX XX</string>
+  <string name="verification_code_hint">XXXXXX</string>
+  <!-- TODO: update correct strings below -->
+  <string name="human_verification_help_manual_title">Demanar una invitació</string>
+  <string name="human_verification_help_manual">Si teniu problemes per crear el vostre compte, sol·liciteu una cita i us respondrem en 1 dia laborable.</string>
+  <string name="human_verification_help_website_title">Visiteu el nostre Centre d\'Ajuda</string>
+  <string name="human_verification_help_website">Més informació sobre la verificació humana i per què la demanem.</string>
+  <string name="human_verification_sending_failed">Ha fallat l\'enviament del codi de verificació. Torneu-ho a provar.</string>
+  <string name="human_verification_incorrect_code">Codi incorrecte. Torneu-ho a provar.</string>
+  <string name="human_verification_resent_code">Us hem enviat un altre codi.</string>
+  <string name="human_verification_captcha_failed">Ha fallat la verificació CAPTCHA. Torneu-ho a provar o trieu una altra opció de verificació.</string>
+  <string name="human_verification_captcha_no_connectivity">No hi ha connexió. No s\'ha pogut carregar el CAPTCHA.</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Rapportera fel</string>
+  <string name="core_report_bug_close">Stäng</string>
+  <string name="core_report_bug_subject_field_hint">Ämne</string>
+  <string name="core_report_bug_description_field_hint">Beskrivning</string>
+  <string name="core_report_bug_description_field_placeholder">Beskriv problemet och inkludera eventuella felmeddelanden.</string>
+  <string name="core_report_bug_discard_changes_title">Osparade ändringar</string>
+  <string name="core_report_bug_discard_changes_description">There are unsaved entries in the form. Are you sure you want to discard them?</string>
+  <string name="core_report_bug_discard_changes_cancel">Fortsätt skriva</string>
+  <string name="core_report_bug_discard_changes_confirm">Förkasta</string>
+  <string name="core_report_bug_form_field_required">Detta fält är obligatoriskt</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="one">Detta fält ska ha minst %d tecken</item>
+    <item quantity="other">Detta fält ska ha minst %d tecken</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Detta fält ska ha maximalt %d tecken</item>
+    <item quantity="other">Detta fält ska ha maximalt %d tecken</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Fel när rapporten skickades, försök igen senare</string>
+  <string name="core_report_bug_send">Skicka</string>
+  <string name="core_report_bug_success">Tack för din rapport</string>
+</resources>

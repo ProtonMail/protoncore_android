@@ -118,7 +118,7 @@
   </string-array>
   <!-- endregion -->
   <!-- region plan professional -->
-  <string name="plan_id_professional_header">Professionnel</string>
+  <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Prise en charge du multiutilisateur</string>
   <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_storage#</item>

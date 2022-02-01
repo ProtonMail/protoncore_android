@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_plan">Seleccionar</string>
+  <string name="plans_select_a_plan">Seleccionar un pla</string>
+  <string name="plans_customizable_features">Visiteu <a href="https://protonmail.com/pricing">protonmail.com</a> per actualitzar-vos a un pla Professional o Visionary o per personalitzar el vostre pla.</string>
+  <string name="plans_customizable_features_web">Visiteu <a href="https://protonmail.com/pricing">protonmail.com</a> per personalitzar el vostre pla.</string>
+  <string name="plans_fetching_general_error">S\'ha produït un error al carregar els plans.</string>
+  <string name="plans_free_name">Gratuït</string>
+  <string name="plan_price_monthly">al mes*</string>
+  <string name="plans_current_plan">Pla actual</string>
+  <string name="plans_upgrade_plan">Millorar</string>
+  <string name="plans_subscription">Subscripció</string>
+  <string name="plans_renewal_date">El vostre pla es renovarà automàticament el</string>
+  <string name="plans_billed_yearly">*Facturat anualment a %s</string>
+  <string name="plans_billed_anually">Facturat anualment</string>
+  <string name="plans_billed_monthly">Facturat mensualment</string>
+  <string name="plans_billed_every_2years">Facturat cada 2 anys</string>
+  <string name="plans_save_20">Estalvieu un 20% passant a facturació anual</string>
+  <string name="plans_renew_info">Es renova automàticament. Cancel·leu o canvieu de pla en qualsevol moment.</string>
+  <string name="plans_upgrade_your_plan">Actualitza el teu compte</string>
+  <!-- plan details -->
+  <string name="plans_feature_free_item_storage">0.5GB d\'emmagatzematge</string>
+  <string name="plans_feature_free_item_address">1 adreça</string>
+  <string name="plans_feature_free_item_calendar">1 calendari</string>
+  <string name="plans_feature_free_item_vpn">1 connexió VPN</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the test between #">
+    <item quantity="one">#proton_storage# emmagatzematge</item>
+    <item quantity="other">#proton_storage# emmagatzematge</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_storage# emmagatzematge / usuari</item>
+    <item quantity="other">#proton_storage# emmagatzematge / usuari</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# adreça</item>
+    <item quantity="other">#proton_addresses# adreces</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# adreça / usuari</item>
+    <item quantity="other">#proton_addresses# adreces / usuari</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">#proton_domains# domini personalitzat</item>
+    <item quantity="other">#proton_domains# dominis personalitzats</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# calendari</item>
+    <item quantity="other">#proton_calendars# calendaris</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# connexió VPN</item>
+    <item quantity="other">#proton_vpn# connexions VPN</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# connexió VPN d\'alta velocitat</item>
+    <item quantity="other">#proton_vpn# connexions VPN d\'alta velocitat</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# usuari</item>
+    <item quantity="other">#proton_users# usuaris</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plan free -->
+  <string-array name="free">
+    <item>La base de les comunicacions privades i segures.</item>
+    <item>@string/plans_feature_free_item_storage</item>
+    <item>@string/plans_feature_free_item_address</item>
+    <item>@string/plans_feature_free_item_calendar</item>
+    <item>@string/plans_feature_free_item_vpn</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan plus. Note: the order array is affected by the change in the -->
+  <string name="plan_id_plus_header">Bústia de correu completa amb protecció avançada.</string>
+  <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_domains#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region vpn basic -->
+  <string name="plan_id_vpnbasic_header">VPN Bàsica</string>
+  <string name="plan_id_vpnbasic_high_speed">Alta velocitat</string>
+  <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_vpn#</item>
+    <item>string</item>
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_highest_speed">La velocitat mes alta</string>
+  <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_vpn#</item>
+    <item>string</item>
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan professional -->
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">Suport multiusuari</string>
+  <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_domains#</item>
+    <item>string</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan visionary -->
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string-array name="plan_id_visionary_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+    <item>#proton_domains#</item>
+    <item>#proton_users#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- supported plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <string-array name="supported_billing_cycle">
+    <item>Pagament mensual</item>
+    <item>Pagament anual (estalvieu fins a un 20%)</item>
+    <item>Pagament cada 2 anys (estalvieu un 33%)</item>
+  </string-array>
+</resources>

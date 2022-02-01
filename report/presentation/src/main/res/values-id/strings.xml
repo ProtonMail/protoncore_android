@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Report bug</string>
+  <string name="core_report_bug_close">Close</string>
+  <string name="core_report_bug_subject_field_hint">Subject</string>
+  <string name="core_report_bug_description_field_hint">Description</string>
+  <string name="core_report_bug_description_field_placeholder">Please describe the problem and include any error messages.</string>
+  <string name="core_report_bug_discard_changes_title">Unsaved Changes</string>
+  <string name="core_report_bug_discard_changes_description">There are unsaved entries in the form. Are you sure you want to discard them?</string>
+  <string name="core_report_bug_discard_changes_cancel">Keep writing</string>
+  <string name="core_report_bug_discard_changes_confirm">Discard</string>
+  <string name="core_report_bug_form_field_required">This field is required</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="other">This field should have at least %d characters</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="other">This field should have at most %d characters</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Error sending report, please try again later</string>
+  <string name="core_report_bug_send">Send</string>
+  <string name="core_report_bug_success">Thank you for your report</string>
+</resources>

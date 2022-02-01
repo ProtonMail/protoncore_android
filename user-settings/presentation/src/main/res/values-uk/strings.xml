@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">Пошта для відновлення доступу</string>
+  <string name="settings_recovery_email_current">Поточна поштова адреса для відновлення</string>
+  <string name="settings_recovery_email_new">Нова е-пошта для відновлення/сповіщень</string>
+  <string name="settings_recovery_email_confirm">Підтвердити е-пошту для відновлення/сповіщень</string>
+  <string name="settings_recovery_email_new_hint">Введіть адресу е-пошти</string>
+  <string name="settings_recovery_email_confirm_hint">Повторно введіть адресу е-пошти</string>
+  <string name="settings_save">Зберегти</string>
+  <string name="settings_password_required">Введіть свій пароль входу</string>
+  <string name="settings_password_required_ok">Гаразд</string>
+  <string name="settings_not_set">Не встановлено</string>
+  <string name="settings_recovery_email_error_no_match">Електронна адреса для відновлення та підтвердження відрізняються.</string>
+  <string name="settings_validation_email">Недійсна електронна адреса.</string>
+  <string name="settings_general_error">Сталася помилка.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">Змінити пароль</string>
+  <string name="settings_password_management_change_mailbox_password">Змінити пароль поштової скриньки</string>
+  <string name="settings_password_management_header">Керування паролями</string>
+  <string name="settings_login_password_hint_current">Поточний пароль входу</string>
+  <string name="settings_login_password_hint_new">Новий пароль входу</string>
+  <string name="settings_login_password_hint_new_confirm">Підтвердження нового пароля входу</string>
+  <string name="settings_mailbox_password_hint_new">Новий пароль поштової скриньки</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Підтвердження нового пароля поштової скриньки</string>
+  <string name="settings_change_password_error">Сталася помилка зміни пароля.</string>
+  <string name="settings_recovery_email_success">Пошту для відновлення доступу оновлено</string>
+  <string name="settings_password_management_success">Пароль оновлено</string>
+  <string name="settings_password_management_login_password_success">Пароль входу оновлено</string>
+  <string name="settings_password_management_mailbox_password_success">Пароль поштової скриньки оновлено</string>
+</resources>

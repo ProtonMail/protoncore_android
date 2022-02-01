@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Αναφορά σφάλματος</string>
+  <string name="core_report_bug_close">Κλείσιμο</string>
+  <string name="core_report_bug_subject_field_hint">Θέμα</string>
+  <string name="core_report_bug_description_field_hint">Περιγραφή</string>
+  <string name="core_report_bug_description_field_placeholder">Please describe the problem and include any error messages.</string>
+  <string name="core_report_bug_discard_changes_title">Μη αποθηκευμένες αλλαγές</string>
+  <string name="core_report_bug_discard_changes_description">Υπάρχουν μη αποθηκευμένες καταχωρήσεις στη φόρμα. Είστε βέβαιοι ότι θέλετε να τις απορρίψετε;</string>
+  <string name="core_report_bug_discard_changes_cancel">Συνέχεια σύνταξης</string>
+  <string name="core_report_bug_discard_changes_confirm">Απόρριψη</string>
+  <string name="core_report_bug_form_field_required">This field is required</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="one">This field should have at least %d character</item>
+    <item quantity="other">This field should have at least %d characters</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">This field should have at most %d character</item>
+    <item quantity="other">This field should have at most %d characters</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Σφάλμα αποστολής αναφοράς, παρακαλούμε δοκιμάστε ξανά αργότερα</string>
+  <string name="core_report_bug_send">Αποστολή</string>
+  <string name="core_report_bug_success">Σας ευχαριστούμε για την αναφορά σας</string>
+</resources>

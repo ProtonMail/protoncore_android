@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">使用 Proton 来保护您的隐私</string>
+  <string name="welcome_subtitle">我们依靠加密机制保护个人隐私，让您的数据真正归您所有。</string>
+  <string name="welcome_title_mail">使用 ProtonMail 来保护您的隐私</string>
+  <string name="welcome_subtitle_mail">加密邮件保护您的通讯隐私，打造您的专属收件箱。</string>
+  <string name="welcome_title_drive">使用 Proton Drive 来保护您的隐私</string>
+  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_title_calendar">使用 Proton Calendar 来保护您的隐私</string>
+  <string name="welcome_subtitle_calendar">加密日历让您的生活大小事保持隐私、安全和可靠。</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_subtitle_vpn">通过加密网络连接来保护您隐私的瑞士高速VPN。</string>
+  <string name="auth_password_label">密码</string>
+  <string name="auth_password_help">密码必须至少包含 8 个字符</string>
+  <string name="auth_current_login_password">当前登录密码</string>
+  <string name="auth_enter_six_digit_code">请输入 6 位验证码</string>
+  <string name="auth_second_factor_code">双重验证码</string>
+  <string name="auth_email_username">邮箱或用户名</string>
+  <string name="auth_account_details">请输入您的 Proton 账户详细信息。</string>
+  <string name="auth_sign_in">登录</string>
+  <string name="auth_sign_in_action">登录</string>
+  <string name="auth_need_help">需要帮助？</string>
+  <string name="auth_login_assistive_text">请输入您的 Proton 邮箱或用户名。</string>
+  <string name="auth_help_title">我们能帮你什么吗？</string>
+  <string name="auth_help_option_forgot_username">忘记用户名</string>
+  <string name="auth_help_option_forgot_password">忘记密码</string>
+  <string name="auth_help_option_other">其他登录问题</string>
+  <string name="auth_help_other">仍需帮助？请直接联系我们。</string>
+  <string name="auth_help_option_customer_support">客服</string>
+  <string name="auth_2fa_title">双重验证</string>
+  <string name="auth_2fa_label">双重验证码</string>
+  <string name="auth_2fa_recovery_code_label">恢复码</string>
+  <string name="auth_2fa_assistive_text">请输入 6 位验证码。</string>
+  <string name="auth_2fa_recovery_code_assistive_text">请输入 8 位恢复码。</string>
+  <string name="auth_2fa_action">验证账户</string>
+  <string name="auth_2fa_use_recovery_code">使用恢复码</string>
+  <string name="auth_2fa_use_2fa_code">使用双重验证码</string>
+  <string name="auth_2fa_error_empty_code">双重验证码不应为空</string>
+  <string name="auth_mailbox_title">解锁您的邮箱</string>
+  <string name="auth_mailbox_password_label">邮箱密码</string>
+  <string name="auth_mailbox_unlock_action">解锁​​​​</string>
+  <string name="auth_forgot_password">忘记密码</string>
+  <string name="auth_login_general_error">出错了。</string>
+  <string name="auth_login_empty_credentials">账号和密码不应为空。</string>
+  <string name="auth_mailbox_empty_credentials">账号和密码不应为空。</string>
+  <string name="auth_create_address_title">创建 ProtonMail 地址</string>
+  <string name="auth_create_address_subtitle">您的 Proton 账户已关联至 %1$s，要使用 ProtonMail，请先创建一个地址。</string>
+  <string name="auth_username">用户名</string>
+  <string name="auth_username_next_action">下一步</string>
+  <string name="auth_create_address_result_title">%s 可以注册</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s 将是您新的 ProtonMail 邮箱地址。</string>
+  <string name="auth_create_address_result_subtitle">您可以使用该地址登录所有 Proton 服务。</string>
+  <string name="auth_create_address_result_recovery_title">您的密保邮箱：</string>
+  <string name="auth_create_address_create">创建地址</string>
+  <string name="auth_create_address_creating">正在创建地址</string>
+  <string name="auth_create_address_terms">点击创建地址即表示您同意 Proton 的<a href="https://protonmail.com/terms-and-conditions">服务条款</a>。</string>
+  <string name="auth_create_address_error_credentials">账号和密码不应为空。</string>
+  <string name="auth_create_address_error_no_available_domain">没有可用的域名。</string>
+  <string name="auth_create_address_error_private_key">生成私钥失败。</string>
+  <string name="auth_create_address_error_signed_key_list">生成密钥列表失败。</string>
+  <string name="auth_create_address_error_setusername">关联用户名失败。</string>
+  <string name="auth_create_address_error_username_unavailable">所选用户名不能使用。</string>
+  <string name="auth_mailbox_login_error_no_primary_key">未找到主密钥。</string>
+  <string name="auth_mailbox_login_error_primary_key_error">主密钥错误。</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">密码无效。</string>
+  <string name="auth_password_chooser_title">更改密码</string>
+  <string name="auth_password_chooser_description">如需以机构成员身份使用 Proton 服务，您需要先从浏览器登录 Proton 并更改密码。</string>
+  <string name="auth_password_chooser_change">更改密码</string>
+  <string name="auth_user_check_one_free_error">只允许使用一个免费 Proton 账户。</string>
+  <string name="auth_user_check_delinquent_error">您的账户因欠费已被停用。</string>
+  <string name="auth_user_check_delinquent_action">前去支付</string>
+  <string name="auth_account_not_found_error">账户出错</string>
+  <string name="auth_one_account_all_services">一个账户即可登录所有 Proton 服务。</string>
+  <string name="auth_create_account">创建账户</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">创建您的账户</string>
+  <string name="auth_signup_current_email">使用您已有的邮箱地址</string>
+  <string name="auth_signup_create_secure_proton_address">创建一个安全的 ProtonMail 邮箱地址</string>
+  <string name="auth_signup_username">用户名</string>
+  <string name="auth_signup_email">邮箱</string>
+  <string name="auth_signup_next">下一步</string>
+  <string name="auth_signup_choose_password">创建密码</string>
+  <string name="auth_signup_repeat_password">确认密码</string>
+  <string name="auth_signup_recovery_method_title">设置恢复方法（非必需）</string>
+  <string name="auth_signup_recovery_method_subtitle">假如以后您忘记用户名或密码无法登录，我们将通过这个邮箱或电话号码帮助您恢复账户。</string>
+  <string name="auth_signup_recovery_method_email">电子邮箱</string>
+  <string name="auth_signup_recovery_method_phone">电话号码</string>
+  <string name="auth_signup_recovery_method_email_hint">密保邮箱</string>
+  <string name="auth_signup_recovery_method_phone_hint">密保手机号</string>
+  <string name="auth_signup_terms_conditions">服务条款</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">点击下一步即表示您同意 Proton 的<annotation link="terms">服务条款</annotation>。</string>
+  <string name="auth_signup_skip_recovery_title">跳过设置恢复方法？</string>
+  <string name="auth_signup_skip_recovery_description">恢复方法将帮助您在忘记密码或账户被锁时访问您的账户。</string>
+  <string name="auth_signup_skip_recovery">跳过</string>
+  <string name="auth_signup_set_recovery">设置恢复方法</string>
+  <string name="auth_signup_no_connectivity">网络未连接，无法显示服务条款。</string>
+  <string name="auth_signup_error_username_blank">用户名不能为空。</string>
+  <string name="auth_signup_error_passwords_do_not_match">两次输入的密码不一致。</string>
+  <string name="auth_signup_validation_password_length">密码长度至少应为 8 个字符。</string>
+  <string name="auth_signup_validation_password">密码不能为空。</string>
+  <string name="auth_signup_your_account_is_being_setup">正在创建您的账户…</string>
+  <string name="auth_signup_please_wait">通常不会超过一分钟。</string>
+  <string name="auth_signup_replacement_code">未收到验证码？</string>
+  <string name="auth_signup_verify">验证</string>
+  <string name="auth_signup_verification_code">验证码</string>
+  <string name="auth_signup_enter_code_subtitle">请输入发送到 %s 的验证码：</string>
+  <string name="auth_signup_error_human_verification_failed">人机验证失败。</string>
+  <string name="auth_signup_token_code_resent">验证码已重新发送。</string>
+  <string name="auth_signup_error_validation_recovery_destination">密保方式无效。</string>
+</resources>

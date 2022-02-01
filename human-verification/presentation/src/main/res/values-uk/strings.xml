@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common strings -->
+  <string name="human_verification_help">Допомога</string>
+  <string name="human_verification_title">Перевірка «Я не робот»</string>
+  <string name="human_verification_main_subtitle">Щоб запобігти зловживанню, підтвердьте, що ви людина, скориставшись одним із запропонованих варіантів</string>
+  <string name="human_verification_enter_code_subtitle">Введіть код перевірки, який був надісланий на %s.</string>
+  <string name="human_verification_enter_code_subtitle_email">Введіть код перевірки, який було надіслано на %s. Якщо ви не можете знайти електронний лист у вхідних, перевірте теку зі спамом.</string>
+  <string name="human_verification_enter_code_subtitle_already_have_code">Введіть отриманий код перевірки:</string>
+  <string name="human_verification_option_captcha">CAPTCHA</string>
+  <string name="human_verification_option_email">Е-пошта</string>
+  <string name="human_verification_option_email_subtitle">Вашу електронну адресу буде застосовано лише для цієї одноразової перевірки. Якщо ви не знайшли листа в теці «Вхідні», перевірте теку зі спамом.</string>
+  <string name="human_verification_option_sms">Номер телефону</string>
+  <string name="human_verification_option_sms_subtitle">Ваш номер телефону застосується лише для цієї одноразової перевірки.</string>
+  <string name="human_verification_get_verification_code">Отримати код підтвердження</string>
+  <string name="human_verification_already_have_code">Я вже маю код</string>
+  <string name="human_verification_request_replacement_code">Не отримали код?</string>
+  <string name="human_verification_verify">Перевірити</string>
+  <!-- To verify the entered code - action -->
+  <string name="human_verification_help_title">Потребуєте допомоги з перевіркою «Я не робот»?</string>
+  <string name="human_verification_code">Код підтвердження</string>
+  <string name="human_verification_code_request_new_code_title">Запитати новий код?</string>
+  <string name="human_verification_code_request_new_code_action">Запитати новий код</string>
+  <string name="human_verification_code_request_new_code">Отримати код заміни, надісланий до %s.</string>
+  <string name="email">Електронна пошта</string>
+  <string name="email_hint">email@example.com</string>
+  <string name="sms_hint">XXX XXX XX XX</string>
+  <string name="verification_code_hint">XXXXXX</string>
+  <!-- TODO: update correct strings below -->
+  <string name="human_verification_help_manual_title">Запитати запрошення</string>
+  <string name="human_verification_help_manual">Якщо у вас виникли труднощі під час створення облікового запису, подайте запит на запрошення і ми відповімо протягом 1 робочого дня.</string>
+  <string name="human_verification_help_website_title">Відвідайте нашу довідку</string>
+  <string name="human_verification_help_website">Докладніше про перевірку чи ви дійсно людина, і чому ми запитуємо її.</string>
+  <string name="human_verification_sending_failed">Не вдалося надіслати код підтвердження. Повторіть спробу.</string>
+  <string name="human_verification_incorrect_code">Не правильний код. Повторіть спробу.</string>
+  <string name="human_verification_resent_code">Ми надіслали вам інший код.</string>
+  <string name="human_verification_captcha_failed">Не вдалося виконати перевірку CAPTCHA. Повторіть спробу або оберіть інший варіант перевірки.</string>
+  <string name="human_verification_captcha_no_connectivity">Немає з\'єднання. Не вдалося завантажити CAPTCHA.</string>
+</resources>

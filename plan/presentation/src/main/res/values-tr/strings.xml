@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_plan">Seçin</string>
+  <string name="plans_select_a_plan">Bir tarife seçin</string>
+  <string name="plans_customizable_features">Profesyonel ve Visionary tarifelerine yükseltmek veya tarifenizi özelleştirmek için <a href="https://protonmail.com/pricing">protonmail.com</a> adresine gidin.</string>
+  <string name="plans_customizable_features_web">Tarifenizi özelleştirmek için <a href="https://protonmail.com/pricing">protonmail.com</a> adresine gidin.</string>
+  <string name="plans_fetching_general_error">Tarifeler alınırken bir sorun çıktı.</string>
+  <string name="plans_free_name">Ücretsiz</string>
+  <string name="plan_price_monthly">aylık*</string>
+  <string name="plans_current_plan">Geçerli tarife</string>
+  <string name="plans_upgrade_plan">Tarifeyi yükselt</string>
+  <string name="plans_subscription">Abonelik</string>
+  <string name="plans_renewal_date">Tarifeniz şu tarihte otomatik olarak yenilenecek</string>
+  <string name="plans_billed_yearly">*%s tutarında yıllık faturalanır</string>
+  <string name="plans_billed_anually">Yıllık faturalanır</string>
+  <string name="plans_billed_monthly">Aylık faturalanır</string>
+  <string name="plans_billed_every_2years">2 yıllık faturalanır</string>
+  <string name="plans_save_20">Yıllık faturaya geçerek %20 indirim alın</string>
+  <string name="plans_renew_info">Otomatik olarak yenilenir. Tarifeyi istediğiniz zaman iptal edebilir ya da değiştirebilirsiniz.</string>
+  <string name="plans_upgrade_your_plan">Tarifenizi yükseltin</string>
+  <!-- plan details -->
+  <string name="plans_feature_free_item_storage">0.5 GB depolama alanı</string>
+  <string name="plans_feature_free_item_address">1 adres</string>
+  <string name="plans_feature_free_item_calendar">1 takvim</string>
+  <string name="plans_feature_free_item_vpn">1 VPN bağlantısı</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the test between #">
+    <item quantity="one">#proton_storage# depolama alanı</item>
+    <item quantity="other">#proton_storage# depolama alanı</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_storage# depolama alanı / kullanıcı</item>
+    <item quantity="other">#proton_storage# depolama alanı / kullanıcı</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# adres</item>
+    <item quantity="other">#proton_addresses# adres</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# adres / kullanıcı</item>
+    <item quantity="other">#proton_addresses# adres / kullanıcı</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">#proton_domains# özel etki alanı</item>
+    <item quantity="other">#proton_domains# özel etki alanı</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# takvim</item>
+    <item quantity="other">#proton_calendars# takvim</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# VPN bağlantısı</item>
+    <item quantity="other">#proton_vpn# VPN bağlantısı</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# yüksek hızlı VPN bağlantısı</item>
+    <item quantity="other">#proton_vpn# yüksek hızlı VPN bağlantısı</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# kullanıcı</item>
+    <item quantity="other">#proton_users# kullanıcı</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plan free -->
+  <string-array name="free">
+    <item>Kişisel ve güvenli iletişim için temel.</item>
+    <item>@string/plans_feature_free_item_storage</item>
+    <item>@string/plans_feature_free_item_address</item>
+    <item>@string/plans_feature_free_item_calendar</item>
+    <item>@string/plans_feature_free_item_vpn</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan plus. Note: the order array is affected by the change in the -->
+  <string name="plan_id_plus_header">Gelişmiş koruma ile tam özellikli posta kutusu.</string>
+  <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_domains#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region vpn basic -->
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_high_speed">Yüksek hız</string>
+  <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_vpn#</item>
+    <item>string</item>
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_highest_speed">En yüksek hız</string>
+  <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_vpn#</item>
+    <item>string</item>
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan professional -->
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">Çoklu kullanıcı desteği</string>
+  <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_domains#</item>
+    <item>string</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan visionary -->
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string-array name="plan_id_visionary_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+    <item>#proton_domains#</item>
+    <item>#proton_users#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- supported plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <string-array name="supported_billing_cycle">
+    <item>Aylık ödeme</item>
+    <item>Yıllık ödeme (%20 indirim)</item>
+    <item>2 yıllık ödeme (%33 indirim)</item>
+  </string-array>
+</resources>

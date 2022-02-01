@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">Proton ile kişisel gizliliğinizi koruyun</string>
+  <string name="welcome_subtitle">Şifreleme, verilerinizi gizli tutar. Verileriniz tamamıyla size aittir.</string>
+  <string name="welcome_title_mail">ProtonMail ile kişisel gizliliğinizi koruyun</string>
+  <string name="welcome_subtitle_mail">Görüşmelerinizi gizli tutan şifrelenmiş e-posta. Gelen kutunuz tamamıyla size ait.</string>
+  <string name="welcome_title_drive">Proton Drive ile kişisel gizliliğinizi koruyun</string>
+  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_title_calendar">Proton Calendar ile kişisel gizliliğinizi koruyun</string>
+  <string name="welcome_subtitle_calendar">Hayatınızdaki etkinlikleri gizli, emniyetli ve güvenli tutan şifrelenmiş takvim.</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_subtitle_vpn">İnternet bağlantınızı şifreleyerek kişisel gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN.</string>
+  <string name="auth_password_label">Parola</string>
+  <string name="auth_password_help">Parola en az 8 karakter uzunluğunda olmalıdır</string>
+  <string name="auth_current_login_password">Geçerli oturum açma parolası</string>
+  <string name="auth_enter_six_digit_code">6 rakamlı kodu yazın</string>
+  <string name="auth_second_factor_code">İki aşamalı kimlik doğrulama kodu</string>
+  <string name="auth_email_username">E-posta ya da kullanıcı adı</string>
+  <string name="auth_account_details">Proton hesabınızın ayrıntılarını yazın.</string>
+  <string name="auth_sign_in">Oturum aç</string>
+  <string name="auth_sign_in_action">Oturum aç</string>
+  <string name="auth_need_help">Yardım gerekiyor mu?</string>
+  <string name="auth_login_assistive_text">Lütfen Proton e-posta adresinizi ya da kullanıcı adınızı yazın.</string>
+  <string name="auth_help_title">Nasıl yardımcı olabiliriz?</string>
+  <string name="auth_help_option_forgot_username">Kullanıcı adımı unuttum</string>
+  <string name="auth_help_option_forgot_password">Parolamı unuttum</string>
+  <string name="auth_help_option_other">Diğer oturum açma sorunları</string>
+  <string name="auth_help_other">Hala yardım gerekiyor mu? Doğrudan bizimle görüşün.</string>
+  <string name="auth_help_option_customer_support">Müşteri desteği</string>
+  <string name="auth_2fa_title">İki aşamalı kimlik doğrulama</string>
+  <string name="auth_2fa_label">İki aşamalı kimlik doğrulama kodu</string>
+  <string name="auth_2fa_recovery_code_label">Kurtarma kodu</string>
+  <string name="auth_2fa_assistive_text">6 rakamlı kodu yazın.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">8 karakterli kurtarma kodunu yazın.</string>
+  <string name="auth_2fa_action">Kimliği doğrula</string>
+  <string name="auth_2fa_use_recovery_code">Kurtarma kodunu kullan</string>
+  <string name="auth_2fa_use_2fa_code">İki aşamalı kimlik doğrulama kodu kullanılsın</string>
+  <string name="auth_2fa_error_empty_code">İki aşamalı kimlik doğrulama kodu boş bırakılamaz</string>
+  <string name="auth_mailbox_title">Posta kutunuzun kilidini açın</string>
+  <string name="auth_mailbox_password_label">Posta kutusu parolası</string>
+  <string name="auth_mailbox_unlock_action">Kilidi aç</string>
+  <string name="auth_forgot_password">Parolamı unuttum</string>
+  <string name="auth_login_general_error">Bir hata oluştu.</string>
+  <string name="auth_login_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
+  <string name="auth_mailbox_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
+  <string name="auth_create_address_title">Bir ProtonMail adresi oluştur</string>
+  <string name="auth_create_address_subtitle">Proton hesabınız %1$s ile bağlantılı. ProtonMail kullanmak için bir adres oluşturun.</string>
+  <string name="auth_username">Kullanıcı adı</string>
+  <string name="auth_username_next_action">Sonraki</string>
+  <string name="auth_create_address_result_title">%s kullanılabilir</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s, yeni ProtonMail e-posta adresiniz olacak.</string>
+  <string name="auth_create_address_result_subtitle">Tüm Proton hizmetlerinde oturum açmak için bu adresi kullanacaksınız.</string>
+  <string name="auth_create_address_result_recovery_title">Kurtarma e-posta adresiniz:</string>
+  <string name="auth_create_address_create">Adres oluştur</string>
+  <string name="auth_create_address_creating">Adres oluşturuluyor</string>
+  <string name="auth_create_address_terms">Adres oluştur üzerine tıklayarak, Proton <a href="https://protonmail.com/terms-and-conditions">Hüküm ve Koşullar</a> metnini kabul etmiş olursunuz</string>
+  <string name="auth_create_address_error_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
+  <string name="auth_create_address_error_no_available_domain">Kullanılabilecek bir etki alanı yok.</string>
+  <string name="auth_create_address_error_private_key">Kişisel anahtar oluşturulamadı.</string>
+  <string name="auth_create_address_error_signed_key_list">Anahtar listesi oluşturulamadı.</string>
+  <string name="auth_create_address_error_setusername">Kullanıcı adı ilişkilendirilemedi.</string>
+  <string name="auth_create_address_error_username_unavailable">Seçilmiş kullanıcı adı kullanılamaz.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Birincil anahtar bulunamadı.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Birincil anahtar hatası.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Parola geçersiz.</string>
+  <string name="auth_password_chooser_title">Parolanızı değiştirin</string>
+  <string name="auth_password_chooser_description">Proton uygulamasını bir kuruluş üyesi olarak kullanmak için, öncelikle tarayıcı üzerinden Proton oturumu açıp parolanızı değiştirmelisiniz.</string>
+  <string name="auth_password_chooser_change">Parolayı değiştir</string>
+  <string name="auth_user_check_one_free_error">Yalnızca bir ücretsiz Proton hesabına izin verilir.</string>
+  <string name="auth_user_check_delinquent_error">Ödenmemiş bir fatura nedeniyle hesabınız askıya alındı.</string>
+  <string name="auth_user_check_delinquent_action">Faturayı öde</string>
+  <string name="auth_account_not_found_error">Hesap ile ilgili hata</string>
+  <string name="auth_one_account_all_services">Tüm Proton hizmetleri için tek hesap.</string>
+  <string name="auth_create_account">Hesap oluştur</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Proton hesabınızı oluşturun</string>
+  <string name="auth_signup_current_email">Bunun yerine var olan e-posta adresinizi kullanın</string>
+  <string name="auth_signup_create_secure_proton_address">Bunun yerine güvenli bir ProtonMail adresi oluşturun</string>
+  <string name="auth_signup_username">Kullanıcı adı</string>
+  <string name="auth_signup_email">E-posta</string>
+  <string name="auth_signup_next">Sonraki</string>
+  <string name="auth_signup_choose_password">Parolanızı oluşturun</string>
+  <string name="auth_signup_repeat_password">Parola onayı</string>
+  <string name="auth_signup_recovery_method_title">Kurtarma yöntemini ayarla (isteğe bağlı)</string>
+  <string name="auth_signup_recovery_method_subtitle">Hesabınızda oturum açamadığınızda, kurtarma yönergelerini bu e-posta ya da telefon numarasına göndereceğiz.</string>
+  <string name="auth_signup_recovery_method_email">E-posta</string>
+  <string name="auth_signup_recovery_method_phone">Telefon</string>
+  <string name="auth_signup_recovery_method_email_hint">Kurtarma e-postası</string>
+  <string name="auth_signup_recovery_method_phone_hint">Kurtarma telefon numarası</string>
+  <string name="auth_signup_terms_conditions">Hüküm ve Koşullar</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Sonraki üzerine tıkladığınızda Proton <annotation link="terms">Hüküm ve Koşulları</annotation> metnini kabul etmiş olursunuz.</string>
+  <string name="auth_signup_skip_recovery_title">Kurtarma yöntemi atlansın mı?</string>
+  <string name="auth_signup_skip_recovery_description">Kurtarma yöntemi, parolanızı unuttuğunuzda ya da oturum açamadığınızda hesabınıza erişmenizi sağlar.</string>
+  <string name="auth_signup_skip_recovery">Atla</string>
+  <string name="auth_signup_set_recovery">Kurtarma yöntemini ayarla</string>
+  <string name="auth_signup_no_connectivity">Bağlantı olmadığından Hüküm ve Koşullar gösterilemiyor.</string>
+  <string name="auth_signup_error_username_blank">Kullanıcı adı boş olamaz.</string>
+  <string name="auth_signup_error_passwords_do_not_match">Parola ile onayı aynı değil.</string>
+  <string name="auth_signup_validation_password_length">Parola en az 8 karakter uzunluğunda olmalıdır.</string>
+  <string name="auth_signup_validation_password">Parola boş olamaz.</string>
+  <string name="auth_signup_your_account_is_being_setup">Hesabınız oluşturuluyor…</string>
+  <string name="auth_signup_please_wait">Genellikle bir dakikadan kısa sürer.</string>
+  <string name="auth_signup_replacement_code">Kodu almadınız mı?</string>
+  <string name="auth_signup_verify">Doğrula</string>
+  <string name="auth_signup_verification_code">Doğrulama kodu</string>
+  <string name="auth_signup_enter_code_subtitle">%s alıcısına gönderilen doğrulama kodunu yazın:</string>
+  <string name="auth_signup_error_human_verification_failed">Kişinin gerçekliği doğrulanamadı.</string>
+  <string name="auth_signup_token_code_resent">Kod yeniden gönderildi.</string>
+  <string name="auth_signup_error_validation_recovery_destination">Kurtarma hedefi geçersiz.</string>
+</resources>

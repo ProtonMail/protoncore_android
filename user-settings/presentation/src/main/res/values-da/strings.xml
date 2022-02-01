@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">E-mail til gendannelse</string>
+  <string name="settings_recovery_email_current">Nuværende e-mail til nulstilling / notifikation</string>
+  <string name="settings_recovery_email_new">Ny e-mail til nulstilling / notifikation</string>
+  <string name="settings_recovery_email_confirm">Bekræft e-mail til nulstilling / notifikation</string>
+  <string name="settings_recovery_email_new_hint">Indtast e-mailadresse</string>
+  <string name="settings_recovery_email_confirm_hint">Indtast e-mailadresse igen</string>
+  <string name="settings_save">Gem</string>
+  <string name="settings_password_required">Indtast din login-adgangskode</string>
+  <string name="settings_password_required_ok">OK</string>
+  <string name="settings_not_set">Ikke indstillet</string>
+  <string name="settings_recovery_email_error_no_match">E-mail til gendannelse og bekræftelse er ikke ens.</string>
+  <string name="settings_validation_email">E-mail er ikke gyldig.</string>
+  <string name="settings_general_error">Der opstod en fejl.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">Skift adgangskode</string>
+  <string name="settings_password_management_change_mailbox_password">Skift postkasseadgangskode</string>
+  <string name="settings_password_management_header">Adgangskodehåndtering</string>
+  <string name="settings_login_password_hint_current">Nuværende login-adgangskode</string>
+  <string name="settings_login_password_hint_new">Ny login-adgangskode</string>
+  <string name="settings_login_password_hint_new_confirm">Bekræft ny login-adgangskode</string>
+  <string name="settings_mailbox_password_hint_new">Ny postkasseadgangskode</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Bekræft ny postkasseadgangskode</string>
+  <string name="settings_change_password_error">En fejl opstod ved ændring af adgangskode.</string>
+  <string name="settings_recovery_email_success">E-mail til gendannelse ugyldig</string>
+  <string name="settings_password_management_success">Adgangskode opdateret</string>
+  <string name="settings_password_management_login_password_success">Login-adgangskode opdateret</string>
+  <string name="settings_password_management_mailbox_password_success">Postkasseadgangskode opdateret</string>
+</resources>
