@@ -52,5 +52,6 @@
   <string name="human_verification_incorrect_code">Kod jest nieprawidłowy. Spróbuj ponownie.</string>
   <string name="human_verification_resent_code">Wysłaliśmy nowy kod.</string>
   <string name="human_verification_captcha_failed">Weryfikacja CAPTCHA nie powiodła się. Spróbuj ponownie lub wybierz inną metodę weryfikacji.</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Brak połączenia z Internetem. Nie można załadować weryfikacji CAPTCHA.</string>
 </resources>

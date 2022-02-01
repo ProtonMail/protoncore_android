@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
-import androidx.activity.ComponentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.coroutineScope

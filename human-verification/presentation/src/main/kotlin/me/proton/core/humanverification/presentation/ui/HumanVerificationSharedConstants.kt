@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation
+package me.proton.core.humanverification.presentation.ui
 
-import javax.inject.Qualifier
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class HumanVerificationApiHost
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class CaptchaApiHost
+internal const val REQUEST_KEY = "HumanVerificationDialogFragment.requestKey"
+internal const val RESULT_HUMAN_VERIFICATION = "result.HumanVerificationResult"
+internal val VALID_METHODS_HV2 = setOf("sms", "email", "captcha", "coupon", "payment", "invite")

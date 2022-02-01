@@ -8,7 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking changes
 
-- `AppLifecycleObserver` now inherits from `DefaultLifecycleObserver`, and the custom methods `onEnterForeground` and `onEnterBackground` have been removed 
+- `AppLifecycleObserver` now inherits from `DefaultLifecycleObserver`, and the custom methods `onEnterForeground` and `onEnterBackground` have been removed.
+- Client apps can and should revert to the old HV2 implementation. To achieve this, we need to provide 2 dependencies:
+```
+@Provides
+/** Can be either HumanVerificationVersion.HV2 or HV3. */
+fun provideHumanVerificationVersion() = HumanVerificationVersion.HV2
+
+@Provides
+@CaptchaApiHost
+/** Legacy Captcha api host dependency. Should point to 'api.$HOST'. */
+fun provideCaptchaApiHost(): String = Constants.API_HOST
+```
 
 ### Changes
 

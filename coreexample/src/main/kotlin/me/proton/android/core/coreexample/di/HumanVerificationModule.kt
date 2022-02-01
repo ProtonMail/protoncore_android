@@ -35,8 +35,10 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
+import me.proton.core.humanverification.presentation.CaptchaApiHost
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
+import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
@@ -47,12 +49,21 @@ import javax.inject.Singleton
 object HumanVerificationModule {
 
     @Provides
+    fun provideHumanVerificationVersion() = HumanVerificationVersion.HV2
+
+    @Provides
     @HumanVerificationApiHost
     fun provideHumanVerificationApiHost(): String = "https://verify.${Constants.HOST}"
 
     @Provides
-    fun provideHumanVerificationOrchestrator(): HumanVerificationOrchestrator =
-        HumanVerificationOrchestrator()
+    @CaptchaApiHost
+    fun provideCaptchaApiHost(): String = Constants.API_HOST
+
+    @Provides
+    fun provideHumanVerificationOrchestrator(
+        humanVerificationVersion: HumanVerificationVersion
+    ): HumanVerificationOrchestrator =
+        HumanVerificationOrchestrator(humanVerificationVersion)
 
     @Provides
     @Singleton
