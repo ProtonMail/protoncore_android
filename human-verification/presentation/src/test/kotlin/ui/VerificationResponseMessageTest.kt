@@ -18,8 +18,8 @@
 
 package ui
 
-import me.proton.core.humanverification.presentation.ui.VerificationResponseMessage
-import me.proton.core.humanverification.presentation.ui.VerificationResponseMessage.VerificationMessageTypeSerializer
+import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage
+import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage.VerificationMessageTypeSerializer
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.deserializeOrNull
 import org.junit.Test
@@ -40,7 +40,7 @@ class VerificationResponseMessageTest {
                 }
             }
             """
-        val result = runCatching { json.deserialize<VerificationResponseMessage>() }
+        val result = runCatching { json.deserialize<HV3ResponseMessage>() }
         assertNull(result.exceptionOrNull())
         assertNotNull(result.getOrNull())
     }
@@ -57,24 +57,24 @@ class VerificationResponseMessageTest {
         val resizeType = rawResizeType.deserialize(VerificationMessageTypeSerializer)
         val incorrectType = rawRandomString.deserializeOrNull(VerificationMessageTypeSerializer)
 
-        assertEquals(VerificationResponseMessage.Type.Success, successType)
-        assertEquals(VerificationResponseMessage.Type.Notification, notificationType)
-        assertEquals(VerificationResponseMessage.Type.Resize, resizeType)
+        assertEquals(HV3ResponseMessage.Type.Success, successType)
+        assertEquals(HV3ResponseMessage.Type.Notification, notificationType)
+        assertEquals(HV3ResponseMessage.Type.Resize, resizeType)
         assertNull(incorrectType)
     }
 
     @Test
     fun `Can match all MessageTypes`() {
-        val successType = VerificationResponseMessage.MessageType.map["success"]
-        val infoType = VerificationResponseMessage.MessageType.map["info"]
-        val warningType = VerificationResponseMessage.MessageType.map["warning"]
-        val errorType = VerificationResponseMessage.MessageType.map["error"]
-        val invalidType = VerificationResponseMessage.MessageType.map["ASDA"]
+        val successType = HV3ResponseMessage.MessageType.map["success"]
+        val infoType = HV3ResponseMessage.MessageType.map["info"]
+        val warningType = HV3ResponseMessage.MessageType.map["warning"]
+        val errorType = HV3ResponseMessage.MessageType.map["error"]
+        val invalidType = HV3ResponseMessage.MessageType.map["ASDA"]
 
-        assertEquals(VerificationResponseMessage.MessageType.Success, successType)
-        assertEquals(VerificationResponseMessage.MessageType.Info, infoType)
-        assertEquals(VerificationResponseMessage.MessageType.Warning, warningType)
-        assertEquals(VerificationResponseMessage.MessageType.Error, errorType)
+        assertEquals(HV3ResponseMessage.MessageType.Success, successType)
+        assertEquals(HV3ResponseMessage.MessageType.Info, infoType)
+        assertEquals(HV3ResponseMessage.MessageType.Warning, warningType)
+        assertEquals(HV3ResponseMessage.MessageType.Error, errorType)
         assertNull(invalidType)
     }
 
@@ -86,7 +86,7 @@ class VerificationResponseMessageTest {
                 "text": "Some message to show"
             }
             """
-        assertNotNull(json.deserializeOrNull<VerificationResponseMessage.Payload>())
+        assertNotNull(json.deserializeOrNull<HV3ResponseMessage.Payload>())
     }
 
     @Test
@@ -97,7 +97,7 @@ class VerificationResponseMessageTest {
                 "token": "SOME_RANDOM_TOKEN"
             }
             """
-        assertNotNull(json.deserializeOrNull<VerificationResponseMessage.Payload>())
+        assertNotNull(json.deserializeOrNull<HV3ResponseMessage.Payload>())
     }
 
     @Test
@@ -107,7 +107,7 @@ class VerificationResponseMessageTest {
                 "height": 1024
             }
             """
-        assertNotNull(json.deserializeOrNull<VerificationResponseMessage.Payload>())
+        assertNotNull(json.deserializeOrNull<HV3ResponseMessage.Payload>())
     }
 
 }

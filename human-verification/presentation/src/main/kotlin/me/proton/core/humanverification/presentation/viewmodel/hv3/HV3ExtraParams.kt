@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation
+package me.proton.core.humanverification.presentation.viewmodel.hv3
 
-import javax.inject.Qualifier
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class HumanVerificationApiHost
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class CaptchaApiHost
+data class HV3ExtraParams(
+    val recoveryPhone: String?,
+    val locale: String?,
+    val defaultCountry: String?,
+    val useVPNTheme: Boolean,
+)

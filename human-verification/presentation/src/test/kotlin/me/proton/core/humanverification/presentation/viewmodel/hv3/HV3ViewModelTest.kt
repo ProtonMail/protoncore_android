@@ -16,14 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.viewmodel
+package me.proton.core.humanverification.presentation.viewmodel.hv3
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertNotNull
 import junit.framework.Assert.assertNull
 import kotlinx.coroutines.flow.emptyFlow
@@ -48,7 +47,7 @@ import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class HumanVerificationViewModelTest : CoroutinesTest {
+class HV3ViewModelTest : CoroutinesTest {
 
     @get:Rule
     val instantTaskRule = InstantTaskExecutorRule()
@@ -58,7 +57,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
     private val getSettings = mockk<GetSettings>(relaxed = true)
     private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
 
-    lateinit var viewModel: HumanVerificationViewModel
+    lateinit var viewModel: HV3ViewModel
 
     private val clientId: ClientId by lazy {
         val id = "client_id"
@@ -68,7 +67,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
 
     @Before
     fun setup() {
-        viewModel = HumanVerificationViewModel(
+        viewModel = HV3ViewModel(
             humanVerificationWorkflowHandler,
             humanVerificationListener,
             accountRepository,
@@ -125,7 +124,7 @@ class HumanVerificationViewModelTest : CoroutinesTest {
 
     @Test
     fun `getHumanVerificationExtraParams returns useVPNTheme when product is Vpn`() = runBlocking {
-        viewModel = HumanVerificationViewModel(
+        viewModel = HV3ViewModel(
             humanVerificationWorkflowHandler,
             humanVerificationListener,
             accountRepository,

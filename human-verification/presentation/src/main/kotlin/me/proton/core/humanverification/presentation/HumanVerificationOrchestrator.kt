@@ -22,13 +22,17 @@ import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentActivity
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
-import me.proton.core.humanverification.presentation.ui.HumanVerificationDialogFragment
+import me.proton.core.humanverification.presentation.ui.REQUEST_KEY
+import me.proton.core.humanverification.presentation.ui.RESULT_HUMAN_VERIFICATION
+import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.network.domain.client.getType
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 
-class HumanVerificationOrchestrator {
+class HumanVerificationOrchestrator(
+    private val humanVerificationVersion: HumanVerificationVersion,
+) {
 
     // region result launchers
     private var humanWorkflowLauncher: FragmentDialogResultLauncher<HumanVerificationInput>? = null
@@ -51,16 +55,17 @@ class HumanVerificationOrchestrator {
      */
     fun register(context: FragmentActivity, largeLayout: Boolean = false) {
         context.supportFragmentManager.setFragmentResultListener(
-            HumanVerificationDialogFragment.REQUEST_KEY,
-            context,
-            { _, bundle ->
-                val hvResult = bundle.getParcelable<HumanVerificationResult>(
-                    HumanVerificationDialogFragment.RESULT_HUMAN_VERIFICATION
-                ) ?: error("HumanVerificationDialogFragment did not return a result")
-                onHumanVerificationResultListener?.invoke(hvResult)
-            })
-        humanWorkflowLauncher = FragmentDialogResultLauncher(HumanVerificationDialogFragment.REQUEST_KEY) { input ->
+            REQUEST_KEY,
+            context
+        ) { _, bundle ->
+            val hvResult = bundle.getParcelable<HumanVerificationResult>(
+                RESULT_HUMAN_VERIFICATION
+            ) ?: error("HumanVerificationDialogFragment did not return a result")
+            onHumanVerificationResultListener?.invoke(hvResult)
+        }
+        humanWorkflowLauncher = FragmentDialogResultLauncher(REQUEST_KEY) { input ->
             context.supportFragmentManager.showHumanVerification(
+                humanVerificationVersion = humanVerificationVersion,
                 clientId = input.clientId,
                 captchaUrl = input.captchaUrl,
                 clientIdType = input.clientIdType,
@@ -77,7 +82,7 @@ class HumanVerificationOrchestrator {
      * Unregister all workflow activity launcher and listener.
      */
     fun unregister(context: FragmentActivity) {
-        context.supportFragmentManager.clearFragmentResultListener(HumanVerificationDialogFragment.REQUEST_KEY)
+        context.supportFragmentManager.clearFragmentResultListener(REQUEST_KEY)
         onHumanVerificationResultListener = null
     }
 

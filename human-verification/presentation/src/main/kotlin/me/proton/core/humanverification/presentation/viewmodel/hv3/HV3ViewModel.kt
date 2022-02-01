@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.viewmodel
+package me.proton.core.humanverification.presentation.viewmodel.hv3
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,7 +38,7 @@ import javax.inject.Inject
  * View model class to serve the main Human Verification screen.
  */
 @HiltViewModel
-class HumanVerificationViewModel @Inject constructor(
+class HV3ViewModel @Inject constructor(
     private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
     private val humanVerificationListener: HumanVerificationListener,
     private val accountRepository: AccountRepository,
@@ -59,7 +59,7 @@ class HumanVerificationViewModel @Inject constructor(
 
         val settings = userId?.let { getSettings(it) }
         val defaultCountry = settings?.locale?.substringAfter("_")
-        HumanVerificationExtraParams(
+        HV3ExtraParams(
             settings?.phone?.value,
             settings?.locale,
             defaultCountry,
@@ -84,9 +84,3 @@ class HumanVerificationViewModel @Inject constructor(
     }
 }
 
-data class HumanVerificationExtraParams(
-    val recoveryPhone: String?,
-    val locale: String?,
-    val defaultCountry: String?,
-    val useVPNTheme: Boolean,
-)

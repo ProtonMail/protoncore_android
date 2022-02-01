@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation.ui
+package me.proton.core.humanverification.presentation.ui.hv3
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
@@ -43,20 +43,21 @@ import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.BuildConfig
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.R
-import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationBinding
+import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationV3Binding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
-import me.proton.core.humanverification.presentation.ui.VerificationResponseMessage.MessageType
-import me.proton.core.humanverification.presentation.ui.VerificationResponseMessage.Type
+import me.proton.core.humanverification.presentation.ui.REQUEST_KEY
+import me.proton.core.humanverification.presentation.ui.RESULT_HUMAN_VERIFICATION
+import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage.MessageType
+import me.proton.core.humanverification.presentation.ui.hv3.HV3ResponseMessage.Type
 import me.proton.core.humanverification.presentation.ui.webview.HumanVerificationWebViewClient
 import me.proton.core.humanverification.presentation.utils.showHelp
-import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationExtraParams
-import me.proton.core.humanverification.presentation.viewmodel.HumanVerificationViewModel
+import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ViewModel
+import me.proton.core.humanverification.presentation.viewmodel.hv3.HV3ExtraParams
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.client.getId
-import me.proton.core.network.domain.humanverification.HumanVerificationListener.HumanVerificationResult.*
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.presentation.ui.ProtonDialogFragment
 import me.proton.core.presentation.utils.errorSnack
@@ -69,10 +70,10 @@ import java.net.URLEncoder
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_human_verification) {
+class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verification_v3) {
 
-    private val viewModel by viewModels<HumanVerificationViewModel>()
-    private val binding by viewBinding(DialogHumanVerificationBinding::bind)
+    private val viewModel by viewModels<HV3ViewModel>()
+    private val binding by viewBinding(DialogHumanVerificationV3Binding::bind)
 
     private val parsedArgs by lazy { requireArguments().get(ARGS_KEY) as Args }
 
@@ -149,7 +150,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         }
     }
 
-    private fun loadWebView(webView: WebView, params: HumanVerificationExtraParams?) {
+    private fun loadWebView(webView: WebView, params: HV3ExtraParams?) {
         // At the moment, this is enough to properly load the Captcha with the extra headers.
         // This behavior could change and we might need to implement a WebViewClient to act as an interceptor.
         WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
@@ -173,7 +174,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         verificationToken: String,
         verificationMethods: List<String>,
         recoveryEmail: String?,
-        params: HumanVerificationExtraParams?,
+        params: HV3ExtraParams?,
         useDarkMode: Boolean,
     ): String {
         val defaultEmail = recoveryEmail?.let { "defaultEmail" to it }
@@ -196,7 +197,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         return "$baseURL?$parameters"
     }
 
-    private fun handleVerificationResponse(response: VerificationResponseMessage) {
+    private fun handleVerificationResponse(response: HV3ResponseMessage) {
         when (response.type) {
             Type.Success -> {
                 val token = requireNotNull(response.payload?.token)
@@ -288,7 +289,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         /** Used as callback by all verification methods once the challenge is solved. */
         @JavascriptInterface
         fun dispatch(response: String) {
-            val verificationResponse = response.deserializeOrNull<VerificationResponseMessage>()
+            val verificationResponse = response.deserializeOrNull<HV3ResponseMessage>()
             verificationResponse?.let {
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                     handleVerificationResponse(it)
@@ -313,8 +314,6 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
         private const val ARGS_KEY = "args"
 
         private const val JS_INTERFACE_NAME = "AndroidInterface"
-        internal const val RESULT_HUMAN_VERIFICATION = "result.HumanVerificationResult"
-        internal const val REQUEST_KEY = "HumanVerificationDialogFragment.requestKey"
 
         operator fun invoke(
             clientId: String,
@@ -324,7 +323,7 @@ class HumanVerificationDialogFragment : ProtonDialogFragment(R.layout.dialog_hum
             verificationMethods: List<String>,
             recoveryEmail: String?,
             isPartOfFlow: Boolean,
-        ) = HumanVerificationDialogFragment().apply {
+        ) = HV3DialogFragment().apply {
             arguments = bundleOf(
                 ARGS_KEY to Args(
                     clientId,
