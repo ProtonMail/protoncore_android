@@ -117,14 +117,14 @@ complexity:
     active: true
     excludes: ['**/test/**', '**/**Test/**']
     threshold: 60
+    ignoreAnnotated: [ 'Composable' ]
   LongParameterList:
     active: true
     functionThreshold: 6
     constructorThreshold: 16
     ignoreDefaultParameters: true
     ignoreDataClasses: true
-    # no annotated elements are ignored
-    ignoreAnnotated: []
+    ignoreAnnotated: [ 'Composable' ]
   # reports methods which are overloaded often
   MethodOverloading:
     active: true
