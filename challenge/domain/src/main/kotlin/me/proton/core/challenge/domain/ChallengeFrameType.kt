@@ -18,7 +18,7 @@
 
 package me.proton.core.challenge.domain
 
-enum class ChallengeFrameType {
+public enum class ChallengeFrameType {
     Username,
     Recovery
 }
