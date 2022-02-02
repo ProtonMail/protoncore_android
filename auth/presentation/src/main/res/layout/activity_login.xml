@@ -102,6 +102,15 @@
                 android:layout_marginTop="@dimen/auth_view_items_top_margin"
                 android:text="@string/auth_need_help" />
 
+            <me.proton.core.presentation.ui.view.ProtonButton
+                android:id="@+id/blockingHelpButton"
+                style="@style/ProtonButton.Borderless.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_view_items_top_margin"
+                android:visibility="gone"
+                tools:text="Troubleshoot" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

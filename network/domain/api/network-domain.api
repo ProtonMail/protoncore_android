@@ -164,6 +164,7 @@ public final class me/proton/core/network/domain/ApiResult$Success : me/proton/c
 
 public final class me/proton/core/network/domain/ApiResultKt {
 	public static final fun doThrow (Lme/proton/core/network/domain/ApiResult$Error;)V
+	public static final fun isPotentialBlocking (Ljava/lang/Throwable;)Z
 	public static final fun isRetryable (Lme/proton/core/network/domain/ApiException;)Z
 	public static final fun isRetryable (Lme/proton/core/network/domain/ApiResult;)Z
 	public static final fun onError (Lme/proton/core/network/domain/ApiResult;Lkotlin/jvm/functions/Function1;)Lme/proton/core/network/domain/ApiResult;

@@ -37,7 +37,7 @@ abstract class AuthActivity<ViewBindingT : ViewBinding>(
         // No op
     }
 
-    open fun onError(triggerValidation: Boolean, message: String? = null) {
+    open fun onError(triggerValidation: Boolean, message: String? = null, isPotentialBlocking: Boolean = false) {
         // default no op
     }
 
