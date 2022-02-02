@@ -5,7 +5,7 @@ public final class me/proton/core/presentation/BuildConfig {
 	public fun <init> ()V
 }
 
-public class me/proton/core/presentation/app/AppLifecycleObserver : androidx/lifecycle/DefaultLifecycleObserver, me/proton/core/presentation/app/AppLifecycleProvider {
+public final class me/proton/core/presentation/app/AppLifecycleObserver : androidx/lifecycle/DefaultLifecycleObserver, me/proton/core/presentation/app/AppLifecycleProvider {
 	public fun <init> ()V
 	public fun getLifecycle ()Landroidx/lifecycle/Lifecycle;
 	public fun getState ()Lkotlinx/coroutines/flow/StateFlow;

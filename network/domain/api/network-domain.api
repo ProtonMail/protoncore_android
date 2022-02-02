@@ -164,6 +164,8 @@ public final class me/proton/core/network/domain/ApiResult$Success : me/proton/c
 
 public final class me/proton/core/network/domain/ApiResultKt {
 	public static final fun doThrow (Lme/proton/core/network/domain/ApiResult$Error;)V
+	public static final fun isForceUpdate (Lme/proton/core/network/domain/ApiException;)Z
+	public static final fun isForceUpdate (Lme/proton/core/network/domain/ApiResult;)Z
 	public static final fun isPotentialBlocking (Ljava/lang/Throwable;)Z
 	public static final fun isRetryable (Lme/proton/core/network/domain/ApiException;)Z
 	public static final fun isRetryable (Lme/proton/core/network/domain/ApiResult;)Z
@@ -253,6 +255,7 @@ public final class me/proton/core/network/domain/ResponseCodes {
 	public static final field PAYMENTS_SUBSCRIPTION_NOT_EXISTS I
 	public static final field USER_CREATE_NAME_INVALID I
 	public static final field USER_CREATE_TOKEN_INVALID I
+	public final fun getFORCE_UPDATE ()Ljava/util/List;
 }
 
 public final class me/proton/core/network/domain/TimeoutOverride {
