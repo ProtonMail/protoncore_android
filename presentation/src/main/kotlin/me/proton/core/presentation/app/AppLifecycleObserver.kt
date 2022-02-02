@@ -22,40 +22,29 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.lifecycle.coroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.onSubscription
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.asStateFlow
 
-open class AppLifecycleObserver : AppLifecycleProvider, DefaultLifecycleObserver {
+class AppLifecycleObserver : AppLifecycleProvider, DefaultLifecycleObserver {
 
-    private val mutableSharedState = MutableSharedFlow<AppLifecycleProvider.State>(
-        replay = 1,
-        onBufferOverflow = BufferOverflow.SUSPEND
-    )
+    private val mutableState = MutableStateFlow(AppLifecycleProvider.State.Background)
 
     override val lifecycle: Lifecycle by lazy {
         ProcessLifecycleOwner.get().lifecycle
     }
 
-    override val state: StateFlow<AppLifecycleProvider.State> by lazy {
-        mutableSharedState
-            .onSubscription { withContext(Dispatchers.Main) { lifecycle.addObserver(this@AppLifecycleObserver) } }
-            .stateIn(lifecycle.coroutineScope, SharingStarted.Lazily, AppLifecycleProvider.State.Background)
+    override val state: StateFlow<AppLifecycleProvider.State> = mutableState.asStateFlow()
+
+    init {
+        lifecycle.addObserver(this)
     }
 
     override fun onStart(owner: LifecycleOwner) {
-        super.onStart(owner)
-        mutableSharedState.tryEmit(AppLifecycleProvider.State.Foreground)
+        mutableState.tryEmit(AppLifecycleProvider.State.Foreground)
     }
 
     override fun onStop(owner: LifecycleOwner) {
-        super.onStop(owner)
-        mutableSharedState.tryEmit(AppLifecycleProvider.State.Background)
+        mutableState.tryEmit(AppLifecycleProvider.State.Background)
     }
 }
