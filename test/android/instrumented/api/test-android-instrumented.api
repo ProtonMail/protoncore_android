@@ -388,6 +388,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnView :
 	public final fun typeText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun viewMatcher ()Lorg/hamcrest/Matcher;
 	public fun waitForCondition (JJLkotlin/jvm/functions/Function0;)V
+	public final fun withAncestor (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withChild (Lme/proton/core/test/android/instrumented/ui/espresso/OnView;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withClassName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withContentDesc (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
@@ -559,7 +560,7 @@ public final class me/proton/core/test/android/plugins/data/BillingCycle : java/
 public final class me/proton/core/test/android/plugins/data/Card {
 	public static final field Companion Lme/proton/core/test/android/plugins/data/Card$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Card$Brand;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/android/plugins/data/Card$Brand;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -828,6 +829,8 @@ public final class me/proton/core/test/android/robots/auth/login/LoginRobot : me
 public final class me/proton/core/test/android/robots/auth/login/LoginRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
 	public final fun loginElementsDisplayed ()V
+	public final fun passwordInputHasError ()V
+	public final fun usernameInputHasError ()V
 }
 
 public final class me/proton/core/test/android/robots/auth/login/MailboxPasswordRobot : me/proton/core/test/android/robots/CoreRobot {
