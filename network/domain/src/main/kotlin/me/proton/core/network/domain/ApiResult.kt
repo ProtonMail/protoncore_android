@@ -188,6 +188,21 @@ open class ApiException(val error: ApiResult.Error) : Exception(
 )
 
 /**
+ * Return true if [ApiException.error] is a force update error (5003/5005).
+ *
+ * @see ApiResult.isForceUpdate
+ */
+fun ApiException.isForceUpdate(): Boolean = error.isForceUpdate()
+
+/**
+ * Return true if [ApiResult] is a force update error (5003/5005).
+ */
+fun <T> ApiResult<T>.isForceUpdate(): Boolean {
+    val httpError = this as? ApiResult.Error.Http
+    return ResponseCodes.FORCE_UPDATE.contains(httpError?.proton?.code)
+}
+
+/**
  * Returns true if exception was thrown after network fail potentially caused by blocking.
  */
 fun Throwable.isPotentialBlocking() =

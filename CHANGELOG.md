@@ -29,6 +29,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 
 ### Fixes
 
+- Fixed EventManager to retry fetching on Force Update error.
 - Fixed AppLifecycleObserver State Flow (add LifecycleObserver as soon as AppLifecycleObserver is initialized).
 - Fixed TwoPassModeActivity to let the User retry unlocking primary key.
 - Several bugfixes for Human Verification:
