@@ -49,6 +49,7 @@ import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
 class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery) {
+    private val canSkipRecoveryMethod get() = signupViewModel.currentAccountType != AccountType.Username
 
     private val viewModel by viewModels<RecoveryMethodViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
@@ -87,6 +88,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
             nextButton.onClick(::onNextClicked)
 
             adjustAccountTypeUI()
+            adjustSkippingRecoveryUI()
         }
 
         viewModel.recoveryMethodUpdate
@@ -124,6 +126,19 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                 R.string.auth_signup_recovery_method_subtitle
             }
         )
+    }
+
+    /** Adjust the UI, depending on [canSkipRecoveryMethod] flag. */
+    private fun adjustSkippingRecoveryUI() = with(binding) {
+        titleText.setText(
+            if (canSkipRecoveryMethod) {
+                R.string.auth_signup_recovery_method_title
+            } else {
+                R.string.auth_signup_recovery_method_title_mandatory
+            }
+        )
+
+        toolbar.menu.findItem(R.id.recovery_menu_skip)?.isVisible = canSkipRecoveryMethod
     }
 
     private fun initTabs() = with(binding) {
@@ -203,10 +218,10 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
 
     private fun onNextClicked() {
         hideKeyboard()
-        if (viewModel.recoveryMethod.isSet) {
-            viewModel.validateRecoveryDestinationInput()
-        } else {
-            showSkip()
+        when {
+            viewModel.recoveryMethod.isSet -> viewModel.validateRecoveryDestinationInput()
+            canSkipRecoveryMethod -> showSkip()
+            else -> viewModel.onRecoveryMethodDestinationMissing()
         }
     }
 
