@@ -25,6 +25,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import androidx.core.text.getSpans
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +33,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupRecoveryBinding
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
@@ -83,6 +85,8 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
             initTabs()
             initTermsAndConditions()
             nextButton.onClick(::onNextClicked)
+
+            adjustAccountTypeUI()
         }
 
         viewModel.recoveryMethodUpdate
@@ -107,6 +111,19 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
         }.launchIn(lifecycleScope)
 
         observeForHumanVerificationFailed()
+    }
+
+    /** Adjusts the UI, depending on the current account type. */
+    private fun adjustAccountTypeUI() = with(binding) {
+        recoveryOptions.isVisible = signupViewModel.currentAccountType != AccountType.Username
+
+        recoveryInstructions.setText(
+            if (signupViewModel.currentAccountType == AccountType.Username) {
+                R.string.auth_signup_recovery_method_subtitle_email_only
+            } else {
+                R.string.auth_signup_recovery_method_subtitle
+            }
+        )
     }
 
     private fun initTabs() = with(binding) {

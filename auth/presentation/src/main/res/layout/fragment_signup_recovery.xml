@@ -63,11 +63,12 @@
                     android:text="@string/auth_signup_recovery_method_title" />
 
                 <TextView
+                    android:id="@+id/recoveryInstructions"
                     style="@style/ProtonTextView.Subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
-                    android:text="@string/auth_signup_recovery_method_subtitle" />
+                    tools:text="This text is set in code" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/recoveryOptions"
