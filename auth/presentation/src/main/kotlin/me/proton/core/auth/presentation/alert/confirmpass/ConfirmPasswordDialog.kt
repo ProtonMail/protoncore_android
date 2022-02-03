@@ -105,7 +105,8 @@ class ConfirmPasswordDialog : DialogFragment() {
                 is ConfirmPasswordDialogViewModel.State.ProcessingSecondFactor -> {
                     // noop
                 }
-                is ConfirmPasswordDialogViewModel.State.Error.Message -> {
+                is ConfirmPasswordDialogViewModel.State.Error.Unknown,
+                is ConfirmPasswordDialogViewModel.State.Error.General -> {
                     setResultAndDismiss(MissingScopeState.ScopeObtainFailed)
                     binding.enterButton.setIdle()
                 }

@@ -31,6 +31,7 @@ import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -86,7 +87,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
         }
         viewModel.state.onEach {
             when (it) {
-                is UpdateRecoveryEmailViewModel.State.Error.Message -> showError(it.message)
+                is UpdateRecoveryEmailViewModel.State.Error -> showError(it.error.getLocalizedMessage(resources))
                 is UpdateRecoveryEmailViewModel.State.Idle -> Unit
                 is UpdateRecoveryEmailViewModel.State.LoadingCurrent -> showLoading(true)
                 is UpdateRecoveryEmailViewModel.State.UpdatingCurrent -> showLoading(true)

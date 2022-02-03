@@ -27,7 +27,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-class VerificationResponseMessageTest {
+class VerificationResponseGeneralTest {
 
     @Test
     fun `Deserializing a VerificationResponseMessage from JSON works`() {

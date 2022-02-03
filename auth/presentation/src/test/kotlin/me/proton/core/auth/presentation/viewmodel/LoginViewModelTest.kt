@@ -37,6 +37,7 @@ import me.proton.core.humanverification.presentation.HumanVerificationOrchestrat
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -153,7 +154,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             assertIs<LoginViewModel.State.Processing>(awaitItem())
 
-            assertTrue(awaitItem() is LoginViewModel.State.ErrorMessage)
+            assertTrue(awaitItem() is LoginViewModel.State.Error)
 
             verify { savedStateHandle.set(any(), any<String>()) }
 
@@ -183,8 +184,8 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             assertIs<LoginViewModel.State.Processing>(awaitItem())
 
             val errorState = awaitItem()
-            assertTrue(errorState is LoginViewModel.State.ErrorMessage)
-            assertEquals("proton error", errorState.message)
+            assertTrue(errorState is LoginViewModel.State.Error)
+            assertEquals("proton error", errorState.error.getLocalizedMessage(mockk()))
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -239,8 +240,8 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
             assertIs<LoginViewModel.State.Processing>(awaitItem()) // retried
 
             val errorState = awaitItem()
-            assertTrue(errorState is LoginViewModel.State.ErrorMessage)
-            assertEquals("Primary key exists", errorState.message)
+            assertTrue(errorState is LoginViewModel.State.Error)
+            assertEquals("Primary key exists", errorState.error.getLocalizedMessage(mockk()))
 
             cancelAndIgnoreRemainingEvents()
         }

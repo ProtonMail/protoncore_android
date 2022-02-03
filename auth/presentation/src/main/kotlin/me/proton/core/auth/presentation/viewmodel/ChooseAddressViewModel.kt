@@ -59,7 +59,7 @@ class ChooseAddressViewModel @Inject constructor(
         sealed class Error : State() {
             object DomainsNotAvailable : Error()
             object UsernameNotAvailable : Error()
-            data class Message(val message: String?) : Error()
+            data class Message(val error: Throwable) : Error()
         }
     }
 
@@ -74,7 +74,7 @@ class ChooseAddressViewModel @Inject constructor(
             val user = usernameDomainAvailability.getUser(userId)
             emit(State.Data(user.name, domains))
         }.catch { error ->
-            emit(State.Error.Message(error.message))
+            emit(State.Error.Message(error))
         }.onEach {
             _state.tryEmit(it)
         }.launchIn(viewModelScope)
@@ -97,7 +97,7 @@ class ChooseAddressViewModel @Inject constructor(
             emit(State.Error.UsernameNotAvailable)
         }
     }.catch { error ->
-        emit(State.Error.Message(error.message))
+        emit(State.Error.Message(error))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)

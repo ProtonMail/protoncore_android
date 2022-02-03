@@ -48,6 +48,7 @@ import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -186,8 +187,8 @@ class PaymentOptionsViewModelTest : ArchTest, CoroutinesTest {
             assertIs<PaymentOptionsViewModel.State.Idle>(awaitItem())
             assertIs<PaymentOptionsViewModel.State.Processing>(awaitItem())
             val paymentMethodsStatus = awaitItem()
-            assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Error.Message)
-            assertEquals("proton error", paymentMethodsStatus.message)
+            assertTrue(paymentMethodsStatus is PaymentOptionsViewModel.State.Error.General)
+            assertEquals("proton error", paymentMethodsStatus.error.getLocalizedMessage(mockk()))
         }
     }
 

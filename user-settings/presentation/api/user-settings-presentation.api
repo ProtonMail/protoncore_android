@@ -321,13 +321,13 @@ public abstract class me/proton/core/usersettings/presentation/viewmodel/Passwor
 public abstract class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 }
 
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$Message : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$Message;
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -428,16 +428,13 @@ public final class me/proton/core/usersettings/presentation/viewmodel/UpdateReco
 public abstract class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
 }
 
-public abstract class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
-}
-
-public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error$Message : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error$Message;
+public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

@@ -33,6 +33,7 @@ import me.proton.core.payment.domain.entity.PaymentToken
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.usecase.GetPaymentTokenStatus
 import me.proton.core.payment.presentation.entity.SecureEndpoint
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -172,8 +173,8 @@ class PaymentTokenApprovalViewModelTest : ArchTest, CoroutinesTest {
             assertIs<PaymentTokenApprovalViewModel.State.Idle>(awaitItem())
             assertIs<PaymentTokenApprovalViewModel.State.Processing>(awaitItem())
             val approvalStatus = awaitItem()
-            assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Error.Message)
-            assertEquals("proton error", approvalStatus.message)
+            assertTrue(approvalStatus is PaymentTokenApprovalViewModel.State.Error)
+            assertEquals("proton error", approvalStatus.error.getLocalizedMessage(mockk()))
         }
     }
 

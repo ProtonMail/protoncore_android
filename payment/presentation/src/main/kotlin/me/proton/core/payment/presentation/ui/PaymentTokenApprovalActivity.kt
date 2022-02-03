@@ -40,6 +40,7 @@ import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalResult
 import me.proton.core.payment.presentation.viewmodel.PaymentTokenApprovalViewModel
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 
@@ -102,7 +103,8 @@ class PaymentTokenApprovalActivity :
                 is PaymentTokenApprovalViewModel.State.Idle -> showLoading(false)
                 is PaymentTokenApprovalViewModel.State.Processing -> showLoading(true)
                 is PaymentTokenApprovalViewModel.State.Success -> onSuccess(it.paymentTokenStatus)
-                is PaymentTokenApprovalViewModel.State.Error.Message -> showError(it.message)
+                is PaymentTokenApprovalViewModel.State.Error ->
+                    showError(it.error.getLocalizedMessage(resources))
             }.exhaustive
         }.launchIn(lifecycleScope)
     }

@@ -55,9 +55,7 @@ class PaymentTokenApprovalViewModel @Inject constructor(
         object Idle : State()
         object Processing : State()
         data class Success(val paymentTokenStatus: PaymentTokenStatus) : State()
-        sealed class Error : State() {
-            data class Message(val message: String?) : Error()
-        }
+        data class Error(val error: Throwable) : State()
     }
 
     /**
@@ -101,7 +99,7 @@ class PaymentTokenApprovalViewModel @Inject constructor(
         emit(State.Processing)
         emit(State.Success(getPaymentTokenStatus(userId, paymentToken).status))
     }.catch {
-        _approvalState.tryEmit(State.Error.Message(it.message))
+        _approvalState.tryEmit(State.Error(it))
     }.onEach {
         _approvalState.tryEmit(it)
     }.launchIn(viewModelScope)

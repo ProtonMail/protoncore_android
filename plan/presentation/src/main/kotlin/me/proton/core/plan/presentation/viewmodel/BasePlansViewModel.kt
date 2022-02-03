@@ -55,9 +55,7 @@ internal abstract class BasePlansViewModel(
             data class PaidPlanPayment(val selectedPlan: SelectedPlan, val billing: BillingResult) : Success()
         }
 
-        sealed class Error : PlanState() {
-            data class Message(val message: String?) : Error()
-        }
+        data class Error(val error: Throwable) : PlanState()
     }
 
     fun register(context: Fragment) {

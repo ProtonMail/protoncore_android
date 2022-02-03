@@ -34,6 +34,7 @@ import me.proton.core.auth.presentation.entity.CreateAddressInput
 import me.proton.core.auth.presentation.entity.CreateAddressResult
 import me.proton.core.auth.presentation.viewmodel.CreateAddressViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 
@@ -77,7 +78,7 @@ class CreateAddressActivity : AuthActivity<ActivityCreateAddressBinding>(Activit
                 is CreateAddressViewModel.State.Idle -> showLoading(false)
                 is CreateAddressViewModel.State.Processing -> showLoading(true)
                 is CreateAddressViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
-                is CreateAddressViewModel.State.ErrorMessage -> showError(it.message)
+                is CreateAddressViewModel.State.Error -> showError(it.error.getLocalizedMessage(resources))
             }.exhaustive
         }.launchIn(lifecycleScope)
     }

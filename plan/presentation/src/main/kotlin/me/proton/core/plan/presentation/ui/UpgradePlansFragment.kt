@@ -41,6 +41,7 @@ import me.proton.core.plan.presentation.viewmodel.BasePlansViewModel
 import me.proton.core.plan.presentation.viewmodel.UpgradePlansViewModel
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 
@@ -77,7 +78,8 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
 
             upgradePlanViewModel.subscribedPlansState.onEach {
                 when (it) {
-                    is UpgradePlansViewModel.SubscribedPlansState.Error.Message -> onError(it.message)
+                    is UpgradePlansViewModel.SubscribedPlansState.Error ->
+                        onError(it.error.getLocalizedMessage(resources))
                     is UpgradePlansViewModel.SubscribedPlansState.Idle -> Unit
                     is UpgradePlansViewModel.SubscribedPlansState.Processing -> showLoading(true)
                     is UpgradePlansViewModel.SubscribedPlansState.Success.SubscribedPlans -> {
@@ -95,7 +97,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
 
             upgradePlanViewModel.availablePlansState.onEach {
                 when (it) {
-                    is BasePlansViewModel.PlanState.Error.Message -> onError(it.message)
+                    is BasePlansViewModel.PlanState.Error -> onError(it.error.getLocalizedMessage(resources))
                     is BasePlansViewModel.PlanState.Idle -> Unit
                     is BasePlansViewModel.PlanState.Processing -> showLoading(true)
                     is BasePlansViewModel.PlanState.Success.Plans -> {

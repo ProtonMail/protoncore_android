@@ -39,6 +39,7 @@ import me.proton.core.payment.presentation.entity.PaymentOptionsInput
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.payment.presentation.viewmodel.PaymentOptionsViewModel
 import me.proton.core.presentation.ui.adapter.selectableProtonAdapter
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 
@@ -120,7 +121,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
         viewModel.availablePaymentMethodsState.onEach {
             when (it) {
                 is PaymentOptionsViewModel.State.Success.PaymentMethodsSuccess -> onSuccess(it.availablePaymentMethods)
-                is PaymentOptionsViewModel.State.Error.Message -> showError(it.message)
+                is PaymentOptionsViewModel.State.Error.General -> showError(it.error.getLocalizedMessage(resources))
                 else -> {
                 }
             }.exhaustive
@@ -153,7 +154,7 @@ class PaymentOptionsActivity : PaymentsActivity<ActivityPaymentOptionsBinding>(A
                 )
                 is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
                     onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
-                is BillingCommonViewModel.State.Error.Message -> showError(it.message)
+                is BillingCommonViewModel.State.Error.General -> showError(it.error.getLocalizedMessage(resources))
                 is BillingCommonViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
                     showError(getString(R.string.payments_error_signup_paymentmethod))
                 else -> {

@@ -37,6 +37,7 @@ dependencies {
 
         project(Module.kotlinUtil),
         project(Module.domain),
+        project(Module.network),
 
         // Kotlin
         `kotlin-reflect`,

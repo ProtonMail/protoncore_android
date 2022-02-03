@@ -482,6 +482,10 @@ public class me/proton/core/presentation/utils/EmptyActivityLifecycleCallbacks :
 	public fun onActivityStopped (Landroid/app/Activity;)V
 }
 
+public final class me/proton/core/presentation/utils/ErrorUtilsKt {
+	public static final fun getLocalizedMessage (Ljava/lang/Throwable;Landroid/content/res/Resources;)Ljava/lang/String;
+}
+
 public final class me/proton/core/presentation/utils/FragmentScreenContentProtectionDelegate : kotlin/properties/ReadOnlyProperty {
 	public fun <init> (Landroidx/fragment/app/Fragment;Lme/proton/core/presentation/utils/ProtectScreenConfiguration;)V
 	public fun getValue (Landroidx/fragment/app/Fragment;Lkotlin/reflect/KProperty;)Lme/proton/core/presentation/utils/ScreenContentProtector;

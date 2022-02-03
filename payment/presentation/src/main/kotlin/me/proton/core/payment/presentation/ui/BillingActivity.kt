@@ -40,6 +40,7 @@ import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.presentation.ui.view.ProtonInput
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onTextChange
@@ -124,7 +125,7 @@ class BillingActivity : PaymentsActivity<ActivityBillingBinding>(ActivityBilling
                 )
                 is BillingCommonViewModel.State.Incomplete.TokenApprovalNeeded ->
                     onTokenApprovalNeeded(input.userId, it.paymentToken, it.amount)
-                is BillingCommonViewModel.State.Error.Message -> showError(it.message)
+                is BillingCommonViewModel.State.Error.General -> showError(it.error.getLocalizedMessage(resources))
                 is BillingCommonViewModel.State.Error.SignUpWithPaymentMethodUnsupported ->
                     showError(getString(R.string.payments_error_signup_paymentmethod))
                 else -> {

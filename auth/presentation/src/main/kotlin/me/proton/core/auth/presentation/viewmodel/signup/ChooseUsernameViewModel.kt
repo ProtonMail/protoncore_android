@@ -68,7 +68,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
         sealed class Error : State() {
             object DomainsNotAvailable : Error()
             object UsernameNotAvailable : Error()
-            data class Message(val message: String?) : Error()
+            data class Message(val error: Throwable) : Error()
         }
     }
 
@@ -113,7 +113,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
         domains = usernameDomainAvailability.getDomains()
         emit(State.AvailableDomains(domains!!, requireCurrentAccountType()))
     }.catch { error ->
-        emit(State.Error.Message(error.message))
+        emit(State.Error.Message(error))
     }
 
     /**
@@ -159,7 +159,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
         emit(State.Processing)
         emit(checkUsernameForAccountType(username, domain))
     }.catch { error ->
-        emit(State.Error.Message(error.message))
+        emit(State.Error.Message(error))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)

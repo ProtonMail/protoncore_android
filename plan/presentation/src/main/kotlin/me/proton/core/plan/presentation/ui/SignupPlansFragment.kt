@@ -38,6 +38,7 @@ import me.proton.core.plan.presentation.viewmodel.BasePlansViewModel
 import me.proton.core.plan.presentation.viewmodel.SignupPlansViewModel
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.getLocalizedMessage
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive
 
@@ -81,7 +82,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
             }
             signupPlansViewModel.availablePlansState.onEach {
                 when (it) {
-                    is BasePlansViewModel.PlanState.Error.Message -> onError(it.message)
+                    is BasePlansViewModel.PlanState.Error -> onError(it.error.getLocalizedMessage(resources))
                     is BasePlansViewModel.PlanState.Idle -> Unit
                     is BasePlansViewModel.PlanState.Processing -> showLoading(true)
                     is BasePlansViewModel.PlanState.Success.Plans -> {
