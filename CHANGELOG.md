@@ -26,6 +26,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 - Removed lifecycle-extensions which has been deprecated; removed lifecycle-compiler; using lifecycle-common instead
 - Support prefilling login username for add account workflow
 - Added possibility to show additional help button when login fails with potential blocking.
+- Updated strings for (bug) report module
 
 ### Fixes
 
