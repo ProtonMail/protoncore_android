@@ -27,7 +27,7 @@ import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
-class UsernameSetupTests : BaseTest() {
+class InternalSetupTests : BaseTest() {
 
     private val chooseUsernameRobot = ChooseUsernameRobot()
 
