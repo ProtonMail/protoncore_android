@@ -34,6 +34,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -213,6 +214,12 @@ class ProtonInput : LinearLayout {
         set(value) {
             binding.inputLayout.suffixText = value
             binding.inputLayout.isExpandedHintEnabled = false
+        }
+
+    var isSuffixTextVisible: Boolean
+        get() = binding.inputLayout.suffixTextView.isVisible
+        set(value) {
+            binding.inputLayout.suffixTextView.isVisible = value
         }
 
     /**

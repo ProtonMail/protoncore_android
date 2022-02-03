@@ -53,7 +53,7 @@ class ExternalSetupTests : BaseTest() {
             .switchSignupType()
             .verify {
                 chooseUsernameElementsDisplayed()
-                suffixDisplayed(BuildConfig.HOST)
+                suffixFilledButNotDisplayed(BuildConfig.HOST)
                 switchToExternalDisplayed()
             }
 

@@ -169,7 +169,7 @@ internal class ChooseUsernameViewModel @Inject constructor(
  * Returns if the user can switch to [AccountType.External] from the client required [AccountType].
  */
 internal fun AccountType.canSwitchToExternal(): Boolean = when (this) {
-    AccountType.Username -> true
+    AccountType.Username -> false
     AccountType.External -> true
     AccountType.Internal -> false
 }.exhaustive
