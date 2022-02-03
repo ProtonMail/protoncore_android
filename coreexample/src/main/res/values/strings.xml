@@ -30,6 +30,7 @@
     <string name="payments_upgrade">Payments (upgrade primary)</string>
     <string name="signup">Signup</string>
     <string name="signup_external">Signup (External)</string>
+    <string name="signup_username">Signup (Username)</string>
     <string name="payments_signup">Payments (signup)</string>
     <string name="plans_signup">Plans Signup</string>
     <string name="plans_upgrade">Plans Upgrade</string>
