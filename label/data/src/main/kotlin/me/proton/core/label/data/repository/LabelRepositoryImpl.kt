@@ -32,6 +32,7 @@ import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.label.data.remote.worker.DeleteLabelWorker
+import me.proton.core.label.data.remote.worker.FetchLabelWorker
 import me.proton.core.label.data.remote.worker.UpdateLabelWorker
 import me.proton.core.label.domain.entity.Label
 import me.proton.core.label.domain.entity.LabelId
@@ -43,7 +44,6 @@ import me.proton.core.label.domain.repository.LabelRemoteDataSource
 import me.proton.core.label.domain.repository.LabelRepository
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.set
 
 @Singleton
 class LabelRepositoryImpl @Inject constructor(
@@ -52,33 +52,27 @@ class LabelRepositoryImpl @Inject constructor(
     private val workManager: WorkManager,
 ) : LabelRepository {
 
-    private val fresh = mutableMapOf<StoreKey, Boolean>()
-
     private data class StoreKey(val userId: UserId, val type: LabelType)
 
     private val store: ProtonStore<StoreKey, List<Label>> = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey ->
-            remoteDataSource.getLabels(key.userId, key.type).also { fresh[key] = true }
+            remoteDataSource.getLabels(key.userId, key.type)
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { key: StoreKey ->
                 localDataSource.observeLabels(key.userId, key.type).map { labels ->
-                    labels.takeIf { fresh[key] == true }
+                    labels.takeIf { it.isNotEmpty() }?.minus(key.getFetchedTagLabel())
                 }
             },
-            writer = { _, labels -> localDataSource.upsertLabel(labels) },
+            writer = { key, labels ->
+                localDataSource.upsertLabel(labels.plus(key.getFetchedTagLabel()))
+            },
         )
     ).buildProtonStore()
 
     override fun observeLabels(userId: UserId, type: LabelType, refresh: Boolean): Flow<DataResult<List<Label>>> =
         StoreKey(userId = userId, type = type).let { key ->
             store.stream(StoreRequest.cached(key, refresh)).map { it.toDataResult() }
-        }
-
-    override suspend fun markAsStale(userId: UserId, type: LabelType) =
-        StoreKey(userId = userId, type = type).let { key ->
-            fresh[key] = false
-            store.clear(key)
         }
 
     override suspend fun getLabels(userId: UserId, type: LabelType, refresh: Boolean): List<Label> =
@@ -115,9 +109,37 @@ class LabelRepositoryImpl @Inject constructor(
         )
     }
 
+    override fun markAsStale(userId: UserId, type: LabelType) {
+        // Replace any existing [Fetch]LabelWorker.
+        workManager.enqueueUniqueWork(
+            getUniqueWorkName(userId, type),
+            ExistingWorkPolicy.REPLACE,
+            FetchLabelWorker.getRequest(userId, type),
+        )
+    }
+
     private companion object {
         // Currently for: [Update|Delete]LabelWorker (ExistingWorkPolicy.REPLACE).
         private fun getUniqueWorkName(userId: UserId, labelId: LabelId) =
             "${LabelRepositoryImpl::class.simpleName}-$userId-$labelId"
+
+        // Currently for [Fetch]LabelWorker (ExistingWorkPolicy.REPLACE).
+        private fun getUniqueWorkName(userId: UserId, type: LabelType) =
+            "${LabelRepositoryImpl::class.simpleName}-$userId-$type"
+
+        // Fake Label tagging the repo the labels have been fetched once.
+        private fun StoreKey.getFetchedTagLabel() = Label(
+            userId = userId,
+            labelId = LabelId("fetched-$type"),
+            parentId = null,
+            name = "fetched",
+            type = type,
+            path = "",
+            color = "",
+            order = 0,
+            isNotified = null,
+            isExpanded = null,
+            isSticky = null
+        )
     }
 }

@@ -36,6 +36,7 @@ interface EventMetadataRepository {
     suspend fun delete(config: EventManagerConfig, eventId: EventId)
 
     suspend fun update(metadata: EventMetadata)
+    suspend fun updateState(config: EventManagerConfig, state: State)
     suspend fun updateState(config: EventManagerConfig, eventId: EventId, state: State)
 
     suspend fun get(config: EventManagerConfig): List<EventMetadata>

@@ -124,7 +124,7 @@ public abstract interface class me/proton/core/label/domain/repository/LabelRepo
 	public abstract fun deleteLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun markAsStale (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun markAsStale (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;)V
 	public abstract fun observeLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Z)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun updateLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/Label;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -138,6 +138,11 @@ public final class me/proton/core/label/domain/repository/LabelRepository$Defaul
 public final class me/proton/core/label/domain/usecase/DeleteLabelRemote {
 	public fun <init> (Lme/proton/core/label/domain/repository/LabelRemoteDataSource;Lme/proton/core/eventmanager/domain/EventManagerProvider;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/label/domain/usecase/FetchLabelRemote {
+	public fun <init> (Lme/proton/core/label/domain/repository/LabelRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/label/domain/usecase/UpdateLabelRemote {

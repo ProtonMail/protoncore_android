@@ -2,6 +2,10 @@ public class hilt_aggregated_deps/_me_proton_core_label_data_remote_worker_Delet
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_label_data_remote_worker_FetchLabelWorker_HiltModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_label_data_remote_worker_UpdateLabelWorker_HiltModule {
 	public fun <init> ()V
 }
@@ -415,6 +419,26 @@ public abstract interface class me/proton/core/label/data/remote/worker/DeleteLa
 	public abstract fun bind (Lme/proton/core/label/data/remote/worker/DeleteLabelWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
 }
 
+public abstract interface class me/proton/core/label/data/remote/worker/FetchLabelWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/label/data/remote/worker/FetchLabelWorker_AssistedFactory_Impl : me/proton/core/label/data/remote/worker/FetchLabelWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/label/data/remote/worker/FetchLabelWorker;
+	public static fun create (Lme/proton/core/label/data/remote/worker/FetchLabelWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/label/data/remote/worker/FetchLabelWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/label/data/remote/worker/FetchLabelWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/label/data/remote/worker/FetchLabelWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/label/domain/usecase/FetchLabelRemote;)Lme/proton/core/label/data/remote/worker/FetchLabelWorker;
+}
+
+public abstract interface class me/proton/core/label/data/remote/worker/FetchLabelWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/label/data/remote/worker/FetchLabelWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
 public abstract interface class me/proton/core/label/data/remote/worker/UpdateLabelWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
 }
 
@@ -441,7 +465,7 @@ public final class me/proton/core/label/data/repository/LabelRepositoryImpl : me
 	public fun deleteLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lme/proton/core/label/domain/entity/LabelId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun markAsStale (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun markAsStale (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;)V
 	public fun observeLabels (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/LabelType;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun updateLabel (Lme/proton/core/domain/entity/UserId;Lme/proton/core/label/domain/entity/Label;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

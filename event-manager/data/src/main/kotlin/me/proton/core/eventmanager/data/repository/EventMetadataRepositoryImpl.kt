@@ -60,6 +60,9 @@ open class EventMetadataRepositoryImpl(
     override suspend fun update(metadata: EventMetadata) =
         insertOrUpdate(metadata.toEntity().copy(updatedAt = System.currentTimeMillis()))
 
+    override suspend fun updateState(config: EventManagerConfig, state: State) =
+        eventMetadataDao.updateState(config.userId, config, state, System.currentTimeMillis())
+
     override suspend fun updateState(config: EventManagerConfig, eventId: EventId, state: State) =
         eventMetadataDao.updateState(config.userId, config, eventId.id, state, System.currentTimeMillis())
 

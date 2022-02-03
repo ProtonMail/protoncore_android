@@ -95,6 +95,7 @@ class EventManagerImpl @AssistedInject constructor(
                 notifyResetAll(metadata)
             }
             else -> when (metadata.state) {
+                State.Cancelled -> fetch(metadata)
                 State.Enqueued -> fetch(metadata)
                 State.Fetching -> fetch(metadata)
                 State.Persisted -> notify(metadata)
@@ -271,7 +272,7 @@ class EventManagerImpl @AssistedInject constructor(
 
     private suspend fun cancel() {
         eventWorkerManager.cancel(config)
-        eventMetadataRepository.deleteAll(config)
+        eventMetadataRepository.updateState(config, State.Cancelled)
     }
 
     private suspend fun internalStart() {

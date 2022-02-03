@@ -23,6 +23,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 
 ### Changes
 
+- Keep cancelled EventMetadata/EventManagerConfig, to start syncing from previous eventId.
 - Removed lifecycle-extensions which has been deprecated; removed lifecycle-compiler; using lifecycle-common instead
 - Support prefilling login username for add account workflow
 - Added possibility to show additional help button when login fails with potential blocking.
@@ -30,6 +31,8 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 
 ### Fixes
 
+- Fixed ContactRepository usage while offline.
+- Fixed LabelRepository usage while offline.
 - Fixed EventManager to retry fetching on Force Update error.
 - Fixed AppLifecycleObserver State Flow (add LifecycleObserver as soon as AppLifecycleObserver is initialized).
 - Fixed TwoPassModeActivity to let the User retry unlocking primary key.
