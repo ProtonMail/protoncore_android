@@ -37,7 +37,7 @@ import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.NextStep
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.domain.entity.UserId
-import me.proton.core.presentation.utils.getLocalizedMessage
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -107,7 +107,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 is LoginViewModel.State.Idle -> showLoading(false)
                 is LoginViewModel.State.Processing -> showLoading(true)
                 is LoginViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
-                is LoginViewModel.State.Error -> onError(true, it.error.getLocalizedMessage(resources), it.isPotentialBlocking)
+                is LoginViewModel.State.Error -> onError(true, it.error.getUserMessage(resources), it.isPotentialBlocking)
             }.exhaustive
         }.launchIn(lifecycleScope)
     }

@@ -36,7 +36,7 @@ import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.errorToast
-import me.proton.core.presentation.utils.getLocalizedMessage
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -90,7 +90,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
                 is SecondFactorViewModel.State.Processing -> showLoading(true)
                 is SecondFactorViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
                 is SecondFactorViewModel.State.Error.Message ->
-                    onError(false, it.error.getLocalizedMessage(resources))
+                    onError(false, it.error.getUserMessage(resources))
                 is SecondFactorViewModel.State.Error.Unrecoverable -> onUnrecoverableError(it.message)
             }.exhaustive
         }.launchIn(lifecycleScope)

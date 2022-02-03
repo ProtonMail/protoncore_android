@@ -39,7 +39,7 @@ import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
 import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
-import me.proton.core.presentation.utils.getLocalizedMessage
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -473,7 +473,7 @@ class BillingViewModelTest : ArchTest, CoroutinesTest {
             assertIs<BillingCommonViewModel.State.Processing>(awaitItem())
             val subscriptionPlanStatus = awaitItem()
             assertTrue(subscriptionPlanStatus is BillingCommonViewModel.State.Error.General)
-            assertEquals("proton error", subscriptionPlanStatus.error.getLocalizedMessage(mockk()))
+            assertEquals("proton error", subscriptionPlanStatus.error.getUserMessage(mockk()))
         }
     }
 

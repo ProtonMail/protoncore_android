@@ -26,7 +26,7 @@ import me.proton.core.auth.domain.usecase.UsernameDomainAvailability
 import me.proton.core.humanverification.domain.usecase.SendVerificationCodeToEmailDestination
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.presentation.utils.getLocalizedMessage
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Before
@@ -96,7 +96,7 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             // THEN
             assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
             val errorItem = awaitItem() as ChooseUsernameViewModel.State.Error.Message
-            assertEquals("domains error", errorItem.error.getLocalizedMessage(mockk()))
+            assertEquals("domains error", errorItem.error.getUserMessage(mockk()))
             cancelAndConsumeRemainingEvents()
         }
     }
@@ -247,7 +247,7 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(errorItem is ChooseUsernameViewModel.State.Error.Message)
             assertEquals(
                 "currentAccountType is not set. Call setClientAppRequiredAccountType first.",
-                errorItem.error.getLocalizedMessage(mockk())
+                errorItem.error.getUserMessage(mockk())
             )
             cancelAndConsumeRemainingEvents()
         }
@@ -355,7 +355,7 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             assertTrue(awaitItem() is ChooseUsernameViewModel.State.Processing)
             val errorItem = awaitItem()
             assertTrue(errorItem is ChooseUsernameViewModel.State.Error.Message)
-            assertEquals("Error with the email", errorItem.error.getLocalizedMessage(mockk()))
+            assertEquals("Error with the email", errorItem.error.getUserMessage(mockk()))
             cancelAndConsumeRemainingEvents()
         }
     }

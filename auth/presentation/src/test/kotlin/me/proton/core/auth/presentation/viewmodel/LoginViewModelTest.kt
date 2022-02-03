@@ -37,7 +37,7 @@ import me.proton.core.humanverification.presentation.HumanVerificationOrchestrat
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.presentation.utils.getLocalizedMessage
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -185,7 +185,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
 
             val errorState = awaitItem()
             assertTrue(errorState is LoginViewModel.State.Error)
-            assertEquals("proton error", errorState.error.getLocalizedMessage(mockk()))
+            assertEquals("proton error", errorState.error.getUserMessage(mockk()))
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -241,7 +241,7 @@ class LoginViewModelTest : ArchTest, CoroutinesTest {
 
             val errorState = awaitItem()
             assertTrue(errorState is LoginViewModel.State.Error)
-            assertEquals("Primary key exists", errorState.error.getLocalizedMessage(mockk()))
+            assertEquals("Primary key exists", errorState.error.getUserMessage(mockk()))
 
             cancelAndIgnoreRemainingEvents()
         }

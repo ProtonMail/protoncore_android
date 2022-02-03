@@ -483,7 +483,7 @@ public class me/proton/core/presentation/utils/EmptyActivityLifecycleCallbacks :
 }
 
 public final class me/proton/core/presentation/utils/ErrorUtilsKt {
-	public static final fun getLocalizedMessage (Ljava/lang/Throwable;Landroid/content/res/Resources;)Ljava/lang/String;
+	public static final fun getUserMessage (Ljava/lang/Throwable;Landroid/content/res/Resources;)Ljava/lang/String;
 }
 
 public final class me/proton/core/presentation/utils/FragmentScreenContentProtectionDelegate : kotlin/properties/ReadOnlyProperty {

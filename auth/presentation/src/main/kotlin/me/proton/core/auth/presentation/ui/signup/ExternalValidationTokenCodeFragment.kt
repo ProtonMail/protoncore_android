@@ -32,7 +32,7 @@ import me.proton.core.auth.presentation.databinding.FragmentSignupValidationToke
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationEnterCodeViewModel
-import me.proton.core.presentation.utils.getLocalizedMessage
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -92,7 +92,7 @@ class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_sig
             when (it) {
                 is ViewModelResult.None -> Unit
                 is ViewModelResult.Processing -> showLoading()
-                is ViewModelResult.Error -> onValidationError(it.throwable?.getLocalizedMessage(resources))
+                is ViewModelResult.Error -> onValidationError(it.throwable?.getUserMessage(resources))
                 is ViewModelResult.Success -> onValidationSuccess()
             }.exhaustive
         }.launchIn(lifecycleScope)
@@ -100,7 +100,7 @@ class ExternalValidationTokenCodeFragment : SignupFragment(R.layout.fragment_sig
         viewModel.verificationCodeResendState.onEach {
             when (it) {
                 is ViewModelResult.None -> Unit
-                is ViewModelResult.Error -> showError(it.throwable?.getLocalizedMessage(resources))
+                is ViewModelResult.Error -> showError(it.throwable?.getUserMessage(resources))
                 is ViewModelResult.Processing -> showLoading(true)
                 is ViewModelResult.Success -> {
                     showLoading(false)

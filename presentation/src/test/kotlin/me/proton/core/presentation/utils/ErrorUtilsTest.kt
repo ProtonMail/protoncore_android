@@ -44,7 +44,7 @@ class ErrorUtilsTest {
     @Test
     fun `socket timeout exception returns original exception message`() {
         val exception = ApiException(ApiResult.Error.Connection(cause = SocketTimeoutException("test-message")))
-        val message = exception.getLocalizedMessage(resources)
+        val message = exception.getUserMessage(resources)
         assertEquals("test-message", message)
     }
 
@@ -59,7 +59,7 @@ class ErrorUtilsTest {
                 )
             )
         )
-        val message = exception.getLocalizedMessage(resources)
+        val message = exception.getUserMessage(resources)
         assertEquals(connectionError, message)
     }
 
@@ -72,7 +72,7 @@ class ErrorUtilsTest {
                 message = "http message"
             )
         )
-        val message = exception.getLocalizedMessage(resources)
+        val message = exception.getUserMessage(resources)
         assertEquals("test-message", message)
     }
 }

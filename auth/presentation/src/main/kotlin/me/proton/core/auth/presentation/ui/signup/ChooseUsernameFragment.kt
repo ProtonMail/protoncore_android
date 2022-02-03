@@ -34,7 +34,7 @@ import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.canSwitchToExternal
-import me.proton.core.presentation.utils.getLocalizedMessage
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -89,7 +89,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                 is ChooseUsernameViewModel.State.Processing -> showLoading(true)
                 is ChooseUsernameViewModel.State.UsernameAvailable -> onUsernameAvailable(it.username, it.domain)
                 is ChooseUsernameViewModel.State.AvailableDomains -> onDomains(it.domains, it.currentAccountType)
-                is ChooseUsernameViewModel.State.Error.Message -> onError(it.error.getLocalizedMessage(resources))
+                is ChooseUsernameViewModel.State.Error.Message -> onError(it.error.getUserMessage(resources))
                 is ChooseUsernameViewModel.State.Error.DomainsNotAvailable ->
                     onError(getString(R.string.auth_create_address_error_no_available_domain))
                 is ChooseUsernameViewModel.State.Error.UsernameNotAvailable ->

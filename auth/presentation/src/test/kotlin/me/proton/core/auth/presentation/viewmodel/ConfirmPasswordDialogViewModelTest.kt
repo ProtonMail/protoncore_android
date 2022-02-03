@@ -42,7 +42,7 @@ import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.presentation.utils.getLocalizedMessage
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -157,7 +157,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             val nextItem = awaitItem()
             assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.General)
-            assertEquals("Invalid input", nextItem.error.getLocalizedMessage(mockk()))
+            assertEquals("Invalid input", nextItem.error.getUserMessage(mockk()))
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -205,7 +205,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             val nextItem = awaitItem()
             assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.General)
-            assertEquals("Invalid input", nextItem.error.getLocalizedMessage(mockk()))
+            assertEquals("Invalid input", nextItem.error.getUserMessage(mockk()))
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -261,7 +261,7 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             val nextItem = awaitItem()
             assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.General)
-            assertEquals("Invalid input", nextItem.error.getLocalizedMessage(mockk()))
+            assertEquals("Invalid input", nextItem.error.getUserMessage(mockk()))
 
             cancelAndIgnoreRemainingEvents()
         }

@@ -30,18 +30,18 @@ import javax.net.ssl.SSLPeerUnverifiedException
 /**
  * Return localised and user readable error message.
  */
-fun Throwable.getLocalizedMessage(resources: Resources): String? =
+fun Throwable.getUserMessage(resources: Resources): String? =
     when (this) {
         // all connectivity errors are wrapped with ApiConnectionException under ApiException
         is ApiException ->
             if (cause is ApiConnectionException) {
-                (cause as ApiConnectionException).getLocalizedMessage(resources)
+                (cause as ApiConnectionException).getUserMessage(resources)
             } else message
         // currently all other errors return their original message
         else -> message
     }
 
-internal fun ApiConnectionException.getLocalizedMessage(resources: Resources): String? =
+internal fun ApiConnectionException.getUserMessage(resources: Resources): String? =
     when (this.cause) {
         is SSLHandshakeException,
         is SSLPeerUnverifiedException,
