@@ -29,10 +29,6 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.ScopeInfo
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
-import me.proton.core.auth.domain.usecase.SetupAccountCheck
-import me.proton.core.auth.domain.usecase.SetupInternalAddress
-import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
-import me.proton.core.auth.domain.usecase.UnlockUserPrimaryKey
 import me.proton.core.auth.presentation.entity.SessionResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
@@ -40,7 +36,6 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
-import me.proton.core.user.domain.UserManager
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals

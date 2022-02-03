@@ -51,6 +51,7 @@ import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KE
 import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.KEY_PLAN_SELECTED
 import me.proton.core.plan.presentation.ui.removePlansSignup
 import me.proton.core.plan.presentation.ui.showPlansSignup
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
@@ -106,7 +107,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             when (it) {
                 is LoginViewModel.State.Idle -> showLoading(false)
                 is LoginViewModel.State.Processing -> showLoading(true)
-                is LoginViewModel.State.ErrorMessage -> onLoginError(it.message)
+                is LoginViewModel.State.Error -> onLoginError(it.error.getUserMessage(resources))
                 is LoginViewModel.State.AccountSetupResult -> onPostLoginAccountSetup(it.result)
             }.exhaustive
         }.launchIn(lifecycleScope)

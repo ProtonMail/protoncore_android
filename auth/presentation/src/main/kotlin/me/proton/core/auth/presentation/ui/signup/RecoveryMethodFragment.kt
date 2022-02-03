@@ -38,6 +38,7 @@ import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.viewmodel.signup.RecoveryMethodViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
@@ -91,7 +92,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
         viewModel.validationResult.onEach {
             when (it) {
                 is ViewModelResult.None -> Unit
-                is ViewModelResult.Error -> showError(it.throwable?.message)
+                is ViewModelResult.Error -> showError(it.throwable?.getUserMessage(resources))
                 is ViewModelResult.Processing -> showLoading(true)
                 is ViewModelResult.Success -> {
                     if (it.value) {

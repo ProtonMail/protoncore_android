@@ -97,7 +97,7 @@ class BillingCommonViewModel @Inject constructor(
         }
 
         sealed class Error : State() {
-            data class Message(val message: String?) : Error()
+            data class General(val error: Throwable) : Error()
             object SignUpWithPaymentMethodUnsupported : Error()
         }
     }
@@ -186,7 +186,7 @@ class BillingCommonViewModel @Inject constructor(
             // endregion
         }
     }.catch {
-        _subscriptionState.tryEmit(State.Error.Message(it.message))
+        _subscriptionState.tryEmit(State.Error.General(it))
     }.onEach {
         _subscriptionState.tryEmit(it)
     }.launchIn(viewModelScope)
@@ -206,7 +206,7 @@ class BillingCommonViewModel @Inject constructor(
     ) = flow {
         emit(onTokenApproved(userId, planIds, codes, amount, currency, cycle, token))
     }.catch {
-        _subscriptionState.tryEmit(State.Error.Message(it.message))
+        _subscriptionState.tryEmit(State.Error.General(it))
     }.onEach {
         _subscriptionState.tryEmit(it)
     }.launchIn(viewModelScope)

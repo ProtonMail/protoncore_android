@@ -64,7 +64,7 @@ class PasswordManagementViewModel @Inject constructor(
         }
 
         sealed class Error : State() {
-            data class Message(val message: String?) : Error()
+            data class General(val error: Throwable) : Error()
             object UpdatingMailboxPassword : Error()
             object UpdatingSinglePassModePassword : Error()
         }
@@ -76,7 +76,7 @@ class PasswordManagementViewModel @Inject constructor(
         secondFactorEnabled = currentSettings.twoFA?.enabled ?: false
         emit(State.Mode(twoPasswordMode!!))
     }.catch { error ->
-        _state.tryEmit(State.Error.Message(error.message))
+        _state.tryEmit(State.Error.General(error))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
@@ -106,7 +106,7 @@ class PasswordManagementViewModel @Inject constructor(
         )
         emit(State.Success.UpdatingLoginPassword(result))
     }.catch { error ->
-        _state.tryEmit(State.Error.Message(error.message))
+        _state.tryEmit(State.Error.General(error))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
@@ -146,7 +146,7 @@ class PasswordManagementViewModel @Inject constructor(
             )
         }
     }.catch { error ->
-        _state.tryEmit(State.Error.Message(error.message))
+        _state.tryEmit(State.Error.General(error))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)

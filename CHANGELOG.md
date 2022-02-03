@@ -43,6 +43,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 - Fix crash on HumanVerificationWebViewClient.onResourceLoadingError when it was called from a background thread.
 - Add ProtonStore to get the calling stack trace of Store operations.
 - We don't generate keys for external accounts anymore. This means they can only be used in VPN or converted into internal accounts on login.
+- Fix/Add support for user readable error messages.
 
 ### New Injection
 

@@ -54,7 +54,7 @@ class CreateAddressViewModel @Inject constructor(
         object Idle : State()
         object Processing : State()
         data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
-        data class ErrorMessage(val message: String?) : State()
+        data class Error(val error: Throwable) : State()
     }
 
     fun upgradeAccount(
@@ -81,7 +81,7 @@ class CreateAddressViewModel @Inject constructor(
     }.retryOnceWhen(Throwable::primaryKeyExists) {
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to upgrade an account")
     }.catch { error ->
-        emit(State.ErrorMessage(error.message))
+        emit(State.Error(error))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)

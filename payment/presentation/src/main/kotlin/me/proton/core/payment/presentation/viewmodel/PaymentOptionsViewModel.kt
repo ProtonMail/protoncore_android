@@ -73,7 +73,7 @@ class PaymentOptionsViewModel @Inject constructor(
 
         sealed class Error : State() {
             object SubscriptionInRecoverableError : Error()
-            data class Message(val message: String?) : Error()
+            data class General(val error: Throwable) : Error()
         }
     }
 
@@ -121,7 +121,7 @@ class PaymentOptionsViewModel @Inject constructor(
         }
         emit(State.Success.PaymentMethodsSuccess(paymentMethods))
     }.catch { error ->
-        _availablePaymentMethodsState.tryEmit(State.Error.Message(error.message))
+        _availablePaymentMethodsState.tryEmit(State.Error.General(error))
     }.onEach { methods ->
         _availablePaymentMethodsState.tryEmit(methods)
     }.launchIn(viewModelScope)

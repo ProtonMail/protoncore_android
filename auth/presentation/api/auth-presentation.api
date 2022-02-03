@@ -1542,12 +1542,12 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Message : me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Message;
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Message;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Message;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel$State$Error$Message;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -1618,19 +1618,23 @@ public abstract class me/proton/core/auth/presentation/viewmodel/ConfirmPassword
 public abstract class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
 }
 
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$General : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$General;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$General;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$General;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$InvalidAccount : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error {
 	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$InvalidAccount;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Message : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Message;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Unknown : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Error$Unknown;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$Idle : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
@@ -1714,13 +1718,13 @@ public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewM
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$ErrorMessage : me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$ErrorMessage;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$ErrorMessage;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$ErrorMessage;
+public final class me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error : me/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/CreateAddressViewModel$State$Error;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -1818,12 +1822,12 @@ public abstract class me/proton/core/auth/presentation/viewmodel/SecondFactorVie
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Error$Message : me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Error {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Error$Message;
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Error$Message;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Error$Message;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Error$Message;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -1895,13 +1899,13 @@ public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewMod
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State$ErrorMessage : me/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State$ErrorMessage;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State$ErrorMessage;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State$ErrorMessage;
+public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State$Error : me/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State$Error;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel$State$Error;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

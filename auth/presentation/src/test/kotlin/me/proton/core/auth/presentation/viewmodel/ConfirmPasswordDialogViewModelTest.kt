@@ -30,7 +30,6 @@ import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.usecase.scopes.GetAuthInfo
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
@@ -43,6 +42,7 @@ import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -156,8 +156,8 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             val nextItem = awaitItem()
-            assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.Message)
-            assertEquals("Invalid input", nextItem.message)
+            assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.General)
+            assertEquals("Invalid input", nextItem.error.getUserMessage(mockk()))
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -204,8 +204,8 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             val nextItem = awaitItem()
-            assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.Message)
-            assertEquals("Invalid input", nextItem.message)
+            assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.General)
+            assertEquals("Invalid input", nextItem.error.getUserMessage(mockk()))
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -260,8 +260,8 @@ class ConfirmPasswordDialogViewModelTest : ArchTest, CoroutinesTest {
             assertIs<ConfirmPasswordDialogViewModel.State.Idle>(awaitItem())
             assertIs<ConfirmPasswordDialogViewModel.State.ProcessingObtainScope>(awaitItem())
             val nextItem = awaitItem()
-            assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.Message)
-            assertEquals("Invalid input", nextItem.message)
+            assertTrue(nextItem is ConfirmPasswordDialogViewModel.State.Error.General)
+            assertEquals("Invalid input", nextItem.error.getUserMessage(mockk()))
 
             cancelAndIgnoreRemainingEvents()
         }

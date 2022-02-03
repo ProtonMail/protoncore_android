@@ -55,7 +55,7 @@ internal class SignupPlansViewModel @Inject constructor(
         }
         emit(PlanState.Success.Plans(plans = plans))
     }.catch { error ->
-        _availablePlansState.tryEmit(PlanState.Error.Message(error.message))
+        _availablePlansState.tryEmit(PlanState.Error(error))
     }.onEach { plans ->
         _availablePlansState.tryEmit(plans)
     }.launchIn(viewModelScope)

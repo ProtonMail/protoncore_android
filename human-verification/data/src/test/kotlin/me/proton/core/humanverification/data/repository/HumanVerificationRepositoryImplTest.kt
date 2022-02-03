@@ -24,6 +24,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
+import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -40,6 +41,7 @@ import me.proton.core.network.domain.client.ClientIdType
 import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -78,6 +80,11 @@ class HumanVerificationRepositoryImplTest {
         coEvery { db.inTransaction(capture(transactionLambda)) } coAnswers {
             transactionLambda.captured.invoke()
         }
+    }
+
+    @After
+    fun afterEveryTest() {
+        unmockkStatic("androidx.room.RoomDatabaseKt")
     }
 
     @Test

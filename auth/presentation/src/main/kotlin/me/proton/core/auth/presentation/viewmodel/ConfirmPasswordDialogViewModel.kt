@@ -66,7 +66,8 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
 
         sealed class Error : State() {
             object InvalidAccount : Error()
-            data class Message(val message: String?) : Error()
+            object Unknown : Error()
+            data class General(val error: Throwable) : Error()
         }
     }
 
@@ -86,7 +87,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         }.exhaustive
         emit(State.SecondFactorResult(isSecondFactorNeeded))
     }.catch { error ->
-        emit(State.Error.Message(error.message))
+        emit(State.Error.General(error))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
@@ -115,10 +116,10 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
                 )
             )
         } else {
-            emit(State.Error.Message(message = null))
+            emit(State.Error.Unknown)
         }
     }.catch { error ->
-        emit(State.Error.Message(error.message))
+        emit(State.Error.General(error))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)

@@ -61,7 +61,7 @@ class SecondFactorViewModel @Inject constructor(
 
         sealed class Error : State() {
             data class Unrecoverable(val message: String?) : Error()
-            data class Message(val message: String?) : Error()
+            data class Message(val error: Throwable) : Error()
         }
     }
 
@@ -102,7 +102,7 @@ class SecondFactorViewModel @Inject constructor(
             stopSecondFactorFlow(userId)
             emit(State.Error.Unrecoverable(error.message))
         } else {
-            emit(State.Error.Message(error.message))
+            emit(State.Error.Message(error))
         }
     }.onEach { state ->
         _state.tryEmit(state)

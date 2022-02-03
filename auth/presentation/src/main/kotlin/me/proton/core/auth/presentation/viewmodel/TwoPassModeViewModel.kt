@@ -52,7 +52,7 @@ class TwoPassModeViewModel @Inject constructor(
         object Idle : State()
         object Processing : State()
         data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
-        data class ErrorMessage(val message: String?) : State()
+        data class Error(val error: Throwable) : State()
     }
 
     fun stopMailboxLoginFlow(
@@ -79,7 +79,7 @@ class TwoPassModeViewModel @Inject constructor(
         )
         emit(State.AccountSetupResult(result))
     }.catch { error ->
-        emit(State.ErrorMessage(error.message))
+        emit(State.Error(error))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)

@@ -55,9 +55,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         object UpdatingCurrent : State()
         data class LoadingSuccess(val recoveryEmail: String?) : State()
         data class UpdatingSuccess(val recoveryEmail: String?) : State()
-        sealed class Error : State() {
-            data class Message(val message: String?) : Error()
-        }
+        data class Error(val error: Throwable) : State()
     }
 
     /**
@@ -69,7 +67,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         secondFactorEnabled = currentSettings.twoFA?.enabled ?: false
         emit(State.LoadingSuccess(currentSettings.email?.value))
     }.catch { error ->
-        _state.tryEmit(State.Error.Message(error.message))
+        _state.tryEmit(State.Error(error))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
@@ -97,7 +95,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         )
         emit(State.UpdatingSuccess(updateRecoveryEmailResult.email?.value))
     }.catch { error ->
-        _state.tryEmit(State.Error.Message(error.message))
+        _state.tryEmit(State.Error(error))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)

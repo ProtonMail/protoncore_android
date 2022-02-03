@@ -64,9 +64,7 @@ internal class UpgradePlansViewModel @Inject constructor(
             ) : Success()
         }
 
-        sealed class Error : SubscribedPlansState() {
-            data class Message(val message: String?) : Error()
-        }
+        data class Error(val error: Throwable) : SubscribedPlansState()
     }
 
     fun getCurrentSubscribedPlans(userId: UserId) = flow {
@@ -102,7 +100,7 @@ internal class UpgradePlansViewModel @Inject constructor(
         getAvailablePlansForUpgrade(userId)
         emit(SubscribedPlansState.Success.SubscribedPlans(subscribedPlans))
     }.catch { error ->
-        _subscribedPlansState.tryEmit(SubscribedPlansState.Error.Message(error.message))
+        _subscribedPlansState.tryEmit(SubscribedPlansState.Error(error))
     }.onEach {
         _subscribedPlansState.tryEmit(it)
     }.launchIn(viewModelScope)
@@ -115,7 +113,7 @@ internal class UpgradePlansViewModel @Inject constructor(
 
         emit(PlanState.Success.Plans(plans = availablePlans))
     }.catch { error ->
-        _availablePlansState.tryEmit(PlanState.Error.Message(error.message))
+        _availablePlansState.tryEmit(PlanState.Error(error))
     }.onEach { plans ->
         _availablePlansState.tryEmit(plans)
     }.launchIn(viewModelScope)

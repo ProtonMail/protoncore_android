@@ -32,6 +32,7 @@ import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.ui.view.ProtonProgressButton
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -97,7 +98,7 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
                         mailboxPasswordGroup.visibility = if (it.twoPasswordMode) View.VISIBLE else View.GONE
                     }
                 }
-                is PasswordManagementViewModel.State.Error.Message -> showError(it.message)
+                is PasswordManagementViewModel.State.Error.General -> showError(it.error.getUserMessage(resources))
                 is PasswordManagementViewModel.State.Error.UpdatingSinglePassModePassword,
                 is PasswordManagementViewModel.State.Error.UpdatingMailboxPassword ->
                     showError(getString(R.string.settings_change_password_error))

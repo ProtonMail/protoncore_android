@@ -520,13 +520,13 @@ public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommo
 public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State {
 }
 
-public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$Message : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$Message;
+public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$General : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$General;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$General;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Error$General;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -691,13 +691,13 @@ public abstract class me/proton/core/payment/presentation/viewmodel/PaymentOptio
 public abstract class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State {
 }
 
-public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$Message : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$Message;
+public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$General : me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$General;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$General;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel$State$Error$General;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -771,16 +771,13 @@ public final class me/proton/core/payment/presentation/viewmodel/PaymentTokenApp
 public abstract class me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State {
 }
 
-public abstract class me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error : me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State {
-}
-
-public final class me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error$Message : me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error$Message;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error$Message;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error$Message;
+public final class me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error : me/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/PaymentTokenApprovalViewModel$State$Error;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMessage ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

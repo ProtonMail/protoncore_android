@@ -26,6 +26,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.domain.entity.UserId
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.usersettings.domain.usecase.SetupUsername
@@ -185,8 +186,8 @@ class CreateAddressViewModelTest : ArchTest, CoroutinesTest {
             coVerify(exactly = 1) { setupUsername.invoke(any(), any()) }
 
             assertIs<CreateAddressViewModel.State.Processing>(awaitItem())
-            val result = assertIs<CreateAddressViewModel.State.ErrorMessage>(awaitItem())
-            assertEquals("Something went wrong", result.message)
+            val result = assertIs<CreateAddressViewModel.State.Error>(awaitItem())
+            assertEquals("Something went wrong", result.error.getUserMessage(mockk()))
             cancelAndIgnoreRemainingEvents()
         }
     }

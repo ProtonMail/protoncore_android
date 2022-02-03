@@ -67,7 +67,7 @@ internal class LoginViewModel @Inject constructor(
         object Idle : State()
         object Processing : State()
         data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
-        data class ErrorMessage(val message: String?, val isPotentialBlocking: Boolean) : State()
+        data class Error(val error: Throwable, val isPotentialBlocking: Boolean) : State()
     }
 
     override val recoveryEmailAddress: String?
@@ -116,7 +116,7 @@ internal class LoginViewModel @Inject constructor(
     }.retryOnceWhen(Throwable::primaryKeyExists) {
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying login flow")
     }.catch { error ->
-        emit(State.ErrorMessage(error.message, error.isPotentialBlocking()))
+        emit(State.Error(error, error.isPotentialBlocking()))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)

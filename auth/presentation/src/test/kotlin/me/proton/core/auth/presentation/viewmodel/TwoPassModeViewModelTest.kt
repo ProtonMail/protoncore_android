@@ -36,9 +36,6 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertTrue
 
-/**
- * @author Dino Kadrikj.
- */
 class TwoPassModeViewModelTest : ArchTest, CoroutinesTest {
 
     // region mocks
