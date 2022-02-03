@@ -136,13 +136,9 @@ internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityB
     private fun handleFormError(validationError: BugReportValidationError) {
         val (textView, message) = when (validationError) {
             BugReportValidationError.DescriptionMissing ->
-                binding.bugReportDescriptionLayout to getString(R.string.core_report_bug_form_field_required)
-            BugReportValidationError.SubjectMissing ->
-                binding.bugReportSubjectLayout to getString(R.string.core_report_bug_form_field_required)
-            BugReportValidationError.SubjectTooLong ->
-                binding.bugReportSubjectLayout to resources.getQuantityString(
-                    R.plurals.core_report_bug_form_field_too_long,
-                    BugReport.SubjectMaxLength, BugReport.SubjectMaxLength
+                binding.bugReportDescriptionLayout to resources.getQuantityString(
+                    R.plurals.core_report_bug_description_field_required,
+                    BugReport.DescriptionMinLength, BugReport.DescriptionMinLength
                 )
             BugReportValidationError.DescriptionTooLong ->
                 binding.bugReportDescriptionLayout to resources.getQuantityString(
@@ -151,8 +147,15 @@ internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityB
                 )
             BugReportValidationError.DescriptionTooShort ->
                 binding.bugReportDescriptionLayout to resources.getQuantityString(
-                    R.plurals.core_report_bug_form_field_too_short,
+                    R.plurals.core_report_bug_description_field_required,
                     BugReport.DescriptionMinLength, BugReport.DescriptionMinLength
+                )
+            BugReportValidationError.SubjectMissing ->
+                binding.bugReportSubjectLayout to getString(R.string.core_report_bug_subject_field_required)
+            BugReportValidationError.SubjectTooLong ->
+                binding.bugReportSubjectLayout to resources.getQuantityString(
+                    R.plurals.core_report_bug_form_field_too_long,
+                    BugReport.SubjectMaxLength, BugReport.SubjectMaxLength
                 )
         }.exhaustive
 

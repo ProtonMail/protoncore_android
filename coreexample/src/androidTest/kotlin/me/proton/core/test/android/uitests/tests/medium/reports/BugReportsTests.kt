@@ -38,8 +38,12 @@ class BugReportsTests : BaseTest() {
             .send<BugReportRobot>()
             .verify {
                 bugReportFormIsEditable()
-                subjectFieldHasError(R.string.core_report_bug_form_field_required)
-                descriptionFieldHasError(R.string.core_report_bug_form_field_required)
+                subjectFieldHasError(R.string.core_report_bug_subject_field_required)
+                descriptionFieldHasError(
+                    R.plurals.core_report_bug_description_field_required,
+                    BugReport.DescriptionMinLength,
+                    BugReport.DescriptionMinLength
+                )
             }
     }
 
@@ -51,8 +55,12 @@ class BugReportsTests : BaseTest() {
             .send<BugReportRobot>()
             .verify {
                 bugReportFormIsEditable()
-                subjectFieldHasError(R.string.core_report_bug_form_field_required)
-                descriptionFieldHasError(R.string.core_report_bug_form_field_required)
+                subjectFieldHasError(R.string.core_report_bug_subject_field_required)
+                descriptionFieldHasError(
+                    R.plurals.core_report_bug_description_field_required,
+                    BugReport.DescriptionMinLength,
+                    BugReport.DescriptionMinLength
+                )
             }
     }
 
@@ -65,7 +73,7 @@ class BugReportsTests : BaseTest() {
             .verify {
                 bugReportFormIsEditable()
                 descriptionFieldHasError(
-                    R.plurals.core_report_bug_form_field_too_short,
+                    R.plurals.core_report_bug_description_field_required,
                     BugReport.DescriptionMinLength,
                     BugReport.DescriptionMinLength
                 )
