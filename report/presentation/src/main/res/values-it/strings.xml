@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Segnala un bug</string>
+  <string name="core_report_bug_close">Chiudi</string>
+  <string name="core_report_bug_subject_field_hint">Oggetto</string>
+  <string name="core_report_bug_description_field_hint">Descrizione</string>
+  <string name="core_report_bug_description_field_placeholder">Per favore descrivi il problema e includi eventuali messaggi di errore.</string>
+  <string name="core_report_bug_discard_changes_title">Modifiche non salvate</string>
+  <string name="core_report_bug_discard_changes_description">Ci sono delle voci non salvate nel modulo. Sei sicuro di volerle scartare?</string>
+  <string name="core_report_bug_discard_changes_cancel">Continua a scrivere</string>
+  <string name="core_report_bug_discard_changes_confirm">Scarta</string>
+  <string name="core_report_bug_form_field_required">Questo campo è obbligatorio</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="one">Questo campo dovrebbe avere almeno %d carattere</item>
+    <item quantity="other">Questo campo dovrebbe avere almeno %d caratteri</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Questo campo dovrebbe avere al massimo %d carattere</item>
+    <item quantity="other">Questo campo dovrebbe avere al massimo %d caratteri</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Errore durante l\'invio del rapporto, riprova più tardi</string>
+  <string name="core_report_bug_send">Invia</string>
+  <string name="core_report_bug_success">Grazie per la segnalazione</string>
+</resources>

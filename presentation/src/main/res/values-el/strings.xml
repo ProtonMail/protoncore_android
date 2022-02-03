@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common presentation strings -->
+  <string name="presentation_browser_missing">Δε βρέθηκε πρόγραμμα περιήγησης για να ανοίξει ο σύνδεσμος.</string>
+  <string name="presentation_force_update_title">Απαιτείται ενημέρωση</string>
+  <string name="presentation_force_update_message">Αυτή η έκδοση της εφαρμογής δεν υποστηρίζεται πλέον. Ενημερώστε την για να συνεχίσετε να τη χρησιμοποιείτε.</string>
+  <string name="presentation_force_update_learn_more">Μάθετε περισσότερα</string>
+  <string name="presentation_force_update_update">Αναβάθμιση</string>
+  <string name="presentation_market_missing">Δεν βρέθηκε η εφαρμογή αγοράς εγκατεστημένη στη συσκευή. Παρακαλούμε, μεταβείτε στο κατάστημα και ενημερώστε την εφαρμογή.</string>
+  <string name="presentation_authenticate">Ταυτοποίηση</string>
+  <string name="presentation_signin_to_continue">Εισέλθετε για να συνεχίσετε</string>
+  <string name="presentation_alert_title">Προειδοποίηση</string>
+  <string name="presentation_alert_ok">ΟΚ</string>
+  <string name="presentation_alert_enter">Εισαγωγή</string>
+  <string name="presentation_alert_cancel">Ακύρωση</string>
+  <string name="presentation_alert_submit">Υποβολή</string>
+  <!-- Common menu items -->
+  <string name="presentation_menu_item_title_report_a_bug">Αναφορά σφάλματος</string>
+  <string name="presentation_menu_item_title_settings">Ρυθμίσεις</string>
+  <string name="presentation_menu_item_title_subscription">Συνδρομή</string>
+  <string name="presentation_menu_item_title_sign_out">Αποσύνδεση</string>
+  <!-- Other -->
+  <string name="presentation_close">Κλείσιμο</string>
+  <string name="presentation_skip">Παράλειψη</string>
+  <string name="presentation_phone_calling_code_template">+%s</string>
+</resources>

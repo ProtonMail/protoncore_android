@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_plan">انتخاب</string>
+  <string name="plans_select_a_plan">Select a Plan</string>
+  <string name="plans_customizable_features">    Visit  to upgrade to Professional and Visionary plans, or to customize your plan.
+    <a href="https://protonmail.com/pricing">protonmail.com</a>
+  </string>
+  <string name="plans_customizable_features_web">    Visit  to customize your plan.
+    <a href="https://protonmail.com/pricing">protonmail.com</a>
+  </string>
+  <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
+  <string name="plans_free_name">رایگان</string>
+  <string name="plan_price_monthly">per month*</string>
+  <string name="plans_current_plan">طرح کنونی</string>
+  <string name="plans_upgrade_plan">Upgrade plan</string>
+  <string name="plans_subscription">اشتراک</string>
+  <string name="plans_renewal_date">طرح شما بطور خودکار تمدید خواهد شد در</string>
+  <string name="plans_billed_yearly">*Billed annually at %s</string>
+  <string name="plans_billed_anually">Billed annually</string>
+  <string name="plans_billed_monthly">Billed monthly</string>
+  <string name="plans_billed_every_2years">قبض دوسالانه</string>
+  <string name="plans_save_20">۲۰٪ صرفه جویی با تغییر به صورتحساب سالیانه</string>
+  <string name="plans_renew_info">Renews automatically. Cancel or change plan at any time.</string>
+  <string name="plans_upgrade_your_plan">طرح خود را ارتقا دهید</string>
+  <!-- plan details -->
+  <string name="plans_feature_free_item_storage">0.5GB storage</string>
+  <string name="plans_feature_free_item_address">۱ آدرس</string>
+  <string name="plans_feature_free_item_calendar">1 calendar</string>
+  <string name="plans_feature_free_item_vpn">1 اتصال VPN</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the test between #">
+    <item quantity="one">#proton_storage# storage</item>
+    <item quantity="other">#proton_storage# storage</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_storage# storage / user</item>
+    <item quantity="other">#proton_storage# storage / user</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# address</item>
+    <item quantity="other">#proton_addresses# addresses</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# address / user</item>
+    <item quantity="other">#proton_addresses# addresses / user</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">#proton_domains# custom domain</item>
+    <item quantity="other">#proton_domains# custom domains</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# calendar</item>
+    <item quantity="other">#proton_calendars# calendars</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# VPN connection</item>
+    <item quantity="other">#proton_vpn# VPN connections</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# high-speed VPN connection</item>
+    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# user</item>
+    <item quantity="other">#proton_users# users</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plan free -->
+  <string-array name="free">
+    <item>بنایی برای ارتباطات خصوصی و امن.</item>
+    <item>@string/plans_feature_free_item_storage</item>
+    <item>@string/plans_feature_free_item_address</item>
+    <item>@string/plans_feature_free_item_calendar</item>
+    <item>@string/plans_feature_free_item_vpn</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan plus. Note: the order array is affected by the change in the -->
+  <string name="plan_id_plus_header">Full-featured mailbox with advanced protection.</string>
+  <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_domains#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region vpn basic -->
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_high_speed">High speed</string>
+  <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_vpn#</item>
+    <item>string</item>
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
+  <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_vpn#</item>
+    <item>string</item>
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan professional -->
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">Multi-user support</string>
+  <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_domains#</item>
+    <item>string</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan visionary -->
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string-array name="plan_id_visionary_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+    <item>#proton_domains#</item>
+    <item>#proton_users#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- supported plans -->
+  <string-array name="supported_currencies">
+    <item>یورو</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <string-array name="supported_billing_cycle">
+    <item>پرداخت ماهانه</item>
+    <item>Pay annual (save up to 20%)</item>
+    <item>Pay every 2 years (save 33%)</item>
+  </string-array>
+</resources>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">Beskyt dit privatliv med Proton</string>
+  <string name="welcome_subtitle">Kryptering holder dine data private. Dine data tilhører virkelig dig.</string>
+  <string name="welcome_title_mail">Beskyt dit privatliv med ProtonMail</string>
+  <string name="welcome_subtitle_mail">Krypteret e-mail, der holder dine samtaler private. Din indbakke tilhører virkelig dig.</string>
+  <string name="welcome_title_drive">Beskyt dit privatliv med Proton Drive</string>
+  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_title_calendar">Beskyt dit privatliv med Proton Calendar</string>
+  <string name="welcome_subtitle_calendar">Krypteret kalender, der holder dine livsbegivenheder private, sikre og trygge.</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_subtitle_vpn">Højhastigheds, schweizisk VPN, der beskytter dit privatliv ved at kryptere din internetforbindelse.</string>
+  <string name="auth_password_label">Adgangskode</string>
+  <string name="auth_password_help">Adgangskode skal indeholde mindst 8 tegn</string>
+  <string name="auth_current_login_password">Nuværende login-adgangskode</string>
+  <string name="auth_enter_six_digit_code">Indtast den sekscifrede kode</string>
+  <string name="auth_second_factor_code">To-faktor-kode</string>
+  <string name="auth_email_username">E-mail eller brugernavn</string>
+  <string name="auth_account_details">Indtast oplysninger om din Proton-konto.</string>
+  <string name="auth_sign_in">Log ind</string>
+  <string name="auth_sign_in_action">Log ind</string>
+  <string name="auth_need_help">Behov for hjælp?</string>
+  <string name="auth_login_assistive_text">Indtast venligst din Proton e-mail eller brugernavn.</string>
+  <string name="auth_help_title">Hvordan kan vi hjælpe?</string>
+  <string name="auth_help_option_forgot_username">Glemte brugernavn</string>
+  <string name="auth_help_option_forgot_password">Glemt adgangskode</string>
+  <string name="auth_help_option_other">Andre login-problemer</string>
+  <string name="auth_help_other">Har du stadig brug for hjælp? Kontakt os direkte.</string>
+  <string name="auth_help_option_customer_support">Kundeservice</string>
+  <string name="auth_2fa_title">To-faktor-godkendelse</string>
+  <string name="auth_2fa_label">To-faktor-kode</string>
+  <string name="auth_2fa_recovery_code_label">Gendannelseskode</string>
+  <string name="auth_2fa_assistive_text">Indtast den sekscifrede kode.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">Indtast en gendannelseskode på 8-tegn.</string>
+  <string name="auth_2fa_action">Godkend</string>
+  <string name="auth_2fa_use_recovery_code">Brug gendannelseskode</string>
+  <string name="auth_2fa_use_2fa_code">Brug to-faktor-kode</string>
+  <string name="auth_2fa_error_empty_code">To-faktor-kode må ikke være tom</string>
+  <string name="auth_mailbox_title">Lås din postkasse op</string>
+  <string name="auth_mailbox_password_label">Postkasseadgangskode</string>
+  <string name="auth_mailbox_unlock_action">Lås op</string>
+  <string name="auth_forgot_password">Glemt adgangskode</string>
+  <string name="auth_login_general_error">Der opstod en fejl.</string>
+  <string name="auth_login_empty_credentials">Brugeroplysninger må ikke være tomme.</string>
+  <string name="auth_mailbox_empty_credentials">Brugeroplysninger må ikke være tomme.</string>
+  <string name="auth_create_address_title">Opret en ProtonMail-adresse</string>
+  <string name="auth_create_address_subtitle">Din Proton-konto er tilknyttet %1$s. For at bruge ProtonMail bedes du oprette en adresse.</string>
+  <string name="auth_username">Brugernavn</string>
+  <string name="auth_username_next_action">Næste</string>
+  <string name="auth_create_address_result_title">%s er tilgængelig</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s bliver din nye ProtonMail e-mailadresse.</string>
+  <string name="auth_create_address_result_subtitle">Du vil bruge denne adresse til at logge ind på alle Proton-tjenester.</string>
+  <string name="auth_create_address_result_recovery_title">Din e-mailadresse til gendannelse er:</string>
+  <string name="auth_create_address_create">Opret adresse</string>
+  <string name="auth_create_address_creating">Opretter adresse</string>
+  <string name="auth_create_address_terms">Ved at klikke på Opret adresse, accepterer du Proton\'s <a href="https://protonmail.com/terms-and-conditions">Vilkår og Betingelser.</a>
+  </string>
+  <string name="auth_create_address_error_credentials">Brugeroplysninger må ikke stå tomt.</string>
+  <string name="auth_create_address_error_no_available_domain">Intet tilgængeligt domæne.</string>
+  <string name="auth_create_address_error_private_key">Generering af privat nøgle mislykkedes.</string>
+  <string name="auth_create_address_error_signed_key_list">Generering af nøgleliste mislykkedes.</string>
+  <string name="auth_create_address_error_setusername">Tilknytning af brugernavn mislykkedes.</string>
+  <string name="auth_create_address_error_username_unavailable">Valgt brugernavn er ikke tilgængeligt.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Ingen primærnøgle fundet.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Primærnøgle-fejl.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Ugyldig kodesætning.</string>
+  <string name="auth_password_chooser_title">Skift din adgangskode</string>
+  <string name="auth_password_chooser_description">For at bruge Proton-appen som medlem af en organisation, skal du først ændre din adgangskode ved at logge på Proton via en browser.</string>
+  <string name="auth_password_chooser_change">Skift adgangskode</string>
+  <string name="auth_user_check_one_free_error">Kun én gratis Proton-konto er tilladt.</string>
+  <string name="auth_user_check_delinquent_error">Din konto er i øjeblikket i bero på grund af en forfalden faktura.</string>
+  <string name="auth_user_check_delinquent_action">Betal faktura</string>
+  <string name="auth_account_not_found_error">Fejl på kontoen</string>
+  <string name="auth_one_account_all_services">Én konto til alle Proton-tjenester.</string>
+  <string name="auth_create_account">Opret en konto</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Opret din Proton-konto</string>
+  <string name="auth_signup_current_email">Brug din nuværende e-mail i stedet</string>
+  <string name="auth_signup_create_secure_proton_address">Opret en sikker ProtonMail-adresse i stedet</string>
+  <string name="auth_signup_username">Brugernavn</string>
+  <string name="auth_signup_email">E-mail</string>
+  <string name="auth_signup_next">Næste</string>
+  <string name="auth_signup_choose_password">Opret din adgangskode</string>
+  <string name="auth_signup_repeat_password">Gentag adgangskode</string>
+  <string name="auth_signup_recovery_method_title">Indstil gendannelsesmetode (valgfrit)</string>
+  <string name="auth_signup_recovery_method_subtitle">Vi vil sende gendannelsesinstruktioner til denne e-mail eller telefonnummer, hvis du bliver låst ude af din konto.</string>
+  <string name="auth_signup_recovery_method_email">E-mail</string>
+  <string name="auth_signup_recovery_method_phone">Telefon</string>
+  <string name="auth_signup_recovery_method_email_hint">E-mail til gendannelse</string>
+  <string name="auth_signup_recovery_method_phone_hint">Telefonnummer til gendannelse</string>
+  <string name="auth_signup_terms_conditions">Vilkår og Betingelser</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ved at klikke på Næste accepterer du Proton\'s <annotation link="terms">Vilkår og betingelser</annotation>.</string>
+  <string name="auth_signup_skip_recovery_title">Spring over gendannelsesmetode?</string>
+  <string name="auth_signup_skip_recovery_description">En gendannelsesmetode vil hjælpe dig med at få adgang til din konto, hvis du glemmer din adgangskode eller bliver låst ude af din konto.</string>
+  <string name="auth_signup_skip_recovery">Spring over</string>
+  <string name="auth_signup_set_recovery">Indstil gendannelsesmetode</string>
+  <string name="auth_signup_no_connectivity">Ingen forbindelse til visning af Vilkår og Betingelser.</string>
+  <string name="auth_signup_error_username_blank">Brugernavn må ikke være tomt.</string>
+  <string name="auth_signup_error_passwords_do_not_match">Adgangskoder matcher ikke.</string>
+  <string name="auth_signup_validation_password_length">Adgangskode skal være mindst 8 tegn lang.</string>
+  <string name="auth_signup_validation_password">Adgangskode må ikke være tom.</string>
+  <string name="auth_signup_your_account_is_being_setup">Din konto oprettes…</string>
+  <string name="auth_signup_please_wait">Det tager normalt ikke mere end et minut.</string>
+  <string name="auth_signup_replacement_code">Ikke modtaget koden?</string>
+  <string name="auth_signup_verify">Bekræft</string>
+  <string name="auth_signup_verification_code">Bekræftelseskode</string>
+  <string name="auth_signup_enter_code_subtitle">Indtast den bekræftelseskode, der blev sendt til %s:</string>
+  <string name="auth_signup_error_human_verification_failed">Menneskelig verifikation mislykkedes.</string>
+  <string name="auth_signup_token_code_resent">Token-kode gensendt.</string>
+  <string name="auth_signup_error_validation_recovery_destination">Gendannelsesdestination er ugyldig.</string>
+</resources>

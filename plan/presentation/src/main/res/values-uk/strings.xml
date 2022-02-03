@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_plan">Вибрати</string>
+  <string name="plans_select_a_plan">Оберіть тарифний план</string>
+  <string name="plans_customizable_features">Відвідайте <a href="https://protonmail.com/pricing">protonmail.com</a>, щоб перейти на тарифний план Professional та Visionary, або налаштувати свій план.</string>
+  <string name="plans_customizable_features_web">Відвідайте <a href="https://protonmail.com/pricing">protonmail.com</a>, щоб налаштувати свій тарифний план.</string>
+  <string name="plans_fetching_general_error">Помилка отримання тарифних планів.</string>
+  <string name="plans_free_name">Безплатний</string>
+  <string name="plan_price_monthly">на місяць*</string>
+  <string name="plans_current_plan">Поточний тарифний план</string>
+  <string name="plans_upgrade_plan">Покращити</string>
+  <string name="plans_subscription">Передплата</string>
+  <string name="plans_renewal_date">Ваш тарифний план автоматично поновиться</string>
+  <string name="plans_billed_yearly">*Сплачується щороку в сумі %s</string>
+  <string name="plans_billed_anually">Сплачується щороку</string>
+  <string name="plans_billed_monthly">Сплачується щомісяця</string>
+  <string name="plans_billed_every_2years">Сплачується кожні 2 роки</string>
+  <string name="plans_save_20">Заощадьте 20% перейшовши на річну передплату</string>
+  <string name="plans_renew_info">Продовжується автоматично. Можна скасувати або змінити тарифний план план у будь-який час.</string>
+  <string name="plans_upgrade_your_plan">Оновіть свій тарифний план</string>
+  <!-- plan details -->
+  <string name="plans_feature_free_item_storage">0.5 ГБ сховища</string>
+  <string name="plans_feature_free_item_address">1 адреса</string>
+  <string name="plans_feature_free_item_calendar">1 календар</string>
+  <string name="plans_feature_free_item_vpn">1 VPN-з\'єднання</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the test between #">
+    <item quantity="one">#proton_storage# сховища</item>
+    <item quantity="few">#proton_storage# сховища</item>
+    <item quantity="many">#proton_storage# сховища</item>
+    <item quantity="other">#proton_storage# сховища</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_storage# сховища на користувача</item>
+    <item quantity="few">#proton_storage# сховища на користувача</item>
+    <item quantity="many">#proton_storage# сховища на користувача</item>
+    <item quantity="other">#proton_storage# сховища на користувача</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# адреса</item>
+    <item quantity="few">#proton_addresses# адреси</item>
+    <item quantity="many">#proton_addresses# адрес</item>
+    <item quantity="other">#proton_addresses# адреси</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# адреса на користувача</item>
+    <item quantity="few">#proton_addresses# адреси на користувача</item>
+    <item quantity="many">#proton_addresses# адрес на користувача</item>
+    <item quantity="other">#proton_addresses# адреси на користувача</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">#proton_domains# власний домен</item>
+    <item quantity="few">#proton_domains# власні домени</item>
+    <item quantity="many">#proton_domains# власних доменів</item>
+    <item quantity="other">#proton_domains# власні домени</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# календар</item>
+    <item quantity="few">#proton_calendars# календарі</item>
+    <item quantity="many">#proton_calendars# календарів</item>
+    <item quantity="other">#proton_calendars# календаря</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# VPN-з\'єднання</item>
+    <item quantity="few">#proton_vpn# VPN-з\'єднання</item>
+    <item quantity="many">#proton_vpn# VPN-з\'єднань</item>
+    <item quantity="other">#proton_vpn# VPN-з\'єднання</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# високошвидкісне VPN-з\'єднання</item>
+    <item quantity="few">#proton_vpn# високошвидкісні VPN-з\'єднання</item>
+    <item quantity="many">#proton_vpn# високошвидкісних VPN-з\'єднань</item>
+    <item quantity="other">#proton_vpn# високошвидкісні VPN-з\'єднання</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# користувач</item>
+    <item quantity="few">#proton_users# користувачі</item>
+    <item quantity="many">#proton_users# користувачів</item>
+    <item quantity="other">#proton_users# користувача</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plan free -->
+  <string-array name="free">
+    <item>Основа для приватного та захищеного спілкування.</item>
+    <item>@string/plans_feature_free_item_storage</item>
+    <item>@string/plans_feature_free_item_address</item>
+    <item>@string/plans_feature_free_item_calendar</item>
+    <item>@string/plans_feature_free_item_vpn</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan plus. Note: the order array is affected by the change in the -->
+  <string name="plan_id_plus_header">Повнофункціональна поштова скринька з додатковим захистом.</string>
+  <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_domains#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region vpn basic -->
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_high_speed">Висока швидкість</string>
+  <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_vpn#</item>
+    <item>string</item>
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan vpn plus -->
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_highest_speed">Найвища швидкість</string>
+  <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_vpn#</item>
+    <item>string</item>
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan professional -->
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">Підтримка кількох користувачів</string>
+  <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_domains#</item>
+    <item>string</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- region plan visionary -->
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string-array name="plan_id_visionary_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+    <item>#proton_storage#</item>
+    <item>#proton_addresses#</item>
+    <item>#proton_calendars#</item>
+    <item>#proton_vpn#</item>
+    <item>#proton_domains#</item>
+    <item>#proton_users#</item>
+  </string-array>
+  <!-- endregion -->
+  <!-- supported plans -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <string-array name="supported_billing_cycle">
+    <item>Сплачувати щомісяця</item>
+    <item>Сплачувати щороку (заощадьте до 20%)</item>
+    <item>Сплачувати кожні 2 роки (заощадьте 33%)</item>
+  </string-array>
+</resources>

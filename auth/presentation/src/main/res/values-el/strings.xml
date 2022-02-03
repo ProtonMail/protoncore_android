@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">Προστατέψτε την ιδιοτικότητά σας με το Proton</string>
+  <string name="welcome_subtitle">Η κρυπτογράφηση διατηρεί τα δεδομένα σας απόρρητα. Τα δεδομένα σας ανήκουν πραγματικά σε εσάς.</string>
+  <string name="welcome_title_mail">Προστατέψτε την ιδιοτικότητά σας με το ProtonMail</string>
+  <string name="welcome_subtitle_mail">Το κρυπτογραφημένο email διατηρεί τις συνομιλίες σας απόρρητες. Τα εισερχόμενά σας ανήκουν πραγματικά σε εσάς.</string>
+  <string name="welcome_title_drive">Προστατέψτε την ιδιοτικότητά σας με το Proton Drive</string>
+  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_title_calendar">Προστατέψτε την ιδιοτικότητά σας με το Proton Calendar</string>
+  <string name="welcome_subtitle_calendar">Κρυπτογραφημένο ημερολόγιο που κρατά τις εκδηλώσεις σας ιδιωτικές, ασφαλείς και διασφαλισμένες.</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_subtitle_vpn">Ελβετικό VPN υψηλής ταχύτητας που προστατεύει το απόρρητό σας κρυπτογραφώντας τη σύνδεσή σας στο διαδίκτυο.</string>
+  <string name="auth_password_label">Κωδικός</string>
+  <string name="auth_password_help">Ο κωδικός πρόσβασης πρέπει να περιέχει τουλάχιστον 8 χαρακτήρες</string>
+  <string name="auth_current_login_password">Τρέχων κωδικός εισόδου</string>
+  <string name="auth_enter_six_digit_code">Εισάγετε τον 6-ψήφιο κωδικό</string>
+  <string name="auth_second_factor_code">Κωδικός Δύο Παραγόντων (2FA)</string>
+  <string name="auth_email_username">Διεύθυνση ή όνομα χρήστη</string>
+  <string name="auth_account_details">Εισαγάγετε τα στοιχεία του Λογαριασμού Proton σας.</string>
+  <string name="auth_sign_in">Είσοδος</string>
+  <string name="auth_sign_in_action">Είσοδος</string>
+  <string name="auth_need_help">Χρειάζεστε βοήθεια;</string>
+  <string name="auth_login_assistive_text">Παρακαλούμε εισάγετε το Proton email ή το όνομα χρήστη σας.</string>
+  <string name="auth_help_title">Πώς μπορούμε να βοηθήσουμε;</string>
+  <string name="auth_help_option_forgot_username">Ξέχασα το όνομα χρήστη μου</string>
+  <string name="auth_help_option_forgot_password">Ξέχασα τον κωδικό πρόσβασης</string>
+  <string name="auth_help_option_other">Άλλα προβλήματα εισόδου</string>
+  <string name="auth_help_other">Χρειάζεστε ακόμα βοήθεια; Επικοινωνήστε απευθείας με εμάς.</string>
+  <string name="auth_help_option_customer_support">Εξυπηρέτηση πελατών</string>
+  <string name="auth_2fa_title">Έλεγχος ταυτότητας δύο παραγόντων</string>
+  <string name="auth_2fa_label">Κωδικός Δύο Παραγόντων (2FA)</string>
+  <string name="auth_2fa_recovery_code_label">Κωδικός ανάκτησης</string>
+  <string name="auth_2fa_assistive_text">Εισάγετε τον 6-ψήφιο κωδικό.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">Enter an 8-character recovery code.</string>
+  <string name="auth_2fa_action">Ταυτοποίηση</string>
+  <string name="auth_2fa_use_recovery_code">Χρησιμοποιήστε κωδικό ανάκτησης</string>
+  <string name="auth_2fa_use_2fa_code">Χρησιμοποιήστε κωδικό Δύο Παραγόντων (2FA)</string>
+  <string name="auth_2fa_error_empty_code">Two-factor code should not be empty</string>
+  <string name="auth_mailbox_title">Ξεκλειδώστε τη θυρίδα σας</string>
+  <string name="auth_mailbox_password_label">Κωδικός Θυρίδας</string>
+  <string name="auth_mailbox_unlock_action">Ξεκλείδωμα</string>
+  <string name="auth_forgot_password">Ξέχασα τον κωδικό πρόσβασης</string>
+  <string name="auth_login_general_error">Παρουσιάστηκε σφάλμα.</string>
+  <string name="auth_login_empty_credentials">Τα διαπιστευτήρια δεν πρέπει να είναι κενά.</string>
+  <string name="auth_mailbox_empty_credentials">Τα διαπιστευτήρια δεν πρέπει να είναι κενά.</string>
+  <string name="auth_create_address_title">Δημιουργηστε μιά διεύθυνση ProtonMail</string>
+  <string name="auth_create_address_subtitle">Ο Proton λογαριασμός σας έχει σχετιστεί με τη διεύθυνση %1$s. Για να χρησιμοποιήσετε to ProtonMail, παρακαλούμε δημιουργήστε μια διεύθυνση.</string>
+  <string name="auth_username">Όνομα χρήστη</string>
+  <string name="auth_username_next_action">Επόμενο</string>
+  <string name="auth_create_address_result_title">%s είναι διαθέσιμο</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s θα είναι η νέα σας διεύθυνση ηλεκτρονικού ταχυδρομείου ProtonMail.</string>
+  <string name="auth_create_address_result_subtitle">You will use this address to log in to all Proton services.</string>
+  <string name="auth_create_address_result_recovery_title">Η διεύθυνση email ανάκτησης είναι:</string>
+  <string name="auth_create_address_create">Δημιουργία διεύθυνσης</string>
+  <string name="auth_create_address_creating">Δημιούργηση διεύθυνσης</string>
+  <string name="auth_create_address_terms">    By clicking Create address, you agree with Proton\'s 
+    <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a>
+  </string>
+  <string name="auth_create_address_error_credentials">Τα διαπιστευτήρια δεν πρέπει να είναι κενά.</string>
+  <string name="auth_create_address_error_no_available_domain">Μη διαθέσιμοι τομείς.</string>
+  <string name="auth_create_address_error_private_key">Generating private key failed.</string>
+  <string name="auth_create_address_error_signed_key_list">Η δημιουργία λίστας κλειδιών απέτυχε.</string>
+  <string name="auth_create_address_error_setusername">Associating username has failed.</string>
+  <string name="auth_create_address_error_username_unavailable">Chosen username is unavailable.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">No Primary key found.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Σφάλμα κύριου κλειδιού.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Invalid passphrase.</string>
+  <string name="auth_password_chooser_title">Αλλαγή του κωδικού πρόσβασης σας</string>
+  <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
+  <string name="auth_password_chooser_change">Αλλαγή Κωδικού Πρόσβασης</string>
+  <string name="auth_user_check_one_free_error">Only one free Proton account is allowed.</string>
+  <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
+  <string name="auth_user_check_delinquent_action">Πληρωμή τιμολογίου</string>
+  <string name="auth_account_not_found_error">Σφάλμα με τον λογαριασμό</string>
+  <string name="auth_one_account_all_services">Ένας λογαριασμός για όλες τις υπηρεσίες Proton.</string>
+  <string name="auth_create_account">Δημιουργία λογαριασμού</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Δημιουργήστε τον λογαριασμό σας Proton</string>
+  <string name="auth_signup_current_email">Χρησιμοποιήστε την τρέχουσα διεύθυνση email σας</string>
+  <string name="auth_signup_create_secure_proton_address">Δημιουργήστε μια ασφαλή διεύθυνση ProtonMail</string>
+  <string name="auth_signup_username">Όνομα χρήστη</string>
+  <string name="auth_signup_email">E-mail</string>
+  <string name="auth_signup_next">Επόμενο</string>
+  <string name="auth_signup_choose_password">Δημιουργήσετε τον κωδικό σας</string>
+  <string name="auth_signup_repeat_password">Επανάληψη κωδικού</string>
+  <string name="auth_signup_recovery_method_title">Set recovery method (optional)</string>
+  <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
+  <string name="auth_signup_recovery_method_email">E-mail</string>
+  <string name="auth_signup_recovery_method_phone">Τηλέφωνο</string>
+  <string name="auth_signup_recovery_method_email_hint">Διεύθυνση ανάκτησης</string>
+  <string name="auth_signup_recovery_method_phone_hint">Αριθμός τηλεφώνου ανάκτησης</string>
+  <string name="auth_signup_terms_conditions">Όροι και Προϋποθέσεις</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_signup_skip_recovery_title">Παράλειψη μεθόδου ανάκτησης;</string>
+  <string name="auth_signup_skip_recovery_description">A recovery method will help you access your account in case you forget your password or get locked out of your account.</string>
+  <string name="auth_signup_skip_recovery">Παράλειψη</string>
+  <string name="auth_signup_set_recovery">Ορισμός μεθόδου ανάκτησης</string>
+  <string name="auth_signup_no_connectivity">No connectivity to display Terms and Conditions.</string>
+  <string name="auth_signup_error_username_blank">Username must not be blank.</string>
+  <string name="auth_signup_error_passwords_do_not_match">Οι κωδικοί πρόσβασης δεν ταιριάζουν.</string>
+  <string name="auth_signup_validation_password_length">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 8 χαρακτήρες.</string>
+  <string name="auth_signup_validation_password">Ο κωδικός πρόσβασης δεν γίνεται να είναι κενός.</string>
+  <string name="auth_signup_your_account_is_being_setup">Ο λογαριασμός σας δημιουγείται…</string>
+  <string name="auth_signup_please_wait">It usually takes no more than a minute.</string>
+  <string name="auth_signup_replacement_code">Δεν λάβατε τον κωδικό;</string>
+  <string name="auth_signup_verify">Επαλήθευση</string>
+  <string name="auth_signup_verification_code">Κωδικός Επαλήθευσης</string>
+  <string name="auth_signup_enter_code_subtitle">Εισάγετε τον κωδικό επαλήθευσης στον οποίο εστάλη %s:</string>
+  <string name="auth_signup_error_human_verification_failed">Αποτυχία επαλήθευσης ανθρώπου.</string>
+  <string name="auth_signup_token_code_resent">Token code resent.</string>
+  <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
+</resources>

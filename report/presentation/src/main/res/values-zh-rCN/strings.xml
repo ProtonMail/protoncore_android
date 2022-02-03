@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">反馈问题</string>
+  <string name="core_report_bug_close">关闭</string>
+  <string name="core_report_bug_subject_field_hint">主题</string>
+  <string name="core_report_bug_description_field_hint">问题描述</string>
+  <string name="core_report_bug_description_field_placeholder">请说明您遇到的问题，并附上看到的所有错误提示。</string>
+  <string name="core_report_bug_discard_changes_title">更改未保存</string>
+  <string name="core_report_bug_discard_changes_description">表单中有未保存的内容，确定要放弃更改吗？</string>
+  <string name="core_report_bug_discard_changes_cancel">继续编辑</string>
+  <string name="core_report_bug_discard_changes_confirm">放弃</string>
+  <string name="core_report_bug_form_field_required">此项必须填写</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="other">此项至少应填写 %d 个字符</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="other">此项不应超过 %d 个字符</item>
+  </plurals>
+  <string name="core_report_bug_general_error">问题反馈失败，请稍后再试</string>
+  <string name="core_report_bug_send">发送</string>
+  <string name="core_report_bug_success">感谢您的反馈</string>
+</resources>

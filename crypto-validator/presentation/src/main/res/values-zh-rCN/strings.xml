@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="crypto_keystore_error_title">加密程序错误</string>
+  <string name="crypto_keystore_error_message">此设备使用了存在缺陷的 Android 密钥库，而我们需要利用该组件保障您的数据安全。这意味着如果攻击者能够以物理手段得到此设备，您的数据就有可能被窃取。您要如何操作？</string>
+  <string name="crypto_keystore_error_continue_action">继续</string>
+  <string name="crypto_keystore_error_more_info_action">了解详细信息</string>
+  <string name="crypto_keystore_error_logout_action">退出账户</string>
+  <string name="crypto_keystore_error_exit_action">退出程序</string>
+</resources>

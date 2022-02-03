@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- region payment errors -->
+  <string name="payments_general_error">Παρουσιάστηκε σφάλμα.</string>
+  <string name="payments_no_connectivity">Δεν υπάρχει συνδεσιμότητα για την εμφάνιση της σελίδας επιβεβαίωσης 3DS.</string>
+  <string name="payments_3ds_not_approved">Η έγκριση 3DS απορρίφθηκε.</string>
+  <string name="payments_error_card_name">Απαιτείται το όνομα κατόχου της κάρτας.</string>
+  <string name="payments_error_card_number">Μη έγκυρος αριθμός κάρτας.</string>
+  <string name="payments_error_cvc">Παρακαλούμε πληκτρολογήστε ένα έγκυρο κωδικό ασφαλείας.</string>
+  <string name="payments_error_session">Απαιτείται έγκυρο αναγνωριστικό περιόδου λειτουργίας κατά την εγγραφή ενός συνδεδεμένου χρήστη.</string>
+  <string name="payments_error_signup_paymentmethod">Δεν ήταν δυνατή η εγγραφή με τον υπάρχοντα τρόπο πληρωμής.</string>
+  <string name="payments_error_invalid_session">Μη έγκυρη περιόδου λειτουργίας.</string>
+  <!-- endregion -->
+  <!-- region payment options -->
+  <string name="payments_choose_payment_method">Διαλέξτε τη μέθοδο πληρωμής σας</string>
+  <string name="payments_add_credit_debit_card">Προσθήκη νέας πιστωτικής/χρεωστικής κάρτας</string>
+  <string name="payments_billing_monthly">Μηνιαία χρέωση</string>
+  <string name="payments_billing_yearly">Ετήσια χρέωση</string>
+  <string name="payments_billing_two_years">Χρεώνεται κάθε δύο χρόνια</string>
+  <string name="payments_pay">Πληρωμή</string>
+  <string name="payments_method_icon">Εικονίδιο τρόπου πληρωμής.</string>
+  <!-- endregion -->
+  <!-- region billing -->
+  <string name="payments_payment_details">Στοιχεία Πληρωμής</string>
+  <string name="payments_card_name">Όνομα πάνω στην κάρτα</string>
+  <string name="payments_card_number">Αριθμός κάρτας</string>
+  <string name="payments_expiration_date">Ημερομηνία λήξης</string>
+  <string name="payments_security_code">Κωδικός ασφαλείας</string>
+  <string name="payments_postal_code">T. K</string>
+  <string name="payments_card_number_hint">0000 0000 0000 0000</string>
+  <string name="payments_expiration_date_hint">ΜΜ/ΧΧ</string>
+  <string name="payments_security_code_hint">123</string>
+  <string name="payments_country">Χώρα</string>
+  <string name="payments_paying_in_process">Πληρώνετε</string>
+  <string name="payments_choose_country">Επιλέξτε χώρα</string>
+  <string name="payments_info_not_available">δ/υ</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (Λήξη %3$s/%4$s)</string>
+  <string name="payment_paypal_list_item">PayPal</string>
+  <!-- endregion -->
+</resources>

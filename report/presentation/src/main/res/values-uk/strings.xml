@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Звіт про помилку</string>
+  <string name="core_report_bug_close">Закрити</string>
+  <string name="core_report_bug_subject_field_hint">Тема</string>
+  <string name="core_report_bug_description_field_hint">Опис</string>
+  <string name="core_report_bug_description_field_placeholder">Опишіть проблему та додайте повідомлення про помилки.</string>
+  <string name="core_report_bug_discard_changes_title">Незбережені зміни</string>
+  <string name="core_report_bug_discard_changes_description">Виявлено незбереженні записи у формі. Ви дійсно хочете відхилити їх?</string>
+  <string name="core_report_bug_discard_changes_cancel">Продовжити писати</string>
+  <string name="core_report_bug_discard_changes_confirm">Відхилити</string>
+  <string name="core_report_bug_form_field_required">Це поле обов\'язкове</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="one">Поле повинно мати принаймні %d символ</item>
+    <item quantity="few">Поле повинно мати принаймні %d символи</item>
+    <item quantity="many">Поле повинно мати принаймні %d символів</item>
+    <item quantity="other">Поле повинно мати принаймні %d символів</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Це поле повинно мати не більше %d символу</item>
+    <item quantity="few">Це поле повинно мати не більше %d символи</item>
+    <item quantity="many">Це поле повинно мати не більше %d символів</item>
+    <item quantity="other">Це поле повинно мати не більше %d символів</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Помилка надсилання звіту. Спробуйте знову пізніше</string>
+  <string name="core_report_bug_send">Надіслати</string>
+  <string name="core_report_bug_success">Дякуємо за ваш звіт</string>
+</resources>

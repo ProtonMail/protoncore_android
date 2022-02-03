@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common presentation strings -->
+  <string name="presentation_browser_missing">Не вдається знайти браузер, щоб відкрити посилання.</string>
+  <string name="presentation_force_update_title">Необхідне оновлення</string>
+  <string name="presentation_force_update_message">Ця версія застосунку більше не підтримується. Оновіть його, щоб продовжити користуватися.</string>
+  <string name="presentation_force_update_learn_more">Докладніше</string>
+  <string name="presentation_force_update_update">Оновити</string>
+  <string name="presentation_market_missing">Не вдалося знайти встановленого на пристрої застосунку. Перейдіть у магазин та оновіть застосунок.</string>
+  <string name="presentation_authenticate">Автентифікація</string>
+  <string name="presentation_signin_to_continue">Увійдіть для продовження</string>
+  <string name="presentation_alert_title">Попередження</string>
+  <string name="presentation_alert_ok">Гаразд</string>
+  <string name="presentation_alert_enter">Ввести</string>
+  <string name="presentation_alert_cancel">Скасувати</string>
+  <string name="presentation_alert_submit">Відправити</string>
+  <!-- Common menu items -->
+  <string name="presentation_menu_item_title_report_a_bug">Повідомити про помилку</string>
+  <string name="presentation_menu_item_title_settings">Налаштування</string>
+  <string name="presentation_menu_item_title_subscription">Передплата</string>
+  <string name="presentation_menu_item_title_sign_out">Вийти</string>
+  <!-- Other -->
+  <string name="presentation_close">Закрити</string>
+  <string name="presentation_skip">Пропустити</string>
+  <string name="presentation_phone_calling_code_template">+%s</string>
+</resources>

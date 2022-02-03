@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="crypto_keystore_error_title">Erreur de chiffrement</string>
+  <string name="crypto_keystore_error_message">Cet appareil utilise une implémentation défectueuse d\'Android Keystore, que nous utilisons pour assurer la sécurité de vos données. Cela signifie que vos données peuvent être compromises si un·e attaquant·e obtient un accès physique à cet appareil. Que voulez-vous faire?</string>
+  <string name="crypto_keystore_error_continue_action">Continuer</string>
+  <string name="crypto_keystore_error_more_info_action">En savoir plus</string>
+  <string name="crypto_keystore_error_logout_action">Se déconnecter</string>
+  <string name="crypto_keystore_error_exit_action">Quitter</string>
+</resources>

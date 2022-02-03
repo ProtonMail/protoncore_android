@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">Protect your privacy with Proton</string>
+  <string name="welcome_subtitle">Encryption keeps your data private. Your data truly belongs to you.</string>
+  <string name="welcome_title_mail">Protect your privacy with ProtonMail</string>
+  <string name="welcome_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
+  <string name="welcome_title_drive">Protect your privacy with Proton Drive</string>
+  <string name="welcome_subtitle_drive">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+  <string name="welcome_title_calendar">Protect your privacy with Proton Calendar</string>
+  <string name="welcome_subtitle_calendar">Encrypted calendar that keeps your life events private, safe, and secure.</string>
+  <string name="welcome_title_vpn">Protect your privacy with Proton Vpn</string>
+  <string name="welcome_subtitle_vpn">High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.</string>
+  <string name="auth_password_label">Awal uffir</string>
+  <string name="auth_password_help">Password must contain at least 8 characters</string>
+  <string name="auth_current_login_password">Current login Password</string>
+  <string name="auth_enter_six_digit_code">Enter 6-digit code</string>
+  <string name="auth_second_factor_code">Two-Factor code</string>
+  <string name="auth_email_username">Imayl neɣ isem n useqdac</string>
+  <string name="auth_account_details">Enter your Proton Account details.</string>
+  <string name="auth_sign_in">Qqen</string>
+  <string name="auth_sign_in_action">Qqen</string>
+  <string name="auth_need_help">Tesriḍ tallelt?</string>
+  <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
+  <string name="auth_help_title">How can we help?</string>
+  <string name="auth_help_option_forgot_username">Tettuḍ isem n useqdac</string>
+  <string name="auth_help_option_forgot_password">Tettud awal uffir</string>
+  <string name="auth_help_option_other">Other sign-in issues</string>
+  <string name="auth_help_other">Still need help? Contact us directly.</string>
+  <string name="auth_help_option_customer_support">Tallalt tudmawant</string>
+  <string name="auth_2fa_title">Asesteb s snat n tarrayin</string>
+  <string name="auth_2fa_label">Tangalt n snat n tarayin</string>
+  <string name="auth_2fa_recovery_code_label">Tangalt n tririt</string>
+  <string name="auth_2fa_assistive_text">Sekcem tangalt n 6 n yizwilen.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">Enter an 8-character recovery code.</string>
+  <string name="auth_2fa_action">Asesteb</string>
+  <string name="auth_2fa_use_recovery_code">Seqdec tangalt n tririt</string>
+  <string name="auth_2fa_use_2fa_code">Seqdec tangalt n snat n tarayin</string>
+  <string name="auth_2fa_error_empty_code">Two-factor code should not be empty</string>
+  <string name="auth_mailbox_title">Kkes asekker i tbewwaḍt-ik·im n ymayl</string>
+  <string name="auth_mailbox_password_label">Awal uffir n Tnaka n yimayl</string>
+  <string name="auth_mailbox_unlock_action">Serreḥ</string>
+  <string name="auth_forgot_password">Tettud awal uffir</string>
+  <string name="auth_login_general_error">An error occurred.</string>
+  <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
+  <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
+  <string name="auth_create_address_title">Rnu tansa n ProtonMail</string>
+  <string name="auth_create_address_subtitle">Your Proton Account is associated with %1$s. To use ProtonMail, please create an address.</string>
+  <string name="auth_username">Isem n useqdac</string>
+  <string name="auth_username_next_action">Ɣer sdat</string>
+  <string name="auth_create_address_result_title">Yella %s</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s will be your new ProtonMail email address.</string>
+  <string name="auth_create_address_result_subtitle">You will use this address to log in to all Proton services.</string>
+  <string name="auth_create_address_result_recovery_title">Your recovery email address is:</string>
+  <string name="auth_create_address_create">Snulfu-d tansa</string>
+  <string name="auth_create_address_creating">Creating address</string>
+  <string name="auth_create_address_terms">    By clicking Create address, you agree with Proton\'s 
+    <a href="https://protonmail.com/terms-and-conditions">Terms and Conditions.</a>
+  </string>
+  <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
+  <string name="auth_create_address_error_no_available_domain">No available domain.</string>
+  <string name="auth_create_address_error_private_key">Generating private key failed.</string>
+  <string name="auth_create_address_error_signed_key_list">Generating key list failed.</string>
+  <string name="auth_create_address_error_setusername">Associating username has failed.</string>
+  <string name="auth_create_address_error_username_unavailable">Chosen username is unavailable.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">No Primary key found.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Primary key error.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Invalid passphrase.</string>
+  <string name="auth_password_chooser_title">Change your password</string>
+  <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
+  <string name="auth_password_chooser_change">Snifel awal uffir</string>
+  <string name="auth_user_check_one_free_error">Only one free Proton account is allowed.</string>
+  <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
+  <string name="auth_user_check_delinquent_action">Xelleṣ tafaturt</string>
+  <string name="auth_account_not_found_error">Error with the account</string>
+  <string name="auth_one_account_all_services">Yiwen n umiḍan i meṛṛa imeẓla n Proton.</string>
+  <string name="auth_create_account">Create an account</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Snulfu-d amiḍan-inek/m Proton</string>
+  <string name="auth_signup_current_email">Use your current email instead</string>
+  <string name="auth_signup_create_secure_proton_address">Rnu tansa n ProtonMail taɣellsant deg ubdil</string>
+  <string name="auth_signup_username">Isem n useqdac</string>
+  <string name="auth_signup_email">Imayl</string>
+  <string name="auth_signup_next">Ɣer sdat</string>
+  <string name="auth_signup_choose_password">Create your password</string>
+  <string name="auth_signup_repeat_password">Ales awal uffir</string>
+  <string name="auth_signup_recovery_method_title">Set recovery method (optional)</string>
+  <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
+  <string name="auth_signup_recovery_method_email">Imayl</string>
+  <string name="auth_signup_recovery_method_phone">Tiliɣri</string>
+  <string name="auth_signup_recovery_method_email_hint">Imayl n tririt</string>
+  <string name="auth_signup_recovery_method_phone_hint">Recovery phone number</string>
+  <string name="auth_signup_terms_conditions">Tiwtilin n useqdec</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_signup_skip_recovery_title">Skip recovery method?</string>
+  <string name="auth_signup_skip_recovery_description">A recovery method will help you access your account in case you forget your password or get locked out of your account.</string>
+  <string name="auth_signup_skip_recovery">Zgel</string>
+  <string name="auth_signup_set_recovery">Set recovery method</string>
+  <string name="auth_signup_no_connectivity">No connectivity to display Terms and Conditions.</string>
+  <string name="auth_signup_error_username_blank">Username must not be blank.</string>
+  <string name="auth_signup_error_passwords_do_not_match">Awalen uffiren ur menṭaḍen ara.</string>
+  <string name="auth_signup_validation_password_length">Password should be at least 8 characters long.</string>
+  <string name="auth_signup_validation_password">Password must not be empty.</string>
+  <string name="auth_signup_your_account_is_being_setup">Your account is being created…</string>
+  <string name="auth_signup_please_wait">It usually takes no more than a minute.</string>
+  <string name="auth_signup_replacement_code">Ur d-teṭṭifeḍ ara tangalt?</string>
+  <string name="auth_signup_verify">Senqed</string>
+  <string name="auth_signup_verification_code">Tangalt n usenqed</string>
+  <string name="auth_signup_enter_code_subtitle">Enter the verification code that was sent to %s:</string>
+  <string name="auth_signup_error_human_verification_failed">Human verification failed.</string>
+  <string name="auth_signup_token_code_resent">Token code resent.</string>
+  <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
+</resources>

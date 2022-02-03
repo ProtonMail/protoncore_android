@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">رایانامه بازیابی</string>
+  <string name="settings_recovery_email_current">تنظیم مجدد / رایانشانی اطلاع رسانی کنونی</string>
+  <string name="settings_recovery_email_new">New Reset/Notification email</string>
+  <string name="settings_recovery_email_confirm">Confirm Reset/Notification email</string>
+  <string name="settings_recovery_email_new_hint">Enter Email Address</string>
+  <string name="settings_recovery_email_confirm_hint">Re-enter Email Address</string>
+  <string name="settings_save">ذخیره</string>
+  <string name="settings_password_required">گذرواژه ورود خود را وارد کنید</string>
+  <string name="settings_password_required_ok">تایید</string>
+  <string name="settings_not_set">تنظیم نشده</string>
+  <string name="settings_recovery_email_error_no_match">Recovery and Confirm recovery email do not match.</string>
+  <string name="settings_validation_email">Email is invalid.</string>
+  <string name="settings_general_error">An error occurred.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">تغییر رمز عبور</string>
+  <string name="settings_password_management_change_mailbox_password">تغییر گذرواژه نامه‌دان</string>
+  <string name="settings_password_management_header">مدیریت گذرواژه</string>
+  <string name="settings_login_password_hint_current">گذرواژه ورود کنونی</string>
+  <string name="settings_login_password_hint_new">گذرواژه ورود جدید</string>
+  <string name="settings_login_password_hint_new_confirm">تایید گذرواژه ورود جدید</string>
+  <string name="settings_mailbox_password_hint_new">رمز عبور جدید صندوق پستی</string>
+  <string name="settings_mailbox_password_hint_new_confirm">تایید گذرواژه نامه‌دان جدید</string>
+  <string name="settings_change_password_error">A change password error has occurred.</string>
+  <string name="settings_recovery_email_success">Recovery email updated</string>
+  <string name="settings_password_management_success">گذرواژه به‌روز شد</string>
+  <string name="settings_password_management_login_password_success">Login password updated</string>
+  <string name="settings_password_management_mailbox_password_success">Mailbox password updated</string>
+</resources>

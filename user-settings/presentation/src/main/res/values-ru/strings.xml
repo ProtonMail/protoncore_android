@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">Адрес резервной эл. почты</string>
+  <string name="settings_recovery_email_current">Текущий адрес эл. почты для сброса/уведомлений</string>
+  <string name="settings_recovery_email_new">Новый адрес эл. почты для сброса/уведомлений</string>
+  <string name="settings_recovery_email_confirm">Подтвердите новый адрес эл. почты для сброса/уведомлений</string>
+  <string name="settings_recovery_email_new_hint">Введите адрес эл. почты</string>
+  <string name="settings_recovery_email_confirm_hint">Повторите адрес эл. почты</string>
+  <string name="settings_save">Сохранить</string>
+  <string name="settings_password_required">Введите свой пароль для входа</string>
+  <string name="settings_password_required_ok">ОК</string>
+  <string name="settings_not_set">Не задано</string>
+  <string name="settings_recovery_email_error_no_match">Резервный адрес и его подтверждение не совпадают.</string>
+  <string name="settings_validation_email">Неправильный адрес электронной почты.</string>
+  <string name="settings_general_error">Произошла ошибка.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">Изменить пароль</string>
+  <string name="settings_password_management_change_mailbox_password">Изменить пароль почтового ящика</string>
+  <string name="settings_password_management_header">Управление паролями</string>
+  <string name="settings_login_password_hint_current">Текущий пароль для входа</string>
+  <string name="settings_login_password_hint_new">Новый пароль для входа</string>
+  <string name="settings_login_password_hint_new_confirm">Подтвердить новый пароль</string>
+  <string name="settings_mailbox_password_hint_new">Новый пароль почтового ящика</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Подтвердите новый пароль к почтовому ящику</string>
+  <string name="settings_change_password_error">Произошла ошибка при смене пароля.</string>
+  <string name="settings_recovery_email_success">Обновлен адрес эл. почты для восстановления доступа</string>
+  <string name="settings_password_management_success">Пароль обновлён</string>
+  <string name="settings_password_management_login_password_success">Пароль обновлен</string>
+  <string name="settings_password_management_mailbox_password_success">Пароль почтового ящика обновлен</string>
+</resources>

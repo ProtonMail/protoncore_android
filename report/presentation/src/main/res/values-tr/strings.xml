@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Hata bildir</string>
+  <string name="core_report_bug_close">Kapat</string>
+  <string name="core_report_bug_subject_field_hint">Konu</string>
+  <string name="core_report_bug_description_field_hint">Açıklama</string>
+  <string name="core_report_bug_description_field_placeholder">Lütfen sorunu açıklayın ve varsa hata iletilerini ekleyin.</string>
+  <string name="core_report_bug_discard_changes_title">Kaydedilmemiş değişiklikler</string>
+  <string name="core_report_bug_discard_changes_description">Formda kaydedilmemiş bilgiler var. Bunları yok saymak istediğinize emin misiniz?</string>
+  <string name="core_report_bug_discard_changes_cancel">Yazmaya devam et</string>
+  <string name="core_report_bug_discard_changes_confirm">Yok say</string>
+  <string name="core_report_bug_form_field_required">Bu alanın doldurulması zorunludur</string>
+  <plurals name="core_report_bug_form_field_too_short">
+    <item quantity="one">Bu alana en az %d karakter yazılmalıdır</item>
+    <item quantity="other">Bu alana en az %d karakter yazılmalıdır</item>
+  </plurals>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Bu alana en fazla %d karakter yazılmalıdır</item>
+    <item quantity="other">Bu alana en fazla %d karakter yazılmalıdır</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Rapor gönderilirken bir sorun çıktı. Lütfen bir süre sonra yeniden deneyin</string>
+  <string name="core_report_bug_send">Gönder</string>
+  <string name="core_report_bug_success">Raporunuz için teşekkür ederiz</string>
+</resources>

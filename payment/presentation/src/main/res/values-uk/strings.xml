@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- region payment errors -->
+  <string name="payments_general_error">Сталася помилка.</string>
+  <string name="payments_no_connectivity">Немає з\'єднання для показу сторінки підтвердження 3DS.</string>
+  <string name="payments_3ds_not_approved">Підтвердження 3DS було відхилено.</string>
+  <string name="payments_error_card_name">Необхідно ввести ім\'я, вказане на картці.</string>
+  <string name="payments_error_card_number">Недійсний номер картки.</string>
+  <string name="payments_error_cvc">Будь ласка, введіть чинний код захисту.</string>
+  <string name="payments_error_session">Щоб підписати зареєстрованого користувача потрібен дійсний ідентифікатор сеансу.</string>
+  <string name="payments_error_signup_paymentmethod">Не вдалося зареєструватися за допомогою наявного способу оплати.</string>
+  <string name="payments_error_invalid_session">Нечинний сеанс.</string>
+  <!-- endregion -->
+  <!-- region payment options -->
+  <string name="payments_choose_payment_method">Оберіть спосіб оплати</string>
+  <string name="payments_add_credit_debit_card">Додати нову кредитну/платіжну картку</string>
+  <string name="payments_billing_monthly">Сплачується щомісяця</string>
+  <string name="payments_billing_yearly">Сплачується щороку</string>
+  <string name="payments_billing_two_years">Сплачується кожні два роки</string>
+  <string name="payments_pay">Сплатити</string>
+  <string name="payments_method_icon">Піктограма способу оплати.</string>
+  <!-- endregion -->
+  <!-- region billing -->
+  <string name="payments_payment_details">Подробиці платежу</string>
+  <string name="payments_card_name">Ім\'я на картці</string>
+  <string name="payments_card_number">Номер картки</string>
+  <string name="payments_expiration_date">Термін дії</string>
+  <string name="payments_security_code">Код безпеки</string>
+  <string name="payments_postal_code">Індекс</string>
+  <string name="payments_card_number_hint">0000 0000 0000 0000</string>
+  <string name="payments_expiration_date_hint">00/00</string>
+  <string name="payments_security_code_hint">123</string>
+  <string name="payments_country">Країна</string>
+  <string name="payments_paying_in_process">Оплата</string>
+  <string name="payments_choose_country">Виберіть країну</string>
+  <string name="payments_info_not_available">н/д</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (Чинна до %3$s/%4$s)</string>
+  <string name="payment_paypal_list_item">PayPal</string>
+  <!-- endregion -->
+</resources>
