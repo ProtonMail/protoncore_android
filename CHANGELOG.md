@@ -28,6 +28,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 - Support prefilling login username for add account workflow
 - Added possibility to show additional help button when login fails with potential blocking.
 - Updated strings for (bug) report module
+- The internal Kotlin plugin (`me.proton.kotlin` / `me.proton.core.gradle-plugins.kotlin`) has been removed, but it's still accessible via Maven
 
 ### Fixes
 
