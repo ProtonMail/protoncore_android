@@ -1,4 +1,4 @@
-image: ${CI_REGISTRY}/android/shared/docker-android:v1.0.0-alpha10
+image: ${CI_REGISTRY}/android/shared/docker-android:new-ci-runners-k8s-snapshot
 
 stages:
   - firebase
