@@ -24,6 +24,7 @@ include:
   - local: '/ci/templates/base-job.gitlab-ci.yml'
 
 stages:
+  - deploy
   - bot
   - analyze
   - build
@@ -71,6 +72,17 @@ detekt-analyze:
     reports:
       codequality: config/detekt/reports/mergedReport.json
 
+## deploy stage ####################################################################################
+deploy-atlas:
+  stage: deploy
+  tags:
+    - xlarge-k8s
+  needs:
+      - prepare-environment
+  extends: .deploy:black
+  allow_failure: true
+  retry: 1
+
 ## bot stage #######################################################################################
 i18n-sync-crowdin:
   extends: .i18n-sync-crowdin-common
@@ -87,16 +99,13 @@ i18n-commit-locales:
     I18N_COMMIT_BRANCH_ALLOWED: 'main'
 
 ## build stage #####################################################################################
-deploy-atlas:
-  stage: build
-  needs: [ "prepare-environment" ]
-  extends: .deploy:black
-  allow_failure: true
-  retry: 1
-
 assemble:
   extends: .gradle-job
   stage: build
+  needs:
+    - detekt-analyze
+    - job: prepare-environment
+      artifacts: true
   interruptible: true
   script:
     - ./gradlew :coreexample:assembleLocalPropertiesDebug
@@ -110,6 +119,9 @@ ui-tests:
   stage: test
   when: always
   allow_failure: true
+  needs:
+    - deploy-atlas
+    - assemble
   trigger:
     strategy: depend
     include:
@@ -119,6 +131,8 @@ ui-tests:
 
 unit-tests-and-coverage-report:
   extends: .gradle-job
+  needs:
+    - assemble
   stage: test
   script:
     - ./gradlew -Pci --console=plain coberturaCoverageReport # This also runs allTest
@@ -133,7 +147,11 @@ unit-tests-and-coverage-report:
         - ./build/reports/cobertura-coverage.xml
 
 start-review:
+  image: ${CI_REGISTRY}/android/shared/docker-android:new-ci-runners-k8s-snapshot
+  needs:
+    - assemble
   before_script:
+    - source /load-env.sh
     - export REVIEW_APP_ARTIFACT_PATH="coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
   extends: .startReview
   stage: test
@@ -141,8 +159,10 @@ start-review:
 binary-compatibility-check:
   extends: .gradle-job
   stage: test
+  needs:
+    - assemble
   tags:
-    - large
+    - xlarge-k8s
   script:
     - ./gradlew apiCheck
 
@@ -151,8 +171,10 @@ trigger-client-integration-tests:
   stage: test
   when: manual
   tags:
-    - small
+    - xlarge-k8s
   cache: []
+  before_script:
+    - source /load-env.sh
   script:
     - echo "Trigger all clients integration tests"
 
@@ -174,7 +196,7 @@ mail-v6-integration-tests:
 release-publish-github:
   stage: publish
   tags:
-    - small
+    - xlarge-k8s
   only:
     - main
   variables:
@@ -242,6 +264,8 @@ danger-review:
   extends: .ruby-job
   stage: .post
   when: always
+  needs:
+    - unit-tests-and-coverage-report
   script:
     - bundle exec danger --fail-on-errors=false
   allow_failure: true
@@ -249,11 +273,14 @@ danger-review:
     DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
   interruptible: true
 
-cleanup-atlas:
-  stage: .post
-  extends: .cleanup:black
-  when: manual
-
 # .startReview requires 'stopReview' job. See GitLab merged YAML.
 stopReview:
   extends: .stopReview
+
+cleanup-atlas:
+  stage: .post
+  needs: []
+  extends: .cleanup:black
+  tags:
+    - xlarge-k8s
+  when: manual

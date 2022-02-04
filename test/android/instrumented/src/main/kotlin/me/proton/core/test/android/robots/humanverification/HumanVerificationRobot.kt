@@ -163,7 +163,7 @@ open class HumanVerificationRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun hvElementsDisplayed() {
-            view.withId(R.id.humanVerificationWebView).checkDisplayed()
+            view.withId(R.id.captchaWebView).checkDisplayed()
         }
 
         fun captchaDisplayed() = onWebView()
