@@ -74,6 +74,9 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:event-manager|
 |me.proton.core:event-manager-data|
 |me.proton.core:event-manager-domain|
+|me.proton.core:feature-flags|
+|me.proton.core:feature-flags-data|
+|me.proton.core:feature-flags-domain|
 |me.proton.core:human-verification|
 |me.proton.core:human-verification-data|
 |me.proton.core:human-verification-domain|
