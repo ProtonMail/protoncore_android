@@ -17,25 +17,25 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Bug melden</string>
+  <string name="core_report_bug_activity_title">Een probleem melden</string>
   <string name="core_report_bug_close">Sluiten</string>
   <string name="core_report_bug_subject_field_hint">Onderwerp</string>
-  <string name="core_report_bug_description_field_hint">Beschrijving</string>
-  <string name="core_report_bug_description_field_placeholder">Please describe the problem and include any error messages.</string>
-  <string name="core_report_bug_discard_changes_title">Niet-opgeslagen wijzigingen</string>
-  <string name="core_report_bug_discard_changes_description">There are unsaved entries in the form. Are you sure you want to discard them?</string>
-  <string name="core_report_bug_discard_changes_cancel">Keep writing</string>
-  <string name="core_report_bug_discard_changes_confirm">Weggooien</string>
-  <string name="core_report_bug_form_field_required">Dit veld is verplicht</string>
-  <plurals name="core_report_bug_form_field_too_short">
-    <item quantity="one">This field should have at least %d character</item>
-    <item quantity="other">This field should have at least %d characters</item>
+  <string name="core_report_bug_subject_field_required">Voer een onderwerp in</string>
+  <string name="core_report_bug_description_field_hint">Wat liep er fout? Minimum 10 tekens</string>
+  <string name="core_report_bug_description_field_placeholder">Beschrijf alstublieft het probleem in zoveel mogelijk detail als u kan. Als er een foutmelding was, laat ons dan weten wat er stond.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Voer minstens %d teken in</item>
+    <item quantity="other">Voer minstens %d tekens in</item>
   </plurals>
+  <string name="core_report_bug_discard_changes_title">Bugmelding sluiten?</string>
+  <string name="core_report_bug_discard_changes_description">Als u deze pagina verlaat, zal uw melding niet bewaard worden.</string>
+  <string name="core_report_bug_discard_changes_cancel">Blijf schrijven</string>
+  <string name="core_report_bug_discard_changes_confirm">Sluiten zonder opslaan</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">This field should have at most %d character</item>
-    <item quantity="other">This field should have at most %d characters</item>
+    <item quantity="one">Maximum %d teken</item>
+    <item quantity="other">Maximum %d tekens</item>
   </plurals>
-  <string name="core_report_bug_general_error">Error sending report, please try again later</string>
-  <string name="core_report_bug_send">Verzenden</string>
+  <string name="core_report_bug_general_error">Er ging iets mis. Probeer het over enkele minuten opnieuw.</string>
+  <string name="core_report_bug_send">Verstuur melding</string>
   <string name="core_report_bug_success">Hartelijk dank voor uw melding</string>
 </resources>

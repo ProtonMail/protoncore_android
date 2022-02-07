@@ -52,5 +52,6 @@
   <string name="human_verification_incorrect_code">Forkert kode. Forsøg venligst igen.</string>
   <string name="human_verification_resent_code">Vi har sendt dig en ny kode.</string>
   <string name="human_verification_captcha_failed">Captcha-verifikation mislykkedes. Prøv en gang til eller vælg en anden bekræftelsesmulighed.</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Ingen forbindelse. Kunne ikke indlæse CAPTCHA.</string>
 </resources>

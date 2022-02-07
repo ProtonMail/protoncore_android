@@ -17,25 +17,25 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Fehler melden</string>
+  <string name="core_report_bug_activity_title">Problem melden</string>
   <string name="core_report_bug_close">Schließen</string>
   <string name="core_report_bug_subject_field_hint">Betreff</string>
-  <string name="core_report_bug_description_field_hint">Beschreibung</string>
-  <string name="core_report_bug_description_field_placeholder">Bitte beschreibe das Problem und füge alle Fehlermeldungen hinzu.</string>
-  <string name="core_report_bug_discard_changes_title">Ungespeicherte Änderungen</string>
-  <string name="core_report_bug_discard_changes_description">Ungespeicherte Elemente im Formular vorhanden. Möchtest du diese wirklich verwerfen?</string>
+  <string name="core_report_bug_subject_field_required">Betreff eingeben</string>
+  <string name="core_report_bug_description_field_hint">Was ist vorgefallen? Mindestens 10 Zeichen</string>
+  <string name="core_report_bug_description_field_placeholder">Bitte beschreibe das Problem so detailliert wie möglich. Wenn es eine Fehlermeldung gab, teile uns diese bitte mit.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Mindestens %d Zeichen eingeben</item>
+    <item quantity="other">Mindestens %d Zeichen eingeben</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Fehlerbericht schließen?</string>
+  <string name="core_report_bug_discard_changes_description">Wenn du diese Seite verlässt, wird dein Bericht nicht gespeichert.</string>
   <string name="core_report_bug_discard_changes_cancel">Bearbeitung fortsetzen</string>
-  <string name="core_report_bug_discard_changes_confirm">Verwerfen</string>
-  <string name="core_report_bug_form_field_required">Pflichtfeld</string>
-  <plurals name="core_report_bug_form_field_too_short">
-    <item quantity="one">Dieses Feld muss mindestens %d Zeichen enthalten</item>
-    <item quantity="other">Dieses Feld muss mindestens %d Zeichen enthalten</item>
-  </plurals>
+  <string name="core_report_bug_discard_changes_confirm">Schließen ohne Speichern</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Dieses Feld darf höchstens %d Zeichen enthalten</item>
-    <item quantity="other">Dieses Feld darf höchstens %d Zeichen enthalten</item>
+    <item quantity="one">Höchstens %d Zeichen</item>
+    <item quantity="other">Höchstens %d Zeichen</item>
   </plurals>
-  <string name="core_report_bug_general_error">Fehler beim Senden des Berichts. Bitte versuche es später erneut</string>
-  <string name="core_report_bug_send">Senden</string>
+  <string name="core_report_bug_general_error">Da ist etwas nicht korrekt gelaufen. Bitte versuche es in ein paar Minuten erneut.</string>
+  <string name="core_report_bug_send">Bericht senden</string>
   <string name="core_report_bug_success">Vielen Dank für deinen Bericht</string>
 </resources>

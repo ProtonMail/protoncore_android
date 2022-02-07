@@ -17,29 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Сообщить об ошибке</string>
+  <string name="core_report_bug_activity_title">Сообщить о проблеме</string>
   <string name="core_report_bug_close">Закрыть</string>
   <string name="core_report_bug_subject_field_hint">Тема</string>
-  <string name="core_report_bug_description_field_hint">Описание</string>
-  <string name="core_report_bug_description_field_placeholder">Пожалуйста, опишите проблему и добавьте все сообщения об ошибках.</string>
-  <string name="core_report_bug_discard_changes_title">Несохраненные изменения</string>
-  <string name="core_report_bug_discard_changes_description">В форме присутствуют несохраненные данные. Вы уверены, что хотите их сбросить?</string>
+  <string name="core_report_bug_subject_field_required">Введите тему</string>
+  <string name="core_report_bug_description_field_hint">Что пошло не так? Минимум 10 символов</string>
+  <string name="core_report_bug_description_field_placeholder">Пожалуйста, опишите проблему как можно подробнее. Если было сообщение об ошибке, сообщите нам, что в нем говорилось.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Введите не менее %d символа</item>
+    <item quantity="few">Введите не менее %d символов</item>
+    <item quantity="many">Введите не менее %d символов</item>
+    <item quantity="other">Введите не менее %d символов</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Закрыть отчет об ошибке?</string>
+  <string name="core_report_bug_discard_changes_description">Если вы покинете эту страницу, ваш отчет не будет сохранен.</string>
   <string name="core_report_bug_discard_changes_cancel">Продолжить писать</string>
-  <string name="core_report_bug_discard_changes_confirm">Сбросить</string>
-  <string name="core_report_bug_form_field_required">Это обязательное поле</string>
-  <plurals name="core_report_bug_form_field_too_short">
-    <item quantity="one">В этом поле должно быть не менее %d символа</item>
-    <item quantity="few">В этом поле должно быть не менее %d символов</item>
-    <item quantity="many">В этом поле должно быть не менее %d символов</item>
-    <item quantity="other">В этом поле должно быть не менее %d символов</item>
-  </plurals>
+  <string name="core_report_bug_discard_changes_confirm">Закрыть без сохранения</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Это поле должно содержать не более %d символа</item>
-    <item quantity="few">Это поле должно содержать не более %d символов</item>
-    <item quantity="many">Это поле должно содержать не более %d символов</item>
-    <item quantity="other">Это поле должно содержать не более %d символов</item>
+    <item quantity="one">Максимум %d символ</item>
+    <item quantity="few">Максимум %d символа</item>
+    <item quantity="many">Максимум %d символов</item>
+    <item quantity="other">Максимум %d символов</item>
   </plurals>
-  <string name="core_report_bug_general_error">Ошибка при отправке отчета, повторите попытку позже</string>
-  <string name="core_report_bug_send">Отправить</string>
+  <string name="core_report_bug_general_error">Что-то пошло не так. Пожалуйста, повторите попытку через несколько минут.</string>
+  <string name="core_report_bug_send">Отправить отчёт</string>
   <string name="core_report_bug_success">Спасибо за ваше сообщение</string>
 </resources>

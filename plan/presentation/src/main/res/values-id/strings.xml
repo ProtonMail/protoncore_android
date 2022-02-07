@@ -27,22 +27,22 @@
   </string>
   <string name="plans_fetching_general_error">Terjadi galat mengambil paket.</string>
   <string name="plans_free_name">Gratis</string>
-  <string name="plan_price_monthly">per month*</string>
+  <string name="plan_price_monthly">per bulan*</string>
   <string name="plans_current_plan">Paket saat ini</string>
   <string name="plans_upgrade_plan">Tingkatkan</string>
   <string name="plans_subscription">Langganan</string>
   <string name="plans_renewal_date">Paket Anda akan diperbarui secara otomatis pada</string>
-  <string name="plans_billed_yearly">*Billed annually at %s</string>
-  <string name="plans_billed_anually">Billed annually</string>
+  <string name="plans_billed_yearly">*Ditagihkan per tahun seharga %s</string>
+  <string name="plans_billed_anually">Ditagihkan per tahun</string>
   <string name="plans_billed_monthly">Ditagih per bulan</string>
   <string name="plans_billed_every_2years">Ditagih setiap 2 tahun</string>
   <string name="plans_save_20">Hemat 20% dengan beralih ke pembayaran tahunan</string>
-  <string name="plans_renew_info">Renews automatically. Cancel or change plan at any time.</string>
+  <string name="plans_renew_info">Memperbarui langganan secara otomatis. Batalkan atau ganti paket kapan saja.</string>
   <string name="plans_upgrade_your_plan">Tingkatkan rencana Anda</string>
   <!-- plan details -->
   <string name="plans_feature_free_item_storage">Penyimpanan 0.5 GB</string>
   <string name="plans_feature_free_item_address">1 alamat</string>
-  <string name="plans_feature_free_item_calendar">1 calendar</string>
+  <string name="plans_feature_free_item_calendar">1 kalender</string>
   <string name="plans_feature_free_item_vpn">1 koneksi VPN</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the test between #">
@@ -83,7 +83,7 @@
   </string-array>
   <!-- endregion -->
   <!-- region plan plus. Note: the order array is affected by the change in the -->
-  <string name="plan_id_plus_header">Full-featured mailbox with advanced protection.</string>
+  <string name="plan_id_plus_header">Kotak surat berfitur lengkap dengan perlindungan tingkat lanjut.</string>
   <string-array name="plan_id_plus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>
@@ -92,7 +92,7 @@
   <!-- endregion -->
   <!-- region vpn basic -->
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
-  <string name="plan_id_vpnbasic_high_speed">High speed</string>
+  <string name="plan_id_vpnbasic_high_speed">Berkecepatan tinggi</string>
   <string-array name="plan_id_vpnbasic_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_vpn#</item>
     <item>string</item>
@@ -103,7 +103,7 @@
   <!-- endregion -->
   <!-- region plan vpn plus -->
   <string name="plan_id_vpnplus_header">VPN Plus</string>
-  <string name="plan_id_vpnplus_highest_speed">Highest speed</string>
+  <string name="plan_id_vpnplus_highest_speed">Kecepatan tertinggi</string>
   <string-array name="plan_id_vpnplus_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_vpn#</item>
     <item>string</item>
@@ -114,7 +114,7 @@
   <!-- endregion -->
   <!-- region plan professional -->
   <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Multi-user support</string>
+  <string name="plan_id_professional_multiuser">Dukungan multi-pengguna</string>
   <string-array name="plan_id_professional_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>
@@ -123,7 +123,7 @@
   </string-array>
   <!-- endregion -->
   <!-- region plan visionary -->
-  <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_visionary_header">Visioner</string>
   <string-array name="plan_id_visionary_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
     <item>#proton_storage#</item>
     <item>#proton_addresses#</item>
@@ -141,7 +141,7 @@
   </string-array>
   <string-array name="supported_billing_cycle">
     <item>Bayar bulanan</item>
-    <item>Pay annual (save up to 20%)</item>
-    <item>Pay every 2 years (save 33%)</item>
+    <item>Bayar per tahun (hemat hingga 20%)</item>
+    <item>Bayar setiap 2 tahun (hemat 33%)</item>
   </string-array>
 </resources>

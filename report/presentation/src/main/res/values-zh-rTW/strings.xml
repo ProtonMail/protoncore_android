@@ -17,23 +17,23 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">回報臭蟲</string>
+  <string name="core_report_bug_activity_title">Report an issue</string>
   <string name="core_report_bug_close">關閉</string>
   <string name="core_report_bug_subject_field_hint">主旨</string>
-  <string name="core_report_bug_description_field_hint">描述</string>
-  <string name="core_report_bug_description_field_placeholder">請描述問題並附上相關的錯誤訊息。</string>
-  <string name="core_report_bug_discard_changes_title">未儲存的變更</string>
-  <string name="core_report_bug_discard_changes_description">表單中有未儲存的項目。您確定要捨棄嗎？</string>
+  <string name="core_report_bug_subject_field_required">Enter a subject</string>
+  <string name="core_report_bug_description_field_hint">What went wrong? Minimum 10 characters</string>
+  <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="other">Enter at least %d characters</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Close bug report?</string>
+  <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
   <string name="core_report_bug_discard_changes_cancel">繼續撰寫</string>
-  <string name="core_report_bug_discard_changes_confirm">捨棄</string>
-  <string name="core_report_bug_form_field_required">此欄位必填</string>
-  <plurals name="core_report_bug_form_field_too_short">
-    <item quantity="other">密碼必須至少 %d 個字元</item>
-  </plurals>
+  <string name="core_report_bug_discard_changes_confirm">Close without saving</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="other">密碼最多 %d 個字元</item>
+    <item quantity="other">Maximum %d characters</item>
   </plurals>
-  <string name="core_report_bug_general_error">傳送報告時發生錯誤，請稍後再試</string>
-  <string name="core_report_bug_send">送出</string>
+  <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
+  <string name="core_report_bug_send">Send report</string>
   <string name="core_report_bug_success">感謝您的回報</string>
 </resources>

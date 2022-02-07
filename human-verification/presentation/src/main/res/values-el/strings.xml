@@ -52,5 +52,6 @@
   <string name="human_verification_incorrect_code">Λανθασμένος κωδικός. Παρακαλούμε δοκιμάστε ξανά.</string>
   <string name="human_verification_resent_code">Σας έχουμε στείλει έναν άλλον κωδικό.</string>
   <string name="human_verification_captcha_failed">Η επαλήθευση CAPTCHA απέτυχε. Δοκιμάστε ακόμα μια φορά ή επιλέξτε μια άλλη επιλογή επαλήθευσης.</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Δεν υπάρχει συνδεσιμότητα. Δεν ήταν δυνατή η φόρτωση του CAPTCHA.</string>
 </resources>

@@ -52,5 +52,6 @@
   <string name="human_verification_incorrect_code">驗證碼不正確。請重試。</string>
   <string name="human_verification_resent_code">我們已經傳送給您另一個驗證碼。</string>
   <string name="human_verification_captcha_failed">CAPTCHA 驗證失敗。請再試一次或選擇其他驗證選項。</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">無連線。無法載入 CAPTCHA。</string>
 </resources>

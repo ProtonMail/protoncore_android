@@ -52,5 +52,6 @@
   <string name="human_verification_incorrect_code">Felaktig kod. Var god försök igen.</string>
   <string name="human_verification_resent_code">Vi har skickat en ny kod till dig.</string>
   <string name="human_verification_captcha_failed">CAPTCHA-verifiering misslyckades. Försök en gång till eller välj ett annat verifieringsalternativ.</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Ingen anslutning. Det gick inte att ladda CAPTCHA.</string>
 </resources>

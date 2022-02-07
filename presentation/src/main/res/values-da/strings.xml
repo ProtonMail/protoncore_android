@@ -40,4 +40,5 @@
   <string name="presentation_close">Luk</string>
   <string name="presentation_skip">Spring over</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
+  <string name="presentation_general_connection_error">Kunne ikke oprette forbindelse til server.</string>
 </resources>

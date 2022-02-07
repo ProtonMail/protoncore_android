@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">Nama pada kartu diperlukan.</string>
   <string name="payments_error_card_number">Nomor kartu tidak valid.</string>
   <string name="payments_error_cvc">Mohon masukkan kode keamanan yang valid.</string>
-  <string name="payments_error_session">Valid session id is needed when subscribing a logged in user.</string>
+  <string name="payments_error_session">Id sesi yang valid dibutuhkan saat berlangganan pengguna yang masuk.</string>
   <string name="payments_error_signup_paymentmethod">Tidak dapat mendaftar dengan metode pembayaran yang sudah ada.</string>
   <string name="payments_error_invalid_session">Sesi tidak valid.</string>
   <!-- endregion -->
@@ -35,7 +35,7 @@
   <string name="payments_billing_yearly">Ditagih per tahun</string>
   <string name="payments_billing_two_years">Ditagih setiap dua tahun</string>
   <string name="payments_pay">Bayar</string>
-  <string name="payments_method_icon">Payment method icon.</string>
+  <string name="payments_method_icon">Ikon metode pembayaran.</string>
   <!-- endregion -->
   <!-- region billing -->
   <string name="payments_payment_details">Rincian pembayaran</string>
@@ -51,7 +51,7 @@
   <string name="payments_paying_in_process">Sedang Membayar</string>
   <string name="payments_choose_country">Pilih negara</string>
   <string name="payments_info_not_available">n/a</string>
-  <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (Eksp. %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <!-- endregion -->
 </resources>

@@ -32,7 +32,7 @@
   <string name="presentation_alert_cancel">Ακύρωση</string>
   <string name="presentation_alert_submit">Υποβολή</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Αναφορά σφάλματος</string>
+  <string name="presentation_menu_item_title_report_a_bug">Αναφορά προβλήματος</string>
   <string name="presentation_menu_item_title_settings">Ρυθμίσεις</string>
   <string name="presentation_menu_item_title_subscription">Συνδρομή</string>
   <string name="presentation_menu_item_title_sign_out">Αποσύνδεση</string>
@@ -40,4 +40,5 @@
   <string name="presentation_close">Κλείσιμο</string>
   <string name="presentation_skip">Παράλειψη</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
+  <string name="presentation_general_connection_error">Αδυναμία σύνδεσης στον διακομιστή.</string>
 </resources>

@@ -52,5 +52,6 @@
   <string name="human_verification_incorrect_code">Onjuiste code. Probeer opnieuw.</string>
   <string name="human_verification_resent_code">We hebben u een andere code gestuurd.</string>
   <string name="human_verification_captcha_failed">CAPTCHA verificatie mislukt. Probeer het nog een keer of kies een andere verificatie optie.</string>
+  <string name="human_verification_calling_code_template">@string/presentation_phone_calling_code_template</string>
   <string name="human_verification_captcha_no_connectivity">Geen connectiviteit. CAPTCHA kon niet geladen worden.</string>
 </resources>
