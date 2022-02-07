@@ -67,11 +67,6 @@ coverage report:
 ```
 
 It also allows for further customization. See the [plugin's README](./jacoco/README.md) for more info.
-## Kotlin plugin
-- Plugin id: `me.proton.core.gradle-plugins.kotlin`
-- Published on MavenCentral.
-
-This plugin should be applied to the root `build.gradle` file. It applies to all subprojects `kotlinOptions` provided by `kotlinCompilerArgs(...)` defined where the plugin is applied.
 
 ## Publish-core-libraries plugin
 - Plugin id: `publish-core-libraries`
