@@ -22,6 +22,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import okhttp3.Interceptor
 import okhttp3.Response
+import okio.Buffer
 import org.jetbrains.annotations.TestOnly
 
 class TooManyRequestInterceptor(
@@ -41,7 +42,8 @@ class TooManyRequestInterceptor(
         val request = chain.request()
 
         // Check if this route for this session is blocked.
-        val key = "${sessionId?.id}:${request.url.encodedPath}"
+        val bodyHash = Buffer().also { request.body?.writeTo(it) }.hashCode()
+        val key = "${sessionId?.id}:${request.url.encodedPath}:$bodyHash"
         blockedRequestMap[key]?.let { banned ->
             val elapsedDeltaSeconds = nowSeconds() - banned.timestampSeconds
             if (elapsedDeltaSeconds < banned.retryAfterSeconds) {

@@ -375,12 +375,13 @@ public abstract interface class me/proton/core/humanverification/presentation/ui
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment_MembersInjector : dagger/MembersInjector {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
 	public static fun injectCaptchaApiHost (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;Ljava/lang/String;)V
 	public static fun injectExtraHeaderProvider (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;)V
+	public static fun injectNetworkRequestOverrider (Lme/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationCaptchaFragment;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;)V
 }
 
 public abstract interface class me/proton/core/humanverification/presentation/ui/hv2/verification/HumanVerificationEmailFragment_GeneratedInjector {
@@ -676,11 +677,11 @@ public final class me/proton/core/humanverification/presentation/viewmodel/hv2/H
 }
 
 public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel;
-	public static fun newInstance (Lme/proton/core/network/domain/NetworkManager;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel;
+	public static fun newInstance (Lme/proton/core/network/domain/NetworkManager;Lme/proton/core/network/domain/NetworkPrefs;)Lme/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel;
 }
 
 public final class me/proton/core/humanverification/presentation/viewmodel/hv2/verification/HumanVerificationCaptchaViewModel_HiltModules {

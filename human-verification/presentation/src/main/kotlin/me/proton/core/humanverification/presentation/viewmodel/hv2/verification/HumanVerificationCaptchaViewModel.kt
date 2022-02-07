@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.presentation.viewmodel.verification.HumanVerificationCode
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.presentation.viewmodel.ViewModelResult
@@ -36,7 +37,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 internal class HumanVerificationCaptchaViewModel @Inject constructor(
-    private val networkManager: NetworkManager
+    private val networkManager: NetworkManager,
+    private val networkPrefs: NetworkPrefs,
 ) : ProtonViewModel(), HumanVerificationCode {
 
     private val _networkConnectionState = MutableStateFlow<ViewModelResult<Boolean>>(ViewModelResult.None)
@@ -45,6 +47,9 @@ internal class HumanVerificationCaptchaViewModel @Inject constructor(
      * Code is sometimes referred as a token, so token on BE and code on UI, it is same thing.
      */
     val networkConnectionState = _networkConnectionState.asStateFlow()
+
+    val activeAltUrlForDoH: String? get() = networkPrefs.activeAltBaseUrl
+        ?.let { "${it.trimEnd('/')}/core/v4/captcha" }
 
     init {
         networkWatcher()

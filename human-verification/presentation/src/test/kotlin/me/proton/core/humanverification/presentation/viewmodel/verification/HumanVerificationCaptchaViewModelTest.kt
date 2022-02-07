@@ -25,12 +25,16 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.humanverification.presentation.viewmodel.hv2.verification.HumanVerificationCaptchaViewModel
 import me.proton.core.network.domain.NetworkManager
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.NetworkStatus
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Rule
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
@@ -39,10 +43,12 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
     val instantTaskRule = InstantTaskExecutorRule()
 
     private val networkManager = mockk<NetworkManager>()
+    private val networkPrefs = mockk<NetworkPrefs>()
 
     private val viewModel by lazy {
         HumanVerificationCaptchaViewModel(
-            networkManager = networkManager
+            networkManager = networkManager,
+            networkPrefs = networkPrefs,
         )
     }
 
@@ -80,5 +86,31 @@ class HumanVerificationCaptchaViewModelTest : CoroutinesTest {
             assertTrue(result is ViewModelResult.Success<Boolean>)
             assertFalse(result.value)
         }
+    }
+
+    @Test
+    fun `if networkPrefs has activeAltBaseUrl it is used for activeAltUrlForDoH`() {
+        every {
+            networkManager.observe()
+        } returns flowOf(NetworkStatus.Disconnected)
+        val altBaseUrl = "https://alternative-url.com"
+        every { networkPrefs.activeAltBaseUrl } returns altBaseUrl
+
+        val url = viewModel.activeAltUrlForDoH
+
+        assertNotNull(url)
+        assertEquals("https://alternative-url.com/core/v4/captcha", url)
+    }
+
+    @Test
+    fun `if networkPrefs has no activeAltBaseUrl activeAltUrlForDoH returns null`() {
+        every {
+            networkManager.observe()
+        } returns flowOf(NetworkStatus.Disconnected)
+        every { networkPrefs.activeAltBaseUrl } returns null
+
+        val url = viewModel.activeAltUrlForDoH
+
+        assertNull(url)
     }
 }
