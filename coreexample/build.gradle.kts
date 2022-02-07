@@ -43,6 +43,7 @@ android {
             }
         }
         version = Version(1, 18, 4)
+        versionName = version.toString()
     }
     setupFlavors(this)
     sourceSets.getByName("androidTest") {

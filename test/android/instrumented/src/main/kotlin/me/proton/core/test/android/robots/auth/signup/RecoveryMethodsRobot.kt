@@ -20,6 +20,7 @@ package me.proton.core.test.android.robots.auth.signup
 
 import android.widget.TextView
 import me.proton.core.auth.R
+import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 import me.proton.core.test.android.robots.humanverification.HumanVerificationRobot
@@ -40,13 +41,15 @@ class RecoveryMethodsRobot : CoreRobot() {
          * Clicks "Set recovery method" button
          * @return [RecoveryMethodsRobot]
          */
-        fun setRecoveryMethod(): RecoveryMethodsRobot = clickElement(R.string.auth_signup_set_recovery)
+        fun setRecoveryMethod(): RecoveryMethodsRobot =
+            clickElement(stringFromResource(R.string.auth_signup_set_recovery))
 
         /**
          * Clicks "Skip" button
          * @return [HumanVerificationRobot]
          */
-        fun skipConfirm(): SelectPlanRobot = clickElement("Skip")
+        fun skipConfirm(): SelectPlanRobot =
+            clickElement(stringFromResource(R.string.auth_signup_skip_recovery))
     }
 
     enum class RecoveryMethodType { EMAIL, PHONE }

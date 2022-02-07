@@ -57,7 +57,14 @@ class LoginTests : BaseTest() {
             .username(user.name)
             .password("Incorrect")
             .signIn<LoginRobot>()
-            .verify { errorSnackbarDisplayed("Incorrect login credentials. Please try again") }
+            .verify {
+                // Error message itself is coming from the server; we cannot reliably check the contents,
+                // given we support multiple languages.
+                errorSnackbarDisplayed("")
+
+                passwordInputHasError()
+                usernameInputHasError()
+            }
     }
 
     @Test

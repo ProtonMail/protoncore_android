@@ -47,6 +47,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 - Add ProtonStore to get the calling stack trace of Store operations.
 - We don't generate keys for external accounts anymore. This means they can only be used in VPN or converted into internal accounts on login.
 - Fix/Add support for user readable error messages.
+- Ability to run Core Smoke tests with languages other than English
 
 ### New Injection
 
