@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,6 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflags.data.api
+package me.proton.core.featureflags.domain.entity
 
-import me.proton.core.featureflags.data.api.response.FeatureApiResponse
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import retrofit2.http.GET
-import retrofit2.http.Query
-
-interface FeaturesApi : BaseRetrofitApi {
-
-    @GET("core/v4/features")
-    suspend fun getFeatureFlag(
-        @Query("Code") code: String
-    ): FeatureApiResponse
-}
+data class FeatureId(val id: String)

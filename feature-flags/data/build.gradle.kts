@@ -45,7 +45,8 @@ dependencies {
         project(Module.eventManagerDomain),
         project(Module.presentation),
 
-        project(Module.user), // UserEntity
+        project(Module.user),
+        project(Module.featureFlagsDomain),
 
         `android-work-runtime`,
         `serialization-json`,

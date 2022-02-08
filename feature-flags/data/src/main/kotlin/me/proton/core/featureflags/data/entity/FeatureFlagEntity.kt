@@ -22,6 +22,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflags.domain.entity.FeatureFlag
+import me.proton.core.featureflags.domain.entity.FeatureId
 import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
@@ -44,7 +46,7 @@ data class FeatureFlagEntity(
     val code: String,
     val isGlobal: Boolean,
     val defaultValue: Boolean,
-    val value: Boolean,
-    val expiresAt: Long,
-    val updatedAt: Long
-)
+    val value: Boolean
+) {
+    fun toFeatureFlag() = FeatureFlag(FeatureId(code), value)
+}

@@ -16,17 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflags.domain.repository
+package me.proton.core.featureflags.data.api.response
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.entity.UserId
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import me.proton.core.featureflags.domain.entity.FeatureFlag
 import me.proton.core.featureflags.domain.entity.FeatureId
 
-interface FeatureFlagsRepository {
-
-    fun observe(userId: UserId, feature: FeatureId): Flow<DataResult<FeatureFlag>>
-
-    suspend fun get(userId: UserId, feature: FeatureId): DataResult<FeatureFlag>
+@Serializable
+data class FeatureApiResponse(
+    @SerialName("Code")
+    val code: String,
+    @SerialName("Global")
+    val isGlobal: Boolean,
+    @SerialName("DefaultValue")
+    val defaultValue: Boolean,
+    @SerialName("Value")
+    val value: Boolean
+) {
+    fun toFeatureFlags() = FeatureFlag(FeatureId(code), value)
 }

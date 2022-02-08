@@ -20,6 +20,7 @@ package me.proton.core.featureflags.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflags.data.entity.FeatureFlagEntity
@@ -28,7 +29,10 @@ import me.proton.core.featureflags.data.entity.FeatureFlagEntity
 abstract class FeatureFlagDao : BaseDao<FeatureFlagEntity>() {
 
     @Query("SELECT * FROM FeatureFlagEntity WHERE code = :feature AND userId = :userId")
-    abstract suspend fun get(userId: UserId, feature: String): List<FeatureFlagEntity>
+    abstract suspend fun observe(userId: UserId, feature: String): Flow<FeatureFlagEntity>
+
+    @Query("SELECT * FROM FeatureFlagEntity WHERE code = :feature AND userId = :userId")
+    abstract suspend fun get(userId: UserId, feature: String): FeatureFlagEntity?
 
     @Query("DELETE FROM FeatureFlagEntity WHERE userId = :userId")
     abstract suspend fun deleteAll(userId: UserId)
