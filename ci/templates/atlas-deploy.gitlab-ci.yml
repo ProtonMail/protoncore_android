@@ -1,0 +1,25 @@
+include:
+  - project: 'proton/devops/atlas-deploy'
+    ref: 'main'
+    file: '/scenarios/pipeline-env.yml'
+
+stages:
+  - deploy
+  - cleanup
+
+## deploy stage ####################################################################################
+deploy:review:
+  tags:
+    - medium
+  needs:
+    - pipeline: $PARENT_PIPELINE_ID
+      job: prepare-environment
+      artifacts: true
+  allow_failure: true
+  retry: 1
+
+cleanup:review:
+  needs: []
+  tags:
+    - medium
+  when: manual

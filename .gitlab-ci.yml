@@ -15,18 +15,17 @@ include:
     ref: development
     file: '/appetize-integration.yml'
 
-  - project: 'proton/devops/atlas-deploy'
-    ref: 'master'
-    file: '/deploy-to-atlas.gitlab-ci.yml'
-
   - local: '/ci/templates/git.gitlab-ci.yml'
 
   - local: '/ci/templates/base-job.gitlab-ci.yml'
 
+  - project: 'proton/devops/atlas-deploy'
+    ref: 'main'
+    file: '/jobs/variables.yml'
+
 stages:
-  - deploy
+  - prepare
   - bot
-  - analyze
   - build
   - test
   - publish
@@ -43,15 +42,20 @@ variables:
 
 ## pre stage #######################################################################################
 prepare-environment:
+  tags:
+    - small
   extends: .script-job
-  stage: .pre
+  stage: prepare
   when: always
+  image: $CI_REGISTRY/proton/devops/atlas-cli
   variables:
     NAMESERVICE_URL: "https://nameservice.$ATLAS_BASE_DOMAIN/api/env"
     REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_NAME} --data tag=${CI_COMMIT_REF_SLUG}"
   script:
+    - get_name.py -v -o deploy.env -d "$ATLAS_BASE_DOMAIN" --release "$ATLAS_RELEASE_SUFFIX" "${ENV_TAG:-$CI_COMMIT_REF_SLUG}" "$CI_PROJECT_PATH" "$CI_COMMIT_REF_NAME"
+    - export $(cat deploy.env)
     - echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
-    - echo HOST="$(curl --request POST --url $NAMESERVICE_URL $REQUEST_DATA | jq -r '.envName')".$ATLAS_BASE_DOMAIN >> local.properties
+    - echo HOST="$DYNAMIC_DOMAIN" >> local.properties
     - mkdir -p coreexample/src/androidTest/assets/sensitive
     - cat $TEST_USERS > coreexample/src/androidTest/assets/sensitive/users.json
     - cat $TEST_INTERNAL_API > coreexample/src/androidTest/assets/sensitive/internal_apis.json
@@ -59,10 +63,13 @@ prepare-environment:
     paths:
       - coreexample/src/androidTest/assets/sensitive
       - local.properties
+    reports:
+      dotenv: deploy.env
+    expire_in: never
 
 detekt-analyze:
   extends: .gradle-job
-  stage: .pre
+  stage: prepare
   when: always
   interruptible: true
   script:
@@ -74,14 +81,15 @@ detekt-analyze:
 
 ## deploy stage ####################################################################################
 deploy-atlas:
-  stage: deploy
-  tags:
-    - xlarge-k8s
+  stage: build
   needs:
-      - prepare-environment
-  extends: .deploy:black
-  allow_failure: true
-  retry: 1
+    - prepare-environment
+  trigger:
+    strategy: depend
+    include:
+      - local: ci/templates/atlas-deploy.gitlab-ci.yml
+  variables:
+    PARENT_PIPELINE_ID: $CI_PIPELINE_ID
 
 ## bot stage #######################################################################################
 i18n-sync-crowdin:
@@ -261,6 +269,8 @@ tag-gradle-plugins-release:
 
 ## post stage ######################################################################################
 danger-review:
+  tags:
+    - medium
   extends: .ruby-job
   stage: .post
   when: always
@@ -276,11 +286,3 @@ danger-review:
 # .startReview requires 'stopReview' job. See GitLab merged YAML.
 stopReview:
   extends: .stopReview
-
-cleanup-atlas:
-  stage: .post
-  needs: []
-  extends: .cleanup:black
-  tags:
-    - xlarge-k8s
-  when: manual
