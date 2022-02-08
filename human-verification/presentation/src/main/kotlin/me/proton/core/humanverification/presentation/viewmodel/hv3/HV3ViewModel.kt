@@ -31,7 +31,7 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.usersettings.domain.usecase.GetSettings
+import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import javax.inject.Inject
 
 /**
@@ -42,7 +42,7 @@ class HV3ViewModel @Inject constructor(
     private val humanVerificationWorkflowHandler: HumanVerificationWorkflowHandler,
     private val humanVerificationListener: HumanVerificationListener,
     private val accountRepository: AccountRepository,
-    private val getSettings: GetSettings,
+    private val getUserSettings: GetUserSettings,
     private val networkPrefs: NetworkPrefs,
     private val product: Product,
 ) : ProtonViewModel() {
@@ -57,7 +57,7 @@ class HV3ViewModel @Inject constructor(
         val userId = accountRepository.getPrimaryUserId()
             .firstOrNull()
 
-        val settings = userId?.let { getSettings(it) }
+        val settings = userId?.let { getUserSettings(it, refresh = false) }
         val defaultCountry = settings?.locale?.substringAfter("_")
         HV3ExtraParams(
             settings?.phone?.value,

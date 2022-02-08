@@ -22,8 +22,11 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
-class GetSettings @Inject constructor(
+class GetUserSettings @Inject constructor(
     private val userSettingsRepository: UserSettingsRepository
 ) {
-    suspend operator fun invoke(sessionUserId: SessionUserId) = userSettingsRepository.getUserSettings(sessionUserId)
+    suspend operator fun invoke(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ) = userSettingsRepository.getUserSettings(sessionUserId, refresh = refresh)
 }

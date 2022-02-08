@@ -32,6 +32,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 
 ### Fixes
 
+- Fixed missing refresh UserSettings for some use cases.
 - Fixed ContactRepository usage while offline.
 - Fixed LabelRepository usage while offline.
 - Fixed EventManager to retry fetching on Force Update error.

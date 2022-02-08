@@ -35,7 +35,7 @@ import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
 import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.usecase.GetSettings
+import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
 import org.junit.Before
@@ -46,7 +46,7 @@ import kotlin.test.assertTrue
 
 class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
-    private val getUserSettingsUseCase = mockk<GetSettings>()
+    private val getUserSettingsUseCase = mockk<GetUserSettings>()
     private val performUpdateLoginPassword = mockk<PerformUpdateLoginPassword>()
     private val performUpdateMailboxPassword = mockk<PerformUpdateUserPassword>()
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
@@ -103,7 +103,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         coEvery { userRepository.getUser(any()) } returns testUser
-        coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse
         viewModel =
             PasswordManagementViewModel(
                 keyStoreCrypto,
@@ -115,7 +115,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `get current settings 2 Pass handled correctly`() = coroutinesTest {
-        coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse.copy(
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
             twoFA = TwoFASetting(true, 1, null, null),
             password = PasswordSetting(mode = 2, expirationTime = null)
         )
@@ -132,7 +132,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `get current settings 1 Pass handled correctly`() = coroutinesTest {
-        coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse.copy(
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
             twoFA = TwoFASetting(true, 1, null, null),
             password = PasswordSetting(mode = 1, expirationTime = null)
         )
@@ -154,7 +154,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
         every { keyStoreCrypto.decrypt("encrypted-test-new-password") } returns testNewPassword
         every { keyStoreCrypto.encrypt(testNewPassword) } returns "encrypted-test-new-password"
 
-        coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse.copy(
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
             twoFA = TwoFASetting(true, 1, null, null),
             password = PasswordSetting(mode = 1, expirationTime = null)
         )
@@ -192,7 +192,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
         val testLoginPassword = testPassword
         val testNewMailboxPassword = testNewPassword
 
-        coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse.copy(
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
             twoFA = TwoFASetting(true, 1, null, null),
             password = PasswordSetting(mode = 2, expirationTime = null)
         )
@@ -232,7 +232,7 @@ class PasswordManagementViewModelTest : ArchTest, CoroutinesTest {
         val testLoginPassword = testPassword
         val testNewMailboxPassword = testNewPassword
 
-        coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse.copy(
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
             twoFA = TwoFASetting(true, 1, null, null),
             password = PasswordSetting(mode = 1, expirationTime = null)
         )

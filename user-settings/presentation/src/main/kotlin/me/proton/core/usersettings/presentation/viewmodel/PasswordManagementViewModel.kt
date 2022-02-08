@@ -31,7 +31,7 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.usecase.GetSettings
+import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
 import javax.inject.Inject
@@ -39,7 +39,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PasswordManagementViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val getSettings: GetSettings,
+    private val getUserSettings: GetUserSettings,
     private val performUpdateLoginPassword: PerformUpdateLoginPassword,
     private val performUpdateUserPassword: PerformUpdateUserPassword
 ) : ProtonViewModel() {
@@ -71,7 +71,7 @@ class PasswordManagementViewModel @Inject constructor(
     }
 
     fun init(userId: UserId) = flow {
-        val currentSettings = getSettings(userId)
+        val currentSettings = getUserSettings(userId, refresh = true)
         twoPasswordMode = currentSettings.password.mode == 2
         secondFactorEnabled = currentSettings.twoFA?.enabled ?: false
         emit(State.Mode(twoPasswordMode!!))

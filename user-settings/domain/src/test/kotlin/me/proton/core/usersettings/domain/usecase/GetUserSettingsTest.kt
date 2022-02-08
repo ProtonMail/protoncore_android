@@ -35,7 +35,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
-class GetSettingsTest {
+class GetUserSettingsTest {
     // region mocks
     private val repository = mockk<UserSettingsRepository>(relaxed = true)
     // endregion
@@ -63,11 +63,11 @@ class GetSettingsTest {
         flags = Flags(true)
     )
     // endregion
-    private lateinit var useCase: GetSettings
+    private lateinit var useCase: GetUserSettings
 
     @Before
     fun beforeEveryTest() {
-        useCase = GetSettings(repository)
+        useCase = GetUserSettings(repository)
     }
 
     @Test
@@ -75,7 +75,7 @@ class GetSettingsTest {
         // GIVEN
         coEvery { repository.getUserSettings(testUserId, any()) } returns testUserSettingsResponse
         // WHEN
-        val result = useCase.invoke(testUserId)
+        val result = useCase.invoke(testUserId, refresh = true)
         // THEN
         assertEquals(testUserSettingsResponse, result)
         val email = result.email
@@ -94,7 +94,7 @@ class GetSettingsTest {
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            useCase.invoke(testUserId)
+            useCase.invoke(testUserId, refresh = true)
         }
         // THEN
         assertNotNull(throwable)

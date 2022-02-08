@@ -304,7 +304,7 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Upda
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;)V
+	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;)V
 	public final fun getSecondFactorEnabled ()Ljava/lang/Boolean;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun init (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
@@ -394,7 +394,7 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;
-	public static fun newInstance (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;
+	public static fun newInstance (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel_HiltModules {
@@ -417,7 +417,7 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetSettings;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/usersettings/domain/usecase/PerformUpdateRecoveryEmail;)V
+	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/usersettings/domain/usecase/PerformUpdateRecoveryEmail;)V
 	public final fun getCurrentRecoveryAddress (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun getSecondFactorEnabled ()Ljava/lang/Boolean;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
@@ -478,7 +478,7 @@ public final class me/proton/core/usersettings/presentation/viewmodel/UpdateReco
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel;
-	public static fun newInstance (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetSettings;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/usersettings/domain/usecase/PerformUpdateRecoveryEmail;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel;
+	public static fun newInstance (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/usersettings/domain/usecase/PerformUpdateRecoveryEmail;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel_HiltModules {
