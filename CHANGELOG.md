@@ -23,6 +23,7 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 
 ### Changes
 
+- Disable Crypto Keys Cache.
 - Keep cancelled EventMetadata/EventManagerConfig, to start syncing from previous eventId.
 - Removed lifecycle-extensions which has been deprecated; removed lifecycle-compiler; using lifecycle-common instead
 - Support prefilling login username for add account workflow
