@@ -20,8 +20,8 @@ package me.proton.core.featureflags.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.featureflags.domain.entity.FeatureFlag
-import me.proton.core.featureflags.domain.entity.FeatureId
+import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflags.data.entity.FeatureFlagEntity
 
 @Serializable
 data class FeatureApiResponse(
@@ -34,5 +34,12 @@ data class FeatureApiResponse(
     @SerialName("Value")
     val value: Boolean
 ) {
-    fun toFeatureFlags() = FeatureFlag(FeatureId(code), value)
+    fun toEntity(userId: UserId) = FeatureFlagEntity(
+        userId = userId,
+        code = code,
+        isGlobal = isGlobal,
+        defaultValue = defaultValue,
+        value = value
+    )
+
 }

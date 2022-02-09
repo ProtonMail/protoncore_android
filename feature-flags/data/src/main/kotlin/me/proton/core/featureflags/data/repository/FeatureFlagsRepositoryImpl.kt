@@ -19,6 +19,7 @@
 package me.proton.core.featureflags.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.ResponseSource
 import me.proton.core.domain.entity.UserId
@@ -37,8 +38,15 @@ class FeatureFlagsRepositoryImpl(
 
     private val featureFlagDao = database.featureFlagDao()
 
-    override fun observe(userId: UserId, feature: FeatureId): Flow<DataResult<FeatureFlag>> {
-        TODO("Not yet implemented")
+    override suspend fun observe(userId: UserId, feature: FeatureId): Flow<DataResult<FeatureFlag>> {
+        return featureFlagDao.observe(userId, feature.id).mapLatest { dbFlag ->
+            if (dbFlag == null) {
+                fetchFromApi(userId, feature)
+                return@mapLatest DataResult.Processing(ResponseSource.Remote)
+            }
+
+            DataResult.Success(ResponseSource.Local, dbFlag.toFeatureFlag())
+        }
     }
 
     override suspend fun get(userId: UserId, feature: FeatureId): DataResult<FeatureFlag> {
@@ -47,18 +55,26 @@ class FeatureFlagsRepositoryImpl(
             return DataResult.Success(ResponseSource.Local, it.toFeatureFlag())
         }
 
-        val apiResult = apiProvider.get<FeaturesApi>(userId).invoke { getFeatureFlag(feature.id) }
-        return when (apiResult) {
-            is ApiResult.Success -> DataResult.Success(
+        return fetchFromApi(userId, feature)
+    }
+
+    private suspend fun fetchFromApi(
+        userId: UserId,
+        feature: FeatureId
+    ) = when (val apiResult = apiProvider.get<FeaturesApi>(userId).invoke { getFeatureFlag(feature.id) }) {
+        is ApiResult.Success -> {
+            val featureFlagEntity = apiResult.value.toEntity(userId)
+            featureFlagDao.insertOrUpdate(featureFlagEntity)
+
+            DataResult.Success(
                 ResponseSource.Remote,
-                apiResult.value.toFeatureFlags()
-            )
-            is ApiResult.Error -> DataResult.Error.Remote(
-                "Failed fetching Feature Flag value for ${feature.id}",
-                apiResult.cause
+                featureFlagEntity.toFeatureFlag()
             )
         }
-
+        is ApiResult.Error -> DataResult.Error.Remote(
+            "Failed fetching Feature Flag value for ${feature.id}",
+            apiResult.cause
+        )
     }
 
 }

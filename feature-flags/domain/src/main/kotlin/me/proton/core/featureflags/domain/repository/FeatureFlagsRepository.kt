@@ -26,7 +26,7 @@ import me.proton.core.featureflags.domain.entity.FeatureId
 
 interface FeatureFlagsRepository {
 
-    fun observe(userId: UserId, feature: FeatureId): Flow<DataResult<FeatureFlag>>
+    suspend fun observe(userId: UserId, feature: FeatureId): Flow<DataResult<FeatureFlag>>
 
     suspend fun get(userId: UserId, feature: FeatureId): DataResult<FeatureFlag>
 }
