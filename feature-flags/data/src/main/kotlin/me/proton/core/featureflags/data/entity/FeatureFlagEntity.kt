@@ -27,10 +27,10 @@ import me.proton.core.featureflags.domain.entity.FeatureId
 import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
-    primaryKeys = ["userId", "code"],
+    primaryKeys = ["userId", "featureId"],
     indices = [
         Index("userId"),
-        Index("code")
+        Index("featureId")
     ],
     foreignKeys = [
         ForeignKey(
@@ -43,10 +43,10 @@ import me.proton.core.user.data.entity.UserEntity
 )
 data class FeatureFlagEntity(
     val userId: UserId,
-    val code: String,
+    val featureId: String,
     val isGlobal: Boolean,
     val defaultValue: Boolean,
     val value: Boolean
 ) {
-    fun toFeatureFlag() = FeatureFlag(FeatureId(code), value)
+    fun toFeatureFlag() = FeatureFlag(FeatureId(featureId), value)
 }

@@ -28,10 +28,10 @@ import me.proton.core.featureflags.data.entity.FeatureFlagEntity
 @Dao
 abstract class FeatureFlagDao : BaseDao<FeatureFlagEntity>() {
 
-    @Query("SELECT * FROM FeatureFlagEntity WHERE code = :feature AND userId = :userId")
-    abstract suspend fun observe(userId: UserId, feature: String): Flow<FeatureFlagEntity?>
+    @Query("SELECT * FROM FeatureFlagEntity WHERE featureId = :feature AND userId = :userId")
+    abstract fun observe(userId: UserId, feature: String): Flow<FeatureFlagEntity?>
 
-    @Query("SELECT * FROM FeatureFlagEntity WHERE code = :feature AND userId = :userId")
+    @Query("SELECT * FROM FeatureFlagEntity WHERE featureId = :feature AND userId = :userId")
     abstract suspend fun get(userId: UserId, feature: String): FeatureFlagEntity?
 
     @Query("DELETE FROM FeatureFlagEntity WHERE userId = :userId")

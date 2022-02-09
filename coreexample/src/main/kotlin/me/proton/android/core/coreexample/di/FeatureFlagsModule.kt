@@ -16,17 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflags.data.api
+package me.proton.android.core.coreexample.di
 
-import me.proton.core.featureflags.data.api.response.FeaturesApiResponse
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import retrofit2.http.GET
-import retrofit2.http.Query
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import me.proton.core.featureflags.data.db.FeatureFlagDatabase
+import me.proton.core.featureflags.data.repository.FeatureFlagsRepositoryImpl
+import me.proton.core.featureflags.domain.repository.FeatureFlagsRepository
+import me.proton.core.network.data.ApiProvider
+import javax.inject.Singleton
 
-interface FeaturesApi : BaseRetrofitApi {
+@Module
+@InstallIn(SingletonComponent::class)
+object FeatureFlagsModule {
 
-    @GET("core/v4/features")
-    suspend fun getFeatureFlag(
-        @Query("Code") code: String
-    ): FeaturesApiResponse
+    @Provides
+    @Singleton
+    fun provideFeatureFlagsRepositoryImpl(
+        db: FeatureFlagDatabase,
+        provider: ApiProvider
+    ): FeatureFlagsRepository = FeatureFlagsRepositoryImpl(db, provider)
 }

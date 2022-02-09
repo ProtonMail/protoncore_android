@@ -156,14 +156,15 @@ class FeatureFlagsRepositoryImplTest {
         // When
         repository.observe(UserIdTestData.userId, FeatureIdTestData.featureId).test {
             // Then
-            assertEquals(DataResult.Processing(ResponseSource.Remote), awaitItem())
+            val expectedFlag = FeatureFlag(FeatureIdTestData.featureId, true)
+            assertEquals(DataResult.Success(ResponseSource.Remote, expectedFlag), awaitItem())
 
             // enabledFeatureFlagEntity is the corresponding entity that the mocked API response
             coVerify { featureFlagDao.insertOrUpdate(FeatureFlagTestData.enabledFeatureFlagEntity) }
             // Inserting the API response into DB causes it to be emitted
             mutableDbFlow.emit(FeatureFlagTestData.enabledFeatureFlagEntity)
 
-            val expected = DataResult.Success(ResponseSource.Local, FeatureFlag(FeatureIdTestData.featureId, true))
+            val expected = DataResult.Success(ResponseSource.Local, expectedFlag)
             assertEquals(expected, awaitItem())
         }
     }

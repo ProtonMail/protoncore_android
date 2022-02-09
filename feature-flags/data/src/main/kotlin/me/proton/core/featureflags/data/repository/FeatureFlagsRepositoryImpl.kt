@@ -38,11 +38,10 @@ class FeatureFlagsRepositoryImpl(
 
     private val featureFlagDao = database.featureFlagDao()
 
-    override suspend fun observe(userId: UserId, feature: FeatureId): Flow<DataResult<FeatureFlag>> {
+    override fun observe(userId: UserId, feature: FeatureId): Flow<DataResult<FeatureFlag>> {
         return featureFlagDao.observe(userId, feature.id).mapLatest { dbFlag ->
             if (dbFlag == null) {
-                fetchFromApi(userId, feature)
-                return@mapLatest DataResult.Processing(ResponseSource.Remote)
+                return@mapLatest fetchFromApi(userId, feature)
             }
 
             DataResult.Success(ResponseSource.Local, dbFlag.toFeatureFlag())
@@ -61,7 +60,11 @@ class FeatureFlagsRepositoryImpl(
     private suspend fun fetchFromApi(
         userId: UserId,
         feature: FeatureId
-    ) = when (val apiResult = apiProvider.get<FeaturesApi>(userId).invoke { getFeatureFlag(feature.id) }) {
+    ) = when (
+        val apiResult = apiProvider.get<FeaturesApi>(userId).invoke {
+            getFeatureFlag(feature.id).features.first()
+        }
+    ) {
         is ApiResult.Success -> {
             val featureFlagEntity = apiResult.value.toEntity(userId)
             featureFlagDao.insertOrUpdate(featureFlagEntity)

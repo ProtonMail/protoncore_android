@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflags.data.api
+package me.proton.android.core.coreexample.utils
 
-import me.proton.core.featureflags.data.api.response.FeaturesApiResponse
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import retrofit2.http.GET
-import retrofit2.http.Query
+import me.proton.core.featureflags.domain.entity.FeatureId
 
-interface FeaturesApi : BaseRetrofitApi {
+/**
+ * Represents all of the feature flags that are available to this client
+ */
+enum class ClientFeatureFlags(val id: FeatureId, val defaultLocalValue: Boolean = false) {
 
-    @GET("core/v4/features")
-    suspend fun getFeatureFlag(
-        @Query("Code") code: String
-    ): FeaturesApiResponse
+    AndroidThreading(FeatureId("ThreadingAndroid")),
+    BundledNotifications(FeatureId("BundledNotifications"), true);
 }
