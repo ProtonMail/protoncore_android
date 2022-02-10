@@ -140,7 +140,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 removeScopeViewModel.removeScopes()
             }
 
-            featureFlags.onClick {
+            featureFlag.onClick {
                 val androidThreading = ClientFeatureFlags.AndroidThreading
                 featureFlagViewModel.state.onEach { result ->
                     when (result) {

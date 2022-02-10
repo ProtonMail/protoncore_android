@@ -16,15 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.utils
+package me.proton.core.featureflag.domain.repository
 
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.arch.DataResult
+import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 
-/**
- * Represents all of the feature flags that are available to this client
- */
-enum class ClientFeatureFlags(val id: FeatureId, val defaultLocalValue: Boolean = false) {
+interface FeatureFlagRepository {
 
-    AndroidThreading(FeatureId("ThreadingAndroid")),
-    BundledNotifications(FeatureId("BundledNotifications"), true);
+    fun observe(userId: UserId, feature: FeatureId): Flow<DataResult<FeatureFlag>>
+
+    suspend fun get(userId: UserId, feature: FeatureId): DataResult<FeatureFlag>
 }

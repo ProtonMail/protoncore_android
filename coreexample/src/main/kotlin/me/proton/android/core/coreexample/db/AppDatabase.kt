@@ -39,8 +39,8 @@ import me.proton.core.data.room.db.CommonConverters
 import me.proton.core.eventmanager.data.db.EventManagerConverters
 import me.proton.core.eventmanager.data.db.EventMetadataDatabase
 import me.proton.core.eventmanager.data.entity.EventMetadataEntity
-import me.proton.core.featureflags.data.db.FeatureFlagDatabase
-import me.proton.core.featureflags.data.entity.FeatureFlagEntity
+import me.proton.core.featureflag.data.db.FeatureFlagDatabase
+import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 import me.proton.core.humanverification.data.db.HumanVerificationConverters
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.entity.HumanVerificationEntity

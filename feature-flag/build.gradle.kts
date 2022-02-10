@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
- * This file is part of Proton AG and ProtonCore.
+ * Copyright (c) 2021 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.utils
+import studio.forface.easygradle.dsl.*
 
-import me.proton.core.featureflag.domain.entity.FeatureId
+plugins {
+    protonAndroidLibrary
+}
 
-/**
- * Represents all of the feature flags that are available to this client
- */
-enum class ClientFeatureFlags(val id: FeatureId, val defaultLocalValue: Boolean = false) {
+publishOption.shouldBePublishedAsLib = true
 
-    AndroidThreading(FeatureId("ThreadingAndroid")),
-    BundledNotifications(FeatureId("BundledNotifications"), true);
+dependencies {
+    api(
+        project(Module.featureFlagData),
+        project(Module.featureFlagDomain)
+    )
 }

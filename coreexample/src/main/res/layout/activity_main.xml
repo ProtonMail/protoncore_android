@@ -292,7 +292,7 @@
                     android:text="Sync Bug Report" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
-                    android:id="@+id/featureFlags"
+                    android:id="@+id/featureFlag"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"

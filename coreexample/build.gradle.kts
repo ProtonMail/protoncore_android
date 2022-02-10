@@ -127,7 +127,7 @@ dependencies {
         project(Module.cryptoValidator),
         project(Module.domain),
         project(Module.eventManager),
-        project(Module.featureFlags),
+        project(Module.featureFlag),
         project(Module.gopenpgp),
         project(Module.humanVerification),
         project(Module.key),

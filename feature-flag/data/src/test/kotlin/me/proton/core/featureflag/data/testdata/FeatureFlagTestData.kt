@@ -16,15 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.utils
+package me.proton.core.featureflag.data.testdata
 
-import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 
-/**
- * Represents all of the feature flags that are available to this client
- */
-enum class ClientFeatureFlags(val id: FeatureId, val defaultLocalValue: Boolean = false) {
-
-    AndroidThreading(FeatureId("ThreadingAndroid")),
-    BundledNotifications(FeatureId("BundledNotifications"), true);
+object FeatureFlagTestData {
+    val enabledFeatureFlagEntity = FeatureFlagEntity(
+        UserIdTestData.userId,
+        FeatureIdTestData.featureId.id,
+        isGlobal = false,
+        defaultValue = false,
+        value = true
+    )
+    val disabledFeatureFlagEntity = FeatureFlagEntity(
+        UserIdTestData.userId,
+        FeatureIdTestData.featureId.id,
+        isGlobal = false,
+        defaultValue = false,
+        value = false
+    )
 }

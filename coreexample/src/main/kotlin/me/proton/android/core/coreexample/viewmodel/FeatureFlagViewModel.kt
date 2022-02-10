@@ -30,9 +30,9 @@ import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.utils.ClientFeatureFlags
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.arch.DataResult
-import me.proton.core.featureflags.domain.entity.FeatureFlag
-import me.proton.core.featureflags.domain.entity.FeatureId
-import me.proton.core.featureflags.domain.repository.FeatureFlagsRepository
+import me.proton.core.featureflag.domain.entity.FeatureFlag
+import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.network.domain.exception.ApiConnectionException
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import javax.inject.Inject
@@ -40,7 +40,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FeatureFlagViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val featureFlagsRepository: FeatureFlagsRepository
+    private val featureFlagRepository: FeatureFlagRepository
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow<ViewModelResult<FeatureFlag>>(ViewModelResult.Processing)
@@ -48,7 +48,7 @@ class FeatureFlagViewModel @Inject constructor(
 
     fun isFeatureEnabled(featureId: FeatureId) = viewModelScope.launch {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
-        featureFlagsRepository.observe(userId, featureId).mapLatest { dataResult ->
+        featureFlagRepository.observe(userId, featureId).mapLatest { dataResult ->
             when (dataResult) {
                 is DataResult.Success -> mutableState.emit(ViewModelResult.Success(dataResult.value))
                 is DataResult.Error.Local -> Unit
