@@ -29,6 +29,7 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.usersettings.data.api.OrganizationApi
 import me.proton.core.usersettings.data.api.response.OrganizationKeysResponse
 import me.proton.core.usersettings.data.db.OrganizationDatabase

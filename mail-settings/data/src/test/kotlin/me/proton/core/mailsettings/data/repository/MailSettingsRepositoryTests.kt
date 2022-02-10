@@ -26,7 +26,6 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.domain.entity.UserId
-import me.proton.core.mailsettings.data.TestApiManager
 import me.proton.core.mailsettings.data.api.MailSettingsApi
 import me.proton.core.mailsettings.data.api.response.MailSettingsResponse
 import me.proton.core.mailsettings.data.api.response.SingleMailSettingsResponse
@@ -39,6 +38,7 @@ import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
 import org.junit.Before
 import org.junit.Test
 

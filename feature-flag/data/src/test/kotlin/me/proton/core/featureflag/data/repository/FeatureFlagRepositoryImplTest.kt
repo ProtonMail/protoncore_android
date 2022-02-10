@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import me.proton.core.featureflag.data.api.FeaturesApi
-import me.proton.core.featureflag.data.api.TestApiManager
 import me.proton.core.featureflag.data.api.response.FeatureApiResponse
 import me.proton.core.featureflag.data.api.response.FeaturesApiResponse
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
@@ -47,6 +46,7 @@ import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before

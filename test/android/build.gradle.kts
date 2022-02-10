@@ -34,6 +34,7 @@ dependencies {
     implementation(
         // Kotlin
         `coroutines-android`,
+        project(Module.network),
 
         // Android
         `lifecycle-runtime`,
