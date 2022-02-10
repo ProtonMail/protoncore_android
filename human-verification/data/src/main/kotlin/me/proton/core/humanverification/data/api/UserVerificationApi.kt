@@ -18,9 +18,9 @@
 
 package me.proton.core.humanverification.data.api
 
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.humanverification.data.api.request.CreationTokenValidityRequest
 import me.proton.core.humanverification.data.api.request.VerificationRequest
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.PUT

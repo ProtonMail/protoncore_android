@@ -91,12 +91,12 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 val chain = handleTimeoutTag(orgChain)
                 chain.proceed(prepareHeaders(chain.request()).build())
             }
-            .initLogging(client)
             .addInterceptor(CacheOverrideInterceptor())
             .addInterceptor(ServerErrorInterceptor())
             .addInterceptor(TooManyRequestInterceptor(sessionId, wallClockMs))
             .addNetworkInterceptor(ServerTimeInterceptor(serverTimeListener))
             .apply { cookieStore?.let { addInterceptor(DoHCookieInterceptor(networkPrefs, it)) } }
+            .initLogging(client)
             .apply(securityStrategy)
             .build()
     }

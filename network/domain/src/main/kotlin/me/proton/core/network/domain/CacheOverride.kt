@@ -46,5 +46,5 @@ class CacheOverride() {
     /** Indicates that cache may be used if an error is encountered after becoming stale for [seconds] */
     fun staleIfError(seconds: Int) = this.also { values.add("stale-if-error=$seconds") }
 
-    val controlHeaderValue: String = values.joinToString(", ")
+    val controlHeaderValue: String get() = values.joinToString(", ")
 }

@@ -32,11 +32,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.CaptchaApiHost
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.FragmentHumanVerificationCaptchaBinding
 import me.proton.core.humanverification.presentation.ui.hv2.HV2DialogFragment
 import me.proton.core.humanverification.presentation.ui.hv2.verification.HumanVerificationMethodCommon.Companion.ARG_URL_TOKEN
+import me.proton.core.humanverification.presentation.ui.webview.HumanVerificationWebViewClient
 import me.proton.core.humanverification.presentation.viewmodel.hv2.verification.HumanVerificationCaptchaViewModel
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.ProtonFragment
@@ -58,6 +60,9 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
 
     @Inject
     lateinit var extraHeaderProvider: ExtraHeaderProvider
+
+    @Inject
+    lateinit var networkRequestOverrider: NetworkRequestOverrider
 
     private val viewModel by viewModels<HumanVerificationCaptchaViewModel>()
     private val binding by viewBinding(FragmentHumanVerificationCaptchaBinding::bind)
@@ -85,6 +90,12 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
             setBackgroundColor(Color.TRANSPARENT)
             settings.javaScriptEnabled = true // this is fine, required to load captcha
             addJavascriptInterface(WebAppInterface(), "AndroidInterface")
+            webViewClient = HumanVerificationWebViewClient(
+                extraHeaderProvider.headers,
+                viewModel.activeAltUrlForDoH,
+                networkRequestOverrider,
+                onResourceLoadingError = {}
+            )
             webChromeClient = CaptchaWebChromeClient()
         }
 
@@ -108,7 +119,8 @@ internal class HumanVerificationCaptchaFragment : ProtonFragment(R.layout.fragme
             // At the moment, this is enough to properly load the Captcha with the extra headers.
             // This behavior could change and we might need to implement a WebViewClient to act as an interceptor.
             val extraHeaders = extraHeaderProvider.headers.associate { it }
-            captchaWebView.loadUrl("$captchaUrl?Token=${humanVerificationBase.urlToken}", extraHeaders)
+            val url = viewModel.activeAltUrlForDoH ?: captchaUrl
+            captchaWebView.loadUrl("$url?Token=${humanVerificationBase.urlToken}", extraHeaders)
         }
     }
 

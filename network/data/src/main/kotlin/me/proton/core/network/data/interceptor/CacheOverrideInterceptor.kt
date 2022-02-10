@@ -22,7 +22,7 @@ import me.proton.core.network.domain.CacheOverride
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class CacheOverrideInterceptor: Interceptor {
+class CacheOverrideInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val cacheControl = request.tag(CacheOverride::class.java) ?: return chain.proceed(request)

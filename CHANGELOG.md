@@ -51,7 +51,12 @@ fun provideCaptchaApiHost(): String = Constants.API_HOST
 - Add ProtonStore to get the calling stack trace of Store operations.
 - We don't generate keys for external accounts anymore. This means they can only be used in VPN or converted into internal accounts on login.
 - Fix/Add support for user readable error messages.
-- Ability to run Core Smoke tests with languages other than English
+- Ability to run Core Smoke tests with languages other than English.
+- Fixed issues with HV2 and DoH:
+  - HV2 shows tabs for 'coupon' and 'payment' methods, they should be filtered.
+  - HV2 catpcha is not loaded properly when DoH is working.
+  - HV2 codes are not sent when DoH is triggered on signup.
+- Fixed bug with CacheOverride Retrofit tag not returning the proper header values.
 
 ### New Injection
 
