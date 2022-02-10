@@ -1,6 +1,6 @@
 warn("Big PR") if git.insertions > 1000
 
-random_reviewers.assign(["jmartin", "marmatys", "dkadrikj", "nmarietta", "vbrison"])
+random_reviewers.assign(["jmartin", "marmatys", "dkadrikj", "nmarietta"])
 
 cobertura.report = "build/reports/cobertura-coverage.xml"
 cobertura.additional_headers = [:line, :branch]
