@@ -18,7 +18,7 @@
 
 package me.proton.core.test.android.robots.other
 
-import me.proton.core.test.android.instrumented.R
+import me.proton.core.crypto.validator.presentation.R
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.CoreVerify
 
