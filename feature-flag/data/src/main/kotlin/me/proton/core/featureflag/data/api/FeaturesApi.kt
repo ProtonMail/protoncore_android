@@ -23,9 +23,11 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+private const val FILTER_FEATURES_FLAGS = "Type=boolean"
+
 interface FeaturesApi : BaseRetrofitApi {
 
-    @GET("core/v4/features")
+    @GET("core/v4/features?$FILTER_FEATURES_FLAGS")
     suspend fun getFeatureFlag(
         @Query("Code") code: String
     ): FeaturesApiResponse
