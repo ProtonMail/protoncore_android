@@ -29,11 +29,9 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import me.proton.android.core.coreexample.utils.ClientFeatureFlags
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
-import me.proton.core.network.domain.exception.ApiConnectionException
 import me.proton.core.presentation.viewmodel.ViewModelResult
 import javax.inject.Inject
 
@@ -48,30 +46,14 @@ class FeatureFlagViewModel @Inject constructor(
 
     fun isFeatureEnabled(featureId: FeatureId) = viewModelScope.launch {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
-        featureFlagRepository.observe(userId, featureId).mapLatest { dataResult ->
-            when (dataResult) {
-                is DataResult.Success -> mutableState.emit(ViewModelResult.Success(dataResult.value))
-                is DataResult.Error.Local -> Unit
-                is DataResult.Error.Remote -> mutableState.emit(localValueOrError(dataResult.cause, featureId))
-                is DataResult.Processing -> Unit
-            }
+        featureFlagRepository.observe(userId, featureId).mapLatest { featureFlag ->
+            val result = featureFlag ?: defaultValueOf(featureId)
+            mutableState.emit(ViewModelResult.Success(result))
 
         }.launchIn(viewModelScope)
     }
 
-    private fun localValueOrError(
-        cause: Throwable?,
-        featureId: FeatureId
-    ): ViewModelResult<FeatureFlag> {
-        val hasNoConnectivity = cause is ApiConnectionException
-        return if (hasNoConnectivity) {
-            ViewModelResult.Success(flagWithDefaultLocalValue(featureId))
-        } else {
-            ViewModelResult.Error(cause)
-        }
-    }
-
-    private fun flagWithDefaultLocalValue(featureId: FeatureId) =
+    private fun defaultValueOf(featureId: FeatureId) =
         FeatureFlag(
             featureId,
             ClientFeatureFlags.values().first { it.id == featureId }.defaultLocalValue

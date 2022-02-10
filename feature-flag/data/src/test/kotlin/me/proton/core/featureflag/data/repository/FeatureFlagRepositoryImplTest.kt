@@ -27,8 +27,6 @@ import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runBlockingTest
-import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.arch.ResponseSource
 import me.proton.core.featureflag.data.api.fake.MockFeaturesApiProvider
 import me.proton.core.featureflag.data.api.response.FeatureApiResponse
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
@@ -79,7 +77,7 @@ class FeatureFlagRepositoryImplTest {
         val actual = repository.get(UserIdTestData.userId, FeatureIdTestData.featureId)
 
         // Then
-        val expected = DataResult.Success(ResponseSource.Remote, FeatureFlag(FeatureIdTestData.featureId, true))
+        val expected = FeatureFlag(FeatureIdTestData.featureId, true)
         assertEquals(expected, actual)
     }
 
@@ -97,7 +95,7 @@ class FeatureFlagRepositoryImplTest {
         val actual = repository.get(UserIdTestData.userId, FeatureIdTestData.featureId)
 
         // Then
-        val expected = DataResult.Success(ResponseSource.Local, FeatureFlag(FeatureIdTestData.featureId, true))
+        val expected = FeatureFlag(FeatureIdTestData.featureId, true)
         assertEquals(expected, actual)
         // API should not be called when there are values in DB (update is done through event loop)
         fakeApiProvider.verifyApiProviderNotCalled()
@@ -132,14 +130,14 @@ class FeatureFlagRepositoryImplTest {
         repository.observe(UserIdTestData.userId, FeatureIdTestData.featureId).test {
             // Then
             assertEquals(
-                DataResult.Success(ResponseSource.Local, FeatureFlag(FeatureIdTestData.featureId, true)),
+                FeatureFlag(FeatureIdTestData.featureId, true),
                 awaitItem()
             )
 
             // simulate this feature flag's value changes in the DB
             mutableDbFlow.emit(FeatureFlagTestData.disabledFeatureFlagEntity)
             assertEquals(
-                DataResult.Success(ResponseSource.Local, FeatureFlag(FeatureIdTestData.featureId, false)),
+                FeatureFlag(FeatureIdTestData.featureId, false),
                 awaitItem()
             )
         }
@@ -157,15 +155,14 @@ class FeatureFlagRepositoryImplTest {
         repository.observe(UserIdTestData.userId, FeatureIdTestData.featureId).test {
             // Then
             val expectedFlag = FeatureFlag(FeatureIdTestData.featureId, true)
-            assertEquals(DataResult.Success(ResponseSource.Remote, expectedFlag), awaitItem())
+            assertEquals(expectedFlag, awaitItem())
 
             // enabledFeatureFlagEntity is the corresponding entity that the mocked API response
             coVerify { featureFlagDao.insertOrUpdate(FeatureFlagTestData.enabledFeatureFlagEntity) }
             // Inserting the API response into DB causes it to be emitted
             mutableDbFlow.emit(FeatureFlagTestData.enabledFeatureFlagEntity)
 
-            val expected = DataResult.Success(ResponseSource.Local, expectedFlag)
-            assertEquals(expected, awaitItem())
+            assertEquals(expectedFlag, awaitItem())
         }
     }
 

@@ -19,14 +19,13 @@
 package me.proton.core.featureflag.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 
 interface FeatureFlagRepository {
 
-    fun observe(userId: UserId, feature: FeatureId): Flow<DataResult<FeatureFlag>>
+    fun observe(userId: UserId, feature: FeatureId): Flow<FeatureFlag?>
 
-    suspend fun get(userId: UserId, feature: FeatureId): DataResult<FeatureFlag>
+    suspend fun get(userId: UserId, feature: FeatureId): FeatureFlag?
 }
