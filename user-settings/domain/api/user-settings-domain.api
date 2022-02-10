@@ -290,9 +290,9 @@ public final class me/proton/core/usersettings/domain/repository/UserSettingsRep
 	public static synthetic fun getUserSettingsFlow$default (Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 }
 
-public final class me/proton/core/usersettings/domain/usecase/GetSettings {
+public final class me/proton/core/usersettings/domain/usecase/GetUserSettings {
 	public fun <init> (Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword {

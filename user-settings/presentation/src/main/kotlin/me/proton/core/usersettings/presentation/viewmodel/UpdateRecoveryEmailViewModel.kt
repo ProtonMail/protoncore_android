@@ -31,14 +31,14 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.usecase.GetSettings
+import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateRecoveryEmail
 import javax.inject.Inject
 
 @HiltViewModel
 class UpdateRecoveryEmailViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val getSettings: GetSettings,
+    private val getUserSettings: GetUserSettings,
     private val userRepository: UserRepository,
     private val performUpdateRecoveryEmail: PerformUpdateRecoveryEmail
 ) : ProtonViewModel() {
@@ -63,7 +63,7 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
      */
     fun getCurrentRecoveryAddress(userId: UserId) = flow {
         emit(State.LoadingCurrent)
-        val currentSettings = getSettings(userId)
+        val currentSettings = getUserSettings(userId, refresh = true)
         secondFactorEnabled = currentSettings.twoFA?.enabled ?: false
         emit(State.LoadingSuccess(currentSettings.email?.value))
     }.catch { error ->

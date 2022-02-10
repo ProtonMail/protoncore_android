@@ -37,7 +37,7 @@ import me.proton.core.usersettings.domain.entity.Flags
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.usecase.GetSettings
+import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateRecoveryEmail
 import org.junit.Before
 import org.junit.Test
@@ -47,7 +47,7 @@ import kotlin.test.assertTrue
 
 class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
     // region mocks
-    private val getUserSettingsUseCase = mockk<GetSettings>()
+    private val getUserSettingsUseCase = mockk<GetUserSettings>()
     private val performUpdateRecoveryEmailUseCase = mockk<PerformUpdateRecoveryEmail>()
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
     private val userRepository = mockk<UserRepository>(relaxed = true)
@@ -102,7 +102,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
     @Before
     fun beforeEveryTest() {
         coEvery { userRepository.getUser(any()) } returns testUser
-        coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse
         viewModel =
             UpdateRecoveryEmailViewModel(
                 keyStoreCrypto,
@@ -114,7 +114,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `get current recovery email empty handled correctly`() = coroutinesTest {
-        coEvery { getUserSettingsUseCase.invoke(testUserId) } returns testUserSettingsResponse.copy(
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
             email = null
         )
         viewModel.state.test {
@@ -145,7 +145,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest, CoroutinesTest {
 
     @Test
     fun `get current recovery email error handled correctly`() = coroutinesTest {
-        coEvery { getUserSettingsUseCase.invoke(testUserId) } throws ApiException(
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
