@@ -53,7 +53,8 @@ dependencies {
         `coroutines-core`,
         `retrofit`,
         `retrofit-kotlin-serialization`,
-        `room-ktx`
+        `room-ktx`,
+        store4
     )
 
     testImplementation(

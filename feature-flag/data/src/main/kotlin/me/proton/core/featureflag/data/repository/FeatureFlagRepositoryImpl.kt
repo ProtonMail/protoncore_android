@@ -18,10 +18,17 @@
 
 package me.proton.core.featureflag.data.repository
 
+import com.dropbox.android.external.store4.Fetcher
+import com.dropbox.android.external.store4.SourceOfTruth
+import com.dropbox.android.external.store4.StoreBuilder
+import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.map
+import me.proton.core.data.arch.ProtonStore
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.api.FeaturesApi
+import me.proton.core.featureflag.data.api.response.FeatureApiResponse
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -35,36 +42,34 @@ class FeatureFlagRepositoryImpl(
 
     private val featureFlagDao = database.featureFlagDao()
 
-    override fun observe(userId: UserId, feature: FeatureId): Flow<FeatureFlag?> {
-        return featureFlagDao.observe(userId, feature.id).mapLatest { dbFlag ->
-            if (dbFlag == null) {
-                return@mapLatest fetchFromApi(userId, feature)?.toEntity(userId)?.let {
-                    featureFlagDao.insertOrUpdate(it)
-                    return@let it.toFeatureFlag()
+    private data class StoreKey(val userId: UserId, val featureId: FeatureId)
+
+    private val store: ProtonStore<StoreKey, FeatureFlag> = StoreBuilder.from(
+        fetcher = Fetcher.of { key: StoreKey ->
+            apiProvider.get<FeaturesApi>(key.userId).invoke {
+                getFeatureFlag(key.featureId.id).features.first()
+            }.valueOrThrow
+        },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = { key: StoreKey ->
+                featureFlagDao.observe(key.userId, key.featureId.id).map {
+                    it?.toFeatureFlag()
                 }
-            }
+            },
+            writer = { key, apiResponse: FeatureApiResponse ->
+                featureFlagDao.insertOrUpdate(apiResponse.toEntity(key.userId))
+            },
+        )
+    ).buildProtonStore()
 
-            dbFlag.toFeatureFlag()
+    override fun observe(userId: UserId, featureId: FeatureId): Flow<FeatureFlag?> =
+        StoreKey(userId = userId, featureId = featureId).let { key ->
+            store.stream(StoreRequest.cached(key, false)).map { it.dataOrNull() }
         }
-    }
 
-    override suspend fun get(userId: UserId, feature: FeatureId): FeatureFlag? {
-        val localFlagEntity = featureFlagDao.get(userId, feature.id)
-        localFlagEntity?.let {
-            return it.toFeatureFlag()
+    override suspend fun get(userId: UserId, featureId: FeatureId): FeatureFlag =
+        StoreKey(userId = userId, featureId = featureId).let { key ->
+            store.get(key)
         }
-
-        return fetchFromApi(userId, feature)?.toEntity(userId)?.let {
-            featureFlagDao.insertOrUpdate(it)
-            it.toFeatureFlag()
-        }
-    }
-
-    private suspend fun fetchFromApi(
-        userId: UserId,
-        feature: FeatureId
-    ) = apiProvider.get<FeaturesApi>(userId).invoke {
-        getFeatureFlag(feature.id).features.first()
-    }.valueOrNull
 
 }
