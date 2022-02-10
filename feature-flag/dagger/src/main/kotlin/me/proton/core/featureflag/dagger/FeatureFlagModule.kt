@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.core.coreexample.di
+package me.proton.core.featureflag.dagger
 
 import dagger.Module
 import dagger.Provides
@@ -30,11 +30,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object FeatureFlagsModule {
+object FeatureFlagModule {
 
     @Provides
     @Singleton
-    fun provideFeatureFlagsRepositoryImpl(
+    fun provideFeatureFlagRepositoryImpl(
         db: FeatureFlagDatabase,
         provider: ApiProvider
     ): FeatureFlagRepository = FeatureFlagRepositoryImpl(db, provider)

@@ -77,6 +77,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 |me.proton.core:feature-flag|
 |me.proton.core:feature-flag-data|
 |me.proton.core:feature-flag-domain|
+|me.proton.core:feature-flag-dagger|
 |me.proton.core:human-verification|
 |me.proton.core:human-verification-data|
 |me.proton.core:human-verification-domain|

@@ -20,13 +20,18 @@ import studio.forface.easygradle.dsl.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
+}
+
+proton {
+    apiModeDisabled()
 }
 
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    api(
-        project(Module.featureFlagDagger),
+    implementation(
+        project(Module.networkData),
         project(Module.featureFlagData),
         project(Module.featureFlagDomain)
     )
