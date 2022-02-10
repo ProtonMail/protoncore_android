@@ -103,6 +103,19 @@ class RecoveryMethodsRobot : CoreRobot() {
             view.withText(RecoveryMethodType.EMAIL.name).checkDisplayed()
             view.withText(RecoveryMethodType.PHONE.name).checkDisplayed()
         }
+
+        fun onlyEmailRecoveryDisplayed() {
+            view.withId(R.id.emailEditText).checkDisplayed()
+            view.withId(R.id.recoveryOptions).checkNotDisplayed()
+        }
+
+        fun recoveryDestinationErrorSnackbarDisplayed() {
+            errorSnackbarDisplayed(R.string.auth_signup_error_validation_recovery_destination)
+        }
+
+        fun skipMenuButtonNotDisplayed() {
+            view.withId(R.id.recovery_menu_skip).checkDoesNotExist()
+        }
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

@@ -168,4 +168,10 @@ class AccountViewModel @Inject constructor(
             authOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.External)
         }
     }
+
+    fun onUsernameSignUpClicked() {
+        viewModelScope.launch {
+            authOrchestrator.startSignupWorkflow(requiredAccountType = AccountType.Username)
+        }
+    }
 }

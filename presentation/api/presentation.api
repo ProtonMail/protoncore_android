@@ -344,6 +344,7 @@ public final class me/proton/core/presentation/ui/view/ProtonInput : android/wid
 	public final fun getText ()Ljava/lang/CharSequence;
 	public fun isEnabled ()Z
 	public final fun isPasswordInput ()Z
+	public final fun isSuffixTextVisible ()Z
 	public final fun setEditTextAlignment (I)V
 	public final fun setEditTextDirection (I)V
 	public fun setEnabled (Z)V
@@ -363,6 +364,7 @@ public final class me/proton/core/presentation/ui/view/ProtonInput : android/wid
 	public final fun setOnFocusLostListener (Landroid/view/View$OnFocusChangeListener;)V
 	public final fun setPrefixText (Ljava/lang/CharSequence;)V
 	public final fun setSuffixText (Ljava/lang/CharSequence;)V
+	public final fun setSuffixTextVisible (Z)V
 	public final fun setText (Ljava/lang/CharSequence;)V
 }
 

@@ -808,8 +808,10 @@ public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot :
 
 public final class me/proton/core/test/android/robots/auth/ChooseUsernameRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
+	public final fun accountTypeSwitchNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun chooseUsernameElementsDisplayed ()V
 	public final fun suffixDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun suffixFilledButNotDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun switchToExternalDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun switchToSecureDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 }
@@ -897,7 +899,10 @@ public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethod
 
 public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
+	public final fun onlyEmailRecoveryDisplayed ()V
+	public final fun recoveryDestinationErrorSnackbarDisplayed ()V
 	public final fun recoveryMethodsElementsDisplayed ()V
+	public final fun skipMenuButtonNotDisplayed ()V
 }
 
 public class me/proton/core/test/android/robots/confirmpassword/ConfirmPasswordRobot : me/proton/core/test/android/robots/CoreRobot {

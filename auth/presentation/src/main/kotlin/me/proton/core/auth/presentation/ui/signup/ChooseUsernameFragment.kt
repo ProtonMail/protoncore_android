@@ -111,7 +111,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                                 suffixText = null
                             }
                             viewModel.domains?.let {
-                                onDomains(it, AccountType.Internal)
+                                onDomains(it, state.type)
                                 useCurrentEmailButton.text = getString(R.string.auth_signup_current_email)
                             }
                         }
@@ -171,6 +171,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             if (accountType == AccountType.Internal || accountType == AccountType.Username) {
                 usernameInput.suffixText = "@${domains.first()}"
             }
+            usernameInput.isSuffixTextVisible = accountType == AccountType.Internal
         }
     }
 

@@ -92,6 +92,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             signIn.onClick { accountViewModel.signIn() }
             signup.onClick { accountViewModel.onSignUpClicked() }
             signupExternal.onClick { accountViewModel.onExternalSignUpClicked() }
+            signupUsername.onClick { accountViewModel.onUsernameSignUpClicked() }
             forceUpdate.onClick {
                 startActivity(ForceUpdateActivity(this@MainActivity, "Error Message coming from the API."))
             }

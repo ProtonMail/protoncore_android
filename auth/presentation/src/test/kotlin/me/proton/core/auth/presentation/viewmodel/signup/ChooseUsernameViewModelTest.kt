@@ -190,7 +190,7 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
     }
 
     @Test
-    fun `set Username Account Type can switch to Internal`() = coroutinesTest {
+    fun `set Username Account Type cannot switch to External`() = coroutinesTest {
         viewModel.selectedAccountTypeState.test {
             // WHEN
             viewModel.setClientAppRequiredAccountType(AccountType.Username)
@@ -202,34 +202,7 @@ class ChooseUsernameViewModelTest : ArchTest, CoroutinesTest {
             viewModel.onUserSwitchAccountType()
             val eventAfterChange = awaitItem()
             assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.External, eventAfterChange.type)
-        }
-    }
-
-    @Test
-    fun `set Username Account Type can switch to Internal back and forth`() = coroutinesTest {
-        viewModel.selectedAccountTypeState.test {
-            // WHEN
-            viewModel.setClientAppRequiredAccountType(AccountType.Username)
-            // THEN
-            val event = awaitItem()
-            assertTrue(event is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.Username, event.type)
-
-            viewModel.onUserSwitchAccountType()
-            val eventAfterChange = awaitItem()
-            assertTrue(eventAfterChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.External, eventAfterChange.type)
-
-            viewModel.onUserSwitchAccountType()
-            val eventAfter2ndChange = awaitItem()
-            assertTrue(eventAfter2ndChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.Username, eventAfter2ndChange.type)
-
-            viewModel.onUserSwitchAccountType()
-            val eventAfter3rdChange = awaitItem()
-            assertTrue(eventAfter3rdChange is ChooseUsernameViewModel.AccountTypeState.NewAccountType)
-            assertEquals(AccountType.External, eventAfter3rdChange.type)
+            assertEquals(AccountType.Username, eventAfterChange.type)
         }
     }
 

@@ -116,7 +116,9 @@
     <string name="auth_signup_choose_password">Create your password</string>
     <string name="auth_signup_repeat_password">Repeat password</string>
     <string name="auth_signup_recovery_method_title">Set recovery method (optional)</string>
+    <string name="auth_signup_recovery_method_title_mandatory">Set recovery method</string>
     <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
+    <string name="auth_signup_recovery_method_subtitle_email_only">We will send recovery instructions to this email if you get locked out of your account.</string>
     <string name="auth_signup_recovery_method_email">Email</string>
     <string name="auth_signup_recovery_method_phone">Phone</string>
     <string name="auth_signup_recovery_method_email_hint">Recovery email</string>

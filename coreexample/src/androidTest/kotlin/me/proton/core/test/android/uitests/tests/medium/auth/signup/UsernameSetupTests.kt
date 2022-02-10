@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,13 @@ import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.uitests.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
 class UsernameSetupTests : BaseTest() {
-
     private val chooseUsernameRobot = ChooseUsernameRobot()
 
     @Before
@@ -38,11 +38,17 @@ class UsernameSetupTests : BaseTest() {
             .clickBackBtn()
 
         CoreexampleRobot()
-            .signup()
+            .signupUsername()
             .verify {
                 chooseUsernameElementsDisplayed()
-                suffixDisplayed(BuildConfig.HOST)
+                suffixFilledButNotDisplayed(BuildConfig.HOST)
             }
+    }
+
+    @Test
+    fun cannotSwitchToExternal() {
+        chooseUsernameRobot
+            .verify { accountTypeSwitchNotDisplayed() }
     }
 
     @Test
@@ -60,5 +66,24 @@ class UsernameSetupTests : BaseTest() {
             .username(existentUsername)
             .next()
             .verify { errorSnackbarDisplayed("Username already used") }
+    }
+
+    @Test
+    fun recoveryMethod() {
+        val recoveryMethodsRobot = chooseUsernameRobot
+            .username(StringUtils.randomString())
+            .next()
+            .password("12345678")
+            .confirmPassword("12345678")
+            .next<RecoveryMethodsRobot>()
+
+        recoveryMethodsRobot.verify {
+            onlyEmailRecoveryDisplayed()
+            skipMenuButtonNotDisplayed()
+        }
+
+        recoveryMethodsRobot
+            .next<RecoveryMethodsRobot>()
+            .verify { recoveryDestinationErrorSnackbarDisplayed() }
     }
 }

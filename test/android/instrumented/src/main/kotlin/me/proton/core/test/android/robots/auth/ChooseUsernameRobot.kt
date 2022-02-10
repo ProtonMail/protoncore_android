@@ -54,6 +54,9 @@ class ChooseUsernameRobot : CoreRobot() {
     fun switchSignupType(): ChooseUsernameRobot = clickElement(R.id.useCurrentEmailButton)
 
     class Verify : CoreVerify() {
+        fun accountTypeSwitchNotDisplayed() =
+            view.withId(R.id.useCurrentEmailButton).checkNotDisplayed()
+
         fun chooseUsernameElementsDisplayed() {
             view.withId(R.id.usernameInput).closeKeyboard().checkDisplayed()
             view.withId(R.id.nextButton).checkDisplayed()
@@ -67,6 +70,9 @@ class ChooseUsernameRobot : CoreRobot() {
 
         fun suffixDisplayed(suffix: String) =
             view.withText("@$suffix").checkDisplayed()
+
+        fun suffixFilledButNotDisplayed(suffix: String) =
+            view.withText("@$suffix").checkNotDisplayed()
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

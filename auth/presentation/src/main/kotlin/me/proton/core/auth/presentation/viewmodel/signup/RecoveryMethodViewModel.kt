@@ -52,6 +52,11 @@ internal class RecoveryMethodViewModel @Inject constructor(
     val recoveryMethod: RecoveryMethod
         get() = _currentActiveRecoveryMethod
 
+    /** Called when destination (email or phone) is empty/blank. */
+    fun onRecoveryMethodDestinationMissing() {
+        _validationResult.tryEmit(ViewModelResult.Success(false))
+    }
+
     /**
      * Sets the currently active verification method that the user chose.
      * If the user changes the verification method tab, the destination is being reset.
