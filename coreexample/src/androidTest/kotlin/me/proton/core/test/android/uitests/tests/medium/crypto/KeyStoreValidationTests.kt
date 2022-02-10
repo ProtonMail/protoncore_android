@@ -18,11 +18,15 @@
 
 package me.proton.core.test.android.uitests.tests.medium.crypto
 
+import android.app.Activity
+import android.app.Instrumentation
+import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.matcher.IntentMatchers
 import me.proton.core.crypto.validator.R
 import me.proton.core.crypto.validator.presentation.ui.CryptoValidatorErrorDialogActivity
 import me.proton.core.test.android.instrumented.ProtonTest
@@ -121,6 +125,9 @@ class KeyStoreValidationTests {
 
     @Test
     fun moreInfoButtonOpensBrowser() {
+        Intents.intending(IntentMatchers.hasAction(Intent.ACTION_VIEW))
+            .respondWith(Instrumentation.ActivityResult(Activity.RESULT_OK, null))
+
         // GIVEN
         val scenario = launchActivity<CryptoValidatorErrorDialogActivity>()
         robot.verify { dialogIsDisplayed() }
